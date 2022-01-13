@@ -1,0 +1,47 @@
+:host::ng-deep .button-bar .ui-button.ui-button-text-only .ui-button-text{
+    padding: 0.3em 1em
+}
+
+:host::ng-deep .p-multiselect{
+    width: 100%;
+}
+
+:host::ng-deep .p-dropdown{
+    width: 100%;
+}
+:host::ng-deep p-toolbar{
+    width: 100%;
+}
+:host::ng-deep .p-autocomplete  {
+    width: 100% !important ;
+    .p-autocomplete-multiple-container {
+            width:100% !important  ;
+    }
+}
+// :host::ng-deep .p-tree {
+//     padding: 0  ;
+//     min-height: 500px;
+//     .p-tree-wrapper{
+//         height: 670px;
+//     }
+// }
+
+::ng-deep .ag-cell {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+:host::ng-deep .text-number .ag-cell-wrapper   {
+   display: flex;
+   justify-content: flex-end;
+}
+
+:host::ng-deep .text-center .ag-cell-wrapper   {
+   justify-content: center;
+}
+
+:host::ng-deep .p-autocomplete .p-autocomplete-input {
+    width: 100% !important ;
+}
+

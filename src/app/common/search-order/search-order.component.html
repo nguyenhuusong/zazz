@@ -1,0 +1,218 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="row">
+      <div class="col-md-3">
+        <section class="left-search">
+          <div class="w-100" style="padding: 0 10px;">
+            <h3>Thông tin tìm kiếm</h3>
+          </div>
+          <div class="d-flex flex-column" style="background-color: white; min-height: 600px; border-radius: 5px; padding: 0 10px;">
+              <div *ngIf="+reason === 1" class="header-filter-search input-group">
+                <label for="">{{placeHolder}} </label>
+                <div class="input-group">
+                    <input type="search"
+                    id="filter"
+                    (keyup)="onProcessValue($event)"
+                    (paste)="onProcessValue($event)"
+                    (keypress)="onProcessValue($event, true)"
+                    (keydown.enter)="onHandleSearchEvent()"
+                      [placeholder]="placeHolder"
+                      [(ngModel)]="queryOrder.filter"
+                      class="form-control input-focus ng-pristine ng-valid ng-empty ng-touched">
+                </div>
+              </div>
+              <div *ngIf="+reason !== 1" class="header-filter-search input-group">
+                <label for="">{{placeHolder}} </label>
+                <div class="input-group">
+                    <input type="search"
+                    id="filter"
+                    (keyup)="onProcessValue($event)"
+                    (paste)="onProcessValue($event)"
+                    (keypress)="onProcessValue($event, true)"
+                    (keydown.enter)="onHandleSearchEvent()"
+                      [placeholder]="placeHolder"
+                      [(ngModel)]="query.filter"
+                      class="form-control input-focus ng-pristine ng-valid ng-empty ng-touched">
+                </div>
+              </div>
+            <div *ngIf="+reason === 13" class="input-group">
+              <label for="">Theo mã sản phẩm</label>
+              <input type="search"
+              [(ngModel)]="query.product_barcode"
+              (keyup)="onValidateNumeric($event)"
+              (paste)="onValidateNumeric($event)"
+              (keypress)="onValidateNumeric($event)"
+              placeholder="Nhập mã sản phẩm"
+              class="form-control input-focus ng-pristine ng-valid ng-empty ng-touched"
+              />
+            </div>
+            <div *ngIf="+reason === 1 || +reason === 13" class="input-group">
+              <label for="">Theo NCC</label>
+              <p-autoComplete  type="search" (onClear)="clearEvent( 'supplier' ,$event)" placeholder="Nhập nhà cung cấp" [(ngModel)]="modelSupplier" [suggestions]="supplierSuggestions" (onSelect)="onSelectSupplierFilter($event)"
+              (completeMethod)="searchSupplier($event)" emptyMessage="Không tìm thấy nhà cung cấp" field="label"></p-autoComplete>
+            </div>
+            <div *ngIf="+reason === 1 || +reason === 13" class="ui-inputgroup input-group">
+              <label for="">Theo nhân viên</label>
+              <p-autoComplete type="search" (onClear)="clearEvent( 'employee' , $event)" (onKeyUp)="autoCompleteValueValidate($event)"  placeholder="Nhập nhân viên" [(ngModel)]="modelStaff" [suggestions]="listStaff" (onSelect)="onSelectStaff($event)"
+              (completeMethod)="getStaffsAtStore($event)" emptyMessage="Không tìm thấy nhân viên" field="label">
+              </p-autoComplete>
+            </div>
+            <div *ngIf="+reason === 1" class="select-default">
+              <label for="">Theo lý do đặt hàng</label>
+              <p-dropdown [options]="listReason" placeholder="Tất cả" [appendTo]="'body'" [autoDisplayFirst]="false" [(ngModel)]="queryOrder.reason"  [filter]="true" [showClear]="true">
+                <ng-template let-item pTemplate="selectedItem">
+                  <span *ngIf="queryOrder.reason" style="vertical-align:middle; ">{{item.label}}</span>
+                  <span *ngIf="!queryOrder.reason" style="vertical-align:middle; "></span>
+                </ng-template>
+                <ng-template let-car pTemplate="item">
+                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                        <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                    </div>
+                </ng-template>
+            </p-dropdown>
+            </div>
+            <div *ngIf="+reason === 1" class="select-default">
+              <label for="">Theo trạng thái</label>
+              <p-dropdown [options]="listOrderStatus" placeholder="Tất cả" [autoDisplayFirst]="false" [(ngModel)]="queryOrder.orderStatus"  [filter]="true" [showClear]="true">
+                <ng-template let-item pTemplate="selectedItem">
+                    <span *ngIf="queryOrder.orderStatus" style="vertical-align:middle; ">{{item.label}}</span>
+                    <span *ngIf="!queryOrder.orderStatus" style="vertical-align:middle; "></span>
+                </ng-template>
+                <ng-template let-car pTemplate="item">
+                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                        <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                    </div>
+                </ng-template>
+            </p-dropdown>
+            </div>
+            <div class="row mt-1">
+              <div class="col-md-12 input-group">
+                <label>Từ ngày</label>
+                <p-calendar type="search"
+                  (onClearClick)="onClearClick('fromDate', $event)"
+                  placeholder="dd-mm-yyyy"
+                  [showButtonBar]="true"
+                  [showIcon]="true"
+                  [style]="{'width': '100%'}"
+                  [(ngModel)]="fromDate" dateFormat="dd-mm-yy"
+                  [maxDate]="toDate"
+                  (ngModelChange)="detectChange('fromDate', $event)">
+              </p-calendar>
+              </div>
+              <div class="col-md-12 input-group">
+                <label>Đến ngày</label>
+                <p-calendar type="search"
+                  (onClearClick)="onClearClick('toDate', $event)"
+                  placeholder="dd-mm-yyyy"
+                  [showButtonBar]="true"
+                  [showIcon]="true"
+                  [style]="{'width': '100%'}"
+                  [(ngModel)]="toDate"
+                  dateFormat="dd-mm-yy"
+                  [minDate]="fromDate"
+                  (ngModelChange)="detectChange('toDate', $event)">
+                </p-calendar>
+              </div>
+            </div>
+            <div class="row mt-1">
+              <div class="col-md-12 text-center">
+                <div class="d-flex justify-content-center">
+                  <p-button icon="fa fa-refresh" label="Đặt lại" (click)="cancelSearch()"></p-button>
+                  <p-button icon="fa fa-filter" label="Lọc"  styleClass="ml-1" (click)="onHandleSearchEvent()"></p-button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+      <div class="col-md-9">
+          <div class="w-100 border-bottom">
+            <h3>Danh sách phiếu</h3>
+          </div>
+          <p-table
+          [dataKey]="+reason=== 1 ? 'order_no' :'stock_no'"
+          styleClass="p-datatable-gridlines p-datatable-sm mt-1"
+          [responsive]="true"
+          [scrollable]="true"
+          scrollHeight="500px"
+          [value]="listOrder"
+          [showCurrentPageReport]="true"
+          selectionMode="single"
+          [(selection)]="order">
+          <ng-template pTemplate="header">
+              <tr class="text-white">
+                  <th class="text-white">Số phiếu</th>
+                  <th class="text-white">Ngày tạo</th>
+                  <th class="text-white">Người tạo</th>
+                  <th class="text-white">Nhà cung cấp</th>
+                  <th class="text-white">Lý do</th>
+                  <th class="text-white" *ngIf="+reason !== 1">Ngày thanh toán</th>
+                  <th class="text-white" *ngIf="+reason === 1">Trạng thái đơn hàng</th>
+                  <th class="text-white" *ngIf="+reason === 1">Trạng thái duyệt</th>
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-rowData let-order let-expanded="expanded">
+              <tr [pSelectableRow]="rowData" (click)="selectOrder()">
+                  <td style="color: crimson;">
+                    <div class="d-flex flex-row">
+                      <button type="button" pButton pRipple [pRowToggler]="order" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                      <span>{{+reason === 1 ? order.order_no : order.stock_no}}</span>
+                    </div>
+                  </td>
+                  <td>{{order.created}}</td>
+                  <td>{{order.created_by}}</td>
+                  <td>{{order.supplier_name}}</td>
+                  <td style="color: crimson;">{{order.reason_name}}</td>
+                  <td *ngIf="+reason !== 1">{{order.payment_date}}</td>
+                  <td *ngIf="+reason === 1">{{order.order_status_name}}</td>
+                  <td *ngIf="+reason === 1">{{order.approve_status_name}}</td>
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="rowexpansion" let-order>
+            <tr>
+                <td colspan="7">
+                    <div class="p-p-3">
+                        <p-table [value]="+reason === 1 ? order.orderDetails :order.stockDiaryDetails" dataKey="bar_code">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th>Mã SP</th>
+                                    <th>Tên SP</th>
+                                    <th >Số lượng</th>
+                                    <th>Đơn giá</th>
+                                    <th>% thuế</th>
+                                    <th>$ thuế</th>
+                                    <th>Thành tiền</th>
+                                    <th></th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-order>
+                                <tr>
+                                    <td>{{order.bar_code}}</td>
+                                    <td>{{order.product_name}}</td>
+                                    <td>{{order.quantity}}</td>
+                                    <td>{{order.price | currency:'VND'}}</td>
+                                    <td>{{order.tax_rate}}</td>
+                                    <td>{{order.tax_amount | currency:'VND'}}</td>
+                                    <td>{{order.remain_amount | currency:'VND'}}</td>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="emptymessage">
+                                <tr>
+                                    <td colspan="6">Không có sản phẩm nào trong số phiếu này.</td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="emptymessage">
+              <tr>
+                  <td colspan="7">Danh sách trống</td>
+              </tr>
+          </ng-template>
+          </p-table>
+      </div>
+    </div>
+  </div>
+</div>

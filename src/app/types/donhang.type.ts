@@ -1,0 +1,30 @@
+export interface Donhang {
+    orderId: number;
+    orderNo: string;
+    cif_No: string;
+    cus_Type: number;
+    cus_Ph_1: string;
+    cus_Pass_No: string;
+    cus_Pass_Dt: Date;
+    cus_Pass_Plc: string;
+    cus_Name: string;
+    cus_Add_1: string;
+    cus_City: string;
+    agencyId: number;
+    roomCd: string;
+    roomCode: string;
+    wallArea: number;
+    waterwayArea: number;
+    order_Note: string;
+    noVatAmt: number;
+    useLandAmt: number;
+    vatAmt: number;
+    mainAmt: number;
+    totalAmt: number;
+    projectCd: string;
+    buildingCd: string;
+    projectName: string;
+    buildingName: string;
+    isBank: true;
+    salerId: number;
+}

@@ -1,0 +1,100 @@
+
+<div class="modal-body p-2">
+    <div class="row header">
+        <div class="col-3">
+            <fieldset class="form-group">
+                <label for="searchFilterSelectImagePopup">Từ khóa</label>
+                <input class="form-control" type="text" [(ngModel)]="filter.search" placeholder="Nhập nội dung tìm kiếm ..."
+                    id="searchFilterSelectImagePopup" name="search">
+            </fieldset>
+        </div>
+        <div class="col-2">
+            <fieldset class="form-group">
+                <label>Loại tệp</label>
+                <select class="form-control custom-dropbox" name="type" (change)="handleSearch()"
+                    id="typeFilterSelectImagePopup" [(ngModel)]="filter.type">
+                    <option value='all'>Tất cả</option>
+                    <option value='image'>Ảnh</option>
+                    <option value='video'>Video</option>
+                    <option value='file'>Tài liệu</option>
+                </select>
+            </fieldset>
+        </div>
+        <!-- <div class="col-2">
+            <fieldset class="form-group">
+                <label>Sắp xếp</label>
+                <select class="form-control custom-dropbox" name="sort" (change)="handleSearch('sort')" id="sort"
+                    [(ngModel)]="filter.sort">
+                    <option [ngValue]="true">Có</option>
+                    <option [ngValue]="false">Không</option>
+                </select>
+            </fieldset>
+        </div> -->
+        <div class="col-4">
+            <fieldset class="form-group">
+                <label>Tìm kiếm </label><br>
+                <button type="submit" (click)="handleSearch()" class="btn btn-dropbox">
+                    <i class="fa fa-search"></i>
+                </button>
+                <button class="btn btn-dropbox" (click)="handleAddRootFolder()">
+                    <i class="fa fa-folder-open-o" aria-hidden="true"></i> Tạo thư mục gốc
+                </button>
+            </fieldset>
+        </div>
+    </div>
+    <div class="row library">
+        <div class="col-sm-3 library-menu">
+            <p-tree
+                id="mytree"
+                [value]="dataTrees"
+                selectionMode="single"
+                [(selection)]="selectedFile"
+                (onNodeSelect)="nodeSelect($event)"
+                (onNodeUnselect)="nodeUnselect($event)"
+                [contextMenu]="cm">
+            </p-tree>
+            <p-contextMenu #cm [model]="contextMenus" appendTo="body" [baseZIndex]="2000"></p-contextMenu>
+        </div>
+        <div class="col-sm-9 library-content">
+            <div class="row p-2 attack col-sm-12">
+                <div class="attack__item" *ngFor="let item of contentsDisplay" [ngClass]="{'active': mediaSelected?.includes(item.documentId)}">
+                    <input type="checkbox" name={{item.documentId}} id={{item.documentId}} class="in-visible" [value]="item.documentId"
+                    (change) ="updateSelected($event)" hidden/>
+                    <label for={{item.documentId}} class="h-100" >
+                        <span *ngIf="mediaSelected?.includes(item.documentId)" class="attack__item-remove">
+                            <i class="fa fa-check" aria-hidden="true"></i>
+                        </span>
+                        <img class="attack__item-image" *ngIf="item.file_type === 'image'" [title]="item.name"
+                            [src]="item?.thumbs?.small" alt="https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg">
+                        <img class="attack__item-image" *ngIf="item.file_type === 'video'" [title]="item.name"
+                            [src]="item?.thumbs?.small" alt="https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg">
+                            <div *ngIf="item.file_type === 'video'" class="icon-media"><i class="fa fa-video-camera" aria-hidden="true"></i></div>
+                        <img class="attack__item-image" *ngIf="item.file_type === 'file'" [title]="item.name"
+                            src="../../../../../assets/images/icons/word.png"
+                            alt="https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg">
+                        <label class="attack__item-image">{{item.nameDisplay}}</label>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+<hr>
+<div class="text-right">
+    <p-button label="Lưu lại" styleClass="p-button-sm mr-1" icon="pi pi-check"  (click)="handleSave()"></p-button>
+    <p-button label="Đóng" styleClass="p-button-sm p-button-secondary" icon="pi pi-times"  (click)="closeModal()"></p-button>
+</div>
+
+
+<p-dialog [(visible)]="selectImage" [draggable]="false" [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '1300px', height: 'auto'}">
+    <p-header>
+        Tải lên tệp
+    </p-header>
+   <app-add-media [dataRouter]="modelAdd.dataRouter" [type]="modelAdd.type" [selectImage]="selectImage" *ngIf="selectImage" (save)="saveMedia($event)"></app-add-media>
+</p-dialog>
+
+
+
+
+

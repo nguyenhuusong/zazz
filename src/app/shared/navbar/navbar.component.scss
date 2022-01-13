@@ -1,0 +1,10 @@
+.logo{
+  max-width: 148px;
+  height: auto;
+  &:hover{
+      cursor: pointer;
+  }
+  &:focus{
+      outline: none;
+  }
+}

@@ -1,0 +1,87 @@
+
+<div class="modal-body">
+    <form [formGroup]="formMedia"  class="form-horizontal ng-pristine ng-valid ng-scope">
+        <div class="form-row"  *ngIf="type === 'file'">
+            <input type="file" (change)="addFolder($event)" style="display:none;" multiple id="uploadAll" name="myfile" class="input-file" />
+            <div class="text-right row">
+                <div class="col-md-6 p-1">
+                    <button class="btn btn-dropbox w-100" (click)="thisFileUpload()"><i class="fa fa-picture-o" aria-hidden="true"></i> Chọn Ảnh</button>
+                </div>
+                <div class="col-md-6 p-1">
+                    <button class="btn btn-dropbox w-100" (click)="thisFileUpload()"><i class="fa fa-video-camera" aria-hidden="true"></i> Chọn Video</button>
+                </div>
+                <div class="col-md-6 p-1">
+                    <button class="btn btn-dropbox w-100" (click)="showImage360()"><i class="fa fa-ravelry" aria-hidden="true"></i> Ảnh 360</button>
+                </div>
+                <div class="col-md-6 p-1">
+                    <button class="btn btn-dropbox w-100" (click)="thisFileUpload(true)"><i class="fa fa-file-code-o" aria-hidden="true"></i> Chọn Tệp</button>
+                </div>
+            </div>
+        </div>
+        <div class="form-row" style="margin:10px 0px;">
+            <div class="col-sm-12" *ngIf="type === 'folder'">
+                <label class="control-label">Tên thư mục
+                    <span style="color:red">*</span>
+                </label>
+                <input type="text" class="form-control" (keyup.enter)="onSave()" [required]="type === 'folder'" name="name" formControlName="name"
+                       id="name"placeholder="Tên thư mục">
+                <!-- <div *ngIf="name.errors && (name.dirty || name.touched)"
+                    class="alert-validation alert-danger">
+                    <div [hidden]="!name.errors.required">
+                        Tên thư mục bắt buộc nhập!
+                    </div>
+                </div> -->
+            </div>
+
+            <div class="col-sm-12" *ngIf="type === 'file' && isImage360">
+                <label class="control-label"><strong>Link ảnh 360</strong></label>
+                <input type="text" class="form-control" name="image360" formControlName="image360"
+                       id="image360" placeholder="Link ảnh 360"/>
+            </div>
+            <div class="col-sm-12" *ngIf="type === 'file'">
+                <label class="control-label"><strong>Mô tả</strong></label>
+                <textarea type="text" class="form-control" name="description" formControlName="description"
+                          id="description" placeholder="Mô tả"></textarea>
+            </div>
+        </div>
+        <ng-container formArrayName="medias" *ngFor="let item of formMedia?.get('medias')['controls']; let i= index">
+            <div class="form-row" [formGroupName]="i" style="margin:10px 0px;" *ngIf="type === 'file'">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <div class="d-flex">
+                            <div class="upload-area uploaded d-inline-flex align-items-center" style="justify-content:center; width: 100%;height: 63px;"
+                            >
+                                <ng-container>
+                                    <!-- <button type="button" (click)="deleteAvatar()"
+                                        class="btn btn-danger rounded-circle btn-close"><span
+                                            class="fa fa-remove"></span></button> -->
+                                    <img id="img" [src]="item.get('images').value" onerror="this.src='https://d1nhio0ox7pgb.cloudfront.net/_img/i_collection_png/256x256/plain/document_empty.png'" alt="" class="preview" style="height: 80px; width: 80px;">
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <label class="control-label">Tên file
+                        <span style="color:red">*</span>
+                    </label>
+                    <input type="text" class="form-control" [required]="type === 'file'" name="names" formControlName="names" placeholder="Tên thư mục">
+                    <!-- <div *ngIf="name.errors && (name.dirty || name.touched)"
+                        class="alert-validation alert-danger">
+                        <div [hidden]="!name.errors.required">
+                            Tên thư mục bắt buộc nhập!
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </ng-container>
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-dropbox" (click)="onSave()" >
+        <i class="fa fa-floppy-o" aria-hidden="true"></i> Lưu lại
+    </button>
+    <button type="button" class="btn btn-default" (click)="closeModal($event)" >
+        <i class="fa fa-times" aria-hidden="true"></i> Đóng lại
+    </button>
+</div>

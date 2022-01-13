@@ -1,0 +1,47 @@
+
+<div class="row">
+  <div class="col-sm-12 text-right">
+    <label for="file-upload" *ngIf="showUpload" class="custom-file-upload">
+      <i class="pi pi-upload" aria-hidden="true"></i> Mở file
+    </label>
+    <input id="file-upload" *ngIf="showUpload" type="file" (change)="onFileChange($event)" accept=".xlsx, .xls" multiple="false" />
+    <label class="custom-file-upload ml-1 " *ngIf="!showUpload" (click)="cancel()" style="background-color: red;">
+      <i class="pi pi-times"  aria-hidden="true"></i> Làm mới
+    </label>
+    <label class="custom-file-upload ml-1" *ngIf="!showUpload" (click)="handleImport()">
+      <i class="pi pi-plus" aria-hidden="true"></i> Import
+    </label>
+  
+  </div>
+
+  <div class="col-md-12 title" *ngIf="excelData.length > 0">
+    <div>
+      <div class="row"  (click)="toggleDisplay()">
+        <div class="col-sm-11">
+          <h4 class="text-green">Nội dung file</h4>
+        </div>
+        <div class="col-sm-1 text-right">
+          <i class="fa fa-arrows cursor-pointer mr-1 toggle" aria-hidden="true"></i>
+        </div>
+      </div>
+      <div class="row col-sm-12 mt-1" id="excelcontent" *ngIf="excelData.length > 0">
+        <table class="table table-import" *ngFor="let sheet of excelData; let i = index">
+          <!-- <thead>c
+            <tr >
+              <th *ngFor="let val2 of listHeader">
+                {{val2}}
+              </th>
+            </tr>
+          </thead> -->
+          <tbody >
+            <tr *ngFor="let row of sheet">
+              <td *ngFor="let val of row; let i=index">
+                {{val}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

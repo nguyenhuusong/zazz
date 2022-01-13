@@ -1,0 +1,14 @@
+<head>
+    <title></title>
+
+</head>
+
+<body>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/oidc-client/1.10.0/oidc-client.min.js"></script> -->
+    <script src="./oidc-client.min.js"></script>
+    <script>
+        
+        // window.location.hash = decodeURIComponent(window.location.hash);
+        new Oidc.UserManager().signinSilentCallback().catch((err) => { console.log(err); });
+    </script>
+</body>

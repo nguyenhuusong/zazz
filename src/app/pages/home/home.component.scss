@@ -1,0 +1,271 @@
+.section{
+    border-radius: 4px;
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-top: 20px;
+    .title{
+        font-weight: 500;
+        font-size: 16px;
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+    &.activites{
+        margin-bottom: 15px;
+        padding-top: 15px;
+        padding-bottom: 16px;
+        .title{
+            margin-top: 0px;
+            margin-bottom: 15px;
+        }
+    }
+    &.chart{
+        padding-left: 24px;
+        padding-right: 24px;
+        margin-bottom: 7px;
+        .the-chart{
+            padding-top: 30px;
+        }
+        .head{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            @media screen and (max-width: 767px) {
+                display: block;
+                .title{
+                    margin-bottom: 20px;
+                }
+            }
+        }
+    }
+    .time{
+        display: flex;
+        align-items: flex-end;
+    }
+    &.document{
+        svg{
+            max-width: 100%;
+        }
+        text-align: center;
+        .title{
+            margin-top: 0px;
+            margin-bottom: 30px;
+        }
+        padding-top: 16px;
+        padding-bottom: 16px;
+    }
+    .readmore{
+        display: block;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    .line{
+        margin-top: 35px;
+        margin-bottom: 22px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+:host::ng-deep{
+    .menu-timeline{
+        &.menu-tab{
+            margin-right: 24px;
+        }
+        .p-tabmenu-nav{
+            background: none;
+            li{
+                a{
+                    background: none !important;
+                    border: none !important;
+                    padding: 4px 12px 6px !important;
+                    span{
+                        font-size: 12px;
+                        line-height: 16px;
+                        font-weight: 500;
+                    }
+                }
+                &.p-tabmenu-ink-bar{
+                    top: calc(100% - 1px) !important;
+                    bottom: auto !important;
+                }
+            }
+        }
+        .p-dropdown{
+            border: none;
+            padding-left: 8px;
+            .p-dropdown-label{
+                padding: 5px 0px;
+                font-size: 12px;
+                line-height: 16px;
+            }
+            .p-dropdown-trigger-icon{
+                font-size: 10px;
+            }
+            &.p-focus{
+                box-shadow: none;
+            }
+        }
+    }
+    .p-timeline-event{
+        .p-timeline-event-opposite{
+            display: none;
+        }
+        .p-timeline-event-content{
+            font-size: 12px;
+            line-height: 16px;
+            p{
+                margin: 0px;
+            }
+        }
+    }
+    
+    .timeline-default{
+        .p-timeline-event-separator{
+            .p-timeline-event-marker{
+                width: 10px;
+                height: 10px;
+                background: none;
+            }
+            .p-timeline-event-connector{
+                margin-bottom: 0px;
+                margin-top: 0px;
+                width: 1px;
+            }
+        }
+    }
+}
+.timeline-item{
+    i{
+        display: block;
+        margin-top: 4px;
+    }
+}
+.home{
+    padding: 20px;
+    .grid{
+        margin-left: -8px;
+        margin-right: -8px;
+        .col-3,
+        .col-9{
+            padding-left: 8px;
+            padding-right: 8px;
+            @media screen and (max-width: 767px) {
+                width: 100%;
+            }
+        }
+    }
+    .boxs{
+        display: flex;
+        margin-right: -0.5rem;
+        margin-left: -0.5rem;
+        margin-bottom: 7px;
+        .box{
+            height: 100%;
+            .desc{
+                font-size: 14px;
+            }
+            border-radius: 4px;
+            padding: 20px 44px 24px;
+            display: flex;
+            align-items: flex-start;
+            @media screen and (max-width: 1199px) {
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+            h5{
+                font-size: 14px;
+                margin-top: 0px;
+                margin-bottom: 4px;
+            }
+            .quan{
+                font-weight: 500;
+                font-size: 24px;
+                line-height: 32px;
+                margin-bottom: 4px;
+                display: flex;
+                align-items: flex-start;
+                .number{
+                    margin-right: 25px;
+                    label{
+                        display: block;
+                        font-size: 14px;
+                    }
+                    @media screen and (max-width: 1024px) {
+                        text-align: left;
+                    }
+                }
+                .percen{
+                    font-size: 12px;
+                    padding: 4px;
+                    border-radius: 4px;
+                    line-height: 1;
+                    margin-top: 5px;
+                }
+                @media screen and (max-width: 1024px) {
+                    justify-content: center;
+                }
+            }
+            @media screen and (max-width: 1024px) {
+                display: block;
+                text-align: center;
+            }
+        }
+        .icon{
+            width: 40px;
+            height: 40px;
+            border-radius: 4px;
+            margin-right: 24px;
+            position: relative;
+            &.icon3,
+            &.icon2{
+                svg{
+                    top: 12px;
+                    left: 10px;
+                }
+            }
+            svg{
+                position: absolute;
+                top: 10px;
+                left: 12px;
+            }
+            @media screen and (max-width: 1024px) {
+                margin: 0px auto 10px;
+            }
+        }
+        @media screen and (max-width: 1024px) {
+            display: block;
+            .col-4{
+                width: 100%;
+            }
+        }
+    }
+}
+.home-notice{
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    @media screen and (max-width: 991px) {
+        display: block;
+        text-align: center;
+        .number-day-use{
+            margin-bottom: 10px;
+        }
+    }
+    .number-day-use{
+        label{
+            margin-right: 30px;
+            font-size: 14px ;
+        }
+    }
+    .contact{
+        .btn{
+            &:first-child{
+                margin-right: 15px;
+            }
+        }
+    }
+}
