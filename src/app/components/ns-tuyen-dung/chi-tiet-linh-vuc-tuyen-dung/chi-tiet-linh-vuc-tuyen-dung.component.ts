@@ -6,12 +6,13 @@ import { cloneDeep } from 'lodash';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
+
 @Component({
-  selector: 'app-chi-tiet-tuyen-dung',
-  templateUrl: './chi-tiet-tuyen-dung.component.html',
-  styleUrls: ['./chi-tiet-tuyen-dung.component.scss']
+  selector: 'app-chi-tiet-linh-vuc-tuyen-dung',
+  templateUrl: './chi-tiet-linh-vuc-tuyen-dung.component.html',
+  styleUrls: ['./chi-tiet-linh-vuc-tuyen-dung.component.scss']
 })
-export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
+export class ChiTietLinhVucTuyenDungComponent implements OnInit, OnDestroy {
   items: MenuItem[] = [];
   paramsObject = null;
   detailInfo = null
@@ -40,12 +41,13 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
       { label: 'Trang chủ' },
       { label: 'Nhân sự' },
       { label: 'Tuyển dụng', url: '/nhan-su/tuyen-dung' },
+      { label: 'Chuyên môn tuyển dụng', url: '/nhan-su/tuyen-dung/linh-vuc-tuyen-dung' },
       { label: `${this.titlePage}` },
     ];
     this.handleParams();
   }
   modelEdit = {
-    canId: 0,
+    job_id: 0,
   }
   titlePage = ''
   handleParams() {
@@ -53,14 +55,14 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((params) => {
         this.paramsObject = { ...params.keys, ...params };
-        this.modelEdit.canId = this.paramsObject.params.canId || null
-        this.getCandidateInfo();
+        this.modelEdit.job_id = this.paramsObject.params.job_id || null
+        this.getJobInfo();
       });
   };
 
-  getCandidateInfo() {
+  getJobInfo() {
     const queryParams = queryString.stringify(this.modelEdit);
-    this.apiService.getCandidateInfo(queryParams)
+    this.apiService.getJobInfo(queryParams)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {
         if (results.status === 'success') {
@@ -71,12 +73,12 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
       });
   }
 
-  setCandidateInfo(data) {
+  setJobInfo(data) {
     this.spinner.show();
     const params = {
       ...this.detailInfo, group_fields: data
     }
-    this.apiService.setCandidateInfo(params)
+    this.apiService.setJobInfo(params)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((results: any) => {
         if (results.status === 'success') {
@@ -97,10 +99,10 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
   quaylai(data) {
     if (data) {
       this.listViews = [];
-      this.modelEdit.canId = this.detailInfo.canId || null
-      this.getCandidateInfo()
+      this.modelEdit.job_id = this.detailInfo.job_id || null
+      this.getJobInfo()
     } else {
-      this.router.navigate(['/nhan-su/tuyen-dung']);
+      this.router.navigate(['/nhan-su/tuyen-dung/linh-vuc-tuyen-dung']);
 
     }
   }

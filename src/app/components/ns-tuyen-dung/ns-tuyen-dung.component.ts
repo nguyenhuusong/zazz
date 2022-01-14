@@ -252,7 +252,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     const params = {
       canId: event.rowData.can_id
     }
-    this.router.navigate(['/nhan-su/tuyen-dung/chinh-sua-tuyen-dung'], { queryParams: params });
+    this.router.navigate(['/nhan-su/tuyen-dung/chi-tiet-tuyen-dung'], { queryParams: params });
   }
 
   addTuyenDung() {

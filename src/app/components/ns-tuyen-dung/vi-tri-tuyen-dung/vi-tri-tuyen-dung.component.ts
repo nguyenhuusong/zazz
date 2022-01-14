@@ -210,14 +210,14 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
     const params = {
       vacancyId: event.rowData.vacancy_id
     }
-    this.router.navigate(['/tuyen-dung/chinh-sua-vi-tri-tuyen-dung'], { queryParams: params });
+    this.router.navigate(['/nhan-su/tuyen-dung/vi-tri-tuyen-dung/them-moi-vi-tri-tuyen-dung'], { queryParams: params });
   }
 
-  addCompany() {
+  create() {
     const params = {
       vacancyId: 0
     }
-    this.router.navigate(['/tuyen-dung/them-moi-vi-tri-tuyen-dung'], { queryParams: params });
+    this.router.navigate(['/nhan-su/tuyen-dung/vi-tri-tuyen-dung/chi-tiet-vi-tri-tuyen-dung'], { queryParams: params });
   }
 
   find() {
@@ -233,7 +233,7 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
     this.items = [
       { label: 'Trang chủ' },
       { label: 'Nhân sự' },
-      { label: 'Tuyển dụng' },
+      { label: 'Tuyển dụng', url: '/nhan-su/tuyen-dung' },
       { label: 'Danh sách vị trí tuyển dụng' },
     ];
     this.getJobTitles();

@@ -36,10 +36,11 @@ import { NsHoSoNghiViecComponent } from 'src/app/components/ns-ho-so-nghi-viec/n
 import { ViTriTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/vi-tri-tuyen-dung/vi-tri-tuyen-dung.component';
 import { ThongTinChiTietTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/thong-tin-chi-tiet-tuyen-dung/thong-tin-chi-tiet-tuyen-dung.component';
 import { LinhVucTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/linh-vuc-tuyen-dung/linh-vuc-tuyen-dung.component';
-import { ThongTinLinhVucTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/thong-tin-linh-vuc-tuyen-dung/thong-tin-linh-vuc-tuyen-dung.component';
 import { ChiTietTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/chi-tiet-tuyen-dung/chi-tiet-tuyen-dung.component';
 import { ChiTietViTriTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/chi-tiet-vi-tri-tuyen-dung/chi-tiet-vi-tri-tuyen-dung.component';
-
+import { ChiTietLinhVucTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/chi-tiet-linh-vuc-tuyen-dung/chi-tiet-linh-vuc-tuyen-dung.component';
+import {ImageModule} from 'primeng/image';
+import {OrganizationChartModule} from 'primeng/organizationchart';
 @NgModule({
   imports: [
     MessagesModule,
@@ -61,6 +62,7 @@ import { ChiTietViTriTuyenDungComponent } from 'src/app/components/ns-tuyen-dung
     FileUploadModule,
     MenuModule,
     CardModule,
+    OrganizationChartModule,
     BadgeModule,
     TooltipModule,
     SliderModule,
@@ -68,6 +70,7 @@ import { ChiTietViTriTuyenDungComponent } from 'src/app/components/ns-tuyen-dung
     NhanSuRoutingModule,
     CurrencyFormatPipeModule,
     DialogModule,
+    ImageModule,
     DropdownModule,
     TabViewModule,
     ConfirmDialogModule,
@@ -84,7 +87,7 @@ import { ChiTietViTriTuyenDungComponent } from 'src/app/components/ns-tuyen-dung
     ViTriTuyenDungComponent,
     ThongTinChiTietTuyenDungComponent,
     LinhVucTuyenDungComponent,
-    ThongTinLinhVucTuyenDungComponent,
+    ChiTietLinhVucTuyenDungComponent,
     ChiTietTuyenDungComponent,
     ChiTietViTriTuyenDungComponent
   ],

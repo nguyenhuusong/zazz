@@ -203,12 +203,12 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
 
   xoalinhvuc(event) {
     this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn thực hiện xóa lĩnh vực này !',
+      message: 'Bạn có chắc chắn muốn thực hiện xóa Chuyên môn này !',
       accept: () => {
         const queryParams = queryString.stringify({ job_id: event.rowData.job_id });
         this.apiService.delJobInfo(queryParams).subscribe(results => {
           if (results.status === 'success') {
-            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa lĩnh vực thành công' });
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa Chuyên môn thành công' });
             this.load();
           } else {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
@@ -240,8 +240,8 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
     this.items = [
       { label: 'Trang chủ' },
       { label: 'Nhân sự' },
-      { label: 'Tuyển dụng' },
-      { label: 'Danh sách lĩnh vực tuyển dụng' },
+      { label: 'Tuyển dụng', url: '/nhan-su/tuyen-dung' },
+      { label: 'Danh sách Chuyên môn tuyển dụng' },
     ];
     this.getJobTitles();
     this.getObjectList();

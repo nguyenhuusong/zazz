@@ -28,7 +28,7 @@ export class ApiHrmService {
     }
   }
 
-  
+
   // Worktime
   getWorktimePage(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/worktime/GetWorktimePage?` + queryParams, this.options);
@@ -53,7 +53,7 @@ export class ApiHrmService {
   }
 
   get(url, params): Observable<Blob> {
-    return this.http.get(`${url}?${params}`,  {
+    return this.http.get(`${url}?${params}`, {
       headers: new HttpHeaders({
         Authorization: this.authService.getAuthorizationHeaderValue(),
       }),
@@ -98,12 +98,12 @@ export class ApiHrmService {
   getProductProjs(): Observable<any> {
     return this.http
       .get<any>(`${apiCore}/api/v1/coreagent/GetProductProjs`, this.options)
-  } 
+  }
 
   getAgencyOrganizeList(queryParams): Observable<any> {
     return this.http.get<any>(`${apiCore}/api/v1/coreagent/getAgencyOrganizeList?` + queryParams, this.options);
   }
-  
+
   getManagerList(queryParams): Observable<any> {
     return this.http.get<any>(`${apiCore}/api/v1/coresystem/GetManagerList?` + queryParams, this.options);
   }
@@ -134,7 +134,7 @@ export class ApiHrmService {
   }
 
   getCompanyList(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v2/compay/GetCompanyList?`+ queryParams, this.options)
+    return this.http.get<any>(`${apiHrmServer}/api/v2/compay/GetCompanyList?` + queryParams, this.options)
   }
 
   getUsersByAdmin(queryParams): Observable<any> {
@@ -172,7 +172,7 @@ export class ApiHrmService {
   getAccountPage(queryParams): Observable<any> {
     return this.http.get<any>(`${apiCore}/api/v1/coreaccount/GetAccountPage?` + queryParams, this.options)
   }
-  
+
   getEmpLeaders(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/employee/GetEmpLeaders?` + queryParams, this.options)
   }
@@ -222,12 +222,62 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetJobPage?` + queryParams, this.options)
   }
 
-  
   delJobInfo(queryParams): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v1/recruitment/DelJobInfo?` + queryParams, this.options)
   }
 
+  getVacancyInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetVacancyInfo?` + queryParams, this.options)
+  }
 
+  setVacancyInfo(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/recruitment/SetVacancyInfo`, params, this.options)
+  }
 
+  getJobInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetJobInfo?` + queryParams, this.options)
+  }
+
+  setJobInfo(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/recruitment/SetJobInfo`, params, this.options)
+  }
+
+  getCandidateInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetCandidateInfo?` + queryParams, this.options)
+  }
+
+  setCandidateInfo(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/recruitment/SetCandidateInfo`, params, this.options)
+  }
+
+  
+  getAgencyOrganizeMap(): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/organize/GetOrganizeMap`, this.options);
+  }
+
+  getEmployeePage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/employee/GetEmployeePage?` + queryParams, this.options);
+  }
+
+  deleteEmployee(employeeId): Observable<string> {
+    return this.http
+      .delete<string>(`${apiHrmServer}/api/v2/employee/DeleteEmployee?employeeId=${employeeId}`, this.options);
+  }
+
+  setEmployeeOpenhrm(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/employee/SetEmployeeOpen`, params, this.options)
+  }
+
+  setEmployeeClose(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/employee/SetEmployeeClose`, params, this.options)
+  }
+
+  setEmployeeApprovehrm(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/employee/SetEmployeeApprove`, params, this.options)
+  }
+
+  getEmployeeStatus(): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/employee/GetEmployeeStatus`, this.options);
+  }
 
 }

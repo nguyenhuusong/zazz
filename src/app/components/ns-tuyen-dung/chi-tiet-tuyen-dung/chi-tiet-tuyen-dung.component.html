@@ -1,1 +1,12 @@
-<p>chi-tiet-tuyen-dung works!</p>
+
+<div class="main-grid product-detail">
+    <div class="breadcrumb">
+        <h3>{{titlePage}}</h3>
+        <p-breadcrumb [model]="items"></p-breadcrumb>
+    </div>
+   <div class="content">
+    <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButon"  [dataView]="listViews"
+        (callback)="setCandidateInfo($event)" (callbackcancel)="quaylai($event)"></app-edit-detail>
+   </div>
+   
+</div>

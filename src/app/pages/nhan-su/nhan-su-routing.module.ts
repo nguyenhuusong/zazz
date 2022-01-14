@@ -3,8 +3,11 @@ import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { NsTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/ns-tuyen-dung.component';
 import { ViTriTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/vi-tri-tuyen-dung/vi-tri-tuyen-dung.component';
-import { ThongTinLinhVucTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/thong-tin-linh-vuc-tuyen-dung/thong-tin-linh-vuc-tuyen-dung.component';
 import { ChiTietViTriTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/chi-tiet-vi-tri-tuyen-dung/chi-tiet-vi-tri-tuyen-dung.component';
+import { ChiTietLinhVucTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/chi-tiet-linh-vuc-tuyen-dung/chi-tiet-linh-vuc-tuyen-dung.component';
+import { ChiTietTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/chi-tiet-tuyen-dung/chi-tiet-tuyen-dung.component';
+import { NsHoSoNghiViecComponent } from 'src/app/components/ns-ho-so-nghi-viec/ns-ho-so-nghi-viec.component';
+import { NsHoSoNhanSuComponent } from 'src/app/components/ns-ho-so-nhan-su/ns-ho-so-nhan-su.component';
 
 const routes: Routes = [
   {
@@ -23,7 +26,7 @@ const routes: Routes = [
   },
   {
     path: 'tuyen-dung/them-moi-tuyen-dung',
-    component: NsTuyenDungComponent,
+    component: ChiTietTuyenDungComponent,
     data: {
       title: 'Thêm mới tuyển dụng',
       url: 'them-moi-tuyen-dung',
@@ -31,7 +34,7 @@ const routes: Routes = [
   },
   {
     path: 'tuyen-dung/chi-tiet-tuyen-dung',
-    component: NsTuyenDungComponent,
+    component: ChiTietTuyenDungComponent,
     data: {
       title: 'Chi tiết tuyển dụng tuyển dụng',
       url: 'chi-tiet-tuyen-dung',
@@ -61,28 +64,28 @@ const routes: Routes = [
       url: 'chi-tiet-vi-tri-tuyen-dung',
     },
   },
-//lĩnh vực
+//Chuyên môn
   {
     path: 'tuyen-dung/linh-vuc-tuyen-dung',
     component: ViTriTuyenDungComponent,
     data: {
-      title: 'Danh sách lĩnh vực tuyển dụng',
+      title: 'Danh sách Chuyên môn tuyển dụng',
       url: 'linh-vuc-tuyen-dung',
     },
   },
   {
     path: 'tuyen-dung/linh-vuc-tuyen-dung/them-moi-linh-vuc-tuyen-dung',
-    component: ThongTinLinhVucTuyenDungComponent,
+    component: ChiTietLinhVucTuyenDungComponent,
     data: {
-      title: 'Thêm mới lĩnh vực tuyển dụng',
+      title: 'Thêm mới Chuyên môn tuyển dụng',
       url: 'them-moi-linh-vuc-tuyen-dung',
     },
   },
   {
     path: 'tuyen-dung/linh-vuc-tuyen-dung/chi-tiet-linh-vuc-tuyen-dung',
-    component: ThongTinLinhVucTuyenDungComponent,
+    component: ChiTietLinhVucTuyenDungComponent,
     data: {
-      title: 'Chi tiết lĩnh vực tuyển dụng',
+      title: 'Chi tiết Chuyên môn tuyển dụng',
       url: 'chi-tiet-linh-vuc-tuyen-dung',
     },
   },
@@ -90,7 +93,7 @@ const routes: Routes = [
   //hồ sơ nhân sự
   {
     path: 'ho-so-nhan-su',
-    component: NsTuyenDungComponent,
+    component: NsHoSoNhanSuComponent,
     data: {
       title: 'Danh sách hồ sơ nhân sự',
       url: 'ho-so-nhan-su',
@@ -114,3 +117,7 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class NhanSuRoutingModule { }
+
+
+
+
