@@ -103,7 +103,7 @@ const routes: Routes = [
    //hồ sơ nghỉ việc
    {
     path: 'ho-so-nghi-viec',
-    component: NsTuyenDungComponent,
+    component: NsHoSoNghiViecComponent,
     data: {
       title: 'Danh sách hồ sơ nghỉ việc',
       url: 'ho-so-nghi-viec',

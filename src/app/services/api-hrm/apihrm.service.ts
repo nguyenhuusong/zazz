@@ -280,4 +280,25 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v2/employee/GetEmployeeStatus`, this.options);
   }
 
+  getTerminatePage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/terminate/GetTerminatePage?` + queryParams, this.options);
+  }
+
+  setTerminateStatus(params): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v2/terminate/SetTerminateStatus`, params, this.options)
+  }
+
+  delTerminateInfo(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/terminate/DelTerminateInfo?` + queryParams, this.options)
+  }
+
+  getObjectGroup(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/category/GetObjectGroup?` + queryParams, this.options);
+  }
+
+  getLeavePage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/leave/GetLeavePage?` + queryParams, this.options)
+  }
+  
+
 }
