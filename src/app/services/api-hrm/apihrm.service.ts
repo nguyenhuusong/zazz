@@ -39,8 +39,7 @@ export class ApiHrmService {
       return this.http.get<any>(`${apiCore}/api/v1/customer/GetCustObjectList?` + queryParams, this.options);
     }
   }
-
-
+ 
   // Worktime
   getWorktimePage(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/worktime/GetWorktimePage?` + queryParams, this.options);

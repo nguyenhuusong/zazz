@@ -1,0 +1,41 @@
+
+<div class="main-grid product-detail">
+    <div class="breadcrumb">
+        <h3>{{titlePage}}</h3>
+        <p-breadcrumb [model]="items"></p-breadcrumb>
+    </div>
+   <div class="content">
+    <p-tabView>
+        <p-tabPanel header="Thông tin chung">
+            <div class="" *ngIf="detailInfo">
+                <app-edit-detail *ngIf="listViews && listViews.length> 0 && manhinh === 'Edit'"
+                    [thongtinnhanvienNew]="true" [manhinh]="manhinh" [dataView]="listViews"
+                    (callback)="setMeetRoomInfo($event)" (callbackcancel)="cancelUpdate()">
+                </app-edit-detail>
+            </div>
+            <div class="members mt-2">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h4>Thành viên cuộc họp</h4>
+                    </div>
+                    <div class="col-sm-6 text-right">
+                        <p-button icon="pi pi-plus" (click)="handleAddMember()" styleClass="p-button-sm mr5" label="Thêm mới"></p-button>
+                    </div> 
+                    <div class="col-sm-12">
+                        <app-list-grid-angular [domLayout]="'autoHeight'" [title]="'Chứng chỉ'"
+                            [listsData]="listsData" (FnClick)="handleRemoveMember($event)"
+                            [columnDefs]="columnDefs">
+                        </app-list-grid-angular>
+                    </div>
+                </div>
+            </div>
+        </p-tabPanel>
+    </p-tabView>
+        
+   </div>
+   
+</div>
+
+<p-dialog header="Thành viên cuộc họp" [(visible)]="showChooseMember" [style]="{width: '80vw'}">
+    <app-meeting-schedule-member *ngIf = "showChooseMember" (save) = "handleChooseMember($event)"></app-meeting-schedule-member>
+</p-dialog>

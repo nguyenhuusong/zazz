@@ -7,11 +7,11 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 @Component({
-  selector: 'app-chi-tiet-nghi-phep',
-  templateUrl: './chi-tiet-nghi-phep.component.html',
-  styleUrls: ['./chi-tiet-nghi-phep.component.scss']
+  selector: 'app-chi-tiet-phong-hop',
+  templateUrl: './chi-tiet-phong-hop.component.html',
+  styleUrls: ['./chi-tiet-phong-hop.component.scss']
 })
-export class ChiTietNghiPhepComponent implements OnInit, OnDestroy {
+export class ChiTietPhongHopComponent implements OnInit, OnDestroy {
   items: MenuItem[] = [];
   paramsObject = null;
   detailInfo = null
@@ -39,27 +39,28 @@ export class ChiTietNghiPhepComponent implements OnInit, OnDestroy {
     this.titlePage = this.activatedRoute.data['_value'].title;
     this.items = [
       { label: 'Trang chủ' },
-      { label: 'Chính sách' },
-      { label: 'Danh sách nghỉ phép', url: '/chinh-sach/nghi-phep' },
+      { label: 'Cài đặt' },
+      { label: 'Danh sách lịch họp', url: '/cai-dat/cai-dat-lich-hop' },
+      { label: 'Danh sách phòng họp', url: '/cai-dat/cai-dat-lich-hop/danh-sach-phong-hop' },
       { label: `${this.titlePage}` },
     ];
     this.handleParams();
   }
-  id = null
+  room_id = null
   titlePage = ''
   handleParams() {
     this.activatedRoute.queryParamMap
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((params) => {
         this.paramsObject = { ...params.keys, ...params };
-        this.id = this.paramsObject.params.id;
-        this.getLeaveInfo();
+        this.room_id = this.paramsObject.params.room_id;
+        this.getMeetRoomInfo();
       });
   };
 
-  getLeaveInfo() {
-    const queryParams = queryString.stringify({ id: this.id });
-    this.apiService.getLeaveInfo(queryParams)
+  getMeetRoomInfo() {
+    const queryParams = queryString.stringify({ room_id: this.room_id });
+    this.apiService.getMeetRoomInfo(queryParams)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {
         if (results.status === 'success') {
@@ -69,42 +70,36 @@ export class ChiTietNghiPhepComponent implements OnInit, OnDestroy {
         }
       });
   }
-  setCompanyInfo(data) {
-
+  
+  setMeetRoomInfo(data) {
+    this.spinner.show();
+    const params = {
+      ...this.detailInfo, group_fields: data
+    }
+    this.apiService.setMeetRoomInfo(params)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((results: any) => {
+        if (results.status === 'success') {
+          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
+          this.spinner.hide();
+          this.router.navigate(['/cai-dat/cai-dat-lich-hop/danh-sach-phong-hop']);
+        } else {
+          this.messageService.add({
+            severity: 'error', summary: 'Thông báo',
+            detail: results.message
+          });
+          this.spinner.hide();
+        }
+      }), error => {
+        this.spinner.hide();
+      };
   }
-  // setCandidateInfo(data) {
-  //   this.spinner.show();
-  //   const params = {
-  //     ...this.detailInfo, group_fields: data
-  //   }
-  //   this.apiService.setCandidateInfo(params)
-  //     .pipe(takeUntil(this.unsubscribe$))
-  //     .subscribe((results: any) => {
-  //       if (results.status === 'success') {
-  //         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
-  //         this.spinner.hide();
-  //       } else {
-  //         this.messageService.add({
-  //           severity: 'error', summary: 'Thông báo',
-  //           detail: results.message
-  //         });
-  //         this.spinner.hide();
-  //       }
-  //     }), error => {
-  //       this.spinner.hide();
-  //     };
-  // }
 
   quaylai(data) {
-    if (data) {
-      this.listViews = [];
-      this.getLeaveInfo()
-    } else {
-      this.router.navigate(['/chinh-sach/nghi-phep']);
-
-    }
+    this.router.navigate(['/cai-dat/cai-dat-lich-hop/danh-sach-phong-hop']);
   }
 
 }
+
 
 

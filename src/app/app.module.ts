@@ -67,8 +67,6 @@ const APP_CONTAINERS = [DefaultLayoutComponent];
         CustomTooltipComponent,
         TooltipSuggestionComponent,
         DropdownRendererComponent,
-  
-        
     ],
     imports: [
         BrowserAnimationsModule,

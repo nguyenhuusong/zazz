@@ -31,6 +31,14 @@ import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
 import { CaiDatRoutingModule } from './cai-dat-routing.module';
 import { PageNotifyModule } from 'src/app/components/page-notify/page-notify.module';
+import { CaiDatLichHopComponent } from 'src/app/components/cai-dat-lich-hop/cai-dat-lich-hop.component';
+import { CaiDatToChucComponent } from 'src/app/components/cai-dat-to-chuc/cai-dat-to-chuc.component';
+import { CaiDatCongTyComponent } from 'src/app/components/cai-dat-cong-ty/cai-dat-cong-ty.component';
+import { CaiDatNgayNghiLeComponent } from 'src/app/components/cai-dat-ngay-nghi-le/cai-dat-ngay-nghi-le.component';
+import { ChiTietLichHopComponent } from 'src/app/components/cai-dat-lich-hop/chi-tiet-lich-hop/chi-tiet-lich-hop.component';
+import { MeetingScheduleMemberComponent } from 'src/app/components/cai-dat-lich-hop/meeting-schedule-member/meeting-schedule-member.component';
+import { DanhSachPhongHopComponent } from 'src/app/components/cai-dat-lich-hop/danh-sach-phong-hop/danh-sach-phong-hop.component';
+import { ChiTietPhongHopComponent } from 'src/app/components/cai-dat-lich-hop/danh-sach-phong-hop/chi-tiet-phong-hop/chi-tiet-phong-hop.component';
 
 @NgModule({
   imports: [
@@ -44,7 +52,6 @@ import { PageNotifyModule } from 'src/app/components/page-notify/page-notify.mod
     BreadcrumbModule,
     MultiSelectModule,
     ListGridAngularModule,
-    PaginatorModule,
     ButtonModule,
     SplitButtonModule,
     CalendarModule,
@@ -63,6 +70,7 @@ import { PageNotifyModule } from 'src/app/components/page-notify/page-notify.mod
     DropdownModule,
     PageNotifyModule,
     TabViewModule,
+    PaginatorModule,
     ConfirmDialogModule,
     AgGridModule.withComponents([
       ButtonRendererComponent,
@@ -71,7 +79,14 @@ import { PageNotifyModule } from 'src/app/components/page-notify/page-notify.mod
   ],
 
   declarations: [
-   
+    CaiDatLichHopComponent,
+    CaiDatToChucComponent,
+    CaiDatCongTyComponent,
+    CaiDatNgayNghiLeComponent,
+    ChiTietLichHopComponent,
+    MeetingScheduleMemberComponent,
+    DanhSachPhongHopComponent,
+    ChiTietPhongHopComponent,
   ],
   providers: []
 })

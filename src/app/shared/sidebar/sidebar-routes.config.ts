@@ -701,7 +701,7 @@ export const ROUTES: any[] =[
         },
         {
           "menuId": 633,
-          "path": "/meeting-schedule",
+          "path": "/cai-dat/cai-dat-lich-hop",
           "title": "Quản lí lịch họp",
           "icon": "fa fa-calendar",
           "classs": "nav-item",
@@ -717,7 +717,7 @@ export const ROUTES: any[] =[
         },
         {
           "menuId": 169,
-          "path": "/department",
+          "path": "/cai-dat/cai-dat-to-chuc",
           "title": "Quản lý tổ chức",
           "icon": "fa fa-user-circle-o",
           "classs": "nav-item",
@@ -733,7 +733,7 @@ export const ROUTES: any[] =[
         },
         {
           "menuId": 617,
-          "path": "/company",
+          "path": "/cai-dat/cai-dat-cong-ty",
           "title": "Công ty",
           "icon": "sun-icon-browser",
           "classs": "nav-item",
@@ -749,7 +749,7 @@ export const ROUTES: any[] =[
         },
         {
           "menuId": 628,
-          "path": "/ngay-nghi-le",
+          "path": "/cai-dat/cai-dat-ngay-nghi-le",
           "title": "Ngày nghỉ lễ",
           "icon": "",
           "classs": "nav-item",
