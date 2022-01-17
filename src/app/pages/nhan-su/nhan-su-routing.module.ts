@@ -9,6 +9,7 @@ import { ChiTietTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/chi-
 import { NsHoSoNghiViecComponent } from 'src/app/components/ns-ho-so-nghi-viec/ns-ho-so-nghi-viec.component';
 import { NsHoSoNhanSuComponent } from 'src/app/components/ns-ho-so-nhan-su/ns-ho-so-nhan-su.component';
 import { ChiTietHoSoNhanSuComponent } from 'src/app/components/ns-ho-so-nhan-su/chi-tiet-ho-so-nhan-su/chi-tiet-ho-so-nhan-su.component';
+import { ChiTietHoSoNghiViecComponent } from 'src/app/components/ns-ho-so-nghi-viec/chi-tiet-ho-so-nghi-viec/chi-tiet-ho-so-nghi-viec.component';
 
 const routes: Routes = [
   {
@@ -116,6 +117,15 @@ const routes: Routes = [
     data: {
       title: 'Danh sách hồ sơ nghỉ việc',
       url: 'ho-so-nghi-viec',
+    },
+  },
+
+  {
+    path: 'ho-so-nghi-viec/chi-tiet-ho-so-nghi-viec',
+    component: ChiTietHoSoNghiViecComponent,
+    data: {
+      title: 'Chi tiết hồ sơ nghỉ việc',
+      url: 'ho-so-nghi-viec/chi-tiet-ho-so-nghi-viec',
     },
   },
 

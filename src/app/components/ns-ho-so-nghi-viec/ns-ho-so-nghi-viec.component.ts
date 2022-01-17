@@ -26,7 +26,7 @@ export class NsHoSoNghiViecComponent implements OnInit {
   cols: any[];
   colsDetail: any[];
   items = [];
-  columnDefs;
+  columnDefs = [];
   detailRowHeight;
   defaultColDef;
   frameworkComponents;
@@ -224,7 +224,7 @@ export class NsHoSoNghiViecComponent implements OnInit {
     const params = {
       id: event.rowData.id
     }
-    this.router.navigate(['/ho-so-nhan-su/danh-sach-nhan-vien-nghi-viec/chi-tiet-ho-so-nghi-viec'], { queryParams: params });
+    this.router.navigate(['/nhan-su/ho-so-nghi-viec/chi-tiet-ho-so-nghi-viec'], { queryParams: params });
   }
   displayChangeStatus = false;
   modelPheDuyet = {

@@ -49,7 +49,7 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
   cols: any[];
   colsDetail: any[];
   items = [];
-  columnDefs;
+  columnDefs = [];
   detailRowHeight;
   defaultColDef;
   frameworkComponents;

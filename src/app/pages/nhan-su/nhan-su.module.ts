@@ -55,6 +55,7 @@ import { DetectCardComponent } from 'src/app/components/ns-ho-so-nhan-su/detect-
 import { UploadFileModule } from 'src/app/common/upload-file/upload-file.module';
 import { EmpAttachFileModule } from 'src/app/components/ns-ho-so-nhan-su/emp-attach-file/emp-attach-file.module';
 import { CreateContractInfoComponent } from 'src/app/components/ns-ho-so-nhan-su/create-contract-info/create-contract-info.component';
+import { ChiTietHoSoNghiViecComponent } from 'src/app/components/ns-ho-so-nghi-viec/chi-tiet-ho-so-nghi-viec/chi-tiet-ho-so-nghi-viec.component';
 @NgModule({
   imports: [
     MessagesModule,
@@ -117,7 +118,8 @@ import { CreateContractInfoComponent } from 'src/app/components/ns-ho-so-nhan-su
     AddAddressContactComponent,
     CardInfoComponent,
     DetectCardComponent,
-    CreateContractInfoComponent
+    CreateContractInfoComponent,
+    ChiTietHoSoNghiViecComponent
   ],
   providers: [ ]
 })

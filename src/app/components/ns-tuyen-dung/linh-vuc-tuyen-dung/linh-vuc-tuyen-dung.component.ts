@@ -51,7 +51,7 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
   cols: any[];
   colsDetail: any[];
   items = [];
-  columnDefs;
+  columnDefs = [];
   detailRowHeight;
   defaultColDef;
   frameworkComponents;

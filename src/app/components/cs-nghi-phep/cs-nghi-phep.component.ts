@@ -61,7 +61,7 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
   cols: any[];
   colsDetail: any[];
   items = [];
-  columnDefs;
+  columnDefs = [];
   detailRowHeight;
   defaultColDef;
   frameworkComponents;
