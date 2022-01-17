@@ -37,6 +37,19 @@
  
 </div>
 <div class="col-md-12 mt-1">
+  <app-list-grid-angular *ngIf="columnDefs.length > 0" [listsData]="items?.dataList?.data" [domLayout]="'autoHeight'"
+    [columnDefs]="columnDefs" [rowSelection]="'multiple'" [idGrid]="'myGridList'" (callback)="selectRow($event)"></app-list-grid-angular>
+<div class="paginator">
+    <span>Từ {{ countRecord.currentRecordStart }} đến
+        {{ countRecord.currentRecordEnd }}
+        trên tổng số
+        {{ countRecord.totalRecord }} kết quả</span>
+    <p-paginator [rows]="filter.pageSize" [totalRecords]="countRecord.totalRecord" [first]="first" 
+        (onPageChange)="paginate($event)" [rowsPerPageOptions]="[15,30,45,100,200,{ showAll: 'ALL' }]">
+    </p-paginator>
+</div>
+
+
   <!-- <ag-grid-angular [modules]="modules" [suppressCsvExport]="true"
  [suppressExcelExport]="true"  enableCellTextSelection=true  suppressCopyRowsToClipboard=true #agGrid style="width: 100%; height: 600px" id="myGrid" class="ag-theme-balham"
       [rowData]="items?.dataList?.data" [columnDefs]="columnDefs" floatingFilter

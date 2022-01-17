@@ -58,7 +58,7 @@ export class GridPushListComponent implements OnInit, OnChanges {
     total: 0
   }
 
-  columnDefs;
+  columnDefs = [];
   detailRowHeight;
   defaultColDef;
   frameworkComponents;
@@ -96,81 +96,41 @@ export class GridPushListComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    // if (changes.notify && this.notify && this.notify.notiId) {
-    //   this.load();
-    // }
-    console.log(":sadasdas", changes)
-    console.log(":sadasdas", this.indexTab)
     if (this.notify.notiId) {
       this.filter.notiId = this.notify.notiId
       this.load();
     }
   }
 
-  cols;
-  colsDetail;
-  loading = false
+  listsData = [];
   load() {
+    this.columnDefs = []
     this.spinner.show();
     const queryParams = queryString.stringify(this.filter);
     this.apiService.getNotifyToPushs(queryParams).subscribe(
       (results: any) => {
-        this.items = results.data;
-        this.items.dataList.data = [...this.items.dataList.data]
+        this.listsData = results.data.dataList.data;
         if (this.filter.offSet === 0) {
           this.cols = results.data.gridflexs;
           this.colsDetail = results.data.gridflexdetails ? results.data.gridflexdetails : [];
-          this.cols.forEach(column => {
-            if (column.columnField === 'actions') {
-              this.objectAction = column;
-            }
-          });
         }
-        this.initTableGrid();
-        this.spinner.hide();
-        this.pagingComponent.total = this.items.dataList.recordsTotal;
-        this.countRecord.totalRecord = this.items.dataList.recordsTotal;
+        this.initGrid();
+        this.countRecord.totalRecord = results.data.dataList.recordsTotal;
+        this.countRecord.totalRecord = results.data.dataList.recordsTotal;
         this.countRecord.currentRecordStart = this.filter.offSet + 1;
-        if ((this.items.dataList.recordsTotal - this.filter.offSet) > this.filter.pageSize) {
+        if ((results.data.dataList.recordsTotal - this.filter.offSet) > this.filter.pageSize) {
           this.countRecord.currentRecordEnd = this.filter.offSet + Number(this.filter.pageSize);
         } else {
-          this.countRecord.currentRecordEnd = this.items.dataList.recordsTotal;
+          this.countRecord.currentRecordEnd = results.data.dataList.recordsTotal;
         }
+        this.spinner.hide();
       },
-      error => { });
+      error => {
+        this.spinner.hide();
+      });
   }
 
-  initTableGrid() {
-    this.columnDefs = [
-      ...this.agGridFn(this.cols),
-      {
-        headerName: 'Chức năng',
-        filter: '',
-        width: 100,
-        pinned: 'right',
-        cellRenderer: 'buttonRenderer',
-        cellClass: ['text-center', 'text-right', 'border-right', 'd-flex', 'align-items-center', 'justify-content-center'],
-        cellRendererParams: params => this.showButtons(params),
-        checkboxSelection: true,
-        headerCheckboxSelection: true,
-        headerCheckboxSelectionFilteredOnly: true,
-        field: 'checkbox'
-      },
-    ];
-    this.rowSelection = 'multiple';
-    this.groupDefaultExpanded = 0;
-    this.detailRowHeight = 300;
-  }
-
-  onGridReady(params) {
-    this.gridApi = params.api;
-    this.gridColumnApi = params.columnApi;
-    if (this.items && this.items.dataList && this.items.dataList.data.length > 0) {
-      this.gridApi.setRowData(this.items.dataList.data);
-    }
-  }
-
-  showButtons(params) {
+  showButtons(event: any) {
     return {
       buttons: [
         {
@@ -182,6 +142,30 @@ export class GridPushListComponent implements OnInit, OnChanges {
         }
       ]
     };
+  }
+
+  initGrid() {
+    this.columnDefs = [
+      ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
+      {
+        headerName: 'Thao tác',
+        filter: '',
+        width: 100,
+        pinned: 'right',
+        cellRenderer: 'buttonAgGridComponent',
+        cellClass: ['border-right', 'no-auto'],
+        cellRendererParams: (params: any) => this.showButtons(params),
+        checkboxSelection: true,
+        field: 'checkbox'
+      }]
+  }
+
+  cols;
+  colsDetail;
+
+  onGridReady(params) {
+    this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
   }
 
   closeModal() {
@@ -227,15 +211,6 @@ export class GridPushListComponent implements OnInit, OnChanges {
     this.gridApi.setRowData(this.items.dataList.data);
   }
 
-  getRowSelection() {
-    const selectedRowData = this.gridApi.getSelectedRows();
-    return selectedRowData;
-  }
-
-  getAllItem() {
-    return this.items.dataList.data;
-  }
-
   displaySend = false
   storeNotify() {
     this.saveStore.emit();
@@ -245,16 +220,21 @@ export class GridPushListComponent implements OnInit, OnChanges {
     this.send.emit();
   }
 
+  appUsers = [];
+  selectRow(event) {
+    this.appUsers = event;
+  }
+
   saveSendNotify() {
-    if(this.gridApi.getSelectedRows().length > 0) {
-      this.saveSend.emit(this.gridApi.getSelectedRows());
-    }else {
+    if (this.appUsers.length > 0) {
+      this.saveSend.emit(this.appUsers);
+    } else {
       this.saveSend.emit(this.items.dataList.data);
     }
   }
 
   deleteMultipleApartment() {
-    this.deleteRooms.emit(this.gridApi.getSelectedRows())
+    this.deleteRooms.emit(this.appUsers)
   }
 
 }

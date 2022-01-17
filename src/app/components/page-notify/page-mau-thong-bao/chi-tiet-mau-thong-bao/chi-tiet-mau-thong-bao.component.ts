@@ -41,26 +41,24 @@ export class ChiTietMauThongBaoComponent implements OnInit, OnChanges {
   }
   @Input() dataRouter = null
   @Output() back = new EventEmitter<any>();
-
+  items = [];
 
   ngOnChanges() {
-    // this.optionsButtonsView = [{ label: 'Sửa', value: 'Edit' }, { label: 'Đóng', value: 'Back' }];
-    // this.titlePage = null;
-    // this.positionId = this.dataRouter.positionId;
-    // this.manhinh = 'Edit';
-    // this.getAccountInfo();
+
   }
 
   ngOnInit(): void {
     this.titlePage =  this.activatedRoute.data['_value'].title;
+    this.items = [
+      { label: 'Trang chủ' },
+      { label: 'Cài đặt' },
+      { label: 'Danh sách thông báo', url: '/cai-dat/thong-bao' },
+      { label: 'Danh sách mẫu thông báo', url: '/cai-dat/thong-bao/mau-thong-bao' },
+      { label: this.titlePage },
+    ];
     this.url = this.activatedRoute.data['_value'].url;
-    if(this.url === 'them-moi-mau-thong-bao') {
-      this.manhinh = 'Edit';
-      this.handleParams();
-    }else {
-      this.manhinh = 'View';
-      this.handleParams()
-    }
+    this.manhinh = 'Edit';
+    this.handleParams();
   }
   tempId = null;
   handleParams() {
@@ -141,15 +139,14 @@ export class ChiTietMauThongBaoComponent implements OnInit, OnChanges {
   goBack() {
    if(this.titlePage) {
 
-    this.router.navigate(['/thong-bao/mau-thong-bao']);
+    this.router.navigate(['/cai-dat/thong-bao/mau-thong-bao']);
    }else {
     this.back.emit();
    }
   }
 
   cancelUpdate() {
-    this.manhinh = 'View';
-    this.getNotifyTemp();
+    this.goBack();
   }
 
 

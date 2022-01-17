@@ -2,7 +2,6 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
-declare var $: any;
 import * as queryString from 'querystring';
 import { cloneDeep } from 'lodash';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -30,7 +29,7 @@ export class PageLoaiThongBaoComponent implements OnInit, OnDestroy, AfterViewCh
     private confirmationService: ConfirmationService,
     private spinner: NgxSpinnerService,
     private router: Router
-   ) {
+  ) {
     this.defaultColDef = {
       resizable: true,
     };
@@ -58,7 +57,7 @@ export class PageLoaiThongBaoComponent implements OnInit, OnDestroy, AfterViewCh
   objectActionDetail
   dataNotifyRef
   destroy$: Subject<boolean> = new Subject<boolean>();
-  columnDefs;
+  columnDefs = [];
   detailRowHeight;
   defaultColDef;
   frameworkComponents;
@@ -80,7 +79,7 @@ export class PageLoaiThongBaoComponent implements OnInit, OnDestroy, AfterViewCh
     total: 0
   }
   first = 0;
-  
+  listsData = [];
   handleReset() {
     this.query = {
       org_cd: '',
@@ -95,13 +94,13 @@ export class PageLoaiThongBaoComponent implements OnInit, OnDestroy, AfterViewCh
     this.load();
   }
 
-
-  ngAfterViewChecked() {
-    this.changeDetector.detectChanges();
-  }
-
   ngOnInit() {
-    this.clientWidth = $('#myGrid')[0].clientWidth;
+    this.items = [
+      { label: 'Trang chủ' },
+      { label: 'Cài đặt' },
+      { label: 'Danh sách thông báo', url: '/cai-dat/thong-bao' },
+      { label: 'Danh sách loại thông báo' },
+    ];
     this.model.filter = '';
     this.load();
   }
@@ -113,90 +112,90 @@ export class PageLoaiThongBaoComponent implements OnInit, OnDestroy, AfterViewCh
     this.query.pageSize = event.rows;
     this.load();
   }
- 
+
   load() {
-    this.query.gridWidth = this.clientWidth
+    this.columnDefs = []
     this.spinner.show();
-    let params = { ...this.query };
-    const queryParams = queryString.stringify(params);
+    const queryParams = queryString.stringify(this.query);
     this.apiService.getNotifyRefPage(queryParams).subscribe(
       (results: any) => {
-        this.dataNotifyRef = results.data;
+        this.listsData = results.data.dataList.data;
         if (this.query.offSet === 0) {
           this.cols = results.data.gridflexs;
           this.colsDetail = results.data.gridflexdetails ? results.data.gridflexdetails : [];
-          this.cols.forEach(column => {
-            if (column.columnField === 'actions') {
-              this.objectAction = column;
-            }
-          });
-          this.colsDetail.forEach(column => {
-            if (column.columnField === 'actions') {
-              this.objectActionDetail = column;
-            }
-          });
         }
-        this.initTableGrid();
-        this.spinner.hide();
-        this.pagingComponent.total = this.dataNotifyRef.dataList.recordsTotal;
-        this.countRecord.totalRecord = this.dataNotifyRef.dataList.recordsTotal;
+        this.initGrid();
+        this.countRecord.totalRecord = results.data.dataList.recordsTotal;
+        this.countRecord.totalRecord = results.data.dataList.recordsTotal;
         this.countRecord.currentRecordStart = this.query.offSet + 1;
-        if ((this.dataNotifyRef.dataList.recordsTotal - this.query.offSet) > this.query.pageSize) {
+        if ((results.data.dataList.recordsTotal - this.query.offSet) > this.query.pageSize) {
           this.countRecord.currentRecordEnd = this.query.offSet + Number(this.query.pageSize);
         } else {
-          this.countRecord.currentRecordEnd = this.dataNotifyRef.dataList.recordsTotal;
+          this.countRecord.currentRecordEnd = results.data.dataList.recordsTotal;
         }
+        this.spinner.hide();
       },
-      error => { });
+      error => {
+        this.spinner.hide();
+      });
   }
 
-  initTableGrid() {
-    this.columnDefs = [
-      ...this.agGridFn(this.cols),
-      {
-        headerName: 'Chức năng',
-        field: 'button',
-        filter: '',
-        width: 120,
-        pinned: 'right',
-        cellRenderer: 'buttonRendererMutiComponent',
-        cellClass: ['text-center', 'text-right', 'border-right', 'd-flex', 'align-items-center', 'justify-content-center'],
-        cellRendererParams: params => this.showButtons(params)
-      },
-    ];
-    this.groupDefaultExpanded = 0;
-    this.detailRowHeight = 300;
-  }
-
-  showButtons(params) {
+  showButtons(event: any) {
     return {
       buttons: [
-        // {
-        //   onClick: this.handleNotificationPush.bind(this),
-        //   label: 'Thông báo',
-        //   icon: 'fa fa-bullhorn',
-        //   class: 'btn-dropbox text-white',
-        //   show: true
-        // },
         {
           onClick: this.handleEdit.bind(this),
           label: 'Sửa',
           icon: 'fa fa-edit',
           class: 'btn-dropbox text-white',
-          // show: this.checkAction('/page-notify', 'edit')
         },
         {
           onClick: this.handleDelete.bind(this),
           label: 'Xóa',
           icon: 'fa fa-trash',
           class: 'btn-google text-white',
-          // show: this.checkAction('/page-notify', 'delete')
         }
       ]
     };
   }
 
-  
+  loadjs = 0;
+  heightGrid = 0
+  ngAfterViewChecked(): void {
+    const a: any = document.querySelector(".header");
+    const b: any = document.querySelector(".sidebarBody");
+    const c: any = document.querySelector(".breadcrumb");
+    const d: any = document.querySelector(".filterInput");
+    const e: any = document.querySelector(".paginator");
+    this.loadjs ++ 
+    if (this.loadjs === 5) {
+      if(b && b.clientHeight) {
+        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + d.clientHeight + e.clientHeight + 45;
+        this.heightGrid = window.innerHeight - totalHeight
+        this.changeDetector.detectChanges();
+      }else {
+        this.loadjs = 0;
+      }
+    }
+  }
+
+
+  initGrid() {
+    this.columnDefs = [
+      ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
+      {
+        headerName: 'Thao tác',
+        filter: '',
+        width: 100,
+        pinned: 'right',
+        cellRenderer: 'buttonAgGridComponent',
+        cellClass: ['border-right', 'no-auto'],
+        cellRendererParams: (params: any) => this.showButtons(params),
+        checkboxSelection: false,
+        field: 'checkbox'
+      }]
+  }
+
   handleDelete(e) {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn thực hiện hành động này?',
@@ -225,16 +224,16 @@ export class PageLoaiThongBaoComponent implements OnInit, OnDestroy, AfterViewCh
     const params = {
       source_ref: event.rowData.source_ref,
     }
-    this.router.navigate(['/thong-bao/loai-thong-bao/chi-tiet-loai-thong-bao'], { queryParams: params });
+    this.router.navigate(['/cai-dat/thong-bao/loai-thong-bao/chi-tiet-loai-thong-bao'], { queryParams: params });
   }
 
   addNotifyRef() {
     const params = {
       source_ref: 0,
     }
-    this.router.navigate(['/thong-bao/loai-thong-bao/them-moi-loai-thong-bao'], { queryParams: params });
+    this.router.navigate(['/cai-dat/thong-bao/loai-thong-bao/them-moi-loai-thong-bao'], { queryParams: params });
   }
- 
+
   ngOnDestroy() {
     this.destroy$.next(true);
     this.destroy$.unsubscribe();

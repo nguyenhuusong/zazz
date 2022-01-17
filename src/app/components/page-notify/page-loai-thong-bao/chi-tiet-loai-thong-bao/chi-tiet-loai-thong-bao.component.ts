@@ -35,26 +35,23 @@ export class ChiTietLoaiThongBaoComponent implements OnInit, OnChanges {
 
   @Input() dataRouter = null
   @Output() back = new EventEmitter<any>();
-
+  items = []
 
   ngOnChanges() {
-    // this.optionsButtonsView = [{ label: 'Sửa', value: 'Edit' }, { label: 'Đóng', value: 'Back' }];
-    // this.titlePage = null;
-    // this.positionId = this.dataRouter.positionId;
-    // this.manhinh = 'Edit';
-    // this.getAccountInfo();
   }
 
   ngOnInit(): void {
     this.titlePage =  this.activatedRoute.data['_value'].title;
+    this.items = [
+      { label: 'Trang chủ' },
+      { label: 'Cài đặt' },
+      { label: 'Danh sách thông báo', url: '/cai-dat/thong-bao' },
+      { label: 'Danh sách loại thông báo', url: '/cai-dat/thong-bao/loai-thong-bao' },
+      { label: this.titlePage },
+    ];
     this.url = this.activatedRoute.data['_value'].url;
-    if(this.url === 'them-moi-loai-thong-bao') {
-      this.manhinh = 'Edit';
-      this.handleParams();
-    }else {
-      this.manhinh = 'View';
-      this.handleParams()
-    }
+    this.manhinh = 'Edit';
+    this.handleParams();
 
   }
 
@@ -89,12 +86,7 @@ export class ChiTietLoaiThongBaoComponent implements OnInit, OnChanges {
     this.apiService.setNotifyRef(params).subscribe((results: any) => {
       if (results.status === 'success') {
         this.displayUserInfo = false;
-        if(this.url === 'them-moi-loai-thong-bao') {
-          this.goBack()
-        }else {
-          this.manhinh = 'View';
-          this.getNotifyRefInfo();
-        }
+        this.goBack()
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Cập nhật thông tin thành công' });
       } else {
         this.messageService.add({
@@ -115,16 +107,14 @@ export class ChiTietLoaiThongBaoComponent implements OnInit, OnChanges {
 
   goBack() {
    if(this.titlePage) {
-
-    this.router.navigate(['/thong-bao/loai-thong-bao']);
+    this.router.navigate(['/cai-dat/thong-bao/loai-thong-bao']);
    }else {
     this.back.emit();
    }
   }
 
   cancelUpdate() {
-    this.manhinh = 'View';
-    this.getNotifyRefInfo();
+    this.goBack();
   }
 
 

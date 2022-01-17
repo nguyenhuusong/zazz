@@ -9,6 +9,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { ChiTietMauThongBaoComponent } from './chi-tiet-mau-thong-bao.component';
 import { EditDetailModule } from 'src/app/common/edit-detail/edit-detail.module';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
 @NgModule({
     imports: [
       FormsModule,
@@ -21,7 +22,7 @@ import { EditDetailModule } from 'src/app/common/edit-detail/edit-detail.module'
       CardModule,
       EditDetailModule,
       SelectButtonModule,
-    
+      BreadcrumbModule
     ],
     
     declarations: [

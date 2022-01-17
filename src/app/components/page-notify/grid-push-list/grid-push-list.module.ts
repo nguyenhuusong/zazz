@@ -16,6 +16,7 @@ import { GridPushListComponent } from './grid-push-list.component';
 import { AgGridModule } from '@ag-grid-community/angular';
 import { DialogImageModule } from 'src/app/common/dialogimage/dialogimage.module';
 import { ManageMediaModule } from 'src/app/common/manage-media-module/manage-media.module';
+import { ListGridAngularModule } from 'src/app/common/list-grid-angular/list-grid-angular.module';
 @NgModule({
   declarations: [
     GridPushListComponent
@@ -35,6 +36,7 @@ import { ManageMediaModule } from 'src/app/common/manage-media-module/manage-med
     LMarkdownEditorModule,
     PageMarkdownModule,
     DialogModule,
+    ListGridAngularModule,
     TabViewModule,
     ManageMediaModule],
   exports: [GridPushListComponent],

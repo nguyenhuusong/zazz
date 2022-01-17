@@ -129,14 +129,14 @@ export class PageNotifyComponent implements OnInit, OnDestroy, AfterViewChecked 
         label: 'Loại thông báo',
         icon: 'pi pi-refresh',
         command: () => {
-          this.router.navigate(['/thong-bao/loai-thong-bao'])
+          this.router.navigate(['/cai-dat/thong-bao/loai-thong-bao'])
         }
       },
       {
         label: 'Mẫu thông báo',
         icon: 'pi pi-refresh',
         command: () => {
-          this.router.navigate(['/thong-bao/mau-thong-bao'])
+          this.router.navigate(['/cai-dat/thong-bao/mau-thong-bao'])
         }
       },
     ]
