@@ -4,10 +4,10 @@
         <h3>{{titlePage}}</h3>
         <p-breadcrumb [model]="items"></p-breadcrumb>
     </div>
-   <div class="content">
+   <div class="content page-detail">
 
     <p-tabView [(activeIndex)]="indexTab" (onChange)="handleChange($event.index)">
-        <p-tabPanel header="Nhân viên [{{detailInfo?.fullName}}]">
+        <p-tabPanel header="Nhân viên [{{detailInfo?.fullName}}]" styleClass="p-0">
             <p-panel>
                 <ng-template pTemplate="header">
                     <div class="col-md-6"> {{detailMenu.name}}</div>
@@ -28,7 +28,7 @@
                                     <p-dropdown [autoZIndex]="true" [autoDisplayFirst]="false" [style]="{'width': '100%'}" [options]="listContractTypes"
                                     [(ngModel)]="modelContractInfo.contractType" name="contractType" (onChange)="taohopdong();op.hide()">
                                     <ng-template let-item pTemplate="selectedItem">
-                                        <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
+                                        <span style="vertical-align:middle;">{{item.label}}</span>
                                     </ng-template>
                                     <ng-template let-car pTemplate="item">
                                         <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
@@ -47,68 +47,76 @@
                                 [detail]="detailInfo" [manhinh]="manhinh" [thongtinnhanvienNew]="true"
                                 [dataView]="listViews" (callback)="setEmployeeInfo($event)"
                                 (callbackcancel)="cancelUpdate()"></app-edit-detail> -->
+                            <div class="page-detail-edit-detail">
+                                <app-edit-detail *ngIf="listViews.length> 0" 
+                                    [detail]="detailInfo" 
+                                    [thongtinnhanvienNew]="true" 
+                                    [manhinh]="'Edit'" 
+                                    [optionsButtonsEdit]="optionsButon"  
+                                    [dataView]="listViews"
+                                    (callback)="setEmployeeInfo($event)" 
+                                    (callbackcancel)="cancelUpdate($event)">
+                                </app-edit-detail>
+                            </div>
+                    </div>
 
-
-
-                                
-    <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [thongtinnhanvienNew]="true" [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButon"  [dataView]="listViews"
-        (callback)="setEmployeeInfo($event)" (callbackcancel)="cancelUpdate($event)"></app-edit-detail>
-                        </div>
-
-                        <div class="row d-flex" *ngIf="selectedMenuCode === API_PROFILE.CONG_VIEC ">
+                        <div class="row d-flex mt-4 timelines" *ngIf="selectedMenuCode === API_PROFILE.CONG_VIEC ">
                             <div class="col-md-8">
-                                <p-card styleClass="mt-1" >
-                                    <ng-template pTemplate="header">
-                                        <div class="row d-flex">
-                                            <div class="col-md-6">
-                                                <div class="panel-heading" style="padding: 10px;">
-                                                    <h6 class="panel-title" style="color: black; font-weight: 500;">
-                                                        {{titles[0]}} <p-badge *ngIf="listsData[0].length > 0"
-                                                            value="listsData[0].length" styleClass="p-mr-2">
-                                                        </p-badge>
-                                                    </h6>
+                                <div class="box">
+                                    <p-card styleClass="mt-1" >
+                                        <ng-template pTemplate="header">
+                                            <div class="row d-flex">
+                                                <div class="col-md-6">
+                                                    <div class="panel-heading">
+                                                        <h6 class="panel-title" style="color: black; font-weight: 500;">
+                                                            {{titles[0]}} <p-badge *ngIf="listsData[0].length > 0"
+                                                                value="listsData[0].length" styleClass="p-mr-2">
+                                                            </p-badge>
+                                                        </h6>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 justify-content-end text-right"
+                                                    style="padding-right: 15px;">
+                                                    <p-button *ngIf="selectedMenuCode === API_PROFILE.CONG_VIEC" 
+                                                        label="Thêm mới" styleClass="p-button-sm"
+                                                        icon="pi pi-plus" (click)="addType0()"></p-button>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6 justify-content-end text-right"
-                                                style="padding-right: 30px;">
-                                                <p-button *ngIf="selectedMenuCode === API_PROFILE.CONG_VIEC" 
-                                                    label="Thêm mới" styleClass="p-button-sm"
-                                                    icon="pi pi-plus" (click)="addType0()"></p-button>
-                                            </div>
-                                        </div>
-                                    </ng-template>
-                                    <app-list-grid-angular  [domLayout]="'autoHeight'" [title]="'Danh sách liên hệ'" *ngIf="listsData[0].length > 0"
-                                        [listsData]="listsData[0]"  (FnClick)="OnClick($event)"
-                                        [columnDefs]="columnDefs[0]"></app-list-grid-angular>
-                                </p-card>
+                                        </ng-template>
+                                        <app-list-grid-angular  [domLayout]="'autoHeight'" [title]="'Danh sách liên hệ'" *ngIf="listsData[0].length > 0"
+                                            [listsData]="listsData[0]"  (FnClick)="OnClick($event)"
+                                            [columnDefs]="columnDefs[0]"></app-list-grid-angular>
+                                    </p-card>
+                                </div>
                             </div>
                             <div class="col-md-4">
-                                <p-card styleClass="mt-1" >
-                                    <ng-template pTemplate="header">
-                                        <div class="panel-heading" style="padding: 10px;">
-                                            <h6 class="panel-title" style="color: black; font-weight: 500;">Dòng
-                                                thời gian<p-badge *ngIf="listsData[0].length > 0"
-                                                    value="{{listsData[0].length}}" styleClass="p-mr-2"></p-badge>
-                                            </h6>
-                                        </div>
-                                    </ng-template>
-                                  
-                                    <p-timeline [value]="detailInfo?.timelines" styleClass="customized-timeline mt-4 nhan-vien-timeline"
-                                       >
-                                        <ng-template pTemplate="marker" let-event>
-                                            <span class="custom-marker p-shadow-2"
-                                                [style.backgroundColor]="event.color">
-                                                <i class="pi pi-{{event.icon}}"></i>
-                                            </span>
+                                <div class="box">
+                                    <p-card styleClass="mt-1" >
+                                        <ng-template pTemplate="header">
+                                            <div class="panel-heading">
+                                                <h6 class="panel-title" style="color: black; font-weight: 500;">Dòng
+                                                    thời gian<p-badge *ngIf="listsData[0].length > 0"
+                                                        value="{{listsData[0].length}}" styleClass="p-mr-2"></p-badge>
+                                                </h6>
+                                            </div>
                                         </ng-template>
-                                        <ng-template pTemplate="content" let-event>
-                                            <p-card [header]="event.status" [subheader]="event.date">
-                                                <p class="mt-1">{{event.note}}</p>
-                                                <!-- <button pButton label="Read more" class="p-button-text"></button> -->
-                                            </p-card>
-                                        </ng-template>
-                                    </p-timeline>
-                                </p-card>
+                                    
+                                        <p-timeline [value]="detailInfo?.timelines" styleClass="customized-timeline mt-4 nhan-vien-timeline"
+                                        >
+                                            <ng-template pTemplate="marker" let-event>
+                                                <span class="custom-marker p-shadow-2" >
+                                                    <i class="pi pi-{{event.icon}}"></i>
+                                                </span>
+                                            </ng-template>
+                                            <ng-template pTemplate="content" let-event>
+                                                <p-card [header]="event.status" [subheader]="event.date">
+                                                    <p class="mt-1">{{event.note}}</p>
+                                                    <!-- <button pButton label="Read more" class="p-button-text"></button> -->
+                                                </p-card>
+                                            </ng-template>
+                                        </p-timeline>
+                                    </p-card>
+                                </div>
                             </div>
                         </div>
                       
@@ -122,11 +130,11 @@
                     || selectedMenuCode === API_PROFILE.NGUOI_DUNG">
                             <ng-template pTemplate="header">
                                 <div class="row d-flex">
-                                    <div class="col-md-6">
-                                        <div class="panel-heading" style="padding: 10px;">
+                                    <div class="col-item mt-3">
+                                        <div class="panel-heading" >
                                             <h6 class="panel-title" style="color: black; font-weight: 500;">
                                                 {{titles[0]}} <p-badge *ngIf="listsData[0].length > 0"
-                                                    value="{{listsData[0].length}}" styleClass="p-mr-2">
+                                                    value="{{listsData[0].length}}" styleClass="">
                                                 </p-badge>
                                             </h6>
                                         </div>
@@ -142,13 +150,15 @@
                                     </div>
                                 </div>
                             </ng-template>
-                            <app-list-grid-angular  [domLayout]="'autoHeight'" [title]="'Danh sách liên hệ'" *ngIf="listsData[0].length > 0"
-                                [listsData]="listsData[0]"  (FnClick)="OnClick($event)"
-                                [columnDefs]="columnDefs[0]"></app-list-grid-angular>
+                            <div class="grid-default border mb-5">
+                                <app-list-grid-angular [height]="500" [domLayout]="'autoHeight'"  [title]="'Danh sách liên hệ'" *ngIf="listsData[0].length > 0"
+                                    [listsData]="listsData[0]"  (FnClick)="OnClick($event)"
+                                    [columnDefs]="columnDefs[0]"></app-list-grid-angular>
+                            </div>
                         </p-card>
 
 
-                        <p-card styleClass="mt-1"
+                        <p-card styleClass="mt-1 mb-4"
                             *ngIf="selectedMenuCode === API_PROFILE.CHUYEN_MON 
                         || selectedMenuCode === API_PROFILE.THUE_BAO_HIEM
                         || selectedMenuCode === API_PROFILE.THONG_TIN_CA_NHAN
@@ -158,7 +168,7 @@
                             <ng-template pTemplate="header">
                                 <div class="row d-flex">
                                     <div class="col-md-6">
-                                        <div class="panel-heading" style="padding: 10px;">
+                                        <div class="panel-heading" >
                                             <h6 class="panel-title" style="color: black; font-weight: 500;">
                                                 {{titles[1]}} <p-badge *ngIf="listsData[1].length > 0"
                                                     value="{{listsData[1].length}}" styleClass="p-mr-2">
@@ -182,18 +192,20 @@
                                     </div>
                                 </div>
                             </ng-template>
-                            <app-list-grid-angular  [domLayout]="'autoHeight'" [title]="'Danh sách liên hệ'" *ngIf="listsData[1].length > 0"
-                                [listsData]="listsData[1]" (FnClick)="OnClick($event)"
-                                [columnDefs]="columnDefs[1]"></app-list-grid-angular>
+                            <div class="grid-default border">
+                                <app-list-grid-angular  [domLayout]="'autoHeight'" [title]="'Danh sách liên hệ'" *ngIf="listsData[1].length > 0"
+                                    [listsData]="listsData[1]" (FnClick)="OnClick($event)"
+                                    [columnDefs]="columnDefs[1]"></app-list-grid-angular>
+                                </div>
                         </p-card>
 
-                        <p-card styleClass="mt-1"
+                        <p-card styleClass="mt-1 mb-4"
                             *ngIf="selectedMenuCode === API_PROFILE.CHUYEN_MON || selectedMenuCode === API_PROFILE.THONG_TIN_CA_NHAN">
 
                             <ng-template pTemplate="header">
                                 <div class="row d-flex">
                                     <div class="col-md-6">
-                                        <div class="panel-heading" style="padding: 10px;">
+                                        <div class="panel-heading">
                                             <h6 class="panel-title" style="color: black; font-weight: 500;">
                                                 {{titles[2]}} <p-badge *ngIf="listsData[2].length > 0"
                                                     value="{{listsData[2].length}}" styleClass="p-mr-2"></p-badge>
@@ -219,7 +231,7 @@
                             <ng-template pTemplate="header">
                                 <div class="row d-flex">
                                     <div class="col-md-6">
-                                        <div class="panel-heading" style="padding: 10px;">
+                                        <div class="panel-heading">
                                             <h6 class="panel-title" style="color: black; font-weight: 500;">
                                                 {{titles[3]}} <p-badge *ngIf="listsData[3].length > 0"
                                                     value="{{listsData[3].length}}" styleClass="p-mr-2"></p-badge>
@@ -330,8 +342,10 @@
             dateFormat="dd/mm/yy" name="exprire_date"></p-calendar>
     </div>
     <div class="row col-md-12 mt-1">
-        <label for="">Ghi chú</label>
-        <textarea [(ngModel)]="modelDuyet.comments" name="comments" cols="30" rows="10" class="form-control"></textarea>
+        <div class="textarea-default">
+            <label for="">Ghi chú</label>
+            <textarea [(ngModel)]="modelDuyet.comments" name="comments" cols="30" rows="10" class="form-control"></textarea>
+        </div>
     </div>
 </p-dialog>
 
@@ -352,8 +366,10 @@
         </p-dropdown>
     </div>
     <div class="row col-md-12 mt-1">
-        <label for="">Ghi chú</label>
-        <textarea [(ngModel)]="modelDuyetHopDong.comment" name="comment" cols="30" rows="10" class="form-control"></textarea>
+        <div class="textarea-default">
+            <label for="">Ghi chú</label>
+            <textarea [(ngModel)]="modelDuyetHopDong.comment" name="comment" cols="30" rows="10" class="form-control"></textarea>
+        </div>
     </div>
 
     <ng-template pTemplate="footer">
@@ -366,8 +382,10 @@
 
 <p-dialog header="Thông tin hồ sơ cá nhân" [(visible)]="displayCreateContract" [modal]="true" [draggable]="false"
     [resizable]="false" [style]="{width: '70vw'}" [autoZIndex]=true [draggable]="false" [resizable]="false">
-    <app-list-grid-angular [domLayout]="'autoHeight'" *ngIf="displayCreateContract" [title]="'Chứng chỉ'"
-        [listsData]="listsData[3]" (FnClick)="OnClick($event)" [columnDefs]="columnDefs[3]"></app-list-grid-angular>
+    <div class="grid-default border">
+        <app-list-grid-angular [domLayout]="'autoHeight'" *ngIf="displayCreateContract" [title]="'Chứng chỉ'"
+            [listsData]="listsData[3]" (FnClick)="OnClick($event)" [columnDefs]="columnDefs[3]"></app-list-grid-angular>
+    </div>
     <ng-template pTemplate="footer">
         <p-button icon="pi pi-check" (click)="saveCreateContract()" label="Xác nhận" styleClass=" p-button-sm mr-1">
         </p-button>
@@ -383,7 +401,7 @@
 </p-dialog>
 
 <p-dialog header="{{modelAttach.meta_id > 0 ? 'Xem chi tiết file đính kèm' : 'Thêm file đính kèm'}}" [(visible)]="displayAttach" [modal]="true" [draggable]="false" [resizable]="false"
-    [style]="{width: '70vw'}" [autoZIndex]=true [draggable]="false" [resizable]="false">
+    [style]="{width: '600px'}" [autoZIndex]=true [draggable]="false" [resizable]="false">
 
     <app-emp-attach-file *ngIf="displayAttach" [modelAttach]="modelAttach" (callback)="emitAttach($event)"
         (back)="displayAttach = !displayAttach"></app-emp-attach-file>
@@ -437,14 +455,16 @@
    <app-detail-account *ngIf="displayNguoiDung" [detailAccount]="detailAccount" [isModal]="false" (back)="displayNguoiDung = !displayNguoiDung"></app-detail-account>
 </p-dialog>
 
-<p-dialog [(visible)]="isShowAddUserLogin" [draggable]="false" [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '800px', height: 'auto'}">
+<p-dialog [(visible)]="isShowAddUserLogin" [draggable]="false" [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '600px', height: 'auto'}">
     <p-header>
       {{keyName === '' ? 'Thêm mới' : 'Chỉnh sửa'}}  tài khoản login
     </p-header>
     <div class="row">
-        <label for="">Tên tài khoản</label>
-        <input class="form-control" type="text"
-           placeholder="Nhập tên user" id="filter" name="filter" [(ngModel)]="keyName" />
+        <div class="input-group">
+            <label for="">Tên tài khoản</label>
+            <input class="form-control" type="text"
+            placeholder="Nhập tên user" id="filter" name="filter" [(ngModel)]="keyName" />
+        </div>
     </div>
     <div class="row mt-1">
        <div class="col-md-6"></div>
