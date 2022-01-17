@@ -132,9 +132,6 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
         }
         this.initGrid();
         this.countRecord.totalRecord = results.data.dataList.recordsTotal;
-        if(this.query.pageSize === MAX_SIZE) {
-                    this.query.pageSize =this.countRecord.totalRecord;
-        }
         this.countRecord.totalRecord = results.data.dataList.recordsTotal;
         this.countRecord.currentRecordStart = this.query.offSet + 1;
         if ((results.data.dataList.recordsTotal - this.query.offSet) > this.query.pageSize) {

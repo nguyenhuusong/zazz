@@ -53,7 +53,9 @@
               "src/assets/scss/main.scss"
             ],
             "scripts": [
-              "node_modules/chart.js/dist/Chart.js"
+              "node_modules/chart.js/dist/Chart.js",
+              "node_modules/ngx-markdown-editor/assets/marked.min.js",
+              "node_modules/ace-builds/src-min/ace.js"
             ]
           },
           "configurations": {

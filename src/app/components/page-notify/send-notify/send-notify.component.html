@@ -1,0 +1,29 @@
+<div class="row">
+  <div class="col-sm-12 form-group">
+    <label>Loại thông báo</label><br>
+    <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
+    [options]="actions" [required] [(ngModel)]="action"
+    name="action" [filter]="true">
+    <ng-template let-item pTemplate="selectedItem">
+        <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
+    </ng-template>
+    <ng-template let-car pTemplate="item">
+        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+            <div style="font-size:14px;float:left;margin-top:4px">{{car.label}}</div>
+        </div>
+    </ng-template>
+</p-dropdown>
+  </div>
+<!-- 
+  <div class="col-sm-8 text-right form-group">
+    <label class="opacity0"></label>
+    <div>
+      <button class="btn btn-dropbox" (click)="handleSendNotify()"> <i class="fa fa-paper-plane" aria-hidden="true"></i> Gửi thông báo</button>
+      <button class="btn btn-github" (click)="closeModal()"><i class="fa fa-close" aria-hidden="true"></i> Đóng lại</button>
+    </div>
+  </div> -->
+
+  <div class="col-sm-12 " style="padding: 0;">
+    <app-grid-push-list [notify]="notify" [indexTab]="indexTab" [hideAction]="true" (saveSend)="handleSendNotify($event)"></app-grid-push-list>
+  </div>
+</div>

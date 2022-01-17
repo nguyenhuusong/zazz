@@ -90,6 +90,145 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v2/incometax/GetIncomeTaxPage?${queryParams}`, this.options);
   }
 
+  // notifi
+  setNotifyToPushRun(params): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v1/notify/SetNotifyToPushRun`, params, this.options);
+  }
+
+  setAppNotifyStatus(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/notify/SetAppNotifyStatus`, params, this.options);
+  }
+  
+  setNotifyStatus(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/notify/SetNotifyStatus`, params, this.options);
+  }
+
+  delAppNotifyInfo(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v1/notify/DelAppNotifyInfo?` + queryParams, this.options);
+  }
+
+  delNotifyInfo(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v1/notify/delNotifyInfo?` + queryParams, this.options);
+  }
+
+  getAppNotifyPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/notify/GetAppNotifyPage?` + queryParams, this.options);
+  }
+
+  getNotifyPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/notify/GetNotifyPage?` + queryParams, this.options);
+  }
+
+  getNotifyTempList(): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/notify/GetNotifyTempList`, this.options);
+  }
+
+  getNotifyRefPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/notify/GetNotifyRefPage?` + queryParams, this.options);
+  }
+
+  getNotifyTempPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/notify/GetNotifyTempPage?` + queryParams, this.options);
+  }
+
+  getNotifyRef(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/notify/GetNotifyRef?` + queryParams, this.options);
+  }
+
+  getUserByPush(queryParams): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v1/notify/GetUserByPush` , queryParams, this.options);
+  }
+
+  getNotifyTemp(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/notify/GetNotifyTemp?` + queryParams, this.options);
+  }
+
+  delNotifyRef(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v1/notify/DelNotifyRef?` + queryParams, this.options);
+  }
+
+  delNotifyTemp(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v1/notify/DelNotifyTemp?` + queryParams, this.options);
+  }
+
+  getModuleList(): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/organize/GetOrgRoots` , this.options);
+  }
+
+  setNotifyCreatePush(params): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v1/notify/SetNotifyCreatePush`, params, this.options);
+  }
+
+  setNotifyTemp(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/notify/SetNotifyTemp`, params, this.options);
+  }
+
+  setNotifyRef(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/notify/SetNotifyRef`, params, this.options);
+  }
+
+  getDocumentUrl<T>(filter, offset, pagesize) {
+    return this.http.get<T>(apiBaseUrl + '/GetDocumentUrl?ProjectCd=&filter=' + filter + '&offSet=' + offset + '&pageSize=' + pagesize, this.options).toPromise();
+  }
+
+  setDocumentUrl<T>(documentUrl) {
+    const doc = {
+      projectCd: '',
+      documentTitle: '',
+      documentUrl
+    };
+    return this.http.post<T>(apiBaseUrl + '/SetDocumentUrl', doc, this.options).toPromise();
+  }
+  
+  getAppNotifyInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/notify/GetAppNotifyInfo?` + queryParams, this.options);
+  }
+
+  getNotifyInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/notify/GetNotifyInfo?` + queryParams, this.options);
+  }
+  
+  setAppNotifyInfo(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/notify/SetAppNotifyInfo`, params, this.options);
+  }
+
+  setNotifyInfo(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/notify/SetNotifyInfo`, params, this.options);
+  }
+
+  delNotifyPushs(queryParams): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v1/notify/DelNotifyPushs`, queryParams, this.options);
+  }
+
+  getNotifyCommentList(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/notify/GetNotifyCommentList?` + queryParams, this.options);
+  }
+
+  getNotifyToPushs(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/notify/GetNotifyToPushs?` + queryParams, this.options);
+  }
+  
+  getNotifyCommentChilds(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/notify/GetNotifyCommentChilds?` + queryParams, this.options);
+  }
+
+  getNotifyPushStatus(): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/notify/GetNotifyPushStatus`, this.options);
+  }
+
+  setNotifyCommentAuth(params): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v1/notify/SetNotifyCommentAuth`, params, this.options);
+  }
+
+  delNotifyPush(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v1/notify/DelNotifyPush?` + queryParams, this.options);
+  }
+
+  setNotifyComment(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/notify/SetNotifyComment`, params, this.options);
+  }
+
+
   getIncomeTaxInfo(id): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/incometax/GetIncomeTaxInfo?id=${id}`, this.options);
   }

@@ -28,6 +28,10 @@ const appRoutes: Routes = [
         path: 'chinh-sach',
         loadChildren: () => import('../app/pages/chinh-sach/chinh-sach.module').then(m => m.ChinhSachModule)
       },
+      {
+        path: 'cai-dat',
+        loadChildren: () => import('../app/pages/cai-dat/cai-dat.module').then(m => m.CaiDatModule)
+      },
       // {
       //   path: 'manager',
       //   loadChildren: () => import('../app/pages/quan-tri/quan-tri.module').then(m => m.QuanTriModule)

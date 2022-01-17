@@ -26,6 +26,7 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
   @Input() floatingFilter: boolean = false;
   @Input() buttons = [];
   @Input() title: string = '';
+  @Input() idGrid: string = 'myGrid';
   // autoHeight
   @Input() domLayout: string = '';
   @Input() height: number = 0;
@@ -151,7 +152,7 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    var pivotModeOn = document.getElementById('myGrid');
+    var pivotModeOn = document.getElementById(`${this.idGrid}`);
     pivotModeOn?.addEventListener('change', (event: any) => {
 
       // console.log(this.gridApi.getSelectedRows())
@@ -242,11 +243,23 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
     this.FnClick.emit(event);
   }
 
-
   create(label: any) {
     this.callback.emit(label);
   }
 
+  cellClicked(event) {
+    if (event.colDef.field === 'meta_file_name') {
+      this.downloadButtonClicked(event.data.meta_file_url)
+    }
+  }
+
+  downloadButtonClicked(urlLink) {
+    var url = urlLink;
+    var elem = document.createElement('a');
+    elem.href = url;
+    elem.target = 'hiddenIframe';
+    elem.click();
+  }
 
   handleScroll(event: any) {
     if (this.gridColumnApi) {

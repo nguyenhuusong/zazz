@@ -685,7 +685,7 @@ export const ROUTES: any[] =[
       "submenus": [
         {
           "menuId": 630,
-          "path": "thong-bao",
+          "path": "cai-dat/thong-bao",
           "title": "Thông báo",
           "icon": "sun-icon-circuit-board",
           "classs": "nav-item",

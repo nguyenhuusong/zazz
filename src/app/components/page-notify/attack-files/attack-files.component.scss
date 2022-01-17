@@ -1,0 +1,48 @@
+.attack {
+    display: flex;
+    flex-wrap: wrap;
+    transition: 0.5s;
+
+    .attack__item {
+        margin-bottom: 1em;
+        margin-right: 1em;
+        width: 15vh;
+        height: 20vh;
+        box-shadow: 0px 0px 5px rgb(177, 176, 176);
+        padding: 1em;
+        border-radius: 1em;
+        position: relative;
+        
+        .attack__item-image {
+            height: 80%;
+            width: 100%;
+            margin-top: 10%;
+        }
+
+        .attack__item-remove {
+            position: absolute;
+            width: 1.5em;
+            height: 1.5em;
+            background: rgb(223, 4, 4);
+            color: white;
+            top: 0;
+            right: 0;
+            cursor: pointer;
+            text-align: center;
+            border-radius: 50%;
+            border: none;
+            box-shadow: 0px 0px 3px rgb(34, 34, 34);
+        }
+        .attack__item-remove:hover {
+            background: rgb(248, 30, 30);
+            transform: scale(1.2);
+            transition: 0.5s;
+        }
+    }
+
+    .attack__item:hover {
+        box-shadow: 0px 0px 7px rgb(110, 109, 109);
+        transition: 0.5s;
+        cursor: pointer;
+    }
+}

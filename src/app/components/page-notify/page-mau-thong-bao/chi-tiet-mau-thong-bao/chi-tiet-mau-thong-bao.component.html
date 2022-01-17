@@ -1,0 +1,37 @@
+
+
+<div class="content-header row " *ngIf="titlePage" style="margin: -6px;">
+    <div class="content-header-left col-md-6 col-12 mb-1">
+        <h5 class="content-header-title ">{{titlePage}}</h5>
+    </div>
+    <div class="content-header-right breadcrumbs-right breadcrumbs-top col-md-6 col-12">
+        <div class="breadcrumb-wrapper col-12">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a routerLink="/dashbroad">Trang chủ</a>
+                </li>
+                <li class="breadcrumb-item active">{{titlePage}}
+                </li>
+            </ol>
+        </div>
+    </div>
+  </div>
+  <main>
+    <div class="khachHangWrapper">
+      <div class="row">
+        <div class="col-md-12">
+            <p-tabView [(activeIndex)]="indexTab" (onChange)="handleChange($event.index)">
+                <p-tabPanel header="Thông tin chung">
+                      <div class="" *ngIf="detailInfo">
+                          <app-edit-detail *ngIf="listViews.length> 0 && manhinh === 'Edit'"  [thongtinnhanvienNew]="true" [modelMarkdow]="modelMarkdow" [manhinh]="manhinh" [dataView]="listViews" (callback)="setNotifyTemp($event)" (callbackcancel)="cancelUpdate()"></app-edit-detail>
+                      </div>
+                </p-tabPanel>
+             
+              </p-tabView>
+        </div>
+      </div>
+    </div>
+  </main>
+
+
+  

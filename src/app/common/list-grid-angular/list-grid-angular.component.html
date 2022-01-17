@@ -1,10 +1,10 @@
 <div class="section" style="margin-top: 5px;">
-  <ag-grid-angular
-    [style.height]="height === 0 ? 'auto' : height"
+  <ag-grid-angular 
+    [style.height]="height === 0 ? 'auto' : height + 'px'"
     [excelStyles]="excelStyles"
     [getContextMenuItems]="getContextMenuItems"
      #agGrid style="width: 100% "
-    id="myGrid"
+     id="{{idGrid}}"
     class="ag-theme-alpine"
     [pinnedTopRowData]="pinnedTopRowData"
     [domLayout]="domLayout"

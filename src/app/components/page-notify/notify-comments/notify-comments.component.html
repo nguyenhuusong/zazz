@@ -1,0 +1,114 @@
+<div class="row bootstrap snippets" *ngIf="notify?.notiId">
+  <div class="col-md-12 col-md-offset-2 col-sm-12">
+    <p>Bình luận</p>
+    <div class="comment-wrapper">
+      <div class="panel panel-info">
+        <div class="panel-body">
+          <form>
+            <textarea class="form-control" placeholder="Nội dung bình luận" [(ngModel)]="comment" name="comment" rows="3"></textarea>
+            <br>
+            <button type="button" class="btn btn-dropbox pull-right" (click)="handleAddComment()"><i class="fa fa-comments-o" aria-hidden="true"></i> Bình luận</button>
+          </form>
+          <div class="clearfix"></div>
+          <hr>
+
+          <label><strong>Danh sách bình luận</strong></label>
+          <ul class="media-list p-1" *ngIf="comments.length > 0">
+            <li class="media m-0" *ngFor="let comment of comments">
+              <a href="#" class="pull-left">
+                <img src="{{comment?.avatarUrl ? comment?.avatarUrl : '/assets/images/portrait/small/icon-man.png'}}" alt="avatar" class="img-circle avatar">
+                <i class="fa fa-check-circle text-success" *ngIf="comment?.auth_St" aria-hidden="true" title="Đã xác nhận"></i>
+                <i class="fa fa-ban text-danger" *ngIf="!comment?.auth_St" aria-hidden="true" title="Không xác nhận"></i>
+              </a>
+              <div class="media-body pl-1">
+                <span class="text-muted pull-right">
+                <small class="text-muted">{{comment?.commentDate}}</small>
+                </span>
+                <b><a href="#">{{comment?.fullName}}</a></b>
+                <p>
+                  {{comment?.comments}}
+                </p>
+                <div class="row m-0 mt-1">
+                  <div class="col-sm-8">
+                    <button type="button" class="btn btn-dropbox btn-sm" title="Phê duyệt" [hidden]="comment?.auth_St" (click)="handleAuthComment(comment, 1)">
+                      <i class="fa fa-check" aria-hidden="true"></i>
+                    </button>
+                    <button type="button" class="btn btn-google btn-sm" title="Hủy duyệt" [hidden]="!comment?.auth_St" (click)="handleAuthComment(comment, 0)">
+                      <i class="fa fa-ban" aria-hidden="true"></i>
+                    </button>
+                    <button type="button" class="btn btn-dropbox btn-sm" title="Trả lời" (click)="toggleAnswer(comment)">
+                      <i class="fa fa-comments-o" aria-hidden="true"></i>
+                    </button>
+                    <button *ngIf="comment?.childComments?.length > 0" type="button" class="btn btn-github btn-sm" title="Hiển thị trả lời" (click)="showSubComment(comment)">
+                      <i class="fa fa-caret-down" aria-hidden="true" *ngIf="comment.showSubComment"></i>
+                      <i class="fa fa-caret-up" aria-hidden="true" *ngIf="!comment.showSubComment"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="row col-sm-12" *ngIf="comment?.isAnswer">
+                  <textarea name="answerComment" [(ngModel)]="comment.answerComment" class="form-control position-relative answer-comment mt-1" id="" rows="4"></textarea>
+                  <button type="button" class="btn btn-dropbox btn-sm position-absolute btn-answer" (click)="handleAnswer(comment)">
+                    <i class="fa fa-commenting-o" aria-hidden="true"></i>Trả lời
+                  </button>
+                </div>
+                <div class="sub-comment mt-1 mb-1" [ngClass]="{'sub-comment-active': comment.showSubComment == true}">
+                  <ul class="media-list child-media-list">
+                    <li class="media" *ngFor="let subcomment of comment.childComments">
+                      <a href="#" class="pull-left">
+                        <img src="{{subcomment?.avatarUrl ? subcomment?.avatarUrl : '/assets/images/portrait/small/icon-man.png'}}" alt="avatar" class="img-circle avatar">
+                        <i class="fa fa-check-circle text-success" *ngIf="subcomment?.auth_St" aria-hidden="true" title="Đã xác nhận"></i>
+                        <i class="fa fa-ban text-danger" *ngIf="!subcomment?.auth_St" aria-hidden="true" title="Không xác nhận"></i>
+                      </a>
+                      <div class="media-body pl-1">
+                        <span class="text-muted pull-right">
+                          <small class="text-muted">{{subcomment?.commentDate}}</small>
+                        </span>
+                        <b><a href="#">{{subcomment?.fullName}}</a></b>
+                        <p>
+                          {{subcomment?.comments}}
+                        </p>
+                        <button type="button" class="btn btn-dropbox btn-sm" title="Phê duyệt" [hidden]="subcomment?.auth_St" (click)="handleAuthComment(subcomment, 1)">
+                          <i class="fa fa-check" aria-hidden="true"></i>
+                        </button>
+                        <button type="button" class="btn btn-google btn-sm mb-1" title="Hủy duyệt" [hidden]="!subcomment?.auth_St" (click)="handleAuthComment(subcomment, 0)">
+                          <i class="fa fa-ban" aria-hidden="true"></i>
+                        </button>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </li>
+          </ul>
+          <div class="mt-1">
+            <div class="row">
+                <div class="col-md-8 padding-0">
+                    <label class="mr-1">
+                        Hiển thị:
+                        <select class="dropdown-custom shadow-border" name="pageSize"
+                            [(ngModel)]="query.pageSize" (change)="changePageSize()" class="">
+                            <option [value]="15">15</option>
+                            <option [value]="25">25</option>
+                            <option [value]="50">50</option>
+                            <option [value]="100">100</option>
+                            <option [value]="1000000000">All</option>
+                        </select>
+                    </label>
+                    <span>Từ {{ countRecord.currentRecordStart }} đến
+                        {{ countRecord.currentRecordEnd }}
+                        trên tổng số
+                        {{ countRecord.totalRecord }} kết quả</span>
+                </div>
+                <div class="col-md-4 padding-0 d-flex justify-content-end">
+                    <!-- <p-paginator [rows]="query.pageSize" [first]="first"
+                        [totalRecords]="pagingComponent?.total"
+                        (onPageChange)="paginate($event)"></p-paginator> -->
+                </div>
+            </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

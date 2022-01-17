@@ -1,0 +1,75 @@
+<div class="col-md-12 d-flex">
+  <p-toolbar>
+    <div class="p-toolbar-group-left">
+      <div class="mr-1">
+        <label>Trạng thái Push</label>
+        <select class="form-control" name="push_st" [(ngModel)]="filter.push_st" #push_st="ngModel" (change)="load()">
+          <option *ngFor="let type of notifyTypes" value={{type.statusId}}>
+            {{type.statusName}} </option>
+        </select>
+      </div>
+      <div class="mr-1">
+        <label>Trạng thái gửi Email</label>
+        <select class="form-control" name="email_st" [(ngModel)]="filter.email_st" #email_st="ngModel" (change)="load()">
+          <option *ngFor="let type of notifyTypes" value={{type.statusId}}>
+            {{type.statusName}} </option>
+        </select>
+      </div>
+      <div class="">
+        <label>Trạng thái gửi Sms</label>
+        <select class="form-control" name="sms_st" [(ngModel)]="filter.sms_st" #sms_st="ngModel" (change)="load()">
+          <option *ngFor="let type of notifyTypes" value={{type.statusId}}>
+            {{type.statusName}} </option>
+        </select>
+      </div>
+    </div>
+    <div class="p-toolbar-group-right" [hidden]="hideAction">
+     <p-button label="Cài đặt danh sách gửi" (click)="storeNotify()" icon="fa fa-save" styleClass="p-button-sm mr-1"></p-button>
+     <p-button label="Gửi thông báo" (click)="sendNotify()" icon="fa fa-paper-plane" styleClass="p-button-sm mr-1"></p-button>
+     <p-button label="Xóa nhân viên" (click)="deleteMultipleApartment()" icon="pi pi-trash" styleClass="p-button-sm p-button-danger mr-1"></p-button>
+     <p-button label="Thoát" (click)="closePage()" icon="pi pi-times" styleClass="p-button-sm p-button-secondary"></p-button>
+    </div>
+    <div class="p-toolbar-group-right" *ngIf="hideAction">
+     <p-button label="Gửi thông báo" (click)="saveSendNotify()" icon="fa fa-save" styleClass="p-button-sm mr-1"></p-button>
+     <p-button label="Đóng lại" (click)="closeModal()" icon="pi pi-times" styleClass="p-button-sm p-button-secondary"></p-button>
+    </div>
+</p-toolbar>
+ 
+</div>
+<div class="col-md-12 mt-1">
+  <!-- <ag-grid-angular [modules]="modules" [suppressCsvExport]="true"
+ [suppressExcelExport]="true"  enableCellTextSelection=true  suppressCopyRowsToClipboard=true #agGrid style="width: 100%; height: 600px" id="myGrid" class="ag-theme-balham"
+      [rowData]="items?.dataList?.data" [columnDefs]="columnDefs" floatingFilter
+      [detailCellRendererParams]="detailCellRendererParams"
+      (gridReady)="onGridReady($event)" [defaultColDef]="defaultColDef" groupUseEntireRow="true" [animateRows]="true"
+      [frameworkComponents]="frameworkComponents" [getRowHeight]="getRowHeight"
+      [rowSelection]="rowSelection"  [suppressRowClickSelection]="true">
+    </ag-grid-angular> -->
+</div>
+<!-- <div class="mt-1">
+  <div class="col-md-12 d-flex">
+      <div class="col-md-8 padding-0">
+          <label class="mr-1">
+              Hiển thị:
+              <select class="dropdown-custom shadow-border" name="pageSize"
+                  [(ngModel)]="filter.pageSize" (change)="changePageSize()" class="">
+                  <option [value]="15">15</option>
+                  <option [value]="25">25</option>
+                  <option [value]="50">50</option>
+                  <option [value]="100">100</option>
+                  <option [value]="1000000000">All</option>
+              </select>
+          </label>
+          <span>Từ {{ countRecord.currentRecordStart }} đến
+              {{ countRecord.currentRecordEnd }}
+              trên tổng số
+              {{ countRecord.totalRecord }} kết quả</span>
+      </div>
+      <div class="col-md-4 padding-0 d-flex justify-content-end">
+          <p-paginator [rows]="filter.pageSize" [first]="first"
+              [totalRecords]="pagingComponent?.total"
+              (onPageChange)="paginate($event)"></p-paginator>
+      </div>
+  </div>
+</div> -->
+
