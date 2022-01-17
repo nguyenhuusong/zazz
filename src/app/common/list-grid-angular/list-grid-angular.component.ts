@@ -28,7 +28,7 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
   @Input() title: string = '';
   // autoHeight
   @Input() domLayout: string = '';
-  @Input() height: number = 630;
+  @Input() height: number = 0;
   @Input() heightRow: number = 40;
   @Input() getContextMenuItems: any = null;
   @Input() excelStyles: any[] = [

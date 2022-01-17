@@ -151,7 +151,7 @@
                                 </div>
                             </ng-template>
                             <div class="grid-default border mb-5">
-                                <app-list-grid-angular [height]="500" [domLayout]="'autoHeight'"  [title]="'Danh sách liên hệ'" *ngIf="listsData[0].length > 0"
+                                <app-list-grid-angular [height]="0" [domLayout]="'autoHeight'"  [title]="'Danh sách liên hệ'" *ngIf="listsData[0].length > 0"
                                     [listsData]="listsData[0]"  (FnClick)="OnClick($event)"
                                     [columnDefs]="columnDefs[0]"></app-list-grid-angular>
                             </div>

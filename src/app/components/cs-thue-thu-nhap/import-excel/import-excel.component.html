@@ -1,13 +1,17 @@
 <div class="row">
     <div class="col-sm-12 form-group">
-        <label for="">Chọn ngày</label>
-        <p-calendar appendTo="body" [(ngModel)] = "date" placeholder="dd/mm/yyyy" name="date" dateFormat="dd/mm/yy" [style]="{'width':'100%'}"></p-calendar>
+        <div class="input-group">
+            <label for="">Chọn ngày</label>
+            <p-calendar appendTo="body" [(ngModel)] = "date" placeholder="dd/mm/yyyy" name="date" dateFormat="dd/mm/yy" [style]="{'width':'100%'}"></p-calendar>
+        </div>
     </div>
     <div class="col-sm-12 form-group">
-        <label for="">
-            Chọn file
-        </label>
-        <input #importEx type="file" (change)="importExcel($event)" class="form-control" placeholder="Chọn file">
+        <div class="input-group">
+            <label for="">
+                Chọn file
+            </label>
+            <input #importEx type="file" (change)="importExcel($event)" class="form-control" placeholder="Chọn file">
+        </div>
     </div>
     <div class="col-sm-12 form-group text-right mt-2">
         <p-button label="Lưu lại" (click)="handleSave()" icon="fa fa-plus" styleClass="p-button-sm ml-1"></p-button>
