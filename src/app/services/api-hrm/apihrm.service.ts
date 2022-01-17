@@ -72,12 +72,66 @@ export class ApiHrmService {
       responseType: "blob"
     });
   }
+
+  setIncomTaxImport(data, datect): Observable<any> {
+    const options = {
+      headers: new HttpHeaders({
+        'Authorization': this.authService.getAuthorizationHeaderValue(),
+        // 'Content-Type': 'multipart/form-data'
+      })
+    };
+    const formdata = new FormData();
+    formdata.append('formFile', data);
+    return this.http.post(`${apiHrmServer}/api/v2/incometax/SetIncomTaxImport?date_ct=${datect}`, formdata, options);
+  }
+
+  // IncomTax
+  getIncomeTaxPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/incometax/GetIncomeTaxPage?${queryParams}`, this.options);
+  }
+
+  getIncomeTaxInfo(id): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/incometax/GetIncomeTaxInfo?id=${id}`, this.options);
+  }
+
+  getIncomeTaxTypes(): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/incometax/GetIncomeTaxTypes`, this.options);
+  }
+
+  setIncomTaxInfo(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/incometax/SetIncomTaxInfo`, params, this.options);
+  }
+
+  deleteIncomeTaxStatus(id): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/incometax/SetIncomeTaxStatus?id=${id}`, this.options);
+  }
+
+  setSalaryRecordInfo(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/salary/SetSalaryRecordInfo`, queryParams, this.options)
+  }
+
   getEatingPage(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/eating/GetEatingPage?` + queryParams, this.options)
   }
 
+  getSalaryEmployeePage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/salary/getSalaryEmployeePage?` + queryParams, this.options)
+  }
+  
+  getSalaryRecordInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/salary/GetSalaryRecordInfo?` + queryParams, this.options)
+  }
+  
+  setSalaryCreateDraft(queryParams): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v1/salary/SetSalaryCreateDraft`, queryParams, this.options)
+  }
+
   getTimekeepingPage(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/timekeeping/GetTimekeepingPage?` + queryParams, this.options)
+  }
+  
+  getSalaryRecordPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/salary/GetSalaryRecordPage?` + queryParams, this.options)
   }
 
   setContractInfo(params): Observable<any> {

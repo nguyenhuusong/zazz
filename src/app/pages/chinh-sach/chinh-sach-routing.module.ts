@@ -10,6 +10,8 @@ import { CsThueThuNhapComponent } from 'src/app/components/cs-thue-thu-nhap/cs-t
 import { ChiTietNghiPhepComponent } from 'src/app/components/cs-nghi-phep/chi-tiet-nghi-phep/chi-tiet-nghi-phep.component';
 import { ChiTietAnCaComponent } from 'src/app/components/cs-an-ca/chi-tiet-an-ca/chi-tiet-an-ca.component';
 import { ChiTietChamCongComponent } from 'src/app/components/cs-cham-cong/chi-tiet-cham-cong/chi-tiet-cham-cong.component';
+import { ChiTietTienLuongComponent } from 'src/app/components/cs-tien-luong/chi-tiet-tien-luong/chi-tiet-tien-luong.component';
+import { ChiTietThueThuNhapComponent } from 'src/app/components/cs-thue-thu-nhap/chi-tiet-thue-thu-nhap/chi-tiet-thue-thu-nhap.component';
 
 const routes: Routes = [
   {
@@ -80,6 +82,22 @@ const routes: Routes = [
     url: 'tien-luong',
   },
 },
+{
+  path: 'tien-luong/them-moi-tien-luong',
+  component: ChiTietTienLuongComponent,
+  data: {
+    title: 'Thêm mới tiền lương',
+    url: 'them-moi-tien-luong',
+  },
+},
+{
+  path: 'tien-luong/chi-tiet-tien-luong',
+  component: ChiTietTienLuongComponent,
+  data: {
+    title: 'Chi tiết tiền lương',
+    url: 'chi-tiet-tien-luong',
+  },
+},
  //Thuế thu nhập
 {
   path: 'thue-thu-nhap',
@@ -87,6 +105,14 @@ const routes: Routes = [
   data: {
     title: 'Danh sách thuế thu nhập',
     url: 'thue-thu-nhap',
+  },
+},
+{
+  path: 'thue-thu-nhap/chi-tiet-thue-thu-nhap',
+  component: ChiTietThueThuNhapComponent,
+  data: {
+    title: 'Chi tiết thuế thu nhập',
+    url: 'chi-tiet-thue-thu-nhap',
   },
 },
 

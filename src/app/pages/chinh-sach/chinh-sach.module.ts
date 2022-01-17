@@ -38,6 +38,10 @@ import { CsThueThuNhapComponent } from 'src/app/components/cs-thue-thu-nhap/cs-t
 import { ChiTietNghiPhepComponent } from 'src/app/components/cs-nghi-phep/chi-tiet-nghi-phep/chi-tiet-nghi-phep.component';
 import { ChiTietAnCaComponent } from 'src/app/components/cs-an-ca/chi-tiet-an-ca/chi-tiet-an-ca.component';
 import { ChiTietChamCongComponent } from 'src/app/components/cs-cham-cong/chi-tiet-cham-cong/chi-tiet-cham-cong.component';
+import { ChiTietTienLuongComponent } from 'src/app/components/cs-tien-luong/chi-tiet-tien-luong/chi-tiet-tien-luong.component';
+import { ImportExcelComponent } from 'src/app/components/cs-thue-thu-nhap/import-excel/import-excel.component';
+import { DeleteTaxComponent } from 'src/app/components/cs-thue-thu-nhap/delete-tax/delete-tax.component';
+import { ChiTietThueThuNhapComponent } from 'src/app/components/cs-thue-thu-nhap/chi-tiet-thue-thu-nhap/chi-tiet-thue-thu-nhap.component';
 
 @NgModule({
   imports: [
@@ -84,7 +88,11 @@ import { ChiTietChamCongComponent } from 'src/app/components/cs-cham-cong/chi-ti
     CsThueThuNhapComponent,
     ChiTietNghiPhepComponent,
     ChiTietAnCaComponent,
-    ChiTietChamCongComponent
+    ChiTietChamCongComponent,
+    ChiTietTienLuongComponent,
+    ImportExcelComponent,
+    DeleteTaxComponent,
+    ChiTietThueThuNhapComponent
   ],
   providers: []
 })

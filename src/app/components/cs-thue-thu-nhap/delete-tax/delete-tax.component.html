@@ -1,0 +1,23 @@
+<div class="row">
+    <div class="col-sm-12 form-group">
+        <label for="">Chọn ngày</label>
+        <p-calendar appendTo="body" [(ngModel)] = "datereport" name="datereport"  placeholder="dd/mm/yyyy" dateFormat="dd/mm/yy" [style]="{'width':'100%'}"></p-calendar>
+    </div>
+    <div class="col-sm-12 form-group">
+        <label for="">Công ty</label> <br>
+        <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" [showClear]="true"
+        [options]="companies" [(ngModel)]="companyId" name="companyId" [filter]="true">
+            <ng-template let-item pTemplate="selectedItem">
+                <span style="vertical-align:middle; margin-left: .5em">{{item?.label}}</span>
+            </ng-template>
+            <ng-template let-car pTemplate="item">
+                <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                    <div style="font-size:14px;float:right;margin-top:4px">{{car?.label}}</div>
+                </div>
+            </ng-template>
+        </p-dropdown>
+    </div>
+    <div class="col-sm-12 form-group text-right mt-2">
+        <p-button label="Lưu lại" (click)="handleSave()" icon="fa fa-plus" styleClass="p-button-sm ml-1"></p-button>
+    </div>
+</div>
