@@ -131,7 +131,7 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
     this.columnDefs = []
     this.spinner.show();
     const queryParams = queryString.stringify(this.query);
-    this.apiService.getCandidatePage(queryParams).subscribe(
+    this.apiService.getLeavePage(queryParams).subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         if (this.query.offSet === 0) {
@@ -263,7 +263,7 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
     const params = {
       id: event.rowData.id
     }
-    this.router.navigate(['/nghi-phep/chi-tiet-nghi-phep'], { queryParams: params });
+    this.router.navigate(['/chinh-sach/nghi-phep/chi-tiet-nghi-phep'], { queryParams: params });
   }
 
   find() {
@@ -300,7 +300,6 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
             value: `${d.org_cd}`
           }
         });
-
         this.listOrgRoots = [{ label: 'Tất cả', value: null }, ...this.listOrgRoots];
       }
     })

@@ -7,6 +7,7 @@ import { CsChamCongComponent } from 'src/app/components/cs-cham-cong/cs-cham-con
 import { CsAnCaComponent } from 'src/app/components/cs-an-ca/cs-an-ca.component';
 import { CsTienLuongComponent } from 'src/app/components/cs-tien-luong/cs-tien-luong.component';
 import { CsThueThuNhapComponent } from 'src/app/components/cs-thue-thu-nhap/cs-thue-thu-nhap.component';
+import { ChiTietNghiPhepComponent } from 'src/app/components/cs-nghi-phep/chi-tiet-nghi-phep/chi-tiet-nghi-phep.component';
 
 const routes: Routes = [
   {
@@ -30,6 +31,14 @@ const routes: Routes = [
   data: {
     title: 'Danh sách nghỉ phép',
     url: 'nghi-phep',
+  },
+},
+{
+  path: 'nghi-phep/chi-tiet-nghi-phep',
+  component: ChiTietNghiPhepComponent,
+  data: {
+    title: 'Chi tiết nghỉ phép',
+    url: 'nghi-phep/chi-tiet-nghi-phep',
   },
 },
 

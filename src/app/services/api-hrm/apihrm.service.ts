@@ -447,4 +447,8 @@ export class ApiHrmService {
   getLeavePage(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/leave/GetLeavePage?` + queryParams, this.options)
   }
+  
+  getLeaveInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/leave/GetLeaveInfo?` + queryParams, this.options)
+  }
 }
