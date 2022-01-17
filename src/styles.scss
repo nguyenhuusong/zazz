@@ -317,7 +317,6 @@ body {
         margin-top: 0px;
         margin-left: 0px;
         margin-right: 0px;
-        justify-content: flex-end;
         &>.col-2{
             // position: fixed;
             // left: 0px;
@@ -795,7 +794,16 @@ div.p-menu-buttons{
 .p-button.p-button-text:enabled:hover{
     background: none !important;
 }
-
+.table-tool{
+    .header-filter-search{
+        padding-left: 0px;
+    }
+    .search-button {
+        .p-button{
+            border-radius: 4px;
+        }
+    }
+}
 .header-filter-search{
     .input-group{
         .search-button{
@@ -810,7 +818,7 @@ div.p-menu-buttons{
         }
         .pi-angle-down{
             position: absolute;
-            right: 35px;
+            right: 5px;
             top: 0px;
             height: 35px;
             line-height: 35px;
@@ -842,6 +850,10 @@ div{
     margin-right: 0px;
     padding: 7px;
     margin-bottom: 15px;
+    &>[class*=col]{
+        padding-top: 0px;
+        padding-bottom: 0px;
+    }
     .tools{
         text-align: right;
         display: flex;
