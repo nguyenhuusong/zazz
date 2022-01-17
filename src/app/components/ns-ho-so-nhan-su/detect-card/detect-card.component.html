@@ -1,0 +1,121 @@
+<div class="row">
+    <div class="col-md-4">
+        <label>Loại giấy tờ:</label>
+        <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" [disabled]="true" (onChange)="onChangeTypeCards()"
+        [options]="typeCards" [(ngModel)]="custIndi.typeCard"
+       name="iol_st" [filter]="true">
+       <ng-template let-item pTemplate="selectedItem">
+           <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
+       </ng-template>
+       <ng-template let-car pTemplate="item">
+           <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+               <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+           </div>
+       </ng-template>
+         </p-dropdown>
+    </div>
+    <!-- <div class="col-md-3">
+        <label>Số điện thoại:</label>
+        <input type="text" name="phone" [(ngModel)]="custIndi.phone" class="form-control">
+    </div>
+    <div class="col-md-6">
+        <label>Email:</label>
+        <input type="text" name="email" [(ngModel)]="custIndi.email" class="form-control">
+    </div> -->
+</div>
+<div class="row mt-1 mb-3 content-upload-card" *ngIf="custIndi.typeCard === 1 || custIndi.typeCard === 2">
+    <div class="col-md-5">
+        <label>Mặt trước CMND/CCCD</label>
+        <div class="img_cmt">
+            <div class="img"><img [src]="imageMt || imgDefault"></div>
+            <!-- <input class="input-hidden" #mt_cmnd type="file" accept="image/*" (change)="uploadMtCm($event)"> -->
+            <span class="upload" #uploadMt>
+                <svg width="68" height="69" viewBox="0 0 68 69" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g filter="url(#filter0_d)">
+                    <ellipse cx="34.1371" cy="34.4124" rx="29.621" ry="29.68" fill="white"/>
+                    </g>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M29.4834 23.0339C29.6832 22.7263 30.0256 22.5405 30.393 22.5405H37.8803C38.2477 22.5405 38.5901 22.7263 38.7899 23.0339L40.9653 26.3848H45.3677C46.3272 26.3848 47.241 26.7765 47.9097 27.4632C48.5774 28.1488 48.9471 29.0723 48.9471 30.0288V44.1245C48.9471 45.0811 48.5774 46.0045 47.9097 46.6901C47.241 47.3768 46.3273 47.7685 45.3677 47.7685H22.9056C21.9461 47.7685 21.0323 47.3768 20.3636 46.6901C19.6959 46.0045 19.3262 45.081 19.3262 44.1245V30.0288C19.3262 29.0723 19.6959 28.1488 20.3636 27.4632C21.0323 26.7765 21.9461 26.3848 22.9056 26.3848H27.308L29.4834 23.0339ZM30.6691 36.4337C30.6691 34.4254 32.2473 32.8457 34.1355 32.8457C36.0237 32.8457 37.6019 34.4254 37.6019 36.4337C37.6019 38.442 36.0237 40.0217 34.1355 40.0217C32.2473 40.0217 30.6691 38.442 30.6691 36.4337ZM34.1355 29.7703C30.5101 29.7703 27.6187 32.7803 27.6187 36.4337C27.6187 40.0871 30.5101 43.0971 34.1355 43.0971C37.7609 43.0971 40.6523 40.0871 40.6523 36.4337C40.6523 32.7803 37.7609 29.7703 34.1355 29.7703Z" fill="#292663"/>
+                    <defs>
+                    <filter id="filter0_d" x="0.516113" y="0.732422" width="67.2419" height="67.36" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                    <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                    <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                    <feOffset/>
+                    <feGaussianBlur stdDeviation="2"/>
+                    <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0"/>
+                    <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+                    <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+                    </filter>
+                    </defs>
+                </svg>
+            </span>
+        </div>
+        
+    </div>
+    <div class="col-md-5">
+        <label>Mặt sau CMND/CCCD</label>
+        <div class="img_cmt">
+            <div class="img"><img [src]="imageMs || imgDefault"></div>
+            <!-- <input class="input-hidden" #ms_cmnd type="file" accept="image/*" (change)="uploadMsCm($event)"> -->
+            <span class="upload" #uploadMs>
+                <svg width="68" height="69" viewBox="0 0 68 69" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g filter="url(#filter0_d)">
+                    <ellipse cx="34.1371" cy="34.4124" rx="29.621" ry="29.68" fill="white"/>
+                    </g>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M29.4834 23.0339C29.6832 22.7263 30.0256 22.5405 30.393 22.5405H37.8803C38.2477 22.5405 38.5901 22.7263 38.7899 23.0339L40.9653 26.3848H45.3677C46.3272 26.3848 47.241 26.7765 47.9097 27.4632C48.5774 28.1488 48.9471 29.0723 48.9471 30.0288V44.1245C48.9471 45.0811 48.5774 46.0045 47.9097 46.6901C47.241 47.3768 46.3273 47.7685 45.3677 47.7685H22.9056C21.9461 47.7685 21.0323 47.3768 20.3636 46.6901C19.6959 46.0045 19.3262 45.081 19.3262 44.1245V30.0288C19.3262 29.0723 19.6959 28.1488 20.3636 27.4632C21.0323 26.7765 21.9461 26.3848 22.9056 26.3848H27.308L29.4834 23.0339ZM30.6691 36.4337C30.6691 34.4254 32.2473 32.8457 34.1355 32.8457C36.0237 32.8457 37.6019 34.4254 37.6019 36.4337C37.6019 38.442 36.0237 40.0217 34.1355 40.0217C32.2473 40.0217 30.6691 38.442 30.6691 36.4337ZM34.1355 29.7703C30.5101 29.7703 27.6187 32.7803 27.6187 36.4337C27.6187 40.0871 30.5101 43.0971 34.1355 43.0971C37.7609 43.0971 40.6523 40.0871 40.6523 36.4337C40.6523 32.7803 37.7609 29.7703 34.1355 29.7703Z" fill="#292663"/>
+                    <defs>
+                    <filter id="filter0_d" x="0.516113" y="0.732422" width="67.2419" height="67.36" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                    <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                    <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                    <feOffset/>
+                    <feGaussianBlur stdDeviation="2"/>
+                    <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0"/>
+                    <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+                    <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+                    </filter>
+                    </defs>
+                </svg>
+            </span>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <p-button label="Gửi" styleClass="p-button-sm mr-1" icon="pi pi-check" *ngIf="!isShowRegister" (click)="sendCustIndiCreate()"></p-button>
+        <!-- <p-button label="Gửi lại" styleClass="p-button-sm mr-1 p-button-secondary" icon="pi pi-times" *ngIf="isShowRegister" (click)="resetCard()"></p-button> -->
+    </div>
+</div>
+<div class="row mt-1" *ngIf="custIndi.typeCard === 3">
+    <div class="col-md-6">
+        <label>Ảnh hộ chiếu</label>
+        <div class="img_cmt">
+            <div class="img"><img [src]="previewHc || imgDefault"></div>
+            <!-- <input class="input-hidden" #mt_hc type="file" accept="image/*" (change)="uploadHC($event)"> -->
+            <span class="upload" #uploadMt >
+                <svg width="68" height="69" viewBox="0 0 68 69" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g filter="url(#filter0_d)">
+                    <ellipse cx="34.1371" cy="34.4124" rx="29.621" ry="29.68" fill="white"/>
+                    </g>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M29.4834 23.0339C29.6832 22.7263 30.0256 22.5405 30.393 22.5405H37.8803C38.2477 22.5405 38.5901 22.7263 38.7899 23.0339L40.9653 26.3848H45.3677C46.3272 26.3848 47.241 26.7765 47.9097 27.4632C48.5774 28.1488 48.9471 29.0723 48.9471 30.0288V44.1245C48.9471 45.0811 48.5774 46.0045 47.9097 46.6901C47.241 47.3768 46.3273 47.7685 45.3677 47.7685H22.9056C21.9461 47.7685 21.0323 47.3768 20.3636 46.6901C19.6959 46.0045 19.3262 45.081 19.3262 44.1245V30.0288C19.3262 29.0723 19.6959 28.1488 20.3636 27.4632C21.0323 26.7765 21.9461 26.3848 22.9056 26.3848H27.308L29.4834 23.0339ZM30.6691 36.4337C30.6691 34.4254 32.2473 32.8457 34.1355 32.8457C36.0237 32.8457 37.6019 34.4254 37.6019 36.4337C37.6019 38.442 36.0237 40.0217 34.1355 40.0217C32.2473 40.0217 30.6691 38.442 30.6691 36.4337ZM34.1355 29.7703C30.5101 29.7703 27.6187 32.7803 27.6187 36.4337C27.6187 40.0871 30.5101 43.0971 34.1355 43.0971C37.7609 43.0971 40.6523 40.0871 40.6523 36.4337C40.6523 32.7803 37.7609 29.7703 34.1355 29.7703Z" fill="#292663"/>
+                    <defs>
+                    <filter id="filter0_d" x="0.516113" y="0.732422" width="67.2419" height="67.36" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                    <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                    <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                    <feOffset/>
+                    <feGaussianBlur stdDeviation="2"/>
+                    <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0"/>
+                    <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+                    <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+                    </filter>
+                    </defs>
+                </svg>
+            </span>
+        </div>
+        
+    </div>
+
+</div>
+<!-- <div class="row mt-1">
+    <div class="col-md-4"></div>
+    <div class="col-md-4 text-right">
+        <p-button label="Gửi" styleClass="p-button-sm mr-1" icon="pi pi-check" (click)="sendCustIndiCreate()"></p-button>
+        <p-button label="Đóng" styleClass="p-button-sm p-button-secondary" icon="pi pi-times" (click)="isShowCustIndiCreate = !isShowCustIndiCreate"></p-button>
+    </div>
+</div> -->

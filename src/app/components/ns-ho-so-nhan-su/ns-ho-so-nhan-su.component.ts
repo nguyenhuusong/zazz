@@ -403,7 +403,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
     const params = {
       employeeId: event.rowData.employeeId
     }
-    this.router.navigate(['/ho-so-nhan-su/thong-tin-nhan-vien'], { queryParams: params });
+    this.router.navigate(['/nhan-su/ho-so-nhan-su/chi-tiet-ho-so-nhan-su'], { queryParams: params });
   }
 
   find() {

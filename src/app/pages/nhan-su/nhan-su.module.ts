@@ -41,16 +41,37 @@ import { ChiTietViTriTuyenDungComponent } from 'src/app/components/ns-tuyen-dung
 import { ChiTietLinhVucTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/chi-tiet-linh-vuc-tuyen-dung/chi-tiet-linh-vuc-tuyen-dung.component';
 import {ImageModule} from 'primeng/image';
 import {OrganizationChartModule} from 'primeng/organizationchart';
+import {ListboxModule} from 'primeng/listbox';
+import {PanelModule} from 'primeng/panel';
+import {SelectButtonModule} from 'primeng/selectbutton';
+import {TimelineModule} from 'primeng/timeline';
+import { ChiTietHoSoNhanSuComponent } from 'src/app/components/ns-ho-so-nhan-su/chi-tiet-ho-so-nhan-su/chi-tiet-ho-so-nhan-su.component';
+import {OverlayPanelModule} from 'primeng/overlaypanel';
+import { UserDetailModule } from 'src/app/components/ns-ho-so-nhan-su/user-detail/user-detail.module';
+import { DetailAccountModule } from 'src/app/components/ns-ho-so-nhan-su/detail-account/detail-account.module';
+import { AddAddressContactComponent } from 'src/app/components/ns-ho-so-nhan-su/add-address-contact/add-address-contact.component';
+import { CardInfoComponent } from 'src/app/components/ns-ho-so-nhan-su/card-info/card-info.component';
+import { DetectCardComponent } from 'src/app/components/ns-ho-so-nhan-su/detect-card/detect-card.component';
+import { UploadFileModule } from 'src/app/common/upload-file/upload-file.module';
+import { EmpAttachFileModule } from 'src/app/components/ns-ho-so-nhan-su/emp-attach-file/emp-attach-file.module';
+import { CreateContractInfoComponent } from 'src/app/components/ns-ho-so-nhan-su/create-contract-info/create-contract-info.component';
 @NgModule({
   imports: [
     MessagesModule,
     MessageModule,
+    SelectButtonModule,
     FormsModule,
     ReactiveFormsModule,
+    PanelModule,
     CommonModule,
     TreeModule,
+    TimelineModule,
     TableModule,
+    OverlayPanelModule,
     BreadcrumbModule,
+    DetailAccountModule,
+    ListboxModule,
+    UserDetailModule,
     MultiSelectModule,
     ListGridAngularModule,
     PaginatorModule,
@@ -74,6 +95,8 @@ import {OrganizationChartModule} from 'primeng/organizationchart';
     DropdownModule,
     TabViewModule,
     ConfirmDialogModule,
+    UploadFileModule,
+    EmpAttachFileModule,
     AgGridModule.withComponents([
       ButtonRendererComponent,
       ButtonRendererComponent1
@@ -89,7 +112,12 @@ import {OrganizationChartModule} from 'primeng/organizationchart';
     LinhVucTuyenDungComponent,
     ChiTietLinhVucTuyenDungComponent,
     ChiTietTuyenDungComponent,
-    ChiTietViTriTuyenDungComponent
+    ChiTietViTriTuyenDungComponent,
+    ChiTietHoSoNhanSuComponent,
+    AddAddressContactComponent,
+    CardInfoComponent,
+    DetectCardComponent,
+    CreateContractInfoComponent
   ],
   providers: [ ]
 })

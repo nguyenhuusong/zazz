@@ -1,0 +1,88 @@
+.upload-default .p-header{
+    font-size: 16px;
+}
+:host::ng-deep .upload-default .p-fileupload p-button{
+    display: none;
+}
+:host::ng-deep .p-fileupload-row{
+    display: none !important;
+}
+:host::ng-deep .upload-default .p-fileupload-content{
+    padding-top: 60px;
+}
+:host::ng-deep .upload-default  .p-fileupload-files>div{
+    display: flex;
+    flex-wrap: wrap;
+}
+:host::ng-deep .upload-default  .p-fileupload-files .p-fileupload-row{
+    width: 20%;
+    position: relative;
+    padding: 10px;
+}
+:host::ng-deep .upload-default  .p-fileupload-files .p-fileupload-row>div:first-child:before{
+    content: "";
+    padding-top: 100%;
+    display: block;
+}
+:host::ng-deep .upload-default  .p-fileupload-files .p-fileupload-row>div:first-child{
+    
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 1px 1px 1px #ccccccad;
+}
+:host::ng-deep .upload-default  .p-fileupload-files .p-fileupload-row>div:first-child img{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+    -webkit-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    padding: 10px;
+    padding-bottom: 25px;
+}
+:host::ng-deep .upload-default  .p-fileupload-files .p-fileupload-row>div{
+    display: none;
+    padding: 0px;
+    width: 100%;
+}
+:host::ng-deep .upload-default  .p-fileupload-files .p-fileupload-row>div:last-child,
+:host::ng-deep .upload-default  .p-fileupload-files .p-fileupload-row>div:first-child{
+    display: block;
+    position: relative;
+}
+:host::ng-deep .upload-default  .p-fileupload-files .p-fileupload-row>div:last-child{
+    position: absolute;
+    bottom: 5px;
+    left: 10px;
+    width: calc(100% - 20px);
+}
+:host::ng-deep .upload-default  .p-fileupload-files .p-fileupload-row>div:last-child .p-button-icon-only{
+    background: none;
+    border: none;
+    outline: none;
+    box-shadow: none;
+}
+:host::ng-deep .upload-default  .p-fileupload-files .p-fileupload-row .p-button-icon::before{
+    content: "\e93d";
+    color: #999;
+}
+:host::ng-deep .upload-default .files-content{
+    text-align: center;
+    color: #c3c3c3;
+    font-size: 16px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    padding: 20px 0px;
+}
+:host::ng-deep .upload-default .p-progressbar{
+    display: none;
+}
+:host::ng-deep .upload-default .p-fileupload-buttonbar{
+    text-align: center;
+}
