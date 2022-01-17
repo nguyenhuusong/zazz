@@ -84,7 +84,7 @@ export class CardInfoComponent implements OnInit, OnChanges {
   }
 
   cancelUpdate() {
-    this.manhinh = 'View';
+    this.manhinh = 'Edit';
     this.getCustIndiIdentity();
   }
 }

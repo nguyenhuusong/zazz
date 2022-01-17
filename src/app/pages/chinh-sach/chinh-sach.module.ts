@@ -36,6 +36,8 @@ import { CsAnCaComponent } from 'src/app/components/cs-an-ca/cs-an-ca.component'
 import { CsTienLuongComponent } from 'src/app/components/cs-tien-luong/cs-tien-luong.component';
 import { CsThueThuNhapComponent } from 'src/app/components/cs-thue-thu-nhap/cs-thue-thu-nhap.component';
 import { ChiTietNghiPhepComponent } from 'src/app/components/cs-nghi-phep/chi-tiet-nghi-phep/chi-tiet-nghi-phep.component';
+import { ChiTietAnCaComponent } from 'src/app/components/cs-an-ca/chi-tiet-an-ca/chi-tiet-an-ca.component';
+import { ChiTietChamCongComponent } from 'src/app/components/cs-cham-cong/chi-tiet-cham-cong/chi-tiet-cham-cong.component';
 
 @NgModule({
   imports: [
@@ -80,7 +82,9 @@ import { ChiTietNghiPhepComponent } from 'src/app/components/cs-nghi-phep/chi-ti
     CsAnCaComponent,
     CsTienLuongComponent,
     CsThueThuNhapComponent,
-    ChiTietNghiPhepComponent
+    ChiTietNghiPhepComponent,
+    ChiTietAnCaComponent,
+    ChiTietChamCongComponent
   ],
   providers: []
 })

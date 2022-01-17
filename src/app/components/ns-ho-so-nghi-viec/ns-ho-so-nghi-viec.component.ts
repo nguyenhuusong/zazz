@@ -147,7 +147,6 @@ export class NsHoSoNghiViecComponent implements OnInit {
     this.gridColumnApi = params.columnApi;
   }
 
-
   listsData = []
   load() {
     this.columnDefs = []
@@ -217,9 +216,6 @@ export class NsHoSoNghiViecComponent implements OnInit {
       }]
   }
 
-  listViews = [];
-  detailInfo = null
-  displayFormEdit = false
   EditEmployee(event) {
     const params = {
       id: event.rowData.id

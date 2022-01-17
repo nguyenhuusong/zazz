@@ -144,7 +144,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       this.manhinh = 'Edit';
       this.handleParams();
     } else {
-      this.manhinh = 'View';
+      this.manhinh = 'Edit';
       this.handleParams();
     }
   }
@@ -193,7 +193,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   }
 
   onChangeMenu(e): void {
-    this.manhinh = 'View';
+    this.manhinh = 'Edit';
     if (this.selectedMenuCode === API_PROFILE.CONG_VIEC) {
       this.optionsButtonsView =
         [
@@ -692,7 +692,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
         if (this.url === 'them-moi-cong-ty') {
           this.goBack();
         } else {
-          this.manhinh = 'View';
+          this.manhinh = 'Edit';
           this.getEmployeeInfo();
         }
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Cập nhật thông tin thành công' });
@@ -708,44 +708,44 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   onChangeButtonView(event): void {
     this.modelDuyet.employeeCd = this.detailInfo.employeeCd;
     this.modelDuyet.full_name = this.detailInfo.fullName;
-    this.manhinh = 'View';
+    this.manhinh = 'Edit';
     if (event.value === 'Back') {
       this.manhinh = event.value;
       this.goBack();
     } else if (event.value === 'HuyHoSo') {
       this.titleForm.title = 'Xác nhận hủy hồ sơ';
       this.titleForm.type = event.value;
-      this.manhinh = 'View';
+      this.manhinh = 'Edit';
       this.displayDialog = true;
 
     } else if (event.value === 'MoLaiHoSo') {
       this.titleForm.title = 'Xác nhận mở lại hồ sơ';
       this.titleForm.type = event.value;
-      this.manhinh = 'View';
+      this.manhinh = 'Edit';
       this.displayDialog = true;
 
     } else if (event.value === 'DuyetHoSo') {
       this.titleForm.title = 'Xác nhận duyệt hồ sơ';
       this.titleForm.type = event.value;
-      this.manhinh = 'View';
+      this.manhinh = 'Edit';
       this.displayDialog = true;
 
     } else if (event.value === 'ChuyenCongTac') {
       this.titleForm.title = 'Chuyển công tác';
       this.titleForm.type = event.value;
-      this.manhinh = 'View';
+      this.manhinh = 'Edit';
       this.displayDialog = true;
 
     } else if (event.value === 'NghiViec') {
       this.titleForm.title = 'Xác nhận nhân viên nghỉ việc';
       this.titleForm.type = event.value;
-      this.manhinh = 'View';
+      this.manhinh = 'Edit';
       this.displayDialog = true;
 
     } else if (event.value === 'TuyenDungLai') {
       this.titleForm.title = 'Xác nhận nhân viên tuyển dụng lại';
       this.titleForm.type = event.value;
-      this.manhinh = 'View';
+      this.manhinh = 'Edit';
       this.displayDialog = true;
     } else {
       this.manhinh = event.value;
@@ -826,7 +826,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     this.apiService.setEmployeeCancel(parmas).subscribe((results: any) => {
       if (results.status === 'success') {
         this.displayDialog = false;
-        this.manhinh = 'View';
+        this.manhinh = 'Edit';
         this.getEmployeeInfo();
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Xác nhận Hủy hồ sơ thành công' });
       } else {
@@ -842,7 +842,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     this.apiService.setEmployeeOpenhrm(parmas).subscribe((results: any) => {
       if (results.status === 'success') {
         this.displayDialog = false;
-        this.manhinh = 'View';
+        this.manhinh = 'Edit';
         this.getEmployeeInfo();
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Xác nhận mở lại hồ sơ thành công' });
       } else {
@@ -858,7 +858,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     this.apiService.setEmployeeApprovehrm(parmas).subscribe((results: any) => {
       if (results.status === 'success') {
         this.displayDialog = false;
-        this.manhinh = 'View';
+        this.manhinh = 'Edit';
         this.getEmployeeInfo();
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Xác nhận duyệt thành công' });
       } else {
@@ -874,7 +874,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     this.apiService.setEmployeeChange(parmas).subscribe((results: any) => {
       if (results.status === 'success') {
         this.displayDialog = false;
-        this.manhinh = 'View';
+        this.manhinh = 'Edit';
         this.getEmployeeInfo();
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Xác nhận duyệt thành công' });
       } else {
@@ -890,7 +890,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     this.apiService.setEmployeeTermilate(parmas).subscribe((results: any) => {
       if (results.status === 'success') {
         this.displayDialog = false;
-        this.manhinh = 'View';
+        this.manhinh = 'Edit';
         this.getEmployeeInfo();
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Xác nhận nghỉ việc thành công' });
       } else {
@@ -906,7 +906,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     this.apiService.setEmployeeRehired(parmas).subscribe((results: any) => {
       if (results.status === 'success') {
         this.displayDialog = false;
-        this.manhinh = 'View';
+        this.manhinh = 'Edit';
         this.getEmployeeInfo();
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Xác nhận tuyển dụng lại thành công' });
       } else {
@@ -927,7 +927,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   }
 
   cancelUpdate(e): void {
-    this.manhinh = 'View';
+    this.manhinh = 'Edit';
     this.getEmployeeInfo();
   }
 

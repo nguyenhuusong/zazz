@@ -50,7 +50,7 @@
             <p-paginator [rows]="query.pageSize" [totalRecords]="countRecord.totalRecord" [first]="first" (onPageChange)="paginate($event)" [rowsPerPageOptions]="[15,30,45,100,200,{ showAll: 'ALL' }]"></p-paginator>
         </div>
             <app-list-grid-angular  *ngIf="columnDefs.length > 0"
-                [listsData]="listsData" [height]="500" [domLayout]="'autoHeight'"
+                [listsData]="listsData" [domLayout]="'autoHeight'"
                 [columnDefs]="columnDefs"></app-list-grid-angular>
                
         </div>

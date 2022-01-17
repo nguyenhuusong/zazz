@@ -8,6 +8,8 @@ import { CsAnCaComponent } from 'src/app/components/cs-an-ca/cs-an-ca.component'
 import { CsTienLuongComponent } from 'src/app/components/cs-tien-luong/cs-tien-luong.component';
 import { CsThueThuNhapComponent } from 'src/app/components/cs-thue-thu-nhap/cs-thue-thu-nhap.component';
 import { ChiTietNghiPhepComponent } from 'src/app/components/cs-nghi-phep/chi-tiet-nghi-phep/chi-tiet-nghi-phep.component';
+import { ChiTietAnCaComponent } from 'src/app/components/cs-an-ca/chi-tiet-an-ca/chi-tiet-an-ca.component';
+import { ChiTietChamCongComponent } from 'src/app/components/cs-cham-cong/chi-tiet-cham-cong/chi-tiet-cham-cong.component';
 
 const routes: Routes = [
   {
@@ -22,6 +24,14 @@ const routes: Routes = [
     data: {
       title: 'Danh sách chấm công',
       url: 'cham-cong',
+    },
+  },
+  {
+    path: 'cham-cong/chi-tiet-cham-cong',
+    component: ChiTietChamCongComponent,
+    data: {
+      title: 'Chi tiết chấm công',
+      url: 'chi-tiet-cham-cong',
     },
   },
 //nghỉ phép
@@ -50,6 +60,14 @@ const routes: Routes = [
   data: {
     title: 'Danh sách ăn ca',
     url: 'an-ca',
+  },
+},
+{
+  path: 'an-ca/chi-tiet-an-ca',
+  component: ChiTietAnCaComponent,
+  data: {
+    title: 'Chi tiết ăn ca',
+    url: 'chi-tiet-an-ca',
   },
 },
 

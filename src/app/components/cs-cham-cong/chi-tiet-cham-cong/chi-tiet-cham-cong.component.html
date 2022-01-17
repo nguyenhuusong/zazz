@@ -1,0 +1,12 @@
+
+<div class="main-grid product-detail">
+    <div class="breadcrumb">
+        <h3>{{titlePage}}</h3>
+        <p-breadcrumb [model]="items"></p-breadcrumb>
+    </div>
+   <div class="content">
+    <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'"  [dataView]="listViews"
+        (callback)="setCompanyInfo($event)" (callbackcancel)="cancelUpdate()"></app-edit-detail>
+   </div>
+   
+</div>

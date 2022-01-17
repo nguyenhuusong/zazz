@@ -110,7 +110,7 @@ export class UserDetailComponent implements OnInit, OnChanges {
           this.apiService.setProfileIdcardVerify({ loginName: this.detailInfo.loginName }).subscribe(results => {
             if (results.status === 'success') {
               this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Thông tin đã được xác minh thành công' });
-              this.manhinh = 'View';
+              this.manhinh = 'Edit';
               this.getProfileInfo();
             } else {
               this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });

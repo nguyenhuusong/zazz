@@ -72,7 +72,14 @@ export class ApiHrmService {
       responseType: "blob"
     });
   }
-  
+  getEatingPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/eating/GetEatingPage?` + queryParams, this.options)
+  }
+
+  getTimekeepingPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/timekeeping/GetTimekeepingPage?` + queryParams, this.options)
+  }
+
   setContractInfo(params): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/contract/SetContractInfo`, params, this.options)
   }
@@ -451,4 +458,9 @@ export class ApiHrmService {
   getLeaveInfo(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/leave/GetLeaveInfo?` + queryParams, this.options)
   }
+
+  getEatingInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/eating/GetEatingInfo?` + queryParams, this.options)
+  }
+
 }

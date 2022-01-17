@@ -189,7 +189,7 @@ export class AddAddressContactComponent implements OnInit, OnChanges {
   }
 
   cancelUpdate() {
-    this.manhinh = 'View';
+    this.manhinh = 'Edit';
   }
 }
 

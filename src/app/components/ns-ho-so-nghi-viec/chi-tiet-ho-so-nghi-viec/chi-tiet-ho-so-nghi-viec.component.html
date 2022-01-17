@@ -32,3 +32,11 @@
    </div>
    
 </div>
+
+<p-dialog [(visible)]="displayuploadcontract" [autoZIndex]="true" [modal]="true" [position]="'top-right'"  [appendTo]="'body'"
+[style]="{width: '800px', height: 'auto'}">
+<p-header>
+    Tải lên hợp đồng [{{metafile?.meta_title}}]
+</p-header>
+<app-upload-file [multiple]="" (callback)="handleUpload($event)" *ngIf="displayuploadcontract"></app-upload-file>
+</p-dialog>

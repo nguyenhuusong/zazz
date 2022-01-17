@@ -80,7 +80,7 @@ export class DetailAccountComponent implements OnInit, OnChanges {
         this.manhinh = 'Edit';
         this.getAccountInfo();
       }else {
-        this.manhinh = 'View';
+        this.manhinh = 'Edit';
         this.getAccountInfo();
       }
  
@@ -123,7 +123,7 @@ export class DetailAccountComponent implements OnInit, OnChanges {
           if(this.url === 'them-moi-tai-khoan') {
             this.goBack()
           }else {
-            this.manhinh = 'View';
+            this.manhinh = 'Edit';
             this.getAccountInfo();
           }
         }else {
@@ -161,7 +161,7 @@ export class DetailAccountComponent implements OnInit, OnChanges {
 
   cancelUpdate() {
     if(this.detailAccount.account_no) {
-      this.manhinh = 'View';
+      this.manhinh = 'Edit';
       this.getAccountInfo();
     }else {
       this.back.emit();
