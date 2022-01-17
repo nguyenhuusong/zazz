@@ -9,7 +9,7 @@ import * as numeral from 'numeral';
 
 @Component({
   selector: 'app-type-text',
-  template: ` 
+  template: ` <div class="input-group">
                 <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="modelFields[element.field_name].isRequire">*</span></label>
                 <div>
                 <input type="text" class="form-control" [(ngModel)]="element.columnValue" (change)="onChangeValue($event.target, element.field_name)"
@@ -19,6 +19,7 @@ import * as numeral from 'numeral';
                     class="alert-validation alert-danger">
                     <div [hidden]="!modelFields[element.field_name].error">
                     {{modelFields[element.field_name].message}}
+                    </div>
                     </div>
                 `,
 })
@@ -41,29 +42,31 @@ export class AppTypeTextComponent implements OnInit {
 @Component({
   selector: 'app-type-select',
   template: `   
-  <label class="text-nowrap label-text mb-0" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
-  <div>
-  <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
-    [disabled]="element.isDisable" [options]="element.options"
-    [required]="element.isRequire && element.isVisiable && !element.isEmpty" [(ngModel)]="element.columnValue"
-    name={{element.field_name}}>
-    <ng-template let-item pTemplate="selectedItem">
-      <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
-    </ng-template>
-    <ng-template let-car pTemplate="item">
-      <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-        <div style="font-size:14px;float:left;margin-top:4px">{{car.label}}</div>
-      </div>
-    </ng-template>
-  </p-dropdown>
+    <div class="select-default">
+          <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
+          <div>
+          <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
+            [disabled]="element.isDisable" [options]="element.options"
+            [required]="element.isRequire && element.isVisiable && !element.isEmpty" [(ngModel)]="element.columnValue"
+            name={{element.field_name}}>
+            <ng-template let-item pTemplate="selectedItem">
+              <span style="vertical-align:middle;">{{item.label}}</span>
+            </ng-template>
+            <ng-template let-car pTemplate="item">
+              <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                <div style="font-size:14px;float:left;margin-top:4px">{{car.label}}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
 
-  <div *ngIf="element.isRequire && submit && !element.columnValue"
-      class="alert-validation alert-danger">
-      <div [hidden]="element.columnValue">
-      Trường bắt buộc nhập!
-      </div>
-  </div>
-</div>
+          <div *ngIf="element.isRequire && submit && !element.columnValue"
+              class="alert-validation alert-danger">
+              <div [hidden]="element.columnValue">
+              Trường bắt buộc nhập!
+              </div>
+          </div>
+        </div>
+        </div>
                 `,
 })
 export class AppTypeSelectComponent implements OnInit {
@@ -86,17 +89,19 @@ export class AppTypeSelectComponent implements OnInit {
 
 @Component({
   selector: 'app-type-selectTree',
-  template: `   
-  <label class="text-nowrap label-text mb-0" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
-  <div> 
-  <p-treeSelect [(ngModel)]="element.columnValue" [options]="element.options" [required]="element.isRequire && element.isVisiable && !element.isEmpty" (onNodeSelect)="onChangeTree($event, element.field_name)" [disabled]="element.isDisable" selectionMode="single"  placeholder="Select Item"></p-treeSelect>
-  <div *ngIf="element.isRequire && submit && !element.columnValue"
-      class="alert-validation alert-danger">
-      <div [hidden]="element.columnValue">
-      Trường bắt buộc nhập!
+  template: `  
+    <div class="select-default"> 
+      <label class="text-nowrap label-tex" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
+      <div> 
+      <p-treeSelect [(ngModel)]="element.columnValue" [options]="element.options" [required]="element.isRequire && element.isVisiable && !element.isEmpty" (onNodeSelect)="onChangeTree($event, element.field_name)" [disabled]="element.isDisable" selectionMode="single"  placeholder="Select Item"></p-treeSelect>
+      <div *ngIf="element.isRequire && submit && !element.columnValue"
+          class="alert-validation alert-danger">
+          <div [hidden]="element.columnValue">
+          Trường bắt buộc nhập!
+          </div>
       </div>
-  </div>
-</div>
+    </div>
+    </div>
                 `,
 })
 export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
@@ -152,14 +157,15 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
 @Component({
   selector: 'app-type-dropdown',
   template: `   
-                <label class="text-nowrap label-text mb-0" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
+          <div class="select-default">
+                <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
                 <div>
                 <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
                   [disabled]="element.isDisable" [options]="element.options" (onChange)="onChangeValue($event.value, element.field_name)"
                   [required]="element.isRequire && element.isVisiable && !element.isEmpty" [(ngModel)]="element.columnValue"
                   name={{element.field_name}} [filter]="true">
                   <ng-template let-item pTemplate="selectedItem">
-                    <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
+                    <span style="vertical-align:middle;">{{item.label}}</span>
                   </ng-template>
                   <ng-template let-car pTemplate="item">
                     <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
@@ -172,6 +178,7 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
                 <div [hidden]="!modelFields[element.field_name].error">
                 {{modelFields[element.field_name].message}}
                 </div>
+            </div>
             </div>
                 `,
 })
@@ -417,6 +424,7 @@ export class AppTypeCheckboxComponent implements OnInit {
 @Component({
   selector: 'app-type-textarea',
   template: `   
+    <div class="textarea-default">
                 <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
                 <div>
                   <textarea type="text" placeholder="" class="form-control"
@@ -429,6 +437,7 @@ export class AppTypeCheckboxComponent implements OnInit {
                     Trường bắt buộc nhập!
                     </div>
                 </div>
+            </div>
             </div>
                 `,
 })
@@ -451,7 +460,8 @@ export class AppTypeTextareaComponent implements OnInit {
 @Component({
   selector: 'app-type-datetime',
   template: `   
-                <label class="text-nowrap label-text mb-0" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
+  <div class="input-group">
+                <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
                 <div>
                   <p-calendar placeholder="DD/MM/YYYY" appendTo="body" [baseZIndex]="101" [disabled]="element.isDisable"
                   [(ngModel)]="element.columnValue" [monthNavigator]="true" [yearNavigator]="true"
@@ -464,6 +474,7 @@ export class AppTypeTextareaComponent implements OnInit {
                     Trường bắt buộc nhập!
                     </div>
                 </div>
+            </div>
             </div>
                 `,
 })
@@ -721,6 +732,7 @@ export class AppTypeCheckboxRadioListComponent implements OnInit {
 @Component({
   selector: 'app-type-linkurl',
   template: `   
+            <div class="input-group">
                   <label  class="text-nowrap label-text" >{{element.columnLabel}}</label>
                   <div>
                   <div style="display: flex;align-items: flex-end" *ngIf="this.element.columnValue"><input type="text" class="form-control" [value]="this.element.columnValue">
@@ -733,6 +745,7 @@ export class AppTypeCheckboxRadioListComponent implements OnInit {
                       Trường bắt buộc nhập!
                       </div>
                   </div>
+                </div>
                 </div>
                 `,
 })
