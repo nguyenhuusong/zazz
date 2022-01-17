@@ -89,6 +89,7 @@ export class NsHoSoNghiViecComponent implements OnInit {
       org_id: 0,
       reason_id: 0
     }
+    this.load();
   }
 
   getAgencyOrganizeMap() {

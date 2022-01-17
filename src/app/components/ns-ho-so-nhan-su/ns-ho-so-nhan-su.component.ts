@@ -133,6 +133,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
       isApprove: -1,
       emp_st: -1
     }
+    this.load();
   }
 
   onGridReady(params) {
