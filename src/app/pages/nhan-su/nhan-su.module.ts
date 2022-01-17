@@ -41,16 +41,27 @@ import { ChiTietViTriTuyenDungComponent } from 'src/app/components/ns-tuyen-dung
 import { ChiTietLinhVucTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/chi-tiet-linh-vuc-tuyen-dung/chi-tiet-linh-vuc-tuyen-dung.component';
 import {ImageModule} from 'primeng/image';
 import {OrganizationChartModule} from 'primeng/organizationchart';
+import {ListboxModule} from 'primeng/listbox';
+import {PanelModule} from 'primeng/panel';
+import {SelectButtonModule} from 'primeng/selectbutton';
+import {TimelineModule} from 'primeng/timeline';
+import { ChiTietHoSoNhanSuComponent } from 'src/app/components/ns-ho-so-nhan-su/chi-tiet-ho-so-nhan-su/chi-tiet-ho-so-nhan-su.component';
+import {OverlayPanelModule} from 'primeng/overlaypanel';
 @NgModule({
   imports: [
     MessagesModule,
     MessageModule,
+    SelectButtonModule,
     FormsModule,
     ReactiveFormsModule,
+    PanelModule,
     CommonModule,
     TreeModule,
+    TimelineModule,
     TableModule,
+    OverlayPanelModule,
     BreadcrumbModule,
+    ListboxModule,
     MultiSelectModule,
     ListGridAngularModule,
     PaginatorModule,
@@ -89,7 +100,8 @@ import {OrganizationChartModule} from 'primeng/organizationchart';
     LinhVucTuyenDungComponent,
     ChiTietLinhVucTuyenDungComponent,
     ChiTietTuyenDungComponent,
-    ChiTietViTriTuyenDungComponent
+    ChiTietViTriTuyenDungComponent,
+    ChiTietHoSoNhanSuComponent
   ],
   providers: [ ]
 })

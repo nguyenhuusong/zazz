@@ -8,6 +8,7 @@ import { ChiTietLinhVucTuyenDungComponent } from 'src/app/components/ns-tuyen-du
 import { ChiTietTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/chi-tiet-tuyen-dung/chi-tiet-tuyen-dung.component';
 import { NsHoSoNghiViecComponent } from 'src/app/components/ns-ho-so-nghi-viec/ns-ho-so-nghi-viec.component';
 import { NsHoSoNhanSuComponent } from 'src/app/components/ns-ho-so-nhan-su/ns-ho-so-nhan-su.component';
+import { ChiTietHoSoNhanSuComponent } from 'src/app/components/ns-ho-so-nhan-su/chi-tiet-ho-so-nhan-su/chi-tiet-ho-so-nhan-su.component';
 
 const routes: Routes = [
   {
@@ -97,6 +98,14 @@ const routes: Routes = [
     data: {
       title: 'Danh sách hồ sơ nhân sự',
       url: 'ho-so-nhan-su',
+    },
+  },
+  {
+    path: 'ho-so-nhan-su/chi-tiet-ho-so-nhan-su',
+    component: ChiTietHoSoNhanSuComponent,
+    data: {
+      title: 'Chi tiết hồ sơ nhân sự',
+      url: 'chi-tiet-ho-so-nhan-su',
     },
   },
 

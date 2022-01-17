@@ -29,5 +29,22 @@ export class ApiCoreService {
       .get<any>(`${apiCoreBaseUrl}/api/v1/coresystem/GetClientWebInfo?` + queryParams , this.options);
   }
 
+  deleteCustUser(params): Observable<any> {
+    return this.http
+      .delete<any>(`${apiCoreBaseUrl}/api/v1/individual/DeleteCustUser?` + params, this.options);
+  }
+
+  setCustUser(params): Observable<any> {
+    return this.http
+      .post<any>(`${apiCoreBaseUrl}/api/v1/individual/SetCustUser`, params, this.options);
+  }
+
+  getCustIndiIdentity(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiCoreBaseUrl}/api/v1/individual/GetCustIndiIdentity?` + queryParams, this.options)
+  }
+
+  setCustIndiIdentityCreate(params): Observable<any>{
+    return this.http.post<any>(`${apiCoreBaseUrl}/api/v1/individual/SetCustIndiIdentityCreate`, params, this.options);
+  }
 
 }

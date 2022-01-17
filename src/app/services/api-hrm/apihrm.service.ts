@@ -61,6 +61,102 @@ export class ApiHrmService {
     });
   }
 
+  setEmpWorking(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/employee/SetEmpWorking`, params, this.options)
+  }
+
+  setEmpDependent(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/employee/SetEmpDependent`, params, this.options)
+  }
+
+  setEmpContact(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/employee/SetEmpContact`, params, this.options)
+  }
+  
+  getEmpWorking(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/employee/GetEmpWorking?` + queryParams, this.options)
+  }
+
+  getEmpDependent(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/employee/GetEmpDependent?` + queryParams, this.options)
+  }
+
+  getEmpContact(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/employee/GetEmpContact?` + queryParams, this.options)
+  }
+
+  getTerminateReasons(): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/terminate/GetTerminateReasons?`, this.options)
+  }
+
+  getEmployeeData(linkurl, queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/employee/${linkurl}?` + queryParams, this.options)
+  }
+
+  setEmployeeInfo(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/employee/SetEmployeeInfo`, params, this.options)
+  }
+
+  lockUser<T>(userId): Observable<T> {
+    return this.http.post<T>(`${apiHrmServer}/api/v1/user/LockUser`, { userId }, this.options);
+  }
+
+  unLockUser<T>(userId): Observable<T> {
+    return this.http.post<T>(`${apiHrmServer}/api/v1/user/UnLockUser`, { userId }, this.options);
+  }
+
+  setEmployeeCancel(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/employee/SetEmployeeCancel`, params, this.options)
+  }
+  
+  setEmployeeTermilate(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/employee/SetEmployeeTermilate`, params, this.options)
+  }
+
+  setEmployeeRehired(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/employee/SetEmployeeRehired`, params, this.options)
+  }
+
+  setEmployeeChange(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/employee/setEmployeeChange`, params, this.options)
+  }
+
+  getRecordInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/contract/GetRecordInfo?` + queryParams, this.options)
+  }
+
+  setContractStatus(params): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v2/contract/SetContractStatus`, params, this.options)
+  }
+
+  removeUser(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/user/RemoveUser?` + queryParams, this.options)
+  }
+
+  delEmpWorking(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiCore}/api/v2/employee/DelEmpWorking?` + queryParams, this.options);
+  }
+
+  delContractInfo(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/contract/DelContractInfo?` + queryParams, this.options)
+  }
+  
+  delEmpAttach(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/employee/DelEmpAttach?` + queryParams, this.options)
+  }
+
+  delEmpDependent(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/employee/DelEmpDependent?` + queryParams, this.options)
+  }
+  
+  delEmpContact(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/employee/DelEmpContact?` + queryParams, this.options)
+  }
+
+  setRecordInfo(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/contract/SetRecordInfo`, params, this.options)
+  }
+
   setIncomeTaxStatus(id): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v2/incometax/SetIncomeTaxStatus?id=` + id, this.options);
   }
@@ -299,6 +395,4 @@ export class ApiHrmService {
   getLeavePage(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/leave/GetLeavePage?` + queryParams, this.options)
   }
-  
-
 }
