@@ -47,4 +47,28 @@ export class ApiCoreService {
     return this.http.post<any>(`${apiCoreBaseUrl}/api/v1/individual/SetCustIndiIdentityCreate`, params, this.options);
   }
 
+  getProfileInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiCoreBaseUrl}/api/v1/coreuser/GetProfileInfo?` + queryParams, this.options)
+  }
+
+  setProfileInfo(queryParams): Observable<any> {
+    return this.http.put<any>(`${apiCoreBaseUrl}/api/v1/coreuser/SetProfileInfo`, queryParams, this.options)
+  }
+
+  setProfileIdcardVerify(params): Observable<any> {
+    return this.http.put<any>(`${apiCoreBaseUrl}/api/v1/coreuser/SetProfileIdcardVerify`,params, this.options);
+  }
+  
+  geAddressList(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiCoreBaseUrl}/api/v1/corelogin/GeAddressList?` + queryParams, this.options)
+  }
+
+  setCustAddressContact(params): Observable<any> {
+    return this.http.post<any>(`${apiCoreBaseUrl}/api/v1/individual/SetCustAddressContact`, params, this.options);
+  }
+
+  setCustIndiIdentity(params): Observable<any> {
+    return this.http.put<any>(`${apiCoreBaseUrl}/api/v1/individual/SetCustIndiIdentity`, params, this.options);
+  }
+
 }

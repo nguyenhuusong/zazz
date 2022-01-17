@@ -1,0 +1,56 @@
+.right{
+    display: flex;
+    flex-direction: column;
+  }
+
+   .right img{
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+  
+   .right h4{
+    margin-bottom: 10px;
+  }
+  
+   .right p{
+    font-size: 12px;
+  }
+
+  .icon-plus {
+    position: absolute;
+    right: 85px;
+    top: 24%;
+    cursor: pointer;
+    background: #2196F3;
+    border-radius: 50%;
+    padding: 14px;
+    color: #fff;
+  }
+
+  .icon-plus:hover {
+    color: red !important;
+  }
+
+  :host::ng-deep .p-card-title {
+      font-size: 0.9rem;
+      text-align: center;
+  }
+
+  input[id^="sign_"]{
+    display: none;
+  }
+  
+  .imageWrapper {
+    &.isAdd {
+      label  {
+        display: flex;
+        width: 100%;
+        max-width: 500px;
+        border: 1px solid #c8ced3;
+        height: 100px;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+      }
+    }
+  }

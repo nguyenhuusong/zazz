@@ -1,0 +1,95 @@
+<main>
+    <div class="khachHangWrapper">
+        <div class="row">
+            <div class="col-md-6">
+                <label for="">Tỉnh/TP</label>
+                <p-dropdown appendTo="body" [baseZIndex]="100" (onChange)="getHuyen()" [autoDisplayFirst]="false" [required]="true"
+                    [options]="tinhs" [(ngModel)]="modelAddress.cont_add4" name="cont_add4"
+                    [filter]="true">
+                    <ng-template let-item pTemplate="selectedItem">
+                        <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
+                    </ng-template>
+                    <ng-template let-car pTemplate="item">
+                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                            <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+            </div>
+            <div class="col-md-6">
+                <label for="">Quận/Huyện</label>
+                <p-dropdown appendTo="body" [baseZIndex]="100" (onChange)="getphuongxa()" [autoDisplayFirst]="false" [required]="true"
+                    [options]="huyens" [(ngModel)]="modelAddress.cont_add3" name="cont_add3"
+                    [filter]="true">
+                    <ng-template let-item pTemplate="selectedItem">
+                        <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
+                    </ng-template>
+                    <ng-template let-car pTemplate="item">
+                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                            <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+            </div>
+            
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="">Phường/Xã</label>
+                <p-dropdown appendTo="body" [baseZIndex]="100"  (onChange)="getContAddress1()" [autoDisplayFirst]="false" [required]="true"
+                    [options]="phuongxas" [required]="true" [(ngModel)]="modelAddress.cont_add2" name="cont_add2"
+                    [filter]="true">
+                    <ng-template let-item pTemplate="selectedItem">
+                        <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
+                    </ng-template>
+                    <ng-template let-car pTemplate="item">
+                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                            <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+            </div>
+            <div class="col-md-6">
+                <label for="">Thôn/Xóm</label>
+                <input type="text" [(ngModel)]="modelAddress.cont_add1" name="cont_add1" (change)="fullStringAddress()" class="form-control">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <label for="">Địa chỉ</label>
+                <textarea name="cont_add_full" id="" cols="30" rows="10" disabled  class="form-control" [(ngModel)]="modelAddress.cont_add_full"></textarea>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <label for="">Tên người liên hệ</label>
+                <input type="text" [(ngModel)]="modelAddress.cont_name" name="cont_name" class="form-control">
+            </div>
+            <div class="col-md-4">
+                <label for="">Số điện thoại</label>
+                <input type="text" [(ngModel)]="modelAddress.cont_phone" name="cont_phone" class="form-control">
+            </div>
+            <div class="col-md-4">
+                <label for="">Dùng mặc định {{trangthais.length}}</label>
+             <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" [required]="true"
+                [options]="trangthais"  [(ngModel)]="modelAddress.cont_flg" name="cont_flg"
+                [filter]="true">
+                <ng-template let-item pTemplate="selectedItem">
+                    <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
+                </ng-template>
+                <ng-template let-car pTemplate="item">
+                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                        <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                    </div>
+                </ng-template>
+            </p-dropdown>
+            </div>
+        </div>
+        <div class="row"> 
+            <div class="col-md-6"></div>
+            <div class="col-md-6 text-right">
+                <p-button label="Lưu lại" styleClass="p-button-sm" (click)="saveAddress()"></p-button>
+            </div>
+        </div>
+    </div>
+</main>

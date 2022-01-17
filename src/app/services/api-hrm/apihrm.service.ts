@@ -19,6 +19,18 @@ export class ApiHrmService {
     })
   };
 
+  getIdentityCardInfomation(image: File) {
+    const options = {
+      headers: new HttpHeaders({
+        'key': 'WZWfWCN2VPDxbYsV6sRfR0N1fV8x030h'
+      })
+    };
+    const formdata = new FormData();
+    formdata.append('image', image, 'TanTano');
+    formdata.append('request_id', '14071996');
+    return this.http.post('https://api.cloudekyc.com/v3.2/ocr/recognition', formdata, options);
+  }
+
   // Dashboard
   getCustObjectListNew(type = false, queryParams): Observable<any> {
     if (type) {
@@ -59,6 +71,39 @@ export class ApiHrmService {
       }),
       responseType: "blob"
     });
+  }
+  
+  setContractInfo(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/contract/SetContractInfo`, params, this.options)
+  }
+
+
+  setContractDraft(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/contract/SetContractDraft`, params, this.options)
+  }
+
+  setContractUpload(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/contract/SetContractUpload`, params, this.options)
+  }
+
+  getContractInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/contract/GetContractInfo?` + queryParams, this.options)
+  }
+
+  setEmpAttach(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/employee/SetEmpAttach`, params, this.options)
+  }
+
+  getEmpAttach(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/employee/GetEmpAttach?` + queryParams, this.options)
+  }
+
+  getAccountInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiCore}/api/v1/coreaccount/GetAccountInfo?` + queryParams, this.options)
+  }
+
+  setAccountInfo(params): Observable<any> {
+    return this.http.post<any>(`${apiCore}/api/v1/coreaccount/SetAccountInfo`, params, this.options)
   }
 
   setEmpWorking(params): Observable<any> {

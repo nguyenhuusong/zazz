@@ -1,0 +1,3 @@
+
+ <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'" [thongtinnhanvienNew]="true" [dataView]="listViews"
+    (callback)="setUploadFile($event)" (callbackcancel)="huy()"></app-edit-detail>

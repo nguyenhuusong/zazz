@@ -1,0 +1,40 @@
+
+
+<div class="content-header row " *ngIf="titlePage && isModal" >
+    <div class="content-header-left col-md-6 col-12 mb-1">
+        <h5 class="content-header-title ">{{titlePage}}</h5>
+    </div>
+    <div class="content-header-right breadcrumbs-right breadcrumbs-top col-md-6 col-12">
+        <div class="breadcrumb-wrapper col-12">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a routerLink="/dashbroad">Trang chủ</a>
+                </li>
+                <li class="breadcrumb-item active">{{titlePage}}
+                </li>
+            </ol>
+        </div>
+    </div>
+  </div>
+  <main>
+    <div class="khachHangWrapper">
+      <div class="row">
+        <div class="col-md-12">
+              <div class="" *ngIf="detailInfo">
+                <!-- <p-selectButton  [options]="optionsButtonsView" *ngIf="listViews.length> 0 && manhinh === 'View'" optionLabel="label" optionValue="value" (onChange)="onChangeButtonView($event)"></p-selectButton> -->
+                  <app-edit-detail *ngIf="listViews.length> 0 && manhinh === 'Edit'"  [manhinh]="manhinh" [dataView]="listViews" (callback)="setAccountInfo($event)" (callbackcancel)="cancelUpdate()"></app-edit-detail>
+              </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+
+  <!-- <p-dialog header="{{imageDetail?.doc_sub_type_name}}" [(visible)]="displayViewImage" [modal]="true" [draggable]="false" [resizable]="false" [style]="{width: '50vw'}" [autoZIndex]=true
+  [draggable]="false" [resizable]="false">
+  <img src="{{imageDetail?.metaUrl}}"  class="w-100">
+      <ng-template pTemplate="footer">
+      <p-button icon="pi pi-check" (click)="displayViewImage=false" label="Ok" styleClass="p-button-text"></p-button>
+      </ng-template>
+  </p-dialog> -->
+  

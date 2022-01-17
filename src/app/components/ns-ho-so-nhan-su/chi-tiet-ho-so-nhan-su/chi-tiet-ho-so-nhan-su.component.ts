@@ -1314,7 +1314,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     this.getEmployeeInfo();
   }
 
-  emitAttach() {
+  emitAttach(e) {
     this.displayAttach = false;
     this.getEmployeeInfo();
   }
