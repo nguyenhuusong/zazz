@@ -713,6 +713,7 @@ body {
     .upload_file{
         border: none !important;
         box-shadow: none !important;
+        padding: 0px !important
     }
 }
 
@@ -2015,5 +2016,13 @@ div.new-toolbar-style{
                 margin-right: 5px;
             }
         }
+    }
+}
+.p-dropdown-panel{
+    max-width: 300px;
+}
+.p-dropdown-item{
+    div{
+        white-space: initial;
     }
 }
