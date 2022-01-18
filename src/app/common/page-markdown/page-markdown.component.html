@@ -11,7 +11,7 @@
     
       <div class="col-12">
         <label for="desc"><b>Đính kèm ảnh</b>
-          <span class="icon-choose-image">
+          <span class="icon-choose-image mb-3">
             <i title="Chọn ảnh" class="fa fa-picture-o ml-1 pointer text-primary" aria-hidden="true" (click)="chooseImageContent()"></i>
           </span>
         </label>
@@ -19,7 +19,7 @@
           <div class="col-sm-6">{{modelMarkdow?.type == 0 || modelMarkdow?.type == 1 ? 'Nội dung Markdown' : 'Nội dung HTML'}} </div>
           <div class="col-sm-6">Hiển thị</div>
           <div class="col-12 mt-2">
-            <md-editor id="content" name="content" [height]="'400px'" [(ngModel)]="element.columnValue"
+            <md-editor class="md-editor-binh-luan" id="content" name="content" [height]="'400px'" [(ngModel)]="element.columnValue"
                maxlength="2500"></md-editor>
           </div>
         </div>
