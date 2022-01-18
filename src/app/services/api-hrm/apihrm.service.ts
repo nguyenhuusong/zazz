@@ -687,8 +687,21 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v1/organize/SetOrganizeInfo`, queryParams, this.options)
   }
 
+  getUsersByCust(custId): Observable<any[]> {
+    return this.http
+      .get<any[]>(`${apiBaseUrl}/api/v1/user/GetUsersByCust?custId=${custId}`, this.options);
+  }
+
   setOrganizePosition(queryParams): Observable<any> {
     return this.http.put<any>(`${apiHrmServer}/api/v1/organize/SetOrganizePosition`, queryParams, this.options)
+  }
+
+  getReportList(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/report/GetReportList?` + queryParams, this.options)
+  }
+  
+  setUserAdd(params): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v1/user/SetUserAdd`, params, this.options)
   }
   
   setOrganizeCompany(queryParams): Observable<any> {
@@ -845,6 +858,10 @@ export class ApiHrmService {
   lockCardVehicle<T>(cardVehicleId) {
     const card = { status: 1, cardVehicleId };
     return this.http.put<T>(`${apiHrmServer}/api/v2/cardvehicle/SetVehicleLock`, card, this.options);
+  }
+
+  getUserPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/user/GetUserPage?` + queryParams, this.options)
   }
 
   getEmployeeVehiclePage(queryParams): Observable<any> {

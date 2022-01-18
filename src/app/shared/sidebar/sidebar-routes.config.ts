@@ -652,7 +652,7 @@ export const ROUTES: any[] =[
         },
         {
           "menuId": 155,
-          "path": "/quyen-nguoi-dung",
+          "path": "/phan-quyen/quyen-nguoi-dung",
           "title": "Quyền người dùng",
           "icon": "sun-icon-person",
           "classs": "nav-item",

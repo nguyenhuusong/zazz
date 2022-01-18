@@ -53,6 +53,8 @@ import { CardModule } from 'primeng/card';
 import {TimelineModule} from 'primeng/timeline';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { ApiHrmService } from './services/api-hrm/apihrm.service';
+import { BaoCaoComponent } from './components/bao-cao/bao-cao.component';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
 const APP_CONTAINERS = [DefaultLayoutComponent];
 @NgModule({
     declarations: [
@@ -67,6 +69,7 @@ const APP_CONTAINERS = [DefaultLayoutComponent];
         CustomTooltipComponent,
         TooltipSuggestionComponent,
         DropdownRendererComponent,
+        BaoCaoComponent,
     ],
     imports: [
         BrowserAnimationsModule,
@@ -88,6 +91,7 @@ const APP_CONTAINERS = [DefaultLayoutComponent];
         SplitButtonModule,
         ScrollPanelModule,
         NgxSpinnerModule,
+        BreadcrumbModule,
         // AgGridModule.withComponents([
         //     ButtonRendererComponent1,
         //     NumberCellRenderer,
