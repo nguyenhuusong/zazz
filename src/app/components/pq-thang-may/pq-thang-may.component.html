@@ -89,16 +89,16 @@
               </div>
         </p-card>
         <!-- //grid1 -->
-        <div class="grid-default" #container> 
-            <p-button label="Thêm mới" [disabled]="!detailcar" styleClass="p-button-sm" (onClick)="AddNew();" icon="pi pi-plus"></p-button>
+        <p-button label="Thêm mới" [disabled]="!detailcar" styleClass="p-button-sm" (onClick)="AddNew();" icon="pi pi-plus"></p-button>
+        <div class="grid-default border" #container> 
             <app-list-grid-angular *ngIf="columnDefs.length > 0" [listsData]="rowData" [height]="500"
                 [domLayout]="'autoHeight'" [columnDefs]="columnDefs"></app-list-grid-angular>
 
         </div>
         <p-card header="Kiểm tra quyền">
             <div class="row" style="margin-top: 10px;">
-                <div class="col-xl-2 col-lg-5 col-md-12 mb-1" style="margin-left: -15px;">
-                  <fieldset class="form-group">
+                <div class="col-xl-3 col-lg-2 col-md-3 mb-1">
+                  <div class="select-default">
                     <label for="status">Dự án</label>
                     <select class="form-control" (change)="getBuidingsSearch();load1()" name="projectCd"
                       [(ngModel)]="modelElevator.projectCd" id="projectCd" #projectCd="ngModel">
@@ -106,10 +106,10 @@
                       <option *ngFor="let advert of projects; let i = index" value="{{advert.projectCd}}">
                         {{advert.projectName}} </option>
                     </select>
-                  </fieldset>
+                  </div>
                 </div>
-                <div class="col-xl-2 col-lg-5 col-md-12 mb-1">
-                  <fieldset class="form-group">
+                <div class="col-xl-3 col-lg-2 col-md-3 mb-1">
+                  <div class="select-default">
                     <label for="status">Tòa</label>
                     <select class="form-control" (change)="getBuildingZones($event);load1()" name="buildCd"
                       [(ngModel)]="modelElevator.buildCd" id="buildCd" #buildCd="ngModel">
@@ -118,10 +118,10 @@
                         {{objBuilding.buildName}}
                       </option>
                     </select>
-                  </fieldset>
+                  </div>
                 </div>
-                <div class="col-xl-2 col-lg-5 col-md-12 mb-1">
-                  <fieldset class="form-group">
+                <div class="col-xl-3 col-lg-2 col-md-3 mb-1">
+                  <div class="select-default">
                     <label for="status">Khu vực</label>
                     <select class="form-control" name="buildZone" (change)="getFloors($event);load1()"
                       [(ngModel)]="modelElevator.buildZone" id="buildZone" #buildZone="ngModel">
@@ -129,10 +129,10 @@
                       <option *ngFor="let advert of buildingZones; let i = index" value="{{advert.buildZoneName}}">
                         {{advert.buildZoneName}} </option>
                     </select>
-                  </fieldset>
+                  </div>
                 </div>
-                <div class="col-xl-2 col-lg-5 col-md-12 mb-1">
-                  <fieldset class="form-group">
+                <div class="col-xl-3 col-lg-2 col-md-3 mb-1">
+                  <div class="select-default">
                     <label for="status">Tầng</label>
                     <select class="form-control" (change)="getHardware();load1()" name="floor"
                       [(ngModel)]="modelElevator.floorNumber" id="floor" #floor="ngModel">
@@ -140,10 +140,10 @@
                       <option *ngFor="let advert of floors; let i = index" value="{{advert.floorNumber}}">
                         {{advert.floorName}} </option>
                     </select>
-                  </fieldset>
+                  </div>
                 </div>
-                <div class="col-xl-2 col-lg-5 col-md-12 mb-1">
-                  <fieldset class="form-group">
+                <div class="col-xl-3 col-lg-2 col-md-3 mb-1">
+                  <div class="select-default">
                     <label for="status">Thiết bị</label>
                     <select class="form-control" name="hardwareId" (change)="load1()"
                       [(ngModel)]="modelElevator.hardwareId" id="hardwareId" #hardwareId="ngModel">
@@ -151,20 +151,23 @@
                       <option *ngFor="let advert of devices; let i = index" value="{{advert.hardwareId}}">
                         {{advert.hardwareId}} </option>
                     </select>
-                  </fieldset>
+                  </div>
                 </div>
-                <div class="col-xl-1 col-lg-3 col-md-12 ssg-btn-search">
-                  <button type="button" (click)="load1()" class="btn btn-primary">
-                    <i _ngcontent-c4="" class="fa fa-search"></i>
-                  </button>
-                  <button type="button" (click)="cancelTestdevices()" class="btn btn-default">
-                    <i _ngcontent-c4="" class="fa fa-repeat"></i>
-                  </button>
+                <div class="col-xl-1 col-lg-2 col-md-12 ssg-btn-search">
+                  <div class="group-btns">
+                    <label style="visibility: hidden;">fff</label>
+                    <button type="button" (click)="load1()" class="btn btn-primary mr-2">
+                      <i _ngcontent-c4="" class="fa fa-search"></i>
+                    </button>
+                    <button type="button" (click)="cancelTestdevices()" class="btn btn-default">
+                      <i _ngcontent-c4="" class="fa fa-repeat"></i>
+                    </button>
+                  </div>
                 </div>
               </div>
         </p-card>
           <!-- //grid2 -->
-          <div class="grid-default" #container> 
+          <div class="grid-default border" #container> 
             <app-list-grid-angular *ngIf="columnDefs1.length > 0" [listsData]="rowData1" [height]="500"
                 [domLayout]="'autoHeight'" [columnDefs]="columnDefs1"></app-list-grid-angular>
 
