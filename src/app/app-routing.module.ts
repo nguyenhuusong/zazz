@@ -32,6 +32,10 @@ const appRoutes: Routes = [
         path: 'cai-dat',
         loadChildren: () => import('../app/pages/cai-dat/cai-dat.module').then(m => m.CaiDatModule)
       },
+      {
+        path: 'phan-quyen',
+        loadChildren: () => import('../app/pages/phan-quyen/phan-quyen.module').then(m => m.PhanQuyenModule)
+      },
       // {
       //   path: 'manager',
       //   loadChildren: () => import('../app/pages/quan-tri/quan-tri.module').then(m => m.QuanTriModule)

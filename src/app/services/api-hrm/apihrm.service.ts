@@ -3,9 +3,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { from, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AuthService } from '../auth.service';
+import { CardInfo, Project, TypeCard } from 'src/app/models/cardinfo.model';
+import { BuildZone } from 'src/app/models/buildzone.model';
+import { ElevatorFloor } from 'src/app/models/elevatorfloor.model';
 const apiBaseUrl = environment.apiBase;
 const apiHrmServer = environment.apiHrmBase;
 const apiCore = environment.apiCoreBase;
+const apiShome = environment.apiShomeBase;
 @Injectable()
 export class ApiHrmService {
   constructor(
@@ -776,5 +780,134 @@ export class ApiHrmService {
     return this.http.delete<any>(`${apiHrmServer}/api/v2/contract/DelContractTypeInfo?` + queryParams, this.options)
   }
 
+  // api cũ
+  getCardCustomers<T>(filter): Observable<T> {
+    return this.http
+      .get<T>(`${apiBaseUrl}/api/v1/shome/GetCardCustomers?${filter}`, this.options);
+  }
+
+  getCardInfo<T>(cardNum: string, customerPhoneNumber: string, HardwareId: string): Observable<T> {
+    return this.http
+      .get<T>(`${apiBaseUrl}/api/v1/shome/GetCardInfo?` +
+        `cardNum=${cardNum}&` +
+        `customerPhoneNumber=${customerPhoneNumber}&` +
+        `hardwareId=${HardwareId}`, this.options);
+  }
+
+  getBuildCdByProjectCd<T>(projectCd: string): Observable<T> {
+    return this.http
+      .get<T>(`${apiShome}/api/v1/shome/GetBuildCdByProjectCd?` +
+        `projectCd=${projectCd}`, this.options);
+  }
+
+  getMasElevatorCards(filter, offset, pagesize): Observable<CardInfo[]> {
+    return this.http
+      .get<CardInfo[]>(`${apiShome}/api/v1/shome/GetMasElevatorCards?` +
+        `filter=${filter}&` +
+        `offSet=${offset}&` +
+        `pageSize=${pagesize}`, this.options);
+  }
+
+  GetBuildFloorByProjectCdBuildCd(buildZone, projectCd, buildCd): Observable<BuildZone[]> {
+    return this.http
+      .get<BuildZone[]>(`${apiShome}/api/v1/shome/GetBuildFloorByProjectCdBuildCd?` +
+        `projectCd=${projectCd}&` +
+        `buildZone=${buildZone}&` +
+        `buildCd=${buildCd}&`, this.options);
+  }
+
+  getElevatorDevicePage(filter, offset, pagesize, projectCd, buildZone, buildCd, floorNumber = null): Observable<Project[]> {
+    return this.http
+      .get<Project[]>(`${apiShome}/api/v1/shome/GetElevatorDevicePage?` +
+        `filter=${filter}&` +
+        `offSet=${offset}&` +
+        `pageSize=${pagesize}&` +
+        `buildCd=${buildCd}&` +
+        `projectCd=${projectCd}&` +
+        `floorNumber=${floorNumber}&` +
+        `buildZone=${buildZone}`
+        , this.options);
+  }
+
+  GetElevatorFloorPage(filter, offset, pagesize, projectCd, buildCd, buildZone): Observable<ElevatorFloor[]> {
+    return this.http
+      .get<ElevatorFloor[]>(`${apiShome}/api/v1/shome/GetElevatorFloorPage?` +
+        `filter=${filter}&` +
+        `offSet=${offset}&` +
+        `pageSize=${pagesize}&` +
+        `projectCd=${projectCd}&` +
+        `buildCd=${buildCd}&` +
+        `buildZone=${buildZone}&`
+        , this.options);
+  }
+
+  setMasElevatorFloor(params): Observable<string> {
+    return this.http
+      .post<string>(`${apiShome}/api/v1/shome/SetMasElevatorFloor`, params, this.options);
+  }
+
+  getFloorTypeByBuildCd(buildCd): Observable<BuildZone[]> {
+    return this.http
+      .get<BuildZone[]>(`${apiShome}/api/v1/shome/GetFloorTypeByBuildCd?` +
+        `buildCd=${buildCd}&`, this.options);
+  }
+
+  getBuildByProjectCd(projectCd): Observable<any[]> {
+    return this.http
+      .get<any[]>(`${apiShome}/api/v1/shome/GetBuildCdByProjectCd?` +
+        `projectCd=${projectCd}&`, this.options);
+  }
+
+  setMasElevatorDevice(params): Observable<string> {
+    return this.http
+      .post<string>(`${apiShome}/api/v1/shome/SetMasElevatorDevice`, params, this.options);
+  }
+
+  getFoorInfoGo(filter, projectCd, buildZone, buildCd, hardWareId, offset, pagesize): Observable<CardInfo[]> {
+    return this.http
+      .get<CardInfo[]>(`${apiShome}/api/v1/shome/GetFoorInfoGo?` +
+        `filter=${filter}&` +
+        `projectCd=${projectCd}&` +
+        `buildZone=${buildZone}&` +
+        `buildCd=${buildCd}&` +
+        `hardWareId=${hardWareId}&` +
+        `offSet=${offset}&` +
+        `pageSize=${pagesize}`, this.options);
+  }
+
+  addRoleCard(mEcard: CardInfo): Observable<any> {
+    return this.http.post<any>(`${apiShome}/api/v1/shome/SetMasElevatorCard`, mEcard, this.options);
+  }
+
+  getElevatorCardRole<T>(): Observable<T> {
+    return this.http
+      .get<T>(`${apiShome}/api/v1/shome/GetElevatorCardRole`, this.options);
+  }
+  
+  getCardTypeList(): Observable<TypeCard[]> {
+    return this.http.get<TypeCard[]>(`${apiBaseUrl}/api/v2/customer/GetCardTypeList`, this.options);
+  }
+
+  getProjects(): Observable<Project[]> {
+    return this.http
+      .get<Project[]>(`${apiBaseUrl}/api/v1/shome/GetProjects`, this.options);
+  }
+
+  getElevatorFloors<T>(buildCd: string): Observable<T> {
+    return this.http
+      .get<T>(`${apiShome}/api/v1/shome/GetElevatorFloors?` +
+        `buildCd=${buildCd}`, this.options);
+  }
+
+  deleteRoleCard(MasECid): Observable<string> {
+    return this.http
+      .delete<string>(`${apiShome}/api/v1/shome/DeleteMasElevatorCard?MasECid=${MasECid}`, this.options);
+  }
+
+  getBuildZoneByBuildCd(projectCd, buildCd): Observable<BuildZone[]> {
+    return this.http
+      .get<BuildZone[]>(`${apiShome}/api/v1/shome/GetBuildZoneByBuildCd?` +
+        `buildCd=${buildCd}&projectCd=${projectCd}`, this.options);
+  }
 
 }

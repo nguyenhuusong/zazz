@@ -502,8 +502,8 @@ export const ROUTES: any[] =[
       "submenus": [
         {
           "menuId": 154,
-          "path": "/elevator",
-          "title": "Quyền thang máy",
+          "path": "/phan-quyen/phan-quyen-thang-may",
+          "title": "Phân quyền thang máy",
           "icon": "sun-icon-file-submodule",
           "classs": "nav-item",
           "badge": "",
