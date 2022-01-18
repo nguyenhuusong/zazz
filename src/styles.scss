@@ -2005,3 +2005,15 @@ div.new-toolbar-style{
     
     background: #fff;
 }
+.md-editor-binh-luan{
+    .tool-bar{
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 10px;
+        .btn-group{
+            button{
+                margin-right: 5px;
+            }
+        }
+    }
+}
