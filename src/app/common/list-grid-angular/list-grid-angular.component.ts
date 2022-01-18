@@ -28,6 +28,17 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
   @Input() title: string = '';
   @Input() idGrid: string = 'myGrid';
   // autoHeight
+  @Input() defaultColDef: any = {
+    tooltipComponent: 'customTooltip',
+    resizable: true,
+    suppressSorting: false,
+    sortable: false,
+    suppressSizeToFit: false,
+    filter: '',
+    rowHeight: 90,
+    cellClass: ['border-right'],
+    tooltipComponentParams: { color: '#ececec' },
+  };;
   @Input() domLayout: string = '';
   @Input() height: number = 0;
   @Input() heightRow: number = 40;
@@ -48,7 +59,6 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
       numberFormat: { format: '#,##0' },
     }
   ];
-  defaultColDef;
   sideBar: any
   gridApi: any;
   getRowHeight: any;
@@ -71,35 +81,24 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
       fileName: this.titlePage ? this.titlePage : 'export'
     };
     this.isRowMaster = (dataItem) => {
-      if(dataItem) {
-        if(dataItem.Details) {
+      if (dataItem) {
+        if (dataItem.Details) {
           return dataItem && dataItem.Details ? dataItem.Details.length > 0 : false;
-        }else if(dataItem.orderDetails) {
+        } else if (dataItem.orderDetails) {
           return dataItem && dataItem.orderDetails ? dataItem.orderDetails.length > 0 : false;
-        }else if(dataItem.details) {
+        } else if (dataItem.details) {
           return dataItem && dataItem.details ? dataItem.details.length > 0 : false;
-        }else if(dataItem.submenus) {
+        } else if (dataItem.submenus) {
           return dataItem && dataItem.submenus ? dataItem.submenus.length > 0 : false;
-        }else if(dataItem.stockDiaryDetails) {
+        } else if (dataItem.stockDiaryDetails) {
           return dataItem && dataItem.stockDiaryDetails ? dataItem.stockDiaryDetails.length > 0 : false;
-        }else {
+        } else {
           return false
         }
-      }else {
-       return false
+      } else {
+        return false
       }
-     
-    };
-    this.defaultColDef = {
-      tooltipComponent: 'customTooltip',
-      resizable: true,
-      suppressSorting: false,
-      sortable: false,
-      suppressSizeToFit: false,
-      filter: '',
-      rowHeight: 90,
-      cellClass: ['border-right'],
-      tooltipComponentParams: { color: '#ececec' },
+
     };
 
     this.frameworkComponents = {

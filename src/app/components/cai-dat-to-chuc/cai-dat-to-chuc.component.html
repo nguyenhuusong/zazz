@@ -1,1 +1,190 @@
-<p>cai-dat-to-chuc works!</p>
+<div class="grid main-grid">
+    <div class="col-12 right max-w-full">
+        <div class="breadcrumb">
+            <h3>Danh sách tổ chức</h3>
+            <p-breadcrumb [model]="items"></p-breadcrumb>
+        </div>
+        <!-- preserveSpace -->
+        <p-card [style]="{'overflow': 'auto'}">
+            <p-organizationChart [value]="listAgencyMap" #mydiv  [preserveSpace]="false" selectionMode="single" [(selection)]="selectedNode" (onNodeSelect)="onNodeSelect($event)"
+            styleClass="company">
+            <ng-template let-node pTemplate="person">
+                <div class="node-header p-corner-top">{{node.data.position ? node.data.position : 'No position'}}</div>
+                <div class="node-content">
+                    <img src="{{node.data.avatarUrl ? node.data.avatarUrl : '../../../../../assets/images/img_avatar.png'}}" width="32">
+                    <div>{{node.data.full_name ? node.data.full_name : 'No name'}}</div>
+                </div>
+            </ng-template>
+            <ng-template let-node pTemplate="department" >
+                {{node.label}}
+            </ng-template>
+         
+        </p-organizationChart>
+        </p-card>
+        <div class="table-tool grid white-background black-box-shadow-005 filterInput mt-2">
+
+            <div class="header-filter-search col-7 ">
+                <div class="input-group icon">
+                    <svg class="placeholder-icon" width="16" height="16" viewBox="0 0 16 16" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M10.1305 11.2619C9.28558 11.8771 8.24518 12.24 7.12002 12.24C4.29231 12.24 2 9.94772 2 7.12002C2 4.29231 4.29231 2 7.12002 2C9.94772 2 12.24 4.29231 12.24 7.12002C12.24 8.24518 11.8771 9.28558 11.2619 10.1305L13.7657 12.6343C14.0781 12.9467 14.0781 13.4533 13.7657 13.7657C13.4533 14.0781 12.9467 14.0781 12.6343 13.7657L10.1305 11.2619ZM11.28 7.12002C11.28 9.41753 9.41753 11.28 7.12002 11.28C4.8225 11.28 2.96 9.41753 2.96 7.12002C2.96 4.8225 4.8225 2.96 7.12002 2.96C9.41753 2.96 11.28 4.8225 11.28 7.12002Z"
+                            fill="#808AA6" />
+                    </svg>
+                    <input class="input-default" type="text" placeholder="Mã, tên nhóm" id="filter"
+                        (keydown.enter)="query.offSet = 0; first = 0;load()"
+                        [(ngModel)]="query.filter">
+                    <i id="icon-search" class="pi pi-angle-down"></i>
+                    <p-button class="search-button" icon="pi pi-search" (click)="query.offSet = 0; first = 0; load()">
+                    </p-button>
+                </div>
+                <div class="input-group-append dropdown">
+                </div>
+            </div>
+            <div class="col-5 tools">
+                <p-button label="Thêm mới phòng ban" (click)="Add()" styleClass="p-button-sm mr-1" icon="pi pi-plus"></p-button>
+                <p-button label="Chỉnh sửa phòng ban" (click)="Edit()" styleClass="p-button-sm mr-1" icon="pi pi-pencil"></p-button>
+                <p-button label="Xóa phòng ban" (click)="Delete()" *ngIf="detailOrganizeMap?.parent_id > 0" styleClass="p-button-sm p-button-danger mr-1" icon="pi pi-trash"></p-button>
+                <p-button *ngIf="detailOrganizeMap?.org_level >= 0" (click)="menuButton.toggle($event)" label="Cài đặt" icon="pi pi-cog" styleClass="p-button-sm mr5"></p-button>
+                <p-menu [model]="menuItem" [appendTo]="'body'" [popup]="true" #menuButton></p-menu>
+            </div>
+            
+        </div>
+        <div class="grid-default" #container>
+            <div class="paginator">
+                <span>Từ {{ countRecord.currentRecordStart }} đến
+                    {{ countRecord.currentRecordEnd }}
+                    trên tổng số
+                    {{ countRecord.totalRecord }} kết quả</span>
+                <p-paginator [rows]="query.pageSize" [totalRecords]="countRecord.totalRecord" [first]="first"
+                    (onPageChange)="paginate($event)" [rowsPerPageOptions]="[15,30,45,100,200,{ showAll: 'ALL' }]">
+                </p-paginator>
+            </div>
+            <app-list-grid-angular *ngIf="columnDefs.length > 0" [listsData]="listsData" [height]="500"
+                [domLayout]="'autoHeight'" [columnDefs]="columnDefs"></app-list-grid-angular>
+
+        </div>
+    </div>
+</div>
+
+<p-dialog [(visible)]="displayOrganize" [draggable]="false" [resizable]="false"  [modal]="true" [style]="{width: '700px', height: 'auto'}">
+    <p-header>
+        {{titleForm.label}}
+    </p-header>
+    <div class=" col-md-12 mt-1">
+        <label for="">parent_id</label> <br>
+        <p-treeSelect [(ngModel)]="selectedNodeTree" [options]="listOrganizeTree" *ngIf="titleForm.value === 'Edit'"
+        selectionMode="single" placeholder="Select Item"></p-treeSelect>
+        <p-dropdown appendTo="body" [disabled]="titleForm.value === 'Add'" *ngIf="titleForm.value === 'Add'"  [baseZIndex]="100" 
+        [options]="organizeList" [required] [(ngModel)]="modeAgencyOrganize.parent_id" name="parent_id" [filter]="true">
+        <ng-template let-item pTemplate="selectedItem">
+          <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
+        </ng-template>
+        <ng-template let-car pTemplate="item">
+          <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+            <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+          </div>
+        </ng-template>
+      </p-dropdown>
+    </div>
+    <div class=" col-md-12 mt-1">
+        <label for="">Level</label>
+        <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" [required]
+        [options]="organizeLevelList"  [(ngModel)]="modeAgencyOrganize.org_level" name="org_level" [filter]="true">
+        <ng-template let-item pTemplate="selectedItem">
+          <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
+        </ng-template>
+        <ng-template let-car pTemplate="item">
+          <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+            <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+          </div>
+        </ng-template>
+      </p-dropdown>
+    </div>
+    <div class=" col-md-12 mt-1">
+        <label for="">Danh sách phòng ban</label>
+      <p-dropdown appendTo="body" (onChange)="selectDepartment($event)" [baseZIndex]="100" [autoDisplayFirst]="false"
+        [options]="departments" [required] [(ngModel)]="modeAgencyOrganize.de_cd" name="de_cd" [filter]="true">
+        <ng-template let-item pTemplate="selectedItem">
+          <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
+        </ng-template>
+        <ng-template let-car pTemplate="item">
+          <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+            <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+          </div>
+        </ng-template>
+      </p-dropdown>
+    </div>
+    <div class=" col-md-12 mt-1">
+        <label for="">Mã phòng ban</label>
+        <input type="text" [(ngModel)]="modeAgencyOrganize.org_cd" name="org_cd" class="form-control">
+    </div>
+    <div class=" col-md-12 mt-1">
+        <label for="">Tên phòng ban</label>
+        <input type="text" [(ngModel)]="modeAgencyOrganize.org_name" name="org_name" class="form-control">
+    </div>
+    
+   
+     <!-- <div class=" col-md-12 mt-1">
+        <label for="">Khu vực</label>
+        <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" required=true
+        [options]="regionLists" required [(ngModel)]="modeAgencyOrganize.region_id" name="region_id" [filter]="true">
+        <ng-template let-item pTemplate="selectedItem">
+          <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
+        </ng-template>
+        <ng-template let-car pTemplate="item">
+          <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+            <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+          </div>
+        </ng-template>
+      </p-dropdown>
+    </div> -->
+     <!-- <div class=" col-md-12 mt-1">
+        <label for="">Tổ chức saler</label>
+        <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" required=true
+        [options]="orgTypes" required [(ngModel)]="modeAgencyOrganize.org_type" name="org_type" [filter]="true">
+        <ng-template let-item pTemplate="selectedItem">
+          <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
+        </ng-template>
+        <ng-template let-car pTemplate="item">
+          <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+            <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+          </div>
+        </ng-template>
+      </p-dropdown>
+    </div> -->
+     <!-- <div class=" col-md-12 mt-1" *ngIf="titleForm?.value === 'Edit'">
+        <label for="">parent</label> <br>
+        <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" required=true
+        [options]="organizeList" required [(ngModel)]="modeAgencyOrganize.parent_id" name="parent_id" [filter]="true">
+        <ng-template let-item pTemplate="selectedItem">
+          <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
+        </ng-template>
+        <ng-template let-car pTemplate="item">
+          <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+            <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+          </div>
+        </ng-template>
+      </p-dropdown>
+    </div> -->
+    <!-- <div class=" col-md-12 mt-1" *ngIf="titleForm?.value === 'Add'">
+        <label for="">Là cấp con</label>
+        <div class="p-field-checkbox">
+            <p-checkbox [(ngModel)]="modeAgencyOrganize.isChild" name="isChild" binary="true" inputId="binary" (onChange)="onChangeCheckbox($event)" ></p-checkbox>
+            <label for="binary">{{checked}}</label>
+        </div>
+    </div> -->
+    <div class=" col-md-12 mt-1 d-flex justify-content-end">
+        <p-button styleClass="p-button-sm mr-1" label="Lưu lại" (click)="Save()" icon="pi pi-check"></p-button>
+        <p-button styleClass="p-button-secondary p-button-sm" (click)="Close()" label="Đóng lại" icon="pi pi-times"> </p-button>
+    </div>
+</p-dialog>
+
+<p-dialog header="Chức năng"  [autoZIndex]="true"  [modal]="true" [draggable]="false" [resizable]="false" [(visible)]="displayButton">
+   <div class="row d-flex justify-content-center"> 
+    <p-button label="Danh sách phòng ban" (click)="getlistnv()" styleClass="p-button-sm mr-1 p-button-info" icon="pi pi-eye"></p-button>
+    <p-button label="Thêm mới phòng ban" (click)="Add()" styleClass="p-button-sm mr-1" icon="pi pi-plus"></p-button>
+    <p-button label="Chỉnh sửa phòng ban" (click)="Edit()" styleClass="p-button-sm mr-1" icon="pi pi-pencil"></p-button>
+    <p-button label="Xóa phòng ban" (click)="Delete()" *ngIf="detailOrganizeMap?.parent_id > 0" styleClass="p-button-sm p-button-danger" icon="pi pi-trash"></p-button>
+   </div>
+</p-dialog>

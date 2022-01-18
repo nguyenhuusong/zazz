@@ -39,6 +39,18 @@ import { ChiTietLichHopComponent } from 'src/app/components/cai-dat-lich-hop/chi
 import { MeetingScheduleMemberComponent } from 'src/app/components/cai-dat-lich-hop/meeting-schedule-member/meeting-schedule-member.component';
 import { DanhSachPhongHopComponent } from 'src/app/components/cai-dat-lich-hop/danh-sach-phong-hop/danh-sach-phong-hop.component';
 import { ChiTietPhongHopComponent } from 'src/app/components/cai-dat-lich-hop/danh-sach-phong-hop/chi-tiet-phong-hop/chi-tiet-phong-hop.component';
+import { TreeSelectModule } from 'primeng/treeselect';
+import { OrganizationChartModule } from 'primeng/organizationchart';
+import { ChiTietToChucComponent } from 'src/app/components/cai-dat-to-chuc/chi-tiet-to-chuc/chi-tiet-to-chuc.component';
+import { GridAddModule } from 'src/app/common/grid-add/grid-add.module';
+import { PanelModule } from 'primeng/panel';
+import { ChucVuComponent } from 'src/app/components/cai-dat-to-chuc/chuc-vu/chuc-vu.component';
+import { NoiLamViecComponent } from 'src/app/components/cai-dat-to-chuc/noi-lam-viec/noi-lam-viec.component';
+import { CaiDatThamSoComponent } from 'src/app/components/cai-dat-to-chuc/cai-dat-tham-so/cai-dat-tham-so.component';
+import { LichLamViecComponent } from 'src/app/components/cai-dat-to-chuc/lich-lam-viec/lich-lam-viec.component';
+import { ChiTietChucVuComponent } from 'src/app/components/cai-dat-to-chuc/chuc-vu/chi-tiet-chuc-vu/chi-tiet-chuc-vu.component';
+import { ChiTietNoiLamViecComponent } from 'src/app/components/cai-dat-to-chuc/noi-lam-viec/chi-tiet-noi-lam-viec/chi-tiet-noi-lam-viec.component';
+import { ChiTietLichLamViecComponent } from 'src/app/components/cai-dat-to-chuc/lich-lam-viec/chi-tiet-lich-lam-viec/chi-tiet-lich-lam-viec.component';
 
 @NgModule({
   imports: [
@@ -58,6 +70,8 @@ import { ChiTietPhongHopComponent } from 'src/app/components/cai-dat-lich-hop/da
     AutoCompleteModule,
     EditDetailModule,
     FileUploadModule,
+    OrganizationChartModule,
+    TreeSelectModule,
     MenuModule,
     CardModule,
     BadgeModule,
@@ -71,6 +85,8 @@ import { ChiTietPhongHopComponent } from 'src/app/components/cai-dat-lich-hop/da
     PageNotifyModule,
     TabViewModule,
     PaginatorModule,
+    GridAddModule,
+    PanelModule,
     ConfirmDialogModule,
     AgGridModule.withComponents([
       ButtonRendererComponent,
@@ -87,6 +103,14 @@ import { ChiTietPhongHopComponent } from 'src/app/components/cai-dat-lich-hop/da
     MeetingScheduleMemberComponent,
     DanhSachPhongHopComponent,
     ChiTietPhongHopComponent,
+    ChiTietToChucComponent,
+    ChucVuComponent,
+    NoiLamViecComponent,
+    CaiDatThamSoComponent,
+    LichLamViecComponent,
+    ChiTietChucVuComponent,
+    ChiTietNoiLamViecComponent,
+    ChiTietLichLamViecComponent,
   ],
   providers: []
 })

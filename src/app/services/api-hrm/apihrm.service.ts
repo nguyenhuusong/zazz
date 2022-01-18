@@ -655,4 +655,83 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v1/eating/GetEatingInfo?` + queryParams, this.options)
   }
 
+  getOrganizeLevelList(): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/organize/GetOrganizeLevelList`, this.options);
+  }
+
+  getOrganizeList(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/organize/GetOrganizeList?` + queryParams, this.options);
+  }
+
+  organizeGetDepartments(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/organize/GetDepartments?${queryParams}`, this.options)
+  }
+
+  delOrganize(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v1/organize/DelOrganize?` + queryParams, this.options)
+  }
+
+  setOrganize(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/organize/SetOrganize`, queryParams, this.options)
+  }
+
+  getPositionList(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/position/GetPositionList?` + queryParams, this.options)
+  }
+
+  setOrganizeInfo(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/organize/SetOrganizeInfo`, queryParams, this.options)
+  }
+
+  setOrganizePosition(queryParams): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v1/organize/SetOrganizePosition`, queryParams, this.options)
+  }
+  
+  setOrganizeCompany(queryParams): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v1/organize/SetOrganizeCompany`, queryParams, this.options)
+  }
+
+  getPositionPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/position/GetPositionPage?` + queryParams, this.options)
+  }
+
+  delPositionInfo(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/position/DelPositionInfo?` + queryParams, this.options)
+  }
+
+  delWorkplaceInfo(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/workplace/DelWorkplaceInfo?` + queryParams, this.options)
+  }
+
+  getWorkplacePage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/workplace/GetWorkplacePage?` + queryParams, this.options)
+  }
+
+  getOrganizeConfig(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/organize/GetOrganizeConfig?` + queryParams, this.options)
+  }
+
+  setOrganizeConfig(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/organize/SetOrganizeConfig`,queryParams, this.options)
+  }
+
+  getPositionInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/position/GetPositionInfo?` + queryParams, this.options)
+  }
+
+  setPositionInfo(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/position/SetPositionInfo`, params, this.options)
+  }
+
+  getWorkplaceInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/workplace/GetWorkplaceInfo?` + queryParams, this.options)
+  }
+  
+  setWorkplaceInfo(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/workplace/SetWorkplaceInfo`, queryParams, this.options)
+  }
+
+  
+
+
 }

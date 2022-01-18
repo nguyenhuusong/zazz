@@ -7,9 +7,9 @@
    <div class="content">
     <p-tabView>
         <p-tabPanel header="Thông tin chung">
-            <div class="" *ngIf="detailInfo">
-                <app-edit-detail *ngIf="listViews && listViews.length> 0 && manhinh === 'Edit'"
-                    [thongtinnhanvienNew]="true" [manhinh]="manhinh" [dataView]="listViews"
+            <div >
+                <app-edit-detail *ngIf="listViews && listViews.length> 0"
+                    [thongtinnhanvienNew]="true" [manhinh]="'Edit'" [dataView]="listViews"
                     (callback)="setMeetRoomInfo($event)" (callbackcancel)="cancelUpdate()">
                 </app-edit-detail>
             </div>
