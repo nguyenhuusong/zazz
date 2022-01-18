@@ -1,5 +1,4 @@
-
-import { AfterViewChecked, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import * as queryString from 'querystring';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -11,20 +10,21 @@ import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-render
 import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.component';
 import { AgGridFn } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
-@Component({
-  selector: 'app-cai-dat-cong-ty',
-  templateUrl: './cai-dat-cong-ty.component.html',
-  styleUrls: ['./cai-dat-cong-ty.component.scss']
-})
-export class CaiDatCongTyComponent implements OnInit, AfterViewChecked {
 
-  dataCompanys: any;
+@Component({
+  selector: 'app-quan-ly-hop-dong',
+  templateUrl: './quan-ly-hop-dong.component.html',
+  styleUrls: ['./quan-ly-hop-dong.component.scss']
+})
+export class QuanLyHopDongComponent implements OnInit {
+
+  dataContractTypes: any;
   constructor(
-    private spinner: NgxSpinnerService,
     private apiService: ApiHrmService,
     private route: ActivatedRoute,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
+    private spinner: NgxSpinnerService,
     private changeDetector: ChangeDetectorRef,
     private router: Router) {
 
@@ -98,7 +98,6 @@ export class CaiDatCongTyComponent implements OnInit, AfterViewChecked {
     this.load();
   }
 
-
   loadjs = 0;
   heightGrid = 0
   ngAfterViewChecked(): void {
@@ -107,13 +106,13 @@ export class CaiDatCongTyComponent implements OnInit, AfterViewChecked {
     const c: any = document.querySelector(".breadcrumb");
     const d: any = document.querySelector(".filterInput");
     const e: any = document.querySelector(".paginator");
-    this.loadjs ++ 
+    this.loadjs++
     if (this.loadjs === 5) {
-      if(b && b.clientHeight) {
+      if (b && b.clientHeight) {
         const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + d.clientHeight + e.clientHeight + 45;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
-      }else {
+      } else {
         this.loadjs = 0;
       }
     }
@@ -124,7 +123,7 @@ export class CaiDatCongTyComponent implements OnInit, AfterViewChecked {
     this.columnDefs = []
     this.spinner.show();
     const queryParams = queryString.stringify(this.query);
-    this.apiService.getCompanyPage(queryParams).subscribe(
+    this.apiService.getContractTypePage(queryParams).subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         if (this.query.offSet === 0) {
@@ -144,9 +143,9 @@ export class CaiDatCongTyComponent implements OnInit, AfterViewChecked {
       },
       error => {
         this.spinner.hide();
-       });
+      });
   }
-  
+
   showButtons(event: any) {
     return {
       buttons: [
@@ -157,11 +156,12 @@ export class CaiDatCongTyComponent implements OnInit, AfterViewChecked {
           class: 'btn-primary mr5',
         },
         {
-          onClick: this.xoacongty.bind(this),
-          label: 'Xóa công ty',
+          onClick: this.xoahopdong.bind(this),
+          label: 'Xóa',
           icon: 'pi pi-trash',
           class: 'btn-primary mr5',
         },
+
       ]
     };
   }
@@ -182,12 +182,12 @@ export class CaiDatCongTyComponent implements OnInit, AfterViewChecked {
       }]
   }
 
-  xoacongty(event) {
+  xoahopdong(event) {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn thực hiện mở tài khoản?',
       accept: () => {
-        const queryParams = queryString.stringify({ companyId: event.rowData.companyId });
-        this.apiService.delCompanyInfo(queryParams).subscribe(results => {
+        const queryParams = queryString.stringify({ contractType: event.rowData.contractType });
+        this.apiService.delContractTypeInfo(queryParams).subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa công ty thành công' });
             this.load();
@@ -201,16 +201,17 @@ export class CaiDatCongTyComponent implements OnInit, AfterViewChecked {
 
   XemChiTiet(event) {
     const params = {
-      companyId: event.rowData.companyId
+      contractType: event.rowData.contractType
     }
-    this.router.navigate(['/cai-dat/cai-dat-cong-ty/chi-tiet-cong-ty'], { queryParams: params });
+    this.router.navigate(['/cai-dat/quan-ly-hop-dong/chi-tiet-hop-dong'], { queryParams: params });
   }
 
-  addCongTy() {
+
+  addHopDong() {
     const params = {
-      companyId: 0
+      contractType: 0
     }
-    this.router.navigate(['/cai-dat/cai-dat-cong-ty/them-moi-cong-ty'], { queryParams: params });
+    this.router.navigate(['/cai-dat/quan-ly-hop-dongthem-moi-hop-dong'], { queryParams: params });
   }
 
   find() {
@@ -232,13 +233,44 @@ export class CaiDatCongTyComponent implements OnInit, AfterViewChecked {
     this.items = [
       { label: 'Trang chủ' },
       { label: 'Cài đặt' },
-      { label: 'Danh sách công ty' },
+      { label: 'Danh sách công ty', url: '/cai-dat/cai-dat-cong-ty' },
+      { label: 'Danh sách loại hợp đồng' },
     ];
     this.load();
   }
 
-  quanlyloaihopdong() {
-    this.router.navigate(['/cai-dat/quan-ly-hop-dong']);
+
+  sizeToFit() {
+    if (this.gridApi) {
+      let allColumnIds: any = [];
+      this.gridColumnApi.getAllColumns()
+        .forEach((column: any) => {
+          if (column.colDef.cellClass.indexOf('no-auto') < 0) {
+            allColumnIds.push(column)
+          } else {
+            column.colDef.suppressSizeToFit = true;
+            allColumnIds.push(column)
+          }
+        });
+      this.gridApi.sizeColumnsToFit(allColumnIds);
+    }
+  }
+
+  autoSizeAll() {
+    if (this.gridColumnApi) {
+      if (this.gridColumnApi.columnModel.bodyWidth < this.gridColumnApi.columnModel.scrollWidth) {
+        this.sizeToFit();
+      } else {
+        let allColumnIds: any = [];
+        this.gridColumnApi.getAllColumns()
+          .forEach((column: any) => {
+            if (column.colDef.cellClass.indexOf('no-auto') < 0) {
+              allColumnIds.push(column)
+            }
+          });
+        this.gridColumnApi.autoSizeColumns(allColumnIds, false);
+      }
+    }
   }
 
 }

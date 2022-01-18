@@ -51,6 +51,10 @@ import { LichLamViecComponent } from 'src/app/components/cai-dat-to-chuc/lich-la
 import { ChiTietChucVuComponent } from 'src/app/components/cai-dat-to-chuc/chuc-vu/chi-tiet-chuc-vu/chi-tiet-chuc-vu.component';
 import { ChiTietNoiLamViecComponent } from 'src/app/components/cai-dat-to-chuc/noi-lam-viec/chi-tiet-noi-lam-viec/chi-tiet-noi-lam-viec.component';
 import { ChiTietLichLamViecComponent } from 'src/app/components/cai-dat-to-chuc/lich-lam-viec/chi-tiet-lich-lam-viec/chi-tiet-lich-lam-viec.component';
+import { CommonSearchUserMasterModule } from 'src/app/common/search-user-master/search-user-master.module';
+import { ChiTietCongTyComponent } from 'src/app/components/cai-dat-cong-ty/chi-tiet-cong-ty/chi-tiet-cong-ty.component';
+import { QuanLyHopDongComponent } from 'src/app/components/quan-ly-hop-dong/quan-ly-hop-dong.component';
+import { ChiTietHopDongComponent } from 'src/app/components/quan-ly-hop-dong/chi-tiet-hop-dong/chi-tiet-hop-dong.component';
 
 @NgModule({
   imports: [
@@ -87,6 +91,7 @@ import { ChiTietLichLamViecComponent } from 'src/app/components/cai-dat-to-chuc/
     PaginatorModule,
     GridAddModule,
     PanelModule,
+    CommonSearchUserMasterModule,
     ConfirmDialogModule,
     AgGridModule.withComponents([
       ButtonRendererComponent,
@@ -111,6 +116,9 @@ import { ChiTietLichLamViecComponent } from 'src/app/components/cai-dat-to-chuc/
     ChiTietChucVuComponent,
     ChiTietNoiLamViecComponent,
     ChiTietLichLamViecComponent,
+    ChiTietCongTyComponent,
+    QuanLyHopDongComponent,
+    ChiTietHopDongComponent,
   ],
   providers: []
 })

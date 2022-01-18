@@ -731,7 +731,50 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v2/workplace/SetWorkplaceInfo`, queryParams, this.options)
   }
 
+  getCompanyPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/compay/GetCompanyPage?` + queryParams, this.options)
+  }
+
+  setCompanyInfo(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/compay/SetCompanyInfo`, params, this.options)
+  }
+
+  delCompanyInfo(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/compay/DelCompanyInfo?` + queryParams, this.options)
+  }
+
+  getCompanyInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/compay/GetCompanyInfo?` + queryParams, this.options)
+  }
+
+  delComAuthorizeInfo(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/compay/DelComAuthorizeInfo?` + queryParams, this.options)
+  }
+
+  getComAuthorizeInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/compay/GetComAuthorizeInfo?` + queryParams, this.options)
+  }
+
+  setComAuthorizeInfo(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/compay/SetComAuthorizeInfo`, params, this.options)
+  }
+
+  getContractTypePage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/contract/GetContractTypePage?` + queryParams, this.options)
+  }
+
   
+  getContractTypeInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/contract/GetContractTypeInfo?` + queryParams, this.options)
+  }
+  
+  setContractTypeInfo(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/contract/SetContractTypeInfo`, params, this.options)
+  }
+
+  delContractTypeInfo(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/contract/DelContractTypeInfo?` + queryParams, this.options)
+  }
 
 
 }

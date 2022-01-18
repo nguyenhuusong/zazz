@@ -71,4 +71,14 @@ export class ApiCoreService {
     return this.http.put<any>(`${apiCoreBaseUrl}/api/v1/individual/SetCustIndiIdentity`, params, this.options);
   }
 
+  getCustCoporatePage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiCoreBaseUrl}/api/v1/customer/GetCustCoporatePage?` + queryParams, this.options)
+  }
+
+  searchCustomer(queryParams): Observable<any> {
+    return this.http
+      .get<any>(`${apiCoreBaseUrl}/api/v1/customer/GetCustIndividualPage?` + queryParams, this.options);
+  }
+
+
 }

@@ -18,6 +18,9 @@ import { LichLamViecComponent } from 'src/app/components/cai-dat-to-chuc/lich-la
 import { ChiTietChucVuComponent } from 'src/app/components/cai-dat-to-chuc/chuc-vu/chi-tiet-chuc-vu/chi-tiet-chuc-vu.component';
 import { ChiTietNoiLamViecComponent } from 'src/app/components/cai-dat-to-chuc/noi-lam-viec/chi-tiet-noi-lam-viec/chi-tiet-noi-lam-viec.component';
 import { ChiTietLichLamViecComponent } from 'src/app/components/cai-dat-to-chuc/lich-lam-viec/chi-tiet-lich-lam-viec/chi-tiet-lich-lam-viec.component';
+import { ChiTietCongTyComponent } from 'src/app/components/cai-dat-cong-ty/chi-tiet-cong-ty/chi-tiet-cong-ty.component';
+import { QuanLyHopDongComponent } from 'src/app/components/quan-ly-hop-dong/quan-ly-hop-dong.component';
+import { ChiTietHopDongComponent } from 'src/app/components/quan-ly-hop-dong/chi-tiet-hop-dong/chi-tiet-hop-dong.component';
 
 const routes: Routes = [
   {
@@ -110,6 +113,22 @@ const routes: Routes = [
     data: {
       title: 'Danh sách công ty',
       url: 'cai-dat-cong-ty',
+    },
+  },
+  {
+    path: 'cai-dat-cong-ty/them-moi-cong-ty',
+    component: ChiTietCongTyComponent,
+    data: {
+      title: 'Danh sách công ty',
+      url: 'them-moi-cong-ty',
+    },
+  },
+  {
+    path: 'cai-dat-cong-ty/chi-tiet-cong-ty',
+    component: ChiTietCongTyComponent,
+    data: {
+      title: 'Danh sách công ty',
+      url: 'chi-tiet-cong-ty',
     },
   },
 
@@ -208,6 +227,33 @@ const routes: Routes = [
     data: {
       title: 'Chi tiết lịch làm việc',
       url: 'lich-lam-viec/chi-tiet-lich-lam-viec',
+    },
+  },
+
+  // Quản lý hợp đồng 
+
+  {
+    path: 'quan-ly-hop-dong',
+    component: QuanLyHopDongComponent,
+    data: {
+      title: 'Danh sách quản lý hợp đồng',
+      url: 'quan-ly-hop-dong',
+    },
+  },
+  {
+    path: 'quan-ly-hop-dong/them-moi-hop-dong',
+    component: ChiTietHopDongComponent,
+    data: {
+      title: 'Thêm mới hợp đồng',
+      url: 'them-moi-hop-dong',
+    },
+  },
+  {
+    path: 'quan-ly-hop-dong/chi-tiet-hop-dong',
+    component: ChiTietHopDongComponent,
+    data: {
+      title: 'Chi tiết hợp đồng',
+      url: 'chi-tiet-hop-dong',
     },
   },
 

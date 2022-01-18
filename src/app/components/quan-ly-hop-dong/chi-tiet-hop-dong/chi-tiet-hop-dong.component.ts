@@ -6,11 +6,11 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 
 @Component({
-  selector: 'app-chi-tiet-noi-lam-viec',
-  templateUrl: './chi-tiet-noi-lam-viec.component.html',
-  styleUrls: ['./chi-tiet-noi-lam-viec.component.scss']
+  selector: 'app-chi-tiet-hop-dong',
+  templateUrl: './chi-tiet-hop-dong.component.html',
+  styleUrls: ['./chi-tiet-hop-dong.component.scss']
 })
-export class ChiTietNoiLamViecComponent implements OnInit, OnChanges {
+export class ChiTietHopDongComponent implements OnInit, OnChanges {
   manhinh = 'View';
   indexTab = 0;
   optionsButtonsView = [{ label: 'Sửa', value: 'Edit' }, { label: 'Quay lại', value: 'Back' }];
@@ -21,7 +21,7 @@ export class ChiTietNoiLamViecComponent implements OnInit, OnChanges {
     private confirmationService: ConfirmationService,
     private router: Router
   ) { }
-  workplaceId = null
+  contractType = null
   org_level = 0
   listViews = []
   imagesUrl = []
@@ -46,8 +46,8 @@ export class ChiTietNoiLamViecComponent implements OnInit, OnChanges {
     this.items = [
       { label: 'Trang chủ' },
       { label: 'Cài đặt' },
-      { label: 'Danh sách tổ chức', url: '/cai-dat/cai-dat-to-chuc' },
-      { label: 'Danh sách nơi làm viẹc', url: '/cai-dat/noi-lam-viec' },
+      { label: 'Danh sách công ty', url: '/cai-dat/cai-dat-cong-ty' },
+      { label: 'Danh sách loại hợp đồng', url: '/cai-dat/quan-ly-hop-dong' },
       { label: `${this.titlePage}` },
     ];
     this.url = this.activatedRoute.data['_value'].url;
@@ -60,16 +60,16 @@ export class ChiTietNoiLamViecComponent implements OnInit, OnChanges {
     this.activatedRoute.queryParamMap.subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.dataRouter = this.paramsObject.params;
-      this.workplaceId = this.paramsObject.params.workplaceId || 0;
-      this.getWorkplaceInfo();
+      this.contractType = this.paramsObject.params.contractType || 0;
+      this.getContractTypeInfo();
     });
   };
 
   detailInfo = null;
-  getWorkplaceInfo() {
+  getContractTypeInfo() {
     this.listViews = [];
-    const queryParams = queryString.stringify({workplaceId: this.workplaceId});
-    this.apiService.getWorkplaceInfo(queryParams).subscribe(results => {
+    const queryParams = queryString.stringify({contractType: this.contractType});
+    this.apiService.getContractTypeInfo(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.listViews = cloneDeep(results.data.group_fields);
         this.detailInfo = results.data;
@@ -81,11 +81,11 @@ export class ChiTietNoiLamViecComponent implements OnInit, OnChanges {
     this.indexTab = index;
   }
 
-  setWorkplaceInfo(data) {
+  setContractTypeInfo(data) {
     const params = {
       ...this.detailInfo, group_fields: data
     };
-    this.apiService.setWorkplaceInfo(params).subscribe((results: any) => {
+    this.apiService.setContractTypeInfo(params).subscribe((results: any) => {
       if (results.status === 'success') {
         this.displayUserInfo = false;
         this.goBack()
@@ -99,7 +99,6 @@ export class ChiTietNoiLamViecComponent implements OnInit, OnChanges {
     });
   }
 
-
   onChangeButtonView(event) {
     this.manhinh = event.value;
     if (event.value === 'Back') {
@@ -109,7 +108,7 @@ export class ChiTietNoiLamViecComponent implements OnInit, OnChanges {
 
   goBack() {
    if(this.titlePage) {
-    this.router.navigate(['/cai-dat/noi-lam-viec']);
+    this.router.navigate(['/cai-dat/quan-ly-hop-dong']);
    }else {
     this.back.emit();
    }
