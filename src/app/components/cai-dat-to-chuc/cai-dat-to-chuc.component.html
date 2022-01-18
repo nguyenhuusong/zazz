@@ -23,7 +23,7 @@
         </p-card>
         <div class="table-tool grid white-background black-box-shadow-005 filterInput mt-2">
 
-            <div class="header-filter-search col-7 ">
+            <div class="header-filter-search col-4">
                 <div class="input-group icon">
                     <svg class="placeholder-icon" width="16" height="16" viewBox="0 0 16 16" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
@@ -41,7 +41,7 @@
                 <div class="input-group-append dropdown">
                 </div>
             </div>
-            <div class="col-5 tools">
+            <div class="col-8 tools">
                 <p-button label="Thêm mới phòng ban" (click)="Add()" styleClass="p-button-sm mr-1" icon="pi pi-plus"></p-button>
                 <p-button label="Chỉnh sửa phòng ban" (click)="Edit()" styleClass="p-button-sm mr-1" icon="pi pi-pencil"></p-button>
                 <p-button label="Xóa phòng ban" (click)="Delete()" *ngIf="detailOrganizeMap?.parent_id > 0" styleClass="p-button-sm p-button-danger mr-1" icon="pi pi-trash"></p-button>
@@ -72,56 +72,66 @@
         {{titleForm.label}}
     </p-header>
     <div class=" col-md-12 mt-1">
-        <label for="">parent_id</label> <br>
-        <p-treeSelect [(ngModel)]="selectedNodeTree" [options]="listOrganizeTree" *ngIf="titleForm.value === 'Edit'"
-        selectionMode="single" placeholder="Select Item"></p-treeSelect>
-        <p-dropdown appendTo="body" [disabled]="titleForm.value === 'Add'" *ngIf="titleForm.value === 'Add'"  [baseZIndex]="100" 
-        [options]="organizeList" [required] [(ngModel)]="modeAgencyOrganize.parent_id" name="parent_id" [filter]="true">
-        <ng-template let-item pTemplate="selectedItem">
-          <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
-        </ng-template>
-        <ng-template let-car pTemplate="item">
-          <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-            <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
-          </div>
-        </ng-template>
-      </p-dropdown>
+      <div class="select-default">
+          <label for="">parent_id</label>
+          <p-treeSelect [(ngModel)]="selectedNodeTree" [options]="listOrganizeTree" *ngIf="titleForm.value === 'Edit'"
+          selectionMode="single" placeholder="Select Item"></p-treeSelect>
+          <p-dropdown appendTo="body" [disabled]="titleForm.value === 'Add'" *ngIf="titleForm.value === 'Add'"  [baseZIndex]="100" 
+          [options]="organizeList" [required] [(ngModel)]="modeAgencyOrganize.parent_id" name="parent_id" [filter]="true">
+          <ng-template let-item pTemplate="selectedItem">
+            <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
+          </ng-template>
+          <ng-template let-car pTemplate="item">
+            <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+              <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+            </div>
+          </ng-template>
+        </p-dropdown>
+      </div>
     </div>
     <div class=" col-md-12 mt-1">
-        <label for="">Level</label>
-        <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" [required]
-        [options]="organizeLevelList"  [(ngModel)]="modeAgencyOrganize.org_level" name="org_level" [filter]="true">
-        <ng-template let-item pTemplate="selectedItem">
-          <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
-        </ng-template>
-        <ng-template let-car pTemplate="item">
-          <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-            <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
-          </div>
-        </ng-template>
-      </p-dropdown>
+      <div class="select-default">
+          <label for="">Level</label>
+          <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" [required]
+          [options]="organizeLevelList"  [(ngModel)]="modeAgencyOrganize.org_level" name="org_level" [filter]="true">
+          <ng-template let-item pTemplate="selectedItem">
+            <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
+          </ng-template>
+          <ng-template let-car pTemplate="item">
+            <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+              <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+            </div>
+          </ng-template>
+        </p-dropdown>
+      </div>
     </div>
     <div class=" col-md-12 mt-1">
+      <div class="select-default">
         <label for="">Danh sách phòng ban</label>
-      <p-dropdown appendTo="body" (onChange)="selectDepartment($event)" [baseZIndex]="100" [autoDisplayFirst]="false"
-        [options]="departments" [required] [(ngModel)]="modeAgencyOrganize.de_cd" name="de_cd" [filter]="true">
-        <ng-template let-item pTemplate="selectedItem">
-          <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
-        </ng-template>
-        <ng-template let-car pTemplate="item">
-          <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-            <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
-          </div>
-        </ng-template>
-      </p-dropdown>
+        <p-dropdown appendTo="body" (onChange)="selectDepartment($event)" [baseZIndex]="100" [autoDisplayFirst]="false"
+          [options]="departments" [required] [(ngModel)]="modeAgencyOrganize.de_cd" name="de_cd" [filter]="true">
+          <ng-template let-item pTemplate="selectedItem">
+            <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
+          </ng-template>
+          <ng-template let-car pTemplate="item">
+            <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+              <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+            </div>
+          </ng-template>
+        </p-dropdown>
+      </div>
     </div>
     <div class=" col-md-12 mt-1">
-        <label for="">Mã phòng ban</label>
-        <input type="text" [(ngModel)]="modeAgencyOrganize.org_cd" name="org_cd" class="form-control">
+      <div class="input-group">
+          <label for="">Mã phòng ban</label>
+          <input type="text" [(ngModel)]="modeAgencyOrganize.org_cd" name="org_cd" class="form-control">
+        </div>
     </div>
     <div class=" col-md-12 mt-1">
-        <label for="">Tên phòng ban</label>
-        <input type="text" [(ngModel)]="modeAgencyOrganize.org_name" name="org_name" class="form-control">
+        <div class="input-group">
+          <label for="">Tên phòng ban</label>
+          <input type="text" [(ngModel)]="modeAgencyOrganize.org_name" name="org_name" class="form-control">
+        </div>
     </div>
     
    
