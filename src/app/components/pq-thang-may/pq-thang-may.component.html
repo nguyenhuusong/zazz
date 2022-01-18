@@ -1,0 +1,275 @@
+<div class="grid main-grid">
+    <div class="col-12 right max-w-full">
+        <div class="breadcrumb">
+            <h3>Danh sách hồ sơ nhân sự</h3>
+            <p-breadcrumb [model]="itemsBreadcrumb"></p-breadcrumb>
+        </div>
+        <div class="table-tool grid white-background black-box-shadow-005 filterInput mt-2">
+            <div class="header-filter-search col-4 ">
+                <div class="input-group">
+                    <p-autoComplete [(ngModel)]="key_car" name="key_car" placeholder="Nhập mã thẻ để tìm kiếm" [suggestions]="listCars" (onSelect)="selectedItem1($event)"
+                    (completeMethod)="getCardCustomers($event)" field="fullNameAndCar"></p-autoComplete>  
+                  
+                </div>
+                <div class="input-group-append dropdown">
+                </div>
+            </div>
+            <div class="col-8 tools">
+                <p-button  (click)="menuButton.toggle($event)" label="Quản lý" icon="pi pi-cog" styleClass="p-button-sm mr5"></p-button>
+                <p-menu [model]="menuItem" [appendTo]="'body'" [popup]="true" #menuButton></p-menu>
+            </div>
+        </div>
+
+        <p-card header="Thông tin chi tiết">
+            <div class="row">
+                <div class="col-xl-4 col-lg-6 col-md-12">
+                  <fieldset class="form-group">
+                    <label for="">Mã thẻ: <strong>{{detailcar?.cardCd}}</strong></label>
+                  </fieldset>
+                </div>
+                <div class="col-xl-2 col-lg-6 col-md-12">
+                  <fieldset class="form-group">
+                    <input class="form-check-input mr-1" style="margin-left: 5px;" [checked]="detailcar?.isNoiBo"
+                      name="isNoiBo" type="checkbox">
+                    <label for="" class="">Nội bộ </label>
+                  </fieldset>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-4 col-lg-6 col-md-12">
+                  <fieldset class="form-group">
+                    <label for="">Mã kỹ thuật: <strong>{{detailcar?.cardNumber}}</strong></label>
+                  </fieldset>
+                </div>
+                <div class="col-xl-2 col-lg-6 col-md-12">
+                  <fieldset class="form-group">
+                    <input class="form-check-input mr-1" style="margin-left: 5px;" [checked]="detailcar?.isVehicle"
+                      name="isCalByMap" type="checkbox" value="">
+                    <label for="" class="">Có xe </label>
+                  </fieldset>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-4 col-lg-6 col-md-12">
+                  <fieldset class="form-group">
+                    <label for="">Loại thẻ: <strong>{{detailcar?.cardTypeName}}</strong></label>
+                  </fieldset>
+                </div>
+                <div class="col-xl-2 col-lg-6 col-md-12">
+                  <fieldset class="form-group">
+                    <input class="form-check-input mr-1" style="margin-left: 5px;" [checked]="detailcar?.isTheKhach"
+                      name="isTheKhach" type="checkbox" value="">
+                    <label for="" class="">Thẻ khách </label>
+                  </fieldset>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-4 col-lg-6 col-md-12">
+                  <fieldset class="form-group">
+                    <label for="">Chủ thẻ: <strong>{{detailcar?.fullName}}</strong></label>
+                  </fieldset>
+                </div>
+                <div class="col-xl-2 col-lg-6 col-md-12">
+                  <fieldset class="form-group">
+                    <label for="">Ngày cấp: <strong>{{detailcar?.issueDate}}</strong></label>
+                  </fieldset>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-4 col-lg-6 col-md-12">
+                  <fieldset class="form-group">
+                    <label for="">Căn hộ: <strong>{{detailcar?.roomCode}}</strong></label>
+                  </fieldset>
+                </div>
+                <div class="col-xl-2 col-lg-6 col-md-12 mb-2">
+                  <fieldset class="form-group">
+                    <label for="">Trạng thái: <strong>{{detailcar?.status}}</strong></label>
+                  </fieldset>
+                </div>
+              </div>
+        </p-card>
+        <!-- //grid1 -->
+        <div class="grid-default" #container> 
+            <p-button label="Thêm mới" [disabled]="!detailcar" styleClass="p-button-sm" (onClick)="AddNew();" icon="pi pi-plus"></p-button>
+            <app-list-grid-angular *ngIf="columnDefs.length > 0" [listsData]="rowData" [height]="500"
+                [domLayout]="'autoHeight'" [columnDefs]="columnDefs"></app-list-grid-angular>
+
+        </div>
+        <p-card header="Kiểm tra quyền">
+            <div class="row" style="margin-top: 10px;">
+                <div class="col-xl-2 col-lg-5 col-md-12 mb-1" style="margin-left: -15px;">
+                  <fieldset class="form-group">
+                    <label for="status">Dự án</label>
+                    <select class="form-control" (change)="getBuidingsSearch();load1()" name="projectCd"
+                      [(ngModel)]="modelElevator.projectCd" id="projectCd" #projectCd="ngModel">
+                      <option value="">Chọn dự án</option>
+                      <option *ngFor="let advert of projects; let i = index" value="{{advert.projectCd}}">
+                        {{advert.projectName}} </option>
+                    </select>
+                  </fieldset>
+                </div>
+                <div class="col-xl-2 col-lg-5 col-md-12 mb-1">
+                  <fieldset class="form-group">
+                    <label for="status">Tòa</label>
+                    <select class="form-control" (change)="getBuildingZones($event);load1()" name="buildCd"
+                      [(ngModel)]="modelElevator.buildCd" id="buildCd" #buildCd="ngModel">
+                      <option value="">Chọn tòa</option>
+                      <option *ngFor="let objBuilding of builds" value={{objBuilding.buildCd}}>
+                        {{objBuilding.buildName}}
+                      </option>
+                    </select>
+                  </fieldset>
+                </div>
+                <div class="col-xl-2 col-lg-5 col-md-12 mb-1">
+                  <fieldset class="form-group">
+                    <label for="status">Khu vực</label>
+                    <select class="form-control" name="buildZone" (change)="getFloors($event);load1()"
+                      [(ngModel)]="modelElevator.buildZone" id="buildZone" #buildZone="ngModel">
+                      <option value="">Chọn khu vực</option>
+                      <option *ngFor="let advert of buildingZones; let i = index" value="{{advert.buildZoneName}}">
+                        {{advert.buildZoneName}} </option>
+                    </select>
+                  </fieldset>
+                </div>
+                <div class="col-xl-2 col-lg-5 col-md-12 mb-1">
+                  <fieldset class="form-group">
+                    <label for="status">Tầng</label>
+                    <select class="form-control" (change)="getHardware();load1()" name="floor"
+                      [(ngModel)]="modelElevator.floorNumber" id="floor" #floor="ngModel">
+                      <option value=null>---</option>
+                      <option *ngFor="let advert of floors; let i = index" value="{{advert.floorNumber}}">
+                        {{advert.floorName}} </option>
+                    </select>
+                  </fieldset>
+                </div>
+                <div class="col-xl-2 col-lg-5 col-md-12 mb-1">
+                  <fieldset class="form-group">
+                    <label for="status">Thiết bị</label>
+                    <select class="form-control" name="hardwareId" (change)="load1()"
+                      [(ngModel)]="modelElevator.hardwareId" id="hardwareId" #hardwareId="ngModel">
+                      <option value=null>---</option>
+                      <option *ngFor="let advert of devices; let i = index" value="{{advert.hardwareId}}">
+                        {{advert.hardwareId}} </option>
+                    </select>
+                  </fieldset>
+                </div>
+                <div class="col-xl-1 col-lg-3 col-md-12 ssg-btn-search">
+                  <button type="button" (click)="load1()" class="btn btn-primary">
+                    <i _ngcontent-c4="" class="fa fa-search"></i>
+                  </button>
+                  <button type="button" (click)="cancelTestdevices()" class="btn btn-default">
+                    <i _ngcontent-c4="" class="fa fa-repeat"></i>
+                  </button>
+                </div>
+              </div>
+        </p-card>
+          <!-- //grid2 -->
+          <div class="grid-default" #container> 
+            <app-list-grid-angular *ngIf="columnDefs1.length > 0" [listsData]="rowData1" [height]="500"
+                [domLayout]="'autoHeight'" [columnDefs]="columnDefs1"></app-list-grid-angular>
+
+        </div>
+    </div>
+</div>
+
+
+<p-dialog [(visible)]="isDialog" header="{{titleModal}}">
+    <form #createSMSF="ngForm" class="form-horizontal ng-pristine ng-valid ng-scope">
+        <div class="box-body" style="padding:10px;">
+
+          <div class="form-row" style="margin:10px 0px;">
+            <label class="col-sm-4 control-label">Mã thẻ</label>
+            <div class="col-sm-8 input-group">
+                <p-autoComplete [(ngModel)]="modelcar" name="modelcar" placeholder="Nhập mã thẻ để tìm kiếm" [suggestions]="listCars" (onSelect)="selectedItem($event)"
+                (completeMethod)="getCardCustomers($event)" field="fullNameAndCar"></p-autoComplete>  
+            </div>
+          </div>
+
+          <div class="form-row" style="margin:10px 0px;">
+            <label class="col-sm-4 control-label">Tên chủ thẻ</label>
+            <div class="col-sm-8">
+              <input [disabled]="true" type="text" class="form-control" name="fullNameCust" id="fullNameCust"
+                [(ngModel)]="cardinfo.fullName" placeholder="Tên chủ thẻ">
+            </div>
+          </div>
+
+          <div class="form-row" style="margin:10px 0px;">
+            <label class="col-sm-4 control-label">Quyền của thẻ</label>
+            <div class="col-sm-8" *ngIf="modelCR">
+              <select class="form-control" name="cardRole" [(ngModel)]="cardinfo.cardRole">
+                <option *ngFor="let objcardRole of modelCR" value={{objcardRole.id}}>
+                  {{objcardRole.roleName}}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row" style="margin:10px 0px;">
+            <label class="col-sm-4 control-label">Loại thẻ</label>
+            <div class="col-sm-8" *ngIf="modelCardType">
+              <select class="form-control" name="cardType" [(ngModel)]="cardinfo.cardType">
+                <option *ngFor="let objCardType of modelCardType" value={{objCardType.cardTypeId}}>
+                  {{objCardType.cardTypeName}}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row" style="margin:10px 0px;">
+            <label class="col-sm-4 control-label">Dự án</label>
+            <div class="col-sm-8" *ngIf="modelProject">
+              <select class="form-control" name="projectCd" [(ngModel)]="cardinfo.projectCd"
+                (change)="loadGetBuildings()">
+                <option *ngFor="let objProject of modelProject" value={{objProject.projectCd}}>
+                  {{objProject.projectName}}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row" style="margin:10px 0px;">
+            <label class="col-sm-4 control-label">Tòa nhà</label>
+            <div class="col-sm-8" *ngIf="modelBuilding">
+              <select class="form-control" name="buildCd" [(ngModel)]="cardinfo.buildCd"
+                (change)="loadGetFloors()">
+                <option value=null>---</option>
+                <option *ngFor="let objBuilding of modelBuilding" value={{objBuilding.buildCd}}>
+                  {{objBuilding.buildName}}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row" style="margin:10px 0px;">
+            <label class="col-sm-4 control-label">Tầng</label>
+            <div class="col-sm-8">
+              <select class="form-control" name="floorNumber" [(ngModel)]="cardinfo.floorNumber">
+                <option value=null>---</option>
+                <option *ngFor="let objFloor of modelFloor" value={{objFloor.floorNumber}}>
+                  {{objFloor.floorName}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row" style="margin:10px 0px;">
+                <p-button styleClass="p-button-sm mr-1" (click)="SaveRoleCard(1)" icon="pi pi-check"></p-button>
+                <p-button styleClass="p-button-sm p-button-secondary" (click)="cancelForm()" icon="pi pi-times"></p-button>
+          </div>
+        </div>
+
+      </form>
+</p-dialog>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
