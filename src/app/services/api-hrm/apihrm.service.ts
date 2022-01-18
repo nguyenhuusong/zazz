@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { from, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AuthService } from '../auth.service';
-import { CardInfo, Project, TypeCard } from 'src/app/models/cardinfo.model';
+import { CardInfo, Project, TypeCard, Vehicle } from 'src/app/models/cardinfo.model';
 import { BuildZone } from 'src/app/models/buildzone.model';
 import { ElevatorFloor } from 'src/app/models/elevatorfloor.model';
 const apiBaseUrl = environment.apiBase;
@@ -827,6 +827,79 @@ export class ApiHrmService {
         `floorNumber=${floorNumber}&` +
         `buildZone=${buildZone}`
         , this.options);
+  }
+
+  getEmployeeCardPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/cardvehicle/GetEmployeeCardPage?` + queryParams, this.options);
+  }
+
+  getEmployeeList(queryParams): Observable<any[]> {
+    return this.http
+      .get<any[]>(`${apiBaseUrl}/api/v2/employee/GetEmployeeList?` + queryParams, this.options)
+  }
+
+  setVehicleRemove(params): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v2/cardvehicle/SetVehicleRemove`, params, this.options);
+  }
+
+  lockCardVehicle<T>(cardVehicleId) {
+    const card = { status: 1, cardVehicleId };
+    return this.http.put<T>(`${apiHrmServer}/api/v2/cardvehicle/SetVehicleLock`, card, this.options);
+  }
+
+  getEmployeeVehiclePage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/cardvehicle/GetEmployeeVehiclePage?` + queryParams, this.options);
+  }
+
+  setVehicleApprove<T>(data) {
+    return this.http.put<T>(`${apiHrmServer}/api/v2/cardvehicle/SetVehicleApprove`, data, this.options);
+  }
+
+  getVehicleTypes(): Observable<any[]> {
+    return this.http
+      .get<any[]>(`${apiBaseUrl}/api/v1/shome/GetVehicleTypes`, this.options);
+  }
+
+  unlockCardVehicle<T>(cardVehicleId) {
+    const card = { status: 0, cardVehicleId };
+    return this.http.put<T>(`${apiHrmServer}/api/v2/cardvehicle/SetVehicleLock`, card, this.options);
+  }
+
+  getCardVehicleDetail(cardVehicleId): Observable<Vehicle> {
+    return this.http
+      .get<Vehicle>(`${apiBaseUrl}/api/v1/shome/GetCardVehicleDetail?cardVehicleId=${cardVehicleId}`, this.options);
+  }
+
+  approveCardVehicle<T>(cardVehicleId) {
+    const card = { cardVehicleId, status: 1 };
+    return this.http.put<T>(`${apiBaseUrl}/api/v1/shome/SetCardVehicleServiceAuth`, card, this.options).toPromise();
+
+  }
+
+  lockCardNV<T>(cardCd) {
+    const card = { cardCd, status: 1 };
+    return this.http.put<T>(`${apiHrmServer}/api/v2/cardvehicle/SetCardLock`, card, this.options);
+  }
+
+  setCardVehicle<T>(cardVehicleId, cardCd = null, vehicleTypeId, vehicleNo, vehicleName, startTime, endTime, custId = null) {
+    const cardSet = {
+      cardVehicleId, cardCd, vehicleTypeId, vehicleNo, vehicleName, serviceId: 0,
+      startTime, endTime, status: 0, custId
+    };
+    return this.http.post<T>(`${apiShome}/api/v1/shome/SetServiceVehicle`, cardSet, this.options);
+  }
+
+  setCardVip<T>(cardCd, employeeId, cardName) {
+    const card = {
+      employeeId: employeeId, cardName, cardCd,
+      issueDate: '', expireDate: '', cardTypeId: 0, isVIP: true
+    };
+    return this.http.post<T>(`${apiShome}/api/v1/shome/SetCardVip`, card, this.options);
+  }
+
+  unlockCardNV<T>(cardCd) {
+    const card = { cardCd, status: 0 };
+    return this.http.put<T>(`${apiHrmServer}/api/v2/cardvehicle/SetCardLock`, card, this.options);
   }
 
   GetElevatorFloorPage(filter, offset, pagesize, projectCd, buildCd, buildZone): Observable<ElevatorFloor[]> {

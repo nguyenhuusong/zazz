@@ -61,5 +61,86 @@ export class Project {
 }
 
 
+export class EmployeeCardList {
+  constructor(
+  public cardId: 0,
+  public cardCd: string,
+  public fullName: string,
+  public  phone: string,
+  public  email: string,
+  public  position: string,
+  public   status: 0,
+  public  statusName: string,
+  public  isClose: boolean,
+  public  closeDate: string,
+  public  isVihecle: boolean,
+  public  departmentName: string
+  ) {}
+
+  static createDefault() {
+      return new EmployeeCardList(0, '', '', '', '', '', 0, '', false, '', false, '');
+  }
+
+
+}
+
+
+
+export class Vehicle {
+  constructor(
+
+      public assignDate: string,
+      public vehicleTypeName: string,
+      public serviceName: string,
+      public  statusName: string,
+      public isLock: boolean,
+      public cardVehicleId: 0,
+      public  cardCd: string,
+      public  vehicleTypeId: 0,
+      public vehicleNo: string,
+      public  vehicleName: string,
+      public  isVehicleNone: boolean,
+      public  serviceId: 0,
+      public  startTime: string,
+      public  endTime: string,
+      public  status: 0,
+      public   reason: string,
+      public  cardName: string,
+      public  fullName: string,
+      public   departmentName: string,
+      public   cardImage: string
+    ) { }
+
+  // tslint:disable-next-line:member-ordering
+  static createDefault() {
+      return new Vehicle('', '', '', '', false, 0, '', 0, '', '', false, 0, '', '', 0, '', '', '', '', '' );
+  }
+}
+
+
+export class VehicleType {
+  constructor(
+
+      public vehicleTypeId: string,
+      public vehicleTypeName: string
+    ) { }
+
+  // tslint:disable-next-line:member-ordering
+  static createDefault() {
+      return new VehicleType('', '');
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 

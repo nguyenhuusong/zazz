@@ -1,0 +1,128 @@
+<form >
+    <div class="modal-body row">
+        <ng-container [formGroup]="cardForm">
+            <div class="col-sm-6 form-group">
+                <label>Loại thẻ</label>
+                <input type="text" class="form-control" name="cardName" [disabled]="true" formControlName="cardName"
+                    placeholder="Loại thẻ">
+            </div>
+            <div class="col-sm-6 form-group">
+                <label>Mã thẻ</label>
+                <input type="text" class="form-control" name="cardCd" formControlName="cardCd" placeholder="Mã thẻ">
+                <div class="text-danger"
+                    *ngIf="(cardForm?.controls?.cardCd?.touched || submitted) && cardForm?.controls?.cardCd?.errors?.required">
+                    Mã thẻ là bắt buộc
+                </div>
+            </div>
+            <div class="col-sm-6 form-group">
+                <label for="">Chọn tổ chức</label> <br>
+                <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
+                  [options]="organizes" formControlName="org_id"  [filter]="true">
+                  <ng-template let-item pTemplate="selectedItem">
+                    <span style="vertical-align:middle; margin-left: .5em">{{item?.label}}</span>
+                  </ng-template>
+                  <ng-template let-car pTemplate="item">
+                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                      <div style="font-size:14px;float:right;margin-top:4px">{{car?.label}}</div>
+                    </div>
+                  </ng-template>
+                </p-dropdown>
+              </div>
+            <div class="col-sm-6 form-group">
+                <label>Tìm kiếm tên nhân viên</label> 
+                <p-autoComplete formControlName="employeeId" [suggestions]="results" [style]="{'width':'100%'}"
+                    [inputStyle]="{'width':'100%'}" (completeMethod)="search($event)" field="name" >
+                    <ng-template let-employee pTemplate="item">
+                        <div class="country-item">
+                            <div>{{employee?.name}}</div>
+                        </div>
+                    </ng-template>
+                </p-autoComplete>
+                <div class="text-danger"
+                    *ngIf="(cardForm?.controls?.employeeId?.touched || submitted) && cardForm?.controls?.employeeId?.errors?.required">
+                    Nhân viên là bắt buộc
+                </div>
+            </div>
+            <div class="col-sm-6 form-group">
+                <label>Số điện thoại</label>
+                <input type="text" class="form-control" [disabled]="true" name="phone" [value]="cardForm.value?.employeeId?.phone">
+            </div>
+            <div class="col-sm-6 form-group">
+                <label>Thư điện tử</label>
+                <input type="text" class="form-control" [disabled]="true" name="email" [value]="cardForm.value?.employeeId?.email">
+            </div>
+            <div class="col-sm-6 form-group">
+                <label>Phòng ban</label>
+                <input type="text" class="form-control" [disabled]="true" name="departmentName" [value]="cardForm.value?.employeeId?.departmentName">
+            </div>
+            <div class="col-sm-6 form-group">
+                <label>Vé gửi xe</label>
+                <div>
+                    <input type="checkbox" name="isCardVehicle" formControlName="isCardVehicle" placeholder="Vé gửi xe"
+                        (change)="handleShowCardVehicle($event)">
+                </div>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="cardForm?.get('isCardVehicle')?.value" [formGroup]="vehicleForm">
+            <div class="col-sm-6 form-group">
+                <label>Loại xe</label>
+                <select name="vehicleTypeId" class="form-control custom-select" formControlName="vehicleTypeId">
+                    <option [ngValue]="1">Ô tô</option>
+                    <option [ngValue]="2">Xe máy</option>
+                    <option [ngValue]="3">Xe máy điện</option>
+                    <option [ngValue]="4">Xe đạp điện</option>
+                    <option [ngValue]="5">Xe đạp</option>
+                </select>
+            </div>
+            <div class="col-sm-6 form-group">
+                <label>Tên xe</label>
+                <input type="text" class="form-control" name="vehicleName" formControlName="vehicleName"
+                    placeholder="Tên xe">
+                <div class="text-danger"
+                    *ngIf="(vehicleForm?.controls?.vehicleName?.touched || submitted) && vehicleForm?.controls?.vehicleName?.errors?.required">
+                    Tên xe là bắt buộc
+                </div>
+            </div>
+            <div class="col-sm-6 form-group">
+                <label>Biển số xe</label>
+                <input type="text" class="form-control" name="vehicleNo" formControlName="vehicleNo"
+                    placeholder="Biển số xe">
+                <div class="text-danger"
+                    *ngIf="(vehicleForm?.controls?.vehicleNo?.touched || submitted) && vehicleForm?.controls?.vehicleNo?.errors?.required">
+                    Biển số xe là bắt buộc
+                </div>
+            </div>
+            <div class="col-sm-6 form-group">
+                <label>Ngày bắt đầu</label>
+                <p-calendar formControlName="startTime" name="startTime" dateFormat="dd/mm/yy"
+                    [style]="{'width':'100%'}"></p-calendar>
+                <!-- <input type="date" class="form-control" name="startTime" formControlName="startTime"> -->
+            </div>
+            <div class="col-sm-6 form-group">
+                <label>Ngày hết hạn</label>
+                <div>
+                    <span>
+                        <input type="radio" [value]="false" name="endTimeType" formControlName="endTimeType"
+                            (change)="handleChange($event)"> Vô hạn
+                    </span>
+                    <span>
+                        <input type="radio" [value]="true" name="endTimeType" formControlName="endTimeType"
+                            (change)="handleChange($event)"> Có hạn
+                    </span>
+                </div>
+                <div *ngIf="vehicleForm?.get('endTimeType')?.value">
+                    <p-calendar formControlName="endTime" name="endTime" dateFormat="dd/mm/yy"
+                        [style]="{'width':'100%'}"></p-calendar>
+                    <!-- <input type="date" class="form-control" name="endTime" formControlName="endTime"> -->
+                </div>
+            </div>
+        </ng-container>
+    </div>
+    <div class="row">
+        <div class="col-md-12 text-right">
+            <p-button label="Xác nhận" styleClass="p-button-sm" icon="pi pi-check" (click)="handleSave()"></p-button>
+               <!-- <button type="submit" class="btn btn-dropbox">Xác nhận</button> -->
+        </div>
+    </div>
+   
+</form>

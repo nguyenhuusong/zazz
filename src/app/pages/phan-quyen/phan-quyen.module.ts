@@ -40,6 +40,7 @@ import { PqXeNhanVienComponent } from 'src/app/components/pq-xe-nhan-vien/pq-xe-
 import { PqQuyenNguoiDungComponent } from 'src/app/components/pq-quyen-nguoi-dung/pq-quyen-nguoi-dung.component';
 import { ThietBiThangMayComponent } from 'src/app/components/thiet-bi-thang-may/thiet-bi-thang-may.component';
 import { ThietLapTangThangMayComponent } from 'src/app/components/thiet-lap-tang-thang-may/thiet-lap-tang-thang-may.component';
+import { CardDetailComponent } from 'src/app/components/pq-the-nhan-vien/card-detail/card-detail.component';
 
 @NgModule({
   imports: [
@@ -88,7 +89,8 @@ import { ThietLapTangThangMayComponent } from 'src/app/components/thiet-lap-tang
     PqXeNhanVienComponent,
     PqQuyenNguoiDungComponent,
     ThietBiThangMayComponent,
-    ThietLapTangThangMayComponent
+    ThietLapTangThangMayComponent,
+    CardDetailComponent
   ],
   providers: []
 })

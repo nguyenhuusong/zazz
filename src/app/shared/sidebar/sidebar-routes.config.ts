@@ -546,7 +546,7 @@ export const ROUTES: any[] =[
         },
         {
           "menuId": 151,
-          "path": "/card",
+          "path": "/phan-quyen/the-nhan-vien",
           "title": "Thẻ nhân viên",
           "icon": "sun-icon-torsos",
           "classs": "nav-item",
@@ -581,7 +581,7 @@ export const ROUTES: any[] =[
         },
         {
           "menuId": 152,
-          "path": "/vehiclelist",
+          "path": "/phan-quyen/xe-nhan-vien",
           "title": "Xe nhân viên",
           "icon": "sun-icon-flight",
           "classs": "nav-item",
