@@ -1,15 +1,15 @@
 
 <div class="modal-body p-2">
-    <div class="row header">
+    <div class="row header grid ">
         <div class="col-3">
-            <fieldset class="form-group">
+            <div class="input-group">
                 <label for="searchFilterSelectImagePopup">Từ khóa</label>
                 <input class="form-control" type="text" [(ngModel)]="filter.search" placeholder="Nhập nội dung tìm kiếm ..."
                     id="searchFilterSelectImagePopup" name="search">
-            </fieldset>
+            </div>
         </div>
         <div class="col-2">
-            <fieldset class="form-group">
+            <div class="select-default">
                 <label>Loại tệp</label>
                 <select class="form-control custom-dropbox" name="type" (change)="handleSearch()"
                     id="typeFilterSelectImagePopup" [(ngModel)]="filter.type">
@@ -18,7 +18,7 @@
                     <option value='video'>Video</option>
                     <option value='file'>Tài liệu</option>
                 </select>
-            </fieldset>
+            </div>
         </div>
         <!-- <div class="col-2">
             <fieldset class="form-group">
@@ -30,20 +30,20 @@
                 </select>
             </fieldset>
         </div> -->
-        <div class="col-4">
-            <fieldset class="form-group">
-                <label>Tìm kiếm </label><br>
-                <button type="submit" (click)="handleSearch()" class="btn btn-dropbox">
+        <div class="col-7">
+            <div class="group-btns">
+                <label>Tìm kiếm </label>
+                <button type="submit" (click)="handleSearch()" class="btn btn-dropbox mr-3">
                     <i class="fa fa-search"></i>
                 </button>
                 <button class="btn btn-dropbox" (click)="handleAddRootFolder()">
                     <i class="fa fa-folder-open-o" aria-hidden="true"></i> Tạo thư mục gốc
                 </button>
-            </fieldset>
+            </div>
         </div>
     </div>
-    <div class="row library">
-        <div class="col-sm-3 library-menu">
+    <div class="row grid library">
+        <div class="col-3 library-menu">
             <p-tree
                 id="mytree"
                 [value]="dataTrees"
