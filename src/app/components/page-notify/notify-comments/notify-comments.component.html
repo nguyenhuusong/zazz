@@ -1,19 +1,17 @@
-<div class="row bootstrap snippets" *ngIf="notify?.notiId">
-  <div class="col-md-12 col-md-offset-2 col-sm-12">
+<div class="snippets" *ngIf="notify?.notiId">
+  <div class="">
     <p>Bình luận</p>
     <div class="comment-wrapper">
       <div class="panel panel-info">
         <div class="panel-body">
-          <form>
-            <textarea class="form-control" placeholder="Nội dung bình luận" [(ngModel)]="comment" name="comment" rows="3"></textarea>
-            <br>
+          <form class="mb-5">
+            <div class="textarea-default">
+              <textarea class="form-control" placeholder="Nội dung bình luận" [(ngModel)]="comment" name="comment" rows="3"></textarea>
+            </div>
             <button type="button" class="btn btn-dropbox pull-right" (click)="handleAddComment()"><i class="fa fa-comments-o" aria-hidden="true"></i> Bình luận</button>
           </form>
-          <div class="clearfix"></div>
-          <hr>
-
           <label><strong>Danh sách bình luận</strong></label>
-          <ul class="media-list p-1" *ngIf="comments.length > 0">
+          <ul class="media-list p-1 mt-3" *ngIf="comments.length > 0">
             <li class="media m-0" *ngFor="let comment of comments">
               <a href="#" class="pull-left">
                 <img src="{{comment?.avatarUrl ? comment?.avatarUrl : '/assets/images/portrait/small/icon-man.png'}}" alt="avatar" class="img-circle avatar">
@@ -81,7 +79,7 @@
               </div>
             </li>
           </ul>
-          <div class="mt-1">
+          <div class="mt-3 mb-3">
             <div class="row">
                 <div class="col-md-8 padding-0">
                     <label class="mr-1">

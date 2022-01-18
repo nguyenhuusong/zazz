@@ -1032,10 +1032,30 @@ div{
     .p-treeselect{
         border: 1px solid var(--border-grey);
         border-color: var(--border-grey) !important;
+        width: 100%;
         .p-treeselect-label{
             padding-top: 7px;
             padding-bottom: 7px;
             color: var(--ink-color-40);
+            display: flex;
+            display: flex;
+            flex-wrap: wrap;
+            margin-right: 0px;
+            background: none;
+            font-size: 13px;
+            .p-treeselect-token{
+                padding: 0px;
+                line-height: 1;
+                background: none;
+                .p-treeselect-token-label{
+                    margin-right: 0px;
+                    padding: 5px 10px;
+                    margin-bottom: 3px;
+                    background: rgba(0, 0, 0, 0.12);
+                    color: rgba(0, 0, 0, 0.87);
+                    border-radius: 16px;
+                }
+            }
         }
         .p-tree{
             .p-tree-wrapper{
@@ -1954,5 +1974,46 @@ button{
 .page-detail-edit-detail{
     .panel-heading{
         margin-bottom: 50px;
+    }
+}
+.wrap-markdown{
+    .icon-choose-image{
+        font-size: 24px;
+        margin-left: 5px;
+        &:hover{
+            color: #f7941e;
+        }
+    }
+    .header{
+        position: static;
+    }
+    .grid {
+        .p-tree{
+            padding: 0px
+        }
+    }   
+}
+.group-btns{
+    label{
+        font-size: 14px;
+        display: block;
+        margin-bottom: 8px;
+        line-height: 20px;
+    }
+}
+div.new-toolbar-style{
+    
+    background: #fff;
+}
+.md-editor-binh-luan{
+    .tool-bar{
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 10px;
+        .btn-group{
+            button{
+                margin-right: 5px;
+            }
+        }
     }
 }
