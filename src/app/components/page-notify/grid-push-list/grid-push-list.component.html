@@ -1,44 +1,58 @@
-<div class="col-md-12 d-flex">
-  <p-toolbar>
+<div class="d-flex">
+  <p-toolbar styleClass="new-toolbar-style p-0">
     <div class="p-toolbar-group-left">
       <div class="mr-1">
-        <label>Trạng thái Push</label>
-        <select class="form-control" name="push_st" [(ngModel)]="filter.push_st" #push_st="ngModel" (change)="load()">
-          <option *ngFor="let type of notifyTypes" value={{type.statusId}}>
-            {{type.statusName}} </option>
-        </select>
+        <div class="select-default mb-0">
+          <label>Trạng thái Push</label>
+          <select class="form-control" name="push_st" [(ngModel)]="filter.push_st" #push_st="ngModel" (change)="load()">
+            <option *ngFor="let type of notifyTypes" value={{type.statusId}}>
+              {{type.statusName}} </option>
+          </select>
+        </div>
       </div>
       <div class="mr-1">
-        <label>Trạng thái gửi Email</label>
-        <select class="form-control" name="email_st" [(ngModel)]="filter.email_st" #email_st="ngModel" (change)="load()">
-          <option *ngFor="let type of notifyTypes" value={{type.statusId}}>
-            {{type.statusName}} </option>
-        </select>
+        <div class="select-default mb-0">
+          <label>Trạng thái gửi Email</label>
+          <select class="form-control" name="email_st" [(ngModel)]="filter.email_st" #email_st="ngModel" (change)="load()">
+            <option *ngFor="let type of notifyTypes" value={{type.statusId}}>
+              {{type.statusName}} </option>
+          </select>
+        </div>
       </div>
       <div class="">
-        <label>Trạng thái gửi Sms</label>
-        <select class="form-control" name="sms_st" [(ngModel)]="filter.sms_st" #sms_st="ngModel" (change)="load()">
-          <option *ngFor="let type of notifyTypes" value={{type.statusId}}>
-            {{type.statusName}} </option>
-        </select>
+        <div class="select-default mb-0">
+          <label>Trạng thái gửi Sms</label>
+          <select class="form-control" name="sms_st" [(ngModel)]="filter.sms_st" #sms_st="ngModel" (change)="load()">
+            <option *ngFor="let type of notifyTypes" value={{type.statusId}}>
+              {{type.statusName}} </option>
+          </select>
+        </div>
       </div>
     </div>
     <div class="p-toolbar-group-right" [hidden]="hideAction">
-     <p-button label="Cài đặt danh sách gửi" (click)="storeNotify()" icon="fa fa-save" styleClass="p-button-sm mr-1"></p-button>
-     <p-button label="Gửi thông báo" (click)="sendNotify()" icon="fa fa-paper-plane" styleClass="p-button-sm mr-1"></p-button>
-     <p-button label="Xóa nhân viên" (click)="deleteMultipleApartment()" icon="pi pi-trash" styleClass="p-button-sm p-button-danger mr-1"></p-button>
-     <p-button label="Thoát" (click)="closePage()" icon="pi pi-times" styleClass="p-button-sm p-button-secondary"></p-button>
+      <div class="group-btns text-right">
+        <label style="visibility: hidden;">Buttons</label>
+        <p-button label="Cài đặt danh sách gửi" (click)="storeNotify()" icon="fa fa-save" styleClass="p-button-sm mr-1"></p-button>
+        <p-button label="Gửi thông báo" (click)="sendNotify()" icon="fa fa-paper-plane" styleClass="p-button-sm mr-1"></p-button>
+        <p-button label="Xóa nhân viên" (click)="deleteMultipleApartment()" icon="pi pi-trash" styleClass="p-button-sm p-button-danger mr-1"></p-button>
+        <p-button label="Thoát" (click)="closePage()" icon="pi pi-times" styleClass="p-button-sm p-button-secondary"></p-button>
+      </div>
     </div>
     <div class="p-toolbar-group-right" *ngIf="hideAction">
-     <p-button label="Gửi thông báo" (click)="saveSendNotify()" icon="fa fa-save" styleClass="p-button-sm mr-1"></p-button>
-     <p-button label="Đóng lại" (click)="closeModal()" icon="pi pi-times" styleClass="p-button-sm p-button-secondary"></p-button>
+      <div class="group-btns text-right">
+        <label style="visibility: hidden;">Buttons</label>
+        <p-button label="Gửi thông báo" (click)="saveSendNotify()" icon="fa fa-save" styleClass="p-button-sm mr-1"></p-button>
+        <p-button label="Đóng lại" (click)="closeModal()" icon="pi pi-times" styleClass="p-button-sm p-button-secondary"></p-button>
+      </div>
     </div>
 </p-toolbar>
  
 </div>
-<div class="col-md-12 mt-1">
-  <app-list-grid-angular *ngIf="columnDefs.length > 0" [listsData]="items?.dataList?.data" [domLayout]="'autoHeight'"
-    [columnDefs]="columnDefs" [rowSelection]="'multiple'" [idGrid]="'myGridList'" (callback)="selectRow($event)"></app-list-grid-angular>
+<div class="mt-1">
+  <div class="grid-default border">
+    <app-list-grid-angular *ngIf="columnDefs.length > 0" [listsData]="items?.dataList?.data" [domLayout]="'autoHeight'"
+      [columnDefs]="columnDefs" [rowSelection]="'multiple'" [idGrid]="'myGridList'" (callback)="selectRow($event)"></app-list-grid-angular>
+    </div>
 <div class="paginator">
     <span>Từ {{ countRecord.currentRecordStart }} đến
         {{ countRecord.currentRecordEnd }}
