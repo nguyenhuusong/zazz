@@ -5,7 +5,7 @@
             <p-breadcrumb [model]="items"></p-breadcrumb>
         </div>
         <div class="table-tool grid white-background black-box-shadow-005 filterInput">
-            <div class="header-filter-search col-9 ">
+            <div class="header-filter-search col-4">
                 <div class="input-group icon">
                     <svg class="placeholder-icon" width="16" height="16" viewBox="0 0 16 16" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
@@ -86,7 +86,7 @@
                 <div class="input-group-append dropdown">
                 </div>
             </div>
-            <div class="col-3 tools">
+            <div class="col-8 tools">
                 <p-button styleClass="p-button-sm mr-1" icon="pi pi-plus" label="Thêm mới" (click)="addThietBi()">
                 </p-button>
             </div>
@@ -108,25 +108,23 @@
 </div>
 
 
-<p-dialog [(visible)]="isDialog" header="{{titleModal}}">
+<p-dialog [(visible)]="isDialog" header="{{titleModal}}" [style]="{width: '600px', height: 'auto'}">
     <form #createElevatorfloor="ngForm" class="form-horizontal ng-pristine ng-valid ng-scope">
         <div class="box-body" style="padding:10px;">
-          <div class="form-row" style="margin:10px 0px;">
-            <label class="col-sm-3 control-label">Mã dự án
+          <div class="select-default">
+            <label class="control-label">Mã dự án
               <span style="color:red">*</span>
             </label>
-            <div class="col-sm-9">
               <select class="form-control" (change)="loadGetBuildings()" name="projectCd"
-                                [(ngModel)]="modelElevator.projectCd" id="projectCd" #projectCd="ngModel" >
-                                <option value="">Chọn dự án</option>
-                                <option *ngFor="let advert of projects; let i = index" value="{{advert.projectCd}}">
-                                  {{advert.projectName}} </option>
-                              </select>
-            </div>
+                  [(ngModel)]="modelElevator.projectCd" id="projectCd" #projectCd="ngModel" >
+                  <option value="">Chọn dự án</option>
+                  <option *ngFor="let advert of projects; let i = index" value="{{advert.projectCd}}">
+                    {{advert.projectName}} </option>
+                </select>
           </div>
-          <div class="form-row" style="margin:10px 0px;">
-            <label class="col-sm-3 control-label">Tòa nhà</label>
-            <div class="col-sm-9" *ngIf="modelBuilding">
+          <div class="select-default">
+            <label class="control-label">Tòa nhà</label>
+            <div *ngIf="modelBuilding">
               <select (change)="getBuildingZones()" class="form-control" name="buildCd" [(ngModel)]="modelElevator.buildCd">
                 <option value="">Chọn tòa</option>
               <option *ngFor="let objBuilding of modelBuilding" value={{objBuilding.buildCd}}>
@@ -135,26 +133,22 @@
             </select>
             </div>
           </div>
-          <div class="form-row" style="margin:10px 0px;">
-            <label class="col-sm-3 control-label">Khu vực
+          <div class="select-default">
+              <label class="control-label">Khu vực
               <span style="color:red">*</span>
-            </label>
-            <div class="col-sm-9">
+              </label>
               <select class="form-control" (change)="loadGetFloors()" name="buildZone" [(ngModel)]="modelElevator.buildZone" id="buildZone" #buildZone="ngModel" >
-                                <option value="">Chọn khu vực</option>
-                                <option *ngFor="let advert of buildingZones; let i = index" value="{{advert.buildZoneName}}">
-                                  {{advert.buildZoneName}} </option>
-                              </select>
-            </div>
+                <option value="">Chọn khu vực</option>
+                <option *ngFor="let advert of buildingZones; let i = index" value="{{advert.buildZoneName}}">
+                  {{advert.buildZoneName}} </option>
+              </select>
           </div>
-          <div class="form-row" style="margin:10px 0px;">
-            <label class="col-sm-3 control-label">Mã thiết bị
+          <div class="input-group">
+            <label class="control-label">Mã thiết bị
               <span style="color:red">*</span>
             </label>
-            <div class="col-sm-9">
               <input type="text" class="form-control" [(ngModel)]="modelElevator.hardwareId" id="hardwareId" #hardwareId="ngModel"  required name="hardwareId"
                       placeholder="Mã thiết bị">
-            </div>
           </div>
           <!-- <div class="form-row" style="margin:10px 0px;">
             <label class="col-sm-3 control-label">Khu thang máy
@@ -166,17 +160,15 @@
             </div>
           </div> -->
 
-          <div class="form-row" style="margin:10px 0px;">
-            <label class="col-sm-3 control-label">Tầng
-              <span style="color:red">*</span>
-            </label>
-            <div class="col-sm-9">
-              <select class="form-control" name="floorNumber" [(ngModel)]="modelElevator.floorNumber" id="floorNumber" #floorNumber="ngModel">
-                                <option value=null>Chọn tầng</option>
-                                <option *ngFor="let advert of floorsCreate; let i = index" value="{{advert.floorNumber}}">
-                                  {{advert.floorName}} </option>
-                              </select>
-            </div>
+          <div class="select-default">
+              <label class="control-label">Tầng
+                <span style="color:red">*</span>
+              </label>
+                <select class="form-control" name="floorNumber" [(ngModel)]="modelElevator.floorNumber" id="floorNumber" #floorNumber="ngModel">
+                <option value=null>Chọn tầng</option>
+                <option *ngFor="let advert of floorsCreate; let i = index" value="{{advert.floorNumber}}">
+                  {{advert.floorName}} </option>
+              </select>
           </div>
           <!-- <div class="form-row" style="margin:10px 0px;">
             <label class="col-sm-3 control-label">Khu, trục thang máy
@@ -190,7 +182,7 @@
                               </select>
             </div>
           </div> -->
-          <div class="form-row" style="margin:10px 0px;">
+          <div class="checkbox-default d-flex">
             <label class="control-label">Trạng thái
               <span style="color:red">*</span>
             </label>
@@ -199,8 +191,8 @@
                 value="">
             </div>
           </div>
-          <div class="form-row" style="margin:10px 0px;">
-                <p-button label="Lưu lại" (click)="onSave()"></p-button>
+          <div class="form-row" >
+                <p-button label="Lưu lại" (click)="onSave()" styleClass="mr-2"></p-button>
                 <p-button label="Đóng" (click)="isDialog = !isDialog"></p-button>
           </div>
         </div>

@@ -15,17 +15,20 @@
             <p-card styleClass="mt-1">
             <ng-template pTemplate="header">
              <div class="row d-flex">
-                <div class="col-md-6">
-                    <div class="panel-heading" style="padding: 10px;"><h6 class="panel-title" style="color: black; font-weight: 500;">Danh sách người duyệt<p-badge *ngIf="listsData.length > 0" value="{{listsData.length}}" styleClass="p-mr-2"></p-badge></h6></div>
+                <div class="col-6">
+                    <div class="panel-heading" style="padding: 10px 0;">
+                        <h6 class="panel-title" style="color: black; font-weight: 500; margin-bottom: 0px;">Danh sách người duyệt<p-badge *ngIf="listsData.length > 0" value="{{listsData.length}}" styleClass="ml-2 p-mr-2"></p-badge></h6></div>
                 </div>
-                <div class="col-md-6 justify-content-end text-right">
+                <div class="col-6 justify-content-end text-right">
                     <p-button label="Thêm mới" styleClass="p-button-sm" (click)="addComAuthorizeInfo()"></p-button>
                 </div>
              </div>
             </ng-template>
-            <app-list-grid-angular [domLayout]="'autoHeight'" *ngIf="indexTab === 1"
-            [title]="'Chứng chỉ'" [listsData]="listsData"  (FnClick)="OnClick($event)"
-            [columnDefs]="columnDefs"></app-list-grid-angular>
+            <div class="grid-default border">
+                <app-list-grid-angular [domLayout]="'autoHeight'" *ngIf="indexTab === 1"
+                [title]="'Chứng chỉ'" [listsData]="listsData"  (FnClick)="OnClick($event)"
+                [columnDefs]="columnDefs"></app-list-grid-angular>
+            </div>
             </p-card>
         </p-tabPanel>
       </p-tabView>
