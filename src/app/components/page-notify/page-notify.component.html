@@ -41,29 +41,32 @@
   </div>
 </div>
 
-<p-dialog [(visible)]="displayNotify" [autoZIndex]="true" [modal]="true" [style]="{width: '800px', height: 'auto'}">
+<p-dialog [(visible)]="displayNotify" [autoZIndex]="true" [modal]="true" [style]="{width: '600px', height: 'auto'}">
   <p-header>
     Thêm mới thông báo
   </p-header>
   <div class="row">
     <div class="col-md-12">
-      <label for="">Chọn tổ chức</label>
-      <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
-                    [options]="moduleList" [required] [(ngModel)]="modelAddNotifi.external_sub"
-                    name="external_sub" [filter]="true">
-                    <ng-template let-item pTemplate="selectedItem">
-                        <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
-                    </ng-template>
-                    <ng-template let-car pTemplate="item">
-                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                            <div style="font-size:14px;float:left;margin-top:4px">{{car.label}}</div>
-                        </div>
-                    </ng-template>
-                </p-dropdown>
+        <div class="select-default">
+            <label for="">Chọn tổ chức</label>
+            <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
+                [options]="moduleList" [required] [(ngModel)]="modelAddNotifi.external_sub"
+                name="external_sub" [filter]="true">
+                <ng-template let-item pTemplate="selectedItem">
+                    <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
+                </ng-template>
+                <ng-template let-car pTemplate="item">
+                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                        <div style="font-size:14px;float:left;margin-top:4px">{{car.label}}</div>
+                    </div>
+                </ng-template>
+            </p-dropdown>
+        </div>
     </div>
     <div class="col-md-12 mt-1">
-      <label for="">Danh sách mẫu thông báo</label>
-      <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
+        <div class="select-default">
+            <label for="">Danh sách mẫu thông báo</label>
+            <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
                     [options]="notifyTempList" [required] [(ngModel)]="modelAddNotifi.tempId"
                     name="tempId" [filter]="true">
                     <ng-template let-item pTemplate="selectedItem">
@@ -75,6 +78,7 @@
                         </div>
                     </ng-template>
                 </p-dropdown>
+            </div>
     </div>
     <div class="col-md-12 mt-1 text-right">
       <p-button label="Gửi thông báo đến tổ chức" p-button="p-button-sm" icon="pi pi-check" (click)="addNotifytoProject()"></p-button>

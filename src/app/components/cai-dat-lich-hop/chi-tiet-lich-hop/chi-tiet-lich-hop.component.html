@@ -22,10 +22,12 @@
                         <p-button icon="pi pi-plus" (click)="handleAddMember()" styleClass="p-button-sm mr5" label="Thêm mới"></p-button>
                     </div> 
                     <div class="col-sm-12">
-                        <app-list-grid-angular [domLayout]="'autoHeight'" [title]="'Chứng chỉ'"
-                            [listsData]="listsData" (FnClick)="handleRemoveMember($event)"
-                            [columnDefs]="columnDefs">
-                        </app-list-grid-angular>
+                        <div class="grid-default border">
+                            <app-list-grid-angular [domLayout]="'autoHeight'" [title]="'Chứng chỉ'"
+                                [listsData]="listsData" (FnClick)="handleRemoveMember($event)"
+                                [columnDefs]="columnDefs">
+                            </app-list-grid-angular>
+                        </div>
                     </div>
                 </div>
             </div>

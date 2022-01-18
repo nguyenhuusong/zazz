@@ -1,5 +1,10 @@
 
 <p-panel header="Danh sách tìm kiếm ">
+    <div class="text-right  mb-3">
+        <button type="button" pButton icon="pi pi-check" class="p-button-sm mr-1" (click)="yes()" label="Đồng ý"></button>
+            <button type="button" pButton icon="pi pi-times" (click)="no()" label="Hủy bỏ"
+                class="p-button-secondary p-button-sm"></button>
+            </div>
     <ag-grid-angular [modules]="modules" [enableCellTextSelection]="true"  [suppressCopyRowsToClipboard]="false" #agGrid
     style="width: 100%; height: auto" id="myGrid" class="ag-theme-balham"  [masterDetail]="true" [domLayout]="'autoHeight'" 
     [rowData]="dataLists" [columnDefs]="columnDefs" floatingFilter  [detailRowHeight]="detailRowHeight"
@@ -14,9 +19,6 @@
         </div>
     </div>
 <ng-template pTemplate="footer">
-    <button type="button" pButton icon="pi pi-check" class="p-button-sm mr-1" (click)="yes()" label="Đồng ý"></button>
-        <button type="button" pButton icon="pi pi-times" (click)="no()" label="Hủy bỏ"
-            class="p-button-secondary p-button-sm mr-1"></button>
 </ng-template>
 </p-panel>
 
