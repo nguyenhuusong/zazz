@@ -23,7 +23,7 @@ styleClass="text-right two-buttons"
         <div *ngFor="let element of group.fields;let i=index" 
         [hidden]="!element.isVisiable"
         [ngClass]="{'isEmpty': element.isEmpty, 'has-image': includeImage && element?.columnType === 'image', 'image-iam': element?.columnType === 'image'}" 
-        class="{{element.columnClass}}  col-item">
+        class="{{element.columnClass}}">
         <app-type-text [modelFields]="modelFields" [element]="element" [submit]="submit" *ngIf="element?.columnType === 'input'"></app-type-text>
         <app-type-select [element]="element" *ngIf="element.columnType === 'select'"></app-type-select>
         <app-type-selectTree [element]="element" *ngIf="element.columnType === 'selectTree' && element.isVisiable" [dataView]="dataView"></app-type-selectTree>

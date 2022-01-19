@@ -53,7 +53,6 @@
                             [optionsButtonsEdit]="optionsButtonsView"  
                             [dataView]="listViews"
                             (callback)="setEmployeeInfo($event)" 
-                            (callback1)="setEmployeeInfo($event)" 
                             (callbackcancel)="cancelUpdate($event)">
                         </app-edit-detail>
                     </div>
@@ -301,10 +300,10 @@
         *ngIf="listViewsForm.length> 0 && displayDialog &&  (titleForm.type === 'DuyetHoSo' || titleForm.type === 'TuyenDungLai' || titleForm.type === 'ChuyenCongTac')"
         [detail]="detailInfo" [manhinh]="manhinh" [thongtinnhanvienNew]="true" [dataView]="listViewsForm"
         (callback)="xacNhan($event)" (callbackcancel)="displayDialog = !displayDialog"></app-edit-detail>
-    <p-selectButton [options]="optionsButtonsSave"
+    <!-- <p-selectButton [options]="optionsButtonsSave"
         *ngIf="titleForm.type === 'HuyHoSo' || titleForm.type === 'MoLaiHoSo' || titleForm.type === 'NghiViec'"
-        optionLabel="label" optionValue="value" (onChange)="onChangeButtonSave($event)"></p-selectButton>
-    <div class="row col-md-12 mt-1"  *ngIf="titleForm.type === 'NghiViec'">
+        optionLabel="label" optionValue="value" (onChange)="onChangeButtonSave($event)"></p-selectButton> -->
+    <div class="row col-md-12 mt-1 select-default"  *ngIf="titleForm.type === 'NghiViec'">
         <label for="">Lý do</label>
         <p-dropdown [autoZIndex]="true" [autoDisplayFirst]="false" [style]="{'width': '100%'}" [options]="terminateReasons"
         [(ngModel)]="modelDuyet.reason_id" name="reason_id">
@@ -318,18 +317,18 @@
         </ng-template>
         </p-dropdown>
     </div>
-    <div class="row col-md-12 mt-1">
+    <div class="row col-md-12 mt-1 input-group">
         <label for="">Nhân viên</label>
         <input type="text" [value]="modelDuyet.full_name || 'No name'" disabled name="full_name" class="form-control">
     </div>
-    <div class="row col-md-12 mt-1 d-flex">
-        <label for="">Ngày xác nhận</label> <br>
+    <div class="row col-md-12 mt-1  input-group">
+        <label for="">Ngày xác nhận</label>
         <p-calendar placeholder="DD/MM/YYYY" appendTo="body" [baseZIndex]="101" [(ngModel)]="modelDuyet.workDt"
             [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" inputId="navigators"
             dateFormat="dd/mm/yy" name="workDt"></p-calendar>
     </div>
-    <div class="row col-md-12 mt-1 d-flex" *ngIf="titleForm.type === 'NghiViec'">
-        <label for="">Ngày chốt nghỉ</label> <br>
+    <div class="row col-md-12 mt-1 input-group" *ngIf="titleForm.type === 'NghiViec'">
+        <label for="">Ngày chốt nghỉ</label>
         <p-calendar placeholder="DD/MM/YYYY" appendTo="body" [baseZIndex]="101" [(ngModel)]="modelDuyet.exprire_date"
             [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" inputId="navigators"
             dateFormat="dd/mm/yy" name="exprire_date"></p-calendar>
@@ -339,6 +338,10 @@
             <label for="">Ghi chú</label>
             <textarea [(ngModel)]="modelDuyet.comments" name="comments" cols="30" rows="10" class="form-control"></textarea>
         </div>
+    </div>
+    <div class="row col-md-12 mt-1 text-right"  *ngIf="titleForm.type === 'HuyHoSo' || titleForm.type === 'MoLaiHoSo' || titleForm.type === 'NghiViec'">
+        <p-button label="Hủy" (click)="onChangeButtonSave('Back')" icon="pi pi-times" styleClass="p-button-sm p-button-secondary mr-1"></p-button>
+        <p-button label="Lưu lại" (click)="onChangeButtonSave('Save')" icon="pi pi-check" styleClass="p-button-sm "></p-button>
     </div>
 </p-dialog>
 

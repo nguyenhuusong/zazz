@@ -673,7 +673,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
       let group_fields = cloneDeep(this.dataView)
       this.callbackform(group_fields, 'TamTinh')
     } else {
-      this.cancel();
+      this.cancel(event);
     }
   }
 
@@ -739,8 +739,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
     return numeral(value).format('0,0[.][00]');
   }
 
-  cancel() {
-    this.callbackcancel.emit();
+  cancel(event) {
+    this.callbackcancel.emit(event);
   }
 
 }

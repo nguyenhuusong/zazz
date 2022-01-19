@@ -1596,7 +1596,7 @@ button{
     &.p-button{
         padding: 0px 10px;
         border-radius: 4px;
-        height: 35px;
+        // height: 35px;
         // line-height: 35px;
         line-height: 1;
     }
@@ -1908,6 +1908,12 @@ button{
         padding: 10px 8px; 
         border-bottom: 1px solid #cccccc7a;
         border-top: 1px solid #cccccc7a;
+    }
+    .p-badge {
+        min-width: 1.2rem;
+        height: 1.2rem;
+        line-height: 1.2rem;
+        font-size: 12px;
     }
     .p-tabview-panels{
         padding: 0px

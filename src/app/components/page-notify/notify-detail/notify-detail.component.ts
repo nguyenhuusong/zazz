@@ -14,7 +14,6 @@ declare var ace:any
 })
 export class NotifyDetailComponent implements OnInit {
   manhinh = 'Edit';
-  optionsButtonsView = [{ label: 'Sửa', value: 'Edit', disabled: false }, { label: 'Tùy chọn', value: 'View', disabled: true }];
   @Output() save = new EventEmitter<any>();
   indexTab = 0;
   notiId = null;

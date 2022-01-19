@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { ApiService } from 'src/app/services/api.service';
 import * as queryString from 'querystring';
 import { cloneDeep } from 'lodash';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
@@ -28,7 +27,8 @@ export class CreateContractInfoComponent implements OnInit {
 
   optionsButon = [
     { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
-    { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-plus'  }
+    { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-plus'  },
+    { label: 'Tạm tính', value: 'TamTinh', class: '', icon: 'pi pi-plus'  }
   ]
   listContractTypes = [];
   indexTab = 0;

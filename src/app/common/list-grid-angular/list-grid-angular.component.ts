@@ -190,6 +190,7 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
         }
       });
     this.gridColumnApi.autoSizeColumns(allColumnIds, false);
+    this.autoSizeAll();
   }
 
   ngOnChanges() {
@@ -273,7 +274,7 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
           }
         });
       this.gridColumnApi.autoSizeColumns(allColumnIds, false);
-      const grid = document.getElementById('myGrid');
+      const grid = document.getElementById(`${this.idGrid}`);
       if (grid) {
         const gridBody = grid.querySelector('.ag-body-viewport') as any;
         this.autoSizeAll();
