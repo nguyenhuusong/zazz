@@ -2,6 +2,22 @@ import { RouteInfo } from './sidebar.metadata';
 
 export const ROUTES: any[] =[
     {
+      "menuId": 222,
+      "path": "/home",
+      "title": "Home",
+      "icon": "",
+      "classs": "nav-item",
+      "badge": "",
+      "badgeClass": "",
+      "isExternalLink": false,
+      "isNavHeader": false,
+      "intPos": 35,
+      "action": null,
+      "actions": [],
+      "submenus": [],
+      "menuRoleId": 36773
+    },
+    {
       "menuId": 144,
       "path": "nhan-su",
       "title": "Nhân sự",
