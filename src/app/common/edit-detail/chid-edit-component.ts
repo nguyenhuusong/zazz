@@ -571,8 +571,8 @@ export class AppTypeTimeonlyComponent implements OnInit {
 
 @Component({
   selector: 'app-type-multiSelect',
-  template: `   
-                <label class="text-nowrap label-text mb-0" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
+  template: `   <div class="select-default">
+                <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
                 <div>
                   <p-multiSelect [options]="element.options" [(ngModel)]="element.columnValue" (onChange)="onChangeValue($event.value, element.field_name)"
                   name={{element.field_name}} defaultLabel="Select a option" optionLabel="name" display="chip">
@@ -583,6 +583,7 @@ export class AppTypeTimeonlyComponent implements OnInit {
                 <div [hidden]="!modelFields[element.field_name].error">
                 {{modelFields[element.field_name].message}}
                 </div>
+            </div>
             </div>
             </div>
                 `,
@@ -636,8 +637,9 @@ export class AppTypeMultiSelectComponent implements OnInit {
 
 @Component({
   selector: 'app-type-markdown',
-  template: `   <label class="text-nowrap label-text" >{{element.columnLabel}}</label>
+  template: `  <div class="wrap-markdown"> <h3 class="text-nowrap label-text" >{{element.columnLabel}}</h3>
                 <app-page-markdown [modelMarkdow]="modelMarkdow" [element]="element" ></app-page-markdown>
+                </div>
                 `,
 })
 

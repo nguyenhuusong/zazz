@@ -1,0 +1,14 @@
+.bg-blue-color {
+    background: #1087dd;
+}
+
+form .form-group {
+    margin-bottom: 1rem !important;
+}
+
+.custom-select {
+    height: 2.5rem !important;
+}
+.text-danger{
+    color: red;
+}

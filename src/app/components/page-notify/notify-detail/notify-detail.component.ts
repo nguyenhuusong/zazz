@@ -100,13 +100,7 @@ export class NotifyDetailComponent implements OnInit {
   }
 
   cancelUpload() {
-    if (!this.notiId) {
-      this.router.navigate(['/cai-dat/thong-bao'])
-    } else {
-      this.manhinh = 'Edit';
-      this.getAppNotifyInfo();
-    }
-
+    this.router.navigate(['/cai-dat/thong-bao'])
   }
 
   displayDsThongBao(data) {

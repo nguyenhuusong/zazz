@@ -1,0 +1,31 @@
+
+<div class="main-grid product-detail">
+    <div class="breadcrumb">
+        <h3>{{titlePage}}</h3>
+        <p-breadcrumb [model]="items"></p-breadcrumb>
+    </div>
+   <div class="content">
+    <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'" [dataView]="listViews"
+        (callback)="setWorkTimeInfo($event)" (callbackcancel)="cancelUpdate($event)"></app-edit-detail>
+        <p-card styleClass="mt-1"
+        >
+         <ng-template pTemplate="header">
+             <div class="row d-flex">
+                 <div class="col-md-6">
+                     <div class="panel-heading" style="padding: 10px;">
+                         <h6 class="panel-title" style="color: black; font-weight: 500;">
+                            Các ngày trong tuần <p-badge *ngIf="detailInfo?.weekdays.length > 0"
+                               value="{{detailInfo?.weekdays.length}}" styleClass="p-mr-2">
+                             </p-badge>
+                         </h6>
+                     </div>
+                 </div>
+             </div>
+         </ng-template>
+         <app-list-grid-angular [domLayout]="'autoHeight'" [heightRow]="40" [title]="'Danh sách liên hệ'" [defaultColDef]="defaultColDef" [floatingFilter]="false" 
+             [listsData]="detailInfo?.weekdays"  (FnClick)="OnClick($event)"
+             [columnDefs]="columnDefs"></app-list-grid-angular>
+     </p-card>
+   </div>
+   
+</div>

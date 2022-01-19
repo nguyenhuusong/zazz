@@ -20,7 +20,7 @@
                 <div class="input-group-append dropdown">
                 </div>
             </div>
-            <div class="col-1">
+            <!-- <div class="col-1"> -->
                 <!-- <div class="select-default mb-0">
                     <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
                         [options]="listOrgRoots" [(ngModel)]="query.org_cd"  (onChange)="find()"
@@ -35,8 +35,8 @@
                         </ng-template>
                     </p-dropdown>
                 </div> -->
-            </div>
-            <div class="col-1">
+            <!-- </div> -->
+            <!-- <div class="col-1"> -->
                 <!-- <div class="select-default mb-0">
                         <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
                         [options]="listStatus" [(ngModel)]="query.request_status"  (onChange)="find()"
@@ -51,13 +51,13 @@
                         </ng-template>
                     </p-dropdown>
                 </div> -->
-            </div>
+            <!-- </div> -->
             <div class="col-1">
                 <p-button class="search-button mr-3" icon="pi pi-search" (click)="model.offSet = 0; first = 0; load()"></p-button>
                 <p-button icon="pi pi-refresh" (click)="cancel()" styleClass="p-button-secondary p-button-sm"></p-button>
             </div>
-            <div class="col-3 tools">
-                <p-button icon="pi pi-plus" (click)="handleAdd()" styleClass="p-button-sm mr5" label="Thêm mới"></p-button>
+            <div class="col-7 tools">
+                <p-button icon="pi pi-plus" (click)="handleAdd()" styleClass="p-button-sm mr-1" label="Thêm mới"></p-button>
                 <p-button icon="pi pi-th-large" (click)="manageBuilding()" styleClass="p-button-sm mr5" label="Quản lý phòng họp"></p-button>
             </div>
         </div>

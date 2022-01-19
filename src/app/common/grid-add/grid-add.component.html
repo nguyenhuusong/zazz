@@ -1,0 +1,24 @@
+
+<p-panel header="Danh sách tìm kiếm ">
+    <div class="text-right  mb-3">
+        <button type="button" pButton icon="pi pi-check" class="p-button-sm mr-1" (click)="yes()" label="Đồng ý"></button>
+            <button type="button" pButton icon="pi pi-times" (click)="no()" label="Hủy bỏ"
+                class="p-button-secondary p-button-sm"></button>
+            </div>
+    <ag-grid-angular [modules]="modules" [enableCellTextSelection]="true"  [suppressCopyRowsToClipboard]="false" #agGrid
+    style="width: 100%; height: auto" id="myGrid" class="ag-theme-balham"  [masterDetail]="true" [domLayout]="'autoHeight'" 
+    [rowData]="dataLists" [columnDefs]="columnDefs" floatingFilter  [detailRowHeight]="detailRowHeight"
+        [detailCellRendererParams]="detailCellRendererParams" (cellMouseDown)="cellMouseDown($event)"
+    (gridReady)="onGridReady($event)" [defaultColDef]="defaultColDef" [animateRows]="true"
+    [frameworkComponents]="frameworkComponents" [getRowHeight]="getRowHeight" floatingFilter
+    [rowSelection]="rowSelection"  [suppressRowClickSelection]="true">
+    </ag-grid-angular>
+    <div class="row mt-1">
+        <div class="col-md-12 d-flex justify-content-end">
+            <span style="font-weight: 600;">Tổng số có {{dataLists?.length}} kết quả</span>
+        </div>
+    </div>
+<ng-template pTemplate="footer">
+</ng-template>
+</p-panel>
+

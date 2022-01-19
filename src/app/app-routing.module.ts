@@ -4,6 +4,7 @@ import { AuthGuardService } from './services/auth-guard.service';
 import { AuthCallbackComponent } from './auth-callback/auth-callback.component';
 import { DefaultLayoutComponent } from './containers';
 import { HomeComponent } from './pages/home/home.component';
+import { BaoCaoComponent } from './components/bao-cao/bao-cao.component';
 // import { HomeComponent } from './home/home.component';
 // import { OrderSunshineComponent } from './order-sunshine/order-sunshine.component';
 // import { ReportendofdayComponent } from './reportendofday/reportendofday.component';
@@ -32,6 +33,19 @@ const appRoutes: Routes = [
         path: 'cai-dat',
         loadChildren: () => import('../app/pages/cai-dat/cai-dat.module').then(m => m.CaiDatModule)
       },
+      {
+        path: 'phan-quyen',
+        loadChildren: () => import('../app/pages/phan-quyen/phan-quyen.module').then(m => m.PhanQuyenModule)
+      },
+      {
+        path: 'bao-cao',
+        component: BaoCaoComponent,
+        data: {
+          title: 'Báo cáo tổng hợp',
+          url: 'bao-cao',
+        },
+      },
+      
       // {
       //   path: 'manager',
       //   loadChildren: () => import('../app/pages/quan-tri/quan-tri.module').then(m => m.QuanTriModule)

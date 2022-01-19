@@ -1,0 +1,51 @@
+
+<div class="main-grid product-detail">
+    <div class="breadcrumb">
+        <h3>{{titlePage}}</h3>
+        <p-breadcrumb [model]="items"></p-breadcrumb>
+    </div>
+   <div class="content">
+    <p-tabView [(activeIndex)]="indexTab" (onChange)="handleChange($event.index)">
+        <p-tabPanel header="Thông tin chung">
+              <div class="" *ngIf="detailInfo">
+                  <app-edit-detail *ngIf="listViews.length> 0 " [thongtinnhanvienNew]="true"  [manhinh]="'Edit'" [dataView]="listViews" (callback)="setCompanyInfo($event)" (callbackcancel)="cancelUpdate()"></app-edit-detail>
+              </div>
+        </p-tabPanel>
+        <p-tabPanel header="Đăng ký người duyệt">
+            <p-card styleClass="mt-1">
+            <ng-template pTemplate="header">
+             <div class="row d-flex">
+                <div class="col-6">
+                    <div class="panel-heading" style="padding: 10px 0;">
+                        <h6 class="panel-title" style="color: black; font-weight: 500; margin-bottom: 0px;">Danh sách người duyệt<p-badge *ngIf="listsData.length > 0" value="{{listsData.length}}" styleClass="ml-2 p-mr-2"></p-badge></h6></div>
+                </div>
+                <div class="col-6 justify-content-end text-right">
+                    <p-button label="Thêm mới" styleClass="p-button-sm" (click)="addComAuthorizeInfo()"></p-button>
+                </div>
+             </div>
+            </ng-template>
+            <div class="grid-default border">
+                <app-list-grid-angular [domLayout]="'autoHeight'" *ngIf="indexTab === 1"
+                [title]="'Chứng chỉ'" [listsData]="listsData"  (FnClick)="OnClick($event)"
+                [columnDefs]="columnDefs"></app-list-grid-angular>
+            </div>
+            </p-card>
+        </p-tabPanel>
+      </p-tabView>
+   </div>
+   
+</div>
+
+<p-dialog header="Thêm mới người duyệt" [(visible)]="displayScreemForm" [modal]="true" [draggable]="false" [resizable]="false" [style]="{width: '50vw'}" [autoZIndex]="true"
+  [draggable]="false" [resizable]="false">
+  <app-edit-detail *ngIf="displayScreemForm"  [manhinh]="'Edit'" [thongtinnhanvienNew]="true" [dataView]="listViewsForm" (callback)="setComAuthorizeInfo($event)" (callbackcancel)="displayScreemForm = !displayScreemForm"></app-edit-detail>
+  </p-dialog> 
+  
+
+<p-dialog [(visible)]="displaysearchUserMaster"  [autoZIndex]="true" [modal]="true" 
+[maximizable]="true" [draggable]="false" [resizable]="false"  [style]="{width: '1000px', height: 'auto'}">
+    <p-header>
+      Tìm kiếm thông tin khách hàng
+    </p-header>
+   <app-search-user-master *ngIf="displaysearchUserMaster" [button]="['Select']" (callbackformSearch)="callbackformSearch($event)" (closeCallback)="displaysearchUserMaster = !displaysearchUserMaster"></app-search-user-master>
+</p-dialog>

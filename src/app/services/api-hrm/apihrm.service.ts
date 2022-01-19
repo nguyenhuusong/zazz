@@ -3,9 +3,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { from, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AuthService } from '../auth.service';
+import { CardInfo, Project, TypeCard, Vehicle } from 'src/app/models/cardinfo.model';
+import { BuildZone } from 'src/app/models/buildzone.model';
+import { ElevatorFloor } from 'src/app/models/elevatorfloor.model';
 const apiBaseUrl = environment.apiBase;
 const apiHrmServer = environment.apiHrmBase;
 const apiCore = environment.apiCoreBase;
+const apiShome = environment.apiShomeBase;
 @Injectable()
 export class ApiHrmService {
   constructor(
@@ -653,6 +657,347 @@ export class ApiHrmService {
 
   getEatingInfo(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/eating/GetEatingInfo?` + queryParams, this.options)
+  }
+
+  getOrganizeLevelList(): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/organize/GetOrganizeLevelList`, this.options);
+  }
+
+  getOrganizeList(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/organize/GetOrganizeList?` + queryParams, this.options);
+  }
+
+  organizeGetDepartments(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/organize/GetDepartments?${queryParams}`, this.options)
+  }
+
+  delOrganize(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v1/organize/DelOrganize?` + queryParams, this.options)
+  }
+
+  setOrganize(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/organize/SetOrganize`, queryParams, this.options)
+  }
+
+  getPositionList(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/position/GetPositionList?` + queryParams, this.options)
+  }
+
+  setOrganizeInfo(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/organize/SetOrganizeInfo`, queryParams, this.options)
+  }
+
+  getUsersByCust(custId): Observable<any[]> {
+    return this.http
+      .get<any[]>(`${apiBaseUrl}/api/v1/user/GetUsersByCust?custId=${custId}`, this.options);
+  }
+
+  setOrganizePosition(queryParams): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v1/organize/SetOrganizePosition`, queryParams, this.options)
+  }
+
+  getReportList(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/report/GetReportList?` + queryParams, this.options)
+  }
+  
+  setUserAdd(params): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v1/user/SetUserAdd`, params, this.options)
+  }
+  
+  setOrganizeCompany(queryParams): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v1/organize/SetOrganizeCompany`, queryParams, this.options)
+  }
+
+  getPositionPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/position/GetPositionPage?` + queryParams, this.options)
+  }
+
+  delPositionInfo(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/position/DelPositionInfo?` + queryParams, this.options)
+  }
+
+  delWorkplaceInfo(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/workplace/DelWorkplaceInfo?` + queryParams, this.options)
+  }
+
+  getWorkplacePage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/workplace/GetWorkplacePage?` + queryParams, this.options)
+  }
+
+  getOrganizeConfig(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/organize/GetOrganizeConfig?` + queryParams, this.options)
+  }
+
+  setOrganizeConfig(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/organize/SetOrganizeConfig`,queryParams, this.options)
+  }
+
+  getPositionInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/position/GetPositionInfo?` + queryParams, this.options)
+  }
+
+  setPositionInfo(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/position/SetPositionInfo`, params, this.options)
+  }
+
+  getWorkplaceInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/workplace/GetWorkplaceInfo?` + queryParams, this.options)
+  }
+  
+  setWorkplaceInfo(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/workplace/SetWorkplaceInfo`, queryParams, this.options)
+  }
+
+  getCompanyPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/compay/GetCompanyPage?` + queryParams, this.options)
+  }
+
+  setCompanyInfo(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/compay/SetCompanyInfo`, params, this.options)
+  }
+
+  delCompanyInfo(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/compay/DelCompanyInfo?` + queryParams, this.options)
+  }
+
+  getCompanyInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/compay/GetCompanyInfo?` + queryParams, this.options)
+  }
+
+  delComAuthorizeInfo(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/compay/DelComAuthorizeInfo?` + queryParams, this.options)
+  }
+
+  getComAuthorizeInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/compay/GetComAuthorizeInfo?` + queryParams, this.options)
+  }
+
+  setComAuthorizeInfo(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/compay/SetComAuthorizeInfo`, params, this.options)
+  }
+
+  getContractTypePage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/contract/GetContractTypePage?` + queryParams, this.options)
+  }
+
+  
+  getContractTypeInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/contract/GetContractTypeInfo?` + queryParams, this.options)
+  }
+  
+  setContractTypeInfo(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/contract/SetContractTypeInfo`, params, this.options)
+  }
+
+  delContractTypeInfo(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/contract/DelContractTypeInfo?` + queryParams, this.options)
+  }
+
+  // api cũ
+  getCardCustomers<T>(filter): Observable<T> {
+    return this.http
+      .get<T>(`${apiBaseUrl}/api/v1/shome/GetCardCustomers?${filter}`, this.options);
+  }
+
+  getCardInfo<T>(cardNum: string, customerPhoneNumber: string, HardwareId: string): Observable<T> {
+    return this.http
+      .get<T>(`${apiBaseUrl}/api/v1/shome/GetCardInfo?` +
+        `cardNum=${cardNum}&` +
+        `customerPhoneNumber=${customerPhoneNumber}&` +
+        `hardwareId=${HardwareId}`, this.options);
+  }
+
+  getBuildCdByProjectCd<T>(projectCd: string): Observable<T> {
+    return this.http
+      .get<T>(`${apiShome}/api/v1/shome/GetBuildCdByProjectCd?` +
+        `projectCd=${projectCd}`, this.options);
+  }
+
+  getMasElevatorCards(filter, offset, pagesize): Observable<CardInfo[]> {
+    return this.http
+      .get<CardInfo[]>(`${apiShome}/api/v1/shome/GetMasElevatorCards?` +
+        `filter=${filter}&` +
+        `offSet=${offset}&` +
+        `pageSize=${pagesize}`, this.options);
+  }
+
+  GetBuildFloorByProjectCdBuildCd(buildZone, projectCd, buildCd): Observable<BuildZone[]> {
+    return this.http
+      .get<BuildZone[]>(`${apiShome}/api/v1/shome/GetBuildFloorByProjectCdBuildCd?` +
+        `projectCd=${projectCd}&` +
+        `buildZone=${buildZone}&` +
+        `buildCd=${buildCd}&`, this.options);
+  }
+
+  getElevatorDevicePage(filter, offset, pagesize, projectCd, buildZone, buildCd, floorNumber = null): Observable<Project[]> {
+    return this.http
+      .get<Project[]>(`${apiShome}/api/v1/shome/GetElevatorDevicePage?` +
+        `filter=${filter}&` +
+        `offSet=${offset}&` +
+        `pageSize=${pagesize}&` +
+        `buildCd=${buildCd}&` +
+        `projectCd=${projectCd}&` +
+        `floorNumber=${floorNumber}&` +
+        `buildZone=${buildZone}`
+        , this.options);
+  }
+
+  getEmployeeCardPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/cardvehicle/GetEmployeeCardPage?` + queryParams, this.options);
+  }
+
+  getEmployeeList(queryParams): Observable<any[]> {
+    return this.http
+      .get<any[]>(`${apiBaseUrl}/api/v2/employee/GetEmployeeList?` + queryParams, this.options)
+  }
+
+  setVehicleRemove(params): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v2/cardvehicle/SetVehicleRemove`, params, this.options);
+  }
+
+  lockCardVehicle<T>(cardVehicleId) {
+    const card = { status: 1, cardVehicleId };
+    return this.http.put<T>(`${apiHrmServer}/api/v2/cardvehicle/SetVehicleLock`, card, this.options);
+  }
+
+  getUserPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/user/GetUserPage?` + queryParams, this.options)
+  }
+
+  getEmployeeVehiclePage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/cardvehicle/GetEmployeeVehiclePage?` + queryParams, this.options);
+  }
+
+  setVehicleApprove<T>(data) {
+    return this.http.put<T>(`${apiHrmServer}/api/v2/cardvehicle/SetVehicleApprove`, data, this.options);
+  }
+
+  getVehicleTypes(): Observable<any[]> {
+    return this.http
+      .get<any[]>(`${apiBaseUrl}/api/v1/shome/GetVehicleTypes`, this.options);
+  }
+
+  unlockCardVehicle<T>(cardVehicleId) {
+    const card = { status: 0, cardVehicleId };
+    return this.http.put<T>(`${apiHrmServer}/api/v2/cardvehicle/SetVehicleLock`, card, this.options);
+  }
+
+  getCardVehicleDetail(cardVehicleId): Observable<Vehicle> {
+    return this.http
+      .get<Vehicle>(`${apiBaseUrl}/api/v1/shome/GetCardVehicleDetail?cardVehicleId=${cardVehicleId}`, this.options);
+  }
+
+  approveCardVehicle<T>(cardVehicleId) {
+    const card = { cardVehicleId, status: 1 };
+    return this.http.put<T>(`${apiBaseUrl}/api/v1/shome/SetCardVehicleServiceAuth`, card, this.options).toPromise();
+
+  }
+
+  lockCardNV<T>(cardCd) {
+    const card = { cardCd, status: 1 };
+    return this.http.put<T>(`${apiHrmServer}/api/v2/cardvehicle/SetCardLock`, card, this.options);
+  }
+
+  setCardVehicle<T>(cardVehicleId, cardCd = null, vehicleTypeId, vehicleNo, vehicleName, startTime, endTime, custId = null) {
+    const cardSet = {
+      cardVehicleId, cardCd, vehicleTypeId, vehicleNo, vehicleName, serviceId: 0,
+      startTime, endTime, status: 0, custId
+    };
+    return this.http.post<T>(`${apiShome}/api/v1/shome/SetServiceVehicle`, cardSet, this.options);
+  }
+
+  setCardVip<T>(cardCd, employeeId, cardName) {
+    const card = {
+      employeeId: employeeId, cardName, cardCd,
+      issueDate: '', expireDate: '', cardTypeId: 0, isVIP: true
+    };
+    return this.http.post<T>(`${apiShome}/api/v1/shome/SetCardVip`, card, this.options);
+  }
+
+  unlockCardNV<T>(cardCd) {
+    const card = { cardCd, status: 0 };
+    return this.http.put<T>(`${apiHrmServer}/api/v2/cardvehicle/SetCardLock`, card, this.options);
+  }
+
+  GetElevatorFloorPage(filter, offset, pagesize, projectCd, buildCd, buildZone): Observable<ElevatorFloor[]> {
+    return this.http
+      .get<ElevatorFloor[]>(`${apiShome}/api/v1/shome/GetElevatorFloorPage?` +
+        `filter=${filter}&` +
+        `offSet=${offset}&` +
+        `pageSize=${pagesize}&` +
+        `projectCd=${projectCd}&` +
+        `buildCd=${buildCd}&` +
+        `buildZone=${buildZone}&`
+        , this.options);
+  }
+
+  setMasElevatorFloor(params): Observable<string> {
+    return this.http
+      .post<string>(`${apiShome}/api/v1/shome/SetMasElevatorFloor`, params, this.options);
+  }
+
+  getFloorTypeByBuildCd(buildCd): Observable<BuildZone[]> {
+    return this.http
+      .get<BuildZone[]>(`${apiShome}/api/v1/shome/GetFloorTypeByBuildCd?` +
+        `buildCd=${buildCd}&`, this.options);
+  }
+
+  getBuildByProjectCd(projectCd): Observable<any[]> {
+    return this.http
+      .get<any[]>(`${apiShome}/api/v1/shome/GetBuildCdByProjectCd?` +
+        `projectCd=${projectCd}&`, this.options);
+  }
+
+  setMasElevatorDevice(params): Observable<string> {
+    return this.http
+      .post<string>(`${apiShome}/api/v1/shome/SetMasElevatorDevice`, params, this.options);
+  }
+
+  getFoorInfoGo(filter, projectCd, buildZone, buildCd, hardWareId, offset, pagesize): Observable<CardInfo[]> {
+    return this.http
+      .get<CardInfo[]>(`${apiShome}/api/v1/shome/GetFoorInfoGo?` +
+        `filter=${filter}&` +
+        `projectCd=${projectCd}&` +
+        `buildZone=${buildZone}&` +
+        `buildCd=${buildCd}&` +
+        `hardWareId=${hardWareId}&` +
+        `offSet=${offset}&` +
+        `pageSize=${pagesize}`, this.options);
+  }
+
+  addRoleCard(mEcard: CardInfo): Observable<any> {
+    return this.http.post<any>(`${apiShome}/api/v1/shome/SetMasElevatorCard`, mEcard, this.options);
+  }
+
+  getElevatorCardRole<T>(): Observable<T> {
+    return this.http
+      .get<T>(`${apiShome}/api/v1/shome/GetElevatorCardRole`, this.options);
+  }
+  
+  getCardTypeList(): Observable<TypeCard[]> {
+    return this.http.get<TypeCard[]>(`${apiBaseUrl}/api/v2/customer/GetCardTypeList`, this.options);
+  }
+
+  getProjects(): Observable<Project[]> {
+    return this.http
+      .get<Project[]>(`${apiBaseUrl}/api/v1/shome/GetProjects`, this.options);
+  }
+
+  getElevatorFloors<T>(buildCd: string): Observable<T> {
+    return this.http
+      .get<T>(`${apiShome}/api/v1/shome/GetElevatorFloors?` +
+        `buildCd=${buildCd}`, this.options);
+  }
+
+  deleteRoleCard(MasECid): Observable<string> {
+    return this.http
+      .delete<string>(`${apiShome}/api/v1/shome/DeleteMasElevatorCard?MasECid=${MasECid}`, this.options);
+  }
+
+  getBuildZoneByBuildCd(projectCd, buildCd): Observable<BuildZone[]> {
+    return this.http
+      .get<BuildZone[]>(`${apiShome}/api/v1/shome/GetBuildZoneByBuildCd?` +
+        `buildCd=${buildCd}&projectCd=${projectCd}`, this.options);
   }
 
 }

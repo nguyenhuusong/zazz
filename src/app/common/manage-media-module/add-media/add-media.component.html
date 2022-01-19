@@ -19,12 +19,14 @@
             </div>
         </div>
         <div class="form-row" style="margin:10px 0px;">
-            <div class="col-sm-12" *ngIf="type === 'folder'">
-                <label class="control-label">Tên thư mục
-                    <span style="color:red">*</span>
-                </label>
-                <input type="text" class="form-control" (keyup.enter)="onSave()" [required]="type === 'folder'" name="name" formControlName="name"
-                       id="name"placeholder="Tên thư mục">
+            <div class="col-sm-12 pl-0 pr-0" *ngIf="type === 'folder'">
+                <div class="input-group">
+                    <label class="control-label">Tên thư mục
+                        <span style="color:red">*</span>
+                    </label>
+                    <input type="text" class="form-control" (keyup.enter)="onSave()" [required]="type === 'folder'" name="name" formControlName="name"
+                        id="name"placeholder="Tên thư mục">
+                    </div>
                 <!-- <div *ngIf="name.errors && (name.dirty || name.touched)"
                     class="alert-validation alert-danger">
                     <div [hidden]="!name.errors.required">
@@ -78,7 +80,7 @@
     </form>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-dropbox" (click)="onSave()" >
+    <button type="button" class="btn btn-dropbox mr-3" (click)="onSave()" >
         <i class="fa fa-floppy-o" aria-hidden="true"></i> Lưu lại
     </button>
     <button type="button" class="btn btn-default" (click)="closeModal($event)" >

@@ -32,8 +32,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
   @Input() detailInfo = null;
   buttonSave = 'Update';
   @Input() optionsButtonsEdit = [
-    { label: 'Hủy', value: 'View' },
-    { label: 'Lưu lại', value: 'Update' }
+    { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
+    { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-plus'  }
   ];
   @Input() modelMarkdow = {
     type: 1,
@@ -650,7 +650,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
   }
 
   onChangeButtonEdit(event) {
-    if (event.value === 'Update') {
+    if (event === 'Update') {
       this.submit = true;
       for (let item in this.modelFields) {
         if (this.modelFields[item].error) {
@@ -661,7 +661,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
       this.submit = false;
       let group_fields = cloneDeep(this.dataView)
       this.callbackform(group_fields, 'Update')
-    } else if (event.value === 'TamTinh') {
+    } else if (event === 'TamTinh') {
       this.submit = true;
       for (let item in this.modelFields) {
         if (this.modelFields[item].error) {

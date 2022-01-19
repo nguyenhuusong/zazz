@@ -73,7 +73,7 @@ export class DanhSachPhongHopComponent implements OnInit {
     this.items = [
       { label: 'Trang chủ' },
       { label: 'Cài đặt' },
-      { label: 'Danh sách lịch họp', url: '/cai-dat/cai-dat-lic-hop' },
+      { label: 'Danh sách lịch họp', url: '/cai-dat/cai-dat-lich-hop' },
       { label: 'Danh sách phòng họp'},
     ];
     this.load();

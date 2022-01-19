@@ -109,6 +109,7 @@ export class GridPushListComponent implements OnInit, OnChanges {
     const queryParams = queryString.stringify(this.filter);
     this.apiService.getNotifyToPushs(queryParams).subscribe(
       (results: any) => {
+        this.items = results.data;
         this.listsData = results.data.dataList.data;
         if (this.filter.offSet === 0) {
           this.cols = results.data.gridflexs;

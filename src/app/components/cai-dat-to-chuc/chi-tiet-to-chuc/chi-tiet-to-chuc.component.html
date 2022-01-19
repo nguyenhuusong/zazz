@@ -1,0 +1,74 @@
+
+<div class="main-grid product-detail">
+    <div class="breadcrumb">
+        <h3>{{titlePage}}</h3>
+        <p-breadcrumb [model]="items"></p-breadcrumb>
+    </div>
+   <div class="content">
+    <p-panel header="Thông tin chung">
+        <div class="">
+            <app-edit-detail *ngIf="listViews.length> 0" [thongtinnhanvienNew]="true" [manhinh]="'Edit'" [dataView]="listViews" (callback)="setOrganizeInfo($event)" (callbackcancel)="cancelUpdate()"></app-edit-detail>
+        </div>
+    </p-panel>
+    <div class="row mt-1" >
+        <div class="col-md-6">
+            <p-panel>
+                <ng-template pTemplate="header">
+                    <div class="col-md-6">
+                        Công ty
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <p-button label="Thêm mới" styleClass="p-button-sm" (click)="addCompanies()"></p-button>
+                    </div>
+                </ng-template>
+                <div class="grid-default border">
+                    <app-list-grid-angular [title]="'Danh mục hồ sơ khách hàng ký'"  [domLayout]="'autoHeight'" [listsData]="listsDataCompanies"  (FnClick)="OnClick($event)" *ngIf="columnDefCompanies.length > 0" [columnDefs]="columnDefCompanies"></app-list-grid-angular>
+                </div>
+            </p-panel>
+        </div>
+        <div class="col-md-6">
+            <p-panel header="">
+                <ng-template pTemplate="header">
+                    <div class="col-md-6">
+                       Chức vụ
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <p-button label="Thêm mới" styleClass="p-button-sm" (click)="addPositions()"></p-button>
+                    </div>
+                </ng-template>
+                <div class="grid-default border">
+                    <app-list-grid-angular  [title]="'Danh mục hồ sơ khách hàng ký'"  [domLayout]="'autoHeight'" [listsData]="listsDataPositions" (FnClick)="OnClick($event)" *ngIf="columnDefPositions.length > 0" [columnDefs]="columnDefPositions"></app-list-grid-angular>
+                </div>
+            </p-panel>
+        </div>
+    </div>
+        
+   </div>
+   
+</div>
+
+<p-dialog header="{{isPositions ? 'Danh sách chức vụ': 'Danh sách công ty'}}" [modal]="true" [(visible)]="displayModal" [position]="'top'" [style]="{width: '70vw'}" [draggable]="false" [resizable]="false"
+[autoZIndex]="true">
+          <p-panel header="Tìm kiếm">
+              <div class="row">
+                  <div class="col-md-9">
+                        <div class="input-group mb-0">
+                            <input type="text" class="form-control" [(ngModel)]="filter" (keyup)="find1()" name="filter">
+                        </div>
+                  </div>
+                  <div class="col-md-3 text-right" *ngIf="isPositions">
+                      <p-button label="Tìm kiếm" styleClass="p-button-sm mr-1" (click)="getPositionList()"></p-button>
+                      <p-button label="Làm mới" styleClass="p-button-sm p-button-secondary" (click)="reset()"></p-button>
+                    
+                  </div>
+                  <div class="col-md-3 text-right" *ngIf="!isPositions">
+                      <p-button label="Tìm kiếm" styleClass="p-button-sm mr-2" (click)="getCompanyList()"></p-button>
+                      <p-button label="Làm mới" styleClass="p-button-sm p-button-secondary" (click)="reset()"></p-button>
+                    
+                  </div>
+              </div>
+          </p-panel>
+          <div class="grid-default border">
+            <app-grid-add [dataLists]="dataGridAdd" [columnDefs]="columnDefsGrid" [isPositions]="isPositions" [type]="isPositions ? 'positionId' : 'companyId'" *ngIf="displayModal" [dataSelects]="dataSelects" (callback)="submit($event)" (close)="displayModal =!displayModal"></app-grid-add>
+        </div>
+</p-dialog>

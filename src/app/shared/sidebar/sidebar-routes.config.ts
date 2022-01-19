@@ -2,6 +2,22 @@ import { RouteInfo } from './sidebar.metadata';
 
 export const ROUTES: any[] =[
     {
+      "menuId": 222,
+      "path": "/home",
+      "title": "Home",
+      "icon": "",
+      "classs": "nav-item",
+      "badge": "",
+      "badgeClass": "",
+      "isExternalLink": false,
+      "isNavHeader": false,
+      "intPos": 35,
+      "action": null,
+      "actions": [],
+      "submenus": [],
+      "menuRoleId": 36773
+    },
+    {
       "menuId": 144,
       "path": "nhan-su",
       "title": "Nhân sự",
@@ -502,8 +518,8 @@ export const ROUTES: any[] =[
       "submenus": [
         {
           "menuId": 154,
-          "path": "/elevator",
-          "title": "Quyền thang máy",
+          "path": "/phan-quyen/phan-quyen-thang-may",
+          "title": "Phân quyền thang máy",
           "icon": "sun-icon-file-submodule",
           "classs": "nav-item",
           "badge": "",
@@ -546,7 +562,7 @@ export const ROUTES: any[] =[
         },
         {
           "menuId": 151,
-          "path": "/card",
+          "path": "/phan-quyen/the-nhan-vien",
           "title": "Thẻ nhân viên",
           "icon": "sun-icon-torsos",
           "classs": "nav-item",
@@ -581,7 +597,7 @@ export const ROUTES: any[] =[
         },
         {
           "menuId": 152,
-          "path": "/vehiclelist",
+          "path": "/phan-quyen/xe-nhan-vien",
           "title": "Xe nhân viên",
           "icon": "sun-icon-flight",
           "classs": "nav-item",
@@ -652,7 +668,7 @@ export const ROUTES: any[] =[
         },
         {
           "menuId": 155,
-          "path": "/quyen-nguoi-dung",
+          "path": "/phan-quyen/quyen-nguoi-dung",
           "title": "Quyền người dùng",
           "icon": "sun-icon-person",
           "classs": "nav-item",

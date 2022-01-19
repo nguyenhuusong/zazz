@@ -34,6 +34,7 @@
     [groupDisplayType]="'groupRows'"
     [enableRangeSelection]="false"
     [getRowHeight]="getRowHeight"
+    (rowSelected)="onRowSelected($event)"
     [accentedSort]="true"
     [frameworkComponents]="frameworkComponents">
   </ag-grid-angular>

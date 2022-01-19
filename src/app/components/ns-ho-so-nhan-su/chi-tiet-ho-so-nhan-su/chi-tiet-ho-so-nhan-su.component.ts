@@ -19,16 +19,16 @@ import { ApiCoreService } from 'src/app/services/api-core/apicore.service';
 })
 
 export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
-  optionsButon = [
-    { label: 'Hủy', value: 'View' },
-    { label: 'Lưu lại', value: 'Update' }
+  optionsButtonsView = [
+    { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
+  { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-plus'  }
   ]
   API_PROFILE = API_PROFILE
   @Input() dataRouter = null;
   @Output() back = new EventEmitter<any>();
   manhinh = 'View';
   indexTab = 0;
-  optionsButtonsView = [{ label: 'Sửa', value: 'Edit' }, { label: 'Quay lại', value: 'Back' }];
+  // optionsButtonsView = [{ label: 'Sửa', value: 'Edit' }, { label: 'Quay lại', value: 'Back' }];
   optionsButtonsSave = [{ label: 'Lưu lại', value: 'Save' }, { label: 'Hủy', value: 'Back' }];
   employeeId = null;
   listViews = [];
@@ -197,23 +197,23 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     if (this.selectedMenuCode === API_PROFILE.CONG_VIEC) {
       this.optionsButtonsView =
         [
-          { label: 'Sửa', value: 'Edit' },
-          { label: 'Duyệt hồ sơ', value: 'DuyetHoSo' },
-          { label: 'Hủy hồ sơ', value: 'HuyHoSo' },
-          { label: 'Mở Lại hồ sơ', value: 'MoLaiHoSo' },
-          { label: 'Tuyển dụng lại', value: 'TuyenDungLai' },
-          { label: 'Nghỉ việc', value: 'NghiViec' },
-          { label: 'Quay lại', value: 'Back' }
+          { label: 'Sửa', value: 'Edit' , class: '', icon: 'pi pi-plus'},
+          { label: 'Duyệt hồ sơ', value: 'DuyetHoSo', class: '', icon: 'pi pi-plus'},
+          { label: 'Hủy hồ sơ', value: 'HuyHoSo', class: '', icon: 'pi pi-plus' },
+          { label: 'Mở Lại hồ sơ', value: 'MoLaiHoSo' , class: '', icon: 'pi pi-plus'},
+          { label: 'Tuyển dụng lại', value: 'TuyenDungLai', class: '', icon: 'pi pi-plus' },
+          { label: 'Nghỉ việc', value: 'NghiViec' , class: '', icon: 'pi pi-plus'},
+          { label: 'Quay lại', value: 'Back', class: 'p-button-secondary', icon: 'pi pi-times' }
         ];
     } else if (this.selectedMenuCode === API_PROFILE.QUAN_HE_LAO_DONG) {
       this.optionsButtonsView =
         [
           // { label: 'Sửa', value: 'Edit' },
           // { label: 'Tạo hợp đồng', value: 'thongtinhoso' },
-          { label: 'Quay lại', value: 'Back' }
+          { label: 'Quay lại', value: 'Back', class: 'p-button-secondary', icon: 'pi pi-times'}
         ];
     } else {
-      this.optionsButtonsView = [{ label: 'Sửa', value: 'Edit' }, { label: 'Quay lại', value: 'Back' }];
+      this.optionsButtonsView = [{ label: 'Sửa', value: 'Edit', class: '', icon: 'pi pi-plus' }, { label: 'Quay lại', value: 'Back' , class: 'p-button-secondary', icon: 'pi pi-times' }];
     }
     this.initData();
     this.getEmployeeInfo();
@@ -257,51 +257,51 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       case 0:
         this.optionsButtonsView =
           [
-            { label: 'Sửa', value: 'Edit' },
-            { label: 'Duyệt hồ sơ', value: 'DuyetHoSo' },
-            { label: 'Hủy hồ sơ', value: 'HuyHoSo' },
-            { label: 'Quay lại', value: 'Back' }
+            { label: 'Sửa', value: 'Edit' , class: '', icon: 'pi pi-plus'},
+            { label: 'Duyệt hồ sơ', value: 'DuyetHoSo' , class: '', icon: 'pi pi-plus'},
+            { label: 'Hủy hồ sơ', value: 'HuyHoSo' , class: '', icon: 'pi pi-plus'},
+            { label: 'Quay lại', value: 'Back' , class: 'p-button-secondary', icon: 'pi pi-times'}
           ];
         break;
       case 1:
         this.optionsButtonsView =
           [
             // { label: 'Sửa', value: 'Edit' },
-            { label: 'Chuyển công tác', value: 'ChuyenCongTac' },
-            { label: 'Nghỉ việc', value: 'NghiViec' },
-            { label: 'Quay lại', value: 'Back' }
+            { label: 'Chuyển công tác', value: 'ChuyenCongTac', class: '', icon: 'pi pi-plus' },
+            { label: 'Nghỉ việc', value: 'NghiViec', class: '', icon: 'pi pi-plus' },
+            { label: 'Quay lại', value: 'Back', class: 'p-button-secondary', icon: 'pi pi-times' }
           ];
         break;
       case 2:
         this.optionsButtonsView =
           [
-            { label: 'Mở Lại hồ sơ', value: 'MoLaiHoSo' },
-            { label: 'Quay lại', value: 'Back' }
+            { label: 'Mở Lại hồ sơ', value: 'MoLaiHoSo', class: '', icon: 'pi pi-plus'},
+            { label: 'Quay lại', value: 'Back', class: 'p-button-secondary', icon: 'pi pi-times'}
           ];
         break;
       case 3:
         this.optionsButtonsView =
           [
-            { label: 'Tuyển dụng lại', value: 'TuyenDungLai' },
-            { label: 'Quay lại', value: 'Back' }
+            { label: 'Tuyển dụng lại', value: 'TuyenDungLai', class: '', icon: 'pi pi-plus' },
+            { label: 'Quay lại', value: 'Back', class: 'p-button-secondary', icon: 'pi pi-times'}
           ];
         break;
       case 4:
         this.optionsButtonsView =
           [
-            { label: 'Quay lại', value: 'Back' }
+            { label: 'Quay lại', value: 'Back', class: 'p-button-secondary', icon: 'pi pi-times'}
           ];
         break;
       default:
         this.optionsButtonsView =
           [
-            { label: 'Sửa', value: 'Edit' },
-            { label: 'Duyệt hồ sơ', value: 'DuyetHoSo' },
-            { label: 'Hủy hồ sơ', value: 'HuyHoSo' },
-            { label: 'Mở Lại hồ sơ', value: 'MoLaiHoSo' },
-            { label: 'Tuyển dụng lại', value: 'TuyenDungLai' },
-            { label: 'Nghỉ việc', value: 'NghiViec' },
-            { label: 'Quay lại', value: 'Back' }
+            { label: 'Sửa', value: 'Edit', class: '', icon: 'pi pi-plus' },
+            { label: 'Duyệt hồ sơ', value: 'DuyetHoSo' , class: '', icon: 'pi pi-plus'},
+            { label: 'Hủy hồ sơ', value: 'HuyHoSo' , class: '', icon: 'pi pi-plus'},
+            { label: 'Mở Lại hồ sơ', value: 'MoLaiHoSo', class: '', icon: 'pi pi-plus' },
+            { label: 'Tuyển dụng lại', value: 'TuyenDungLai' , class: '', icon: 'pi pi-plus'},
+            { label: 'Nghỉ việc', value: 'NghiViec', class: '', icon: 'pi pi-plus' },
+            { label: 'Quay lại', value: 'Back', class: 'p-button-secondary', icon: 'pi pi-times' }
           ];
         break;
     }
@@ -920,18 +920,15 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
 
   goBack(): void {
     if (this.titlePage) {
-      this.router.navigate(['/ho-so-nhan-su']);
+      this.router.navigate(['/nhan-su/ho-so-nhan-su']);
     } else {
       this.back.emit();
     }
   }
 
   cancelUpdate(e): void {
-    this.manhinh = 'Edit';
-    this.getEmployeeInfo();
+    this.goBack();
   }
-
-
 
   aGridFnMeta(table): void {
     this.columnDefs[0] = [

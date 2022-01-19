@@ -1,0 +1,44 @@
+
+
+<div class="grid main-grid">
+    <div class="col-12 right max-w-full">
+        <div class="breadcrumb">
+            <h3>Danh sách chức vụ</h3>
+            <p-breadcrumb [model]="items"></p-breadcrumb>
+        </div>
+        <div class="table-tool grid white-background black-box-shadow-005 filterInput justify-content-start">
+            <div class="header-filter-search col-4">
+                <div class="input-group icon">
+                    <svg class="placeholder-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M10.1305 11.2619C9.28558 11.8771 8.24518 12.24 7.12002 12.24C4.29231 12.24 2 9.94772 2 7.12002C2 4.29231 4.29231 2 7.12002 2C9.94772 2 12.24 4.29231 12.24 7.12002C12.24 8.24518 11.8771 9.28558 11.2619 10.1305L13.7657 12.6343C14.0781 12.9467 14.0781 13.4533 13.7657 13.7657C13.4533 14.0781 12.9467 14.0781 12.6343 13.7657L10.1305 11.2619ZM11.28 7.12002C11.28 9.41753 9.41753 11.28 7.12002 11.28C4.8225 11.28 2.96 9.41753 2.96 7.12002C2.96 4.8225 4.8225 2.96 7.12002 2.96C9.41753 2.96 11.28 4.8225 11.28 7.12002Z" fill="#808AA6"/>
+                    </svg>
+                    <input class="input-default" type="text" placeholder="Mã, tên nhóm" id="filter"
+                    (keydown.enter)="query.offSet = 0; first = 0;load()"
+                        [(ngModel)]="query.filter">
+                        <i id="icon-search" class="pi pi-angle-down"></i>
+                </div>
+                <div class="input-group-append dropdown">
+                </div>
+            </div>
+            <div class="col-1">
+                <p-button class="search-button mr-3" icon="pi pi-search" (click)="query.offSet = 0; first = 0; load()"></p-button>
+                <p-button icon="pi pi-refresh" (click)="cancel()" styleClass="p-button-secondary p-button-sm"></p-button>
+            </div>
+            <div class="col-7 tools">
+              <p-button styleClass="p-button-sm mr-1" icon="pi pi-plus" label="Thêm mới" (click)="addChucVu()"></p-button>
+            </div>
+        </div>
+        <div class="grid-default" #container>
+            <app-list-grid-angular  *ngIf="columnDefs.length > 0"
+                [listsData]="listsData" [height]="heightGrid"
+                [columnDefs]="columnDefs"></app-list-grid-angular>
+                <div class="paginator">
+                    <span>Từ {{ countRecord.currentRecordStart }} đến
+                        {{ countRecord.currentRecordEnd }}
+                        trên tổng số
+                        {{ countRecord.totalRecord }} kết quả</span>
+                <p-paginator [rows]="query.pageSize" [totalRecords]="countRecord.totalRecord" [first]="first" (onPageChange)="paginate($event)" [rowsPerPageOptions]="[15,30,45,100,200,{ showAll: 'ALL' }]"></p-paginator>
+            </div>
+        </div>
+    </div>
+</div>

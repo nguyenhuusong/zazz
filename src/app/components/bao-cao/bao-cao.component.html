@@ -1,0 +1,77 @@
+
+
+<div class="grid main-grid">
+    <div class="col-12 right max-w-full">
+        <div class="breadcrumb">
+            <h3>Báo cáo tổng</h3>
+            <p-breadcrumb [model]="items"></p-breadcrumb>
+        </div>
+     
+        <div class="grid-default" #container>
+            <p-card styleClass="mb-3">
+                <div class="row d-flex justify-content-center">
+                  <div class="col-md-6 mt-3 select-default">
+                    <label for="">Loại báo cáo</label>
+                    <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" [options]="listReports"
+                      [(ngModel)]="query.report_type" name="report_type" [filter]="true">
+                      <ng-template let-item pTemplate="selectedItem">
+                        <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
+                      </ng-template>
+                      <ng-template let-car pTemplate="item">
+                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                          <div style="font-size:14px;float:left;margin-top:4px">{{car.label}}</div>
+                        </div>
+                      </ng-template>
+                    </p-dropdown>
+                  </div>
+
+                </div>
+                <div class="row d-flex justify-content-center mt-5" *ngIf="chiTietThamSoBaoCao">
+                  <div class="col-md-6">
+                    <ng-container *ngFor="let paramater of chiTietThamSoBaoCao?.paramaters">
+                      <div *ngIf="paramater?.param_cd === 'exporttype'">
+                        <div class="col-md-12 d-flex justify-content-center">
+                          <p-button label="Xem file Excel" icon="pi pi-eye" (click)="ViewExcel('view')"
+                            styleClass="mr-1 p-button-sm"></p-button>
+                          <p-button label="Xuất file Excel" icon="pi pi-file-excel" (click)="exportExcel('xlsx')"
+                            styleClass="mr-1 p-button-sm"></p-button>
+                          <p-button label="Xuất file PDf" icon="pi pi-file-pdf" styleClass="p-button-sm"
+                            (click)="exportPdf('pdf')"></p-button>
+                        </div>
+                      </div>
+                      <div *ngIf="paramater?.param_type === 'datetime'" class="row mt-1 d-flex justify-content-center">
+                        <div class="col-md-6 input-group">
+                          <label for="">{{paramater?.param_name}}: </label>
+                          <p-calendar placeholder="DD/MM/YYYY" appendTo="body" [baseZIndex]="101"
+                            [(ngModel)]="paramater[paramater?.param_cd]" name="{{paramater?.param_cd}}"
+                            [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" inputId="navigators"
+                            dateFormat="dd/mm/yy" name="datereport">
+                          </p-calendar>
+                        </div>
+                      </div>
+                      <div *ngIf="paramater?.param_type === 'object'" class="row mt-1 d-flex justify-content-center">
+                        <div class="col-md-6 select-default">
+                          <label for="">{{paramater?.param_name}}: </label>
+                          <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
+                            [options]="paramater.options" [(ngModel)]="paramater[paramater?.param_cd]"
+                            name={{paramater.param_cd}} [filter]="true">
+                            <ng-template let-item pTemplate="selectedItem">
+                              <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
+                            </ng-template>
+                            <ng-template let-car pTemplate="item">
+                              <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                                <div style="font-size:14px;float:left;margin-top:4px">{{car.label}}</div>
+                              </div>
+                            </ng-template>
+                          </p-dropdown>
+                        </div>
+                      </div>
+                    </ng-container>
+
+                  </div>
+
+                </div>
+              </p-card>
+        </div>
+    </div>
+</div>

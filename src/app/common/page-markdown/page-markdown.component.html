@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row grid">
     <!-- <div class="col-sm-12">
         <div class="form-group">
           <label for="title">Loại nội dung</label>
@@ -9,19 +9,22 @@
         </div>
       </div> -->
     
-      <div class="col-md-12">
-        <label for="desc">Đính kèm ảnh <i title="Chọn ảnh" 
-            class="fa fa-picture-o ml-1 pointer text-primary" aria-hidden="true" (click)="chooseImageContent()"></i></label>
-        <div class="row form-group" >
+      <div class="col-12">
+        <label for="desc"><b>Đính kèm ảnh</b>
+          <span class="icon-choose-image mb-3">
+            <i title="Chọn ảnh" class="fa fa-picture-o ml-1 pointer text-primary" aria-hidden="true" (click)="chooseImageContent()"></i>
+          </span>
+        </label>
+        <div class="row form-group grid" >
           <div class="col-sm-6">{{modelMarkdow?.type == 0 || modelMarkdow?.type == 1 ? 'Nội dung Markdown' : 'Nội dung HTML'}} </div>
           <div class="col-sm-6">Hiển thị</div>
-          <div class="col-sm-12">
-            <md-editor id="content" name="content" [height]="'400px'" [(ngModel)]="element.columnValue"
+          <div class="col-12 mt-2">
+            <md-editor class="md-editor-binh-luan" id="content" name="content" [height]="'400px'" [(ngModel)]="element.columnValue"
                maxlength="2500"></md-editor>
           </div>
         </div>
       </div>
-      <div class="col-sm-12" *ngIf="modelMarkdow.attack">
+      <div class="col-12" *ngIf="modelMarkdow.attack">
         <div class="form-group">
           <label for="title">Tệp đính kèm 
             <span class="ml-2 attack-file" (click)="handleAttackFile()">

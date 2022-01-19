@@ -78,30 +78,34 @@
 </div>
 
 
-<p-dialog header="Thêm mới tiền lương" [(visible)]="displayFrom" [modal]="true" [draggable]="false" [resizable]="false" [style]="{width: '50vw'}" [autoZIndex]="true"
+<p-dialog header="Thêm mới tiền lương" [(visible)]="displayFrom" [modal]="true" [draggable]="false" [resizable]="false" [style]="{width: '600px'}" [autoZIndex]="true"
   [draggable]="false" [resizable]="false">
     <div class="col-md-12">
-        <label for="">Chọn tổ chức</label> <br>
-        <p-dropdown appendTo="body" [baseZIndex]="100" appendTo="body" [autoDisplayFirst]="false"
-        [options]="listOrgRoots" [(ngModel)]="modelAdd.org_cd" name="org_cd" 
-        [filter]="true">
-        <ng-template let-item pTemplate="selectedItem">
-            <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
-        </ng-template>
-        <ng-template let-car pTemplate="item">
-            <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
-            </div>
-        </ng-template>
-    </p-dropdown>
+        <div class="select-default">
+            <label for="">Chọn tổ chức</label>
+            <p-dropdown appendTo="body" [baseZIndex]="100" appendTo="body" [autoDisplayFirst]="false"
+                [options]="listOrgRoots" [(ngModel)]="modelAdd.org_cd" name="org_cd" 
+                [filter]="true">
+                <ng-template let-item pTemplate="selectedItem">
+                    <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
+                </ng-template>
+                <ng-template let-car pTemplate="item">
+                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                        <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                    </div>
+                </ng-template>
+            </p-dropdown>
+        </div>
     </div>
     <div class="col-md-12 mt-1">
-        <label for="">Tháng</label> <br>
-        <p-calendar [(ngModel)]="modelAdd.date" name="date" view="month" appendTo="body" dateFormat="mm/yy" [readonlyInput]="true" inputId="monthpicker"></p-calendar>
+        <div class="input-group">
+            <label for="">Tháng</label>
+            <p-calendar [(ngModel)]="modelAdd.date" name="date" view="month" appendTo="body" dateFormat="mm/yy" [readonlyInput]="true" inputId="monthpicker"></p-calendar>
+        </div>
     </div>
     <div class="col-md-12">
         <div class="col-md-6"></div>
-        <div class="col-md-6">
+        <div class="col-md-6 text-right pr-0">
                 <p-button label="Gửi" icon="pi pi-check" styleClass="p-button-sm" (click)="themmoi()"></p-button>
         </div>
     </div>
