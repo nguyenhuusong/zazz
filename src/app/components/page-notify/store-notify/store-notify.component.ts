@@ -302,15 +302,11 @@ export class StoreNotifyComponent implements OnInit, OnChanges {
       pinned: 'left',
       cellClass: ['border-right', 'no-auto'],
       checkboxSelection: true,
-      headerCheckboxSelection: true,
-      headerCheckboxSelectionFilteredOnly: true,
       field: 'checkbox',
       cellRenderer: params => params.rowIndex + 1
     },
       ...AgGridFn(this.gridflexs)
     ];
-    this.groupDefaultExpanded = 0;
-    this.detailRowHeight = 300;
   }
 
   showButtons(params) {
