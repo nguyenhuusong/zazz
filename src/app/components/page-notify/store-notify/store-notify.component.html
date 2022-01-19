@@ -44,8 +44,9 @@
   <div class="col-sm-12 mt-3">
     <label for=""><b>Danh sách nhân viên </b><p-badge *ngIf="listsData.length > 0"
       value="{{listsData.length}}" styleClass="p-mr-2"></p-badge></label> <br>
-    <app-list-grid-angular [domLayout]="'autoHeight'"  [title]="'Danh sách liên hệ'" *ngIf="columnDefs.length > 0" [rowSelection]="'multiple'" [heightRow]="60" 
-      [listsData]="listsData" [idGrid]="'myGridStoreNoti'" (callback)="selectRow($event)"
+    <app-list-grid-angular [domLayout]="'autoHeight'"  [title]="'Danh sách liên hệ'"
+     *ngIf="columnDefs.length > 0" [rowSelection]="'multiple'" [heightRow]="60" 
+      [listsData]="listsData" [idGrid]="'myGridStoreNoti1'" (callback)="selectRow($event)"
       [columnDefs]="columnDefs"></app-list-grid-angular>
   </div>
 </div>

@@ -153,8 +153,6 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     var pivotModeOn = document.getElementById(`${this.idGrid}`);
     pivotModeOn?.addEventListener('change', (event: any) => {
-
-      // console.log(this.gridApi.getSelectedRows())
       if (event.target.ariaLabel === 'Press SPACE to toggle visibility (visible)' || event.target.ariaLabel === 'Press SPACE to toggle visibility (hidden)') {
         let allColumnIds: any = [];
         this.gridColumnApi.getAllColumns()
@@ -171,9 +169,12 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
         || event.target.ariaLabel === 'Press Space to toggle row selection (unchecked)'
         || event.target.ariaLabel === 'Press Space to toggle all rows selection (checked)'
         || event.target.ariaLabel === 'Press Space to toggle all rows selection (unchecked)') {
-        this.callback.emit(this.gridApi.getSelectedRows())
       }
     })
+  }
+
+  onRowSelected(e) {
+    this.callback.emit(this.gridApi.getSelectedRows())
   }
 
   onGridReady(params: any) {
