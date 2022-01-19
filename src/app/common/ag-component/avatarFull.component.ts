@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
   selector: 'child-avatar',
   template: `
     <div class="avatar-wrap">
-    <img  src="{{value ? value: '/assets/images/avatar.jpg'}}" alt=""  style="width:50px; max-height: 50px; padding: 5px">
+    <img  src="{{value ? value: '/assets/images/avatar.jpg'}}" alt=""  style="width:50px; max-height: 50px;">
     </div>
     `
 })

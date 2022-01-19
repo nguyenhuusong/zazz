@@ -248,6 +248,10 @@ export class ChiTietCongTyComponent implements OnInit, OnChanges, OnDestroy {
     }, error => {
     });
   }
+
+  searchUserMasterClose(e){
+    console.log(e, 'ffffffffffffffffffffffff')
+  }
 }
 
 
