@@ -5,7 +5,7 @@
             <p-breadcrumb [model]="items"></p-breadcrumb>
         </div>
         <div class="table-tool grid white-background black-box-shadow-005 filterInput">
-            <div class="header-filter-search col-9 ">
+            <div class="header-filter-search col-4">
                 <div class="input-group icon">
                     <svg class="placeholder-icon" width="16" height="16" viewBox="0 0 16 16" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
@@ -23,7 +23,7 @@
                 <div class="input-group-append dropdown">
                 </div>
             </div>
-            <div class="col-3 tools">
+            <div class="col-8 tools">
                 <p-button styleClass="p-button-sm" icon="pi pi-plus" label="Thêm mới" (click)="themmoi()"></p-button>
             </div>
         </div>
@@ -48,58 +48,70 @@
       {{titleForm}}
     </p-header> 
     <div class="col-md-12">
-        <label for="">Tên đăng nhập</label>
-        <input type="text" class="form-control" [value]="chiTietNguoiDUng?.userLogin" name="userLogin" >
+        <div class="input-group">
+            <label for="">Tên đăng nhập</label>
+            <input type="text" class="form-control" [value]="chiTietNguoiDUng?.userLogin" name="userLogin" >
+        </div>
     </div>
     <div class="col-md-12 mt-1">
-        <label for="">Họ và tên</label>
-        <input type="text" class="form-control" [value]="chiTietNguoiDUng?.fullName" name="fullName" >
+        <div class="input-group">
+            <label for="">Họ và tên</label>
+            <input type="text" class="form-control" [value]="chiTietNguoiDUng?.fullName" name="fullName" >
+        </div>
     </div>
     <div class="col-md-12  mt-1">
-        <label for="">Số điện thoại</label>
-        <input type="text" class="form-control" [value]="chiTietNguoiDUng?.phone" name="phone" >
+        <div class="input-group">
+            <label for="">Số điện thoại</label>
+            <input type="text" class="form-control" [value]="chiTietNguoiDUng?.phone" name="phone" >
+        </div>
     </div>
     <div class="col-md-12  mt-1">
-        <label for="">Thư điện tử</label>
-        <input type="text" class="form-control" [value]="chiTietNguoiDUng?.email" name="email"  >
+        <div class="input-group">
+            <label for="">Thư điện tử</label>
+            <input type="text" class="form-control" [value]="chiTietNguoiDUng?.email" name="email"  >
+        </div>
     </div>
     <!-- <div class="col-md-12  mt-1">
         <label for="">Phòng</label>
         <input type="text" class="form-control" [value]="chiTietNguoiDUng?.departmentName" name="departmentName"  >
     </div> -->
     <div class="col-md-12  mt-1">
-        <label for="">Người quản lý</label>
-        <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
-        [options]="managerLists" [(ngModel)]="modelAdd.parent_id" name="parent_id">
-        <ng-template let-item pTemplate="selectedItem">
-            <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
-        </ng-template>
-        <ng-template let-car pTemplate="item">
-            <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
-            </div>
-        </ng-template>
-    </p-dropdown>
-    </div>
-    <div class="col-md-12  mt-1">
-        <div class="p-field-checkbox">
-            <p-checkbox [(ngModel)]="modelAdd.admin_st" binary="true" inputId="binary"></p-checkbox>
-            <label for="binary"> Là admin</label>
+        <div class="select-default">
+            <label for="">Người quản lý</label>
+                <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
+                [options]="managerLists" [(ngModel)]="modelAdd.parent_id" name="parent_id">
+                <ng-template let-item pTemplate="selectedItem">
+                    <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
+                </ng-template>
+                <ng-template let-car pTemplate="item">
+                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                        <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                    </div>
+                </ng-template>
+            </p-dropdown>
         </div>
     </div>
     <div class="col-md-12  mt-1">
-        <label for="">Chức vụ</label>
-        <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
-        [options]="dataPositionList" [(ngModel)]="modelAdd.position" name="position">
-        <ng-template let-item pTemplate="selectedItem">
-            <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
-        </ng-template>
-        <ng-template let-car pTemplate="item">
-            <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
-            </div>
-        </ng-template>
-    </p-dropdown>
+        <div class="p-field-checkbox mb-2">
+            <label for="binary"> Là admin</label>
+            <p-checkbox [(ngModel)]="modelAdd.admin_st" binary="true" inputId="binary"></p-checkbox>
+        </div>
+    </div>
+    <div class="col-md-12  mt-1">
+        <div class="select-default">
+            <label for="">Chức vụ</label>
+            <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
+            [options]="dataPositionList" [(ngModel)]="modelAdd.position" name="position">
+            <ng-template let-item pTemplate="selectedItem">
+                <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
+            </ng-template>
+            <ng-template let-car pTemplate="item">
+                <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                    <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                </div>
+            </ng-template>
+            </p-dropdown>
+        </div>
     </div>
    <div class="col-md-12 mt-1 text-right">
        <p-button label="Lưu lại" icon="pi pi-check" styleClass="p-button-sm" (click)="save()" ></p-button>
@@ -112,13 +124,16 @@
       Tìm kiếm Tài khoản
   </p-header>
   <p-panel header="Nhập tên nhân viên tìm kiếm">
-        <p-autoComplete [(ngModel)]="valueSearchUser" name="valueSearchUser" placeholder="Tìm kiếm tên nhân viên" [suggestions]="listUser" (onSelect)="onSelectUser($event)"
-        (completeMethod)="getListUserMaster($event)" field="label"></p-autoComplete>
+      <div class="input-group">
+            <p-autoComplete [(ngModel)]="valueSearchUser" name="valueSearchUser" placeholder="Tìm kiếm tên nhân viên" [suggestions]="listUser" (onSelect)="onSelectUser($event)"
+            (completeMethod)="getListUserMaster($event)" field="label"></p-autoComplete>
+        </div>
     </p-panel>
     <p-panel header="Thông tin tài khoản">
-        <app-list-grid-angular *ngIf="columnDefs1.length > 0" [listsData]="managerInfoList" [height]="400"
-            [columnDefs]="columnDefs1"></app-list-grid-angular>
-
+        <div class="grid-default border">
+            <app-list-grid-angular *ngIf="columnDefs1.length > 0" [listsData]="managerInfoList" [height]="400"
+                [columnDefs]="columnDefs1"></app-list-grid-angular>
+            </div>
     <ng-template pTemplate="footer">
         <p-button label="Đóng"  styleClass="p-button-secondary" (click)="seachManager = !seachManager"></p-button>
     </ng-template>
