@@ -2097,3 +2097,22 @@ div.p-organizationchart {
         }
     }
 }
+.p-button-back{
+    background: #6c757d !important;
+    border: 1px solid #6c757d !important;
+}
+.noti-number{
+    display: inline-block;
+    color: #fff;
+    border-radius: 4px;
+    font-size: 13px;
+    padding: 1px 6px;
+    &.bg-secondary {
+        background: #6c757d;
+        border: 1px solid #6c757d;
+    }
+    &.bg-danger{
+        background: #c82333;
+        color: #ffffff;
+    }
+}

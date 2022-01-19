@@ -254,4 +254,9 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
       }
     })
   }
+
+  onBack() {
+    this.router.navigateByUrl('/nhan-su/tuyen-dung');
+  }
+
 }
