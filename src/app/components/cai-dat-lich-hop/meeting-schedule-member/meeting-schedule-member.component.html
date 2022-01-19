@@ -3,13 +3,15 @@
         <div class="card  p-2">
             <div class="row">
                 <div class="col-sm-3 form-group">
-                    <label for="">Nội dung tìm kiếm</label>
-                    <p-autoComplete
-                    [(ngModel)]="selectedMember"
-                    [suggestions]="results"
-                    (completeMethod)="search($event)"
-                    field="displayName"
-                    (onSelect) = "handleSelectedMember()"></p-autoComplete>
+                    <div class="input-group">
+                        <label for="">Nội dung tìm kiếm</label>
+                        <p-autoComplete
+                        [(ngModel)]="selectedMember"
+                        [suggestions]="results"
+                        (completeMethod)="search($event)"
+                        field="displayName"
+                        (onSelect) = "handleSelectedMember()"></p-autoComplete>
+                    </div>
                 </div>
                 <div class="col-sm-9 form-group text-right">
                     <label for="" style="visibility: hidden;">Nhập </label> <br>
@@ -18,9 +20,11 @@
             </div>
             <div class="row">
                 <div class="col-sm-12">
-                    <app-list-grid-angular  *ngIf="columnDefs.length > 0"
-                        [listsData]="members" [domLayout]="'autoHeight'"
-                        [columnDefs]="columnDefs"></app-list-grid-angular>
+                    <div class="grid-default border">
+                        <app-list-grid-angular  *ngIf="columnDefs.length > 0"
+                            [listsData]="members" [domLayout]="'autoHeight'"
+                            [columnDefs]="columnDefs"></app-list-grid-angular>
+                        </div>
                     <!-- <ag-grid-angular [modules]="modules" [suppressCsvExport]="true" [suppressExcelExport]="true" #agGrid
                         style="width: 100%; height: 500px" id="myGrid" class="ag-theme-balham" [rowData]="members"
                         [columnDefs]="columnDefs" [detailCellRendererParams]="detailCellRendererParams"

@@ -16,6 +16,7 @@ import { ApiCoreService } from 'src/app/services/api-core/apicore.service';
 export class SearchUserMasterComponent implements OnInit {
   public modules: Module[] = AllModules;
   @Output() callbackformSearch = new EventEmitter<any>();
+  @Output() closeCallback = new EventEmitter<any>();
   @Input() indexTab = 0
   @Input() disabled = 3
   @Input() button: any[] = []
@@ -206,6 +207,11 @@ export class SearchUserMasterComponent implements OnInit {
            this.initGridUser(repo.data.gridflexs)
         });
     }
+  }
+
+  close() {
+    console.log('ffffffffffff')
+    this.closeCallback.emit(false);
   }
 
 }
