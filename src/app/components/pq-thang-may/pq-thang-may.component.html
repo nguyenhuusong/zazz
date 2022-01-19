@@ -23,68 +23,68 @@
         <p-card header="Thông tin chi tiết">
             <div class="row">
                 <div class="col-xl-4 col-lg-6 col-md-12">
-                  <fieldset class="form-group">
+                  <div>
                     <label for="">Mã thẻ: <strong>{{detailcar?.cardCd}}</strong></label>
-                  </fieldset>
+                  </div>
                 </div>
                 <div class="col-xl-2 col-lg-6 col-md-12">
-                  <fieldset class="form-group">
-                    <input class="form-check-input mr-1" style="margin-left: 5px;" [checked]="detailcar?.isNoiBo"
+                  <div class="checkbox-default d-flex mb-0">
+                    <input id="noi-bo" class="form-check-input mr-2 ml-0" [checked]="detailcar?.isNoiBo"
                       name="isNoiBo" type="checkbox">
-                    <label for="" class="">Nội bộ </label>
-                  </fieldset>
+                    <label for="noi-bo" class="">Nội bộ </label>
+                  </div>
                 </div>
               </div>
               <div class="row">
                 <div class="col-xl-4 col-lg-6 col-md-12">
-                  <fieldset class="form-group">
+                  <div>
                     <label for="">Mã kỹ thuật: <strong>{{detailcar?.cardNumber}}</strong></label>
-                  </fieldset>
+                  </div>
                 </div>
                 <div class="col-xl-2 col-lg-6 col-md-12">
-                  <fieldset class="form-group">
-                    <input class="form-check-input mr-1" style="margin-left: 5px;" [checked]="detailcar?.isVehicle"
+                  <div class="checkbox-default d-flex mb-0">
+                    <input id="co-xe" class="form-check-input mr-2 ml-0" [checked]="detailcar?.isVehicle"
                       name="isCalByMap" type="checkbox" value="">
-                    <label for="" class="">Có xe </label>
-                  </fieldset>
+                    <label for="co-xe" class="">Có xe </label>
+                  </div>
                 </div>
               </div>
               <div class="row">
                 <div class="col-xl-4 col-lg-6 col-md-12">
-                  <fieldset class="form-group">
+                  <div>
                     <label for="">Loại thẻ: <strong>{{detailcar?.cardTypeName}}</strong></label>
-                  </fieldset>
+                  </div>
                 </div>
                 <div class="col-xl-2 col-lg-6 col-md-12">
-                  <fieldset class="form-group">
-                    <input class="form-check-input mr-1" style="margin-left: 5px;" [checked]="detailcar?.isTheKhach"
+                  <div class="checkbox-default d-flex mb-0">
+                    <input id="the-khach" class="form-check-input ml-0 mr-2"[checked]="detailcar?.isTheKhach"
                       name="isTheKhach" type="checkbox" value="">
-                    <label for="" class="">Thẻ khách </label>
-                  </fieldset>
+                    <label for="the-khach" class="">Thẻ khách </label>
+                  </div>
                 </div>
               </div>
               <div class="row">
                 <div class="col-xl-4 col-lg-6 col-md-12">
-                  <fieldset class="form-group">
+                  <div class="mb-2">
                     <label for="">Chủ thẻ: <strong>{{detailcar?.fullName}}</strong></label>
-                  </fieldset>
+                  </div>
                 </div>
                 <div class="col-xl-2 col-lg-6 col-md-12">
-                  <fieldset class="form-group">
+                  <div>
                     <label for="">Ngày cấp: <strong>{{detailcar?.issueDate}}</strong></label>
-                  </fieldset>
+                  </div>
                 </div>
               </div>
               <div class="row">
                 <div class="col-xl-4 col-lg-6 col-md-12">
-                  <fieldset class="form-group">
+                  <div>
                     <label for="">Căn hộ: <strong>{{detailcar?.roomCode}}</strong></label>
-                  </fieldset>
+                  </div>
                 </div>
                 <div class="col-xl-2 col-lg-6 col-md-12 mb-2">
-                  <fieldset class="form-group">
+                  <div>
                     <label for="">Trạng thái: <strong>{{detailcar?.status}}</strong></label>
-                  </fieldset>
+                  </div>
                 </div>
               </div>
         </p-card>
