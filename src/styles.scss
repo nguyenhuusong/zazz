@@ -1903,15 +1903,16 @@ button{
     }
 }
 .page-detail{
+    .p-panel-header{
+        margin-bottom: 20px;
+        padding: 10px 8px; 
+        border-bottom: 1px solid #cccccc7a;
+        border-top: 1px solid #cccccc7a;
+    }
+    .p-tabview-panels{
+        padding: 0px
+    }
     .p-tabview{
-        .p-panel-header{
-            margin-bottom: 20px;
-            padding: 10px 8px;
-            border-bottom: 1px solid #cccccc7a;
-        }
-        .p-tabview-panels{
-            padding: 0px
-        }
     }
     h6{
         margin-bottom: 10px;
