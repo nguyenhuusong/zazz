@@ -37,7 +37,7 @@ export class PqTheNhanVienComponent implements OnInit {
   organizes = [];
   departmentFiltes = [];
   listStatus = [
-    { label: 'Tất cả', value: -1 },
+    { label: 'Lọc theo trạng thái', value: -1 },
     { label: 'Đang hoạt động', value: 1 },
     { label: 'Khóa thẻ', value: 3 },
   ];
@@ -230,7 +230,7 @@ export class PqTheNhanVienComponent implements OnInit {
           //   this.model.organizationCd = { org_cd: this.organizes[0].value.org_cd, org_id: this.organizes[0].value.org_id };
           //   this.getOrganizeTree();
           // }
-          this.organizes = [{ label: 'Tất cả', value: '' }, ...this.organizes];
+          this.organizes = [{ label: 'Chọn tổ chức', value: '' }, ...this.organizes];
         },
         error => { });
   }

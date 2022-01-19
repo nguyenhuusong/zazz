@@ -9,3 +9,6 @@ form .form-group {
 .custom-select {
     height: 2.5rem !important;
 }
+.text-danger{
+    color: red;
+}

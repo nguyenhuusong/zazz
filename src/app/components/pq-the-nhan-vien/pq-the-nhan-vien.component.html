@@ -5,7 +5,7 @@
             <p-breadcrumb [model]="items"></p-breadcrumb>
         </div>
         <div class="table-tool grid white-background black-box-shadow-005 filterInput">
-            <div class="header-filter-search col-9 ">
+            <div class="header-filter-search col-3">
                 <div class="input-group icon">
                     <svg class="placeholder-icon" width="16" height="16" viewBox="0 0 16 16" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
@@ -17,14 +17,56 @@
                         (keydown.enter)="model.offSet = 0; first = 0;load()"
                         [(ngModel)]="model.filter">
                     <i id="icon-search" class="pi pi-angle-down"></i>
-                    <p-button class="search-button" icon="pi pi-search" (click)="model.offSet = 0; first = 0; load()">
-                    </p-button>
                    
                 </div>
                 <div class="input-group-append dropdown">
                 </div>
             </div>
-            <div class="col-3 tools">
+            <!-- to chuc -->
+            <div class="col-2">
+                <div class="select-default mb-0">
+                    <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
+                    [showClear]="true" (onChange)="handleChangeOrganize()"
+                    [options]="organizes" [(ngModel)]="model.organizationCd" name="organizationCd" [filter]="true">
+                    <ng-template let-item pTemplate="selectedItem">
+                        <span style="vertical-align:middle;">{{item?.label}}</span>
+                    </ng-template>
+                    <ng-template let-car pTemplate="item">
+                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                        <div style="font-size:14px;float:right;margin-top:4px">{{car?.label}}</div>
+                        </div>
+                    </ng-template>
+                    </p-dropdown>
+                </div>
+            </div>
+            <!-- phòng ban -->
+            <div class="col-2">
+                <div class="select-default mb-0">
+                    <p-treeSelect [(ngModel)]="model.org_id" [ngClass]="[ departmentFiltes.length <= 0 ? 'tree-empty' : '' ]" [options]="departmentFiltes" selectionMode="single" name="org_id"
+                    (onNodeSelect)="onChangeTree($event)" placeholder="Chọn phòng ban"></p-treeSelect>
+                </div>
+            </div>
+            <!-- trang thai -->
+            <div class="col-2">
+                <div class="select-default mb-0">
+                    <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" [showClear]="true" (onChange)="find()"
+                        [options]="listStatus" [(ngModel)]="model.status" name="status" [filter]="true">
+                        <ng-template let-item pTemplate="selectedItem">
+                        <span style="vertical-align:middle;">{{item.label}}</span>
+                        </ng-template>
+                        <ng-template let-car pTemplate="item">
+                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                            <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                        </div>
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+            </div>
+            <div class="col-1">
+                <p-button class="search-button" icon="pi pi-search" (click)="model.offSet = 0; first = 0; load()">
+                </p-button>
+            </div>
+            <div class="col-2 tools">
                 <p-button label="Xuất Excel" (click)="exportexcel()" icon="fa fa-download" styleClass="p-button-sm">
                 </p-button>
                 <p-button label="Thêm mới" (click)="handleAdd()" icon="fa fa-plus" styleClass="p-button-sm ml-1">
