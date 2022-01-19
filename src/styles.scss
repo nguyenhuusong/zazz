@@ -1984,7 +1984,7 @@ button{
 }
 .page-detail-edit-detail{
     .panel-heading{
-        margin-bottom: 50px;
+        margin-bottom: 30px;
     }
 }
 .wrap-markdown{
@@ -2139,5 +2139,10 @@ div.p-organizationchart {
     .p-card-header{
         border-bottom: 1px solid #cccccc75;
         padding-bottom: 13px;
+    }
+}
+.product-detail .content .p-selectbutton{
+    &.two-buttons{
+        top: 0px;
     }
 }
