@@ -221,7 +221,7 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
 
   autoSizeAll() {
     if (this.gridColumnApi) {
-      if (this.gridColumnApi.columnModel.bodyWidth + this.gridColumnApi.columnModel.rightWidth < this.gridColumnApi.columnModel.scrollWidth) {
+      if (this.gridColumnApi.columnModel.scrollWidth > this.gridColumnApi.columnModel.bodyWidth) {
         this.sizeToFit();
       } else {
         let allColumnIds: any = [];
