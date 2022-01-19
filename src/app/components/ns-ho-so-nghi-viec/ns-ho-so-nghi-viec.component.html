@@ -82,43 +82,51 @@
 <p-dialog header="Thay đổi trạng thái" [(visible)]="displayChangeStatus" [modal]="true" [style]="{width: '40vw'}"
     [draggable]="false" [resizable]="false">
     <div class="col-md-12 mt-1" style="padding: 0">
-        <label for="">status_key</label> <br>
-        <p-dropdown [autoZIndex]="true" [autoDisplayFirst]="false" [style]="{'width': '100%'}" [options]="listTerminateKey"
-        [(ngModel)]="modelPheDuyet.status_key" name="status_key">
-        <ng-template let-item pTemplate="selectedItem">
-            <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
-        </ng-template>
-        <ng-template let-car pTemplate="item">
-            <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
-            </div>
-        </ng-template>
-    </p-dropdown>
+        <div class="select-default">
+            <label for="">status_key</label>
+            <p-dropdown [autoZIndex]="true" [autoDisplayFirst]="false" [style]="{'width': '100%'}" [options]="listTerminateKey"
+            [(ngModel)]="modelPheDuyet.status_key" name="status_key">
+            <ng-template let-item pTemplate="selectedItem">
+                <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
+            </ng-template>
+            <ng-template let-car pTemplate="item">
+                <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                    <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                </div>
+            </ng-template>
+            </p-dropdown>
+        </div>
     </div>
     <div class="col-md-12 mt-1" style="padding: 0">
-        <label for="">Trạng thái phê duyệt</label>
-        <p-dropdown [autoZIndex]="true" [autoDisplayFirst]="false" [style]="{'width': '100%'}" [options]="listStatus"
-        [(ngModel)]="modelPheDuyet.status" name="status">
-        <ng-template let-item pTemplate="selectedItem">
-            <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
-        </ng-template>
-        <ng-template let-car pTemplate="item">
-            <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
-            </div>
-        </ng-template>
-    </p-dropdown>
+        <div class="select-default">
+            <label for="">Trạng thái phê duyệt</label>
+            <p-dropdown [autoZIndex]="true" [autoDisplayFirst]="false" [style]="{'width': '100%'}" [options]="listStatus"
+            [(ngModel)]="modelPheDuyet.status" name="status">
+            <ng-template let-item pTemplate="selectedItem">
+                <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
+            </ng-template>
+            <ng-template let-car pTemplate="item">
+                <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                    <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                </div>
+            </ng-template>
+        </p-dropdown>
+    </div>
     </div>
     <div class="col-md-12 mt-1" style="padding: 0">
-        <label for="">Ngày xác nhận</label>
-        <p-calendar placeholder="DD/MM/YYYY"  [baseZIndex]="101" [(ngModel)]="modelPheDuyet.status_dt"
-            [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" inputId="navigators"
-            dateFormat="dd/mm/yy" name="status_dt"></p-calendar>
+        <div class="input-group">
+            <label for="">Ngày xác nhận</label>
+            <p-calendar placeholder="DD/MM/YYYY"  [baseZIndex]="101" [(ngModel)]="modelPheDuyet.status_dt"
+                [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" inputId="navigators"
+                dateFormat="dd/mm/yy" name="status_dt"></p-calendar>
+            </div>
     </div>
 
     <div class="col-md-12 mt-1" style="padding: 0">
-        <label for="">Ghi chú</label>
-        <textarea name="comment" [(ngModel)]="modelPheDuyet.comment"  class="form-control" cols="30" rows="10"></textarea>
+        <div class="textarea-default">
+            <label for="">Ghi chú</label>
+            <textarea name="comment" [(ngModel)]="modelPheDuyet.comment"  class="form-control" cols="30" rows="10"></textarea>
+        </div>
     </div>
 
     <div class="row col-md-12 mt-1 text-right d-flex justify-content-end" style="padding: 0">
