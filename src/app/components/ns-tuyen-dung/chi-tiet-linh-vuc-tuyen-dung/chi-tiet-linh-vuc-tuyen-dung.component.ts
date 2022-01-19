@@ -18,8 +18,8 @@ export class ChiTietLinhVucTuyenDungComponent implements OnInit, OnDestroy {
   detailInfo = null
   listViews = [];
   optionsButon = [
-    { label: 'Hủy', value: 'View' },
-    { label: 'Lưu lại', value: 'Update' }
+    { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
+    { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-plus'  }
   ]
   constructor(
     private activatedRoute: ActivatedRoute,

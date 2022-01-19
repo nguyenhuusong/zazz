@@ -50,9 +50,10 @@
                             [detail]="detailInfo" 
                             [thongtinnhanvienNew]="true" 
                             [manhinh]="'Edit'" 
-                            [optionsButtonsEdit]="optionsButon"  
+                            [optionsButtonsEdit]="optionsButtonsView"  
                             [dataView]="listViews"
                             (callback)="setEmployeeInfo($event)" 
+                            (callback1)="setEmployeeInfo($event)" 
                             (callbackcancel)="cancelUpdate($event)">
                         </app-edit-detail>
                     </div>
@@ -66,7 +67,7 @@
                                     <div class="row d-flex">
                                         <div class="col-md-6">
                                             <div class="panel-heading">
-                                                <h6 class="panel-title mb-0" style="color: black; font-weight: 500;">
+                                                <h6 class="panel-title mb-0" style="color: black; ">
                                                     {{titles[0]}} <p-badge *ngIf="listsData[0].length > 0"
                                                         value="listsData[0].length" styleClass="p-mr-2">
                                                     </p-badge>
@@ -92,7 +93,7 @@
                             <p-card styleClass="mt-1" >
                                 <ng-template pTemplate="header">
                                     <div class="panel-heading">
-                                        <h6 class="panel-title mb-0" style="color: black; font-weight: 500;">Dòng
+                                        <h6 class="panel-title mb-0" style="color: black; ">Dòng
                                             thời gian<p-badge *ngIf="listsData[0].length > 0"
                                                 value="{{listsData[0].length}}" styleClass="p-mr-2"></p-badge>
                                         </h6>
@@ -120,33 +121,32 @@
               
 
 
-                <p-card styleClass="mt-1"
+                <p-card styleClass="mt-1 mb-4 p-card-header-custom"
                     *ngIf="selectedMenuCode === API_PROFILE.TIEN_ICH || selectedMenuCode === API_PROFILE.THONG_TIN_CA_NHAN
             || selectedMenuCode === API_PROFILE.NGUOI_QUAN_LY
             || selectedMenuCode === API_PROFILE.QUAN_HE_LAO_DONG || selectedMenuCode === API_PROFILE.THUE_BAO_HIEM
            || selectedMenuCode === API_PROFILE.CHUYEN_MON 
             || selectedMenuCode === API_PROFILE.NGUOI_DUNG">
-                    <ng-template pTemplate="header">
-                        <div class="row d-flex">
-                            <div class="col-item mt-6">
-                                <div class="panel-heading" >
-                                    <h6 class="panel-title">
-                                        {{titles[0]}} <p-badge *ngIf="listsData[0].length > 0"
-                                            value="{{listsData[0].length}}" styleClass="">
-                                        </p-badge>
-                                    </h6>
+
+                        <ng-template pTemplate="header">
+                            <div class="row d-flex">
+                                <div class="col-md-6">
+                                    <div class="panel-heading" >
+                                        <h6 class="panel-title mb-0" style="color: black; ">
+                                            {{titles[0]}} <p-badge *ngIf="listsData[0].length > 0"
+                                                value="{{listsData[0].length}}" styleClass="p-mr-2">
+                                            </p-badge>
+                                        </h6>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 justify-content-end text-right">
+                                    <p-button *ngIf="selectedMenuCode === API_PROFILE.THUE_BAO_HIEM || selectedMenuCode === API_PROFILE.LIEN_HE
+                                    || selectedMenuCode === API_PROFILE.NGUOI_DUNG" 
+                                        label="Thêm mới" styleClass="p-button-sm"
+                                        icon="pi pi-plus" (click)="addType0()"></p-button>
                                 </div>
                             </div>
-                            <div class="col-md-6 justify-content-end text-right">
-                                <p-button *ngIf="selectedMenuCode === API_PROFILE.THUE_BAO_HIEM || selectedMenuCode === API_PROFILE.LIEN_HE
-                                || selectedMenuCode === API_PROFILE.NGUOI_DUNG" 
-                                    label="Thêm mới" styleClass="p-button-sm"
-                                    icon="pi pi-plus" (click)="addType0()"></p-button>
-                                    <!-- <p-button label="Thêm mới CMND/CCCD/HC" *ngIf="selectedMenuCode === API_PROFILE.THONG_TIN_CA_NHAN" icon="pi pi-plus" styleClass="p-button-sm p-button-info"
-                                     (click)="showPopupUploadCard()"></p-button> -->
-                            </div>
-                        </div>
-                    </ng-template>
+                        </ng-template>
                     <div class="grid-default border mb-7">
                         <app-list-grid-angular [height]="0" [domLayout]="'autoHeight'"  [title]="'Danh sách liên hệ'" *ngIf="listsData[0].length > 0"
                             [listsData]="listsData[0]"  (FnClick)="OnClick($event)"
@@ -166,7 +166,7 @@
                         <div class="row d-flex">
                             <div class="col-md-6">
                                 <div class="panel-heading" >
-                                    <h6 class="panel-title mb-0" style="color: black; font-weight: 500;">
+                                    <h6 class="panel-title mb-0" style="color: black; ">
                                         {{titles[1]}} <p-badge *ngIf="listsData[1].length > 0"
                                             value="{{listsData[1].length}}" styleClass="p-mr-2">
                                         </p-badge>
@@ -202,7 +202,7 @@
                         <div class="row d-flex">
                             <div class="col-md-6">
                                 <div class="panel-heading">
-                                    <h6 class="panel-title" style="color: black; font-weight: 500;">
+                                    <h6 class="panel-title" style="color: black; ">
                                         {{titles[2]}} <p-badge *ngIf="listsData[2].length > 0"
                                             value="{{listsData[2].length}}" styleClass="p-mr-2"></p-badge>
                                     </h6>
@@ -227,7 +227,7 @@
                         <div class="row d-flex">
                             <div class="col-md-6">
                                 <div class="panel-heading">
-                                    <h6 class="panel-title" style="color: black; font-weight: 500;">
+                                    <h6 class="panel-title" style="color: black; ">
                                         {{titles[3]}} <p-badge *ngIf="listsData[3].length > 0"
                                             value="{{listsData[3].length}}" styleClass="p-mr-2"></p-badge>
                                     </h6>
@@ -253,7 +253,7 @@
                 <!-- <p-card styleClass="mt-1" *ngIf="selectedMenuCode === API_PROFILE.THONG_TIN_CA_NHAN">
                     <ng-template pTemplate="header">
                         <div class="panel-heading" style="padding: 10px;">
-                            <h6 class="panel-title" style="color: black; font-weight: 500;">
+                            <h6 class="panel-title" style="color: black; ">
                                 {{titles[4]}} <p-badge *ngIf="listsData[4].length > 0"
                                     [value]="listsData[4].length" styleClass="p-mr-2"></p-badge>
                             </h6>
@@ -278,7 +278,7 @@
                     (onChange)="onChangeMenu($event.value)" optionLabel="name" optionValue="code">
                     <ng-template let-country pTemplate="item">
                         <div class="country-item">
-                            <div><span style="font-weight: 500;">{{country.name}} </span>
+                            <div><span style="">{{country.name}} </span>
                                 <span *ngIf="country.code === 'GetEmployeeByJob'"
                                     [innerHTML]="detailInfo?.emp_status"></span>
                                 <span

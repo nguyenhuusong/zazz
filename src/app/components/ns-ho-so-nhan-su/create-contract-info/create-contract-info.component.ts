@@ -24,9 +24,12 @@ export class CreateContractInfoComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private spinner: NgxSpinnerService,
     private router: Router
-  ) { }
+  ) { } 
 
-  optionsButon = [{ label: 'Lưu lại', value: 'Update' }, { label: 'Hủy', value: 'View' }, { label: 'Tạm tính', value: 'TamTinh' }]
+  optionsButon = [
+    { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
+    { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-plus'  }
+  ]
   listContractTypes = [];
   indexTab = 0;
   @Input() modelContractInfo = null
