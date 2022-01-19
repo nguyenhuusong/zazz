@@ -2135,3 +2135,9 @@ div.p-organizationchart {
     background: #28a745;
     }
 }
+.p-card-header-custom{
+    .p-card-header{
+        border-bottom: 1px solid #cccccc75;
+        padding-bottom: 13px;
+    }
+}
