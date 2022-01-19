@@ -1960,10 +1960,19 @@ button{
         .custom-marker{
             background-color: rgb(9 121 253);
             color: #fff;
-            padding: 9px;
+            padding: 5px;
             line-height: 1;
             border-radius: 7px;
+            i{
+                font-size: 14px;
+            }
         }
+        .p-timeline-event-content{
+            .p-card-title{
+                font-size: 16px;
+                line-height: 1;
+            }
+        } 
     }
     .timelines{
         &>div{
@@ -2106,7 +2115,8 @@ div.p-organizationchart {
     color: #fff;
     border-radius: 4px;
     font-size: 13px;
-    padding: 1px 6px;
+    padding: 3px 6px;
+    line-height: 1;
     &.bg-secondary {
         background: #6c757d;
         border: 1px solid #6c757d;
@@ -2114,5 +2124,13 @@ div.p-organizationchart {
     &.bg-danger{
         background: #c82333;
         color: #ffffff;
+    }
+    &.bg-warning{
+        background: #ffc107;
+        color: #ffffff;
+    }
+    &.bg-success{
+        color: #ffffff;
+    background: #28a745;
     }
 }
