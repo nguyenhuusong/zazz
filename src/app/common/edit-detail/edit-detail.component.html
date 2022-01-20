@@ -7,7 +7,7 @@ styleClass="text-right two-buttons"
 (onChange)="onChangeButtonEdit($event)"
 ></p-selectButton> -->
 
-<div class="main-grid text-right" style="position: absolute; right: 0">
+<div class="main-grid text-right" style="position: absolute; right: 0; z-index: 1;">
     <ng-container *ngFor="let button of optionsButtonsEdit">
         <p-button label="{{button.label}}" (onClick)="onChangeButtonEdit(button.value)" icon="{{button?.icon ? button?.icon : 'pi pi-plus'}}" styleClass="p-button-sm {{button?.class ? button?.class : ''}} mr-1"></p-button>
     </ng-container>
