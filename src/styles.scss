@@ -22,7 +22,9 @@ html {
         }
     }
 }
-
+h6{
+    margin-bottom: 10px;
+}
 body {
     font-family: var(--font-family);
     color: var(--text-color);
@@ -1034,6 +1036,7 @@ div{
         border: 1px solid var(--border-grey);
         border-color: var(--border-grey) !important;
         width: 100%;
+        min-height: 35px;
         .p-treeselect-label{
             padding-top: 7px;
             padding-bottom: 7px;
@@ -1403,6 +1406,11 @@ div.menu-agrid{
     .input-group.icon {
         input{
             padding-left: 15px;
+        }
+    }
+    .input-group{
+        .p-button{
+            padding: 10px;
         }
     }
 }

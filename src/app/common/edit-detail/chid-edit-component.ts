@@ -349,7 +349,7 @@ export class AppTypeNumberComponent implements OnInit {
 
 @Component({
   selector: 'app-type-currency',
-  template: `   
+  template: `   <div class="input-group">
                 <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
                 <div>
                   <input maxLength=18 type="text" (change)="changePrice($event)"
@@ -362,6 +362,7 @@ export class AppTypeNumberComponent implements OnInit {
                     Trường bắt buộc nhập!
                     </div>
                 </div>
+            </div>
             </div>
                 `,
 })
