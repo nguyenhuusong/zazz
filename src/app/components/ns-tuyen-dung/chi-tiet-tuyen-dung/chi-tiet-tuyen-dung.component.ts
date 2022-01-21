@@ -95,14 +95,7 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
   }
 
   quaylai(data) {
-    if (data) {
-      this.listViews = [];
-      this.modelEdit.canId = this.detailInfo.canId || null
-      this.getCandidateInfo()
-    } else {
-      this.router.navigate(['/nhan-su/tuyen-dung']);
-
-    }
+    this.router.navigate(['/nhan-su/tuyen-dung']);
   }
 
 }

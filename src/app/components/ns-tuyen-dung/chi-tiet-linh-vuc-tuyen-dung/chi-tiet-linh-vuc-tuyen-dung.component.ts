@@ -97,14 +97,8 @@ export class ChiTietLinhVucTuyenDungComponent implements OnInit, OnDestroy {
   }
 
   quaylai(data) {
-    if (data) {
-      this.listViews = [];
-      this.modelEdit.job_id = this.detailInfo.job_id || null
-      this.getJobInfo()
-    } else {
-      this.router.navigate(['/nhan-su/tuyen-dung/linh-vuc-tuyen-dung']);
+    this.router.navigate(['/nhan-su/tuyen-dung/linh-vuc-tuyen-dung']);
 
-    }
   }
 
 }
