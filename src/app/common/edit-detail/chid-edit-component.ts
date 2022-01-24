@@ -738,7 +738,7 @@ export class AppTypeCheckboxRadioListComponent implements OnInit {
             <div class="input-group">
                   <label  class="text-nowrap label-text" >{{element.columnLabel}}</label>
                   <div>
-                  <div style="display: flex;align-items: flex-end" *ngIf="this.element.columnValue"><input type="text" class="form-control" [value]="this.element.columnValue">
+                  <div style="display: flex" *ngIf="this.element.columnValue"><input type="text" class="form-control" [value]="this.element.columnValue">
                   <button pButton pRipple type="button" (click)="removeAttach()" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-text"></button></div>
                   <div *ngIf="!this.element.columnValue" class="upload_file"><input class="" type="file"  accept="image/*" (change)="onUploadOutputImage($event)" ></div>
                     <input type="file" style="display: none" id="sign_second" name="sign_second"  accept="image/jpeg,image/png,image/jpg,image/gif" (change)="onUploadOutputImage($event)">

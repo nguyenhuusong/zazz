@@ -796,7 +796,7 @@ export class ApiHrmService {
   // api cũ
   getCardCustomers<T>(filter): Observable<T> {
     return this.http
-      .get<T>(`${apiBaseUrl}/api/v1/shome/GetCardCustomers?${filter}`, this.options);
+      .get<T>(`${apiShome}/api/v1/shome/GetCardCustomers?${filter}`, this.options);
   }
 
   getCardInfo<T>(cardNum: string, customerPhoneNumber: string, HardwareId: string): Observable<T> {

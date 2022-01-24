@@ -96,13 +96,8 @@ export class ChiTietNghiPhepComponent implements OnInit, OnDestroy {
   // }
 
   quaylai(data) {
-    if (data) {
-      this.listViews = [];
-      this.getLeaveInfo()
-    } else {
-      this.router.navigate(['/chinh-sach/nghi-phep']);
+    this.router.navigate(['/chinh-sach/nghi-phep']);
 
-    }
   }
 
 }
