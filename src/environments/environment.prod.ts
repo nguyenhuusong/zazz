@@ -13,14 +13,14 @@ const host = {
 const authenSettings = {
   authority: host.authServer,
   client_id: 'web_s_hrm_prod',
-  redirect_uri: 'https://dev-hrm.sunshineapp.vn/auth-callback',
-  post_logout_redirect_uri: 'https://dev-hrm.sunshineapp.vn',
+  redirect_uri: 'https://s-hrm.sunshineapp.vn/auth-callback',
+  post_logout_redirect_uri: 'https://s-hrm.sunshineapp.vn',
   response_type: 'id_token token',
   scope: 'openid profile api_sre api_home_service api_core_bigtec api_hrm_bigtec',
   filterProtocolClaims: true,
   loadUserInfo: true,
   automaticSilentRenew: true,
-  silent_redirect_uri: 'https://dev-hrm.sunshineapp.vn/silent-refresh.html'
+  silent_redirect_uri: 'https://s-hrm.sunshineapp.vn/silent-refresh.html'
 
 };
 
