@@ -126,8 +126,8 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
           iconKey: 'columns',
           toolPanel: 'agColumnsToolPanel',
           toolPanelParams: {
-            suppressRowGroups: true,
-            suppressValues: true,
+            suppressRowGroups: false,
+            suppressValues: false,
             suppressPivots: true,
             suppressPivotMode: true,
             suppressColumnFilter: true,

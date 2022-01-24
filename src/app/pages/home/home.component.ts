@@ -14,31 +14,33 @@ export class HomeComponent implements OnInit {
   body: HTMLBodyElement = document.getElementsByTagName('body')[0];
 
   constructor(private HomeService: ApiHrmService, private route: ActivatedRoute, private router: Router) { }
-  columnDefs = [
-    {
-     headerName: 'Thời gian',
-     cellClass: ['border-right'],
-     field: 'date'
-    },
-    {
-     headerName: 'Hoạt động',
-     cellClass: ['border-right'],
-     field: 'hoat_dong'
-    }];
+  columnDefs = [];
     
-  columnDefs1 = [
-    {
-     headerName: 'Tên khách hàng',
-     cellClass: ['border-right'],
-     field: 'tenKH'
-    },
-    {
-     headerName: 'Nội Dung cần hỗ trợ',
-     cellClass: ['border-right'],
-     field: 'noiDung'
-    }];
+  columnDefs1 = [];
   ngOnInit() {
     this.drawChart();
+    this.columnDefs = [
+      {
+       headerName: 'Thời gian',
+       cellClass: ['border-right'],
+       field: 'date'
+      },
+      {
+       headerName: 'Hoạt động',
+       cellClass: ['border-right'],
+       field: 'hoat_dong'
+      }]
+    this.columnDefs1 = [
+      {
+       headerName: 'Tên khách hàng',
+       cellClass: ['border-right'],
+       field: 'tenKH'
+      },
+      {
+       headerName: 'Nội Dung cần hỗ trợ',
+       cellClass: ['border-right'],
+       field: 'noiDung'
+      }]
      
   }
   ngOnDestroy() {

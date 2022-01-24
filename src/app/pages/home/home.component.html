@@ -94,7 +94,7 @@
       <!-- row 2 -->
       <div class="row custom-card">
           <div class="col-lg-6">
-              <div class="card ">
+              <div class="card mb-1">
                   <div class="card-header card-header-custom">
                       <h4 class="card-title"><i class="fa fa-users"></i> Khách hàng theo nhóm</h4>
                   </div>
@@ -115,14 +115,14 @@
                 <div class="card-header">
                     <h4 class="card-title"><i class="fa fa-clock-o"></i> Lịch làm việc trong ngày</h4>
                 </div>
-                <div class="card-content"> 
-                  <app-list-grid-angular *ngIf="columnDefs.length > 0" [listsData]="dataLamViecTrongNgay" [height]="500"
+                <div class="card-content1"> 
+                  <app-list-grid-angular [listsData]="dataLamViecTrongNgay" [height]="500"
                       [columnDefs]="columnDefs"></app-list-grid-angular>
                 </div> 
             </div>
           </div>
           <div class="col-lg-6">
-              <div class="card">
+              <div class="card mb-1">
                   <div class="card-header card-header-custom">
                       <h4 class="card-title"><i class="ft-arrow-up"></i> Tăng trưởng khách hàng hàng năm</h4>
                   </div>
@@ -142,8 +142,8 @@
                     <div class="card-header">
                         <h4 class="card-title"><i class="fa fa-commenting"></i> Hỗ trợ khách hàng</h4>
                     </div>
-                    <div class="card-content"> 
-                      <app-list-grid-angular *ngIf="columnDefs1.length > 0" [listsData]="dataHoTroKhachHang" [height]="500"
+                    <div class="card-content1"> 
+                      <app-list-grid-angular  [listsData]="dataHoTroKhachHang" [height]="500"
                           [columnDefs]="columnDefs1"></app-list-grid-angular>
                     </div> 
                   </div>
