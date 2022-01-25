@@ -20,8 +20,8 @@ import { ApiCoreService } from 'src/app/services/api-core/apicore.service';
 
 export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   optionsButtonsView = [
-    { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
-    { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-plus' }
+    // { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
+    { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check' }
   ]
   API_PROFILE = API_PROFILE
   @Input() dataRouter = null;
@@ -197,23 +197,25 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     if (this.selectedMenuCode === API_PROFILE.CONG_VIEC) {
       this.optionsButtonsView =
         [
-          { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-plus' },
-          { label: 'Duyệt hồ sơ', value: 'DuyetHoSo', class: '', icon: 'pi pi-plus' },
-          { label: 'Hủy hồ sơ', value: 'HuyHoSo', class: '', icon: 'pi pi-plus' },
-          { label: 'Mở Lại hồ sơ', value: 'MoLaiHoSo', class: '', icon: 'pi pi-plus' },
-          { label: 'Tuyển dụng lại', value: 'TuyenDungLai', class: '', icon: 'pi pi-plus' },
-          { label: 'Nghỉ việc', value: 'NghiViec', class: '', icon: 'pi pi-plus' },
-          { label: 'Quay lại', value: 'Back', class: 'p-button-secondary', icon: 'pi pi-times' }
+          { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check' },
+          { label: 'Duyệt hồ sơ', value: 'DuyetHoSo', class: '', icon: 'pi pi-check' },
+          { label: 'Hủy hồ sơ', value: 'HuyHoSo', class: '', icon: 'pi pi-check' },
+          { label: 'Mở Lại hồ sơ', value: 'MoLaiHoSo', class: '', icon: 'pi pi-check' },
+          { label: 'Tuyển dụng lại', value: 'TuyenDungLai', class: '', icon: 'pi pi-check' },
+          { label: 'Nghỉ việc', value: 'NghiViec', class: '', icon: 'pi pi-check' },
+          // { label: 'Quay lại', value: 'Back', class: 'p-button-secondary', icon: 'pi pi-times' }
         ];
     } else if (this.selectedMenuCode === API_PROFILE.QUAN_HE_LAO_DONG) {
       this.optionsButtonsView =
         [
           // { label: 'Sửa', value: 'Edit' },
-          { label: 'Tạo hợp đồng', value: 'TaoHopDong', class: '', icon: 'pi pi-plus' },
-          { label: 'Quay lại', value: 'Back', class: 'p-button-secondary', icon: 'pi pi-times' }
+          { label: 'Tạo hợp đồng', value: 'TaoHopDong', class: '', icon: 'pi pi-check' },
+          // { label: 'Quay lại', value: 'Back', class: 'p-button-secondary', icon: 'pi pi-times' }
         ];
     } else {
-      this.optionsButtonsView = [{ label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-plus' }, { label: 'Quay lại', value: 'Back', class: 'p-button-secondary', icon: 'pi pi-times' }];
+      this.optionsButtonsView = [{ label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check' },
+      //  { label: 'Quay lại', value: 'Back', class: 'p-button-secondary', icon: 'pi pi-times' }
+      ];
     }
     this.initData();
     this.getEmployeeInfo();
@@ -257,51 +259,51 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       case 0:
         this.optionsButtonsView =
           [
-            { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-plus' },
-            { label: 'Duyệt hồ sơ', value: 'DuyetHoSo', class: '', icon: 'pi pi-plus' },
-            { label: 'Hủy hồ sơ', value: 'HuyHoSo', class: '', icon: 'pi pi-plus' },
-            { label: 'Quay lại', value: 'Back', class: 'p-button-secondary', icon: 'pi pi-times' }
+            { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check' },
+            { label: 'Duyệt hồ sơ', value: 'DuyetHoSo', class: '', icon: 'pi pi-check' },
+            { label: 'Hủy hồ sơ', value: 'HuyHoSo', class: '', icon: 'pi pi-check' },
+            // { label: 'Quay lại', value: 'Back', class: 'p-button-secondary', icon: 'pi pi-times' }
           ];
         break;
       case 1:
         this.optionsButtonsView =
           [
             // { label: 'Sửa', value: 'Edit' },
-            { label: 'Chuyển công tác', value: 'ChuyenCongTac', class: '', icon: 'pi pi-plus' },
-            { label: 'Nghỉ việc', value: 'NghiViec', class: '', icon: 'pi pi-plus' },
-            { label: 'Quay lại', value: 'Back', class: 'p-button-secondary', icon: 'pi pi-times' }
+            { label: 'Chuyển công tác', value: 'ChuyenCongTac', class: '', icon: 'pi pi-check' },
+            { label: 'Nghỉ việc', value: 'NghiViec', class: '', icon: 'pi pi-check' },
+            // { label: 'Quay lại', value: 'Back', class: 'p-button-secondary', icon: 'pi pi-times' }
           ];
         break;
       case 2:
         this.optionsButtonsView =
           [
-            { label: 'Mở Lại hồ sơ', value: 'MoLaiHoSo', class: '', icon: 'pi pi-plus' },
-            { label: 'Quay lại', value: 'Back', class: 'p-button-secondary', icon: 'pi pi-times' }
+            { label: 'Mở Lại hồ sơ', value: 'MoLaiHoSo', class: '', icon: 'pi pi-check' },
+            // { label: 'Quay lại', value: 'Back', class: 'p-button-secondary', icon: 'pi pi-times' }
           ];
         break;
       case 3:
         this.optionsButtonsView =
           [
-            { label: 'Tuyển dụng lại', value: 'TuyenDungLai', class: '', icon: 'pi pi-plus' },
-            { label: 'Quay lại', value: 'Back', class: 'p-button-secondary', icon: 'pi pi-times' }
+            { label: 'Tuyển dụng lại', value: 'TuyenDungLai', class: '', icon: 'pi pi-check' },
+            // { label: 'Quay lại', value: 'Back', class: 'p-button-secondary', icon: 'pi pi-times' }
           ];
         break;
       case 4:
         this.optionsButtonsView =
           [
-            { label: 'Quay lại', value: 'Back', class: 'p-button-secondary', icon: 'pi pi-times' }
+            // { label: 'Quay lại', value: 'Back', class: 'p-button-secondary', icon: 'pi pi-times' }
           ];
         break;
       default:
         this.optionsButtonsView =
           [
-            { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-plus' },
-            { label: 'Duyệt hồ sơ', value: 'DuyetHoSo', class: '', icon: 'pi pi-plus' },
-            { label: 'Hủy hồ sơ', value: 'HuyHoSo', class: '', icon: 'pi pi-plus' },
-            { label: 'Mở Lại hồ sơ', value: 'MoLaiHoSo', class: '', icon: 'pi pi-plus' },
-            { label: 'Tuyển dụng lại', value: 'TuyenDungLai', class: '', icon: 'pi pi-plus' },
-            { label: 'Nghỉ việc', value: 'NghiViec', class: '', icon: 'pi pi-plus' },
-            { label: 'Quay lại', value: 'Back', class: 'p-button-secondary', icon: 'pi pi-times' }
+            { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check' },
+            { label: 'Duyệt hồ sơ', value: 'DuyetHoSo', class: '', icon: 'pi pi-check' },
+            { label: 'Hủy hồ sơ', value: 'HuyHoSo', class: '', icon: 'pi pi-check' },
+            { label: 'Mở Lại hồ sơ', value: 'MoLaiHoSo', class: '', icon: 'pi pi-check' },
+            { label: 'Tuyển dụng lại', value: 'TuyenDungLai', class: '', icon: 'pi pi-check' },
+            { label: 'Nghỉ việc', value: 'NghiViec', class: '', icon: 'pi pi-check' },
+            // { label: 'Quay lại', value: 'Back', class: 'p-button-secondary', icon: 'pi pi-times' }
           ];
         break;
     }
@@ -318,7 +320,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
             cellClass: ['border-right', 'no-auto'],
             width: 70,
             pinned: 'right',
-            cellRenderer: 'buttonRendererMutiComponent',
+            cellRenderer: 'buttonAgGridComponent',
             cellRendererParams: params => {
               return {
                 buttons: [
@@ -346,7 +348,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
             cellClass: ['border-right', 'no-auto'],
             pinned: 'right',
             width: 70,
-            cellRenderer: 'buttonRendererMutiComponent',
+            cellRenderer: 'buttonAgGridComponent',
             cellRendererParams: params => {
               return {
                 buttons: [
@@ -379,7 +381,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
             cellClass: ['border-right', 'no-auto'],
             pinned: 'right',
             width: 70,
-            cellRenderer: 'buttonRendererMutiComponent',
+            cellRenderer: 'buttonAgGridComponent',
             cellRendererParams: params => {
               return {
                 buttons: [
@@ -418,7 +420,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
             cellClass: ['border-right', 'no-auto'],
             pinned: 'right',
             width: 70,
-            cellRenderer: 'buttonRendererMutiComponent',
+            cellRenderer: 'buttonAgGridComponent',
             cellRendererParams: params => {
               return {
                 buttons: [
@@ -465,7 +467,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
             cellClass: ['border-right', 'no-auto'],
             pinned: 'right',
             width: 70,
-            cellRenderer: 'buttonRendererMutiComponent',
+            cellRenderer: 'buttonAgGridComponent',
             cellRendererParams: params => {
               return {
                 buttons: [
@@ -499,7 +501,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
             cellClass: ['border-right', 'no-auto'],
             pinned: 'right',
             width: 70,
-            cellRenderer: 'buttonRendererMutiComponent',
+            cellRenderer: 'buttonAgGridComponent',
             cellRendererParams: params => {
               return {
                 buttons: [
@@ -534,7 +536,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
             cellClass: ['border-right', 'no-auto'],
             pinned: 'right',
             width: 70,
-            cellRenderer: 'buttonRendererMutiComponent',
+            cellRenderer: 'buttonAgGridComponent',
             cellRendererParams: params => {
               return {
                 buttons: [
@@ -572,7 +574,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
           cellClass: ['border-right', 'no-auto'],
           pinned: 'right',
           width: 70,
-          cellRenderer: 'buttonRendererMutiComponent',
+          cellRenderer: 'buttonAgGridComponent',
           cellRendererParams: params => {
             return {
               buttons: [
@@ -629,7 +631,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
             cellClass: ['border-right', 'no-auto'],
             pinned: 'right',
             width: 70,
-            cellRenderer: 'buttonRendererMutiComponent',
+            cellRenderer: 'buttonAgGridComponent',
             cellRendererParams: params => {
               return {
                 buttons: [
@@ -948,7 +950,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
             field: 'button234',
             cellClass: ['border-right'],
             width: 100,
-            cellRenderer: 'buttonRendererMutiComponent',
+            cellRenderer: 'buttonAgGridComponent',
             cellRendererParams: params => {
               return {
                 buttons: [

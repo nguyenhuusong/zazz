@@ -18,7 +18,7 @@ export class ChiTietPhongHopComponent implements OnInit, OnDestroy {
   listViews = [];
   optionsButon = [
     { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
-    { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-plus'  }
+    { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check'  }
   ]
   url: string = '';
   constructor(
