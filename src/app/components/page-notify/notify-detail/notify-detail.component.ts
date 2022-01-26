@@ -6,7 +6,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
-declare var ace:any
+declare var ace:any;
+import showdown from 'showdown';
 @Component({
   selector: 'app-notify-detail',
   templateUrl: './notify-detail.component.html',
@@ -25,6 +26,7 @@ export class NotifyDetailComponent implements OnInit {
   loading = false;
   titleForm;
   listViews = [];
+  converter = new showdown.Converter();
   projectListSelects = [];
   modelMarkdow = {
     type: 1,
@@ -184,12 +186,21 @@ export class NotifyDetailComponent implements OnInit {
     this.spinner.show();
     data.forEach(element => {
       element.fields.forEach(element1 => {
-        if (element1.field_name === 'content_mardown') {
-          element1.columnValue = this.modelMarkdow.content;
-        }
-        if (element1.field_name === 'content_email') {
-          element1.columnValue = this.modelMarkdow.content;
-        }
+        if(element1.field_name === 'content_type') {
+          data.forEach(a => {
+            a.fields.forEach(b => {
+              if (b.field_name === 'content_markdown') {
+                if(element1.columnValue == 2) {
+                  b.columnValue = this.converter.makeHtml(this.modelMarkdow.content);
+                }else {
+                  b.columnValue = this.converter.markdown(this.modelMarkdow.content);
+                }
+              }
+            });
+          });
+      }else  if (element1.field_name === 'content_email') {
+        element1.columnValue =  this.converter.makeHtml(this.modelMarkdow.content);
+      }
       });
     });
     const params = {

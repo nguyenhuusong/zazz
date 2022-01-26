@@ -1,16 +1,19 @@
 import { Router } from '@angular/router';
-import { Component, OnInit, Input, ViewChild, Output, EventEmitter, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Output, EventEmitter, AfterViewInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiService } from 'src/app/services/api.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
-
+import { chunk } from 'lodash'
+import { takeUntil } from 'rxjs/operators';
+import { forkJoin, Subject } from 'rxjs';
 @Component({
   selector: 'app-send-notify',
   templateUrl: './send-notify.component.html',
   styleUrls: ['./send-notify.component.css']
 })
-export class SendNotifyComponent implements OnInit, AfterViewInit {
+export class SendNotifyComponent implements OnInit, AfterViewInit,OnDestroy {
+  private readonly unsubscribe$: Subject<void> = new Subject();
   loading = false;
   typeSend = 'some';
   constructor(
@@ -36,6 +39,11 @@ export class SendNotifyComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.initTypeNotify();
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   ngOnInit(): void {
@@ -72,24 +80,25 @@ export class SendNotifyComponent implements OnInit, AfterViewInit {
         return;
       }
 
-      if (data.length === 0) {
+
+      const ids = chunk(data.map(item => item.id), 1000);
+      let listAPis: any = []
+      for (let items of ids) {
         const dataSave = {
-          ids: data.map(item => item.id),
-          // notiId: this.notify.notiId,
+          ids: items,
           n_id: this.notify.n_id,
           action: this.action
         };
-        this.setNotifyToPushRun(dataSave);
-      }else {
-        const dataSave = {
-          ids: data.map(item => item.id),
-          // notiId: this.notify.n_id,
-          n_id: this.notify.n_id,
-          action: this.action
-        };
-        this.setNotifyToPushRun(dataSave);
+        listAPis.push(this.apiService.setNotifyToPushRun(dataSave))
       }
-    
+      this.spinner.show();
+      forkJoin(listAPis)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((results: any) => {
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Gửi thành công' });
+        this.spinner.hide()
+        this.reload.emit();
+      })
     }
   }
 

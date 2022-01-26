@@ -1956,7 +1956,7 @@ button{
             transform: translate(-50%,-50%);
         }
     }
-    .bg-success{
+    .bg-success, .bg-info{
         background: #2cab02;
         color: #fff;
         font-size: 14px;
@@ -2146,6 +2146,10 @@ div.p-organizationchart {
         color: #ffffff;
     }
     &.bg-success{
+        color: #ffffff;
+    background: #28a745;
+    }
+    &.bg-info{
         color: #ffffff;
     background: #28a745;
     }
