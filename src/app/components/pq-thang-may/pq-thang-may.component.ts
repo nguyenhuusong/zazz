@@ -415,6 +415,7 @@ export class PqThangMayComponent implements OnInit {
         headerName: 'Thao tác',
         field: 'button',
         filter: '',
+        width: 100,
         cellRenderer: 'buttonAgGridComponent',
         cellRendererParams: {
           buttons: [
@@ -495,7 +496,6 @@ export class PqThangMayComponent implements OnInit {
 
   detailcar
   selectedItem1(event) {
-    console.log(event)
     this.detailcar = event;
     this.load();
   };

@@ -46,7 +46,6 @@ export class ChiTietHopDongComponent implements OnInit, OnChanges {
     this.items = [
       { label: 'Trang chủ' },
       { label: 'Cài đặt' },
-      { label: 'Danh sách công ty', url: '/cai-dat/cai-dat-cong-ty' },
       { label: 'Danh sách loại hợp đồng', url: '/cai-dat/quan-ly-hop-dong' },
       { label: `${this.titlePage}` },
     ];

@@ -233,7 +233,6 @@ export class QuanLyHopDongComponent implements OnInit {
     this.items = [
       { label: 'Trang chủ' },
       { label: 'Cài đặt' },
-      { label: 'Danh sách công ty', url: '/cai-dat/cai-dat-cong-ty' },
       { label: 'Danh sách loại hợp đồng' },
     ];
     this.load();

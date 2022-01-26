@@ -176,83 +176,69 @@
 </div>
 
 
-<p-dialog [(visible)]="isDialog" header="{{titleModal}}">
+<p-dialog [(visible)]="isDialog" header="{{titleModal}}" [autoZIndex]="true" [style]="{width: '800px', height: 'auto'}">
     <form #createSMSF="ngForm" class="form-horizontal ng-pristine ng-valid ng-scope">
         <div class="box-body" style="padding:10px;">
 
-          <div class="form-row" style="margin:10px 0px;">
-            <label class="col-sm-4 control-label">Mã thẻ</label>
-            <div class="col-sm-8 input-group">
-                <p-autoComplete [(ngModel)]="modelcar" name="modelcar" placeholder="Nhập mã thẻ để tìm kiếm" [suggestions]="listCars" (onSelect)="selectedItem($event)"
-                (completeMethod)="getCardCustomers($event)" field="fullNameAndCar"></p-autoComplete>  
-            </div>
+          <div class="form-row input-group" style="margin:10px 0px;">
+            <label class=" control-label">Mã thẻ</label>
+            <p-autoComplete [(ngModel)]="modelcar" name="modelcar" placeholder="Nhập mã thẻ để tìm kiếm" [suggestions]="listCars" (onSelect)="selectedItem($event)"
+            (completeMethod)="getCardCustomers($event)" field="fullNameAndCar"></p-autoComplete> 
           </div>
 
-          <div class="form-row" style="margin:10px 0px;">
-            <label class="col-sm-4 control-label">Tên chủ thẻ</label>
-            <div class="col-sm-8">
-              <input [disabled]="true" type="text" class="form-control" name="fullNameCust" id="fullNameCust"
-                [(ngModel)]="cardinfo.fullName" placeholder="Tên chủ thẻ">
-            </div>
+          <div class="form-row input-group" style="margin:10px 0px;">
+            <label class=" control-label">Tên chủ thẻ</label>
+            <input [disabled]="true" type="text" class="form-control" name="fullNameCust" id="fullNameCust"
+            [(ngModel)]="cardinfo.fullName" placeholder="Tên chủ thẻ">
           </div>
 
-          <div class="form-row" style="margin:10px 0px;">
-            <label class="col-sm-4 control-label">Quyền của thẻ</label>
-            <div class="col-sm-8" *ngIf="modelCR">
-              <select class="form-control" name="cardRole" [(ngModel)]="cardinfo.cardRole">
-                <option *ngFor="let objcardRole of modelCR" value={{objcardRole.id}}>
-                  {{objcardRole.roleName}}
-                </option>
-              </select>
-            </div>
+          <div class="form-row select-default" *ngIf="modelCR" style="margin:10px 0px;">
+            <label class=" control-label">Quyền của thẻ</label>
+            <select class="form-control" name="cardRole" [(ngModel)]="cardinfo.cardRole">
+              <option *ngFor="let objcardRole of modelCR" value={{objcardRole.id}}>
+                {{objcardRole.roleName}}
+              </option>
+            </select>
           </div>
 
-          <div class="form-row" style="margin:10px 0px;">
-            <label class="col-sm-4 control-label">Loại thẻ</label>
-            <div class="col-sm-8" *ngIf="modelCardType">
-              <select class="form-control" name="cardType" [(ngModel)]="cardinfo.cardType">
-                <option *ngFor="let objCardType of modelCardType" value={{objCardType.cardTypeId}}>
-                  {{objCardType.cardTypeName}}
-                </option>
-              </select>
-            </div>
+          <div class="form-row select-default" *ngIf="modelCardType" style="margin:10px 0px;">
+            <label class=" control-label">Loại thẻ</label>
+            <select class="form-control" name="cardType" [(ngModel)]="cardinfo.cardType">
+              <option *ngFor="let objCardType of modelCardType" value={{objCardType.cardTypeId}}>
+                {{objCardType.cardTypeName}}
+              </option>
+            </select>
           </div>
 
-          <div class="form-row" style="margin:10px 0px;">
-            <label class="col-sm-4 control-label">Dự án</label>
-            <div class="col-sm-8" *ngIf="modelProject">
-              <select class="form-control" name="projectCd" [(ngModel)]="cardinfo.projectCd"
-                (change)="loadGetBuildings()">
-                <option *ngFor="let objProject of modelProject" value={{objProject.projectCd}}>
-                  {{objProject.projectName}}
-                </option>
-              </select>
-            </div>
+          <div class="form-row select-default" *ngIf="modelProject" style="margin:10px 0px;">
+            <label class=" control-label">Dự án</label>
+            <select class="form-control" name="projectCd" [(ngModel)]="cardinfo.projectCd"
+            (change)="loadGetBuildings()">
+            <option *ngFor="let objProject of modelProject" value={{objProject.projectCd}}>
+              {{objProject.projectName}}
+            </option>
+          </select>
           </div>
 
-          <div class="form-row" style="margin:10px 0px;">
-            <label class="col-sm-4 control-label">Tòa nhà</label>
-            <div class="col-sm-8" *ngIf="modelBuilding">
-              <select class="form-control" name="buildCd" [(ngModel)]="cardinfo.buildCd"
-                (change)="loadGetFloors()">
-                <option value=null>---</option>
-                <option *ngFor="let objBuilding of modelBuilding" value={{objBuilding.buildCd}}>
-                  {{objBuilding.buildName}}
-                </option>
-              </select>
-            </div>
+          <div class="form-row select-default" *ngIf="modelBuilding" style="margin:10px 0px;">
+            <label class="control-label">Tòa nhà</label>
+            <select class="form-control" name="buildCd" [(ngModel)]="cardinfo.buildCd"
+            (change)="loadGetFloors()">
+            <option value=null>---</option>
+            <option *ngFor="let objBuilding of modelBuilding" value={{objBuilding.buildCd}}>
+              {{objBuilding.buildName}}
+            </option>
+          </select>
           </div>
 
-          <div class="form-row" style="margin:10px 0px;">
-            <label class="col-sm-4 control-label">Tầng</label>
-            <div class="col-sm-8">
-              <select class="form-control" name="floorNumber" [(ngModel)]="cardinfo.floorNumber">
-                <option value=null>---</option>
-                <option *ngFor="let objFloor of modelFloor" value={{objFloor.floorNumber}}>
-                  {{objFloor.floorName}}
-                </option>
-              </select>
-            </div>
+          <div class="form-row select-default" style="margin:10px 0px;">
+            <label class="control-label">Tầng</label>
+            <select class="form-control" name="floorNumber" [(ngModel)]="cardinfo.floorNumber">
+              <option value=null>---</option>
+              <option *ngFor="let objFloor of modelFloor" value={{objFloor.floorNumber}}>
+                {{objFloor.floorName}}
+              </option>
+            </select>
           </div>
           <div class="form-row" style="margin:10px 0px;">
                 <p-button styleClass="p-button-sm mr-1" (click)="SaveRoleCard(1)" icon="pi pi-check"></p-button>
