@@ -61,7 +61,7 @@ export const ROUTES: any[] =[
       "submenus": [
         {
           "menuId": 145,
-          "path": "/nhan-su/tuyen-dung",
+          "path": "/tuyen-dung/danh-sach-tuyen-dung",
           "title": "Tuyển dụng",
           "icon": "sun-icon-hubot",
           "classs": "nav-item",

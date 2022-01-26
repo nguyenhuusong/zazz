@@ -222,14 +222,14 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
     const params = {
       job_id: event.rowData.job_id
     }
-    this.router.navigate(['/tuyen-dung/chinh-sua-linh-vu-tuyen-dung'], { queryParams: params });
+    this.router.navigate(['/tuyen-dung/chuyen-mon/chi-tiet-linh-vuc-tuyen-dung'], { queryParams: params });
   }
 
   addJob() {
     const params = {
       job_id: 0
     }
-    this.router.navigate(['/tuyen-dung/them-moi-linh-vu-tuyen-dung'], { queryParams: params });
+    this.router.navigate(['/tuyen-dung/chuyen-mon/them-moi-linh-vuc-tuyen-dung'], { queryParams: params });
   }
 
   find() {
@@ -239,8 +239,7 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
   ngOnInit() {
     this.items = [
       { label: 'Trang chủ' },
-      { label: 'Nhân sự' },
-      { label: 'Tuyển dụng', url: '/nhan-su/tuyen-dung' },
+      { label: 'Tuyển dụng', },
       { label: 'Danh sách Chuyên môn tuyển dụng' },
     ];
     this.getJobTitles();

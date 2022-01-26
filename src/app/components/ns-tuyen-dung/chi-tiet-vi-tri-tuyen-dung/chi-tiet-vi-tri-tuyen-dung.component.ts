@@ -39,9 +39,8 @@ export class ChiTietViTriTuyenDungComponent implements OnInit, OnDestroy {
     this.titlePage = this.activatedRoute.data['_value'].title;
     this.items = [
       { label: 'Trang chủ' },
-      { label: 'Nhân sự' },
-      { label: 'Tuyển dụng', url: '/nhan-su/tuyen-dung' },
-      { label: 'Vị trí tuyển dụng', url: '/nhan-su/tuyen-dung/vi-tri-tuyen-dung' },
+      { label: 'Tuyển dụng' },
+      { label: 'Vị trí tuyển dụng', url: '/tuyen-dung/vi-tri-tuyen-dung' },
       { label: `${this.titlePage}` },
     ];
     this.handleParams();
@@ -97,7 +96,7 @@ export class ChiTietViTriTuyenDungComponent implements OnInit, OnDestroy {
   }
 
   quaylai(data) {
-    this.router.navigate(['/nhan-su/tuyen-dung/linh-vuc-tuyen-dung']);
+    this.router.navigate(['/tuyen-dung/vi-tri-tuyen-dung']);
   }
 
 }

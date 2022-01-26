@@ -29,26 +29,24 @@ import { DropdownModule } from 'primeng/dropdown';
 import { TabViewModule } from 'primeng/tabview';
 import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
-import { NhanSuRoutingModule } from './nhan-su-routing.module';
-import { NsHoSoNhanSuComponent } from 'src/app/components/ns-ho-so-nhan-su/ns-ho-so-nhan-su.component';
-import { NsHoSoNghiViecComponent } from 'src/app/components/ns-ho-so-nghi-viec/ns-ho-so-nghi-viec.component';
+import { NsTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/ns-tuyen-dung.component';
+import { ViTriTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/vi-tri-tuyen-dung/vi-tri-tuyen-dung.component';
+import { LinhVucTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/linh-vuc-tuyen-dung/linh-vuc-tuyen-dung.component';
+import { ChiTietTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/chi-tiet-tuyen-dung/chi-tiet-tuyen-dung.component';
+import { ChiTietViTriTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/chi-tiet-vi-tri-tuyen-dung/chi-tiet-vi-tri-tuyen-dung.component';
+import { ChiTietLinhVucTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/chi-tiet-linh-vuc-tuyen-dung/chi-tiet-linh-vuc-tuyen-dung.component';
 import {ImageModule} from 'primeng/image';
 import {OrganizationChartModule} from 'primeng/organizationchart';
 import {ListboxModule} from 'primeng/listbox';
 import {PanelModule} from 'primeng/panel';
 import {SelectButtonModule} from 'primeng/selectbutton';
 import {TimelineModule} from 'primeng/timeline';
-import { ChiTietHoSoNhanSuComponent } from 'src/app/components/ns-ho-so-nhan-su/chi-tiet-ho-so-nhan-su/chi-tiet-ho-so-nhan-su.component';
 import {OverlayPanelModule} from 'primeng/overlaypanel';
 import { UserDetailModule } from 'src/app/components/ns-ho-so-nhan-su/user-detail/user-detail.module';
 import { DetailAccountModule } from 'src/app/components/ns-ho-so-nhan-su/detail-account/detail-account.module';
-import { AddAddressContactComponent } from 'src/app/components/ns-ho-so-nhan-su/add-address-contact/add-address-contact.component';
-import { CardInfoComponent } from 'src/app/components/ns-ho-so-nhan-su/card-info/card-info.component';
-import { DetectCardComponent } from 'src/app/components/ns-ho-so-nhan-su/detect-card/detect-card.component';
 import { UploadFileModule } from 'src/app/common/upload-file/upload-file.module';
 import { EmpAttachFileModule } from 'src/app/components/ns-ho-so-nhan-su/emp-attach-file/emp-attach-file.module';
-import { CreateContractInfoComponent } from 'src/app/components/ns-ho-so-nhan-su/create-contract-info/create-contract-info.component';
-import { ChiTietHoSoNghiViecComponent } from 'src/app/components/ns-ho-so-nghi-viec/chi-tiet-ho-so-nghi-viec/chi-tiet-ho-so-nghi-viec.component';
+import { TuyenDungRoutingModule } from './tuyen-dung-routing.module';
 @NgModule({
   imports: [
     MessagesModule,
@@ -82,7 +80,7 @@ import { ChiTietHoSoNghiViecComponent } from 'src/app/components/ns-ho-so-nghi-v
     TooltipModule,
     SliderModule,
     SidebarModule,
-    NhanSuRoutingModule,
+    TuyenDungRoutingModule,
     CurrencyFormatPipeModule,
     DialogModule,
     ImageModule,
@@ -98,15 +96,13 @@ import { ChiTietHoSoNghiViecComponent } from 'src/app/components/ns-ho-so-nghi-v
   ],
 
   declarations: [
-    NsHoSoNhanSuComponent,
-    NsHoSoNghiViecComponent,
-    ChiTietHoSoNhanSuComponent,
-    AddAddressContactComponent,
-    CardInfoComponent,
-    DetectCardComponent,
-    CreateContractInfoComponent,
-    ChiTietHoSoNghiViecComponent
+    NsTuyenDungComponent,
+    ViTriTuyenDungComponent,
+    LinhVucTuyenDungComponent,
+    ChiTietLinhVucTuyenDungComponent,
+    ChiTietTuyenDungComponent,
+    ChiTietViTriTuyenDungComponent,
   ],
   providers: [ ]
 })
-export class NhanSuModule { }
+export class TuyenDungModule { }

@@ -157,8 +157,8 @@ export class PqThangMayComponent implements OnInit {
       this.loading = true;
       this.apiService.getMasElevatorCards(this.detailcar.cardCd, 0, 100000).subscribe(
         (results: any) => {
-          this.items = results.data;
-          this.gridApi.setRowData(this.items);
+          this.rowData = results.data;
+          // this.gridApi.setRowData(this.items);
           this.loading = false;
         },
         error => {

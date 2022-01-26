@@ -22,6 +22,10 @@ const appRoutes: Routes = [
     data: { title: '' }, children: [
       { path: 'home', component: HomeComponent },
       {
+        path: 'tuyen-dung',
+        loadChildren: () => import('../app/pages/tuyen-dung/tuyen-dung.module').then(m => m.TuyenDungModule)
+      },
+      {
         path: 'nhan-su',
         loadChildren: () => import('../app/pages/nhan-su/nhan-su.module').then(m => m.NhanSuModule)
       },

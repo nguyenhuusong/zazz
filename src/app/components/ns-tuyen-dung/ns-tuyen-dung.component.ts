@@ -249,14 +249,14 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     const params = {
       canId: event.rowData.can_id
     }
-    this.router.navigate(['/nhan-su/tuyen-dung/chi-tiet-tuyen-dung'], { queryParams: params });
+    this.router.navigate(['/tuyen-dung/ds-tuyen-dung/chi-tiet-tuyen-dung'], { queryParams: params });
   }
 
   addTuyenDung() {
     const params = {
       canId: 0
     }
-    this.router.navigate(['/nhan-su/tuyen-dung/them-moi-tuyen-dung'], { queryParams: params });
+    this.router.navigate(['/tuyen-dung/ds-tuyen-dung/them-moi-tuyen-dung'], { queryParams: params });
   }
 
   find() {
@@ -336,13 +336,13 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     })
   }
 
-  vitrituyendung() {
-    this.router.navigate(['/nhan-su/tuyen-dung/vi-tri-tuyen-dung']);
-  }
+  // vitrituyendung() {
+  //   this.router.navigate(['/tuyen-dung/danh-sach-tuyen-dung/vi-tri-tuyen-dung']);
+  // }
 
-  linhvuctuyendung() {
-    this.router.navigate(['/nhan-su/tuyen-dung/linh-vuc-tuyen-dung']);
-  }
+  // linhvuctuyendung() {
+  //   this.router.navigate(['/tuyen-dung/danh-sach-tuyen-dung/linh-vuc-tuyen-dung']);
+  // }
 
 
 }
