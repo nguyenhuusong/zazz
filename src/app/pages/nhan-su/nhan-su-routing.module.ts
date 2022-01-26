@@ -10,6 +10,7 @@ import { NsHoSoNghiViecComponent } from 'src/app/components/ns-ho-so-nghi-viec/n
 import { NsHoSoNhanSuComponent } from 'src/app/components/ns-ho-so-nhan-su/ns-ho-so-nhan-su.component';
 import { ChiTietHoSoNhanSuComponent } from 'src/app/components/ns-ho-so-nhan-su/chi-tiet-ho-so-nhan-su/chi-tiet-ho-so-nhan-su.component';
 import { ChiTietHoSoNghiViecComponent } from 'src/app/components/ns-ho-so-nghi-viec/chi-tiet-ho-so-nghi-viec/chi-tiet-ho-so-nghi-viec.component';
+import { LinhVucTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/linh-vuc-tuyen-dung/linh-vuc-tuyen-dung.component';
 
 const routes: Routes = [
   {
@@ -69,7 +70,7 @@ const routes: Routes = [
 //Chuyên môn
   {
     path: 'tuyen-dung/linh-vuc-tuyen-dung',
-    component: ViTriTuyenDungComponent,
+    component: LinhVucTuyenDungComponent,
     data: {
       title: 'Danh sách Chuyên môn tuyển dụng',
       url: 'linh-vuc-tuyen-dung',

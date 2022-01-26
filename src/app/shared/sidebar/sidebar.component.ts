@@ -24,16 +24,19 @@ export class SidebarComponent implements OnInit {
 
     ngOnInit() {
         const pathname = window.location.pathname;
-        // this.manager.getUser().then(user => {
-        //     this.apiService.getListMenuByUserId(user.profile.sub, '3133579B-4FD9-449E-9CEA-4B384884E7D3').subscribe(results => {
-        //         console.log(JSON.stringify(results.data))
-                
-        //     })
-        //   });
-
-        this.menuItems = ROUTES.filter(menuItem => menuItem);
+        this.manager.getUser().then(user => {
+            this.apiService.getListMenuByUserId(user.profile.sub, '3133579B-4FD9-449E-9CEA-4B384884E7D3').subscribe(results => {
+                this.menuItems = results.data.filter(menuItem => menuItem);
                 this.parseObjectProperties(this.menuItems, pathname);
                 this.menuItems = [...this.menuItems];
+                // localStorage.setItem('menuItems',JSON.stringify(results.data));
+
+            })
+        });
+
+        // this.menuItems = ROUTES.filter(menuItem => menuItem);
+        //         this.parseObjectProperties(this.menuItems, pathname);
+        //         this.menuItems = [...this.menuItems];
     }
 
     parseObjectProperties(obj: any[], pathname) {
