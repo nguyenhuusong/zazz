@@ -424,14 +424,12 @@ export class PqThangMayComponent implements OnInit {
               label: 'Sửa',
               icon: 'fa-edit',
               class: 'btn-primary',
-              hide: true
             },
             {
               onClick: this.onBtnClick2.bind(this),
               label: 'Xóa',
               icon: 'fa-remove',
               class: 'btn-danger',
-              hide: true
             },
           ]
         },
