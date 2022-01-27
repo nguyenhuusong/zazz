@@ -222,7 +222,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
 
 
   getContractTypes(element1) {
-    this.apiService.getContractTypes().subscribe(results => {
+    const queryParams = queryString.stringify({ org_cd: this.detailInfo.org_cd });
+    this.apiService.getContractTypes(queryParams).subscribe(results => {
       if (results.status === 'success') {
         element1.options = cloneDeep(results.data).map(d => {
           return {
