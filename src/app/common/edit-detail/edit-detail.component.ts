@@ -116,9 +116,9 @@ export class EditDetailComponent implements OnInit, OnChanges {
           } else if (element1.field_name === 'shift_cds') {
             this.getWorkShifts(element1, null)
           } else if (element1.field_name === 'work_cd') {
-            this.getWorkTime(element1, this.detailInfo.employeeCd)
+            this.getWorkTime(element1, this.detail.employeeCd)
           } else if (element1.field_name === 'shift_cd') {
-            this.getWorkShift(element1, this.detailInfo.employeeCd)
+            this.getWorkShift(element1, this.detail.employeeCd)
           } else if (element1.field_name === 'bank_code') {
             this.getBankList(element1)
           } else if (element1.field_name === 'parent_id') {
@@ -129,8 +129,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
             const root_org_id = await this.getValueByKey('root_org_id');
             this.getOrgPositions(root_org_id, element1);
           } else if (element1.field_name === 'companyId') {
-            const root_org_id = await this.getValueByKey('org_id');
-            this.getCompanyList(root_org_id, element1);
+            this.getCompanyList(this.detail.root_org_id ? this.detail.root_org_id : 0, element1);
           } else if (element1.field_name === 'company_id') {
             this.getCompanyList(this.detail.root_org_id ? this.detail.root_org_id : 0, element1);
           } else if (element1.field_name === 'reportTo') {
@@ -222,7 +221,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
 
 
   getContractTypes(element1) {
-    const queryParams = queryString.stringify({ org_cd: this.detailInfo.org_cd });
+    const queryParams = queryString.stringify({ org_cd: this.detail.org_cd });
     this.apiService.getContractTypes(queryParams).subscribe(results => {
       if (results.status === 'success') {
         element1.options = cloneDeep(results.data).map(d => {

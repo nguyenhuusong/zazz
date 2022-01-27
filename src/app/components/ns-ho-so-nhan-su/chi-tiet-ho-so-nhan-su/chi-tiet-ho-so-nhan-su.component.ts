@@ -62,7 +62,8 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   modelContractInfo = {
     contract_id: 0,
     contractType: 0,
-    employeeCd: 0
+    employeeCd: 0,
+    detailInfo: null
   }
   hienthihopdong = false;
   displayAttach = false;
@@ -1173,7 +1174,8 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     this.modelContractInfo = {
       contract_id: event.rowData.contract_id,
       contractType: 0,
-      employeeCd: this.detailInfo.employeeCd
+      employeeCd: this.detailInfo.employeeCd,
+      detailInfo: this.detailInfo
     }
     this.hienthihopdong = true;
   }
@@ -1297,6 +1299,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
 
   taohopdong() {
     this.modelContractInfo = {
+      detailInfo: this.detailInfo,
       contract_id: this.detailInfo.contract_id || 0,
       contractType: this.listContractTypes[0].value,
       employeeCd: this.detailInfo.employeeCd

@@ -40,7 +40,7 @@ export class CreateContractInfoComponent implements OnInit {
   }
 
   getContractTypes() {
-    const queryParams = queryString.stringify({ org_cd: this.detailInfo.org_cd });
+    const queryParams = queryString.stringify({ org_cd: this.modelContractInfo.org_cd });
     this.apiService.getContractTypes(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.listContractTypes = results.data.map(d => {
@@ -59,7 +59,9 @@ export class CreateContractInfoComponent implements OnInit {
     this.listViews = [];
     this.listsData = [];
     this.spinner.show();
-    const queryParams = queryString.stringify(this.modelContractInfo);
+    let params = {...this.modelContractInfo};
+    delete params.detailInfo
+    const queryParams = queryString.stringify(params);
     this.apiService.getContractInfo(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.restData(results);

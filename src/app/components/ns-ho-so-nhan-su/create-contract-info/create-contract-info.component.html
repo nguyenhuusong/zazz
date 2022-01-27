@@ -1,5 +1,5 @@
 <div *ngIf="listViews.length > 0">
-    <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButon" [thongtinnhanvienNew]="true" [dataView]="listViews"
+    <app-edit-detail *ngIf="listViews.length> 0" [detail]="modelContractInfo.detailInfo" [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButon" [thongtinnhanvienNew]="true" [dataView]="listViews"
         (callback)="setContractInfo($event)" (callback1)="saveCallback1($event)" (callbackcancel)="huy($event)"></app-edit-detail>
     <p-card styleClass="" *ngIf="listViews.length> 0">
         <!-- <ng-template pTemplate="header">
