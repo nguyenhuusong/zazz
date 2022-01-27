@@ -263,7 +263,7 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
 
   getObjectList() {
     const queryParams = queryString.stringify({ objKey: 'positiontype_group' });
-    this.apiService.getCustObjectListNew(true, queryParams).subscribe(results => {
+    this.apiService.getCustObjectListNew(false,queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.positiontypes = results.data.map(d => {
           return {

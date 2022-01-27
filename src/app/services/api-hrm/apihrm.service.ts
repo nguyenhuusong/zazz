@@ -36,12 +36,8 @@ export class ApiHrmService {
   }
 
   // Dashboard
-  getCustObjectListNew(type = false, queryParams): Observable<any> {
-    if (type) {
-      return this.http.get<any>(`${apiHrmServer}/api/v2/category/GetObjectList?` + queryParams, this.options);
-    } else {
-      return this.http.get<any>(`${apiCore}/api/v1/customer/GetCustObjectList?` + queryParams, this.options);
-    }
+  getCustObjectListNew(type = false,queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/category/GetObjectList?` + queryParams, this.options);
   }
  
   // Worktime

@@ -211,7 +211,7 @@ export class QuanLyHopDongComponent implements OnInit {
     const params = {
       contractType: 0
     }
-    this.router.navigate(['/cai-dat/quan-ly-hop-dongthem-moi-hop-dong'], { queryParams: params });
+    this.router.navigate(['/cai-dat/quan-ly-hop-dong/them-moi-hop-dong'], { queryParams: params });
   }
 
   find() {

@@ -627,9 +627,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
   }
 
   getCustObjectListNew(element1) {
-    const opts = { params: new HttpParams({ fromString: `fieldObject=${element1.columnObject}` }) };
     const opts1 = { params: new HttpParams({ fromString: `objKey=${element1.columnObject}` }) };
-    this.apiService.getCustObjectListNew(this.thongtinnhanvienNew, this.thongtinnhanvienNew ? opts1.params.toString() : opts.params.toString()).subscribe(results => {
+    this.apiService.getCustObjectListNew(null,opts1.params.toString()).subscribe(results => {
       element1.options = cloneDeep(results.data).map(d => {
         return {
           label: d.objName,

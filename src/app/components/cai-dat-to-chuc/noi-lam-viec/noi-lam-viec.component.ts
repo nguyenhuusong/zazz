@@ -243,7 +243,7 @@ export class NoiLamViecComponent implements OnInit {
   listLevers = []
   getCustObjectListNew() {
     const opts1 = { params: new HttpParams({ fromString: `objKey=hrm_org_level` }) };
-    this.apiService.getCustObjectListNew(true, opts1.params.toString()).subscribe(results => {
+    this.apiService.getCustObjectListNew(false,opts1.params.toString()).subscribe(results => {
       this.listLevers = results.data.map(d => {
         return {
           label: d.objName,
