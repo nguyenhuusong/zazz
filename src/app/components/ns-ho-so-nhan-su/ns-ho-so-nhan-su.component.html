@@ -33,7 +33,7 @@
                             fill="#808AA6" />
                     </svg>
                     <input class="input-default" type="text" placeholder="Mã, tên nhóm" id="filter"
-                        (click)="op.toggle($event)" (keydown.enter)="query.offSet = 0; first = 0;load()"
+                      (keydown.enter)="query.offSet = 0; first = 0;load()"
                         [(ngModel)]="query.filter">
                     <i id="icon-search" class="pi pi-angle-down"></i>
                     <p-button class="search-button" icon="pi pi-search" (click)="query.offSet = 0; first = 0; load()">
@@ -75,7 +75,22 @@
                 <div class="input-group-append dropdown">
                 </div>
             </div>
-            <div class="col-8 tools">
+            <div class="col-2 select-default">
+                <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
+                [options]="employeeStatus" [(ngModel)]="query.emp_st" name="emp_st"
+                (onChange)="find()" [filter]="true">
+                <ng-template let-item pTemplate="selectedItem">
+                    <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
+                </ng-template>
+                <ng-template let-car pTemplate="item">
+                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                        <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}
+                        </div>
+                    </div>
+                </ng-template>
+            </p-dropdown>
+            </div>
+            <div class="col-6 tools">
             </div>
         </div>
         <div class="grid-default" #container>

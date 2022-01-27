@@ -10,6 +10,8 @@ import { CustomTooltipComponent } from 'src/app/common/ag-component/customtoolti
 import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
 import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.component';
 import { AgGridFn } from 'src/app/common/function-common/common';
+import * as moment from 'moment';
+import * as FileSaver from 'file-saver';
 @Component({
   selector: 'app-cs-cham-cong',
   templateUrl: './cs-cham-cong.component.html',
@@ -74,9 +76,11 @@ export class CsChamCongComponent implements OnInit {
   getRowHeight;
   query = {
     org_cd: null,
+    fromDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).add(-1,'months').format()),
+    toDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).format()),
     filter: '',
     offSet: 0,
-    pageSize: 15
+    pageSize: 100000000
   }
   totalRecord = 0;
   DriverId = 0;
@@ -94,11 +98,11 @@ export class CsChamCongComponent implements OnInit {
     const b: any = document.querySelector(".sidebarBody");
     const c: any = document.querySelector(".breadcrumb");
     const d: any = document.querySelector(".filterInput");
-    const e: any = document.querySelector(".paginator");
+    // const e: any = document.querySelector(".paginator");
     this.loadjs ++ 
     if (this.loadjs === 5) {
       if(b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + d.clientHeight + e.clientHeight + 45;
+        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + d.clientHeight  + 45;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       }else {
@@ -115,19 +119,44 @@ export class CsChamCongComponent implements OnInit {
   cancel() {
     this.query = {
       org_cd: null,
+      fromDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).add(-1,'months').format()),
+      toDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).format()),
       filter: '',
       offSet: 0,
-      pageSize: 15
+      pageSize: 100000000
     }
     this.load();
+  }
+
+  Export() {
+    let params: any = {... this.query};
+    delete params.org_cd
+    delete params.fromDate
+    delete params.toDate
+    params.FromDate = moment(new Date(this.query.fromDate)).format('YYYY-MM-DD')
+    params.ToDate = moment(new Date(this.query.toDate)).format('YYYY-MM-DD')
+    const queryParams = queryString.stringify(params);
+    this.spinner.show();
+    this.apiService.getExportReport('ExportBangLuongThang',queryParams).subscribe(results => {
+      if (results.type === 'application/json') {
+        this.spinner.hide();
+      } else {
+        var blob = new Blob([results], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        FileSaver.saveAs(blob, `Danh sách chấm công tháng ${moment(new Date()).format('MM')}` + ".xlsx");
+        this.spinner.hide();
+      }
+    })
   }
 
   listsData = []
   load() {
     this.columnDefs = []
     this.spinner.show();
-    const queryParams = queryString.stringify(this.query);
-    this.apiService.getTimekeepingPage(queryParams).subscribe(
+    let params: any = {... this.query};
+    params.fromDate = moment(new Date(this.query.fromDate)).format('YYYY-MM-DD')
+    params.toDate = moment(new Date(this.query.toDate)).format('YYYY-MM-DD')
+    const queryParams = queryString.stringify(params);
+    this.apiService.getEmployeeSalaryMonthPage(queryParams).subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         if (this.query.offSet === 0) {

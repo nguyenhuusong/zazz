@@ -267,6 +267,19 @@ export class ApiHrmService {
   getTimekeepingPage(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/timekeeping/GetTimekeepingPage?` + queryParams, this.options)
   }
+
+  getEmployeeSalaryMonthPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/timekeeping/GetEmployeeSalaryMonthPage?` + queryParams, this.options)
+  }
+
+  getExportReport(url,queryParams: any): Observable<Blob> {
+    return this.http.get(`${apiHrmServer}/api/v1/report/${url}?${queryParams}`, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
+  }
   
   getSalaryRecordPage(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/salary/GetSalaryRecordPage?` + queryParams, this.options)
