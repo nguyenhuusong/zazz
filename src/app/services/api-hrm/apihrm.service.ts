@@ -540,8 +540,8 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v1/salary/GetSalaryBases`, this.options)
   }
 
-  getContractTypes(): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v2/contract/GetContractTypes`, this.options)
+  getContractTypes(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/contract/GetContractTypes?${queryParams}`, this.options)
   }
 
   // Tuyển dụng

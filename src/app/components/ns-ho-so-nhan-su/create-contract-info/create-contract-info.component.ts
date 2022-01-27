@@ -36,12 +36,12 @@ export class CreateContractInfoComponent implements OnInit {
   @Output() callback = new EventEmitter<any>();
   @Output() back = new EventEmitter<any>();
   ngOnInit(): void {
-    this.getContractTypes();
     this.getContractInfo();
   }
 
   getContractTypes() {
-    this.apiService.getContractTypes().subscribe(results => {
+    const queryParams = queryString.stringify({ org_cd: this.detailInfo.org_cd });
+    this.apiService.getContractTypes(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.listContractTypes = results.data.map(d => {
           return {
@@ -141,6 +141,7 @@ export class CreateContractInfoComponent implements OnInit {
   restData(results) {
     this.listViews = cloneDeep(results.data.group_fields);
     this.detailInfo = results.data;
+    this.getContractTypes()
     this.listsData = cloneDeep(results.data.salary_components) || [];
    
   }

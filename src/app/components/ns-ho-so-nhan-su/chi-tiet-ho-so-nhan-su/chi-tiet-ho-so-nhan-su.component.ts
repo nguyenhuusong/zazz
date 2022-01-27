@@ -123,7 +123,6 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       { label: 'Hồ sơ nhân sự', url: 'nhan-su/ho-so-nghi-viec' },
       { label: `${this.titlePage}` },
     ];
-    this.getContractTypes();
     this.getUsersByAdmin();
     this.getTerminateReasons();
     this.menuItems = [
@@ -150,7 +149,8 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   }
 
   getContractTypes() {
-    this.apiService.getContractTypes().subscribe(results => {
+    const queryParams = queryString.stringify({ org_cd: this.detailInfo.org_cd });
+    this.apiService.getContractTypes(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.listContractTypes = results.data.map(d => {
           return {
@@ -244,6 +244,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
         this.listViewsForm = cloneDeep(results.data.group_fields || []);
         this.detailInfo = results.data;
         this.bindingData(results.data);
+         this.getContractTypes();
         if (this.selectedMenuCode === API_PROFILE.CONG_VIEC) {
           this.bindingDataButton(results.data);
         }
