@@ -5,6 +5,8 @@ import { AuthCallbackComponent } from './auth-callback/auth-callback.component';
 import { DefaultLayoutComponent } from './containers';
 import { HomeComponent } from './pages/home/home.component';
 import { BaoCaoComponent } from './components/bao-cao/bao-cao.component';
+import { ChiTietGopYComponent } from './components/gop-y-kien/chi-tiet-gop-y/chi-tiet-gop-y.component';
+import { GopYKienComponent } from './components/gop-y-kien/gop-y-kien.component';
 // import { HomeComponent } from './home/home.component';
 // import { OrderSunshineComponent } from './order-sunshine/order-sunshine.component';
 // import { ReportendofdayComponent } from './reportendofday/reportendofday.component';
@@ -38,6 +40,10 @@ const appRoutes: Routes = [
         loadChildren: () => import('../app/pages/cai-dat/cai-dat.module').then(m => m.CaiDatModule)
       },
       {
+        path: 'gop-y',
+        loadChildren: () => import('../app/pages/gop-y/gop-y.module').then(m => m.GopYModule)
+      },
+      {
         path: 'phan-quyen',
         loadChildren: () => import('../app/pages/phan-quyen/phan-quyen.module').then(m => m.PhanQuyenModule)
       },
@@ -49,6 +55,7 @@ const appRoutes: Routes = [
           url: 'bao-cao',
         },
       },
+      
       
       // {
       //   path: 'manager',

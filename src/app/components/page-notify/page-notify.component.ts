@@ -294,7 +294,7 @@ export class PageNotifyComponent implements OnInit, OnDestroy, AfterViewChecked 
         const queryParams = queryString.stringify({ n_id: e.rowData.n_id });
         this.apiService.delNotifyInfo(queryParams).subscribe(results => {
           if (results.status === 'success') {
-            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data });
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
             this.spinner.hide();
             this.load();
           } else {

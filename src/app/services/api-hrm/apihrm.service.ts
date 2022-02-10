@@ -57,6 +57,16 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v2/worktime/SetWorktimeInfo`, queryParams, this.options)
   }
 
+  //góp ý
+  getFeedbackInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/feedback/GetFeedbackInfo?` + queryParams, this.options)
+  }
+
+  getFeedbackPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/feedback/GetFeedbackPage?`+ queryParams, this.options)
+  }
+
+
 
   // end thông báo
   getEmployeeSearch(queryParams): Observable<any> {

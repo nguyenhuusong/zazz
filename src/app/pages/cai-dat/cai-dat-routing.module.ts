@@ -19,6 +19,8 @@ import { ChiTietLichLamViecComponent } from 'src/app/components/cai-dat-to-chuc/
 import { ChiTietCongTyComponent } from 'src/app/components/cai-dat-cong-ty/chi-tiet-cong-ty/chi-tiet-cong-ty.component';
 import { QuanLyHopDongComponent } from 'src/app/components/quan-ly-hop-dong/quan-ly-hop-dong.component';
 import { ChiTietHopDongComponent } from 'src/app/components/quan-ly-hop-dong/chi-tiet-hop-dong/chi-tiet-hop-dong.component';
+import { GopYKienComponent } from 'src/app/components/gop-y-kien/gop-y-kien.component';
+import { ChiTietGopYComponent } from 'src/app/components/gop-y-kien/chi-tiet-gop-y/chi-tiet-gop-y.component';
 
 const routes: Routes = [
   {
@@ -254,6 +256,7 @@ const routes: Routes = [
       url: 'chi-tiet-hop-dong',
     },
   },
+  
 
 ];
 

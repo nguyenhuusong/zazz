@@ -29,7 +29,6 @@ import { DropdownModule } from 'primeng/dropdown';
 import { TabViewModule } from 'primeng/tabview';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
-import { CaiDatRoutingModule } from './cai-dat-routing.module';
 import { PageNotifyModule } from 'src/app/components/page-notify/page-notify.module';
 import { CaiDatLichHopComponent } from 'src/app/components/cai-dat-lich-hop/cai-dat-lich-hop.component';
 import { CaiDatToChucComponent } from 'src/app/components/cai-dat-to-chuc/cai-dat-to-chuc.component';
@@ -57,6 +56,7 @@ import { QuanLyHopDongComponent } from 'src/app/components/quan-ly-hop-dong/quan
 import { ChiTietHopDongComponent } from 'src/app/components/quan-ly-hop-dong/chi-tiet-hop-dong/chi-tiet-hop-dong.component';
 import { GopYKienComponent } from 'src/app/components/gop-y-kien/gop-y-kien.component';
 import { ChiTietGopYComponent } from 'src/app/components/gop-y-kien/chi-tiet-gop-y/chi-tiet-gop-y.component';
+import { GopYRoutingModule } from './gop-y-routing.module';
 
 @NgModule({
   imports: [
@@ -84,7 +84,7 @@ import { ChiTietGopYComponent } from 'src/app/components/gop-y-kien/chi-tiet-gop
     TooltipModule,
     SliderModule,
     SidebarModule,
-    CaiDatRoutingModule,
+    GopYRoutingModule,
     CurrencyFormatPipeModule,
     DialogModule,
     DropdownModule,
@@ -102,26 +102,9 @@ import { ChiTietGopYComponent } from 'src/app/components/gop-y-kien/chi-tiet-gop
   ],
 
   declarations: [
-    CaiDatLichHopComponent,
-    CaiDatToChucComponent,
-    CaiDatCongTyComponent,
-    CaiDatNgayNghiLeComponent,
-    ChiTietLichHopComponent,
-    MeetingScheduleMemberComponent,
-    DanhSachPhongHopComponent,
-    ChiTietPhongHopComponent,
-    ChiTietToChucComponent,
-    ChucVuComponent,
-    NoiLamViecComponent,
-    CaiDatThamSoComponent,
-    LichLamViecComponent,
-    ChiTietChucVuComponent,
-    ChiTietNoiLamViecComponent,
-    ChiTietLichLamViecComponent,
-    ChiTietCongTyComponent,
-    QuanLyHopDongComponent,
-    ChiTietHopDongComponent,
+    GopYKienComponent,
+    ChiTietGopYComponent
   ],
   providers: []
 })
-export class CaiDatModule { }
+export class GopYModule { }
