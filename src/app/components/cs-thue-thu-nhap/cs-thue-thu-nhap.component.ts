@@ -225,7 +225,7 @@ export class CsThueThuNhapComponent implements OnInit, AfterViewChecked {
   }
 
   handleEdit(e): void {
-    this.router.navigate(['/chinh-sach/thue-thu-nhap/chi-tiet-thue-thu-nhap', { queryParams: {id: e.rowData.id} }])
+    this.router.navigate(['/chinh-sach/thue-thu-nhap/chi-tiet-thue-thu-nhap'], { queryParams: {id: e.rowData.id} })
   }
 
   onGridReady(params): void {
