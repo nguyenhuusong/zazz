@@ -36,7 +36,7 @@ export class ThietLapTangThangMayComponent implements OnInit {
     elevatorfloorModel: ElevatorFloor = ElevatorFloor.createDefault();
   ngOnInit() {
     this.items = [
-      { label: 'Trang chủ' },
+      { label: 'Trang chủ' , url: '/home' },
       { label: 'Phân quyền' },
       { label: 'Phân quyền thang máy', url: '/phan-quyen/phan-quyen-thang-may' },
       { label: 'Thiết lập tầng thang máy' },

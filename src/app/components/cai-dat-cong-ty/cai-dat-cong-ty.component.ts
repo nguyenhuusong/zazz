@@ -230,7 +230,7 @@ export class CaiDatCongTyComponent implements OnInit, AfterViewChecked {
 
   ngOnInit() {
     this.items = [
-      { label: 'Trang chủ' },
+      { label: 'Trang chủ' , url: '/home' },
       { label: 'Cài đặt' },
       { label: 'Danh sách công ty' },
     ];

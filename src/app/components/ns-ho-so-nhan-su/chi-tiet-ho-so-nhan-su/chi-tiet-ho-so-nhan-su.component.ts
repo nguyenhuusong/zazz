@@ -119,9 +119,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.titlePage = this.activatedRoute.data['_value'].title;
     this.items = [
-      { label: 'Trang chủ' },
+      { label: 'Trang chủ' , url: '/home' },
       { label: 'Nhân sự' },
-      { label: 'Hồ sơ nhân sự', url: 'nhan-su/ho-so-nghi-viec' },
+      { label: 'Hồ sơ nhân sự', url: '/nhan-su/ho-so-nhan-su' },
       { label: `${this.titlePage}` },
     ];
     this.getUsersByAdmin();

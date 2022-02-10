@@ -43,7 +43,7 @@ export class ChiTietLoaiThongBaoComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.titlePage =  this.activatedRoute.data['_value'].title;
     this.items = [
-      { label: 'Trang chủ' },
+      { label: 'Trang chủ' , url: '/home' },
       { label: 'Cài đặt' },
       { label: 'Danh sách thông báo', url: '/cai-dat/thong-bao' },
       { label: 'Danh sách loại thông báo', url: '/cai-dat/thong-bao/loai-thong-bao' },

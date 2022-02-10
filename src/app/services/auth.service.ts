@@ -67,7 +67,6 @@ export class AuthService {
   }
 
   getEmpDetail() {
-    console.log(localStorage.getItem("employeeId"))
     if (localStorage.getItem("employeeId") === null) {
       const headers = new HttpHeaders({ Authorization: this.getAuthorizationHeaderValue() });
       return this.http.get(environment.apiBase + '/api/v2/employee/GetEmployee?employeeId=', { headers }).toPromise()

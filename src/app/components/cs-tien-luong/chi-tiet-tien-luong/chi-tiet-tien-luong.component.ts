@@ -57,7 +57,7 @@ export class ChiTietTienLuongComponent implements OnInit, OnChanges, OnDestroy {
   ngOnInit(): void {
     this.titlePage = this.activatedRoute.data['_value'].title;
     this.items = [
-      { label: 'Trang chủ' },
+      { label: 'Trang chủ' , url: '/home' },
       { label: 'Chính sách' },
       { label: 'Danh sách tiền lương', url: '/chinh-sach/tien-luong' },
       { label: this.titlePage },

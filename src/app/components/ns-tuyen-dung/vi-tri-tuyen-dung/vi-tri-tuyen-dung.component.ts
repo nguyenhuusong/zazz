@@ -231,7 +231,7 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
 
   ngOnInit() {
     this.items = [
-      { label: 'Trang chủ' },
+      { label: 'Trang chủ' , url: '/home' },
       { label: 'Tuyển dụng'},
       { label: 'Danh sách vị trí tuyển dụng' },
     ];

@@ -94,7 +94,7 @@ export class PqXeNhanVienComponent implements OnInit {
   itemsBreadcrumb = [];
   ngOnInit(): void {
     this.itemsBreadcrumb = [
-      { label: 'Trang chủ' },
+      { label: 'Trang chủ' , url: '/home' },
       { label: 'Phân quyền' },
       { label: 'Danh sách xe nhân viên' },
     ];
@@ -317,7 +317,8 @@ export class PqXeNhanVienComponent implements OnInit {
             this.modelTM.vehicleTypeIdTM = results.data.vehicleTypeId;
             this.modelTM.vehiclecardCd = results.data.cardCd;
             this.modelTM.startTimeTM = stringtodate(results.data.startTime);
-            this.modelTM.endTimeTM = stringtodate(results.data.endTime);
+            this.modelTM.endTimeTM = results.data.endTime ? stringtodate(results.data.endTime) : '';
+            this.showVehicleCard = this.modelTM.endTimeTM ? true : false;
             this.displayCreateVehicleCard = true;
             this.modelTM.cusId = results.data.custId;
             this.search({ query: results.data.fullName }, 'edit');

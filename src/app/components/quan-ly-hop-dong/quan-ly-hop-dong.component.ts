@@ -231,7 +231,7 @@ export class QuanLyHopDongComponent implements OnInit {
 
   ngOnInit() {
     this.items = [
-      { label: 'Trang chủ' },
+      { label: 'Trang chủ' , url: '/home' },
       { label: 'Cài đặt' },
       { label: 'Danh sách loại hợp đồng' },
     ];

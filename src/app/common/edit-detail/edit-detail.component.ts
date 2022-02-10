@@ -436,7 +436,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
       if (results.status === 'success') {
         element1.options = cloneDeep(results.data.dataList.data).map(d => {
           return {
-            label: `${d.vacancy_name} [${d.description}]`,
+            label: `${d.vacancy_name}`,
             value: `${d.vacancy_id}`
           }
         });

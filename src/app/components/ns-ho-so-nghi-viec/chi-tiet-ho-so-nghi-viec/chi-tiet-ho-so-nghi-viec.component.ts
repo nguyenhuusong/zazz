@@ -62,9 +62,9 @@ export class ChiTietHoSoNghiViecComponent implements OnInit, OnChanges, OnDestro
    
     this.titlePage =  this.activatedRoute.data['_value'].title;
     this.items = [
-      { label: 'Trang chủ' },
+      { label: 'Trang chủ' , url: '/home' },
       { label: 'Nhân sự' },
-      { label: 'Hồ sơ nhân sự', url: 'nhan-su/ho-so-nghi-viec' },
+      { label: 'Hồ sơ nhân sự nghỉ việc', url: 'nhan-su/ho-so-nghi-viec' },
       { label: `${this.titlePage}` },
     ];
     this.url = this.activatedRoute.data['_value'].url;
@@ -240,14 +240,13 @@ export class ChiTietHoSoNghiViecComponent implements OnInit, OnChanges, OnDestro
 
   goBack() {
    if(this.titlePage) {
-    this.router.navigate(['/ho-so-nhan-su/danh-sach-nhan-vien-nghi-viec']);
+    this.router.navigate(['/nhan-su/ho-so-nghi-viec']);
    }else {
     this.back.emit();
    }
   }
 
   cancelUpdate() {
-    this.manhinh = 'Edit';
-    this.getTerminateInfo();
+    this.router.navigate(['/nhan-su/ho-so-nghi-viec']);
   }
 }

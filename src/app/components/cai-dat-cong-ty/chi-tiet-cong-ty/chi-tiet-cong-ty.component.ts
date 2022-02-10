@@ -58,7 +58,7 @@ export class ChiTietCongTyComponent implements OnInit, OnChanges, OnDestroy {
   ngOnInit(): void {
     this.titlePage = this.activatedRoute.data['_value'].title;
     this.items = [
-      { label: 'Trang chủ' },
+      { label: 'Trang chủ' , url: '/home' },
       { label: 'Cài đặt' },
       { label: 'Danh sách công ty', url: '/cai-dat/cai-dat-cong-ty' },
       { label: this.titlePage },

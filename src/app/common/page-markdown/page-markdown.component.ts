@@ -92,7 +92,6 @@ export class PageMarkdownComponent implements OnInit {
 
   submitMedia(data) {
     if(this.dinhkem === 'attack') {
-     
       if(data && data.length > 0) {
         data.forEach(item => {
           if (item.file_type === 'file') {
@@ -112,10 +111,12 @@ export class PageMarkdownComponent implements OnInit {
       }
     }else {
       if(data && data.length > 0) {
-        console.log(data)
         data.forEach(item => {
-          console.log(item);
-          this.chooseImage(item.link, item)
+          if(item.is_file) {
+            this.chooseImage(item.thumbs.medium, item)
+          }else {
+            this.chooseImage(item.link, item)
+          }
         })
       }
      
@@ -131,6 +132,7 @@ export class PageMarkdownComponent implements OnInit {
     } else {
       if(item.file_type === 'image') {
         this.element.columnValue += '\r\n![](' + documentUrl + ')'
+        this.element.columnValue = this.element.columnValue.replace('null', '')
         this.modelMarkdow.content = this.element.columnValue;
       }else if(item.file_type === 'video'){
         this.element.columnValue += `<video controls

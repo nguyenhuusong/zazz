@@ -76,7 +76,7 @@ export class CsThueThuNhapComponent implements OnInit, AfterViewChecked {
 
   ngOnInit(): void {
     this.items = [
-      { label: 'Trang chủ' },
+      { label: 'Trang chủ' , url: '/home' },
       { label: 'Chính sách' },
       { label: 'Danh sách thuế thu nhập' },
     ];

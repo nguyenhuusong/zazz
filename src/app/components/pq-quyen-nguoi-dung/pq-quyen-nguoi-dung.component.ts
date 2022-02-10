@@ -228,7 +228,7 @@ export class PqQuyenNguoiDungComponent implements OnInit {
 
   ngOnInit() {
     this.items = [
-      { label: 'Trang chủ' },
+      { label: 'Trang chủ' , url: '/home' },
       { label: 'Phân quyền' },
       { label: 'Danh sách quyền người dùng' },
     ];

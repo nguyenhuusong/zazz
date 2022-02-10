@@ -74,7 +74,7 @@ export class CreateContractInfoComponent implements OnInit {
             field: 'meta_file_tpl',
             cellClass: ['border-right'],
             width: 100,
-            cellRenderer: 'buttonRendererMutiComponent',
+            cellRenderer: 'buttonAgGridComponent',
             cellRendererParams: params => {
               return {
                 buttons: [
@@ -102,7 +102,7 @@ export class CreateContractInfoComponent implements OnInit {
             field: 'meta_file_url',
             cellClass: ['border-right'],
             width: 100,
-            cellRenderer: 'buttonRendererMutiComponent',
+            cellRenderer: 'buttonAgGridComponent',
             cellRendererParams: params => {
               return {
                 buttons: [
@@ -144,7 +144,11 @@ export class CreateContractInfoComponent implements OnInit {
     this.listViews = cloneDeep(results.data.group_fields);
     this.detailInfo = results.data;
     this.getContractTypes()
-    this.listsData = cloneDeep(results.data.salary_components) || [];
+    if(this.indexTab === 0) {
+      this.listsData = cloneDeep(results.data.salary_components) || [];
+    }else {
+      this.listsData = cloneDeep(results.data.metafiles) || [];
+    }
    
   }
 
@@ -269,6 +273,8 @@ export class CreateContractInfoComponent implements OnInit {
   saveCallback1(data) {
     this.listViews = [];
     this.listsData = [];
+    this.columnDefsMetafiles = [];
+    this.columnDefsSalaryComponents = []; 
     const params = {
       ...this.detailInfo, group_fields: data
     }
@@ -278,6 +284,82 @@ export class CreateContractInfoComponent implements OnInit {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Tạm tính thành công' });
         // this.callback.emit();
         this.restData(results)
+        results.data.gridflexdetails2.forEach(element => {
+          element.cellClass = element.cellClass || []
+        });
+        results.data.gridflexdetails1.forEach(element => {
+          element.cellClass = element.cellClass || []
+        });
+        this.columnDefsSalaryComponents = [
+          ...AgGridFn(results.data.gridflexdetails2 || [])]
+        this.columnDefsMetafiles = [
+          ...AgGridFn(results.data.gridflexdetails1 || []),
+          {
+            headerName: 'Hồ sơ mẫu',
+            field: 'meta_file_tpl',
+            cellClass: ['border-right'],
+            width: 100,
+            cellRenderer: 'buttonAgGridComponent',
+            cellRendererParams: params => {
+              return {
+                buttons: [
+                  {
+                    onClick: this.OnClick.bind(this),
+                    label: 'Tải về hồ sơ mẫu',
+                    icon: 'pi pi-cloud-upload',
+                    key: 'taivehosomau',
+                    class: 'btn-primary mr5',
+                    hide: !params.data.temp_download_url
+                  }, {
+                    onClick: this.OnClick.bind(this),
+                    label: 'Xem hồ sơ mẫu',
+                    icon: 'pi pi-cloud-upload',
+                    key: 'xemhosomau',
+                    class: 'btn-primary mr5',
+                    hide: !params.data.temp_view_url
+                  },
+                ]
+              };
+            },
+          },
+          {
+            headerName: 'Tải lên hồ sơ',
+            field: 'meta_file_url',
+            cellClass: ['border-right'],
+            width: 100,
+            cellRenderer: 'buttonAgGridComponent',
+            cellRendererParams: params => {
+              return {
+                buttons: [
+                  {
+                    onClick: this.OnClick.bind(this),
+                    label: 'Tải lên hồ sơ',
+                    icon: 'pi pi-cloud-download',
+                    class: 'btn-primary mr5',
+                    key: 'tailenhoso',
+                    hide: !params.data.meta_id
+                  },
+                  {
+                    onClick: this.OnClick.bind(this),
+                    label: 'Xem hồ sơ tải lên',
+                    icon: 'pi pi-cloud-upload',
+                    key: 'xemhoso',
+                    class: 'btn-primary mr5',
+                    hide: !params.data.meta_file_url
+                  },
+                  // {
+                  //   onClick: this.OnClick.bind(this),
+                  //   label: 'Hủy hồ sơ',
+                  //   icon: 'pi pi-trash',
+                  //   key: 'huyhosoky',
+                  //   class: 'btn-danger',
+                  // },
+    
+                ]
+              };
+            },
+          }
+        ];
         // this.getContractInfo();
         this.spinner.hide();
       }

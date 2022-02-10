@@ -120,7 +120,7 @@ export class PageNotifyComponent implements OnInit, OnDestroy, AfterViewChecked 
 
   ngOnInit() {
     this.items = [
-      { label: 'Trang chủ' },
+      { label: 'Trang chủ' , url: '/home' },
       { label: 'Cài đặt' },
       { label: 'Danh sách thông báo' },
     ];
@@ -227,7 +227,7 @@ export class PageNotifyComponent implements OnInit, OnDestroy, AfterViewChecked 
         },
         {
           onClick: this.handleChangeStatus.bind(this),
-          label: 'Thay đổi trạng thái',
+          label: event.data.isPublish ? 'Hủy công bố' : 'Công bố',
           icon: 'fa fa-check',
           class: 'btn-dropbox text-white',
         },
@@ -279,6 +279,7 @@ export class PageNotifyComponent implements OnInit, OnDestroy, AfterViewChecked 
             this.load();
           } else {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+            this.spinner.hide();
           }
         });
       }
@@ -298,6 +299,7 @@ export class PageNotifyComponent implements OnInit, OnDestroy, AfterViewChecked 
             this.load();
           } else {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+            this.spinner.hide();
           }
         });
       }

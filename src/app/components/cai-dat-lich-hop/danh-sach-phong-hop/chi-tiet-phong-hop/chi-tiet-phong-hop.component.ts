@@ -38,7 +38,7 @@ export class ChiTietPhongHopComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.titlePage = this.activatedRoute.data['_value'].title;
     this.items = [
-      { label: 'Trang chủ' },
+      { label: 'Trang chủ' , url: '/home' },
       { label: 'Cài đặt' },
       { label: 'Danh sách lịch họp', url: '/cai-dat/cai-dat-lich-hop' },
       { label: 'Danh sách phòng họp', url: '/cai-dat/cai-dat-lich-hop/danh-sach-phong-hop' },

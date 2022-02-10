@@ -96,7 +96,7 @@ export class PageLoaiThongBaoComponent implements OnInit, OnDestroy, AfterViewCh
 
   ngOnInit() {
     this.items = [
-      { label: 'Trang chủ' },
+      { label: 'Trang chủ' , url: '/home' },
       { label: 'Cài đặt' },
       { label: 'Danh sách thông báo', url: '/cai-dat/thong-bao' },
       { label: 'Danh sách loại thông báo' },

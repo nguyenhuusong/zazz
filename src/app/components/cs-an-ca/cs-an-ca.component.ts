@@ -236,7 +236,7 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
 
   ngOnInit() {
     this.items = [
-      { label: 'Trang chủ' },
+      { label: 'Trang chủ' , url: '/home' },
       { label: 'Chính sách' },
       { label: 'Danh sách ăn ca' },
     ];

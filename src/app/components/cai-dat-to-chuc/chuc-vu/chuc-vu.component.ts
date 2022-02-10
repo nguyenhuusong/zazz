@@ -230,7 +230,7 @@ export class ChucVuComponent implements OnInit, AfterViewChecked {
 
   ngOnInit() {
     this.items = [
-      { label: 'Trang chủ' },
+      { label: 'Trang chủ' , url: '/home' },
       { label: 'Cài đặt' },
       { label: 'Danh sách tổ chức', url: '/cai-dat/cai-dat-to-chuc' },
       { label: 'Danh sách chức vụ'},

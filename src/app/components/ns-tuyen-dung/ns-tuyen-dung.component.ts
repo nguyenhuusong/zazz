@@ -157,7 +157,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
         },
         {
           onClick: this.xoatuyendung.bind(this),
-          label: 'Xóa công ty',
+          label: 'Xóa ',
           icon: 'pi pi-trash',
           class: 'btn-primary mr5',
         },
@@ -232,7 +232,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn thực hiện mở tài khoản?',
       accept: () => {
-        const queryParams = queryString.stringify({ canId: event.rowData.canId });
+        const queryParams = queryString.stringify({ canId: event.rowData.can_id });
         this.apiService.delCandidateInfo(queryParams).subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa tuyển dụng thành công' });
@@ -276,7 +276,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
 
   ngOnInit() {
     this.items = [
-      { label: 'Trang chủ' },
+      { label: 'Trang chủ' , url: '/home' },
       { label: 'Nhân sự' },
       { label: 'Danh sách tuyển dụng' },
     ];

@@ -318,7 +318,7 @@ export class NsHoSoNghiViecComponent implements OnInit {
 
   ngOnInit() {
     this.items = [
-      { label: 'Trang chủ' },
+      { label: 'Trang chủ' , url: '/home' },
       { label: 'Nhân sự' },
       { label: 'Danh sách hồ sơ nghỉ việc' },
     ];

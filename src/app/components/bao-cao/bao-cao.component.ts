@@ -28,7 +28,7 @@ export class BaoCaoComponent implements OnInit {
   items = []
   ngOnInit(): void {
     this.items = [
-      { label: 'Trang chủ' },
+      { label: 'Trang chủ' , url: '/home' },
       { label: 'Báo cáo' },
     ];
     this.load();

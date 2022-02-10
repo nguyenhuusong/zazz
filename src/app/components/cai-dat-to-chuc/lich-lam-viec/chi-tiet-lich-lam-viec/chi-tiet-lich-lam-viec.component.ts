@@ -53,7 +53,7 @@ export class ChiTietLichLamViecComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.titlePage = this.activatedRoute.data['_value'].title;
     this.items = [
-      { label: 'Trang chủ' },
+      { label: 'Trang chủ' , url: '/home' },
       { label: 'Cài đặt' },
       { label: 'Danh sách tổ chức', url: '/cai-dat/cai-dat-to-chuc' },
       { label: 'Danh sách lịch làm việc', url: '/cai-dat/lich-lam-viec' },

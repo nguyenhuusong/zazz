@@ -66,7 +66,7 @@ export class ThietBiThangMayComponent implements OnInit, AfterViewChecked {
     searchFloors = []
   ngOnInit() {
     this.items = [
-      { label: 'Trang chủ' },
+      { label: 'Trang chủ' , url: '/home' },
       { label: 'Phân quyền' },
       { label: 'Phân quyền thang máy', url: '/phan-quyen/phan-quyen-thang-may' },
       { label: 'Thiết bị thang máy' },

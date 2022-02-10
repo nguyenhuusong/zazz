@@ -53,7 +53,7 @@ export class ChiTietThueThuNhapComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.titlePage = this.activatedRoute.data['_value'].title;
     this.items = [
-      { label: 'Trang chủ' },
+      { label: 'Trang chủ' , url: '/home' },
       { label: 'Chính sách' },
       { label: 'Danh sách thuế thu nhập', url: '/chinh-sach/thue-thu-nhap' },
       { label: this.titlePage },

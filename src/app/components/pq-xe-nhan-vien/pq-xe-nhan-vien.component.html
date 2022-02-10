@@ -146,11 +146,11 @@
         <div class="col-sm-8">
           <div class="checkbox-default d-flex mb-0">
             <label for="vo-han">Vô hạn</label>
-            <input id="vo-han" name="isEnddateVehicleCard" type="radio" checked (click)="checkEnddateVehicleCard(true)">
+            <input id="vo-han" name="isEnddateVehicleCard" type="radio" [checked]="!modelTM.endTimeTM" (click)="checkEnddateVehicleCard(true)">
           </div>
           <div class="checkbox-default d-flex mb-0">
             <label for="ngay-het-han">Hết hạn ngày</label>
-            <input id="ngay-het-han" name="isEnddateVehicleCard" type="radio" (click)="checkEnddateVehicleCard(false)">
+            <input id="ngay-het-han" name="isEnddateVehicleCard" type="radio" [checked]="modelTM.endTimeTM" (click)="checkEnddateVehicleCard(false)">
             </div>
             <div class="datepicker-container" *ngIf="showVehicleCard">
               <div class="input-group">
