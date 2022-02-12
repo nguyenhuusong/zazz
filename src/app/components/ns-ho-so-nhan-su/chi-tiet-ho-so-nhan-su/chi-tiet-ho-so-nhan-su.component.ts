@@ -971,13 +971,13 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
                     class: 'btn-primary mr5',
                     hide: !params.data.meta_file_url
                   },
-                  // {
-                  //   onClick: this.OnClick.bind(this),
-                  //   label: 'Hủy hồ sơ',
-                  //   icon: 'pi pi-trash',
-                  //   key: 'huyhosoky',
-                  //   class: 'btn-danger',
-                  // },
+                  {
+                    onClick: this.OnClick.bind(this),
+                    label: 'Hủy hồ sơ',
+                    icon: 'pi pi-trash',
+                    key: 'huyhosocanhan',
+                    class: 'btn-danger',
+                  },
 
                 ]
               };
@@ -994,6 +994,8 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       this.uploadContract(event)
     } else if (event.event.item.key === 'xemhoso') {
       this.ViewContract(event)
+    }else if (event.event.item.key === 'huyhosocanhan') {
+      this.HuyHoSo(event)
     } else if (event.event.item.key === 'sua_cong_viec') {
       this.titleType0 = 'Sửa thời gian làm việc';
       const queryParams = queryString.stringify({ employeeCd: this.detailInfo.employeeCd, gd: event.rowData.gd });
@@ -1114,6 +1116,25 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
           }
         });
+      }
+    });
+  }
+
+  HuyHoSo(event) {
+    this.confirmationService.confirm({
+      message: 'Bạn có chắc chắn muốn thực hiện hủy hồ sơ này ?',
+      accept: () => {
+        console.log(event)
+        const indexobj = this.listsData[3].findIndex(d => d.source_id === event.rowData.source_id);
+        let record = { ... this.listsData[3][indexobj] };
+        record.meta_file_url = "";
+        record.meta_file_type = "";
+        record.meta_file_size = "";
+        record.meta_file_name = "";
+        record.meta_id = 0;
+        this.listsData[3][indexobj] = record;
+        this.listsData[3] = [... this.listsData[3]];
+        this.listViewsRecordInfo.records = this.listsData[3];
       }
     });
   }

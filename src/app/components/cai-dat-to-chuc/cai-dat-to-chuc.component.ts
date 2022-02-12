@@ -597,6 +597,7 @@ export class CaiDatToChucComponent implements OnInit {
 
     if (!this.modeAgencyOrganize.org_name) {
       this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Nhập tên phòng ban' });
+      return
     }
     let params = { ...this.modeAgencyOrganize };
     // if(this.titleForm.value === 'Add') {

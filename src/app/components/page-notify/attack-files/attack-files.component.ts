@@ -10,7 +10,7 @@ export class AttackFilesComponent implements OnInit, OnChanges {
   constructor() { }
   attachs = []
   ngOnChanges(changes: SimpleChanges): void {
-
+    console.log(this.notify.attachs)
     if (changes.notify && this.notify.attachs.length > 0) {
           this.attachs = [...this.notify.attachs.map(d => d.attach_url)]
       if (typeof this.attachs === 'string') {

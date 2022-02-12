@@ -448,6 +448,8 @@ export class NsHoSoNhanSuComponent implements OnInit {
   organizeList = []
   onNodeSelect(event) {
     this.detailOrganizeMap = event.node;
+    localStorage.setItem('organize', JSON.stringify(event.node));
+    this.query.org_id = this.selectedNode.org_id;
     this.query.org_id = this.detailOrganizeMap.org_id;
     this.load()
   }

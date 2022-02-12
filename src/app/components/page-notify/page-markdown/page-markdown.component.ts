@@ -82,13 +82,13 @@ export class PageMarkdownComponent implements OnInit {
             (this.modelMarkdow.attachs as any[]).push({
               id: this.modelMarkdow.id,
               attach_name: item.name,
-              attach_url: item.link
+              attach_url: item.link,
             });
           } else {
             (this.modelMarkdow.attachs as any[]).push({
               id: this.modelMarkdow.id,
               attach_name: item.name,
-              attach_url: item.image
+              attach_url: item.image,
             });
           }
         });

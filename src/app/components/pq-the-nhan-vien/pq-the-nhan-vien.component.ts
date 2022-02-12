@@ -108,6 +108,7 @@ export class PqTheNhanVienComponent implements OnInit {
   }
 
   exportexcel(): void {
+    this.spinner.show();
     const query = { ...this.model };
     query.offSet = 0;
     query.pageSize = 1000000;
@@ -129,7 +130,9 @@ export class PqTheNhanVienComponent implements OnInit {
           dataExport.push(data);
         });
         this.fileService.exportAsExcelFile(dataExport, 'Danh sách thẻ xe ' + new Date());
+        this.spinner.hide();
       }, error => {
+        this.spinner.hide();
         console.error(error);
       });
   }

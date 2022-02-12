@@ -10,6 +10,7 @@ import { AttackFilesComponent } from './attack-files.component';
 import { AgGridModule } from '@ag-grid-community/angular';
 import { DialogImageModule } from '../dialogimage/dialogimage.module';
 import { ManageMediaModule } from '../manage-media-module/manage-media.module';
+import {ImageModule} from 'primeng/image';
 @NgModule({
   declarations: [
     AttackFilesComponent
@@ -18,7 +19,7 @@ import { ManageMediaModule } from '../manage-media-module/manage-media.module';
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
-   
+    ImageModule,
     AgGridModule,
     SharedModule,
     ButtonModule,

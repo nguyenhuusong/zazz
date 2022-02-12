@@ -12,7 +12,7 @@ export class AttackFilesComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
 
     if (changes.notify && this.notify.attachs.length > 0) {
-          this.attachs = [...this.notify.attachs.map(d => d.attach_url)]
+          this.attachs = [...this.notify.attachs.map(d => d.attach_url)];
       if (typeof this.attachs === 'string') {
         this.attachs= (this.attachs as string).split(',');
       }
@@ -20,6 +20,7 @@ export class AttackFilesComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
+    console.log(this.notify)
   }
 
   handleRemoveMedia(id) {
@@ -27,6 +28,6 @@ export class AttackFilesComponent implements OnInit, OnChanges {
   }
 
   openFile(item) {
-    window.open(item, '_blank');
+    window.open(item.attach_url, '_blank');
   }
 }

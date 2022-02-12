@@ -93,18 +93,21 @@ export class PageMarkdownComponent implements OnInit {
   submitMedia(data) {
     if(this.dinhkem === 'attack') {
       if(data && data.length > 0) {
+        this.modelMarkdow.attachs = []
         data.forEach(item => {
           if (item.file_type === 'file') {
             (this.modelMarkdow.attachs as any[]).push({
               id: this.modelMarkdow.id,
               attach_name: item.name,
-              attach_url: item.link
+              attach_url: item.link,
+              attach_type: item.file_type
             });
           } else {
             (this.modelMarkdow.attachs as any[]).push({
               id: this.modelMarkdow.id,
               attach_name: item.name,
-              attach_url: item.image
+              attach_url: item.image,
+              attach_type: item.file_type
             });
           }
         });
