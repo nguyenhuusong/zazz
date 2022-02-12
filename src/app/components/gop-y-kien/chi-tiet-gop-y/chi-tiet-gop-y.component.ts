@@ -16,7 +16,7 @@ export class ChiTietGopYComponent implements OnInit, OnDestroy {
   private readonly unsubscribe$: Subject<void> = new Subject();
   manhinh = 'Edit';
   indexTab = 0;
-  optionsButtonsView = [{ label: 'Quay lại', value: 'Back' }];
+  optionsButon = [{ label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },];
   constructor(
     private apiService: ApiHrmService,
     private activatedRoute: ActivatedRoute,
@@ -55,7 +55,7 @@ export class ChiTietGopYComponent implements OnInit, OnDestroy {
     this.titlePage = this.activatedRoute.data['_value'].title;
     this.items = [
       { label: 'Trang chủ' , url: '/home' },
-      { label: 'Danh sách góp ý', url: '/cai-dat/gop-y' },
+      { label: 'Danh sách góp ý', url: '/gop-y' },
       { label: this.titlePage },
     ];
     this.url = this.activatedRoute.data['_value'].url;
@@ -121,14 +121,14 @@ export class ChiTietGopYComponent implements OnInit, OnDestroy {
 
   goBack() {
     if (this.titlePage) {
-      this.router.navigate(['/cai-dat/gop-y']);
+      this.router.navigate(['/gop-y']);
     } else {
       this.back.emit();
     }
   }
 
   cancelUpdate() {
-    this.router.navigate(['/cai-dat/gop-y']);
+    this.router.navigate(['/gop-y']);
   }
 
 }

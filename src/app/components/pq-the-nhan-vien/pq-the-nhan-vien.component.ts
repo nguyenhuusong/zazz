@@ -181,6 +181,13 @@ export class PqTheNhanVienComponent implements OnInit {
           icon: 'fa fa-unlock',
           class: 'btn-primary mr5',
           hide: (event.data.status !== 3)
+        },
+        {
+          onClick: this.deleteCard.bind(this),
+          label: 'Xóa thẻ',
+          icon: 'fa fa-trash',
+          class: 'btn-primary mr5',
+          hide: (event.data.status !== 3)
         }
       ]
     };
@@ -250,9 +257,11 @@ export class PqTheNhanVienComponent implements OnInit {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn thực hiện Khóa thẻ này?',
       accept: () => {
+     this.spinner.show();
         this.apiService.lockCardNV(event.rowData.cardCd)
           .subscribe(results => {
             this.load();
+            this.spinner.hide();
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Khóa thẻ thành công' });
           }, error => this.handlerError(error));
       }
@@ -291,10 +300,27 @@ export class PqTheNhanVienComponent implements OnInit {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn thực hiện Mở khóa thẻ này?',
       accept: () => {
+        this.spinner.show();
         this.apiService.unlockCardNV(event.rowData.cardCd)
           .subscribe(results => {
             this.load();
+            this.spinner.hide();
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Mở khóa thẻ thành công' });
+          }, error => this.handlerError(error));
+      }
+    });
+  }
+
+  deleteCard(event): void {
+    this.confirmationService.confirm({
+      message: 'Bạn có chắc chắn muốn thực hiện xóa thẻ xe này?',
+      accept: () => {
+       this.spinner.show();
+        this.apiService.deleteCard(event.rowData.cardCd)
+          .subscribe(results => {
+            this.load();
+            this.spinner.hide();
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Xóa thẻ xe thành công' });
           }, error => this.handlerError(error));
       }
     });

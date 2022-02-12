@@ -67,7 +67,9 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     filter: '',
     offSet: 0,
     pageSize: 15,
-    job_id: 0,
+    job_id: null,
+    org_cd: null,
+    positionCd: null,
     vacancy_id: 0,
     can_st: -1
   }
@@ -112,14 +114,15 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
       filter: '',
       offSet: 0,
       pageSize: 15,
-      job_id: 0,
+      org_cd: null,
+      positionCd: '',
+      job_id: null,
       vacancy_id: 0,
       can_st: -1
     }
     this.load();
   }
-
-  load() {
+load() {
     this.columnDefs = []
     this.spinner.show();
     const queryParams = queryString.stringify(this.query);
@@ -281,10 +284,44 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
       { label: 'Danh sách tuyển dụng' },
     ];
     this.getJobTitles();
+    this.getOrgRoots();
+    this.getObjectList();
     this.getStatus();
     this.load();
   }
 
+  getOrgRoots() {
+    this.apiService.getOrgRoots().subscribe(results => {
+      if (results.status === 'success') {
+        this.listOrgRoots = results.data.map(d => {
+          return {
+            label: d.org_name + '-' + d.org_cd,
+            value: `${d.org_cd}`
+          }
+        });
+
+        this.listOrgRoots = [{ label: 'Tất cả', value: null }, ...this.listOrgRoots];
+      }
+    })
+  }
+
+  getObjectList() {
+    const queryParams = queryString.stringify({ objKey: 'positiontype_group' });
+    this.apiService.getCustObjectListNew(false,queryParams).subscribe(results => {
+      if (results.status === 'success') {
+        this.positiontypes = results.data.map(d => {
+          return {
+            label: d.objName,
+            value: d.objCode
+          }
+        });
+        this.positiontypes = [{ label: 'Tất cả', value: null }, ...this.positiontypes]
+      }
+    })
+  }
+
+  listOrgRoots = []
+  positiontypes = []
   listJobTitles = []
   getJobTitles() {
     this.apiService.getJobTitles().subscribe(results => {
@@ -295,7 +332,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
             value: d.job_id
           }
         });
-        this.listJobTitles = [{ label: 'Tất cả', value: '' }, ...this.listJobTitles]
+        this.listJobTitles = [{ label: 'Tất cả', value: null }, ...this.listJobTitles]
       }
     })
   }

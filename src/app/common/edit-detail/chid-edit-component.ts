@@ -738,7 +738,7 @@ export class AppTypeCheckboxRadioListComponent implements OnInit {
             <div class="input-group">
                   <label  class="text-nowrap label-text" >{{element.columnLabel}}</label>
                   <div>
-                  <div style="display: flex" *ngIf="this.element.columnValue"><input type="text" class="form-control" [value]="this.element.columnValue">
+                  <div style="display: flex" *ngIf="this.element.columnValue"><input type="text" class="form-control" (change)="setvalueImage($event)" [value]="this.element.columnValue">
                   <button pButton pRipple type="button" (click)="removeAttach()" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-text"></button></div>
                   <div *ngIf="!this.element.columnValue" class="upload_file"><input class="" type="file"  accept="image/*" (change)="onUploadOutputImage($event)" ></div>
                     <input type="file" style="display: none" id="sign_second" name="sign_second"  accept="image/jpeg,image/png,image/jpg,image/gif" (change)="onUploadOutputImage($event)">
@@ -747,6 +747,9 @@ export class AppTypeCheckboxRadioListComponent implements OnInit {
                       <div [hidden]="element.columnValue">
                       Trường bắt buộc nhập!
                       </div>
+                  </div>
+                  <div *ngIf="this.element.columnValue">
+                  <p-image  src="{{this.element.columnValue}}" alt="Image" width="250" [preview]="true"></p-image>
                   </div>
                 </div>
                 </div>
@@ -770,6 +773,10 @@ export class AppTypeLinkUrlRadioListComponent implements OnInit {
     this.element.columnValue = '';
   }
 
+  setvalueImage(event) {
+    this.element.columnValue = event.target.value
+  }
+
   onUploadOutputImage(event){
     this.spinner.show();
     if (event.target.files[0] && event.target.files[0].size > 0) {
@@ -782,7 +789,7 @@ export class AppTypeLinkUrlRadioListComponent implements OnInit {
         }, () => {
             uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
                 if (downloadURL) {
-                  this.element.columnValue = event.target.files[0].name;
+                  this.element.columnValue = downloadURL;
                   this.dataView.forEach(element => {
                     element.fields.forEach(async element1 => {
                       if (element1.field_name === 'meta_file_type') {

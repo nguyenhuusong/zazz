@@ -32,6 +32,7 @@ import { CurrencyDirectiveModule } from '../currency-format/currency.module';
 import { CustomTooltipComponent } from '../ag-component/customtooltip.component';
 import { ButtonRendererMutiComponent } from 'src/app/utils/common/button-renderermutibuttons.component';
 import { PageMarkdownModule } from '../page-markdown/page-markdown.module';
+import {ImageModule} from 'primeng/image';
 @NgModule({
   imports: [
     FormsModule,
@@ -41,6 +42,7 @@ import { PageMarkdownModule } from '../page-markdown/page-markdown.module';
     SharedModule,
     DialogModule,
     ToastModule,
+    ImageModule,
     DropdownModule,
     PaginatorModule,
     CalendarModule,

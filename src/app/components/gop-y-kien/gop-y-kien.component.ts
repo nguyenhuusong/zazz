@@ -76,7 +76,8 @@ export class GopYKienComponent implements OnInit {
   query = {
     filter: '',
     offSet: 0,
-    pageSize: 100000000
+    pageSize: 100000000,
+    feedbackTypeId: null
   }
   totalRecord = 0;
   DriverId = 0;
@@ -116,7 +117,8 @@ export class GopYKienComponent implements OnInit {
     this.query = {
       filter: '',
       offSet: 0,
-      pageSize: 100000000
+      pageSize: 100000000,
+      feedbackTypeId: null
     }
     this.load();
   }
@@ -181,7 +183,7 @@ export class GopYKienComponent implements OnInit {
 
   XemChiTiet(event) {
     const params = {
-      feedbackId: event.rowData.feedback_id,
+      feedbackId: event.rowData.feedbackId,
     }
     this.router.navigate(['/gop-y/chi-tiet-gop-y'], { queryParams: params });
   }
@@ -207,8 +209,22 @@ export class GopYKienComponent implements OnInit {
       { label: 'Góp ý' },
     ];
     this.load();
+    this.getFeedbackType();
   }
-
+  typeFeedBacks = [];
+  getFeedbackType() {
+    this.apiService.getFeedbackType().subscribe(results => {
+      if(results.status === 'success') {
+        this.typeFeedBacks = results.data.map(d => {
+          return {
+            label: d.feedbackTypeName,
+            value: d.feedbackTypeId
+          }
+        });
+        this.typeFeedBacks = [{label: 'Tất cả', value: null}, ...this.typeFeedBacks]
+      }
+    })
+  }
 }
 
 

@@ -331,6 +331,10 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiCore}/api/v1/coreaccount/GetAccountInfo?` + queryParams, this.options)
   }
 
+  getFeedbackType(): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/feedback/GetFeedbackType`, this.options)
+  }
+
   setAccountInfo(params): Observable<any> {
     return this.http.post<any>(`${apiCore}/api/v1/coreaccount/SetAccountInfo`, params, this.options)
   }
@@ -936,6 +940,11 @@ export class ApiHrmService {
   unlockCardNV<T>(cardCd) {
     const card = { cardCd, status: 0 };
     return this.http.put<T>(`${apiHrmServer}/api/v2/cardvehicle/SetCardLock`, card, this.options);
+  }
+
+  deleteCard<T>(cardCd) {
+    const card = { cardCd};
+    return this.http.put<T>(`${apiHrmServer}/api/v2/cardvehicle/DeleteCard`, card, this.options);
   }
 
   GetElevatorFloorPage(filter, offset, pagesize, projectCd, buildCd, buildZone): Observable<ElevatorFloor[]> {
