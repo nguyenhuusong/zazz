@@ -74,7 +74,7 @@
                                     <div class="col-6">
                                         <label for="">Tổ chức </label>
                                         <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
-                                            [options]="listOrgRoots" [(ngModel)]="query.org_cd"  (onChange)="find()"
+                                            [options]="listOrgRoots" [(ngModel)]="query.org_cd"  (onChange)="getOrgPositions()"
                                             name="org_cd" [filter]="true">
                                             <ng-template let-item pTemplate="selectedItem">
                                                 <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
@@ -86,7 +86,7 @@
                                             </ng-template>
                                             </p-dropdown>
                                     </div>
-                                        <div class="col-6">
+                                        <!-- <div class="col-6">
                                             <label for="">Phòng ban </label>
                                     <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
                                         [options]="listOrgRoots" [(ngModel)]="query.org_cd"  (onChange)="find()"
@@ -100,11 +100,11 @@
                                             </div>
                                         </ng-template>
                                         </p-dropdown>
-                                        </div>  
+                                        </div>   -->
                                         <div class="col-6">
                                             <label for="">Cấp bậc</label>
                                             <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
-                                                [options]="positiontypes" [(ngModel)]="query.positionCd" name="positionCd" (onChange)="find()"
+                                                [options]="positions" [(ngModel)]="query.positionCd" name="positionCd" (onChange)="find()"
                                                 >
                                                 <ng-template let-item pTemplate="selectedItem">
                                                     <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>

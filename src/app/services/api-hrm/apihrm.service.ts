@@ -942,9 +942,8 @@ export class ApiHrmService {
     return this.http.put<T>(`${apiHrmServer}/api/v2/cardvehicle/SetCardLock`, card, this.options);
   }
 
-  deleteCard<T>(cardCd) {
-    const card = { cardCd};
-    return this.http.put<T>(`${apiHrmServer}/api/v2/cardvehicle/DeleteCard`, card, this.options);
+  deleteCard(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/cardvehicle/DeleteCard?` + queryParams, this.options)
   }
 
   GetElevatorFloorPage(filter, offset, pagesize, projectCd, buildCd, buildZone): Observable<ElevatorFloor[]> {

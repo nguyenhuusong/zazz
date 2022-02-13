@@ -262,6 +262,20 @@ load() {
     this.router.navigate(['/tuyen-dung/ds-tuyen-dung/them-moi-tuyen-dung'], { queryParams: params });
   }
 
+  getOrgPositions() {
+    this.positions = [];
+    let items = this.listOrgRoots.filter(d => d.value === this.query.org_cd)
+    const queryParams = queryString.stringify({ org_id: items[0].code });
+    this.apiService.getOrgPositions(queryParams).subscribe(results => {
+      if (results.status === 'success') {
+        this.positions = results.data.map(d => {
+          return { label: d.positionName, value: d.positionCd }
+        });
+        this.positions = [{label: 'Tất cả', value: null}, ...this.positions]
+      }
+    })
+  }
+
   find() {
     this.load();
   }
@@ -296,7 +310,8 @@ load() {
         this.listOrgRoots = results.data.map(d => {
           return {
             label: d.org_name + '-' + d.org_cd,
-            value: `${d.org_cd}`
+            value: `${d.org_cd}`,
+            code:  `${d.org_id}`,
           }
         });
 
@@ -320,9 +335,10 @@ load() {
     })
   }
 
-  listOrgRoots = []
-  positiontypes = []
-  listJobTitles = []
+  listOrgRoots = [];
+  positiontypes = [];
+  listJobTitles = [];
+  positions = [{label: 'Tất cả', value: null}];
   getJobTitles() {
     this.apiService.getJobTitles().subscribe(results => {
       if (results.status === 'success') {

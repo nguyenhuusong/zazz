@@ -274,6 +274,7 @@ export class PqTheNhanVienComponent implements OnInit {
 
   handlerError(error): void {
     console.log(error);
+    this.spinner.hide();
     if (error.status === 401) {
       this.router.navigate(['/home']);
     }
@@ -319,7 +320,8 @@ export class PqTheNhanVienComponent implements OnInit {
       message: 'Bạn có chắc chắn muốn thực hiện xóa thẻ xe này?',
       accept: () => {
        this.spinner.show();
-        this.apiService.deleteCard(event.rowData.cardCd)
+       const queryParams = queryString.stringify({ cardCd: event.rowData.cardCd});
+        this.apiService.deleteCard(queryParams)
           .subscribe(results => {
             this.load();
             this.spinner.hide();
