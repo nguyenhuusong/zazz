@@ -45,7 +45,7 @@ export class AppTypeTextComponent implements OnInit {
     <div class="select-default">
           <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
           <div>
-          <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
+          <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"  [filterBy]="'label'"
             [disabled]="element.isDisable" [options]="element.options"
             [required]="element.isRequire && element.isVisiable && !element.isEmpty" [(ngModel)]="element.columnValue"
             name={{element.field_name}}>
@@ -161,7 +161,7 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
                 <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
                 <div>
                 <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
-                  [disabled]="element.isDisable" [options]="element.options" (onChange)="onChangeValue($event.value, element.field_name)"
+                  [disabled]="element.isDisable" [options]="element.options" (onChange)="onChangeValue($event.value, element.field_name)" [filterBy]="'label'"
                   [required]="element.isRequire && element.isVisiable && !element.isEmpty" [(ngModel)]="element.columnValue"
                   name={{element.field_name}} [filter]="true">
                   <ng-template let-item pTemplate="selectedItem">

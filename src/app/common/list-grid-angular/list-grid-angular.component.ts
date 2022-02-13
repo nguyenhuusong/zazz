@@ -75,7 +75,17 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
   ) {
     this.titlePage = this.activatedRoute.data['_value'].title;
     this.excelExportParams = {
-      fileName: this.titlePage ? this.titlePage : 'export'
+      fileName: this.titlePage ? this.titlePage : 'export',
+      processCellCallback: params => {
+        console.log(params)
+        if(params.node.data) {
+          params.node.data.isContacted = params.node.data.isContacted ? params.node.data.isContacted.split('</span>').shift().split('ml5\">').pop() : '';
+          params.node.data.isProfileFull = params.node.data.isProfileFul ?  params.node.data.isProfileFull.split('</span>').shift().split('ml5\">').pop() :'';
+          params.node.data.lockName =params.node.data.isProfileFul ? params.node.data.lockName.split('</span>').shift().split('ml5\">').pop(): '';
+          params.node.data.status_name =params.node.data.isProfileFul ? params.node.data.status_name.split('</span>').shift().split('ml5\">').pop() : '';
+        }
+        return params.value
+      }
     };
     this.csvExportParams = {
       fileName: this.titlePage ? this.titlePage : 'export'
