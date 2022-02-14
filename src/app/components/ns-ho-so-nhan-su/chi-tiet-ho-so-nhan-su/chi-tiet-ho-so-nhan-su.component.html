@@ -413,7 +413,7 @@
 
 <p-dialog [(visible)]="isShowCustIndiCreate" (onHide)="onHideCreate()" [draggable]="false"  [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '1000px', height: 'auto'}">
     <p-header>
-      Thêm mới khách hàng
+      Xem thông tin giấy tờ
     </p-header>
     <app-detect-card *ngIf="isShowCustIndiCreate" [isShowRegister]="isShowRegister" (reset)="isShowRegister =!isShowRegister"  (callback)="confirmCheckCard($event)" [thongtinchitietthe]="thongtinchitietthe"></app-detect-card>
     <app-card-info *ngIf="isShowRegister" [thongtinchitietthe]="thongtinchitietthe" (back)="onReloadCard()"></app-card-info>
