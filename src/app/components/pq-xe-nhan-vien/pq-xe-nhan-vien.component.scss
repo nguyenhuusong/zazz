@@ -1,0 +1,9 @@
+.box-body{
+    .form-row{
+        &:after{
+            content: '';
+            clear: both;
+            display: table;
+        }
+    }
+}
