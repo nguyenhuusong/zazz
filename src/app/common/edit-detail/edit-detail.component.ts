@@ -18,7 +18,8 @@ import * as numeral from 'numeral';
 export class EditDetailComponent implements OnInit, OnChanges {
   constructor(
     private apiService: ApiHrmService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private apiServiceCore: ApiService,
   ) { }
   @Output() callback = new EventEmitter<any>();
   @Output() callbackcancel = new EventEmitter<any>();
@@ -169,6 +170,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
             this.getProductProjs(element1);
           } else if (element1.field_name === 'room_id') {
             this.getMeetRooms(element1);
+          } else if (element1.field_name === 'content_type' || element1.field_name === 'isPublish') {
+            this.GetCustObjectList(element1);
           } else {
             this.getCustObjectListNew(element1);
           }
@@ -481,6 +484,21 @@ export class EditDetailComponent implements OnInit, OnChanges {
             return {
               label: `${d.room_name}`,
               value: `${d.room_id}`
+            };
+          });
+          element1.columnValue = element1.columnValue ? element1.columnValue : '';
+        }
+      });
+  }
+
+  GetCustObjectList(element1): void {
+    this.apiServiceCore.getCustObjectList(element1.columnObject)
+      .subscribe(results => {
+        if (results.status === 'success') {
+          element1.options = cloneDeep(results.data).map(d => {
+            return {
+              label: `${d.objName}`,
+              value: `${d.objValue}`
             };
           });
           element1.columnValue = element1.columnValue ? element1.columnValue : '';
