@@ -329,12 +329,25 @@ export class PqXeNhanVienComponent implements OnInit {
   }
 
   SaveVehicleCard(): void {
+    let startTimeTm = null;
+    let endTimeTm = null;
+    if(this.modelTM.endTimeTM === ''){
+      startTimeTm = null;
+      endTimeTm = null;
+    }else{
+      startTimeTm = this.datetostring(this.modelTM.startTimeTM);
+      endTimeTm = this.datetostring(this.modelTM.endTimeTM);
+    }
     this.apiService.setCardVehicle(this.modelTM.cardVehicleId, this.modelTM.vehiclecardCd,
       this.modelTM.vehicleTypeIdTM, this.modelTM.vehicleNoTM, this.modelTM.vehicleNameTM,
-      this.datetostring(this.modelTM.startTimeTM), this.datetostring(this.modelTM.endTimeTM), this.modelTM.cusId).subscribe(results => {
-        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Cập nhật vé xe thành công' });
-        this.displayCreateVehicleCard = false;
-        this.load();
+      startTimeTm, endTimeTm, this.modelTM.cusId).subscribe((results: any) => {
+        if(results.status === 'error'){
+          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
+        }else{
+          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Cập nhật vé xe thành công' });
+          this.displayCreateVehicleCard = false;
+          this.load();
+        }
       }, error => { });
     // this.loadCardVip(this.model.custId);
 
