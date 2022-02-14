@@ -69,9 +69,16 @@
         </label>
         <div class="col-sm-8">
           <div class="input-group">
-            <p-autoComplete [(ngModel)]="cusId" name="cusId"  [baseZIndex]="102" appendTo="body" [style]="{width: '100%'}"
+            <p-autoComplete panelStyleClass="search-user-by-phone" [(ngModel)]="cusId" name="cusId"  [baseZIndex]="102" appendTo="body" [style]="{width: '100%'}"
               [suggestions]="results" (onSelect)="onSelectCus($event)" placeholder="Tìm kiếm theo tên , SĐT.."
-              (completeMethod)="search($event)" field="fullName"></p-autoComplete>
+              (completeMethod)="search($event)" field="fullName">
+              <ng-template let-value pTemplate="item">
+                <div class="result_cus_item">
+                  <label class="">{{ value.employeeName }}</label>
+                  <span class="phone">{{ value.phone }}</span>
+                </div>
+              </ng-template>
+            </p-autoComplete>
             </div>
           <!-- <input [ngbTypeahead]="search" name="cusId" (keyup)="getEmployee($event)" [resultFormatter]="formatter"
             (selectItem)="selectedItem($event)" #cusId="ngModel" [inputFormatter]="formatter" type="text"

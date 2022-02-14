@@ -2176,3 +2176,16 @@ div.p-organizationchart {
         font-size: 20px;
     }
 }
+.search-user-by-phone{
+    ul{
+        li{
+            padding-top: 5px !important;
+            padding-bottom: 5px !important;
+            span{
+                &.phone{
+                    color: #838383;
+                }
+            }
+        }
+    }
+}
