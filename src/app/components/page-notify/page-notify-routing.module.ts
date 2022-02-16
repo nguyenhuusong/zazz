@@ -32,14 +32,14 @@ const routes: Routes = [
         path: 'them-moi-thong-bao',
         component: NotifyDetailComponent,
         data: {
-          title: 'Thêm mới chi tiết dự án'
+          title: 'Thêm mới thông báo'
         }
       },
       {
         path: 'chi-tiet-gioi-thieu-du-an',
         component: NotifyDetailComponent,
         data: {
-          title: 'Chi tiết giới thiệu dự án'
+          title: 'Chi tiết thông báo'
         }
       },
 

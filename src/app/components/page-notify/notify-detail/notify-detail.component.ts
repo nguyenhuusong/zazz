@@ -191,15 +191,15 @@ export class NotifyDetailComponent implements OnInit {
             a.fields.forEach(b => {
               if (b.field_name === 'content_markdown') {
                 if(element1.columnValue == 2) {
-                  b.columnValue = this.converter.makeHtml(this.modelMarkdow.content);
+                  b.columnValue =this.modelMarkdow.content ? this.converter.makeHtml(this.modelMarkdow.content) : '';
                 }else {
-                  b.columnValue = this.converter.markdown(this.modelMarkdow.content);
+                  b.columnValue = this.modelMarkdow.content ? this.converter.markdown(this.modelMarkdow.content) : '';
                 }
               }
             });
           });
       }else  if (element1.field_name === 'content_email') {
-        element1.columnValue =  this.converter.makeHtml(this.modelMarkdow.content);
+        element1.columnValue = this.modelMarkdow.content ? this.converter.makeHtml(this.modelMarkdow.content) : '';
       }
       });
     });
