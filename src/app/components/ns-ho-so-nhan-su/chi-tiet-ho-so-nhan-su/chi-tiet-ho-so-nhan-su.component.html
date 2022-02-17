@@ -347,7 +347,7 @@
 
 <p-dialog header="Duyệt hợp đồng" [(visible)]="displayApproveContract" [modal]="true" [draggable]="false"
     [resizable]="false" [style]="{width: '40vw'}" [autoZIndex]=true [draggable]="false" [resizable]="false">
-    <div class="row col-md-12 mt-1" >
+    <div class="row col-md-12 mt-1 select-default" >
         <label for="">Trạng thái duyệt</label>
         <p-dropdown [autoZIndex]="true" [autoDisplayFirst]="false" [style]="{'width': '100%'}" [options]="statusApprover"
         [(ngModel)]="modelDuyetHopDong.status" name="status">
@@ -361,7 +361,7 @@
         </ng-template>
         </p-dropdown>
     </div>
-    <div class="row col-md-12 mt-1">
+    <div class="row col-md-12 mt-1" style="margin-top: 5px;">
         <div class="textarea-default">
             <label for="">Ghi chú</label>
             <textarea [(ngModel)]="modelDuyetHopDong.comment" name="comment" cols="30" rows="10" class="form-control"></textarea>
