@@ -67,11 +67,7 @@ export class NotifyDetailComponent implements OnInit {
       this.notiId = this.paramsObject.params.notiId;
       this.external_sub = this.paramsObject.params.external_sub;
       this.tempId = this.paramsObject.params.tempId;
-      if (this.notiId == null) {
-        this.manhinh = 'Edit'
-      } else {
-        this.manhinh = 'Edit'
-      }
+    
       this.modelMarkdow.id = this.notiId
       this.getAppNotifyInfo();
     });
@@ -86,6 +82,13 @@ export class NotifyDetailComponent implements OnInit {
         this.listViews = cloneDeep(results.data.group_fields);
         this.dataInfo = results.data;
         this.external_sub = this.dataInfo.external_sub;
+        if (this.notiId == null) {
+          this.manhinh = 'Edit';
+          this.indexTab = 0;
+        } else {
+          this.manhinh = 'Edit';
+          this.indexTab = 1;
+        }
         this.spinner.hide();
       }
     })
@@ -215,11 +218,11 @@ export class NotifyDetailComponent implements OnInit {
     }
     this.apiService.setNotifyInfo(params).subscribe(results => {
       if (results.status === 'success') {
-        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.messages ? results.messages : 'Thành công' });
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data.messages ? results.data.messages : 'Thành công' });
         this.indexTab = 1;
         this.spinner.hide();
         this.notiId = results.data.id;
-        this.router.navigate(['/thong-bao/chi-tiet-gioi-thieu-du-an'], { queryParams: { notiId: results.data.id } });
+        this.router.navigate(['/cai-dat/thong-bao/chi-tiet-thong-bao'], { queryParams: { notiId: results.data.id } });
         // this.getAppNotifyInfo();
       }
     })

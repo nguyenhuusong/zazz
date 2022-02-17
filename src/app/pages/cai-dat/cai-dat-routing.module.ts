@@ -33,7 +33,7 @@ const routes: Routes = [
     path: 'thong-bao',
     loadChildren: () => import('src/app/components/page-notify/page-notify.module').then(m => m.PageNotifyModule),
     data: {
-      title: 'Danh sách chấm công',
+      title: 'Danh sachs thông báo',
       url: 'thong-bao',
     },
   },
