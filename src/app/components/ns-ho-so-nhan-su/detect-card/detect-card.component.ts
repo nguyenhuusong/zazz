@@ -46,8 +46,9 @@ export class DetectCardComponent implements OnInit, OnChanges {
 
   ngOnChanges(event) {
     if (event && this.thongtinchitietthe && this.thongtinchitietthe.metas.length > 0) {
+      this.custIndi.typeCard = this.thongtinchitietthe.idcard_type;
       for (let item of this.thongtinchitietthe.metas) {
-            if(item.doc_type === 'identity1' || item.doc_type === 'identity3') {
+            if(item.doc_type === 'identity1' || item.doc_type === 'identity2') {
                 if(item.doc_sub_type === 'identity1' || item.doc_sub_type === 'identity3') {
                   this.imageMt = item.metaUrl
                 }else {
