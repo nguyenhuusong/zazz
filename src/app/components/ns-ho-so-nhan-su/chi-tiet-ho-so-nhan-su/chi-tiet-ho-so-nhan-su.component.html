@@ -416,7 +416,7 @@
       Xem thông tin giấy tờ
     </p-header>
     <app-detect-card *ngIf="isShowCustIndiCreate" [isShowRegister]="isShowRegister" (reset)="isShowRegister =!isShowRegister"  (callback)="confirmCheckCard($event)" [thongtinchitietthe]="thongtinchitietthe"></app-detect-card>
-    <app-card-info *ngIf="isShowRegister" [thongtinchitietthe]="thongtinchitietthe" (back)="onReloadCard()"></app-card-info>
+    <app-card-info *ngIf="isShowRegister" [thongtinchitietthe]="thongtinchitietthe"  (back)="onReloadCard()"></app-card-info>
 </p-dialog>
 
 <p-dialog [(visible)]="isShowAddress" [draggable]="false" [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '1200px', height: 'auto'}">

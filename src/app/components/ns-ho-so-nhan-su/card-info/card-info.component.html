@@ -5,7 +5,7 @@
               <div class="">
                 <!-- <p-selectButton  [options]="optionsButtonsView" *ngIf="listViews.length> 0 && manhinh === 'View'" optionLabel="label" optionValue="value" (onChange)="onChangeButtonView($event)"></p-selectButton> -->
                   <!-- <app-view-detail *ngIf="listViews.length> 0 && manhinh === 'View'"  [manhinh]="manhinh" [dataView]="listViews" (callback)="setAccountInfo($event)"></app-view-detail> -->
-                  <app-edit-detail *ngIf="listViews.length> 0 && manhinh === 'Edit'"  [manhinh]="manhinh" [dataView]="listViews" (callback)="setAccountInfo($event)" (callbackcancel)="cancelUpdate()"></app-edit-detail>
+                  <app-edit-detail *ngIf="listViews.length> 0 && manhinh === 'Edit'"   [optionsButtonsEdit]="optionsButtonsView"   [manhinh]="manhinh" [dataView]="listViews" (callback)="setAccountInfo($event)" (callbackcancel)="cancelUpdate()"></app-edit-detail>
               </div>
         </div>
       </div>

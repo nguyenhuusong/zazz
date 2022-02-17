@@ -13,7 +13,8 @@ import { ApiCoreService } from 'src/app/services/api-core/apicore.service';
 })
 export class CardInfoComponent implements OnInit, OnChanges {
   manhinh = 'View';
-  optionsButtonsView = [{ label: 'Sửa', value: 'Edit' }, { label: 'Quay lại', value: 'Back' }];
+  
+  optionsButtonsView = [ { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check'  }];
   constructor(
     private apiService: ApiService,
     private apiCoreService: ApiCoreService,
@@ -28,9 +29,8 @@ export class CardInfoComponent implements OnInit, OnChanges {
   @Output() back = new EventEmitter<any>();
   detailInfo = null;
   ngOnChanges(event) {
-    console.log(event)
     if (event) {
-      this.optionsButtonsView = [{ label: 'Sửa', value: 'Edit' }, { label: 'Quay lại', value: 'Back' }];
+      this.optionsButtonsView = [ { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check'  }];
       this.manhinh = 'Edit'
       this.getCustIndiIdentity();
     }
