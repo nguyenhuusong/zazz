@@ -302,6 +302,7 @@ export class StoreNotifyComponent implements OnInit, OnChanges {
       pinned: 'left',
       cellClass: ['border-right', 'no-auto'],
       checkboxSelection: true,
+      headerCheckboxSelection: true,
       field: 'checkbox',
       cellRenderer: params => params.rowIndex + 1
     },

@@ -151,8 +151,9 @@ export class GridPushListComponent implements OnInit, OnChanges {
       {
         headerName: 'Thao tác',
         filter: '',
-        width: 100,
+        width: 120,
         pinned: 'right',
+        headerCheckboxSelection: true,
         cellRenderer: 'buttonAgGridComponent',
         cellClass: ['border-right', 'no-auto'],
         cellRendererParams: (params: any) => this.showButtons(params),
