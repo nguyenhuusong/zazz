@@ -27,6 +27,7 @@ import { AvatarFullComponent } from '../common/ag-component/avatarFull.component
 import { ButtonAgGridComponent } from '../common/ag-component/button-renderermutibuttons.component';
 import { CustomTooltipComponent } from '../common/ag-component/customtooltip.component';
 import { CurrencyFormatPipeModule } from '../common/pipe/currency-pipe.module';
+import {DialogModule} from 'primeng/dialog';
 @NgModule({
     exports: [
         CommonModule,
@@ -57,6 +58,7 @@ import { CurrencyFormatPipeModule } from '../common/pipe/currency-pipe.module';
         ToolbarModule,
         CurrencyFormatPipeModule,
         MenuModule,
+        DialogModule,
         AgGridModule.withComponents([
             ButtonRendererComponent,
             CustomTooltipComponent,

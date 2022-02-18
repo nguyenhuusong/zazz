@@ -30,3 +30,59 @@
     <!-- <p-splitButton label="Nguyen Gia Manh" icon="pi pi-user" [appendTo]="'body'"  [model]="items" styleClass="p-button-warning p-button-sm p-button-text"></p-splitButton> -->
   </div>
 </p-toolbar>
+
+<p-dialog [(visible)]="isShowChangePassword" [modal]="true" [style]="{width: '600px', height: 'auto'}">
+    <p-header>
+      Cập nhật mật khẩu tài khoản [{{userName}}]
+  </p-header>
+  <form #editSMSF="ngForm" class="form-horizontal change-password">
+    <div class="box-body" style="padding:10px;">
+
+      <!-- <div class="form-row" style="margin:10px 0px;">
+        <label class="col-sm-4 control-label">Tên đăng nhập
+          <span style="color:red">*</span>
+        </label>
+      </div> -->
+      <div class="form-row" style="margin:10px 0px;">
+        <label class="col-sm-4 control-label">Mật khẩu
+          <span style="color:red">*</span>
+        </label>
+        <div class="col-sm-8">
+          <div class="input-group">
+            <input type="password" class="form-control" name="userPassword" autocomplete="off" (change)="checkPasswordcf()" [(ngModel)]="modelPass.userPassword" required
+              value="" #userPassword="ngModel" placeholder="Password">
+            <div *ngIf="submitPass && !modelPass.userPassword " class="alert-validation alert-danger">
+              <div *ngIf="!modelPass.userPassword">
+                Password bắt buộc nhập!
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-row" style="margin:10px 0px;">
+        <label class="col-sm-4 control-label">Nhập lại mật khẩu
+          <span style="color:red">*</span>
+        </label>
+        <div class="col-sm-8">
+          <div class="input-group">
+            <input type="password" class="form-control" name="userPassCf" autocomplete="off"  (change)="checkPasswordcf()" [(ngModel)]="modelPass.userPassCf" required
+              #userPassCf="ngModel" id="userPassCf" placeholder="Nhập lại Password">
+              <div *ngIf="submitPass && (confimPassword || !modelPass.userPassCf) " class="alert-validation alert-danger">
+                <div *ngIf="!modelPass.userPassCf || confimPassword">
+                  Nhập lại mật khẩu không đúng
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="form-row" style="margin:10px 0px;">
+        <div class="col-md-12 text-right">
+          <p-button label="Lưu lại" styleClass="mr-1" (click)="saveChangePass()"></p-button>
+          <p-button label="Hủy" styleClass="p-button-secondary" (click)="isShowChangePassword = !isShowChangePassword"></p-button>
+        </div>
+
+      </div>
+    </div>
+
+  </form>
+</p-dialog>
