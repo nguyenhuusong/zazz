@@ -2039,6 +2039,16 @@ div.new-toolbar-style{
         .btn-group{
             button{
                 margin-right: 5px;
+                min-width: 0px;
+                padding: 0px 10px;
+                vertical-align: middle;
+                height: 25px;
+                line-height: 24px;
+                text-align: center;
+                i{
+                    font-size: 10px;
+                    margin-right: 0px;
+                }
             }
         }
     }
