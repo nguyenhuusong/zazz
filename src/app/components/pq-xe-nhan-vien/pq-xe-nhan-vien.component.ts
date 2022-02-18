@@ -501,5 +501,10 @@ export class PqXeNhanVienComponent implements OnInit {
   changePageSize(): void {
     this.load();
   }
+
+  exportExel() {
+    this.gridApi.exportDataAsExcel();
+  }
+
 }
 
