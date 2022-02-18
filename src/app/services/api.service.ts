@@ -127,4 +127,11 @@ export class ApiService {
         `custPhone=${custPhone}&` +
         `custPassNo=${custPassNo}` , this.options);
   }
+
+  setResetPassword(password): Observable<any> {
+    return this.http
+    .put<any>(`${apiCoreBaseUrl}/api/v1/coresystem/SetResetPassword`, password , this.options);
+  }
+
+
 }
