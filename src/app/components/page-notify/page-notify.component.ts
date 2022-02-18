@@ -350,7 +350,8 @@ export class PageNotifyComponent implements OnInit, OnDestroy, AfterViewChecked 
   addNotifytoProject() {
     this.displayNotify = false;
     this.displaySelectRoom = false;
-    this.router.navigate(['cai-dat/thong-bao/them-moi-thong-bao'], { queryParams: { notiId: null, external_sub: this.modelAddNotifi.external_sub, tempId: this.modelAddNotifi.tempId } });
+    let items = this.moduleList.filter(d => d.value === this.modelAddNotifi.external_sub);
+    this.router.navigate(['cai-dat/thong-bao/them-moi-thong-bao'], { queryParams: { notiId: null, external_sub: this.modelAddNotifi.external_sub, tempId: this.modelAddNotifi.tempId, external_name: items[0].label } });
   }
 
   modelAddNotifi = {

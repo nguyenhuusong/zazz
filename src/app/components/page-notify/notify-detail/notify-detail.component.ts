@@ -20,6 +20,7 @@ export class NotifyDetailComponent implements OnInit {
   notiId = null;
   tempId = null;
   external_sub = '';
+  external_name = '';
   paramsObject = null;
   dataInfo = null;
   columnDefs = [];
@@ -66,6 +67,7 @@ export class NotifyDetailComponent implements OnInit {
       this.paramsObject = { ...params.keys, ...params };
       this.notiId = this.paramsObject.params.notiId;
       this.external_sub = this.paramsObject.params.external_sub;
+      this.external_name = this.paramsObject.params.external_name;
       this.tempId = this.paramsObject.params.tempId;
     
       this.modelMarkdow.id = this.notiId
@@ -76,7 +78,7 @@ export class NotifyDetailComponent implements OnInit {
   getAppNotifyInfo() {
     this.listViews = [];
     this.spinner.show();
-    const queryParams = queryString.stringify({ n_id: this.notiId, external_sub: this.external_sub, tempId: this.tempId });
+    const queryParams = queryString.stringify({ n_id: this.notiId, external_sub: this.external_sub, tempId: this.tempId, external_name: this.external_name });
     this.apiService.getNotifyInfo(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.listViews = cloneDeep(results.data.group_fields);
