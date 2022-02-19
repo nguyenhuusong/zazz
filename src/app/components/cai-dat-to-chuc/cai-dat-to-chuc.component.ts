@@ -403,14 +403,7 @@ export class CaiDatToChucComponent implements OnInit {
         label: 'Cài đặt tham số',
         icon: 'pi pi-refresh',
         command: () => {
-          if (this.detailOrganizeMap.org_level === 1) {
-            const params = {
-              org_cd: this.detailOrganizeMap.org_cd
-            }
-            this.router.navigate(['/cai-dat/cai-dat-tham-so'], { queryParams: params });
-          } else {
-            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Chọn tổ chức level 1' });
-          }
+         
 
         }
       },
@@ -426,6 +419,17 @@ export class CaiDatToChucComponent implements OnInit {
     this.getOrganizeLevelList();
     // this.getRegionList();
     // this.getAgencyOrganizeTypes();
+  }
+
+  caiDatThamSo() {
+    if (this.detailOrganizeMap.org_level === 1) {
+      const params = {
+        org_cd: this.detailOrganizeMap.org_cd
+      }
+      this.router.navigate(['/cai-dat/cai-dat-tham-so'], { queryParams: params });
+    } else {
+      this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Chọn tổ chức level 1' });
+    }
   }
 
   workTime() {
