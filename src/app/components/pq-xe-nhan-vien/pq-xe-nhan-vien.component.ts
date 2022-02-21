@@ -9,6 +9,7 @@ import { CustomTooltipComponent } from 'src/app/common/ag-component/customtoolti
 import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
 import { Vehicle, VehicleType } from 'src/app/models/cardinfo.model';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ExportFileService } from 'src/app/services/export-file.service';
 declare var jQuery: any;
 
 @Component({
@@ -26,6 +27,7 @@ export class PqXeNhanVienComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private messageService: MessageService,
     private changeDetector: ChangeDetectorRef,
+    private fileService: ExportFileService,
     private router: Router) {
     this.defaultColDef = {
       tooltipComponent: 'customTooltip',
@@ -503,7 +505,35 @@ export class PqXeNhanVienComponent implements OnInit {
   }
 
   exportExel() {
-    this.gridApi.exportDataAsExcel();
+  
+    this.spinner.show();
+    this.model.pageSize = 1000000;
+    const query = { ...this.model };
+    query.organizationCd = typeof query.organizationCd === 'string' ? query.organizationCd : query.organizationCd.org_cd;
+    query.org_id = typeof query.org_id === 'string' ? query.org_id : query.org_id.org_id;
+    const queryParams = queryString.stringify(query);
+    this.apiService.getEmployeeVehiclePage(queryParams).subscribe((results: any) => {
+      const dataExport = [];
+      let gridflexs = results.data.gridflexs;
+      let arrKey = gridflexs.map(elementName => elementName.columnField);
+      
+      let dataList = results.data.dataList.data;
+      for(let elementValue of dataList) {
+        const data: any = {};
+        for(let elementName of gridflexs) {
+          if(arrKey.indexOf(elementName.columnField) > -1 && !elementName.isHide && elementName.columnField !== 'statusName') {
+            data[elementName.columnCaption] = elementValue[elementName.columnField] || '';
+          }
+         
+        }
+
+      dataExport.push(data);
+      }
+      this.fileService.exportAsExcelFile(dataExport, 'Danh sách xe nhân viên ' + new Date());
+
+      this.spinner.hide();
+
+    });
   }
 
 }
