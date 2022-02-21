@@ -26,7 +26,7 @@ export class CreateContractInfoComponent implements OnInit {
   ) { } 
 
   optionsButon = [
-    { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
+    // { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
     { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check'  },
     { label: 'Tạm tính', value: 'TamTinh', class: '', icon: 'pi pi-check'  }
   ]
