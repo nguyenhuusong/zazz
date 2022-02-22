@@ -1132,10 +1132,6 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
         const indexobj = this.listsData[3].findIndex(d => d.source_id === event.rowData.source_id);
         let record = { ... this.listsData[3][indexobj] };
         record.meta_file_url = "";
-        record.meta_file_type = "";
-        record.meta_file_size = "";
-        record.meta_file_name = "";
-        record.meta_id = 0;
         this.listsData[3][indexobj] = record;
         this.listsData[3] = [... this.listsData[3]];
         this.listViewsRecordInfo.records = this.listsData[3];
