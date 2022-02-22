@@ -1131,7 +1131,11 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
         console.log(event)
         const indexobj = this.listsData[3].findIndex(d => d.source_id === event.rowData.source_id);
         let record = { ... this.listsData[3][indexobj] };
-        record.meta_file_url = "";
+        record.meta_file_url = null;
+        record.meta_file_size = "";
+        record.meta_file_name = "";
+        record.meta_file_size_name = "";
+        record.meta_file_type = "";
         this.listsData[3][indexobj] = record;
         this.listsData[3] = [... this.listsData[3]];
         this.listViewsRecordInfo.records = this.listsData[3];
@@ -1299,7 +1303,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     this.spinner.show();
     this.apiService.setRecordInfo(this.listViewsRecordInfo).subscribe(results => {
       if (results.status === 'success') {
-        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.data });
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data });
         this.displayCreateContract = false;
         this.getEmployeeInfo();
         this.spinner.hide();
