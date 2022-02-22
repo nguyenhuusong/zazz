@@ -74,7 +74,7 @@ export class QuanLyHopDongComponent implements OnInit {
     filter: '',
     offSet: 0,
     pageSize: 15,
-    org_cd: ''
+    org_cd: null
   }
   totalRecord = 0;
   DriverId = 0;
@@ -95,7 +95,7 @@ export class QuanLyHopDongComponent implements OnInit {
       filter: '',
       offSet: 0,
       pageSize: 15,
-      org_cd: ''
+      org_cd: null
     }
     this.load();
   }
