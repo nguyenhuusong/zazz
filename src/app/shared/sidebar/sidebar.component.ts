@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { UserManager } from 'oidc-client';
+import { filter } from 'rxjs/operators';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { environment } from 'src/environments/environment';
-import { ROUTES } from './sidebar-routes.config';
+import {Event, RouterEvent, Router} from '@angular/router';
 declare var $: any;
 @Component({
     // moduleId: module.id,
@@ -20,10 +20,22 @@ export class SidebarComponent implements OnInit {
         private authService: AuthService,
         private apiService: ApiService,
     ) {
+        
+        router.events.pipe(
+            filter((e: Event): e is RouterEvent => e instanceof RouterEvent)
+         ).subscribe((e: RouterEvent) => {
+             if(this.menuItems.length > 0) {
+                const pathname  = window.location.pathname ;
+                this.parseObjectProperties(this.menuItems, e.url);
+                this.menuItems = [...this.menuItems];
+             }
+         });
     }
 
     ngOnInit() {
         const pathname = window.location.pathname;
+        console.log(pathname)
+
         this.manager.getUser().then(user => {
             this.apiService.getListMenuByUserId(user.profile.sub, '3133579B-4FD9-449E-9CEA-4B384884E7D3').subscribe(results => {
                 this.menuItems = results.data.filter(menuItem => menuItem);
@@ -43,20 +55,29 @@ export class SidebarComponent implements OnInit {
         for (let k of obj) {
             k.label = k.title;
             if (k.path && k.classs !== 'navigation-header') {
-                k.url = k.path
+                k.routerLink = k.path
             }
             if (k.submenus && k.submenus.length > 0) {
                 k.items = k.submenus.filter((d: any) => d.classs && (d.classs.indexOf("hidden") < 0));
             }
-            if (k.url) {
+            if (k.routerLink) {
                 // active menu con
-                if (k.url && pathname.includes(k.url)) {
-                    k.styleClass = k.classs + ' active'
-                    k.icon = ''
-                } else {
-                    k.styleClass = k.classs + ' no-active';
-                    k.icon = ''
+                if(k.isExternalLink) {
+                    if (k.routerLink && pathname.includes(k.routerLink)) {
+                        k.styleClass = 'parent_active'
+                    } else {
+                        k.styleClass = 'parent_no_active'
+                    }
+                }else {
+                    if (k.routerLink && pathname.includes(k.routerLink)) {
+                        k.styleClass = k.classs + ' active'
+                        k.icon = ''
+                    } else {
+                        k.styleClass = k.classs + ' no-active';
+                        k.icon = ''
+                    }
                 }
+               
             } else {
                 //active cha
                 if (k.path && pathname && pathname.split('/').indexOf(k.path) > -1 && k.classs === 'navigation-header') {
@@ -71,6 +92,5 @@ export class SidebarComponent implements OnInit {
             }
         }
     }
-
 
 }

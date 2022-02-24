@@ -13,7 +13,7 @@ export function AgGridFn(lists: Array<any>) {
                 sortable: false,
                 width: value.columnWidth,
                 cellRenderer: (params: any) => {
-                    return `<span class="noti-number noti-number-on ml5">${params.value}</span>`
+                    return `${params.value}`
                 },
                 hide: value.isHide ? true : false,
                 pinned: value.pinned,

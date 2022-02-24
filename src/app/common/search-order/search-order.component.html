@@ -59,7 +59,7 @@
             </div>
             <div *ngIf="+reason === 1" class="select-default">
               <label for="">Theo lý do đặt hàng</label>
-              <p-dropdown [options]="listReason" placeholder="Tất cả" [appendTo]="'body'" [autoDisplayFirst]="false" [(ngModel)]="queryOrder.reason"  [filter]="true" [showClear]="true">
+              <p-dropdown [options]="listReason" placeholder="Tất cả" [appendTo]="'body'" [autoDisplayFirst]="false" [(ngModel)]="queryOrder.reason"  [filter]="true" >
                 <ng-template let-item pTemplate="selectedItem">
                   <span *ngIf="queryOrder.reason" style="vertical-align:middle; ">{{item.label}}</span>
                   <span *ngIf="!queryOrder.reason" style="vertical-align:middle; "></span>
@@ -73,7 +73,7 @@
             </div>
             <div *ngIf="+reason === 1" class="select-default">
               <label for="">Theo trạng thái</label>
-              <p-dropdown [options]="listOrderStatus" placeholder="Tất cả" [autoDisplayFirst]="false" [(ngModel)]="queryOrder.orderStatus"  [filter]="true" [showClear]="true">
+              <p-dropdown [options]="listOrderStatus" placeholder="Tất cả" [autoDisplayFirst]="false" [(ngModel)]="queryOrder.orderStatus"  [filter]="true" >
                 <ng-template let-item pTemplate="selectedItem">
                     <span *ngIf="queryOrder.orderStatus" style="vertical-align:middle; ">{{item.label}}</span>
                     <span *ngIf="!queryOrder.orderStatus" style="vertical-align:middle; "></span>

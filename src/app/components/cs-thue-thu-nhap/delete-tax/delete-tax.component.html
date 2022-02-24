@@ -7,7 +7,7 @@
     </div>
     <div class="col-sm-12 form-group">
         <div class="field-group select label-8">
-            <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" [showClear]="true"
+            <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
             [options]="companies" [(ngModel)]="companyId" name="companyId" [filter]="true">
                 <ng-template let-item pTemplate="selectedItem">
                     <span>{{item?.label}}</span>

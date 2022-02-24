@@ -22,7 +22,7 @@
                  </div>
              </div>
          </ng-template>
-         <app-list-grid-angular [domLayout]="'autoHeight'" [heightRow]="40" [title]="'Danh sách liên hệ'" [defaultColDef]="defaultColDef" [floatingFilter]="false" 
+         <app-list-grid-angular [domLayout]="'autoHeight'" *ngIf="columnDefs" [heightRow]="40" [title]="'Danh sách liên hệ'" [defaultColDef]="defaultColDef" [floatingFilter]="false" 
              [listsData]="detailInfo?.weekdays"  (FnClick)="OnClick($event)"
              [columnDefs]="columnDefs"></app-list-grid-angular>
      </p-card>
