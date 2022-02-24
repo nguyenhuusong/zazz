@@ -3,14 +3,14 @@
         <div class="card  p-2">
             <div class="row">
                 <div class="col-sm-3 form-group">
-                    <div class="input-group">
-                        <label for="">Nội dung tìm kiếm</label>
+                    <div class="field-group text" [ngClass]=" selectedMember ? 'valid' : 'invalid' ">
                         <p-autoComplete
                         [(ngModel)]="selectedMember"
                         [suggestions]="results"
                         (completeMethod)="search($event)"
                         field="displayName"
                         (onSelect) = "handleSelectedMember()"></p-autoComplete>
+                        <label for="">Nội dung tìm kiếm</label>
                     </div>
                 </div>
                 <div class="col-sm-9 form-group text-right">

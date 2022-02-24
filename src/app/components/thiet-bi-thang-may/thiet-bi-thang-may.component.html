@@ -6,16 +6,17 @@
         </div>
         <div class="table-tool grid white-background black-box-shadow-005 filterInput">
             <div class="header-filter-search col-4">
-                <div class="input-group icon">
-                    <svg class="placeholder-icon" width="16" height="16" viewBox="0 0 16 16" fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" clip-rule="evenodd"
-                            d="M10.1305 11.2619C9.28558 11.8771 8.24518 12.24 7.12002 12.24C4.29231 12.24 2 9.94772 2 7.12002C2 4.29231 4.29231 2 7.12002 2C9.94772 2 12.24 4.29231 12.24 7.12002C12.24 8.24518 11.8771 9.28558 11.2619 10.1305L13.7657 12.6343C14.0781 12.9467 14.0781 13.4533 13.7657 13.7657C13.4533 14.0781 12.9467 14.0781 12.6343 13.7657L10.1305 11.2619ZM11.28 7.12002C11.28 9.41753 9.41753 11.28 7.12002 11.28C4.8225 11.28 2.96 9.41753 2.96 7.12002C2.96 4.8225 4.8225 2.96 7.12002 2.96C9.41753 2.96 11.28 4.8225 11.28 7.12002Z"
-                            fill="#808AA6" />
-                    </svg>
-                    <input class="input-default" type="text" placeholder="Mã, tên nhóm" id="filter"
+                <div class="field-group text mb-0 search" [ngClass]="model.filter ? 'valid' : 'invalid' ">
+                    <input class="input-default" type="text" id="filter"
                         (keydown.enter)="model.offset = 0; first = 0;load()"
                         [(ngModel)]="model.filter">
+                        <label>Mã, tên nhóm</label>
+                        <svg class="placeholder-icon" width="16" height="16" viewBox="0 0 16 16" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M10.1305 11.2619C9.28558 11.8771 8.24518 12.24 7.12002 12.24C4.29231 12.24 2 9.94772 2 7.12002C2 4.29231 4.29231 2 7.12002 2C9.94772 2 12.24 4.29231 12.24 7.12002C12.24 8.24518 11.8771 9.28558 11.2619 10.1305L13.7657 12.6343C14.0781 12.9467 14.0781 13.4533 13.7657 13.7657C13.4533 14.0781 12.9467 14.0781 12.6343 13.7657L10.1305 11.2619ZM11.28 7.12002C11.28 9.41753 9.41753 11.28 7.12002 11.28C4.8225 11.28 2.96 9.41753 2.96 7.12002C2.96 4.8225 4.8225 2.96 7.12002 2.96C9.41753 2.96 11.28 4.8225 11.28 7.12002Z"
+                                fill="#808AA6" />
+                        </svg>
                     <i id="icon-search" class="pi pi-angle-down"></i>
                     <p-button class="search-button" icon="pi pi-search" (click)="model.offset = 0; first = 0; load()">
                     </p-button>
@@ -111,7 +112,7 @@
 <p-dialog [(visible)]="isDialog" header="{{titleModal}}" [style]="{width: '600px', height: 'auto'}">
     <form #createElevatorfloor="ngForm" class="form-horizontal ng-pristine ng-valid ng-scope">
         <div class="box-body" style="padding:10px;">
-          <div class="select-default">
+          <div class="field-group select label-8">
             <label class="control-label">Mã dự án
               <span style="color:red">*</span>
             </label>
@@ -122,7 +123,7 @@
                     {{advert.projectName}} </option>
                 </select>
           </div>
-          <div class="select-default">
+          <div class="field-group select label-8">
             <label class="control-label">Tòa nhà</label>
             <div *ngIf="modelBuilding">
               <select (change)="getBuildingZones()" class="form-control" name="buildCd" [(ngModel)]="modelElevator.buildCd">
@@ -133,9 +134,9 @@
             </select>
             </div>
           </div>
-          <div class="select-default">
+          <div class="field-group select label-8">
               <label class="control-label">Khu vực
-              <span style="color:red">*</span>
+                <span style="color:red">*</span>
               </label>
               <select class="form-control" (change)="loadGetFloors()" name="buildZone" [(ngModel)]="modelElevator.buildZone" id="buildZone" #buildZone="ngModel" >
                 <option value="">Chọn khu vực</option>
@@ -143,12 +144,12 @@
                   {{advert.buildZoneName}} </option>
               </select>
           </div>
-          <div class="input-group">
-            <label class="control-label">Mã thiết bị
-              <span style="color:red">*</span>
-            </label>
+          <div class="field-group text label-8" [ngClass]="modelElevator.hardwareId ? 'valid' : 'invalid' ">
               <input type="text" class="form-control" [(ngModel)]="modelElevator.hardwareId" id="hardwareId" #hardwareId="ngModel"  required name="hardwareId"
                       placeholder="Mã thiết bị">
+                      <label class="control-label">Mã thiết bị
+                        <span style="color:red">*</span>
+                      </label>
           </div>
           <!-- <div class="form-row" style="margin:10px 0px;">
             <label class="col-sm-3 control-label">Khu thang máy
@@ -160,12 +161,12 @@
             </div>
           </div> -->
 
-          <div class="select-default">
+          <div class="field-group select label-8">
               <label class="control-label">Tầng
                 <span style="color:red">*</span>
               </label>
                 <select class="form-control" name="floorNumber" [(ngModel)]="modelElevator.floorNumber" id="floorNumber" #floorNumber="ngModel">
-                <option value=null>Chọn tầng</option>
+                <option value= '' selected="selected">Chọn tầng</option>
                 <option *ngFor="let advert of floorsCreate; let i = index" value="{{advert.floorNumber}}">
                   {{advert.floorName}} </option>
               </select>

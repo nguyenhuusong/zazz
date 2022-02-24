@@ -1,16 +1,18 @@
 <div class="row">
     <div class="col-sm-12 form-group">
-        <div class="input-group">
+        <div class="field-group date">
             <label for="">Chọn ngày</label>
             <p-calendar appendTo="body" [(ngModel)] = "date" placeholder="dd/mm/yyyy" name="date" dateFormat="dd/mm/yy" [style]="{'width':'100%'}"></p-calendar>
         </div>
     </div>
     <div class="col-sm-12 form-group">
-        <div class="input-group">
+        <div class="field-group attach-file label-8">
             <label for="">
                 Chọn file
             </label>
-            <input #importEx type="file" (change)="importExcel($event)" class="form-control" placeholder="Chọn file">
+            <div class="upload_file">
+                <input #importEx type="file" (change)="importExcel($event)" class="form-control" placeholder="Chọn file">
+            </div>
         </div>
     </div>
     <div class="col-sm-12 form-group text-right mt-2">

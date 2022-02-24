@@ -248,7 +248,7 @@ export class CsThueThuNhapComponent implements OnInit, AfterViewChecked {
           .map(d => {
             return { label: d.companyName, value: d.companyId };
           });
-        this.companies = [{ label: 'Tất cả công ty', value: '' }, ...this.companies];
+        this.companies = [{ label: 'Tất cả', value: '' }, ...this.companies];
       });
   }
 

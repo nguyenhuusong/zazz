@@ -1,0 +1,35 @@
+:host::ng-deep{
+    .chi-tiet-ho-so-nhan-su{
+        .p-dialog-header,
+        .p-dialog-content{
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+        .p-dialog-header-icons{
+            position: absolute;
+            top: 20px;
+            right: 8px;
+        }
+        .p-panel-header{
+            background: #f7f7f7;
+            padding-left: 0px;
+            padding-right: 0px;
+        }
+        .btn-group-edit-detail{
+            right: 8px !important;
+            top: 0px !important;
+        }
+        .popup-btngroup-edit-detail{
+            .p-dialog-header{
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+            .btn-group-edit-detail{
+                // right: 52px !important;
+                // top: 22px !important;
+                right: 40px !important;
+                top: 16px !important;
+            }
+        }
+    }
+}
