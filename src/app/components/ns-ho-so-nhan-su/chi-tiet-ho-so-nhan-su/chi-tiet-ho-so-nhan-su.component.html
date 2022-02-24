@@ -1,5 +1,5 @@
 
-<div class="main-grid product-detail">
+<div class="main-grid product-detail chi-tiet-ho-so-nhan-su">
     <div class="breadcrumb">
         <h3>{{titlePage}}</h3>
         <p-breadcrumb [model]="items"></p-breadcrumb>
@@ -7,7 +7,7 @@
    <div class="content page-detail">
 
     <p-panel>
-        <ng-template pTemplate="header">
+        <ng-template pTemplate="header" styleClass="ffffffffffff">
             <div class="col-md-6"> {{detailMenu.name}} [{{detailInfo?.fullName}}]</div>
             <div class="col-md-6 text-right"> <span [innerHTML]="detailInfo?.emp_status"></span>
             </div>
@@ -81,9 +81,9 @@
                                         </div>
                                     </div>
                                 </ng-template>
-                                <app-list-grid-angular  [domLayout]="'autoHeight'" [title]="'Danh sách liên hệ'" *ngIf="listsData[0].length > 0"
-                                    [listsData]="listsData[0]"  (FnClick)="OnClick($event)"
-                                    [columnDefs]="columnDefs[0]"></app-list-grid-angular>
+                                    <app-list-grid-angular  [domLayout]="'autoHeight'" [title]="'Danh sách liên hệ'" *ngIf="listsData[0].length > 0"
+                                        [listsData]="listsData[0]"  (FnClick)="OnClick($event)"
+                                        [columnDefs]="columnDefs[0]"></app-list-grid-angular>
                             </p-card>
                         </div>
                     </div>
@@ -294,7 +294,7 @@
         </div>
     </p-panel>
 
-    <p-dialog header="{{titleForm.title}}" [(visible)]="displayDialog" [modal]="true" [draggable]="false"
+    <p-dialog styleClass="popup-btngroup-edit-detail" header="{{titleForm.title}}" [(visible)]="displayDialog" [modal]="true" [draggable]="false"
     [resizable]="false" [style]="{width: '60vw'}" [autoZIndex]=true [draggable]="false" [resizable]="false">
     <app-edit-detail
         *ngIf="listViewsForm.length> 0 && displayDialog &&  (titleForm.type === 'DuyetHoSo' || titleForm.type === 'TuyenDungLai' || titleForm.type === 'ChuyenCongTac')"
@@ -303,43 +303,51 @@
     <!-- <p-selectButton [options]="optionsButtonsSave"
         *ngIf="titleForm.type === 'HuyHoSo' || titleForm.type === 'MoLaiHoSo' || titleForm.type === 'NghiViec'"
         optionLabel="label" optionValue="value" (onChange)="onChangeButtonSave($event)"></p-selectButton> -->
-    <div class="row col-md-12 mt-1 select-default"  *ngIf="titleForm.type === 'NghiViec'">
-        <label for="">Lý do</label>
-        <p-dropdown [autoZIndex]="true" [autoDisplayFirst]="false" [style]="{'width': '100%'}" [options]="terminateReasons"
-        [(ngModel)]="modelDuyet.reason_id" name="reason_id">
-        <ng-template let-item pTemplate="selectedItem">
-            <span style="vertical-align:middle; margin-left: .5em">{{item.name}}</span>
-        </ng-template>
-        <ng-template let-car pTemplate="item">
-            <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                <div style="font-size:14px;float:right;margin-top:4px">{{car.name}}</div>
+        <div class="col-md-6 mt-1">
+            <div class="field-group text" [ngClass]=" modelDuyet.full_name ? 'valid' : 'invalid' ">
+                <input type="text" [value]="modelDuyet.full_name || 'No name'" disabled name="full_name" class="form-control">
+                <label for="">Nhân viên</label>
             </div>
-        </ng-template>
-        </p-dropdown>
-    </div>
-    <div class="row col-md-12 mt-1 input-group">
-        <label for="">Nhân viên</label>
-        <input type="text" [value]="modelDuyet.full_name || 'No name'" disabled name="full_name" class="form-control">
-    </div>
-    <div class="row col-md-12 mt-1  input-group">
-        <label for="">Ngày xác nhận</label>
-        <p-calendar placeholder="DD/MM/YYYY" appendTo="body" [baseZIndex]="101" [(ngModel)]="modelDuyet.workDt"
-            [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" inputId="navigators"
-            dateFormat="dd/mm/yy" name="workDt"></p-calendar>
-    </div>
-    <div class="row col-md-12 mt-1 input-group" *ngIf="titleForm.type === 'NghiViec'">
-        <label for="">Ngày chốt nghỉ</label>
-        <p-calendar placeholder="DD/MM/YYYY" appendTo="body" [baseZIndex]="101" [(ngModel)]="modelDuyet.exprire_date"
-            [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" inputId="navigators"
-            dateFormat="dd/mm/yy" name="exprire_date"></p-calendar>
-    </div>
-    <div class="row col-md-12 mt-1">
-        <div class="textarea-default">
-            <label for="">Ghi chú</label>
-            <textarea [(ngModel)]="modelDuyet.comments" name="comments" cols="30" rows="10" class="form-control"></textarea>
         </div>
-    </div>
-    <div class="row col-md-12 mt-1 text-right"  *ngIf="titleForm.type === 'HuyHoSo' || titleForm.type === 'MoLaiHoSo' || titleForm.type === 'NghiViec'">
+        <div class="col-md-6 mt-1"  *ngIf="titleForm.type === 'NghiViec'">
+            <div class="field-group select" [ngClass]=" modelDuyet.reason_id? 'valid' : 'invalid' ">
+                <p-dropdown [autoZIndex]="true" [autoDisplayFirst]="false" [style]="{'width': '100%'}" [options]="terminateReasons"
+                [(ngModel)]="modelDuyet.reason_id" name="reason_id">
+                <ng-template let-item pTemplate="selectedItem">
+                    <span style="vertical-align:middle; margin-left: .5em">{{item.name}}</span>
+                </ng-template>
+                <ng-template let-car pTemplate="item">
+                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                        <div style="font-size:14px;float:right;margin-top:4px">{{car.name}}</div>
+                    </div>
+                </ng-template>
+                </p-dropdown>
+                <label for="">Lý do</label>
+            </div>
+        </div>
+        <div class="col-md-6 mt-1 ">
+            <div class="field-group date">
+                <label for="">Ngày xác nhận</label>
+                <p-calendar placeholder="DD/MM/YYYY" appendTo="body" [baseZIndex]="101" [(ngModel)]="modelDuyet.workDt"
+                    [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" inputId="navigators"
+                    dateFormat="dd/mm/yy" name="workDt"></p-calendar>
+            </div>
+        </div>
+        <div class="col-md-6 mt-1" *ngIf="titleForm.type === 'NghiViec'">
+            <div class="field-group date">
+                <label for="">Ngày chốt nghỉ</label>
+                <p-calendar placeholder="DD/MM/YYYY" appendTo="body" [baseZIndex]="101" [(ngModel)]="modelDuyet.exprire_date"
+                    [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" inputId="navigators"
+                    dateFormat="dd/mm/yy" name="exprire_date"></p-calendar>
+            </div>
+        </div>
+            <div class="col-md-12 mt-1">
+                <div class="field-group textarea">
+                    <label for="">Ghi chú</label>
+                    <textarea [(ngModel)]="modelDuyet.comments" name="comments" cols="30" rows="10" class="form-control"></textarea>
+                </div>
+            </div>
+    <div class="col-md-12 mt-1 text-right"  *ngIf="titleForm.type === 'HuyHoSo' || titleForm.type === 'MoLaiHoSo' || titleForm.type === 'NghiViec'">
         <p-button label="Hủy" (click)="onChangeButtonSave('Back')" icon="pi pi-times" styleClass="p-button-sm p-button-secondary mr-1"></p-button>
         <p-button label="Lưu lại" (click)="onChangeButtonSave('Save')" icon="pi pi-check" styleClass="p-button-sm "></p-button>
     </div>
@@ -390,13 +398,13 @@
     </ng-template>
 </p-dialog>
 
-<p-dialog header="{{modelContractInfo.contract_id === 0 ? ' Tạo hợp đồng': 'Thông tin chi tiết hợp đồng'}}" [(visible)]="hienthihopdong" [modal]="true"  [draggable]="false" [resizable]="false"
+<p-dialog styleClass="popup-btngroup-edit-detail" header="{{modelContractInfo.contract_id === 0 ? ' Tạo hợp đồng': 'Thông tin chi tiết hợp đồng'}}" [(visible)]="hienthihopdong" [modal]="true"  [draggable]="false" [resizable]="false"
     [style]="{width: '80vw'}" [autoZIndex]=true [draggable]="false" [resizable]="false">
     <app-create-contract-info *ngIf="hienthihopdong" [modelContractInfo]="modelContractInfo"
         (callback)="emitContract($event)" (back)="hienthihopdong = !hienthihopdong"></app-create-contract-info>
 </p-dialog>
 
-<p-dialog header="{{modelAttach.meta_id > 0 ? 'Xem chi tiết file đính kèm' : 'Thêm file đính kèm'}}" [(visible)]="displayAttach" [modal]="true" [draggable]="false" [resizable]="false"
+<p-dialog styleClass="popup-btngroup-edit-detail" header="{{modelAttach.meta_id > 0 ? 'Xem chi tiết file đính kèm' : 'Thêm file đính kèm'}}" [(visible)]="displayAttach" [modal]="true" [draggable]="false" [resizable]="false"
     [style]="{width: '600px'}" [autoZIndex]=true [draggable]="false" [resizable]="false">
 
     <app-emp-attach-file *ngIf="displayAttach" [modelAttach]="modelAttach" (callback)="emitAttach($event)"
@@ -426,7 +434,7 @@
     <app-add-address-contact *ngIf="isShowAddress" [thongtinlienhe]="thongtinlienhe" (back)="reloaddanhsachlienhe()"></app-add-address-contact>
 </p-dialog>
 
-<p-dialog [(visible)]="displayFormEditDetail" [draggable]="false"  [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '1200px', height: 'auto'}">
+<p-dialog styleClass="popup-btngroup-edit-detail" [(visible)]="displayFormEditDetail" [draggable]="false"  [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '1200px', height: 'auto'}">
     <p-header>
         {{titleType0}}
     </p-header>
@@ -455,12 +463,10 @@
     <p-header>
       {{keyName === '' ? 'Thêm mới' : 'Chỉnh sửa'}}  tài khoản login
     </p-header>
-    <div class="row">
-        <div class="input-group">
-            <label for="">Tên tài khoản</label>
-            <input class="form-control" type="text"
-            placeholder="Nhập tên user" id="filter" name="filter" [(ngModel)]="keyName" />
-        </div>
+    <div class="field-group text label-8" [ngClass]=" keyName ? 'valid' : 'invalid' ">
+        <input class="form-control" type="text"
+        placeholder="Nhập tên user" id="filter" name="filter" [(ngModel)]="keyName" />
+        <label for="">Tên tài khoản</label>
     </div>
     <div class="row mt-1">
        <div class="col-md-6"></div>

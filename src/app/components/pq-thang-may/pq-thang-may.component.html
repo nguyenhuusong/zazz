@@ -5,16 +5,16 @@
             <p-breadcrumb [model]="itemsBreadcrumb"></p-breadcrumb>
         </div>
         <div class="table-tool grid white-background black-box-shadow-005 filterInput mt-2">
-            <div class="header-filter-search col-4 ">
-                <div class="input-group">
-                    <p-autoComplete [(ngModel)]="key_car" name="key_car" placeholder="Nhập mã thẻ để tìm kiếm" [suggestions]="listCars" (onSelect)="selectedItem1($event)"
-                    (completeMethod)="getCardCustomers($event)" field="fullNameAndCar"></p-autoComplete>  
-                  
+            <div class="header-filter-search col-3">
+                <div class="field-group text mb-0 " [ngClass]="key_car ? 'valid' : 'invalid' ">
+                    <p-autoComplete [(ngModel)]="key_car" name="key_car" [suggestions]="listCars" (onSelect)="selectedItem1($event)"
+                    (completeMethod)="getCardCustomers($event)" field="fullNameAndCar"></p-autoComplete>
+                    <label>Nhập mã thẻ để tìm kiếm</label> 
                 </div>
                 <div class="input-group-append dropdown">
                 </div>
             </div>
-            <div class="col-8 tools">
+            <div class="col-9 tools">
                 <p-button  (click)="menuButton.toggle($event)" label="Quản lý" icon="pi pi-cog" styleClass="p-button-sm mr5"></p-button>
                 <p-menu [model]="menuItem" [appendTo]="'body'" [popup]="true" #menuButton></p-menu>
             </div>
@@ -98,18 +98,18 @@
         <p-card header="Kiểm tra quyền">
             <div class="row" style="margin-top: 10px;">
                 <div class="col-xl-3 col-lg-2 col-md-3 mb-1">
-                  <div class="select-default">
-                    <label for="status">Dự án</label>
+                  <div class="field-group select label-8" [ngClass]="modelElevator.projectCd ? 'valid' : 'invalid' ">
                     <select class="form-control" (change)="getBuidingsSearch();load1()" name="projectCd"
                       [(ngModel)]="modelElevator.projectCd" id="projectCd" #projectCd="ngModel">
                       <option value="">Chọn dự án</option>
                       <option *ngFor="let advert of projects; let i = index" value="{{advert.projectCd}}">
                         {{advert.projectName}} </option>
                     </select>
+                    <label for="status">Dự án</label>
                   </div>
                 </div>
                 <div class="col-xl-3 col-lg-2 col-md-3 mb-1">
-                  <div class="select-default">
+                  <div class="field-group select label-8" [ngClass]="modelElevator.buildCd ? 'valid' : 'invalid' ">
                     <label for="status">Tòa</label>
                     <select class="form-control" (change)="getBuildingZones($event);load1()" name="buildCd"
                       [(ngModel)]="modelElevator.buildCd" id="buildCd" #buildCd="ngModel">
@@ -121,7 +121,7 @@
                   </div>
                 </div>
                 <div class="col-xl-3 col-lg-2 col-md-3 mb-1">
-                  <div class="select-default">
+                  <div class="field-group select label-8" [ngClass]="modelElevator.buildZone ? 'valid' : 'invalid' ">
                     <label for="status">Khu vực</label>
                     <select class="form-control" name="buildZone" (change)="getFloors($event);load1()"
                       [(ngModel)]="modelElevator.buildZone" id="buildZone" #buildZone="ngModel">
@@ -132,7 +132,7 @@
                   </div>
                 </div>
                 <div class="col-xl-3 col-lg-2 col-md-3 mb-1">
-                  <div class="select-default">
+                  <div class="field-group select label-8" [ngClass]="modelElevator.floorNumber ? 'valid' : 'invalid' ">
                     <label for="status">Tầng</label>
                     <select class="form-control" (change)="getHardware();load1()" name="floor"
                       [(ngModel)]="modelElevator.floorNumber" id="floor" #floor="ngModel">
@@ -143,7 +143,7 @@
                   </div>
                 </div>
                 <div class="col-xl-3 col-lg-2 col-md-3 mb-1">
-                  <div class="select-default">
+                  <div class="field-group select label-8" [ngClass]="modelElevator.hardwareId ? 'valid' : 'invalid' ">
                     <label for="status">Thiết bị</label>
                     <select class="form-control" name="hardwareId" (change)="load1()"
                       [(ngModel)]="modelElevator.hardwareId" id="hardwareId" #hardwareId="ngModel">
@@ -155,11 +155,10 @@
                 </div>
                 <div class="col-xl-1 col-lg-2 col-md-12 ssg-btn-search">
                   <div class="group-btns">
-                    <label style="visibility: hidden;">fff</label>
-                    <button type="button" (click)="load1()" class="btn btn-primary mr-2">
+                    <button type="button" (click)="load1()" class="btn btn-primary mr-2 btn-56-56">
                       <i _ngcontent-c4="" class="fa fa-search"></i>
                     </button>
-                    <button type="button" (click)="cancelTestdevices()" class="btn btn-default">
+                    <button type="button" (click)="cancelTestdevices()" class="btn btn-default btn-56-56">
                       <i _ngcontent-c4="" class="fa fa-repeat"></i>
                     </button>
                   </div>

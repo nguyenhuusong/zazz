@@ -9,18 +9,20 @@ import * as numeral from 'numeral';
 
 @Component({
   selector: 'app-type-text',
-  template: ` <div class="input-group">
-                <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="modelFields[element.field_name].isRequire">*</span></label>
-                <div>
-                <input type="text" class="form-control" [(ngModel)]="element.columnValue" (change)="onChangeValue($event.target, element.field_name)"
-                name={{element.field_name}} [disabled]="element.isDisable"
-                [required]="element.isRequire && element.isVisiable && !element.isEmpty">
-                <div *ngIf="modelFields[element.field_name].isRequire && submit && modelFields[element.field_name].error"
-                    class="alert-validation alert-danger">
-                    <div [hidden]="!modelFields[element.field_name].error">
-                    {{modelFields[element.field_name].message}}
-                    </div>
-                    </div>
+  template: ` <div class="field-group text" [ngClass]=" element.columnValue ? 'valid' : 'invalid' ">
+                  <input type="text" class="form-control" [(ngModel)]="element.columnValue" (change)="onChangeValue($event.target, element.field_name)"
+                  name={{element.field_name}} [disabled]="element.isDisable"
+                  (focus)="foucusIn($event)"
+                  (focusout)="foucusOut($event)"
+                  [required]="element.isRequire && element.isVisiable && !element.isEmpty">
+                  <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="modelFields[element.field_name].isRequire">*</span></label>
+                  <div *ngIf="modelFields[element.field_name].isRequire && submit && modelFields[element.field_name].error"
+                      class="alert-validation alert-danger">
+                      <div [hidden]="!modelFields[element.field_name].error">
+                        {{modelFields[element.field_name].message}}
+                      </div>
+                  </div>
+                </div>
                 `,
 })
 export class AppTypeTextComponent implements OnInit {
@@ -35,6 +37,14 @@ export class AppTypeTextComponent implements OnInit {
   onChangeValue(value, field_name) {
     this.modelFields[field_name].error = false;
   }
+
+  foucusOut(e){
+
+  }
+
+  foucusIn(e){
+    
+  }
 }
 
 // select
@@ -42,31 +52,28 @@ export class AppTypeTextComponent implements OnInit {
 @Component({
   selector: 'app-type-select',
   template: `   
-    <div class="select-default">
-          <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
-          <div>
-          <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"  [filterBy]="'label'"
-            [disabled]="element.isDisable" [options]="element.options"
-            [required]="element.isRequire && element.isVisiable && !element.isEmpty" [(ngModel)]="element.columnValue"
-            name={{element.field_name}}>
-            <ng-template let-item pTemplate="selectedItem">
-              <span style="vertical-align:middle;">{{item.label}}</span>
-            </ng-template>
-            <ng-template let-car pTemplate="item">
-              <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                <div style="font-size:14px;float:left;margin-top:4px">{{car.label}}</div>
-              </div>
-            </ng-template>
-          </p-dropdown>
-
-          <div *ngIf="element.isRequire && submit && !element.columnValue"
-              class="alert-validation alert-danger">
-              <div [hidden]="element.columnValue">
-              Trường bắt buộc nhập!
-              </div>
+          <div class="field-group select" [ngClass]=" element.columnValue ? 'valid' : 'invalid' ">
+            <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"  [filterBy]="'label'"
+              [disabled]="element.isDisable" [options]="element.options"
+              [required]="element.isRequire && element.isVisiable && !element.isEmpty" [(ngModel)]="element.columnValue"
+              name={{element.field_name}}>
+              <ng-template let-item pTemplate="selectedItem">
+                <span style="vertical-align:middle;">{{item.label}}</span>
+              </ng-template>
+              <ng-template let-car pTemplate="item">
+                <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                  <div style="font-size:14px;float:left;margin-top:4px">{{car.label}}</div>
+                </div>
+              </ng-template>
+            </p-dropdown>
+            <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
+            <div *ngIf="element.isRequire && submit && !element.columnValue"
+                class="alert-validation alert-danger">
+                <div [hidden]="element.columnValue">
+                  Trường bắt buộc nhập!
+                </div>
+            </div>
           </div>
-        </div>
-        </div>
                 `,
 })
 export class AppTypeSelectComponent implements OnInit {
@@ -90,17 +97,15 @@ export class AppTypeSelectComponent implements OnInit {
 @Component({
   selector: 'app-type-selectTree',
   template: `  
-    <div class="select-default"> 
-      <label class="text-nowrap label-tex" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
-      <div> 
+    <div class="field-group select treeselect" [ngClass]=" element.columnValue ? 'valid' : 'invalid' "> 
       <p-treeSelect [(ngModel)]="element.columnValue" [options]="element.options" [required]="element.isRequire && element.isVisiable && !element.isEmpty" (onNodeSelect)="onChangeTree($event, element.field_name)" [disabled]="element.isDisable" selectionMode="single"  placeholder="Select Item"></p-treeSelect>
       <div *ngIf="element.isRequire && submit && !element.columnValue"
           class="alert-validation alert-danger">
           <div [hidden]="element.columnValue">
-          Trường bắt buộc nhập!
+            Trường bắt buộc nhập!
           </div>
       </div>
-    </div>
+      <label class="text-nowrap label-tex" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
     </div>
                 `,
 })
@@ -157,9 +162,7 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
 @Component({
   selector: 'app-type-dropdown',
   template: `   
-          <div class="select-default">
-                <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
-                <div>
+          <div class="field-group select" [ngClass]=" element.columnValue ? 'valid' : 'invalid' ">
                 <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
                   [disabled]="element.isDisable" [options]="element.options" (onChange)="onChangeValue($event.value, element.field_name)" [filterBy]="'label'"
                   [required]="element.isRequire && element.isVisiable && !element.isEmpty" [(ngModel)]="element.columnValue"
@@ -173,12 +176,12 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
                     </div>
                   </ng-template>
                 </p-dropdown>
+                <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
                 <div *ngIf="modelFields[element.field_name].isRequire && submit && modelFields[element.field_name].error"
-                class="alert-validation alert-danger">
-                <div [hidden]="!modelFields[element.field_name].error">
-                {{modelFields[element.field_name].message}}
+                  class="alert-validation alert-danger">
+                  <div [hidden]="!modelFields[element.field_name].error">
+                  {{modelFields[element.field_name].message}}
                 </div>
-            </div>
             </div>
                 `,
 })
@@ -349,21 +352,18 @@ export class AppTypeNumberComponent implements OnInit {
 
 @Component({
   selector: 'app-type-currency',
-  template: `   <div class="input-group">
-                <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
-                <div>
+  template: `   <div class="field-group text" [ngClass]=" element.columnValue ? 'valid' : 'invalid' ">
                   <input maxLength=18 type="text" (change)="changePrice($event)"
                   class="form-control" [(ngModel)]="element.columnValue" currency name={{element.field_name}}
                   [disabled]="element.isDisable" [required]="element.isRequire && element.isVisiable && !element.isEmpty">
+                  <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
 
-                <div *ngIf="element.isRequire && submit && !element.columnValue"
+                  <div *ngIf="element.isRequire && submit && !element.columnValue"
                     class="alert-validation alert-danger">
                     <div [hidden]="element.columnValue">
                     Trường bắt buộc nhập!
-                    </div>
-                </div>
-            </div>
-            </div>
+                  </div>
+              </div>
                 `,
 })
 
@@ -425,12 +425,11 @@ export class AppTypeCheckboxComponent implements OnInit {
 @Component({
   selector: 'app-type-textarea',
   template: `   
-    <div class="textarea-default">
-                <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
-                <div>
+              <div class="field-group textarea">
                   <textarea type="text" placeholder="" class="form-control"
                   [(ngModel)]="element.columnValue" name={{element.field_name}} [disabled]="element.isDisable"
                   [required]="element.isRequire && element.isVisiable && !element.isEmpty"></textarea>
+                  <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
 
                 <div *ngIf="element.isRequire && submit && !element.columnValue"
                     class="alert-validation alert-danger">
@@ -438,7 +437,6 @@ export class AppTypeCheckboxComponent implements OnInit {
                     Trường bắt buộc nhập!
                     </div>
                 </div>
-            </div>
             </div>
                 `,
 })
@@ -461,21 +459,19 @@ export class AppTypeTextareaComponent implements OnInit {
 @Component({
   selector: 'app-type-datetime',
   template: `   
-  <div class="input-group">
-                <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
-                <div>
+  <div class="field-group date" [ngClass]=" element.columnValue ? 'valid' : 'invalid' ">
                   <p-calendar placeholder="DD/MM/YYYY" appendTo="body" [baseZIndex]="101" [disabled]="element.isDisable"
                   [(ngModel)]="element.columnValue" [monthNavigator]="true" [yearNavigator]="true"
                   yearRange="2000:2030" inputId="navigators" [required]="element.isRequire && element.isVisiable && !element.isEmpty"
                   dateFormat="dd/mm/yy" name={{element.field_name}}></p-calendar>
+                  <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
 
                 <div *ngIf="element.isRequire && submit && !element.columnValue"
                     class="alert-validation alert-danger">
                     <div [hidden]="element.columnValue">
-                    Trường bắt buộc nhập!
+                      Trường bắt buộc nhập!
                     </div>
                 </div>
-            </div>
             </div>
                 `,
 })
@@ -572,20 +568,18 @@ export class AppTypeTimeonlyComponent implements OnInit {
 
 @Component({
   selector: 'app-type-multiSelect',
-  template: `   <div class="select-default">
-                <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
-                <div>
+  template: `   <div class="field-group multi-select">
                   <p-multiSelect [options]="element.options" [(ngModel)]="element.columnValue" (onChange)="onChangeValue($event.value, element.field_name)"
                   name={{element.field_name}} defaultLabel="Select a option" optionLabel="name" display="chip">
                 </p-multiSelect>
+                <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
 
                 <div *ngIf="modelFields[element.field_name].isRequire && submit && modelFields[element.field_name].error"
-                class="alert-validation alert-danger">
-                <div [hidden]="!modelFields[element.field_name].error">
-                {{modelFields[element.field_name].message}}
+                    class="alert-validation alert-danger">
+                      <div [hidden]="!modelFields[element.field_name].error">
+                        {{modelFields[element.field_name].message}}
+                      </div>
                 </div>
-            </div>
-            </div>
             </div>
                 `,
 })
@@ -735,23 +729,23 @@ export class AppTypeCheckboxRadioListComponent implements OnInit {
 @Component({
   selector: 'app-type-linkurl',
   template: `   
-            <div class="input-group">
-                  <label  class="text-nowrap label-text" >{{element.columnLabel}}</label>
-                  <div>
-                  <div style="display: flex" *ngIf="this.element.columnValue"><input type="text" class="form-control" (change)="setvalueImage($event)" [value]="this.element.columnValue">
-                  <button pButton pRipple type="button" (click)="removeAttach()" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-text"></button></div>
-                  <div *ngIf="!this.element.columnValue" class="upload_file"><input class="" type="file"  accept="image/*" (change)="onUploadOutputImage($event)" ></div>
+            <div class="field-group attach-file">
+                    <div style="display: flex" *ngIf="this.element.columnValue">
+                      <input type="text" class="form-control" (change)="setvalueImage($event)" [value]="this.element.columnValue">
+                      <button pButton pRipple type="button" (click)="removeAttach()" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-text"></button>
+                    </div>
+                    <label  class="text-nowrap label-text" >{{element.columnLabel}}</label>
+                    <div *ngIf="!this.element.columnValue" class="upload_file"><input class="" type="file"  accept="image/*" (change)="onUploadOutputImage($event)" ></div>
                     <input type="file" style="display: none" id="sign_second" name="sign_second"  accept="image/jpeg,image/png,image/jpg,image/gif" (change)="onUploadOutputImage($event)">
-                  <div *ngIf="element.isRequire && submit && !element.columnValue"
-                      class="alert-validation alert-danger">
-                      <div [hidden]="element.columnValue">
-                      Trường bắt buộc nhập!
-                      </div>
-                  </div>
-                  <div *ngIf="this.element.columnValue">
-                  <p-image  src="{{this.element.columnValue}}" alt="Image" width="250" [preview]="true"></p-image>
-                  </div>
-                </div>
+                    <div *ngIf="element.isRequire && submit && !element.columnValue"
+                        class="alert-validation alert-danger">
+                        <div [hidden]="element.columnValue">
+                          Trường bắt buộc nhập!
+                        </div>
+                    </div>
+                    <div *ngIf="this.element.columnValue">
+                    <p-image  src="{{this.element.columnValue}}" alt="Image" width="250" [preview]="true"></p-image>
+                    </div>
                 </div>
                 `,
 })
