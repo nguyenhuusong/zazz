@@ -57,6 +57,9 @@ export class BaoCaoComponent implements OnInit {
               if (element.param_cd === 'companyId') {
                 this.getCompanyList(element);
               }
+              if (element.param_cd === 'typeBM') {
+                this.getObjectList(element);
+              }
             }
           });
         }
@@ -74,6 +77,21 @@ export class BaoCaoComponent implements OnInit {
           return {
             label: `${res.companyName}`,
             value: `${res.companyId}`
+          };
+        });
+        element1[element1.param_cd] = element1.param_default;
+      }
+    });
+  }
+
+  getObjectList(element1: any): void {
+    const queryParams = queryString.stringify({ objKey: 'object_bm_st' });
+    this.apiService.getCustObjectListNew(false,queryParams).subscribe(results => {
+      if (results.status === 'success') {
+        element1.options = results.data.map(res => {
+          return {
+            label: `${res.objName}`,
+            value: `${res.objValue}`
           };
         });
         element1[element1.param_cd] = element1.param_default;

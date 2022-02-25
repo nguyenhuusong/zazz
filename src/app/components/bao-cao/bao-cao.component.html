@@ -13,7 +13,7 @@
                   <div class="col-md-6 mt-3 select-default">
                     <label for="">Loại báo cáo</label>
                     <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" [options]="listReports"
-                      [(ngModel)]="query.report_type" name="report_type" [filter]="true">
+                      [(ngModel)]="query.report_type" name="report_type" [filter]="true" >
                       <ng-template let-item pTemplate="selectedItem">
                         <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
                       </ng-template>
