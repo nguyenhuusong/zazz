@@ -257,6 +257,7 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
             value: `${d.org_id}`
           }
         });
+        this.orgRoots = [{label: 'Tất cả', value: null}, ...this.orgRoots]
       }
     })
   }

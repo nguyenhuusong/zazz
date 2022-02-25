@@ -6,27 +6,55 @@
             <h3>Danh sách hợp đồng</h3>
             <p-breadcrumb [model]="items"></p-breadcrumb>
         </div>
-        <div class="table-tool grid white-background black-box-shadow-005 filterInput justify-content-start">
-            <div class="header-filter-search col-4">
-                <div class="field-group text search" [ngClass]="query.filter ? 'valid' : 'invalid' ">
-                    <input class="input-default" type="text" id="filter"
+
+        <div class="table-tool grid white-background black-box-shadow-005 filterInput">
+            <div class="header-filter-search col-4 ">
+                <div class="field-group text search multi-field" [ngClass]="query.filter ? 'valid' : 'invalid' ">
+                    <input class="input-default" type="text"id="filter"
                     (keydown.enter)="query.offSet = 0; first = 0;load()"
                         [(ngModel)]="query.filter">
                         <label>Mã, tên nhóm</label>
                         <svg class="placeholder-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M10.1305 11.2619C9.28558 11.8771 8.24518 12.24 7.12002 12.24C4.29231 12.24 2 9.94772 2 7.12002C2 4.29231 4.29231 2 7.12002 2C9.94772 2 12.24 4.29231 12.24 7.12002C12.24 8.24518 11.8771 9.28558 11.2619 10.1305L13.7657 12.6343C14.0781 12.9467 14.0781 13.4533 13.7657 13.7657C13.4533 14.0781 12.9467 14.0781 12.6343 13.7657L10.1305 11.2619ZM11.28 7.12002C11.28 9.41753 9.41753 11.28 7.12002 11.28C4.8225 11.28 2.96 9.41753 2.96 7.12002C2.96 4.8225 4.8225 2.96 7.12002 2.96C9.41753 2.96 11.28 4.8225 11.28 7.12002Z" fill="#808AA6"/>
                         </svg>
+                        <svg class="placeholder-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M10.1305 11.2619C9.28558 11.8771 8.24518 12.24 7.12002 12.24C4.29231 12.24 2 9.94772 2 7.12002C2 4.29231 4.29231 2 7.12002 2C9.94772 2 12.24 4.29231 12.24 7.12002C12.24 8.24518 11.8771 9.28558 11.2619 10.1305L13.7657 12.6343C14.0781 12.9467 14.0781 13.4533 13.7657 13.7657C13.4533 14.0781 12.9467 14.0781 12.6343 13.7657L10.1305 11.2619ZM11.28 7.12002C11.28 9.41753 9.41753 11.28 7.12002 11.28C4.8225 11.28 2.96 9.41753 2.96 7.12002C2.96 4.8225 4.8225 2.96 7.12002 2.96C9.41753 2.96 11.28 4.8225 11.28 7.12002Z" fill="#808AA6"/>
+                        </svg>
                         <i id="icon-search" class="pi pi-angle-down"></i>
-                        <p-button class="search-button" icon="pi pi-search" (click)="query.offSet = 0; first = 0; load()"></p-button>
-                        <p-button class="search-button" icon="pi pi-refresh" (click)="cancel()" styleClass="btn-reload p-button-secondary p-button-sm"></p-button>
+                        <!-- <p-button class="search-button" icon="pi pi-search" (click)="query.offSet = 0; first = 0; load()"></p-button>
+                        <p-button class="search-button" icon="pi pi-refresh" (click)="cancel()" styleClass="btn-reload p-button-secondary p-button-sm"></p-button> -->
                 </div>
                 <div class="input-group-append dropdown">
                 </div>
             </div>
-            <div class="col-8 tools">
+            <div class="col-4" > 
+                <div class="field-group select label-8">
+                    <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
+                    [options]="listOrgRoots" [(ngModel)]="query.org_cd" name="org_cd" (onChange)="find()">
+                    <ng-template let-item pTemplate="selectedItem">
+                        <span>{{item.label}}</span>
+                    </ng-template>
+                    <ng-template let-car pTemplate="item">
+                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                            <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+                <label  for=""> Tổ chức: </label>
+               
+                </div>
+            </div>
+            <div class="col-2">
+                <p-button class="search-button ml-1 mr-3" styleClass=" btn-56-56" icon="pi pi-search" (click)="query.offSet = 0; first = 0; load()"></p-button>
+                <p-button class="btn-56-56" icon="pi pi-refresh" (click)="cancel()" styleClass="p-button-secondary p-button-sm btn-56-56"></p-button>
+            </div>
+           
+            <div class="col-2 tools">
                  <p-button styleClass="p-button-sm mr-1" icon="pi pi-plus" label="Thêm mới" (click)="addHopDong()"></p-button>
             </div>
+           
         </div>
+ 
         <div class="grid-default" #container>
             <app-list-grid-angular  *ngIf="columnDefs.length > 0"
                 [listsData]="listsData" [height]="heightGrid"

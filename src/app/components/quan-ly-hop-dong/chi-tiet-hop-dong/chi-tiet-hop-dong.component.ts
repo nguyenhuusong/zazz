@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { cloneDeep } from 'lodash';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
+import { AgGridFn } from 'src/app/common/function-common/common';
 
 @Component({
   selector: 'app-chi-tiet-hop-dong',
@@ -63,17 +64,67 @@ export class ChiTietHopDongComponent implements OnInit, OnChanges {
       this.getContractTypeInfo();
     });
   };
-
+  listsData = [];
+  columnDefs = [];
   detailInfo = null;
   getContractTypeInfo() {
     this.listViews = [];
+    this.columnDefs = [];
     const queryParams = queryString.stringify({contractType: this.contractType});
     this.apiService.getContractTypeInfo(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.listViews = cloneDeep(results.data.group_fields);
         this.detailInfo = results.data;
+        this.listsData = cloneDeep(this.detailInfo.metafiles);
+        this.columnDefs = [...AgGridFn(this.detailInfo.gridflexdetails1 || []),
+        {
+          headerName: 'Thao tác',
+          filter: '',
+          width: 100,
+          pinned: 'right',
+          cellRenderer: 'buttonAgGridComponent',
+          cellClass: ['border-right', 'no-auto'],
+          cellRendererParams: (params: any) => this.showButtons(params),
+          checkboxSelection: false,
+          field: 'checkbox'
+        }];
       }
     })
+  }
+
+  showButtons(event: any) {
+    return {
+      buttons: [
+        {
+          onClick: this.ViewContract.bind(this),
+          label: 'Xem file',
+          icon: 'fa fa-eye',
+          class: 'btn-primary mr5',
+        },
+        {
+          onClick: this.DowloadFileDemo.bind(this),
+          label: 'DowloadFile',
+          icon: 'pi pi-trash',
+          class: 'btn-primary mr5',
+        },
+      ]
+    };
+  }
+
+  ViewContract(event) {
+    this.downloadButtonClicked(event.rowData.temp_view_url);
+  }
+
+  DowloadFileDemo(event) {
+    this.downloadButtonClicked(event.rowData.temp_download_url);
+  }
+
+  downloadButtonClicked(urlLink) {
+    var url = urlLink;
+    var elem = document.createElement('a');
+    elem.href = url;
+    elem.target = 'hiddenIframe';
+    elem.click();
   }
 
   handleChange(index) {

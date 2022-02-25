@@ -73,7 +73,8 @@ export class QuanLyHopDongComponent implements OnInit {
   query = {
     filter: '',
     offSet: 0,
-    pageSize: 15
+    pageSize: 15,
+    org_cd: null
   }
   totalRecord = 0;
   DriverId = 0;
@@ -93,7 +94,8 @@ export class QuanLyHopDongComponent implements OnInit {
     this.query = {
       filter: '',
       offSet: 0,
-      pageSize: 15
+      pageSize: 15,
+      org_cd: null
     }
     this.load();
   }
@@ -119,6 +121,21 @@ export class QuanLyHopDongComponent implements OnInit {
   }
 
   listsData = [];
+  listOrgRoots = [];
+  getOrgRoots() {
+    this.apiService.getOrgRoots().subscribe(results => {
+      if (results.status === 'success') {
+        this.listOrgRoots = results.data.map(d => {
+          return {
+            label: d.org_name + '-' + d.org_cd,
+            value: `${d.org_cd}`
+          }
+        });
+
+        this.listOrgRoots = [{ label: 'Tất cả', value: null }, ...this.listOrgRoots];
+      }
+    })
+  }
   load() {
     this.columnDefs = []
     this.spinner.show();
@@ -230,6 +247,7 @@ export class QuanLyHopDongComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getOrgRoots();
     this.items = [
       { label: 'Trang chủ' , url: '/home' },
       { label: 'Cài đặt' },
