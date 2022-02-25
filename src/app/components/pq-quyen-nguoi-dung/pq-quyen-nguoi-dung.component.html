@@ -5,17 +5,21 @@
             <p-breadcrumb [model]="items"></p-breadcrumb>
         </div>
         <div class="table-tool grid white-background black-box-shadow-005 filterInput">
-            <div class="header-filter-search col-4 ">
-                <div class="field-group text search mb-0" [ngClass]=" query.filter ? 'valid' : 'invalid' ">
+            <div class="header-filter-search col-4">
+                <div class="field-group search text">
                     <input class="input-default" type="text" id="filter"
-                        (keydown.enter)="query.offSet = 0; first = 0; load()"
+                        (keydown.enter)="query.offSet = 0; first = 0;load()"
                         [(ngModel)]="query.filter">
-                    <label>Tên đăng nhập</label>
-                    <!-- <i id="icon-search" class="pi pi-angle-down"></i> -->
-                    <svg class="placeholder-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M10.1305 11.2619C9.28558 11.8771 8.24518 12.24 7.12002 12.24C4.29231 12.24 2 9.94772 2 7.12002C2 4.29231 4.29231 2 7.12002 2C9.94772 2 12.24 4.29231 12.24 7.12002C12.24 8.24518 11.8771 9.28558 11.2619 10.1305L13.7657 12.6343C14.0781 12.9467 14.0781 13.4533 13.7657 13.7657C13.4533 14.0781 12.9467 14.0781 12.6343 13.7657L10.1305 11.2619ZM11.28 7.12002C11.28 9.41753 9.41753 11.28 7.12002 11.28C4.8225 11.28 2.96 9.41753 2.96 7.12002C2.96 4.8225 4.8225 2.96 7.12002 2.96C9.41753 2.96 11.28 4.8225 11.28 7.12002Z" fill="#808AA6"/>
-                    </svg>
-                    <p-button class="search-button" icon="pi pi-search" (click)="query.offSet = 0; first = 0; load()"></p-button>
+                        <svg class="placeholder-icon" width="16" height="16" viewBox="0 0 16 16" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M10.1305 11.2619C9.28558 11.8771 8.24518 12.24 7.12002 12.24C4.29231 12.24 2 9.94772 2 7.12002C2 4.29231 4.29231 2 7.12002 2C9.94772 2 12.24 4.29231 12.24 7.12002C12.24 8.24518 11.8771 9.28558 11.2619 10.1305L13.7657 12.6343C14.0781 12.9467 14.0781 13.4533 13.7657 13.7657C13.4533 14.0781 12.9467 14.0781 12.6343 13.7657L10.1305 11.2619ZM11.28 7.12002C11.28 9.41753 9.41753 11.28 7.12002 11.28C4.8225 11.28 2.96 9.41753 2.96 7.12002C2.96 4.8225 4.8225 2.96 7.12002 2.96C9.41753 2.96 11.28 4.8225 11.28 7.12002Z"
+                                fill="#808AA6" />
+                        </svg>
+                        <label>Tên đăng nhập</label>
+                    <i id="icon-search" class="pi pi-angle-down"></i>
+                    <p-button class="search-button" icon="pi pi-search" (click)="query.offSet = 0; first = 0; load()">
+                    </p-button>
                 </div>
                 <div class="input-group-append dropdown">
                 </div>
@@ -46,27 +50,27 @@
       {{titleForm}}
     </p-header> 
     <div class="col-md-12">
-        <div class="input-group">
+        <div class="field-group text label-8">
+            <input type="text" class="form-control" [value]="chiTietNguoiDUng?.userLogin" name="userLogin" placeholder="Nhập tên đăng nhập">
             <label for="">Tên đăng nhập</label>
-            <input type="text" class="form-control" [value]="chiTietNguoiDUng?.userLogin" name="userLogin" >
         </div>
     </div>
     <div class="col-md-12 mt-1">
-        <div class="input-group">
+        <div class="field-group text label-8">
+            <input type="text" class="form-control" [value]="chiTietNguoiDUng?.fullName" name="fullName" placeholder="Nhập họ và tên">
             <label for="">Họ và tên</label>
-            <input type="text" class="form-control" [value]="chiTietNguoiDUng?.fullName" name="fullName" >
         </div>
     </div>
     <div class="col-md-12  mt-1">
-        <div class="input-group">
+        <div class="field-group text label-8">
+            <input type="text" class="form-control" [value]="chiTietNguoiDUng?.phone" name="phone" placeholder="Nhập số điện thoại">
             <label for="">Số điện thoại</label>
-            <input type="text" class="form-control" [value]="chiTietNguoiDUng?.phone" name="phone" >
         </div>
     </div>
     <div class="col-md-12  mt-1">
-        <div class="input-group">
+        <div class="field-group text label-8">
+            <input type="text" class="form-control" [value]="chiTietNguoiDUng?.email" name="email" placeholder="Nhập thư điện tử">
             <label for="">Thư điện tử</label>
-            <input type="text" class="form-control" [value]="chiTietNguoiDUng?.email" name="email"  >
         </div>
     </div>
     <!-- <div class="col-md-12  mt-1">
@@ -74,12 +78,11 @@
         <input type="text" class="form-control" [value]="chiTietNguoiDUng?.departmentName" name="departmentName"  >
     </div> -->
     <div class="col-md-12  mt-1">
-        <div class="select-default">
-            <label for="">Người quản lý</label>
-                <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
+        <div class="field-group select" [ngClass]="modelAdd.parent_id ? 'valid' : 'invalid' ">
+            <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
                 [options]="managerLists" [(ngModel)]="modelAdd.parent_id" name="parent_id">
                 <ng-template let-item pTemplate="selectedItem">
-                    <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
+                    <span>{{item.label}}</span>
                 </ng-template>
                 <ng-template let-car pTemplate="item">
                     <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
@@ -87,6 +90,7 @@
                     </div>
                 </ng-template>
             </p-dropdown>
+            <label for="">Người quản lý</label>
         </div>
     </div>
     <div class="col-md-12  mt-1">
@@ -96,12 +100,12 @@
         </div>
     </div>
     <div class="col-md-12  mt-1">
-        <div class="select-default">
+        <div class="field-group select" [ngClass]="modelAdd.position ? 'valid' : 'invalid' ">
             <label for="">Chức vụ</label>
             <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
             [options]="dataPositionList" [(ngModel)]="modelAdd.position" name="position">
             <ng-template let-item pTemplate="selectedItem">
-                <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
+                <span>{{item.label}}</span>
             </ng-template>
             <ng-template let-car pTemplate="item">
                 <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
@@ -122,9 +126,10 @@
       Tìm kiếm Tài khoản
   </p-header>
   <p-panel header="Nhập tên nhân viên tìm kiếm">
-      <div class="input-group">
-            <p-autoComplete [(ngModel)]="valueSearchUser" name="valueSearchUser" placeholder="Tìm kiếm tên nhân viên" [suggestions]="listUser" (onSelect)="onSelectUser($event)"
+      <div class="field-group text" [ngClass]="valueSearchUser ? 'valid' : 'invalid' ">
+            <p-autoComplete [(ngModel)]="valueSearchUser" name="valueSearchUser" placeholder="" [suggestions]="listUser" (onSelect)="onSelectUser($event)"
             (completeMethod)="getListUserMaster($event)" field="label"></p-autoComplete>
+            <label>Tìm kiếm tên nhân viên</label>
         </div>
     </p-panel>
     <p-panel header="Thông tin tài khoản">

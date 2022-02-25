@@ -2204,7 +2204,7 @@ div.p-organizationchart {
     border-bottom: 1px solid #000;
 }
 .field-group{
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     position: relative;
     label{
         color: #808AA6;
@@ -2347,6 +2347,7 @@ div.p-organizationchart {
             z-index: 1;
             background: none;
             width: 100%;
+            min-height: 56px;
             &.p-focus{
                 box-shadow: none;
                 border: 1px solid #292663;
@@ -2429,6 +2430,14 @@ div.p-organizationchart {
     &.date{
         label{
             top: 8px;
+        }
+        &.date-invalid{
+            label{
+                top: 20px;
+            }
+            .p-inputwrapper-focus + label { 
+                top: 8px;
+            }
         }
         .p-calendar{
             display: block;
@@ -2586,7 +2595,7 @@ div.p-organizationchart {
     }
     .alert-validation{
         position: absolute;
-        top: calc(100% - 5px);
+        top: calc(100% - 2px);
         font-size: 12px;
         margin-top: 3px;
         &.alert-danger{
@@ -2594,9 +2603,23 @@ div.p-organizationchart {
         }
     }
 }
+.p-dropdown-panel{
+    .p-dropdown-items-wrapper{
+        .p-dropdown-items{
+            .p-dropdown-item{
+                &>div{
+                    height: auto !important;
+                }
+            }
+        }
+    }
+}
 .btn-56-56{
+    height: 56px !important;
+    width: 56px !important;
+}
+.btn-h56{
     height: 56px;
-    width: 56px;
 }
 .btn-with-filter{
     .p-button{

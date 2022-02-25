@@ -9,28 +9,31 @@
      
         <div class="grid-default" #container>
             <p-card styleClass="mb-3">
-                <div class="row d-flex justify-content-center">
-                  <div class="col-md-6 mt-3 select-default">
-                    <label for="">Loại báo cáo</label>
-                    <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" [options]="listReports"
-                      [(ngModel)]="query.report_type" name="report_type" [filter]="true" >
-                      <ng-template let-item pTemplate="selectedItem">
-                        <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
-                      </ng-template>
-                      <ng-template let-car pTemplate="item">
-                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                          <div style="font-size:14px;float:left;margin-top:4px">{{car.label}}</div>
-                        </div>
-                      </ng-template>
-                    </p-dropdown>
-                  </div>
 
-                </div>
-                <div class="row d-flex justify-content-center mt-5" *ngIf="chiTietThamSoBaoCao">
+                <div class="row d-flex justify-content-center">
                   <div class="col-md-6">
+                    <div class="field-group select" [ngClass]="query.report_type ? 'valid' : 'invalid' ">
+                      <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" [options]="listReports"
+                        [(ngModel)]="query.report_type" name="report_type" [filter]="true">
+                        <ng-template let-item pTemplate="selectedItem">
+                          <span>{{item.label}}</span>
+                        </ng-template>
+                        <ng-template let-car pTemplate="item">
+                          <div class="ui-helper-clearfix" >
+                            <div style="font-size:14px;float:left;margin-top:4px">{{car.label}}</div>
+                          </div>
+                        </ng-template>
+                      </p-dropdown>
+                      <label for="">Loại báo cáo</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row d-flex justify-content-center mt-3 chiTietThamSoBaoCao" *ngIf="chiTietThamSoBaoCao">
+                  <div class="col-md-6" style="padding-left: 0px;padding-right: 0px;">
                     <ng-container *ngFor="let paramater of chiTietThamSoBaoCao?.paramaters">
                       <div *ngIf="paramater?.param_cd === 'exporttype'">
-                        <div class="col-md-12 d-flex justify-content-center">
+                        <div class="col-md-12 d-flex mb-3">
                           <p-button label="Xem file Excel" icon="pi pi-eye" (click)="ViewExcel('view')"
                             styleClass="mr-1 p-button-sm"></p-button>
                           <p-button label="Xuất file Excel" icon="pi pi-file-excel" (click)="exportExcel('xlsx')"
@@ -39,32 +42,32 @@
                             (click)="exportPdf('pdf')"></p-button>
                         </div>
                       </div>
-                      <div *ngIf="paramater?.param_type === 'datetime'" class="row mt-1 d-flex justify-content-center">
-                        <div class="col-md-6 input-group">
-                          <label for="">{{paramater?.param_name}}: </label>
-                          <p-calendar placeholder="DD/MM/YYYY" appendTo="body" [baseZIndex]="101"
-                            [(ngModel)]="paramater[paramater?.param_cd]" name="{{paramater?.param_cd}}"
-                            [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" inputId="navigators"
-                            dateFormat="dd/mm/yy" name="datereport">
-                          </p-calendar>
-                        </div>
+                      <div *ngIf="paramater?.param_type === 'datetime'" class="col-md-4">
+                          <div class="field-group date label-8">
+                            <p-calendar placeholder="DD/MM/YYYY" appendTo="body" [baseZIndex]="101"
+                              [(ngModel)]="paramater[paramater?.param_cd]" name="{{paramater?.param_cd}}"
+                              [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" inputId="navigators"
+                              dateFormat="dd/mm/yy" name="datereport">
+                            </p-calendar>
+                            <label for="">{{paramater?.param_name}}: </label>
+                          </div>
                       </div>
-                      <div *ngIf="paramater?.param_type === 'object'" class="row mt-1 d-flex justify-content-center">
-                        <div class="col-md-6 select-default">
-                          <label for="">{{paramater?.param_name}}: </label>
-                          <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
-                            [options]="paramater.options" [(ngModel)]="paramater[paramater?.param_cd]"
-                            name={{paramater.param_cd}} [filter]="true">
-                            <ng-template let-item pTemplate="selectedItem">
-                              <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
-                            </ng-template>
-                            <ng-template let-car pTemplate="item">
-                              <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                                <div style="font-size:14px;float:left;margin-top:4px">{{car.label}}</div>
-                              </div>
-                            </ng-template>
-                          </p-dropdown>
-                        </div>
+                      <div *ngIf="paramater?.param_type === 'object'" class="col-md-4">
+                          <div class="field-group select" [ngClass]="paramater[paramater?.param_cd] ? 'valid' : 'invalid' ">
+                            <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
+                              [options]="paramater.options" [(ngModel)]="paramater[paramater?.param_cd]"
+                              name={{paramater.param_cd}} [filter]="true">
+                              <ng-template let-item pTemplate="selectedItem">
+                                <span>{{item.label}}</span>
+                              </ng-template>
+                              <ng-template let-car pTemplate="item">
+                                <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                                  <div style="font-size:14px;float:left;margin-top:4px">{{car.label}}</div>
+                                </div>
+                              </ng-template>
+                            </p-dropdown>
+                            <label for="">{{paramater?.param_name}}: </label>
+                          </div>
                       </div>
                     </ng-container>
 
