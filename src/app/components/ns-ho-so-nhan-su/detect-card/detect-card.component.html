@@ -1,18 +1,20 @@
 <div class="row">
-    <div class="col-md-4 select-default">
-        <label>Loại giấy tờ:</label>
-        <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" [disabled]="true" (onChange)="onChangeTypeCards()"
-        [options]="typeCards" [(ngModel)]="custIndi.typeCard"
-       name="iol_st" [filter]="true">
-       <ng-template let-item pTemplate="selectedItem">
-           <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
-       </ng-template>
-       <ng-template let-car pTemplate="item">
-           <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-               <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
-           </div>
-       </ng-template>
-         </p-dropdown>
+    <div class="col-md-4">
+        <div class="field-group select label-8">
+            <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" [disabled]="true" (onChange)="onChangeTypeCards()"
+            [options]="typeCards" [(ngModel)]="custIndi.typeCard"
+        name="iol_st" [filter]="true">
+        <ng-template let-item pTemplate="selectedItem">
+            <span >{{item.label}}</span>
+        </ng-template>
+        <ng-template let-car pTemplate="item">
+            <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+            </div>
+        </ng-template>
+            </p-dropdown>
+            <label>Loại giấy tờ:</label>
+        </div>
     </div>
     <!-- <div class="col-md-3">
         <label>Số điện thoại:</label>
@@ -25,7 +27,7 @@
 </div>
 <div class="row mt-1 mb-3 content-upload-card" *ngIf="custIndi.typeCard === 1 || custIndi.typeCard === 2">
     <div class="col-md-5">
-        <label>Mặt trước CMND/CCCD</label>
+        <label class="mb-4" style="display: block;">Mặt trước CMND/CCCD</label>
         <div class="img_cmt">
             <div class="img"><img [src]="imageMt || imgDefault"></div>
             <!-- <input class="input-hidden" #mt_cmnd type="file" accept="image/*" (change)="uploadMtCm($event)"> -->
@@ -52,7 +54,7 @@
         
     </div>
     <div class="col-md-5">
-        <label>Mặt sau CMND/CCCD</label>
+        <label class="mb-4" style="display: block;">Mặt sau CMND/CCCD</label>
         <div class="img_cmt">
             <div class="img"><img [src]="imageMs || imgDefault"></div>
             <!-- <input class="input-hidden" #ms_cmnd type="file" accept="image/*" (change)="uploadMsCm($event)"> -->
