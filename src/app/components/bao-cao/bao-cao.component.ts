@@ -42,7 +42,7 @@ export class BaoCaoComponent implements OnInit {
         this.reports = results.data;
         this.listReports = results.data.map(d => {
           return {
-            label: `${d.report_group} [${d.report_name}]`,
+            label: `${d.report_group} - ${d.report_name}`,
             value: d.report_id,
             api: d.api_url
           };
@@ -67,6 +67,23 @@ export class BaoCaoComponent implements OnInit {
         this.spinner.hide();
       },
       error => { });
+  }
+
+  getDetailReport(event) {
+    let items = this.reports.filter(d => d.report_id === this.query.report_type)
+    this.chiTietThamSoBaoCao = items[0];
+    this.chiTietThamSoBaoCao.paramaters.forEach(element => {
+      if (element.param_type === 'datetime') {
+        element[element.param_cd] = new Date();
+      } else if (element.param_type === 'object') {
+        if (element.param_cd === 'companyId') {
+          this.getCompanyList(element);
+        }
+        if (element.param_cd === 'typeBM') {
+          this.getObjectList(element);
+        }
+      }
+    });
   }
 
   getCompanyList(element1: any): void {

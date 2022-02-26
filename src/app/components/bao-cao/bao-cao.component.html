@@ -13,7 +13,7 @@
                 <div class="row d-flex justify-content-center">
                   <div class="col-md-6">
                     <div class="field-group select" [ngClass]="query.report_type ? 'valid' : 'invalid' ">
-                      <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" [options]="listReports"
+                      <p-dropdown appendTo="body" (onChange)="getDetailReport($event)" [baseZIndex]="100" [autoDisplayFirst]="false" [options]="listReports"
                         [(ngModel)]="query.report_type" name="report_type" [filter]="true">
                         <ng-template let-item pTemplate="selectedItem">
                           <span>{{item.label}}</span>
