@@ -116,8 +116,10 @@
                     <h4 class="card-title"><i class="fa fa-clock-o"></i> Lịch làm việc trong ngày</h4>
                 </div>
                 <div class="card-content1"> 
-                  <app-list-grid-angular [listsData]="dataLamViecTrongNgay" [height]="500"
-                      [columnDefs]="columnDefs"></app-list-grid-angular>
+                  <div class="grid-default border">
+                    <app-list-grid-angular [listsData]="dataLamViecTrongNgay" [height]="500"
+                        [columnDefs]="columnDefs"></app-list-grid-angular>
+                  </div>
                 </div> 
             </div>
           </div>
@@ -143,8 +145,10 @@
                         <h4 class="card-title"><i class="fa fa-commenting"></i> Hỗ trợ khách hàng</h4>
                     </div>
                     <div class="card-content1"> 
-                      <app-list-grid-angular  [listsData]="dataHoTroKhachHang" [height]="500"
-                          [columnDefs]="columnDefs1"></app-list-grid-angular>
+                      <div class="grid-default border">
+                        <app-list-grid-angular  [listsData]="dataHoTroKhachHang" [height]="500"
+                            [columnDefs]="columnDefs1"></app-list-grid-angular>
+                          </div>
                     </div> 
                   </div>
             </div>

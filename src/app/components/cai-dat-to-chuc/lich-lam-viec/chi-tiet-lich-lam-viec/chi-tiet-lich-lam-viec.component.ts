@@ -34,7 +34,7 @@ export class ChiTietLichLamViecComponent implements OnInit, OnChanges {
   }
   titlePage: string = '';
   url: string = '';
-  columnDefs;
+  columnDefs = [];
   defaultColDef: any = {
     editable: false,
     tooltipComponent: 'customTooltip',
@@ -85,9 +85,10 @@ export class ChiTietLichLamViecComponent implements OnInit, OnChanges {
         if (this.manhinh === 'Edit') {
           gridflexs1.forEach(d => {
             if (d.columnField !== 'work_status') {
-              d.cellClass = [...d.cellClass, 'bg-warning']
+              d.cellClass = [...d.cellClass, 'bg-f7ff7']
+              d.editable = true;
             }
-          })
+          });
         }
         this.columnDefs = [...AgGridFn(gridflexs1 || []),];
       }

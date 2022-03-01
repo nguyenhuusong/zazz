@@ -42,7 +42,7 @@ export class BaoCaoComponent implements OnInit {
         this.reports = results.data;
         this.listReports = results.data.map(d => {
           return {
-            label: `${d.report_group} [${d.report_name}]`,
+            label: `${d.report_group} - ${d.report_name}`,
             value: d.report_id,
             api: d.api_url
           };
@@ -57,6 +57,9 @@ export class BaoCaoComponent implements OnInit {
               if (element.param_cd === 'companyId') {
                 this.getCompanyList(element);
               }
+              if (element.param_cd === 'typeBM') {
+                this.getObjectList(element);
+              }
             }
           });
         }
@@ -64,6 +67,23 @@ export class BaoCaoComponent implements OnInit {
         this.spinner.hide();
       },
       error => { });
+  }
+
+  getDetailReport(event) {
+    let items = this.reports.filter(d => d.report_id === this.query.report_type)
+    this.chiTietThamSoBaoCao = items[0];
+    this.chiTietThamSoBaoCao.paramaters.forEach(element => {
+      if (element.param_type === 'datetime') {
+        element[element.param_cd] = new Date();
+      } else if (element.param_type === 'object') {
+        if (element.param_cd === 'companyId') {
+          this.getCompanyList(element);
+        }
+        if (element.param_cd === 'typeBM') {
+          this.getObjectList(element);
+        }
+      }
+    });
   }
 
   getCompanyList(element1: any): void {
@@ -74,6 +94,21 @@ export class BaoCaoComponent implements OnInit {
           return {
             label: `${res.companyName}`,
             value: `${res.companyId}`
+          };
+        });
+        element1[element1.param_cd] = element1.param_default;
+      }
+    });
+  }
+
+  getObjectList(element1: any): void {
+    const queryParams = queryString.stringify({ objKey: 'object_bm_st' });
+    this.apiService.getCustObjectListNew(false,queryParams).subscribe(results => {
+      if (results.status === 'success') {
+        element1.options = results.data.map(res => {
+          return {
+            label: `${res.objName}`,
+            value: `${res.objValue}`
           };
         });
         element1[element1.param_cd] = element1.param_default;

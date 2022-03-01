@@ -419,7 +419,7 @@
     <app-upload-file [multiple]="" (callback)="handleUpload($event)" *ngIf="displayuploadcontract"></app-upload-file>
 </p-dialog>
 
-<p-dialog [(visible)]="isShowCustIndiCreate" (onHide)="onHideCreate()" [draggable]="false"  [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '1000px', height: 'auto'}">
+<p-dialog styleClass="xemthongtin-giayto-for-btn" [(visible)]="isShowCustIndiCreate" (onHide)="onHideCreate()" [draggable]="false"  [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '1000px', height: 'auto'}">
     <p-header>
       Xem thông tin giấy tờ
     </p-header>

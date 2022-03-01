@@ -1040,7 +1040,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
         this.getEmpDependent(queryParams);
       }
     } else if (event.event.item.key === 'xemchitietCard') {
-
+      
       if (this.selectedMenuCode === API_PROFILE.THONG_TIN_CA_NHAN) {
         this.getCustIndiIdentity(event)
       } else {

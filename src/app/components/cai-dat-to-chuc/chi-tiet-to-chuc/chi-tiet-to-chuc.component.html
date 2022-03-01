@@ -52,18 +52,19 @@
           <p-panel header="Tìm kiếm">
               <div class="row">
                   <div class="col-md-9">
-                        <div class="input-group mb-0">
+                        <div class="field-group text"  [ngClass]=" filter ? 'valid' : 'invalid' ">
                             <input type="text" class="form-control" [(ngModel)]="filter" (keyup)="find1()" name="filter">
+                            <label>Tìm kiếm</label>
                         </div>
                   </div>
                   <div class="col-md-3 text-right" *ngIf="isPositions">
-                      <p-button label="Tìm kiếm" styleClass="p-button-sm mr-1" (click)="getPositionList()"></p-button>
-                      <p-button label="Làm mới" styleClass="p-button-sm p-button-secondary" (click)="reset()"></p-button>
+                      <p-button label="Tìm kiếm" styleClass="p-button-sm mr-1 btn-h56" (click)="getPositionList()"></p-button>
+                      <p-button label="Làm mới" styleClass="p-button-sm p-button-secondary btn-h56" (click)="reset()"></p-button>
                     
                   </div>
                   <div class="col-md-3 text-right" *ngIf="!isPositions">
-                      <p-button label="Tìm kiếm" styleClass="p-button-sm mr-2" (click)="getCompanyList()"></p-button>
-                      <p-button label="Làm mới" styleClass="p-button-sm p-button-secondary" (click)="reset()"></p-button>
+                      <p-button label="Tìm kiếm" styleClass="p-button-sm mr-2 btn-h56" (click)="getCompanyList()"></p-button>
+                      <p-button label="Làm mới" styleClass="p-button-sm p-button-secondary btn-h56" (click)="reset()"></p-button>
                     
                   </div>
               </div>

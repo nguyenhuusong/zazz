@@ -133,7 +133,7 @@
         </div>
 
       <div class="col-sm-4" >
-        <div class="mb-1">Ngày kết thúc</div>
+        <div class="mb-1" style="margin-bottom: 10px; font-weight: 500;display: block;">Ngày kết thúc</div>
         <div>
           <div class="checkbox-default d-flex mb-0">
             <input id="vo-han" name="isEnddateVehicleCard" type="radio" [checked]="!modelTM.endTimeTM" (click)="checkEnddateVehicleCard(true)">
@@ -146,7 +146,7 @@
             </div>
             </div>
             <div class="datepicker-container" *ngIf="showVehicleCard">
-              <div class="field-group date label-8">
+              <div class="field-group date label-8" [ngClass]="modelTM.endTimeTM ? 'valid' : 'date-invalid' ">
                 <p-calendar [(ngModel)]="modelTM.endTimeTM" appendTo="body" [baseZIndex]="100" name="endTimeTM"
                   dateFormat="dd/mm/yy"></p-calendar>
                   <label>Ngày hạn</label>
@@ -169,33 +169,30 @@
 </p-dialog>
 
 
-<p-dialog [(visible)]="displayVehicleApprove"  [baseZIndex]="99" [modal]="true" [style]="{width: '1000px', height: 'auto'}">
+<p-dialog [(visible)]="displayVehicleApprove"  [baseZIndex]="99" [modal]="true" [style]="{width: '600px', height: 'auto'}">
     <p-header>
       Phê duyệt vé xe
     </p-header>
     <form action="" #createSMSF="ngForm">
-      <div class="box-body" style="padding:10px;">
+      <div class="box-body">
   
-        <div class="form-row" style="margin:10px 0px;">
-          <label class="col-sm-4 control-label">Mã thẻ
-            <span style="color:red">*</span>
-          </label>
-          <div class="col-sm-8">
-            <div class="input-group">
+        <div class="col-md-12">
+            <div class="field-group text label-8">
               <input type="text" class="form-control" name="cardCd" [(ngModel)]="modelApprove.cardCd" id="cardCd" required
                 #cardCd="ngModel" placeholder="Mã thẻ">
+                <label>Mã thẻ
+                  <span style="color:red">*</span>
+                </label>
               <div *ngIf="cardCd.errors && (cardCd.dirty || cardCd.touched)" class="alert-validation alert-danger">
                 <div *ngIf="cardCd.errors.required">Trường này bắt buộc nhập</div>
               </div>
             </div>
-          </div>
         </div>
   
-        <div class="form-row" style="margin:10px 0px;">
-          <label class="col-sm-4 control-label">Ngày hết hạn</label>
-          <div class="col-sm-8">
+        <div class="col-md-12">
+            <label class="control-label" style="margin-bottom: 10px; font-weight: 500;display: block;">Ngày hết hạn</label>
             <div class="checkbox-default d-flex mb-0">
-              <label for="vo-han">Vô hạn</label>
+              <label for="vo-han" class="mb-0">Vô hạn</label>
               <input id="vo-han" name="isEnddate" type="radio" checked (click)="checkEnddate(true)">
             </div>
             <div class="checkbox-default d-flex mb-0">
@@ -203,12 +200,12 @@
               <input id="het-han-ngay" name="isEnddate" type="radio" (click)="checkEnddate(false)">
             </div>
             <div class="datepicker-container" *ngIf="show">
-              <div class="input-group">
-                <p-calendar [(ngModel)]="modelTM.endTime" appendTo="body" [baseZIndex]="100" name="endTime"
-                  dateFormat="dd/mm/yy"></p-calendar>
+              <div class="field-group date" [ngClass]="modelTM.endTime ? 'valid' : 'date-invalid' ">
+                  <p-calendar [(ngModel)]="modelTM.endTime" appendTo="body" [baseZIndex]="100" name="endTime"
+                    dateFormat="dd/mm/yy"></p-calendar>
+                    <label>Ngày hạn</label>
                 </div>
             </div>
-          </div>
         </div>
   
       </div>

@@ -24,7 +24,7 @@ styleClass="text-right two-buttons"
                 <div *ngFor="let element of group.fields;let i=index" 
                 [hidden]="!element.isVisiable"
                 [ngClass]="{'isEmpty': element.isEmpty, 'has-image': includeImage && element?.columnType === 'image', 'image-iam': element?.columnType === 'image'}" 
-                class="{{element.columnClass}} fdsfd">
+                class="{{element.columnClass}} ">
                 <app-type-text [modelFields]="modelFields" [element]="element" [submit]="submit" *ngIf="element?.columnType === 'input'"></app-type-text>
                 <app-type-select [element]="element" *ngIf="element.columnType === 'select'"></app-type-select>
                 <app-type-selectTree [element]="element" *ngIf="element.columnType === 'selectTree' && element.isVisiable" [dataView]="dataView"></app-type-selectTree>
@@ -33,7 +33,7 @@ styleClass="text-right two-buttons"
                 <app-type-currency [element]="element" *ngIf="element.columnType === 'currency'"></app-type-currency>
                 <app-type-checkbox [element]="element" *ngIf="element.columnType === 'checkbox'"></app-type-checkbox>
                 <app-type-textarea [element]="element" *ngIf="element.columnType === 'textarea'"></app-type-textarea>
-                <app-type-datetime [element]="element" *ngIf="element.columnType === 'datetime'"></app-type-datetime>
+                <app-type-datetime [submit]="submit" [element]="element" *ngIf="element.columnType === 'datetime'"></app-type-datetime>
                 <app-type-datefulltime [element]="element" *ngIf="element.columnType === 'datefulltime'"></app-type-datefulltime>
                 <app-type-timeonly [element]="element" *ngIf="element.columnType === 'timeonly'"></app-type-timeonly>
                 <app-type-multiSelect [element]="element" *ngIf="element.columnType === 'multiSelect'" [modelFields]="modelFields" [submit]="submit" [dataView]="dataView"></app-type-multiSelect>
