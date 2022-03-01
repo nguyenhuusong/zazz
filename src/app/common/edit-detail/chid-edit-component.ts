@@ -415,7 +415,8 @@ export class AppTypeCheckboxComponent implements OnInit {
     private apiService: ApiHrmService
   ) { }
   ngOnInit(): void {
-
+    console.log("sđsdsds", this.element.columnValue)
+    this.element.columnValue = this.element.columnValue == 'true' || this.element.columnValue == true ? true : false
   }
 
 }
