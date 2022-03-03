@@ -5,6 +5,8 @@ import { NsHoSoNghiViecComponent } from 'src/app/components/ns-ho-so-nghi-viec/n
 import { NsHoSoNhanSuComponent } from 'src/app/components/ns-ho-so-nhan-su/ns-ho-so-nhan-su.component';
 import { ChiTietHoSoNhanSuComponent } from 'src/app/components/ns-ho-so-nhan-su/chi-tiet-ho-so-nhan-su/chi-tiet-ho-so-nhan-su.component';
 import { ChiTietHoSoNghiViecComponent } from 'src/app/components/ns-ho-so-nghi-viec/chi-tiet-ho-so-nghi-viec/chi-tiet-ho-so-nghi-viec.component';
+import { ThaiSanComponent } from 'src/app/components/thai-san/thai-san.component';
+import { ChiTietThaiSanComponent } from 'src/app/components/thai-san/chi-tiet-thai-san/chi-tiet-thai-san.component';
 
 const routes: Routes = [
   {
@@ -51,6 +53,25 @@ const routes: Routes = [
     },
   },
 
+  // Thai sản
+
+  {
+    path: 'thai-san',
+    component: ThaiSanComponent,
+    data: {
+      title: 'Danh sách nhân viên đăng ký thai sản',
+      url: 'thai-san',
+    },
+  },
+
+  {
+    path: 'thai-san/chi-tiet-thai-san',
+    component: ChiTietThaiSanComponent,
+    data: {
+      title: 'Chi tiết thai sản',
+      url: 'thai-san/chi-tiet-thai-san',
+    },
+  },
 ];
 
 @NgModule({
