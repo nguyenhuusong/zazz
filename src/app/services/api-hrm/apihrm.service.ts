@@ -577,6 +577,14 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v2/maternity/GetMaternityPage?` + queryParams, this.options)
   }
 
+  getMaternityChildInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/maternity/GetMaternityChildInfo?` + queryParams, this.options)
+  }
+
+  getMaternityPregnancInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/maternity/GetMaternityPregnancInfo?` + queryParams, this.options)
+  }
+
   getMaternityInfo(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/maternity/GetMaternityInfo?` + queryParams, this.options)
   }
@@ -589,8 +597,8 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v2/maternity/SetMaternityChildInfo`, params, this.options)
   }
 
-  setMaternityPregnancyInfo(params): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v2/maternity/SetMaternityPregnancyInfo`, params, this.options)
+  setMaternityPregnancyInfo(url,params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/maternity/${url}`, params, this.options)
   }
 
   delMaternityInfo(queryParams): Observable<any> {

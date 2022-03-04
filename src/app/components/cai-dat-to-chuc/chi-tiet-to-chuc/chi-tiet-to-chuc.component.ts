@@ -115,7 +115,6 @@ export class ChiTietToChucComponent implements OnInit, OnChanges {
     this.getPositionList();
     this.isPositions = true;
     this.displayModal = true;
-
   }
   filter = ''
   getCompanyList() {

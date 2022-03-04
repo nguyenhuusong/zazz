@@ -20,8 +20,19 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
   listViews = [];
   optionsButon = [
     { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
-    { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check'  }
-  ]
+    { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check' }
+  ];
+  modelEdit = {
+    maternityId: 0,
+  }
+  titlePage = '';
+  listsDataMaternityPregnancy = [];
+  listsDataMaternityChild = [];
+  columnDefMaternityChild = [];
+  columnDefMaternityPregnancy = [];
+  displayAddThaiSan = false;
+  listViews_other = [];
+  detailInfo_other = null;
   constructor(
     private activatedRoute: ActivatedRoute,
     private apiService: ApiHrmService,
@@ -39,17 +50,14 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.titlePage = this.activatedRoute.data['_value'].title;
     this.items = [
-      { label: 'Trang chủ' , url: '/home' },
+      { label: 'Trang chủ', url: '/home' },
       { label: 'Tuyển dụng' },
       { label: 'danh sách thai sản', url: '/nhan-su/thai-san' },
       { label: `${this.titlePage}` },
     ];
     this.handleParams();
   }
-  modelEdit = {
-    maternityId: 0,
-  }
-  titlePage = ''
+ 
   handleParams() {
     this.activatedRoute.queryParamMap
       .pipe(takeUntil(this.unsubscribe$))
@@ -59,10 +67,7 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
         this.getMaternityInfo();
       });
   };
-  listsDataMaternityPregnancy = [];
-  listsDataMaternityChild = [];
-  columnDefMaternityChild = [];
-  columnDefMaternityPregnancy = [];
+ 
   getMaternityInfo() {
     const queryParams = queryString.stringify(this.modelEdit);
     this.apiService.getMaternityInfo(queryParams)
@@ -121,6 +126,78 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
 
   quaylai(data) {
     this.router.navigate(['/nhan-su/thai-san']);
+  }
+  modelAdd = {
+    title: '',
+    set: 'SetMaternityPregnancyInfo'
+  }
+
+  addKhamThai() {
+    this.displayAddThaiSan = false;
+    this.listViews_other = [];
+    this.modelAdd = {
+      title: 'Thêm mới khám thai',
+      set: 'SetMaternityPregnancyInfo'
+    }
+    const queryParams = queryString.stringify({pregnancId : 0});
+    this.getMaternityPregnancInfo(queryParams)
+  }
+  
+  getMaternityPregnancInfo(queryParams) {
+    this.apiService.getMaternityPregnancInfo(queryParams).subscribe(results => {
+      if (results.status === 'success') {
+        const listViews = cloneDeep(results.data.group_fields);
+        this.listViews_other = listViews;
+        this.detailInfo_other = results.data;
+        this.displayAddThaiSan = true;
+      }
+    })
+  }
+
+  getMaternityChildInfo(queryParams) {
+    this.apiService.getMaternityChildInfo(queryParams).subscribe(results => {
+      if (results.status === 'success') {
+        const listViews = cloneDeep(results.data.group_fields);
+        this.listViews_other = listViews;
+        this.detailInfo_other = results.data;
+        this.displayAddThaiSan = true;
+      }
+    })
+  }
+
+  addConNho() {
+    this.displayAddThaiSan = false;
+    this.listViews_other = [];
+    this.modelAdd = {
+      title: 'Thêm mới con nhỏ',
+      set: 'SetMaternityChildInfo'
+    }
+    const queryParams = queryString.stringify({childId : 0});
+    this.getMaternityChildInfo(queryParams);
+  }
+
+  saveCallApi(event) {
+    this.spinner.show();
+    const params = {
+      ...this.detailInfo_other, group_fields: event
+    }
+    this.apiService.setMaternityPregnancyInfo(this.modelAdd.set,params)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((results: any) => {
+        if (results.status === 'success') {
+          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
+          this.spinner.hide();
+          this.displayAddThaiSan = false;
+        } else {
+          this.messageService.add({
+            severity: 'error', summary: 'Thông báo',
+            detail: results.message
+          });
+          this.spinner.hide();
+        }
+      }), error => {
+        this.spinner.hide();
+      };
   }
 
 }

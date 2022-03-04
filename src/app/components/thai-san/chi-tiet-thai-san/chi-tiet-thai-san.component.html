@@ -16,7 +16,7 @@
                             Khám thai
                         </div>
                         <div class="col-md-6 text-right">
-                            <!-- <p-button label="Thêm mới" styleClass="p-button-sm" (click)="addCompanies()"></p-button> -->
+                            <p-button label="Thêm mới" styleClass="p-button-sm" (click)="addKhamThai()"></p-button>
                         </div>
                     </ng-template>
                     <div class="grid-default border">
@@ -31,7 +31,7 @@
                           Con nhỏ
                         </div>
                         <div class="col-md-6 text-right">
-                            <!-- <p-button label="Thêm mới" styleClass="p-button-sm" (click)="addPositions()"></p-button> -->
+                            <p-button label="Thêm mới" styleClass="p-button-sm" (click)="addConNho()"></p-button>
                         </div>
                     </ng-template>
                     <div class="grid-default border">
@@ -41,6 +41,11 @@
             </div>
         </div>
    </div>
-   
-   
 </div>
+
+
+<p-dialog header="{{modelAdd.title}}" [(visible)]="displayAddThaiSan" [modal]="true" [style]="{width: '1000px'}"
+    [draggable]="false" [resizable]="false">
+    <app-edit-detail *ngIf="listViews_other.length> 0" [detail]="detailInfo_other" [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButon"  [dataView]="listViews_other"
+        (callback)="saveCallApi($event)" (callbackcancel)="displayAddThaiSan = !displayAddThaiSan"></app-edit-detail>
+</p-dialog>
