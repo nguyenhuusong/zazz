@@ -244,11 +244,11 @@ load() {
     this.router.navigate(['/nhan-su/thai-san/chi-tiet-thai-san'], { queryParams: params });
   }
 
-  addTuyenDung() {
+  addThaiSan() {
     const params = {
-      canId: 0
+      maternityId: 0
     }
-    this.router.navigate(['/tuyen-dung/ds-tuyen-dung/them-moi-tuyen-dung'], { queryParams: params });
+    this.router.navigate(['/nhan-su/thai-san/them-moi-thai-san'], { queryParams: params });
   }
 
   find() {

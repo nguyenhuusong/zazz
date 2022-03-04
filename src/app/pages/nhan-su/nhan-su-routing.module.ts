@@ -63,7 +63,14 @@ const routes: Routes = [
       url: 'thai-san',
     },
   },
-
+  {
+    path: 'thai-san/them-moi-thai-san',
+    component: ChiTietThaiSanComponent,
+    data: {
+      title: 'Thêm mới thai sản',
+      url: 'thai-san/them-moi-thai-san',
+    },
+  },
   {
     path: 'thai-san/chi-tiet-thai-san',
     component: ChiTietThaiSanComponent,
