@@ -6,6 +6,7 @@ import { cloneDeep } from 'lodash';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
+import { AgGridFn } from 'src/app/common/function-common/common';
 
 @Component({
   selector: 'app-chi-tiet-thai-san',
@@ -58,7 +59,10 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
         this.getMaternityInfo();
       });
   };
-
+  listsDataMaternityPregnancy = [];
+  listsDataMaternityChild = [];
+  columnDefMaternityChild = [];
+  columnDefMaternityPregnancy = [];
   getMaternityInfo() {
     const queryParams = queryString.stringify(this.modelEdit);
     this.apiService.getMaternityInfo(queryParams)
@@ -68,8 +72,28 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
           const listViews = cloneDeep(results.data.group_fields);
           this.listViews = [...listViews];
           this.detailInfo = results.data;
+          this.listsDataMaternityPregnancy = [...this.detailInfo.maternityPregnancy]
+          this.listsDataMaternityChild = [...this.detailInfo.maternityChild]
+          this.aGridFnMaternityChild(this.detailInfo.gridflexdetails1)
+          this.aGridFnMaternityPregnancy(this.detailInfo.gridflexdetails2)
         }
       });
+  }
+
+  aGridFnMaternityChild(table) {
+    this.columnDefMaternityChild = [
+      ...AgGridFn(table),
+    ];
+  }
+
+  OnClick(e) {
+
+  }
+
+  aGridFnMaternityPregnancy(table) {
+    this.columnDefMaternityPregnancy = [
+      ...AgGridFn(table),
+    ];
   }
 
   setMaternityInfo(data) {
