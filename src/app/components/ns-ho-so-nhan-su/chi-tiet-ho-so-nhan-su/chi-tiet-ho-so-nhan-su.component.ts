@@ -593,6 +593,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
                   icon: 'pi pi-trash',
                   key: 'xoataikhoandangnhap',
                   class: 'btn-primary',
+                  hide: !params.data.lock_st
                 },
                 {
                   onClick: this.OnClick.bind(this),
@@ -650,6 +651,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
                     icon: 'pi pi-trash',
                     key: 'xoataikhoandangnhap',
                     class: 'btn-primary',
+                    hide: !params.data.lock_st
                   },
                 ]
               };
@@ -1106,13 +1108,12 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       }
     });
   }
-
   xoaNguoiDung(event) {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn thực hiện thao tác này ?',
       accept: () => {
-        const queryParams = queryString.stringify({ userId: event.rowData.userId });
-        this.apiService.removeUser(queryParams).subscribe(results => {
+        const queryParams = queryString.stringify({ loginName: event.rowData.loginName });
+        this.apiService.deleteUser(queryParams).subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công quyền người dùng' });
             this.getEmployeeInfo();

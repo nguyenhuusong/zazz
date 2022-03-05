@@ -411,6 +411,10 @@ export class ApiHrmService {
     return this.http.delete<any>(`${apiHrmServer}/api/v1/user/RemoveUser?` + queryParams, this.options)
   }
 
+  deleteUser(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiCore}/api/v1/coreuser/DeleteUser?` + queryParams, this.options)
+  }
+
   delEmpWorking(queryParams): Observable<any> {
     return this.http.get<any>(`${apiCore}/api/v2/employee/DelEmpWorking?` + queryParams, this.options);
   }
