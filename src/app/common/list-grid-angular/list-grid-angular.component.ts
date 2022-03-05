@@ -193,16 +193,10 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
     let allColumnIds: any = [];
     this.gridColumnApi.getAllColumns()
       .forEach((column: any) => {
-        if (column.colDef.cellClass.indexOf('no-auto') < 0) {
-          allColumnIds.push(column)
-        } else {
-          column.colDef.resizable = false;
-        }
+        allColumnIds.push(column)
       });
     this.gridColumnApi.autoSizeColumns(allColumnIds, false);
-    setTimeout(() => {
-      this.autoSizeAll();
-    }, 200);
+   
   }
 
   ngOnChanges() {

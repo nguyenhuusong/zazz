@@ -99,7 +99,7 @@ export class CreateContractInfoComponent implements OnInit {
           },
           {
             headerName: 'Tải lên hồ sơ',
-            field: 'meta_file_url',
+            field: 'meta_upload_url',
             cellClass: ['border-right'],
             width: 100,
             cellRenderer: 'buttonAgGridComponent',
@@ -120,7 +120,7 @@ export class CreateContractInfoComponent implements OnInit {
                     icon: 'pi pi-cloud-upload',
                     key: 'xemhoso',
                     class: 'btn-primary mr5',
-                    hide: !params.data.meta_file_url
+                    hide: !params.data.meta_upload_url
                   },
                   // {
                   //   onClick: this.OnClick.bind(this),
@@ -179,7 +179,7 @@ export class CreateContractInfoComponent implements OnInit {
   }
 
   ViewContract(event) {
-    this.downloadButtonClicked(event.rowData.meta_file_url);
+    this.downloadButtonClicked(event.rowData.meta_upload_url);
   }
 
   DowloadFileDemo(event, type) {
@@ -324,7 +324,7 @@ export class CreateContractInfoComponent implements OnInit {
           },
           {
             headerName: 'Tải lên hồ sơ',
-            field: 'meta_file_url',
+            field: 'meta_upload_url',
             cellClass: ['border-right'],
             width: 100,
             cellRenderer: 'buttonAgGridComponent',
@@ -345,7 +345,7 @@ export class CreateContractInfoComponent implements OnInit {
                     icon: 'pi pi-cloud-upload',
                     key: 'xemhoso',
                     class: 'btn-primary mr5',
-                    hide: !params.data.meta_file_url
+                    hide: !params.data.meta_upload_url
                   },
                   // {
                   //   onClick: this.OnClick.bind(this),
