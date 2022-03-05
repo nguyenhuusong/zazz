@@ -20,16 +20,9 @@
     <div class="khachHangWrapper">
       <div class="row">
           <div class="col-md-12">
-            <p-tabView [(activeIndex)]="indexTab" (onChange)="handleChange($event.index)">
-                <p-tabPanel header="Thông tin chung">
-                      <div class="" *ngIf="detailInfo">
-                          <!-- <p-selectButton  [options]="optionsButtonsView" *ngIf="listViews.length> 0 && manhinh === 'View'" optionLabel="label" optionValue="value" (onChange)="onChangeButtonView($event)"></p-selectButton> -->
-                          <!-- <app-view-detail *ngIf="listViews.length> 0 && manhinh === 'View'"  [manhinh]="manhinh" [dataView]="listViews" (callback)="saveUserInfo($event)"></app-view-detail> -->
-                          <app-edit-detail *ngIf="listViews.length> 0 && manhinh === 'Edit'"  [manhinh]="manhinh" [dataView]="listViews" (callback)="saveUserInfo($event)" (callbackcancel)="cancelUpdate()"></app-edit-detail>
-                      </div>
-                </p-tabPanel>
-             
-              </p-tabView>
+            <div class="" *ngIf="detailInfo">
+                <app-edit-detail *ngIf="listViews.length> 0 && manhinh === 'Edit'"  [manhinh]="manhinh" [dataView]="listViews" (callback)="saveUserInfo($event)" (callbackcancel)="cancelUpdate()"></app-edit-detail>
+            </div>
           </div>
          
       </div>
