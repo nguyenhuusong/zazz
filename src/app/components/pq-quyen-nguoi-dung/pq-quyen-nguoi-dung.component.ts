@@ -207,7 +207,7 @@ export class PqQuyenNguoiDungComponent implements OnInit {
     this.modelAdd.userId = rowData.userId;
     this.modelAdd.admin_st = rowData.admin_st;
     this.modelAdd.position = rowData.position;
-    this.modelAdd.parent_id = rowData.parent_id;
+    this.modelAdd.parentId = rowData.parentId;
     this.displayAdd = true;
   }
 
@@ -395,7 +395,7 @@ export class PqQuyenNguoiDungComponent implements OnInit {
     position: '',
     userId: '',
     admin_st: false,
-    parent_id: ''
+    parentId: ''
   }
   checkSquare(e) {
     this.displayAdd = true;

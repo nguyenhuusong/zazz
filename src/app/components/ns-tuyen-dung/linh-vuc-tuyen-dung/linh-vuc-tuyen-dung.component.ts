@@ -254,7 +254,7 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
         this.orgRoots = results.data.map(d => {
           return {
             label: d.org_name + '-' + d.org_cd,
-            value: `${d.org_id}`
+            value: `${d.orgId}`
           }
         });
         this.orgRoots = [{label: 'Tất cả', value: null}, ...this.orgRoots]

@@ -265,7 +265,7 @@ load() {
   getOrgPositions() {
     this.positions = [];
     let items = this.listOrgRoots.filter(d => d.value === this.query.org_cd)
-    const queryParams = queryString.stringify({ org_id: items[0].code });
+    const queryParams = queryString.stringify({ orgId: items[0].code });
     this.apiService.getOrgPositions(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.positions = results.data.map(d => {
@@ -311,7 +311,7 @@ load() {
           return {
             label: d.org_name + '-' + d.org_cd,
             value: `${d.org_cd}`,
-            code:  `${d.org_id}`,
+            code:  `${d.orgId}`,
           }
         });
 

@@ -21,7 +21,7 @@ export class CaiDatThamSoComponent implements OnInit, OnChanges {
     private confirmationService: ConfirmationService,
     private router: Router
   ) { }
-  org_cd = null
+  organizeId = null
   org_level = 0
   listViews = []
   imagesUrl = []
@@ -63,14 +63,14 @@ export class CaiDatThamSoComponent implements OnInit, OnChanges {
     this.activatedRoute.queryParamMap.subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.dataRouter = this.paramsObject.params;
-      this.org_cd = this.paramsObject.params.org_cd;
+      this.organizeId = this.paramsObject.params.organizeId;
       this.getOrganizeConfig();
     });
   };
   detailInfo = null;
   getOrganizeConfig() {
     this.listViews = [];
-    const queryParams = queryString.stringify({org_cd: this.org_cd});
+    const queryParams = queryString.stringify({organizeId: this.organizeId});
     this.apiService.getOrganizeConfig(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.detailInfo = results.data;

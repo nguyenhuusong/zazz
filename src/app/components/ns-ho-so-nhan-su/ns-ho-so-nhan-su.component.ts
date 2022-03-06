@@ -102,7 +102,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
     gridWidth: 0,
     offSet: 0,
     pageSize: 15,
-    org_id: 0,
+    orgId: 0,
     isLock: -1,
     isApprove: -1,
     emp_st: -1
@@ -128,7 +128,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
       gridWidth: 0,
       offSet: 0,
       pageSize: 15,
-      org_id: 0,
+      orgId: 0,
       isLock: -1,
       isApprove: -1,
       emp_st: -1
@@ -148,13 +148,13 @@ export class NsHoSoNhanSuComponent implements OnInit {
         if (localStorage.getItem("organize") === null) {
           this.selectedNode = this.listAgencyMap[0];
           localStorage.setItem('organize', JSON.stringify(this.listAgencyMap[0]));
-          this.query.org_id = this.selectedNode.org_id;
+          this.query.orgId = this.selectedNode.orgId;
           this.load();
         } else {
           this.selectedNode = JSON.parse(localStorage.getItem("organize"));
-          this.query.org_id = this.selectedNode.org_id;
-          this.listAgencyMap = this.expanded(this.listAgencyMap, this.selectedNode.parent_id)
-          this.selected(this.listAgencyMap, this.query.org_id)
+          this.query.orgId = this.selectedNode.orgId;
+          this.listAgencyMap = this.expanded(this.listAgencyMap, this.selectedNode.parentId)
+          this.selected(this.listAgencyMap, this.query.orgId)
           this.load();
         }
       }
@@ -162,24 +162,24 @@ export class NsHoSoNhanSuComponent implements OnInit {
   }
 
 
-  expanded(datas = [], org_id = 0) {
+  expanded(datas = [], orgId = 0) {
     datas.forEach(d => {
-      if (d.org_id === org_id) {
+      if (d.orgId === orgId) {
         d.expanded = true;
       } else {
-        if (d.children.length > 0) this.expanded(d.children, this.selectedNode.parent_id)
+        if (d.children.length > 0) this.expanded(d.children, this.selectedNode.parentId)
       }
     })
     return datas
   }
 
-  selected(datas = [], org_id = 0) {
+  selected(datas = [], orgId = 0) {
     datas.forEach(d => {
-      if (d.org_id === org_id) {
+      if (d.orgId === orgId) {
         this.selectedNode = d;
         this.detailOrganizeMap = d;
       } else {
-        if (d.children.length > 0) this.selected(d.children, this.selectedNode.org_id)
+        if (d.children.length > 0) this.selected(d.children, this.selectedNode.orgId)
       }
     }
     )
@@ -449,8 +449,8 @@ export class NsHoSoNhanSuComponent implements OnInit {
   onNodeSelect(event) {
     this.detailOrganizeMap = event.node;
     localStorage.setItem('organize', JSON.stringify(event.node));
-    this.query.org_id = this.selectedNode.org_id;
-    this.query.org_id = this.detailOrganizeMap.org_id;
+    this.query.orgId = this.selectedNode.orgId;
+    this.query.orgId = this.detailOrganizeMap.orgId;
     this.load()
   }
 

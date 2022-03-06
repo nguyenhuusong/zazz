@@ -148,7 +148,7 @@ export class NotifyDetailComponent implements OnInit {
           return {
             label: `${d.org_name} (${d.org_cd})`,
             value: d.org_cd,
-            code: d.org_id,
+            code: d.orgId,
           }
         });
         this.moduleLists = moduleLists

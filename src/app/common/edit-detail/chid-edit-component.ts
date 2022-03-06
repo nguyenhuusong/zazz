@@ -125,8 +125,8 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
     // }
   }
 
-  getCompanyList(org_id, element1) {
-    const queryParams = queryString.stringify({ org_id: org_id });
+  getCompanyList(orgId, element1) {
+    const queryParams = queryString.stringify({ orgId: orgId });
     this.apiService.getCompanyList(queryParams).subscribe(results => {
       if (results.status === 'success') {
         element1.options = cloneDeep(results.data).map(d => {
@@ -138,11 +138,11 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
   }
 
   onChangeTree(event, field_name) {
-    if (field_name === 'org_id') {
+    if (field_name === 'orgId') {
       this.dataView.forEach(element => {
         element.fields.forEach(async element1 => {
           if (element1.field_name === 'companyId') {
-            this.getCompanyList(event.node.org_id, element1);
+            this.getCompanyList(event.node.orgId, element1);
           }
         });
       });
@@ -196,10 +196,10 @@ export class AppTypeDropdownComponent implements OnInit {
     private apiService: ApiHrmService
   ) { }
   async ngOnInit() {
-    if (this.element.field_name === 'parent_id') {
-      const org_id = await this.getValueByKey('org_id');
+    if (this.element.field_name === 'parentId') {
+      const orgId = await this.getValueByKey('orgId');
       const adm_st = await this.getValueByKey('adm_st');
-      this.getAgentLeaders(org_id, this.element, adm_st);
+      this.getAgentLeaders(orgId, this.element, adm_st);
     }
   }
 
@@ -221,20 +221,20 @@ export class AppTypeDropdownComponent implements OnInit {
 
   onChangeValue(value, field_name) {
     this.modelFields[field_name].error = false;
-    if (field_name === 'org_id') {
+    if (field_name === 'orgId') {
       this.dataView.forEach(element => {
         element.fields.forEach(async element1 => {
-          if (element1.field_name === 'parent_id') {
+          if (element1.field_name === 'parentId') {
             const adm_st = await this.getValueByKey('adm_st');
             this.getAgentLeaders(value, element1, adm_st);
           }
         });
       });
 
-    }else if (field_name === 'root_org_id') {
+    }else if (field_name === 'root_orgId') {
       this.dataView.forEach(element => {
         element.fields.forEach(async element1 => {
-          if (element1.columnType === 'selectTree' && element1.field_name === 'org_id') {
+          if (element1.columnType === 'selectTree' && element1.field_name === 'orgId') {
             this.getOrganizeTree(value, element1);
           }else if(element1.field_name === 'job_id') {
             const positionTypeCd = await this.getValueByKey('positionCd');
@@ -246,17 +246,17 @@ export class AppTypeDropdownComponent implements OnInit {
       this.dataView.forEach(element => {
         element.fields.forEach(async element1 => {
          if(element1.field_name === 'job_id') {
-            const root_org_id = await this.getValueByKey('root_org_id');
-            this.getJobTitles(root_org_id,element1, value) 
+            const root_orgId = await this.getValueByKey('root_orgId');
+            this.getJobTitles(root_orgId,element1, value) 
           }
         });
       });
     }  else if (field_name === 'adm_st') {
       this.dataView.forEach(element => {
         element.fields.forEach(async element1 => {
-          if (element1.field_name === 'parent_id') {
-            const org_id = await this.getValueByKey('org_id');
-            this.getAgentLeaders(org_id, element1, value);
+          if (element1.field_name === 'parentId') {
+            const orgId = await this.getValueByKey('orgId');
+            this.getAgentLeaders(orgId, element1, value);
           }
         });
       });
@@ -274,8 +274,8 @@ export class AppTypeDropdownComponent implements OnInit {
     }
   }
 
-  getJobTitles(org_id,element1, positionTypeCd) {
-    const queryParams = queryString.stringify({ org_id: org_id, positionTypeCd: positionTypeCd });
+  getJobTitles(orgId,element1, positionTypeCd) {
+    const queryParams = queryString.stringify({ orgId: orgId, positionTypeCd: positionTypeCd });
     this.apiService.getJobs(queryParams).subscribe(results => {
       if (results.status === 'success') {
         element1.options = cloneDeep(results.data).map(d => {
@@ -289,8 +289,8 @@ export class AppTypeDropdownComponent implements OnInit {
     })
   }
 
-  getAgentLeaders(org_id, element1, isAdmin) {
-    const queryParams = queryString.stringify({ org_id: org_id, admin_is: isAdmin });
+  getAgentLeaders(orgId, element1, isAdmin) {
+    const queryParams = queryString.stringify({ orgId: orgId, admin_is: isAdmin });
     this.apiService.getAgentLeaders(queryParams).subscribe(results => {
       if (results.status === 'success') {
         element1.options = cloneDeep(results.data).map(d => {
@@ -301,8 +301,8 @@ export class AppTypeDropdownComponent implements OnInit {
     })
   }
 
-  getOrganizeTree(org_id, element1) {
-    const queryParams = queryString.stringify({ parent_id: org_id });
+  getOrganizeTree(orgId, element1) {
+    const queryParams = queryString.stringify({ parentId: orgId });
     this.apiService.getOrganizeTree(queryParams).subscribe(results => {
       if (results.status === 'success') {
         element1.options = results.data;

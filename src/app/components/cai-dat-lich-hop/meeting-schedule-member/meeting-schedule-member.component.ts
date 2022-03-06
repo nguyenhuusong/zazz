@@ -61,7 +61,7 @@ export class MeetingScheduleMemberComponent implements OnInit {
   }
   search(event): void {
     this.columnDefs = []
-    const queryParams = queryString.stringify({org_id: 1, offSet: 0, pageSize: 10000, filter: event.query});
+    const queryParams = queryString.stringify({orgId: 1, offSet: 0, pageSize: 10000, filter: event.query});
     this.apiService.getEmployeePage(queryParams)
     .subscribe(response => {
         this.results = response.data.dataList.data.map(t => ({...t, displayName: t.code + ' - ' + t.full_name + ' - ' + t.phone1}));

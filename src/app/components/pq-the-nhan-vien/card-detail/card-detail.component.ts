@@ -31,7 +31,7 @@ export class CardDetailComponent implements OnInit {
   initForm(): void {
     this.cardForm = new FormGroup({
       employeeId: new FormControl(this.employeeId, [Validators.required]),
-      org_id: new FormControl(null, [Validators.required]),
+      orgId: new FormControl(null, [Validators.required]),
       cardName: new FormControl('Thẻ S-Service'),
       cardCd: new FormControl('', [Validators.required]),
       issueDate: new FormControl(''),
@@ -66,12 +66,12 @@ export class CardDetailComponent implements OnInit {
   }
 
   search(event): void {
-    if(this.cardForm.value.org_id === null) {
+    if(this.cardForm.value.orgId === null) {
       this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Chọn tổ chức' });
       return;
     }
     this.apiService.getEmployeeSearch(
-      queryString.stringify({ filter: event.query, org_id: this.cardForm.value.org_id })
+      queryString.stringify({ filter: event.query, orgId: this.cardForm.value.orgId })
     )
       .pipe(
         debounceTime(500),
@@ -160,7 +160,7 @@ export class CardDetailComponent implements OnInit {
           .map(d => {
             return {
               label: d.org_name || d.org_cd,
-              value: d.org_id
+              value: d.orgId
             };
           });
       },

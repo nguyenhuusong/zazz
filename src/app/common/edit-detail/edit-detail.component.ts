@@ -102,11 +102,11 @@ export class EditDetailComponent implements OnInit, OnChanges {
           //callApi intentions
           if (element1.field_name === 'project_cd') {
 
-          } else if (element1.field_name === 'org_id') {
+          } else if (element1.field_name === 'orgId') {
             if (element1.columnType === 'selectTree') {
               element1.isVisiable = false;
-              const root_org_id = await this.getValueByKey('root_org_id');
-              this.getOrganizeTree(root_org_id, element1);
+              const root_orgId = await this.getValueByKey('root_orgId');
+              this.getOrganizeTree(root_orgId, element1);
             } else {
               this.getAgencyOrganizeList(element1);
             }
@@ -122,28 +122,28 @@ export class EditDetailComponent implements OnInit, OnChanges {
             this.getWorkShift(element1, this.detail.employeeCd)
           } else if (element1.field_name === 'bank_code') {
             this.getBankList(element1)
-          } else if (element1.field_name === 'parent_id') {
-            const org_id = await this.getValueByKey('org_id');
+          } else if (element1.field_name === 'parentId') {
+            const orgId = await this.getValueByKey('orgId');
             const adm_st = await this.getValueByKey('adm_st');
-            this.getAgentLeaders(org_id, element1, adm_st);
+            this.getAgentLeaders(orgId, element1, adm_st);
           } else if (element1.field_name === 'posistionCd') {
-            const root_org_id = await this.getValueByKey('root_org_id');
-            this.getOrgPositions(root_org_id, element1);
+            const root_orgId = await this.getValueByKey('root_orgId');
+            this.getOrgPositions(root_orgId, element1);
           } else if (element1.field_name === 'companyId') {
-            this.getCompanyList(this.detail.root_org_id ? this.detail.root_org_id : 0, element1);
+            this.getCompanyList(this.detail.root_orgId ? this.detail.root_orgId : 0, element1);
           } else if (element1.field_name === 'company_id') {
-            this.getCompanyList(this.detail.root_org_id ? this.detail.root_org_id : 0, element1);
+            this.getCompanyList(this.detail.root_orgId ? this.detail.root_orgId : 0, element1);
           } else if (element1.field_name === 'reportTo') {
-            const root_org_id = this.detail ? this.detail.root_org_id : 0
-            this.getEmpLeaders(element1, root_org_id);
+            const root_orgId = this.detail ? this.detail.root_orgId : 0
+            this.getEmpLeaders(element1, root_orgId);
           } else if (element1.field_name === 'acc_no') {
             const cif_no = this.detail.cif_no
             this.getAccountList(element1, cif_no);
           } else if (element1.field_name === 'job_id') {
-            const root_org_id = await this.getValueByKey('root_org_id');
+            const root_orgId = await this.getValueByKey('root_orgId');
             const positionTypeCd = await this.getValueByKey('positionCd');
-            this.getJobTitles(root_org_id, element1, positionTypeCd);
-          } else if (element1.field_name === 'root_org_id') {
+            this.getJobTitles(root_orgId, element1, positionTypeCd);
+          } else if (element1.field_name === 'root_orgId') {
             this.getOrgRoots(element1);
           } else if (element1.field_name === 'org_cds') {
             this.getOrgRootsMuti(element1);
@@ -311,8 +311,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
     })
   }
 
-  getEmpLeaders(element1, root_org_id) {
-    const queryParams = queryString.stringify({ root_org_id: root_org_id });
+  getEmpLeaders(element1, root_orgId) {
+    const queryParams = queryString.stringify({ root_orgId: root_orgId });
     this.apiService.getEmpLeaders(queryParams).subscribe(results => {
       if (results.status === 'success') {
         element1.options = cloneDeep(results.data).map(d => {
@@ -342,8 +342,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
     })
   }
 
-  getJobTitles(org_id, element1, positionTypeCd) {
-    const queryParams = queryString.stringify({ org_id: org_id, positionTypeCd: positionTypeCd });
+  getJobTitles(orgId, element1, positionTypeCd) {
+    const queryParams = queryString.stringify({ orgId: orgId, positionTypeCd: positionTypeCd });
     this.apiService.getJobs(queryParams).subscribe(results => {
       if (results.status === 'success') {
         element1.options = cloneDeep(results.data).map(d => {
@@ -395,7 +395,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
           element1.options = cloneDeep(results.data).map(d => {
             return {
               label: d.org_name + '-' + d.org_cd,
-              value: `${d.org_id}`
+              value: `${d.orgId}`
             }
           });
           element1.columnValue = element1.columnValue ? element1.columnValue : ''
@@ -411,7 +411,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
         element1.options = cloneDeep(results.data).map(d => {
           return {
             label: d.org_name + '-' + d.org_cd,
-            value: `${d.org_id}`
+            value: `${d.orgId}`
           }
         });
         element1.columnValue = element1.columnValue ? element1.columnValue : ''
@@ -521,8 +521,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
     })
   }
 
-  getAgentLeaders(org_id, element1, isAdmin) {
-    const queryParams = queryString.stringify({ org_id: org_id, admin_is: isAdmin });
+  getAgentLeaders(orgId, element1, isAdmin) {
+    const queryParams = queryString.stringify({ orgId: orgId, admin_is: isAdmin });
     this.apiService.getAgentLeaders(queryParams).subscribe(results => {
       if (results.status === 'success') {
         element1.options = cloneDeep(results.data).map(d => {
@@ -533,8 +533,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
     })
   }
 
-  getOrgPositions(org_id, element1) {
-    const queryParams = queryString.stringify({ org_id: org_id });
+  getOrgPositions(orgId, element1) {
+    const queryParams = queryString.stringify({ orgId: orgId });
     this.apiService.getOrgPositions(queryParams).subscribe(results => {
       if (results.status === 'success') {
         element1.options = cloneDeep(results.data).map(d => {
@@ -545,8 +545,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
     })
   }
 
-  getCompanyList(org_id, element1) {
-    const queryParams = queryString.stringify({ org_id: org_id });
+  getCompanyList(orgId, element1) {
+    const queryParams = queryString.stringify({ orgId: orgId });
     this.apiService.getCompanyList(queryParams).subscribe(results => {
       if (results.status === 'success') {
         element1.options = cloneDeep(results.data).map(d => {
@@ -557,13 +557,13 @@ export class EditDetailComponent implements OnInit, OnChanges {
     })
   }
 
-  getOrganizeTree(org_id, element1) {
-    const queryParams = queryString.stringify({ parent_id: org_id });
+  getOrganizeTree(orgId, element1) {
+    const queryParams = queryString.stringify({ parentId: orgId });
     this.apiService.getOrganizeTree(queryParams).subscribe(results => {
       if (results.status === 'success') {
         element1.options = results.data;
         if (element1.columnValue) {
-          const queryParams1 = queryString.stringify({ parent_id: element1.columnValue });
+          const queryParams1 = queryString.stringify({ parentId: element1.columnValue });
           this.apiService.getOrganizeTree(queryParams1).subscribe(results => {
             if (results.status === 'success' && results.data.length > 0) {
               element1.columnValue = results.data.length > 0 ? results.data[0] : null;
@@ -614,7 +614,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
     this.apiService.getAgencyOrganizeList(queryParams).subscribe(results => {
       if (results.status === 'success') {
         element1.options = cloneDeep(results.data).map(d => {
-          return { label: d.org_name, value: d.org_id }
+          return { label: d.org_name, value: d.orgId }
         });
         element1.columnValue = element1.columnValue ? parseInt(element1.columnValue) : ''
       }

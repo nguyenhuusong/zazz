@@ -22,7 +22,7 @@ export class ChiTietToChucComponent implements OnInit, OnChanges {
     private confirmationService: ConfirmationService,
     private router: Router
   ) { }
-  org_id = null;
+  orgId = null;
   listViews = [];
   imagesUrl = [];
   paramsObject = null;
@@ -70,14 +70,14 @@ export class ChiTietToChucComponent implements OnInit, OnChanges {
     this.activatedRoute.queryParamMap.subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.dataRouter = this.paramsObject.params;
-      this.org_id = this.paramsObject.params.org_id;
+      this.orgId = this.paramsObject.params.orgId;
       this.getOrganizeInfo();
     });
   };
 
   getOrganizeInfo() {
     this.listViews = [];
-    const queryParams = queryString.stringify({ org_id: this.org_id });
+    const queryParams = queryString.stringify({ orgId: this.orgId });
     this.apiService.getOrganizeInfo(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.listViews = cloneDeep(results.data.group_fields);
@@ -118,7 +118,7 @@ export class ChiTietToChucComponent implements OnInit, OnChanges {
   }
   filter = ''
   getCompanyList() {
-    const queryParams = queryString.stringify({ filter: this.filter });
+    const queryParams = queryString.stringify({ filter: this.filter, orgId: this.orgId });
     this.apiService.getCompanyList(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.dataGridAdd = results.data;
@@ -171,7 +171,7 @@ export class ChiTietToChucComponent implements OnInit, OnChanges {
   }
 
   getPositionList() {
-    const queryParams = queryString.stringify({ org_level: + this.orgLevels[0].columnValue, filter: this.filter });
+    const queryParams = queryString.stringify({ orgId: this.orgId, filter: this.filter });
     this.apiService.getPositionList(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.dataGridAdd = results.data;
@@ -229,14 +229,13 @@ export class ChiTietToChucComponent implements OnInit, OnChanges {
   }
 
   cancelUpdate() {
-    this.manhinh = 'View';
-    this.getOrganizeInfo();
+    this.router.navigate(['/cai-dat/cai-dat-to-chuc']);
   }
 
   submit(datas) {
     if (this.isPositions) {
       const params = {
-        org_id: this.detailInfo.org_id,
+        orgId: this.detailInfo.orgId,
         positionIds: datas.map(d => d.positionId)
       }
       this.apiService.setOrganizePosition(params).subscribe(results => {
@@ -250,7 +249,7 @@ export class ChiTietToChucComponent implements OnInit, OnChanges {
       })
     } else {
       const params = {
-        org_id: this.detailInfo.org_id,
+        orgId: this.detailInfo.orgId,
         companyIds: datas.map(d => d.companyId)
       }
       this.apiService.setOrganizeCompany(params).subscribe(results => {
@@ -263,10 +262,7 @@ export class ChiTietToChucComponent implements OnInit, OnChanges {
         }
       })
     }
-
   }
-
-
 }
 
 

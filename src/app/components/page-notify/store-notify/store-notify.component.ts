@@ -175,7 +175,7 @@ export class StoreNotifyComponent implements OnInit, OnChanges {
   }
 
   getOrganizeTree(value): void {
-    const queryParams = queryString.stringify({ parent_id: value });
+    const queryParams = queryString.stringify({ parentId: value });
     this.apiService.getOrganizeTree(queryParams)
       .subscribe((results: any) => {
         if (results && results.status === 'success') {
@@ -193,14 +193,14 @@ export class StoreNotifyComponent implements OnInit, OnChanges {
   danhsachphongban = [];
 
   onNodeSelect(event) {
-    if (this.danhsachphongban.indexOf(event.node.org_id) < 0) {
-      this.danhsachphongban.push(event.node.org_id);
+    if (this.danhsachphongban.indexOf(event.node.orgId) < 0) {
+      this.danhsachphongban.push(event.node.orgId);
     }
   }
 
   onNodeUnselect(event) {
-    if (this.danhsachphongban.indexOf(event.node.org_id) > -1) {
-      this.danhsachphongban = this.danhsachphongban.filter(s => s !== event.node.org_id);
+    if (this.danhsachphongban.indexOf(event.node.orgId) > -1) {
+      this.danhsachphongban = this.danhsachphongban.filter(s => s !== event.node.orgId);
     }
   }
 
@@ -219,7 +219,7 @@ export class StoreNotifyComponent implements OnInit, OnChanges {
   getUserByPush() {
     const params = {
       "org_cd": this.perent_id,
-      "org_ids": this.danhsachphongban,
+      "orgIds": this.danhsachphongban,
       "employees": [],
       "filter": this.query.filter
     }

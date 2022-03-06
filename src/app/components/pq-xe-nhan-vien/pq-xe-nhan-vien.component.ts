@@ -102,7 +102,7 @@ export class PqXeNhanVienComponent implements OnInit {
     ];
     this.model = {
       organizationCd: '',
-      org_id: '',
+      orgId: '',
       filter: '',
       status: -1,
       offSet: 0,
@@ -114,7 +114,7 @@ export class PqXeNhanVienComponent implements OnInit {
   }
 
   handleChangeOrganize(): void {
-    this.model.org_id = '';
+    this.model.orgId = '';
     this.getOrganizeTree();
     this.find();
   }
@@ -127,11 +127,11 @@ export class PqXeNhanVienComponent implements OnInit {
             .map(d => {
               return {
                 label: d.org_name || d.org_cd,
-                value: { org_cd: d.org_cd, org_id: d.org_id }
+                value: { org_cd: d.org_cd, orgId: d.orgId }
               };
             });
           // if (this.organizes && this.organizes.length) {
-          //   this.model.organizationCd = { org_cd: this.organizes[0].value.org_cd, org_id: this.organizes[0].value.org_id };
+          //   this.model.organizationCd = { org_cd: this.organizes[0].value.org_cd, orgId: this.organizes[0].value.orgId };
           //   this.getOrganizeTree();
           // }
           this.organizes = [{ label: 'Tất cả', value: '' }, ...this.organizes];
@@ -140,7 +140,7 @@ export class PqXeNhanVienComponent implements OnInit {
   }
 
   getOrganizeTree(): void {
-    const queryParams = queryString.stringify({ parent_id: this.model.organizationCd.org_id });
+    const queryParams = queryString.stringify({ parentId: this.model.organizationCd.orgId });
     this.apiService.getOrganizeTree(queryParams)
       .subscribe((results: any) => {
         if (results && results.status === 'success') {
@@ -160,7 +160,7 @@ export class PqXeNhanVienComponent implements OnInit {
     this.spinner.show();
     const query = { ...this.model };
     query.organizationCd = typeof query.organizationCd === 'string' ? query.organizationCd : query.organizationCd.org_cd;
-    query.org_id = typeof query.org_id === 'string' ? query.org_id : query.org_id.org_id;
+    query.orgId = typeof query.orgId === 'string' ? query.orgId : query.orgId.orgId;
     const queryParams = queryString.stringify(query);
     this.apiService.getEmployeeVehiclePage(queryParams).subscribe(
       (results: any) => {
@@ -510,7 +510,7 @@ export class PqXeNhanVienComponent implements OnInit {
     this.model.pageSize = 1000000;
     const query = { ...this.model };
     query.organizationCd = typeof query.organizationCd === 'string' ? query.organizationCd : query.organizationCd.org_cd;
-    query.org_id = typeof query.org_id === 'string' ? query.org_id : query.org_id.org_id;
+    query.orgId = typeof query.orgId === 'string' ? query.orgId : query.orgId.orgId;
     const queryParams = queryString.stringify(query);
     this.apiService.getEmployeeVehiclePage(queryParams).subscribe((results: any) => {
       const dataExport = [];

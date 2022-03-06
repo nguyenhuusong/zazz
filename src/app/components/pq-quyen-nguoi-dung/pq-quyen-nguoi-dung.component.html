@@ -78,9 +78,9 @@
         <input type="text" class="form-control" [value]="chiTietNguoiDUng?.departmentName" name="departmentName"  >
     </div> -->
     <div class="col-md-12  mt-1">
-        <div class="field-group select" [ngClass]="modelAdd.parent_id ? 'valid' : 'invalid' ">
+        <div class="field-group select" [ngClass]="modelAdd.parentId ? 'valid' : 'invalid' ">
             <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
-                [options]="managerLists" [(ngModel)]="modelAdd.parent_id" name="parent_id">
+                [options]="managerLists" [(ngModel)]="modelAdd.parentId" name="parentId">
                 <ng-template let-item pTemplate="selectedItem">
                     <span>{{item.label}}</span>
                 </ng-template>

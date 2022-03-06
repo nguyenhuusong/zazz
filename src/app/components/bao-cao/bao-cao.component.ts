@@ -87,7 +87,7 @@ export class BaoCaoComponent implements OnInit {
   }
 
   getCompanyList(element1: any): void {
-    const queryParams = queryString.stringify({ org_id: 0 });
+    const queryParams = queryString.stringify({ orgId: 0 });
     this.apiService.getCompanyList(queryParams).subscribe(results => {
       if (results.status === 'success') {
         element1.options = results.data.map(res => {

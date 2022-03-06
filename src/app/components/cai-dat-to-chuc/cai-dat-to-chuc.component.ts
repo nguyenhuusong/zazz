@@ -85,7 +85,7 @@ export class CaiDatToChucComponent implements OnInit {
     gridWidth: 0,
     offSet: 0,
     pageSize: 15,
-    org_id: 0,
+    orgId: 0,
     isLock: -1,
     isApprove: -1,
     org_level: 0,
@@ -101,11 +101,11 @@ export class CaiDatToChucComponent implements OnInit {
   displayButton = false;
   detailOrganizeMap = null;
   modeAgencyOrganize = {
-    org_id: 0,
+    orgId: 0,
     org_cd: '',
     org_name: '',
     org_level: 0,
-    parent_id: 0,
+    parentId: 0,
     org_type: '',
     isChild: false,
     de_cd: null
@@ -117,7 +117,7 @@ export class CaiDatToChucComponent implements OnInit {
       gridWidth: 0,
       offSet: 0,
       pageSize: 15,
-      org_id: 0,
+      orgId: 0,
       isLock: -1,
       isApprove: -1,
       org_level: 0
@@ -137,16 +137,16 @@ export class CaiDatToChucComponent implements OnInit {
           this.selectedNode = this.listAgencyMap[0];
           this.detailOrganizeMap = this.selectedNode
           localStorage.setItem('organize', JSON.stringify(this.listAgencyMap[0]));
-          this.query.org_id = this.selectedNode.org_id;
+          this.query.orgId = this.selectedNode.orgId;
           this.query.org_level = this.selectedNode.org_level;
           this.load();
         } else {
           this.selectedNode = JSON.parse(localStorage.getItem("organize"));
-          this.query.org_id = this.selectedNode.org_id;
-          console.log(this.selectedNode.parent_id)
-          this.parseObjectProperties(this.listAgencyMap, this.selectedNode.parent_id);
+          this.query.orgId = this.selectedNode.orgId;
+          console.log(this.selectedNode.parentId)
+          this.parseObjectProperties(this.listAgencyMap, this.selectedNode.parentId);
           this.detailOrganizeMap = this.selectedNode
-          this.selected(this.listAgencyMap, this.query.org_id);
+          this.selected(this.listAgencyMap, this.query.orgId);
           this.query.org_level = this.selectedNode.org_level;
           this.load();
         }
@@ -162,14 +162,14 @@ export class CaiDatToChucComponent implements OnInit {
   }
 
 
-  parseObjectProperties(obj, org_id = 0) {
+  parseObjectProperties(obj, orgId = 0) {
     for (let k of obj) {
-      if (k.org_id === org_id) {
+      if (k.orgId === orgId) {
 
         k.expanded = true;
       } else {
         if (k.hasOwnProperty('children') && Array.isArray(k.children) && k.children.length > 0) {
-          this.parseObjectProperties(k.children, org_id);
+          this.parseObjectProperties(k.children, orgId);
         }
       }
     }
@@ -177,24 +177,24 @@ export class CaiDatToChucComponent implements OnInit {
 
 
 
-  // expanded(datas = [], org_id = 0) {
+  // expanded(datas = [], orgId = 0) {
   //   datas.forEach(d => {
-  //     if (d.org_id === org_id) {
+  //     if (d.orgId === orgId) {
   //       d.expanded = true;
   //     } else {
-  //       if (d.children.length > 0) this.expanded(d.children, this.selectedNode.parent_id)
+  //       if (d.children.length > 0) this.expanded(d.children, this.selectedNode.parentId)
   //     }
   //   })
   //   return datas
   // }
 
-  selected(datas = [], org_id = 0) {
+  selected(datas = [], orgId = 0) {
     datas.forEach(d => {
-      if (d.org_id === org_id) {
+      if (d.orgId === orgId) {
         this.selectedNode = d;
         this.detailOrganizeMap = d;
       } else {
-        if (d.children.length > 0) this.selected(d.children, this.selectedNode.org_id)
+        if (d.children.length > 0) this.selected(d.children, this.selectedNode.orgId)
       }
     }
     )
@@ -320,7 +320,7 @@ export class CaiDatToChucComponent implements OnInit {
 
   thongtinphongban(event) {
     const params = {
-      org_id: event.rowData.org_id
+      orgId: event.rowData.orgId
     }
     this.router.navigate(['/cai-dat/cai-dat-to-chuc/chi-tiet-to-chuc'], { queryParams: params })
   }
@@ -341,18 +341,18 @@ export class CaiDatToChucComponent implements OnInit {
   }
 
   getAgencyOrganizeList(org_level) {
-    const queryParams = queryString.stringify({ org_level: org_level });
-    this.apiService.getOrganizeList(queryParams).subscribe(results => {
-      if (results.status === 'success') {
-        this.organizeList = results.data;
-        this.organizeList = this.organizeList.map(d => {
-          return {
-            label: d.org_name,
-            value: d.org_id
-          }
-        })
-      }
-    })
+    // const queryParams = queryString.stringify({ org_level: org_level });
+    // this.apiService.getOrganizeList(queryParams).subscribe(results => {
+    //   if (results.status === 'success') {
+    //     this.organizeList = results.data;
+    //     this.organizeList = this.organizeList.map(d => {
+    //       return {
+    //         label: d.org_name,
+    //         value: d.orgId
+    //       }
+    //     })
+    //   }
+    // })
   }
 
   selectDepartment(event) {
@@ -361,8 +361,8 @@ export class CaiDatToChucComponent implements OnInit {
     this.modeAgencyOrganize.org_name = items[0].label
   }
 
-  getDepartments(parent_id) {
-    const queryParams = queryString.stringify({ parent_id: parent_id })
+  getDepartments(parentId) {
+    const queryParams = queryString.stringify({ parentId: parentId })
     this.apiService.organizeGetDepartments(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.departments = results.data.map(d => {
@@ -424,7 +424,7 @@ export class CaiDatToChucComponent implements OnInit {
   caiDatThamSo() {
     if (this.detailOrganizeMap.org_level === 1) {
       const params = {
-        org_cd: this.detailOrganizeMap.org_cd
+        organizeId: this.detailOrganizeMap.orgId
       }
       this.router.navigate(['/cai-dat/cai-dat-tham-so'], { queryParams: params });
     } else {
@@ -449,47 +449,47 @@ export class CaiDatToChucComponent implements OnInit {
 
   getlistnv() {
     localStorage.setItem("organize", JSON.stringify(this.detailOrganizeMap))
-    this.query.org_id = this.detailOrganizeMap.org_id;
+    this.query.orgId = this.detailOrganizeMap.orgId;
+    this.query.org_level = this.detailOrganizeMap.org_level;
     this.load();
     this.displayButton = false;
   }
-
   Add() {
-    this.getDepartments(this.detailOrganizeMap.org_id);
+    this.getDepartments(this.detailOrganizeMap.orgId);
     this.titleForm = {
       label: 'Thêm mới phòng ban',
       value: 'Add'
     }
-    const queryParams = queryString.stringify({ org_level: this.detailOrganizeMap.org_level });
+    const queryParams = queryString.stringify({ org_level: this.detailOrganizeMap.org_level, organizeId: this.detailOrganizeMap.orgId });
     this.apiService.getOrganizeList(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.organizeList = results.data;
         this.organizeList = this.organizeList.map(d => {
           return {
             label: d.org_name,
-            value: d.org_id
+            value: d.orgId
           }
         })
 
         this.displayOrganize = true;
-        if (this.detailOrganizeMap.parent_id > 0) {
+        if (this.detailOrganizeMap.parentId > 0) {
           this.modeAgencyOrganize = {
-            org_id: 0,
+            orgId: 0,
             org_cd: '',
             org_name: '',
             org_level: this.detailOrganizeMap.org_level,
-            parent_id: this.detailOrganizeMap.org_id,
+            parentId: this.detailOrganizeMap.orgId,
             org_type: '',
             isChild: false,
             de_cd: null,
           }
         } else {
           this.modeAgencyOrganize = {
-            org_id: 0,
+            orgId: 0,
             org_cd: '',
             org_name: '',
             org_level: this.listAgencyMap.length > 0 ? 1 : 0,
-            parent_id: this.listAgencyMap.length > 0 ? this.detailOrganizeMap.org_id : 0,
+            parentId: this.listAgencyMap.length > 0 ? this.detailOrganizeMap.orgId : 0,
             org_type: '',
             isChild: false,
             de_cd: null,
@@ -505,27 +505,27 @@ export class CaiDatToChucComponent implements OnInit {
   selectedNodeTree: any = null;
   Edit() {
     this.displayButton = false;
-    this.getDepartments(this.detailOrganizeMap.parent_id);
+    this.getDepartments(this.detailOrganizeMap.parentId);
     this.titleForm = {
       label: 'Chỉnh sửa phòng ban',
       value: 'Edit'
     }
 
-    const queryParams = queryString.stringify({ parent_id: 1 });
+    const queryParams = queryString.stringify({ parentId: 1 });
     this.apiService.getOrganizeTree(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.listOrganizeTree = results.data;
-        const queryParams1 = queryString.stringify({ parent_id: this.detailOrganizeMap.parent_id });
+        const queryParams1 = queryString.stringify({ parentId: this.detailOrganizeMap.parentId });
         this.apiService.getOrganizeTree(queryParams1).subscribe(results => {
           if (results.status === 'success' && results.data.length > 0) {
             this.selectedNodeTree = results.data[0];
             this.displayOrganize = true;
             this.modeAgencyOrganize = {
-              org_id: this.detailOrganizeMap.org_id,
+              orgId: this.detailOrganizeMap.orgId,
               org_name: this.detailOrganizeMap.label,
               org_cd: this.detailOrganizeMap.org_cd,
               org_level: this.detailOrganizeMap.org_level,
-              parent_id: this.detailOrganizeMap.parent_id,
+              parentId: this.detailOrganizeMap.parentId,
               isChild: false,
               org_type: null,
               de_cd: this.detailOrganizeMap.org_cd
@@ -544,18 +544,18 @@ export class CaiDatToChucComponent implements OnInit {
     //     this.organizeList = this.organizeList.map(d => {
     //       return {
     //         label: d.org_name,
-    //         value: d.org_id
+    //         value: d.orgId
     //       }
     //     });
 
-    //     this.organizeList = this.organizeList.filter(d => d.value !== this.detailOrganizeMap.org_id)
+    //     this.organizeList = this.organizeList.filter(d => d.value !== this.detailOrganizeMap.orgId)
     //     this.displayOrganize = true;
     //     this.modeAgencyOrganize = {
-    //       org_id: this.detailOrganizeMap.org_id,
+    //       orgId: this.detailOrganizeMap.orgId,
     //       org_name: this.detailOrganizeMap.label,
     //       org_cd: this.detailOrganizeMap.org_cd,
     //       org_level: this.detailOrganizeMap.org_level,
-    //       parent_id: this.detailOrganizeMap.parent_id,
+    //       parentId: this.detailOrganizeMap.parentId,
     //       isChild: false,
     //       org_type: null,
     //       de_cd: this.detailOrganizeMap.org_cd
@@ -572,7 +572,7 @@ export class CaiDatToChucComponent implements OnInit {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn thực hiện hành động này?',
       accept: () => {
-        const queryParams = queryString.stringify({ org_id: this.detailOrganizeMap.org_id });
+        const queryParams = queryString.stringify({ orgId: this.detailOrganizeMap.orgId });
         this.apiService.delOrganize(queryParams).subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
@@ -596,7 +596,7 @@ export class CaiDatToChucComponent implements OnInit {
 
   Save() {
     if (this.titleForm.value === 'Edit') {
-      this.modeAgencyOrganize.parent_id = this.selectedNodeTree.org_id
+      this.modeAgencyOrganize.parentId = this.selectedNodeTree.orgId
     }
 
     if (!this.modeAgencyOrganize.org_name) {
@@ -605,7 +605,7 @@ export class CaiDatToChucComponent implements OnInit {
     }
     let params = { ...this.modeAgencyOrganize };
     // if(this.titleForm.value === 'Add') {
-    //   params.parent_id = this.modeAgencyOrganize.isChild ? this.detailOrganizeMap.org_id : this.detailOrganizeMap.parent_id;
+    //   params.parentId = this.modeAgencyOrganize.isChild ? this.detailOrganizeMap.orgId : this.detailOrganizeMap.parentId;
     // }
     delete params.isChild;
     delete params.de_cd;
