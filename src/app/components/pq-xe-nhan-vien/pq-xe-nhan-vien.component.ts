@@ -72,7 +72,7 @@ export class PqXeNhanVienComponent implements OnInit {
   cusId = null;
   first = 0;
   model: any = {
-    organizationCd: '',
+    organizeId: '',
     filter: '',
     status: -1,
     offSet: 0,
@@ -101,7 +101,7 @@ export class PqXeNhanVienComponent implements OnInit {
       { label: 'Danh sách xe nhân viên' },
     ];
     this.model = {
-      organizationCd: '',
+      organizeId: '',
       orgId: '',
       filter: '',
       status: -1,
@@ -131,7 +131,7 @@ export class PqXeNhanVienComponent implements OnInit {
               };
             });
           // if (this.organizes && this.organizes.length) {
-          //   this.model.organizationCd = { org_cd: this.organizes[0].value.org_cd, orgId: this.organizes[0].value.orgId };
+          //   this.model.organizeId = { org_cd: this.organizes[0].value.org_cd, orgId: this.organizes[0].value.orgId };
           //   this.getOrganizeTree();
           // }
           this.organizes = [{ label: 'Tất cả', value: '' }, ...this.organizes];
@@ -140,7 +140,7 @@ export class PqXeNhanVienComponent implements OnInit {
   }
 
   getOrganizeTree(): void {
-    const queryParams = queryString.stringify({ parentId: this.model.organizationCd.orgId });
+    const queryParams = queryString.stringify({ parentId: this.model.organizeId.orgId });
     this.apiService.getOrganizeTree(queryParams)
       .subscribe((results: any) => {
         if (results && results.status === 'success') {
@@ -159,7 +159,7 @@ export class PqXeNhanVienComponent implements OnInit {
     this.columnDefs = []
     this.spinner.show();
     const query = { ...this.model };
-    query.organizationCd = typeof query.organizationCd === 'string' ? query.organizationCd : query.organizationCd.org_cd;
+    query.organizeId = typeof query.organizeId === 'string' ? query.organizeId : query.organizeId.org_cd;
     query.orgId = typeof query.orgId === 'string' ? query.orgId : query.orgId.orgId;
     const queryParams = queryString.stringify(query);
     this.apiService.getEmployeeVehiclePage(queryParams).subscribe(
@@ -509,7 +509,7 @@ export class PqXeNhanVienComponent implements OnInit {
     this.spinner.show();
     this.model.pageSize = 1000000;
     const query = { ...this.model };
-    query.organizationCd = typeof query.organizationCd === 'string' ? query.organizationCd : query.organizationCd.org_cd;
+    query.organizeId = typeof query.organizeId === 'string' ? query.organizeId : query.organizeId.org_cd;
     query.orgId = typeof query.orgId === 'string' ? query.orgId : query.orgId.orgId;
     const queryParams = queryString.stringify(query);
     this.apiService.getEmployeeVehiclePage(queryParams).subscribe((results: any) => {
