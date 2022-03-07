@@ -67,8 +67,8 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     filter: '',
     offSet: 0,
     pageSize: 15,
-    job_id: null,
-    org_cd: null,
+    jobId: null,
+    organizeId: null,
     positionCd: null,
     vacancy_id: 0,
     can_st: -1
@@ -114,9 +114,9 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
       filter: '',
       offSet: 0,
       pageSize: 15,
-      org_cd: null,
+      organizeId: null,
       positionCd: '',
-      job_id: null,
+      jobId: null,
       vacancy_id: 0,
       can_st: -1
     }
@@ -264,7 +264,7 @@ load() {
 
   getOrgPositions() {
     this.positions = [];
-    let items = this.listOrgRoots.filter(d => d.value === this.query.org_cd)
+    let items = this.listOrgRoots.filter(d => d.value === this.query.organizeId)
     const queryParams = queryString.stringify({ orgId: items[0].code });
     this.apiService.getOrgPositions(queryParams).subscribe(results => {
       if (results.status === 'success') {
@@ -310,7 +310,7 @@ load() {
         this.listOrgRoots = results.data.map(d => {
           return {
             label: d.org_name + '-' + d.org_cd,
-            value: `${d.org_cd}`,
+            value: `${d.orgId}`,
             code:  `${d.orgId}`,
           }
         });
@@ -345,7 +345,7 @@ load() {
         this.listJobTitles = results.data.map(d => {
           return {
             label: d.job_name,
-            value: d.job_id
+            value: d.jobId
           }
         });
         this.listJobTitles = [{ label: 'Tất cả', value: null }, ...this.listJobTitles]
@@ -374,7 +374,7 @@ load() {
   }
   getVacancyPage() {
     const queryParams = queryString.stringify({
-      job_id: this.query.job_id,
+      jobId: this.query.jobId,
       active_st: 1
     });
     this.apiService.getVacancyPage(queryParams).subscribe(results => {

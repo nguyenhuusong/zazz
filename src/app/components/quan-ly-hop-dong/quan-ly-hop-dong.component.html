@@ -30,7 +30,7 @@
             <div class="col-4" > 
                 <div class="field-group select label-8">
                     <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
-                    [options]="listOrgRoots" [(ngModel)]="query.org_cd" name="org_cd" (onChange)="find()">
+                    [options]="listOrgRoots" [(ngModel)]="query.organizeId" name="organizeId" (onChange)="find()">
                     <ng-template let-item pTemplate="selectedItem">
                         <span>{{item.label}}</span>
                     </ng-template>

@@ -139,7 +139,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
           } else if (element1.field_name === 'acc_no') {
             const cif_no = this.detail.cif_no
             this.getAccountList(element1, cif_no);
-          } else if (element1.field_name === 'job_id') {
+          } else if (element1.field_name === 'jobId') {
             const root_orgId = await this.getValueByKey('root_orgId');
             const positionTypeCd = await this.getValueByKey('positionCd');
             this.getJobTitles(root_orgId, element1, positionTypeCd);
@@ -149,11 +149,11 @@ export class EditDetailComponent implements OnInit, OnChanges {
             this.getOrgRootsMuti(element1);
           }else if (element1.field_name === 'source_ref') {
             this.getNotifyRefList(element1);
-          } else if (element1.field_name === 'contract_type') {
+          } else if (element1.field_name === 'contractTypeId') {
             this.getContractTypes(element1);
           } else if (element1.field_name === 'salary_type') {
-            const contract_type = await this.getValueByKey('contract_type');
-            this.getSalaryTypes(contract_type, element1);
+            const contractTypeId = await this.getValueByKey('contractTypeId');
+            this.getSalaryTypes(contractTypeId, element1);
           } else if (element1.field_name === 'base_id') {
             this.getSalaryBases(element1);
           } else if (element1.field_name === 'hiring_man_id') {
@@ -168,7 +168,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
             this.getWorkplaces(element1);
           } else if (element1.field_name === 'sub_prod_cd' && element1.columnType === 'checkboxList') {
             this.getProductProjs(element1);
-          } else if (element1.field_name === 'room_id') {
+          } else if (element1.field_name === 'roomId') {
             this.getMeetRooms(element1);
           } else if (element1.field_name === 'content_type' || element1.field_name === 'isPublish') {
             this.GetCustObjectList(element1);
@@ -224,7 +224,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
 
 
   getContractTypes(element1) {
-    const queryParams = queryString.stringify({ org_cd: this.detail.org_cd });
+    const queryParams = queryString.stringify({  organizeId: this.detail.orgId });
     this.apiService.getContractTypes(queryParams).subscribe(results => {
       if (results.status === 'success') {
         element1.options = cloneDeep(results.data).map(d => {
@@ -349,7 +349,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
         element1.options = cloneDeep(results.data).map(d => {
           return {
             label: d.job_name,
-            value: `${d.job_id}`
+            value: `${d.jobId}`
           }
         });
         element1.columnValue = element1.columnValue ? element1.columnValue : ''
@@ -357,8 +357,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
     })
   }
 
-  getSalaryTypes(contract_type, element1) {
-    const queryParams = queryString.stringify({ contract_type: contract_type });
+  getSalaryTypes(contractTypeId, element1) {
+    const queryParams = queryString.stringify({ contractTypeId: contractTypeId });
     this.apiService.getSalaryTypes(queryParams).subscribe(results => {
       if (results.status === 'success') {
         element1.options = cloneDeep(results.data).map(d => {
@@ -378,8 +378,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
         if(element1.columnType === 'multiSelect') {
           element1.options = cloneDeep(results.data).map(d => {
             return {
-              name: d.org_name + '-' + d.org_cd,
-              code: `${d.org_cd}`
+              name: d.org_name,
+              code: `${d.orgId}`
             }
           });
           if (element1.columnValue) {
@@ -483,7 +483,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
           element1.options = cloneDeep(results.data).map(d => {
             return {
               label: `${d.room_name}`,
-              value: `${d.room_id}`
+              value: `${d.roomId}`
             };
           });
           element1.columnValue = element1.columnValue ? element1.columnValue : '';
@@ -614,7 +614,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
     this.apiService.getAgencyOrganizeList(queryParams).subscribe(results => {
       if (results.status === 'success') {
         element1.options = cloneDeep(results.data).map(d => {
-          return { label: d.org_name, value: d.orgId }
+          return { label: d.org_name + '-' + d.org_cd, value: d.orgId }
         });
         element1.columnValue = element1.columnValue ? parseInt(element1.columnValue) : ''
       }

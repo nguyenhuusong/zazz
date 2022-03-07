@@ -54,13 +54,13 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
 
   statusApprover = [{ label: "Từ chối", value: 0 }, { label: 'Đồng ý', value: 1 }];
   modelDuyetHopDong = {
-    contract_id: 0,
+    contractId: null,
     status: 1,
     comment: ''
   }
 
   modelContractInfo = {
-    contract_id: 0,
+    contractId: null,
     contractType: 0,
     employeeCd: 0,
     detailInfo: null
@@ -87,7 +87,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   displayCreateContract = false;
   listViewsRecordInfo = null;
   thongtinlienhe = {
-    cont_id: 0,
+    cont_id: null,
     custId: null
   }
   isShowAddress = false;
@@ -1024,7 +1024,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     } else if (event.event.item.key === 'huyhosoky') {
       this.DeleteMeta(event)
     } else if (event.event.item.key === 'duyet-hop-dong') {
-      this.modelDuyetHopDong.contract_id = event.rowData.contract_id;
+      this.modelDuyetHopDong.contractId = event.rowData.contractId;
       this.modelDuyetHopDong.comment = '';
       this.displayApproveContract = true;
     } else if (event.event.item.key === 'view-qua-trinh-hop-dong') {
@@ -1198,7 +1198,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
 
   XemQuaTrinhHopDong(event) {
     this.modelContractInfo = {
-      contract_id: event.rowData.contract_id,
+      contractId: event.rowData.contractId,
       contractType: 0,
       employeeCd: this.detailInfo.employeeCd,
       detailInfo: this.detailInfo
@@ -1210,7 +1210,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn thực xóa hợp đồng?',
       accept: () => {
-        const queryParams = queryString.stringify({ contract_id: event.rowData.contract_id });
+        const queryParams = queryString.stringify({ contractId: event.rowData.contractId });
         this.apiService.delContractInfo(queryParams).subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa hợp đồng thành công' });
@@ -1326,7 +1326,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   taohopdong() {
     this.modelContractInfo = {
       detailInfo: this.detailInfo,
-      contract_id: this.detailInfo.contract_id || 0,
+      contractId: this.detailInfo.contractId || null,
       contractType: this.listContractTypes[0].value,
       employeeCd: this.detailInfo.employeeCd
     }
@@ -1436,7 +1436,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     this.listViewsDependent = [];
     if (this.selectedMenuCode === API_PROFILE.THUE_BAO_HIEM) {
       this.titleType0 = 'Thêm mới người phụ thuộc';
-      const queryParams = queryString.stringify({ employeeCd: this.detailInfo.employeeCd, dependentId: 0 });
+      const queryParams = queryString.stringify({ employeeCd: this.detailInfo.employeeCd, dependentId: null });
       this.getEmpDependent(queryParams);
     } else if (this.selectedMenuCode === API_PROFILE.TIEN_ICH) {
       this.displayNguoiDung = true;
@@ -1450,7 +1450,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   addType3() {
     this.listViewsDependent = [];
     this.titleType0 = 'Thêm mới người liên hệ';
-    const queryParams = queryString.stringify({ employeeCd: this.detailInfo.employeeCd, cont_id: 0 });
+    const queryParams = queryString.stringify({ employeeCd: this.detailInfo.employeeCd, cont_id: null });
     this.getEmpContact(queryParams);
   }
 

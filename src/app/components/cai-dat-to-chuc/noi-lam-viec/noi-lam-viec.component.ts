@@ -209,7 +209,7 @@ export class NoiLamViecComponent implements OnInit {
 
   addNoiLamViec() {
     const params = {
-      workplaceId: 0
+      workplaceId: null
     }
     this.router.navigate(['/cai-dat/noi-lam-viec/them-moi-noi-lam-viec'], { queryParams: params });
   }

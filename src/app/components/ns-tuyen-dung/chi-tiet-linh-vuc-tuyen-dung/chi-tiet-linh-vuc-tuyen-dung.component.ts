@@ -46,7 +46,7 @@ export class ChiTietLinhVucTuyenDungComponent implements OnInit, OnDestroy {
     this.handleParams();
   }
   modelEdit = {
-    job_id: 0,
+    jobId: 0,
   }
   titlePage = ''
   handleParams() {
@@ -54,7 +54,7 @@ export class ChiTietLinhVucTuyenDungComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((params) => {
         this.paramsObject = { ...params.keys, ...params };
-        this.modelEdit.job_id = this.paramsObject.params.job_id || null
+        this.modelEdit.jobId = this.paramsObject.params.jobId || null
         this.getJobInfo();
       });
   };

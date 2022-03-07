@@ -401,7 +401,7 @@
     </ng-template>
 </p-dialog>
 
-<p-dialog styleClass="popup-btngroup-edit-detail" header="{{modelContractInfo.contract_id === 0 ? ' Tạo hợp đồng': 'Thông tin chi tiết hợp đồng'}}" [(visible)]="hienthihopdong" [modal]="true"  [draggable]="false" [resizable]="false"
+<p-dialog styleClass="popup-btngroup-edit-detail" header="{{modelContractInfo.contractId === null ? ' Tạo hợp đồng': 'Thông tin chi tiết hợp đồng'}}" [(visible)]="hienthihopdong" [modal]="true"  [draggable]="false" [resizable]="false"
     [style]="{width: '80vw'}" [autoZIndex]=true [draggable]="false" [resizable]="false">
     <app-create-contract-info *ngIf="hienthihopdong" [modelContractInfo]="modelContractInfo"
         (callback)="emitContract($event)" (back)="hienthihopdong = !hienthihopdong"></app-create-contract-info>
@@ -432,7 +432,7 @@
 
 <p-dialog [(visible)]="isShowAddress" [draggable]="false" [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '1200px', height: 'auto'}">
     <p-header>
-        {{thongtinlienhe.cont_id > 0 ? 'Xem chi tiết liên hệ' :  'Thêm mới người liên hệ'}}
+        {{thongtinlienhe.cont_id ? 'Xem chi tiết liên hệ' :  'Thêm mới người liên hệ'}}
     </p-header>
     <app-add-address-contact *ngIf="isShowAddress" [thongtinlienhe]="thongtinlienhe" (back)="reloaddanhsachlienhe()"></app-add-address-contact>
 </p-dialog>

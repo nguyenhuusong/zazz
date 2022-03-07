@@ -46,7 +46,7 @@ export class PageLoaiThongBaoComponent implements OnInit, OnDestroy, AfterViewCh
   totalRecord = 0;
   projects = [];
   query = {
-    org_cd: '',
+    organizeId: '',
     filter: '',
     gridWidth: 0,
     offSet: 0,
@@ -82,7 +82,7 @@ export class PageLoaiThongBaoComponent implements OnInit, OnDestroy, AfterViewCh
   listsData = [];
   handleReset() {
     this.query = {
-      org_cd: '',
+      organizeId: '',
       filter: '',
       gridWidth: 0,
       offSet: 0,

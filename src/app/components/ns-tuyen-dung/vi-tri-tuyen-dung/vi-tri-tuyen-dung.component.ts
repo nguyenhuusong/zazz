@@ -66,7 +66,7 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
     filter: '',
     offSet: 0,
     pageSize: 15,
-    job_id: 0,
+    jobId: 0,
     hiring_man_id: 0
   }
   totalRecord = 0;
@@ -109,7 +109,7 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
       filter: '',
       offSet: 0,
       pageSize: 15,
-      job_id: 0,
+      jobId: 0,
       hiring_man_id: 0
     }
     this.load();
@@ -215,7 +215,7 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
 
   create() {
     const params = {
-      vacancyId: 0
+      vacancyId: null
     }
     this.router.navigate(['/tuyen-dung/vi-tri-tuyen-dung/them-moi-vi-tri-tuyen-dung'], { queryParams: params });
   }
@@ -246,7 +246,7 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
         this.listJobTitles = results.data.map(d => {
           return {
             label: d.job_name,
-            value: d.job_id
+            value: d.jobId
           }
         });
         this.listJobTitles = [{ label: 'Tất cả', value: '' }, ...this.listJobTitles]

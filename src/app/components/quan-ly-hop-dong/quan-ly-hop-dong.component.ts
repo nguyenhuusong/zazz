@@ -74,7 +74,7 @@ export class QuanLyHopDongComponent implements OnInit {
     filter: '',
     offSet: 0,
     pageSize: 15,
-    org_cd: null
+    organizeId: null
   }
   totalRecord = 0;
   DriverId = 0;
@@ -95,7 +95,7 @@ export class QuanLyHopDongComponent implements OnInit {
       filter: '',
       offSet: 0,
       pageSize: 15,
-      org_cd: null
+      organizeId: null
     }
     this.load();
   }
@@ -128,7 +128,7 @@ export class QuanLyHopDongComponent implements OnInit {
         this.listOrgRoots = results.data.map(d => {
           return {
             label: d.org_name + '-' + d.org_cd,
-            value: `${d.org_cd}`
+            value: `${d.orgId}`
           }
         });
 

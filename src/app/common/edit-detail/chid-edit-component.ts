@@ -236,7 +236,7 @@ export class AppTypeDropdownComponent implements OnInit {
         element.fields.forEach(async element1 => {
           if (element1.columnType === 'selectTree' && element1.field_name === 'orgId') {
             this.getOrganizeTree(value, element1);
-          }else if(element1.field_name === 'job_id') {
+          }else if(element1.field_name === 'jobId') {
             const positionTypeCd = await this.getValueByKey('positionCd');
             this.getJobTitles(value,element1, positionTypeCd) 
           }
@@ -245,7 +245,7 @@ export class AppTypeDropdownComponent implements OnInit {
     }else if (field_name === 'positionCd') {
       this.dataView.forEach(element => {
         element.fields.forEach(async element1 => {
-         if(element1.field_name === 'job_id') {
+         if(element1.field_name === 'jobId') {
             const root_orgId = await this.getValueByKey('root_orgId');
             this.getJobTitles(root_orgId,element1, value) 
           }
@@ -269,7 +269,7 @@ export class AppTypeDropdownComponent implements OnInit {
           }
         });
       });
-    }else if (field_name === 'contract_type') {
+    }else if (field_name === 'contractTypeId') {
       this.callback.emit(value);
     }
   }
@@ -281,7 +281,7 @@ export class AppTypeDropdownComponent implements OnInit {
         element1.options = cloneDeep(results.data).map(d => {
           return {
             label: d.job_name,
-            value: `${d.job_id}`
+            value: `${d.jobId}`
           }
         });
         element1.columnValue = element1.columnValue ? element1.columnValue : ''

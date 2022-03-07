@@ -68,12 +68,12 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
   listJobTitles = [];
   getRowHeight;
   query = {
-    job_id: -1,
+    jobId: -1,
     filter: '',
     offSet: 0,
     pageSize: 15,
     gridWidth: 1300,
-    org_cd: null,
+    organizeId: null,
     positionTypeCd: null,
   }
   totalRecord = 0;
@@ -115,13 +115,13 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
 
   cancel() {
     this.query = {
-      job_id: -1,
+      jobId: -1,
       positionTypeCd: null,
       filter: '',
       offSet: 0,
       pageSize: 15,
       gridWidth: 1300,
-      org_cd: null,
+      organizeId: null,
     }
     this.load();
   }
@@ -205,7 +205,7 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn thực hiện xóa Chuyên môn này !',
       accept: () => {
-        const queryParams = queryString.stringify({ job_id: event.rowData.job_id });
+        const queryParams = queryString.stringify({ jobId: event.rowData.jobId });
         this.apiService.delJobInfo(queryParams).subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa Chuyên môn thành công' });
@@ -220,14 +220,14 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
 
   XemChiTiet(event) {
     const params = {
-      job_id: event.rowData.job_id
+      jobId: event.rowData.jobId
     }
     this.router.navigate(['/tuyen-dung/chuyen-mon/chi-tiet-linh-vuc-tuyen-dung'], { queryParams: params });
   }
 
   addJob() {
     const params = {
-      job_id: 0
+      jobId: 0
     }
     this.router.navigate(['/tuyen-dung/chuyen-mon/them-moi-linh-vuc-tuyen-dung'], { queryParams: params });
   }
@@ -283,7 +283,7 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
         this.listJobTitles = results.data.map(d => {
           return {
             label: d.job_name,
-            value: d.job_id
+            value: d.jobId
           }
         });
         this.listJobTitles = [{ label: 'Tất cả', value: -1 }, ...this.listJobTitles]

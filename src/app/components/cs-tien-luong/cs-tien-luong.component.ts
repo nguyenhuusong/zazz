@@ -45,7 +45,7 @@ export class CsTienLuongComponent implements OnInit {
 
   modelAdd = {
     date: new Date(),
-    org_cd: ''
+    organizeId: ''
   }
   listOrgRoots = [];
   listRecordStatus = [];
@@ -78,7 +78,7 @@ export class CsTienLuongComponent implements OnInit {
   gridflexs: any;
   getRowHeight;
   query = {
-    org_cd: null,
+    organizeId: null,
     record_st: '',
     filter: '',
     offSet: 0,
@@ -100,7 +100,7 @@ export class CsTienLuongComponent implements OnInit {
 
   cancel() {
     this.query = {
-      org_cd: null,
+      organizeId: null,
       record_st: '',
       filter: '',
       offSet: 0,
@@ -206,7 +206,7 @@ export class CsTienLuongComponent implements OnInit {
     this.displayFrom = true;
     this.modelAdd = {
       date: new Date(),
-      org_cd: ''
+      organizeId: ''
     }
 
 
@@ -276,7 +276,7 @@ export class CsTienLuongComponent implements OnInit {
         this.listOrgRoots = results.data.map(d => {
           return {
             label: d.org_name + '-' + d.org_cd,
-            value: `${d.org_cd}`
+            value: `${d.orgId}`
           }
         });
         this.listOrgRoots = [{ label: 'Chọn tổ chức', value: null }, ...this.listOrgRoots];

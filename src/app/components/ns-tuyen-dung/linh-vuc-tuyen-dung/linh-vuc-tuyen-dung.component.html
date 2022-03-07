@@ -25,7 +25,7 @@
             <div class="col-2">
                 <div class="field-group select mb-0 valid" >
                     <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
-                        [options]="orgRoots" [(ngModel)]="query.org_cd" name="org_cd" (onChange)="find()">
+                        [options]="orgRoots" [(ngModel)]="query.organizeId" name="organizeId" (onChange)="find()">
                         <ng-template let-item pTemplate="selectedItem">
                             <span style="vertical-align:middle;">{{item.label}}</span>
                         </ng-template>

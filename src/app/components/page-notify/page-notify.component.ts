@@ -154,7 +154,7 @@ export class PageNotifyComponent implements OnInit, OnDestroy, AfterViewChecked 
         this.moduleList = results.data.map(res => {
           return {
             label: `${res.org_name} (${res.org_cd})`,
-            value: res.org_cd
+            value: res.orgId
           }
         });
       }

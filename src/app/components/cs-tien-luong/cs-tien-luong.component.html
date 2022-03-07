@@ -26,8 +26,8 @@
             <div class="col-2">
                 <div class="field-group select mb-0 label-8">
                     <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
-                        [options]="listOrgRoots" [(ngModel)]="query.org_cd"  (onChange)="find()"
-                        name="org_cd" [filter]="true">
+                        [options]="listOrgRoots" [(ngModel)]="query.organizeId"  (onChange)="find()"
+                        name="organizeId" [filter]="true">
                         <ng-template let-item pTemplate="selectedItem">
                             <span>{{item.label}}</span>
                         </ng-template>
@@ -85,7 +85,7 @@
     <div class="col-md-12">
         <div class="field-group select label-8">
             <p-dropdown appendTo="body" [baseZIndex]="100" appendTo="body" [autoDisplayFirst]="false"
-                [options]="listOrgRoots" [(ngModel)]="modelAdd.org_cd" name="org_cd" 
+                [options]="listOrgRoots" [(ngModel)]="modelAdd.organizeId" name="organizeId" 
                 [filter]="true">
                 <ng-template let-item pTemplate="selectedItem">
                     <span>{{item.label}}</span>

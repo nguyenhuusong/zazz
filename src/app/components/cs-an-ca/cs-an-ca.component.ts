@@ -75,7 +75,7 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
   gridflexs: any;
   getRowHeight;
   query = {
-    org_cd: null,
+    organizeId: null,
     // request_status: '',
     filter: '',
     offSet: 0,
@@ -97,7 +97,7 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
 
   cancel() {
     this.query = {
-      org_cd: null,
+      organizeId: null,
       // request_status: '',
       filter: '',
       offSet: 0,
@@ -250,7 +250,7 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
         this.listOrgRoots = results.data.map(d => {
           return {
             label: d.org_name + '-' + d.org_cd,
-            value: `${d.org_cd}`
+            value: `${d.orgId}`
           }
         });
 

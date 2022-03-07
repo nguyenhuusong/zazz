@@ -455,7 +455,7 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v2/meeting/GetMeetingInfo${queryParams}`, this.options);
   }
   getMeetRoomInfo(roomId): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v2/meeting/GetMeetRoomInfo?room_id=${roomId}`, this.options);
+    return this.http.get<any>(`${apiHrmServer}/api/v2/meeting/GetMeetRoomInfo?roomId=${roomId}`, this.options);
   }
   setMeetingInfo(data): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/meeting/SetMeetingInfo`, data, this.options);
@@ -464,7 +464,7 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v2/meeting/SetMeetRoomInfo`, data, this.options);
   }
   delMeetRoomInfo(id): Observable<any> {
-    return this.http.delete<any>(`${apiHrmServer}/api/v2/meeting/DelMeetRoomInfo?room_id=` + id, this.options);
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/meeting/DelMeetRoomInfo?roomId=` + id, this.options);
   }
   delMeetingInfo(id): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v2/meeting/DelMeetingInfo?meet_ud=` + id, this.options);

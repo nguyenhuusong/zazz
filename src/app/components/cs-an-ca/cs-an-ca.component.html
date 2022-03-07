@@ -22,10 +22,10 @@
                 </div>
             </div>
             <div class="col-1">
-                <div class="field-group select mb-0 label-8" [ngClass]=" query.org_cd ? 'valid' : 'invalid' ">
+                <div class="field-group select mb-0 label-8" [ngClass]=" query.organizeId ? 'valid' : 'invalid' ">
                         <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
-                        [options]="listOrgRoots" [(ngModel)]="query.org_cd"  (onChange)="find()"
-                        name="org_cd" [filter]="true">
+                        [options]="listOrgRoots" [(ngModel)]="query.organizeId"  (onChange)="find()"
+                        name="organizeId" [filter]="true">
                         <ng-template let-item pTemplate="selectedItem">
                             <span>{{item.label}}</span>
                         </ng-template>

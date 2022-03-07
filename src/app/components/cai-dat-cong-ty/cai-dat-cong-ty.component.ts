@@ -208,7 +208,7 @@ export class CaiDatCongTyComponent implements OnInit, AfterViewChecked {
 
   addCongTy() {
     const params = {
-      companyId: 0
+      companyId: null
     }
     this.router.navigate(['/cai-dat/cai-dat-cong-ty/them-moi-cong-ty'], { queryParams: params });
   }

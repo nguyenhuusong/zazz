@@ -44,7 +44,7 @@ export class GopYKienComponent implements OnInit {
   }
   modelAdd = {
     date: new Date(),
-    org_cd: ''
+    organizeId: ''
   }
   listOrgRoots = [];
   displayFrom = false;

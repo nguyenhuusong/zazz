@@ -179,7 +179,7 @@ export class DanhSachPhongHopComponent implements OnInit {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa không?',
       accept: () => {
-        this.apiService.delMeetRoomInfo(e.rowData.room_id)
+        this.apiService.delMeetRoomInfo(e.rowData.roomId)
           .subscribe(response => {
             if (response.status === 'success') {
               this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: `Xóa thành công` });
@@ -197,7 +197,7 @@ export class DanhSachPhongHopComponent implements OnInit {
 
   handleEdit(e): void {
     const params = {
-      room_id: e.rowData.room_id
+      roomId: e.rowData.roomId
     }
     this.router.navigate(['/cai-dat/cai-dat-lich-hop/danh-sach-phong-hop/chi-tiet-phong-hop'], { queryParams: params });
   }
@@ -235,7 +235,7 @@ export class DanhSachPhongHopComponent implements OnInit {
 
   handleAdd(): void {
     const params = {
-      room_id: ''
+      roomId: ''
     }
     this.router.navigate(['/cai-dat/cai-dat-lich-hop/danh-sach-phong-hop/them-moi-phong-hop'], { queryParams: params });
   }

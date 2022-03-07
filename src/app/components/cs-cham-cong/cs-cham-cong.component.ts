@@ -45,7 +45,7 @@ export class CsChamCongComponent implements OnInit {
   }
   modelAdd = {
     date: new Date(),
-    org_cd: ''
+    organizeId: ''
   }
   listOrgRoots = [];
   displayFrom = false;
@@ -75,7 +75,7 @@ export class CsChamCongComponent implements OnInit {
   gridflexs: any;
   getRowHeight;
   query = {
-    org_cd: null,
+    organizeId: null,
     fromDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).add(-1,'months').format()),
     toDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).format()),
     filter: '',
@@ -118,7 +118,7 @@ export class CsChamCongComponent implements OnInit {
 
   cancel() {
     this.query = {
-      org_cd: null,
+      organizeId: null,
       fromDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).add(-1,'months').format()),
       toDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).format()),
       filter: '',
@@ -130,7 +130,7 @@ export class CsChamCongComponent implements OnInit {
 
   Export() {
     let params: any = {... this.query};
-    delete params.org_cd
+    delete params.organizeId
     delete params.fromDate
     delete params.toDate
     params.FromDate = moment(new Date(this.query.fromDate)).format('YYYY-MM-DD')
@@ -247,7 +247,7 @@ export class CsChamCongComponent implements OnInit {
         this.listOrgRoots = results.data.map(d => {
           return {
             label: d.org_name + '-' + d.org_cd,
-            value: `${d.org_cd}`
+            value: `${d.orgId}`
           }
         });
         this.listOrgRoots = [{ label: 'Tất cả', value: null }, ...this.listOrgRoots];

@@ -60,7 +60,7 @@ export class ChiTietNoiLamViecComponent implements OnInit, OnChanges {
     this.activatedRoute.queryParamMap.subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.dataRouter = this.paramsObject.params;
-      this.workplaceId = this.paramsObject.params.workplaceId || 0;
+      this.workplaceId = this.paramsObject.params.workplaceId || null;
       this.getWorkplaceInfo();
     });
   };

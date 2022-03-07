@@ -143,7 +143,7 @@ export class PqTheNhanVienComponent implements OnInit {
     this.columnDefs = []
     this.spinner.show();
     const query = { ...this.model };
-    query.organizationCd = query.organizationCd.org_cd;
+    query.organizationCd = query.organizationCd.organizeId;
     query.orgId = typeof query.orgId === 'string' ? query.orgId : query.orgId.orgId;
     const queryParams = queryString.stringify(query);
     this.apiService.getEmployeeCardPage(queryParams).subscribe(

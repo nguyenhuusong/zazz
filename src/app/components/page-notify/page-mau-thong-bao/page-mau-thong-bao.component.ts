@@ -47,7 +47,7 @@ export class PageMauThongBaoComponent implements OnInit, OnDestroy, AfterViewChe
   totalRecord = 0;
   projects = [];
   query = {
-    org_cd: '',
+    organizeId: '',
     filter: '',
     gridWidth: 0,
     offSet: 0,
@@ -83,7 +83,7 @@ export class PageMauThongBaoComponent implements OnInit, OnDestroy, AfterViewChe
   
   handleReset() {
     this.query = {
-      org_cd: '',
+      organizeId: '',
       filter: '',
       gridWidth: 0,
       offSet: 0,

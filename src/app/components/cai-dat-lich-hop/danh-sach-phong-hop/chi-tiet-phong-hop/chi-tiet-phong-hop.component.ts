@@ -46,20 +46,20 @@ export class ChiTietPhongHopComponent implements OnInit, OnDestroy {
     ];
     this.handleParams();
   }
-  room_id = null
+  roomId = null
   titlePage = ''
   handleParams() {
     this.activatedRoute.queryParamMap
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((params) => {
         this.paramsObject = { ...params.keys, ...params };
-        this.room_id = this.paramsObject.params.room_id;
+        this.roomId = this.paramsObject.params.roomId;
         this.getMeetRoomInfo();
       });
   };
 
   getMeetRoomInfo() {
-    const queryParams = queryString.stringify({ room_id: this.room_id });
+    const queryParams = queryString.stringify({ roomId: this.roomId });
     this.apiService.getMeetRoomInfo(queryParams)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {

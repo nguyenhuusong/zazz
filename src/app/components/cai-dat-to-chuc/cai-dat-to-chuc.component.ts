@@ -102,7 +102,7 @@ export class CaiDatToChucComponent implements OnInit {
   detailOrganizeMap = null;
   modeAgencyOrganize = {
     orgId: 0,
-    org_cd: '',
+    organizeId: '',
     org_name: '',
     org_level: 0,
     parentId: 0,
@@ -357,7 +357,7 @@ export class CaiDatToChucComponent implements OnInit {
 
   selectDepartment(event) {
     const items = this.departments.filter(d => d.value === this.modeAgencyOrganize.de_cd);
-    this.modeAgencyOrganize.org_cd = items[0].value
+    this.modeAgencyOrganize.organizeId = items[0].value
     this.modeAgencyOrganize.org_name = items[0].label
   }
 
@@ -466,7 +466,7 @@ export class CaiDatToChucComponent implements OnInit {
         this.organizeList = results.data;
         this.organizeList = this.organizeList.map(d => {
           return {
-            label: d.org_name,
+            label: d.org_name + '-' + d.org_cd,
             value: d.orgId
           }
         })
@@ -475,7 +475,7 @@ export class CaiDatToChucComponent implements OnInit {
         if (this.detailOrganizeMap.parentId > 0) {
           this.modeAgencyOrganize = {
             orgId: 0,
-            org_cd: '',
+            organizeId: '',
             org_name: '',
             org_level: this.detailOrganizeMap.org_level,
             parentId: this.detailOrganizeMap.orgId,
@@ -486,7 +486,7 @@ export class CaiDatToChucComponent implements OnInit {
         } else {
           this.modeAgencyOrganize = {
             orgId: 0,
-            org_cd: '',
+            organizeId: '',
             org_name: '',
             org_level: this.listAgencyMap.length > 0 ? 1 : 0,
             parentId: this.listAgencyMap.length > 0 ? this.detailOrganizeMap.orgId : 0,
@@ -523,12 +523,12 @@ export class CaiDatToChucComponent implements OnInit {
             this.modeAgencyOrganize = {
               orgId: this.detailOrganizeMap.orgId,
               org_name: this.detailOrganizeMap.label,
-              org_cd: this.detailOrganizeMap.org_cd,
+              organizeId: this.detailOrganizeMap.organizeId,
               org_level: this.detailOrganizeMap.org_level,
               parentId: this.detailOrganizeMap.parentId,
               isChild: false,
               org_type: null,
-              de_cd: this.detailOrganizeMap.org_cd
+              de_cd: this.detailOrganizeMap.organizeId
             }
 
           }

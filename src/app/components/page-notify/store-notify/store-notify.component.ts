@@ -218,7 +218,7 @@ export class StoreNotifyComponent implements OnInit, OnChanges {
 
   getUserByPush() {
     const params = {
-      "org_cd": this.perent_id,
+      "organizeId": this.perent_id,
       "orgIds": this.danhsachphongban,
       "employees": [],
       "filter": this.query.filter

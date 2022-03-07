@@ -244,7 +244,7 @@ export class PqQuyenNguoiDungComponent implements OnInit {
         this.listJobTitles = results.data.map(d => {
           return {
             label: d.job_name,
-            value: d.job_id
+            value: d.jobId
           }
         })
       }

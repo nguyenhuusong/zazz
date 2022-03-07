@@ -213,7 +213,7 @@ export class ChiTietCongTyComponent implements OnInit, OnChanges, OnDestroy {
 
   modelComAuthorizeInfo = {
     auth_id: 0,
-    companyId: 0,
+    companyId: null,
     cif_no: ''
   }
 

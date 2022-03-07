@@ -28,7 +28,7 @@ export class AddAddressContactComponent implements OnInit, OnChanges {
   tinhs = [];
 
   modelAddress = {
-    cont_id: 0,
+    cont_id: null,
     cont_name: '',
     cont_phone: '',
     cont_add1: '',
@@ -51,7 +51,7 @@ export class AddAddressContactComponent implements OnInit, OnChanges {
 
   ngOnChanges(event) {
     if (event) {
-      if (this.thongtinlienhe.cont_id > 0) {
+      if (this.thongtinlienhe.cont_id) {
         const diachi1 = this.apiServiceCore.geAddressList(queryString.stringify({ parent_code: '' }))
         const diachi2 = this.apiServiceCore.geAddressList(queryString.stringify({ parent_code: this.thongtinlienhe.cont_add4 }))
         const diachi3 = this.apiServiceCore.geAddressList(queryString.stringify({ parent_code: this.thongtinlienhe.cont_add3 }))

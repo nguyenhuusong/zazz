@@ -46,7 +46,7 @@ export class ChiTietViTriTuyenDungComponent implements OnInit, OnDestroy {
     this.handleParams();
   }
   modelEdit = {
-    vacancyId: 0,
+    vacancyId: null,
   }
   titlePage = ''
   handleParams() {
