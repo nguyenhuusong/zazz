@@ -218,7 +218,7 @@ export class QuanLyHopDongComponent implements OnInit {
 
   XemChiTiet(event) {
     const params = {
-      contractType: event.rowData.contractType
+      contractTypeId: event.rowData.contractTypeId
     }
     this.router.navigate(['/cai-dat/quan-ly-hop-dong/chi-tiet-hop-dong'], { queryParams: params });
   }
@@ -226,7 +226,7 @@ export class QuanLyHopDongComponent implements OnInit {
 
   addHopDong() {
     const params = {
-      contractType: 0
+      contractTypeId: 0
     }
     this.router.navigate(['/cai-dat/quan-ly-hop-dong/them-moi-hop-dong'], { queryParams: params });
   }

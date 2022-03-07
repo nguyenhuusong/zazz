@@ -24,7 +24,7 @@
                         <ng-template pTemplate>
                             <label for="" >Chọn loại hợp đồng</label> <br>
                             <p-dropdown [autoZIndex]="true" [autoDisplayFirst]="false" [style]="{'width': '100%'}" [options]="listContractTypes"
-                            [(ngModel)]="modelContractInfo.contractType" name="contractType" (onChange)="taohopdong();op.hide()">
+                            [(ngModel)]="modelContractInfo.contractTypeId" name="contractTypeId" (onChange)="taohopdong();op.hide()">
                             <ng-template let-item pTemplate="selectedItem">
                                 <span style="vertical-align:middle;">{{item.label}}</span>
                             </ng-template>

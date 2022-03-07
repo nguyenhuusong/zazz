@@ -8,7 +8,7 @@
     <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButon"  [dataView]="listViews"
         (callback)="setMaternityInfo($event)" (callbackcancel)="quaylai($event)"></app-edit-detail>
         <hr>
-        <div class="row mt-1" >
+        <div class="row mt-1" *ngIf="modelEdit.maternityId">
             <div class="col-md-6">
                 <p-panel>
                     <ng-template pTemplate="header">

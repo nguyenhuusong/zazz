@@ -22,7 +22,7 @@ export class ChiTietHopDongComponent implements OnInit, OnChanges {
     private confirmationService: ConfirmationService,
     private router: Router
   ) { }
-  contractType = null
+  contractTypeId = null
   org_level = 0
   listViews = []
   imagesUrl = []
@@ -60,7 +60,7 @@ export class ChiTietHopDongComponent implements OnInit, OnChanges {
     this.activatedRoute.queryParamMap.subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.dataRouter = this.paramsObject.params;
-      this.contractType = this.paramsObject.params.contractType || 0;
+      this.contractTypeId = this.paramsObject.params.contractTypeId || null;
       this.getContractTypeInfo();
     });
   };
@@ -70,7 +70,7 @@ export class ChiTietHopDongComponent implements OnInit, OnChanges {
   getContractTypeInfo() {
     this.listViews = [];
     this.columnDefs = [];
-    const queryParams = queryString.stringify({contractType: this.contractType});
+    const queryParams = queryString.stringify({contractTypeId: this.contractTypeId});
     this.apiService.getContractTypeInfo(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.listViews = cloneDeep(results.data.group_fields);
