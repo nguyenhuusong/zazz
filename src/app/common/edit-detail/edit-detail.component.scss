@@ -17,3 +17,11 @@
         }
     }
 }
+:host::ng-deep {
+    .border-section{
+        &::after{
+            bottom: 25px;
+            left: 0px;
+        }
+    }
+}

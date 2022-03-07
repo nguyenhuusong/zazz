@@ -39,3 +39,10 @@
         }
     }
 }
+:host::ng-deep{
+    .border-section{
+        &::after{
+            bottom: 0px;
+        }
+    }
+}
