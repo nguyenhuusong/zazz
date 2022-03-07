@@ -461,8 +461,8 @@ export class AppTypeTextareaComponent implements OnInit {
   selector: 'app-type-datetime',
   template: `   
   <div class="field-group date" [ngClass]=" element.columnValue ? 'valid' : 'invalid' ">
-                  <p-calendar placeholder="DD/MM/YYYY" appendTo="body" [baseZIndex]="101" [disabled]="element.isDisable"
-                  [(ngModel)]="element.columnValue" [monthNavigator]="true" [yearNavigator]="true"
+                  <p-calendar placeholder="DD/MM/YYYY" appendTo="body" [baseZIndex]="101" [disabled]="element.isDisable" (onSelect)="onChangeValue($event, element.field_name)"
+                  [(ngModel)]="element.columnValue" [monthNavigator]="true" [yearNavigator]="true" (onBlur)="onChangeValue($event, element.field_name)"
                   yearRange="2000:2030" inputId="navigators" [required]="element.isRequire && element.isVisiable && !element.isEmpty"
                   dateFormat="dd/mm/yy" name={{element.field_name}}></p-calendar>
                   <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
@@ -480,6 +480,7 @@ export class AppTypeTextareaComponent implements OnInit {
 export class AppTypeDatetimeComponent implements OnInit, OnChanges {
   @Input() element;
   @Input() submit = false;
+  @Input() modelFields;
   constructor(
     private apiService: ApiHrmService
   ) { }
@@ -493,6 +494,12 @@ export class AppTypeDatetimeComponent implements OnInit, OnChanges {
   }
   ngOnInit(): void {
   }
+
+  onChangeValue(value, field_name) {
+    this.modelFields[field_name].error = this.modelFields[field_name].isRequire ? this.element.columnValue ? false : true : false;
+    this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập' : '';
+  }
+
 
 }
 

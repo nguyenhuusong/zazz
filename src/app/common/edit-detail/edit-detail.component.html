@@ -33,7 +33,7 @@ styleClass="text-right two-buttons"
                 <app-type-currency [element]="element" *ngIf="element.columnType === 'currency'"></app-type-currency>
                 <app-type-checkbox [element]="element" *ngIf="element.columnType === 'checkbox'"></app-type-checkbox>
                 <app-type-textarea [element]="element" *ngIf="element.columnType === 'textarea'"></app-type-textarea>
-                <app-type-datetime [submit]="submit" [element]="element" *ngIf="element.columnType === 'datetime'"></app-type-datetime>
+                <app-type-datetime [modelFields]="modelFields" [submit]="submit" [element]="element" *ngIf="element.columnType === 'datetime'"></app-type-datetime>
                 <app-type-datefulltime [element]="element" *ngIf="element.columnType === 'datefulltime'"></app-type-datefulltime>
                 <app-type-timeonly [element]="element" *ngIf="element.columnType === 'timeonly'"></app-type-timeonly>
                 <app-type-multiSelect [element]="element" *ngIf="element.columnType === 'multiSelect'" [modelFields]="modelFields" [submit]="submit" [dataView]="dataView"></app-type-multiSelect>

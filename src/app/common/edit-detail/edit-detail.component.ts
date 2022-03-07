@@ -670,6 +670,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
     if (event === 'Update') {
       this.submit = true;
       for (let item in this.modelFields) {
+        console.log(this.modelFields[item])
         if (this.modelFields[item].error) {
           this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Dữ liệu thiếu !' });
           return

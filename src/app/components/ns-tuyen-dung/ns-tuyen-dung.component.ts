@@ -257,7 +257,7 @@ load() {
 
   addTuyenDung() {
     const params = {
-      canId: 0
+      canId: null
     }
     this.router.navigate(['/tuyen-dung/ds-tuyen-dung/them-moi-tuyen-dung'], { queryParams: params });
   }
