@@ -750,9 +750,9 @@ export class AppTypeCheckboxRadioListComponent implements OnInit {
                         <div [hidden]="element.columnValue">
                           Trường bắt buộc nhập!
                         </div>
-                    </div>
-                    <div *ngIf="this.element.columnValue">
-                    <p-image  src="{{this.element.columnValue}}" alt="Image" width="250" [preview]="true"></p-image>
+                    </div> 
+                    <div *ngIf="imagesUpload">
+                    <p-image  src="{{imagesUpload}}" alt="Image" width="250" height="250" ></p-image>
                     </div>
                 </div>
                 `,
@@ -762,7 +762,7 @@ export class AppTypeLinkUrlRadioListComponent implements OnInit {
   @Input() element;
   @Input() dataView;
   @Input() submit = false;
-
+  imagesUpload = '';
   constructor(
     private apiService: ApiHrmService,
     private spinner: NgxSpinnerService,
@@ -773,10 +773,12 @@ export class AppTypeLinkUrlRadioListComponent implements OnInit {
 
   removeAttach() {
     this.element.columnValue = '';
+    this.imagesUpload = ''
   }
 
   setvalueImage(event) {
-    this.element.columnValue = event.target.value
+    this.element.columnValue = event.target.value;
+    this.imagesUpload = event.target.value
   }
 
   onUploadOutputImage(event){
@@ -792,6 +794,7 @@ export class AppTypeLinkUrlRadioListComponent implements OnInit {
             uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
                 if (downloadURL) {
                   this.element.columnValue = downloadURL;
+                  this.imagesUpload = downloadURL;
                   this.dataView.forEach(element => {
                     element.fields.forEach(async element1 => {
                       if (element1.field_name === 'meta_file_type') {
@@ -805,7 +808,6 @@ export class AppTypeLinkUrlRadioListComponent implements OnInit {
                       }
                     });
                   });
-                  console.log(this.dataView)
                   this.spinner.hide();
                 }
               
