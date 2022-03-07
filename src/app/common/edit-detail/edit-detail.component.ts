@@ -160,7 +160,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
             this.getUsersByAdmin(element1, 1);
           } else if (element1.field_name === 'hiring_user_id') {
             this.getUsersByAdmin(element1, 0);
-          } else if (element1.field_name === 'vacancy_id') {
+          } else if (element1.field_name === 'vacancyId') {
             this.getVacancyPage(element1);
           } else if (element1.field_name === 'educationId') {
             this.getEducations(element1);

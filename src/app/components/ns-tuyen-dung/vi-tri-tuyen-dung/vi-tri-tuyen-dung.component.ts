@@ -208,7 +208,7 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
 
   XemChiTiet(event) {
     const params = {
-      vacancyId: event.rowData.vacancy_id
+      vacancyId: event.rowData.vacancyId
     }
     this.router.navigate(['/tuyen-dung/vi-tri-tuyen-dung/chi-tiet-vi-tri-tuyen-dung'], { queryParams: params });
   }

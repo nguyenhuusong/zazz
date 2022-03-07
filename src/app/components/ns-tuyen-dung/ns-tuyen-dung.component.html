@@ -61,10 +61,10 @@
                                         </div>
                                     </div>
                                     <div class="col-6">
-                                        <div class="field-group select" [ngClass]=" query.vacancy_id ? 'valid' : 'invalid' ">
+                                        <div class="field-group select" [ngClass]=" query.vacancyId ? 'valid' : 'invalid' ">
                                             <label for="">Vị trí tuyển dụng </label>
                                             <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
-                                                [options]="listVacancy" [(ngModel)]="query.vacancy_id" name="vacancy_id"
+                                                [options]="listVacancy" [(ngModel)]="query.vacancyId" name="vacancyId"
                                                 (onChange)="find()" [filter]="true">
                                                 <ng-template let-item pTemplate="selectedItem">
                                                     <span>{{item.label}}</span>

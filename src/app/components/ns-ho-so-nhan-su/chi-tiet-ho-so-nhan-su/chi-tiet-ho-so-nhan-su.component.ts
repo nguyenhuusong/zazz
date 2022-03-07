@@ -942,7 +942,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   }
 
   getRecordInfo() {
-    const queryParams = queryString.stringify({ employeeCd: this.detailInfo.employeeCd });
+    const queryParams = queryString.stringify({ empId: this.detailInfo.empId });
     this.apiService.getRecordInfo(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.listsData[3] = results.data.records || [];
