@@ -30,7 +30,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   indexTab = 0;
   // optionsButtonsView = [{ label: 'Sửa', value: 'Edit' }, { label: 'Quay lại', value: 'Back' }];
   optionsButtonsSave = [{ label: 'Lưu lại', value: 'Save' }, { label: 'Hủy', value: 'Back' }];
-  employeeId = null;
+  empId = null;
   listViews = [];
   listViewsForm = [];
   displayFormEditDetail = false;
@@ -227,7 +227,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     this.activatedRoute.queryParamMap.subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.dataRouter = this.paramsObject.params;
-      this.employeeId = this.paramsObject.params.employeeId;
+      this.empId = this.paramsObject.params.empId;
       this.getEmployeeInfo();
     });
   }
@@ -238,7 +238,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     this.listViewsForm = [];
     this.detailInfo = null;
     this.listsData = [[], [], [], []];
-    const queryParams = queryString.stringify({ employeeId: this.employeeId });
+    const queryParams = queryString.stringify({ empId: this.empId });
     this.apiService.getEmployeeData(this.selectedMenuCode, queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.listViews = cloneDeep(results.data.group_fields || []);

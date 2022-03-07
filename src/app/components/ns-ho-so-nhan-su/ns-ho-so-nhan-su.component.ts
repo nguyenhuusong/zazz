@@ -187,7 +187,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
 
   themnhanvien() {
     const params = {
-      employeeId: 0
+      empId: 0
     }
     this.router.navigate(['/ho-so-nhan-su/them-moi-nhan-vien'], { queryParams: params });
   }
@@ -306,7 +306,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn thực hiện mở tài khoản?',
       accept: () => {
-        this.apiService.deleteEmployee(event.rowData.employeeId).subscribe((results: any) => {
+        this.apiService.deleteEmployee(event.rowData.empId).subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa nhân viên thành công' });
             this.load();
@@ -330,12 +330,12 @@ export class NsHoSoNhanSuComponent implements OnInit {
       rejectButtonStyleClass: 'p-button-sm p-button-secondary',
       accept: () => {
         this.unLockEmployee({
-          employeeId: event.rowData.employeeId
+          empId: event.rowData.empId
         })
       },
       reject: () => {
         this.setEmployeeClose({
-          employeeId: event.rowData.employeeId
+          empId: event.rowData.empId
         })
       }
     });
@@ -376,13 +376,13 @@ export class NsHoSoNhanSuComponent implements OnInit {
       rejectButtonStyleClass: 'p-button-sm p-button-secondary',
       accept: () => {
         this.setAccountStatus({
-          employeeId: event.rowData.employeeId,
+          empId: event.rowData.empId,
           status: true
         })
       },
       reject: () => {
         this.setAccountStatus({
-          employeeId: event.rowData.employeeId,
+          empId: event.rowData.empId,
           status: false
         })
       }
@@ -402,7 +402,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
 
   EditEmployee(event) {
     const params = {
-      employeeId: event.rowData.employeeId
+      empId: event.rowData.empId
     }
     this.router.navigate(['/nhan-su/ho-so-nhan-su/chi-tiet-ho-so-nhan-su'], { queryParams: params });
   }
