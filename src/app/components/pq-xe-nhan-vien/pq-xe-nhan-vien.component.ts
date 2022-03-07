@@ -120,14 +120,15 @@ export class PqXeNhanVienComponent implements OnInit {
   }
 
   getOrganize(): void {
-    this.apiService.getOrganizeList('org_level=1')
+    const queryParams = queryString.stringify({ filter: ''});
+    this.apiService.getOrganizations(queryParams)
       .subscribe(
         (results: any) => {
           this.organizes = results.data
             .map(d => {
               return {
-                label: d.org_name || d.org_cd,
-                value: { org_cd: d.org_cd, orgId: d.orgId }
+                label: d.organizationName || d.organizationCd,
+                value: d.organizeId
               };
             });
           // if (this.organizes && this.organizes.length) {
@@ -135,8 +136,8 @@ export class PqXeNhanVienComponent implements OnInit {
           //   this.getOrganizeTree();
           // }
           this.organizes = [{ label: 'Tất cả', value: '' }, ...this.organizes];
-        },
-        error => { });
+        }),
+        error => { };
   }
 
   getOrganizeTree(): void {

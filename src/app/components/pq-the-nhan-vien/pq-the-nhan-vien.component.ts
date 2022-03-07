@@ -92,7 +92,7 @@ export class PqTheNhanVienComponent implements OnInit {
 
   initFilter(): void {
     this.model = {
-      organizationCd: '',
+      organizeId: '',
       orgId: '',
       filter: '',
       status: -1,
@@ -143,7 +143,7 @@ export class PqTheNhanVienComponent implements OnInit {
     this.columnDefs = []
     this.spinner.show();
     const query = { ...this.model };
-    query.organizationCd = query.organizationCd.organizeId;
+    query.organizeId = query.organizeId.organizeId;
     query.orgId = typeof query.orgId === 'string' ? query.orgId : query.orgId.orgId;
     const queryParams = queryString.stringify(query);
     this.apiService.getEmployeeCardPage(queryParams).subscribe(
@@ -226,7 +226,8 @@ export class PqTheNhanVienComponent implements OnInit {
 
 
   getOrganize(): void {
-    this.apiService.getOrganizeList('org_level=1')
+    const queryParams = queryString.stringify({ filter: ''});
+    this.apiService.getOrganizations(queryParams)
       .subscribe(
         (results: any) => {
           this.organizes = results.data
@@ -237,16 +238,16 @@ export class PqTheNhanVienComponent implements OnInit {
               };
             });
           // if (this.organizes && this.organizes.length) {
-          //   this.model.organizationCd = { org_cd: this.organizes[0].value.org_cd, orgId: this.organizes[0].value.orgId };
+          //   this.model.organizeId = { org_cd: this.organizes[0].value.org_cd, orgId: this.organizes[0].value.orgId };
           //   this.getOrganizeTree();
           // }
           this.organizes = [{ label: 'Chọn tổ chức', value: '' }, ...this.organizes];
-        },
-        error => { });
+        }),
+        error => { };
   }
 
   getOrganizeTree(): void {
-    const queryParams = queryString.stringify({ parentId: this.model.organizationCd.orgId });
+    const queryParams = queryString.stringify({ parentId: this.model.organizeId.orgId });
     this.apiService.getOrganizeTree(queryParams)
       .subscribe((results: any) => {
         if (results && results.status === 'success') {
