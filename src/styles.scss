@@ -2178,7 +2178,7 @@ div.p-organizationchart {
 }
 .p-card-header-custom{
     .p-card-header{
-        border-bottom: 1px solid #cccccc75;
+        // border-bottom: 1px solid #cccccc75;
         padding-bottom: 13px;
     }
 }
@@ -2662,4 +2662,24 @@ div.p-organizationchart {
         clear: left;
     }
 }
+.border-section{
+    // .p-card{
+        position: relative;
+        padding-left: 10px;
+        &::after{
+            content: '';
+            width: 1px;
+            background: #0979fd78;
+            display: block;
+            position: absolute;
+            top: 5px;
+            bottom: 25px;
+            left: 0px;
+            box-shadow: 1px 1px 1px #ccc;
+        }
+    // }
+}
 
+.page-detail-edit-detail{
+    
+}

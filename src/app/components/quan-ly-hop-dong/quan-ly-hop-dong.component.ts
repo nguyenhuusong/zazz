@@ -201,9 +201,9 @@ export class QuanLyHopDongComponent implements OnInit {
 
   xoahopdong(event) {
     this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn thực hiện mở tài khoản?',
+      message: 'Bạn có chắc chắn muốn xóa hợp đồng?',
       accept: () => {
-        const queryParams = queryString.stringify({ contractType: event.rowData.contractType });
+        const queryParams = queryString.stringify({ contractTypeId: event.rowData.contractTypeId });
         this.apiService.delContractTypeInfo(queryParams).subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa công ty thành công' });

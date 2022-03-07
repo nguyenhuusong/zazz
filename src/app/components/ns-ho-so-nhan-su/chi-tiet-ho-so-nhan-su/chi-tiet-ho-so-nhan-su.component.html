@@ -57,10 +57,9 @@
                         </app-edit-detail>
                     </div>
             </div>
-
                 <div class="row d-flex mt-4 timelines" *ngIf="selectedMenuCode === API_PROFILE.CONG_VIEC ">
                     <div class="col-md-8">
-                        <div class="box">
+                        <div class="border-section">
                             <p-card styleClass="mt-1" >
                                 <ng-template pTemplate="header">
                                     <div class="row d-flex">
@@ -119,81 +118,85 @@
                 </div>
               
 
+                <div class="border-section">
+                    <p-card styleClass="mt-1 mb-4 p-card-header-custom"
+                        *ngIf="selectedMenuCode === API_PROFILE.TIEN_ICH || selectedMenuCode === API_PROFILE.THONG_TIN_CA_NHAN
+                || selectedMenuCode === API_PROFILE.NGUOI_QUAN_LY
+                || selectedMenuCode === API_PROFILE.QUAN_HE_LAO_DONG || selectedMenuCode === API_PROFILE.THUE_BAO_HIEM
+            || selectedMenuCode === API_PROFILE.CHUYEN_MON 
+                || selectedMenuCode === API_PROFILE.NGUOI_DUNG">
 
-                <p-card styleClass="mt-1 mb-4 p-card-header-custom"
-                    *ngIf="selectedMenuCode === API_PROFILE.TIEN_ICH || selectedMenuCode === API_PROFILE.THONG_TIN_CA_NHAN
-            || selectedMenuCode === API_PROFILE.NGUOI_QUAN_LY
-            || selectedMenuCode === API_PROFILE.QUAN_HE_LAO_DONG || selectedMenuCode === API_PROFILE.THUE_BAO_HIEM
-           || selectedMenuCode === API_PROFILE.CHUYEN_MON 
-            || selectedMenuCode === API_PROFILE.NGUOI_DUNG">
+                            <ng-template pTemplate="header">
+                                <div class="row d-flex">
+                                    <div class="col-md-6">
+                                        <div class="panel-heading" >
+                                            <h6 class="panel-title mb-0" style="color: black; ">
+                                                {{titles[0]}} <p-badge *ngIf="listsData[0].length > 0"
+                                                    value="{{listsData[0].length}}" styleClass="p-mr-2">
+                                                </p-badge>
+                                            </h6>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 justify-content-end text-right">
+                                        <p-button *ngIf="selectedMenuCode === API_PROFILE.THUE_BAO_HIEM || selectedMenuCode === API_PROFILE.LIEN_HE
+                                        || selectedMenuCode === API_PROFILE.NGUOI_DUNG" 
+                                            label="Thêm mới" styleClass="p-button-sm"
+                                            icon="pi pi-plus" (click)="addType0()"></p-button>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        <div class="grid-default border mb-7">
+                            <app-list-grid-angular [height]="0" [domLayout]="'autoHeight'"  [title]="'Danh sách liên hệ'" *ngIf="listsData[0].length > 0"
+                                [listsData]="listsData[0]"  (FnClick)="OnClick($event)"
+                                [columnDefs]="columnDefs[0]"></app-list-grid-angular>
+                        </div>
+                    </p-card>
+                </div>
+
+
+                <div class="border-section">
+                    <p-card styleClass="mt-1 mb-4 p-card-header-custom"
+                        *ngIf="selectedMenuCode === API_PROFILE.CHUYEN_MON 
+                    || selectedMenuCode === API_PROFILE.THUE_BAO_HIEM
+                    || selectedMenuCode === API_PROFILE.THONG_TIN_CA_NHAN
+                    || selectedMenuCode === API_PROFILE.NGUOI_QUAN_LY
+                    || selectedMenuCode === API_PROFILE.QUAN_HE_LAO_DONG ">
 
                         <ng-template pTemplate="header">
                             <div class="row d-flex">
                                 <div class="col-md-6">
                                     <div class="panel-heading" >
                                         <h6 class="panel-title mb-0" style="color: black; ">
-                                            {{titles[0]}} <p-badge *ngIf="listsData[0].length > 0"
-                                                value="{{listsData[0].length}}" styleClass="p-mr-2">
+                                            {{titles[1]}} <p-badge *ngIf="listsData[1].length > 0"
+                                                value="{{listsData[1].length}}" styleClass="p-mr-2">
                                             </p-badge>
                                         </h6>
                                     </div>
                                 </div>
                                 <div class="col-md-6 justify-content-end text-right">
-                                    <p-button *ngIf="selectedMenuCode === API_PROFILE.THUE_BAO_HIEM || selectedMenuCode === API_PROFILE.LIEN_HE
-                                    || selectedMenuCode === API_PROFILE.NGUOI_DUNG" 
-                                        label="Thêm mới" styleClass="p-button-sm"
-                                        icon="pi pi-plus" (click)="addType0()"></p-button>
+                                    <p-button *ngIf="selectedMenuCode === API_PROFILE.THONG_TIN_CA_NHAN"
+                                        label="Thông tin hồ sơ" icon="pi pi-book"
+                                        styleClass="p-button-sm" (click)="createContract()"></p-button>
+                                    <p-button
+                                        *ngIf=" selectedMenuCode === API_PROFILE.THUE_BAO_HIEM"
+                                        label="Thêm mới" icon="pi pi-file" styleClass="p-button-sm"
+                                        (click)="createAttach()"></p-button>
+                                        <p-button
+                                        *ngIf=" selectedMenuCode === API_PROFILE.NGUOI_QUAN_LY"
+                                        label="Thêm mới" icon="pi pi-plus" styleClass="p-button-sm"
+                                        (click)="onAddUserLogin()"></p-button>    
                                 </div>
                             </div>
                         </ng-template>
-                    <div class="grid-default border mb-7">
-                        <app-list-grid-angular [height]="0" [domLayout]="'autoHeight'"  [title]="'Danh sách liên hệ'" *ngIf="listsData[0].length > 0"
-                            [listsData]="listsData[0]"  (FnClick)="OnClick($event)"
-                            [columnDefs]="columnDefs[0]"></app-list-grid-angular>
-                    </div>
-                </p-card>
-
-
-                <p-card styleClass="mt-1 mb-4 p-card-header-custom"
-                    *ngIf="selectedMenuCode === API_PROFILE.CHUYEN_MON 
-                || selectedMenuCode === API_PROFILE.THUE_BAO_HIEM
-                || selectedMenuCode === API_PROFILE.THONG_TIN_CA_NHAN
-                || selectedMenuCode === API_PROFILE.NGUOI_QUAN_LY
-                || selectedMenuCode === API_PROFILE.QUAN_HE_LAO_DONG ">
-
-                    <ng-template pTemplate="header">
-                        <div class="row d-flex">
-                            <div class="col-md-6">
-                                <div class="panel-heading" >
-                                    <h6 class="panel-title mb-0" style="color: black; ">
-                                        {{titles[1]}} <p-badge *ngIf="listsData[1].length > 0"
-                                            value="{{listsData[1].length}}" styleClass="p-mr-2">
-                                        </p-badge>
-                                    </h6>
-                                </div>
+                        <div class="grid-default border" *ngIf="listsData[1].length > 0">
+                            <app-list-grid-angular  [domLayout]="'autoHeight'" [title]="'Danh sách liên hệ'"
+                                [listsData]="listsData[1]" (FnClick)="OnClick($event)"
+                                [columnDefs]="columnDefs[1]"></app-list-grid-angular>
                             </div>
-                            <div class="col-md-6 justify-content-end text-right">
-                                <p-button *ngIf="selectedMenuCode === API_PROFILE.THONG_TIN_CA_NHAN"
-                                    label="Thông tin hồ sơ" icon="pi pi-book"
-                                    styleClass="p-button-sm" (click)="createContract()"></p-button>
-                                <p-button
-                                    *ngIf=" selectedMenuCode === API_PROFILE.THUE_BAO_HIEM"
-                                    label="Thêm mới" icon="pi pi-file" styleClass="p-button-sm"
-                                    (click)="createAttach()"></p-button>
-                                    <p-button
-                                    *ngIf=" selectedMenuCode === API_PROFILE.NGUOI_QUAN_LY"
-                                    label="Thêm mới" icon="pi pi-plus" styleClass="p-button-sm"
-                                    (click)="onAddUserLogin()"></p-button>    
-                            </div>
-                        </div>
-                    </ng-template>
-                    <div class="grid-default border" *ngIf="listsData[1].length > 0">
-                        <app-list-grid-angular  [domLayout]="'autoHeight'" [title]="'Danh sách liên hệ'"
-                            [listsData]="listsData[1]" (FnClick)="OnClick($event)"
-                            [columnDefs]="columnDefs[1]"></app-list-grid-angular>
-                        </div>
-                </p-card>
+                    </p-card>
+                </div>
 
+                <div class="border-section">
                 <p-card styleClass="mt-1 mb-4 p-card-header-custom"
                     *ngIf="selectedMenuCode === API_PROFILE.CHUYEN_MON || selectedMenuCode === API_PROFILE.THONG_TIN_CA_NHAN">
 
@@ -222,8 +225,9 @@
                                 [columnDefs]="columnDefs[2]"></app-list-grid-angular>
                             </div>
                 </p-card>
+                </div>
 
-
+                <div class="border-section">
                 <p-card styleClass="mt-1 mb-4 " *ngIf="selectedMenuCode === API_PROFILE.CHUYEN_MON || selectedMenuCode === API_PROFILE.THONG_TIN_CA_NHAN">
                     <ng-template pTemplate="header">
                         <div class="row d-flex">
@@ -251,6 +255,7 @@
                             [columnDefs]="columnDefs[3]"></app-list-grid-angular>
                         </div>
                 </p-card>
+                </div>
 
                 <!-- <p-card styleClass="mt-1" *ngIf="selectedMenuCode === API_PROFILE.THONG_TIN_CA_NHAN">
                     <ng-template pTemplate="header">
