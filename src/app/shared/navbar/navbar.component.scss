@@ -14,3 +14,10 @@
     margin-bottom: 25px;
   }
 }
+:host::ng-deep{
+  [styleclass="my-account-menu"]{
+    .p-menu{
+      top: 100% !important;
+    }
+  }
+}
