@@ -1955,6 +1955,9 @@ button{
             -ms-transform: translate(-50%,-50%);
             transform: translate(-50%,-50%);
         }
+        .p-image-preview{
+            position: static;
+        }
     }
     .bg-success, .bg-info{
         background: #2cab02;
