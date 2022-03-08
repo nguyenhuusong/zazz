@@ -24,7 +24,7 @@
         </p-card>
         <div class="table-tool grid white-background black-box-shadow-005 filterInput mt-2">
 
-            <div class="header-filter-search col-4 ">
+            <div class="header-filter-search col-3">
                 <div class="field-group text search mb-0" [ngClass]=" query.filter ? 'valid' : 'invalid' ">
                     <input class="input-default" type="text" id="filter"
                       (keydown.enter)="query.offSet = 0; first = 0;load()"
@@ -37,8 +37,6 @@
                                 fill="#808AA6" />
                         </svg>
                     <!-- <i id="icon-search" class="pi pi-angle-down"></i> -->
-                    <p-button class="search-button" icon="pi pi-search" (click)="query.offSet = 0; first = 0; load()">
-                    </p-button>
                     <p-overlayPanel #op [style]="{width: '700px'}" styleClass="advance-seach">
                         <ng-template pTemplate>
                             <div class="header-filter-search  grid">
@@ -76,7 +74,7 @@
                 <div class="input-group-append dropdown">
                 </div>
             </div>
-            <div class="col-2">
+            <div class="col-1">
                 <div class="field-group select mb-0 label-8" [ngClass]=" query.emp_st > -1 ? 'valid' : 'invalid' ">
                     <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
                             [options]="employeeStatus" [(ngModel)]="query.emp_st" name="emp_st"
@@ -93,10 +91,11 @@
                     <label>Trạng thái</label>
                 </div>
             </div>
-            <div class="col-1">
+            <div class="col-2">
+                <p-button styleClass="search-button btn-56-56 mr-3" icon="pi pi-search" (click)="query.offSet = 0; first = 0; load()"></p-button>
                 <p-button label="Xuất file" styleClass="btn-h56" icon="fa fa-download" (click)="exportExel()"></p-button>
             </div>
-            <div class="col-6 tools">
+            <div class="col-7 tools">
             </div>
         </div>
         <div class="grid-default" #container>
