@@ -48,8 +48,8 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   url = '';
   modelAttach = {
     employee_key: '',
-    employeeCd: 0,
-    meta_id: 0
+    empId: null,
+    metaId: null
   }
 
   statusApprover = [{ label: "Từ chối", value: 0 }, { label: 'Đồng ý', value: 1 }];
@@ -1053,8 +1053,8 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     } else if (event.event.item.key === 'xem-chi-tiet-file-dinh-kem') {
       this.modelAttach = {
         employee_key: this.detailInfo.employee_key,
-        employeeCd: this.detailInfo.employeeCd,
-        meta_id: event.rowData.meta_id
+        empId: this.detailInfo.empId,
+        metaId: event.rowData.metaId
       }
       this.displayAttach = true;
     } else if (event.event.item.key === 'xoa-file-dinh-kem') {
@@ -1317,8 +1317,8 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   createAttach() {
     this.modelAttach = {
       employee_key: this.detailInfo.employee_key,
-      employeeCd: this.detailInfo.employeeCd,
-      meta_id: 0
+      empId: this.detailInfo.empId,
+      metaId: null,
     }
     this.displayAttach = true;
   }
