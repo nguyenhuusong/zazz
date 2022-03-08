@@ -1139,7 +1139,7 @@ div{
             .panel-title{
                 margin-top: 0px;
                 font-size: 18px;
-                font-weight: normal;
+                font-weight: 500;
             }
         }
     }
@@ -1954,6 +1954,9 @@ button{
             -webkit-transform: translate(-50%,-50%);
             -ms-transform: translate(-50%,-50%);
             transform: translate(-50%,-50%);
+        }
+        .p-image-preview{
+            position: static;
         }
     }
     .bg-success, .bg-info{
