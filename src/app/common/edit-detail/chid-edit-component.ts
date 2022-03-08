@@ -242,7 +242,15 @@ export class AppTypeDropdownComponent implements OnInit {
           }
         });
       });
-
+    }else if (field_name === 'org_cds') {
+      debugger
+     this.dataView.forEach(element => {
+      element.fields.forEach( element1 => {
+        if (element1.field_name === 'full_name') {
+          this.getUserByPush(value, element1)
+        }
+      });
+    });
     }else if (field_name === 'organizeId') {
       this.dataView.forEach(element => {
         element.fields.forEach(async element1 => {
@@ -286,6 +294,20 @@ export class AppTypeDropdownComponent implements OnInit {
     }
   }
 
+  getUserByPush(orgId,element1) {
+    this.apiService.getUserByPush({ organizeId: orgId, orgIds: [orgId] }).subscribe(results => {
+      if (results.status === 'success') {
+        element1.options = cloneDeep(results.data).map(d => {
+          return {
+            label: d.fullName  + '-' + d.phone,
+            value: `${d.userId}`
+          }
+        });
+        element1.columnValue = element1.columnValue ? element1.columnValue : ''
+      }
+    })
+  }
+  
   getJobTitles(orgId,element1, positionTypeCd) {
     const queryParams = queryString.stringify({ orgId: orgId, positionTypeCd: positionTypeCd });
     this.apiService.getJobs(queryParams).subscribe(results => {

@@ -147,6 +147,9 @@ export class EditDetailComponent implements OnInit, OnChanges {
             this.getOrgRoots(element1);
           } else if (element1.field_name === 'org_cds') {
             this.getOrgRootsMuti(element1);
+          } else if (element1.field_name === 'full_name') {
+            const org_cds = await this.getValueByKey('org_cds');
+            this.getUserByPush(org_cds,element1);
           }else if (element1.field_name === 'source_ref') {
             this.getNotifyRefList(element1);
           } else if (element1.field_name === 'contractTypeId') {
@@ -365,6 +368,20 @@ export class EditDetailComponent implements OnInit, OnChanges {
           return {
             label: d.salary_type_name,
             value: `${d.salary_type}`
+          }
+        });
+        element1.columnValue = element1.columnValue ? element1.columnValue : ''
+      }
+    })
+  }
+
+  getUserByPush(orgId,element1) {
+    this.apiService.getUserByPush({ organizeId: orgId, orgIds: [orgId] }).subscribe(results => {
+      if (results.status === 'success') {
+        element1.options = cloneDeep(results.data).map(d => {
+          return {
+            label: d.fullName  + '-' + d.phone,
+            value: `${d.userId}`
           }
         });
         element1.columnValue = element1.columnValue ? element1.columnValue : ''
