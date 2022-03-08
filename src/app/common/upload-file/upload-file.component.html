@@ -1,12 +1,5 @@
 <div class="upload-default">
     <!-- <h5>File Upload</h5> -->
-    <div class="card-header-right">
-        <ul class="list-unstyled card-option">
-            <li><i class="feather icon-maximize full-card"></i></li>
-            <li><i class="feather icon-minus minimize-card"></i></li>
-            <li><i class="feather icon-trash-2 close-card"></i></li>
-        </ul>
-    </div>
     <div class="card-block">
     <!-- <div class="sub-title">Example 1</div> -->
     <!-- <input type="file" name="files[]" id="filer_input1" multiple="multiple"> -->
@@ -23,13 +16,14 @@
         </ng-template> -->
         <ng-template pTemplate="content" let-files>
             <div class="files-content">Drag and drop files here</div>
-            <ul *ngIf="listAttach.length">
+            <ul *ngIf="listAttach.length" class="hscn-each-upload">
                 <li *ngFor="let file of listAttach">
                         <img *ngIf="file.type === 'application/pdf' || file.type === 'application/msword' || file.type === 'application/vnd.ms-excel'; else isImage" src="/assets/images/image-pdf1.png" style="width: 50px;" alt="">
                         <ng-template #isImage>
                             <p-image src="{{file.url}}" alt="Image" [preview]="true" width="100"></p-image>
                         </ng-template>
-                    {{file.name}} - {{file.size}} bytes</li>
+                    <!-- {{file.name}} - {{file.size}} bytes -->
+                </li>
             </ul>
         </ng-template>
 </p-fileUpload>

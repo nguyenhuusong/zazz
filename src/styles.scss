@@ -2248,14 +2248,21 @@ div.p-organizationchart {
         outline: none;
         line-height: 20px;
         padding: 30px 12px 4px 11px;
+        &:-internal-autofill-selected {
+            background-color: transparent
+        }
+
         &:-webkit-autofill,
         &:-webkit-autofill:hover, 
         &:-webkit-autofill:focus, 
         &:-webkit-autofill:active{
-            // -webkit-box-shadow: 0 0 0 30px rgb(87 94 131) inset !important;
+            // -webkit-box-shadow: unset !important;
             // color: #ffffff !important;
             // -webkit-text-fill-color: #fff;
-
+            -webkit-box-shadow: 0 0 0 30px white inset !important;
+            & + label{
+                z-index: 2;
+            }
         }
     }
     &.valid{
@@ -2558,6 +2565,25 @@ div.p-organizationchart {
             padding-top: 26px;
             border: none;
             padding-left: 12px;
+        }
+        .control-image{
+            width: 100%;
+            button{
+            }
+        }
+        display: flex;
+        .p-image{
+            box-shadow: none;
+            &::before{
+                display: none;
+            }
+            img{
+                position: static;
+                transform: none;
+                max-height: 50px;
+                width: auto;
+                object-fit: unset;
+            }
         }
     }
 

@@ -798,7 +798,7 @@ export class AppTypeCheckboxRadioListComponent implements OnInit {
   selector: 'app-type-linkurl',
   template: `   
             <div class="field-group attach-file">
-                    <div style="display: flex" *ngIf="this.element.columnValue">
+                    <div class="control-image" style="display: flex" *ngIf="this.element.columnValue">
                       <input type="text" class="form-control" (change)="setvalueImage($event)" [value]="this.element.columnValue">
                       <button pButton pRipple type="button" (click)="removeAttach()" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-text"></button>
                     </div>

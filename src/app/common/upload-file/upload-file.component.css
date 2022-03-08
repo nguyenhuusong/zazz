@@ -86,3 +86,9 @@
 :host::ng-deep .upload-default .p-fileupload-buttonbar{
     text-align: center;
 }
+:host::ng-deep .hscn-each-upload{
+    padding: 0px;
+}
+:host::ng-deep .hscn-each-upload li{
+    list-style: none;
+}
