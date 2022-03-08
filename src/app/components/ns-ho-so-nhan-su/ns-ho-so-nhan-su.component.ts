@@ -10,6 +10,7 @@ import { CustomTooltipComponent } from 'src/app/common/ag-component/customtoolti
 import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
 import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.component';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
+import { ExportFileService } from 'src/app/services/export-file.service';
 @Component({
   selector: 'app-ns-ho-so-nhan-su',
   templateUrl: './ns-ho-so-nhan-su.component.html',
@@ -78,6 +79,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
     private route: ActivatedRoute,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
+    private fileService: ExportFileService,
     private router: Router) {
     this.defaultColDef = {
       tooltipComponent: 'customTooltip',
@@ -480,6 +482,46 @@ export class NsHoSoNhanSuComponent implements OnInit {
       'separator',
     ];
     return result;
+  }
+
+  exportExel() {
+    this.spinner.show();
+    this.query.pageSize = 1000000;
+    const query = { ...this.query };
+    const queryParams = queryString.stringify(query);
+    this.apiService.getEmployeePage(queryParams).subscribe(
+      (results: any) => {
+        const dataExport = [];
+      let gridflexs = results.data.gridflexs;
+      let arrKey = gridflexs.map(elementName => elementName.columnField);
+      
+      let dataList = results.data.dataList.data;
+      for(let elementValue of dataList) {
+        const data: any = {};
+        for(let elementName of gridflexs) {
+          if(arrKey.indexOf(elementName.columnField) > -1 && !elementName.isHide && elementName.columnField !== 'statusName') {
+            let valueColumn = elementValue[elementName.columnField];
+            if(elementName.columnField == 'status_name' || elementName.columnField == 'isContacted' || elementName.columnField == 'isProfileFull' || elementName.columnField == 'lockName'){
+              valueColumn = this.replaceHtmlToText(valueColumn);
+            }
+            data[elementName.columnCaption] = valueColumn || '';
+          }
+         
+        }
+
+      dataExport.push(data);
+      }
+      this.fileService.exportAsExcelFile(dataExport, 'Danh sách hồ sơ nhân sự ' + new Date());
+
+      this.spinner.hide();
+      },
+      error => {
+        this.spinner.hide();
+    });
+  }
+
+  replaceHtmlToText(string){
+    return string.replace(/(<([^>]+)>)/gi, "");
   }
 
 }
