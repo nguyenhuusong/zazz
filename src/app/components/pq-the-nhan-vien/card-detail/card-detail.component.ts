@@ -153,13 +153,13 @@ export class CardDetailComponent implements OnInit {
 
   organizes = [];
   getOrganize(): void {
-    this.apiService.getOrganizeList('org_level=1')
+    this.apiService.getOrgRoots()
     .subscribe(
       (results: any) => {
         this.organizes = results.data
           .map(d => {
             return {
-              label: d.org_name || d.org_cd,
+              label: d.org_name,
               value: d.orgId
             };
           });
