@@ -142,13 +142,14 @@ export class NotifyDetailComponent implements OnInit {
   }
   moduleLists = []
   getModuleList() {
-    this.apiService.getModuleList().subscribe(results => {
+    const queryParams = queryString.stringify({ filter: ''});
+    this.apiService.getOrganizations(queryParams).subscribe(results => {
       if (results.status === 'success') {
         const moduleLists = results.data.map(d => {
           return {
-            label: `${d.org_name} (${d.org_cd})`,
-            value: d.org_cd,
-            code: d.orgId,
+            label: `${d.organizationName}`,
+            value: d.organizeId,
+            code: d.organizeId,
           }
         });
         this.moduleLists = moduleLists

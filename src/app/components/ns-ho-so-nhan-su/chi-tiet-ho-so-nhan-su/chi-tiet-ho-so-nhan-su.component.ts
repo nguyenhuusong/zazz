@@ -156,7 +156,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
         this.listContractTypes = results.data.map(d => {
           return {
             label: d.contractTypeName,
-            value: d.contractType
+            value: d.contractTypeId
           }
         });
       }

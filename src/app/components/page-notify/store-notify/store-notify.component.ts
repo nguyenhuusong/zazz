@@ -175,7 +175,8 @@ export class StoreNotifyComponent implements OnInit, OnChanges {
   }
 
   getOrganizeTree(value): void {
-    const queryParams = queryString.stringify({ parentId: value });
+    console.log(this.perent_id)
+    const queryParams = queryString.stringify({ parentId: this.perent_id });
     this.apiService.getOrganizeTree(queryParams)
       .subscribe((results: any) => {
         if (results && results.status === 'success') {

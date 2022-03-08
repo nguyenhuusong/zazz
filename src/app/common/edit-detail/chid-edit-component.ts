@@ -10,7 +10,7 @@ import * as numeral from 'numeral';
 @Component({
   selector: 'app-type-text',
   template: ` <div class="field-group text" [ngClass]=" element.columnValue ? 'valid' : 'invalid' ">
-                  <input type="text" class="form-control" [(ngModel)]="element.columnValue" (change)="onChangeValue($event.target, element.field_name)"
+                  <input type="text" class="form-control" [(ngModel)]="element.columnValue" (change)="onChangeValue($event.target, element.field_name, element)"
                   name={{element.field_name}} [disabled]="element.isDisable"
                   (focus)="foucusIn($event)"
                   (focusout)="foucusOut($event)"
@@ -34,8 +34,9 @@ export class AppTypeTextComponent implements OnInit {
     console.log(this.modelFields)
   }
 
-  onChangeValue(value, field_name) {
-    this.modelFields[field_name].error = false;
+  onChangeValue(value, field_name, element) {
+    this.modelFields[field_name].error = this.modelFields[field_name].isRequire ? this.element.columnValue ? false : true : false
+    this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
   }
 
   foucusOut(e){
@@ -54,7 +55,7 @@ export class AppTypeTextComponent implements OnInit {
   template: `   
           <div class="field-group select" [ngClass]=" element.columnValue ? 'valid' : 'invalid' ">
             <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"  [filterBy]="'label'"
-              [disabled]="element.isDisable" [options]="element.options"
+              [disabled]="element.isDisable" [options]="element.options" (onChange)="onChangeValue($event.target, element.field_name, element)"
               [required]="element.isRequire && element.isVisiable && !element.isEmpty" [(ngModel)]="element.columnValue"
               name={{element.field_name}}>
               <ng-template let-item pTemplate="selectedItem">
@@ -78,6 +79,7 @@ export class AppTypeTextComponent implements OnInit {
 })
 export class AppTypeSelectComponent implements OnInit {
   @Input() element;
+  @Input() modelFields;
   @Input() submit = false;
   constructor(
     private apiService: ApiHrmService
@@ -89,6 +91,12 @@ export class AppTypeSelectComponent implements OnInit {
       })
     }
   }
+
+  onChangeValue(value, field_name, element) {
+    this.modelFields[field_name].error = this.modelFields[field_name].isRequire ? this.element.columnValue ? false : true : false
+    this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
+  }
+    
 }
 
 
@@ -97,8 +105,8 @@ export class AppTypeSelectComponent implements OnInit {
 @Component({
   selector: 'app-type-selectTree',
   template: `  
-    <div class="field-group select treeselect" [ngClass]=" element.columnValue ? 'valid' : 'invalid' "> 
-      <p-treeSelect [(ngModel)]="element.columnValue" [options]="element.options" [required]="element.isRequire && element.isVisiable && !element.isEmpty" (onNodeSelect)="onChangeTree($event, element.field_name)" [disabled]="element.isDisable" selectionMode="single"  placeholder="Select Item"></p-treeSelect>
+    <div class="field-group select treeselect" [ngClass]="'valid'"> 
+      <p-treeSelect [(ngModel)]="element.columnValue" [options]="element.options" [required]="element.isRequire && element.isVisiable && !element.isEmpty" (onNodeSelect)="onChangeTree($event, element.field_name, element)" [disabled]="element.isDisable" selectionMode="single"  placeholder="Select Item"></p-treeSelect>
       <div *ngIf="element.isRequire && submit && !element.columnValue"
           class="alert-validation alert-danger">
           <div [hidden]="element.columnValue">
@@ -112,6 +120,7 @@ export class AppTypeSelectComponent implements OnInit {
 export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
   @Input() element;
   @Input() dataView;
+  @Input() modelFields;
   @Input() submit = false;
   constructor(
     private apiService: ApiHrmService
@@ -137,7 +146,9 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
     })
   }
 
-  onChangeTree(event, field_name) {
+  onChangeTree(event, field_name, element) {
+    this.modelFields[field_name].error = this.modelFields[field_name].isRequire ? this.element.columnValue ? false : true : false
+    this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
     if (field_name === 'orgId') {
       this.dataView.forEach(element => {
         element.fields.forEach(async element1 => {
@@ -164,7 +175,7 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
   template: `   
           <div class="field-group select" [ngClass]=" element.columnValue ? 'valid' : 'invalid' ">
                 <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
-                  [disabled]="element.isDisable" [options]="element.options" (onChange)="onChangeValue($event.value, element.field_name)" [filterBy]="'label'"
+                  [disabled]="element.isDisable" [options]="element.options" (onChange)="onChangeValue($event.value, element.field_name, element)" [filterBy]="'label'"
                   [required]="element.isRequire && element.isVisiable && !element.isEmpty" [(ngModel)]="element.columnValue"
                   name={{element.field_name}} [filter]="true">
                   <ng-template let-item pTemplate="selectedItem">
@@ -219,8 +230,9 @@ export class AppTypeDropdownComponent implements OnInit {
   }
 
 
-  onChangeValue(value, field_name) {
-    this.modelFields[field_name].error = false;
+  onChangeValue(value, field_name, element) {
+    this.modelFields[field_name].error = this.modelFields[field_name].isRequire ? this.element.columnValue ? false : true : false
+    this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
     if (field_name === 'orgId') {
       this.dataView.forEach(element => {
         element.fields.forEach(async element1 => {
@@ -231,7 +243,7 @@ export class AppTypeDropdownComponent implements OnInit {
         });
       });
 
-    }else if (field_name === 'root_orgId') {
+    }else if (field_name === 'organizeId') {
       this.dataView.forEach(element => {
         element.fields.forEach(async element1 => {
           if (element1.columnType === 'selectTree' && element1.field_name === 'orgId') {
@@ -246,7 +258,7 @@ export class AppTypeDropdownComponent implements OnInit {
       this.dataView.forEach(element => {
         element.fields.forEach(async element1 => {
          if(element1.field_name === 'jobId') {
-            const root_orgId = await this.getValueByKey('root_orgId');
+            const root_orgId = await this.getValueByKey('organizeId');
             this.getJobTitles(root_orgId,element1, value) 
           }
         });
@@ -307,6 +319,8 @@ export class AppTypeDropdownComponent implements OnInit {
       if (results.status === 'success') {
         element1.options = results.data;
         element1.columnValue = results.data[0];
+        this.modelFields[element1.field_name].error = this.modelFields[element1.field_name].isRequire ? element1.columnValue  ? false : true : false
+        this.modelFields[element1.field_name].message = this.modelFields[element1.field_name].error ? 'Trường bắt buộc nhập !' : ''
       }
     })
   }
@@ -323,7 +337,7 @@ export class AppTypeDropdownComponent implements OnInit {
                 <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
                 <div>
                   <input type="number" class="form-control" [(ngModel)]="element.columnValue"
-                  name={{element.field_name}} [disabled]="element.isDisable"
+                  name={{element.field_name}} [disabled]="element.isDisable" (change)="onChangeValue($event.target, element.field_name, element)"
                   [required]="element.isRequire && element.isVisiable && !element.isEmpty">
 
                 <div *ngIf="element.isRequire && submit && !element.columnValue"
@@ -338,11 +352,17 @@ export class AppTypeDropdownComponent implements OnInit {
 
 export class AppTypeNumberComponent implements OnInit {
   @Input() element;
+  @Input() modelFields;
   @Input() submit = false;
   constructor(
     private apiService: ApiHrmService
   ) { }
   ngOnInit(): void {
+  }
+
+  onChangeValue(value, field_name, element) {
+    this.modelFields[field_name].error = this.modelFields[field_name].isRequire ? this.element.columnValue ? false : true : false
+    this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
   }
 }
 
@@ -353,9 +373,9 @@ export class AppTypeNumberComponent implements OnInit {
 @Component({
   selector: 'app-type-currency',
   template: `   <div class="field-group text" [ngClass]=" element.columnValue ? 'valid' : 'invalid' ">
-                  <input maxLength=18 type="text" (change)="changePrice($event)"
+                  <input maxLength=18 type="text" (change)="changePrice($event, element.field_name, element)"
                   class="form-control" [(ngModel)]="element.columnValue" currency name={{element.field_name}}
-                  [disabled]="element.isDisable" [required]="element.isRequire && element.isVisiable && !element.isEmpty">
+                  [disabled]="element.isDisable"  [required]="element.isRequire && element.isVisiable && !element.isEmpty">
                   <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
 
                   <div *ngIf="element.isRequire && submit && !element.columnValue"
@@ -369,6 +389,7 @@ export class AppTypeNumberComponent implements OnInit {
 
 export class AppTypeCurrencyComponent implements OnInit {
   @Input() element;
+  @Input() modelFields;
   @Input() submit = false;
   constructor(
     private apiService: ApiHrmService
@@ -381,8 +402,9 @@ export class AppTypeCurrencyComponent implements OnInit {
     return numeral(value).format('0,0[.][00]');
   }
 
-  changePrice(event) {
-
+  changePrice(event, field_name, element) {
+    this.modelFields[field_name].error = this.modelFields[field_name].isRequire ? this.element.columnValue ? false : true : false
+    this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
   }
 }
 
@@ -396,7 +418,7 @@ export class AppTypeCurrencyComponent implements OnInit {
                 <div>
                   <p-checkbox name={{element.field_name}} [binary]="true" label="{{element.columnLabel}} :"
                   [required]="element.isRequire && element.isVisiable && !element.isEmpty" [disabled]="element.isDisable"
-                  [(ngModel)]="element.columnValue"></p-checkbox>
+                  [(ngModel)]="element.columnValue" (onChange)="onChangeValue($event.value, element.field_name, element)"></p-checkbox>
 
                 <div *ngIf="element.isRequire && submit && !element.columnValue"
                     class="alert-validation alert-danger">
@@ -410,6 +432,7 @@ export class AppTypeCurrencyComponent implements OnInit {
 
 export class AppTypeCheckboxComponent implements OnInit {
   @Input() element;
+  @Input() modelFields;
   @Input() submit = false;
   constructor(
     private apiService: ApiHrmService
@@ -417,6 +440,10 @@ export class AppTypeCheckboxComponent implements OnInit {
   ngOnInit(): void {
     console.log("sđsdsds", this.element.columnValue)
     this.element.columnValue = this.element.columnValue == 'true' || this.element.columnValue == true ? true : false
+  }
+
+  onChangeValue(value, field_name, element) {
+    this.modelFields[field_name].error = false
   }
 
 }
@@ -429,7 +456,8 @@ export class AppTypeCheckboxComponent implements OnInit {
               <div class="field-group textarea">
                   <textarea type="text" placeholder="" class="form-control"
                   [(ngModel)]="element.columnValue" name={{element.field_name}} [disabled]="element.isDisable"
-                  [required]="element.isRequire && element.isVisiable && !element.isEmpty"></textarea>
+                  [required]="element.isRequire && element.isVisiable && !element.isEmpty"
+                  (change)="onChangeValue($event.target, element.field_name, element)"></textarea>
                   <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
 
                 <div *ngIf="element.isRequire && submit && !element.columnValue"
@@ -444,6 +472,7 @@ export class AppTypeCheckboxComponent implements OnInit {
 
 export class AppTypeTextareaComponent implements OnInit {
   @Input() element;
+  @Input() modelFields;
   @Input() submit = false;
   constructor(
     private apiService: ApiHrmService
@@ -451,7 +480,11 @@ export class AppTypeTextareaComponent implements OnInit {
   ngOnInit(): void {
 
   }
+  onChangeValue(value, field_name, element) {
+    this.modelFields[field_name].error = this.modelFields[field_name].isRequire ? this.element.columnValue ? false : true : false
+    this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
 
+  }
 }
 
 
@@ -528,11 +561,13 @@ export class AppTypeDatetimeComponent implements OnInit, OnChanges {
 
 export class AppTypeDatefulltimeComponent implements OnInit {
   @Input() element;
+  @Input() modelFields;
   @Input() submit = false;
   constructor(
     private apiService: ApiHrmService
   ) { }
   ngOnInit(): void {
+    this.modelFields[this.element.field_name].error = false
   }
 
 }
@@ -562,12 +597,13 @@ export class AppTypeDatefulltimeComponent implements OnInit {
 
 export class AppTypeTimeonlyComponent implements OnInit {
   @Input() element;
+  @Input() modelFields;
   @Input() submit = false;
   constructor(
     private apiService: ApiHrmService
   ) { }
   ngOnInit(): void {
-
+    this.modelFields[this.element.field_name].error = false
   }
 }
 
@@ -684,13 +720,14 @@ export class AppTypeMarkdownComponent implements OnInit {
 
 export class AppTypeCheckboxListComponent implements OnInit {
   @Input() element;
+  @Input() modelFields;
   @Input() submit = false;
 
   constructor(
     private apiService: ApiHrmService
   ) { }
   ngOnInit(): void {
-
+    this.modelFields[this.element.field_name].error = false;
 
   }
 
@@ -722,13 +759,14 @@ export class AppTypeCheckboxListComponent implements OnInit {
 
 export class AppTypeCheckboxRadioListComponent implements OnInit {
   @Input() element;
+  @Input() modelFields;
   @Input() submit = false;
 
   constructor(
     private apiService: ApiHrmService
   ) { }
   ngOnInit(): void {
-
+    this.modelFields[this.element.field_name].error = false;
   }
 
 }

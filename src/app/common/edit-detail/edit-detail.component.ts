@@ -105,7 +105,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
           } else if (element1.field_name === 'orgId') {
             if (element1.columnType === 'selectTree') {
               element1.isVisiable = false;
-              const root_orgId = await this.getValueByKey('root_org_id');
+              const root_orgId = await this.getValueByKey('organizeId');
               this.getOrganizeTree(root_orgId, element1);
             } else {
               this.getAgencyOrganizeList(element1);
@@ -127,7 +127,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
             const adm_st = await this.getValueByKey('adm_st');
             this.getAgentLeaders(orgId, element1, adm_st);
           } else if (element1.field_name === 'posistionCd') {
-            const root_orgId = await this.getValueByKey('root_org_id');
+            const root_orgId = await this.getValueByKey('organizeId');
             this.getOrgPositions(root_orgId, element1);
           } else if (element1.field_name === 'companyId') {
             this.getCompanyList(this.detail.organizeId ? this.detail.organizeId : null, element1);
@@ -140,10 +140,10 @@ export class EditDetailComponent implements OnInit, OnChanges {
             const cif_no = this.detail.cif_no
             this.getAccountList(element1, cif_no);
           } else if (element1.field_name === 'jobId') {
-            const root_orgId = await this.getValueByKey('root_org_id');
+            const root_orgId = await this.getValueByKey('organizeId');
             const positionTypeCd = await this.getValueByKey('positionCd');
             this.getJobTitles(root_orgId, element1, positionTypeCd);
-          } else if (element1.field_name === 'root_org_id') {
+          } else if (element1.field_name === 'organizeId') {
             this.getOrgRoots(element1);
           } else if (element1.field_name === 'org_cds') {
             this.getOrgRootsMuti(element1);
@@ -373,13 +373,14 @@ export class EditDetailComponent implements OnInit, OnChanges {
   }
 
   getOrgRootsMuti(element1) {
-    this.apiService.getOrgRoots().subscribe(results => {
+    const queryParams = queryString.stringify({ filter: ''});
+    this.apiService.getOrganizations(queryParams).subscribe(results => {
       if (results.status === 'success') {
         if(element1.columnType === 'multiSelect') {
           element1.options = cloneDeep(results.data).map(d => {
             return {
-              name: d.org_name,
-              code: `${d.orgId}`
+              name: d.organizationName,
+              code: `${d.organizeId}`
             }
           });
           if (element1.columnValue) {
@@ -394,8 +395,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
         }else {
           element1.options = cloneDeep(results.data).map(d => {
             return {
-              label: d.org_name + '-' + d.org_cd,
-              value: `${d.orgId}`
+              label: d.organizationName + '-' + d.organizationCd,
+              value: `${d.organizeId}`
             }
           });
           element1.columnValue = element1.columnValue ? element1.columnValue : ''
@@ -404,14 +405,14 @@ export class EditDetailComponent implements OnInit, OnChanges {
       }
     })
   }
-
   getOrgRoots(element1) {
-    this.apiService.getOrgRoots().subscribe(results => {
+    const queryParams = queryString.stringify({ filter: ''});
+    this.apiService.getOrganizations(queryParams).subscribe(results =>{
       if (results.status === 'success') {
         element1.options = cloneDeep(results.data).map(d => {
           return {
-            label: d.org_name,
-            value: `${d.orgId}`
+            label: d.organizationName,
+            value: `${d.organizeId}`
           }
         });
         element1.columnValue = element1.columnValue ? element1.columnValue : ''

@@ -81,7 +81,7 @@ export class SendNotifyComponent implements OnInit, AfterViewInit,OnDestroy {
       }
 
 
-      const ids = chunk(data.map(item => item.id), 1000);
+      const ids = chunk(data.map(item => item.id), 10);
       let listAPis: any = []
       for (let items of ids) {
         const dataSave = {

@@ -4,7 +4,7 @@
     <div class="select-default">
       <label for="">Tổ chức</label>
       <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
-                    [options]="moduleLists" [(ngModel)]="perent_id" [disabled]="true" [required] (onChange)="getOrganizeTree($event.value)"
+                    [options]="moduleLists" [(ngModel)]="perent_id"  [required] (onChange)="getOrganizeTree($event.code)"
                     name="perent_id" [filter]="true">
                     <ng-template let-item pTemplate="selectedItem">
                         <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
