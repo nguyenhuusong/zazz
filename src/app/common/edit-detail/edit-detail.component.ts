@@ -127,9 +127,15 @@ export class EditDetailComponent implements OnInit, OnChanges {
             const adm_st = await this.getValueByKey('adm_st');
             this.getAgentLeaders(orgId, element1, adm_st);
           } else if (element1.field_name === 'posistionCd') {
-            const root_orgId = await this.getValueByKey('organizeId');
+            const root_orgId = this.detail.organizeId ? this.detail.organizeId : null;
             this.getOrgPositions(root_orgId, element1);
-          } else if (element1.field_name === 'companyId') {
+          } else if (element1.field_name === 'positionId') {
+            const orgId = await this.getValueByKey('orgId');
+            this.getPositionList(orgId, element1);
+          } else if (element1.field_name === 'positionTitleId') {
+            const positionId = await this.getValueByKey('positionId');
+            this.getPositionTitles(positionId, element1);
+          }  if (element1.field_name === 'companyId') {
             this.getCompanyList(this.detail.organizeId ? this.detail.organizeId : null, element1);
           } else if (element1.field_name === 'company_id') {
             this.getCompanyList(this.detail.organizeId ? this.detail.organizeId : null, element1);
@@ -547,6 +553,29 @@ export class EditDetailComponent implements OnInit, OnChanges {
           return { label: d.fullName, value: d.saler_id }
         });
         element1.columnValue = element1.columnValue ? parseInt(element1.columnValue) : ''
+      }
+    })
+  }
+
+  getPositionTitles(positionId, element1) {
+    const queryParams = queryString.stringify({ PositionId: positionId });
+    this.apiService.getPositionTitles(queryParams).subscribe(results => {
+      if (results.status === 'success') {
+        element1.options = cloneDeep(results.data).map(d => {
+          return { label: d.positionName, value: d.positionId }
+        });
+        element1.columnValue = element1.columnValue ? element1.columnValue : ''
+      }
+    })
+  }
+  getPositionList(orgId, element1) {
+    const queryParams = queryString.stringify({ orgId: orgId });
+    this.apiService.getPositionList(queryParams).subscribe(results => {
+      if (results.status === 'success') {
+        element1.options = cloneDeep(results.data).map(d => {
+          return { label: d.positionName, value: d.positionId }
+        });
+        element1.columnValue = element1.columnValue ? element1.columnValue : ''
       }
     })
   }

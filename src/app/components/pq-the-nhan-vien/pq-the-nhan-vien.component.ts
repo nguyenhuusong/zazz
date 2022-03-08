@@ -233,8 +233,8 @@ export class PqTheNhanVienComponent implements OnInit {
           this.organizes = results.data
             .map(d => {
               return {
-                label: d.org_name || d.org_cd,
-                value: { org_cd: d.org_cd, orgId: d.orgId }
+                label: d.organizationName || d.organizationCd,
+                value: d.organizeId
               };
             });
           // if (this.organizes && this.organizes.length) {
@@ -247,7 +247,7 @@ export class PqTheNhanVienComponent implements OnInit {
   }
 
   getOrganizeTree(): void {
-    const queryParams = queryString.stringify({ parentId: this.model.organizeId.orgId });
+    const queryParams = queryString.stringify({ parentId: this.model.organizeId});
     this.apiService.getOrganizeTree(queryParams)
       .subscribe((results: any) => {
         if (results && results.status === 'success') {
