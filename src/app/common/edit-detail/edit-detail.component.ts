@@ -105,7 +105,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
           } else if (element1.field_name === 'orgId') {
             if (element1.columnType === 'selectTree') {
               element1.isVisiable = false;
-              const root_orgId = await this.getValueByKey('root_orgId');
+              const root_orgId = await this.getValueByKey('root_org_id');
               this.getOrganizeTree(root_orgId, element1);
             } else {
               this.getAgencyOrganizeList(element1);
@@ -127,7 +127,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
             const adm_st = await this.getValueByKey('adm_st');
             this.getAgentLeaders(orgId, element1, adm_st);
           } else if (element1.field_name === 'posistionCd') {
-            const root_orgId = await this.getValueByKey('root_orgId');
+            const root_orgId = await this.getValueByKey('root_org_id');
             this.getOrgPositions(root_orgId, element1);
           } else if (element1.field_name === 'companyId') {
             this.getCompanyList(this.detail.organizeId ? this.detail.organizeId : null, element1);
@@ -140,10 +140,10 @@ export class EditDetailComponent implements OnInit, OnChanges {
             const cif_no = this.detail.cif_no
             this.getAccountList(element1, cif_no);
           } else if (element1.field_name === 'jobId') {
-            const root_orgId = await this.getValueByKey('root_orgId');
+            const root_orgId = await this.getValueByKey('root_org_id');
             const positionTypeCd = await this.getValueByKey('positionCd');
             this.getJobTitles(root_orgId, element1, positionTypeCd);
-          } else if (element1.field_name === 'root_orgId') {
+          } else if (element1.field_name === 'root_org_id') {
             this.getOrgRoots(element1);
           } else if (element1.field_name === 'org_cds') {
             this.getOrgRootsMuti(element1);
@@ -410,7 +410,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
       if (results.status === 'success') {
         element1.options = cloneDeep(results.data).map(d => {
           return {
-            label: d.org_name + '-' + d.org_cd,
+            label: d.org_name,
             value: `${d.orgId}`
           }
         });
