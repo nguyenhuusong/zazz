@@ -2643,8 +2643,12 @@ div.p-organizationchart {
         top: calc(100% - 2px);
         font-size: 12px;
         margin-top: 3px;
+        width: 100%;
+        background: red;
+        border-radius: 2px;
+        padding: 2px 5px;
         &.alert-danger{
-            color: red
+            color: #FFF;
         }
     }
 }
