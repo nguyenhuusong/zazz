@@ -70,7 +70,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     jobId: null,
     organizeId: null,
     positionCd: null,
-    vacancy_id: 0,
+    vacancyId: 0,
     can_st: -1
   }
   totalRecord = 0;
@@ -117,7 +117,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
       organizeId: null,
       positionCd: '',
       jobId: null,
-      vacancy_id: 0,
+      vacancyId: 0,
       can_st: -1
     }
     this.load();
@@ -382,7 +382,7 @@ load() {
         this.listVacancy = results.data.dataList.data.map(d => {
           return {
             label: d.vacancy_name,
-            value: d.vacancy_id
+            value: d.vacancyId
           }
         })
       }
