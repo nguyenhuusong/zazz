@@ -61,8 +61,8 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
 
   modelContractInfo = {
     contractId: null,
-    contractTypeId: 0,
-    employeeCd: 0,
+    contractTypeId: null,
+    empId: null,
     detailInfo: null
   }
   hienthihopdong = false;
@@ -150,7 +150,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   }
 
   getContractTypes() {
-    const queryParams = queryString.stringify({ org_cd: this.detailInfo.org_cd });
+    const queryParams = queryString.stringify({ organizeId: this.detailInfo.organizeId });
     this.apiService.getContractTypes(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.listContractTypes = results.data.map(d => {
@@ -1200,7 +1200,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     this.modelContractInfo = {
       contractId: event.rowData.contractId,
       contractTypeId: null,
-      employeeCd: this.detailInfo.employeeCd,
+      empId: this.detailInfo.empId,
       detailInfo: this.detailInfo
     }
     this.hienthihopdong = true;
@@ -1328,7 +1328,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       detailInfo: this.detailInfo,
       contractId: this.detailInfo.contractId || null,
       contractTypeId: this.listContractTypes[0].value,
-      employeeCd: this.detailInfo.employeeCd
+      empId: this.detailInfo.empId
     }
     this.hienthihopdong = true;
   }

@@ -40,7 +40,7 @@ export class CreateContractInfoComponent implements OnInit {
   }
 
   getContractTypes() {
-    const queryParams = queryString.stringify({ org_cd: this.modelContractInfo.org_cd });
+    const queryParams = queryString.stringify({ organizeId: this.modelContractInfo.organizeId });
     this.apiService.getContractTypes(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.listContractTypes = results.data.map(d => {

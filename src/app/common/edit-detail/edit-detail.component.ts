@@ -130,11 +130,11 @@ export class EditDetailComponent implements OnInit, OnChanges {
             const root_orgId = await this.getValueByKey('root_orgId');
             this.getOrgPositions(root_orgId, element1);
           } else if (element1.field_name === 'companyId') {
-            this.getCompanyList(this.detail.root_orgId ? this.detail.root_orgId : 0, element1);
+            this.getCompanyList(this.detail.organizeId ? this.detail.organizeId : null, element1);
           } else if (element1.field_name === 'company_id') {
-            this.getCompanyList(this.detail.root_orgId ? this.detail.root_orgId : 0, element1);
+            this.getCompanyList(this.detail.organizeId ? this.detail.organizeId : null, element1);
           } else if (element1.field_name === 'reportTo') {
-            const root_orgId = this.detail ? this.detail.root_orgId : 0
+            const root_orgId = this.detail ? this.detail.organizeId : null
             this.getEmpLeaders(element1, root_orgId);
           } else if (element1.field_name === 'acc_no') {
             const cif_no = this.detail.cif_no
@@ -224,7 +224,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
 
 
   getContractTypes(element1) {
-    const queryParams = queryString.stringify({  organizeId: this.detail.orgId });
+    const queryParams = queryString.stringify({  organizeId: this.detail.organizeId });
     this.apiService.getContractTypes(queryParams).subscribe(results => {
       if (results.status === 'success') {
         element1.options = cloneDeep(results.data).map(d => {
