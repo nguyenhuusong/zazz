@@ -139,7 +139,7 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
       title: 'Thêm mới khám thai',
       set: 'SetMaternityPregnancyInfo'
     }
-    const queryParams = queryString.stringify({pregnancId : 0});
+    const queryParams = queryString.stringify({pregnancId : null, maternityId: this.modelEdit.maternityId });
     this.getMaternityPregnancInfo(queryParams)
   }
   
@@ -172,7 +172,7 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
       title: 'Thêm mới con nhỏ',
       set: 'SetMaternityChildInfo'
     }
-    const queryParams = queryString.stringify({childId : 0});
+    const queryParams = queryString.stringify({childId : null, maternityId: this.modelEdit.maternityId });
     this.getMaternityChildInfo(queryParams);
   }
 
