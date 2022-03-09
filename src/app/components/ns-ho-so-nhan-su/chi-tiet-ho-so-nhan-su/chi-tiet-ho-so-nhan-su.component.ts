@@ -77,7 +77,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     title: ''
   };
   modelDuyet = {
-    employeeCd: "",
+    empId: "",
     workDt: new Date(),
     exprire_date: new Date(),
     comments: "",
@@ -885,7 +885,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   }
 
   cancelUpdate(button): void {
-    this.modelDuyet.employeeCd = this.detailInfo.employeeCd;
+    this.modelDuyet.empId = this.detailInfo.empId;
     this.modelDuyet.full_name = this.detailInfo.fullName;
     if (button === 'Back') {
       this.goBack();
