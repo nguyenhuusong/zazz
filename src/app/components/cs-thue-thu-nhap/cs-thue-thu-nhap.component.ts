@@ -86,7 +86,7 @@ export class CsThueThuNhapComponent implements OnInit, AfterViewChecked {
 
   initFilter(): void {
     this.query = {
-      company_id: '',
+      companyId: '',
       filter: '',
       offSet: 0,
       pageSize: 15
