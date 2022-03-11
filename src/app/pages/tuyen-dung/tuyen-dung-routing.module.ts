@@ -36,7 +36,7 @@ const routes: Routes = [
     component: ChiTietTuyenDungComponent,
     data: {
       title: 'Chi tiết tuyển dụng tuyển dụng',
-      url: 'chi-tiet-tuyen-dung',
+      url: 'chi-tiet-tuyen-dung/:canId',
     },
   },
   {

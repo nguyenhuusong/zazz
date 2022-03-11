@@ -1076,4 +1076,13 @@ export class ApiHrmService {
         `buildCd=${buildCd}&projectCd=${projectCd}`, this.options);
   }
 
+  GetEmployeeCardInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/compay/GetEmployeeCardInfof?` + queryParams, this.options)
+  }
+  SetEmployeeCardInfo(queryParams): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v1/organize/SetEmployeeCardInfof`, queryParams, this.options)
+  }
+
+  
+
 }

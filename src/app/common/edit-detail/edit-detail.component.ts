@@ -172,7 +172,9 @@ export class EditDetailComponent implements OnInit, OnChanges {
             this.getMeetRooms(element1);
           } else if (element1.field_name === 'content_type' || element1.field_name === 'isPublish') {
             this.GetCustObjectList(element1);
-          } else {
+          }  else if (element1.field_name === 'year_of_birth') {
+            this.GetYearPicker(element1);
+          }else {
             this.getCustObjectListNew(element1);
           }
         }
@@ -208,6 +210,18 @@ export class EditDetailComponent implements OnInit, OnChanges {
         element1.columnValue = element1.columnValue ? element1.columnValue : ''
       }
     })
+  }
+
+  GetYearPicker( element1){ 
+    let minYear = 1990;
+    let maxYear = 2030;
+    let listYears = []
+    for( let i = minYear; i <= maxYear; i++){
+      listYears.push({ label: i, value: i.toString() })
+    }
+    element1.options = listYears;
+    element1.columnValue = element1.columnValue ? element1.columnValue : ''
+   
   }
 
   getWorkTime(element1, employeeCd) {
