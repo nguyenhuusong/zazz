@@ -250,8 +250,9 @@ load() {
 
   XemChiTiet(event) {
     const params = {
-      canId: event.rowData.can_id
+      canId: event.rowData.canId
     }
+    console.log(event, 'event event event event')
     this.router.navigate(['/tuyen-dung/ds-tuyen-dung/chi-tiet-tuyen-dung'], { queryParams: params });
   }
 

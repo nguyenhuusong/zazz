@@ -346,7 +346,11 @@ export class PqTheNhanVienComponent implements OnInit {
   }
   displaythenv = false;
   handleAdd(): void {
-    this.displaythenv = true;
+    // this.displaythenv = true;
+    const params = {
+      canId: null
+    }
+    this.router.navigate(['/phan-quyen/the-nhan-vien/them-moi-the-nhan-vien'], { queryParams: params });
   }
 
   onChangeTree(a): void {

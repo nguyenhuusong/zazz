@@ -7,6 +7,7 @@ import { PqTheNhanVienComponent } from 'src/app/components/pq-the-nhan-vien/pq-t
 import { PqXeNhanVienComponent } from 'src/app/components/pq-xe-nhan-vien/pq-xe-nhan-vien.component';
 import { ThietBiThangMayComponent } from 'src/app/components/thiet-bi-thang-may/thiet-bi-thang-may.component';
 import { ThietLapTangThangMayComponent } from 'src/app/components/thiet-lap-tang-thang-may/thiet-lap-tang-thang-may.component';
+import { ChiTietTheNhanVienComponent } from 'src/app/components/pq-the-nhan-vien/chi-tiet-the-nhan-vien/chi-tiet-the-nhan-vien.component';
 
 const routes: Routes = [
   {
@@ -30,6 +31,15 @@ const routes: Routes = [
     data: {
       title: 'Danh sách thẻ nhân viên',
       url: 'the-nhan-vien',
+    },
+  },
+  // thêm mới thẻ nhân viên
+  {
+    path: 'the-nhan-vien/them-moi-the-nhan-vien',
+    component: ChiTietTheNhanVienComponent,
+    data: {
+      title: 'Thêm mới thẻ nhân viên',
+      url: 'them-moi-nhan-vien',
     },
   },
   //Thiết bị thang máy
