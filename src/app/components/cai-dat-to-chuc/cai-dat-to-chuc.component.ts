@@ -378,6 +378,7 @@ export class CaiDatToChucComponent implements OnInit {
   url = '';
   dataRouter = null;
   ngOnInit() {
+    this.getOrrginiaztions();
     this.items = [
       { label: 'Trang chủ' , url: '/home' },
       { label: 'Cài đặt' },
@@ -454,51 +455,71 @@ export class CaiDatToChucComponent implements OnInit {
     this.load();
     this.displayButton = false;
   }
-  Add() {
-    this.getDepartments(this.detailOrganizeMap.orgId);
-    this.titleForm = {
-      label: 'Thêm mới phòng ban',
-      value: 'Add'
-    }
-    const queryParams = queryString.stringify({ org_level: this.detailOrganizeMap.org_level, organizeId: this.detailOrganizeMap.orgId });
+  organizes = []
+  getOrrginiaztions() {
+    const queryParams = queryString.stringify({ filter: ''});
+    this.apiService.getOrganizations(queryParams).subscribe(results => {
+      if(results.status === 'success') {
+          this.organizes = results.data.map(d => {
+            return {
+              label: d.organizationName,
+              value: `${d.organizeId}`
+            }
+          });
+          this.organizes = [{label: 'UNION-SUNSHINE', value: null}, ...this.organizes];
+      }
+    })
+  }
+
+  getOrganizeList(organizeId) {
+    const queryParams = queryString.stringify({ org_level: this.detailOrganizeMap.org_level, organizeId: organizeId });
     this.apiService.getOrganizeList(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.organizeList = results.data;
         this.organizeList = this.organizeList.map(d => {
           return {
-            label: d.org_name + '-' + d.org_cd,
+            label: d.org_name,
             value: d.orgId
           }
         })
-
-        this.displayOrganize = true;
-        if (this.detailOrganizeMap.parentId > 0) {
-          this.modeAgencyOrganize = {
-            orgId: 0,
-            organizeId: '',
-            org_name: '',
-            org_level: this.detailOrganizeMap.org_level,
-            parentId: this.detailOrganizeMap.orgId,
-            org_type: '',
-            isChild: false,
-            de_cd: null,
-          }
-        } else {
-          this.modeAgencyOrganize = {
-            orgId: 0,
-            organizeId: '',
-            org_name: '',
-            org_level: this.listAgencyMap.length > 0 ? 1 : 0,
-            parentId: this.listAgencyMap.length > 0 ? this.detailOrganizeMap.orgId : 0,
-            org_type: '',
-            isChild: false,
-            de_cd: null,
-          }
-        }
-        this.displayButton = false;
-
       }
     })
+  }
+
+  Add() {
+    this.getDepartments(this.detailOrganizeMap.organizeId);
+    this.titleForm = {
+      label: 'Thêm mới phòng ban',
+      value: 'Add'
+    }
+
+    if (this.detailOrganizeMap.parentId) {
+      this.getOrganizeList(this.detailOrganizeMap.organizeId);
+      this.modeAgencyOrganize = {
+        orgId: null,
+        organizeId:this.detailOrganizeMap.organizeId,
+        org_name: '',
+        org_level: this.detailOrganizeMap.org_level,
+        parentId: this.detailOrganizeMap.parentId,
+        org_type: '',
+        isChild: false,
+        de_cd: null,
+      }
+    } else {
+      this.modeAgencyOrganize = {
+        orgId: null,
+        organizeId: this.listAgencyMap.length > 0 ? this.detailOrganizeMap.organizeId : null,
+        org_name: '',
+        org_level: this.listAgencyMap.length > 0 ? 1 : 0,
+        parentId: null,
+        org_type: '',
+        isChild: false,
+        de_cd: null,
+      }
+    }
+    this.displayOrganize = true;
+
+    this.displayButton = false;
   }
 
   listOrganizeTree = []
@@ -506,12 +527,14 @@ export class CaiDatToChucComponent implements OnInit {
   Edit() {
     this.displayButton = false;
     this.getDepartments(this.detailOrganizeMap.parentId);
+    this.getOrganizeList(this.detailOrganizeMap.organizeId);
+
     this.titleForm = {
       label: 'Chỉnh sửa phòng ban',
       value: 'Edit'
     }
 
-    const queryParams = queryString.stringify({ parentId: 1 });
+    const queryParams = queryString.stringify({ parentId: this.detailOrganizeMap.organizeId });
     this.apiService.getOrganizeTree(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.listOrganizeTree = results.data;

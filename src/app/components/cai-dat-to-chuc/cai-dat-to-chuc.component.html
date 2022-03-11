@@ -74,6 +74,24 @@
         {{titleForm.label}}
     </p-header>
     <div class=" col-md-12 mt-1">
+      <div class="field-group treeselect select label-8" > 
+          <!-- <p-treeSelect [(ngModel)]="selectedNodeTree" [options]="listOrganizeTree" *ngIf="titleForm.value === 'Edit'"
+          selectionMode="single" placeholder="Select Item"></p-treeSelect> -->
+          <p-dropdown appendTo="body"  [baseZIndex]="100" 
+          [options]="organizes" [required] [(ngModel)]="modeAgencyOrganize.organizeId" (onChange)="getOrganizeList($event.query)" name="organizeId" [filter]="true">
+          <ng-template let-item pTemplate="selectedItem">
+            <span>{{item.label}}</span>
+          </ng-template>
+          <ng-template let-car pTemplate="item">
+            <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+              <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+            </div>
+          </ng-template>
+        </p-dropdown>
+        <label for="">Tổ chức</label>
+      </div>
+    </div>
+    <div class=" col-md-12 mt-1">
       <div class="field-group treeselect select label-8" >
           <p-treeSelect [(ngModel)]="selectedNodeTree" [options]="listOrganizeTree" *ngIf="titleForm.value === 'Edit'"
           selectionMode="single" placeholder="Select Item"></p-treeSelect>
@@ -123,12 +141,12 @@
         <label for="">Danh sách phòng ban</label>
       </div>
     </div>
-    <div class=" col-md-12 mt-1">
+    <!-- <div class=" col-md-12 mt-1">
       <div class="field-group text" [ngClass]=" modeAgencyOrganize.organizeId ? 'valid' : 'invalid' ">
           <input type="text" [(ngModel)]="modeAgencyOrganize.organizeId" name="organizeId" class="form-control">
           <label for="">Mã phòng ban</label>
         </div>
-    </div>
+    </div> -->
     <div class=" col-md-12 mt-1">
         <div class="field-group text" [ngClass]=" modeAgencyOrganize.org_name ? 'valid' : 'invalid' ">
           <input type="text" [(ngModel)]="modeAgencyOrganize.org_name" name="org_name" class="form-control">
