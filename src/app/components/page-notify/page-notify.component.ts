@@ -149,12 +149,13 @@ export class PageNotifyComponent implements OnInit, OnDestroy, AfterViewChecked 
   moduleList = [];
   notifyTempList = [];
   getModuleList() {
-    this.apiService.getModuleList().subscribe(results => {
+    const queryParams = queryString.stringify({filter: ''});
+    this.apiService.getOrganizations(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.moduleList = results.data.map(res => {
           return {
-            label: `${res.org_name} (${res.org_cd})`,
-            value: res.orgId
+            label: `${res.organizationName} (${res.organizationCd})`,
+            value: res.organizationCd
           }
         });
       }

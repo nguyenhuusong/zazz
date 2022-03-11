@@ -11,6 +11,8 @@ import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-render
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { AgGridFn } from 'src/app/common/function-common/common';
 import { NgxSpinnerService } from 'ngx-spinner';
+import * as FileSaver from 'file-saver';
+
 @Component({
   selector: 'app-cs-thue-thu-nhap',
   templateUrl: './cs-thue-thu-nhap.component.html',
@@ -50,6 +52,7 @@ export class CsThueThuNhapComponent implements OnInit, AfterViewChecked {
   showImportExcel = false;
   constructor(
     private apiService: ApiHrmService,
+    private apiBaseService: ApiService,
     private fileService: ExportFileService,
     private spinner: NgxSpinnerService,
     private changeDetector: ChangeDetectorRef,
@@ -86,7 +89,7 @@ export class CsThueThuNhapComponent implements OnInit, AfterViewChecked {
 
   initFilter(): void {
     this.query = {
-      company_id: '',
+      companyId: '',
       filter: '',
       offSet: 0,
       pageSize: 15
@@ -158,15 +161,59 @@ export class CsThueThuNhapComponent implements OnInit, AfterViewChecked {
           class: 'btn-primary mr5',
           // hide: (params.data.status === 3)
         },
-        // {
-        //   onClick: this.handleDelete.bind(this),
-        //   label: 'Xóa',
-        //   icon: 'fa fa-trash',
-        //   class: 'btn-danger mr5',
-        //   hide: (params.data.status === 3)
-        // },
+        {
+          onClick: this.handleExportTax.bind(this),
+          label: 'Xuất chứng từ thuế mẫu 1',
+          icon: 'fa fa-trash',
+          class: 'btn-danger mr5',
+          hide: false
+        },
+        {
+          onClick: this.handleExportTax2.bind(this),
+          label: 'Xuất chứng từ thuế mẫu 2',
+          icon: 'fa fa-trash',
+          class: 'btn-danger mr5',
+          hide: false
+        },
+        {
+          onClick: this.handleExportApproveTax.bind(this),
+          label: 'Xuất thư xác nhận thuế',
+          icon: 'fa fa-trash',
+          class: 'btn-danger mr5',
+          hide: false
+        },
       ]
     };
+  }
+  
+  handleExportTax(data) {
+    this.spinner.show();
+    this.apiBaseService.getCTThueThuNhapCN(data.rowData.id, 1)
+    .subscribe(response => {
+      var blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      FileSaver.saveAs(blob, 'Chứng từ thuế mẫu 1' + ".xlsx");
+      this.spinner.hide();
+    })
+  }
+
+  handleExportTax2(data) {
+    this.spinner.show();
+    this.apiBaseService.getCTThueThuNhapCN(data.rowData.id, 2)
+    .subscribe(response => {
+      var blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      FileSaver.saveAs(blob, 'Chứng từ thuế mẫu 2' + ".xlsx");
+      this.spinner.hide();
+    })
+  }
+
+  handleExportApproveTax(data) {
+  this.spinner.show();
+    this.apiBaseService.getThuXacNhanThuNhaptype(data.rowData.id)
+    .subscribe(response => {
+      var blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      FileSaver.saveAs(blob, 'Thư xác nhận thuế' + ".xlsx");
+      this.spinner.hide();
+    })
   }
 
   initGrid() {

@@ -755,6 +755,10 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v2/position/GetPositionList?` + queryParams, this.options)
   }
 
+  getPositionTitles(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/position/GetPositionTitles?` + queryParams, this.options)
+  }
+
   setOrganizeInfo(queryParams): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v1/organize/SetOrganizeInfo`, queryParams, this.options)
   }
@@ -973,9 +977,9 @@ export class ApiHrmService {
   setCardVehicle<T>(cardVehicleId, cardCd = null, vehicleTypeId, vehicleNo, vehicleName, startTime, endTime, custId = null) {
     const cardSet = {
       cardVehicleId, cardCd, vehicleTypeId, vehicleNo, vehicleName, serviceId: 0,
-      startTime, endTime, status: 0, custId
+      startTime, endTime, status: 0, custId, imageLinks: []
     };
-    return this.http.post<T>(`${apiShome}/api/v1/shome/SetServiceVehicle`, cardSet, this.options);
+    return this.http.put<T>(`${apiHrmServer}/api/v2/cardvehicle/SetServiceVehicle`, cardSet, this.options);
   }
 
   setCardVip<T>(cardCd, employeeId, cardName) {

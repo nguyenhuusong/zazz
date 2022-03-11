@@ -4,6 +4,7 @@ import { AuthService } from './auth.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 const apiBaseUrl = environment.apiBase;
+const apiHrmBase = environment.apiHrmBase;
 const apiCoreBaseUrl = 'https://apicore.sunshinegroup.vn';
 @Injectable()
 export class ApiService {
@@ -133,5 +134,22 @@ export class ApiService {
     .put<any>(`${apiCoreBaseUrl}/api/v1/coresystem/SetResetPassword`, password , this.options);
   }
 
+  getCTThueThuNhapCN(id: string, typeBM: number): Observable<Blob> {
+    return this.http.get(`${apiHrmBase}/api/v1/report/GetCTThueThuNhapCN?type=xlsx&id=${id}&typeBM=${typeBM}`, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
+  }
+
+  getThuXacNhanThuNhaptype(id: string): Observable<Blob> {
+    return this.http.get(`${apiHrmBase}/api/v1/report/GetThuXacNhanThuNhap?type=xlsx&id=${id}`, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
+  }
 
 }

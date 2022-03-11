@@ -154,6 +154,8 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
         element.fields.forEach(async element1 => {
           if (element1.field_name === 'companyId') {
             this.getCompanyList(event.node.orgId, element1);
+          }else if (element1.field_name === 'positionId') {
+            this.getPositionList(event.node.orgId, element1);
           }
         });
       });
@@ -163,6 +165,18 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
     if(event && event.element) {
       this.element = event.element.currentValue
     }
+  }
+
+  getPositionList(orgId, element1) {
+    const queryParams = queryString.stringify({ orgId: orgId });
+    this.apiService.getPositionList(queryParams).subscribe(results => {
+      if (results.status === 'success') {
+        element1.options = cloneDeep(results.data).map(d => {
+          return { label: d.positionName, value: d.positionId }
+        });
+        element1.columnValue = element1.columnValue ? element1.columnValue : ''
+      }
+    })
   }
 }
 
@@ -242,7 +256,15 @@ export class AppTypeDropdownComponent implements OnInit {
           }
         });
       });
-
+    }else if (field_name === 'org_cds') {
+      debugger
+     this.dataView.forEach(element => {
+      element.fields.forEach( element1 => {
+        if (element1.field_name === 'full_name') {
+          this.getUserByPush(value, element1)
+        }
+      });
+    });
     }else if (field_name === 'organizeId') {
       this.dataView.forEach(element => {
         element.fields.forEach(async element1 => {
@@ -254,7 +276,15 @@ export class AppTypeDropdownComponent implements OnInit {
           }
         });
       });
-    }else if (field_name === 'positionCd') {
+    }else if (field_name === 'positionId') {
+      this.dataView.forEach(element => {
+        element.fields.forEach(async element1 => {
+         if(element1.field_name === 'positionTitleId') {
+            this.getPositionTitles(value,element1) 
+          }
+        });
+      });
+    } else if (field_name === 'positionCd') {
       this.dataView.forEach(element => {
         element.fields.forEach(async element1 => {
          if(element1.field_name === 'jobId') {
@@ -263,7 +293,7 @@ export class AppTypeDropdownComponent implements OnInit {
           }
         });
       });
-    }  else if (field_name === 'adm_st') {
+    } else if (field_name === 'adm_st') {
       this.dataView.forEach(element => {
         element.fields.forEach(async element1 => {
           if (element1.field_name === 'parentId') {
@@ -286,6 +316,34 @@ export class AppTypeDropdownComponent implements OnInit {
     }
   }
 
+  getPositionTitles(positionId, element1) {
+    const queryParams = queryString.stringify({ PositionId: positionId });
+    this.apiService.getPositionTitles(queryParams).subscribe(results => {
+      if (results.status === 'success') {
+        element1.options = cloneDeep(results.data).map(d => {
+          return { label: d.positionName, value: d.positionId }
+        });
+        element1.columnValue = element1.columnValue ? element1.columnValue : ''
+      }
+    })
+  }
+
+
+
+  getUserByPush(orgId,element1) {
+    this.apiService.getUserByPush({ organizeId: orgId, orgIds: [orgId] }).subscribe(results => {
+      if (results.status === 'success') {
+        element1.options = cloneDeep(results.data).map(d => {
+          return {
+            label: d.fullName  + '-' + d.phone,
+            value: `${d.userId}`
+          }
+        });
+        element1.columnValue = element1.columnValue ? element1.columnValue : ''
+      }
+    })
+  }
+  
   getJobTitles(orgId,element1, positionTypeCd) {
     const queryParams = queryString.stringify({ orgId: orgId, positionTypeCd: positionTypeCd });
     this.apiService.getJobs(queryParams).subscribe(results => {

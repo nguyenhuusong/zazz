@@ -24,8 +24,8 @@
             <div class="col-2">
                 <div class="field-group select mb-0 label-8">
                     <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
-                        (onChange)="load()" [options]="companies" [(ngModel)]="query.company_id"
-                        name="company_id" [filter]="true">
+                        (onChange)="load()" [options]="companies" [(ngModel)]="query.companyId"
+                        name="companyId" [filter]="true">
                         <ng-template let-item pTemplate="selectedItem">
                             <span>{{item?.label}}</span>
                         </ng-template>

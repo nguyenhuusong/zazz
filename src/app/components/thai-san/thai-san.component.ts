@@ -246,7 +246,7 @@ load() {
 
   addThaiSan() {
     const params = {
-      maternityId: 0
+      maternityId: null
     }
     this.router.navigate(['/nhan-su/thai-san/them-moi-thai-san'], { queryParams: params });
   }

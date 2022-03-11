@@ -412,7 +412,7 @@
         (callback)="emitContract($event)" (back)="hienthihopdong = !hienthihopdong"></app-create-contract-info>
 </p-dialog>
 
-<p-dialog styleClass="popup-btngroup-edit-detail" header="{{modelAttach.meta_id > 0 ? 'Xem chi tiết file đính kèm' : 'Thêm file đính kèm'}}" [(visible)]="displayAttach" [modal]="true" [draggable]="false" [resizable]="false"
+<p-dialog styleClass="popup-btngroup-edit-detail" header="{{modelAttach.metaId > 0 ? 'Xem chi tiết file đính kèm' : 'Thêm file đính kèm'}}" [(visible)]="displayAttach" [modal]="true" [draggable]="false" [resizable]="false"
     [style]="{width: '600px'}" [autoZIndex]=true [draggable]="false" [resizable]="false">
 
     <app-emp-attach-file *ngIf="displayAttach" [modelAttach]="modelAttach" (callback)="emitAttach($event)"

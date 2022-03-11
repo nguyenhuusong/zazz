@@ -23,7 +23,7 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
     { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check' }
   ];
   modelEdit = {
-    maternityId: 0,
+    maternityId: null,
   }
   titlePage = '';
   listsDataMaternityPregnancy = [];
@@ -77,10 +77,10 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
           const listViews = cloneDeep(results.data.group_fields);
           this.listViews = [...listViews];
           this.detailInfo = results.data;
-          this.listsDataMaternityPregnancy = [...this.detailInfo.maternityPregnancy]
-          this.listsDataMaternityChild = [...this.detailInfo.maternityChild]
-          this.aGridFnMaternityChild(this.detailInfo.gridflexdetails1)
-          this.aGridFnMaternityPregnancy(this.detailInfo.gridflexdetails2)
+          this.listsDataMaternityPregnancy = [...this.detailInfo.maternityPregnancy || []]
+          this.listsDataMaternityChild = [...this.detailInfo.maternityChild || []]
+          this.aGridFnMaternityChild(this.detailInfo.gridflexdetails1 || [])
+          this.aGridFnMaternityPregnancy(this.detailInfo.gridflexdetails2 || [])
         }
       });
   }
@@ -139,7 +139,7 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
       title: 'Thêm mới khám thai',
       set: 'SetMaternityPregnancyInfo'
     }
-    const queryParams = queryString.stringify({pregnancId : 0});
+    const queryParams = queryString.stringify({pregnancId : null, maternityId: this.modelEdit.maternityId });
     this.getMaternityPregnancInfo(queryParams)
   }
   
@@ -172,7 +172,7 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
       title: 'Thêm mới con nhỏ',
       set: 'SetMaternityChildInfo'
     }
-    const queryParams = queryString.stringify({childId : 0});
+    const queryParams = queryString.stringify({childId : null, maternityId: this.modelEdit.maternityId });
     this.getMaternityChildInfo(queryParams);
   }
 

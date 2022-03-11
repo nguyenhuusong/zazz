@@ -80,7 +80,7 @@ export class CardDetailComponent implements OnInit {
       )
       .subscribe((res: any) => {
         this.results = res.data.map(item => ({
-          name: item.fullName + '-' + item.phone || item.employeeName + '-' + item.phone, code: item.employeeCd, custId: item.custId, phone: item.phone, email: item.email , departmentName:item.departmentName 
+          name: item.fullName + '-' + item.phone || item.employeeName + '-' + item.phone, code: item.code,empId: item.empId, custId: item.custId, phone: item.phone, email: item.email , departmentName:item.departmentName 
         }));
         console.log('result:', this.results);
       });
@@ -94,11 +94,14 @@ export class CardDetailComponent implements OnInit {
     const cardFormValue = { ...this.cardForm.value };
     const vehicleFormValue = { ...this.vehicleForm.value };
     let custId = '';
+    debugger
     if (typeof cardFormValue.employeeId !== 'string') {
       custId = cardFormValue.employeeId.custId;
-      cardFormValue.employeeId = cardFormValue.employeeId.code;
+      cardFormValue.employeeId = cardFormValue.employeeId.empId;
     }
+
     if (cardFormValue.isCardVehicle) {
+      debugger
       this.apiService.setCardVip(cardFormValue.cardCd, cardFormValue.employeeId, cardFormValue.cardName)
         .pipe(
           concatMap(response => {
@@ -117,6 +120,7 @@ export class CardDetailComponent implements OnInit {
           this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Thêm mới thẻ thất bại' });
         })
     } else {
+      debugger
       this.apiService.setCardVip(cardFormValue.cardCd, cardFormValue.employeeId, cardFormValue.cardName)
         .subscribe((response: any) => {
           if (response.status === 'success') {
