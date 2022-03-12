@@ -43,7 +43,7 @@
                 </div>
             </div>
             <div class="col-8 tools">
-                <p-button label="Thêm mới phòng ban" (click)="Add()" styleClass="p-button-sm mr-1" icon="pi pi-plus"></p-button>
+                <p-button label="Thêm mới phòng ban" *ngIf="detailOrganizeMap?.organizeId" (click)="Add()" styleClass="p-button-sm mr-1" icon="pi pi-plus"></p-button>
                 <p-button label="Chỉnh sửa phòng ban" (click)="Edit()" *ngIf="detailOrganizeMap?.org_level >1" styleClass="p-button-sm mr-1" icon="pi pi-pencil"></p-button>
                 <p-button label="Xóa phòng ban" (click)="Delete()" *ngIf="detailOrganizeMap?.parentId > 0" styleClass="p-button-sm p-button-danger mr-1" icon="pi pi-trash"></p-button>
                 <p-button label="Cài đặt tham số" (click)="caiDatThamSo()" styleClass="p-button-sm" icon="pi pi-plus"></p-button>
@@ -75,10 +75,9 @@
     </p-header>
     <div class=" col-md-12 mt-1">
       <div class="field-group treeselect select label-8" > 
-          <!-- <p-treeSelect [(ngModel)]="selectedNodeTree" [options]="listOrganizeTree" *ngIf="titleForm.value === 'Edit'"
-          selectionMode="single" placeholder="Select Item"></p-treeSelect> -->
+    
           <p-dropdown appendTo="body"  [baseZIndex]="100" 
-          [options]="organizes" [required] [(ngModel)]="modeAgencyOrganize.organizeId" (onChange)="getOrganizeList($event.query)" name="organizeId" [filter]="true">
+          [options]="organizes" [(ngModel)]="modeAgencyOrganize.organizeId" [disabled]="true" (onChange)="getOrganizeList($event.query)" name="organizeId" [filter]="true">
           <ng-template let-item pTemplate="selectedItem">
             <span>{{item.label}}</span>
           </ng-template>
@@ -93,9 +92,9 @@
     </div>
     <div class=" col-md-12 mt-1">
       <div class="field-group treeselect select label-8" >
-          <p-treeSelect [(ngModel)]="selectedNodeTree" [options]="listOrganizeTree" *ngIf="titleForm.value === 'Edit'"
+          <p-treeSelect [(ngModel)]="selectedNodeTree" [options]="listOrganizeTree" (onNodeSelect)="onNodeSelectAdd($event)"
           selectionMode="single" placeholder="Select Item"></p-treeSelect>
-          <p-dropdown appendTo="body" [disabled]="titleForm.value === 'Add'" *ngIf="titleForm.value === 'Add'"  [baseZIndex]="100" 
+          <!-- <p-dropdown appendTo="body" [disabled]="titleForm.value === 'Add'" *ngIf="titleForm.value === 'Add'"  [baseZIndex]="100" 
           [options]="organizeList" [required] [(ngModel)]="modeAgencyOrganize.parentId" name="parentId" [filter]="true">
           <ng-template let-item pTemplate="selectedItem">
             <span>{{item.label}}</span>
@@ -105,7 +104,7 @@
               <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
             </div>
           </ng-template>
-        </p-dropdown>
+        </p-dropdown> -->
         <label for="">parentId</label>
       </div>
     </div>
@@ -153,7 +152,6 @@
           <label for="">Tên phòng ban  <span style="color:red" >*</span></label>
         </div>
     </div>
-    
    
      <!-- <div class=" col-md-12 mt-1">
         <label for="">Khu vực</label>

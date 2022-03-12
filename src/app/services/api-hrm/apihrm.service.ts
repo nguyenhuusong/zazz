@@ -727,8 +727,8 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v1/eating/GetEatingInfo?` + queryParams, this.options)
   }
 
-  getOrganizeLevelList(): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/organize/GetOrganizeLevelList`, this.options);
+  getOrganizeLevelList(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/organize/GetOrganizeLevelList?` + queryParams, this.options);
   }
 
   getOrganizeList(queryParams): Observable<any> {
