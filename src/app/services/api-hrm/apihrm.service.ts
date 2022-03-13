@@ -282,6 +282,14 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v1/timekeeping/GetEmployeeSalaryMonthPage?` + queryParams, this.options)
   }
 
+  getTimekeepingInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/timekeeping/getTimekeepingInfo?` + queryParams, this.options)
+  }
+
+  updateTimeKeeping(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/timekeeping/UpdateTimeKeeping` , queryParams, this.options)
+  }
+
   getExportReport(url,queryParams: any): Observable<Blob> {
     return this.http.get(`${apiHrmServer}/api/v1/report/${url}?${queryParams}`, {
       headers: new HttpHeaders({
@@ -454,8 +462,8 @@ export class ApiHrmService {
   getMeetingInfo(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/meeting/GetMeetingInfo${queryParams}`, this.options);
   }
-  getMeetRoomInfo(roomId): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v2/meeting/GetMeetRoomInfo?roomId=${roomId}`, this.options);
+  getMeetRoomInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/meeting/GetMeetRoomInfo?` + queryParams, this.options);
   }
   setMeetingInfo(data): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/meeting/SetMeetingInfo`, data, this.options);

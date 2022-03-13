@@ -10,6 +10,7 @@ import { MessageService } from 'primeng/api';
 import { AgGridFn } from 'src/app/utils/common/function-common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as numeral from 'numeral';
+import { delay, of, tap, timer } from 'rxjs';
 @Component({
   selector: 'app-edit-detail',
   templateUrl: './edit-detail.component.html',
@@ -34,7 +35,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
   buttonSave = 'Update';
   @Input() optionsButtonsEdit = [
     { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
-    { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check'  }
+    { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check' }
   ];
   @Input() modelMarkdow = {
     type: 1,
@@ -78,7 +79,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
 
   callApiDrop() {
     this.dataView.forEach(element => {
-      element.fields.forEach(async element1 => {
+      element.fields.forEach(element1 => {
         if (element1.columnType === 'markdown' || element1.columnType === 'linkUrl') {
           const dataValidation = {
             key: element1.field_name,
@@ -87,7 +88,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
             message: ''
           }
           this.modelFields[element1.field_name] = dataValidation
-        }else {
+        } else {
           const dataValidation = {
             key: element1.field_name,
             isRequire: element1.isVisiable && !element1.isEmpty && element1.isRequire ? true : false,
@@ -105,12 +106,12 @@ export class EditDetailComponent implements OnInit, OnChanges {
           } else if (element1.field_name === 'orgId') {
             if (element1.columnType === 'selectTree') {
               element1.isVisiable = false;
-              const root_orgId = await this.getValueByKey('organizeId');
+              const root_orgId = this.getValueByKey('organizeId');
               this.getOrganizeTree(root_orgId, element1);
             } else {
-                setTimeout(() => {
-                  this.getOrgRoots(element1);
-                }, 100);
+              setTimeout(() => {
+                this.getOrgRoots(element1);
+              }, 100);
             }
           } else if (element1.field_name === 'actionlist') {
             this.getActionlist(element1)
@@ -125,19 +126,22 @@ export class EditDetailComponent implements OnInit, OnChanges {
           } else if (element1.field_name === 'bank_code') {
             this.getBankList(element1)
           } else if (element1.field_name === 'parentId') {
-            const orgId = await this.getValueByKey('orgId');
-            const adm_st = await this.getValueByKey('adm_st');
+            const orgId = this.getValueByKey('orgId');
+            const adm_st = this.getValueByKey('adm_st');
             this.getAgentLeaders(orgId, element1, adm_st);
           } else if (element1.field_name === 'posistionCd') {
             const root_orgId = this.detail.organizeId ? this.detail.organizeId : null;
             this.getOrgPositions(root_orgId, element1);
           } else if (element1.field_name === 'positionId') {
-            const orgId = await this.getValueByKey('orgId');
-            this.getPositionList(orgId, element1);
+            const orgId = this.getValueByKey('orgId');
+            setTimeout(() => {
+              this.getPositionList(orgId, element1);
+            }, 100);
+          
           } else if (element1.field_name === 'positionTitleId') {
-            const positionId = await this.getValueByKey('positionId');
+            const positionId = this.getValueByKey('positionId');
             this.getPositionTitles(positionId, element1);
-          }  if (element1.field_name === 'companyId') {
+          } if (element1.field_name === 'companyId') {
             this.getCompanyList(this.detail.organizeId ? this.detail.organizeId : null, element1);
           } else if (element1.field_name === 'company_id') {
             this.getCompanyList(this.detail.organizeId ? this.detail.organizeId : null, element1);
@@ -148,22 +152,22 @@ export class EditDetailComponent implements OnInit, OnChanges {
             const cif_no = this.detail.cif_no
             this.getAccountList(element1, cif_no);
           } else if (element1.field_name === 'jobId') {
-            const root_orgId = await this.getValueByKey('organizeId');
-            const positionTypeCd = await this.getValueByKey('positionCd');
+            const root_orgId = this.getValueByKey('organizeId');
+            const positionTypeCd = this.getValueByKey('positionCd');
             this.getJobTitles(root_orgId, element1, positionTypeCd);
           } else if (element1.field_name === 'organizeId') {
             this.getOrgRoots(element1);
           } else if (element1.field_name === 'org_cds') {
             this.getOrgRootsMuti(element1);
           } else if (element1.field_name === 'full_name') {
-            const org_cds = await this.getValueByKey('org_cds');
-            this.getUserByPush(org_cds,element1);
-          }else if (element1.field_name === 'source_ref') {
+            const org_cds = this.getValueByKey('org_cds');
+            this.getUserByPush(org_cds, element1);
+          } else if (element1.field_name === 'source_ref') {
             this.getNotifyRefList(element1);
           } else if (element1.field_name === 'contractTypeId') {
             this.getContractTypes(element1);
           } else if (element1.field_name === 'salary_type') {
-            const contractTypeId = await this.getValueByKey('contractTypeId');
+            const contractTypeId = this.getValueByKey('contractTypeId');
             this.getSalaryTypes(contractTypeId, element1);
           } else if (element1.field_name === 'base_id') {
             this.getSalaryBases(element1);
@@ -183,16 +187,18 @@ export class EditDetailComponent implements OnInit, OnChanges {
             this.getMeetRooms(element1);
           } else if (element1.field_name === 'content_type' || element1.field_name === 'isPublish') {
             this.GetCustObjectList(element1);
-          }else if (element1.field_name === 'vehicleTypeId') {
+          } else if (element1.field_name === 'vehicleTypeId') {
             this.getVehicleTypes(element1);
-          }  else if (element1.field_name === 'year_of_birth') {
+          } else if (element1.field_name === 'year_of_birth') {
             this.GetYearPicker(element1);
-          }else {
+          } else if (element1.columnType === 'select') {
+            this.getCustObjectListNew(element1);
+          } else {
             this.getCustObjectListNew(element1);
           }
         }
       });
-    })
+    });
   }
 
   getActionlist(element1) {
@@ -225,16 +231,16 @@ export class EditDetailComponent implements OnInit, OnChanges {
     })
   }
 
-  GetYearPicker( element1){ 
+  GetYearPicker(element1) {
     let minYear = 1990;
     let maxYear = 2030;
     let listYears = []
-    for( let i = minYear; i <= maxYear; i++){
+    for (let i = minYear; i <= maxYear; i++) {
       listYears.push({ label: i, value: i.toString() })
     }
     element1.options = listYears;
     element1.columnValue = element1.columnValue ? element1.columnValue : ''
-   
+
   }
 
   getWorkTime(element1, employeeCd) {
@@ -251,16 +257,16 @@ export class EditDetailComponent implements OnInit, OnChanges {
 
 
   getContractTypes(element1) {
-    const queryParams = queryString.stringify({  organizeId: this.detail.organizeId });
+    const queryParams = queryString.stringify({ organizeId: this.detail.organizeId });
     this.apiService.getContractTypes(queryParams).subscribe(results => {
       if (results.status === 'success') {
         element1.options = cloneDeep(results.data).map(d => {
           return {
             label: d.contractTypeName,
-            value: `${d.contractType}`
+            value: `${d.contractTypeId}`
           }
         });
-        element1.columnValue = element1.columnValue ? element1.columnValue : ''
+        element1.columnValue = element1.columnValue ? element1.columnValue.toLowerCase() : ''
       }
     })
   }
@@ -344,8 +350,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
       if (results.status === 'success') {
         element1.options = cloneDeep(results.data).map(d => {
           return {
-            label: d.fullName + '-' + d.positionName,
-            value: d.employeeCd
+            label: d.fullName + ' [' + d.job_name + '-' + d.org_name + ']',
+            value: d.empId
           }
         });
         element1.columnValue = element1.columnValue ? element1.columnValue : ''
@@ -379,7 +385,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
             value: `${d.jobId}`
           }
         });
-        element1.columnValue = element1.columnValue ? element1.columnValue : ''
+        element1.columnValue = element1.columnValue ? element1.columnValue.toLowerCase() : ''
       }
     })
   }
@@ -394,17 +400,17 @@ export class EditDetailComponent implements OnInit, OnChanges {
             value: `${d.salary_type}`
           }
         });
-        element1.columnValue = element1.columnValue ? element1.columnValue : ''
+        element1.columnValue = element1.columnValue ? element1.columnValue.toLowerCase() : ''
       }
     })
   }
 
-  getUserByPush(orgId,element1) {
+  getUserByPush(orgId, element1) {
     this.apiService.getUserByPush({ organizeId: orgId, orgIds: [orgId] }).subscribe(results => {
       if (results.status === 'success') {
         element1.options = cloneDeep(results.data).map(d => {
           return {
-            label: d.fullName  + '-' + d.phone,
+            label: d.fullName + '-' + d.phone,
             value: `${d.userId}`
           }
         });
@@ -414,10 +420,10 @@ export class EditDetailComponent implements OnInit, OnChanges {
   }
 
   getOrgRootsMuti(element1) {
-    const queryParams = queryString.stringify({ filter: ''});
+    const queryParams = queryString.stringify({ filter: '' });
     this.apiService.getOrganizations(queryParams).subscribe(results => {
       if (results.status === 'success') {
-        if(element1.columnType === 'multiSelect') {
+        if (element1.columnType === 'multiSelect') {
           element1.options = cloneDeep(results.data).map(d => {
             return {
               name: d.organizationName,
@@ -433,22 +439,22 @@ export class EditDetailComponent implements OnInit, OnChanges {
             });
             element1.columnValue = newarray;
           }
-        }else {
+        } else {
           element1.options = cloneDeep(results.data).map(d => {
             return {
               label: d.organizationName + '-' + d.organizationCd,
               value: `${d.organizeId}`
             }
           });
-          element1.columnValue = element1.columnValue ? element1.columnValue : ''
+          element1.columnValue = element1.columnValue ? element1.columnValue.toLowerCase() : ''
         }
-       
+
       }
     })
   }
   getOrgRoots(element1) {
-    const queryParams = queryString.stringify({ filter: ''});
-    this.apiService.getOrganizations(queryParams).subscribe(results =>{
+    const queryParams = queryString.stringify({ filter: '' });
+    this.apiService.getOrganizations(queryParams).subscribe(results => {
       if (results.status === 'success') {
         element1.options = cloneDeep(results.data).map(d => {
           return {
@@ -456,13 +462,13 @@ export class EditDetailComponent implements OnInit, OnChanges {
             value: `${d.organizeId}`
           }
         });
-        element1.columnValue = element1.columnValue ? element1.columnValue : ''
+        element1.columnValue = element1.columnValue ? element1.columnValue.toLowerCase() : ''
       }
     })
-  } 
-  
+  }
+
   getVehicleTypes(element1) {
-    this.apiService.getVehicleTypes().subscribe((results: any) =>{
+    this.apiService.getVehicleTypes().subscribe((results: any) => {
       if (results.status === 'success') {
         element1.options = cloneDeep(results.data).map(d => {
           return {
@@ -470,7 +476,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
             value: `${d.vehicleTypeId}`
           }
         });
-        element1.columnValue = element1.columnValue ? element1.columnValue : ''
+        element1.columnValue = element1.columnValue ? element1.columnValue.toLowerCase() : ''
       }
     })
   }
@@ -496,10 +502,10 @@ export class EditDetailComponent implements OnInit, OnChanges {
         element1.options = cloneDeep(results.data.dataList.data).map(d => {
           return {
             label: `${d.vacancy_name}`,
-            value: `${d.vacancy_id}`
+            value: `${d.vacancyId}`
           }
         });
-        element1.columnValue = element1.columnValue ? element1.columnValue : ''
+        element1.columnValue = element1.columnValue ? element1.columnValue.toLowerCase() : ''
       }
     })
   }
@@ -527,7 +533,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
             value: `${d.workplaceId}`
           }
         });
-        element1.columnValue = element1.columnValue ? element1.columnValue : ''
+        element1.columnValue = element1.columnValue ? element1.columnValue.toLowerCase() : ''
       }
     })
   }
@@ -542,7 +548,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
               value: `${d.roomId}`
             };
           });
-          element1.columnValue = element1.columnValue ? element1.columnValue : '';
+          element1.columnValue = element1.columnValue ? element1.columnValue.toLowerCase() : '';
         }
       });
   }
@@ -604,7 +610,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
     const queryParams = queryString.stringify({ orgId: orgId });
     this.apiService.getPositionList(queryParams).subscribe(results => {
       if (results.status === 'success') {
-        element1.options = cloneDeep(results.data).map(d => {
+        element1.options = results.data.map(d => {
           return { label: d.positionName, value: d.positionId }
         });
         element1.columnValue = element1.columnValue ? element1.columnValue : ''
@@ -631,7 +637,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
         element1.options = cloneDeep(results.data).map(d => {
           return { label: d.companyName, value: d.companyId }
         });
-        element1.columnValue = element1.columnValue ? parseInt(element1.columnValue) : ''
+        element1.columnValue = element1.columnValue ? element1.columnValue.toLowerCase() : ''
       }
     })
   }
@@ -661,7 +667,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
   }
 
 
-  async getValueByKey(key) {
+  getValueByKey(key) {
     if (this.dataView && this.dataView.length > 0) {
       let value = ''
       for (let i = 0; i < this.dataView.length; i++) {
@@ -672,7 +678,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
           }
         }
       }
-      return await value
+      return value
     }
   }
 
@@ -695,7 +701,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
         element1.options = cloneDeep(results.data).map(d => {
           return { label: d.org_name + '-' + d.org_cd, value: d.orgId }
         });
-        element1.columnValue = element1.columnValue ? parseInt(element1.columnValue) : ''
+        element1.columnValue = element1.columnValue ? element1.columnValue.toLowerCase() : ''
       }
     })
   }
@@ -725,7 +731,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
 
   getCustObjectListNew(element1) {
     const opts1 = { params: new HttpParams({ fromString: `objKey=${element1.columnObject}` }) };
-    this.apiService.getCustObjectListNew(null,opts1.params.toString()).subscribe(results => {
+    this.apiService.getCustObjectListNew(null, opts1.params.toString()).subscribe(results => {
       element1.options = cloneDeep(results.data).map(d => {
         return {
           label: d.objName,

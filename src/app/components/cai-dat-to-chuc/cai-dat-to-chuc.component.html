@@ -53,7 +53,12 @@
             
         </div>
         <div class="grid-default" #container>
-            <div class="paginator">
+          <div class="grid">
+            <div class="col-6">
+              <h3>{{detailOrganizeMap?.label}}</h3>
+            </div>
+            <div class="col-6">
+              <div class="paginator">
                 <span>Từ {{ countRecord.currentRecordStart }} đến
                     {{ countRecord.currentRecordEnd }}
                     trên tổng số
@@ -62,6 +67,9 @@
                     (onPageChange)="paginate($event)" [rowsPerPageOptions]="[15,30,45,100,200,{ showAll: 'ALL' }]">
                 </p-paginator>
             </div>
+            </div>
+          </div>
+         
             <app-list-grid-angular *ngIf="columnDefs.length > 0" [listsData]="listsData" [height]="500"
                 [domLayout]="'autoHeight'" [columnDefs]="columnDefs"></app-list-grid-angular>
 

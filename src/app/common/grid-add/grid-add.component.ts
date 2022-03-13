@@ -119,15 +119,16 @@ public agGridFn = AgGridFn;
   }
 
   onGridReady(params) {
-    console.log(this.type)
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
     if (this.dataSelects.length > 0) {
+     setTimeout(() => {
       this.gridApi.forEachNode( (node) =>{
         if (this.dataSelects.map(d => d[this.type]).indexOf(node.data[this.type]) > -1) {
           node.setSelected(true);
         }
       });
+     }, 500);
     }
 
   }

@@ -29,7 +29,7 @@ export class ChiTietChamCongComponent implements OnInit, OnDestroy {
   displaysearchUserMaster = false;
   listViewsForm = [];
   detailComAuthorizeInfo = null;
-  record_id = null
+  recordId = null
   listViews = []
   imagesUrl = []
   paramsObject = null
@@ -68,7 +68,7 @@ export class ChiTietChamCongComponent implements OnInit, OnDestroy {
     this.activatedRoute.queryParamMap.subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.dataRouter = this.paramsObject.params;
-      this.record_id = this.paramsObject.params.record_id;
+      this.recordId = this.paramsObject.params.recordId;
         this.getChamCongInfo();
     });
   };
@@ -77,7 +77,7 @@ export class ChiTietChamCongComponent implements OnInit, OnDestroy {
     this.listViews = [];
     this.listsData = [];
     const queryParams = queryString.stringify(this.paramsObject.params);
-    this.apiService.getLeaveInfo(queryParams).subscribe(results => {
+    this.apiService.getTimekeepingInfo(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.listViews = cloneDeep(results.data.group_fields);
         this.detailInfo = results.data;

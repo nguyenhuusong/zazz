@@ -123,12 +123,13 @@ export class QuanLyHopDongComponent implements OnInit {
   listsData = [];
   listOrgRoots = [];
   getOrgRoots() {
-    this.apiService.getOrgRoots().subscribe(results => {
+    const queryParams = queryString.stringify({filter: ''});
+    this.apiService.getOrganizations(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.listOrgRoots = results.data.map(d => {
           return {
-            label: d.org_name + '-' + d.org_cd,
-            value: `${d.orgId}`
+            label: d.organizationName + '-' + d.organizationCd,
+            value: `${d.organizeId}`
           }
         });
 
@@ -226,7 +227,7 @@ export class QuanLyHopDongComponent implements OnInit {
 
   addHopDong() {
     const params = {
-      contractTypeId: 0
+      contractTypeId: null
     }
     this.router.navigate(['/cai-dat/quan-ly-hop-dong/them-moi-hop-dong'], { queryParams: params });
   }

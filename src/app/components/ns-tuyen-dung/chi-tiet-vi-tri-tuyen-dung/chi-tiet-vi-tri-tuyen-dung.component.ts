@@ -83,6 +83,7 @@ export class ChiTietViTriTuyenDungComponent implements OnInit, OnDestroy {
         if (results.status === 'success') {
           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
           this.spinner.hide();
+          this.router.navigate(['/tuyen-dung/vi-tri-tuyen-dung']);
         } else {
           this.messageService.add({
             severity: 'error', summary: 'Thông báo',

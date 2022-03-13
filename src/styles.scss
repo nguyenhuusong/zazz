@@ -15,7 +15,10 @@ html {
     height: 100%;
 }
 .main-grid{
-    padding-top: 7px;
+    padding-top: 0;
+    .max-w-full {
+        padding-top: 2px;
+    }
     .tools{
         .p-button{
             padding: 10px
@@ -2223,7 +2226,7 @@ div.p-organizationchart {
     input-file: .attach-file 
 */
 .field-group{
-    margin-bottom: 25px;
+    margin-bottom: 10px;
     position: relative;
     label{
         color: #808AA6;

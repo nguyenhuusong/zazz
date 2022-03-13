@@ -7,7 +7,7 @@
             <p-breadcrumb [model]="items"></p-breadcrumb>
         </div>
         <div class="table-tool grid white-background black-box-shadow-005 filterInput">
-            <div class="header-filter-search col-4">
+            <div class="header-filter-search col-3">
                 <div class="field-group text search multi-field mb-0" [ngClass]=" query.filter ? 'valid' : 'invalid' ">
                     <input class="input-default" type="text" id="filter"
                     (keydown.enter)="query.offSet = 0; first = 0;load()"
@@ -38,7 +38,7 @@
                     <label>Công ty</label>
                 </div>
             </div>
-            <div class="col-1">
+            <div class="col-2">
                 <p-button class="search-button btn-with-filter mr-3" icon="pi pi-search" (click)="query.offSet = 0; first = 0; load()"></p-button>
                 <p-button class="search-button btn-with-filter" icon="pi pi-refresh" (click)="cancel()" styleClass="p-button-secondary p-button-sm"></p-button>
             </div>

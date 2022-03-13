@@ -210,8 +210,8 @@ export class CsChamCongComponent implements OnInit {
 
   XemChiTiet(event) {
     const params = {
-      record_id: event.rowData.record_id,
-      employeeCd: event.rowData.employeeCd
+      recordId: event.rowData.recordId,
+      empId: event.rowData.userId
     }
     this.router.navigate(['/chinh-sach/cham-cong/chi-tiet-cham-cong'], { queryParams: params });
   }
