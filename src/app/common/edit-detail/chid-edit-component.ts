@@ -889,7 +889,7 @@ export class AppTypeLinkUrlRadioListComponent implements OnInit {
     private spinner: NgxSpinnerService,
   ) { }
   ngOnInit(): void {
-
+    this.imagesUpload = this.element.columnValue ? this.element.columnValue : ''
   }
 
   removeAttach() {
