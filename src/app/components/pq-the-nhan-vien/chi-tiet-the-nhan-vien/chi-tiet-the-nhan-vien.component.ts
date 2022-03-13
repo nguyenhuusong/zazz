@@ -45,7 +45,7 @@ export class ChiTietTheNhanVienComponent implements OnInit, OnDestroy {
     this.handleParams();
   }
   modelEdit = {
-    canId: null,
+    carCode: null,
   }
   titlePage = ''
   handleParams() {
@@ -53,19 +53,18 @@ export class ChiTietTheNhanVienComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((params) => {
         this.paramsObject = { ...params.keys, ...params };
-        this.modelEdit.canId = this.paramsObject.params.canId || null
+        this.modelEdit.carCode = this.paramsObject.params.canId || null
         this.GetEmployeeCardInfo();
       });
   };
 
   GetEmployeeCardInfo() {
     const queryParams = queryString.stringify(this.modelEdit);
-    this.apiService.GetEmployeeCardInfo(queryParams)
+    this.apiService.getEmployeeCardInfo(queryParams)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {
         if (results.status === 'success') {
-          const listViews = cloneDeep(results.data.group_fields);
-          this.listViews = [...listViews];
+          this.listViews = [...results.data.group_fields];
           this.detailInfo = results.data;
         }
       });
@@ -76,7 +75,7 @@ export class ChiTietTheNhanVienComponent implements OnInit, OnDestroy {
     const params = {
       ...this.detailInfo, group_fields: data
     }
-    this.apiService.SetEmployeeCardInfo(params)
+    this.apiService.setEmployeeCardInfo(params)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((results: any) => {
         if (results.status === 'success') {

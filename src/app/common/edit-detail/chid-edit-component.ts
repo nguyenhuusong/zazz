@@ -39,12 +39,12 @@ export class AppTypeTextComponent implements OnInit {
     this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
   }
 
-  foucusOut(e){
+  foucusOut(e) {
 
   }
 
-  foucusIn(e){
-    
+  foucusIn(e) {
+
   }
 }
 
@@ -96,7 +96,7 @@ export class AppTypeSelectComponent implements OnInit {
     this.modelFields[field_name].error = this.modelFields[field_name].isRequire ? this.element.columnValue ? false : true : false
     this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
   }
-    
+
 }
 
 
@@ -154,7 +154,7 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
         element.fields.forEach(async element1 => {
           if (element1.field_name === 'companyId') {
             this.getCompanyList(event.node.orgId, element1);
-          }else if (element1.field_name === 'positionId') {
+          } else if (element1.field_name === 'positionId') {
             this.getPositionList(event.node.orgId, element1);
           }
         });
@@ -162,7 +162,7 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
     }
   }
   ngOnChanges(event) {
-    if(event && event.element) {
+    if (event && event.element) {
       this.element = event.element.currentValue
     }
   }
@@ -229,7 +229,7 @@ export class AppTypeDropdownComponent implements OnInit {
   }
 
   async getValueByKey(key) {
-    if(this.dataView && this.dataView.length > 0) {
+    if (this.dataView && this.dataView.length > 0) {
       let value = ''
       for (let i = 0; i < this.dataView.length; i++) {
         for (let j = 0; j < this.dataView[i].fields.length; j++) {
@@ -253,43 +253,56 @@ export class AppTypeDropdownComponent implements OnInit {
           if (element1.field_name === 'parentId') {
             const adm_st = await this.getValueByKey('adm_st');
             this.getAgentLeaders(value, element1, adm_st);
+          } else if (element1.field_name === 'CustId') {
+            this.getUserByPush(value, element1)
           }
         });
       });
-    }else if (field_name === 'org_cds') {
-      debugger
-     this.dataView.forEach(element => {
-      element.fields.forEach( element1 => {
-        if (element1.field_name === 'full_name') {
-          this.getUserByPush(value, element1)
-        }
+    } else if (field_name === 'org_cds') {
+      this.dataView.forEach(element => {
+        element.fields.forEach(element1 => {
+          if (element1.field_name === 'full_name') {
+            this.getUserByPush(value, element1)
+          }
+        });
       });
-    });
-    }else if (field_name === 'organizeId') {
+    } else if (field_name === 'organizeId') {
       this.dataView.forEach(element => {
         element.fields.forEach(async element1 => {
           if (element1.columnType === 'selectTree' && element1.field_name === 'orgId') {
             this.getOrganizeTree(value, element1);
-          }else if(element1.field_name === 'jobId') {
+          } else if (element1.field_name === 'jobId') {
             const positionTypeCd = await this.getValueByKey('positionCd');
-            this.getJobTitles(value,element1, positionTypeCd) 
+            this.getJobTitles(value, element1, positionTypeCd)
           }
         });
       });
-    }else if (field_name === 'positionId') {
+    } else if (field_name === 'CustId') {
+      let items = element.options.filter(d => d.custId === value);
+      debugger
       this.dataView.forEach(element => {
         element.fields.forEach(async element1 => {
-         if(element1.field_name === 'positionTitleId') {
-            this.getPositionTitles(value,element1) 
+          if (element1.field_name === 'Phone') {
+            this.setValue(items[0].phone, element1.field_name)
+          }else if(element1.field_name === 'email') {
+            this.setValue(items[0].email, element1.field_name)
+          }
+        });
+      });
+    } else if (field_name === 'positionId') {
+      this.dataView.forEach(element => {
+        element.fields.forEach(async element1 => {
+          if (element1.field_name === 'positionTitleId') {
+            this.getPositionTitles(value, element1)
           }
         });
       });
     } else if (field_name === 'positionCd') {
       this.dataView.forEach(element => {
         element.fields.forEach(async element1 => {
-         if(element1.field_name === 'jobId') {
+          if (element1.field_name === 'jobId') {
             const root_orgId = await this.getValueByKey('organizeId');
-            this.getJobTitles(root_orgId,element1, value) 
+            this.getJobTitles(root_orgId, element1, value)
           }
         });
       });
@@ -302,16 +315,16 @@ export class AppTypeDropdownComponent implements OnInit {
           }
         });
       });
-    }else if (field_name === 'base_id') {
+    } else if (field_name === 'base_id') {
       this.dataView.forEach(element => {
         element.fields.forEach(async element1 => {
           if (element1.field_name === 'base_amt') {
             const items = this.element.options.filter(s => s.value === value);
-            if(items.length > 0)  element1.columnValue = items[0].label.split('[')[1].replace(']', '');
+            if (items.length > 0) element1.columnValue = items[0].label.split('[')[1].replace(']', '');
           }
         });
       });
-    }else if (field_name === 'contractTypeId') {
+    } else if (field_name === 'contractTypeId') {
       this.callback.emit(value);
     }
   }
@@ -328,27 +341,39 @@ export class AppTypeDropdownComponent implements OnInit {
     })
   }
 
+  setValue(value, field_name) {
+    this.dataView.forEach(element => {
+      element.fields.forEach( element1 => {
+        if (element1.field_name === field_name) {
+          element1.columnValue = value;
+          this.modelFields[field_name].error = this.modelFields[field_name].isRequire ? element1.columnValue ? false : true : false
+          this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
+        }
+      });
+    });
+  }
 
 
-  getUserByPush(orgId,element1) {
+  getUserByPush(orgId, element1) {
     this.apiService.getUserByPush({ organizeId: orgId, orgIds: [orgId] }).subscribe(results => {
       if (results.status === 'success') {
-        element1.options = cloneDeep(results.data).map(d => {
+        element1.options = results.data.map(d => {
           return {
-            label: d.fullName  + '-' + d.phone,
-            value: `${d.userId}`
+            label: d.fullName + '-' + d.phone,
+            value: element1.field_name === 'CustId' ? d.custId : d.userId,
+            ...d
           }
         });
         element1.columnValue = element1.columnValue ? element1.columnValue : ''
       }
     })
   }
-  
-  getJobTitles(orgId,element1, positionTypeCd) {
+
+  getJobTitles(orgId, element1, positionTypeCd) {
     const queryParams = queryString.stringify({ orgId: orgId, positionTypeCd: positionTypeCd });
     this.apiService.getJobs(queryParams).subscribe(results => {
       if (results.status === 'success') {
-        element1.options = cloneDeep(results.data).map(d => {
+        element1.options = results.data.map(d => {
           return {
             label: d.job_name,
             value: `${d.jobId}`
@@ -363,7 +388,7 @@ export class AppTypeDropdownComponent implements OnInit {
     const queryParams = queryString.stringify({ orgId: orgId, admin_is: isAdmin });
     this.apiService.getAgentLeaders(queryParams).subscribe(results => {
       if (results.status === 'success') {
-        element1.options = cloneDeep(results.data).map(d => {
+        element1.options = results.data.map(d => {
           return { label: d.fullName, value: d.saler_id }
         });
         element1.columnValue = element1.columnValue ? parseInt(element1.columnValue) : '';
@@ -377,7 +402,7 @@ export class AppTypeDropdownComponent implements OnInit {
       if (results.status === 'success') {
         element1.options = results.data;
         element1.columnValue = results.data[0];
-        this.modelFields[element1.field_name].error = this.modelFields[element1.field_name].isRequire ? element1.columnValue  ? false : true : false
+        this.modelFields[element1.field_name].error = this.modelFields[element1.field_name].isRequire ? element1.columnValue ? false : true : false
         this.modelFields[element1.field_name].message = this.modelFields[element1.field_name].error ? 'Trường bắt buộc nhập !' : ''
       }
     })
@@ -691,7 +716,7 @@ export class AppTypeMultiSelectComponent implements OnInit {
   @Input() dataView;
   @Input() modelFields;
   @Input() submit = false;
- 
+
   constructor(
     private apiService: ApiHrmService
   ) { }
@@ -864,7 +889,7 @@ export class AppTypeLinkUrlRadioListComponent implements OnInit {
     private spinner: NgxSpinnerService,
   ) { }
   ngOnInit(): void {
-    
+
   }
 
   removeAttach() {
@@ -877,41 +902,41 @@ export class AppTypeLinkUrlRadioListComponent implements OnInit {
     this.imagesUpload = event.target.value
   }
 
-  onUploadOutputImage(event){
+  onUploadOutputImage(event) {
     this.spinner.show();
     if (event.target.files[0] && event.target.files[0].size > 0) {
-        const getDAte = new Date();
-        const getTime = getDAte.getTime();
-        const storageRef = firebase.storage().ref();
-        const uploadTask = storageRef.child(`ksbond/images/${getTime}-${event.target.files[0].name}`).put(event.target.files[0]);
-        uploadTask.on('state_changed', (snapshot) => {
-        }, (error) => {
-        }, () => {
-            uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-                if (downloadURL) {
-                  this.element.columnValue = downloadURL;
-                  this.imagesUpload = downloadURL;
-                  this.dataView.forEach(element => {
-                    element.fields.forEach(async element1 => {
-                      if (element1.field_name === 'meta_file_type') {
-                        element1.columnValue = event.target.files[0].type
-                      }else if(element1.field_name === 'meta_file_size') {
-                        element1.columnValue = event.target.files[0].size
-                      }else if(element1.field_name === 'meta_file_name') {
-                        element1.columnValue = event.target.files[0].name
-                      }else if(element1.field_name === 'meta_file_url') {
-                        element1.columnValue = downloadURL
-                      }
-                    });
-                  });
-                  this.spinner.hide();
+      const getDAte = new Date();
+      const getTime = getDAte.getTime();
+      const storageRef = firebase.storage().ref();
+      const uploadTask = storageRef.child(`ksbond/images/${getTime}-${event.target.files[0].name}`).put(event.target.files[0]);
+      uploadTask.on('state_changed', (snapshot) => {
+      }, (error) => {
+      }, () => {
+        uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+          if (downloadURL) {
+            this.element.columnValue = downloadURL;
+            this.imagesUpload = downloadURL;
+            this.dataView.forEach(element => {
+              element.fields.forEach(async element1 => {
+                if (element1.field_name === 'meta_file_type') {
+                  element1.columnValue = event.target.files[0].type
+                } else if (element1.field_name === 'meta_file_size') {
+                  element1.columnValue = event.target.files[0].size
+                } else if (element1.field_name === 'meta_file_name') {
+                  element1.columnValue = event.target.files[0].name
+                } else if (element1.field_name === 'meta_file_url') {
+                  element1.columnValue = downloadURL
                 }
-              
-            }).catch(error => {
-              this.spinner.show();
+              });
             });
+            this.spinner.hide();
+          }
+
+        }).catch(error => {
+          this.spinner.show();
         });
+      });
     }
-}
+  }
 
 }

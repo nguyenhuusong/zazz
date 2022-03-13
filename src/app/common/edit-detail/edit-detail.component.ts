@@ -108,7 +108,9 @@ export class EditDetailComponent implements OnInit, OnChanges {
               const root_orgId = await this.getValueByKey('organizeId');
               this.getOrganizeTree(root_orgId, element1);
             } else {
-              this.getAgencyOrganizeList(element1);
+                setTimeout(() => {
+                  this.getOrgRoots(element1);
+                }, 100);
             }
           } else if (element1.field_name === 'actionlist') {
             this.getActionlist(element1)
@@ -181,6 +183,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
             this.getMeetRooms(element1);
           } else if (element1.field_name === 'content_type' || element1.field_name === 'isPublish') {
             this.GetCustObjectList(element1);
+          }else if (element1.field_name === 'vehicleTypeId') {
+            this.getVehicleTypes(element1);
           }  else if (element1.field_name === 'year_of_birth') {
             this.GetYearPicker(element1);
           }else {
@@ -450,6 +454,20 @@ export class EditDetailComponent implements OnInit, OnChanges {
           return {
             label: d.organizationName,
             value: `${d.organizeId}`
+          }
+        });
+        element1.columnValue = element1.columnValue ? element1.columnValue : ''
+      }
+    })
+  } 
+  
+  getVehicleTypes(element1) {
+    this.apiService.getVehicleTypes().subscribe((results: any) =>{
+      if (results.status === 'success') {
+        element1.options = cloneDeep(results.data).map(d => {
+          return {
+            label: d.vehicleTypeName,
+            value: `${d.vehicleTypeId}`
           }
         });
         element1.columnValue = element1.columnValue ? element1.columnValue : ''

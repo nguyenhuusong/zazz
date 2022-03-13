@@ -5,7 +5,7 @@
         <p-breadcrumb [model]="items"></p-breadcrumb>
     </div>
    <div class="content">
-    <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButon"  [dataView]="listViews"
+    <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButon" [dataView]="listViews"
         (callback)="SetEmployeeCardInfo($event)" (callbackcancel)="quaylai($event)"></app-edit-detail>
    </div>
    
