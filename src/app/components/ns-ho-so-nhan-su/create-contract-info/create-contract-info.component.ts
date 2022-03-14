@@ -84,15 +84,8 @@ export class CreateContractInfoComponent implements OnInit {
                     icon: 'pi pi-cloud-upload',
                     key: 'taivehosomau',
                     class: 'btn-primary mr5',
-                    hide: !params.data.temp_download_url
-                  }, {
-                    onClick: this.OnClick.bind(this),
-                    label: 'Xem hồ sơ mẫu',
-                    icon: 'pi pi-cloud-upload',
-                    key: 'xemhosomau',
-                    class: 'btn-primary mr5',
-                    hide: !params.data.temp_view_url
-                  },
+                    hide: !params.data.meta_file_tpl
+                  }
                 ]
               };
             },
@@ -183,7 +176,7 @@ export class CreateContractInfoComponent implements OnInit {
   }
 
   DowloadFileDemo(event, type) {
-    this.downloadButtonClicked(type === 'taivehosomau' ? event.rowData.temp_download_url : event.rowData.temp_view_url);
+    this.downloadButtonClicked(type === 'taivehosomau' ? event.rowData.meta_file_tpl : event.rowData.temp_view_url);
   }
 
   downloadButtonClicked(urlLink) {

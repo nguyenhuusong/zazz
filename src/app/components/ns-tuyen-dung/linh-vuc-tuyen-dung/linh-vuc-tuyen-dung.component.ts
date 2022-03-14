@@ -249,12 +249,13 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
   }
 
   getOrgRoots() {
-    this.apiService.getOrgRoots().subscribe(results => {
+    const queryParams = queryString.stringify({ filter: '' });
+    this.apiService.getOrganizations(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.orgRoots = results.data.map(d => {
           return {
-            label: d.org_name + '-' + d.org_cd,
-            value: `${d.orgId}`
+            label: d.organizationName + '-' + d.organizationCd,
+            value: `${d.organizeId}`
           }
         });
         this.orgRoots = [{label: 'Tất cả', value: null}, ...this.orgRoots]

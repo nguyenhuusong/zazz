@@ -123,6 +123,20 @@ export class CsThueThuNhapComponent implements OnInit, AfterViewChecked {
       });
   }
 
+  dowloadTemplate() {
+    this.apiService.exportReportLocalhost('assets/mau-thue-thu-nhap.xlsx').subscribe((data: any) => {
+        this.createImageFromBlob(data)
+    });
+  }
+
+  createImageFromBlob(image: Blob) {
+    var blob = new Blob([image]);
+    var url = window.URL.createObjectURL(blob);
+    var anchor = document.createElement("a");
+    anchor.download = "mau-thue-thu-nhap.xlsx";
+    anchor.href = url;
+    anchor.click();
+  }
 
   listsData = []
   load() {

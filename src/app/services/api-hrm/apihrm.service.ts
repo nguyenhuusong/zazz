@@ -298,6 +298,12 @@ export class ApiHrmService {
       responseType: "blob"
     });
   }
+
+  exportReportLocalhost(url): Observable<Blob> {
+    return this.http.get(url, {
+      responseType: "blob"
+    });
+  }
   
   getSalaryRecordPage(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/salary/GetSalaryRecordPage?` + queryParams, this.options)
