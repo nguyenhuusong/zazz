@@ -232,10 +232,11 @@ load() {
   }
 
   xoatuyendung(event) {
+    console.log(event, 'event event event')
     this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn thực hiện mở tài khoản?',
+      message: 'Bạn có chắc chắn muốn xóa tuyển dụng?',
       accept: () => {
-        const queryParams = queryString.stringify({ canId: event.rowData.can_id });
+        const queryParams = queryString.stringify({ canId: event.rowData.canId });
         this.apiService.delCandidateInfo(queryParams).subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa tuyển dụng thành công' });

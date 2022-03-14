@@ -191,12 +191,12 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
 
   xoavitri(event) {
     this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn thực hiện mở tài khoản?',
+      message: 'Bạn có chắc chắn muốn xóa vị trí tuyển dụng?',
       accept: () => {
         const queryParams = queryString.stringify({ vacancyId: event.rowData.vacancyId });
         this.apiService.delVacancyInfo(queryParams).subscribe(results => {
           if (results.status === 'success') {
-            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa vị trí thành công' });
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa vị trí tuyển dụng thành công' });
             this.load();
           } else {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });

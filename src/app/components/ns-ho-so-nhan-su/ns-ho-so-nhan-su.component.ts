@@ -306,7 +306,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
 
   xoanhanvien(event) {
     this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn thực hiện mở tài khoản?',
+      message: 'Bạn có chắc chắn muốn xóa nhân viên?',
       accept: () => {
         this.apiService.deleteEmployee(event.rowData.empId).subscribe((results: any) => {
           if (results.status === 'success') {
