@@ -105,7 +105,7 @@ export class CreateContractInfoComponent implements OnInit {
                     icon: 'pi pi-cloud-download',
                     class: 'btn-primary mr5',
                     key: 'tailenhoso',
-                    hide: !params.data.meta_id
+                    hide: !params.data.temp_download_url
                   },
                   {
                     onClick: this.OnClick.bind(this),
@@ -113,7 +113,7 @@ export class CreateContractInfoComponent implements OnInit {
                     icon: 'pi pi-cloud-upload',
                     key: 'xemhoso',
                     class: 'btn-primary mr5',
-                    hide: !params.data.meta_upload_url
+                    hide: !params.data.temp_view_url
                   },
                   // {
                   //   onClick: this.OnClick.bind(this),
@@ -172,7 +172,7 @@ export class CreateContractInfoComponent implements OnInit {
   }
 
   ViewContract(event) {
-    this.downloadButtonClicked(event.rowData.meta_upload_url);
+    this.downloadButtonClicked(event.rowData.temp_view_url);
   }
 
   DowloadFileDemo(event, type) {

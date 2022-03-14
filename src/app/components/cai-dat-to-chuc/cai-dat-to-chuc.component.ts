@@ -494,13 +494,13 @@ export class CaiDatToChucComponent implements OnInit {
 
     if (this.detailOrganizeMap.parentId) {
       this.getOrganizeTree(this.detailOrganizeMap.organizeId);
-      this.getOrganizeLevelList(this.detailOrganizeMap.parentId);
+      this.getOrganizeLevelList(this.detailOrganizeMap.organizeId);
       this.modeAgencyOrganize = {
         orgId: null,
         organizeId:this.detailOrganizeMap.organizeId,
         org_name: '',
-        org_level: this.detailOrganizeMap.org_level,
-        parentId: this.detailOrganizeMap.parentId,
+        org_level: this.detailOrganizeMap.org_level + 1,
+        parentId: this.detailOrganizeMap.orgId,
         org_type: '',
         isChild: false,
         de_cd: null,
@@ -522,11 +522,12 @@ export class CaiDatToChucComponent implements OnInit {
   }
 
   getOrganizeTree(organizeId) {
+    console.log(this.detailOrganizeMap)
     const queryParams = queryString.stringify({ parentId: organizeId });
     this.apiService.getOrganizeTree(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.listOrganizeTree = results.data;
-        const queryParams1 = queryString.stringify({ parentId: this.detailOrganizeMap.organizeId });
+        const queryParams1 = queryString.stringify({ parentId: this.detailOrganizeMap.orgId });
         this.apiService.getOrganizeTree(queryParams1).subscribe(results => {
           if (results.status === 'success' && results.data.length > 0) {
             this.selectedNodeTree = results.data[0];
