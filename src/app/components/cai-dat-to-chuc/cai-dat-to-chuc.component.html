@@ -45,7 +45,7 @@
             <div class="col-8 tools">
                 <p-button label="Thêm mới phòng ban" *ngIf="detailOrganizeMap?.organizeId" (click)="Add()" styleClass="p-button-sm mr-1" icon="pi pi-plus"></p-button>
                 <p-button label="Chỉnh sửa phòng ban" (click)="Edit()" *ngIf="detailOrganizeMap?.org_level >1" styleClass="p-button-sm mr-1" icon="pi pi-pencil"></p-button>
-                <p-button label="Xóa phòng ban" (click)="Delete()" *ngIf="detailOrganizeMap?.parentId > 0" styleClass="p-button-sm p-button-danger mr-1" icon="pi pi-trash"></p-button>
+                <p-button label="Xóa phòng ban" (click)="Delete()" *ngIf="detailOrganizeMap?.org_level >1" styleClass="p-button-sm p-button-danger mr-1" icon="pi pi-trash"></p-button>
                 <p-button label="Cài đặt tham số" (click)="caiDatThamSo()" styleClass="p-button-sm" icon="pi pi-plus"></p-button>
                 <!-- <p-button *ngIf="detailOrganizeMap?.org_level >= 0" (click)="menuButton.toggle($event)" label="Cài đặt" icon="pi pi-cog" styleClass="p-button-sm mr5"></p-button>
                 <p-menu [model]="menuItem" [appendTo]="'body'" [popup]="true" #menuButton></p-menu> -->

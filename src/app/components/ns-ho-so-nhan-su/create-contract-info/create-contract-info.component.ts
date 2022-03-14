@@ -105,7 +105,7 @@ export class CreateContractInfoComponent implements OnInit {
                     icon: 'pi pi-cloud-download',
                     class: 'btn-primary mr5',
                     key: 'tailenhoso',
-                    hide: !params.data.temp_download_url
+                    hide: params.data.temp_download_url
                   },
                   {
                     onClick: this.OnClick.bind(this),
