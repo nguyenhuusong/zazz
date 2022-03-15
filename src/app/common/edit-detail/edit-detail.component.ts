@@ -114,7 +114,9 @@ export class EditDetailComponent implements OnInit, OnChanges {
               }, 100);
             }
           } else if (element1.field_name === 'actionlist') {
+           setTimeout(() => {
             this.getActionlist(element1)
+           }, 500);
           } else if (element1.field_name === 'work_cds') {
             this.getWorkTimes(element1, null)
           } else if (element1.field_name === 'shift_cds') {

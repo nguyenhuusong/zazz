@@ -1045,7 +1045,6 @@ div{
             padding-bottom: 7px;
             color: var(--ink-color-40);
             display: flex;
-            display: flex;
             flex-wrap: wrap;
             margin-right: 0px;
             background: none;
@@ -2426,7 +2425,7 @@ div.p-organizationchart {
             }
         }
         &.treeselect{
-            z-index: 9;
+            z-index: 2;
         }
     }
 
