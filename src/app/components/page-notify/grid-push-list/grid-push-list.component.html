@@ -2,7 +2,7 @@
   <p-toolbar styleClass="new-toolbar-style p-0">
     <div class="p-toolbar-group-left">
       <div class="mr-1">
-        <div class="select-default mb-0">
+        <div class="field-group select label-8 mr-2">
           <label>Trạng thái Push</label>
           <select class="form-control" name="push_st" [(ngModel)]="filter.push_st" #push_st="ngModel" (change)="load()">
             <option *ngFor="let type of notifyTypes" value={{type.statusId}}>
@@ -11,7 +11,7 @@
         </div>
       </div>
       <div class="mr-1">
-        <div class="select-default mb-0">
+        <div class="field-group select label-8 mr-2">
           <label>Trạng thái gửi Email</label>
           <select class="form-control" name="email_st" [(ngModel)]="filter.email_st" #email_st="ngModel" (change)="load()">
             <option *ngFor="let type of notifyTypes" value={{type.statusId}}>
@@ -20,7 +20,7 @@
         </div>
       </div>
       <div class="">
-        <div class="select-default mb-0">
+        <div class="field-group select label-8">
           <label>Trạng thái gửi Sms</label>
           <select class="form-control" name="sms_st" [(ngModel)]="filter.sms_st" #sms_st="ngModel" (change)="load()">
             <option *ngFor="let type of notifyTypes" value={{type.statusId}}>

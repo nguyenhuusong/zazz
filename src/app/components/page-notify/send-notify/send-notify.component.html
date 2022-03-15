@@ -1,7 +1,6 @@
 <div class="row">
   <div class="col-sm-12 form-group">
-    <div class="select-default">
-        <label>Loại thông báo</label>
+    <div class="field-group select label-8">
         <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
         [options]="actions" [required] [(ngModel)]="action"
         name="action" [filter]="true">
@@ -14,6 +13,7 @@
             </div>
         </ng-template>
       </p-dropdown>
+      <label>Loại thông báo</label>
     </div>
   </div>
 <!-- 
