@@ -117,6 +117,7 @@ export class ChiTietMauThongBaoComponent implements OnInit, OnChanges {
         }else {
           this.manhinh = 'View';
           this.getNotifyTemp();
+          this.goBack()
         }
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Cập nhật thông tin thành công' });
       } else {
