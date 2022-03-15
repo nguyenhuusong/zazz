@@ -1068,7 +1068,8 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
 
   duyetHoSo() {
     this.spinner.show();
-    this.apiService.setContractStatus(this.modelDuyetHopDong).subscribe(results => {
+    this.apiService.setContractStatus(this.modelDuyetHopDong)
+    .subscribe(results => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
         this.displayApproveContract = false;
@@ -1083,7 +1084,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
 
   cancelContract() {
     this.spinner.show();
-    this.apiService.setContractStatus({
+    this.apiService.setContractCancel({
       contractId: this.modelDuyetHopDong.contractId
     }).subscribe(results => {
       if (results.status === 'success') {
