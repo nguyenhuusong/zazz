@@ -143,8 +143,7 @@ export class CaiDatToChucComponent implements OnInit {
         } else {
           this.selectedNode = JSON.parse(localStorage.getItem("organize"));
           this.query.orgId = this.selectedNode.orgId;
-          console.log(this.selectedNode.parentId)
-          this.parseObjectProperties(this.listAgencyMap, this.selectedNode.parentId);
+          this.parseObjectProperties(this.listAgencyMap, this.selectedNode.organizeId);
           this.detailOrganizeMap = this.selectedNode
           this.selected(this.listAgencyMap, this.query.orgId);
           this.query.org_level = this.selectedNode.org_level;
@@ -162,14 +161,16 @@ export class CaiDatToChucComponent implements OnInit {
   }
 
 
-  parseObjectProperties(obj, orgId = 0) {
+  parseObjectProperties(obj, organizeId = null) {
     for (let k of obj) {
-      if (k.orgId === orgId) {
-
+      if (k.organizeId === organizeId) {
         k.expanded = true;
+        if (k.hasOwnProperty('children') && Array.isArray(k.children) && k.children.length > 0 && k.org_level < this.selectedNode.org_level) {
+          this.parseObjectProperties(k.children, organizeId);
+        }
       } else {
         if (k.hasOwnProperty('children') && Array.isArray(k.children) && k.children.length > 0) {
-          this.parseObjectProperties(k.children, orgId);
+          this.parseObjectProperties(k.children, organizeId);
         }
       }
     }
