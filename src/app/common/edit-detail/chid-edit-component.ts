@@ -6,6 +6,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { stringtodate } from '../function-common/common';
 import * as numeral from 'numeral';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-type-text',
@@ -263,6 +264,17 @@ export class AppTypeDropdownComponent implements OnInit {
         element.fields.forEach(element1 => {
           if (element1.field_name === 'full_name') {
             this.getUserByPush(value, element1)
+          }
+        });
+      });
+    } else if (field_name === 'contract_term') {
+      this.dataView.forEach(element => {
+        element.fields.forEach(async element1 => {
+          if (element1.field_name === 'contract_expire_dt') {
+            const contract_issue_dt = await this.getValueByKey('contract_issue_dt');
+            const dateConvert = typeof contract_issue_dt === 'string' ? stringtodate(contract_issue_dt) : contract_issue_dt
+            const columnValue = new Date(moment(new Date(dateConvert)).add(value == 0 ? 60 : parseInt(value), 'months').format());
+            this.setValue(columnValue, element1.field_name)
           }
         });
       });
