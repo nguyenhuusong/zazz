@@ -1081,6 +1081,22 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     })
   }
 
+  cancelContract() {
+    this.spinner.show();
+    this.apiService.setContractStatus({
+      contractId: this.modelDuyetHopDong.contractId
+    }).subscribe(results => {
+      if (results.status === 'success') {
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
+        this.getEmployeeInfo();
+        this.spinner.hide();
+      } else {
+        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+        this.spinner.hide();
+      }
+    })
+  }
+
 
   uploadContract(event) {
     this.displayuploadcontract = true;
