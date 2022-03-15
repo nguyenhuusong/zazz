@@ -133,7 +133,7 @@ export class NoiLamViecComponent implements OnInit {
         this.initGrid();
         this.countRecord.totalRecord = results.data.dataList.recordsTotal;
         this.countRecord.totalRecord = results.data.dataList.recordsTotal;
-        this.countRecord.currentRecordStart = this.query.offSet + 1;
+        this.countRecord.currentRecordStart = results.data.dataList.recordsTotal === 0 ? this.query.offSet = 0 :  this.query.offSet + 1;
         if ((results.data.dataList.recordsTotal - this.query.offSet) > this.query.pageSize) {
           this.countRecord.currentRecordEnd = this.query.offSet + Number(this.query.pageSize);
         } else {
@@ -185,12 +185,12 @@ export class NoiLamViecComponent implements OnInit {
 
   xoacongty(event) {
     this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn thực hiện mở tài khoản?',
+      message: 'Bạn có chắc chắn muốn xóa nơi làm việc?',
       accept: () => {
         const queryParams = queryString.stringify({ workplaceId: event.rowData.workplaceId });
         this.apiService.delWorkplaceInfo(queryParams).subscribe(results => {
           if (results.status === 'success') {
-            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa chức vụ thành công' });
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Đã xóa nơi làm việc' });
             this.load();
           } else {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });

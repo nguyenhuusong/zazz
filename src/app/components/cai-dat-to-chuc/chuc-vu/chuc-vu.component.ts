@@ -132,7 +132,7 @@ export class ChucVuComponent implements OnInit, AfterViewChecked {
         this.initGrid();
         this.countRecord.totalRecord = results.data.dataList.recordsTotal;
         this.countRecord.totalRecord = results.data.dataList.recordsTotal;
-        this.countRecord.currentRecordStart = this.query.offSet + 1;
+        this.countRecord.currentRecordStart = results.data.dataList.recordsTotal === 0 ? this.query.offSet = 0 :  this.query.offSet + 1;
         if ((results.data.dataList.recordsTotal - this.query.offSet) > this.query.pageSize) {
           this.countRecord.currentRecordEnd = this.query.offSet + Number(this.query.pageSize);
         } else {
@@ -182,7 +182,7 @@ export class ChucVuComponent implements OnInit, AfterViewChecked {
 
   xoacongty(event) {
     this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn thực hiện mở tài khoản?',
+      message: 'Bạn có chắc chắn muốn thực hiện xóa chức vụ?',
       accept: () => {
         const queryParams = queryString.stringify({ positionId: event.rowData.positionId });
         this.apiService.delPositionInfo(queryParams).subscribe(results => {

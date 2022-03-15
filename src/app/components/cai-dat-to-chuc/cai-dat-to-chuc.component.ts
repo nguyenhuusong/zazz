@@ -231,7 +231,7 @@ export class CaiDatToChucComponent implements OnInit {
         this.initGrid();
         this.countRecord.totalRecord = results.data.dataList.recordsTotal;
         this.countRecord.totalRecord = results.data.dataList.recordsTotal;
-        this.countRecord.currentRecordStart = this.query.offSet + 1;
+        this.countRecord.currentRecordStart = results.data.dataList.recordsTotal === 0 ? this.query.offSet = 0 :  this.query.offSet + 1;
         if ((results.data.dataList.recordsTotal - this.query.offSet) > this.query.pageSize) {
           this.countRecord.currentRecordEnd = this.query.offSet + Number(this.query.pageSize);
         } else {
@@ -385,7 +385,6 @@ export class CaiDatToChucComponent implements OnInit {
       { label: 'Trang chủ' , url: '/home' },
       { label: 'Cài đặt' },
       { label: 'Danh sách tổ chức', url: '/cai-dat/cai-dat-to-chuc' },
-      { label: 'Danh sách chức vụ' },
     ];
     this.menuItem = [
       {

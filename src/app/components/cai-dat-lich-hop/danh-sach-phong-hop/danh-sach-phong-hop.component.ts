@@ -124,7 +124,7 @@ export class DanhSachPhongHopComponent implements OnInit {
         this.initGrid();
         this.countRecord.totalRecord = results.data.dataList.recordsTotal;
         this.countRecord.totalRecord = results.data.dataList.recordsTotal;
-        this.countRecord.currentRecordStart = this.model.offSet + 1;
+        this.countRecord.currentRecordStart = results.data.dataList.recordsTotal === 0 ? this.model.offSet = 0 :  this.model.offSet + 1;
         if ((results.data.dataList.recordsTotal - this.model.offSet) > this.model.pageSize) {
           this.countRecord.currentRecordEnd = this.model.offSet + Number(this.model.pageSize);
         } else {

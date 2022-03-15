@@ -184,7 +184,7 @@ export class CaiDatCongTyComponent implements OnInit, AfterViewChecked {
 
   xoacongty(event) {
     this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn thực hiện mở tài khoản?',
+      message: 'Bạn có chắc chắn muốn xóa công ty?',
       accept: () => {
         const queryParams = queryString.stringify({ companyId: event.rowData.companyId });
         this.apiService.delCompanyInfo(queryParams).subscribe(results => {

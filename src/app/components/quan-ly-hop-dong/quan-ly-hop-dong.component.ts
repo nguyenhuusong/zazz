@@ -151,7 +151,7 @@ export class QuanLyHopDongComponent implements OnInit {
         this.initGrid();
         this.countRecord.totalRecord = results.data.dataList.recordsTotal;
         this.countRecord.totalRecord = results.data.dataList.recordsTotal;
-        this.countRecord.currentRecordStart = this.query.offSet + 1;
+        this.countRecord.currentRecordStart = results.data.dataList.recordsTotal === 0 ? this.query.offSet = 0 :  this.query.offSet + 1;
         if ((results.data.dataList.recordsTotal - this.query.offSet) > this.query.pageSize) {
           this.countRecord.currentRecordEnd = this.query.offSet + Number(this.query.pageSize);
         } else {
@@ -207,7 +207,7 @@ export class QuanLyHopDongComponent implements OnInit {
         const queryParams = queryString.stringify({ contractTypeId: event.rowData.contractTypeId });
         this.apiService.delContractTypeInfo(queryParams).subscribe(results => {
           if (results.status === 'success') {
-            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa công ty thành công' });
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa hợp đồng thành công' });
             this.load();
           } else {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });

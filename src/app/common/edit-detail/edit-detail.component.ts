@@ -79,7 +79,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
 
   callApiDrop() {
     this.dataView.forEach(element => {
-      element.fields.forEach(element1 => {
+      element.fields.forEach(async element1 => {
         if (element1.columnType === 'markdown' || element1.columnType === 'linkUrl') {
           const dataValidation = {
             key: element1.field_name,
@@ -106,7 +106,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
           } else if (element1.field_name === 'orgId') {
             if (element1.columnType === 'selectTree') {
               element1.isVisiable = false;
-              const root_orgId = this.getValueByKey('organizeId');
+              const root_orgId = await this.getValueByKey('organizeId');
               this.getOrganizeTree(root_orgId, element1);
             } else {
               setTimeout(() => {
@@ -126,20 +126,20 @@ export class EditDetailComponent implements OnInit, OnChanges {
           } else if (element1.field_name === 'bank_code') {
             this.getBankList(element1)
           } else if (element1.field_name === 'parentId') {
-            const orgId = this.getValueByKey('orgId');
-            const adm_st = this.getValueByKey('adm_st');
+            const orgId =await this.getValueByKey('orgId');
+            const adm_st =await this.getValueByKey('adm_st');
             this.getAgentLeaders(orgId, element1, adm_st);
           } else if (element1.field_name === 'posistionCd') {
             const root_orgId = this.detail.organizeId ? this.detail.organizeId : null;
             this.getOrgPositions(root_orgId, element1);
           } else if (element1.field_name === 'positionId') {
-            const orgId = this.getValueByKey('orgId');
+            const orgId =await this.getValueByKey('orgId');
             setTimeout(() => {
               this.getPositionList(orgId, element1);
             }, 100);
           
           } else if (element1.field_name === 'positionTitleId') {
-            const positionId = this.getValueByKey('positionId');
+            const positionId =await this.getValueByKey('positionId');
             this.getPositionTitles(positionId, element1);
           } if (element1.field_name === 'companyId') {
             this.getCompanyList(this.detail.organizeId ? this.detail.organizeId : null, element1);
@@ -152,22 +152,22 @@ export class EditDetailComponent implements OnInit, OnChanges {
             const cif_no = this.detail.cif_no
             this.getAccountList(element1, cif_no);
           } else if (element1.field_name === 'jobId') {
-            const root_orgId = this.getValueByKey('organizeId');
-            const positionTypeCd = this.getValueByKey('positionCd');
+            const root_orgId =await this.getValueByKey('organizeId');
+            const positionTypeCd =await this.getValueByKey('positionCd');
             this.getJobTitles(root_orgId, element1, positionTypeCd);
           } else if (element1.field_name === 'organizeId') {
             this.getOrgRoots(element1);
           } else if (element1.field_name === 'org_cds') {
             this.getOrgRootsMuti(element1);
           } else if (element1.field_name === 'full_name') {
-            const org_cds = this.getValueByKey('org_cds');
+            const org_cds =await this.getValueByKey('org_cds');
             this.getUserByPush(org_cds, element1);
           } else if (element1.field_name === 'source_ref') {
             this.getNotifyRefList(element1);
           } else if (element1.field_name === 'contractTypeId') {
             this.getContractTypes(element1);
           } else if (element1.field_name === 'salary_type') {
-            const contractTypeId = this.getValueByKey('contractTypeId');
+            const contractTypeId =await this.getValueByKey('contractTypeId');
             this.getSalaryTypes(contractTypeId, element1);
           } else if (element1.field_name === 'base_id') {
             this.getSalaryBases(element1);
