@@ -82,8 +82,8 @@
 
 <p-dialog header="Thêm mới tiền lương" [(visible)]="displayFrom" [modal]="true" [draggable]="false" [resizable]="false" [style]="{width: '600px'}" [autoZIndex]="true"
   [draggable]="false" [resizable]="false">
-    <div class="col-md-12">
-        <div class="field-group select label-8">
+    <div class="col-md-12 p-0">
+        <div class="field-group select" [ngClass]="modelAdd.organizeId ? 'valid' : 'invalid'">
             <p-dropdown appendTo="body" [baseZIndex]="100" appendTo="body" [autoDisplayFirst]="false"
                 [options]="listOrgRoots" [(ngModel)]="modelAdd.organizeId" name="organizeId" 
                 [filter]="true">
@@ -99,13 +99,13 @@
             <label for="">Chọn tổ chức</label>
         </div>
     </div>
-    <div class="col-md-12 mt-1">
+    <div class="col-md-12 p-0 mt-1">
         <div class="field-group date">
             <label for="">Tháng</label>
             <p-calendar [(ngModel)]="modelAdd.date" name="date" view="month" appendTo="body" dateFormat="mm/yy" [readonlyInput]="true" inputId="monthpicker"></p-calendar>
         </div>
     </div>
-    <div class="col-md-12">
+    <div class="col-md-12 p-0">
         <div class="col-md-6"></div>
         <div class="col-md-6 text-right pr-0">
                 <p-button label="Gửi" icon="pi pi-check" styleClass="p-button-sm" (click)="themmoi()"></p-button>
