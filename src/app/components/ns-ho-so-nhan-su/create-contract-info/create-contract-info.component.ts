@@ -71,7 +71,7 @@ export class CreateContractInfoComponent implements OnInit {
           ...AgGridFn(this.detailInfo.gridflexdetails1 || []),
           {
             headerName: 'Hồ sơ mẫu',
-            field: 'meta_file_tpl',
+            field: 'temp_download_url',
             cellClass: ['border-right'],
             width: 100,
             cellRenderer: 'buttonAgGridComponent',
@@ -84,7 +84,15 @@ export class CreateContractInfoComponent implements OnInit {
                     icon: 'pi pi-cloud-upload',
                     key: 'taivehosomau',
                     class: 'btn-primary mr5',
-                    hide: !params.data.meta_file_tpl
+                    hide: !params.data.temp_download_url
+                  },
+                  {
+                    onClick: this.OnClick.bind(this),
+                    label: 'Xem file mẫu',
+                    icon: 'pi pi-cloud-upload',
+                    key: 'taivehosomau',
+                    class: 'btn-primary mr5',
+                    hide: !params.data.temp_view_url
                   }
                 ]
               };
@@ -105,7 +113,7 @@ export class CreateContractInfoComponent implements OnInit {
                     icon: 'pi pi-cloud-download',
                     class: 'btn-primary mr5',
                     key: 'tailenhoso',
-                    hide: params.data.temp_download_url
+                    hide: params.data.meta_upload_url
                   },
                   {
                     onClick: this.OnClick.bind(this),
@@ -113,7 +121,7 @@ export class CreateContractInfoComponent implements OnInit {
                     icon: 'pi pi-cloud-upload',
                     key: 'xemhoso',
                     class: 'btn-primary mr5',
-                    hide: !params.data.temp_view_url
+                    hide: !params.data.meta_upload_url
                   },
                   // {
                   //   onClick: this.OnClick.bind(this),
@@ -167,16 +175,20 @@ export class CreateContractInfoComponent implements OnInit {
   }
 
   uploadContract(event) {
-    this.displayuploadcontract = true;
-    this.metafile = event.rowData;
+    if(event.rowData.metaId) {
+      this.displayuploadcontract = true;
+      this.metafile = event.rowData;
+    }else {
+      this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Chưa lưu hợp đồng' });
+    }
   }
 
   ViewContract(event) {
-    this.downloadButtonClicked(event.rowData.temp_view_url);
+    this.downloadButtonClicked(event.rowData.meta_upload_url);
   }
 
   DowloadFileDemo(event, type) {
-    this.downloadButtonClicked(type === 'taivehosomau' ? event.rowData.meta_file_tpl : event.rowData.temp_view_url);
+    this.downloadButtonClicked(type === 'taivehosomau' ? event.rowData.temp_download_url : event.rowData.temp_view_url);
   }
 
   downloadButtonClicked(urlLink) {

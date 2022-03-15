@@ -81,7 +81,7 @@ export class ChiTietLichHopComponent implements OnInit, OnDestroy {
           filter: '',
           pinned: 'right',
           width: 50,
-          cellRenderer: 'buttonRendererMutiComponent',
+          cellRenderer: 'buttonAgGridComponent',
           cellClass: ['border-right text-center'],
           cellRendererParams: () => this.showButton()
         }];
@@ -108,10 +108,18 @@ export class ChiTietLichHopComponent implements OnInit, OnDestroy {
     this.listsData = this.listsData.filter(t => t.userId !== event.rowData.userId);
   }
 
-  handleChooseMember(data): void {
-    data = [...data.map(t => ({avatarUrl: t.avatar_url, fullName: t.full_name, roleName: 'user', userId: t.userId}))]
-    .filter((v, i, a) => a.findIndex(t => (t.userId === v.userId)) === i);
-    this.listsData = [...this.listsData, ...data];
+  handleChooseMember(datas): void {
+    datas.forEach(user => {
+      if(this.listsData.map(d => d.userId).indexOf(user.userId) < 0) {
+        this.listsData.push({
+          avatarUrl: user.avatar,
+          fullName: user.fullName,
+          roleName: user.roleName,
+          userId: user.userId
+        })
+      }
+    })
+    this.listsData = [...this.listsData];
     this.showChooseMember = false;
   }
 
