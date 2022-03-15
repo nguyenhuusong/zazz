@@ -207,7 +207,7 @@ export class QuanLyHopDongComponent implements OnInit {
         const queryParams = queryString.stringify({ contractTypeId: event.rowData.contractTypeId });
         this.apiService.delContractTypeInfo(queryParams).subscribe(results => {
           if (results.status === 'success') {
-            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa công ty thành công' });
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa hợp đồng thành công' });
             this.load();
           } else {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
