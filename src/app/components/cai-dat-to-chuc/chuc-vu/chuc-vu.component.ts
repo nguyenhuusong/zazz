@@ -68,7 +68,7 @@ export class ChucVuComponent implements OnInit, AfterViewChecked {
     filter: '',
     offSet: 0,
     pageSize: 15,
-    org_level: 0
+    organizeId: 0
   }
   totalRecord = 0;
   DriverId = 0;
@@ -91,7 +91,7 @@ export class ChucVuComponent implements OnInit, AfterViewChecked {
       filter: '',
       offSet: 0,
       pageSize: 15,
-      org_level: 0
+      organizeId: 0
     }
     this.load();
   }
@@ -107,13 +107,29 @@ export class ChucVuComponent implements OnInit, AfterViewChecked {
     this.loadjs ++ 
     if (this.loadjs === 5) {
       if(b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + d.clientHeight + e.clientHeight + 45;
+        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + d.clientHeight + e.clientHeight + 25;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       }else {
         this.loadjs = 0;
       }
     }
+  }
+
+  organizes = []
+  getOrrginiaztions() {
+    const queryParams = queryString.stringify({ filter: ''});
+    this.apiService.getOrganizations(queryParams).subscribe(results => {
+      if(results.status === 'success') {
+          this.organizes = results.data.map(d => {
+            return {
+              label: d.organizationName,
+              value: `${d.organizeId}`
+            }
+          });
+          this.organizes = [...this.organizes];
+      }
+    })
   }
 
 
@@ -200,14 +216,14 @@ export class ChucVuComponent implements OnInit, AfterViewChecked {
   XemChiTiet(event) {
     const params = {
       positionId: event.rowData.positionId,
-      org_level: this.query.org_level,
+      organizeId: this.query.organizeId,
     }
     this.router.navigate(['/cai-dat/chuc-vu/chi-tiet-chuc-vu'], { queryParams: params });
   }
 
   addChucVu() {
     const params = {
-      org_level: this.query.org_level,
+      organizeId: this.query.organizeId,
       positionId: 0
     }
     this.router.navigate(['/cai-dat/chuc-vu/them-moi-chuc-vu'], { queryParams: params });
@@ -229,6 +245,7 @@ export class ChucVuComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit() {
+    this.getOrrginiaztions();
     this.items = [
       { label: 'Trang chủ' , url: '/home' },
       { label: 'Cài đặt' },
@@ -238,7 +255,7 @@ export class ChucVuComponent implements OnInit, AfterViewChecked {
     this.getCustObjectListNew();
     this.route.queryParamMap.subscribe((params: any) => {
       this.orgLevel = params.params.org_level;
-      this.query.org_level = params.params.org_level;
+      // this.query.org_level = params.params.org_level;
       this.load();
     });
   }

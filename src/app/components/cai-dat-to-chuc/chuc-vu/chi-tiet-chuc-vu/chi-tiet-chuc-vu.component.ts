@@ -23,7 +23,7 @@ export class ChiTietChucVuComponent implements OnInit, OnChanges {
     private router: Router
   ) { }
   positionId = null
-  org_level = 0
+  organizeId = null
   listViews = []
   imagesUrl = []
   paramsObject = null
@@ -47,7 +47,6 @@ export class ChiTietChucVuComponent implements OnInit, OnChanges {
     this.items = [
       { label: 'Trang chủ' , url: '/home' },
       { label: 'Cài đặt' },
-      { label: 'Danh sách tổ chức', url: '/cai-dat/cai-dat-to-chuc' },
       { label: 'Danh sách chức vụ', url: '/cai-dat/chuc-vu' },
       { label: `${this.titlePage}` },
     ];
@@ -61,8 +60,8 @@ export class ChiTietChucVuComponent implements OnInit, OnChanges {
     this.activatedRoute.queryParamMap.subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.dataRouter = this.paramsObject.params;
-      this.positionId = this.paramsObject.params.positionId;
-      this.org_level = this.paramsObject.params.org_level;
+      this.positionId = this.paramsObject.params.positionId || null;
+      this.organizeId	 = this.paramsObject.params.organizeId || null	;
       this.getPositionInfo();
     });
   };
@@ -70,7 +69,7 @@ export class ChiTietChucVuComponent implements OnInit, OnChanges {
   detailInfo = null;
   getPositionInfo() {
     this.listViews = [];
-    const queryParams = queryString.stringify({positionId: this.positionId, org_level: this.org_level});
+    const queryParams = queryString.stringify({positionId: this.positionId, organizeId	: this.organizeId	});
     this.apiService.getPositionInfo(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.listViews = cloneDeep(results.data.group_fields);
@@ -111,7 +110,7 @@ export class ChiTietChucVuComponent implements OnInit, OnChanges {
 
   goBack() {
    if(this.titlePage) {
-    this.router.navigate(['/cai-dat/chuc-vu'], {queryParams: {org_level: this.org_level}});
+    this.router.navigate(['/cai-dat/chuc-vu']);
    }else {
     this.back.emit();
    }
