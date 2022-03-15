@@ -9,6 +9,7 @@ import { CustomTooltipComponent } from 'src/app/common/ag-component/customtoolti
 import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
 import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.component';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-meeting-schedule-member',
   templateUrl: './meeting-schedule-member.component.html',
@@ -38,6 +39,7 @@ export class MeetingScheduleMemberComponent implements OnInit {
     private apiService: ApiHrmService,
     private router: Router,
     private messageService: MessageService,
+    private spinner: NgxSpinnerService,
     private confirmationService: ConfirmationService
   ) {
     this.defaultColDef = {
@@ -58,21 +60,61 @@ export class MeetingScheduleMemberComponent implements OnInit {
 
   ngOnInit(): void {
     this.initGrid();
-  }
-  search(event): void {
-    this.columnDefs = []
-    const queryParams = queryString.stringify({orgId: 1, offSet: 0, pageSize: 10000, filter: event.query});
-    this.apiService.getEmployeePage(queryParams)
-    .subscribe(response => {
-        this.results = response.data.dataList.data.map(t => ({...t, displayName: t.code + ' - ' + t.full_name + ' - ' + t.phone1}));
-        this.initGrid();
-    });
+    this.getOrrginiaztions();
   }
 
-  handleSelectedMember(): void {
-    this.members = [this.selectedMember, ...this.members];
-    this.selectedMember = '';
+  organizes = []
+  getOrrginiaztions() {
+    const queryParams = queryString.stringify({ filter: ''});
+    this.apiService.getOrganizations(queryParams).subscribe(results => {
+      if(results.status === 'success') {
+          this.organizes = results.data.map(d => {
+            return {
+              label: d.organizationName,
+              value: `${d.organizeId}`,
+              ...d
+            }
+          });
+          this.modeAgencyOrganize.organizeId = this.organizes[0].value
+          this.getUserByPush(this.organizes[0].value);
+
+      }
+    })
   }
+
+  listUsers = [];
+  getUserByPush(orgId) {
+    this.spinner.show();
+    this.apiService.getUserByPush({ organizeId: this.modeAgencyOrganize.organizeId, orgIds: [this.modeAgencyOrganize.organizeId] }).subscribe(results => {
+      if (results.status === 'success') {
+       this.listUsers = results.data.map(d => {
+          return {
+            label: d.fullName + '-' + d.phone,
+            value: d.custId,
+            roleName: 'user',
+            ...d
+          }
+        });
+        this.spinner.hide();
+      }else {
+        this.spinner.hide();
+      }
+    })
+  }
+
+  selectUser(value) {
+    let items = this.listUsers.filter(d => d.value === this.modeAgencyOrganize.cusId);
+    if(this.members.map(d => d.value).indexOf(this.modeAgencyOrganize.cusId) < 0) {
+      this.members.push(items[0]);
+      this.members = [...this.members]
+    }
+  }
+
+  modeAgencyOrganize = {
+    organizeId: '',
+    cusId: ''
+  }
+
 
   handleAdd(): void {
     this.save.emit([...this.members]);
@@ -82,30 +124,28 @@ export class MeetingScheduleMemberComponent implements OnInit {
     this.columnDefs = [
       {
         headerName: 'Avatar',
-        field: 'avatar_url',
+        field: 'avatar',
         headerClass: ['cl6dabe8', 'd-flex', 'flex-row', 'justify-content-center'],
         cellRenderer: 'avatarRendererFull',
         width: 100
       },
       {
         headerName: 'Họ tên',
-        field: 'full_name',
+        field: 'fullName',
         headerClass: ['cl6dabe8', 'd-flex', 'flex-row', 'justify-content-center'],
         width: 250,
       },
       {
-        headerName: 'Vai trò ',
-        field: 'isApproved',
+        headerName: 'Số điện thoại',
+        field: 'phone',
         headerClass: ['cl6dabe8', 'd-flex', 'flex-row', 'justify-content-center'],
-        width: 130,
-        cellRenderer: params => {
-          return 'Thành viên';
-        }
+        width: 250,
       },
       {
-        headerName: 'ID',
-        field: 'userId',
+        headerName: 'Email',
+        field: 'email',
         headerClass: ['cl6dabe8', 'd-flex', 'flex-row', 'justify-content-center'],
+        width: 250,
       },
       {
         headerName: '',
@@ -133,21 +173,24 @@ export class MeetingScheduleMemberComponent implements OnInit {
   }
 
   handleDelete(e): void {
-    this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn xóa không?',
-      accept: () => {
-        this.apiService.delMeetingInfo(e.rowData.meet_ud)
-          .subscribe(response => {
-            if (response.status === 'success') {
-              this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: `Xóa thành công` });
-            } else {
-              this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: `Xóa thất bại` });
-            }
-          }, error => {
-            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: `Xóa thất bại` });
-          });
-      }
-    });
+    // this.confirmationService.confirm({
+    //   message: 'Bạn có chắc chắn muốn xóa không?',
+    //   accept: () => {
+    //     this.apiService.delMeetingInfo(e.rowData.meet_ud)
+    //       .subscribe(response => {
+    //         if (response.status === 'success') {
+    //           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: `Xóa thành công` });
+    //         } else {
+    //           this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: `Xóa thất bại` });
+    //         }
+    //       }, error => {
+    //         this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: `Xóa thất bại` });
+    //       });
+    //   }
+    // });
+
+    this.members.splice(e.rowIndex, 1);
+    this.members = [...this.members]
   }
 
   onGridReady(params): void {
