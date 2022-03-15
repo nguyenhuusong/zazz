@@ -23,9 +23,11 @@
                           </div>
                       </div>
                   </ng-template>
-                  <app-list-grid-angular [domLayout]="'autoHeight'" [heightRow]="40" [title]="'Danh sách liên hệ'" [floatingFilter]="false" *ngIf="listsData.length > 0"
-                      [listsData]="listsData"  (FnClick)="OnClick($event)"
-                      [columnDefs]="columnDefs"></app-list-grid-angular>
+                  <div class="grid-default border max-h-600">
+                    <app-list-grid-angular [domLayout]="'autoHeight'" [heightRow]="40" [title]="'Danh sách liên hệ'" [floatingFilter]="false" *ngIf="listsData.length > 0"
+                        [listsData]="listsData"  (FnClick)="OnClick($event)"
+                        [columnDefs]="columnDefs"></app-list-grid-angular>
+                    </div>
               </p-card>
               </div>
         </p-tabPanel>
