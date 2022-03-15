@@ -3,7 +3,6 @@ import { MessageService } from 'primeng/api';
 import { environment } from 'src/environments/environment';
 import * as firebase from 'firebase';
 import { ApiService } from 'src/app/services/api.service';
-import * as queryString from 'querystring'
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 @Component({
   selector: 'app-page-markdown',

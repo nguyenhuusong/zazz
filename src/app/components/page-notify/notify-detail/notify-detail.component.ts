@@ -199,7 +199,7 @@ export class NotifyDetailComponent implements OnInit {
                 if(element1.columnValue == 2) {
                   b.columnValue =this.modelMarkdow.content ? this.converter.makeHtml(this.modelMarkdow.content) : '';
                 }else {
-                  b.columnValue = this.modelMarkdow.content ? this.converter.markdown(this.modelMarkdow.content) : '';
+                  b.columnValue = this.modelMarkdow.content;
                 }
               }
             });
