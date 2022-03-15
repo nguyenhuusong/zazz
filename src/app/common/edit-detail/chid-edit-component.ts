@@ -540,7 +540,9 @@ export class AppTypeCheckboxComponent implements OnInit {
                   <textarea type="text" placeholder="" class="form-control"
                   [(ngModel)]="element.columnValue" name={{element.field_name}} [disabled]="element.isDisable"
                   [required]="element.isRequire && element.isVisiable && !element.isEmpty"
-                  (change)="onChangeValue($event.target, element.field_name, element)"></textarea>
+                  (change)="onChangeValue($event.target, element.field_name, element)"
+                  maxlength="200"
+                  ></textarea>
                   <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
 
                 <div *ngIf="element.isRequire && submit && !element.columnValue"
