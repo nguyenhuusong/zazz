@@ -940,14 +940,15 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   createContract() {
     this.getRecordInfo()
   }
-
+  listsDataRecord = []
+  columnDefsRecord = []
   getRecordInfo() {
     const queryParams = queryString.stringify({ empId: this.detailInfo.empId });
     this.apiService.getRecordInfo(queryParams).subscribe(results => {
       if (results.status === 'success') {
-        this.listsData[3] = results.data.records || [];
+        this.listsDataRecord = results.data.records || [];
         this.listViewsRecordInfo = results.data;
-        this.columnDefs[3] = [
+        this.columnDefsRecord = [
           ...AgGridFn(this.listViewsRecordInfo.gridflexdetails1 || [])
           , {
             headerName: 'Tải lên hồ sơ',
