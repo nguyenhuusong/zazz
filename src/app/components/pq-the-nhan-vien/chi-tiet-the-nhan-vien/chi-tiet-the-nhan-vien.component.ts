@@ -80,6 +80,7 @@ export class ChiTietTheNhanVienComponent implements OnInit, OnDestroy {
       .subscribe((results: any) => {
         if (results.status === 'success') {
           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
+          this.router.navigate(['/phan-quyen/the-nhan-vien']);
           this.spinner.hide();
         } else {
           this.messageService.add({

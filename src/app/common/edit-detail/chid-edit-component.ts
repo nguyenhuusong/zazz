@@ -291,7 +291,6 @@ export class AppTypeDropdownComponent implements OnInit {
       });
     } else if (field_name === 'CustId') {
       let items = element.options.filter(d => d.custId === value);
-      debugger
       this.dataView.forEach(element => {
         element.fields.forEach(async element1 => {
           if (element1.field_name === 'Phone') {
