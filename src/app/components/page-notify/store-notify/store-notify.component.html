@@ -1,45 +1,43 @@
 
 <div class="row">
-  <div class="col-md-12">
-    <div class="select-default">
+  <div class="col-md-6">
+    <div class="field-group label-8" [ngClass]=" query.filter? 'valid' : 'invalid' ">
+      <input class="form-control" type="text" 
+      placeholder="Tìm kiếm mã sản phẩm đầu tư, tên, SĐT, Email" id="filter" name="filter"
+      [(ngModel)]="query.filter" />
+      <label for="">Tìm kiếm</label>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="field-group select" [ngClass]=" perent_id? 'valid' : 'invalid' ">
       <label for="">Tổ chức</label>
       <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
-                    [options]="moduleLists" [(ngModel)]="perent_id"  [required] (onChange)="getOrganizeTree($event.code)"
-                    name="perent_id" [filter]="true">
-                    <ng-template let-item pTemplate="selectedItem">
-                        <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
-                    </ng-template>
-                    <ng-template let-car pTemplate="item">
-                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                            <div style="font-size:14px;float:left;margin-top:4px">{{car.label}}</div>
-                        </div>
-                    </ng-template>
-                </p-dropdown>
+          [options]="moduleLists" [(ngModel)]="perent_id"  [required] (onChange)="getOrganizeTree($event.code)"
+          name="perent_id" [filter]="true">
+          <ng-template let-item pTemplate="selectedItem">
+              <span>{{item.label}}</span>
+          </ng-template>
+          <ng-template let-car pTemplate="item">
+              <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                  <div style="font-size:14px;float:left;margin-top:4px">{{car.label}}</div>
               </div>
+          </ng-template>
+      </p-dropdown>
+    </div>
   </div>
-  <div class="col-md-12 d-flex mt-1 " style="padding: 0">
-    <div class="col-md-4 ">
-      <div class="select-default">
-        <label for="">Bộ phận</label>
-        <p-treeSelect [(ngModel)]="sub_prod_cd" [options]="departmentFiltes" display="chip" (onNodeSelect)="onNodeSelect($event)" (onNodeUnselect)="onNodeUnselect($event)" [metaKeySelection]="false" selectionMode="multiple"  appendTo="body" name="sub_prod_cd" placeholder="Chọn phòng ban"></p-treeSelect>
-      </div>
+  <div class="col-md-10 ">
+    <div class="field-group  select treeselect label-8" [ngClass]=" sub_prod_cd? 'valid' : 'invalid' ">
+      <p-treeSelect [(ngModel)]="sub_prod_cd" [options]="departmentFiltes" display="chip" (onNodeSelect)="onNodeSelect($event)" (onNodeUnselect)="onNodeUnselect($event)" [metaKeySelection]="false" selectionMode="multiple"  appendTo="body" name="sub_prod_cd" placeholder="Chọn phòng ban"></p-treeSelect>
+      <label for="">Bộ phận</label>
     </div>
-    <div class="col-md-4">
-      <div class="input-group">
-        <label for="">Tìm kiếm</label>
-        <input class="form-control" type="text" 
-        placeholder="Tìm kiếm mã sản phẩm đầu tư, tên, SĐT, Email" id="filter" name="filter"
-        [(ngModel)]="query.filter" />
-      </div>
-    </div>
-    <div class="col-md-4">
+  </div>
+  <div class="col-md-2">
       <div class="group-btns text-right">
+        <p-button label="Tìm kiếm" styleClass="p-button-sm mr-1 btn-h56  width100" (click)="getUserByPush()"></p-button>
+        <p-button styleClass="p-button-sm mr-1 btn-56" label="Lưu danh sách" *ngIf="listsData.length > 0"  icon="pi pi-check" (click)="saveUserByPush()"></p-button>
+        <!-- <p-button styleClass="p-button-sm p-button-secondary btn-56" label="Đóng lại" icon="pi pi-times" (click)="closeModal()"></p-button> -->
         <label for="" style="visibility: hidden;">Tìm kiếm</label>
-        <p-button label="Tìm kiếm" styleClass="p-button-sm mr-1" (click)="getUserByPush()"></p-button>
-        <p-button styleClass="p-button-sm mr-1" label="Lưu danh sách" *ngIf="listsData.length > 0"  icon="pi pi-check" (click)="saveUserByPush()"></p-button>
-        <p-button styleClass="p-button-sm p-button-secondary" label="Đóng lại" icon="pi pi-times" (click)="closeModal()"></p-button>
       </div>
-    </div>
   </div>
   <div class="col-sm-12 mt-3">
     <label for=""><b>Danh sách nhân viên </b><p-badge *ngIf="listsData.length > 0"

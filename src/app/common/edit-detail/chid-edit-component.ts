@@ -509,11 +509,11 @@ export class AppTypeCurrencyComponent implements OnInit {
 @Component({
   selector: 'app-type-checkbox',
   template: `   
-                <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
-                <div>
+                <div class="field-group checkbox">
                   <p-checkbox name={{element.field_name}} [binary]="true" label="{{element.columnLabel}} :"
                   [required]="element.isRequire && element.isVisiable && !element.isEmpty" [disabled]="element.isDisable"
                   [(ngModel)]="element.columnValue" (onChange)="onChangeValue($event.value, element.field_name, element)"></p-checkbox>
+                  <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
 
                 <div *ngIf="element.isRequire && submit && !element.columnValue"
                     class="alert-validation alert-danger">
@@ -552,7 +552,9 @@ export class AppTypeCheckboxComponent implements OnInit {
                   <textarea type="text" placeholder="" class="form-control"
                   [(ngModel)]="element.columnValue" name={{element.field_name}} [disabled]="element.isDisable"
                   [required]="element.isRequire && element.isVisiable && !element.isEmpty"
-                  (change)="onChangeValue($event.target, element.field_name, element)"></textarea>
+                  (change)="onChangeValue($event.target, element.field_name, element)"
+                  maxlength="200"
+                  ></textarea>
                   <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
 
                 <div *ngIf="element.isRequire && submit && !element.columnValue"
