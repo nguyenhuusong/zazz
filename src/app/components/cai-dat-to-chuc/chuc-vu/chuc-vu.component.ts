@@ -182,7 +182,7 @@ export class ChucVuComponent implements OnInit, AfterViewChecked {
 
   xoacongty(event) {
     this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn thực hiện mở tài khoản?',
+      message: 'Bạn có chắc chắn muốn thực hiện xóa chức vụ?',
       accept: () => {
         const queryParams = queryString.stringify({ positionId: event.rowData.positionId });
         this.apiService.delPositionInfo(queryParams).subscribe(results => {
