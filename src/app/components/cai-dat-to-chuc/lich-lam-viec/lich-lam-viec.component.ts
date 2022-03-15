@@ -182,12 +182,12 @@ public agGridFn = AgGridFn;
 
   delWorktimeInfo(event) {
     this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn thực hiện mở tài khoản?',
+      message: 'Bạn có chắc chắn muốn lịch làm việc?',
       accept: () => {
         const queryParams = queryString.stringify({ work_cd: event.rowData.work_cd });
         this.apiService.DelWorktimeInfo(queryParams).subscribe(results => {
           if (results.status === 'success') {
-            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa chức vụ thành công' });
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa lịch làm việc thành công' });
             this.load();
           } else {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
