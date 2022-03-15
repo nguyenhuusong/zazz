@@ -420,6 +420,10 @@ export class ApiHrmService {
   setContractStatus(params): Observable<any> {
     return this.http.put<any>(`${apiHrmServer}/api/v2/contract/SetContractStatus`, params, this.options)
   }
+  
+  setContractCancel(params): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v2/contract/SetContractCancel`, params, this.options)
+  }
 
   removeUser(queryParams): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v1/user/RemoveUser?` + queryParams, this.options)
