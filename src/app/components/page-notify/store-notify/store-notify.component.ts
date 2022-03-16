@@ -236,6 +236,9 @@ export class StoreNotifyComponent implements OnInit, OnChanges {
       }else {
         this.spinner.hide();
       }
+      if(results.status === 'error'){
+        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message});
+      }
     })
   }
 
