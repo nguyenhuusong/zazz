@@ -49,7 +49,7 @@ export class PageNotifyComponent implements OnInit, OnDestroy, AfterViewChecked 
   totalRecord = 0;
   projects = [];
   query = {
-    prod_cd: '',
+    organizeId: '',
     filter: '',
     gridWidth: 0,
     offSet: 0,
@@ -85,7 +85,7 @@ export class PageNotifyComponent implements OnInit, OnDestroy, AfterViewChecked 
   menuItem = [];
   handleReset() {
     this.query = {
-      prod_cd: '',
+      organizeId: '',
       filter: '',
       gridWidth: 0,
       offSet: 0,
@@ -146,6 +146,9 @@ export class PageNotifyComponent implements OnInit, OnDestroy, AfterViewChecked 
     this.load();
     // this.pagingComponent.pageSize = this.filter.pageSize;
   }
+
+
+
   moduleList = [];
   notifyTempList = [];
   getModuleList() {
@@ -155,7 +158,7 @@ export class PageNotifyComponent implements OnInit, OnDestroy, AfterViewChecked 
         this.moduleList = results.data.map(res => {
           return {
             label: `${res.organizationName} (${res.organizationCd})`,
-            value: res.organizationCd
+            value: res.organizeId
           }
         });
       }
