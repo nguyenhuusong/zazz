@@ -90,7 +90,7 @@ export class CreateContractInfoComponent implements OnInit {
                     onClick: this.OnClick.bind(this),
                     label: 'Xem file mẫu',
                     icon: 'pi pi-cloud-upload',
-                    key: 'taivehosomau',
+                    key: 'xemhosomau',
                     class: 'btn-primary mr5',
                     hide: !params.data.temp_view_url
                   }
@@ -188,6 +188,7 @@ export class CreateContractInfoComponent implements OnInit {
   }
 
   DowloadFileDemo(event, type) {
+    console.log(event, 'fjdosfjio');
     this.downloadButtonClicked(type === 'taivehosomau' ? event.rowData.temp_download_url : event.rowData.temp_view_url);
   }
 

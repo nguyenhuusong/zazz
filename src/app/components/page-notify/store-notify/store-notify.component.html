@@ -25,18 +25,18 @@
       </p-dropdown>
     </div>
   </div>
-  <div class="col-md-10 ">
+  <div class="col-md-8 ">
     <div class="field-group  select treeselect label-8" [ngClass]=" sub_prod_cd? 'valid' : 'invalid' ">
       <p-treeSelect [(ngModel)]="sub_prod_cd" [options]="departmentFiltes" display="chip" (onNodeSelect)="onNodeSelect($event)" (onNodeUnselect)="onNodeUnselect($event)" [metaKeySelection]="false" selectionMode="multiple"  appendTo="body" name="sub_prod_cd" placeholder="Chọn phòng ban"></p-treeSelect>
       <label for="">Bộ phận</label>
     </div>
   </div>
-  <div class="col-md-2">
-      <div class="group-btns text-right">
-        <p-button label="Tìm kiếm" styleClass="p-button-sm mr-1 btn-h56  width100" (click)="getUserByPush()"></p-button>
+  <div class="col-md-4">
+      <div class="group-btns text-right d-flex justify-content-end">
+        <p-button label="Tìm kiếm" styleClass="p-button-sm mr-1 btn-h56 " (click)="getUserByPush()"></p-button>
         <p-button styleClass="p-button-sm mr-1 btn-56" label="Lưu danh sách" *ngIf="listsData.length > 0"  icon="pi pi-check" (click)="saveUserByPush()"></p-button>
         <!-- <p-button styleClass="p-button-sm p-button-secondary btn-56" label="Đóng lại" icon="pi pi-times" (click)="closeModal()"></p-button> -->
-        <label for="" style="visibility: hidden;">Tìm kiếm</label>
+        <!-- <label for="" style="visibility: hidden;">Tìm kiếm</label> -->
       </div>
   </div>
   <div class="col-sm-12 mt-3">
