@@ -141,7 +141,7 @@ export class PqXeNhanVienComponent implements OnInit {
               };
             });
           this.modelTM.organizeId = this.organizesAdds[0].value;
-          this.getUserByPush(this.organizesAdds[0].value);
+          this.getUserByPush();
           this.organizes = [{ label: 'Tất cả', value: '' }, ...this.organizes];
 
         }),
@@ -324,7 +324,7 @@ export class PqXeNhanVienComponent implements OnInit {
           this.modelTM.type = 2;
           this.modelTM.cardVehicleId = results.data.cardVehicleId;
           this.modelTM.vehicleNoTM = results.data.vehicleNo;
-          this.modelTM.organizeId = results.data.organizeId;
+          this.modelTM.organizeId = event.rowData.organizeId;
           this.modelTM.vehicleNameTM = results.data.vehicleName;
           this.modelTM.vehicleTypeIdTM = results.data.vehicleTypeId;
           this.modelTM.vehiclecardCd = results.data.cardCd;
@@ -332,7 +332,8 @@ export class PqXeNhanVienComponent implements OnInit {
           this.modelTM.endTimeTM = results.data.endTime ? stringtodate(results.data.endTime) : '';
           this.showVehicleCard = this.modelTM.endTimeTM ? true : false;
           this.displayCreateVehicleCard = true;
-          this.modelTM.cusId = results.data.custId;
+          this.modelTM.cusId = event.rowData.cusId;
+          this.getUserByPush();
           // this.search({ query: results.data.fullName }, 'edit');
           // this.show_dialogcreate = true;
         }, error => this.handlerError(error));
@@ -548,7 +549,7 @@ export class PqXeNhanVienComponent implements OnInit {
   }
 
   listUsers = [];
-  getUserByPush(orgId) {
+  getUserByPush() {
     this.spinner.show();
     this.apiService.getUserByPush({ organizeId: this.modelTM.organizeId, orgIds: [this.modelTM.organizeId] }).subscribe(results => {
       if (results.status === 'success') {
@@ -560,6 +561,8 @@ export class PqXeNhanVienComponent implements OnInit {
             ...d
           }
         });
+        this.modelTM.cusId = this.modelTM.cusId ? this.modelTM.cusId : this.listUsers[0].value;
+
         this.spinner.hide();
       } else {
         this.spinner.hide();
