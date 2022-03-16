@@ -24,7 +24,7 @@
           <div class="col-2">
             <div class="field-group select mb-0 label-8">
                 <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
-                 (onChange)="find()"
+                 (onChange)="load()"
                 [options]="moduleList" [(ngModel)]="model.organizeId" name="organizeId" [filter]="true">
                 <ng-template let-item pTemplate="selectedItem">
                     <span style="vertical-align:middle;">{{item?.label}}</span>

@@ -96,7 +96,7 @@ export class PqXeNhanVienComponent implements OnInit {
   itemsBreadcrumb = [];
   ngOnInit(): void {
     this.itemsBreadcrumb = [
-      { label: 'Trang chủ' , url: '/home' },
+      { label: 'Trang chủ', url: '/home' },
       { label: 'Phân quyền' },
       { label: 'Danh sách xe nhân viên' },
     ];
@@ -118,9 +118,9 @@ export class PqXeNhanVienComponent implements OnInit {
     this.getOrganizeTree();
     this.find();
   }
-
+  organizesAdds = [];
   getOrganize(): void {
-    const queryParams = queryString.stringify({ filter: ''});
+    const queryParams = queryString.stringify({ filter: '' });
     this.apiService.getOrganizations(queryParams)
       .subscribe(
         (results: any) => {
@@ -128,16 +128,24 @@ export class PqXeNhanVienComponent implements OnInit {
             .map(d => {
               return {
                 label: d.organizationName || d.organizationCd,
-                value: d.organizeId
+                value: d.organizeId,
+                ...d
               };
             });
-          // if (this.organizes && this.organizes.length) {
-          //   this.model.organizeId = { org_cd: this.organizes[0].value.org_cd, orgId: this.organizes[0].value.orgId };
-          //   this.getOrganizeTree();
-          // }
+          this.organizesAdds = results.data
+            .map(d => {
+              return {
+                label: d.organizationName || d.organizationCd,
+                value: d.organizeId,
+                ...d
+              };
+            });
+          this.modelTM.organizeId = this.organizesAdds[0].value;
+          this.getUserByPush(this.organizesAdds[0].value);
           this.organizes = [{ label: 'Tất cả', value: '' }, ...this.organizes];
+
         }),
-        error => { };
+      error => { };
   }
 
   getOrganizeTree(): void {
@@ -160,8 +168,8 @@ export class PqXeNhanVienComponent implements OnInit {
     this.columnDefs = []
     this.spinner.show();
     const query = { ...this.model };
-    query.organizeId = typeof query.organizeId === 'string' ? query.organizeId : query.organizeId.org_cd;
-    query.orgId = typeof query.orgId === 'string' ? query.orgId : query.orgId.orgId;
+    // query.organizeId = typeof query.organizeId === 'string' ? query.organizeId : query.organizeId.org_cd;
+    // query.orgId = typeof query.orgId === 'string' ? query.orgId : query.orgId.orgId;
     const queryParams = queryString.stringify(query);
     this.apiService.getEmployeeVehiclePage(queryParams).subscribe(
       (results: any) => {
@@ -172,7 +180,7 @@ export class PqXeNhanVienComponent implements OnInit {
         this.initGrid();
         this.countRecord.totalRecord = results.data.dataList.recordsTotal;
         this.countRecord.totalRecord = results.data.dataList.recordsTotal;
-        this.countRecord.currentRecordStart = results.data.dataList.recordsTotal === 0 ? this.model.offSet = 0 :  this.model.offSet + 1;
+        this.countRecord.currentRecordStart = results.data.dataList.recordsTotal === 0 ? this.model.offSet = 0 : this.model.offSet + 1;
         if ((results.data.dataList.recordsTotal - this.model.offSet) > this.model.pageSize) {
           this.countRecord.currentRecordEnd = this.model.offSet + Number(this.model.pageSize);
         } else {
@@ -182,9 +190,9 @@ export class PqXeNhanVienComponent implements OnInit {
       },
       error => {
         this.spinner.hide();
-       });
+      });
   }
-  
+
   showButtons(event: any) {
     return {
       buttons: [
@@ -308,45 +316,46 @@ export class PqXeNhanVienComponent implements OnInit {
 
   editVehicleCard(event): void {
     const cardVehicleId = event.rowData.cardVehicleId;
-      if (cardVehicleId === null || cardVehicleId === 0) {
-        alert('Cần phê duyệt');
-      } else {
-        this.apiService.getCardVehicleDetail(cardVehicleId).subscribe(
-          (results: any) => {
-            this.modelTM.type = 2;
-            this.modelTM.cardVehicleId = results.data.cardVehicleId;
-            this.modelTM.vehicleNoTM = results.data.vehicleNo;
-            this.modelTM.vehicleNameTM = results.data.vehicleName;
-            this.modelTM.vehicleTypeIdTM = results.data.vehicleTypeId;
-            this.modelTM.vehiclecardCd = results.data.cardCd;
-            this.modelTM.startTimeTM = stringtodate(results.data.startTime);
-            this.modelTM.endTimeTM = results.data.endTime ? stringtodate(results.data.endTime) : '';
-            this.showVehicleCard = this.modelTM.endTimeTM ? true : false;
-            this.displayCreateVehicleCard = true;
-            this.modelTM.cusId = results.data.custId;
-            this.search({ query: results.data.fullName }, 'edit');
-            // this.show_dialogcreate = true;
-          }, error => this.handlerError(error));
-      }
+    if (cardVehicleId === null || cardVehicleId === 0) {
+      alert('Cần phê duyệt');
+    } else {
+      this.apiService.getCardVehicleDetail(cardVehicleId).subscribe(
+        (results: any) => {
+          this.modelTM.type = 2;
+          this.modelTM.cardVehicleId = results.data.cardVehicleId;
+          this.modelTM.vehicleNoTM = results.data.vehicleNo;
+          this.modelTM.organizeId = results.data.organizeId;
+          this.modelTM.vehicleNameTM = results.data.vehicleName;
+          this.modelTM.vehicleTypeIdTM = results.data.vehicleTypeId;
+          this.modelTM.vehiclecardCd = results.data.cardCd;
+          this.modelTM.startTimeTM = stringtodate(results.data.startTime);
+          this.modelTM.endTimeTM = results.data.endTime ? stringtodate(results.data.endTime) : '';
+          this.showVehicleCard = this.modelTM.endTimeTM ? true : false;
+          this.displayCreateVehicleCard = true;
+          this.modelTM.cusId = results.data.custId;
+          // this.search({ query: results.data.fullName }, 'edit');
+          // this.show_dialogcreate = true;
+        }, error => this.handlerError(error));
+    }
 
   }
 
   SaveVehicleCard(): void {
     let startTimeTm = null;
     let endTimeTm = null;
-    if(this.modelTM.endTimeTM === ''){
+    if (this.modelTM.endTimeTM === '') {
       startTimeTm = null;
       endTimeTm = null;
-    }else{
+    } else {
       startTimeTm = this.datetostring(this.modelTM.startTimeTM);
       endTimeTm = this.datetostring(this.modelTM.endTimeTM);
     }
     this.apiService.setCardVehicle(this.modelTM.cardVehicleId, this.modelTM.vehiclecardCd,
       this.modelTM.vehicleTypeIdTM, this.modelTM.vehicleNoTM, this.modelTM.vehicleNameTM,
       startTimeTm, endTimeTm, this.modelTM.cusId).subscribe((results: any) => {
-        if(results.status === 'error'){
+        if (results.status === 'error') {
           this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
-        }else{
+        } else {
           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Cập nhật vé xe thành công' });
           this.displayCreateVehicleCard = false;
           this.load();
@@ -447,13 +456,13 @@ export class PqXeNhanVienComponent implements OnInit {
     const c: any = document.querySelector(".breadcrumb");
     const d: any = document.querySelector(".filterInput");
     const e: any = document.querySelector(".paginator");
-    this.loadjs ++ 
+    this.loadjs++
     if (this.loadjs === 5) {
-      if(b && b.clientHeight) {
+      if (b && b.clientHeight) {
         const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + d.clientHeight + e.clientHeight + 45;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
-      }else {
+      } else {
         this.loadjs = 0;
       }
     }
@@ -481,6 +490,7 @@ export class PqXeNhanVienComponent implements OnInit {
 
   addVehicleCard(): void {
     this.modelTM.type = 1;
+    this.modelTM.organizeId = this.organizesAdds[0].value;
     this.modelTM.cardVehicleId = 0;
     this.modelTM.vehicleNoTM = '';
     this.modelTM.vehicleNameTM = '';
@@ -506,7 +516,7 @@ export class PqXeNhanVienComponent implements OnInit {
   }
 
   exportExel() {
-  
+
     this.spinner.show();
     this.model.pageSize = 1000000;
     const query = { ...this.model };
@@ -517,24 +527,44 @@ export class PqXeNhanVienComponent implements OnInit {
       const dataExport = [];
       let gridflexs = results.data.gridflexs;
       let arrKey = gridflexs.map(elementName => elementName.columnField);
-      
+
       let dataList = results.data.dataList.data;
-      for(let elementValue of dataList) {
+      for (let elementValue of dataList) {
         const data: any = {};
-        for(let elementName of gridflexs) {
-          if(arrKey.indexOf(elementName.columnField) > -1 && !elementName.isHide && elementName.columnField !== 'statusName') {
+        for (let elementName of gridflexs) {
+          if (arrKey.indexOf(elementName.columnField) > -1 && !elementName.isHide && elementName.columnField !== 'statusName') {
             data[elementName.columnCaption] = elementValue[elementName.columnField] || '';
           }
-         
+
         }
 
-      dataExport.push(data);
+        dataExport.push(data);
       }
       this.fileService.exportAsExcelFile(dataExport, 'Danh sách xe nhân viên ' + new Date());
 
       this.spinner.hide();
 
     });
+  }
+
+  listUsers = [];
+  getUserByPush(orgId) {
+    this.spinner.show();
+    this.apiService.getUserByPush({ organizeId: this.modelTM.organizeId, orgIds: [this.modelTM.organizeId] }).subscribe(results => {
+      if (results.status === 'success') {
+        this.listUsers = results.data.map(d => {
+          return {
+            label: d.fullName + '-' + d.phone,
+            value: d.custId,
+            roleName: 'user',
+            ...d
+          }
+        });
+        this.spinner.hide();
+      } else {
+        this.spinner.hide();
+      }
+    })
   }
 
 }

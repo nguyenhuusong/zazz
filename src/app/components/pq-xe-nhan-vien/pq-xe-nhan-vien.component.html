@@ -65,6 +65,40 @@
   <form action="" #createSMSF1="ngForm">
     <div class="box-body" style="padding:10px;">
 
+      <div class="col-sm-6 form-group">
+        <div class="field-group select label-8">
+            <p-dropdown appendTo="body"  [baseZIndex]="100" 
+                [options]="organizesAdds" [(ngModel)]="modelTM.organizeId" [autoDisplayFirst]="false" (onChange)="getUserByPush($event.query)" name="organizeId" [filter]="true">
+                <ng-template let-item pTemplate="selectedItem">
+                    <span>{{item.label}}</span>
+                </ng-template>
+                <ng-template let-car pTemplate="item">
+                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                    <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                    </div>
+                </ng-template>
+                </p-dropdown>
+            <label for="">Chọn tổ chức</label>
+        </div>
+    </div>
+    <div class="col-sm-6 form-group">
+        <div class="field-group select label-8" >
+            <p-dropdown appendTo="body"  [baseZIndex]="100" 
+                [options]="listUsers" [(ngModel)]="modelTM.cusId" [autoDisplayFirst]="false" name="cusId" [filter]="true">
+                <ng-template let-item pTemplate="selectedItem">
+                    <span>{{item.label}}</span>
+                </ng-template>
+                <ng-template let-car pTemplate="item">
+                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                    <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                    </div>
+                </ng-template>
+                </p-dropdown>
+            <label for="">Nhân viên</label>
+        </div>
+    </div>
+
+<!-- 
         <div class="col-sm-6">
           <div class="field-group text label-8">
             <p-autoComplete panelStyleClass="search-user-by-phone" [(ngModel)]="cusId" name="cusId"  [baseZIndex]="102" appendTo="body" [style]="{width: '100%'}"
@@ -79,13 +113,7 @@
             </p-autoComplete>
             <label>Tên nhân viên<span style="color:red">*</span></label>
             </div>
-          <!-- <input [ngbTypeahead]="search" name="cusId" (keyup)="getEmployee($event)" [resultFormatter]="formatter"
-            (selectItem)="selectedItem($event)" #cusId="ngModel" [inputFormatter]="formatter" type="text"
-            [(ngModel)]="modelTM.cusId" id="cusId" class="form-control w-100"> -->
-          <!-- <div *ngIf="cusId.errors && (cusId.dirty || cusId.touched)" class="alert-validation alert-danger">
-            <div *ngIf="cusId.errors.required">Trường này bắt buộc nhập</div>
-          </div> -->
-        </div>
+        </div> -->
         <div class="col-sm-6">
           <div class="field-group text label-8">
             <input type="text" class="form-control" name="vehiclecardCd" [(ngModel)]="modelTM.vehiclecardCd"
