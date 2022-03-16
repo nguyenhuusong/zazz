@@ -68,7 +68,7 @@
       <div class="col-sm-6 form-group">
         <div class="field-group select label-8">
             <p-dropdown appendTo="body"  [baseZIndex]="100" 
-                [options]="organizesAdds" [(ngModel)]="modelTM.organizeId" [autoDisplayFirst]="false" (onChange)="getUserByPush($event.query)" name="organizeId" [filter]="true">
+                [options]="organizesAdds" [(ngModel)]="modelTM.organizeId" [autoDisplayFirst]="false" (onChange)="getUserByPush()" name="organizeId" [filter]="true">
                 <ng-template let-item pTemplate="selectedItem">
                     <span>{{item.label}}</span>
                 </ng-template>
