@@ -1,3 +1,5 @@
+import { ThamSoChungDetailComponent } from './../../components/cai-dat-to-chuc/tham-so-chung/tham-so-chung-detail/tham-so-chung-detail.component';
+import { ThamSoChungListComponent } from './../../components/cai-dat-to-chuc/tham-so-chung/tham-so-chung-list/tham-so-chung-list.component';
 import { Routes } from '@angular/router';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
@@ -256,8 +258,23 @@ const routes: Routes = [
       url: 'chi-tiet-hop-dong',
     },
   },
-  
-
+  {
+    path: 'tham-so-chung/:id',
+    component: ThamSoChungDetailComponent,
+    data: {
+      title: 'Chi tiết tham số chung',
+      url: 'chi-tiet-tham-so-chung',
+    },
+  },
+  {
+    path: 'tham-so-chung',
+    pathMatch: 'full',
+    component: ThamSoChungListComponent,
+    data: {
+      title: 'Tham số chung',
+      url: 'tham-so-chung',
+    },
+  },
 ];
 
 @NgModule({

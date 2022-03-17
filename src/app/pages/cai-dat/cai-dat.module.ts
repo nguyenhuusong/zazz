@@ -57,6 +57,8 @@ import { QuanLyHopDongComponent } from 'src/app/components/quan-ly-hop-dong/quan
 import { ChiTietHopDongComponent } from 'src/app/components/quan-ly-hop-dong/chi-tiet-hop-dong/chi-tiet-hop-dong.component';
 import { GopYKienComponent } from 'src/app/components/gop-y-kien/gop-y-kien.component';
 import { ChiTietGopYComponent } from 'src/app/components/gop-y-kien/chi-tiet-gop-y/chi-tiet-gop-y.component';
+import { ThamSoChungDetailComponent } from 'src/app/components/cai-dat-to-chuc/tham-so-chung/tham-so-chung-detail/tham-so-chung-detail.component';
+import { ThamSoChungListComponent } from 'src/app/components/cai-dat-to-chuc/tham-so-chung/tham-so-chung-list/tham-so-chung-list.component';
 
 @NgModule({
   imports: [
@@ -121,6 +123,8 @@ import { ChiTietGopYComponent } from 'src/app/components/gop-y-kien/chi-tiet-gop
     ChiTietCongTyComponent,
     QuanLyHopDongComponent,
     ChiTietHopDongComponent,
+    ThamSoChungListComponent,
+    ThamSoChungDetailComponent,
   ],
   providers: []
 })

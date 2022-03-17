@@ -1105,5 +1105,16 @@ export class ApiHrmService {
   setEmployeeCardInfo(queryParams): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/cardvehicle/SetEmployeeCardInfo`, queryParams, this.options)
   }
+  
+  getParameterPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/work/GetParameterPage?` + queryParams, this.options)
+  }
 
+  getInvParameter(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/work/GetInvParameter?` + queryParams, this.options)
+  }
+
+  setInvParameter(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/work/SetInvParameter`, params, this.options)
+  }
 }
