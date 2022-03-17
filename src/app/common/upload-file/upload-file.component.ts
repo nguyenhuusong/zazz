@@ -10,6 +10,7 @@ import { MessageService } from 'primeng/api';
 })
 export class UploadFileComponent implements OnInit {
   @Input() multiple = false;
+  @Input() maxFileSize = 12000
   @Output() callback = new EventEmitter<any>();
   constructor(
     private spinner: NgxSpinnerService,
@@ -26,6 +27,7 @@ export class UploadFileComponent implements OnInit {
   }
   listAttach = [];
   uploadFn(event) {
+    console.log(event, 'fjdosjifodjisf ')
     this.spinner.show();
     this.listAttach = [];
     if (event.currentFiles.length > 0) {
@@ -53,8 +55,9 @@ export class UploadFileComponent implements OnInit {
           });
         });
       }
-
-
+    }
+    else{
+      this.spinner.hide();
     }
 
 
