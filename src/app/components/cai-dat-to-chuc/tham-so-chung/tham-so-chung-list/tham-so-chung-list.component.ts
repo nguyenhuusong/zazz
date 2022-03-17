@@ -196,12 +196,12 @@ export class ThamSoChungListComponent implements OnInit {
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
         },
-        {
-          onClick: this.handleDelete.bind(this),
-          label: 'Xóa',
-          icon: 'pi pi-trash',
-          class: 'btn-primary mr5',
-        },
+        // {
+        //   onClick: this.handleDelete.bind(this),
+        //   label: 'Xóa',
+        //   icon: 'pi pi-trash',
+        //   class: 'btn-primary mr5',
+        // },
 
       ]
     };
@@ -227,15 +227,15 @@ export class ThamSoChungListComponent implements OnInit {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa hợp đồng?',
       accept: () => {
-        const queryParams = queryString.stringify({ contractTypeId: event.rowData.contractTypeId });
-        this.apiService.delContractTypeInfo(queryParams).subscribe(results => {
-          if (results.status === 'success') {
-            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa hợp đồng thành công' });
-            this.load();
-          } else {
-            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
-          }
-        });
+        // const queryParams = queryString.stringify({ contractTypeId: event.rowData.contractTypeId });
+        // this.apiService.delContractTypeInfo(queryParams).subscribe(results => {
+        //   if (results.status === 'success') {
+        //     this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa hợp đồng thành công' });
+        //     this.load();
+        //   } else {
+        //     this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+        //   }
+        // });
       }
     });
   }
