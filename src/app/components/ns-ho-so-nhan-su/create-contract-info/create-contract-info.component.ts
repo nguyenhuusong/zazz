@@ -204,12 +204,15 @@ export class CreateContractInfoComponent implements OnInit {
     if (datas.length > 0) {
       // const indexobj = this.listsData.findIndex(d => d.meta_id === this.metafile.meta_id);
       //  let metafile = { ... this.listsData[indexobj] };
-      this.apiService.setContractUpload({ meta_id: this.metafile.meta_id, meta_upload_url: datas[0].url }).subscribe(
+      this.apiService.setContractUpload({ metaId: this.metafile.metaId, meta_upload_url: datas[0].url }).subscribe(
         results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Upload hợp đồng ký thành công' });
             this.displayuploadcontract = false;
             this.getContractInfo();
+          }
+          if( results.status === "error" ){
+            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
           }
         }
       );
