@@ -37,5 +37,5 @@
     <p-header>
         Tải lên hợp đồng [{{metafile?.meta_title}}]
     </p-header>
-    <app-upload-file [multiple]="" (callback)="handleUpload($event)" *ngIf="displayuploadcontract"></app-upload-file>
+    <app-upload-file [maxFileSize]="8000" [multiple]="" (callback)="handleUpload($event)" *ngIf="displayuploadcontract"></app-upload-file>
 </p-dialog>
