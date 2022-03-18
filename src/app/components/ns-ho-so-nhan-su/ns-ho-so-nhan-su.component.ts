@@ -569,26 +569,26 @@ export class NsHoSoNhanSuComponent implements OnInit {
       {
         headerName: 'Mã NV',
         filter: '',
-        cellClass: ['border-right', 'no-auto', 'yellow-bg'],
+        cellClass: ['border-right', 'yellow-bg'],
         field: 'code',
         editable: true
       },
       {
         headerName: 'Họ tên',
         filter: '',
-        cellClass: ['border-right', 'no-auto'],
+        cellClass: ['border-right'],
         field: 'full_name',
       },
       {
         headerName: 'Số ĐT',
         filter: '',
-        cellClass: ['border-right', 'no-auto'],
+        cellClass: ['border-right'],
         field: 'phone1',
       },
       {
         headerName: 'Tổ chức',
         filter: '',
-        cellClass: ['border-right', 'no-auto'],
+        cellClass: ['border-right'],
         field: 'organization',
       },
       {
@@ -626,7 +626,6 @@ export class NsHoSoNhanSuComponent implements OnInit {
     // ColumnDefs for data move 
     this.getColumnDefsMoveOrgan();
     this.getOrgan();
-    this.getOrganizeTree();
     if(this.listDataSelect.length > 0){
       this.theOrganToMoveData = cloneDeep(this.listDataSelect);
       this.isTheOrganToMove = true;
@@ -684,7 +683,8 @@ export class NsHoSoNhanSuComponent implements OnInit {
       this.apiService.setListEmployeeChange(this.queryStaffToMove).subscribe(results => {
         if (results.status === 'success') {
           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Cập nhật thành công' });
-          this.getAgencyOrganizeMap();
+          this.load();
+          this.listDataSelect = []
           this.isTheOrganToMove = false
         } else {
           this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
