@@ -108,13 +108,73 @@
                     (onPageChange)="paginate($event)" [rowsPerPageOptions]="[15,30,45,100,200,{ showAll: 'ALL' }]">
                 </p-paginator>
             </div>
-            <app-list-grid-angular *ngIf="columnDefs.length > 0" [listsData]="listsData" [height]="500"
-                [domLayout]="'autoHeight'" [columnDefs]="columnDefs"></app-list-grid-angular>
-
+            <p-button label="Chuyển tổ chức" (click)="theOrganToMove()" styleClass="move-organ" *ngIf="theOrganToMoveData.length > 0"></p-button>
+            <app-list-grid-angular *ngIf="columnDefs.length > 0" 
+                [listsData]="listsData" 
+                [height]="500"
+                [domLayout]="'autoHeight'" 
+                [columnDefs]="columnDefs"
+                [rowSelection]="'multiple'"
+                (callback)="rowSelected($event)"
+                >
+            </app-list-grid-angular>
         </div>
     </div>
 </div>
 
 <p-dialog [(visible)]="isShowAvatar" header="Ảnh Avartar">
     <p-image class="img-popup" [src]="imgAvatar" alt="Image" [preview]="false"></p-image>
+</p-dialog>
+<p-dialog [(visible)]="isTheOrganToMove" header="Chuyển tổ chức" [style]="{width: '56vw'}">
+    <div class="grid ">
+        <div class="col-4">
+            <div class="field-group select mb-0 label-8" [ngClass]="organizeId? 'valid': 'invalid' ">
+                <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
+                    [options]="organs" [(ngModel)]="organizeId" name="organizeId" [filter]="true"
+                    (onChange)="handleChangeOrganize()"
+                    placeholder="Chọn tổ chức"
+                    >
+                    <ng-template let-item pTemplate="selectedItem">
+                        <span style="vertical-align:middle;">{{item?.label}}</span>
+                    </ng-template>
+                    <ng-template let-car pTemplate="item">
+                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                        <div style="font-size:14px;float:right;margin-top:4px">{{car?.label}}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+                <label>Tổ chức</label>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="field-group select mb-0 label-8">
+                <p-treeSelect 
+                    [(ngModel)]="aDepartment" 
+                    [ngClass]="[ departmentFiltes.length <= 0 ? 'tree-empty' : '' ]" 
+                    [options]="departmentFiltes" 
+                    selectionMode="single" 
+                    name="aDepartment"
+                    (onNodeSelect)="onChangeTreeDepart()"
+                    placeholder="Chọn phòng ban">
+                </p-treeSelect>
+                <label>Bộ phận</label>
+            </div>
+        </div>
+        <div class="col-2">
+            <p-button label="Chuyển tổ chức" styleClass="btn-h56" (click)="moveOrganNow()" [disabled]="isButtonmoveOrganNow"></p-button>
+        </div>
+        <div class="col-12">
+            <div class="grid-default">
+                <app-list-grid-angular *ngIf="columnDefsMoveOrgan.length > 0" 
+                    [listsData]="theOrganToMoveData" 
+                    [height]="500"
+                    [idGrid]="'theOrganToMoveData'"
+                    [domLayout]="'autoHeight'" 
+                    [columnDefs]="columnDefsMoveOrgan"
+                    [rowSelection]="'multiple'"
+                    >
+                </app-list-grid-angular>
+            </div>
+        </div>
+    </div>
 </p-dialog>

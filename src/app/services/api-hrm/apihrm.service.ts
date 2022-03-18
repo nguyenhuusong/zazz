@@ -761,6 +761,10 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v1/organize/GetDepartments?${queryParams}`, this.options)
   }
 
+  setListEmployeeChange(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/employee/SetListEmployeeChange`, queryParams, this.options)
+  }
+
   delOrganize(queryParams): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v1/organize/DelOrganize?` + queryParams, this.options)
   }
