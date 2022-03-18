@@ -448,7 +448,7 @@
     <p-header>
         {{titleType0}}
     </p-header>
-    <app-edit-detail *ngIf="listViewsDependent.length> 0" [detailInfo]="detailInfo"
+    <app-edit-detail *ngIf="listViewsDependent.length> 0 && detailDependentInfo" [detailInfo]="detailInfo"
         [detail]="detailDependentInfo" [manhinh]="'Edit'" [thongtinnhanvienNew]="true"
         [dataView]="listViewsDependent" (callback)="setEmpDependen($event)"
         (callbackcancel)="displayFormEditDetail = !displayFormEditDetail"></app-edit-detail>

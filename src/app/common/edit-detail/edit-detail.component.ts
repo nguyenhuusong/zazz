@@ -122,7 +122,9 @@ export class EditDetailComponent implements OnInit, OnChanges {
           } else if (element1.field_name === 'shift_cds') {
             this.getWorkShifts(element1, null)
           } else if (element1.field_name === 'work_cd') {
-            this.getWorkTime(element1, this.detail.empId)
+            setTimeout(() => {
+              this.getWorkTime(element1, this.detail.empId)
+            }, 100);
           } else if (element1.field_name === 'shift_cd') {
             this.getWorkShift(element1, this.detail.empId)
           } else if (element1.field_name === 'bank_code') {
@@ -202,7 +204,6 @@ export class EditDetailComponent implements OnInit, OnChanges {
       });
     });
   }
-
   getActionlist(element1) {
     element1.options = cloneDeep(this.dropdownList).map(d => {
       return {
@@ -252,7 +253,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
         element1.options = cloneDeep(results.data).map(d => {
           return { label: d.work_times + '-' + d.work_cd, value: d.work_cd }
         });
-        element1.columnValue = element1.columnValue ? element1.columnValue : ''
+        element1.columnValue = element1.columnValue ? element1.columnValue : '';
       }
     })
   }
