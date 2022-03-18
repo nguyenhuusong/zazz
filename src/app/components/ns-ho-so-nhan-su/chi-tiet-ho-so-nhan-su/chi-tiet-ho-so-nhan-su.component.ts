@@ -1001,7 +1001,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       this.HuyHoSo(event)
     } else if (event.event.item.key === 'sua_cong_viec') {
       this.titleType0 = 'Sửa thời gian làm việc';
-      const queryParams = queryString.stringify({ employeeCd: this.detailInfo.employeeCd, gd: event.rowData.gd });
+      const queryParams = queryString.stringify({ empId: this.detailInfo.empId, gd: event.rowData.gd });
       this.getEmpWorking(queryParams);
     } else if (event.event.item.key === 'xoataikhoandangnhap') {
       this.xoaNguoiDung(event);
@@ -1035,11 +1035,11 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     } else if (event.event.item.key === 'xemchitietlienhe') {
       if (this.selectedMenuCode === API_PROFILE.LIEN_HE) {
         this.titleType0 = 'Chỉnh sửa thông tin người liên hệ';
-        const queryParams = queryString.stringify({ employeeCd: this.detailInfo.employeeCd, cont_id: event.rowData.cont_id });
+        const queryParams = queryString.stringify({ empId: this.detailInfo.empId, cont_id: event.rowData.cont_id });
         this.getEmpContact(queryParams);
       } else {
         this.titleType0 = 'Chỉnh sửa thông tin người phụ thuộc';
-        const queryParams = queryString.stringify({ employeeCd: this.detailInfo.employeeCd, dependentId: event.rowData.dependentId });
+        const queryParams = queryString.stringify({ empId: this.detailInfo.empId, dependentId: event.rowData.dependentId });
         this.getEmpDependent(queryParams);
       }
     } else if (event.event.item.key === 'xemchitietCard') {
@@ -1047,7 +1047,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       if (this.selectedMenuCode === API_PROFILE.THONG_TIN_CA_NHAN) {
         this.getCustIndiIdentity(event)
       } else {
-        // const queryParams = queryString.stringify({ employeeCd: this.detailInfo.employeeCd, dependentId: event.rowData.dependentId });
+        // const queryParams = queryString.stringify({ empId: this.detailInfo.empId, dependentId: event.rowData.dependentId });
         // this.getEmpDependent(queryParams);
       }
 
@@ -1245,7 +1245,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn thực xóa hợp đồng?',
       accept: () => {
-        const queryParams = queryString.stringify({ meta_id: event.rowData.meta_id });
+        const queryParams = queryString.stringify({ metaId: event.rowData.metaId });
         this.apiService.delEmpAttach(queryParams).subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa file đính kèm thành công' });
@@ -1454,13 +1454,13 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     this.listViewsDependent = [];
     if (this.selectedMenuCode === API_PROFILE.THUE_BAO_HIEM) {
       this.titleType0 = 'Thêm mới người phụ thuộc';
-      const queryParams = queryString.stringify({ employeeCd: this.detailInfo.employeeCd, dependentId: null });
+      const queryParams = queryString.stringify({ empId: this.detailInfo.empId, dependentId: null });
       this.getEmpDependent(queryParams);
     } else if (this.selectedMenuCode === API_PROFILE.TIEN_ICH) {
       this.displayNguoiDung = true;
     } else if (this.selectedMenuCode === API_PROFILE.CONG_VIEC) {
       this.titleType0 = 'Thêm mới thời gian làm việc';
-      const queryParams = queryString.stringify({ employeeCd: this.detailInfo.employeeCd, gd: null });
+      const queryParams = queryString.stringify({ empId: this.detailInfo.empId, gd: null });
       this.getEmpWorking(queryParams);
     }
   }
@@ -1468,7 +1468,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   addType3() {
     this.listViewsDependent = [];
     this.titleType0 = 'Thêm mới người liên hệ';
-    const queryParams = queryString.stringify({ employeeCd: this.detailInfo.employeeCd, cont_id: null });
+    const queryParams = queryString.stringify({ empId: this.detailInfo.empId, cont_id: null });
     this.getEmpContact(queryParams);
   }
 
