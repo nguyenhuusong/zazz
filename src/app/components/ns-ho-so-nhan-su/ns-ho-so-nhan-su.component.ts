@@ -619,7 +619,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
   delStaffinDataOraMove(data) {
     this.theOrganToMoveData = this.theOrganToMoveData.filter( a => a.CustId !=  data.rowData.CustId);
     if(this.theOrganToMoveData.length < 1){
-      this.isButtonmoveOrganNow = false
+      this.isButtonmoveOrganNow = true
     }
   }
   theOrganToMove(){
