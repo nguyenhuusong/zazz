@@ -243,16 +243,30 @@ export class NsHoSoNhanSuComponent implements OnInit {
 
   initGrid() {
     this.columnDefs = [
+      {
+        headerName: 'Stt',
+        filter: '',
+        maxWidth: 90,
+        pinned: 'left',
+        cellRenderer: params => {
+          return params.rowIndex + 1
+        },
+        cellClass: ['border-right', 'no-auto'],
+        checkboxSelection: true,
+        headerCheckboxSelection: true,
+        headerCheckboxSelectionFilteredOnly: true,
+        field: 'checkbox2',
+        suppressSizeToFit: true,
+      },
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       {
         headerName: 'Thao tác',
         filter: '',
-        width: 100,
+        maxWidth: 90,
         pinned: 'right',
         cellRenderer: 'buttonAgGridComponent',
         cellClass: ['border-right', 'no-auto'],
         cellRendererParams: (params: any) => this.showButtons(params),
-        checkboxSelection: false,
         field: 'checkbox'
       }]
 
