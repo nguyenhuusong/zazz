@@ -51,6 +51,7 @@ import { CreateContractInfoComponent } from 'src/app/components/ns-ho-so-nhan-su
 import { ChiTietHoSoNghiViecComponent } from 'src/app/components/ns-ho-so-nghi-viec/chi-tiet-ho-so-nghi-viec/chi-tiet-ho-so-nghi-viec.component';
 import { ThaiSanComponent } from 'src/app/components/thai-san/thai-san.component';
 import { ChiTietThaiSanComponent } from 'src/app/components/thai-san/chi-tiet-thai-san/chi-tiet-thai-san.component';
+import {TreeSelectModule} from 'primeng/treeselect';
 @NgModule({
   imports: [
     MessagesModule,
@@ -93,6 +94,7 @@ import { ChiTietThaiSanComponent } from 'src/app/components/thai-san/chi-tiet-th
     ConfirmDialogModule,
     UploadFileModule,
     EmpAttachFileModule,
+    TreeSelectModule,
     AgGridModule.withComponents([
       ButtonRendererComponent,
       ButtonRendererComponent1

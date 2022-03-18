@@ -73,6 +73,20 @@ export class NsHoSoNhanSuComponent implements OnInit {
   imgAvatar = '';
   modelTM: any = {};
   displayEmployee = false;
+
+  // for the move organ
+  departmentFiltes = [];
+  organizeId = '';
+  aDepartment: any;
+  theOrganToMoveData = []
+  isTheOrganToMove = false;
+  queryStaffToMove = {
+    organizeId: '',
+    orgId: '',
+    members: []
+  }
+  organs = []
+  isButtonmoveOrganNow = true;
   constructor(
     private apiService: ApiHrmService,
     private spinner: NgxSpinnerService,
@@ -536,6 +550,149 @@ export class NsHoSoNhanSuComponent implements OnInit {
 
   replaceHtmlToText(string){
     return string.replace(/(<([^>]+)>)/gi, "");
+  }
+
+  columnDefsMoveOrgan = [];
+  getColumnDefsMoveOrgan(){
+    this.columnDefsMoveOrgan = [
+      {
+        headerName: 'Stt',
+        filter: '',
+        maxWidth: 90,
+        pinned: 'left',
+        cellRenderer: params => {
+          return params.rowIndex + 1
+        },
+        cellClass: ['border-right', 'no-auto'],
+      },
+      {
+        headerName: 'Mã NV',
+        filter: '',
+        cellClass: ['border-right', 'no-auto', 'yellow-bg'],
+        field: 'code',
+        editable: true
+      },
+      {
+        headerName: 'Họ tên',
+        filter: '',
+        cellClass: ['border-right', 'no-auto'],
+        field: 'full_name',
+      },
+      {
+        headerName: 'Số ĐT',
+        filter: '',
+        cellClass: ['border-right', 'no-auto'],
+        field: 'phone1',
+      },
+      {
+        headerName: 'Tổ chức',
+        filter: '',
+        cellClass: ['border-right', 'no-auto'],
+        field: 'organization',
+      },
+      {
+        headerName: 'Thao tác',
+        filter: '',
+        maxWidth: 120,
+        pinned: 'right',
+        cellRenderer: 'buttonAgGridComponent',
+        cellClass: ['border-right', 'no-auto'],
+        cellRendererParams: (params: any) => this.showButtons2(params),
+        field: 'button'
+      }
+    ]
+  }
+
+  showButtons2(params) {
+    return {
+      buttons: [
+        {
+          onClick: this.delStaffinDataOraMove.bind(this),
+          label: 'Xóa',
+          icon: 'fa fa-trash',
+          class: 'btn-primary mr5',
+        },
+      ]
+    };
+  }
+  delStaffinDataOraMove(data) {
+    this.theOrganToMoveData = this.theOrganToMoveData.filter( a => a.CustId !=  data.rowData.CustId);
+    if(this.theOrganToMoveData.length < 1){
+      this.isButtonmoveOrganNow = false
+    }
+  }
+  theOrganToMove(){
+    // ColumnDefs for data move 
+    this.getColumnDefsMoveOrgan();
+    this.getOrgan();
+    this.getOrganizeTree();
+    if(this.theOrganToMoveData.length > 0){
+      this.isTheOrganToMove = true;
+    }else{
+      this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Vui lòng nhân sự' });
+    }
+  }
+  
+  getOrgan() {
+    const queryParams = queryString.stringify({ filter: ''});
+    this.apiService.getOrganizations(queryParams).subscribe(results => {
+      if(results.status === 'success') {
+          this.organs = results.data.map(d => {
+            return {
+              label: d.organizationName,
+              value: `${d.organizeId}`
+            }
+          });
+          this.organs = [...this.organs];
+      }
+    })
+  }
+
+  getOrganizeTree(): void {
+    const queryParams = queryString.stringify({ parentId: this.organizeId});
+    this.apiService.getOrganizeTree(queryParams)
+      .subscribe((results: any) => {
+        if (results && results.status === 'success') {
+          this.departmentFiltes = results.data;
+        }
+      },
+        error => { });
+  }
+
+  handleChangeOrganize() {
+    this.getOrganizeTree();
+  }
+  onChangeTreeDepart() {
+    if(this.aDepartment.orgId && this.organizeId){
+      this.isButtonmoveOrganNow = false;
+    }else{
+      this.isButtonmoveOrganNow = true;
+    }
+  }
+  moveOrganNow() {
+    if(this.theOrganToMoveData.length > 0){
+      this.queryStaffToMove.organizeId = this.organizeId;
+      this.queryStaffToMove.orgId = this.aDepartment.orgId;
+      this.queryStaffToMove.members = this.theOrganToMoveData.map( o => {
+        return {
+          empId: o.empId,
+          code: o.code
+        }
+      })
+      this.apiService.setListEmployeeChange(this.queryStaffToMove).subscribe(results => {
+        if (results.status === 'success') {
+          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Cập nhật thành công' });
+          this.getAgencyOrganizeMap();
+          this.isTheOrganToMove = false
+        } else {
+          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
+        }
+      })
+    }
+  }
+
+  rowSelected(data){
+    this.theOrganToMoveData = data;
   }
 
 }

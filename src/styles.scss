@@ -463,6 +463,7 @@ body {
 
 /* #grid-default */
 .grid-default{
+    position: relative;
     border-radius: 0px 0px 4px 4px;
     .ag-header{
         border-bottom: none;
@@ -2747,4 +2748,16 @@ div.p-organizationchart {
 }
 .p-dropdown-items-wrapper{
     text-align: right;
+}
+.move-organ{
+    position: absolute !important;
+    left: 18px;
+    top: 6px;
+}
+.yellow-bg{
+    background-color: yellow;
+    border: 1px solid #ccc;
+    .ag-input-field-input{
+        background-color: yellow;
+    }
 }
