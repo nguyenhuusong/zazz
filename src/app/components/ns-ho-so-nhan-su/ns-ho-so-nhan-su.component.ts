@@ -11,6 +11,7 @@ import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-render
 import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.component';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { ExportFileService } from 'src/app/services/export-file.service';
+import { cloneDeep } from 'lodash';
 @Component({
   selector: 'app-ns-ho-so-nhan-su',
   templateUrl: './ns-ho-so-nhan-su.component.html',
@@ -626,7 +627,8 @@ export class NsHoSoNhanSuComponent implements OnInit {
     this.getColumnDefsMoveOrgan();
     this.getOrgan();
     this.getOrganizeTree();
-    if(this.theOrganToMoveData.length > 0){
+    if(this.listDataSelect.length > 0){
+      this.theOrganToMoveData = cloneDeep(this.listDataSelect);
       this.isTheOrganToMove = true;
     }else{
       this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Vui lòng nhân sự' });
@@ -690,9 +692,9 @@ export class NsHoSoNhanSuComponent implements OnInit {
       })
     }
   }
-
+  listDataSelect = [];
   rowSelected(data){
-    this.theOrganToMoveData = data;
+    this.listDataSelect = data
   }
 
 }

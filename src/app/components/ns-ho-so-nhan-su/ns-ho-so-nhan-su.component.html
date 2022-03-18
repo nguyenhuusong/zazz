@@ -108,7 +108,7 @@
                     (onPageChange)="paginate($event)" [rowsPerPageOptions]="[15,30,45,100,200,{ showAll: 'ALL' }]">
                 </p-paginator>
             </div>
-            <p-button label="Chuyển tổ chức" (click)="theOrganToMove()" styleClass="move-organ" *ngIf="theOrganToMoveData.length > 0"></p-button>
+            <p-button label="Chuyển tổ chức" (click)="theOrganToMove()" styleClass="move-organ" *ngIf="listDataSelect.length > 0"></p-button>
             <app-list-grid-angular *ngIf="columnDefs.length > 0" 
                 [listsData]="listsData" 
                 [height]="500"
@@ -122,14 +122,14 @@
     </div>
 </div>
 
-<p-dialog [(visible)]="isShowAvatar" header="Ảnh Avartar">
+<p-dialog  [modal]="true" [(visible)]="isShowAvatar" header="Ảnh Avartar">
     <p-image class="img-popup" [src]="imgAvatar" alt="Image" [preview]="false"></p-image>
 </p-dialog>
-<p-dialog [(visible)]="isTheOrganToMove" header="Chuyển tổ chức" [style]="{width: '56vw'}">
+<p-dialog [modal]="true" [(visible)]="isTheOrganToMove" header="Chuyển tổ chức" [style]="{width: '56vw'}">
     <div class="grid ">
         <div class="col-4">
             <div class="field-group select mb-0 label-8" [ngClass]="organizeId? 'valid': 'invalid' ">
-                <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
+                <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" (onChange)="getOrganizeTree()"
                     [options]="organs" [(ngModel)]="organizeId" name="organizeId" [filter]="true"
                     (onChange)="handleChangeOrganize()"
                     placeholder="Chọn tổ chức"
