@@ -332,7 +332,7 @@ export class PqXeNhanVienComponent implements OnInit {
           this.modelTM.endTimeTM = results.data.endTime ? stringtodate(results.data.endTime) : '';
           this.showVehicleCard = this.modelTM.endTimeTM ? true : false;
           this.displayCreateVehicleCard = true;
-          this.modelTM.cusId = event.rowData.cusId;
+          this.modelTM.cusId = event.rowData.custId;
           this.getUserByPush();
           // this.search({ query: results.data.fullName }, 'edit');
           // this.show_dialogcreate = true;
@@ -562,7 +562,6 @@ export class PqXeNhanVienComponent implements OnInit {
           }
         });
         this.modelTM.cusId = this.modelTM.cusId ? this.modelTM.cusId : this.listUsers[0].value;
-
         this.spinner.hide();
       } else {
         this.spinner.hide();
