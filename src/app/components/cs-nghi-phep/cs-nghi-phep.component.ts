@@ -27,7 +27,8 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
     private confirmationService: ConfirmationService,
     private changeDetector: ChangeDetectorRef,
     private messageService: MessageService,
-    private router: Router) {
+    private router: Router,
+    private apiBaseService: ApiService) {
 
     this.defaultColDef = {
       tooltipComponent: 'customTooltip',
@@ -50,7 +51,7 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
   pagingComponent = {
     total: 0
   }
-
+  leaveReasons = [];
   titleForm = {
     label: 'Thêm mới tài khoản',
     value: 'Add'
@@ -74,10 +75,14 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
   objectActionDetail: any;
   gridflexs: any;
   getRowHeight;
+  time = null;
   query = {
     organizeId: null,
     request_status: '',
+    reason_code: '',
     filter: '',
+    year: '',
+    month: '',
     offSet: 0,
     pageSize: 15
   }
@@ -119,7 +124,10 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
     this.query = {
       organizeId: null,
       request_status: '',
+      reason_code: '',
       filter: '',
+      year: '',
+      month: '',
       offSet: 0,
       pageSize: 15
     }
@@ -130,8 +138,16 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
   load() {
     this.columnDefs = []
     this.spinner.show();
-    const queryParams = queryString.stringify(this.query);
-    this.apiService.getLeavePage(queryParams).subscribe(
+    const queryParams: any = {...this.query};
+    if (this.time) {
+      queryParams.year = this.time.getFullYear();
+      queryParams.month = this.time.getMonth() + 1;
+    }
+    if (typeof queryParams.reason_code !== 'string') {
+      queryParams.reason_code = queryParams.reason_code.code;
+    }
+    const queryStrings = queryString.stringify(queryParams);
+    this.apiService.getLeavePage(queryStrings).subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         if (this.query.offSet === 0) {
@@ -287,8 +303,19 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
       { label: 'Chính sách' },
       { label: 'Danh sách nghỉ phép' },
     ];
-    this.load();
     this.getOrgRoots();
+    this.getLeaveReasons();
+  }
+
+  getLeaveReasons() {
+    this.apiBaseService.getLeaveReasons()
+    .subscribe(response => {
+      this.leaveReasons = response.data;
+      if (this.leaveReasons.length) {
+        this.query.reason_code = this.leaveReasons[0];
+        this.load();
+      }
+    })
   }
 
   getOrgRoots() {

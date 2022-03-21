@@ -152,4 +152,8 @@ export class ApiService {
     });
   }
 
+  getLeaveReasons(): Observable<any> {
+    return this.http.get<any>(`${apiHrmBase}/api/v2/leave/GetLeaveReasons` , this.options);
+  }
+  
 }

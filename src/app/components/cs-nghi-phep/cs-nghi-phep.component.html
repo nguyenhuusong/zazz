@@ -7,7 +7,7 @@
             <p-breadcrumb [model]="items"></p-breadcrumb>
         </div>
         <div class="table-tool grid white-background black-box-shadow-005 filterInput justify-content-start">
-            <div class="header-filter-search col-4">
+            <div class="header-filter-search col-2">
                 <div class="field-group text search mb-0 multi-field" [ngClass]=" query.filter ? 'valid' : 'invalid' ">
                     <input class="input-default" type="text" id="filter"
                     (keydown.enter)="query.offSet = 0; first = 0;load()"
@@ -53,6 +53,29 @@
                         </ng-template>
                     </p-dropdown>
                     <label>Trạng thái</label>
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="field-group select mb-0" [ngClass]=" query.reason_code ? 'valid' : 'invalid' ">
+                        <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
+                        [options]="leaveReasons" [(ngModel)]="query.reason_code"  (onChange)="find()"
+                        name="reason_code" [filter]="true">
+                        <ng-template let-item pTemplate="selectedItem">
+                            <span style="vertical-align:middle; margin-left: .5em">{{item.name}}</span>
+                        </ng-template>
+                        <ng-template let-car pTemplate="item">
+                            <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                                <div style="font-size:14px;float:left;margin-top:4px">{{car.name}}</div>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+                    <label>Lí do</label>
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="field-group select mb-0" [ngClass]=" time ? 'valid' : 'invalid' ">
+                    <p-calendar [(ngModel)]="time" name="time" view="month" dateFormat="mm/yy" [readonlyInput]="true" inputId="monthpicker" (onSelect) = "load()"></p-calendar>
+                    <label>Thời gian</label>
                 </div>
             </div>
             <div class="col-2">
