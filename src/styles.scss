@@ -2254,7 +2254,8 @@ div.p-organizationchart {
         &:-internal-autofill-selected {
             background-color: transparent
         }
-
+        position: relative;
+        z-index: 2;
         &:-webkit-autofill,
         &:-webkit-autofill:hover, 
         &:-webkit-autofill:focus, 
@@ -2267,6 +2268,11 @@ div.p-organizationchart {
                 z-index: 2;
             }
         }
+        &:focus + label { 
+            top: 8px;
+            -webkit-transition: 300ms ease all;
+          transition: 300ms ease all;
+         }
     }
     &.valid{
         label{
