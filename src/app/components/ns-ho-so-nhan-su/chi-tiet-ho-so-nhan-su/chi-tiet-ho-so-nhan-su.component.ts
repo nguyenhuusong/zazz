@@ -181,7 +181,6 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   getTerminateReasons() {
     this.apiService.getTerminateReasons().subscribe(results => {
       if (results.status === 'success') {
-        console.log(results.data, 'results.data')
         this.terminateReasons = results.data;
       }
     })
