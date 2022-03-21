@@ -427,7 +427,7 @@ export class AppTypeDropdownComponent implements OnInit {
 
 @Component({
   selector: 'app-type-number',
-  template: `   
+  template: `   <div class="field-group number" [ngClass]=" element.columnValue ? 'valid' : 'invalid' ">
                 <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
                 <div>
                   <input type="number" class="form-control" [(ngModel)]="element.columnValue"
@@ -440,6 +440,7 @@ export class AppTypeDropdownComponent implements OnInit {
                     Trường bắt buộc nhập!
                     </div>
                 </div>
+            </div>
             </div>
                 `,
 })
@@ -673,7 +674,7 @@ export class AppTypeDatefulltimeComponent implements OnInit {
 
 @Component({
   selector: 'app-type-timeonly',
-  template: `   
+  template: `   <div class="field-group date" [ngClass]=" element.columnValue ? 'valid' : 'invalid' ">
                 <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
                 <div>
                 <p-calendar placeholder="DD/MM/YYYY" appendTo="body" [baseZIndex]="101" [disabled]="element.isDisable"
@@ -687,6 +688,7 @@ export class AppTypeDatefulltimeComponent implements OnInit {
                     Trường bắt buộc nhập!
                     </div>
                 </div>
+            </div>
             </div>
                 `,
 })
