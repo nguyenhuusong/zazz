@@ -121,6 +121,7 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
   }
 
   cancel() {
+    this.time = null;
     this.query = {
       organizeId: null,
       request_status: '',
@@ -142,6 +143,9 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
     if (this.time) {
       queryParams.year = this.time.getFullYear();
       queryParams.month = this.time.getMonth() + 1;
+    }
+    if (typeof queryParams.request_status !== 'string') {
+      queryParams.request_status = queryParams.request_status.objValue;
     }
     if (typeof queryParams.reason_code !== 'string') {
       queryParams.reason_code = queryParams.reason_code.code;
@@ -305,6 +309,7 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
     ];
     this.getOrgRoots();
     this.getLeaveReasons();
+    this.getRequestStatus();
   }
 
   getLeaveReasons() {
@@ -313,6 +318,17 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
       this.leaveReasons = response.data;
       if (this.leaveReasons.length) {
         this.query.reason_code = this.leaveReasons[0];
+        this.load();
+      }
+    })
+  }
+  
+  getRequestStatus() {
+    this.apiBaseService.getObjectList('hrm_leave_status')
+    .subscribe(response => {
+      this.listStatus = response.data;
+      if (this.listStatus.length) {
+        this.query.request_status = this.listStatus[0];
         this.load();
       }
     })
