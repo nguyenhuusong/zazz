@@ -26,9 +26,9 @@ styleClass="text-right two-buttons"
                 [ngClass]="{'isEmpty': element.isEmpty, 'has-image': includeImage && element?.columnType === 'image', 'image-iam': element?.columnType === 'image'}" 
                 class="{{element.columnClass}} ">
                 <app-type-text [modelFields]="modelFields" [element]="element" [submit]="submit" *ngIf="element?.columnType === 'input'"></app-type-text>
-                <app-type-select [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'select'"></app-type-select>
+                <app-type-select [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'khongDung'"></app-type-select> 
                 <app-type-selectTree [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'selectTree' && element.isVisiable" [dataView]="dataView"></app-type-selectTree>
-                <app-type-dropdown [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'dropdown'" [submit]="submit" [paramsObject]="paramsObject" [dataView]="dataView" (callback)="resetData($event)"></app-type-dropdown>
+                <app-type-dropdown [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'dropdown' || element.columnType === 'select'" [submit]="submit" [paramsObject]="paramsObject" [dataView]="dataView" (callback)="resetData($event)"></app-type-dropdown>
                 <app-type-number [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'number'"></app-type-number>
                 <app-type-currency [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'currency'"></app-type-currency>
                 <app-type-checkbox [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'checkbox'"></app-type-checkbox>
