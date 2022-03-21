@@ -517,7 +517,7 @@ export class AppTypeCurrencyComponent implements OnInit {
   selector: 'app-type-checkbox',
   template: `   
                 <div class="field-group checkbox">
-                  <p-checkbox name={{element.field_name}} [binary]="true" label="{{element.columnLabel}} :"
+                  <p-checkbox name={{element.field_name}} [binary]="true" label="{{element.columnLabel}}"
                   [required]="element.isRequire && element.isVisiable && !element.isEmpty" [disabled]="element.isDisable"
                   [(ngModel)]="element.columnValue" (onChange)="onChangeValue($event.value, element.field_name, element)"></p-checkbox>
                   <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
