@@ -1190,11 +1190,11 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     }
     this.apiCoreService.setCustUser(params).subscribe(results => {
       if (results.status === 'success') {
-        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.messages });
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data });
         this.isShowAddUserLogin = false;
         this.getEmployeeInfo();
       } else {
-        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.messages });
+        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
       }
     })
   }
