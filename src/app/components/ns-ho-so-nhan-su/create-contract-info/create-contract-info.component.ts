@@ -144,7 +144,7 @@ export class CreateContractInfoComponent implements OnInit {
   restData(results) {
     this.listViews = cloneDeep(results.data.group_fields);
     this.detailInfo = results.data;
-    this.getContractTypes()
+    // this.getContractTypes()
     if(this.indexTab === 0) {
       this.listsData = cloneDeep(results.data.salary_components) || [];
     }else {
@@ -377,7 +377,7 @@ export class CreateContractInfoComponent implements OnInit {
 
   huy(value) {
     if(value) {
-      this.modelContractInfo.contractType = value;
+      this.modelContractInfo.contractTypeId = value;
       this.getContractInfo();
     }else {
       this.back.emit();

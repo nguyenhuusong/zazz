@@ -258,18 +258,20 @@ export class EditDetailComponent implements OnInit, OnChanges {
 
 
   getContractTypes(element1) {
-    const queryParams = queryString.stringify({ organizeId: this.detail.organizeId });
-    this.apiService.getContractTypes(queryParams).subscribe(results => {
-      if (results.status === 'success') {
-        element1.options = cloneDeep(results.data).map(d => {
-          return {
-            label: d.contractTypeName,
-            value: `${d.contractTypeId}`
-          }
-        });
-        element1.columnValue = element1.columnValue ? element1.columnValue.toLowerCase() : ''
-      }
-    })
+    if(this.detail.organizeId){
+      const queryParams = queryString.stringify({ organizeId: this.detail.organizeId });
+      this.apiService.getContractTypes(queryParams).subscribe(results => {
+        if (results.status === 'success') {
+          element1.options = cloneDeep(results.data).map(d => {
+            return {
+              label: d.contractTypeName,
+              value: `${d.contractTypeId}`
+            }
+          });
+          element1.columnValue = element1.columnValue ? element1.columnValue.toLowerCase() : ''
+        }
+      })
+    }
   }
 
   getSalaryBases(element1) {
