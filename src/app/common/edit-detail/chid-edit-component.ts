@@ -427,21 +427,18 @@ export class AppTypeDropdownComponent implements OnInit {
 
 @Component({
   selector: 'app-type-number',
-  template: `   <div class="field-group number" [ngClass]=" element.columnValue ? 'valid' : 'invalid' ">
-                <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
-                <div>
+  template: `   <div class="field-group" [ngClass]=" element.columnValue ? 'valid' : 'invalid' ">
                   <input type="number" class="form-control" [(ngModel)]="element.columnValue"
-                  name={{element.field_name}} [disabled]="element.isDisable" (change)="onChangeValue($event.target, element.field_name, element)"
-                  [required]="element.isRequire && element.isVisiable && !element.isEmpty">
-
-                <div *ngIf="element.isRequire && submit && !element.columnValue"
-                    class="alert-validation alert-danger">
-                    <div [hidden]="element.columnValue">
-                    Trường bắt buộc nhập!
-                    </div>
+                    name={{element.field_name}} [disabled]="element.isDisable" (change)="onChangeValue($event.target, element.field_name, element)"
+                    [required]="element.isRequire && element.isVisiable && !element.isEmpty">
+                  <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
+                  <div *ngIf="element.isRequire && submit && !element.columnValue"
+                      class="alert-validation alert-danger">
+                      <div [hidden]="element.columnValue">
+                        Trường bắt buộc nhập!
+                      </div>
+                  </div>
                 </div>
-            </div>
-            </div>
                 `,
 })
 
