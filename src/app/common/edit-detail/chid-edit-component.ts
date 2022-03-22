@@ -267,6 +267,16 @@ export class AppTypeDropdownComponent implements OnInit {
           }
         });
       });
+    }else if (field_name === 'type_salary') {
+      this.dataView.forEach(element => {
+        element.fields.forEach(element1 => {
+          if (element1.field_name === 'salary_start_dt') {
+            element1.isVisiable = value == 2 ? true : false;
+          }else if (element1.field_name === 'salary_next_dt') {
+            element1.isVisiable = value == 2 ? true : false;
+          }
+        });
+      });
     } else if (field_name === 'contract_term') {
       this.dataView.forEach(element => {
         element.fields.forEach(async element1 => {

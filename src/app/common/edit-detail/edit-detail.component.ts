@@ -195,8 +195,6 @@ export class EditDetailComponent implements OnInit, OnChanges {
             this.getVehicleTypes(element1);
           } else if (element1.field_name === 'year_of_birth') {
             this.GetYearPicker(element1);
-          } else if (element1.columnType === 'select') {
-            this.getCustObjectListNew(element1);
           } else {
             this.getCustObjectListNew(element1);
           }
