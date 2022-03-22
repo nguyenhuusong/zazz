@@ -272,8 +272,10 @@ export class AppTypeDropdownComponent implements OnInit {
         element.fields.forEach(element1 => {
           if (element1.field_name === 'salary_start_dt') {
             element1.isVisiable = value == 2 ? true : false;
+            this.setValue(24, element1.field_name)
           }else if (element1.field_name === 'salary_next_dt') {
             element1.isVisiable = value == 2 ? true : false;
+            this.setValue(25, element1.field_name)
           }
         });
       });
@@ -540,7 +542,6 @@ export class AppTypeCheckboxComponent implements OnInit {
     private apiService: ApiHrmService
   ) { }
   ngOnInit(): void {
-    console.log("sđsdsds", this.element.columnValue)
     this.element.columnValue = this.element.columnValue == 'true' || this.element.columnValue == true ? true : false
   }
 
