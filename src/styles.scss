@@ -2516,6 +2516,13 @@ div.p-organizationchart {
                 }
             }
         }
+        p-calendar{
+            &.ng-untouched{
+                & + label{
+                    z-index: 2;
+                }
+            }
+        }
     }
 
     //#type
