@@ -10,7 +10,7 @@ import { MessageService } from 'primeng/api';
 })
 export class UploadFileComponent implements OnInit {
   @Input() multiple = false;
-  @Input() maxFileSize = 12000
+  @Input() maxFileSize = 12000000
   @Output() callback = new EventEmitter<any>();
   constructor(
     private spinner: NgxSpinnerService,
