@@ -69,8 +69,26 @@ export class ChiTietNghiPhepComponent implements OnInit, OnDestroy {
         }
       });
   }
-  setCompanyInfo(data) {
-
+  setLeaveInfo(data) {
+      const params = {
+        ...this.detailInfo, group_fields: data
+      }
+      this.apiService.setLeaveInfo(params)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((results: any) => {
+        if (results.status === 'success') {
+          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
+          this.spinner.hide();
+        } else {
+          this.messageService.add({
+            severity: 'error', summary: 'Thông báo',
+            detail: results.message
+          });
+          this.spinner.hide();
+        }
+      }), error => {
+        this.spinner.hide();
+      };
   }
   // setCandidateInfo(data) {
   //   this.spinner.show();

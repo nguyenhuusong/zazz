@@ -741,6 +741,10 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v2/leave/GetLeaveInfo?` + queryParams, this.options)
   }
 
+  setLeaveInfo(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/leave/SetLeaveInfo`, queryParams, this.options)
+  }
+
   getEatingInfo(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/eating/GetEatingInfo?` + queryParams, this.options)
   }

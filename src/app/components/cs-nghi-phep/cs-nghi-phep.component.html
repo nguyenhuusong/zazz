@@ -44,7 +44,7 @@
                         [options]="listStatus" [(ngModel)]="query.request_status"  (onChange)="find()"
                         name="request_status" [filter]="true">
                         <ng-template let-item pTemplate="selectedItem">
-                            <span style="vertical-align:middle; margin-left: .5em">{{item.objName}}</span>
+                            <span style="vertical-align:middle;">{{item.objName}}</span>
                         </ng-template>
                         <ng-template let-car pTemplate="item">
                             <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
@@ -61,7 +61,7 @@
                         [options]="leaveReasons" [(ngModel)]="query.reason_code"  (onChange)="find()"
                         name="reason_code" [filter]="true">
                         <ng-template let-item pTemplate="selectedItem">
-                            <span style="vertical-align:middle; margin-left: .5em">{{item.name}}</span>
+                            <span style="vertical-align:middle;">{{item.name}}</span>
                         </ng-template>
                         <ng-template let-car pTemplate="item">
                             <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
@@ -80,7 +80,8 @@
             </div>
             <div class="col-2">
                 <p-button class="search-button mr-3" icon="pi pi-search" (click)="query.offSet = 0; first = 0; load()"></p-button>
-                <p-button icon="pi pi-refresh" (click)="cancel()" styleClass="p-button-secondary p-button-sm"></p-button>
+                <p-button icon="pi pi-refresh" (click)="cancel()" styleClass="p-button-secondary p-button-sm mr-2"></p-button>
+                <p-button icon="pi pi-plus" (click)="addNewNghiPhep()" label="Thêm mới" styleClass="p-button-sm width-auto"></p-button>
             </div>
             <div class="col-2 tools">
                 <!-- <p-button styleClass="p-button-sm mr-1" icon="pi pi-plus" label="Thêm mới" (click)="addTuyenDung()"></p-button>
