@@ -332,6 +332,13 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
     })
   }
 
+  addNewNghiPhep() {
+    const params = {
+      id: ''
+    }
+    this.router.navigate(['/chinh-sach/nghi-phep/chi-tiet-nghi-phep'], { queryParams: params });
+  }
+
 }
 
 
