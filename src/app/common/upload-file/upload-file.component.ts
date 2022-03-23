@@ -27,7 +27,6 @@ export class UploadFileComponent implements OnInit {
   }
   listAttach = [];
   uploadFn(event) {
-    console.log(event, 'fjdosjifodjisf ')
     this.spinner.show();
     this.listAttach = [];
     if (event.currentFiles.length > 0) {
