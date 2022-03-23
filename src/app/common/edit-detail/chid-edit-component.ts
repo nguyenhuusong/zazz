@@ -270,12 +270,12 @@ export class AppTypeDropdownComponent implements OnInit {
     }else if (field_name === 'type_salary') {
       this.dataView.forEach(element => {
         element.fields.forEach(element1 => {
-          if (element1.field_name === 'salary_start_dt') {
-            element1.isVisiable = value == 2 ? true : false;
-            this.setValue(24, element1.field_name)
-          }else if (element1.field_name === 'salary_next_dt') {
+          if (element1.field_name === 'from_day') {
             element1.isVisiable = value == 2 ? true : false;
             this.setValue(25, element1.field_name)
+          }else if (element1.field_name === 'to_day') {
+            element1.isVisiable = value == 2 ? true : false;
+            this.setValue(24, element1.field_name)
           }
         });
       });
