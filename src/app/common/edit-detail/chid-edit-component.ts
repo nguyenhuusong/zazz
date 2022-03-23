@@ -7,7 +7,7 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { stringtodate } from '../function-common/common';
 import * as numeral from 'numeral';
 import * as moment from 'moment';
-
+import { ValidationNumberDayInMonth, ValidationNumberDayInMonthEmpty } from './validation';
 @Component({
   selector: 'app-type-text',
   template: ` <div class="field-group text" [ngClass]=" element.columnValue ? 'valid' : 'invalid' ">
@@ -444,11 +444,10 @@ export class AppTypeDropdownComponent implements OnInit {
                     name={{element.field_name}} [disabled]="element.isDisable" (change)="onChangeValue($event.target, element.field_name, element)"
                     [required]="element.isRequire && element.isVisiable && !element.isEmpty">
                   <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
-                  <div *ngIf="element.isRequire && submit && !element.columnValue"
-                      class="alert-validation alert-danger">
-                      <div [hidden]="element.columnValue">
-                        Trường bắt buộc nhập!
-                      </div>
+                  <div *ngIf="submit && modelFields[element.field_name].error" class="alert-validation alert-danger"> 
+                    <div [hidden]="!modelFields[element.field_name].error">
+                      {{modelFields[element.field_name].message}}
+                    </div>
                   </div>
                 </div>
                 `,
@@ -464,9 +463,19 @@ export class AppTypeNumberComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onChangeValue(value, field_name, element) {
-    this.modelFields[field_name].error = this.modelFields[field_name].isRequire ? this.element.columnValue ? false : true : false
-    this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
+  onChangeValue(event, field_name, element) {
+    console.log(element);
+    if(field_name === 'salary_start_dt' || field_name === 'salary_next_dt'){
+      if(element.isRequire) {
+          this.modelFields[field_name] = {...this.modelFields[field_name], ...ValidationNumberDayInMonth(event.value)}
+      }else{
+          this.modelFields[field_name] = {...this.modelFields[field_name], ...ValidationNumberDayInMonthEmpty(event.value)}
+      }
+    }else{
+      this.modelFields[field_name].error = this.modelFields[field_name].isRequire ? this.element.columnValue ? false : true : false
+      this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
+    }
+    
   }
 }
 
