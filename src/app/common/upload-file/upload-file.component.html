@@ -7,7 +7,7 @@
         chooseLabel="Browse Files"  
         [showUploadButton]="false"
         [showCancelButton]="false"
-        accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
+        accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
         text/plain, application/pdf, image/*, .doc,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document" [maxFileSize]="maxFileSize">
         <!-- <ng-template let-file pTemplate="file">
             <div>Custom UI to display a file</div>
@@ -17,7 +17,7 @@
             <div class="files-content">Drag and drop files here, Max size file: {{maxFileSize}} bytes</div>
             <ul *ngIf="listAttach.length" class="hscn-each-upload">
                 <li *ngFor="let file of listAttach">
-                        <img *ngIf="file.type === 'application/pdf' || file.type === 'application/msword' || file.type === 'application/vnd.ms-excel'; else isImage" src="/assets/images/image-pdf1.png" style="width: 50px;" alt="">
+                        <img *ngIf="file.type === 'application/pdf' || file.type === 'application/msword' || file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' || file.type === 'application/vnd.ms-excel'; else isImage" src="../../../assets/images/file.png" style="width: 50px;height:50px" alt="">
                         <ng-template #isImage>
                             <p-image src="{{file.url}}" alt="Image" [preview]="true" width="100"></p-image>
                         </ng-template>
