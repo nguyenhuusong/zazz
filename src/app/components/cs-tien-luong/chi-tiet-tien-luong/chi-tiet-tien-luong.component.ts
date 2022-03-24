@@ -30,7 +30,7 @@ export class ChiTietTienLuongComponent implements OnInit, OnChanges, OnDestroy {
   displaysearchUserMaster = false;
   listViewsForm = [];
   detailComAuthorizeInfo = null;
-  record_id = null
+  recordId = null
   listViews = []
   imagesUrl = []
   paramsObject = null
@@ -71,10 +71,10 @@ export class ChiTietTienLuongComponent implements OnInit, OnChanges, OnDestroy {
     this.activatedRoute.queryParamMap.subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.dataRouter = this.paramsObject.params;
+      this.recordId = this.paramsObject.params.recordId || null;
       if(this.url === 'them-moi-tien-luong') {
         this.setSalaryCreateDraft()
       }else {
-        this.record_id = this.paramsObject.params.record_id;
         this.getSalaryRecordInfo();
       }
     
@@ -99,7 +99,7 @@ export class ChiTietTienLuongComponent implements OnInit, OnChanges, OnDestroy {
   getSalaryRecordInfo() {
     this.listViews = [];
     this.listsData = [];
-    const queryParams = queryString.stringify({record_id: this.record_id});
+    const queryParams = queryString.stringify({recordId: this.recordId});
     this.apiService.getSalaryRecordInfo(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.listViews = cloneDeep(results.data.group_fields);
@@ -137,13 +137,17 @@ export class ChiTietTienLuongComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   getSalaryEmployeePage() {
-    const queryParams = queryString.stringify({record_id: this.record_id});
+    this.spinner.show();
+    const queryParams = queryString.stringify({recordId: this.recordId});
     this.apiService.getSalaryEmployeePage(queryParams).subscribe(results => {
       if(results.status === 'success') {
         this.listsData =results.data.dataList.data;
         this.columnDefs = [
           ...AgGridFn(results.data.gridflexs),
         ]
+        this.spinner.hide()
+      }else {
+        this.spinner.hide()
       }
     })
   }

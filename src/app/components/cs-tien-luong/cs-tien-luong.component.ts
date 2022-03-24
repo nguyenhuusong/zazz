@@ -197,9 +197,9 @@ export class CsTienLuongComponent implements OnInit {
 
   XemChiTiet(event) {
     const params = {
-      record_id: event.rowData.record_id
+      recordId: event.rowData.recordId
     }
-    this.router.navigate(['/chinh-sach/tien-luong/chinh-sua-tien-luong'], { queryParams: params });
+    this.router.navigate(['/chinh-sach/tien-luong/chi-tiet-tien-luong'], { queryParams: params });
   }
 
   addTienLuong() {
