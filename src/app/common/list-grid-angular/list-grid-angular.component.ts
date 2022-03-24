@@ -15,6 +15,7 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
   @Output() FnClick = new EventEmitter<any>();
   @Output() rowDoubleClicked = new EventEmitter<any>();
   @Output() cellDoubleClicked = new EventEmitter<any>();
+  @Output() onCellClicked = new EventEmitter<any>();
   @Output() callback = new EventEmitter<any>();
   @Input() columnDefs: Array<any> = [];
   @Input() rowSelection: string = 'single';
@@ -158,6 +159,10 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
 
   CellDoubleClicked(event) {
     this.cellDoubleClicked.emit(event);
+  }
+
+  CellClicked(event) {
+    this.onCellClicked.emit(event);
   }
 
   ngOnInit(): void {

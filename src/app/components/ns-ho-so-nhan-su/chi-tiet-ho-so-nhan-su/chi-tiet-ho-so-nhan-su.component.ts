@@ -1554,5 +1554,21 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     this.getEmployeeInfo();
   }
 
+  hienThifileDinhKem = false
+  dataFileDinhKem: any = {}
+  cellClick(event) {
+    if(event.colDef.field === "meta_file_name"){
+      if(event.data.meta_file_type === "image/jpeg"){
+        this.hienThifileDinhKem = true;
+        this.dataFileDinhKem = event.data;
+      }else{
+        var elem = document.createElement('a');
+        elem.href = event.data.meta_file_url;
+        elem.target = 'hiddenIframe';
+        elem.click();
+      }
+    }
+  }
+
 }
 

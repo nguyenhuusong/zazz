@@ -896,7 +896,8 @@ export class AppTypeCheckboxRadioListComponent implements OnInit {
                       <button pButton pRipple type="button" (click)="removeAttach()" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-text"></button>
                     </div>
                     <label  class="text-nowrap label-text" >{{element.columnLabel}}</label>
-                    <div *ngIf="!this.element.columnValue" class="upload_file"><input class="" type="file"  accept="image/*" (change)="onUploadOutputImage($event)" ></div>
+                    <div *ngIf="!this.element.columnValue" class="upload_file"><input class="" type="file"  accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/pdf, application/msword, image/*, application/vnd.ms-powerpoint,
+                    text/plain, application/vnd.ms-excel" (change)="onUploadOutputImage($event)" ></div>
                     <input type="file" style="display: none" id="sign_second" name="sign_second"  accept="image/jpeg,image/png,image/jpg,image/gif" (change)="onUploadOutputImage($event)">
                     <div *ngIf="element.isRequire && submit && !element.columnValue"
                         class="alert-validation alert-danger">
@@ -904,9 +905,19 @@ export class AppTypeCheckboxRadioListComponent implements OnInit {
                           Trường bắt buộc nhập!
                         </div>
                     </div> 
-                    <div *ngIf="imagesUpload">
-                    <p-image  src="{{imagesUpload}}" alt="Image" width="250" height="250" ></p-image>
+                    <div *ngIf="imagesUpload && (fileType ==='image/jpeg' || fileType ==='image/png' || fileType ==='image/jpg' || fileType ==='image/gif') else otherFile" >
+                      <p-image  src="{{imagesUpload}}" alt="Image" width="250" height="250" ></p-image>
                     </div>
+                    <ng-template #otherFile class="">
+                      <div *ngIf="imagesUpload">
+                          <a style="display: block;
+                          min-width: 60px;
+                          line-height: 47px;
+                          text-align: center;
+                          text-decoration: none;
+                          padding-right: 4px;" target="_blank" href="{{ imagesUpload }}">Xem file</a>
+                          </div>
+                      </ng-template>
                 </div>
                 `,
 })
@@ -916,12 +927,14 @@ export class AppTypeLinkUrlRadioListComponent implements OnInit {
   @Input() dataView;
   @Input() submit = false;
   imagesUpload = '';
+  fileType: any =''
   constructor(
     private apiService: ApiHrmService,
     private spinner: NgxSpinnerService,
   ) { }
   ngOnInit(): void {
     this.imagesUpload = this.element.columnValue ? this.element.columnValue : ''
+    this.getFile();
   }
 
   removeAttach() {
@@ -932,6 +945,17 @@ export class AppTypeLinkUrlRadioListComponent implements OnInit {
   setvalueImage(event) {
     this.element.columnValue = event.target.value;
     this.imagesUpload = event.target.value
+  }
+
+  getFile() {
+    this.dataView[0].fields.forEach(element => {
+      if(element.field_name === "meta_file_type"){
+        this.fileType = element.columnValue;
+      }
+      if(element.field_name === "meta_file_url"){
+        this.imagesUpload = element.columnValue;
+      }
+    })
   }
 
   onUploadOutputImage(event) {
@@ -948,6 +972,7 @@ export class AppTypeLinkUrlRadioListComponent implements OnInit {
           if (downloadURL) {
             this.element.columnValue = downloadURL;
             this.imagesUpload = downloadURL;
+            this.fileType = event.target.files[0].type;
             this.dataView.forEach(element => {
               element.fields.forEach(async element1 => {
                 if (element1.field_name === 'meta_file_type') {

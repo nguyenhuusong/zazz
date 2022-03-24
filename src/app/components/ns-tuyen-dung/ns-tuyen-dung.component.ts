@@ -232,7 +232,6 @@ load() {
   }
 
   xoatuyendung(event) {
-    console.log(event, 'event event event')
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa tuyển dụng?',
       accept: () => {
@@ -253,7 +252,6 @@ load() {
     const params = {
       canId: event.rowData.canId
     }
-    console.log(event, 'event event event event')
     this.router.navigate(['/tuyen-dung/ds-tuyen-dung/chi-tiet-tuyen-dung'], { queryParams: params });
   }
 
@@ -359,7 +357,6 @@ load() {
   getStatus() {
     this.apiService.getCandidateStatus().subscribe(results => {
       if (results.status === 'success') {
-        console.log(results, 'this.listStatus');
         this.listStatus = results.data.map(d => {
           return {
             label: d.name,
