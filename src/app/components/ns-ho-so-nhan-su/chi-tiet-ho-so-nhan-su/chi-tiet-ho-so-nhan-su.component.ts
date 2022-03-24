@@ -1005,7 +1005,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     } else if (event.event.item.key === 'xoataikhoandangnhap') {
       this.xoaNguoiDung(event);
     } else if (event.event.item.key === 'xoa_cong_viec') {
-      this.deleteCustUser(event.rowData.loginName);
+      this.delEmpWorking(event.rowData.gd);
     } else if (event.event.item.key === 'dong-mo-tai-khoan') {
       if (event.rowData.lock_st) {
         this.unlockCard(event);
@@ -1146,7 +1146,6 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn thực hiện hủy hồ sơ này ?',
       accept: () => {
-        console.log(event)
         const indexobj = this.listsData[3].findIndex(d => d.source_id === event.rowData.source_id);
         let record = { ... this.listsData[3][indexobj] };
         record.meta_file_url = "";
@@ -1166,7 +1165,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       message: 'Bạn có chắc chắn muốn xóa thông tin này ?',
       accept: () => {
         const queryParams = queryString.stringify({ gd: gd });
-        this.apiService.delEmpWorking(queryParams).subscribe(results => {
+        this.apiService.hrmDelEmpWorking(queryParams).subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
             this.getEmployeeInfo();
@@ -1368,7 +1367,6 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   }
 
   confirmCheckCard(data) {
-    console.log(data)
     const images = data.images.map(res => {
       return {
         metaId: null,
