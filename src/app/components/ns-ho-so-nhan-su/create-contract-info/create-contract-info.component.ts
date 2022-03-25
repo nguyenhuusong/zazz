@@ -74,6 +74,7 @@ export class CreateContractInfoComponent implements OnInit {
             field: 'temp_download_url',
             cellClass: ['border-right'],
             width: 100,
+            pinned: 'right',
             cellRenderer: 'buttonAgGridComponent',
             cellRendererParams: params => {
               return {

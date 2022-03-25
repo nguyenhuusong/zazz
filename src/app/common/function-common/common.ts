@@ -79,18 +79,49 @@ export function AgGridFn(lists: Array<any>) {
                 };
             } else {
                 row = {
+                    // headerName: value.columnCaption,
+                    // field: value.columnField,
+                    // cellClass: value.cellClass,
+                    // filter: value.isFilter ? 'agTextColumnFilter' : '',
+                    // sortable: false,
+                    // width: value.columnWidth,
+                    // editable: value.editable ? value.editable : false,
+                    // cellRenderer: value.isMasterDetail ? 'agGroupCellRenderer' : '',
+                    // hide: value.isHide ? true : false,
+                    // pinned: value.pinned,
+                    // tooltipField: value.columnField,
+                    // headerTooltip: value.
+                    
+
+
+
+
                     headerName: value.columnCaption,
                     field: value.columnField,
                     cellClass: value.cellClass,
-                    filter: value.isFilter ? 'agTextColumnFilter' : '',
+                    filter: value.isFilter ? 'agSetColumnFilter' : '',
                     sortable: false,
-                    width: value.columnWidth,
-                    editable: value.editable ? value.editable : false,
+                    filterParams: {
+                      caseSensitive: true,
+                      textFormatter:  (r) => TextFormatter(r),
+                      cellRenderer:  cellRendererSanPham,
+                    },
                     cellRenderer: value.isMasterDetail ? 'agGroupCellRenderer' : '',
                     hide: value.isHide ? true : false,
                     pinned: value.pinned,
                     tooltipField: value.columnField,
                     headerTooltip: value.columnCaption
+
+
+
+
+
+
+
+
+
+
+
                     // valueFormatter: value.fieldType == 'decimal' ? ""
                 }
             }
@@ -100,6 +131,18 @@ export function AgGridFn(lists: Array<any>) {
     }
     return arrAgGrids
 }
+
+export function cellRendererSanPham(params){
+    console.log(params)
+    let rowData = [];
+    if (!params.value || params.value === '(Select All)') {
+      return params.value;
+    }
+    params.api.forEachNodeAfterFilter(node => {
+        rowData.push(node.data)
+      } );
+    return params.value;
+  }
 
 export function stringtodate(datestring) {
     if (datestring) {
