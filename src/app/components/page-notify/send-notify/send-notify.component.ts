@@ -36,7 +36,7 @@ export class SendNotifyComponent implements OnInit, AfterViewInit,OnDestroy {
   actions = [];
   apartmentSelected = [];
   action;
-
+  run_act = 0
   ngAfterViewInit(): void {
     this.initTypeNotify();
   }
@@ -67,7 +67,7 @@ export class SendNotifyComponent implements OnInit, AfterViewInit,OnDestroy {
   }
 
   handleSendNotify(data) {
-    if (data === 'hide') {
+    if (data.data === 'hide') {
       this.reload.emit();
     } else {
       if (!this.action) {
@@ -79,16 +79,20 @@ export class SendNotifyComponent implements OnInit, AfterViewInit,OnDestroy {
         });
         return;
       }
+      if(data.run_act === 2){
+        this.run_act = data.run_act;
+      }
 
-
-      const ids = chunk(data.map(item => item.id), 10);
+      const ids = chunk(data.data.map(item => item.id), 10);
       let listAPis: any = []
       for (let items of ids) {
         const dataSave = {
           ids: items,
           n_id: this.notify.n_id,
-          action: this.action
+          action: this.action,
+          run_act: this.run_act
         };
+
         listAPis.push(this.apiService.setNotifyToPushRun(dataSave))
       }
       this.spinner.show();
