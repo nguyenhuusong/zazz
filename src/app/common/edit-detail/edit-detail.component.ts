@@ -814,6 +814,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
             if (data.columnValue && data.columnValue.length > 0) {
               data.columnValue = data.columnValue.map(d => d.code);
               data.columnValue = data.columnValue.toString()
+            }else {
+              data.columnValue = null;
             }
             delete data.options;
 
