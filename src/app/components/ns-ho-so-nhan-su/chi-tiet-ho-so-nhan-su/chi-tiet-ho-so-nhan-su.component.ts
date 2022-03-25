@@ -1303,16 +1303,17 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   }
 
   handleUpload(datas) {
+    console.log(datas)
     if (datas.length > 0) {
-      const indexobj = this.listsData[3].findIndex(d => d.source_id === this.record.source_id);
-      let record = { ... this.listsData[3][indexobj] };
+      const indexobj = this.listsDataRecord.findIndex(d => d.sourceId === this.record.sourceId);
+      let record = { ... this.listsDataRecord[indexobj] };
       record.meta_file_url = datas[0].url;
       record.meta_file_type = datas[0].type;
       record.meta_file_size = datas[0].size;
       record.meta_file_name = datas[0].name;
-      this.listsData[3][indexobj] = record;
-      this.listsData[3] = [... this.listsData[3]];
-      this.listViewsRecordInfo.records = this.listsData[3];
+      this.listsDataRecord[indexobj] = record;
+      this.listsDataRecord = [... this.listsDataRecord];
+      this.listViewsRecordInfo.records = this.listsDataRecord;
       this.displayuploadcontract = false;
     }
   }

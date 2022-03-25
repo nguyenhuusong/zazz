@@ -136,3 +136,32 @@
     </div>
 
 </p-dialog>
+
+<p-dialog styleClass="popup-btngroup-edit-detail" header="Tuyển dụng lại" [(visible)]="displayDialog" [modal]="true" [draggable]="false"
+[resizable]="false" [style]="{width: '60vw'}" [autoZIndex]=true [draggable]="false" [resizable]="false">
+<app-edit-detail
+    *ngIf="listViews.length> 0 && displayDialog"
+    [detail]="detailInfoEmployee" [thongtinnhanvienNew]="true" [dataView]="listViews"
+    (callback)="xacNhanTuyenDungLai($event)" (callbackcancel)="displayDialog = !displayDialog"></app-edit-detail>
+    <div class="col-md-6 mt-1">
+        <div class="field-group text" [ngClass]="modelDuyet?.full_name ? 'valid' : 'invalid' ">
+            <input type="text" [value]="modelDuyet?.full_name || 'No name'" disabled name="full_name" class="form-control">
+            <label for="">Nhân viên</label>
+        </div>
+    </div>
+    <div class="col-md-6 mt-1 ">
+        <div class="field-group date">
+            <label for="">Ngày xác nhận</label>
+            <p-calendar placeholder="DD/MM/YYYY" appendTo="body" [baseZIndex]="101" [(ngModel)]="modelDuyet.workDt"
+                [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" inputId="navigators"
+                dateFormat="dd/mm/yy" name="workDt"></p-calendar>
+        </div>
+    </div>
+   
+        <div class="col-md-12 mt-1">
+            <div class="field-group textarea">
+                <label for="">Ghi chú</label>
+                <textarea [(ngModel)]="modelDuyet.comments" name="comments" cols="30" rows="10" class="form-control"></textarea>
+            </div>
+        </div>
+</p-dialog>
