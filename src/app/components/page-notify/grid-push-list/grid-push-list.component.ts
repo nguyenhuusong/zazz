@@ -171,7 +171,10 @@ export class GridPushListComponent implements OnInit, OnChanges {
   }
 
   closeModal() {
-    this.saveSend.emit('hide');
+    this.saveSend.emit({
+      data: 'hide',
+      run_act: 0,
+    });
   }
 
   handleDelete(e) {
@@ -229,14 +232,35 @@ export class GridPushListComponent implements OnInit, OnChanges {
 
   saveSendNotify() {
     if (this.appUsers.length > 0) {
-      this.saveSend.emit(this.appUsers);
+      this.saveSend.emit({
+        data: this.appUsers,
+        run_act: 0,
+      });
     } else {
-      this.saveSend.emit(this.items.dataList.data);
+      this.saveSend.emit({
+        data: this.items.dataList.data,
+        run_act: 0,
+      });
     }
   }
 
   deleteMultipleApartment() {
     this.deleteRooms.emit(this.appUsers)
+  }
+
+  reSendNotify() {
+    
+    if (this.appUsers.length > 0) {
+      this.saveSend.emit({
+        data: this.appUsers,
+        run_act: 2,
+      });
+    } else {
+      this.saveSend.emit({
+        data: this.items.dataList.data,
+        run_act: 2,
+      });
+    }
   }
 
 }

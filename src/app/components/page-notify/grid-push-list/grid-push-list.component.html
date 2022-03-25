@@ -41,6 +41,7 @@
     <div class="p-toolbar-group-right" *ngIf="hideAction">
       <div class="group-btns text-right">
         <label style="visibility: hidden;">Buttons</label>
+        <p-button label="Gửi lại thông báo" (click)="reSendNotify()" icon="fa fa-reply" styleClass="p-button-sm mr-1"></p-button>
         <p-button label="Gửi thông báo" (click)="saveSendNotify()" icon="fa fa-save" styleClass="p-button-sm mr-1"></p-button>
         <p-button label="Đóng lại" (click)="closeModal()" icon="pi pi-times" styleClass="p-button-sm p-button-secondary"></p-button>
       </div>
