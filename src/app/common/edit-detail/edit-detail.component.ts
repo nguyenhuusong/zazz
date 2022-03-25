@@ -25,6 +25,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
   @Output() callback = new EventEmitter<any>();
   @Output() callbackcancel = new EventEmitter<any>();
   @Output() callback1 = new EventEmitter<any>();
+  @Output() callbackButton = new EventEmitter<any>();
   @Input() thongtinnhanvienNew: boolean = false;
   @Input() manhinh;
   @Input() dataView = [];
@@ -32,8 +33,9 @@ export class EditDetailComponent implements OnInit, OnChanges {
   includeImage = false;
   @Input() paramsObject;
   @Input() detailInfo = null;
+  @Input() isViewButtonTop = true;
   buttonSave = 'Update';
-  @Input() optionsButtonsEdit = [
+  @Input() optionsButtonsEdit: any = [
     { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
     { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check' }
   ];
@@ -777,6 +779,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
       this.submit = false;
       let group_fields = cloneDeep(this.dataView)
       this.callbackform(group_fields, 'TamTinh')
+    } else if (event === 'ReHire') {
+      this.callbackButton.emit({type: 'rehire', data: null});
     } else {
       this.cancel(event);
     }

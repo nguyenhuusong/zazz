@@ -8,6 +8,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { Subject } from 'rxjs';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { AgGridFn } from 'src/app/common/function-common/common';
+import * as moment from 'moment';
 @Component({
   selector: 'app-chi-tiet-ho-so-nghi-viec',
   templateUrl: './chi-tiet-ho-so-nghi-viec.component.html',
@@ -17,7 +18,11 @@ export class ChiTietHoSoNghiViecComponent implements OnInit, OnChanges, OnDestro
   private readonly unsubscribe$: Subject<void> = new Subject();
   manhinh = 'View';
   indexTab = 0;
-  optionsButtonsView = [{ label: 'Sửa', value: 'Edit' }, { label: 'Quay lại', value: 'Back' }];
+  optionsButtonsView = [
+    { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check' },
+    { label: 'Tuyển dụng lại', value: 'ReHire', icon: 'pi pi-refresh' },
+    { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' }
+  ];
   constructor(
     private apiService: ApiHrmService,
     private activatedRoute: ActivatedRoute,
@@ -30,7 +35,8 @@ export class ChiTietHoSoNghiViecComponent implements OnInit, OnChanges, OnDestro
   displaysearchUserMaster = false;
   listViewsForm = [];
   detailComAuthorizeInfo = null;
-  id = null
+  id = null;
+  empId;
   listViews = []
   imagesUrl = []
   paramsObject = null
@@ -45,10 +51,17 @@ export class ChiTietHoSoNghiViecComponent implements OnInit, OnChanges, OnDestro
   @Input() dataRouter = null
   @Output() back = new EventEmitter<any>();
 
-  ngOnDestroy() {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
+  modelDuyet = {
+    empId: "",
+    workDt: new Date(),
+    comments: "",
+    full_name: ""
   }
+  listViewsEmp = [];
+  listViewsFormEmp = [];
+  detailInfoEmp = null;
+  showRehire = false;
+  
 
   ngOnChanges() {
     // this.optionsButtonsView = [{ label: 'Sửa', value: 'Edit' }, { label: 'Đóng', value: 'Back' }];
@@ -76,8 +89,10 @@ export class ChiTietHoSoNghiViecComponent implements OnInit, OnChanges, OnDestro
     this.activatedRoute.queryParamMap.subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.dataRouter = this.paramsObject.params;
-      this.id = this.paramsObject.params.id;
+      this.id = this.paramsObject.params.terminateId;
+      this.empId = this.paramsObject.params.empId;
       this.getTerminateInfo();
+      this.getEmployeeInfo();
     });
   };
   detailInfo = null;
@@ -214,20 +229,20 @@ export class ChiTietHoSoNghiViecComponent implements OnInit, OnChanges, OnDestro
   }
 
   setTerminateInfo(data) {
-    const params = {
-      ...this.detailInfo, group_fields: data
-    }
-    this.apiService.setTerminateInfo(params).subscribe((results: any) => {
-      if (results.status === 'success') {
-        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Cập nhật thông tin thành công' });
-        this.getTerminateInfo();
-      } else {
-        this.messageService.add({
-          severity: 'error', summary: 'Thông báo', detail: results.message
-        });
-      }
-    }, error => {
-    });
+    // const params = {
+    //   ...this.detailInfo, group_fields: data
+    // }
+    // this.apiService.setTerminateInfo(params).subscribe((results: any) => {
+    //   if (results.status === 'success') {
+    //     this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Cập nhật thông tin thành công' });
+    //     this.getTerminateInfo();
+    //   } else {
+    //     this.messageService.add({
+    //       severity: 'error', summary: 'Thông báo', detail: results.message
+    //     });
+    //   }
+    // }, error => {
+    // });
   }
 
 
@@ -246,7 +261,57 @@ export class ChiTietHoSoNghiViecComponent implements OnInit, OnChanges, OnDestro
    }
   }
 
+
+  handleRehire(data): void {
+    let parmas: any = { ...this.modelDuyet };
+    delete parmas.full_name;
+    parmas.workDt = moment(new Date(parmas.workDt)).format('DD/MM/YYYY');
+    delete parmas.reason_id;
+    delete parmas.exprire_date;
+    parmas.group_fields = cloneDeep(this.listViewsFormEmp);
+    console.log(parmas);
+    this.apiService.setEmployeeRehired(parmas)
+    .subscribe((results: any) => {
+      if (results.status === 'success') {
+        this.showRehire = false;
+        this.manhinh = 'Edit';
+        this.getTerminateInfo();
+        this.getEmployeeInfo();
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Xác nhận tuyển dụng lại thành công!' });
+      } else {
+        this.messageService.add({
+          severity: 'error', summary: 'Thông báo', detail: results.message
+        });
+      }
+    }, error => {
+    });
+  }
+
+  getEmployeeInfo(): void {
+    const queryParams = queryString.stringify({ empId: this.empId });
+    this.apiService.getEmployeeData('GetEmployeeByJob', queryParams).subscribe(results => {
+      if (results.status === 'success') {
+        this.listViewsEmp = cloneDeep(results.data.group_fields || []);
+        this.listViewsFormEmp = cloneDeep(results.data.group_fields || []);
+        this.detailInfoEmp = results.data;
+        this.modelDuyet.full_name = results.data.fullName;
+        this.modelDuyet.empId = this.empId
+      }
+    });
+  }
+
+  callbackButton(data) {
+    if (data.type === 'rehire') {
+      this.showRehire = true;
+    }
+  }
+
   cancelUpdate() {
     this.router.navigate(['/nhan-su/ho-so-nghi-viec']);
+  }
+  
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }

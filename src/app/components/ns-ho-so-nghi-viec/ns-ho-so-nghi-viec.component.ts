@@ -219,8 +219,10 @@ export class NsHoSoNghiViecComponent implements OnInit {
 
   EditEmployee(event) {
     const params = {
-      id: event.rowData.id
+      empId: event.rowData.empId,
+      terminateId: event.rowData.terminateId,
     }
+    console.log(params);
     this.router.navigate(['/nhan-su/ho-so-nghi-viec/chi-tiet-ho-so-nghi-viec'], { queryParams: params });
   }
   displayChangeStatus = false;
