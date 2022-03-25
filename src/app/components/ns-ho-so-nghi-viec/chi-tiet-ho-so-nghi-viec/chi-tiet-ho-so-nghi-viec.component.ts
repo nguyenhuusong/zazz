@@ -30,7 +30,7 @@ export class ChiTietHoSoNghiViecComponent implements OnInit, OnChanges, OnDestro
   displaysearchUserMaster = false;
   listViewsForm = [];
   detailComAuthorizeInfo = null;
-  id = null
+  terminateId = null
   listViews = []
   imagesUrl = []
   paramsObject = null
@@ -76,7 +76,7 @@ export class ChiTietHoSoNghiViecComponent implements OnInit, OnChanges, OnDestro
     this.activatedRoute.queryParamMap.subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.dataRouter = this.paramsObject.params;
-      this.id = this.paramsObject.params.id;
+      this.terminateId = this.paramsObject.params.terminateId;
       this.getTerminateInfo();
     });
   };
@@ -86,7 +86,7 @@ export class ChiTietHoSoNghiViecComponent implements OnInit, OnChanges, OnDestro
   getTerminateInfo() {
     this.listViews = [];
     this.listsData = [];
-    const queryParams = queryString.stringify({id: this.id});
+    const queryParams = queryString.stringify({id: this.terminateId});
     this.apiService.getTerminateInfo(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.listViews = cloneDeep(results.data.group_fields);

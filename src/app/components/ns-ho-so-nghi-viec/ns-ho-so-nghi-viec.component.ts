@@ -5,6 +5,7 @@ import { ConfirmationService, MessageService, TreeNode } from 'primeng/api';
 import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { HttpParams } from '@angular/common/http';
+import { cloneDeep } from 'lodash';
 import * as moment from 'moment';
 import { AgGridFn } from 'src/app/common/function-common/common';
 import { CustomTooltipComponent } from 'src/app/common/ag-component/customtooltip.component';
@@ -192,12 +193,62 @@ export class NsHoSoNghiViecComponent implements OnInit {
           class: 'btn-primary mr5',
         },
         {
+          onClick: this.tuyenDungLai.bind(this),
+          label: 'Tuyển dụng lại',
+          icon: 'fa fa-edit',
+          class: 'btn-primary mr5',
+        },
+        {
           onClick: this.changeStatus.bind(this),
           label: 'Thay đổi trạng thái',
           icon: 'fa fa-check',
           class: 'btn-primary mr5',
         },
       ]
+    };
+  }
+
+  listViews = [];
+  displayDialog = false;
+  detailInfoEmployee = null;
+  tuyenDungLai(event) {
+    const queryParams = queryString.stringify({ empId: event.rowData.empId });
+    this.apiService.getEmployeeData('GetEmployeeByJob', queryParams).subscribe(results => {
+      if (results.status === 'success') {
+        this.listViews = cloneDeep(results.data.group_fields || []);
+        this.detailInfoEmployee = results.data;
+        this.displayDialog = true;
+        this.modelDuyet = {
+          workDt: new Date(),
+          comments: "",
+          full_name: event.rowData.full_name,
+        }
+      }
+    }), error => {
+      this.spinner.hide();
+    };
+  }
+  modelDuyet = {
+    workDt: new Date(),
+    comments: "",
+    full_name: "",
+  }
+
+  xacNhanTuyenDungLai(data) {
+    let params = {
+      ...this.detailInfoEmployee, group_fields: data, workDt: moment(new Date(this.modelDuyet.workDt)).format('DD/MM/YYYY'),comments: this.modelDuyet.comments
+    }
+    this.apiService.setEmployeeRehired(params).subscribe((results: any) => {
+      if (results.status === 'success') {
+        this.displayDialog = false;
+        this.load();
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Xác nhận tuyển dụng lại thành công' });
+      } else {
+        this.messageService.add({
+          severity: 'error', summary: 'Thông báo', detail: results.message
+        });
+      }
+    }), error => {
     };
   }
 
@@ -219,7 +270,7 @@ export class NsHoSoNghiViecComponent implements OnInit {
 
   EditEmployee(event) {
     const params = {
-      id: event.rowData.id
+      terminateId: event.rowData.terminateId
     }
     this.router.navigate(['/nhan-su/ho-so-nghi-viec/chi-tiet-ho-so-nghi-viec'], { queryParams: params });
   }
@@ -332,6 +383,7 @@ export class NsHoSoNghiViecComponent implements OnInit {
       this.imgAvatar = event.value;
     }
   }
-
 }
+
+
 

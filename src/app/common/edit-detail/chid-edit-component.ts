@@ -471,7 +471,7 @@ export class AppTypeNumberComponent implements OnInit {
 
   onChangeValue(event, field_name, element) {
     console.log(element);
-    if(field_name === 'salary_start_dt' || field_name === 'salary_next_dt'){
+    if(field_name === 'from_day' || field_name === 'to_day'){
       if(element.isRequire) {
           this.modelFields[field_name] = {...this.modelFields[field_name], ...ValidationNumberDayInMonth(event.value)}
       }else{
