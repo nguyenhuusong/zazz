@@ -16,11 +16,13 @@
         <ng-template pTemplate="content" let-files>
             <div class="files-content">Drag and drop files here, Max size file: {{maxFileSize}} bytes</div>
             <ul *ngIf="listAttach.length" class="hscn-each-upload">
-                <li *ngFor="let file of listAttach">
-                        <img *ngIf="file.type === 'application/pdf' || file.type === 'application/msword' || file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' || file.type === 'application/vnd.ms-excel'; else isImage" src="../../../assets/images/file.png" style="width: 50px;height:50px" alt="">
+                <li *ngFor="let file of listAttach" class="d-flex">
+                        <img *ngIf="file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' || file.type === 'application/pdf' || file.type === 'application/msword' || file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' || file.type === 'application/vnd.ms-excel'; else isImage" src="../../../assets/images/file.png" style="width: 50px;height:50px" alt="">
+                        
                         <ng-template #isImage>
                             <p-image src="{{file.url}}" alt="Image" [preview]="true" width="100"></p-image>
                         </ng-template>
+                        <span class="ml-2">{{ file.name }}</span>
                     <!-- {{file.name}} - {{file.size}} bytes -->
                 </li>
             </ul>
