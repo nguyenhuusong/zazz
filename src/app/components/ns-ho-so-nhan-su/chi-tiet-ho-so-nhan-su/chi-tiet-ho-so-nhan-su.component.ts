@@ -954,6 +954,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
             field: 'button234',
             cellClass: ['border-right'],
             width: 100,
+            pinned: 'right',
             cellRenderer: 'buttonAgGridComponent',
             cellRendererParams: params => {
               return {

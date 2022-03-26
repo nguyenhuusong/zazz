@@ -34,7 +34,7 @@ export class UploadFileComponent implements OnInit {
         const getDAte = new Date();
         const getTime = getDAte.getTime();
         const storageRef = firebase.storage().ref();
-        const uploadTask = storageRef.child(`s-hrm/file-attach/${getTime}-${file.name})`).put(file);
+        const uploadTask = storageRef.child(`s-hrm/file-attach/${getTime}-${file.name}`).put(file);
         uploadTask.on('state_changed', (snapshot) => {
         }, (error) => {
           this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: error.message });

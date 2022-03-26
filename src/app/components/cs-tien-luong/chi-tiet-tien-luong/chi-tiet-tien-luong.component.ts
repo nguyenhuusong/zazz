@@ -7,7 +7,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subject } from 'rxjs';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
-import { AgGridFn } from 'src/app/common/function-common/common';
+import { AgGridFn, TextFormatter } from 'src/app/common/function-common/common';
 @Component({
   selector: 'app-chi-tiet-tien-luong',
   templateUrl: './chi-tiet-tien-luong.component.html',
@@ -105,7 +105,8 @@ export class ChiTietTienLuongComponent implements OnInit, OnChanges, OnDestroy {
         this.listViews = cloneDeep(results.data.group_fields);
         this.detailInfo = results.data;
         this.listsData = cloneDeep(this.detailInfo.monthdays);
-        this.columnDefs = [...AgGridFn(this.detailInfo.gridflexs1 || [])
+        this.listDataNew =this.listsData;
+        this.columnDefs = [...this.agGridFnCustomer(this.detailInfo.gridflexs1 || [])
         // , {
         //   headerName: '',
         //   field: 'button',
@@ -124,7 +125,7 @@ export class ChiTietTienLuongComponent implements OnInit, OnChanges, OnDestroy {
   OnClick(e) {
 
   }
-
+  listDataNew = [];
   handleChange(index) {
     this.columnDefs = []
     this.indexTab = index;
@@ -132,7 +133,8 @@ export class ChiTietTienLuongComponent implements OnInit, OnChanges, OnDestroy {
       this.getSalaryEmployeePage()
     }else {
       this.listsData = cloneDeep(this.detailInfo.monthdays);
-      this.columnDefs = [...AgGridFn(this.detailInfo.gridflexs1 || [])]
+      this.listDataNew =this.listsData;
+      this.columnDefs = [...this.agGridFnCustomer(this.detailInfo.gridflexs1 || [])]
     }
   }
 
@@ -196,6 +198,48 @@ export class ChiTietTienLuongComponent implements OnInit, OnChanges, OnDestroy {
     this.getSalaryRecordInfo();
   }
   
+
+  cellRendererSanPham =(params) => {
+    console.log(params)
+    let rowData = [];
+    if (!params.value || params.value === '(Select All)') {
+      return params.value;
+    }
+    setTimeout(() => {
+      params.api.forEachNodeAfterFilter(node => {
+        console.log(node.data);
+        rowData.push(node.data)
+      } );
+      this.listDataNew =  rowData
+    }, 500);
+    return params.value;
+  }
+
+  agGridFnCustomer(lists: Array<any>) {
+    let arrAgGrids = [];
+    for (let value of lists) {
+     let row = {
+        headerName: value.columnCaption,
+        field: value.columnField,
+        cellClass: value.cellClass,
+        filter: value.isFilter ? 'agSetColumnFilter' : '',
+        sortable: false,
+        filterParams: {
+          caseSensitive: true,
+          textFormatter:  (r) => TextFormatter(r),
+          cellRenderer:  this.cellRendererSanPham,
+        },
+        cellRenderer: value.isMasterDetail ? 'agGroupCellRenderer' : '',
+        hide: value.isHide ? true : false,
+        pinned: value.pinned,
+        tooltipField: value.columnField,
+        headerTooltip: value.columnCaption
+        // valueFormatter: value.fieldType == 'decimal' ? ""
+    }
+        arrAgGrids.push(row);
+    }
+    return arrAgGrids
+}
 }
 
 
