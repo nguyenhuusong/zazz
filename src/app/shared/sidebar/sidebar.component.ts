@@ -64,16 +64,16 @@ export class SidebarComponent implements OnInit {
                 // active menu con
                 if(k.isExternalLink) {
                     if (k.routerLink && pathname.includes(k.routerLink)) {
-                        k.styleClass = 'parent_active'
+                        k.styleClass = 'parent_active' + ' ' + k.classs
                     } else {
-                        k.styleClass = 'parent_no_active'
+                        k.styleClass = 'parent_no_active' + ' ' + k.classs
                     }
                 }else {
                     if (k.routerLink && pathname.includes(k.routerLink)) {
-                        k.styleClass = k.classs + ' active'
+                        k.styleClass = k.classs + ' active' + ' ' + k.classs
                         k.icon = ''
                     } else {
-                        k.styleClass = k.classs + ' no-active';
+                        k.styleClass = k.classs + ' no-active'; + ' ' + k.classs
                         k.icon = ''
                     }
                 }
@@ -81,9 +81,9 @@ export class SidebarComponent implements OnInit {
             } else {
                 //active cha
                 if (k.path && pathname && pathname.split('/').indexOf(k.path) > -1 && k.classs === 'navigation-header') {
-                    k.styleClass = k.classs + " parent_active"
+                    k.styleClass = k.classs + " parent_active" + ' ' + k.classs
                 } else {
-                    k.styleClass = k.classs + " parent_no_active"
+                    k.styleClass = k.classs + " parent_no_active" + ' ' + k.classs
                 }
             }
 
