@@ -740,13 +740,29 @@ export class ApiHrmService {
   getLeavePage(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/leave/GetLeavePage?` + queryParams, this.options)
   }
+
+  getLeaveReasonPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/leave/GetLeaveReasonPage?` + queryParams, this.options)
+  }
+
+  delLeaveReason(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/leave/DelLeaveReason?` + queryParams, this.options)
+  }
   
+  getLeaveReason(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/leave/GetLeaveReason?` + queryParams, this.options)
+  }
+
   getLeaveInfo(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/leave/GetLeaveInfo?` + queryParams, this.options)
   }
 
   setLeaveInfo(queryParams): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/leave/SetLeaveInfo`, queryParams, this.options)
+  }
+
+  setLeaveReason(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/leave/SetLeaveReason`, queryParams, this.options)
   }
 
   getEatingInfo(queryParams): Observable<any> {

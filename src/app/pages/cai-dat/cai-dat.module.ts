@@ -55,10 +55,10 @@ import { CommonSearchUserMasterModule } from 'src/app/common/search-user-master/
 import { ChiTietCongTyComponent } from 'src/app/components/cai-dat-cong-ty/chi-tiet-cong-ty/chi-tiet-cong-ty.component';
 import { QuanLyHopDongComponent } from 'src/app/components/quan-ly-hop-dong/quan-ly-hop-dong.component';
 import { ChiTietHopDongComponent } from 'src/app/components/quan-ly-hop-dong/chi-tiet-hop-dong/chi-tiet-hop-dong.component';
-import { GopYKienComponent } from 'src/app/components/gop-y-kien/gop-y-kien.component';
-import { ChiTietGopYComponent } from 'src/app/components/gop-y-kien/chi-tiet-gop-y/chi-tiet-gop-y.component';
 import { ThamSoChungDetailComponent } from 'src/app/components/cai-dat-to-chuc/tham-so-chung/tham-so-chung-detail/tham-so-chung-detail.component';
 import { ThamSoChungListComponent } from 'src/app/components/cai-dat-to-chuc/tham-so-chung/tham-so-chung-list/tham-so-chung-list.component';
+import { LyDoNghiViecComponent } from 'src/app/components/ly-do-nghi-viec/ly-do-nghi-viec.component';
+import { ChiTietLyDoNghiViecComponent } from 'src/app/components/ly-do-nghi-viec/chi-tiet-ly-do-nghi-viec/chi-tiet-ly-do-nghi-viec.component';
 
 @NgModule({
   imports: [
@@ -125,6 +125,8 @@ import { ThamSoChungListComponent } from 'src/app/components/cai-dat-to-chuc/tha
     ChiTietHopDongComponent,
     ThamSoChungListComponent,
     ThamSoChungDetailComponent,
+    LyDoNghiViecComponent,
+    ChiTietLyDoNghiViecComponent
   ],
   providers: []
 })

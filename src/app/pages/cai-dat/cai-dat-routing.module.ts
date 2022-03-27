@@ -21,8 +21,8 @@ import { ChiTietLichLamViecComponent } from 'src/app/components/cai-dat-to-chuc/
 import { ChiTietCongTyComponent } from 'src/app/components/cai-dat-cong-ty/chi-tiet-cong-ty/chi-tiet-cong-ty.component';
 import { QuanLyHopDongComponent } from 'src/app/components/quan-ly-hop-dong/quan-ly-hop-dong.component';
 import { ChiTietHopDongComponent } from 'src/app/components/quan-ly-hop-dong/chi-tiet-hop-dong/chi-tiet-hop-dong.component';
-import { GopYKienComponent } from 'src/app/components/gop-y-kien/gop-y-kien.component';
-import { ChiTietGopYComponent } from 'src/app/components/gop-y-kien/chi-tiet-gop-y/chi-tiet-gop-y.component';
+import { LyDoNghiViecComponent } from 'src/app/components/ly-do-nghi-viec/ly-do-nghi-viec.component';
+import { ChiTietLyDoNghiViecComponent } from 'src/app/components/ly-do-nghi-viec/chi-tiet-ly-do-nghi-viec/chi-tiet-ly-do-nghi-viec.component';
 
 const routes: Routes = [
   {
@@ -131,6 +131,33 @@ const routes: Routes = [
     data: {
       title: 'Danh sách công ty',
       url: 'chi-tiet-cong-ty',
+    },
+  },
+
+
+  // Lý do nghỉ việc 
+  {
+    path: 'ly-do-nghi',
+    component: LyDoNghiViecComponent,
+    data: {
+      title: 'Lý do nghỉ việc',
+      url: 'ly-do-nghi',
+    },
+  },
+  {
+    path: 'ly-do-nghi/them-moi-ly-do-nghi',
+    component: ChiTietLyDoNghiViecComponent,
+    data: {
+      title: 'Thêm mới lý do nghỉ việc',
+      url: 'them-moi-ly-do-nghi',
+    },
+  },
+  {
+    path: 'ly-do-nghi/chi-tiet-ly-do-nghi',
+    component: ChiTietLyDoNghiViecComponent,
+    data: {
+      title: 'Chi tiết lý do nghỉ việc',
+      url: 'chi-tiet-ly-do-nghi',
     },
   },
 
