@@ -55,6 +55,7 @@ import {TreeSelectModule} from 'primeng/treeselect';
 import { DangKyLichLamViecComponent } from 'src/app/components/dang-ky-lich-lam-viec/dang-ky-lich-lam-viec.component';
 import { ChiTietDangKyLichLamViecComponent } from 'src/app/components/dang-ky-lich-lam-viec/chi-tiet-dang-ky-lich-lam-viec/chi-tiet-dang-ky-lich-lam-viec.component';
 import { StoreNotifyModule } from 'src/app/components/page-notify/store-notify/store-notify.module';
+import { XuLyHopDongComponent } from 'src/app/components/xu-ly-hop-dong/xu-ly-hop-dong.component';
 @NgModule({
   imports: [
     MessagesModule,
@@ -118,6 +119,7 @@ import { StoreNotifyModule } from 'src/app/components/page-notify/store-notify/s
     ChiTietThaiSanComponent,
     DangKyLichLamViecComponent,
     ChiTietDangKyLichLamViecComponent,
+    XuLyHopDongComponent
   ],
   providers: [ ]
 })

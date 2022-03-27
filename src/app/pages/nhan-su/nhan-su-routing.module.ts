@@ -9,6 +9,7 @@ import { ThaiSanComponent } from 'src/app/components/thai-san/thai-san.component
 import { ChiTietThaiSanComponent } from 'src/app/components/thai-san/chi-tiet-thai-san/chi-tiet-thai-san.component';
 import { DangKyLichLamViecComponent } from 'src/app/components/dang-ky-lich-lam-viec/dang-ky-lich-lam-viec.component';
 import { ChiTietDangKyLichLamViecComponent } from 'src/app/components/dang-ky-lich-lam-viec/chi-tiet-dang-ky-lich-lam-viec/chi-tiet-dang-ky-lich-lam-viec.component';
+import { XuLyHopDongComponent } from 'src/app/components/xu-ly-hop-dong/xu-ly-hop-dong.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,14 @@ const routes: Routes = [
  
 
   //hồ sơ nhân sự
+  {
+    path: 'xu-ly-hop-dong',
+    component: XuLyHopDongComponent,
+    data: {
+      title: 'Danh sách xử lý hợp đồng',
+      url: 'xu-ly-hop-dong',
+    },
+  },
   {
     path: 'ho-so-nhan-su',
     component: NsHoSoNhanSuComponent,
