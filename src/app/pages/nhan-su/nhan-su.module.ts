@@ -52,6 +52,9 @@ import { ChiTietHoSoNghiViecComponent } from 'src/app/components/ns-ho-so-nghi-v
 import { ThaiSanComponent } from 'src/app/components/thai-san/thai-san.component';
 import { ChiTietThaiSanComponent } from 'src/app/components/thai-san/chi-tiet-thai-san/chi-tiet-thai-san.component';
 import {TreeSelectModule} from 'primeng/treeselect';
+import { DangKyLichLamViecComponent } from 'src/app/components/dang-ky-lich-lam-viec/dang-ky-lich-lam-viec.component';
+import { ChiTietDangKyLichLamViecComponent } from 'src/app/components/dang-ky-lich-lam-viec/chi-tiet-dang-ky-lich-lam-viec/chi-tiet-dang-ky-lich-lam-viec.component';
+import { StoreNotifyModule } from 'src/app/components/page-notify/store-notify/store-notify.module';
 @NgModule({
   imports: [
     MessagesModule,
@@ -95,6 +98,7 @@ import {TreeSelectModule} from 'primeng/treeselect';
     UploadFileModule,
     EmpAttachFileModule,
     TreeSelectModule,
+    StoreNotifyModule,
     AgGridModule.withComponents([
       ButtonRendererComponent,
       ButtonRendererComponent1
@@ -111,7 +115,9 @@ import {TreeSelectModule} from 'primeng/treeselect';
     CreateContractInfoComponent,
     ChiTietHoSoNghiViecComponent,
     ThaiSanComponent,
-    ChiTietThaiSanComponent
+    ChiTietThaiSanComponent,
+    DangKyLichLamViecComponent,
+    ChiTietDangKyLichLamViecComponent,
   ],
   providers: [ ]
 })

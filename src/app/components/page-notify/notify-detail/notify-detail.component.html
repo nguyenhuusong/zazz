@@ -36,7 +36,7 @@
         <p-header>
           Gửi thông báo
         </p-header>
-       <app-store-notify [notify]="dataInfo" [moduleLists]="moduleLists" *ngIf="displayStore"  (reload)="backpagestore()"></app-store-notify>
+       <app-store-notify [notify]="dataInfo" [isNotifi]="true" [moduleLists]="moduleLists" *ngIf="displayStore"  (reload)="backpagestore()"></app-store-notify>
       </p-dialog>
       
   

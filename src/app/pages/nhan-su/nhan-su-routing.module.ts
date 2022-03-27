@@ -7,6 +7,8 @@ import { ChiTietHoSoNhanSuComponent } from 'src/app/components/ns-ho-so-nhan-su/
 import { ChiTietHoSoNghiViecComponent } from 'src/app/components/ns-ho-so-nghi-viec/chi-tiet-ho-so-nghi-viec/chi-tiet-ho-so-nghi-viec.component';
 import { ThaiSanComponent } from 'src/app/components/thai-san/thai-san.component';
 import { ChiTietThaiSanComponent } from 'src/app/components/thai-san/chi-tiet-thai-san/chi-tiet-thai-san.component';
+import { DangKyLichLamViecComponent } from 'src/app/components/dang-ky-lich-lam-viec/dang-ky-lich-lam-viec.component';
+import { ChiTietDangKyLichLamViecComponent } from 'src/app/components/dang-ky-lich-lam-viec/chi-tiet-dang-ky-lich-lam-viec/chi-tiet-dang-ky-lich-lam-viec.component';
 
 const routes: Routes = [
   {
@@ -77,6 +79,33 @@ const routes: Routes = [
     data: {
       title: 'Chi tiết thai sản',
       url: 'thai-san/chi-tiet-thai-san',
+    },
+  },
+
+  //Đăng ký lịch làm việc
+
+  {
+    path: 'dang-ky-lich-lam-viec',
+    component: DangKyLichLamViecComponent,
+    data: {
+      title: 'Danh sách đăng ký lịch làm việc',
+      url: 'dang-ky-lich-lam-viec',
+    },
+  },
+  {
+    path: 'dang-ky-lich-lam-viec/them-moi-dang-ky-lich-lam-viec',
+    component: ChiTietDangKyLichLamViecComponent,
+    data: {
+      title: 'Thêm mới đăng ký lịch làm việc',
+      url: 'them-moi-dang-ky-lich-lam-viec',
+    },
+  },
+  {
+    path: 'dang-ky-lich-lam-viec/chi-tiet-dang-ky-lich-lam-viec',
+    component: ChiTietDangKyLichLamViecComponent,
+    data: {
+      title: 'Chi tiết đăng ký lịch làm việc',
+      url: 'chi-tiet-dang-ky-lich-lam-viec',
     },
   },
 ];

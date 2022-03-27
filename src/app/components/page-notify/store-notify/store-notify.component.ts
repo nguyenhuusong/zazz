@@ -17,6 +17,7 @@ export class StoreNotifyComponent implements OnInit, OnChanges {
   @Input() notify;
   @Input() external_sub;
   @Input() indexTab;
+  @Input() isNotifi: boolean = true;
   @Input() moduleLists;
   @Output() reload = new EventEmitter<any>();
   loading = false;
@@ -145,20 +146,20 @@ export class StoreNotifyComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-
-    this.perent_id = this.notify.external_sub || null;
-    const items = this.moduleLists.filter(d => d.value === this.perent_id)
-    if (items.length > 0) this.getOrganizeTree(items[0].code)
-  
+    if(this.isNotifi) {
+      this.perent_id = this.notify.external_sub || null;
+      const items = this.moduleLists.filter(d => d.value === this.perent_id)
+      if (items.length > 0) this.getOrganizeTree(items[0].code)
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+   if(this.isNotifi) {
     this.perent_id = this.notify.external_sub || null;
     const items = this.moduleLists.filter(d => d.value === this.perent_id)
     if (items.length > 0) this.getOrganizeTree(items[0].code)
-    // if (changes.moduleLists && this.moduleLists.length > 0) {
-    //   this.sub_prod_cd = this.notify.external_sub;
-    // }
+   }
+  
   }
 
   getProductOrderPage() {
@@ -244,12 +245,22 @@ export class StoreNotifyComponent implements OnInit, OnChanges {
 
   saveUserByPush() {
     if(this.appUsers.length > 0) {
-      const saveData = {
-        // notiId: this.notify.notiId,
-        n_id: this.notify.n_id,
-        appUsers: this.appUsers
-      };
-      this.storePushList(saveData)
+      if(this.isNotifi) {
+        const saveData = {
+          // notiId: this.notify.notiId,
+          n_id: this.notify.n_id,
+          appUsers: this.appUsers
+        };
+        this.storePushList(saveData)
+      }else {
+        const saveData = {
+          // notiId: this.notify.notiId,
+          n_id: null,
+          appUsers: this.appUsers
+        };
+        this.reload.emit(saveData)
+      }
+    
     }else {
       this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Chưa chọn bản ghi nào !' });
     }
@@ -302,7 +313,7 @@ export class StoreNotifyComponent implements OnInit, OnChanges {
     this.columnDefs = [ {
       headerName: 'STT',
       filter: '',
-      width: 100,
+      maxWidth: 80,
       pinned: 'left',
       cellClass: ['border-right', 'no-auto'],
       checkboxSelection: true,

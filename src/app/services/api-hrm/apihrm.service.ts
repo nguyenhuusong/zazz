@@ -56,6 +56,14 @@ export class ApiHrmService {
   setWorktimeInfo(queryParams): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/worktime/SetWorktimeInfo`, queryParams, this.options)
   }
+  
+  getEmpWorktimePage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/worktime/GetEmpWorktimePage?` + queryParams, this.options)
+  }
+
+  setEmpWorkingChanges(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/worktime/SetEmpWorkingChanges`, queryParams, this.options)
+  }
 
   //góp ý
   getFeedbackInfo(queryParams): Observable<any> {
@@ -360,7 +368,7 @@ export class ApiHrmService {
   setEmpDependent(params): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/employee/SetEmpDependent`, params, this.options)
   }
-
+  
   setEmpContact(params): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/employee/SetEmpContact`, params, this.options)
   }
