@@ -1,6 +1,5 @@
 
-<div class="row">
-  <div class="col-md-12">
+  <div class="row">
     <div class="col-md-6">
       <div class="field-group select" [ngClass]=" perent_id? 'valid' : 'invalid' ">
         <label for="">Tổ chức</label>
@@ -25,7 +24,7 @@
       </div>
     </div>
   </div>
-  <div class="col-md-12">
+  <div class="row">
     <div class="col-md-6">
       <div class="field-group label-8" [ngClass]=" query.filter? 'valid' : 'invalid' ">
         <input class="form-control" type="text" 
@@ -44,13 +43,16 @@
   </div>
  
   </div>
+  <div class="row">
   <div class="col-sm-12 mt-3">
-    <label for=""><b>Danh sách nhân viên </b><p-badge *ngIf="listsData.length > 0"
-      value="{{listsData.length}}" styleClass="p-mr-2"></p-badge></label> <br>
-    <app-list-grid-angular [domLayout]="'autoHeight'"  [title]="'Danh sách liên hệ'"
-     *ngIf="columnDefs.length > 0" [rowSelection]="'multiple'" [heightRow]="60" 
-      [listsData]="listsData" [idGrid]="'myGridStoreNoti1'" (callback)="selectRow($event)"
-      [columnDefs]="columnDefs"></app-list-grid-angular>
+    <label for="" class="mb-3 ds-block" *ngIf="columnDefs.length > 0"><b>Danh sách nhân viên </b><p-badge *ngIf="listsData.length > 0"
+      value="{{listsData.length}}" styleClass="p-mr-2"></p-badge></label>
+      <div class="grid-default border mh-560">
+      <app-list-grid-angular [domLayout]="'autoHeight'"  [title]="'Danh sách liên hệ'"
+      *ngIf="columnDefs.length > 0" [rowSelection]="'multiple'" [heightRow]="60" 
+        [listsData]="listsData" [idGrid]="'myGridStoreNoti1'" (callback)="selectRow($event)"
+        [columnDefs]="columnDefs"></app-list-grid-angular>
+      </div>
   </div>
 </div>
 <div class="modal-body p-2 row">
