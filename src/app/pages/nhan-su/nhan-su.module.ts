@@ -56,6 +56,8 @@ import { DangKyLichLamViecComponent } from 'src/app/components/dang-ky-lich-lam-
 import { ChiTietDangKyLichLamViecComponent } from 'src/app/components/dang-ky-lich-lam-viec/chi-tiet-dang-ky-lich-lam-viec/chi-tiet-dang-ky-lich-lam-viec.component';
 import { StoreNotifyModule } from 'src/app/components/page-notify/store-notify/store-notify.module';
 import { XuLyHopDongComponent } from 'src/app/components/xu-ly-hop-dong/xu-ly-hop-dong.component';
+import { PheDuyetComponent } from 'src/app/components/phe-duyet/phe-duyet.component';
+import { ChiTietPheDuyetComponent } from 'src/app/components/phe-duyet/chi-tiet-phe-duyet/chi-tiet-phe-duyet.component';
 @NgModule({
   imports: [
     MessagesModule,
@@ -119,7 +121,9 @@ import { XuLyHopDongComponent } from 'src/app/components/xu-ly-hop-dong/xu-ly-ho
     ChiTietThaiSanComponent,
     DangKyLichLamViecComponent,
     ChiTietDangKyLichLamViecComponent,
-    XuLyHopDongComponent
+    XuLyHopDongComponent,
+    PheDuyetComponent,
+    ChiTietPheDuyetComponent,
   ],
   providers: [ ]
 })

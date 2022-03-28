@@ -710,7 +710,7 @@ export class ApiHrmService {
 
   deleteEmployee(employeeId): Observable<string> {
     return this.http
-      .delete<string>(`${apiHrmServer}/api/v2/employee/DeleteEmployee?employeeId=${employeeId}`, this.options);
+      .delete<string>(`${apiHrmServer}/api/v2/employee/DeleteEmployee?empId=${employeeId}`, this.options);
   }
 
   setEmployeeOpenhrm(params): Observable<any> {

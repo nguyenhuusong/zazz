@@ -71,6 +71,7 @@ const APP_CONTAINERS = [DefaultLayoutComponent];
         TooltipSuggestionComponent,
         DropdownRendererComponent,
         BaoCaoComponent,
+      
     ],
     imports: [
         BrowserAnimationsModule,

@@ -10,6 +10,8 @@ import { ChiTietThaiSanComponent } from 'src/app/components/thai-san/chi-tiet-th
 import { DangKyLichLamViecComponent } from 'src/app/components/dang-ky-lich-lam-viec/dang-ky-lich-lam-viec.component';
 import { ChiTietDangKyLichLamViecComponent } from 'src/app/components/dang-ky-lich-lam-viec/chi-tiet-dang-ky-lich-lam-viec/chi-tiet-dang-ky-lich-lam-viec.component';
 import { XuLyHopDongComponent } from 'src/app/components/xu-ly-hop-dong/xu-ly-hop-dong.component';
+import { PheDuyetComponent } from 'src/app/components/phe-duyet/phe-duyet.component';
+import { ChiTietPheDuyetComponent } from 'src/app/components/phe-duyet/chi-tiet-phe-duyet/chi-tiet-phe-duyet.component';
 
 const routes: Routes = [
   {
@@ -115,6 +117,33 @@ const routes: Routes = [
     data: {
       title: 'Chi tiết đăng ký lịch làm việc',
       url: 'chi-tiet-dang-ky-lich-lam-viec',
+    },
+  },
+
+  //  Phê duyệt
+
+  {
+    path: 'phe-duyet',
+    component: PheDuyetComponent,
+    data: {
+      title: 'Danh sách phê duyệt',
+      url: 'phe-duyet',
+    },
+  },
+  {
+    path: 'phe-duyet/them-moi-phe-duyet',
+    component: ChiTietPheDuyetComponent,
+    data: {
+      title: 'Thêm mới phê duyệt',
+      url: 'them-moi-phe-duyet',
+    },
+  },
+  {
+    path: 'phe-duyet/chi-tiet-phe-duyet',
+    component: ChiTietPheDuyetComponent,
+    data: {
+      title: 'Chi tiết phê duyệt',
+      url: 'chi-tiet-phe-duyet',
     },
   },
 ];
