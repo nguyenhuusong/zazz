@@ -12,12 +12,22 @@ import { ChiTietAnCaComponent } from 'src/app/components/cs-an-ca/chi-tiet-an-ca
 import { ChiTietChamCongComponent } from 'src/app/components/cs-cham-cong/chi-tiet-cham-cong/chi-tiet-cham-cong.component';
 import { ChiTietTienLuongComponent } from 'src/app/components/cs-tien-luong/chi-tiet-tien-luong/chi-tiet-tien-luong.component';
 import { ChiTietThueThuNhapComponent } from 'src/app/components/cs-thue-thu-nhap/chi-tiet-thue-thu-nhap/chi-tiet-thue-thu-nhap.component';
+import { PhepNamComponent } from 'src/app/components/phep-nam/phep-nam.component';
 
 const routes: Routes = [
   {
     path: "",
     redirectTo: "cham-cong",
     pathMatch: 'full'
+  },
+  // Phép năm
+  {
+    path: 'phep-nam',
+    component: PhepNamComponent,
+    data: {
+      title: 'Phép năm',
+      url: 'phep-nam',
+    },
   },
   //Chấm công
   {
