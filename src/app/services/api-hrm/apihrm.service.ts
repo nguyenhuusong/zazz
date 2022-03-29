@@ -1166,4 +1166,22 @@ export class ApiHrmService {
   setInvParameter(params): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/work/SetInvParameter`, params, this.options)
   }
+
+  // AnnualLeave
+  getAnnualLeavePage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/annualleave/GetAnnualLeavePage?` + queryParams, this.options)
+  }
+
+  getAnnualAddPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/annualleave/GetAnnualAddPage?` + queryParams, this.options)
+  }
+
+  setAnnualAddInfo(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/annualleave/SetAnnualAddInfo`, queryParams, this.options)
+  }
+
+  delAnnualAddInfo(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/annualleave/DelAnnualAddInfo?` + queryParams, this.options)
+  }
+
 }
