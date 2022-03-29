@@ -80,9 +80,9 @@ export class CsChamCongComponent implements OnInit {
     toDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).format()),
     filter: '',
     offSet: 0,
-    pageSize: 100000000,
-    month: 0,
-    year: 0,
+    pageSize: 100,
+    month: new Date().getMonth() + 1,
+    year: new Date().getFullYear(),
   }
   totalRecord = 0;
   DriverId = 0;
@@ -159,7 +159,6 @@ export class CsChamCongComponent implements OnInit {
     let params: any = {... this.query};
     params.fromDate = moment(new Date(this.query.fromDate)).format('YYYY-MM-DD')
     params.toDate = moment(new Date(this.query.toDate)).format('YYYY-MM-DD')
-    console.log(params, 'params params params params')
     const queryParams = queryString.stringify(params);
     this.apiService.getEmployeeSalaryMonthPage(queryParams).subscribe(
       (results: any) => {
@@ -203,7 +202,7 @@ export class CsChamCongComponent implements OnInit {
       {
         headerName: 'Thao tác',
         filter: '',
-        width: 100,
+        maxWidth: 90,
         pinned: 'right',
         cellRenderer: 'buttonAgGridComponent',
         cellClass: ['border-right', 'no-auto'],

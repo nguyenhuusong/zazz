@@ -471,16 +471,17 @@ export class AppTypeNumberComponent implements OnInit {
 
   onChangeValue(event, field_name, element) {
     console.log(element);
-    if(field_name === 'from_day' || field_name === 'to_day'){
-      if(element.isRequire) {
-          this.modelFields[field_name] = {...this.modelFields[field_name], ...ValidationNumberDayInMonth(event.value)}
-      }else{
-          this.modelFields[field_name] = {...this.modelFields[field_name], ...ValidationNumberDayInMonthEmpty(event.value)}
-      }
-    }else{
-      this.modelFields[field_name].error = this.modelFields[field_name].isRequire ? this.element.columnValue ? false : true : false
-      this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
-    }
+    // if(field_name === 'from_day' || field_name === 'to_day'){
+     
+    // }else{
+    //   this.modelFields[field_name].error = this.modelFields[field_name].isRequire ? this.element.columnValue ? false : true : false
+    //   this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
+    // }
+    if(element.isRequire) {
+      this.modelFields[field_name] = {...this.modelFields[field_name], ...ValidationNumberDayInMonth(event.value)}
+  }else{
+      this.modelFields[field_name] = {...this.modelFields[field_name], ...ValidationNumberDayInMonthEmpty(event.value)}
+  }
     
   }
 }
