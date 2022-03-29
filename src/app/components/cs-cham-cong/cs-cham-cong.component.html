@@ -21,7 +21,21 @@
                 <div class="input-group-append dropdown">
                 </div>
             </div>
-            <div class="col-2">
+            <div class="col-1">
+                <div class="field-group text label-8 mb-0">
+                    <input type="number" class="input-default" id="" placeholder="Tháng"
+                        [(ngModel)]="query.month">
+                    <label>Tháng</label>
+                </div>
+            </div>
+            <div class="col-1">
+                <div class="field-group text label-8 mb-0">
+                    <input type="number" class="input-default" id="" placeholder="Năm"
+                        [(ngModel)]="query.year">
+                    <label>Năm</label>
+                </div>
+            </div>
+            <div class="col-1">
                 <div class="field-group select mb-0 label-8">
                     <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
                     [options]="listOrgRoots" [(ngModel)]="query.organizeId"  (onChange)="find()"
@@ -38,7 +52,7 @@
                 <label>Công ty</label>
                 </div>
             </div>
-            <div class="col-2">
+            <div class="col-1">
                 <div class="field-group date mb-0">
                     <p-calendar 
                     panelStyleClass="datepicker-default"
