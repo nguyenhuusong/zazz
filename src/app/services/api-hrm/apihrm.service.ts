@@ -647,6 +647,19 @@ export class ApiHrmService {
     return this.http.delete<any>(`${apiHrmServer}/api/v2/maternity/DelMaternityChildInfo?` + queryParams, this.options)
   }
   // Tuyển dụng
+
+  getWorkflowPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/work/GetWorkflowPage?` + queryParams, this.options)
+  }
+
+  getWorkflowInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/work/GetWorkflowInfo?` + queryParams, this.options)
+  }
+
+  setWorkApprove(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/work/SetWorkApprove`, params, this.options)
+  }
+
   getCandidatePage(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetCandidatePage?` + queryParams, this.options)
   }
