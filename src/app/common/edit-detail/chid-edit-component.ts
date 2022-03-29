@@ -32,7 +32,6 @@ export class AppTypeTextComponent implements OnInit {
   @Input() submit = false;
   constructor() { }
   ngOnInit(): void {
-    console.log(this.modelFields)
   }
 
   onChangeValue(value, field_name, element) {
@@ -759,8 +758,6 @@ export class AppTypeMultiSelectComponent implements OnInit {
     private apiService: ApiHrmService
   ) { }
   ngOnInit(): void {
-
-    console.log(this.element)
   }
 
   onChangeValue(value, field_name) {
