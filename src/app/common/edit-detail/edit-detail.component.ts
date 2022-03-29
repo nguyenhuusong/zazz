@@ -438,7 +438,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
           if (element1.columnValue) {
             let newarray = []
             element1.options.forEach(element => {
-              if (element1.columnValue.split(",").indexOf(element.code) > -1) {
+              if (element1.columnValue.split(",").indexOf(element.code.toUpperCase()) > -1) {
                 newarray.push(element);
               }
             });
