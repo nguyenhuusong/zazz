@@ -263,7 +263,7 @@ export class DangKyLichLamViecComponent implements OnInit {
   ngOnInit() {
     this.getModuleList();
     this.items = [
-      { label: 'Trang chủ' , url: '/home' },
+      { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Góp ý' },
     ];
     this.load();

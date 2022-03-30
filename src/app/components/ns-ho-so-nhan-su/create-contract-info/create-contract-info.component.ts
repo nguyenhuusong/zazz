@@ -48,7 +48,7 @@ export class CreateContractInfoComponent implements OnInit {
         { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check'  },
       ]
       this.itemsMenu =  [
-        { label: 'Trang chủ' , url: '/home' },
+        { label: 'Trang chủ' , routerLink: '/home' },
         { label: 'Danh sách xử lý hợp đồng' , routerLink: '/nhan-su/xu-ly-hop-dong'},
         { label: `${this.titlePage}` },
       ]

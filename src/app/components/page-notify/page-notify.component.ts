@@ -120,7 +120,7 @@ export class PageNotifyComponent implements OnInit, OnDestroy, AfterViewChecked 
 
   ngOnInit() {
     this.items = [
-      { label: 'Trang chủ' , url: '/home' },
+      { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Cài đặt' },
       { label: 'Danh sách thông báo' },
     ];

@@ -250,7 +250,7 @@ export class QuanLyHopDongComponent implements OnInit {
   ngOnInit() {
     this.getOrgRoots();
     this.items = [
-      { label: 'Trang chủ' , url: '/home' },
+      { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Cài đặt' },
       { label: 'Danh sách loại hợp đồng' },
     ];

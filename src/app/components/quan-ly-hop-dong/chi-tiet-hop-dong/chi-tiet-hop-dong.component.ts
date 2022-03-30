@@ -45,9 +45,9 @@ export class ChiTietHopDongComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.titlePage =  this.activatedRoute.data['_value'].title;
     this.items = [
-      { label: 'Trang chủ' , url: '/home' },
+      { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Cài đặt' },
-      { label: 'Danh sách loại hợp đồng', url: '/cai-dat/quan-ly-hop-dong' },
+      { label: 'Danh sách loại hợp đồng', routerLink: '/cai-dat/quan-ly-hop-dong' },
       { label: `${this.titlePage}` },
     ];
     this.url = this.activatedRoute.data['_value'].url;

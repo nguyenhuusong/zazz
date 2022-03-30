@@ -82,7 +82,7 @@ export class PqTheNhanVienComponent implements OnInit {
   items = []
   ngOnInit(): void {
     this.items = [
-      { label: 'Trang chủ' , url: '/home' },
+      { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Phân quyền' },
       { label: 'Danh sách thẻ nhân viên' },
     ];

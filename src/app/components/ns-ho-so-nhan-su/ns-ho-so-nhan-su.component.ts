@@ -455,7 +455,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
 
   ngOnInit() {
     this.items = [
-      { label: 'Trang chủ' , url: '/home' },
+      { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Nhân sự' },
       { label: 'Danh sách hồ sơ nhân sự' },
     ];

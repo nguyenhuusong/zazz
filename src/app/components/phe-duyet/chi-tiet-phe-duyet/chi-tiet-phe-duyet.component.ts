@@ -51,9 +51,9 @@ export class ChiTietPheDuyetComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.titlePage = this.activatedRoute.data['_value'].title;
     this.items = [
-      { label: 'Trang chủ', url: '/home' },
+      { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Nhân sự' },
-      { label: 'danh sách phê duyệt', url: '/nhan-su/phe-duyet' },
+      { label: 'danh sách phê duyệt', routerLink: '/nhan-su/phe-duyet' },
       { label: `${this.titlePage}` },
     ];
     this.handleParams();

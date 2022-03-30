@@ -228,9 +228,9 @@ public agGridFn = AgGridFn;
 
   ngOnInit() {
     this.items = [
-      { label: 'Trang chủ' , url: '/home' },
+      { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Cài đặt' },
-      { label: 'Danh sách tổ chức', url: '/cai-dat/cai-dat-to-chuc' },
+      { label: 'Danh sách tổ chức', routerLink: '/cai-dat/cai-dat-to-chuc' },
       { label: 'Lịch làm việc'},
     ];
     this.getCustObjectListNew();

@@ -34,7 +34,7 @@ export class ThamSoChungDetailComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.titlePage = this.activatedRoute.data['_value'].title;
     this.items = [
-      { label: 'Trang chủ', url: '/home' },
+      { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Cài đặt' },
       { label: `${this.titlePage}` },
     ];

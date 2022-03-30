@@ -50,10 +50,10 @@ export class ChiTietMauThongBaoComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.titlePage =  this.activatedRoute.data['_value'].title;
     this.items = [
-      { label: 'Trang chủ' , url: '/home' },
+      { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Cài đặt' },
-      { label: 'Danh sách thông báo', url: '/cai-dat/thong-bao' },
-      { label: 'Danh sách mẫu thông báo', url: '/cai-dat/thong-bao/mau-thong-bao' },
+      { label: 'Danh sách thông báo', routerLink: '/cai-dat/thong-bao' },
+      { label: 'Danh sách mẫu thông báo', routerLink: '/cai-dat/thong-bao/mau-thong-bao' },
       { label: this.titlePage },
     ];
     this.url = this.activatedRoute.data['_value'].url;

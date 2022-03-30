@@ -45,9 +45,9 @@ export class ChiTietChucVuComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.titlePage =  this.activatedRoute.data['_value'].title;
     this.items = [
-      { label: 'Trang chủ' , url: '/home' },
+      { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Cài đặt' },
-      { label: 'Danh sách chức vụ', url: '/cai-dat/chuc-vu' },
+      { label: 'Danh sách chức vụ', routerLink: '/cai-dat/chuc-vu' },
       { label: `${this.titlePage}` },
     ];
     this.url = this.activatedRoute.data['_value'].url;

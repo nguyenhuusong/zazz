@@ -168,7 +168,7 @@ load() {
 
   ngOnInit() {
     this.items = [
-      { label: 'Trang chủ' , url: '/home' },
+      { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Chính sách' },
       { label: 'Phép năm' },
     ];

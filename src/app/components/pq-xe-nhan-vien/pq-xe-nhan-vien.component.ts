@@ -96,7 +96,7 @@ export class PqXeNhanVienComponent implements OnInit {
   itemsBreadcrumb = [];
   ngOnInit(): void {
     this.itemsBreadcrumb = [
-      { label: 'Trang chủ', url: '/home' },
+      { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Phân quyền' },
       { label: 'Danh sách xe nhân viên' },
     ];

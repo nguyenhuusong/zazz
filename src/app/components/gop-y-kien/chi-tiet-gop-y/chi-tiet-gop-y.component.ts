@@ -54,8 +54,8 @@ export class ChiTietGopYComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.titlePage = this.activatedRoute.data['_value'].title;
     this.items = [
-      { label: 'Trang chủ' , url: '/home' },
-      { label: 'Danh sách góp ý', url: '/gop-y' },
+      { label: 'Trang chủ' , routerLink: '/home' },
+      { label: 'Danh sách góp ý', routerLink: '/gop-y' },
       { label: this.titlePage },
     ];
     this.url = this.activatedRoute.data['_value'].url;

@@ -238,7 +238,7 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
 
   ngOnInit() {
     this.items = [
-      { label: 'Trang chủ' , url: '/home' },
+      { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Tuyển dụng', },
       { label: 'Danh sách Chuyên môn tuyển dụng' },
     ];

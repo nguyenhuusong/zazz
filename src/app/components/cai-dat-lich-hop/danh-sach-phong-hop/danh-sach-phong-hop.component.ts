@@ -71,9 +71,9 @@ export class DanhSachPhongHopComponent implements OnInit {
   items = []
   ngOnInit(): void {
     this.items = [
-      { label: 'Trang chủ' , url: '/home' },
+      { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Cài đặt' },
-      { label: 'Danh sách lịch họp', url: '/cai-dat/cai-dat-lich-hop' },
+      { label: 'Danh sách lịch họp', routerLink: '/cai-dat/cai-dat-lich-hop' },
       { label: 'Danh sách phòng họp'},
     ];
     this.load();

@@ -267,7 +267,7 @@ load() {
 
   ngOnInit() {
     this.items = [
-      { label: 'Trang chủ' , url: '/home' },
+      { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Nhân sự' },
       { label: 'Danh sách phê duyệt' },
     ];

@@ -57,8 +57,8 @@ export class ChiTietLyDoNghiViecComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.titlePage = this.activatedRoute.data['_value'].title;
     this.items = [
-      { label: 'Trang chủ' , url: '/home' },
-      { label: 'Danh sách lý do nghỉ', url: '/cai-dat/ly-do-nghi' },
+      { label: 'Trang chủ' , routerLink: '/home' },
+      { label: 'Danh sách lý do nghỉ', routerLink: '/cai-dat/ly-do-nghi' },
       { label: this.titlePage },
     ];
     this.url = this.activatedRoute.data['_value'].url;

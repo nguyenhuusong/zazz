@@ -72,7 +72,7 @@ export class PqThangMayComponent implements OnInit {
 
   ngOnInit() {
     this.itemsBreadcrumb = [
-      { label: 'Trang chủ' , url: '/home' },
+      { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Phân quyền' },
       { label: 'Phân quyền thang máy' },
     ];

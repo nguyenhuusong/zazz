@@ -38,9 +38,9 @@ export class ChiTietLinhVucTuyenDungComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.titlePage = this.activatedRoute.data['_value'].title;
     this.items = [
-      { label: 'Trang chủ' , url: '/home' },
+      { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Tuyển dụng'},
-      { label: 'Chuyên môn tuyển dụng', url: '/tuyen-dung/chuyen-mon' },
+      { label: 'Chuyên môn tuyển dụng', routerLink: '/tuyen-dung/chuyen-mon' },
       { label: `${this.titlePage}` },
     ];
     this.handleParams();

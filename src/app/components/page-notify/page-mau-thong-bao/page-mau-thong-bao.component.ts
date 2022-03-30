@@ -97,9 +97,9 @@ export class PageMauThongBaoComponent implements OnInit, OnDestroy, AfterViewChe
 
   ngOnInit() {
     this.items = [
-      { label: 'Trang chủ' , url: '/home' },
+      { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Cài đặt' },
-      { label: 'Danh sách thông báo', url: '/cai-dat/thong-bao' },
+      { label: 'Danh sách thông báo', routerLink: '/cai-dat/thong-bao' },
       { label: 'Danh sách mẫu thông báo' },
     ];
     this.model.filter = '';
