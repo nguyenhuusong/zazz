@@ -12,6 +12,7 @@ import { ChiTietDangKyLichLamViecComponent } from 'src/app/components/dang-ky-li
 import { XuLyHopDongComponent } from 'src/app/components/xu-ly-hop-dong/xu-ly-hop-dong.component';
 import { PheDuyetComponent } from 'src/app/components/phe-duyet/phe-duyet.component';
 import { ChiTietPheDuyetComponent } from 'src/app/components/phe-duyet/chi-tiet-phe-duyet/chi-tiet-phe-duyet.component';
+import { CreateContractInfoComponent } from 'src/app/components/ns-ho-so-nhan-su/create-contract-info/create-contract-info.component';
 
 const routes: Routes = [
   {
@@ -28,6 +29,14 @@ const routes: Routes = [
     data: {
       title: 'Danh sách xử lý hợp đồng',
       url: 'xu-ly-hop-dong',
+    },
+  },
+  {
+    path: 'xu-ly-hop-dong/chi-tiet-xu-ly-hop-dong',
+    component: CreateContractInfoComponent,
+    data: {
+      title: 'Danh sách xử lý hợp đồng',
+      url: 'chi-tiet-xu-ly-hop-dong',
     },
   },
   {

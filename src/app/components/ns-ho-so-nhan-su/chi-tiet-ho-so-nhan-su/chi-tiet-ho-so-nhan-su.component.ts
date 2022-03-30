@@ -63,7 +63,8 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     contractId: null,
     contractTypeId: null,
     empId: null,
-    detailInfo: null
+    detailInfo: null,
+    organizeId: null
   }
   hienthihopdong = false;
   displayAttach = false;
@@ -1219,7 +1220,8 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       contractId: event.rowData.contractId,
       contractTypeId: null,
       empId: this.detailInfo.empId,
-      detailInfo: this.detailInfo
+      detailInfo: this.detailInfo,
+      organizeId: this.detailInfo.organizeId
     }
     this.hienthihopdong = true;
   }
@@ -1347,7 +1349,8 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       detailInfo: this.detailInfo,
       contractId: this.detailInfo.contractId || null,
       contractTypeId: this.listContractTypes[0].value,
-      empId: this.detailInfo.empId
+      empId: this.detailInfo.empId,
+      organizeId: this.detailInfo.organizeId
     }
     this.hienthihopdong = true;
   }

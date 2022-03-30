@@ -177,26 +177,51 @@ export class XuLyHopDongComponent implements OnInit {
   showButtons(event: any) {
     return {
       buttons: [
-        
-
+        {
+          onClick: this.XemChiTiet.bind(this),
+          label: 'Xem chi tiết',
+          icon: 'fa fa-eye',
+          class: 'btn-primary mr5',
+        },
+        {
+          onClick: this.delMaternityInfo.bind(this),
+          label: 'Xóa ',
+          icon: 'pi pi-trash',
+          class: 'btn-primary mr5',
+        },
       ]
     };
+  }
+  // GET /api/v2/contract/GetContractInfo
+  XemChiTiet(event) {
+  const modelContractInfo = {
+      contractId: event.rowData.contractId,
+      contractTypeId: event.rowData.contractTypeId,
+      empId: event.rowData.empId,
+      organizeId: event.rowData.organizeId
+    }
+    this.router.navigate(['/nhan-su/xu-ly-hop-dong/chi-tiet-xu-ly-hop-dong'], { queryParams: modelContractInfo });
+
+  }
+
+  delMaternityInfo(event) {
+
   }
 
   initGrid() {
     this.columnDefs = [
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
-      // {
-      //   headerName: 'Thao tác',
-      //   filter: '',
-      //   width: 100,
-      //   pinned: 'right',
-      //   cellRenderer: 'buttonAgGridComponent',
-      //   cellClass: ['border-right', 'no-auto'],
-      //   cellRendererParams: (params: any) => this.showButtons(params),
-      //   checkboxSelection: false,
-      //   field: 'checkbox'
-      // }
+      {
+        headerName: 'Thao tác',
+        filter: '',
+        width: 100,
+        pinned: 'right',
+        cellRenderer: 'buttonAgGridComponent',
+        cellClass: ['border-right', 'no-auto'],
+        cellRendererParams: (params: any) => this.showButtons(params),
+        checkboxSelection: false,
+        field: 'checkbox'
+      }
     ]
   }
   

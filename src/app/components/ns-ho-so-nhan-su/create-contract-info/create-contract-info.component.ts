@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import * as queryString from 'querystring';
@@ -20,6 +20,7 @@ export class CreateContractInfoComponent implements OnInit {
   constructor(
     private apiService: ApiHrmService,
     private messageService: MessageService,
+    private activatedRoute: ActivatedRoute,
     private confirmationService: ConfirmationService,
     private spinner: NgxSpinnerService,
     private router: Router
@@ -35,8 +36,38 @@ export class CreateContractInfoComponent implements OnInit {
   @Input() modelContractInfo = null
   @Output() callback = new EventEmitter<any>();
   @Output() back = new EventEmitter<any>();
+  titlePage = '';
+  url = '';
+  itemsMenu = [];
+  paramsObject = null;
   ngOnInit(): void {
-    this.getContractInfo();
+    this.titlePage = this.activatedRoute.data['_value'].title;
+    this.url = this.activatedRoute.data['_value'].url;
+    if (this.url === 'chi-tiet-xu-ly-hop-dong') {
+      this.optionsButon= [
+        { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check'  },
+      ]
+      this.itemsMenu =  [
+        { label: 'Trang chủ' , url: '/home' },
+        { label: 'Danh sách xử lý hợp đồng' , routerLink: '/nhan-su/xu-ly-hop-dong'},
+        { label: `${this.titlePage}` },
+      ]
+      this.handleParams();
+    } else {
+      this.optionsButon= [
+        { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check'  },
+        { label: 'Tạm tính', value: 'TamTinh', class: '', icon: 'pi pi-check'  }
+      ]
+      this.getContractInfo();
+    }
+  }
+
+  handleParams(): void {
+    this.activatedRoute.queryParamMap.subscribe((params) => {
+      this.paramsObject = { ...params.keys, ...params };
+      this.modelContractInfo = this.paramsObject.params;
+      this.getContractInfo();
+    });
   }
 
   getContractTypes() {
@@ -60,7 +91,9 @@ export class CreateContractInfoComponent implements OnInit {
     this.listsData = [];
     this.spinner.show();
     let params = {...this.modelContractInfo};
-    delete params.detailInfo
+    if (this.url !== 'chi-tiet-xu-ly-hop-dong') {
+        delete params.detailInfo
+    }
     const queryParams = queryString.stringify(params);
     this.apiService.getContractInfo(queryParams).subscribe(results => {
       if (results.status === 'success') {
