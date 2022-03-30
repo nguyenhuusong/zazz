@@ -388,7 +388,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
                 buttons: [
                   {
                     onClick: this.OnClick.bind(this),
-                    label: 'Xem chi tiêt',
+                    label: 'Xem chi tiết',
                     icon: 'fa fa-edit',
                     key: 'xemchitietlienhe',
                     class: 'btn-primary mr-1',
@@ -993,6 +993,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   }
 
   OnClick(event): void {
+    console.log('xemchitietlienhe')
     if (event.event.item.key === 'tailenhoso') {
       this.uploadContract(event)
     } else if (event.event.item.key === 'xemhoso') {
@@ -1033,7 +1034,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     } else if (event.event.item.key === 'delete-qua-trinh-hop-dong') {
       this.XoaQuaTrinhHopDong(event)
     } else if (event.event.item.key === 'xemchitietlienhe') {
-      if (this.selectedMenuCode === API_PROFILE.LIEN_HE) {
+      if (this.selectedMenuCode === API_PROFILE.THONG_TIN_CA_NHAN) {
         this.titleType0 = 'Chỉnh sửa thông tin người liên hệ';
         const queryParams = queryString.stringify({ empId: this.detailInfo.empId, cont_id: event.rowData.cont_id });
         this.getEmpContact(queryParams);
