@@ -13,6 +13,7 @@ import { XuLyHopDongComponent } from 'src/app/components/xu-ly-hop-dong/xu-ly-ho
 import { PheDuyetComponent } from 'src/app/components/phe-duyet/phe-duyet.component';
 import { ChiTietPheDuyetComponent } from 'src/app/components/phe-duyet/chi-tiet-phe-duyet/chi-tiet-phe-duyet.component';
 import { CreateContractInfoComponent } from 'src/app/components/ns-ho-so-nhan-su/create-contract-info/create-contract-info.component';
+import { QuyetDinhLuongComponent } from 'src/app/components/quyet-dinh-luong/quyet-dinh-luong.component';
 
 const routes: Routes = [
   {
@@ -20,7 +21,18 @@ const routes: Routes = [
     redirectTo: "ho-so-nhan-su",
     pathMatch: 'full'
   },
+ // quyết định lương
+
  
+
+ {
+  path: 'quyet-dinh-luong',
+  component: QuyetDinhLuongComponent,
+  data: {
+    title: 'Quyết định lương',
+    url: 'quyet-dinh-luong',
+  },
+},
 
   //hồ sơ nhân sự
   {

@@ -58,6 +58,7 @@ import { StoreNotifyModule } from 'src/app/components/page-notify/store-notify/s
 import { XuLyHopDongComponent } from 'src/app/components/xu-ly-hop-dong/xu-ly-hop-dong.component';
 import { PheDuyetComponent } from 'src/app/components/phe-duyet/phe-duyet.component';
 import { ChiTietPheDuyetComponent } from 'src/app/components/phe-duyet/chi-tiet-phe-duyet/chi-tiet-phe-duyet.component';
+import { QuyetDinhLuongComponent } from 'src/app/components/quyet-dinh-luong/quyet-dinh-luong.component';
 @NgModule({
   imports: [
     MessagesModule,
@@ -124,6 +125,7 @@ import { ChiTietPheDuyetComponent } from 'src/app/components/phe-duyet/chi-tiet-
     XuLyHopDongComponent,
     PheDuyetComponent,
     ChiTietPheDuyetComponent,
+    QuyetDinhLuongComponent
   ],
   providers: [ ]
 })

@@ -270,6 +270,10 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v1/eating/GetEatingPage?` + queryParams, this.options)
   }
 
+  getSalaryInfoPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/salary/GetSalaryInfoPage?` + queryParams, this.options)
+  }
+  
   getSalaryEmployeePage(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/salary/getSalaryEmployeePage?` + queryParams, this.options)
   }
