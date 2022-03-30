@@ -27,6 +27,57 @@
                 <div class="input-group-append dropdown">
                 </div>
             </div>
+            <div class="col-2" > 
+                <div class="field-group select label-8">
+                    <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" [filter] = "true"
+                    [options]="listOrgRoots" [(ngModel)]="query.organizeId" name="organizeId" (onChange)="getContractTypes();find()">
+                    <ng-template let-item pTemplate="selectedItem">
+                        <span>{{item.label}}</span>
+                    </ng-template>
+                    <ng-template let-car pTemplate="item">
+                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                            <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+                <label  for=""> Tổ chức: </label>
+               
+                </div>
+            </div>
+            <div class="col-2" > 
+                <div class="field-group select label-8">
+                    <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" [filter] = "true"
+                    [options]="statusContracts" [(ngModel)]="query.contract_st" name="contract_st" (onChange)="find()">
+                    <ng-template let-item pTemplate="selectedItem">
+                        <span>{{item.label}}</span>
+                    </ng-template>
+                    <ng-template let-car pTemplate="item">
+                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                            <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+                <label  for=""> Trạng thái: </label>
+               
+                </div>
+            </div>
+            <div class="col-2" > 
+                <div class="field-group select label-8">
+                    <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" [filter] = "true"
+                    [options]="typeContracts" [(ngModel)]="query.contractTypeId" name="contractTypeId" (onChange)="find()">
+                    <ng-template let-item pTemplate="selectedItem">
+                        <span>{{item.label}}</span>
+                    </ng-template>
+                    <ng-template let-car pTemplate="item">
+                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                            <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+                <label  for=""> Loại hợp đông: </label>
+               
+                </div>
+            </div>
             <div class="col-2">
                 <p-button class="search-button ml-1 mr-3" styleClass=" btn-56-56" icon="pi pi-search" (click)="query.offSet = 0; first = 0; load()"></p-button>
                 <p-button class="btn-56-56" icon="pi pi-refresh" (click)="cancel()" styleClass="p-button-secondary p-button-sm btn-56-56"></p-button>

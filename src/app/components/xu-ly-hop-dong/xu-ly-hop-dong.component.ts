@@ -51,7 +51,11 @@ export class XuLyHopDongComponent implements OnInit {
     label: 'Thêm mới tài khoản',
     value: 'Add'
   }
-
+  statusContracts = [ {
+    label: 'Tất cả',
+    value: null
+  }];
+  typeContracts = []
   public modules: Module[] = AllModules;
   public agGridFn = AgGridFn;
   cols: any[];
@@ -74,7 +78,10 @@ export class XuLyHopDongComponent implements OnInit {
     filter: '',
     offSet: 0,
     pageSize: 15,
-    organizeId: null
+    organizeId: null,
+    orgId: null,
+    contract_st: null,
+    contractTypeId: null
   }
   totalRecord = 0;
   DriverId = 0;
@@ -95,7 +102,10 @@ export class XuLyHopDongComponent implements OnInit {
       filter: '',
       offSet: 0,
       pageSize: 15,
-      organizeId: null
+      organizeId: null,
+      orgId: null,
+      contract_st: null,
+      contractTypeId: null
     }
     this.load();
   }
@@ -141,7 +151,7 @@ export class XuLyHopDongComponent implements OnInit {
     this.columnDefs = []
     this.spinner.show();
     const queryParams = queryString.stringify(this.query);
-    this.apiService.getContractTypePage(queryParams).subscribe(
+    this.apiService.getContractPage(queryParams).subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         if (this.query.offSet === 0) {
@@ -215,7 +225,6 @@ export class XuLyHopDongComponent implements OnInit {
     this.load();
   }
 
-
   sizeToFit() {
     if (this.gridApi) {
       let allColumnIds: any = [];
@@ -246,6 +255,23 @@ export class XuLyHopDongComponent implements OnInit {
           });
         this.gridColumnApi.autoSizeColumns(allColumnIds, false);
       }
+    }
+  }
+
+  getContractTypes() {
+    if(this.query.organizeId){
+      const queryParams = queryString.stringify({ organizeId: this.query.organizeId });
+      this.apiService.getContractTypes(queryParams).subscribe(results => {
+        if (results.status === 'success') {
+          this.typeContracts = results.data.map(d => {
+            return {
+              label: d.contractTypeName,
+              value: `${d.contractTypeId}`
+            }
+          });
+          this.typeContracts = [{label: 'Tất cả', value: null}, ...this.typeContracts];
+        }
+      })
     }
   }
 
