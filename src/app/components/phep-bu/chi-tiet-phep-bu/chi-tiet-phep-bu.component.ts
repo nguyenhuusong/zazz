@@ -60,7 +60,7 @@ export class ChiTietPhepBuComponent implements OnInit, OnDestroy {
 
   getAnnualAddInfo() {
     const queryParams = queryString.stringify(this.modelEdit);
-    this.apiService.getAnnualAddPage(queryParams)
+    this.apiService.getAnnualAddInfo(queryParams)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {
         if (results.status === 'success') {

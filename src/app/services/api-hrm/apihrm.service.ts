@@ -1176,6 +1176,10 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v2/annualleave/GetAnnualAddPage?` + queryParams, this.options)
   }
 
+  getAnnualAddInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/annualleave/GetAnnualAddInfo?` + queryParams, this.options)
+  }
+
   setAnnualAddInfo(queryParams): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/annualleave/SetAnnualAddInfo`, queryParams, this.options)
   }

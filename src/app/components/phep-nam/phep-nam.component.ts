@@ -175,6 +175,9 @@ load() {
     this.load();
   }
 
+  goToPhepBu() {
+    this.router.navigate(['/chinh-sach/phep-bu']);
+  }
 
 
 }
