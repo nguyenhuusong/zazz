@@ -84,6 +84,7 @@ export class NotifyDetailComponent implements OnInit {
         this.listViews = cloneDeep(results.data.group_fields);
         this.dataInfo = results.data;
         this.external_sub = this.dataInfo.external_sub;
+        this.modelMarkdow.attachs =this.dataInfo.attachs && this.dataInfo.attachs.length ? this.dataInfo.attachs : []
         if (this.notiId == null) {
           this.manhinh = 'Edit';
           this.indexTab = 0;
@@ -190,8 +191,6 @@ export class NotifyDetailComponent implements OnInit {
 
   saveNotifyInfo(data) {
     this.spinner.show();
-    console.log(data)
-    debugger
     data.forEach(element => {
       element.fields.forEach(element1 => {
         if(element1.field_name === 'content_type') {
