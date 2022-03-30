@@ -63,8 +63,9 @@
     Thêm vé gửi xe
   </p-header>
   <form action="" #createSMSF1="ngForm">
-    <div class="box-body" style="padding:10px;">
+    <div class="box-body" >
 
+      <div class="row">
       <div class="col-sm-6 form-group">
         <div class="field-group select label-8">
             <p-dropdown appendTo="body"  [baseZIndex]="100" 
@@ -82,7 +83,7 @@
         </div>
     </div>
     <div class="col-sm-6 form-group">
-        <div class="field-group select label-8" >
+        <div class="field-group select" [ngClass]="modelTM.cusId ? 'valid' : 'invalid'">
             <p-dropdown appendTo="body"  [baseZIndex]="100" 
                 [options]="listUsers" [(ngModel)]="modelTM.cusId" [autoDisplayFirst]="false" name="cusId" [filter]="true">
                 <ng-template let-item pTemplate="selectedItem">
@@ -200,6 +201,7 @@
       </div>
 
     </div>
+  </div>
     <div class="row mt-1">
       <div class="col-md-6"></div>
       <div class="col-md-6 text-right">
