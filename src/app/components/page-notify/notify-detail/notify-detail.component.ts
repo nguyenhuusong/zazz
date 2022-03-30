@@ -190,6 +190,8 @@ export class NotifyDetailComponent implements OnInit {
 
   saveNotifyInfo(data) {
     this.spinner.show();
+    console.log(data)
+    debugger
     data.forEach(element => {
       element.fields.forEach(element1 => {
         if(element1.field_name === 'content_type') {
@@ -197,15 +199,21 @@ export class NotifyDetailComponent implements OnInit {
             a.fields.forEach(b => {
               if (b.field_name === 'content_markdown') {
                 if(element1.columnValue == 2) {
-                  b.columnValue =this.modelMarkdow.content ? this.converter.makeHtml(this.modelMarkdow.content) : '';
+                  b.columnValue =b.columnValue ? this.converter.makeHtml(b.columnValue) : '';
                 }else {
-                  b.columnValue = this.modelMarkdow.content;
+                  b.columnValue = b.columnValue;
                 }
               }
             });
           });
       }else  if (element1.field_name === 'content_email') {
-        element1.columnValue = this.modelMarkdow.content ? this.converter.makeHtml(this.modelMarkdow.content) : '';
+        data.forEach(a => {
+          a.fields.forEach(b => {
+            if (b.field_name === 'content_markdown') {
+              element1.columnValue =b.columnValue ? this.converter.makeHtml(b.columnValue) : '';
+            }
+          });
+        });
       }
       });
     });
