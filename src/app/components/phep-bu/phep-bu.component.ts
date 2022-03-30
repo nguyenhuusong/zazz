@@ -165,7 +165,7 @@ load() {
 
   addNewPhepBu() {
     const params = {
-      annualId: null
+      annualId: ""
     }
     this.router.navigate(['/chinh-sach/phep-bu/chi-tiet-phep-bu'], { queryParams: params });
   }
