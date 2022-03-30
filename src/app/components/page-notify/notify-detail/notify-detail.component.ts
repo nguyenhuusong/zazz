@@ -217,13 +217,16 @@ export class NotifyDetailComponent implements OnInit {
       }
       });
     });
+    console.log(this.modelMarkdow.attachs)
     const params = {
       ...this.dataInfo,
       group_fields: data,
       attachs: this.modelMarkdow.attachs.map(data1 => {
         return {
           attach_name: data1.attach_name,
-          attach_url: data1.attach_url
+          attach_url: data1.attach_url,
+          id: data1.id,
+          notiId: this.dataInfo.notiId
         }
       }),
     }

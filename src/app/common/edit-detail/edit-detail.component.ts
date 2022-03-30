@@ -44,7 +44,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
     content: '',
     attachs: [],
     attack: false,
-    id: 0
+    id: null
   };
   CONSTANTS_NOTIFY = {
     NOTIFICATION: 'Notification',

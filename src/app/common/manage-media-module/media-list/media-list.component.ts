@@ -219,8 +219,6 @@ export class MediaListComponent implements OnInit {
   displayAddImage = false
  async saveMedia(receiveEntry) {
     if (receiveEntry) {
-      console.log(receiveEntry)
-      debugger
       this.modelMedia.created_date = firebase.firestore.Timestamp.fromDate(new Date());
       if (this.dataRouter) {
         if (receiveEntry.is_file) {

@@ -79,13 +79,13 @@ export class PageMarkdownComponent implements OnInit {
         data.forEach(item => {
           if (item.file_type === 'file') {
             (this.modelMarkdow.attachs as any[]).push({
-              id: this.modelMarkdow.id,
+              id: null,
               attach_name: item.name,
               attach_url: item.link,
             });
           } else {
             (this.modelMarkdow.attachs as any[]).push({
-              id: this.modelMarkdow.id,
+              id: null,
               attach_name: item.name,
               attach_url: item.image,
             });
