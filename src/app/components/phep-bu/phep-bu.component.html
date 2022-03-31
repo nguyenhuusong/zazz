@@ -30,11 +30,27 @@
                     <label>Năm</label>
                 </div>
             </div>
+            <div class="col-2">
+                <div class="field-group select mb-0 valid" [ngClass]="">
+                    <p-dropdown placeholder="Chọn tổ chức" appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
+                        [options]="orgRoots" [(ngModel)]="query.organizeId" name="organizeId" (onChange)="find()">
+                        <ng-template let-item pTemplate="selectedItem">
+                            <span style="vertical-align:middle;">{{item.label}}</span>
+                        </ng-template>
+                        <ng-template let-car pTemplate="item">
+                            <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                                <div style="">{{car.label}}</div>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+                    <label  for=""> Tổ chức: </label>
+                </div>
+            </div>
             <div class="col-1">
                 <p-button styleClass="btn-56-56 search-button" icon="pi pi-search" (click)="query.offSet = 0; first = 0; load()">
                 </p-button>
             </div>
-            <div class="col-6 tools">
+            <div class="col-4 tools">
                 <p-button styleClass="p-button-sm mr-1" icon="pi pi-plus" label="Thêm mới" (click)="addNewPhepBu()">
                 </p-button>
             </div>
