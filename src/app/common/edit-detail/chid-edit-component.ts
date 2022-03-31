@@ -258,10 +258,10 @@ export class AppTypeDropdownComponent implements OnInit {
           }
         });
       });
-    } else if (field_name === 'org_cds') {
+    } else if (field_name === 'org_cds' || field_name === 'organizeId' ) {
       this.dataView.forEach(element => {
         element.fields.forEach(element1 => {
-          if (element1.field_name === 'full_name') {
+          if (element1.field_name === 'full_name' || element1.field_name === 'empId') {
             this.getUserByPush(value, element1)
           }
         });
