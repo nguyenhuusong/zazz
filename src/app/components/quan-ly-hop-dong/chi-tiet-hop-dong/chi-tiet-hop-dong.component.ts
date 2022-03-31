@@ -23,6 +23,7 @@ export class ChiTietHopDongComponent implements OnInit, OnChanges {
     private router: Router
   ) { }
   contractTypeId = null
+  organizeId = null
   org_level = 0
   listViews = []
   imagesUrl = []
@@ -61,6 +62,7 @@ export class ChiTietHopDongComponent implements OnInit, OnChanges {
       this.paramsObject = { ...params.keys, ...params };
       this.dataRouter = this.paramsObject.params;
       this.contractTypeId = this.paramsObject.params.contractTypeId || null;
+      this.organizeId = this.paramsObject.params.organizeId || null;
       this.getContractTypeInfo();
     });
   };
@@ -158,7 +160,10 @@ export class ChiTietHopDongComponent implements OnInit, OnChanges {
 
   goBack() {
    if(this.titlePage) {
-    this.router.navigate(['/cai-dat/quan-ly-hop-dong']);
+     const params = {
+      organizeId: this.organizeId
+     }
+    this.router.navigate(['/cai-dat/quan-ly-hop-dong'], { queryParams: params });
    }else {
     this.back.emit();
    }
