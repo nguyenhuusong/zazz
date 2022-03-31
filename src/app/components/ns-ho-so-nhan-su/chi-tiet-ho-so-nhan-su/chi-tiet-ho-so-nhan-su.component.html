@@ -366,21 +366,23 @@
 <p-dialog header="Duyệt hợp đồng" [(visible)]="displayApproveContract" [modal]="true" [draggable]="false"
     [resizable]="false" [style]="{width: '40vw'}" [autoZIndex]=true [draggable]="false" [resizable]="false">
     <div class="row col-md-12 mt-1 select-default" >
-        <label for="">Trạng thái duyệt</label>
-        <p-dropdown [autoZIndex]="true" [autoDisplayFirst]="false" [style]="{'width': '100%'}" [options]="statusApprover"
-        [(ngModel)]="modelDuyetHopDong.status" name="status">
-        <ng-template let-item pTemplate="selectedItem">
-            <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
-        </ng-template>
-        <ng-template let-car pTemplate="item">
-            <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
-            </div>
-        </ng-template>
-        </p-dropdown>
+        <div class="field-group select label-8">
+            <p-dropdown [autoZIndex]="true" [autoDisplayFirst]="false" [style]="{'width': '100%'}" [options]="statusApprover"
+            [(ngModel)]="modelDuyetHopDong.status" name="status">
+            <ng-template let-item pTemplate="selectedItem">
+                <span>{{item.label}}</span>
+            </ng-template>
+            <ng-template let-car pTemplate="item">
+                <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                    <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                </div>
+            </ng-template>
+            </p-dropdown>
+            <label for="">Trạng thái duyệt</label>
+        </div>
     </div>
     <div class="row col-md-12 mt-1" style="margin-top: 5px;">
-        <div class="textarea-default">
+        <div class="field-group textarea ">
             <label for="">Ghi chú</label>
             <textarea [(ngModel)]="modelDuyetHopDong.comment" name="comment" cols="30" rows="10" class="form-control"></textarea>
         </div>

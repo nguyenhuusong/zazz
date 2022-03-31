@@ -85,6 +85,8 @@ export class QuanLyHopDongComponent implements OnInit {
     currentRecordEnd: 0
   }
 
+  paramsObject = null
+  organizeId = null
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
@@ -219,7 +221,8 @@ export class QuanLyHopDongComponent implements OnInit {
 
   XemChiTiet(event) {
     const params = {
-      contractTypeId: event.rowData.contractTypeId
+      contractTypeId: event.rowData.contractTypeId,
+      organizeId: this.query.organizeId
     }
     this.router.navigate(['/cai-dat/quan-ly-hop-dong/chi-tiet-hop-dong'], { queryParams: params });
   }
@@ -254,6 +257,7 @@ export class QuanLyHopDongComponent implements OnInit {
       { label: 'Cài đặt' },
       { label: 'Danh sách loại hợp đồng' },
     ];
+    this.handleParams();
     this.load();
   }
 
@@ -290,6 +294,13 @@ export class QuanLyHopDongComponent implements OnInit {
       }
     }
   }
+
+  handleParams() {
+    this.route.queryParamMap.subscribe((params) => {
+      this.paramsObject = { ...params.keys, ...params };
+      this.query.organizeId = this.paramsObject.params.organizeId || null;
+    });
+  };
 
 }
 
