@@ -225,7 +225,8 @@ export class NotifyDetailComponent implements OnInit {
           attach_name: data1.attach_name,
           attach_url: data1.attach_url,
           id: data1.id,
-          notiId: this.dataInfo.notiId
+          notiId: this.dataInfo.notiId,
+          attach_type: data1.attach_type
         }
       }),
     }
