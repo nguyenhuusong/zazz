@@ -24,7 +24,8 @@ export class AttackFilesComponent implements OnInit, OnChanges {
   }
 
   handleRemoveMedia(id) {
-    this.attachs= (this.attachs as string[]).filter(t => t !== id);
+    // this.attachs= (this.attachs as string[]).filter(t => t !== id);
+    this.notify.attachs = this.notify.attachs.filter(t => t.attach_url !== id.attach_url)
   }
 
   openFile(item) {
