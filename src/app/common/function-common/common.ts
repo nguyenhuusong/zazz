@@ -91,16 +91,13 @@ export function AgGridFn(lists: Array<any>) {
                     // pinned: value.pinned,
                     // tooltipField: value.columnField,
                     // headerTooltip: value.
-                    
-
-
-
 
                     headerName: value.columnCaption,
                     field: value.columnField,
                     cellClass: value.cellClass,
                     filter: value.isFilter ? 'agSetColumnFilter' : '',
                     sortable: false,
+                    editable: value.editable ? value.editable : false,
                     filterParams: {
                       caseSensitive: true,
                       textFormatter:  (r) => TextFormatter(r),
@@ -111,18 +108,6 @@ export function AgGridFn(lists: Array<any>) {
                     pinned: value.pinned,
                     tooltipField: value.columnField,
                     headerTooltip: value.columnCaption
-
-
-
-
-
-
-
-
-
-
-
-                    // valueFormatter: value.fieldType == 'decimal' ? ""
                 }
             }
         }
