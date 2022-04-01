@@ -1,0 +1,17 @@
+
+<div class="main-grid product-detail">
+    <div class="breadcrumb">
+        <h3>{{titlePage}}</h3>
+        <p-breadcrumb [model]="items"></p-breadcrumb>
+    </div>
+   <div class="content">
+    <div >
+        <app-edit-detail *ngIf="listViews && listViews.length> 0"
+            [thongtinnhanvienNew]="true" [manhinh]="'Edit'" [dataView]="listViews"
+            (callback)="setMeetingFloorInfo($event)" (callbackcancel)="cancelUpdate()">
+        </app-edit-detail>
+    </div>
+        
+   </div>
+   
+</div>

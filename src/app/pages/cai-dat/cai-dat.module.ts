@@ -59,6 +59,8 @@ import { ThamSoChungDetailComponent } from 'src/app/components/cai-dat-to-chuc/t
 import { ThamSoChungListComponent } from 'src/app/components/cai-dat-to-chuc/tham-so-chung/tham-so-chung-list/tham-so-chung-list.component';
 import { LyDoNghiViecComponent } from 'src/app/components/ly-do-nghi-viec/ly-do-nghi-viec.component';
 import { ChiTietLyDoNghiViecComponent } from 'src/app/components/ly-do-nghi-viec/chi-tiet-ly-do-nghi-viec/chi-tiet-ly-do-nghi-viec.component';
+import { CaiDatPhongHopTheoTangComponent } from 'src/app/components/cai-dat-phong-hop-theo-tang/cai-dat-phong-hop-theo-tang.component';
+import { ChiTietPhongHopTheoTangComponent } from 'src/app/components/cai-dat-phong-hop-theo-tang/chi-tiet-phong-hop-theo-tang/chi-tiet-phong-hop-theo-tang.component';
 
 @NgModule({
   imports: [
@@ -126,7 +128,9 @@ import { ChiTietLyDoNghiViecComponent } from 'src/app/components/ly-do-nghi-viec
     ThamSoChungListComponent,
     ThamSoChungDetailComponent,
     LyDoNghiViecComponent,
-    ChiTietLyDoNghiViecComponent
+    ChiTietLyDoNghiViecComponent,
+    CaiDatPhongHopTheoTangComponent,
+    ChiTietPhongHopTheoTangComponent
   ],
   providers: []
 })
