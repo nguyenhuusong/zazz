@@ -23,6 +23,8 @@ import { QuanLyHopDongComponent } from 'src/app/components/quan-ly-hop-dong/quan
 import { ChiTietHopDongComponent } from 'src/app/components/quan-ly-hop-dong/chi-tiet-hop-dong/chi-tiet-hop-dong.component';
 import { LyDoNghiViecComponent } from 'src/app/components/ly-do-nghi-viec/ly-do-nghi-viec.component';
 import { ChiTietLyDoNghiViecComponent } from 'src/app/components/ly-do-nghi-viec/chi-tiet-ly-do-nghi-viec/chi-tiet-ly-do-nghi-viec.component';
+import { CaiDatPhongHopTheoTangComponent } from 'src/app/components/cai-dat-phong-hop-theo-tang/cai-dat-phong-hop-theo-tang.component';
+import { ChiTietPhongHopTheoTangComponent } from 'src/app/components/cai-dat-phong-hop-theo-tang/chi-tiet-phong-hop-theo-tang/chi-tiet-phong-hop-theo-tang.component';
 
 const routes: Routes = [
   {
@@ -285,6 +287,35 @@ const routes: Routes = [
       url: 'chi-tiet-hop-dong',
     },
   },
+
+
+  // Quản lý phòng họp theo tầng
+
+  {
+    path: 'quan-ly-phong-hop-theo-tang',
+    component: CaiDatPhongHopTheoTangComponent,
+    data: {
+      title: 'Danh sách tầng',
+      url: 'quan-ly-phong-hop-theo-tang',
+    },
+  },
+  {
+    path: 'quan-ly-phong-hop-theo-tang/them-moi-tang',
+    component: ChiTietPhongHopTheoTangComponent,
+    data: {
+      title: 'Thêm mới Phòng họp theo tầng',
+      url: 'them-moi-phong-hop-theo-tang',
+    },
+  },
+  {
+    path: 'quan-ly-phong-hop-theo-tangg/chi-tiet-tang',
+    component: ChiTietPhongHopTheoTangComponent,
+    data: {
+      title: 'Chi tiết Phòng họp theo tầng',
+      url: 'chi-tiet-phong-hop-theo-tang',
+    },
+  },
+  
   {
     path: 'tham-so-chung/:id',
     component: ThamSoChungDetailComponent,

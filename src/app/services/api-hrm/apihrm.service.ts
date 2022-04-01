@@ -507,6 +507,23 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v2/meeting/GetMeetRooms?filter=${filter}`, this.options);
   }
 
+  // meetingFloor
+  getMeetingFloorPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/meeting/GetMeetingFloorPage?` + queryParams, this.options);
+  }
+
+  getMeetingFloorInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/meeting/GetMeetingFloorInfo${queryParams}`, this.options);
+  }
+
+  setMeetingFloorInfo(data): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/meeting/SetMeetingFloorInfo`, data, this.options);
+  }
+  
+  delMeetingFloorInfo(params): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/meeting/DelMeetingFloorInfo` + params, this.options);
+  }
+
   getProductProjs(): Observable<any> {
     return this.http
       .get<any>(`${apiCore}/api/v1/coreagent/GetProductProjs`, this.options)
