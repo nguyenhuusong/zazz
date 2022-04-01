@@ -31,7 +31,7 @@ export class ChiTietPhongHopTheoTangComponent implements OnInit, OnDestroy {
   listViewsForm = [];
   detailComAuthorizeInfo = null;
   listViews = [];
-  floor = '';
+  floorId = '';
   detailInfo = null;
   listsData = [];
   columnDefs;
@@ -60,7 +60,7 @@ export class ChiTietPhongHopTheoTangComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((params) => {
         this.paramsObject = { ...params.keys, ...params };
-        this.floor = this.paramsObject.params.floor;
+        this.floorId = this.paramsObject.params.floorId;
         this.getMeetingFloorInfo();
       });
   };
@@ -68,7 +68,7 @@ export class ChiTietPhongHopTheoTangComponent implements OnInit, OnDestroy {
   getMeetingFloorInfo(): void {
     this.listViews = [];
     this.listsData = [];
-    this.apiService.getMeetingFloorInfo(`?floor=${this.floor || ''}`).subscribe(results => {
+    this.apiService.getMeetingFloorInfo(`?floorId=${this.floorId || ''}`).subscribe(results => {
       if (results.status === 'success') {
         this.listViews = cloneDeep(results.data.group_fields);
         this.detailInfo = results.data;
