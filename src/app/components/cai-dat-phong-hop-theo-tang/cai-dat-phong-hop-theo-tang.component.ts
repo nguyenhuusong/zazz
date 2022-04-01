@@ -175,7 +175,7 @@ export class CaiDatPhongHopTheoTangComponent implements OnInit {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa không?',
       accept: () => {
-        this.apiService.delMeetingFloorInfo(e.rowData.floor)
+        this.apiService.delMeetingFloorInfo(e.rowData.floorId)
           .subscribe(response => {
             if (response.status === 'success') {
               this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: `Xóa thành công` });
@@ -196,7 +196,7 @@ export class CaiDatPhongHopTheoTangComponent implements OnInit {
 
   handleEdit(e): void {
     const params = {
-      floor: e.rowData.floor
+      floorId: e.rowData.floorId
     }
     this.router.navigate(['/cai-dat/quan-ly-phong-hop-theo-tang/chi-tiet-tang'], { queryParams: params });
   }
@@ -234,7 +234,7 @@ export class CaiDatPhongHopTheoTangComponent implements OnInit {
 
   handleAdd(): void {
     const params = {
-      floor: ''
+      floorId: ''
     }
     this.router.navigate(['/cai-dat/quan-ly-phong-hop-theo-tang/them-moi-tang'], { queryParams: params });
   }
