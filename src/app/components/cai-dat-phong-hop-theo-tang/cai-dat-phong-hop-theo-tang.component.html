@@ -19,9 +19,26 @@
                         <!-- <i id="icon-search" class="pi pi-angle-down"></i> -->
                         
                     <p-button class="search-button" icon="pi pi-search" (click)="model.offSet = 0; first = 0; load()"></p-button>
-                    <p-button class="search-button" icon="pi pi-refresh" (click)="cancel()" styleClass="p-button-secondary  btn-reload p-button-sm"></p-button>
                 </div>
                 <div class="input-group-append dropdown">
+                </div>
+            </div>
+            <div class="col-2 d-flex">
+                <p-button icon="pi pi-refresh" (click)="cancel()" styleClass="p-button-secondary search-button btn-56-56 p-button-sm"></p-button>
+                <div class="field-group select mb-0 ml-2 label-8" style="width: 100%">
+                    <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
+                     (onChange)="find()"
+                    [options]="organizes" [(ngModel)]="model.organizeId" name="organizeId" [filter]="true">
+                    <ng-template let-item pTemplate="selectedItem">
+                        <span style="vertical-align:middle;">{{item?.label}}</span>
+                    </ng-template>
+                    <ng-template let-car pTemplate="item">
+                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                        <div style="font-size:14px;float:right;margin-top:4px">{{car?.label}}</div>
+                        </div>
+                    </ng-template>
+                    </p-dropdown>
+                    <label>Tổ chức</label>
                 </div>
             </div>
             <!-- <div class="col-1"> -->
@@ -56,7 +73,9 @@
                     </p-dropdown>
                 </div> -->
             <!-- </div> -->
-            <div class="col-8 tools">
+            <!-- <div class="col-2">
+            </div> -->
+            <div class="col-5 tools">
                 <p-button icon="pi pi-plus" (click)="handleAdd()" styleClass="p-button-sm mr-1" label="Thêm mới"></p-button>
                 <!-- <p-button icon="pi pi-th-large" (click)="manageBuilding()" styleClass="p-button-sm mr5" label="Quản lý phòng họp"></p-button> -->
             </div>
