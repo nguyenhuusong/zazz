@@ -54,7 +54,8 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
     offSet: 0,
     pageSize: 15,
     year: 0,
-    month: 0
+    month: 0,
+    organizeId: ''
   }
   totalRecord = 0;
   first = 0;
@@ -91,7 +92,8 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
       offSet: 0,
       pageSize: 15,
       year: 0,
-      month: 0
+      month: 0,
+      organizeId: ''
     }
     this.load();
   }
@@ -172,11 +174,29 @@ load() {
       { label: 'Chính sách' },
       { label: 'Phép năm' },
     ];
+    this.getOrgRoots();
     this.load();
   }
 
   goToPhepBu() {
     this.router.navigate(['/chinh-sach/phep-bu']);
+  }
+
+  organizeId = ''
+  orgRoots = [];
+  getOrgRoots() {
+    const queryParams = queryString.stringify({ filter: '' });
+    this.apiService.getOrganizations(queryParams).subscribe(results => {
+      if (results.status === 'success') {
+        this.orgRoots = results.data.map(d => {
+          return {
+            label: d.organizationName + '-' + d.organizationCd,
+            value: `${d.organizeId}`
+          }
+        });
+        this.orgRoots = [{label: 'Tất cả', value: null}, ...this.orgRoots]
+      }
+    })
   }
 
 
