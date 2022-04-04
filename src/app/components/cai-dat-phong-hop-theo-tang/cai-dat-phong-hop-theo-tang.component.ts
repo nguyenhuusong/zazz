@@ -75,7 +75,7 @@ export class CaiDatPhongHopTheoTangComponent implements OnInit {
       { label: 'Cài đặt' },
       { label: 'Danh sách tầng của phòng họp và lịch họp' },
     ];
-    this.getOrrginiaztions();
+    // this.getOrrginiaztions();
     this.load();
   }
 
@@ -105,7 +105,7 @@ export class CaiDatPhongHopTheoTangComponent implements OnInit {
       gridWidth: '',
       offSet: 0,
       pageSize: 15,
-      organizeId: ''
+      // organizeId: ''
     };
   }
   listsData = [];
@@ -247,20 +247,20 @@ export class CaiDatPhongHopTheoTangComponent implements OnInit {
   }
 
   
-  organizes = []
-  getOrrginiaztions() {
-    const queryParams = queryString.stringify({ filter: ''});
-    this.apiService.getOrganizations(queryParams).subscribe(results => {
-      if(results.status === 'success') {
-          this.organizes = results.data.map(d => {
-            return {
-              label: d.organizationName,
-              value: `${d.organizeId}`
-            }
-          });
-          this.organizes = [...this.organizes];
-      }
-    })
-  }
+  // organizes = []
+  // getOrrginiaztions() {
+  //   const queryParams = queryString.stringify({ filter: ''});
+  //   this.apiService.getOrganizations(queryParams).subscribe(results => {
+  //     if(results.status === 'success') {
+  //         this.organizes = results.data.map(d => {
+  //           return {
+  //             label: d.organizationName,
+  //             value: `${d.organizeId}`
+  //           }
+  //         });
+  //         this.organizes = [...this.organizes];
+  //     }
+  //   })
+  // }
 }
 
