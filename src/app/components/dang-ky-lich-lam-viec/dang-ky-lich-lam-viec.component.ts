@@ -251,7 +251,7 @@ export class DangKyLichLamViecComponent implements OnInit {
     const queryParams = queryString.stringify({ organizeId: this.query.organizeId});
     this.apiService.getWorktimeList(queryParams).subscribe(results => {
       if (results.status === 'success') {
-        this.listWorkCds = results.data.dataList.data.map(d => {
+        this.listWorkCds = results.data.map(d => {
           return { label: d.work_times + '-' + d.work_cd, value: d.work_cd }
         });
       }
