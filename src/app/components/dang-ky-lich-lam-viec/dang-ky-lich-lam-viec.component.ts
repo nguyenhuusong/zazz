@@ -328,7 +328,7 @@ export class DangKyLichLamViecComponent implements OnInit {
     this.getWorkTime();
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
-      { label: 'Góp ý' },
+      { label: 'Danh sách đăng ký lịch làm việc' },
     ];
     this.load();
     this.getFeedbackType();
