@@ -325,6 +325,7 @@ export class DangKyLichLamViecComponent implements OnInit {
     this.getCustObjectListNew('empworking_app_st');
     this.getCustObjectListNew('worktimes_flexible');
     this.getModuleList();
+    this.getWorkTime();
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Góp ý' },
