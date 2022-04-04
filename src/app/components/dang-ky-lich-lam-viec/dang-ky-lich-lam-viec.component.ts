@@ -146,6 +146,10 @@ export class DangKyLichLamViecComponent implements OnInit {
     this.columnDefs = []
     this.spinner.show();
     let params: any = {... this.query};
+    console.log(params)
+    if(params.orgId) {
+      params.orgId = typeof params.orgId === 'string' ? params.orgId : params.orgId.orgId;
+    }
     const queryParams = queryString.stringify(params);
     this.apiService.getEmpWorkingPage(queryParams).subscribe(
       (results: any) => {
