@@ -57,8 +57,8 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v2/worktime/SetWorktimeInfo`, queryParams, this.options)
   }
   
-  getEmpWorktimePage(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v2/worktime/GetEmpWorktimePage?` + queryParams, this.options)
+  getEmpWorkingPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/working/GetEmpWorkingPage?` + queryParams, this.options)
   }
 
   setEmpWorkingChanges(queryParams): Observable<any> {

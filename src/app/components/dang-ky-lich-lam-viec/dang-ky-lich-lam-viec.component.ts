@@ -143,7 +143,7 @@ export class DangKyLichLamViecComponent implements OnInit {
     this.spinner.show();
     let params: any = {... this.query};
     const queryParams = queryString.stringify(params);
-    this.apiService.getEmpWorktimePage(queryParams).subscribe(
+    this.apiService.getEmpWorkingPage(queryParams).subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         if (this.query.offSet === 0) {
