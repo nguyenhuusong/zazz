@@ -10,6 +10,7 @@ import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-render
 import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.component';
 import { AgGridFn } from 'src/app/common/function-common/common';
 import * as moment from 'moment';
+import { cloneDeep } from 'lodash';
 @Component({
   selector: 'app-dang-ky-lich-lam-viec',
   templateUrl: './dang-ky-lich-lam-viec.component.html',
@@ -99,13 +100,13 @@ export class DangKyLichLamViecComponent implements OnInit {
     const c: any = document.querySelector(".breadcrumb");
     const d: any = document.querySelector(".filterInput");
     // const e: any = document.querySelector(".paginator");
-    this.loadjs ++ 
+    this.loadjs++
     if (this.loadjs === 5) {
-      if(b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + d.clientHeight  + 45;
+      if (b && b.clientHeight) {
+        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + d.clientHeight + 45;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
-      }else {
+      } else {
         this.loadjs = 0;
       }
     }
@@ -130,24 +131,34 @@ export class DangKyLichLamViecComponent implements OnInit {
     this.load();
   }
 
-  modelChangeStatus ={
+  modelChangeStatus = {
     empIds: [
       {
         gd: null
       }
     ],
+    organizeId: null,
+    full_name: null,
     work_cd: null,
     start_dt: moment(new Date()).format('DD/MM/YYYY')
   }
   displayChangeStatus = false;
-
+  organizes = [];
+  departmentFiltes = [];
+  typeFeedBacks = [];
+  listUsers = [];
+  isTheOrganToMove = false;
+  listDataSelect = [];
+  columnDefsMoveOrgan = [];
+  listWorkCds = [];
+  listAppSt = [];
+  listIsFlexible = [];
   listsData = []
   load() {
     this.columnDefs = []
     this.spinner.show();
-    let params: any = {... this.query};
-    console.log(params)
-    if(params.orgId) {
+    let params: any = { ... this.query };
+    if (params.orgId) {
       params.orgId = typeof params.orgId === 'string' ? params.orgId : params.orgId.orgId;
     }
     const queryParams = queryString.stringify(params);
@@ -157,6 +168,11 @@ export class DangKyLichLamViecComponent implements OnInit {
         if (this.query.offSet === 0) {
           this.cols = results.data.gridflexs;
           this.colsDetail = results.data.gridflexdetails ? results.data.gridflexdetails : [];
+        }
+        if(!this.query.organizeId) {
+          this.query.organizeId = results.data.dataList.data[0].organizeId;
+          this.getOrganizeTree();
+          this.getWorkTime();
         }
         this.initGrid();
         this.countRecord.totalRecord = results.data.dataList.recordsTotal;
@@ -177,12 +193,12 @@ export class DangKyLichLamViecComponent implements OnInit {
   showButtons(event: any) {
     return {
       buttons: [
-        // {
-        //   onClick: this.XemChiTiet.bind(this),
-        //   label: 'Xem chi tiết',
-        //   icon: 'fa fa-eye',
-        //   class: 'btn-primary mr5',
-        // },
+        {
+          onClick: this.XemChiTiet.bind(this),
+          label: 'Xem chi tiết',
+          icon: 'fa fa-eye',
+          class: 'btn-primary mr5',
+        },
         {
           onClick: this.doiLichLamViec.bind(this),
           label: 'Đổi lịch làm việc',
@@ -193,21 +209,59 @@ export class DangKyLichLamViecComponent implements OnInit {
     };
   }
 
+  XemChiTiet(event) {
+    const queryParams = queryString.stringify({ empId: event.rowData.empId, gd: event.rowData.gd });
+    this.getEmpWorking(queryParams);
+  }
+  listViewsDependent = [];
+  detailDependentInfo = null;
+  displayFormEditDetail = false;
+  getEmpWorking(query) {
+    this.listViewsDependent = [];
+    this.apiService.getEmpWorking(query).subscribe(results => {
+      if (results.status === 'success') {
+        this.listViewsDependent = cloneDeep(results.data.group_fields);
+        this.detailDependentInfo = results.data;
+        this.displayFormEditDetail = true;
+      }
+    })
+  }
+
+  setEmpDependen(data) {
+    const param = {
+      ...this.detailDependentInfo, group_fields: data
+    }
+    this.apiService.setEmpWorking(param).subscribe(results => {
+      if (results.status === 'success') {
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.messages ? results.messages : 'Thêm mới thành công' });
+        this.displayFormEditDetail = false;
+        this.spinner.hide();
+        this.load();
+      } else {
+        this.spinner.hide();
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.messages });
+      }
+    })
+  }
+
   doiLichLamViec(event) {
-    this.modelChangeStatus ={
+    this.modelChangeStatus = {
       empIds: [
         {
           gd: null
         }
       ],
+      organizeId: null,
+      full_name: event.rowData.fullName,
       work_cd: event.rowData.work_cd,
       start_dt: moment(new Date()).format('DD/MM/YYYY')
     }
+    this.listUsers = [{empId : event.rowData.empId}]
     this.displayChangeStatus = true;
   }
-  organizes = []
+
   getModuleList() {
-    const queryParams = queryString.stringify({ filter: ''});
+    const queryParams = queryString.stringify({ filter: '' });
     this.apiService.getOrganizations(queryParams).subscribe(results => {
       if (results.status === 'success') {
         const moduleLists = results.data.map(d => {
@@ -228,9 +282,9 @@ export class DangKyLichLamViecComponent implements OnInit {
     this.getWorkTime();
     this.find();
   }
-  departmentFiltes = [];
+
   getOrganizeTree(): void {
-    const queryParams = queryString.stringify({ parentId: this.query.organizeId});
+    const queryParams = queryString.stringify({ parentId: this.query.organizeId });
     this.apiService.getOrganizeTree(queryParams)
       .subscribe((results: any) => {
         if (results && results.status === 'success') {
@@ -244,11 +298,8 @@ export class DangKyLichLamViecComponent implements OnInit {
     this.find();
   }
 
-  listWorkCds = [];
-  listAppSt = [];
-  listIsFlexible = [];
   getWorkTime() {
-    const queryParams = queryString.stringify({ organizeId: this.query.organizeId});
+    const queryParams = queryString.stringify({ organizeId: this.query.organizeId });
     this.apiService.getWorktimeList(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.listWorkCds = results.data.map(d => {
@@ -258,17 +309,44 @@ export class DangKyLichLamViecComponent implements OnInit {
     })
   }
 
+  saveForm() {
+    if(!this.modelChangeStatus.work_cd) {
+      this.messageService.add({ severity: 'error', summary: 'Thông báo', detail:  'Chọn lịch làm việc'});
+      return;
+    }
+    if(this.listUsers.length === 0) {
+      this.messageService.add({ severity: 'error', summary: 'Thông báo', detail:  'Chưa có bản ghi nào được cài đặt'});
+      return;
+    }
+    let params = { ...this.modelChangeStatus };
+    delete params.organizeId;
+    delete params.full_name;
+    params.empIds = this.listUsers.map(d => {
+      return {
+        gd: d.empId
+      }
+    });
+    this.apiService.setEmpWorkingChanges(params).subscribe(results => {
+      if (results.status === 'success') {
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Đổi lịch công việc thành công' });
+        this.load();
+        this.displayChangeStatus = false;
+        this.isTheOrganToMove = false;
+      }
+    })
+  }
+
   getCustObjectListNew(params) {
-    const queryParams = queryString.stringify({ objKey: params});
+    const queryParams = queryString.stringify({ objKey: params });
     this.apiService.getCustObjectListNew(true, queryParams).subscribe(results => {
-      if(params === 'empworking_app_st') {
+      if (params === 'empworking_app_st') {
         this.listAppSt = results.data.map(d => {
           return {
             label: d.objName,
             value: d.objValue
           }
         });
-      }else {
+      } else {
         this.listIsFlexible = results.data.map(d => {
           return {
             label: d.objName,
@@ -276,12 +354,12 @@ export class DangKyLichLamViecComponent implements OnInit {
           }
         });
       }
-   
+
     });
   }
 
   initGrid() {
-    this.columnDefs = [ 
+    this.columnDefs = [
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       {
         headerName: 'Thao tác',
@@ -292,17 +370,20 @@ export class DangKyLichLamViecComponent implements OnInit {
         cellClass: ['border-right', 'no-auto'],
         cellRendererParams: (params: any) => this.showButtons(params),
         checkboxSelection: true,
+        headerCheckboxSelection: true,
+        headerCheckboxSelectionFilteredOnly: true,
+        suppressSizeToFit: true,
         field: 'checkbox'
       }
-      ]
+    ]
   }
 
-  XemChiTiet(event) {
-    const params = {
-      reason_code: event.rowData.reason_code,
-    }
-    this.router.navigate(['/cai-dat/ly-do-nghi/chi-tiet-ly-do-nghi'], { queryParams: params });
-  }
+  // XemChiTiet(event) {
+  //   const params = {
+  //     reason_code: event.rowData.reason_code,
+  //   }
+  //   this.router.navigate(['/cai-dat/ly-do-nghi/chi-tiet-ly-do-nghi'], { queryParams: params });
+  // }
 
   create() {
     const params = {
@@ -331,43 +412,134 @@ export class DangKyLichLamViecComponent implements OnInit {
     this.getCustObjectListNew('worktimes_flexible');
     this.getModuleList();
     this.items = [
-      { label: 'Trang chủ' , routerLink: '/home' },
+      { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Danh sách đăng ký lịch làm việc' },
     ];
     this.load();
     this.getFeedbackType();
   }
-  typeFeedBacks = [];
+
   getFeedbackType() {
     this.apiService.getFeedbackType().subscribe(results => {
-      if(results.status === 'success') {
+      if (results.status === 'success') {
         this.typeFeedBacks = results.data.map(d => {
           return {
             label: d.feedbackTypeName,
             value: d.feedbackTypeId
           }
         });
-        this.typeFeedBacks = [{label: 'Tất cả', value: null}, ...this.typeFeedBacks]
+        this.typeFeedBacks = [{ label: 'Tất cả', value: null }, ...this.typeFeedBacks]
       }
     })
   }
-  
+
   changeStatus(event) {
-    console.log(event)
-    let params = {...this.modelChangeStatus};
+    let params = { ...this.modelChangeStatus };
     params.empIds = event.appUsers.map(d => {
       return {
         gd: d.userId
       }
     });
-      this.apiService.setEmpWorkingChanges(params).subscribe(results => {
-         if(results.status === 'success') {
-          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Đổi lịch công việc thành công' });
-          this.load();
-          this.displayChangeStatus = true;
-         }
-      })
+    this.apiService.setEmpWorkingChanges(params).subscribe(results => {
+      if (results.status === 'success') {
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Đổi lịch công việc thành công' });
+        this.load();
+        this.displayChangeStatus = true;
+      }
+    })
 
+  }
+
+  getColumnDefsMoveOrgan() {
+    this.columnDefsMoveOrgan = [
+      {
+        headerName: 'Stt',
+        filter: '',
+        maxWidth: 90,
+        pinned: 'left',
+        cellRenderer: params => {
+          return params.rowIndex + 1
+        },
+        cellClass: ['border-right', 'no-auto'],
+      },
+      {
+        headerName: 'Mã NV',
+        filter: '',
+        cellClass: ['border-right'],
+        field: 'code',
+        width: 100
+      },
+      {
+        headerName: 'Họ tên',
+        filter: '',
+        cellClass: ['border-right'],
+        field: 'fullName',
+      },
+      {
+        headerName: 'Số ĐT',
+        filter: '',
+        cellClass: ['border-right'],
+        field: 'phone',
+      },
+      {
+        headerName: 'Tổ chức',
+        filter: '',
+        cellClass: ['border-right'],
+        field: 'org_name',
+      },
+      {
+        headerName: 'Thao tác',
+        filter: '',
+        maxWidth: 100,
+        pinned: 'right',
+        cellRenderer: 'buttonAgGridComponent',
+        cellClass: ['border-right', 'no-auto'],
+        cellRendererParams: (params: any) => this.showButtons2(params),
+        field: 'button'
+      }
+    ]
+  }
+
+  showButtons2(params) {
+    return {
+      buttons: [
+        {
+          onClick: this.delStaffinDataOraMove.bind(this),
+          label: 'Xóa',
+          icon: 'fa fa-trash',
+          class: 'btn-primary mr5',
+        },
+      ]
+    };
+  }
+  delStaffinDataOraMove(data) {
+    this.listUsers = this.listUsers.filter(a => a.rowid != data.rowData.rowid);
+  }
+
+
+  taolichlamviec() {
+    this.getColumnDefsMoveOrgan();
+    this.modelChangeStatus = {
+      empIds: [
+        {
+          gd: null
+        }
+      ],
+      organizeId: null,
+      work_cd: null,
+      full_name: null,
+      start_dt: moment(new Date()).format('DD/MM/YYYY')
+    }
+    if (this.listDataSelect.length > 0) {
+      this.listUsers = cloneDeep(this.listDataSelect);
+      this.isTheOrganToMove = true;
+    } else {
+      this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Vui lòng nhân sự' });
+    }
+  }
+
+  rowSelected(data) {
+    this.listDataSelect = data
   }
 
 }
