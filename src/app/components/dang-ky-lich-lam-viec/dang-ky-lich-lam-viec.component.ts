@@ -77,8 +77,10 @@ export class DangKyLichLamViecComponent implements OnInit {
     offSet: 0,
     pageSize: 15,
     organizeId: null,
+    orgId: null,
     work_cd: null,
-    app_st: null
+    app_st: null,
+    is_flexible: null
   }
   totalRecord = 0;
   DriverId = 0;
@@ -120,8 +122,10 @@ export class DangKyLichLamViecComponent implements OnInit {
       offSet: 0,
       pageSize: 15,
       organizeId: null,
+      orgId: null,
       work_cd: null,
-      app_st: null
+      app_st: null,
+      is_flexible: null
     }
     this.load();
   }
@@ -197,7 +201,7 @@ export class DangKyLichLamViecComponent implements OnInit {
     }
     this.displayChangeStatus = true;
   }
-  moduleLists = []
+  organizes = []
   getModuleList() {
     const queryParams = queryString.stringify({ filter: ''});
     this.apiService.getOrganizations(queryParams).subscribe(results => {
@@ -209,9 +213,66 @@ export class DangKyLichLamViecComponent implements OnInit {
             ...d
           }
         });
-        this.moduleLists = moduleLists
+        this.organizes = moduleLists
       }
     })
+  }
+
+  handleChangeOrganize(): void {
+    this.query.orgId = '';
+    this.getOrganizeTree();
+    this.find();
+  }
+  departmentFiltes = [];
+  getOrganizeTree(): void {
+    const queryParams = queryString.stringify({ parentId: this.query.organizeId});
+    this.apiService.getOrganizeTree(queryParams)
+      .subscribe((results: any) => {
+        if (results && results.status === 'success') {
+          this.departmentFiltes = results.data;
+        }
+      },
+        error => { });
+  }
+
+  onChangeTree(a): void {
+    this.find();
+  }
+
+  listWorkCds = [];
+  listAppSt = [];
+  listIsFlexible = [];
+  getWorkTime() {
+    const queryParams = queryString.stringify({ filter: ''});
+    this.apiService.getWorktimePage(queryParams).subscribe(results => {
+      if (results.status === 'success') {
+        this.listWorkCds = results.data.dataList.data.map(d => {
+          return { label: d.work_times + '-' + d.work_cd, value: d.work_cd }
+        });
+      }
+    })
+  }
+
+  getCustObjectListNew(params) {
+    const queryParams = queryString.stringify({ objKey: params});
+    this.apiService.getCustObjectListNew(true, queryParams).subscribe(results => {
+      if(params === 'empworking_app_st') {
+        this.listAppSt = results.data.map(d => {
+          return {
+            label: d.objName,
+            value: d.objValue
+          }
+        });
+      }else {
+        this.listIsFlexible = results.data.map(d => {
+          return {
+            label: d.objName,
+            value: d.objValue
+          }
+        });
+      }
+   
+    });
   }
 
   initGrid() {
@@ -261,6 +322,8 @@ export class DangKyLichLamViecComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getCustObjectListNew('empworking_app_st');
+    this.getCustObjectListNew('worktimes_flexible');
     this.getModuleList();
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
