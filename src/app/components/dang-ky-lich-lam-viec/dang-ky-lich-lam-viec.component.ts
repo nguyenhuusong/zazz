@@ -225,6 +225,7 @@ export class DangKyLichLamViecComponent implements OnInit {
   handleChangeOrganize(): void {
     this.query.orgId = '';
     this.getOrganizeTree();
+    this.getWorkTime();
     this.find();
   }
   departmentFiltes = [];
@@ -247,8 +248,8 @@ export class DangKyLichLamViecComponent implements OnInit {
   listAppSt = [];
   listIsFlexible = [];
   getWorkTime() {
-    const queryParams = queryString.stringify({ filter: ''});
-    this.apiService.getWorktimePage(queryParams).subscribe(results => {
+    const queryParams = queryString.stringify({ organizeId: this.query.organizeId});
+    this.apiService.getWorktimeList(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.listWorkCds = results.data.dataList.data.map(d => {
           return { label: d.work_times + '-' + d.work_cd, value: d.work_cd }
@@ -290,7 +291,7 @@ export class DangKyLichLamViecComponent implements OnInit {
         cellRenderer: 'buttonAgGridComponent',
         cellClass: ['border-right', 'no-auto'],
         cellRendererParams: (params: any) => this.showButtons(params),
-        checkboxSelection: false,
+        checkboxSelection: true,
         field: 'checkbox'
       }
       ]
@@ -329,7 +330,6 @@ export class DangKyLichLamViecComponent implements OnInit {
     this.getCustObjectListNew('empworking_app_st');
     this.getCustObjectListNew('worktimes_flexible');
     this.getModuleList();
-    this.getWorkTime();
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Danh sách đăng ký lịch làm việc' },
