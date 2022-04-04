@@ -308,7 +308,7 @@ const routes: Routes = [
     },
   },
   {
-    path: 'quan-ly-phong-hop-theo-tangg/chi-tiet-tang',
+    path: 'quan-ly-phong-hop-theo-tang/chi-tiet-tang',
     component: ChiTietPhongHopTheoTangComponent,
     data: {
       title: 'Chi tiết Phòng họp theo tầng',
