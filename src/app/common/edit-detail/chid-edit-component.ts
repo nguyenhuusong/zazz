@@ -7,7 +7,7 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { stringtodate } from '../function-common/common';
 import * as numeral from 'numeral';
 import * as moment from 'moment';
-import { ValidationNumberDayInMonth, ValidationNumberDayInMonthEmpty } from './validation';
+import { ValidationNumberDayInMonth, ValidationNumberDayInMonthEmpty, ValidationNumber, ValidationNumberEmpty } from './validation';
 @Component({
   selector: 'app-type-text',
   template: ` <div class="field-group text" [ngClass]=" element.columnValue ? 'valid' : 'invalid' ">
@@ -476,11 +476,25 @@ export class AppTypeNumberComponent implements OnInit {
     //   this.modelFields[field_name].error = this.modelFields[field_name].isRequire ? this.element.columnValue ? false : true : false
     //   this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
     // }
-    if(element.isRequire) {
-      this.modelFields[field_name] = {...this.modelFields[field_name], ...ValidationNumberDayInMonth(event.value)}
-  }else{
-      this.modelFields[field_name] = {...this.modelFields[field_name], ...ValidationNumberDayInMonthEmpty(event.value)}
-  }
+    // if(element.isRequire) {
+    //   this.modelFields[field_name] = {...this.modelFields[field_name], ...ValidationNumberDayInMonth(event.value)}
+    // }else{
+    //     this.modelFields[field_name] = {...this.modelFields[field_name], ...ValidationNumberDayInMonthEmpty(event.value)}
+    // }
+
+    if(field_name === 'from_day' || field_name === 'to_day'){
+      if(element.isRequire) {
+        this.modelFields[field_name] = {...this.modelFields[field_name], ...ValidationNumberDayInMonth(event.value)}
+      }else{
+        this.modelFields[field_name] = {...this.modelFields[field_name], ...ValidationNumberDayInMonthEmpty(event.value)}
+      }
+    }else{
+      if(element.isRequire) {
+        this.modelFields[field_name] = {...this.modelFields[field_name], ...ValidationNumber(event.value)}
+      }else{
+        this.modelFields[field_name] = {...this.modelFields[field_name], ...ValidationNumberEmpty(event.value)}
+      }
+    }
     
   }
 }

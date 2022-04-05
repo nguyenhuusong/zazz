@@ -291,30 +291,30 @@ const routes: Routes = [
 
   // Quản lý phòng họp theo tầng
 
-  {
-    path: 'quan-ly-phong-hop-theo-tang',
-    component: CaiDatPhongHopTheoTangComponent,
-    data: {
-      title: 'Danh sách tầng',
-      url: 'quan-ly-phong-hop-theo-tang',
-    },
-  },
-  {
-    path: 'quan-ly-phong-hop-theo-tang/them-moi-tang',
-    component: ChiTietPhongHopTheoTangComponent,
-    data: {
-      title: 'Thêm mới Phòng họp theo tầng',
-      url: 'them-moi-phong-hop-theo-tang',
-    },
-  },
-  {
-    path: 'quan-ly-phong-hop-theo-tang/chi-tiet-tang',
-    component: ChiTietPhongHopTheoTangComponent,
-    data: {
-      title: 'Chi tiết Phòng họp theo tầng',
-      url: 'chi-tiet-phong-hop-theo-tang',
-    },
-  },
+  // {
+  //   path: 'quan-ly-phong-hop-theo-tang',
+  //   component: CaiDatPhongHopTheoTangComponent,
+  //   data: {
+  //     title: 'Danh sách tầng',
+  //     url: 'quan-ly-phong-hop-theo-tang',
+  //   },
+  // },
+  // {
+  //   path: 'quan-ly-phong-hop-theo-tang/them-moi-tang',
+  //   component: ChiTietPhongHopTheoTangComponent,
+  //   data: {
+  //     title: 'Thêm mới Phòng họp theo tầng',
+  //     url: 'them-moi-phong-hop-theo-tang',
+  //   },
+  // },
+  // {
+  //   path: 'quan-ly-phong-hop-theo-tang/chi-tiet-tang',
+  //   component: ChiTietPhongHopTheoTangComponent,
+  //   data: {
+  //     title: 'Chi tiết Phòng họp theo tầng',
+  //     url: 'chi-tiet-phong-hop-theo-tang',
+  //   },
+  // },
   
   {
     path: 'tham-so-chung/:id',
