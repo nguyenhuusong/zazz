@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { AuthService } from './auth.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 const apiBaseUrl = environment.apiBase;
 const apiHrmBase = environment.apiHrmBase;
 const apiCoreBaseUrl = 'https://apicore.sunshinegroup.vn';
@@ -159,4 +159,6 @@ export class ApiService {
   getObjectList(objKey): Observable<any> {
     return this.http.get<any>(`${apiHrmBase}/api/v2/category/GetObjectList?objKey=${objKey}` , this.options);
   }
+
+ 
 }

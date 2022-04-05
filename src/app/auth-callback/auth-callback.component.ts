@@ -24,12 +24,7 @@ export class AuthCallbackComponent implements OnInit {
     if (returnUrl) {
       this.router.navigateByUrl(returnUrl);
     }
-    // if (!this.firebaseAuthService.authenticated) {
-    //   const customToken = await this.getCustomToken(token);
-    //   if (customToken) {
-    //     this.firebaseAuthService.customLogin(customToken);
-    //   }
-    // }
+    
 
   }
   getCustomToken(token: string): Promise<string> {

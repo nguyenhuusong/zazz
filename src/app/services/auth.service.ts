@@ -2,13 +2,17 @@ import { Injectable } from '@angular/core';
 import { UserManager, UserManagerSettings, User } from 'oidc-client';
 import { environment } from '../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { FirebaseAuthService } from './firebase-auth.service';
+import { map } from 'rxjs';
 
 @Injectable()
 export class AuthService {
   private manager: UserManager = new UserManager(environment.authenSettings);
   private user: User = null;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+    private firebaseAuthService: FirebaseAuthService,
+    ) {
   }
 
   isLoggedIn(): Promise<boolean> {
@@ -66,7 +70,7 @@ export class AuthService {
     return localStorage.getItem('avatarUrl');
   }
 
-  getEmpDetail() {
+ async getEmpDetail() {
     if (localStorage.getItem("employeeId") === null) {
       const headers = new HttpHeaders({ Authorization: this.getAuthorizationHeaderValue() });
       return this.http.get(environment.apiBase + '/api/v2/employee/GetEmployee?employeeId=', { headers }).toPromise()
@@ -77,11 +81,33 @@ export class AuthService {
           }
         });
     }
+    const token = this.getAccessTokenValue();
+    if (!this.firebaseAuthService.authenticated) {
+      const customToken = await this.getCustomToken(token);
+      if (customToken) {
+        this.firebaseAuthService.customLogin(customToken);
+      }
+    }
   }
+
   getWorkingProject() {
     return localStorage.getItem('projectCd');
   }
+
+  getCustomToken(token: string): Promise<any> {
+    const url = `${environment.cloudFunctionServer}/getCustomToken`;
+    return this.http.post(url, {
+      data: {
+        access_token: token
+      }
+    }).pipe(
+      map((response: any) => response.result)
+    ).toPromise();
+
+  }
+ 
 }
+
 
 export function getClientSettings(): UserManagerSettings {
   return {
