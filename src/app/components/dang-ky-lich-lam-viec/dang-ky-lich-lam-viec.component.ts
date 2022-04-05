@@ -321,6 +321,7 @@ export class DangKyLichLamViecComponent implements OnInit {
     let params = { ...this.modelChangeStatus };
     delete params.organizeId;
     delete params.full_name;
+    params.start_dt = typeof params.start_dt === 'object' ? moment(new Date(params.start_dt)).format('DD/MM/YYYY') : params.start_dt;
     params.empIds = this.listUsers.map(d => {
       return {
         gd: d.empId
