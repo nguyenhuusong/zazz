@@ -169,7 +169,7 @@ export class DangKyLichLamViecComponent implements OnInit {
           this.cols = results.data.gridflexs;
           this.colsDetail = results.data.gridflexdetails ? results.data.gridflexdetails : [];
         }
-        if(!this.query.organizeId) {
+        if(!this.query.organizeId && results.data && results.data.dataList.data.length > 0) {
           this.query.organizeId = results.data.dataList.data[0].organizeId;
           this.getOrganizeTree();
           this.getWorkTime();
