@@ -290,7 +290,7 @@ export class NsHoSoNghiViecComponent implements OnInit {
   ]
   changeStatus(event) {
     this.modelPheDuyet = {
-      id: event.rowData.id,
+      id: event.rowData.terminateId,
       status_key: this.listTerminateKey.length > 0 ? this.listTerminateKey[0].value : '',
       status: 0,
       comment: '',
