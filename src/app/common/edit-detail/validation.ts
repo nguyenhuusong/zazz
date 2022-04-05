@@ -2,7 +2,8 @@ const Error = {
     ERROR_REQUIRE : 'Trường bắt buộc nhập',
     ERROR_PHONE: 'Dữ liệu không hợp lệ',
     ERROR_EMAIL: 'Dữ liệu không hợp lệ',
-    ERROR_DAYOFMONTH: 'Ngày không hợp lệ'
+    ERROR_DAYOFMONTH: 'Ngày không hợp lệ',
+    ERROR_NUMBER: 'Dữ liệu không hợp lệ',
 }
 
 export function ValidationPhoneNumber(value) {
@@ -166,6 +167,46 @@ export function ValidationNumberDayInMonthEmpty(value) {
         return {
             error : true,
             message: Error.ERROR_DAYOFMONTH
+        }
+    }
+    return {
+        error : false,
+        message: ''
+    }
+}
+
+
+export function ValidationNumber(value) {
+    if(value === "" || value === undefined) {
+        return {
+            error : true,
+            message: Error.ERROR_REQUIRE
+        }
+    };
+    if (value < 1) {
+        return {
+            error : true,
+            message: Error.ERROR_NUMBER
+        }
+    }
+    return {
+        error : false,
+        message: ''
+    }
+}
+
+
+export function ValidationNumberEmpty(value) {
+    if(value === "" || value === undefined) {
+        return {
+            error : false,
+            message: ''
+        }
+    };
+    if (value < 1) {
+        return {
+            error : true,
+            message: Error.ERROR_NUMBER
         }
     }
     return {
