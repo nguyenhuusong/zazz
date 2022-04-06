@@ -1,7 +1,9 @@
 <div class="row p-2 attack col-sm-12 mt-2">
     <div class="attack__item" *ngFor="let item of notify.attachs">
-        <span class="attack__item-remove" (click)="handleRemoveMedia(item)"><i class="fa fa-times" aria-hidden="true"></i></span>
-        <p-image src="{{item.attach_url}}" *ngIf="item.attach_type === 'image'" alt="Image" width="200" [preview]="true"></p-image>
-        <img class="attack__item-image" *ngIf="item.attach_type !== 'image'" (click)="openFile(item)" [src]="item.attach_url" onerror="this.src='https://icon-library.com/images/pdf-file-icon/pdf-file-icon-18.jpg'" alt="Image">
+        <div class="in">
+            <span class="attack__item-remove" (click)="handleRemoveMedia(item)"><i class="fa fa-times" aria-hidden="true"></i></span>
+            <p-image src="{{item.attach_url}}" *ngIf="item.attach_type === 'image'" alt="Image" width="200" [preview]="true"></p-image>
+            <img class="attack__item-image" *ngIf="item.attach_type !== 'image'" (click)="openFile(item)" [src]="item.attach_url" onerror="this.src='https://icon-library.com/images/pdf-file-icon/pdf-file-icon-18.jpg'" alt="Image">
+        </div>
     </div>
 </div>
