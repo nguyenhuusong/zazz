@@ -144,15 +144,15 @@ load() {
   }
   XemChiTiet(event) {
     const params = {
-      annualId: event.rowData.canId
+      annualId: event.rowData.annualId
     }
     this.router.navigate(['/chinh-sach/phep-bu/chi-tiet-phep-bu'], { queryParams: params });
   }
   delRecord(event) {
     this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn xóa tuyển dụng?',
+      message: 'Bạn có chắc chắn muốn xóa phép bù?',
       accept: () => {
-        const queryParams = queryString.stringify({ canId: event.rowData.canId });
+        const queryParams = queryString.stringify({ annualId: event.rowData.annualId });
         this.apiService.delAnnualAddInfo(queryParams).subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa phép bù thành công' });
@@ -169,7 +169,7 @@ load() {
     const params = {
       annualId: ""
     }
-    this.router.navigate(['/chinh-sach/phep-bu/chi-tiet-phep-bu'], { queryParams: params });
+    this.router.navigate(['/chinh-sach/phep-bu/them-moi-phep-bu'], { queryParams: params });
   }
   initGrid() {
     this.columnDefs = [
