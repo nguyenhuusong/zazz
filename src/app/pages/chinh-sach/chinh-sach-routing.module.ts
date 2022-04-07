@@ -48,6 +48,14 @@ const routes: Routes = [
       url: 'chi-tiet-phep-bu',
     },
   },
+  {
+    path: 'phep-bu/them-moi-phep-bu',
+    component: ChiTietPhepBuComponent,
+    data: {
+      title: 'Thêm mới phép bù',
+      url: 'them-moi-phep-bu',
+    },
+  },
   //Chấm công
   {
     path: 'cham-cong',
