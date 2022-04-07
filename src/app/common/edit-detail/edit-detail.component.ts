@@ -94,8 +94,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
           const dataValidation = {
             key: element1.field_name,
             isRequire: element1.isVisiable && !element1.isEmpty && element1.isRequire ? true : false,
-            error: element1.isVisiable && !element1.isEmpty && element1.isRequire && (element1.columnValue === null) ? true : false,
-            message: element1.isVisiable && !element1.isEmpty && element1.isRequire && (element1.columnValue === null) ? 'Trường bắt buộc nhập !' : ''
+            error: element1.isVisiable && !element1.isDisable && !element1.isEmpty && element1.isRequire && (element1.columnValue === null) ? true : false,
+            message: element1.isVisiable && !element1.isDisable && !element1.isEmpty && element1.isRequire && (element1.columnValue === null) ? 'Trường bắt buộc nhập !' : ''
           }
           this.modelFields[element1.field_name] = dataValidation
         }
@@ -197,9 +197,15 @@ export class EditDetailComponent implements OnInit, OnChanges {
             this.getVehicleTypes(element1);
           } else if (element1.field_name === 'year_of_birth') {
             this.GetYearPicker(element1);
-          } else {
+          } else if (element1.field_name === 'annualMonth') {
+            this.GetAnnualMonth(element1);
+          }else {
             this.getCustObjectListNew(element1);
           }
+        }else if(element1.columnType === 'input'){
+          if (element1.field_name === 'annualYear') {
+            this.GetAnnualYear(element1);
+          } 
         }
       });
     });
@@ -244,6 +250,19 @@ export class EditDetailComponent implements OnInit, OnChanges {
     element1.options = listYears;
     element1.columnValue = element1.columnValue ? element1.columnValue : ''
 
+  }
+
+  GetAnnualMonth(element1) {
+    let listMonths = []
+    for (let i = 1; i <= 12; i++) {
+      listMonths.push({ label: 'Tháng ' + i, value: i.toString() })
+    }
+    element1.options = listMonths;
+    element1.columnValue = element1.columnValue ? element1.columnValue : ''
+  }
+
+  GetAnnualYear(element1) {
+    element1.columnValue = moment().year();
   }
 
   getWorkTime(element1, empId) {
