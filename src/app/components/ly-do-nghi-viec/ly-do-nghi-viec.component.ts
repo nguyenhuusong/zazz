@@ -176,7 +176,7 @@ export class LyDoNghiViecComponent implements OnInit {
       message: 'Bạn có chắc chắn muốn thực hiện mở tài khoản?',
       accept: () => {
         const queryParams = queryString.stringify({ reason_code: event.rowData.reason_code });
-        this.apiService.delCompanyInfo(queryParams).subscribe(results => {
+        this.apiService.delLeaveReason(queryParams).subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa công ty thành công' });
             this.load();
