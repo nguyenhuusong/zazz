@@ -121,6 +121,11 @@ export class EditDetailComponent implements OnInit, OnChanges {
            }, 500);
           } else if (element1.field_name === 'work_cds') {
             this.getWorkTimes(element1, null)
+          } else if (element1.field_name === 'empId') {
+            const root_orgId = await this.getValueByKey('organizeId');
+            setTimeout(() => {
+              this.getUserByPush(root_orgId, element1);
+            }, 100);
           } else if (element1.field_name === 'shift_cds') {
             this.getWorkShifts(element1, null)
           } else if (element1.field_name === 'work_cd') {
