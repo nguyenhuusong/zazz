@@ -124,7 +124,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
           } else if (element1.field_name === 'empId') {
             const root_orgId = await this.getValueByKey('organizeId');
             setTimeout(() => {
-              this.getUserByPush(root_orgId, element1);
+              this.getUserByPushFor(root_orgId, element1);
             }, 100);
           } else if (element1.field_name === 'shift_cds') {
             this.getWorkShifts(element1, null)
@@ -443,7 +443,21 @@ export class EditDetailComponent implements OnInit, OnChanges {
             value: `${d.userId}`
           }
         });
-        element1.columnValue = element1.columnValue ? element1.columnValue : ''
+        element1.columnValue = element1.columnValue ? element1.columnValue.toLowerCase() : ''
+      }
+    })
+  }
+
+  getUserByPushFor(orgId, element1) {
+    this.apiService.getUserByPush({ organizeId: orgId, orgIds: [orgId] }).subscribe(results => {
+      if (results.status === 'success') {
+        element1.options = cloneDeep(results.data).map(d => {
+          return {
+            label: d.fullName + '-' + d.phone,
+            value: `${d.empId}`
+          }
+        });
+        element1.columnValue = element1.columnValue ? element1.columnValue.toLowerCase() : ''
       }
     })
   }
