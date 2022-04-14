@@ -124,7 +124,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
           } else if (element1.field_name === 'empId') {
             const root_orgId = await this.getValueByKey('organizeId');
             setTimeout(() => {
-              this.getUserByPushFor(root_orgId, element1);
+              this.getEmployeePage(root_orgId, element1);
             }, 100);
           } else if (element1.field_name === 'shift_cds') {
             this.getWorkShifts(element1, null)
@@ -448,12 +448,13 @@ export class EditDetailComponent implements OnInit, OnChanges {
     })
   }
 
-  getUserByPushFor(orgId, element1) {
-    this.apiService.getUserByPush({ organizeId: orgId, orgIds: [orgId] }).subscribe(results => {
+  getEmployeePage(orgId, element1) {
+    const queryParams = queryString.stringify({ orgId: orgId, pageSize: 100000 });
+    this.apiService.getEmployeePage(queryParams).subscribe(results => {
       if (results.status === 'success') {
-        element1.options = cloneDeep(results.data).map(d => {
+        element1.options = cloneDeep(results.data.dataList.data).map(d => {
           return {
-            label: d.fullName + '-' + d.phone,
+            label: d.full_name + '-' + d.phone1,
             value: `${d.empId}`
           }
         });
