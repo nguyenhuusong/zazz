@@ -468,6 +468,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
     this.apiService.getOrganizations(queryParams).subscribe(results => {
       if (results.status === 'success') {
         if (element1.columnType === 'multiSelect') {
+          element1.options = []
           element1.options = cloneDeep(results.data).map(d => {
             return {
               name: d.organizationName,
@@ -475,7 +476,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
             }
           });
           if (element1.columnValue) {
-            let newarray = []
+            let newarray = [];
             element1.options.forEach(element => {
               if (element1.columnValue.split(",").indexOf(element.code.toUpperCase()) > -1) {
                 newarray.push(element);
@@ -608,6 +609,9 @@ export class EditDetailComponent implements OnInit, OnChanges {
             };
           });
           element1.columnValue = element1.columnValue ? element1.columnValue : '';
+          if(element1.field_name === 'content_type' && element1.columnValue) {
+            this.modelMarkdow.type = element1.columnValue;
+          }
         }
       });
   }

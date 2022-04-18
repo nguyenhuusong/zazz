@@ -66,6 +66,7 @@ export class NotifyDetailComponent implements OnInit {
     this.activatedRoute.queryParamMap.subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.notiId = this.paramsObject.params.notiId;
+     
       this.external_sub = this.paramsObject.params.external_sub;
       this.external_name = this.paramsObject.params.external_name;
       this.tempId = this.paramsObject.params.tempId;
@@ -87,10 +88,10 @@ export class NotifyDetailComponent implements OnInit {
         this.modelMarkdow.attachs =this.dataInfo.attachs && this.dataInfo.attachs.length ? this.dataInfo.attachs : []
         if (this.notiId == null) {
           this.manhinh = 'Edit';
-          this.indexTab = 0;
+          this.indexTab = this.indexTab;
         } else {
           this.manhinh = 'Edit';
-          this.indexTab = 1;
+          this.indexTab = this.indexTab;
         }
         this.spinner.hide();
       }
@@ -99,6 +100,9 @@ export class NotifyDetailComponent implements OnInit {
 
   handleChange(index) {
     this.indexTab = index;
+    if(this.indexTab === 0) {
+      this.getAppNotifyInfo();
+    }
   }
 
   onChangeButtonView(event) {
