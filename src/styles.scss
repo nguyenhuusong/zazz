@@ -1990,16 +1990,49 @@ button{
         }
         .p-timeline-event-content{
             .p-card-title{
-                font-size: 16px;
+                font-size: 15px;
                 line-height: 1;
-                font-weight: normal
+                font-weight: 500;
+                margin-bottom: 4px;
             }
         } 
     }
     .timelines{
         &>div{
             // padding-left: 8px;
-            // padding-right: 8px;
+            // padding-right: 8px;   
+        }
+        .box{
+            .p-card-body{
+                padding: 10px 0px;
+            }
+            .p-card-content{
+                max-height: 378px;
+                overflow: auto;
+                &::-webkit-scrollbar {
+                width: 8px;
+                border-left-width: 11px;
+                cursor: pointer;
+                &:hover{
+                        cursor: pointer;
+                    }
+                }
+                /* Track */
+                &::-webkit-scrollbar-track {
+                    border-radius: 2px;
+                    cursor: pointer;
+                    box-shadow: inset 0 0 2px #80808078; 
+                }
+            
+                /* Handle */
+                &::-webkit-scrollbar-thumb {
+                    border-radius: 2px;
+                        background:#0979FD; 
+                }
+                &::-webkit-scrollbar-thumb:hover {
+                    background: #0C3399 
+                }
+            }
         }
     }
 }
@@ -2732,6 +2765,9 @@ div.p-organizationchart {
 }
 .chi-tiet-ho-so-nhan-su{
     height: 100%;
+    .page-detail{
+        padding-bottom: 20px !important;
+    }
 }
 .fields-section{
     margin-bottom: 20px;
