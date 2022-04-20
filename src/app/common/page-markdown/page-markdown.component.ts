@@ -140,7 +140,6 @@ export class PageMarkdownComponent implements OnInit {
     if (this.imageType === '1') {
       // this.modelMarkdow.imgUrl = documentUrl;
     } else {
-      console.log(documentUrl)
       if(item.file_type === 'image') {
         this.element.columnValue += `\r\n![](${documentUrl})` 
         // this.element.columnValue = this.element.columnValue.replace('null', '')
