@@ -45,7 +45,7 @@ import { ChiTietThueThuNhapComponent } from 'src/app/components/cs-thue-thu-nhap
 import { PhepNamComponent } from 'src/app/components/phep-nam/phep-nam.component';
 import { PhepBuComponent } from 'src/app/components/phep-bu/phep-bu.component';
 import { ChiTietPhepBuComponent } from 'src/app/components/phep-bu/chi-tiet-phep-bu/chi-tiet-phep-bu.component';
-
+import {OverlayPanelModule} from 'primeng/overlaypanel';
 @NgModule({
   imports: [
     MessagesModule,
@@ -77,6 +77,7 @@ import { ChiTietPhepBuComponent } from 'src/app/components/phep-bu/chi-tiet-phep
     DropdownModule,
     TabViewModule,
     ConfirmDialogModule,
+    OverlayPanelModule,
     AgGridModule.withComponents([
       ButtonRendererComponent,
       ButtonRendererComponent1

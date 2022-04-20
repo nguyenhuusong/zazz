@@ -855,7 +855,6 @@ div{
     border-radius: 4px;
     margin-left: 0px;
     margin-right: 0px;
-    padding: 7px;
     margin-bottom: 15px;
     &>[class*=col]{
         padding-top: 0px;
@@ -2813,4 +2812,15 @@ div.p-organizationchart {
 }
 .width-auto{
     width: auto !important;
+}
+.h-56{
+    height: 56px !important;
+}
+.bread-filter>div{
+    padding-bottom: 0px;
+    .pi-angle-down{
+        &:hover{
+            cursor: pointer;
+        }
+    }
 }

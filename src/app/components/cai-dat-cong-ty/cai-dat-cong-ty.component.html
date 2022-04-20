@@ -2,12 +2,12 @@
 
 <div class="grid main-grid">
     <div class="col-12 right max-w-full">
-        <div class="breadcrumb">
-            <h3>Danh sách công ty</h3>
-            <p-breadcrumb [model]="items"></p-breadcrumb>
-        </div>
-        <div class="table-tool grid white-background black-box-shadow-005 filterInput justify-content-start">
-            <div class="header-filter-search col-4">
+        <div class="bread-filter grid">
+            <div class="breadcrumb col-7">
+                <h3>Danh sách công ty</h3>
+                <p-breadcrumb [model]="items"></p-breadcrumb>
+            </div>
+            <div class="header-filter-search col-3">
                 <div class="field-group text search" [ngClass]="query.filter ? 'valid' : 'invalid' ">
                     <input class="input-default" type="text" id="filter"
                     (keydown.enter)="query.offSet = 0; first = 0;load()"
@@ -18,15 +18,15 @@
                         </svg>
                         <i id="icon-search" class="pi pi-angle-down"></i>
                         <p-button class="search-button" icon="pi pi-search" (click)="query.offSet = 0; first = 0; load()"></p-button>
-                        <p-button class="search-button" icon="pi pi-refresh" (click)="cancel()" styleClass="p-button-secondary p-button-sm btn-reload"></p-button>
                 </div>
                 <div class="input-group-append dropdown">
                 </div>
             </div>
         
-            <div class="col-8 tools">
-                 <p-button styleClass="p-button-sm mr-1" icon="pi pi-plus" label="Thêm mới" (click)="addCongTy()"></p-button>
-                 <!-- <p-button styleClass="p-button-sm" icon="pi pi-plus" label="Quản lý loại HĐ" (click)="quanlyloaihopdong()"></p-button> -->
+            <div class="col-2 d-flex">
+                <p-button class="search-button" icon="pi pi-refresh" (click)="cancel()" styleClass="p-button-secondary p-button-sm btn-reload btn-56-56 mr-2"></p-button>
+                <p-button styleClass="p-button-sm mr-1 h-56" icon="pi pi-plus" label="Thêm mới" (click)="addCongTy()"></p-button>
+                <!-- <p-button styleClass="p-button-sm" icon="pi pi-plus" label="Quản lý loại HĐ" (click)="quanlyloaihopdong()"></p-button> -->
             </div>
         </div>
         <div class="grid-default" #container>

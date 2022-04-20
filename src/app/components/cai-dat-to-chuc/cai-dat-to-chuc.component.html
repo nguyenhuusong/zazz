@@ -21,10 +21,9 @@
          
         </p-organizationChart>
         </p-card>
-        <div class="table-tool grid white-background black-box-shadow-005 filterInput mt-2">
-
+        <div class="table-tool grid white-background black-box-shadow-005 filterInput mt-2 p-2">
             <div class="header-filter-search col-4">
-                <div class="field-group text search">
+                <div class="field-group text search mb-0">
                     <input type="text" id="filter"
                         (keydown.enter)="query.offSet = 0; first = 0;load()"
                         [(ngModel)]="query.filter">

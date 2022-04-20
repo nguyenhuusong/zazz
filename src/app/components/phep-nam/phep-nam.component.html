@@ -1,11 +1,11 @@
 <div class="grid main-grid">
     <div class="col-12 right max-w-full">
-        <div class="breadcrumb">
-            <h3>Danh sách phép năm</h3>
-            <p-breadcrumb [model]="items"></p-breadcrumb>
-        </div>
-        <div class="table-tool grid white-background black-box-shadow-005 filterInput">
-            <div class="header-filter-search col-3 ">
+        <div class="bread-filter grid">
+            <div class="breadcrumb col-4">
+                <h3>Danh sách phép năm</h3>
+                <p-breadcrumb [model]="items"></p-breadcrumb>
+            </div>
+            <div class="header-filter-search col-2 ">
                 <div class="field-group search text mb-0" [ngClass]=" query.filter ? 'valid' : 'invalid' ">
                     <input class="input-default" type="text" autocomplete="off" id="filter"
                         (keydown.enter)="query.offSet = 0; first = 0;load()"
@@ -51,12 +51,12 @@
                 </p-button>
                 <p-button styleClass="btn-h56 search-button" icon="pi pi-arrow-right" (click)="goToPhepBu()" label="Phép bù"></p-button>
             </div>
-            <div class="col-5 tools">
+            <!-- <div class="col-5 tools"> -->
                 <!-- <p-button icon="pi pi-plus" label="Chuyên môn" (click)="linhvuctuyendung()"
                     styleClass="p-button-sm mr-1"></p-button>
                 <p-button icon="pi pi-plus" label="Vị trí tuyển dụng" (click)="vitrituyendung()"
                     styleClass="p-button-sm mr5"></p-button> -->
-            </div>
+            <!-- </div> -->
         </div>
         <div class="grid-default" #container>
             <app-list-grid-angular *ngIf="columnDefs.length > 0" [listsData]="listsData" [height]="heightGrid"
