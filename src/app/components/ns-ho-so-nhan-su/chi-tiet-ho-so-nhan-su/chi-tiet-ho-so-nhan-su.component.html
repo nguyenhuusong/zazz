@@ -45,6 +45,9 @@
                         [detail]="detailInfo" [manhinh]="manhinh" [thongtinnhanvienNew]="true"
                         [dataView]="listViews" (callback)="setEmployeeInfo($event)"
                         (callbackcancel)="cancelUpdate()"></app-edit-detail> -->
+                        <div class="status-line">
+                            <p-steps [model]="stepsLine" [(activeIndex)]="activeIndex" [readonly]="true"></p-steps>
+                        </div>
                     <div class="page-detail-edit-detail">
                         <app-edit-detail *ngIf="listViews.length> 0" 
                             [detail]="detailInfo" 
