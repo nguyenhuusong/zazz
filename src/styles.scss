@@ -2832,3 +2832,19 @@ div.p-organizationchart {
 .main .sidebarBody {
     border-radius:0 ;
 }
+.status-line{
+    .p-steps-item{
+        .p-menuitem-link{
+            display: block;
+            .p-steps-number{
+                display: block;
+                width: 30px;
+                height: 30px;
+                text-align: center;
+                line-height: 30px;
+                margin: auto;
+                margin-bottom: 5px;
+            }
+        }
+    }
+}

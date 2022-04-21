@@ -1216,5 +1216,13 @@ export class ApiHrmService {
   delAnnualAddInfo(queryParams): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v2/annualleave/DelAnnualAddInfo?` + queryParams, this.options)
   }
+  // TimeLine
+  getStatusTimelineEmployee(): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/employee/GetStatusTimelineEmployee`, this.options)
+  }
+  
+  getStatusTimelineTerminate(): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/terminate/GetStatusTimelineTerminate`, this.options)
+  }
 
 }
