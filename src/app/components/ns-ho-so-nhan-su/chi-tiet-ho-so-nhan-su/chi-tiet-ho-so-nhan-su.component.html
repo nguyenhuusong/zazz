@@ -9,7 +9,7 @@
     <p-panel>
         <ng-template pTemplate="header" styleClass="ffffffffffff">
             <div class="col-md-6"> {{detailMenu.name}} [{{detailInfo?.fullName}}]</div>
-            <div class="col-md-6 text-right"> <span [innerHTML]="detailInfo?.emp_status"></span>
+            <div class="col-md-6 text-right">
             </div>
         </ng-template>
         <div class="row">
@@ -288,14 +288,14 @@
                     <ng-template let-country pTemplate="item">
                         <div class="country-item">
                             <div><span style="">{{country.name}} </span>
-                                <span *ngIf="country.code === 'GetEmployeeByJob'"
+                                <!-- <span *ngIf="country.code === 'GetEmployeeByJob'"
                                     [innerHTML]="detailInfo?.emp_status"></span>
                                 <span
                                     *ngIf="country.code === 'GetEmployeeByContract'"
                                     [innerHTML]="detailInfo?.contract_status"></span>
                                 <span
                                     *ngIf="country.code === 'GetEmployeeByQualification' && !detailInfo?.isProfileFull"
-                                    class="bg-danger noti-number ml5">Chưa tạo</span>
+                                    class="bg-danger noti-number ml5">Chưa tạo</span> -->
                             </div>
                         </div>
                     </ng-template>
