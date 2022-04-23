@@ -1,11 +1,13 @@
 <div class="grid main-grid">
     <div class="col-12 right max-w-full">
-        <div class="breadcrumb">
-            <h3>Danh sách tuyển dụng</h3>
-            <p-breadcrumb [model]="items"></p-breadcrumb>
-        </div>
-        <div class="table-tool grid white-background black-box-shadow-005 filterInput">
-            <div class="header-filter-search col-4 ">
+        <div class="grid bread-filter">
+            <div class="col-8">
+                <div class="breadcrumb">
+                    <h3>Danh sách tuyển dụng</h3>
+                    <p-breadcrumb [model]="items"></p-breadcrumb>
+                </div>
+            </div>
+            <div class="header-filter-search col-3">
                 <div class="field-group text search mb-0" [ngClass]=" query.filter ? 'valid' : 'invalid' ">
                     <input class="input-default" type="text" autocomplete="off" id="filter"
                         (click)="op.toggle($event)" (keydown.enter)="query.offSet = 0; first = 0;load()"
@@ -127,7 +129,7 @@
                                                 </p-dropdown>
                                             </div>
                                         </div>
-                                   
+                                
                                 </div>
                                 <div class="input-group icon col-12 select-default pr-0 text-right">
                                     <label for="" style="visibility: hidden;">Classid <span class="pi pi-info-circle"
@@ -145,13 +147,15 @@
                 <div class="input-group-append dropdown">
                 </div>
             </div>
-            <div class="col-8 tools">
-                <p-button styleClass="p-button-sm mr-1" icon="pi pi-plus" label="Thêm mới" (click)="addTuyenDung()">
-                </p-button>
-                <!-- <p-button icon="pi pi-plus" label="Chuyên môn" (click)="linhvuctuyendung()"
-                    styleClass="p-button-sm mr-1"></p-button>
-                <p-button icon="pi pi-plus" label="Vị trí tuyển dụng" (click)="vitrituyendung()"
-                    styleClass="p-button-sm mr5"></p-button> -->
+            <div class="col-1">
+                <div class="tools">
+                    <p-button styleClass="p-button-sm mr-1 h-56" icon="pi pi-plus" label="Thêm mới" (click)="addTuyenDung()">
+                    </p-button>
+                    <!-- <p-button icon="pi pi-plus" label="Chuyên môn" (click)="linhvuctuyendung()"
+                        styleClass="p-button-sm mr-1"></p-button>
+                    <p-button icon="pi pi-plus" label="Vị trí tuyển dụng" (click)="vitrituyendung()"
+                        styleClass="p-button-sm mr5"></p-button> -->
+                </div>
             </div>
         </div>
         <div class="grid-default" #container>

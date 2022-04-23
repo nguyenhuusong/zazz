@@ -22,7 +22,7 @@
             </ng-template>
         </p-organizationChart>
             </p-card>
-        <div class="table-tool grid white-background black-box-shadow-005 filterInput mt-2">
+        <div class="table-tool grid white-background black-box-shadow-005 filterInput mt-2 p-2">
             
             <div class="header-filter-search col-4 ">
                 <div class="field-group text search mb-0" [ngClass]=" query.filter ? 'valid' : 'invalid' ">
@@ -57,7 +57,24 @@
                 <div class="input-group-append dropdown">
                 </div>
             </div>
-            <div class="col-8 tools">
+            <div class="col-1">
+                <div class="field-group select mb-0 label-8" [ngClass]=" query.status > -1 ? 'valid' : 'invalid' ">
+                    <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
+                            [options]="employeeStatus" [(ngModel)]="query.status" name="status"
+                            (onChange)="find()" [filter]="true">
+                            <ng-template let-item pTemplate="selectedItem">
+                                <span>{{item.label}}</span>
+                            </ng-template>
+                            <ng-template let-car pTemplate="item">
+                                <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                                    <div>{{car.label}}</div>
+                                </div>
+                            </ng-template>
+                    </p-dropdown>
+                    <label>Trạng thái</label>
+                </div>
+            </div>
+            <div class="col-7 tools">
             </div>
         </div>
         <div class="grid-default" #container>

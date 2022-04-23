@@ -6,6 +6,9 @@
     <div class="content">
         <p-tabView [(activeIndex)]="indexTab" (onChange)="handleChange($event.index)">
             <p-tabPanel header="Thông tin chung">
+                <div class="status-line">
+                    <p-steps [model]="stepsLine" [(activeIndex)]="activeIndex" [readonly]="true"></p-steps>
+                </div>
                 <div class="" *ngIf="detailInfo">
                     <app-edit-detail [optionsButtonsEdit]="optionsButtonsView"
                         *ngIf="listViews.length> 0 && manhinh === 'Edit'" [thongtinnhanvienNew]="true"

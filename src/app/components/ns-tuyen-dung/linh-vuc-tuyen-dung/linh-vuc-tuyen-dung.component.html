@@ -2,12 +2,12 @@
 
 <div class="grid main-grid">
     <div class="col-12 right max-w-full">
-        <div class="breadcrumb">
-            <h3>Chuyên môn tuyển dụng</h3>
-            <p-breadcrumb [model]="items"></p-breadcrumb>
-        </div>
-        <div class="table-tool grid white-background black-box-shadow-005 filterInput">
-            <div class="header-filter-search col-4 ">
+        <div class="bread-filter grid">
+            <div class="breadcrumb col-5">
+                <h3>Chuyên môn tuyển dụng</h3>
+                <p-breadcrumb [model]="items"></p-breadcrumb>
+            </div>
+            <div class="header-filter-search col-3 ">
                 <div class="field-group text search mb-0" [ngClass]=" query.filter ? 'valid' : 'invalid' ">
                     <input class="input-default" type="text" id="filter"
                         (keydown.enter)="query.offSet = 0; first = 0; load()"
@@ -38,7 +38,7 @@
                     <label  for=""> Tổ chức: </label>
                 </div>
             </div>
-            <div class="col-2" >
+            <div class="col-1" >
                 <div class="field-group select label-8 mb-0" [ngClass]=" query.positionTypeCd ? 'valid' : 'invalid' ">
                     <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
                         [options]="positiontypes" [(ngModel)]="query.positionTypeCd" name="positionTypeCd" (onChange)="find()"
@@ -55,8 +55,8 @@
                     <label  for=""> Cấp bậc: </label>
                 </div>
             </div>
-            <div class="col-4 tools">
-                <p-button styleClass="p-button-sm" icon="pi pi-plus" label="Thêm mới" (click)="addJob()"></p-button>
+            <div class="col-1">
+                <p-button styleClass="p-button-sm h-56" icon="pi pi-plus" label="Thêm mới" (click)="addJob()"></p-button>
             </div>
         </div>
         <div class="grid-default" #container>

@@ -59,6 +59,7 @@ import { XuLyHopDongComponent } from 'src/app/components/xu-ly-hop-dong/xu-ly-ho
 import { PheDuyetComponent } from 'src/app/components/phe-duyet/phe-duyet.component';
 import { ChiTietPheDuyetComponent } from 'src/app/components/phe-duyet/chi-tiet-phe-duyet/chi-tiet-phe-duyet.component';
 import { QuyetDinhLuongComponent } from 'src/app/components/quyet-dinh-luong/quyet-dinh-luong.component';
+import { StepsModule } from 'primeng/steps';
 @NgModule({
   imports: [
     MessagesModule,
@@ -103,6 +104,7 @@ import { QuyetDinhLuongComponent } from 'src/app/components/quyet-dinh-luong/quy
     EmpAttachFileModule,
     TreeSelectModule,
     StoreNotifyModule,
+    StepsModule,
     AgGridModule.withComponents([
       ButtonRendererComponent,
       ButtonRendererComponent1

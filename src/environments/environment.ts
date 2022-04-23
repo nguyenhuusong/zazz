@@ -10,8 +10,8 @@ const host = {
   apiHrmServer: 'https://apihrm.sunshinetech.com.vn',
   apiCoreServer: 'https://apicore.sunshinetech.com.vn',
   uploadServer: 'https://data.sunshinegroup.vn/api/v1/FileHandler',
-  cloudFunction: 'https://us-central1-sunshine-super-app.cloudfunctions.net'
-  // cloudFunction: 'https://asia-northeast1-sunshine-app-production.cloudfunctions.net'
+  // cloudFunction: 'https://us-central1-sunshine-super-app.cloudfunctions.net'
+  cloudFunction: 'https://asia-northeast1-sunshine-app-production.cloudfunctions.net'
 };
 
 const authenSettings = {
@@ -38,18 +38,18 @@ export const environment = {
   cloudFunctionServer: host.cloudFunction,
   uploadServer: host.uploadServer,
   firebase: {
-    // apiKey: 'AIzaSyAb3orVc8nnGT0L2JgbdzXrRND393mFiFU',
-    // authDomain: 'sunshine-app-production.firebaseapp.com',
-    // databaseURL: 'https://sunshine-app-production.firebaseio.com',
-    // projectId: 'sunshine-app-production',
-    // storageBucket: 'sunshine-app-production.appspot.com'
-    apiKey: 'AIzaSyAczqJoNnTDPPLktoPtQ694IH38sR8wX6w',
-    authDomain: 'sunshine-super-app.firebaseapp.com',
-    databaseURL: 'https://sunshine-super-app.firebaseio.com',
-    projectId: 'sunshine-super-app',
-    storageBucket: 'sunshine-super-app.appspot.com',
-    messagingSenderId: '504497996884',
-    appId: '1:504497996884:web:14254d3f5e66c908'
+    apiKey: 'AIzaSyAb3orVc8nnGT0L2JgbdzXrRND393mFiFU',
+    authDomain: 'sunshine-app-production.firebaseapp.com',
+    databaseURL: 'https://sunshine-app-production.firebaseio.com',
+    projectId: 'sunshine-app-production',
+    storageBucket: 'sunshine-app-production.appspot.com'
+    // apiKey: 'AIzaSyAczqJoNnTDPPLktoPtQ694IH38sR8wX6w',
+    // authDomain: 'sunshine-super-app.firebaseapp.com',
+    // databaseURL: 'https://sunshine-super-app.firebaseio.com',
+    // projectId: 'sunshine-super-app',
+    // storageBucket: 'sunshine-super-app.appspot.com',
+    // messagingSenderId: '504497996884',
+    // appId: '1:504497996884:web:14254d3f5e66c908'
   }
 };
 

@@ -2,21 +2,53 @@
     display: flex;
     flex-wrap: wrap;
     transition: 0.5s;
-
+    // display: grid;
+    // grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    // grid-gap: 1rem;
+    &::before{
+        display: none;
+    }
+    &::after{
+        display: none;
+    }
     .attack__item {
-        margin-bottom: 1em;
-        margin-right: 1em;
+        .p-image-toolbar{
+            z-index: 9999;
+        }
+        .in{
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            right: 5px;
+            bottom: 5px;
+            box-shadow: 0px 0px 5px #b1b0b0;
+            border-radius: 1em;
+            :hover {
+                box-shadow: 0px 0px 7px rgb(110, 109, 109);
+                transition: 0.5s;
+                cursor: pointer;
+            }
+        }
+        // margin-bottom: 1em;
+        // margin-right: 1em;
         // width: 15vh;
-        height: 20vh;
-        box-shadow: 0px 0px 5px rgb(177, 176, 176);
-        padding: 1em;
-        border-radius: 1em;
+        // height: 20vh;
+        height: 0;
+        width: 12.5%;
+        padding-bottom: 11.5%;
+        // box-shadow: 0px 0px 5px rgb(177, 176, 176);
+        // padding: 1em;
+        // border-radius: 1em;
         position: relative;
         
         .attack__item-image {
-            height: 80%;
-            width: 100%;
-            margin-top: 10%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: calc(100% - 20px);
+            height: calc(100% - 20px);
+            object-fit: cover;
+            transform: translate(-50%, -50%);
         }
 
         .attack__item-remove {
@@ -32,6 +64,7 @@
             border-radius: 50%;
             border: none;
             box-shadow: 0px 0px 3px rgb(34, 34, 34);
+            z-index: 3;
         }
         .attack__item-remove:hover {
             background: rgb(248, 30, 30);
@@ -39,10 +72,40 @@
             transition: 0.5s;
         }
     }
-
-    .attack__item:hover {
-        box-shadow: 0px 0px 7px rgb(110, 109, 109);
-        transition: 0.5s;
-        cursor: pointer;
+    
+}
+:host::ng-deep{
+    .attack {
+        .p-image-toolbar{
+            z-index: 9999;
+        }
+        p-image{
+            img{
+                width: 100%;
+            }
+        }
+        .p-image{
+            position: static;
+               &>img{
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    width: calc(100% - 20px);
+                    height: calc(100% - 20px);
+                    -o-object-fit: cover;
+                    object-fit: cover;
+                    -webkit-transform: translate(-50%,-50%);
+                    -ms-transform: translate(-50%,-50%);
+                    transform: translate(-50%,-50%);
+                }
+            .p-image-preview-indicator{
+                bottom: 10px;
+                right: 10px;
+                width: auto;
+                height: auto;
+                left: 10px;
+                top: 10px;
+            }
+        }
     }
 }

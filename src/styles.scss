@@ -855,7 +855,6 @@ div{
     border-radius: 4px;
     margin-left: 0px;
     margin-right: 0px;
-    padding: 7px;
     margin-bottom: 15px;
     &>[class*=col]{
         padding-top: 0px;
@@ -1990,16 +1989,49 @@ button{
         }
         .p-timeline-event-content{
             .p-card-title{
-                font-size: 16px;
+                font-size: 15px;
                 line-height: 1;
-                font-weight: normal
+                font-weight: 500;
+                margin-bottom: 4px;
             }
         } 
     }
     .timelines{
         &>div{
             // padding-left: 8px;
-            // padding-right: 8px;
+            // padding-right: 8px;   
+        }
+        .box{
+            .p-card-body{
+                padding: 10px 0px;
+            }
+            .p-card-content{
+                max-height: 378px;
+                overflow: auto;
+                &::-webkit-scrollbar {
+                width: 8px;
+                border-left-width: 11px;
+                cursor: pointer;
+                &:hover{
+                        cursor: pointer;
+                    }
+                }
+                /* Track */
+                &::-webkit-scrollbar-track {
+                    border-radius: 2px;
+                    cursor: pointer;
+                    box-shadow: inset 0 0 2px #80808078; 
+                }
+            
+                /* Handle */
+                &::-webkit-scrollbar-thumb {
+                    border-radius: 2px;
+                        background:#0979FD; 
+                }
+                &::-webkit-scrollbar-thumb:hover {
+                    background: #0C3399 
+                }
+            }
         }
     }
 }
@@ -2732,6 +2764,9 @@ div.p-organizationchart {
 }
 .chi-tiet-ho-so-nhan-su{
     height: 100%;
+    .page-detail{
+        padding-bottom: 20px !important;
+    }
 }
 .fields-section{
     margin-bottom: 20px;
@@ -2777,4 +2812,39 @@ div.p-organizationchart {
 }
 .width-auto{
     width: auto !important;
+}
+.h-56{
+    height: 56px !important;
+}
+.bread-filter>div{
+    padding-bottom: 0px;
+    .pi-angle-down{
+        &:hover{
+            cursor: pointer;
+        }
+    }
+}
+.header .p-toolbar{
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.main .sidebarBody {
+    border-radius:0 ;
+}
+.status-line{
+    .p-steps-item{
+        .p-menuitem-link{
+            display: block;
+            .p-steps-number{
+                display: block;
+                width: 30px;
+                height: 30px;
+                text-align: center;
+                line-height: 30px;
+                margin: auto;
+                margin-bottom: 5px;
+            }
+        }
+    }
 }

@@ -78,8 +78,13 @@ export class NsHoSoNghiViecComponent implements OnInit {
     offSet: 0,
     pageSize: 15,
     orgId: 0,
-    reason_id: 0
+    reason_id: 0,
+    status: -1
   }
+
+  employeeStatus = [
+   
+  ]
 
   cancel() {
     this.query = {
@@ -88,7 +93,8 @@ export class NsHoSoNghiViecComponent implements OnInit {
       offSet: 0,
       pageSize: 15,
       orgId: 0,
-      reason_id: 0
+      reason_id: 0,
+      status: -1
     }
     this.load();
   }
@@ -376,6 +382,7 @@ export class NsHoSoNghiViecComponent implements OnInit {
     ];
     this.getAgencyOrganizeMap();
     this.getCustObjectListNew();
+    this.getEmployeeStatus();
   }
 
   onCellClicked(event) {
@@ -383,6 +390,25 @@ export class NsHoSoNghiViecComponent implements OnInit {
       this.isShowAvatar = true;
       this.imgAvatar = event.value;
     }
+  }
+
+  getEmployeeStatus() {
+    this.apiService.getEmployeeStatus().subscribe(results => {
+      if (results.status === 'success') {
+        console.log(results, 'results results results ')
+        this.employeeStatus = []
+        results.data.forEach( s => {
+            if(s.value == "3" || s.value == "4"){
+              this.employeeStatus.push({
+                label: s.name,
+                value: s.value
+              })
+            }
+          }
+        )
+        this.employeeStatus = [{ label: 'Tất cả', value: -1 }, ...this.employeeStatus];
+      }
+    })
   }
 }
 

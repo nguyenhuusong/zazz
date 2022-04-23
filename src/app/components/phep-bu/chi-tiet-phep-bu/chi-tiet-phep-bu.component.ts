@@ -38,8 +38,8 @@ export class ChiTietPhepBuComponent implements OnInit, OnDestroy {
     this.titlePage = this.activatedRoute.data['_value'].title;
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
-      { label: 'Tuyển dụng' },
-      { label: 'Vị trí tuyển dụng', routerLink: '/chinh-sach/phep-bu' },
+      { label: 'Chính sách' },
+      { label: 'Phép bù', routerLink: '/chinh-sach/phep-bu' },
       { label: `${this.titlePage}` },
     ];
     this.handleParams();

@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MessageService } from 'primeng/api';
-import { environment } from 'src/environments/environment';
 import * as firebase from 'firebase';
 import { ApiService } from 'src/app/services/api.service';
-import * as queryString from 'querystring'
+import * as queryString from 'querystring';
+import showdown from 'showdown';
+import { MdEditorOption } from 'ngx-markdown-editor';
 @Component({
   selector: 'app-page-markdown',
   templateUrl: './page-markdown.component.html',
@@ -12,6 +13,7 @@ import * as queryString from 'querystring'
 export class PageMarkdownComponent implements OnInit {
   // url = environment.uploadServer;
   @Input() modelMarkdow
+  converter = new showdown.Converter();
   @Input() element
   pagingComponent = {
     total: 0
@@ -36,9 +38,15 @@ export class PageMarkdownComponent implements OnInit {
     private messageService: MessageService,
     private apiService: ApiService,
   ) { }
-  contentTypes = []
+  contentTypes = [];
+
   ngOnInit(): void {
-    console.log(this.modelMarkdow)
+    if(this.modelMarkdow.type == 2) {
+      this.element.columnValue = this.converter.markdown(this.element.columnValue);
+    }else {
+      this.element.columnValue = this.element.columnValue;
+    }
+    
     // this.dataInfo.group_fields.forEach(element => {
     //   element.fields.forEach(element1 => {
     //     if(element1.columnType === 'select' && element1.field_name === 'content_type') {
@@ -56,7 +64,7 @@ export class PageMarkdownComponent implements OnInit {
     //   });
     // });
   }
-  dinhkem
+  dinhkem;
   chooseImageContent() {
     this.dinhkem = 'markdown'
     this.imageType = 2;
@@ -72,7 +80,6 @@ export class PageMarkdownComponent implements OnInit {
     this.query.pageSize = event.rows;
     this.loadImage();
   }
-
 
   loadImage(event = null) {
     // this.notifyService.getDocumentUrl('',this.query.offSet, this.query.pageSize).then(
@@ -127,14 +134,15 @@ export class PageMarkdownComponent implements OnInit {
     this.showMedia = false;
   }
 
+
   chooseImage(documentUrl, item = null) {
     this.modelMarkdow.content = ''
     if (this.imageType === '1') {
       // this.modelMarkdow.imgUrl = documentUrl;
     } else {
       if(item.file_type === 'image') {
-        this.element.columnValue += '\r\n![](' + documentUrl + ')'
-        this.element.columnValue = this.element.columnValue.replace('null', '')
+        this.element.columnValue += `\r\n![](${documentUrl})` 
+        // this.element.columnValue = this.element.columnValue.replace('null', '')
         this.modelMarkdow.content = this.element.columnValue;
       }else if(item.file_type === 'video'){
         this.element.columnValue += `<video controls

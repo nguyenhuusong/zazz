@@ -94,8 +94,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
           const dataValidation = {
             key: element1.field_name,
             isRequire: element1.isVisiable && !element1.isEmpty && element1.isRequire ? true : false,
-            error: element1.isVisiable && !element1.isEmpty && element1.isRequire && (element1.columnValue === null) ? true : false,
-            message: element1.isVisiable && !element1.isEmpty && element1.isRequire && (element1.columnValue === null) ? 'Trường bắt buộc nhập !' : ''
+            error: element1.isVisiable && !element1.isDisable && !element1.isEmpty && element1.isRequire && (element1.columnValue === null) ? true : false,
+            message: element1.isVisiable && !element1.isDisable && !element1.isEmpty && element1.isRequire && (element1.columnValue === null) ? 'Trường bắt buộc nhập !' : ''
           }
           this.modelFields[element1.field_name] = dataValidation
         }
@@ -121,6 +121,11 @@ export class EditDetailComponent implements OnInit, OnChanges {
            }, 500);
           } else if (element1.field_name === 'work_cds') {
             this.getWorkTimes(element1, null)
+          } else if (element1.field_name === 'empId') {
+            const root_orgId = await this.getValueByKey('organizeId');
+            setTimeout(() => {
+              this.getEmployeePage(root_orgId, element1);
+            }, 100);
           } else if (element1.field_name === 'shift_cds') {
             this.getWorkShifts(element1, null)
           } else if (element1.field_name === 'work_cd') {
@@ -197,9 +202,15 @@ export class EditDetailComponent implements OnInit, OnChanges {
             this.getVehicleTypes(element1);
           } else if (element1.field_name === 'year_of_birth') {
             this.GetYearPicker(element1);
-          } else {
+          } else if (element1.field_name === 'annualMonth') {
+            this.GetAnnualMonth(element1);
+          }else {
             this.getCustObjectListNew(element1);
           }
+        }else if(element1.columnType === 'input'){
+          if (element1.field_name === 'annualYear') {
+            this.GetAnnualYear(element1);
+          } 
         }
       });
     });
@@ -244,6 +255,19 @@ export class EditDetailComponent implements OnInit, OnChanges {
     element1.options = listYears;
     element1.columnValue = element1.columnValue ? element1.columnValue : ''
 
+  }
+
+  GetAnnualMonth(element1) {
+    let listMonths = []
+    for (let i = 1; i <= 12; i++) {
+      listMonths.push({ label: 'Tháng ' + i, value: i.toString() })
+    }
+    element1.options = listMonths;
+    element1.columnValue = element1.columnValue ? element1.columnValue : ''
+  }
+
+  GetAnnualYear(element1) {
+    element1.columnValue = moment().year();
   }
 
   getWorkTime(element1, empId) {
@@ -419,7 +443,22 @@ export class EditDetailComponent implements OnInit, OnChanges {
             value: `${d.userId}`
           }
         });
-        element1.columnValue = element1.columnValue ? element1.columnValue : ''
+        element1.columnValue = element1.columnValue ? element1.columnValue.toLowerCase() : ''
+      }
+    })
+  }
+
+  getEmployeePage(orgId, element1) {
+    const queryParams = queryString.stringify({ orgId: orgId, pageSize: 100000 });
+    this.apiService.getEmployeePage(queryParams).subscribe(results => {
+      if (results.status === 'success') {
+        element1.options = cloneDeep(results.data.dataList.data).map(d => {
+          return {
+            label: d.full_name + '-' + d.phone1,
+            value: `${d.empId}`
+          }
+        });
+        element1.columnValue = element1.columnValue ? element1.columnValue.toLowerCase() : ''
       }
     })
   }
@@ -429,6 +468,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
     this.apiService.getOrganizations(queryParams).subscribe(results => {
       if (results.status === 'success') {
         if (element1.columnType === 'multiSelect') {
+          element1.options = []
           element1.options = cloneDeep(results.data).map(d => {
             return {
               name: d.organizationName,
@@ -436,7 +476,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
             }
           });
           if (element1.columnValue) {
-            let newarray = []
+            let newarray = [];
             element1.options.forEach(element => {
               if (element1.columnValue.split(",").indexOf(element.code.toUpperCase()) > -1) {
                 newarray.push(element);
@@ -569,6 +609,9 @@ export class EditDetailComponent implements OnInit, OnChanges {
             };
           });
           element1.columnValue = element1.columnValue ? element1.columnValue : '';
+          if(element1.field_name === 'content_type' && element1.columnValue) {
+            this.modelMarkdow.type = element1.columnValue;
+          }
         }
       });
   }

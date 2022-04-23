@@ -61,7 +61,8 @@ export class ChiTietHoSoNghiViecComponent implements OnInit, OnChanges, OnDestro
   listViewsFormEmp = [];
   detailInfoEmp = null;
   showRehire = false;
-  
+  stepsLine = [];
+  activeIndex: number = 0;
 
   ngOnChanges() {
     // this.optionsButtonsView = [{ label: 'Sửa', value: 'Edit' }, { label: 'Đóng', value: 'Back' }];
@@ -82,7 +83,8 @@ export class ChiTietHoSoNghiViecComponent implements OnInit, OnChanges, OnDestro
     ];
     this.url = this.activatedRoute.data['_value'].url;
     this.manhinh = 'Edit';
-      this.handleParams();
+    this.handleParams();
+    this.getStatusTimelineTerminate();
   }
 
   handleParams() {
@@ -298,6 +300,18 @@ export class ChiTietHoSoNghiViecComponent implements OnInit, OnChanges, OnDestro
         this.modelDuyet.empId = this.empId
       }
     });
+  }
+
+  getStatusTimelineTerminate() {
+    this.apiService.getStatusTimelineTerminate().subscribe(results => {
+      if (results.status === 'success') {
+        this.stepsLine = results.data.map( d => {
+          return {
+            label: d.objName,
+          }
+        })
+      }
+    })
   }
 
   callbackButton(data) {

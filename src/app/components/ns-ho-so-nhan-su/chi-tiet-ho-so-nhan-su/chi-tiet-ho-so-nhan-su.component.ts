@@ -100,6 +100,8 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   record = null;
   terminateReasons = [];
   selectedMenuCode = API_PROFILE.THONG_TIN_CA_NHAN;
+  stepsLine = [];
+  activeIndex: number = 0;
   constructor(
     private apiService: ApiHrmService,
     private apiCoreService: ApiCoreService,
@@ -148,6 +150,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       this.manhinh = 'Edit';
       this.handleParams();
     }
+    this.getStatusTimelineEmployee();
   }
 
   getContractTypes() {
@@ -160,6 +163,18 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
             value: d.contractTypeId
           }
         });
+      }
+    })
+  }
+
+  getStatusTimelineEmployee() {
+    this.apiService.getStatusTimelineEmployee().subscribe(results => {
+      if (results.status === 'success') {
+        this.stepsLine = results.data.map( d => {
+          return {
+            label: d.objName,
+          }
+        })
       }
     })
   }
@@ -1419,11 +1434,11 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     }
     this.apiCoreService.setCustIndiIdentityCreate(params).subscribe(results => {
       if (results.status === 'success') {
-        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.messages });
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
         this.thongtinchitietthe = results.data;
         this.isShowRegister = true;
       } else {
-        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.messages });
+        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
       }
     });
   }
@@ -1516,37 +1531,37 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     if (this.selectedMenuCode === API_PROFILE.THUE_BAO_HIEM) {
       this.apiService.setEmpDependent(param).subscribe(results => {
         if (results.status === 'success') {
-          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.messages ? results.messages : 'Thêm mới thành công' });
+          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thêm mới thành công' });
           this.displayFormEditDetail = false;
           this.getEmployeeInfo();
           this.spinner.hide();
         } else {
           this.spinner.hide();
-          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.messages });
+          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
         }
       })
     } else if (this.selectedMenuCode === API_PROFILE.CONG_VIEC) {
       this.apiService.setEmpWorking(param).subscribe(results => {
         if (results.status === 'success') {
-          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.messages ? results.messages : 'Thêm mới thành công' });
+          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thêm mới thành công' });
           this.displayFormEditDetail = false;
           this.getEmployeeInfo();
           this.spinner.hide();
         } else {
           this.spinner.hide();
-          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.messages });
+          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
         }
       })
     } else {
       this.apiService.setEmpContact(param).subscribe(results => {
         if (results.status === 'success') {
-          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.messages ? results.messages : 'Thêm mới thành công' });
+          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thêm mới thành công' });
           this.displayFormEditDetail = false;
           this.getEmployeeInfo();
           this.spinner.hide();
         } else {
           this.spinner.hide();
-          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.messages });
+          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
         }
       })
     }
