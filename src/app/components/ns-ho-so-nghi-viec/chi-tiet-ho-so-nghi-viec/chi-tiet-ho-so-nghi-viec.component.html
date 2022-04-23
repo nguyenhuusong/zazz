@@ -7,7 +7,9 @@
         <p-tabView [(activeIndex)]="indexTab" (onChange)="handleChange($event.index)">
             <p-tabPanel header="Thông tin chung">
                 <div class="status-line">
-                    <p-steps [model]="stepsLine" [(activeIndex)]="activeIndex" [readonly]="true"></p-steps>
+                    <div class="row" style="margin-top: -20px;">
+                        <p-steps [model]="stepsLine" [(activeIndex)]="activeIndex" [readonly]="true"></p-steps>
+                    </div>
                 </div>
                 <div class="" *ngIf="detailInfo">
                     <app-edit-detail [optionsButtonsEdit]="optionsButtonsView"
