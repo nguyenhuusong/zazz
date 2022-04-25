@@ -245,12 +245,17 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
         this.listViews = cloneDeep(results.data.group_fields || []);
         this.listViewsForm = cloneDeep(results.data.group_fields || []);
         this.detailInfo = results.data;
+        this.menuItems[0].name = this.menuItems[0].name + ' - '+ this.detailInfo.fullName
         this.stepsLine = results.data.flowStatuses.map( d => {
           return {
             label: d.flow_name,
             value: d.flow_st
           }
         });
+        setTimeout(() => {
+          this.stepActivated();
+        }, 100)
+        
         if(this.selectedMenuCode === API_PROFILE.THONG_TIN_CA_NHAN) {
           this.activeIndex = this.detailInfo.emp_st
         }
@@ -265,6 +270,18 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     });
   }
 
+  stepActivated(): void {
+    const stepS = document.querySelectorAll('.status-line .p-steps-item');
+    if(stepS.length > 0){
+      for (let i = 0; i <= this.stepsLine.length; i++) {
+        if (i <= this.activeIndex) {
+          stepS[i].className += ' active';
+        } else {
+          stepS[i].classList.value = `p-steps-item icon-${i}`;
+        }
+      }
+    }
+  }
 
   bindingDataButton(data): void {
     switch (data.emp_st) {
