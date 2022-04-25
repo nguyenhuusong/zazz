@@ -70,6 +70,7 @@ public agGridFn = AgGridFn;
     filter: '',
     offSet: 0,
     pageSize: 15,
+    status: null
   }
   totalRecord = 0;
   DriverId = 0;
@@ -81,7 +82,7 @@ public agGridFn = AgGridFn;
   }
   loading = false;
   paramsObject = null
-
+  status = []
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
@@ -92,6 +93,7 @@ public agGridFn = AgGridFn;
       filter: '',
       offSet: 0,
       pageSize: 15,
+      status: null
     }
     this.load();
   }
@@ -196,6 +198,21 @@ public agGridFn = AgGridFn;
     });
   }
 
+  getStatus() {
+    this.status = []
+    const opts1 = { params: new HttpParams({ fromString: `objKey=worktimes_flexible` }) };
+    this.apiService.getCustObjectListNew(true, opts1.params.toString()).subscribe(results => {
+      this.status = results.data.map(d => {
+        return {
+          label: d.objName,
+          value: d.objValue
+        }
+      });
+      console.log(results, 'results results results results')
+      this.status = [{label: 'Tất cả', value: null}, ...this.status]
+    });
+  }
+
   XemChiTiet(event) {
     const params = {
       work_cd: event.rowData.work_cd,
@@ -239,6 +256,8 @@ public agGridFn = AgGridFn;
     //   this.orgLevel = params.params.org_level;
     //   this.query.org_level = params.params.org_level;
     // });
+
+    this.getStatus();
   }
  
   listLevers = []

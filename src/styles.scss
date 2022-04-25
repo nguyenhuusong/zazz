@@ -2867,3 +2867,17 @@ div.p-organizationchart {
         }
     }
 }
+
+.paginator-bottom{
+    position: relative;
+    .p-dialog-content{
+        padding-bottom: 54px;
+    }
+    .paginator{
+        position: fixed;
+        bottom: 0px;
+        right: 20px;
+        background: #fff;
+        left: 0px;
+    }
+}
