@@ -248,8 +248,12 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
         this.stepsLine = results.data.flowStatuses.map( d => {
           return {
             label: d.flow_name,
+            value: d.flow_st
           }
-        })
+        });
+        if(this.selectedMenuCode === API_PROFILE.THONG_TIN_CA_NHAN) {
+          this.activeIndex = this.detailInfo.emp_st
+        }
         this.bindingData(results.data);
          this.getContractTypes();
         if (this.selectedMenuCode === API_PROFILE.CONG_VIEC) {
