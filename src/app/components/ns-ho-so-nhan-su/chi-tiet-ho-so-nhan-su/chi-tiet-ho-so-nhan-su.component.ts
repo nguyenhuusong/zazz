@@ -258,7 +258,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
         }, 100)
         
         if(this.selectedMenuCode === API_PROFILE.THONG_TIN_CA_NHAN) {
-          this.activeIndex = this.detailInfo.emp_st
+          this.activeIndex = this.detailInfo.flow_st
         }
         this.bindingData(results.data);
          this.getContractTypes();
