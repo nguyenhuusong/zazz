@@ -208,7 +208,6 @@ public agGridFn = AgGridFn;
           value: d.objValue
         }
       });
-      console.log(results, 'results results results results')
       this.status = [{label: 'Tất cả', value: null}, ...this.status]
     });
   }
