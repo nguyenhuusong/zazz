@@ -245,6 +245,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
         this.listViews = cloneDeep(results.data.group_fields || []);
         this.listViewsForm = cloneDeep(results.data.group_fields || []);
         this.detailInfo = results.data;
+        this.menuItems[0].name = 'Thông tin cá nhân';
         this.menuItems[0].name = this.menuItems[0].name + ' - '+ this.detailInfo.fullName
         this.stepsLine = results.data.flowStatuses.map( d => {
           return {
