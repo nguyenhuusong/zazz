@@ -150,7 +150,6 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       this.manhinh = 'Edit';
       this.handleParams();
     }
-    this.getStatusTimelineEmployee();
   }
 
   getContractTypes() {
@@ -166,19 +165,6 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       }
     })
   }
-
-  getStatusTimelineEmployee() {
-    this.apiService.getStatusTimelineEmployee().subscribe(results => {
-      if (results.status === 'success') {
-        this.stepsLine = results.data.map( d => {
-          return {
-            label: d.objName,
-          }
-        })
-      }
-    })
-  }
-
 
   getUsersByAdmin() {
     const queryParams = queryString.stringify({ admin_st: 1 });
@@ -259,6 +245,11 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
         this.listViews = cloneDeep(results.data.group_fields || []);
         this.listViewsForm = cloneDeep(results.data.group_fields || []);
         this.detailInfo = results.data;
+        this.stepsLine = results.data.flowStatuses.map( d => {
+          return {
+            label: d.flow_name,
+          }
+        })
         this.bindingData(results.data);
          this.getContractTypes();
         if (this.selectedMenuCode === API_PROFILE.CONG_VIEC) {
