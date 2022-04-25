@@ -243,7 +243,6 @@ export class AppTypeDropdownComponent implements OnInit {
     }
   }
 
-
   onChangeValue(value, field_name, element) {
     this.modelFields[field_name].error = this.modelFields[field_name].isRequire ? this.element.columnValue ? false : true : false
     this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
@@ -258,7 +257,7 @@ export class AppTypeDropdownComponent implements OnInit {
           }
         });
       });
-    } else if (field_name === 'org_cds' || field_name === 'organizeId' ) {
+    } else if (field_name === 'org_cds') {
       this.dataView.forEach(element => {
         element.fields.forEach(element1 => {
           if (element1.field_name === 'full_name' || element1.field_name === 'empId') {
@@ -303,6 +302,16 @@ export class AppTypeDropdownComponent implements OnInit {
           } else if (element1.field_name === 'jobId') {
             const positionTypeCd = await this.getValueByKey('positionCd');
             this.getJobTitles(value, element1, positionTypeCd)
+          }else if (element1.field_name === 'full_name' || element1.field_name === 'empId') {
+            this.getUserByPush(value, element1)
+          }
+        });
+      });
+    }else if(field_name === 'organize_id'){
+      this.dataView.forEach(element => {
+        element.fields.forEach(async element1 => {
+          if(element1.field_name === 'requester_custId') {
+            this.getUserByPush(value, element1)
           }
         });
       });

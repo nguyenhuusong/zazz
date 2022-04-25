@@ -168,11 +168,18 @@ export class EditDetailComponent implements OnInit, OnChanges {
             this.getJobTitles(root_orgId, element1, positionTypeCd);
           } else if (element1.field_name === 'organizeId') {
             this.getOrgRoots(element1);
+          }else if(element1.field_name === 'organize_id'){
+            this.getOrgRoots(element1);
           } else if (element1.field_name === 'org_cds') {
             this.getOrgRootsMuti(element1);
           } else if (element1.field_name === 'full_name') {
             const org_cds =await this.getValueByKey('org_cds');
             this.getUserByPush(org_cds, element1);
+          }else if(element1.field_name === 'requester_custId'){
+            // const org_cds =await this.getValueByKey('org_cds');
+            const root_orgId = await this.getValueByKey('organizeId');
+            console.log(root_orgId, '')
+            this.getEmployeePage(root_orgId, element1);
           } else if (element1.field_name === 'source_ref') {
             this.getNotifyRefList(element1);
           } else if (element1.field_name === 'contractTypeId') {
