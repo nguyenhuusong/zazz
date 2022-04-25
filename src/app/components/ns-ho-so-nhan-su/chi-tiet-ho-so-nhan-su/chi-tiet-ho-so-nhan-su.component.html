@@ -8,8 +8,11 @@
 
     <p-panel>
         <ng-template pTemplate="header" styleClass="ffffffffffff">
-            <div class="col-md-6"> {{detailMenu.name}} [{{detailInfo?.fullName}}]</div>
-            <div class="col-md-6 text-right">
+            <div class="col-md-3"> {{detailMenu.name}}</div>
+            <div class="col-md-9 text-right">
+                <div class="status-line">
+                    <p-steps [model]="stepsLine" [(activeIndex)]="activeIndex" [readonly]="true"></p-steps>
+                </div>
             </div>
         </ng-template>
         <div class="row">
@@ -45,13 +48,6 @@
                         [detail]="detailInfo" [manhinh]="manhinh" [thongtinnhanvienNew]="true"
                         [dataView]="listViews" (callback)="setEmployeeInfo($event)"
                         (callbackcancel)="cancelUpdate()"></app-edit-detail> -->
-                        <div class="status-line">
-                            <div class="row">
-                                <div class="col-md-10" style="margin-top: -40px">
-                                    <p-steps [model]="stepsLine" [(activeIndex)]="activeIndex" [readonly]="true"></p-steps>
-                                </div>
-                            </div>
-                        </div>
                     <div class="page-detail-edit-detail">
                         <app-edit-detail *ngIf="listViews.length> 0" 
                             [detail]="detailInfo" 

@@ -6,8 +6,8 @@
     <div class="content">
         <p-tabView [(activeIndex)]="indexTab" (onChange)="handleChange($event.index)">
             <p-tabPanel header="Thông tin chung">
-                <div class="status-line">
-                    <div class="row" style="margin-top: -20px;">
+                <div class="status-line mb-3">
+                    <div class="row">
                         <p-steps [model]="stepsLine" [(activeIndex)]="activeIndex" [readonly]="true"></p-steps>
                     </div>
                 </div>
