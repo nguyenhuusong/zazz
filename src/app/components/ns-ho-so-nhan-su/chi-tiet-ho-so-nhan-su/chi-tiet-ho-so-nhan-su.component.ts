@@ -273,7 +273,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   stepActivated(): void {
     const stepS = document.querySelectorAll('.status-line .p-steps-item');
     if(stepS.length > 0){
-      for (let i = 0; i <= this.stepsLine.length; i++) {
+      for (let i = 0; i < this.stepsLine.length; i++) {
         if (i <= this.activeIndex) {
           stepS[i].className += ' active';
         } else {
