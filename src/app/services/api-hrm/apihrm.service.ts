@@ -270,6 +270,10 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v1/salary/SetSalaryRecordInfo`, queryParams, this.options)
   }
 
+  setSalaryRecordApprove(queryParams): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v1/salary/SetSalaryRecordApprove`, queryParams, this.options)
+  }
+
   getEatingPage(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/eating/GetEatingPage?` + queryParams, this.options)
   }
