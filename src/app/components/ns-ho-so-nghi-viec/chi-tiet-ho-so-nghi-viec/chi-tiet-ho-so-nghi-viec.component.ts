@@ -78,7 +78,7 @@ export class ChiTietHoSoNghiViecComponent implements OnInit, OnChanges, OnDestro
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Nhân sự' },
-      { label: 'Hồ sơ nhân sự nghỉ việc', routerLink: 'nhan-su/ho-so-nghi-viec' },
+      { label: 'Hồ sơ nhân sự nghỉ việc', routerLink: '/nhan-su/ho-so-nghi-viec' },
       { label: `${this.titlePage}` },
     ];
     this.url = this.activatedRoute.data['_value'].url;
