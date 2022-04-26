@@ -122,7 +122,10 @@ export class EditDetailComponent implements OnInit, OnChanges {
           } else if (element1.field_name === 'work_cds') {
             this.getWorkTimes(element1, null)
           } else if (element1.field_name === 'empId') {
-            const root_orgId = await this.getValueByKey('organizeId');
+            let root_orgId = await this.getValueByKey('organizeId');
+            if(root_orgId === ''){
+              root_orgId = await this.getValueByKey('organize_id');
+            }
             setTimeout(() => {
               this.getEmployeePage(root_orgId, element1);
             }, 100);
@@ -178,6 +181,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
           }else if(element1.field_name === 'requester_custId'){
             // const org_cds =await this.getValueByKey('org_cds');
             const root_orgId = await this.getValueByKey('organize_id');
+            console.log(root_orgId, 'root_orgId')
             this.getEmployeePage(root_orgId, element1);
           } else if (element1.field_name === 'source_ref') {
             this.getNotifyRefList(element1);
