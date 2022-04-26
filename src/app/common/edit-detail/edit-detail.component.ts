@@ -177,8 +177,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
             this.getUserByPush(org_cds, element1);
           }else if(element1.field_name === 'requester_custId'){
             // const org_cds =await this.getValueByKey('org_cds');
-            const root_orgId = await this.getValueByKey('organizeId');
-            console.log(root_orgId, '')
+            const root_orgId = await this.getValueByKey('organize_id');
             this.getEmployeePage(root_orgId, element1);
           } else if (element1.field_name === 'source_ref') {
             this.getNotifyRefList(element1);
@@ -211,7 +210,9 @@ export class EditDetailComponent implements OnInit, OnChanges {
             this.GetYearPicker(element1);
           } else if (element1.field_name === 'annualMonth') {
             this.GetAnnualMonth(element1);
-          }else {
+          }else if(element1.field_name === 'reason_code') { 
+            this.getLeaveReasons(element1)
+          } else {
             this.getCustObjectListNew(element1);
           }
         }else if(element1.columnType === 'input'){
@@ -222,6 +223,21 @@ export class EditDetailComponent implements OnInit, OnChanges {
       });
     });
   }
+
+  getLeaveReasons(element1) {
+      this.apiServiceCore.getLeaveReasons().subscribe(results => {
+        if (results.status === 'success') {
+          element1.options = cloneDeep(results.data).map(d => {
+            return {
+              label: d.name,
+              value: d.code
+            }
+          });
+          element1.columnValue = element1.columnValue ? element1.columnValue: ''
+        }
+      })
+  }
+
   getActionlist(element1) {
     element1.options = cloneDeep(this.dropdownList).map(d => {
       return {

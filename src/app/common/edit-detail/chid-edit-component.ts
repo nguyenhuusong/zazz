@@ -126,7 +126,6 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
     private apiService: ApiHrmService
   ) { }
   ngOnInit(): void {
-    console.log(this.element.columnValue)
     // if (this.element.options && this.element.options.length > 0) {
     //   this.element.options = this.element.options.forEach(element => {
     //     element.value = parseInt(element.value);
@@ -478,7 +477,6 @@ export class AppTypeNumberComponent implements OnInit {
   }
 
   onChangeValue(event, field_name, element) {
-    console.log(element);
     // if(field_name === 'from_day' || field_name === 'to_day'){
      
     // }else{

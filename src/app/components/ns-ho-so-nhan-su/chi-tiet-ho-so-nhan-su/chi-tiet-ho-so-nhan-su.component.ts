@@ -1021,7 +1021,6 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   }
 
   OnClick(event): void {
-    console.log('xemchitietlienhe')
     if (event.event.item.key === 'tailenhoso') {
       this.uploadContract(event)
     } else if (event.event.item.key === 'xemhoso') {
