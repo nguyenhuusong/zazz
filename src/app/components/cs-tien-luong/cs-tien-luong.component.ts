@@ -146,12 +146,12 @@ export class CsTienLuongComponent implements OnInit {
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
         },
-        // {
-        //   onClick: this.xoaTienLuong.bind(this),
-        //   label: 'Xóa',
-        //   icon: 'pi pi-trash',
-        //   class: 'btn-primary mr5',
-        // },
+        {
+          onClick: this.pheDuyet.bind(this),
+          label: 'Phê duyệt',
+          icon: 'pi pi-trash',
+          class: 'btn-primary mr5',
+        },
         // {
         //   onClick: this.CloseAccount.bind(this),
         //   label: 'Đóng tài khoản',
@@ -160,6 +160,22 @@ export class CsTienLuongComponent implements OnInit {
         // },
       ]
     };
+  }
+
+  pheDuyet(event) {
+      this.confirmationService.confirm({
+      message: 'Bạn có chắc chắn muốn thực hiện phê duyệt?',
+      accept: () => {
+        this.apiService.setSalaryRecordApprove({ recordId: event.rowData.recordId }).subscribe(results => {
+          if (results.status === 'success') {
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa công ty thành công' });
+            this.load();
+          } else {
+            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+          }
+        });
+      }
+    });
   }
 
   initGrid() {

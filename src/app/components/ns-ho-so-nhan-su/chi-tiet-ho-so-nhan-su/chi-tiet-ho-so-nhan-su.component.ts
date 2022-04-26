@@ -245,6 +245,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
         this.listViews = cloneDeep(results.data.group_fields || []);
         this.listViewsForm = cloneDeep(results.data.group_fields || []);
         this.detailInfo = results.data;
+        this.menuItems[0].name = 'Thông tin cá nhân';
         this.menuItems[0].name = this.menuItems[0].name + ' - '+ this.detailInfo.fullName
         this.stepsLine = results.data.flowStatuses.map( d => {
           return {
@@ -257,7 +258,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
         }, 100)
         
         if(this.selectedMenuCode === API_PROFILE.THONG_TIN_CA_NHAN) {
-          this.activeIndex = this.detailInfo.emp_st
+          this.activeIndex = this.detailInfo.flow_st
         }
         this.bindingData(results.data);
          this.getContractTypes();

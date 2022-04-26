@@ -6,12 +6,16 @@
     <div class="content">
         <p-tabView [(activeIndex)]="indexTab" (onChange)="handleChange($event.index)">
             <p-tabPanel header="Thông tin chung">
-                <div class="status-line mb-3">
-                    <div class="row">
+                <div class="row">
+                   <div class="col-md-2"></div>
+                   <div class="col-md-8">
+                    <div class="status-line">
                         <p-steps [model]="stepsLine" [(activeIndex)]="activeIndex" [readonly]="true"></p-steps>
                     </div>
+                   </div>
+                   <div class="col-md-2"></div>
                 </div>
-                <div class="" *ngIf="detailInfo">
+                <div class="mt-1" *ngIf="detailInfo">
                     <app-edit-detail [optionsButtonsEdit]="optionsButtonsView"
                         *ngIf="listViews.length> 0 && manhinh === 'Edit'" [thongtinnhanvienNew]="true"
                         [manhinh]="'Edit'" [dataView]="listViews" (callback)="setTerminateInfo($event)"

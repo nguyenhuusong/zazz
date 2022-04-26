@@ -84,7 +84,6 @@ export class ChiTietHoSoNghiViecComponent implements OnInit, OnChanges, OnDestro
     this.url = this.activatedRoute.data['_value'].url;
     this.manhinh = 'Edit';
     this.handleParams();
-    this.getStatusTimelineTerminate();
   }
 
   handleParams() {
@@ -108,6 +107,16 @@ export class ChiTietHoSoNghiViecComponent implements OnInit, OnChanges, OnDestro
       if (results.status === 'success') {
         this.listViews = cloneDeep(results.data.group_fields);
         this.detailInfo = results.data;
+        this.activeIndex = results.data.flow_st;
+        this.stepsLine = results.data.flowStatuses.map( d => {
+          return {
+            label: d.flow_name,
+            value: d.flow_st
+          }
+        });
+        setTimeout(() => {
+          this.stepActivated();
+        }, 100)
         this.listsData = this.detailInfo.metafiles || [];
         this.columnDefs = [
           ...AgGridFn(this.detailInfo.gridflexdetails1 || []),
@@ -271,7 +280,6 @@ export class ChiTietHoSoNghiViecComponent implements OnInit, OnChanges, OnDestro
     delete parmas.reason_id;
     delete parmas.exprire_date;
     parmas.group_fields = cloneDeep(this.listViewsFormEmp);
-    console.log(parmas);
     this.apiService.setEmployeeRehired(parmas)
     .subscribe((results: any) => {
       if (results.status === 'success') {
@@ -297,21 +305,23 @@ export class ChiTietHoSoNghiViecComponent implements OnInit, OnChanges, OnDestro
         this.listViewsFormEmp = cloneDeep(results.data.group_fields || []);
         this.detailInfoEmp = results.data;
         this.modelDuyet.full_name = results.data.fullName;
-        this.modelDuyet.empId = this.empId
+        this.modelDuyet.empId = this.empId;
+       
       }
     });
   }
 
-  getStatusTimelineTerminate() {
-    this.apiService.getStatusTimelineTerminate().subscribe(results => {
-      if (results.status === 'success') {
-        this.stepsLine = results.data.map( d => {
-          return {
-            label: d.objName,
-          }
-        })
+  stepActivated(): void {
+    const stepS = document.querySelectorAll('.status-line .p-steps-item');
+    if(stepS.length > 0){
+      for (let i = 0; i < this.stepsLine.length; i++) {
+        if (i <= this.activeIndex) {
+          stepS[i].className += ' active';
+        } else {
+          stepS[i].classList.value = `p-steps-item icon-${i}`;
+        }
       }
-    })
+    }
   }
 
   callbackButton(data) {

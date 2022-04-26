@@ -7,8 +7,20 @@
     </div>
    <div class="content">
     <div *ngIf="listViews.length > 0">
-        <app-edit-detail *ngIf="listViews.length> 0" [detail]="modelContractInfo" [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButon" [thongtinnhanvienNew]="true" [dataView]="listViews"
-            (callback)="setContractInfo($event)" (callback1)="saveCallback1($event)" (callbackcancel)="huy($event)"></app-edit-detail>
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+             <div class="status-line">
+                 <p-steps [model]="stepsLine" [(activeIndex)]="activeIndex" [readonly]="true"></p-steps>
+             </div>
+            </div>
+            <div class="col-md-2"></div>
+         </div>
+         <div class="mt-1" *ngIf="modelContractInfo">
+            <app-edit-detail *ngIf="listViews.length> 0" [detail]="modelContractInfo" [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButon" [thongtinnhanvienNew]="true" [dataView]="listViews"
+                (callback)="setContractInfo($event)" (callback1)="saveCallback1($event)" (callbackcancel)="huy($event)"></app-edit-detail>
+         </div>
+       
         <p-card styleClass="" *ngIf="listViews.length> 0">
             <!-- <ng-template pTemplate="header">
                 <div class="panel-heading" style="padding: 10px;">

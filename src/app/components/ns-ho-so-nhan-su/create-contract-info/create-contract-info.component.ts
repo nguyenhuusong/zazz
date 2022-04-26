@@ -84,6 +84,7 @@ export class CreateContractInfoComponent implements OnInit {
     })
   }
   columnDefsMetafiles = [];
+  stepsLine = [];
   columnDefsSalaryComponents = [];
   getContractInfo() {
     this.detailInfo = null;
@@ -98,6 +99,16 @@ export class CreateContractInfoComponent implements OnInit {
     this.apiService.getContractInfo(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.restData(results);
+        this.activeIndex = results.data.flow_st;
+        this.stepsLine = results.data.flowStatuses.map( d => {
+          return {
+            label: d.flow_name,
+            value: d.flow_st
+          }
+        });
+        setTimeout(() => {
+          this.stepActivated();
+        }, 100);
         this.columnDefsSalaryComponents = [
           ...AgGridFn(this.detailInfo.gridflexdetails2 || [])]
         this.columnDefsMetafiles = [
@@ -173,6 +184,19 @@ export class CreateContractInfoComponent implements OnInit {
         this.spinner.hide();
       }
     })
+  }
+  activeIndex = 0
+  stepActivated(): void {
+    const stepS = document.querySelectorAll('.status-line .p-steps-item');
+    if(stepS.length > 0){
+      for (let i = 0; i < this.stepsLine.length; i++) {
+        if (i <= this.activeIndex) {
+          stepS[i].className += ' active';
+        } else {
+          stepS[i].classList.value = `p-steps-item icon-${i}`;
+        }
+      }
+    }
   }
 
   restData(results) {
