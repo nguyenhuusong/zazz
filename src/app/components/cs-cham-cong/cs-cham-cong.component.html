@@ -25,21 +25,21 @@
                             <h3>Tìm kiếm nâng cao</h3>
                         </div>
                         <div class="grid">
-                            <div class="col-3">
+                            <div class="col-4">
                                 <div class="field-group text label-8 mb-0">
                                     <input type="number" class="input-default" id="" placeholder="Tháng"
                                         [(ngModel)]="query.month">
                                     <label>Tháng</label>
                                 </div>
                             </div>
-                            <div class="col-3">
+                            <div class="col-4">
                                 <div class="field-group text label-8 mb-0">
                                     <input type="number" class="input-default" id="" placeholder="Năm"
                                         [(ngModel)]="query.year">
                                     <label>Năm</label>
                                 </div>
                             </div>
-                            <div class="col-3">
+                            <div class="col-4">
                                 <div class="field-group select mb-0 label-8">
                                     <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
                                     [options]="listOrgRoots" [(ngModel)]="query.organizeId"  (onChange)="find()"
@@ -49,7 +49,7 @@
                                     </ng-template>
                                     <ng-template let-car pTemplate="item">
                                         <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                                            <div style="font-size:14px;float:left;margin-top:4px">{{car.label}}</div>
+                                            <div style="font-size:14px;margin-top:4px">{{car.label}}</div>
                                         </div>
                                     </ng-template>
                                 </p-dropdown>

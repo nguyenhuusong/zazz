@@ -249,7 +249,7 @@ export class CsChamCongComponent implements OnInit {
       if (results.status === 'success') {
         this.listOrgRoots = results.data.map(d => {
           return {
-            label: d.org_name + '-' + d.org_cd,
+            label: d.org_name,
             value: `${d.orgId}`
           }
         });
