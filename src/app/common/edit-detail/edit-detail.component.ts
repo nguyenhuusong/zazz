@@ -122,10 +122,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
           } else if (element1.field_name === 'work_cds') {
             this.getWorkTimes(element1, null)
           } else if (element1.field_name === 'empId') {
-            let root_orgId = await this.getValueByKey('organizeId');
-            if(root_orgId === ''){
-              root_orgId = await this.getValueByKey('organize_id');
-            }
+            const root_orgId = await this.getValueByKey('organizeId');
             setTimeout(() => {
               this.getEmployeePage(root_orgId, element1);
             }, 100);
@@ -302,7 +299,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
     this.apiService.getWorkTimes(queryParams).subscribe(results => {
       if (results.status === 'success') {
         element1.options = cloneDeep(results.data).map(d => {
-          return { label: d.work_times + '-' + d.work_cd, value: d.work_cd }
+          return { label: d.work_times + '-' + d.work_name, value: d.work_cd }
         });
         element1.columnValue = element1.columnValue ? element1.columnValue : '';
       }
@@ -514,7 +511,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
         } else {
           element1.options = cloneDeep(results.data).map(d => {
             return {
-              label: d.organizationName + '-' + d.organizationCd,
+              label: d.organizationName + ' - ' + d.organizationCd,
               value: `${d.organizeId}`
             }
           });
