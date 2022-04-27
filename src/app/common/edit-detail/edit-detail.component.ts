@@ -511,7 +511,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
         } else {
           element1.options = cloneDeep(results.data).map(d => {
             return {
-              label: d.organizationName + '-' + d.organizationCd,
+              label: d.organizationName + ' - ' + d.organizationCd,
               value: `${d.organizeId}`
             }
           });
