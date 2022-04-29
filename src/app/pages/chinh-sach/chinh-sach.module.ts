@@ -46,6 +46,7 @@ import { PhepNamComponent } from 'src/app/components/phep-nam/phep-nam.component
 import { PhepBuComponent } from 'src/app/components/phep-bu/phep-bu.component';
 import { ChiTietPhepBuComponent } from 'src/app/components/phep-bu/chi-tiet-phep-bu/chi-tiet-phep-bu.component';
 import {OverlayPanelModule} from 'primeng/overlaypanel';
+import {TreeSelectModule} from 'primeng/treeselect';
 @NgModule({
   imports: [
     MessagesModule,
@@ -78,6 +79,7 @@ import {OverlayPanelModule} from 'primeng/overlaypanel';
     TabViewModule,
     ConfirmDialogModule,
     OverlayPanelModule,
+    TreeSelectModule,
     AgGridModule.withComponents([
       ButtonRendererComponent,
       ButtonRendererComponent1
