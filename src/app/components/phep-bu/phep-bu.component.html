@@ -1,9 +1,13 @@
 <div class="grid main-grid">
     <div class="col-12 right max-w-full">
         <div class="bread-filter grid">
-            <div class="breadcrumb col-4">
+            <div class="breadcrumb col-2">
                 <h3>Danh sách phép bù</h3>
                 <p-breadcrumb [model]="items"></p-breadcrumb>
+            </div>
+            <div class="col-2">
+                <p-button styleClass="p-button-sm h-56" icon="pi pi-plus" label="Thêm mới phép bù phòng ban" (click)="addNewPhepBuDep()">
+                </p-button>
             </div>
                 <div class="header-filter-search col-2">
                     <div class="field-group search text mb-0" [ngClass]=" query.filter ? 'valid' : 'invalid' ">
@@ -68,3 +72,44 @@
         </div>
     </div>
 </div>
+
+<p-dialog [(visible)]="isShowAddPhepBuDep" [draggable]="false" [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '1000px', height: 'auto'}">
+    <p-header>
+        Thêm mới Phép bù phòng ban 
+    </p-header>
+    <div class="grid">
+        <div class="col-3">
+            <div class="field-group select mb-0 valid" [ngClass]="">
+                <p-dropdown [required]="true" placeholder="Chọn tổ chức" appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
+                    [options]="orgRoots" [(ngModel)]="querAddNewPhepBuDep.orgId" name="orgId" >
+                    <ng-template let-item pTemplate="selectedItem">
+                        <span style="vertical-align:middle;">{{item.label}}</span>
+                    </ng-template>
+                    <ng-template let-car pTemplate="item">
+                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                            <div style="">{{car.label}}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+                <label  for=""> Tổ chức: </label>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="field-group label-8">
+                <input class="form-control" min="1" type="number" [(ngModel)]="querAddNewPhepBuDep.annualAdd" placeholder="Nhập số phép được bù" name="annualAdd">
+                    <label>Số phép được bù</label>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="field-group label-8">
+                <input class="form-control" min="1" max="12" type="number" [(ngModel)]="querAddNewPhepBuDep.annualMonth" placeholder="Nhập số phép được bù" name="annualAdd">
+                    <label>tháng thêm phép bù</label>
+            </div>
+        </div>
+        <div class="col-3">
+            <p-button styleClass="p-button-sm mr-1 h-56" icon="pi pi-plus" label="Thêm" (click)="setPhepBuDep()">
+            </p-button>
+        </div>
+    </div>
+</p-dialog>
+
