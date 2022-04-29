@@ -1217,6 +1217,10 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v2/annualleave/SetAnnualAddInfo`, queryParams, this.options)
   }
 
+  setAnnualAddOrgInfo(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/annualleave/SetAnnualAddOrgInfo`, queryParams, this.options)
+  }
+
   delAnnualAddInfo(queryParams): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v2/annualleave/DelAnnualAddInfo?` + queryParams, this.options)
   }

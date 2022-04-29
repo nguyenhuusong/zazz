@@ -68,6 +68,13 @@ export class PhepBuComponent implements OnInit, AfterViewChecked {
 
   loadjs = 0;
   heightGrid = 0
+  isShowAddPhepBuDep = false;
+  querAddNewPhepBuDep = {
+    orgId: '',
+    annualAdd: '',
+    annualMonth: ''
+  }
+  annulOptions = []
   ngAfterViewChecked(): void {
     const a: any = document.querySelector(".header");
     const b: any = document.querySelector(".sidebarBody");
@@ -169,6 +176,23 @@ load() {
       annualId: ""
     }
     this.router.navigate(['/chinh-sach/phep-bu/them-moi-phep-bu'], { queryParams: params });
+  }
+  addNewPhepBuDep() {
+    this.isShowAddPhepBuDep = true;
+  }
+  // thêm mới Phép bù phòng ban
+  setPhepBuDep() {
+    if(this.querAddNewPhepBuDep.orgId === '' || this.querAddNewPhepBuDep.annualAdd === '' || this.querAddNewPhepBuDep.annualMonth === ''){
+      this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Vui lòng điền đủ thông tin' });
+    }else{
+      this.apiService.setAnnualAddOrgInfo(this.querAddNewPhepBuDep).subscribe((results: any) => {
+        if (results.status === 'success') {
+          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Thêm mới thành công' });
+        }else{
+          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+        }
+      })
+    }
   }
   initGrid() {
     this.columnDefs = [
