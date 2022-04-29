@@ -258,33 +258,31 @@ load() {
   }
   // thêm mới Phép bù phòng ban
   setPhepBuDep() {
-    if(this.querAddNewPhepBuDep.orgId === '' || this.querAddNewPhepBuDep.annualAdd === '' || this.querAddNewPhepBuDep.annualMonth === ''){
-      this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Vui lòng điền đủ thông tin' });
-    }else{
+    console.log('fjodsfji');
+    // if(this.querAddNewPhepBuDep.orgId === '' || this.querAddNewPhepBuDep.annualAdd === '' || this.querAddNewPhepBuDep.annualMonth === ''){
+    //   this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Vui lòng điền đủ thông tin' });
+    // }else{
       this.apiService.setAnnualAddOrgInfo(this.querAddNewPhepBuDep).subscribe((results: any) => {
-        if (results.status === 'success') {
-          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Thêm mới thành công' });
-        }else{
-          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
-        }
+        // console.log(results, 'fjdsofio')
+        // if (results.status === 'success') {
+        //   this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Thêm mới thành công' });
+        // }else{
+        //   this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+        // }
       })
-    }
+    // }
   }
   chonToChuc() {
+    this.querAddNewPhepBuDep.orgId = '';
     if(this.organizeIdForDep){
       this.getDepartments(this.organizeIdForDep);
     }
   }
   getDepartments(parentId) {
     const queryParams = queryString.stringify({ parentId: parentId })
-    this.apiService.organizeGetDepartments(queryParams).subscribe(results => {
+    this.apiService.getOrganizeTree(queryParams).subscribe(results => {
       if (results.status === 'success') {
-        this.departments = results.data.map(d => {
-          return {
-            label: d.departmentName,
-            value: d.departmentCd
-          }
-        });
+        this.departments = results.data;
       }
     })
 

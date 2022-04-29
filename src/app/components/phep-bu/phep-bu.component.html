@@ -95,8 +95,8 @@
             </div>
         </div>
         <div class=" col-3 mb-0">
-            <div class="field-group select label-8">
-                <p-dropdown placeholder="Chọn Phòng ban" appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
+            <div class="field-group select treeselect label-8">
+                <!-- <p-dropdown placeholder="Chọn Phòng ban" appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
                   [options]="departments" [required] [(ngModel)]="querAddNewPhepBuDep.orgId" name="orgId" [filter]="true">
                   <ng-template let-item pTemplate="selectedItem">
                     <span>{{item.label}}</span>
@@ -106,8 +106,11 @@
                       <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
                     </div>
                   </ng-template>
-                </p-dropdown>
-                <label for="">Phòng ban</label>
+                </p-dropdown>(onNodeSelect)="onNodeSelectAdd($event)
+                <label for="">Phòng ban</label> -->
+                <p-treeSelect placeholder="Chọn Phòng ban" appendTo="body" [(ngModel)]="querAddNewPhepBuDep.orgId" [options]="departments"
+          selectionMode="single" placeholder="Select Item"></p-treeSelect>
+          <label for="">Phòng ban</label>
               </div>
           </div>
         <div class="col-2">
