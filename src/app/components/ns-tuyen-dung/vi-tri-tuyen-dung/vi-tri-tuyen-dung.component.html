@@ -3,7 +3,7 @@
 <div class="grid main-grid">
     <div class="col-12 right max-w-full">
         <div class="bread-filter grid">
-            <div class="breadcrumb col-md-8">
+            <div class="breadcrumb col-5">
                 <h3>Danh sách vị trí tuyển dụng</h3>
                 <p-breadcrumb [model]="items"></p-breadcrumb>
             </div>
@@ -22,6 +22,39 @@
                 <div class="input-group-append dropdown">
                 </div>
             </div>
+            <div class="col-2">
+                <div class="field-group select mb-0 valid" >
+                    <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" [filter]="true"
+                        [options]="listJobTitles" [(ngModel)]="query.jobId" name="jobId" (onChange)="find()">
+                        <ng-template let-item pTemplate="selectedItem">
+                            <span style="vertical-align:middle;">{{item.label}}</span>
+                        </ng-template>
+                        <ng-template let-car pTemplate="item">
+                            <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                                <div style="">{{car.label}}</div>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+                    <label  for=""> Chuyên môn: </label>
+                </div>
+            </div>
+            <!-- <div class="col-1" >
+                <div class="field-group select label-8 mb-0" [ngClass]=" query.active_st ? 'valid' : 'invalid' ">
+                    <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
+                        [options]="positiontypes" [(ngModel)]="query.active_st" name="active_st" (onChange)="find()"
+                    >
+                        <ng-template let-item pTemplate="selectedItem">
+                            <span style="vertical-align:middle;">{{item.label}}</span>
+                        </ng-template>
+                        <ng-template let-car pTemplate="item">
+                            <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                                <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+                    <label  for=""> Trạng thái: </label>
+                </div>
+            </div> -->
             <div class="col-1 tools">
                 <p-button styleClass="p-button-sm h-56" icon="pi pi-plus" label="Thêm mới" (click)="create()"></p-button>
                 <!-- <p-button styleClass="p-button-sm ml-1 p-button-back" icon="pi pi-replay" label="Quay lại" (click)="onBack()"></p-button> -->
