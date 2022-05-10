@@ -1,0 +1,41 @@
+
+:host::ng-deep{
+    table {
+        width: 100%;
+    }
+    .p-datatable .p-datatable-thead > tr > th {
+        padding: 15px !important;
+    }
+    .p-datatable-thead {
+        tr{
+            th{
+                span {
+                    text-align: center;
+                }
+            }
+        }
+    }
+    .text-center {
+        text-align: center;
+    }
+    .color-red {
+        color: red;
+        cursor: pointer;
+    }
+    .hover-td {
+        &:hover {
+            border-color: royalblue !important;
+            background-color: royalblue !important;
+            font-weight: 500;
+            color: #ffffff;
+       }
+    }
+    .btn-danger:hover, .btn-danger:focus, .btn-danger:active {
+        background-color: #e7575e !important;
+        border-color: #BF2D35 !important;
+    }
+    .cursor-pointer {
+       cursor: pointer;
+    }
+    
+}

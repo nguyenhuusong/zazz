@@ -61,6 +61,7 @@ import { LyDoNghiViecComponent } from 'src/app/components/ly-do-nghi-viec/ly-do-
 import { ChiTietLyDoNghiViecComponent } from 'src/app/components/ly-do-nghi-viec/chi-tiet-ly-do-nghi-viec/chi-tiet-ly-do-nghi-viec.component';
 import { CaiDatPhongHopTheoTangComponent } from 'src/app/components/cai-dat-phong-hop-theo-tang/cai-dat-phong-hop-theo-tang.component';
 import { ChiTietPhongHopTheoTangComponent } from 'src/app/components/cai-dat-phong-hop-theo-tang/chi-tiet-phong-hop-theo-tang/chi-tiet-phong-hop-theo-tang.component';
+import { QuanLyNgayNghiComponent } from 'src/app/components/quan-ly-ngay-nghi/quan-ly-ngay-nghi.component';
 
 @NgModule({
   imports: [
@@ -130,7 +131,8 @@ import { ChiTietPhongHopTheoTangComponent } from 'src/app/components/cai-dat-pho
     LyDoNghiViecComponent,
     ChiTietLyDoNghiViecComponent,
     CaiDatPhongHopTheoTangComponent,
-    ChiTietPhongHopTheoTangComponent
+    ChiTietPhongHopTheoTangComponent,
+    QuanLyNgayNghiComponent
   ],
   providers: []
 })

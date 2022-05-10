@@ -1233,4 +1233,22 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v2/terminate/GetStatusTimelineTerminate`, this.options)
   }
 
+  // Holiday
+
+  getHolidayPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/holiday/GetHolidayPage?` + queryParams, this.options)
+  }
+
+  delHoliday(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v1/holiday/DelHoliday?` + queryParams, this.options)
+  }
+
+  setHolidayAdd(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/holiday/SetHolidayAdd`, params , this.options)
+  }
+
+  setHolidayCreate(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/holiday/SetHolidayCreate`, params , this.options)
+  }
+
 }
