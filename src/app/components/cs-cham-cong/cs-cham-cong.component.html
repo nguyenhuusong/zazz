@@ -3,11 +3,11 @@
 <div class="grid main-grid">
     <div class="col-12 right max-w-full">
         <div class="bread-filter grid">
-            <div class="breadcrumb col-7">
+            <div class="breadcrumb col-3">
                 <h3>Danh sách chấm công</h3>
                 <p-breadcrumb [model]="items"></p-breadcrumb>
             </div>
-            <div class="header-filter-search col-3">
+            <div class="header-filter-search col-2">
                 <div class="field-group text search mb-0" [ngClass]=" query.filter ? 'valid' : 'invalid' ">
                     <input class="input-default" type="text" id="filter"
                     (keydown.enter)="query.offSet = 0; first = 0;load()"
@@ -57,7 +57,7 @@
                                 </div>
                             </div>
                             <div class="col-6">
-                                <div class="field-group date mb-0">
+                                <div class="field-group date mb-0 mr-1">
                                     <p-calendar 
                                     panelStyleClass="datepicker-default"
                                     placeholder="DD/MM/YYYY" 
@@ -74,23 +74,78 @@
                             </div>
                             <div class="col-6">
                                 <div class="field-group date mb-0">
-                                    <p-calendar
-                                    panelStyleClass="datepicker-default" 
-                                    placeholder="DD/MM/YYYY" [appendTo]="'body'" [baseZIndex]="101"
-                                    [(ngModel)]="query.toDate" [monthNavigator]="true" [yearNavigator]="true"
-                                    yearRange="2010:2030" inputId="navigators"
-                                    dateFormat="dd/mm/yy" name="toDate"></p-calendar>
-                                    <label>Đến ngày</label>
+                                        <p-calendar
+                                        panelStyleClass="datepicker-default" 
+                                        placeholder="DD/MM/YYYY" [appendTo]="'body'" [baseZIndex]="101"
+                                        [(ngModel)]="query.toDate" [monthNavigator]="true" [yearNavigator]="true"
+                                        yearRange="2010:2030" inputId="navigators"
+                                        dateFormat="dd/mm/yy" name="toDate"></p-calendar>
+                                        <label>Đến ngày</label>
+                                </div>
                             </div>
-                        </div>
                         </div>
                     </ng-template>
                 </p-overlayPanel>
             </div>
-            <div class="col-2">
+            <div class="col-2 d-flex">
+                <div class="field-group text label-8 mb-0 mr-3">
+                    <input type="number" class="input-default" id="" placeholder="Tháng"
+                        [(ngModel)]="query.month">
+                    <label>Tháng</label>
+                </div>
+                <div class="field-group text label-8 mb-0">
+                    <input type="number" class="input-default" id="" placeholder="Năm"
+                        [(ngModel)]="query.year">
+                    <label>Năm</label>
+                </div>
+            </div>
+            <div class="col-1">
+                <div class="field-group select mb-0 label-8">
+                    <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
+                    [options]="listOrgRoots" [(ngModel)]="query.organizeId"  (onChange)="find()"
+                    name="organizeId" [filter]="true">
+                    <ng-template let-item pTemplate="selectedItem">
+                        <span>{{item.label}}</span>
+                    </ng-template>
+                    <ng-template let-car pTemplate="item">
+                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                            <div style="font-size:14px;margin-top:4px">{{car.label}}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+                <label>Công ty</label>
+                </div>
+            </div>
+            <div class="col-4 d-flex">
+                <div class="field-group date mb-0 mr-3">
+                    <p-calendar 
+                    panelStyleClass="datepicker-default"
+                    placeholder="DD/MM/YYYY" 
+                    [appendTo]="'body'" 
+                    [baseZIndex]="101"
+                    [(ngModel)]="query.fromDate" 
+                    [monthNavigator]="true" 
+                    [yearNavigator]="true"
+                    yearRange="2010:2030" 
+                    inputId="navigators"
+                    dateFormat="dd/mm/yy" name="fromDate"></p-calendar>
+                    <label>Từ ngày</label>
+                </div>
+                <div class="field-group date mb-0 mr-3">
+                    <p-calendar
+                        panelStyleClass="datepicker-default" 
+                        placeholder="DD/MM/YYYY" [appendTo]="'body'" [baseZIndex]="101"
+                        [(ngModel)]="query.toDate" [monthNavigator]="true" [yearNavigator]="true"
+                        yearRange="2010:2030" inputId="navigators"
+                        dateFormat="dd/mm/yy" name="toDate"></p-calendar>
+                        <label>Đến ngày</label>
+                </div>
                 <p-button styleClass="search-button p-button-secondary btn-56-56 mr-2" icon="pi pi-refresh" (click)="cancel()" ></p-button>
                 <p-button label="Export" styleClass="h-56" icon="pi pi-cloud-download" (click)="Export()"></p-button>
             </div>
+                
+            <!-- <div class="col-1">
+            </div> -->
         </div>
         <div class="grid-default" #container>
             <app-list-grid-angular  *ngIf="columnDefs.length > 0"

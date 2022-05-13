@@ -133,11 +133,12 @@ export class CsChamCongComponent implements OnInit {
 
   Export() {
     let params: any = {... this.query};
-    delete params.organizeId
+    // delete params.organizeId
     delete params.fromDate
     delete params.toDate
     params.FromDate = moment(new Date(this.query.fromDate)).format('YYYY-MM-DD')
     params.ToDate = moment(new Date(this.query.toDate)).format('YYYY-MM-DD')
+
     const queryParams = queryString.stringify(params);
     this.spinner.show();
     this.apiService.getExportReport('ExportBangLuongThang',queryParams).subscribe(results => {
