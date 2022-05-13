@@ -1,0 +1,134 @@
+
+
+<div class="grid main-grid" style="padding: 0">
+    <div class="col-12 right max-w-full" style="padding-top: 0;">
+        <div class="breadcrumb col-12 d-flex">
+            <div class="col-8">
+                <h3>{{dataRouter?.title}}</h3>
+                <p-breadcrumb [model]="itemsBreadcrumb"></p-breadcrumb>
+            </div>
+            <div class="col-2"> 
+                <div class="field-group select label-8">
+                    <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
+                    [options]="arrayYear" [(ngModel)]="query.year" name="year" (onChange)="load()">
+                    <ng-template let-item pTemplate="selectedItem">
+                        <span style="vertical-align:middle;">{{item.label}}</span>
+                    </ng-template>
+                    <ng-template let-car pTemplate="item">
+                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                            <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+                <label  for=""> Năm: </label>
+                </div>
+            </div>
+            <div class="col-2 text-right">
+                <p-button label="Tạo ngày nghỉ trong năm" icon="pi pi-calendar-plus" styleClass="height-56" (click)="AddDayToYear()"></p-button>
+            </div>
+          
+        </div>
+        <div class="grid" #container>
+            <p-table [value]="listHolidays" [style]="{width: '100%'}"
+            styleClass="p-datatable-gridlines p-datatable-sm">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th *ngFor="let item of headerDate"
+                        [style.width]="item.title_id === 1 ? '70px' : ''"><span
+                            [style.color]="item.color">{{item.title}}</span></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-product>
+                <tr>
+                    <td [innerHTML]="fnRenderTextMont(product.month)"></td>
+                    <ng-container *ngFor="let item of arraylengths; let i=index">
+                        <td *ngIf="i + 1 < product.start; else loggedOut"
+                            class="text-center">*</td>
+                        <ng-template #loggedOut>
+
+                            <td *ngIf="i+1<= product.end" style="white-space: nowrap;"
+                                class="cursor-pointer hover-td text-center"
+                                [ngClass]="{'color-red': product.holidays[i].holi_is}"
+                                (dblclick)="confirm($event, i, product.holidays[i].day_dt,
+                                product.holidays[i].holi_is, product.holidays[i].holi_des)"
+                                title="{{product.holidays[i].holi_des}}">
+                                {{i + 1 - product.start + 1}}</td>
+                            <td *ngIf="i+1 > product.end" class="text-center">*</td>
+                        </ng-template>
+                    </ng-container>
+                </tr>
+            </ng-template>
+
+        </p-table>
+      
+         
+    </div>
+    <div class="grid mt-1">
+        <div class="col-6">
+        </div>
+        <div class="col-6 text-right">
+            <p-button type="button" icon="pi pi-chevron-left" (click)="prev()"
+                [disabled]="isFirstPage()" styleClass="p-button-text">
+            </p-button>
+            <p-button type="button" icon="pi pi-refresh" (click)="reset()"
+                styleClass="p-button-text"></p-button>
+            <p-button type="button" icon="pi pi-chevron-right" (click)="next()"
+                [disabled]="isLastPage()" styleClass="p-button-text"></p-button>
+        </div>
+    </div>
+</div>
+
+            
+
+<p-dialog [(visible)]="displayAddHoliday" [baseZIndex]="99" [modal]="true" [style]="{width: '1000px', height: 'auto'}">
+    <!-- <ngx-loading [show]="loading1" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading> -->
+    <p-header>
+        Thêm mới ngày nghỉ
+    </p-header>
+    <div class="row">
+        <div class="group-date" [ngClass]=" modelAddHoliday.day_dt ? 'valid' : 'invalid' ">
+            <label class="text-nowrap label-text" >Ngày nghỉ </label>
+            <p-calendar placeholder="DD/MM/YYYY" [(ngModel)]="modelAddHoliday.day_dt" name="day_dt" [monthNavigator]="true"
+            appendTo="body" dateFormat="dd/mm/yy" [baseZIndex]="100" [required]="true" [yearNavigator]="true"
+            yearRange="2000:2030" inputId="navigators"></p-calendar>
+
+            </div>
+
+    </div>
+    <div class="row mt-1">
+        <div class="group-textarea" [ngClass]="modelAddHoliday?.holi_des ? 'valid' : 'invalid' ">
+            <textarea type="text" id="holi_des"  class="form-control" [(ngModel)]="modelAddHoliday.holi_des" cols="30" rows="10" name="holi_des"></textarea>
+            <label for="">Mô tả:<span style="color:red">*</span> </label>
+        </div>
+    </div>
+    <div class="row mt-1">
+        <div class="d-flex align-items-end" style="width: 100%;">
+            <div class="group-dropdown default mb-0">
+                <label  for=""> Kiểu lịch: </label>
+                <div style="flex-grow: 1">
+                    <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
+                        [options]="listLich" [(ngModel)]="modelAddHoliday.calendar_type" name="calendar_type" >
+                        <ng-template let-item pTemplate="selectedItem">
+                            <span style="vertical-align:middle;">{{item.label}}</span>
+                        </ng-template>
+                        <ng-template let-car pTemplate="item">
+                            <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                                <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row mt-1">
+        <div class="col-md-6"></div>
+        <div class="col-md-6 text-right">
+            <p-button label="Cập nhật" icon="pi pi-check" styleClass="p-button-sm mr-1" (click)="updateHoliday()"> </p-button>
+            <p-button *ngIf="this.modelAddHoliday.holi_is" label="Hủy ngày nghỉ" icon="pi pi-trash" (click)="FnHuy()" styleClass="p-button-sm p-button-danger mr-1"> </p-button>
+            <p-button label="Đóng" icon="pi pi-times" styleClass="p-button-sm p-button-secondary" (click)="displayAddHoliday = !displayAddHoliday"> </p-button>
+        </div>
+    </div>
+</p-dialog>

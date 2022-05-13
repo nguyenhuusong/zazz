@@ -590,7 +590,12 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
           }
         ];
         this.listsData[0] = data.workings || [];
+        this.listsData[1] = data.timelines || [];
         this.titles[0] = 'Thời gian làm việc';
+        this.titles[1] = 'Dòng thời gian';
+        this.columnDefs[1] = [
+          ...AgGridFn(data.gridflexdetails2 || []),
+        ];
         this.spinner.hide();
         break;
       case API_PROFILE.NGUOI_QUAN_LY:

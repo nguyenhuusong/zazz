@@ -61,7 +61,7 @@
                     </div>
             </div>
                 <div class="row d-flex mt-4 timelines" *ngIf="selectedMenuCode === API_PROFILE.CONG_VIEC ">
-                    <div class="col-md-8">
+                    <div class="col-md-12">
                         <div class="border-section">
                             <p-card styleClass="mt-1" >
                                 <ng-template pTemplate="header">
@@ -91,7 +91,7 @@
                             </p-card>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <!-- <div class="col-md-4">
                         <div class="box">
                             <p-card styleClass="mt-1" >
                                 <ng-template pTemplate="header">
@@ -113,13 +113,12 @@
                                     <ng-template pTemplate="content" let-event>
                                         <p-card [header]="event.status" [subheader]="event.date">
                                             <p class="mt-1">{{event.note}}</p>
-                                            <!-- <button pButton label="Read more" class="p-button-text"></button> -->
                                         </p-card>
                                     </ng-template>
                                 </p-timeline>
                             </p-card>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
               
 
@@ -165,6 +164,7 @@
                     || selectedMenuCode === API_PROFILE.THUE_BAO_HIEM
                     || selectedMenuCode === API_PROFILE.THONG_TIN_CA_NHAN
                     || selectedMenuCode === API_PROFILE.NGUOI_QUAN_LY
+                    || selectedMenuCode === API_PROFILE.CONG_VIEC
                     || selectedMenuCode === API_PROFILE.QUAN_HE_LAO_DONG ">
 
                         <ng-template pTemplate="header">
