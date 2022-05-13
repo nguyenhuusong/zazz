@@ -30,8 +30,11 @@
                     <label>Năm</label>
                 </div>
             </div>
-            <div class="col-1">
-                <div class="field-group select mb-0 label-8">
+            <!-- <div class="col-2">
+            </div> -->
+            <div class="col-5 d-flex">
+                
+                <div class="field-group select mb-0 label-8 mr-3" style="width: 255px">
                     <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
                     [options]="listOrgRoots" [(ngModel)]="query.organizeId"  (onChange)="find()"
                     name="organizeId" [filter]="true">
@@ -46,8 +49,6 @@
                 </p-dropdown>
                 <label>Công ty</label>
                 </div>
-            </div>
-            <div class="col-4 d-flex">
                 <div class="field-group date mb-0 mr-3">
                     <p-calendar 
                     panelStyleClass="datepicker-default"
