@@ -314,10 +314,18 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
   getLeaveReasons() {
     this.apiBaseService.getLeaveReasons()
     .subscribe(response => {
-      this.leaveReasons = response.data;
-      if (this.leaveReasons.length) {
-        this.query.reason_code = this.leaveReasons[0];
-        this.load();
+      if(response.status === 'success'){
+        this.leaveReasons = response.data.map( d => {
+          return {
+            name: d.name,
+            code: d.code
+          }
+        });
+        this.leaveReasons = [{ name: 'Tất cả', code: ''}, ...this.leaveReasons]
+        if (this.leaveReasons.length) {
+          this.query.reason_code = this.leaveReasons[0];
+          this.load();
+        }
       }
     })
   }
