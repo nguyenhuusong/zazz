@@ -144,7 +144,7 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
       queryParams.month = this.time.getMonth() + 1;
     }
     if (typeof queryParams.request_status !== 'string') {
-      queryParams.request_status = queryParams.request_status.objValue;
+      queryParams.request_status = queryParams.request_status.code;
     }
     if (typeof queryParams.reason_code !== 'string') {
       queryParams.reason_code = queryParams.reason_code.code;
@@ -334,7 +334,20 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
     this.apiBaseService.getObjectList('hrm_leave_status')
     .subscribe(response => {
       this.listStatus = response.data;
-      if (this.listStatus.length) {
+      // if (this.listStatus.length) {
+      //   this.query.request_status = this.listStatus[0];
+      //   this.load();
+      // }
+
+
+      if(response.status === 'success'){
+        this.listStatus = response.data.map( d => {
+          return {
+            name: d.objName,
+            code: d.objCode
+          }
+        });
+        this.listStatus = [{ name: 'Tất cả', code: ''}, ...this.listStatus]
         this.query.request_status = this.listStatus[0];
         this.load();
       }
