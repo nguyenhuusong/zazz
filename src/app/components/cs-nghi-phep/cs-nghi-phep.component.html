@@ -47,11 +47,11 @@
                                             [options]="listStatus" [(ngModel)]="query.request_status"  (onChange)="find()"
                                             name="request_status" [filter]="true">
                                             <ng-template let-item pTemplate="selectedItem">
-                                                <span style="vertical-align:middle;">{{item.objName}}</span>
+                                                <span style="vertical-align:middle;">{{item.name}}</span>
                                             </ng-template>
                                             <ng-template let-car pTemplate="item">
                                                 <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                                                    <div style="font-size:14px;float:left;margin-top:4px">{{car.objName}}</div>
+                                                    <div style="font-size:14px;float:left;margin-top:4px">{{car.name}}</div>
                                                 </div>
                                             </ng-template>
                                         </p-dropdown>
