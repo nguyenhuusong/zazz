@@ -70,7 +70,8 @@ public agGridFn = AgGridFn;
     filter: '',
     offSet: 0,
     pageSize: 15,
-    status: null
+    status: null,
+    organizeId : null
   }
   totalRecord = 0;
   DriverId = 0;
@@ -93,7 +94,8 @@ public agGridFn = AgGridFn;
       filter: '',
       offSet: 0,
       pageSize: 15,
-      status: null
+      status: null,
+      organizeId : null
     }
     this.load();
   }
@@ -242,6 +244,7 @@ public agGridFn = AgGridFn;
   }
 
   ngOnInit() {
+    this.getOrgRoots();
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Cài đặt' },
@@ -257,6 +260,20 @@ public agGridFn = AgGridFn;
     // });
 
     this.getStatus();
+  }
+  listOrgRoots = [];
+  getOrgRoots() {
+    this.apiService.getOrgRoots().subscribe(results => {
+      if (results.status === 'success') {
+        this.listOrgRoots = results.data.map(d => {
+          return {
+            label: d.org_name,
+            value: `${d.orgId}`
+          }
+        });
+        this.listOrgRoots = [{ label: 'Tất cả', value: null }, ...this.listOrgRoots];
+      }
+    })
   }
  
   listLevers = []

@@ -3,7 +3,7 @@
 <div class="grid main-grid">
     <div class="col-12 right max-w-full">
         <div class="bread-filter grid">
-            <div class="breadcrumb col-6">
+            <div class="breadcrumb col-3">
                 <h3>Lịch làm việc</h3>
                 <p-breadcrumb [model]="items"></p-breadcrumb>
             </div>
@@ -18,6 +18,24 @@
                         </svg>
                         
                     <p-button class="search-button" icon="pi pi-search" (click)="query.offSet = 0; first = 0; load()"></p-button>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="field-group select label-8">
+                    <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
+                        [options]="listOrgRoots" [(ngModel)]="query.organizeId" name="organizeId"
+                        (onChange)="find()" [filter]="true">
+                        <ng-template let-item pTemplate="selectedItem">
+                            <span>{{item.label}}</span>
+                        </ng-template>
+                        <ng-template let-car pTemplate="item">
+                            <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                                <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}
+                                </div>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+                    <label for="">Tổ chức</label>
                 </div>
             </div>
             <div class="col-1">
