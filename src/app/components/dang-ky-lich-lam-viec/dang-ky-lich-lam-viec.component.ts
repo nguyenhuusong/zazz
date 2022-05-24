@@ -364,7 +364,7 @@ export class DangKyLichLamViecComponent implements OnInit {
       {
         headerName: 'Thao tác',
         filter: '',
-        maxWidth: 90,
+        maxWidth: 140,
         pinned: 'right',
         cellRenderer: 'buttonAgGridComponent',
         cellClass: ['border-right', 'no-auto'],
