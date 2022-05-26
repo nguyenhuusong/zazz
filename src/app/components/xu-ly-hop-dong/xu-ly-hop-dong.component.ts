@@ -10,6 +10,7 @@ import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-render
 import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.component';
 import { AgGridFn } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-xu-ly-hop-dong',
@@ -51,10 +52,7 @@ export class XuLyHopDongComponent implements OnInit {
     label: 'Thêm mới tài khoản',
     value: 'Add'
   }
-  statusContracts = [ {
-    label: 'Tất cả',
-    value: null
-  }];
+  statusContracts = [];
   typeContracts = []
   public modules: Module[] = AllModules;
   public agGridFn = AgGridFn;
@@ -241,6 +239,7 @@ export class XuLyHopDongComponent implements OnInit {
 
   ngOnInit() {
     this.getOrgRoots();
+    this.getCustObjectListNew();
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Cài đặt' },
@@ -248,6 +247,20 @@ export class XuLyHopDongComponent implements OnInit {
     ];
     this.load();
   }
+
+  getCustObjectListNew() {
+    const opts1 = { params: new HttpParams({ fromString: `objKey=contract_status` }) };
+    this.apiService.getCustObjectListNew(null, opts1.params.toString()).subscribe(results => {
+      this.statusContracts = results.data.map(d => {
+        return {
+          label: d.objName,
+          value: d.objValue
+        }
+      });
+      this.statusContracts = [{label: 'Tất cả', value: null}, ...this.statusContracts]
+    });
+  }
+
 
   sizeToFit() {
     if (this.gridApi) {
