@@ -11,6 +11,8 @@ import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.comp
 import { AgGridFn } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { HttpParams } from '@angular/common/http';
+import { WebsocketService2 } from 'src/app/services/websocket.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-xu-ly-hop-dong',
@@ -27,8 +29,10 @@ export class XuLyHopDongComponent implements OnInit {
     private messageService: MessageService,
     private spinner: NgxSpinnerService,
     private changeDetector: ChangeDetectorRef,
+    private webSocketService: WebsocketService2,
     private router: Router) {
-
+    this.webSocketService.connect('ws://localhost:6999');
+    this.webSocketService.emit("action", 'PRINT_LIST_PRINTERS')
     this.defaultColDef = {
       tooltipComponent: 'customTooltip',
       resizable: true,
@@ -189,6 +193,23 @@ export class XuLyHopDongComponent implements OnInit {
       ]
     };
   }
+
+  showButtons1(event: any) {
+    return {
+      buttons: [
+        {
+          onClick: this.deleteRowPrint.bind(this),
+          label: 'Xóa',
+          icon: 'fa fa-eye',
+          class: 'btn-primary mr5',
+        },
+      ]
+    };
+  }
+
+  deleteRowPrint(event) {
+
+  }
   // GET /api/v2/contract/GetContractInfo
   XemChiTiet(event) {
   const modelContractInfo = {
@@ -204,7 +225,7 @@ export class XuLyHopDongComponent implements OnInit {
   delMaternityInfo(event) {
 
   }
-
+  columnDefsPrint = []
   initGrid() {
     this.columnDefs = [
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
@@ -216,10 +237,13 @@ export class XuLyHopDongComponent implements OnInit {
         cellRenderer: 'buttonAgGridComponent',
         cellClass: ['border-right', 'no-auto'],
         cellRendererParams: (params: any) => this.showButtons(params),
-        checkboxSelection: false,
+        checkboxSelection: true,
+        headerCheckboxSelection: true,
+        headerCheckboxSelectionFilteredOnly: true,
         field: 'checkbox'
       }
     ]
+   
   }
   
   find() {
@@ -229,15 +253,38 @@ export class XuLyHopDongComponent implements OnInit {
   changePageSize() {
     this.load();
   }
-
   paginate(event) {
     this.query.offSet = event.first;
     this.first = event.first;
     this.query.pageSize = event.rows;
     this.load();
   }
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
 
+  listPrints = []
   ngOnInit() {
+    this.webSocketService.myWebSocket
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
+      repon => {
+        repon = JSON.parse(repon)
+        if(repon && repon.data && repon.data.length > 0) {
+          this.listPrints = repon.data.map(d => {
+            return {
+              label: d,
+              value: d
+            }
+          })
+        }
+      
+       console.log(repon)
+      },
+      err => console.log(err),
+    )
     this.getOrgRoots();
     this.getCustObjectListNew();
     this.items = [
@@ -311,7 +358,101 @@ export class XuLyHopDongComponent implements OnInit {
       })
     }
   }
+  modelPrint = {
+    PrinterName: null,
+    Copies: 1
+  }
+  soLanIn = [
+    {label: 'Một lần', value: 1},
+    {label: 'Hai lần', value: 2},
+    {label: 'Ba lần', value: 3},
+    {label: 'Bốn lần', value: 4},
+    {label: 'Năm lần', value: 5},
+    
+  ]
+  listRowSelects = []
+  filesPrints = [];
+  displayPrint = false;
+  Prints() {
+    const params = this.listRowSelects.map((item, index) => {
+      return {
+        key: item.contractId,
+        data: null,
+        seq: index + 1
+      }
+    })
+    this.apiService.getPrintFiles(params).subscribe(results => {
+      if(results.status ==='success') {
+          this.filesPrints = results.data;
+          this.initGridPrint();
+         this.displayPrint = true;
+      }
 
+    })
+  }
+  rowSelected(event) {
+    this.listRowSelects = event;
+  }
+
+  openPrint() {
+    const data = {
+      "action": "PRINT",
+      "data" : {
+        "PrinterName": this.modelPrint.PrinterName,
+        "Copies": this.modelPrint.Copies,
+        "Files": this.filesPrints.map(d => {
+          return {
+            "Filename": d.filename,
+            "Url": d.url,
+            "Type": d.type
+          }
+        })
+      }
+    }
+    this.spinner.show();
+    this.webSocketService.send(data);
+    this.webSocketService.myWebSocket
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
+      repon => {
+        this.spinner.hide();
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'In thành công' });
+      },
+      err => {
+        this.spinner.hide();
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'In Lỗi' });
+        console.log(err)
+      },
+    )
+  }
+
+  initGridPrint() {
+    this.columnDefsPrint = [
+      {
+        headerName: 'Tên file',
+        field: 'filename',
+      },
+      {
+        headerName: 'Loại file',
+        field: 'type',
+      },
+      {
+        headerName: 'Link url',
+        field: 'url',
+      },
+      // {
+      //   headerName: 'Thao tác',
+      //   filter: '',
+      //   minWidth: 100,
+      //   pinned: 'right',
+      //   cellRenderer: 'buttonAgGridComponent',
+      //   cellClass: ['border-right'],
+      //   cellRendererParams: (params: any) => this.showButtons1(params),
+      //   checkboxSelection: false,
+      //   field: 'checkbox'
+      // }
+    ]
+  }
 }
 
 

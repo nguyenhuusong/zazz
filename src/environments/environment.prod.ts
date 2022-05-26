@@ -1,5 +1,5 @@
 const host = {
-  socketServer: 'https://chat.sunshineservice.vn:3001',
+  socketServer: 'ws://localhost:6999/print',
   authServer: 'https://api.sunshinegroup.vn:5000',
   apiServer: 'https://api.sunshinegroup.vn',
   apShomeServer: 'https://apiresident.sunshinetech.com.vn',

@@ -634,6 +634,10 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v2/contract/GetContractTypes?${queryParams}`, this.options)
   }
 
+  getPrintFiles(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/contract/GetPrintFiles`,queryParams, this.options)
+  }
+
   // Thai sản
 
   getMaternityPage(queryParams): Observable<any> {
