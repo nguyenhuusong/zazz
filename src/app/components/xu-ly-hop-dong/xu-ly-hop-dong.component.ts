@@ -13,6 +13,7 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { HttpParams } from '@angular/common/http';
 import { WebsocketService2 } from 'src/app/services/websocket.service';
 import { Subject, takeUntil } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-xu-ly-hop-dong',
@@ -31,7 +32,7 @@ export class XuLyHopDongComponent implements OnInit {
     private changeDetector: ChangeDetectorRef,
     private webSocketService: WebsocketService2,
     private router: Router) {
-    this.webSocketService.connect('ws://localhost:6999');
+    this.webSocketService.connect(environment.socketServer);
     this.webSocketService.emit("action", 'PRINT_LIST_PRINTERS')
     this.defaultColDef = {
       tooltipComponent: 'customTooltip',
