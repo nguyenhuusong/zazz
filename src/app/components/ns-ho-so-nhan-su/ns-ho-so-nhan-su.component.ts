@@ -136,6 +136,8 @@ export class NsHoSoNhanSuComponent implements OnInit {
 
   departments = [];
 
+  isHrDiagram: boolean = false
+
   onmouseenter(event) {
     console.log(event)
   }
@@ -158,7 +160,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
     this.gridColumnApi = params.columnApi;
   }
 
-  getAgencyOrganizeMap() {
+  getAgencyOrganizeMap(type = false) {
     this.apiService.getAgencyOrganizeMap().subscribe(results => {
       if (results.status === 'success') {
         this.listAgencyMap = [...results.data.root];
@@ -168,11 +170,16 @@ export class NsHoSoNhanSuComponent implements OnInit {
           this.query.orgId = this.selectedNode.orgId;
           this.load();
         } else {
+         
           this.selectedNode = JSON.parse(localStorage.getItem("organize"));
           this.query.orgId = this.selectedNode.orgId;
           this.listAgencyMap = this.expanded(this.listAgencyMap, this.selectedNode.parentId)
-          this.selected(this.listAgencyMap, this.query.orgId)
-          this.load();
+          this.selected(this.listAgencyMap, this.query.orgId);
+          if(type) {
+            this.isHrDiagram = true;
+  
+            }
+          this.load( );
         }
       }
     })
@@ -486,7 +493,15 @@ export class NsHoSoNhanSuComponent implements OnInit {
     localStorage.setItem('organize', JSON.stringify(event.node));
     this.query.orgId = this.selectedNode.orgId;
     this.query.orgId = this.detailOrganizeMap.orgId;
+    this.isHrDiagram = false;
+
     this.load()
+  }
+
+  hrDiagram() {
+    this.selectedNode = null;
+    this.listAgencyMap = []
+    this.getAgencyOrganizeMap(true);
   }
 
   Back() {
@@ -700,5 +715,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
   rowSelected(data){
     this.listDataSelect = data
   }
+
+
 
 }

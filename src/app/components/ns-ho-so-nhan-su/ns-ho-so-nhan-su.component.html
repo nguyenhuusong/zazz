@@ -4,9 +4,9 @@
             <div class="d-flex bet end">
                 <app-hrm-breadcrumb [items]="items"></app-hrm-breadcrumb>
                 <div class="d-flex">
-                    <div class="select-ori mr-2">
+                    <div class="select-ori mr-2" (click)="hrDiagram()">
                         <div class="name">
-                            Công ty CP tập đoàn KSFinance
+                            {{ selectedNode.label }}
                             <svg width="8" height="4" viewBox="0 0 8 4" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M1.09181 0C0.909362 -8.24682e-09 0.712484 0.0743539 0.676783 0.260078C0.64492 0.425834 0.688025 0.60529 0.806099 0.733979L3.66324 3.84799C3.84921 4.05067 4.15071 4.05067 4.33668 3.84799L7.19382 0.733979C7.3119 0.60529 7.355 0.425834 7.32314 0.260078C7.28744 0.0743541 7.09056 2.71145e-07 6.90811 2.62899e-07L1.09181 0Z" fill="#99A2BC"/>
                             </svg>
@@ -96,24 +96,6 @@
                 </div>
             </div>
         </div>
-        <!-- preserveSpace -->
-        <p-card [style]="{'overflow': 'auto'}">
-            <p-organizationChart [value]="listAgencyMap" [preserveSpace]="false" selectionMode="single"
-                [(selection)]="selectedNode" (onNodeSelect)="onNodeSelect($event)" styleClass="company">
-                <ng-template let-node pTemplate="person">
-                    <div class="node-header p-corner-top">{{node.data.position ? node.data.position : 'No position'}}
-                    </div>
-                    <div class="node-content">
-                        <img src="{{node.data.avatarUrl ? node.data.avatarUrl : '../../../../../assets/images/img_avatar.png'}}"
-                            width="32">
-                        <div>{{node.data.full_name ? node.data.full_name : 'No name'}}</div>
-                    </div>
-                </ng-template>
-                <ng-template let-node pTemplate="department">
-                    {{node.label}}
-                </ng-template>
-            </p-organizationChart>
-        </p-card>
         <div class="grid-default" #container>
             <div class="paginator">
                 <span>Từ {{ countRecord.currentRecordStart }} đến
@@ -194,4 +176,24 @@
             </div>
         </div>
     </div>
+</p-dialog>
+<p-dialog styleClass="hr-diagram" [appendTo]="'body'" [autoZIndex]="true" [(visible)]="isHrDiagram" [modal]="true" [breakpoints]="{'1024': '95vw', '640px': '100vw'}" [style]="{width: '90vw'}">
+    <ng-template pTemplate="header">
+        Lọc nhân sự theo sơ đồ tổ chức
+    </ng-template>
+    <p-organizationChart  [value]="listAgencyMap" *ngIf="isHrDiagram" styleClass="diagram-zindex" [preserveSpace]="false" selectionMode="single"
+        [(selection)]="selectedNode" (onNodeSelect)="onNodeSelect($event)" styleClass="company">
+        <ng-template let-node pTemplate="person">
+            <div class="node-header p-corner-top">{{node.data.position ? node.data.position : 'No position'}}
+            </div>
+            <div class="node-content">
+                <img src="{{node.data.avatarUrl ? node.data.avatarUrl : '../../../../../assets/images/img_avatar.png'}}"
+                    width="32">
+                <div>{{node.data.full_name ? node.data.full_name : 'No name'}}</div>
+            </div>
+        </ng-template>
+        <ng-template let-node pTemplate="department">
+            {{node.label}}
+        </ng-template>
+    </p-organizationChart>
 </p-dialog>

@@ -182,7 +182,7 @@ body {
         padding-left: 20px;
         padding-right: 20px;
         height: calc(100% - 58px);
-        padding-top: 25px;
+        padding-top: 10px;
         &>.col-12{
             padding-left: 0px;
             padding-right: 0px;
@@ -719,7 +719,7 @@ body {
     }
     input{
         height: 35px;
-        border-radius: 4px;
+        border-radius: 8px;
         line-height: 35px;
         padding: 0px 27px 0px 12px;
         display: block;
@@ -2207,8 +2207,12 @@ div.p-organizationchart {
             }
         }
         &.p-highlight{
-            background: rgb(9 121 253);
-            color: #ffffff;
+            background: #F3F8FF;
+            font-size: 12px;
+            font-family: var(--font-family);
+            line-height: 16px;
+            border: 1px solid #0979FD;
+            color: #212633;
             a{
                 background: #fff;
                 color: #ccc;
@@ -2309,16 +2313,17 @@ div.p-organizationchart {
     input-file: .attach-file 
 */
 .field-group{
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     position: relative;
     label{
-        color: #808AA6;
+        color: #99A2BC;
         font-size: 12px;
         position: absolute;
         left: 12px;
-        -webkit-transition: 300ms ease all;
         transition: 300ms ease all;
         top: 20px;
+        font-weight: 600;
+        line-height: 16px;
     }
     input{
         width: 100%;
@@ -2327,13 +2332,13 @@ div.p-organizationchart {
         -moz-border-radius: 8px;
         background: none;
         border: 1px solid #E2E6F2;
-        font-size: 16px;
-        color: rgba(0, 0, 0, 0.87);
+        font-size: 14px;
+        color: #212633;
         padding-left: 12px;
         padding-right: 12px;
         outline: none;
         line-height: 20px;
-        padding: 30px 12px 4px 11px;
+        padding: 26px 12px 2px 11px;
         &:-internal-autofill-selected {
             background-color: transparent
         }
@@ -2359,7 +2364,7 @@ div.p-organizationchart {
     }
     &.valid{
         label{
-             top: 8px;
+             top: 6px;
             //  z-index: 2;
          }
  
@@ -2370,13 +2375,13 @@ div.p-organizationchart {
          }
          &.focused{
              label{
-                 top: 8px;
+                 top: 6px;
              }
          }
      }
      &.label-8{
          label{
-             top: 8px
+             top: 6px
          }
      }
 
@@ -2388,7 +2393,7 @@ div.p-organizationchart {
             transition: all 0.3s;
             &:hover,
             &:focus{
-                border: 1px solid #292663;
+                border: 1px solid #0979FD;
             }
             &:disabled{
                 background: rgba(239, 239, 239, 1);
@@ -2402,7 +2407,7 @@ div.p-organizationchart {
             //     top: 20px;
             // }
             &:focus + label { 
-                top: 8px;
+                top: 6px;
                 -webkit-transition: 300ms ease all;
               transition: 300ms ease all;
              }
@@ -2465,7 +2470,9 @@ div.p-organizationchart {
             z-index: 1;
             background: none;
             width: 100%;
-            min-height: 56px;
+            min-height: 50px;
+            border-radius: 8px;
+            -moz-border-radius: 8px;
             &.p-focus{
                 box-shadow: none;
                 border: 1px solid #292663;
@@ -2493,8 +2500,8 @@ div.p-organizationchart {
             color: rgba(0, 0, 0, 0.87);
             outline: none;
             line-height: 1;
-            padding: 30px 12px 4px 11px;
-            min-height: 54px;
+            padding: 26px 12px 2px 11px;
+            min-height: 50px;
         }
         .p-dropdown-trigger{
             position: absolute;
@@ -2531,7 +2538,7 @@ div.p-organizationchart {
             }
         }
         label{
-            top: 8px;
+            top: 6px;
         }
         .p-multiselect-label{
             padding-left: 0px !important;
@@ -2547,23 +2554,23 @@ div.p-organizationchart {
     // #type
     &.date{
         label{
-            top: 8px;
+            top: 6px;
         }
         &.date-invalid{
             label{
                 top: 20px;
             }
             .p-inputwrapper-focus + label { 
-                top: 8px;
+                top: 6px;
             }
         }
         .p-calendar{
             display: block;
             input{
                 width: 100%;
-                border-radius: 4px;
-                -webkit-border-radius: 4px;
-                -moz-border-radius: 4px;
+                border-radius: 8px;
+                -webkit-border-radius: 8px;
+                -moz-border-radius: 8px;
                 background: rgba(255, 255, 255, 0.3);
                 border: 1px solid rgba(51, 51, 51, 0.1);
                 font-size: 16px;
@@ -2572,7 +2579,7 @@ div.p-organizationchart {
                 padding-right: 12px;
                 outline: none;
                 line-height: 20px;
-                padding: 30px 12px 4px 11px;
+                padding: 26px 12px 2px 11px;
                 &::-webkit-input-placeholder { /* Edge */
                     font-size: 14px;
                   }
@@ -2611,19 +2618,21 @@ div.p-organizationchart {
     //#type
     &.textarea{
         label{
-            top: 8px;
+            top: 6px;
         }
         textarea{
             border: 1px solid #D9DFF0;
             border-color: #D9DFF0;
             width: 100%;
             padding: 10px;
-            border-radius: 4px;
+            border-radius: 8px;
             min-height: 100px;
             padding: 30px 12px 4px 11px;
             font-family: Arial;
             font-size: 16px;
+            height: 108px;
             transition: all 0.4s;
+            display: block;
             &:disabled{
                 background: #efefef;
                 border: 1px solid rgba(239, 239, 239, 0.3);
@@ -2658,7 +2667,7 @@ div.p-organizationchart {
             transition: all 0.4s;
         }
         label{
-            top: 8px;
+            top: 6px;
         }
         input{
             padding-top: 26px;
@@ -2824,6 +2833,15 @@ div.p-organizationchart {
     .panel-heading{
         clear: left;
     }
+    .p-card-content{
+        .grid{
+            &>div{
+                &>div{
+                    padding: 0px;
+                }
+            }
+        }
+    }
 }
 .border-section{
     // .p-card{
@@ -2965,6 +2983,7 @@ div.p-organizationchart {
         }
     }
     .ag-body-viewport{
+        padding-right: 9px;
         .ag-cell-value{
             &.border-right{
                 border-right: none !important;
@@ -3046,4 +3065,75 @@ div.p-organizationchart {
         padding-left: 9px;
         padding-right: 9px;
     }
+}
+.hr-diagram{
+    height: 100vh;
+}
+.diagram-zindex{
+    z-index: 99999;
+}
+.p-organizationchart-table{
+    tbody{
+        &>tr{
+            &>td{
+
+            }
+        }
+    }
+}
+.p-organizationchart{
+    &>table{
+        &>tbody{
+            &>tr{
+                &:first-child{
+                    td{
+                        .p-organizationchart-node-content{
+                            min-height: 0px;
+                            background: #BAD5FF;
+                            border: 1px solid #0979FD;
+                            font-weight: 700;
+                            font-size: 20px;
+                            padding: 20px;
+                            width: auto;
+                        }
+                    }
+                }
+                &>td{
+                    padding-left: 0px;
+                    padding-right: 0px;
+                    tbody{
+                        &>tr{
+                            &>td{
+                                padding-left: 6px;
+                                padding-right: 6px;
+                            }
+                        }
+                    }
+                    .p-organizationchart-node-content{
+                        width: auto;
+                        min-width: 0;
+                    }
+                }
+            }
+        }
+    }
+    tbody{
+        &>tr{
+            &>td{
+                .p-organizationchart-node-content{
+                    border: 1px solid #E2E6F2;
+                    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
+                    border-radius: 8px;
+                    min-height: 90px;
+                    min-width: 90px !important;
+                }
+            }
+        }
+    }
+}
+.hr-diagram{
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+    font-family: var(--font-family);
 }
