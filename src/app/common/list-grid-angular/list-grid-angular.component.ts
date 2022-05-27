@@ -37,12 +37,12 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
     suppressSizeToFit: false,
     filter: '',
     rowHeight: 90,
-    cellClass: ['border-right'],
+    cellClass: [],
     tooltipComponentParams: { color: '#ececec' },
   };;
   @Input() domLayout: string = '';
   @Input() height: number = 0;
-  @Input() heightRow: number = 40;
+  @Input() heightRow: number = 49;
   @Input() getContextMenuItems: any = null;
   @Input() excelStyles: any[] = [
     {

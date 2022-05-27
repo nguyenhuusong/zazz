@@ -56,6 +56,11 @@
     --2B2B33: #2B2B33;
     --c10000: #c10000;
     --f7941e: #f7941e;
+
+    --525B73: #525B73;
+    --F3F8FF: #F3F8FF;
+    --color-text-normal: rgba(43, 47, 51, 0.4);
+    --BDC4D8: #BDC4D8
     
 }
 
@@ -78,6 +83,7 @@ body{
 
 .p-toolbar{
     background-color: var(--header-background);
+    
 }
 
 /* #p-menubar */
@@ -87,38 +93,48 @@ body{
             &> .p-menuitem-link{
                 &:not(.p-disabled):hover {
                     .p-menuitem-text{
-                        color: var(--white-color);
+                        color: var(--525B73);
                     }
                     background: none;
                     .p-submenu-icon,
                     .p-menuitem-icon{
-                        color: var(--white-color);
+                        color: var(--525B73);
                     }
                     border-bottom-color: var(--main-color);
                 }
                 .p-menuitem-icon{
-                    color: var(--white-color);
+                    color: var(--525B73);
                 }
             }
             &>.p-menuitem-link{
                 .p-menuitem-text{
-                    color: var(--white-color)
+                    color: var(--525B73)
                 }
                 .p-submenu-icon{
-                    color: var(--white-color);
+                    color: var(--525B73);
+                }
+            }
+            &.p-menuitem-active{
+                &>a{
+                    &>.p-menuitem-text{
+                        color: var(--main-color) !important;
+                    }
+                    .p-submenu-icon{
+                        color: var(--main-color) !important;
+                    }
                 }
             }
             &.parent_active{
                 &>a{
                     &>.p-menuitem-text{
-                        color: var(--f7941e);
+                        color: var(--main-color);
                     }
                 }
                 .p-menuitem-icon{
-                    color: var(--f7941e);
+                    color: var(--main-color);
                 }
                 .p-submenu-icon{
-                    color: var(--f7941e);
+                    color: var(--main-color);
                 }
                 .p-submenu-list{
                     &>li.active{
@@ -184,8 +200,9 @@ body{
             font-weight: var(--p-menubar-500);
         }
     }
-    background: var(--main-background);
-    box-shadow: var(--black-box-shadow-005);
+    background: var(--white-background);
+    // box-shadow: var(--black-box-shadow-005);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.05);
 }
 
 /* #p-tree */
@@ -257,19 +274,18 @@ body{
 .paginator{
     box-shadow: var(--black-box-shadow-005);
     .p-paginator-rpp-options{
-        background: var(--main-background);
         .p-dropdown-label{
             color: var(--white-color);
         }
         .p-dropdown-trigger{
-            color: var(--white-color);
+            color: var(--color-text-normal);
         }
     }
     .p-paginator-pages{
         .p-paginator-element{
             &.p-highlight{
-                background: var(--main-background);
-                color: var(--white-color);
+                background: var(--F3F8FF);
+                color: var(--main-background);
             }
         }
     }
@@ -294,8 +310,7 @@ body{
          .ag-header-cell{
             background: var(--white-background);
             span{
-                color: var(--text-color);
-                font-size: 14px;
+                color: var(--525B73);
             }
          }   
         }
@@ -306,10 +321,11 @@ body{
             box-shadow: inset 0 0 2px var(--grey-color); 
         }
         &::-webkit-scrollbar-thumb {
-            background: var(--main-background); 
+            background: var(--BDC4D8); 
+            border-radius: 4px;
         }
         &::-webkit-scrollbar-thumb:hover {
-            background: var(--header-background); 
+            background: var(--BDC4D8); 
         }
     }
     .ag-body-horizontal-scroll-viewport{
@@ -317,10 +333,10 @@ body{
             box-shadow: inset 0 0 2px var(--grey-color); 
         }
         &::-webkit-scrollbar-thumb {
-            background: var(--main-background); 
+            background: var(--BDC4D8); 
         }
         &::-webkit-scrollbar-thumb:hover {
-            background: var(--header-background); 
+            background: var(--BDC4D8); 
         }
     }
 }
@@ -818,8 +834,8 @@ body{
 }
 .header{
     .p-toolbar{
-        background: var(--white-color);
-        box-shadow: var(--box-shadow-005);
+        background: var(--main-background);
+        // box-shadow: var(--box-shadow-005);
     }
 }
 .left-sidebar{

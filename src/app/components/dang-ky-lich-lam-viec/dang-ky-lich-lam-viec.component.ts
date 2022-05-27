@@ -332,7 +332,10 @@ export class DangKyLichLamViecComponent implements OnInit {
         this.load();
         this.displayChangeStatus = false;
         this.isTheOrganToMove = false;
+      } else if(results.status === 'error'){
+        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message ? results.message : 'Đổi lịch công việc thất bại' });
       }
+
     })
   }
 
