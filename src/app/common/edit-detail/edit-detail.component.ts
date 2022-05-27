@@ -27,6 +27,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
   @Output() callback1 = new EventEmitter<any>();
   @Output() callbackButton = new EventEmitter<any>();
   @Input() thongtinnhanvienNew: boolean = false;
+  @Input() isNested: boolean = false;
   @Input() manhinh;
   @Input() dataView = [];
   @Input() projects = [];

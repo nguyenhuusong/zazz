@@ -6,7 +6,7 @@
     </div>
    <div class="content">
     <div >
-        <app-edit-detail *ngIf="listViews && listViews.length> 0"
+        <app-edit-detail *ngIf="listViews && listViews.length> 0" [isNested]="true"
             [thongtinnhanvienNew]="true" [manhinh]="'Edit'" [dataView]="listViews"
             (callback)="setMeetRoomInfo($event)" (callbackcancel)="cancelUpdate()">
         </app-edit-detail>
