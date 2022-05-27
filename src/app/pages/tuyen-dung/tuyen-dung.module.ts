@@ -47,6 +47,7 @@ import { DetailAccountModule } from 'src/app/components/ns-ho-so-nhan-su/detail-
 import { UploadFileModule } from 'src/app/common/upload-file/upload-file.module';
 import { EmpAttachFileModule } from 'src/app/components/ns-ho-so-nhan-su/emp-attach-file/emp-attach-file.module';
 import { TuyenDungRoutingModule } from './tuyen-dung-routing.module';
+import { HrmBreadCrumbModule } from 'src/app/common/hrm-breadcrumb/hrm-breadcrumb.module';
 @NgModule({
   imports: [
     MessagesModule,
@@ -89,6 +90,7 @@ import { TuyenDungRoutingModule } from './tuyen-dung-routing.module';
     ConfirmDialogModule,
     UploadFileModule,
     EmpAttachFileModule,
+    HrmBreadCrumbModule,
     AgGridModule.withComponents([
       ButtonRendererComponent,
       ButtonRendererComponent1

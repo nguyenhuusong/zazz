@@ -60,6 +60,7 @@ import { PheDuyetComponent } from 'src/app/components/phe-duyet/phe-duyet.compon
 import { ChiTietPheDuyetComponent } from 'src/app/components/phe-duyet/chi-tiet-phe-duyet/chi-tiet-phe-duyet.component';
 import { QuyetDinhLuongComponent } from 'src/app/components/quyet-dinh-luong/quyet-dinh-luong.component';
 import { StepsModule } from 'primeng/steps';
+import { HrmBreadCrumbModule } from 'src/app/common/hrm-breadcrumb/hrm-breadcrumb.module';
 @NgModule({
   imports: [
     MessagesModule,
@@ -105,6 +106,7 @@ import { StepsModule } from 'primeng/steps';
     TreeSelectModule,
     StoreNotifyModule,
     StepsModule,
+    HrmBreadCrumbModule,
     AgGridModule.withComponents([
       ButtonRendererComponent,
       ButtonRendererComponent1

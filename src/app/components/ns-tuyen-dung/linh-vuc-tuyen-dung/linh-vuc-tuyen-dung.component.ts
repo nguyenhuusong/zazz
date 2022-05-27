@@ -32,7 +32,7 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
       tooltipComponent: 'customTooltip',
       resizable: true,
       filter: '',
-      cellClass: ['border-right'],
+      cellClass: [],
     };
     this.getRowHeight = (params) => {
       return 40;
@@ -97,7 +97,7 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
     this.loadjs ++ 
     if (this.loadjs === 5) {
       if(b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + e.clientHeight + 15;
+        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + e.clientHeight + 57;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       }else {
@@ -193,7 +193,7 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
         width: 100,
         pinned: 'right',
         cellRenderer: 'buttonAgGridComponent',
-        cellClass: ['border-right', 'no-auto'],
+        cellClass: [ 'no-auto'],
         cellRendererParams: (params: any) => this.showButtons(params),
         checkboxSelection: false,
         field: 'checkbox'
