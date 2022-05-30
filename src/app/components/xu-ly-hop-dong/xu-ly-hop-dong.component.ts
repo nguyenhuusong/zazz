@@ -113,6 +113,18 @@ export class XuLyHopDongComponent implements OnInit {
     this.load();
   }
 
+  DowloadPlugin(){
+    this.downloadButtonClicked('https://firebasestorage.googleapis.com/v0/b/sunshine-app-production.appspot.com/o/s_hrm%2Fhrm-plugin%2FUniplugin.zip?alt=media&token=b3e42839-52f9-4ed0-8537-6be007ba5480')
+  }
+
+  downloadButtonClicked(urlLink) {
+    var url = urlLink;
+    var elem = document.createElement('a');
+    elem.href = url;
+    elem.target = 'hiddenIframe';
+    elem.click();
+  }
+
   loadjs = 0;
   heightGrid = 0
   ngAfterViewChecked(): void {
@@ -281,10 +293,10 @@ export class XuLyHopDongComponent implements OnInit {
             }
           })
         }
-      
-       console.log(repon)
       },
-      err => console.log(err),
+      err => {
+        console.log(err)
+      },
     )
     this.getOrgRoots();
     this.getCustObjectListNew();

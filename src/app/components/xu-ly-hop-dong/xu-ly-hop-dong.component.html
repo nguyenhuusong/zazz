@@ -80,7 +80,8 @@
             <div class="col-2">
                 <p-button class="search-button ml-1 mr-3" styleClass=" btn-56-56" icon="pi pi-search" (click)="query.offSet = 0; first = 0; load()"></p-button>
                 <p-button class="btn-56-56 mr-3 ml-1"  icon="pi pi-refresh" (click)="cancel()" styleClass="p-button-secondary p-button-sm btn-56-56"></p-button>
-                <p-button class="btn-56-56 search-button" (click)="Prints()" label="PRINT" styleClass="p-button-sm btn-56-56"></p-button>
+                <p-button class="btn-56-56 search-button" *ngIf="this.listPrints.length > 0" (click)="Prints()" label="PRINT" styleClass="p-button-sm btn-56-56"></p-button>
+                <p-button class="btn-56-56 search-button" *ngIf="this.listPrints.length === 0" (click)="DowloadPlugin()" label="Plugin" styleClass="p-button-sm btn-56-56"></p-button>
             </div>
             <!-- <div class="col-2" >  -->
                 <!-- <div class="field-group select label-8">
