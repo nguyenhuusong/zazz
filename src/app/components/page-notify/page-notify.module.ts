@@ -25,6 +25,7 @@ import { ManageMediaModule } from 'src/app/common/manage-media-module/manage-med
 import { DialogImageModule } from 'src/app/common/dialogimage/dialogimage.module';
 import { ListGridAngularModule } from 'src/app/common/list-grid-angular/list-grid-angular.module';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { HrmBreadCrumbModule } from 'src/app/common/hrm-breadcrumb/hrm-breadcrumb.module';
 @NgModule({
   declarations: [
     PageNotifyComponent,
@@ -53,7 +54,8 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
     ToolbarModule,
     DialogModule,
     NotifyDetailModule,
-    ManageMediaModule
+    ManageMediaModule,
+    HrmBreadCrumbModule
   ],
   exports: [PageNotifyComponent],
   entryComponents: [],

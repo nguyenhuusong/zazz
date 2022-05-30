@@ -62,6 +62,7 @@ import { ChiTietLyDoNghiViecComponent } from 'src/app/components/ly-do-nghi-viec
 import { CaiDatPhongHopTheoTangComponent } from 'src/app/components/cai-dat-phong-hop-theo-tang/cai-dat-phong-hop-theo-tang.component';
 import { ChiTietPhongHopTheoTangComponent } from 'src/app/components/cai-dat-phong-hop-theo-tang/chi-tiet-phong-hop-theo-tang/chi-tiet-phong-hop-theo-tang.component';
 import { QuanLyNgayNghiComponent } from 'src/app/components/quan-ly-ngay-nghi/quan-ly-ngay-nghi.component';
+import { HrmBreadCrumbModule } from 'src/app/common/hrm-breadcrumb/hrm-breadcrumb.module';
 
 @NgModule({
   imports: [
@@ -98,6 +99,7 @@ import { QuanLyNgayNghiComponent } from 'src/app/components/quan-ly-ngay-nghi/qu
     PaginatorModule,
     GridAddModule,
     PanelModule,
+    HrmBreadCrumbModule,
     CommonSearchUserMasterModule,
     ConfirmDialogModule,
     AgGridModule.withComponents([

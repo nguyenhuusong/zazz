@@ -2,29 +2,29 @@
 
 <div class="grid main-grid" style="padding: 0">
     <div class="col-12 right max-w-full" style="padding-top: 0;">
-        <div class="breadcrumb col-12 d-flex">
-            <div class="col-8">
-                <h3>{{dataRouter?.title}}</h3>
-                <p-breadcrumb [model]="itemsBreadcrumb"></p-breadcrumb>
-            </div>
-            <div class="col-2"> 
-                <div class="field-group select label-8">
-                    <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
-                    [options]="arrayYear" [(ngModel)]="query.year" name="year" (onChange)="load()">
-                    <ng-template let-item pTemplate="selectedItem">
-                        <span style="vertical-align:middle;">{{item.label}}</span>
-                    </ng-template>
-                    <ng-template let-car pTemplate="item">
-                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                            <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
-                        </div>
-                    </ng-template>
-                </p-dropdown>
-                <label  for=""> Năm: </label>
-                </div>
-            </div>
-            <div class="col-2 text-right">
+        
+        <div class="bread-filter">
+            <div class="d-flex bet end">
+                <app-hrm-breadcrumb [items]="itemsBreadcrumb"></app-hrm-breadcrumb>
                 <p-button label="Tạo ngày nghỉ trong năm" icon="pi pi-calendar-plus" styleClass="height-56" (click)="AddDayToYear()"></p-button>
+            </div>
+            <div class="grid filter">
+                <div class="x-1"> 
+                    <div class="field-group select label-8">
+                        <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
+                        [options]="arrayYear" [(ngModel)]="query.year" name="year" (onChange)="load()">
+                        <ng-template let-item pTemplate="selectedItem">
+                            <span style="vertical-align:middle;">{{item.label}}</span>
+                        </ng-template>
+                        <ng-template let-car pTemplate="item">
+                            <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                                <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+                    <label  for=""> Năm: </label>
+                    </div>
+                </div>
             </div>
           
         </div>

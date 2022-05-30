@@ -1,23 +1,24 @@
 <div class="grid main-grid">
     <div class="col-12 right max-w-full">
-      <div class="bread-filter grid">
-          <div class="breadcrumb col-9">
-              <h3>Danh sách phân quyền thang máy</h3>
-              <p-breadcrumb [model]="itemsBreadcrumb"></p-breadcrumb>
+      <div class="bread-filter">
+        <div class="d-flex bet end">
+          <app-hrm-breadcrumb [items]="itemsBreadcrumb"></app-hrm-breadcrumb>
+          <div class="">
+              <p-button  (click)="menuButton.toggle($event)" label="Quản lý" icon="pi pi-cog" styleClass="p-button-sm mr5 h-56"></p-button>
+              <p-menu [model]="menuItem" [appendTo]="'body'" [popup]="true" #menuButton></p-menu>
           </div>
-              <div class="header-filter-search col-2">
-                  <div class="field-group text mb-0 " [ngClass]="key_car ? 'valid' : 'invalid' ">
-                      <p-autoComplete [(ngModel)]="key_car" name="key_car" [suggestions]="listCars" (onSelect)="selectedItem1($event)"
-                      (completeMethod)="getCardCustomers($event)" field="fullNameAndCar"></p-autoComplete>
-                      <label>Nhập mã thẻ để tìm kiếm</label> 
-                  </div>
-                  <div class="input-group-append dropdown">
-                  </div>
+        </div>
+        <div class="grid filter">
+          <div class="header-filter-search x-2">
+              <div class="field-group text mb-0 " [ngClass]="key_car ? 'valid' : 'invalid' ">
+                  <p-autoComplete [(ngModel)]="key_car" name="key_car" [suggestions]="listCars" (onSelect)="selectedItem1($event)"
+                  (completeMethod)="getCardCustomers($event)" field="fullNameAndCar"></p-autoComplete>
+                  <label>Nhập mã thẻ để tìm kiếm</label> 
               </div>
-              <div class="col-1">
-                  <p-button  (click)="menuButton.toggle($event)" label="Quản lý" icon="pi pi-cog" styleClass="p-button-sm mr5 h-56"></p-button>
-                  <p-menu [model]="menuItem" [appendTo]="'body'" [popup]="true" #menuButton></p-menu>
+              <div class="input-group-append dropdown">
               </div>
+          </div>
+          </div>
         </div>
         <p-card header="Thông tin chi tiết" styleClass="card-title-part">
             <div class="row">

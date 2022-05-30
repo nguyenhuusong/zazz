@@ -2,80 +2,91 @@
 
 <div class="grid main-grid">
     <div class="col-12 right max-w-full">
-        <div class="bread-filter grid">
-            <div class="breadcrumb col-3">
-                <h3>Danh sách chấm công</h3>
-                <p-breadcrumb [model]="items"></p-breadcrumb>
+        <div class="bread-filter">
+            <div class="d-flex bet end">
+                <app-hrm-breadcrumb [items]="items"></app-hrm-breadcrumb>
+                <p-button label="Export" styleClass="h-56" icon="pi pi-cloud-download" (click)="Export()"></p-button>
             </div>
-            <div class="header-filter-search col-2">
-                <div class="field-group text search mb-0" [ngClass]=" query.filter ? 'valid' : 'invalid' ">
-                    <input class="input-default" type="text" id="filter"
-                    (keydown.enter)="query.offSet = 0; first = 0;load()"
-                        [(ngModel)]="query.filter">
-                    <label>Mã, tên nhóm</label>
-                        <svg class="placeholder-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M10.1305 11.2619C9.28558 11.8771 8.24518 12.24 7.12002 12.24C4.29231 12.24 2 9.94772 2 7.12002C2 4.29231 4.29231 2 7.12002 2C9.94772 2 12.24 4.29231 12.24 7.12002C12.24 8.24518 11.8771 9.28558 11.2619 10.1305L13.7657 12.6343C14.0781 12.9467 14.0781 13.4533 13.7657 13.7657C13.4533 14.0781 12.9467 14.0781 12.6343 13.7657L10.1305 11.2619ZM11.28 7.12002C11.28 9.41753 9.41753 11.28 7.12002 11.28C4.8225 11.28 2.96 9.41753 2.96 7.12002C2.96 4.8225 4.8225 2.96 7.12002 2.96C9.41753 2.96 11.28 4.8225 11.28 7.12002Z" fill="#808AA6"/>
-                        </svg>
+            
+            <div class="grid filter">
+                <div class="header-filter-search x-2">
+                    <div class="field-group text search mb-0" [ngClass]=" query.filter ? 'valid' : 'invalid' ">
+                        <input class="input-default" type="text" id="filter"
+                        (keydown.enter)="query.offSet = 0; first = 0;load()"
+                            [(ngModel)]="query.filter">
+                        <label>Mã, tên nhóm</label>
+                        <span class="placeholder-icon" (click)="query.offSet = 0; first = 0; load()">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M10.1305 11.2619C9.28558 11.8771 8.24518 12.24 7.12002 12.24C4.29231 12.24 2 9.94772 2 7.12002C2 4.29231 4.29231 2 7.12002 2C9.94772 2 12.24 4.29231 12.24 7.12002C12.24 8.24518 11.8771 9.28558 11.2619 10.1305L13.7657 12.6343C14.0781 12.9467 14.0781 13.4533 13.7657 13.7657C13.4533 14.0781 12.9467 14.0781 12.6343 13.7657L10.1305 11.2619ZM11.28 7.12002C11.28 9.41753 9.41753 11.28 7.12002 11.28C4.8225 11.28 2.96 9.41753 2.96 7.12002C2.96 4.8225 4.8225 2.96 7.12002 2.96C9.41753 2.96 11.28 4.8225 11.28 7.12002Z"
+                                    fill="#808AA6" />
+                            </svg>
+                        </span>
+                    </div>
                 </div>
-            </div>
-            <div class="col-2 d-flex">
-                <div class="field-group text label-8 mb-0 mr-3">
-                    <input type="number" class="input-default" id="" placeholder="Tháng"
-                        [(ngModel)]="query.month">
-                    <label>Tháng</label>
+                <div class="x-1">
+                    <div class="field-group select mb-0 label-8">
+                        <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
+                            [options]="listOrgRoots" [(ngModel)]="query.organizeId"  (onChange)="find()"
+                            name="organizeId" [filter]="true">
+                            <ng-template let-item pTemplate="selectedItem">
+                                <span>{{item.label}}</span>
+                            </ng-template>
+                            <ng-template let-car pTemplate="item">
+                                <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                                    <div style="font-size:14px;margin-top:4px">{{car.label}}</div>
+                                </div>
+                            </ng-template>
+                        </p-dropdown>
+                        <label>Công ty</label>
+                    </div>
                 </div>
-                <div class="field-group text label-8 mb-0">
-                    <input type="number" class="input-default" id="" placeholder="Năm"
-                        [(ngModel)]="query.year">
-                    <label>Năm</label>
+                <div class="x-1-2">
+                    <div class="field-group text label-8 mb-0">
+                        <input type="number" class="input-default" id="" placeholder="Tháng"
+                            [(ngModel)]="query.month">
+                        <label>Tháng</label>
+                    </div>
                 </div>
+                <div class="x-1-2">
+                    <div class="field-group text label-8 mb-0">
+                        <input type="number" class="input-default" id="" placeholder="Năm"
+                            [(ngModel)]="query.year">
+                        <label>Năm</label>
+                    </div>
+                </div>
+                <div class="x-1-2">
+                    <div class="field-group date mb-0 ">
+                        <p-calendar 
+                        panelStyleClass="datepicker-default"
+                        placeholder="DD/MM/YYYY" 
+                        [appendTo]="'body'" 
+                        [baseZIndex]="101"
+                        [(ngModel)]="query.fromDate" 
+                        [monthNavigator]="true" 
+                        [yearNavigator]="true"
+                        yearRange="2010:2030" 
+                        inputId="navigators"
+                        dateFormat="dd/mm/yy" name="fromDate"></p-calendar>
+                        <label>Từ ngày</label>
+                    </div>
+                </div>
+                <div class="x-1-2">
+                    <div class="field-group date mb-0">
+                        <p-calendar
+                            panelStyleClass="datepicker-default" 
+                            placeholder="DD/MM/YYYY" [appendTo]="'body'" [baseZIndex]="101"
+                            [(ngModel)]="query.toDate" [monthNavigator]="true" [yearNavigator]="true"
+                            yearRange="2010:2030" inputId="navigators"
+                            dateFormat="dd/mm/yy" name="toDate"></p-calendar>
+                            <label>Đến ngày</label>
+                    </div>
+                </div>
+                <p-button styleClass="search-button p-button-secondary btn-56-56 mr-2" icon="pi pi-refresh" (click)="cancel()" ></p-button>
             </div>
             <!-- <div class="col-2">
             </div> -->
-            <div class="col-5 d-flex">
-                
-                <div class="field-group select mb-0 label-8 mr-3" style="width: 255px">
-                    <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
-                    [options]="listOrgRoots" [(ngModel)]="query.organizeId"  (onChange)="find()"
-                    name="organizeId" [filter]="true">
-                    <ng-template let-item pTemplate="selectedItem">
-                        <span>{{item.label}}</span>
-                    </ng-template>
-                    <ng-template let-car pTemplate="item">
-                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                            <div style="font-size:14px;margin-top:4px">{{car.label}}</div>
-                        </div>
-                    </ng-template>
-                </p-dropdown>
-                <label>Công ty</label>
-                </div>
-                <div class="field-group date mb-0 mr-3">
-                    <p-calendar 
-                    panelStyleClass="datepicker-default"
-                    placeholder="DD/MM/YYYY" 
-                    [appendTo]="'body'" 
-                    [baseZIndex]="101"
-                    [(ngModel)]="query.fromDate" 
-                    [monthNavigator]="true" 
-                    [yearNavigator]="true"
-                    yearRange="2010:2030" 
-                    inputId="navigators"
-                    dateFormat="dd/mm/yy" name="fromDate"></p-calendar>
-                    <label>Từ ngày</label>
-                </div>
-                <div class="field-group date mb-0 mr-3">
-                    <p-calendar
-                        panelStyleClass="datepicker-default" 
-                        placeholder="DD/MM/YYYY" [appendTo]="'body'" [baseZIndex]="101"
-                        [(ngModel)]="query.toDate" [monthNavigator]="true" [yearNavigator]="true"
-                        yearRange="2010:2030" inputId="navigators"
-                        dateFormat="dd/mm/yy" name="toDate"></p-calendar>
-                        <label>Đến ngày</label>
-                </div>
-                <p-button class="mr-3" styleClass="btn-56-56" icon="pi pi-search" (click)="query.offSet = 0; first = 0; load()"></p-button>
-                <p-button styleClass="search-button p-button-secondary btn-56-56 mr-2" icon="pi pi-refresh" (click)="cancel()" ></p-button>
-                <p-button label="Export" styleClass="h-56" icon="pi pi-cloud-download" (click)="Export()"></p-button>
-            </div>
                 
             <!-- <div class="col-1">
             </div> -->

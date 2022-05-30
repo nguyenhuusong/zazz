@@ -105,6 +105,14 @@ body{
                 .p-menuitem-icon{
                     color: var(--525B73);
                 }
+                &.p-menuitem-link-active{
+                    border-bottom-color: var(--main-color);
+                }
+            }
+            &.parent_active{
+                .p-menuitem-link{
+                    border-bottom-color: var(--main-color);
+                }
             }
             &>.p-menuitem-link{
                 .p-menuitem-text{
