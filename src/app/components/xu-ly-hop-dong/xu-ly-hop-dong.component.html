@@ -5,7 +5,10 @@
         <div class="bread-filter">
             <div class="d-flex bet end">
                 <app-hrm-breadcrumb [items]="items"></app-hrm-breadcrumb>
-                <p-button (click)="Prints()" label="PRINT" styleClass="p-button-sm h-56"></p-button>
+                <div>
+                    <p-button (click)="Prints()" label="PRINT" styleClass="p-button-sm h-56"></p-button>
+                    <p-button class="btn-56-56 search-button" *ngIf="this.listPrints.length === 0" (click)="DowloadPlugin()" label="Plugin" styleClass="p-button-sm btn-56-56"></p-button>
+                </div>
             </div>
             
             <div class="grid filter">
