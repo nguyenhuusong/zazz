@@ -1158,6 +1158,15 @@ div{
     &.end{
         align-items: flex-end;
     }
+    &.middle{
+        align-items: center;
+    }
+    &.center{
+        justify-content: center;
+    }
+    &.bottom{
+        align-items: flex-end;
+    }
 }
 .header-filter-search{
     .input-group{
@@ -3184,4 +3193,16 @@ div.p-organizationchart {
 .wrap-edit-detail{
     // position: relative;
     padding-top: 25px;
+}
+.select-noborder{
+    .p-dropdown{
+        border: none;
+        .p-dropdown-label{
+            padding: 0px;
+        }
+        width: auto;
+    }
+}
+ul{
+    padding-left: 0px;
 }
