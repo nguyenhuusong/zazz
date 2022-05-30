@@ -31,6 +31,23 @@
                 top: 23px !important;
             }
         }
+        .page-detail{
+            p-dialog{
+                .p-dialog{
+                    .wrap-edit-detail{
+                        .main-grid{
+                            right: 35px !important;
+                            top: 21px !important;
+                        }
+                    }
+                }
+            }
+        }
+        .khachHangWrapper{
+            .col-md-12{
+                position: static;
+            }
+        }
     }
     .xemthongtin-giayto-for-btn{
         .btn-group-edit-detail{

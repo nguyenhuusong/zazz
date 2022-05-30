@@ -57,6 +57,7 @@ import { ChiTietHopDongComponent } from 'src/app/components/quan-ly-hop-dong/chi
 import { GopYKienComponent } from 'src/app/components/gop-y-kien/gop-y-kien.component';
 import { ChiTietGopYComponent } from 'src/app/components/gop-y-kien/chi-tiet-gop-y/chi-tiet-gop-y.component';
 import { GopYRoutingModule } from './gop-y-routing.module';
+import { HrmBreadCrumbModule } from 'src/app/common/hrm-breadcrumb/hrm-breadcrumb.module';
 
 @NgModule({
   imports: [
@@ -95,6 +96,7 @@ import { GopYRoutingModule } from './gop-y-routing.module';
     PanelModule,
     CommonSearchUserMasterModule,
     ConfirmDialogModule,
+    HrmBreadCrumbModule,
     AgGridModule.withComponents([
       ButtonRendererComponent,
       ButtonRendererComponent1

@@ -47,6 +47,7 @@ import { PhepBuComponent } from 'src/app/components/phep-bu/phep-bu.component';
 import { ChiTietPhepBuComponent } from 'src/app/components/phep-bu/chi-tiet-phep-bu/chi-tiet-phep-bu.component';
 import {OverlayPanelModule} from 'primeng/overlaypanel';
 import {TreeSelectModule} from 'primeng/treeselect';
+import { HrmBreadCrumbModule } from 'src/app/common/hrm-breadcrumb/hrm-breadcrumb.module';
 @NgModule({
   imports: [
     MessagesModule,
@@ -80,6 +81,7 @@ import {TreeSelectModule} from 'primeng/treeselect';
     ConfirmDialogModule,
     OverlayPanelModule,
     TreeSelectModule,
+    HrmBreadCrumbModule,
     AgGridModule.withComponents([
       ButtonRendererComponent,
       ButtonRendererComponent1

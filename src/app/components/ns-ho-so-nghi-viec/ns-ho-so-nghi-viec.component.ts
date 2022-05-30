@@ -12,6 +12,7 @@ import { CustomTooltipComponent } from 'src/app/common/ag-component/customtoolti
 import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
 import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.component';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
+import { Tree } from 'primeng/tree';
 @Component({
   selector: 'app-ns-ho-so-nghi-viec',
   templateUrl: './ns-ho-so-nghi-viec.component.html',
@@ -85,6 +86,7 @@ export class NsHoSoNghiViecComponent implements OnInit {
   employeeStatus = [
    
   ]
+  isHrDiagram: boolean = false
 
   cancel() {
     this.query = {
@@ -146,6 +148,7 @@ export class NsHoSoNghiViecComponent implements OnInit {
   onNodeSelect(event) {
     this.detailOrganizeMap = event.node;
     this.query.orgId = this.detailOrganizeMap.orgId;
+    this.isHrDiagram = false;
     this.load()
   }
 
@@ -410,6 +413,11 @@ export class NsHoSoNghiViecComponent implements OnInit {
       }
     })
   }
+
+  hrDiagram() {
+    this.isHrDiagram = true;
+  }
+
 }
 
 

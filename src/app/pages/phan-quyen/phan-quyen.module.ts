@@ -43,6 +43,7 @@ import { ThietLapTangThangMayComponent } from 'src/app/components/thiet-lap-tang
 import { CardDetailComponent } from 'src/app/components/pq-the-nhan-vien/card-detail/card-detail.component';
 import { ChiTietTheNhanVienComponent } from 'src/app/components/pq-the-nhan-vien/chi-tiet-the-nhan-vien/chi-tiet-the-nhan-vien.component';
 import {OverlayPanelModule} from 'primeng/overlaypanel';
+import { HrmBreadCrumbModule } from 'src/app/common/hrm-breadcrumb/hrm-breadcrumb.module';
 @NgModule({
   imports: [
     MessagesModule,
@@ -79,6 +80,7 @@ import {OverlayPanelModule} from 'primeng/overlaypanel';
     PanelModule,
     ConfirmDialogModule,
     OverlayPanelModule,
+    HrmBreadCrumbModule,
     AgGridModule.withComponents([
       ButtonRendererComponent,
       ButtonRendererComponent1
