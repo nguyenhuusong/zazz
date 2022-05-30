@@ -53,8 +53,8 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
     filter: '',
     offSet: 0,
     pageSize: 15,
-    year: 0,
-    month: 0,
+    year: new Date().getFullYear(),
+    month: new Date().getMonth() + 1,
     organizeId: ''
   }
   totalRecord = 0;
