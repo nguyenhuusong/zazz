@@ -17,6 +17,12 @@ export class HomeComponent implements OnInit {
   columnDefs = [];
     
   columnDefs1 = [];
+  months: any = []
+  basicData: any;
+  basicData2: any;
+  basicOptions: any;
+  basicOptions2: any;
+  dataDou: any;
   ngOnInit() {
     this.drawChart();
     this.columnDefs = [
@@ -41,7 +47,134 @@ export class HomeComponent implements OnInit {
        cellClass: ['border-right'],
        field: 'noiDung'
       }]
-     
+      this.months = [
+        {name: 'Tháng 1', code: '1'},
+        {name: 'Tháng 2', code: '2'},
+        {name: 'Tháng 3', code: '3'},
+        {name: 'Tháng 4', code: '4'},
+        {name: 'Tháng 5', code: '5'},
+        {name: 'Tháng 6', code: '6'},
+        {name: 'Tháng 7', code: '7'},
+        {name: 'Tháng 8', code: '8'},
+        {name: 'Tháng 9', code: '9'},
+        {name: 'Tháng 10', code: '10'},
+        {name: 'Tháng 11', code: '11'},
+        {name: 'Tháng 12', code: '12'},
+    ];
+      this.basicData = {
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        datasets: [
+            {
+                label: 'My First dataset',
+                backgroundColor: '#42A5F5',
+                data: [65, 59, 80, 81, 56, 55, 40]
+            },
+            {
+                label: 'My Second dataset',
+                backgroundColor: '#FFA726',
+                data: [28, 48, 40, 19, 86, 27, 90]
+            }
+        ]
+    };
+
+    this.basicData2 = {
+      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+      datasets: [
+          {
+              label: 'First Dataset',
+              data: [65, 59, 80, 81, 56, 55, 40],
+              fill: false,
+              borderColor: '#42A5F5',
+              tension: .4
+          },
+          {
+              label: 'Second Dataset',
+              data: [28, 48, 40, 19, 86, 27, 90],
+              fill: false,
+              borderColor: '#FFA726',
+              tension: .4
+          }
+      ]
+  };
+  
+    this.basicOptions = {
+      plugins: {
+          legend: {
+              labels: {
+                  color: '#ebedef'
+              }
+          }
+      },
+      options: {
+          maintainAspectRatio: false,
+          responsive: true,
+
+      },
+      scales: {
+            x: {
+                ticks: {
+                    color: '#ebedef'
+                },
+                grid: {
+                    color: 'rgba(255,255,255,0.2)'
+                }
+            },
+            y: {
+                ticks: {
+                    color: '#ebedef'
+                },
+                grid: {
+                    color: 'rgba(255,255,255,0.2)'
+                }
+            }
+        }
+    };
+    
+    this.basicOptions = {
+      plugins: {
+          legend: {
+              labels: {
+                  color: '#495057'
+              }
+          }
+      },
+      scales: {
+          x: {
+              ticks: {
+                  color: '#495057'
+              },
+              grid: {
+                  color: '#ebedef'
+              }
+          },
+          y: {
+              ticks: {
+                  color: '#495057'
+              },
+              grid: {
+                  color: '#ebedef'
+              }
+          }
+      }
+  };
+  this.dataDou = {
+    labels: ['A','B','C'],
+    datasets: [
+        {
+            data: [300, 50, 100],
+            backgroundColor: [
+                "#FF6384",
+                "#36A2EB",
+                "#FFCE56"
+            ],
+            hoverBackgroundColor: [
+                "#FF6384",
+                "#36A2EB",
+                "#FFCE56"
+            ]
+        }
+    ]
+};
   }
   ngOnDestroy() {
   }
