@@ -44,7 +44,7 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
   public agGridFn = AgGridFn;
   cols: any[];
   colsDetail: any[];
-  columnDefs= [];
+  columnDefs = [];
   defaultColDef;
   gridApi: any;
   clientWidth: any;
@@ -73,13 +73,13 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
     const b: any = document.querySelector(".sidebarBody");
     const c: any = document.querySelector(".bread-filter");
     const e: any = document.querySelector(".paginator");
-    this.loadjs ++ 
+    this.loadjs++
     if (this.loadjs === 5) {
-      if(b && b.clientHeight) {
+      if (b && b.clientHeight) {
         const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + e.clientHeight + 15;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
-      }else {
+      } else {
         this.loadjs = 0;
       }
     }
@@ -96,7 +96,7 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
     }
     this.load();
   }
-load() {
+  load() {
     this.columnDefs = []
     this.spinner.show();
     const queryParams = queryString.stringify(this.query);
@@ -115,14 +115,18 @@ load() {
           this.countRecord.currentRecordEnd = this.query.offSet + Number(this.query.pageSize);
         } else {
           this.countRecord.currentRecordEnd = results.data.dataList.recordsTotal;
+          setTimeout(() => {
+            const noData = document.querySelector('.ag-overlay-no-rows-center');
+            noData.innerHTML = 'Không có kết quả phù hợp'
+          }, 100);
         }
         this.spinner.hide();
       },
       error => {
         this.spinner.hide();
-       });
+      });
   }
-  
+
   showButtons(event: any) {
     return {
       buttons: [
@@ -169,7 +173,7 @@ load() {
 
   ngOnInit() {
     this.items = [
-      { label: 'Trang chủ' , routerLink: '/home' },
+      { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Chính sách' },
       { label: 'Phép năm' },
     ];
@@ -193,7 +197,7 @@ load() {
             value: `${d.organizeId}`
           }
         });
-        this.orgRoots = [{label: 'Tất cả', value: null}, ...this.orgRoots]
+        this.orgRoots = [{ label: 'Tất cả', value: null }, ...this.orgRoots]
       }
     })
   }
