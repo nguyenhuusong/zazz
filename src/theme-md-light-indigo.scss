@@ -110,7 +110,7 @@ body{
                 }
             }
             &.parent_active{
-                .p-menuitem-link{
+                &>.p-menuitem-link{
                     border-bottom-color: var(--main-color);
                 }
             }
