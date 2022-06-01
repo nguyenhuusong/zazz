@@ -19,7 +19,7 @@ export class AuthCallbackComponent implements OnInit {
 
   async ngOnInit() {
     await this.authService.completeAuthentication();
-    const token = this.authService.getAccessTokenValue();
+    // const token = this.authService.getAccessTokenValue();
     const returnUrl = localStorage.getItem('returnUrl');
     if (returnUrl) {
       this.router.navigateByUrl(returnUrl);
