@@ -114,7 +114,7 @@ export class XuLyHopDongComponent implements OnInit {
   }
 
   DowloadPlugin(){
-    this.downloadButtonClicked('https://firebasestorage.googleapis.com/v0/b/sunshine-app-production.appspot.com/o/s_hrm%2Fhrm-plugin%2FUniplugin.zip?alt=media&token=b3e42839-52f9-4ed0-8537-6be007ba5480')
+    this.downloadButtonClicked('https://firebasestorage.googleapis.com/v0/b/sunshine-app-production.appspot.com/o/s_hrm%2Fhrm-plugin%2FUniPlugin.zip?alt=media&token=838880e5-f2e2-4044-8d5f-21e57a5f3335')
   }
 
   downloadButtonClicked(urlLink) {
