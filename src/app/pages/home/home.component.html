@@ -1,115 +1,181 @@
 <div class="content-body">
     <!-- row 1 -->
-    <div class="row boxs">
-        <div class="col-lg-3 col-12">
-          <div class="card">
-            <div class="card-content">
-              <div class="text-center">
-                <i class="fa fa-user-circle-o font-large-2 white"></i>
-              </div>
-              <div class="media align-items-stretch" style="text-align: right">
-                <div class="white media-body">
-                  <h1>800</h1>
-                  <h5 class="text-bold-400 mb-0">
-                     Khách hàng 
-                  </h5>
+    <div class="grid boxs">
+      <div class="col-9 pr-0">
+        <div class="grid">
+          <div class="col-4 pt-0">
+            <div class="card">
+              <div class="card-content">
+                <div class="icon d-flex middle center">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8.414 7.02347C8.414 5.07744 10.0196 3.5 12 3.5C13.9804 3.5 15.586 5.07744 15.586 7.02347V7.92546C15.586 9.87149 13.9804 11.4489 12 11.4489C10.0196 11.4489 8.414 9.87149 8.414 7.92546V7.02347Z" fill="#FF7C59"/>
+                    <path d="M6.18961 13.2051C6.16381 13.2046 6.13793 13.2043 6.11198 13.2043H3.89606C2.02054 13.2043 0.5 14.6982 0.5 16.5411V17.412C0.5 18.293 1.22686 19.0071 2.12333 19.0071H4.50679V16.8126C4.50679 15.3702 5.15924 14.0781 6.18961 13.2051Z" fill="#FF7C59"/>
+                    <path d="M17.8104 13.2051C18.8408 14.0781 19.4932 15.3702 19.4932 16.8126V19.0071H21.8767C22.7731 19.0071 23.5 18.293 23.5 17.412V16.5411C23.5 14.6982 21.9795 13.2043 20.1039 13.2043H17.888C17.8621 13.2043 17.8362 13.2046 17.8104 13.2051Z" fill="#FF7C59"/>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M18.0362 19.0918V16.8126C18.0362 16.0106 17.7472 15.2746 17.2657 14.6998C16.6445 13.9582 15.703 13.4851 14.6483 13.4851H9.35166C7.47946 13.4851 5.9638 14.976 5.9638 16.8126V19.0918C6.20934 19.906 6.97642 20.5 7.88472 20.5H16.1153C17.0236 20.5 17.7907 19.906 18.0362 19.0918Z" fill="#FF7C59"/>
+                    <path d="M5.00402 6.20445C3.49565 6.20445 2.27274 7.4059 2.27274 8.88812V9.5724C2.27274 11.0546 3.49565 12.2561 5.00402 12.2561C6.5124 12.2561 7.73531 11.0546 7.73531 9.5724V8.88812C7.73531 7.4059 6.5124 6.20445 5.00402 6.20445Z" fill="#FF7C59"/>
+                    <path d="M16.2647 8.88812C16.2647 7.4059 17.4876 6.20445 18.996 6.20445C20.5044 6.20445 21.7273 7.4059 21.7273 8.88812V9.5724C21.7273 11.0546 20.5044 12.2561 18.996 12.2561C17.4876 12.2561 16.2647 11.0546 16.2647 9.5724V8.88812Z" fill="#FF7C59"/>
+                    </svg>
                 </div>
-                <div class="media align-items-stretch" class="bg-darken-2" style="text-align: right;">
-                     <a class="white read-more">View More <i class="fa  fa-arrow-circle-o-right "></i> </a>
+                <div class="media align-items-stretch">
+                    <p>Tổng số toàn bộ nhân viên</p>
+                    <div class="per-50 d-flex bottom bet">
+                      <div class="qan d-flex bet">
+                          <div class="">
+                            <h1>800</h1>
+                            <label>Người</label>
+                          </div>
+                          <div class="per"> <span>-10% </span></div>
+                      </div>
+                      
+                      <div class="the-month">
+                        <div class="select-noborder">
+                          <p-dropdown [options]="months" optionLabel="name"></p-dropdown>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+            <!--card-->
+          </div>
+      
+          <div class="col-4 pt-0">
+            <div class="card">
+              <div class="card-content">
+                <div class="icon d-flex middle center">
+                  <svg width="15" height="18" viewBox="0 0 15 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6.79844 1.45967C4.85507 1.45967 3.29621 2.99418 3.29621 4.86733V5.57084C3.29621 7.444 4.85507 8.97851 6.79844 8.97851C8.7418 8.97851 10.3007 7.444 10.3007 5.57084V4.86733C10.3007 2.99418 8.7418 1.45967 6.79844 1.45967Z" fill="#FF7C59"/>
+                    <path d="M4.32628 10.2096C1.93694 10.2096 0 12.0699 0 14.3647V15.5519C0 16.5354 0.830118 17.3327 1.85412 17.3327H11.7428C12.7668 17.3327 13.5969 16.5354 13.5969 15.5519V14.3647C13.5969 12.0699 11.6599 10.2096 9.27059 10.2096H4.32628Z" fill="#FF7C59"/>
+                    <path d="M13.5575 0.844936C13.7946 1.07986 13.7966 1.44982 13.573 1.67134L12.2313 3.00049C12.0076 3.22201 11.6342 3.22004 11.397 2.98511C11.1599 2.75019 11.1579 2.38023 11.3815 2.15871L12.7232 0.829554C12.9469 0.608032 13.3203 0.610011 13.5575 0.844936Z" fill="#FF7C59"/>
+                    <path d="M15 4.83269C15 5.16492 14.7373 5.42792 14.4211 5.42792H12.5236C12.2073 5.42792 11.9447 5.16492 11.9447 4.83269C11.9447 4.50046 12.2073 4.23746 12.5236 4.23746H14.4211C14.7373 4.23746 15 4.50046 15 4.83269Z" fill="#FF7C59"/>
+                    </svg>
+                </div>
+                <div class="media align-items-stretch">
+                    <p>Tổng số nhân viên mới</p>
+                    <div class="per-50 d-flex bottom bet">
+                      <div class="qan d-flex bet">
+                          <div class="">
+                            <h1>800</h1>
+                            <label>Người</label>
+                          </div>
+                          <div class="per"> <span>-10% </span></div>
+                      </div>
+                      
+                      <div class="the-month">
+                        <div class="select-noborder">
+                          <p-dropdown [options]="months" optionLabel="name"></p-dropdown>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+            <!--card-->
+          </div>
+      
+          <div class="col-4 pt-0">
+            <div class="card">
+              <div class="card-content">
+                <div class="icon d-flex middle center">
+                  <svg width="15" height="17" viewBox="0 0 15 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3.65471 3.89914C3.65471 2.03067 5.18607 0.5 7.09515 0.5C9.00423 0.5 10.5356 2.03067 10.5356 3.89914V4.6009C10.5356 6.46937 9.00423 8.00004 7.09515 8.00004C5.18607 8.00004 3.65471 6.46937 3.65471 4.6009V3.89914Z" fill="#FF8F6D"/>
+                    <path d="M0.416656 13.3728C0.416656 11.0837 2.31942 9.22803 4.66661 9.22803H8.87736C8.88276 10.1748 9.27693 11.029 9.90744 11.6371L9.55722 14.9659C9.51796 15.3391 9.69191 15.7025 10.0064 15.9043C10.3209 16.1061 10.7218 16.1117 11.0417 15.9186L12.2221 15.2062L13.2353 15.8178C12.9061 16.1365 12.4527 16.3333 11.9522 16.3333H2.23806C1.23213 16.3333 0.416656 15.538 0.416656 14.557V13.3728Z" fill="#FF8F6D"/>
+                    <path d="M12.2222 11.5833C13.5262 11.5833 14.5833 10.52 14.5833 9.20833C14.5833 7.89666 13.5262 6.83333 12.2222 6.83333C10.9182 6.83333 9.8611 7.89666 9.8611 9.20833C9.8611 10.52 10.9182 11.5833 12.2222 11.5833Z" fill="#FF8F6D"/>
+                    <path d="M13.6141 12.2687C13.1903 12.464 12.7189 12.5729 12.2222 12.5729C11.7255 12.5729 11.2541 12.464 10.8303 12.2687L10.5356 15.0701L12.2221 14.0522L13.9086 15.0702L13.6141 12.2687Z" fill="#FF8F6D"/>
+                    </svg>
+                </div>
+                <div class="media align-items-stretch">
+                    <p>Số lượng nhân viên nghỉ việc</p>
+                    <div class="per-50 d-flex bottom bet">
+                      <div class="qan d-flex bet">
+                          <div class="">
+                            <h1>1000</h1>
+                            <label>Người</label>
+                          </div>
+                          <div class="per"> <span class="green">+10% </span></div>
+                      </div>
+                      
+                      <div class="the-month">
+                        <div class="select-noborder">
+                          <p-dropdown [options]="months" optionLabel="name"></p-dropdown>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+            <!--card-->
+          </div>
+        </div>
+          <div class="col-12">
+            <div class="chart-section">
+              <div class="d-flex bet ">
+                  <div class="des">
+                    <h3>Biến động nhân sự </h3>
+                    <p>Công ty KSFinance</p>
+                  </div>
+                  <div class="select-noborder">
+                    <p-dropdown [options]="months" optionLabel="name"></p-dropdown>
                   </div>
               </div>
-            </div>
-          </div>
-          <!--card-->
-        </div>
-    
-        <div class="col-lg-3 col-12">
-          <div class="card">
-            <div class="card-content">
-              <div class="text-center bg-purple">
-                <i class="pi pi-credit-card"></i>
-              </div>
-              <div class="media align-items-stretch">
-                <div class="bg-purple white media-body"  style="text-align: right">
-                  <h1>1050</h1>
-                  <h5 class="text-bold-400 mb-0">
-                     Thẻ thành viên
-                  </h5>
-                  <div class="media align-items-stretch" class="bg-purple bg-darken-2" style="text-align: right;">
-                        <a class="white read-more">View More <i class="fa  fa-arrow-circle-o-right "></i> </a>
-                     </div>
-                </div> 
-              </div> 
-            </div>
-          </div>
-          <!--card-->
-        </div>
-    
-        <div class="col-lg-3 col-12">
-          <div class="card">
-            <div class="card-content">
-              <div class="text-center bg-warning ">
-                <i class="fa fa-users font-large-2 white"></i>
-              </div>
-              <div class="media align-items-stretch">
-                <div class="bg-warning white media-body" style="text-align: right">
-                      <h1>5</h1>
-                      <h5 class="text-bold-400 mb-0">
-                          Nhóm khách hàng
-                      </h5>
-                      <div class="media align-items-stretch" class="bg-warning bg-darken-2" style="text-align: right;">
-                        <a class="white read-more">View More <i class="fa  fa-arrow-circle-o-right "></i> </a>
-                      </div>
-                </div>
+              <div class="chart">
+                <p-chart type="bar" [data]="basicData" [options]="basicOptions"></p-chart>
               </div>
             </div>
-          </div>
-          <!--card-->
-        </div>
-    
-        <div class="col-lg-3 col-12">
-          <div class="card">
-            <div class="card-content">
-              <div class="text-center bg-success">
-                <i class="fa fa-bar-chart font-large-2 white"></i>
+            <div class="chart-section">
+              <div class="d-flex bet ">
+                  <h3>Số lượng nhân sự </h3>
+                  <div class="select-noborder">
+                    <p-dropdown [options]="months" optionLabel="name"></p-dropdown>
+                  </div>
               </div>
-              <div class="media align-items-stretch" >
-                <div class="bg-success white media-body" style="text-align: right">
-                  <h1>25000</h1>
-                  <h5 class="text-bold-400 mb-0">
-                   Lượt tương tác trong ngày
-                  </h5>
-                  <div class="media align-items-stretch" class="bg-success bg-darken-2" style="text-align: right; padding: 5px;">
-                        <a class="white read-more">View More <i class="fa  fa-arrow-circle-o-right "></i> </a>
-                     </div>
-                </div>
+              <div class="chart">
+                <p-chart type="line" [data]="basicData2" [options]="basicOptions2"></p-chart>
               </div>
             </div>
-          </div>
-          <!--card-->
         </div>
       </div>
-      <!-- end row 1 -->
-     
+      <div class="col-3">
+        <div class="sidebar col-12 pt-0 pl-0">
+          <div class="box">
+            <h3>Thống kê hợp đồng theo loại hợp đồng</h3>
+            <p>Công ty KSFinance - Đến ngày 20/10/2022</p>
+            <div class="chart">
+              <p-chart type="doughnut" [data]="dataDou" [style]="{'width': '40%'}"></p-chart>
+            </div>
+            <ul>
+              <li class="d-flex bet">Hợp đồng sắp hết hạn: 03 
+                <span class="icon">
+                    <svg width="6" height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M0.259459 0.278481C0.54816 0.00352719 1.01624 0.00352719 1.30494 0.278481L5.74054 4.50286C6.02924 4.77781 6.02924 5.2236 5.74054 5.49856L1.30494 9.72293C1.01624 9.99789 0.54816 9.99789 0.259459 9.72293C-0.029243 9.44798 -0.029243 9.00219 0.259459 8.72724L4.17232 5.00071L0.259459 1.27418C-0.029243 0.999223 -0.029243 0.553435 0.259459 0.278481Z" fill="#99A2BC"/>
+                    </svg>
+                </span>
+              </li>
+              <li class="d-flex bet">Hợp đồng quá hạn: 05
+                <span class="icon">
+                    <svg width="6" height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M0.259459 0.278481C0.54816 0.00352719 1.01624 0.00352719 1.30494 0.278481L5.74054 4.50286C6.02924 4.77781 6.02924 5.2236 5.74054 5.49856L1.30494 9.72293C1.01624 9.99789 0.54816 9.99789 0.259459 9.72293C-0.029243 9.44798 -0.029243 9.00219 0.259459 8.72724L4.17232 5.00071L0.259459 1.27418C-0.029243 0.999223 -0.029243 0.553435 0.259459 0.278481Z" fill="#99A2BC"/>
+                    </svg>
+                </span>
+              </li>
+            </ul>
+          </div>
+          <div class="box">
+            <h3>Thống kê hợp đồng theo loại hợp đồng</h3>
+            <p>Công ty KSFinance - Đến ngày 20/10/2022</p>
+            <div class="chart">
+              <p-chart type="doughnut" [data]="dataDou" [style]="{'width': '40%'}"></p-chart>
+            </div>
+          </div>
+        </div>
+      </div>
       <!-- row 2 -->
-      <div class="row custom-card">
+      <!-- <div class="row custom-card">
           <div class="col-lg-6">
               <div class="card mb-1">
                   <div class="card-header card-header-custom">
                       <h4 class="card-title"><i class="fa fa-users"></i> Khách hàng theo nhóm</h4>
                   </div>
-                  <!-- <div class="card-content">  -->
-                      <!-- <canvas
-                          baseChart
-                          [chartType]="'line'"
-                          [datasets]="chartData"
-                          [labels]="chartLabels"
-                          [options]="chartOptions"
-                          [legend]="true"
-                          (chartClick)="onChartClick($event)">
-                      </canvas> -->
-                      
-                  <!-- </div>  -->
               </div>
               <div class="card">
                 <div class="card-header">
@@ -122,25 +188,13 @@
                   </div>
                 </div> 
             </div>
-          </div>
-          <div class="col-lg-6">
-              <div class="card mb-1">
-                  <div class="card-header card-header-custom">
-                      <h4 class="card-title"><i class="ft-arrow-up"></i> Tăng trưởng khách hàng hàng năm</h4>
+            <div class="col-lg-6">
+                <div class="card mb-1">
+                    <div class="card-header card-header-custom">
+                        <h4 class="card-title"><i class="ft-arrow-up"></i> Tăng trưởng khách hàng hàng năm</h4>
+                    </div>
                   </div>
-                  <!-- <div class="card-content">  -->
-                      <!-- <canvas baseChart
-                        [datasets]="barChartData"
-                        [labels]="barChartLabels"
-                        [options]="barChartOptions"
-                        [legend]="barChartLegend"
-                        [chartType]="barChartType"
-                        (chartHover)="chartHovered($event)"
-                        (chartClick)="chartClicked($event)"> 
-                      </canvas> -->
-                  <!-- </div>  -->
-                </div>
-                <div class="card">
+                  <div class="card">
                     <div class="card-header">
                         <h4 class="card-title"><i class="fa fa-commenting"></i> Hỗ trợ khách hàng</h4>
                     </div>
@@ -151,35 +205,8 @@
                           </div>
                     </div> 
                   </div>
-            </div>
-    
-      </div>
-      <!-- end row 2 -->
-      <!-- row 3 -->
-      <!-- <div class="row">
-          <div class="col-xl-6">
-              <div class="card">
-                  <div class="card-header">
-                      <h4 class="card-title"><i class="fa fa-clock-o"></i> Lịch làm việc trong ngày</h4>
-                  </div>
-                  <div class="card-content"> 
-                    <app-list-grid-angular *ngIf="columnDefs.length > 0" [listsData]="dataLamViecTrongNgay" [height]="500"
-                        [columnDefs]="columnDefs"></app-list-grid-angular>
-                  </div> 
-              </div>
-          </div>
-          <div class="col-xl-6">
-              <div class="card">
-                  <div class="card-header">
-                      <h4 class="card-title"><i class="fa fa-commenting"></i> Hỗ trợ khách hàng</h4>
-                  </div>
-                  <div class="card-content"> 
-                    <app-list-grid-angular *ngIf="columnDefs1.length > 0" [listsData]="dataHoTroKhachHang" [height]="500"
-                        [columnDefs]="columnDefs1"></app-list-grid-angular>
-                  </div> 
                 </div>
-            </div>
-    
-      </div> -->
-      <!-- end row 3 -->
+              </div>
+          </div> -->
+    </div>
 </div>
