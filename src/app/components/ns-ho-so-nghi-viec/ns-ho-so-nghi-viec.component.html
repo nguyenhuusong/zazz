@@ -3,7 +3,7 @@
 <div class="grid main-grid">
     <div class="col-12 right max-w-full">
         <div class="bread-filter">
-            <div class="d-flex bet end">
+            <div class="d-flex bet middle">
                 <app-hrm-breadcrumb [items]="items"></app-hrm-breadcrumb>
                 <div class="d-flex">
                     <div class="select-ori mr-2" (click)="hrDiagram()">
@@ -87,7 +87,8 @@
             <p-paginator [rows]="query.pageSize" [totalRecords]="countRecord.totalRecord" [first]="first" (onPageChange)="paginate($event)" [rowsPerPageOptions]="[15,30,45,100,200,{ showAll: 'ALL' }]"></p-paginator>
         </div>
             <app-list-grid-angular  *ngIf="columnDefs.length > 0"
-                [listsData]="listsData" [domLayout]="'autoHeight'"
+                [height]="heightGrid"
+                [listsData]="listsData"
                 [columnDefs]="columnDefs"></app-list-grid-angular>
                
         </div>

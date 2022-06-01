@@ -2,11 +2,11 @@
 <div class="grid main-grid">
   <div class="col-12 right max-w-full">
     <div class="bread-filter">
-        <div class="d-flex bet end">
+        <div class="d-flex bet middle">
             <app-hrm-breadcrumb [items]="items"></app-hrm-breadcrumb>
             <div class="tools">
-                <p-button label="Tạo thông báo" styleClass="p-button-sm mr-2 h-56" icon="pi pi-plus" (click)="AddNotify()"></p-button>
-                <p-button  (click)="menuButton.toggle($event)" label="Cài đặt" icon="pi pi-cog" styleClass="p-button-sm h-56"></p-button>
+                <p-button label="Tạo thông báo" styleClass="p-button-sm mr-2" icon="pi pi-plus" (click)="AddNotify()"></p-button>
+                <p-button  (click)="menuButton.toggle($event)" label="Cài đặt" icon="pi pi-cog" styleClass="p-button-sm"></p-button>
                 <p-menu [model]="menuItem" [appendTo]="'body'" [popup]="true" #menuButton></p-menu>
             </div>
         </div>

@@ -1,7 +1,7 @@
 <div class="grid main-grid">
     <div class="col-12 right max-w-full">
         <div class="bread-filter">
-            <div class="d-flex bet end">
+            <div class="d-flex bet end middle">
                 <app-hrm-breadcrumb [items]="items"></app-hrm-breadcrumb>
                 <div class="d-flex">
                     <div class="select-ori mr-2" (click)="hrDiagram()">
@@ -109,8 +109,7 @@
             <p-button label="Chuyển tổ chức" (click)="theOrganToMove()" styleClass="move-organ" *ngIf="listDataSelect.length > 0"></p-button>
             <app-list-grid-angular *ngIf="columnDefs.length > 0" 
                 [listsData]="listsData" 
-                [height]="500"
-                [domLayout]="'autoHeight'" 
+                [height]="heightGrid"
                 [columnDefs]="columnDefs"
                 [rowSelection]="'multiple'"
                 [floatingFilter]="true"
