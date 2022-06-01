@@ -129,7 +129,7 @@ export class CaiDatPhongHopTheoTangComponent implements OnInit {
           this.countRecord.currentRecordEnd = results.data.dataList.recordsTotal;
           setTimeout(() => {
             const noData = document.querySelector('.ag-overlay-no-rows-center');
-            noData.innerHTML = 'Không có kết quả phù hợp'
+            if (noData) { noData.innerHTML = 'Không có kết quả phù hợp'}
           }, 100);
         }
         this.spinner.hide();
