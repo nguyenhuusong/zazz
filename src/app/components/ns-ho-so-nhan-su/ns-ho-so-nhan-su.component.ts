@@ -501,7 +501,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
   onNodeSelect(event) {
     this.detailOrganizeMap = event.node;
     localStorage.setItem('organize', JSON.stringify(event.node));
-    this.query.orgId = this.selectedNode?.orgId;
+    // this.query.orgId = this.selectedNode?.orgId;
     this.query.orgId = this.detailOrganizeMap?.orgId;
     this.isHrDiagram = false;
 
