@@ -253,7 +253,7 @@ export class ThietBiThangMayComponent implements OnInit, AfterViewChecked {
     this.loadjs ++ 
     if (this.loadjs === 5) {
       if(b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + d.clientHeight + e.clientHeight + 45;
+        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + d.clientHeight + e.clientHeight + 55;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       }else {

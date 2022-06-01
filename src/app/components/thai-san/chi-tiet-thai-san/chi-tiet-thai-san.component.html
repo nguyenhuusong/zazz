@@ -44,7 +44,7 @@
 </div>
 
 
-<p-dialog header="{{modelAdd.title}}" [(visible)]="displayAddThaiSan" [modal]="true" [style]="{width: '1000px'}"
+<p-dialog styleClass="popup-chi-tiet-thai-san" header="{{modelAdd.title}}" [(visible)]="displayAddThaiSan" [modal]="true" [style]="{width: '1000px'}"
     [draggable]="false" [resizable]="false">
     <app-edit-detail *ngIf="listViews_other.length> 0" [detail]="detailInfo_other" [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButon"  [dataView]="listViews_other"
         (callback)="saveCallApi($event)" (callbackcancel)="displayAddThaiSan = !displayAddThaiSan"></app-edit-detail>

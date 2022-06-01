@@ -1,5 +1,5 @@
 <div class="d-flex">
-  <p-toolbar styleClass="new-toolbar-style p-0">
+  <p-toolbar styleClass="new-toolbar-style d-flex p-0 middle">
     <div class="p-toolbar-group-left">
       <!-- <div class="field-group mr-2">
         <input type="text" id="filter" [(ngModel)]="filter.filter" >
@@ -7,7 +7,7 @@
         <p-button class="search-button" icon="pi pi-search" (click)="load()"></p-button>
       </div> -->
       <div class="mr-1">
-        <div class="field-group select label-8 mr-2">
+        <div class="field-group select label-8 mr-2 mb-0">
           <label>Trạng thái Push</label>
           <select class="form-control" name="push_st" [(ngModel)]="filter.push_st" #push_st="ngModel" (change)="load()">
             <option *ngFor="let type of notifyTypes" value={{type.statusId}}>
@@ -16,7 +16,7 @@
         </div>
       </div>
       <div class="mr-1">
-        <div class="field-group select label-8 mr-2">
+        <div class="field-group select label-8 mr-2 mb-0">
           <label>Trạng thái gửi Email</label>
           <select class="form-control" name="email_st" [(ngModel)]="filter.email_st" #email_st="ngModel" (change)="load()">
             <option *ngFor="let type of notifyTypes" value={{type.statusId}}>
@@ -25,7 +25,7 @@
         </div>
       </div>
       <div class="">
-        <div class="field-group select label-8">
+        <div class="field-group select label-8 mb-0">
           <label>Trạng thái gửi Sms</label>
           <select class="form-control" name="sms_st" [(ngModel)]="filter.sms_st" #sms_st="ngModel" (change)="load()">
             <option *ngFor="let type of notifyTypes" value={{type.statusId}}>
@@ -36,7 +36,7 @@
     </div>
     <div class="p-toolbar-group-right" [hidden]="hideAction">
       <div class="group-btns text-right">
-        <label style="visibility: hidden;">Buttons</label>
+        <!-- <label style="visibility: hidden;">Buttons</label> -->
         <p-button label="Cài đặt danh sách gửi" (click)="storeNotify()" icon="fa fa-save" styleClass="p-button-sm mr-1"></p-button>
         <p-button label="Gửi thông báo" (click)="sendNotify()" icon="fa fa-paper-plane" styleClass="p-button-sm mr-1"></p-button>
         <p-button label="Xóa nhân viên" (click)="deleteMultipleApartment()" icon="pi pi-trash" styleClass="p-button-sm p-button-danger mr-1"></p-button>
@@ -45,7 +45,7 @@
     </div>
     <div class="p-toolbar-group-right" *ngIf="hideAction">
       <div class="group-btns text-right">
-        <label style="visibility: hidden;">Buttons</label>
+        <!-- <label style="visibility: hidden;">Buttons</label> -->
         <p-button label="Gửi lại thông báo" (click)="reSendNotify()" icon="fa fa-reply" styleClass="p-button-sm mr-1"></p-button>
         <p-button label="Gửi thông báo" (click)="saveSendNotify()" icon="fa fa-save" styleClass="p-button-sm mr-1"></p-button>
         <p-button label="Đóng lại" (click)="closeModal()" icon="pi pi-times" styleClass="p-button-sm p-button-secondary"></p-button>

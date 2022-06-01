@@ -102,7 +102,7 @@
     </div>
 
     <ng-template #NotNested>
-        <div class="main-grid text-right btn-group-edit-detail" *ngIf = "isViewButtonTop" style="position: absolute; right: 0; z-index: 1; top: 5px;">
+        <div class="main-grid text-right btn-group-edit-detail" *ngIf = "isViewButtonTop" style="position: absolute; right: 0; z-index: 1; top: 15px;">
             <ng-container *ngFor="let button of optionsButtonsEdit">
                 <p-button label="{{button.label}}" (onClick)="onChangeButtonEdit(button.value)" icon="{{button?.icon ? button?.icon : 'pi pi-plus'}}" styleClass="p-button-sm {{button?.class ? button?.class : ''}} mr-1"></p-button>
             </ng-container>

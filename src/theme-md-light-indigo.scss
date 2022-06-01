@@ -60,7 +60,9 @@
     --525B73: #525B73;
     --F3F8FF: #F3F8FF;
     --color-text-normal: rgba(43, 47, 51, 0.4);
-    --BDC4D8: #BDC4D8
+    --BDC4D8: #BDC4D8;
+
+    --8E9ABB: #8E9ABB;
     
 }
 
@@ -540,7 +542,7 @@ body{
     li{
         a{
           span{
-            color: var(--515663) !important;
+            color: var(--8E9ABB) !important;
           }
           &:hover{
             background: none !important;

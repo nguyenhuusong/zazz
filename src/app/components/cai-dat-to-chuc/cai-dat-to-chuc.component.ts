@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import * as queryString from 'querystring';
 import { ConfirmationService, MessageService, TreeNode } from 'primeng/api';
@@ -55,6 +55,7 @@ export class CaiDatToChucComponent implements OnInit {
   }
   menuItem = []
   organizeLevelList = []
+  isHrDiagram: boolean = false
   constructor(
     private apiService: ApiHrmService,
     private spinner: NgxSpinnerService,
@@ -62,6 +63,7 @@ export class CaiDatToChucComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private activatedRoute: ActivatedRoute,
+    private changeDetector: ChangeDetectorRef,
     private router: Router) {
 
     this.defaultColDef = {
@@ -129,7 +131,7 @@ export class CaiDatToChucComponent implements OnInit {
     this.gridColumnApi = params.columnApi;
   }
 
-  getAgencyOrganizeMap() {
+  getAgencyOrganizeMap(type = false) {
     this.apiService.getAgencyOrganizeMap().subscribe(results => {
       if (results.status === 'success') {
         this.listAgencyMap = [...results.data.root];
@@ -147,6 +149,9 @@ export class CaiDatToChucComponent implements OnInit {
           this.detailOrganizeMap = this.selectedNode
           this.selected(this.listAgencyMap, this.query.orgId);
           this.query.org_level = this.selectedNode.org_level;
+          if (type) {
+            this.isHrDiagram = true;
+          }
           this.load();
         }
       }
@@ -447,6 +452,7 @@ export class CaiDatToChucComponent implements OnInit {
   organizeList = []
   onNodeSelect(event) {
     this.detailOrganizeMap = event.node;
+    this.isHrDiagram = false;
     this.getlistnv();
     // this.displayButton = true;
   }
@@ -644,9 +650,31 @@ export class CaiDatToChucComponent implements OnInit {
     this.displayOrganize = false;
   }
 
+  hrDiagram() {
+    this.selectedNode = null;
+    this.listAgencyMap = []
+    this.isHrDiagram = true;
+    this.getAgencyOrganizeMap(true);
+  }
 
-
-
+  loadjs = 0;
+  heightGrid = 0
+  ngAfterViewChecked(): void {
+    const a: any = document.querySelector(".header");
+    const b: any = document.querySelector(".sidebarBody");
+    const c: any = document.querySelector(".bread-filter");
+    const e: any = document.querySelector(".paginator");
+    this.loadjs++
+    if (this.loadjs === 5) {
+      if (b && b.clientHeight) {
+        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + e.clientHeight + 55;
+        this.heightGrid = window.innerHeight - totalHeight
+        this.changeDetector.detectChanges();
+      } else {
+        this.loadjs = 0;
+      }
+    }
+  }
 
 }
 
