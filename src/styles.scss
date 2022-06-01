@@ -2382,7 +2382,7 @@ div.p-organizationchart {
      }
      &.invalid{
         label{
-             top: 20px;
+             top: 17px;
          }
          &.focused{
              label{
@@ -2486,10 +2486,10 @@ div.p-organizationchart {
             -moz-border-radius: 8px;
             &.p-focus{
                 box-shadow: none;
-                border: 1px solid #292663;
+                border: 1px solid #0979FD;
             }
             &:hover{
-                border: 1px solid #292663;
+                border: 1px solid #0979FD;
             }
             &.p-dropdown-open{
                 z-index: 3;
@@ -2529,7 +2529,7 @@ div.p-organizationchart {
             transition: all 0.3s;
             &:hover{
                 transition: all 0.3s;
-                border: 1px solid #292663;
+                border: 1px solid #0979FD;
             }
         }
         &.treeselect{
@@ -2543,8 +2543,9 @@ div.p-organizationchart {
             padding: 0px 12px 0px 11px;
             border: 1px solid rgba(51, 51, 51, 0.1);
             transition: all 0.4s;
+            border-radius: 8px;
             &:hover{
-                border: 1px solid #292663;
+                border: 1px solid #0979FD;
                 transition: all 0.4s;
             }
         }
@@ -2553,11 +2554,14 @@ div.p-organizationchart {
         }
         .p-multiselect-label{
             padding-left: 0px !important;
-            padding-top: 27px !important;
-            padding-bottom: 7px !important;
+            padding-top: 24px!important;
+            padding-bottom: 3px!important;
             .p-multiselect-token{
-                padding: 3px 10px;
+                padding: 0px 6px;
                 font-size: 10px;
+                .p-multiselect-token-icon{
+                    font-size: 13px;
+                }
             }
         }
     }
@@ -2653,7 +2657,7 @@ div.p-organizationchart {
             }
             &:hover,
             &:focus-visible{
-                border: 1px solid #292663;
+                border: 1px solid #0979FD;
                 outline: none;
                 transition: all 0.4s;
             }
@@ -2674,7 +2678,7 @@ div.p-organizationchart {
             padding: 0px;
         }
         &:hover{
-            border: 1px solid #292663;
+            border: 1px solid #0979FD;
             transition: all 0.4s;
         }
         label{
