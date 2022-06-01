@@ -13,7 +13,8 @@ export class AuthService {
   constructor(private http: HttpClient,
     private firebaseAuthService: FirebaseAuthService,
     ) {
-  }
+      this.getEmpDetail()
+      }
 
   isLoggedIn(): Promise<boolean> {
     localStorage.removeItem('menuItems');
@@ -82,6 +83,7 @@ export class AuthService {
         });
     }
     const token = this.getAccessTokenValue();
+    console.log(this.firebaseAuthService.authenticated)
     if (!this.firebaseAuthService.authenticated) {
       const customToken = await this.getCustomToken(token);
       if (customToken) {
