@@ -103,7 +103,7 @@ export class CsChamCongComponent implements OnInit {
     this.loadjs ++ 
     if (this.loadjs === 5) {
       if(b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight  + 45;
+        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight  + 70;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       }else {

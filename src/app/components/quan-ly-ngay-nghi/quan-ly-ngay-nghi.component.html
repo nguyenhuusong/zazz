@@ -4,9 +4,9 @@
     <div class="col-12 right max-w-full" style="padding-top: 0;">
         
         <div class="bread-filter">
-            <div class="d-flex bet end">
+            <div class="d-flex bet middle">
                 <app-hrm-breadcrumb [items]="itemsBreadcrumb"></app-hrm-breadcrumb>
-                <p-button label="Tạo ngày nghỉ trong năm" icon="pi pi-calendar-plus" styleClass="height-56" (click)="AddDayToYear()"></p-button>
+                <p-button label="Tạo ngày nghỉ trong năm" icon="pi pi-calendar-plus" (click)="AddDayToYear()"></p-button>
             </div>
             <div class="grid filter">
                 <div class="x-1"> 
@@ -29,39 +29,38 @@
           
         </div>
         <div class="grid" #container>
-            <p-table [value]="listHolidays" [style]="{width: '100%'}"
-            styleClass="p-datatable-gridlines p-datatable-sm">
-            <ng-template pTemplate="header">
-                <tr>
-                    <th *ngFor="let item of headerDate"
-                        [style.width]="item.title_id === 1 ? '70px' : ''"><span
-                            [style.color]="item.color">{{item.title}}</span></th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-product>
-                <tr>
-                    <td [innerHTML]="fnRenderTextMont(product.month)"></td>
-                    <ng-container *ngFor="let item of arraylengths; let i=index">
-                        <td *ngIf="i + 1 < product.start; else loggedOut"
-                            class="text-center">*</td>
-                        <ng-template #loggedOut>
+            <div class="col-12">
+                <p-table [value]="listHolidays" [style]="{width: '100%'}"
+                styleClass="p-datatable-gridlines p-datatable-sm">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th *ngFor="let item of headerDate"
+                            [style.width]="item.title_id === 1 ? '70px' : ''"><span
+                                [style.color]="item.color">{{item.title}}</span></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-product>
+                    <tr>
+                        <td [innerHTML]="fnRenderTextMont(product.month)"></td>
+                        <ng-container *ngFor="let item of arraylengths; let i=index">
+                            <td *ngIf="i + 1 < product.start; else loggedOut"
+                                class="text-center">*</td>
+                            <ng-template #loggedOut>
 
-                            <td *ngIf="i+1<= product.end" style="white-space: nowrap;"
-                                class="cursor-pointer hover-td text-center"
-                                [ngClass]="{'color-red': product.holidays[i].holi_is}"
-                                (dblclick)="confirm($event, i, product.holidays[i].day_dt,
-                                product.holidays[i].holi_is, product.holidays[i].holi_des)"
-                                title="{{product.holidays[i].holi_des}}">
-                                {{i + 1 - product.start + 1}}</td>
-                            <td *ngIf="i+1 > product.end" class="text-center">*</td>
-                        </ng-template>
-                    </ng-container>
-                </tr>
-            </ng-template>
-
+                                <td *ngIf="i+1<= product.end" style="white-space: nowrap;"
+                                    class="cursor-pointer hover-td text-center"
+                                    [ngClass]="{'color-red': product.holidays[i].holi_is}"
+                                    (dblclick)="confirm($event, i, product.holidays[i].day_dt,
+                                    product.holidays[i].holi_is, product.holidays[i].holi_des)"
+                                    title="{{product.holidays[i].holi_des}}">
+                                    {{i + 1 - product.start + 1}}</td>
+                                <td *ngIf="i+1 > product.end" class="text-center">*</td>
+                            </ng-template>
+                        </ng-container>
+                    </tr>
+                </ng-template>
         </p-table>
-      
-         
+    </div>
     </div>
     <div class="grid mt-1">
         <div class="col-6">
