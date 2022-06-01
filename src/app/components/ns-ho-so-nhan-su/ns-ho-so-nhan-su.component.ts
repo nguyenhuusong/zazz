@@ -170,16 +170,14 @@ export class NsHoSoNhanSuComponent implements OnInit {
           this.query.orgId = this.selectedNode.orgId;
           this.load();
         } else {
-         
           this.selectedNode = JSON.parse(localStorage.getItem("organize"));
-          this.query.orgId = this.selectedNode.orgId;
+          this.query.orgId = this.selectedNode?.orgId;
           this.listAgencyMap = this.expanded(this.listAgencyMap, this.selectedNode.parentId)
           this.selected(this.listAgencyMap, this.query.orgId);
-          if(type) {
+          if (type) {
             this.isHrDiagram = true;
-  
-            }
-          this.load( );
+          }
+          this.load();
         }
       }
     })
@@ -193,6 +191,13 @@ export class NsHoSoNhanSuComponent implements OnInit {
       } else {
         if (d.children.length > 0) this.expanded(d.children, this.selectedNode.parentId)
       }
+      d.children.forEach((elm: { children: { expanded: boolean; }[]; expanded: boolean; }) => {
+        elm.children.forEach((e: { expanded: boolean; }) =>{
+          if (e.expanded === true) {
+            elm.expanded = true
+          }
+        })
+      });      
     })
     return datas
   }
@@ -238,16 +243,16 @@ export class NsHoSoNhanSuComponent implements OnInit {
           this.countRecord.currentRecordEnd = results.data.dataList.recordsTotal;
           setTimeout(() => {
             const noData = document.querySelector('.ag-overlay-no-rows-center');
-            noData.innerHTML = 'Không có kết quả phù hợp'
+            if (noData) { noData.innerHTML = 'Không có kết quả phù hợp' }
           }, 100);
         }
         this.spinner.hide();
       },
       error => {
         this.spinner.hide();
-       });
+      });
   }
-  
+
   showButtons(event: any) {
     return {
       buttons: [
@@ -296,52 +301,52 @@ export class NsHoSoNhanSuComponent implements OnInit {
         field: 'checkbox'
       }]
 
-      this.detailCellRendererParams = {
-        detailGridOptions: {
-          frameworkComponents: {},
-          getRowHeight: (params) => {
-            return 40;
-          },
-          columnDefs: [
-            ...AgGridFn(this.colsDetail),
-          ],
-
-          enableCellTextSelection: true,
-          onFirstDataRendered(params) {
-            let allColumnIds: any = [];
-            params.columnApi.getAllColumns()
-              .forEach((column: any) => {
-                if (column.colDef.cellClass.indexOf('auto') < 0) {
-                  allColumnIds.push(column)
-                } else {
-                  column.colDef.suppressSizeToFit = true;
-                  allColumnIds.push(column)
-                }
-              });
-            params.api.sizeColumnsToFit(allColumnIds);
-          },
+    this.detailCellRendererParams = {
+      detailGridOptions: {
+        frameworkComponents: {},
+        getRowHeight: (params) => {
+          return 40;
         },
-        getDetailRowData(params) {
-          params.successCallback(params.data.AgencyGenerals);
-        },
-        excelStyles: [
-          {
-            id: 'stringType',
-            dataType: 'string'
-          }
+        columnDefs: [
+          ...AgGridFn(this.colsDetail),
         ],
-        template: function (params) {
-          var personName = params.data.theme;
-          return (
-            '<div style="height: 100%; background-color: #EDF6FF; padding: 20px; box-sizing: border-box;">' +
-            `  <div style="height: 10%; padding: 2px; font-weight: bold;">###### Danh sách (${params.data.AgencyGenerals.length}) : [` +
-            personName + ']' +
-            '</div>' +
-            '  <div ref="eDetailGrid" style="height: 90%;"></div>' +
-            '</div>'
-          );
+
+        enableCellTextSelection: true,
+        onFirstDataRendered(params) {
+          let allColumnIds: any = [];
+          params.columnApi.getAllColumns()
+            .forEach((column: any) => {
+              if (column.colDef.cellClass.indexOf('auto') < 0) {
+                allColumnIds.push(column)
+              } else {
+                column.colDef.suppressSizeToFit = true;
+                allColumnIds.push(column)
+              }
+            });
+          params.api.sizeColumnsToFit(allColumnIds);
         },
-      };
+      },
+      getDetailRowData(params) {
+        params.successCallback(params.data.AgencyGenerals);
+      },
+      excelStyles: [
+        {
+          id: 'stringType',
+          dataType: 'string'
+        }
+      ],
+      template: function (params) {
+        var personName = params.data.theme;
+        return (
+          '<div style="height: 100%; background-color: #EDF6FF; padding: 20px; box-sizing: border-box;">' +
+          `  <div style="height: 10%; padding: 2px; font-weight: bold;">###### Danh sách (${params.data.AgencyGenerals.length}) : [` +
+          personName + ']' +
+          '</div>' +
+          '  <div ref="eDetailGrid" style="height: 90%;"></div>' +
+          '</div>'
+        );
+      },
+    };
   }
 
   xoanhanvien(event) {
@@ -466,7 +471,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
 
   ngOnInit() {
     this.items = [
-      { label: 'Trang chủ' , routerLink: '/home' },
+      { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Nhân sự' },
       { label: 'Danh sách hồ sơ nhân sự' },
     ];
@@ -478,14 +483,14 @@ export class NsHoSoNhanSuComponent implements OnInit {
     this.apiService.getEmployeeStatus().subscribe(results => {
       if (results.status === 'success') {
         this.employeeStatus = []
-        results.data.forEach( s => {
-            if(s.value != "3"){
-              this.employeeStatus.push({
-                label: s.name,
-                value: s.value
-              })
-            }
+        results.data.forEach(s => {
+          if (s.value != "3") {
+            this.employeeStatus.push({
+              label: s.name,
+              value: s.value
+            })
           }
+        }
         )
         this.employeeStatus = [{ label: 'Tất cả', value: -1 }, ...this.employeeStatus];
       }
@@ -495,8 +500,8 @@ export class NsHoSoNhanSuComponent implements OnInit {
   onNodeSelect(event) {
     this.detailOrganizeMap = event.node;
     localStorage.setItem('organize', JSON.stringify(event.node));
-    this.query.orgId = this.selectedNode.orgId;
-    this.query.orgId = this.detailOrganizeMap.orgId;
+    this.query.orgId = this.selectedNode?.orgId;
+    this.query.orgId = this.detailOrganizeMap?.orgId;
     this.isHrDiagram = false;
 
     this.load()
@@ -544,40 +549,40 @@ export class NsHoSoNhanSuComponent implements OnInit {
     this.apiService.getEmployeePage(queryParams).subscribe(
       (results: any) => {
         const dataExport = [];
-      let gridflexs = results.data.gridflexs;
-      let arrKey = gridflexs.map(elementName => elementName.columnField);
-      
-      let dataList = results.data.dataList.data;
-      for(let elementValue of dataList) {
-        const data: any = {};
-        for(let elementName of gridflexs) {
-          if(arrKey.indexOf(elementName.columnField) > -1 && !elementName.isHide && elementName.columnField !== 'statusName') {
-            let valueColumn = elementValue[elementName.columnField];
-            if(elementName.columnField == 'status_name' || elementName.columnField == 'isContacted' || elementName.columnField == 'isProfileFull' || elementName.columnField == 'lockName'){
-              valueColumn = this.replaceHtmlToText(valueColumn);
+        let gridflexs = results.data.gridflexs;
+        let arrKey = gridflexs.map(elementName => elementName.columnField);
+
+        let dataList = results.data.dataList.data;
+        for (let elementValue of dataList) {
+          const data: any = {};
+          for (let elementName of gridflexs) {
+            if (arrKey.indexOf(elementName.columnField) > -1 && !elementName.isHide && elementName.columnField !== 'statusName') {
+              let valueColumn = elementValue[elementName.columnField];
+              if (elementName.columnField == 'status_name' || elementName.columnField == 'isContacted' || elementName.columnField == 'isProfileFull' || elementName.columnField == 'lockName') {
+                valueColumn = this.replaceHtmlToText(valueColumn);
+              }
+              data[elementName.columnCaption] = valueColumn || '';
             }
-            data[elementName.columnCaption] = valueColumn || '';
+
           }
-         
+
+          dataExport.push(data);
         }
+        this.fileService.exportAsExcelFile(dataExport, 'Danh sách hồ sơ nhân sự ' + new Date());
 
-      dataExport.push(data);
-      }
-      this.fileService.exportAsExcelFile(dataExport, 'Danh sách hồ sơ nhân sự ' + new Date());
-
-      this.spinner.hide();
+        this.spinner.hide();
       },
       error => {
         this.spinner.hide();
-    });
+      });
   }
 
-  replaceHtmlToText(string){
+  replaceHtmlToText(string) {
     return string.replace(/(<([^>]+)>)/gi, "");
   }
 
   columnDefsMoveOrgan = [];
-  getColumnDefsMoveOrgan(){
+  getColumnDefsMoveOrgan() {
     this.columnDefsMoveOrgan = [
       {
         headerName: 'Stt',
@@ -640,40 +645,40 @@ export class NsHoSoNhanSuComponent implements OnInit {
     };
   }
   delStaffinDataOraMove(data) {
-    this.theOrganToMoveData = this.theOrganToMoveData.filter( a => a.CustId !=  data.rowData.CustId);
-    if(this.theOrganToMoveData.length < 1){
+    this.theOrganToMoveData = this.theOrganToMoveData.filter(a => a.CustId != data.rowData.CustId);
+    if (this.theOrganToMoveData.length < 1) {
       this.isButtonmoveOrganNow = true
     }
   }
-  theOrganToMove(){
+  theOrganToMove() {
     // ColumnDefs for data move 
     this.getColumnDefsMoveOrgan();
     this.getOrgan();
-    if(this.listDataSelect.length > 0){
+    if (this.listDataSelect.length > 0) {
       this.theOrganToMoveData = cloneDeep(this.listDataSelect);
       this.isTheOrganToMove = true;
-    }else{
+    } else {
       this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Vui lòng nhân sự' });
     }
   }
-  
+
   getOrgan() {
-    const queryParams = queryString.stringify({ filter: ''});
+    const queryParams = queryString.stringify({ filter: '' });
     this.apiService.getOrganizations(queryParams).subscribe(results => {
-      if(results.status === 'success') {
-          this.organs = results.data.map(d => {
-            return {
-              label: d.organizationName,
-              value: `${d.organizeId}`
-            }
-          });
-          this.organs = [...this.organs];
+      if (results.status === 'success') {
+        this.organs = results.data.map(d => {
+          return {
+            label: d.organizationName,
+            value: `${d.organizeId}`
+          }
+        });
+        this.organs = [...this.organs];
       }
     })
   }
 
   getOrganizeTree(): void {
-    const queryParams = queryString.stringify({ parentId: this.organizeId});
+    const queryParams = queryString.stringify({ parentId: this.organizeId });
     this.apiService.getOrganizeTree(queryParams)
       .subscribe((results: any) => {
         if (results && results.status === 'success') {
@@ -687,17 +692,17 @@ export class NsHoSoNhanSuComponent implements OnInit {
     this.getOrganizeTree();
   }
   onChangeTreeDepart() {
-    if(this.aDepartment.orgId && this.organizeId){
+    if (this.aDepartment.orgId && this.organizeId) {
       this.isButtonmoveOrganNow = false;
-    }else{
+    } else {
       this.isButtonmoveOrganNow = true;
     }
   }
   moveOrganNow() {
-    if(this.theOrganToMoveData.length > 0){
+    if (this.theOrganToMoveData.length > 0) {
       this.queryStaffToMove.organizeId = this.organizeId;
       this.queryStaffToMove.orgId = this.aDepartment.orgId;
-      this.queryStaffToMove.members = this.theOrganToMoveData.map( o => {
+      this.queryStaffToMove.members = this.theOrganToMoveData.map(o => {
         return {
           empId: o.empId,
           code: o.code
@@ -716,7 +721,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
     }
   }
   listDataSelect = [];
-  rowSelected(data){
+  rowSelected(data) {
     this.listDataSelect = data
   }
 
