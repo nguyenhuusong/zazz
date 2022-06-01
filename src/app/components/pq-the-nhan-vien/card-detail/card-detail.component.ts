@@ -94,14 +94,12 @@ export class CardDetailComponent implements OnInit {
     const cardFormValue = { ...this.cardForm.value };
     const vehicleFormValue = { ...this.vehicleForm.value };
     let custId = '';
-    debugger
     if (typeof cardFormValue.employeeId !== 'string') {
       custId = cardFormValue.employeeId.custId;
       cardFormValue.employeeId = cardFormValue.employeeId.empId;
     }
 
     if (cardFormValue.isCardVehicle) {
-      debugger
       this.apiService.setCardVip(cardFormValue.cardCd, cardFormValue.employeeId, cardFormValue.cardName)
         .pipe(
           concatMap(response => {
@@ -120,7 +118,6 @@ export class CardDetailComponent implements OnInit {
           this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Thêm mới thẻ thất bại' });
         })
     } else {
-      debugger
       this.apiService.setCardVip(cardFormValue.cardCd, cardFormValue.employeeId, cardFormValue.cardName)
         .subscribe((response: any) => {
           if (response.status === 'success') {
