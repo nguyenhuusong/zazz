@@ -108,7 +108,7 @@ export class PageNotifyComponent implements OnInit, OnDestroy, AfterViewChecked 
     this.loadjs++
     if (this.loadjs === 5) {
       if (b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + e.clientHeight + 15;
+        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + e.clientHeight + 18;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       } else {

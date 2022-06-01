@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import * as queryString from 'querystring';
 import { ConfirmationService, MessageService, TreeNode } from 'primeng/api';
@@ -95,6 +95,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private fileService: ExportFileService,
+    private changeDetector: ChangeDetectorRef,
     private router: Router) {
     this.defaultColDef = {
       tooltipComponent: 'customTooltip',
@@ -725,6 +726,23 @@ export class NsHoSoNhanSuComponent implements OnInit {
     this.listDataSelect = data
   }
 
-
+  loadjs = 0;
+  heightGrid = 0
+  ngAfterViewChecked(): void {
+    const a: any = document.querySelector(".header");
+    const b: any = document.querySelector(".sidebarBody");
+    const c: any = document.querySelector(".bread-filter");
+    const e: any = document.querySelector(".paginator");
+    this.loadjs++
+    if (this.loadjs === 5) {
+      if (b && b.clientHeight) {
+        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + e.clientHeight + 35;
+        this.heightGrid = window.innerHeight - totalHeight
+        this.changeDetector.detectChanges();
+      } else {
+        this.loadjs = 0;
+      }
+    }
+  }
 
 }
