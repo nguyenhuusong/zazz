@@ -5,6 +5,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { environment } from 'src/environments/environment';
 import {Event, RouterEvent, Router} from '@angular/router';
+import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
 declare var $: any;
 @Component({
     // moduleId: module.id,
@@ -19,6 +20,7 @@ export class SidebarComponent implements OnInit {
         private router: Router,
         private authService: AuthService,
         private apiService: ApiService,
+        private firebaseAuthService: FirebaseAuthService,
     ) {
         
         router.events.pipe(
@@ -32,10 +34,15 @@ export class SidebarComponent implements OnInit {
          });
     }
 
-    ngOnInit() {
+   async ngOnInit() {
         const pathname = window.location.pathname;
-        console.log(pathname)
-
+        const token = this.authService.getAccessTokenValue();
+        if (!this.firebaseAuthService.authenticated) {
+          const customToken = await this.authService.getCustomToken(token);
+          if (customToken) {
+            this.firebaseAuthService.customLogin(customToken);
+          }
+        }
         this.manager.getUser().then(user => {
             this.apiService.getListMenuByUserId(user.profile.sub, '3133579B-4FD9-449E-9CEA-4B384884E7D3').subscribe(results => {
                 this.menuItems = results.data.filter(menuItem => menuItem);

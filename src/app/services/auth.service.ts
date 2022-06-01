@@ -13,7 +13,19 @@ export class AuthService {
   constructor(private http: HttpClient,
     private firebaseAuthService: FirebaseAuthService,
     ) {
-      this.getEmpDetail()
+      this.manager.getUser().then(async user => {
+        this.user = user;
+        if(this.user) {
+          const token = this.getAccessTokenValue();
+          if (!this.firebaseAuthService.authenticated) {
+            const customToken = await this.getCustomToken(token);
+            if (customToken) {
+              this.firebaseAuthService.customLogin(customToken);
+            }
+          }
+        }
+
+      });
       }
 
   isLoggedIn(): Promise<boolean> {
@@ -24,6 +36,7 @@ export class AuthService {
 
     return this.manager.getUser().then(user => {
       this.user = user;
+      // this.getEmpDetail()
       return user != null && !user.expired;
     });
   }
@@ -33,11 +46,11 @@ export class AuthService {
   }
 
   getAuthorizationHeaderValue(): string {
-    return `${this.user.token_type} ${this.user.access_token}`;
+    return `Bearer ${this.user.access_token}`;
   }
 
   getAccessTokenValue(): string {
-    return this.user.access_token;
+    return  this.user.access_token;
   }
 
   getUserName(): string {
@@ -82,14 +95,7 @@ export class AuthService {
           }
         });
     }
-    const token = this.getAccessTokenValue();
-    console.log(this.firebaseAuthService.authenticated)
-    if (!this.firebaseAuthService.authenticated) {
-      const customToken = await this.getCustomToken(token);
-      if (customToken) {
-        this.firebaseAuthService.customLogin(customToken);
-      }
-    }
+    
   }
 
   getWorkingProject() {
