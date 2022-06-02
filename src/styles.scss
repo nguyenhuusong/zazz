@@ -533,7 +533,8 @@ body {
 .ag-body-viewport{
     padding-right: 8px;
     &::-webkit-scrollbar {
-        width: 9px;
+        width: 17px;
+        scrollbar-width: 30px;
         // border-right: 10px solid transparent;
         cursor: pointer;
         &:hover{
@@ -544,12 +545,14 @@ body {
     &::-webkit-scrollbar-track {
         border-radius: 4px;
         cursor: pointer;
+        scrollbar-width: 30px;
     }
     
     /* Handle */
     &::-webkit-scrollbar-thumb {
         // padding-right: 9px;
         border-radius: 4px;
+        scrollbar-width: 30px;
     }
 }
 .ag-body-horizontal-scroll-viewport{
@@ -3333,5 +3336,16 @@ ul{
             font-size: 14px;
             margin-top: 5px;
         }
+    }
+}
+.p-fileupload {
+    .p-button.p-fileupload-choose{
+        border-radius: 8px;
+        padding: 7px 10px 6px;
+    }
+}
+p-button{
+    .p-button.p-button-icon-only{
+        padding: 9px 5px 8px;
     }
 }

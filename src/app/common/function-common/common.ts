@@ -150,10 +150,14 @@ export function formatMargin(params) {
 }
 
 export function ShowFullScreen() {
-    const c: any = document.querySelector(".breadcrumb");
-    const d: any = document.querySelector(".filterInput");
+    const c: any = document.querySelector(".bread-filter");
+    // const d: any = document.querySelector(".filterInput");
     const e: any = document.querySelector(".paginator");
-    const totalHeight = c.clientHeight + d.clientHeight + e.clientHeight + 24;
+    let eHeight = 0;
+    if(e){
+        eHeight = e.clientHeight
+    }
+    const totalHeight = c.clientHeight + eHeight + 24;
     const main: any = document.querySelector(".main");
     main.className = main.className + ' grid-fixed';
     return window.innerHeight - totalHeight
@@ -164,10 +168,14 @@ export function HideFullScreen() {
     main.className = 'main';
     const a: any = document.querySelector(".header");
     const b: any = document.querySelector(".sidebarBody");
-    const c: any = document.querySelector(".breadcrumb");
-    const d: any = document.querySelector(".filterInput");
+    const c: any = document.querySelector(".bread-filter");
+    // const d: any = document.querySelector(".filterInput");
     const e: any = document.querySelector(".paginator");
-    const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + d.clientHeight + e.clientHeight + 45;
+    let eHeight = 0;
+    if(e){
+        eHeight = e.clientHeight
+    }
+    const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + eHeight + 45;
     return window.innerHeight - totalHeight
 }
 

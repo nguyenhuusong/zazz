@@ -62,6 +62,7 @@ import { QuyetDinhLuongComponent } from 'src/app/components/quyet-dinh-luong/quy
 import { StepsModule } from 'primeng/steps';
 import { HrmBreadCrumbModule } from 'src/app/common/hrm-breadcrumb/hrm-breadcrumb.module';
 import { ExcelModule } from 'src/app/shared/components/excel/excel.module';
+import { ImportXyLyHopDongComponent } from 'src/app/components/xu-ly-hop-dong/import-xy-ly-hop-dong/import-xy-ly-hop-dong.component';
 @NgModule({
   imports: [
     MessagesModule,
@@ -131,7 +132,8 @@ import { ExcelModule } from 'src/app/shared/components/excel/excel.module';
     XuLyHopDongComponent,
     PheDuyetComponent,
     ChiTietPheDuyetComponent,
-    QuyetDinhLuongComponent
+    QuyetDinhLuongComponent,
+    ImportXyLyHopDongComponent
   ],
   providers: [ ]
 })
