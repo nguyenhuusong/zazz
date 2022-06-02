@@ -100,6 +100,7 @@ export class XuLyHopDongComponent implements OnInit {
   showImportExcel = false
   file = null;
   loading = false;
+  itemsToolOfGrid: any[] = [];
 
   onGridReady(params) {
     this.gridApi = params.api;
@@ -316,6 +317,18 @@ export class XuLyHopDongComponent implements OnInit {
       { label: 'Danh sách loại hợp đồng' },
     ];
     this.load();
+    
+
+  this.itemsToolOfGrid = [
+    {
+      label: 'Import file',
+      code: 'Import',
+      icon: 'pi pi-file-excel',
+      command: () => {
+          this.importFileExel();
+        }
+      },
+    ]
   }
 
   getCustObjectListNew() {
@@ -477,23 +490,9 @@ export class XuLyHopDongComponent implements OnInit {
     ]
   }
 
-  handleUpload(res) {
-    this.loading = true;
-    this.apiService.contractImport(res).subscribe(result => {
-      if (result.status === 'error') {
-        this.loading = false;
-        this.messageService.add({
-          severity: 'error', summary: 'Thông báo', detail: result.error[0]
-        });
-      } else if (result.status === 'success') {
-        this.loading = false;
-        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: result.message ? result.message : 'Import thành công' });
-        this.load();
-        this.showImportExcel = false;
-      }
-    }, error => {
-      this.loading = false;
-    });
+
+  importFileExel() {
+    this.router.navigate(['/nhan-su/xu-ly-hop-dong/import']);
   }
 }
 

@@ -14,6 +14,7 @@ import { PheDuyetComponent } from 'src/app/components/phe-duyet/phe-duyet.compon
 import { ChiTietPheDuyetComponent } from 'src/app/components/phe-duyet/chi-tiet-phe-duyet/chi-tiet-phe-duyet.component';
 import { CreateContractInfoComponent } from 'src/app/components/ns-ho-so-nhan-su/create-contract-info/create-contract-info.component';
 import { QuyetDinhLuongComponent } from 'src/app/components/quyet-dinh-luong/quyet-dinh-luong.component';
+import { ImportXyLyHopDongComponent } from 'src/app/components/xu-ly-hop-dong/import-xy-ly-hop-dong/import-xy-ly-hop-dong.component';
 
 const routes: Routes = [
   {
@@ -167,6 +168,24 @@ const routes: Routes = [
       url: 'chi-tiet-phe-duyet',
     },
   },
+  {
+    path: 'phe-duyet/chi-tiet-phe-duyet',
+    component: ChiTietPheDuyetComponent,
+    data: {
+      title: 'Chi tiết phê duyệt',
+      url: 'chi-tiet-phe-duyet',
+    },
+  },
+  {
+    path: 'xu-ly-hop-dong/import',
+    component: ImportXyLyHopDongComponent,
+    data: {
+      title: 'Import loại hợp đồng',
+      url: 'import-loai-hop-dong',
+    },
+  },
+
+  
 ];
 
 @NgModule({
