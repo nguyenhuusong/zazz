@@ -1254,5 +1254,16 @@ export class ApiHrmService {
   setHolidayCreate(params): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v1/holiday/SetHolidayCreate`, params , this.options)
   }
+  
+  contractImport(data): Observable<any> {
+    const customOptions = {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue()
+      })
+    };
+    return this.http.post<any>(`${apiHrmServer}/api/v2/contract/Import`, data, customOptions);
+  }
+
+  
 
 }
