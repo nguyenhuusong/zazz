@@ -61,6 +61,7 @@ import { ChiTietPheDuyetComponent } from 'src/app/components/phe-duyet/chi-tiet-
 import { QuyetDinhLuongComponent } from 'src/app/components/quyet-dinh-luong/quyet-dinh-luong.component';
 import { StepsModule } from 'primeng/steps';
 import { HrmBreadCrumbModule } from 'src/app/common/hrm-breadcrumb/hrm-breadcrumb.module';
+import { ExcelModule } from 'src/app/shared/components/excel/excel.module';
 @NgModule({
   imports: [
     MessagesModule,
@@ -107,6 +108,7 @@ import { HrmBreadCrumbModule } from 'src/app/common/hrm-breadcrumb/hrm-breadcrum
     StoreNotifyModule,
     StepsModule,
     HrmBreadCrumbModule,
+    ExcelModule,
     AgGridModule.withComponents([
       ButtonRendererComponent,
       ButtonRendererComponent1

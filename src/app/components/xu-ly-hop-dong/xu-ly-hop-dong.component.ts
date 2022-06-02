@@ -13,6 +13,7 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { HttpParams } from '@angular/common/http';
 import { WebsocketService2 } from 'src/app/services/websocket.service';
 import { Subject, takeUntil } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -94,6 +95,11 @@ export class XuLyHopDongComponent implements OnInit {
     currentRecordStart: 0,
     currentRecordEnd: 0
   }
+
+  // import 
+  showImportExcel = false
+  file = null;
+  loading = false;
 
   onGridReady(params) {
     this.gridApi = params.api;
@@ -469,6 +475,25 @@ export class XuLyHopDongComponent implements OnInit {
       //   field: 'checkbox'
       // }
     ]
+  }
+
+  handleUpload(res) {
+    this.loading = true;
+    this.apiService.contractImport(res).subscribe(result => {
+      if (result.status === 'error') {
+        this.loading = false;
+        this.messageService.add({
+          severity: 'error', summary: 'Thông báo', detail: result.error[0]
+        });
+      } else if (result.status === 'success') {
+        this.loading = false;
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: result.message ? result.message : 'Import thành công' });
+        this.load();
+        this.showImportExcel = false;
+      }
+    }, error => {
+      this.loading = false;
+    });
   }
 }
 
