@@ -113,19 +113,19 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
     const queryParams = queryString.stringify(this.query);
     this.apiService.getEatingPage(queryParams).subscribe(
       (results: any) => {
-        this.listsData = results.data.dataList.data;
+        this.listsData = results.data.result.dataList.data;
         if (this.query.offSet === 0) {
-          this.cols = results.data.gridflexs;
-          this.colsDetail = results.data.gridflexdetails ? results.data.gridflexdetails : [];
+          this.cols =  results.data.result.gridflexs;
+          // this.colsDetail =  results.data.result.gridflexdetails ?  results.data.result.gridflexdetails : [];
         }
         this.initGrid();
-        this.countRecord.totalRecord = results.data.dataList.recordsTotal;
-        this.countRecord.totalRecord = results.data.dataList.recordsTotal;
-        this.countRecord.currentRecordStart = results.data.dataList.recordsTotal === 0 ? this.query.offSet = 0 :  this.query.offSet + 1;
-        if ((results.data.dataList.recordsTotal - this.query.offSet) > this.query.pageSize) {
+        this.countRecord.totalRecord = results.data.result.dataList.recordsTotal;
+        this.countRecord.totalRecord = results.data.result.dataList.recordsTotal;
+        this.countRecord.currentRecordStart = results.data.result.dataList.recordsTotal === 0 ? this.query.offSet = 0 :  this.query.offSet + 1;
+        if ((results.data.result.dataList.recordsTotal - this.query.offSet) > this.query.pageSize) {
           this.countRecord.currentRecordEnd = this.query.offSet + Number(this.query.pageSize);
         } else {
-          this.countRecord.currentRecordEnd = results.data.dataList.recordsTotal;
+          this.countRecord.currentRecordEnd = results.data.result.dataList.recordsTotal;
           setTimeout(() => {
             const noData = document.querySelector('.ag-overlay-no-rows-center');
             if (noData) { noData.innerHTML = 'Không có kết quả phù hợp'}
