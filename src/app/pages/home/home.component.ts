@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { Chart } from 'chart.js';
+import { ConfirmationService, MessageService, TreeNode } from 'primeng/api';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { stringify } from 'querystring';
 // import { ChartsModule } from 'ng2-charts';
 @Component({
   selector: 'app-home',
@@ -14,7 +17,12 @@ export class HomeComponent implements OnInit {
   bodyClasses = 'skin-blue sidebar-mini';
   body: HTMLBodyElement = document.getElementsByTagName('body')[0];
 
-  constructor(private HomeService: ApiHrmService, private route: ActivatedRoute, private router: Router) { }
+  constructor(
+    private HomeService: ApiHrmService, 
+    private route: ActivatedRoute, 
+    private apiService: ApiHrmService,
+    private spinner: NgxSpinnerService,
+    private router: Router) { }
   columnDefs = [];
     
   columnDefs1 = [];
@@ -24,6 +32,15 @@ export class HomeComponent implements OnInit {
   basicOptions: any;
   basicOptions2: any;
   dataDou: any;
+  
+  // nsMoi: nhan su moi, 
+  dashboardData: any = []
+  selectedMonth: any = ''
+  queryDashboard = {
+    orgid: "",
+    months: 10,
+    years: 2022
+  }
   ngOnInit() {
     this.columnDefs = [
       {
@@ -65,6 +82,7 @@ export class HomeComponent implements OnInit {
     this.chartBDNhanSu();
     this.charDou();
     this.charDou2();
+    this.getAgencyOrganizeMap();
   }
   ngOnDestroy() {
   }
@@ -337,6 +355,67 @@ load() {}
       });
       }, 500);
     }
+  }
+
+
+  listAgencyMap: TreeNode[];
+  selectedNode
+  detailOrganizeMap = null;
+  orgId = ''
+  isHrDiagram = false;
+
+  hrDiagram() {
+    this.spinner.show();
+    this.selectedNode = null;
+    this.listAgencyMap = []
+    this.isHrDiagram = true;
+    this.getAgencyOrganizeMap(true);
+  }
+  getAgencyOrganizeMap(type = false) {
+    this.apiService.getAgencyOrganizeMap().subscribe(results => {
+      if (results.status === 'success') {
+        this.spinner.hide();
+        this.listAgencyMap = [...results.data.root];
+        if (localStorage.getItem("organize") === null) {
+          this.selectedNode = this.listAgencyMap[0];
+          this.detailOrganizeMap = this.selectedNode
+          localStorage.setItem('organize', JSON.stringify(this.listAgencyMap[0]));
+          this.queryDashboard.orgid = this.selectedNode.orgId;
+          // this.query.org_level = this.selectedNode.org_level;
+          this.load();
+        } else {
+          this.selectedNode = JSON.parse(localStorage.getItem("organize"));
+          this.queryDashboard.orgid = this.selectedNode.orgId;
+          // this.parseObjectProperties(this.listAgencyMap, this.selectedNode.organizeId);
+          this.detailOrganizeMap = this.selectedNode
+          if (type) {
+            this.isHrDiagram = true;
+          }
+          this.load();
+        }
+        this.getDashboardInfo();
+      }
+    })
+  }
+
+  onNodeSelect(event) {
+    this.detailOrganizeMap = event.node;
+    this.isHrDiagram = false;
+    localStorage.setItem("organize", JSON.stringify(this.detailOrganizeMap))
+  }
+  getDashboardInfo() {
+    this.apiService.getDashboardInfo(this.queryDashboard).subscribe( results => {
+      if (results.status === 'success') {
+        this.dashboardData = results.data;
+      }
+    })
+  }
+
+  // select month
+
+  changeMonths(e) {
+    this.queryDashboard.months = e.value.code;
+    this.getDashboardInfo()
   }
 
 
