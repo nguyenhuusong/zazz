@@ -198,7 +198,7 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
 
   XemChiTiet(event) {
     const params = {
-      id: event.rowData.id
+      custId: event.rowData.custId
     }
     this.router.navigate(['/chinh-sach/an-ca/chi-tiet-an-ca'], { queryParams: params });
   }

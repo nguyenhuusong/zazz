@@ -30,7 +30,7 @@ export class ChiTietAnCaComponent implements OnInit, OnChanges, OnDestroy {
   displaysearchUserMaster = false;
   listViewsForm = [];
   detailComAuthorizeInfo = null;
-  id = null
+  custId = null
   listViews = []
   imagesUrl = []
   paramsObject = null
@@ -71,7 +71,7 @@ export class ChiTietAnCaComponent implements OnInit, OnChanges, OnDestroy {
     this.activatedRoute.queryParamMap.subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.dataRouter = this.paramsObject.params;
-      this.id = this.paramsObject.params.id;
+      this.custId = this.paramsObject.params.custId;
       this.getAnCaInfo();
     });
   };
@@ -83,11 +83,11 @@ export class ChiTietAnCaComponent implements OnInit, OnChanges, OnDestroy {
   getAnCaInfo() {
     this.listViews = [];
     this.listsData = [];
-    const queryParams = queryString.stringify({ id: this.id });
+    const queryParams = queryString.stringify({ cusId: this.custId });
     this.apiService.getEatingInfo(queryParams).subscribe(results => {
       if (results.status === 'success') {
-        this.listViews = cloneDeep(results.data.group_fields);
-        this.detailInfo = results.data;
+        this.listViews = cloneDeep(results.data.result.group_fields);
+        this.detailInfo = results.data.result;
         // this.listsData = cloneDeep(this.detailInfo.authorizes);
         // this.columnDefs = [...AgGridFn(this.detailInfo.gridflexs || []), {
         //   headerName: '',
@@ -130,7 +130,7 @@ export class ChiTietAnCaComponent implements OnInit, OnChanges, OnDestroy {
     // if (event.event.item.key === 'CHINHSUA') {  
     //   this.modelComAuthorizeInfo = {
     //     auth_id : event.rowData.auth_id,
-    //     id: this.id,
+    //     id: this.custId,
     //     cif_no: ''
     //   }
     //   this.getComAuthorizeInfo();
