@@ -5,6 +5,8 @@ import { Chart } from 'chart.js';
 import { ConfirmationService, MessageService, TreeNode } from 'primeng/api';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { stringify } from 'querystring';
+import { finalize } from 'rxjs';
+import * as moment from 'moment';
 // import { ChartsModule } from 'ng2-charts';
 @Component({
   selector: 'app-home',
@@ -27,6 +29,7 @@ export class HomeComponent implements OnInit {
     
   columnDefs1 = [];
   months: any = []
+  years: any = [];
   basicData: any;
   basicData2: any;
   basicOptions: any;
@@ -34,13 +37,33 @@ export class HomeComponent implements OnInit {
   dataDou: any;
   
   // nsMoi: nhan su moi, 
-  dashboardData: any = []
+  dashboardData: any = null;
   selectedMonth: any = ''
+  selectedYear: any = {
+    name: 2022,
+    code: 2022
+  }
   queryDashboard = {
     orgid: "",
-    months: 10,
+    months: 1,
     years: 2022
   }
+  currentYear = moment().year()
+  bg = [
+    '#4591FE',
+    '#F0D042',
+    '#FF7C59',
+    '#DA100B',
+    '#FFA384',
+    '#36eb44',
+    '#beeb36',
+    '#eb3679',
+    '#eb36d5',
+    '#7c36eb',
+    '#36daeb',
+    '#36ebb9',
+    '#36eb6e',
+  ]
   ngOnInit() {
     this.columnDefs = [
       {
@@ -65,23 +88,21 @@ export class HomeComponent implements OnInit {
        field: 'noiDung'
       }]
       this.months = [
-        {name: 'Tháng 1', code: '1'},
-        {name: 'Tháng 2', code: '2'},
-        {name: 'Tháng 3', code: '3'},
-        {name: 'Tháng 4', code: '4'},
-        {name: 'Tháng 5', code: '5'},
-        {name: 'Tháng 6', code: '6'},
-        {name: 'Tháng 7', code: '7'},
-        {name: 'Tháng 8', code: '8'},
-        {name: 'Tháng 9', code: '9'},
-        {name: 'Tháng 10', code: '10'},
-        {name: 'Tháng 11', code: '11'},
-        {name: 'Tháng 12', code: '12'},
+        {name: 'Tháng 1', code: 1},
+        {name: 'Tháng 2', code: 2},
+        {name: 'Tháng 3', code: 3},
+        {name: 'Tháng 4', code: 4},
+        {name: 'Tháng 5', code: 5},
+        {name: 'Tháng 6', code: 6},
+        {name: 'Tháng 7', code: 7},
+        {name: 'Tháng 8', code: 8},
+        {name: 'Tháng 9', code: 9},
+        {name: 'Tháng 10', code: 10},
+        {name: 'Tháng 11', code: 11},
+        {name: 'Tháng 12', code: 12},
     ];
-    this.chartSlNhanSu();
-    this.chartBDNhanSu();
-    this.charDou();
-    this.charDou2();
+    
+    this.getYears();
     this.getAgencyOrganizeMap();
   }
   ngOnDestroy() {
@@ -101,7 +122,13 @@ public barChartOptions:any = {
   responsive: true
 };
 
-
+  getYears() {
+    let yearsTem = []
+    for( let i = 2000; i <= this.currentYear; i ++ ){
+      yearsTem.push({name: i, code: i})
+    }
+    this.years = yearsTem
+  }
 chartSlNhanSu() {
   let configs = {
     type: 'bar',
@@ -120,12 +147,18 @@ chartSlNhanSu() {
 
     }
   }
+  let labels = this.dashboardData.nhansuthang.map( month => {
+    return month.months
+  })
+  let value = this.dashboardData.nhansuthang.map( tongnv => {
+    return tongnv.tongnv
+  })
   
   let datas = {
-    labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
+    labels: labels,
       datasets: [{
         label: 'My First Dataset',
-        data: [65, 59, 80, 81, 56, 55, 55, 55, 55, 55, 55, 200],
+        data: value,
         backgroundColor: [
           '#4591FE',
         ],
@@ -159,13 +192,27 @@ chartBDNhanSu() {
 
     }
   }
+
+  let labelsNsIn = this.dashboardData.nhansu_in.map( month => {
+    return month.months
+  })
+  let valueNsIn = this.dashboardData.nhansu_in.map( tongnv => {
+    return tongnv.tongnv
+  })
+  
+  let labelsNsOut = this.dashboardData.nhansu_out.map( month => {
+    return month.months
+  })
+  let valueNsOut = this.dashboardData.nhansu_out.map( tongnv => {
+    return tongnv.tongnv
+  })
   
   let datas = {
-    labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
+    labels: labelsNsIn,
       datasets: [
         {
         label: 'Tiếp nhận',
-        data: [65, 59, 80, 81, 56, 55, 55, 55, 55, 55, 55, 200],
+        data: valueNsIn,
         backgroundColor: [
           '#1F8B24',
         ],
@@ -177,7 +224,7 @@ chartBDNhanSu() {
       },
       {
         label: 'Nghỉ việc',
-        data: [120, 140, 180, 111, 156, 155, 155, 155, 155, 155, 155, 200],
+        data: valueNsOut,
         backgroundColor: [
           '#DA100B',
         ],
@@ -194,94 +241,104 @@ chartBDNhanSu() {
   this.drawChart(configs, datas)
 }
 
-charDou() {
-  let configs = {
-    type: 'doughnut',
-    canvasID: 'doughnut',
-      options: {
-        responsive: true,
-          indexAxis: 'x',
-        plugins: {
-          htmlLegend: {
-            containerID: 'legend-doughnut',
+  charDou() {
+    let configs = {
+      type: 'doughnut',
+      canvasID: 'doughnut',
+        options: {
+          responsive: true,
+            indexAxis: 'x',
+          plugins: {
+            htmlLegend: {
+              containerID: 'legend-doughnut',
+            },
+            legend: {
+              display: false,
+            },
           },
-          legend: {
-            display: false,
-          },
-        },
 
+      }
     }
+    let labels = []
+    let bg = []
+    for(let i = 0; i < this.dashboardData.nhansu_hd.length; i++){
+      labels.push( this.dashboardData.nhansu_hd[i].name );
+      bg.push(this.bg[i]);
+    };
+    let value = this.dashboardData.nhansu_hd.map( tongnv => {
+      return tongnv.tongnv
+    })
+    let datas = {
+      labels: labels,
+        datasets: [{
+          label: '',
+          data: value,
+          backgroundColor: bg,
+          borderWidth: 1,
+          cornerRadius: 20,
+          barThickness: 40,
+          borderRadius: 4,
+          borderSkipped: false,
+        }]
+
+      
+    };
+    this.drawChart(configs, datas)
   }
-  let datas = {
-    labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7'],
-      datasets: [{
-        label: 'Công ty KSFinance - Đến ngày 20/10/2022',
-        data: [65, 59, 80, 81, 56, 55, 55],
-        backgroundColor: [
-          '#4591FE',
-          '#FFA384',
-          '#F0D042',
-          '#FF7C59',
-          '#DA100B',
-          '#FFA384',
-          '#FFA384',
-        ],
-        borderWidth: 1,
-        cornerRadius: 20,
-        barThickness: 40,
-        borderRadius: 4,
-        borderSkipped: false,
-      }]
-
-    
-  };
-  this.drawChart(configs, datas)
-}
-charDou2() {
-  let configs = {
-    type: 'doughnut',
-    canvasID: 'doughnut-2',
-      options: {
-        responsive: true,
-          indexAxis: 'x',
-        plugins: {
-          htmlLegend: {
-            containerID: 'legend-doughnut-2',
+  charDou2() {
+    let configs = {
+      type: 'doughnut',
+      canvasID: 'doughnut-2',
+        options: {
+          responsive: true,
+            indexAxis: 'x',
+          plugins: {
+            htmlLegend: {
+              containerID: 'legend-doughnut-2',
+            },
+            legend: {
+              display: false,
+            },
           },
-          legend: {
-            display: false,
-          },
-        },
 
+      }
     }
+    let labels = []
+    let bg = []
+    for(let i = 0; i < this.dashboardData.nhansu_sex.length; i++){
+      labels.push( this.dashboardData.nhansu_sex[i].name );
+      bg.push(this.bg[i]);
+    };
+    let value = this.dashboardData.nhansu_sex.map( tongnv => {
+      return tongnv.tongnv
+    })
+    let datas = {
+      labels: labels,
+        datasets: [{
+          label: 'Công ty KSFinance - Đến ngày 20/10/2022',
+          data: value,
+          backgroundColor: [
+            '#4591FE',
+            '#FFA384',
+            '#F0D042',
+            '#FF7C59',
+            '#DA100B',
+            '#FFA384',
+            '#FFA384',
+          ],
+          borderWidth: 1,
+          cornerRadius: 20,
+          barThickness: 40,
+          borderRadius: 4,
+          borderSkipped: false,
+        }]
+
+      
+    };
+    this.drawChart(configs, datas)
   }
-  let datas = {
-    labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7'],
-      datasets: [{
-        label: 'Công ty KSFinance - Đến ngày 20/10/2022',
-        data: [65, 59, 80, 81, 56, 55, 55],
-        backgroundColor: [
-          '#4591FE',
-          '#FFA384',
-          '#F0D042',
-          '#FF7C59',
-          '#DA100B',
-          '#FFA384',
-          '#FFA384',
-        ],
-        borderWidth: 1,
-        cornerRadius: 20,
-        barThickness: 40,
-        borderRadius: 4,
-        borderSkipped: false,
-      }]
 
-    
-  };
-  this.drawChart(configs, datas)
-}
-
-load() {}
+  load() {}
 
   /*
     configs: type, options(htmlLegend), canvasID
@@ -290,8 +347,10 @@ load() {}
   drawChart(configs, datas ) {
     if(configs.canvasID) {
       setTimeout(() => {
+        console.log(document.getElementById(configs.canvasID),'configs.canvasIDconfigs.canvasID ')
       let ctx:any = document.getElementById(configs.canvasID);
       ctx = ctx.getContext('2d');
+      console.log(ctx.canvas, 'ctx')
       let chart = new Chart(ctx, {
         type: configs.type,
         data: datas,
@@ -353,6 +412,9 @@ load() {}
           }
         }],
       });
+      chart.update();
+
+      // chart.destroy();
       }, 500);
     }
   }
@@ -401,12 +463,23 @@ load() {}
   onNodeSelect(event) {
     this.detailOrganizeMap = event.node;
     this.isHrDiagram = false;
+    this.queryDashboard.orgid = this.detailOrganizeMap.orgId;
     localStorage.setItem("organize", JSON.stringify(this.detailOrganizeMap))
+    this.getDashboardInfo()
   }
   getDashboardInfo() {
-    this.apiService.getDashboardInfo(this.queryDashboard).subscribe( results => {
+    this.dashboardData = null;
+    this.apiService.getDashboardInfo(this.queryDashboard)
+    .pipe(
+      finalize(() => this.spinner.hide())
+    )
+    .subscribe( results => {
       if (results.status === 'success') {
         this.dashboardData = results.data;
+        this.chartSlNhanSu();
+        this.chartBDNhanSu();
+        this.charDou();
+        this.charDou2();
       }
     })
   }
@@ -415,8 +488,14 @@ load() {}
 
   changeMonths(e) {
     this.queryDashboard.months = e.value.code;
+    this.spinner.show();
     this.getDashboardInfo()
   }
-
+// select year
+  changeYears(e) {
+    this.queryDashboard.years = e.value.code;
+    this.spinner.show();
+    this.getDashboardInfo()
+  }
 
 }
