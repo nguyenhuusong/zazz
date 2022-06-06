@@ -56,6 +56,7 @@ import { ApiHrmService } from './services/api-hrm/apihrm.service';
 import { BaoCaoComponent } from './components/bao-cao/bao-cao.component';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { ListGridAngularModule } from './common/list-grid-angular/list-grid-angular.module';
+import { OrganizationChartModule } from 'primeng/organizationchart';
 const APP_CONTAINERS = [DefaultLayoutComponent];
 @NgModule({
     declarations: [
@@ -95,6 +96,7 @@ const APP_CONTAINERS = [DefaultLayoutComponent];
         NgxSpinnerModule,
         ListGridAngularModule,
         BreadcrumbModule,
+        OrganizationChartModule,
         // AgGridModule.withComponents([
         //     ButtonRendererComponent1,
         //     NumberCellRenderer,
