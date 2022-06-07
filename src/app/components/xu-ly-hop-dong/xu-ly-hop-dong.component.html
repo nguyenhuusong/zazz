@@ -170,7 +170,7 @@
                 </div>
         </div>
         <div class="col-md-2 mt-2">
-           <p-button label="Thực hiện" styleClass="p-button-sm btn-h56" [disabled]="filesPrints.length === 0" (onClick)="openPrint()"></p-button>
+           <p-button label="Thực hiện" styleClass="p-button-sm btn-h56 mb-2" [disabled]="filesPrints.length === 0 || !modelPrint.PrinterName" (onClick)="openPrint()"></p-button>
         </div>
     </div>
 

@@ -79,6 +79,9 @@ export class NotifyDetailComponent implements OnInit {
   getAppNotifyInfo() {
     this.listViews = [];
     this.spinner.show();
+    if(this.notiId){
+      this.indexTab = 1;
+    }
     const queryParams = queryString.stringify({ n_id: this.notiId, external_sub: this.external_sub, tempId: this.tempId, external_name: this.external_name });
     this.apiService.getNotifyInfo(queryParams).subscribe(results => {
       if (results.status === 'success') {
@@ -99,10 +102,10 @@ export class NotifyDetailComponent implements OnInit {
   }
 
   handleChange(index) {
-    this.indexTab = index;
     if(this.indexTab === 0) {
       this.getAppNotifyInfo();
     }
+    this.indexTab = index;
   }
 
   onChangeButtonView(event) {
@@ -237,10 +240,11 @@ export class NotifyDetailComponent implements OnInit {
     this.apiService.setNotifyInfo(params).subscribe(results => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data.messages ? results.data.messages : 'Thành công' });
-        this.indexTab = 1;
         this.spinner.hide();
         this.notiId = results.data.id;
         this.router.navigate(['/cai-dat/thong-bao/chi-tiet-thong-bao'], { queryParams: { notiId: results.data.id } });
+        this.indexTab = 1;
+        console.log('fffffffffffffffffff')
         // this.getAppNotifyInfo();
       }
     })
