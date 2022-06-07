@@ -2390,7 +2390,7 @@ div.p-organizationchart {
             }
         }
         &:focus + label { 
-            top: 8px;
+            top: 6px;
             -webkit-transition: 300ms ease all;
           transition: 300ms ease all;
          }
@@ -2797,7 +2797,7 @@ div.p-organizationchart {
         border-radius: 2px;
         padding: 2px 5px;
         z-index: 1;
-        margin-top: -9px;
+        margin-top: -4px;
         &.alert-danger{
             color: #FFF;
         }
@@ -2843,7 +2843,7 @@ div.p-organizationchart {
     width: 100%;
 }
 .btn-h56{
-    height: 56px !important;
+    height: 50px !important;
 }
 .btn-with-filter{
     .p-button{
