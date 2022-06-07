@@ -7,6 +7,19 @@
    <div class="content">
     <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'"  [dataView]="listViews"
         (callback)="setCompanyInfo($event)" (callbackcancel)="cancelUpdate()"></app-edit-detail>
+        <div class="panel-heading">
+            <h3 class="panel-title">   Danh sách ăn ca </h3>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-8">
+                <div class="field-checkbox col-md-4 justify-content-center" *ngFor="let item of listDates; let i = index">
+                    <p-checkbox name="group1" [value]="item" [disabled]="checkdisableddate(i + 1)" [(ngModel)]="selectedDates" [inputId]="item"></p-checkbox>
+                    <label for="{{item}}">{{item}}</label>
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+          
+        </div>
    </div>
    
 </div>

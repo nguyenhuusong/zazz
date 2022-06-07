@@ -48,6 +48,7 @@ import { ChiTietPhepBuComponent } from 'src/app/components/phep-bu/chi-tiet-phep
 import {OverlayPanelModule} from 'primeng/overlaypanel';
 import {TreeSelectModule} from 'primeng/treeselect';
 import { HrmBreadCrumbModule } from 'src/app/common/hrm-breadcrumb/hrm-breadcrumb.module';
+import {CheckboxModule} from 'primeng/checkbox';
 @NgModule({
   imports: [
     MessagesModule,
@@ -58,6 +59,7 @@ import { HrmBreadCrumbModule } from 'src/app/common/hrm-breadcrumb/hrm-breadcrum
     TreeModule,
     TableModule,
     BreadcrumbModule,
+    CheckboxModule,
     MultiSelectModule,
     ListGridAngularModule,
     PaginatorModule,

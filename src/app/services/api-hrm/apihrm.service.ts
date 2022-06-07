@@ -823,6 +823,10 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v1/eating/GetEatingInfo?` + queryParams, this.options)
   }
 
+  getEatingList(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/eating/GetEatingList?` + queryParams, this.options)
+  }
+
   getOrganizeLevelList(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/organize/GetOrganizeLevelList?` + queryParams, this.options);
   }
@@ -930,6 +934,10 @@ export class ApiHrmService {
 
   setCompanyInfo(params): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/compay/SetCompanyInfo`, params, this.options)
+  }
+  
+  setEatingInfo(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/eating/SetEatingInfo`, params, this.options)
   }
 
   delCompanyInfo(queryParams): Observable<any> {

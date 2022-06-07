@@ -8,6 +8,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subject } from 'rxjs';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
+import * as moment from 'moment';
 @Component({
   selector: 'app-chi-tiet-an-ca',
   templateUrl: './chi-tiet-an-ca.component.html',
@@ -51,20 +52,43 @@ export class ChiTietAnCaComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges() {
-    
+
   }
 
   ngOnInit(): void {
+    // const toDate= moment(new Date()).add(45,'days').format('DD');
+    const thanghientai= moment(new Date()).endOf('month').format('DD');
+    const a = [];
+    const b = [];
+    for(let i = 0; i< 45; i++) {
+      if(i+ 1 <= parseInt(thanghientai)) {
+        a.push(`${i + 1 < 10 ? 0 : ''}${i+1}/${new Date().getMonth() + 1 < 10 ? 0 : ''}${new Date().getMonth() + 1}/${new Date().getFullYear()}`)
+      }else {
+        let newDay = 45 - i;
+        b.push(`${newDay < 10 ? 0 : ''}${newDay}/${new Date().getMonth() + 2 < 10 ? 0 : ''}${new Date().getMonth() + 2}/${new Date().getFullYear()}`)
+      }
+      this.listDates = [...a, ...b.sort()];
+      console.log(b.sort())
+    }
+   
     this.titlePage = this.activatedRoute.data['_value'].title;
     this.items = [
-      { label: 'Trang chủ' , routerLink: '/home' },
+      { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Chính sách' },
       { label: 'Danh sách ăn ca', routerLink: '/chinh-sach/an-ca' },
       { label: this.titlePage },
     ];
     this.url = this.activatedRoute.data['_value'].url;
     this.manhinh = 'Edit';
-      this.handleParams()
+    this.handleParams();
+
+  }
+
+  checkdisableddate(day) {
+    if(day < parseInt(moment(new Date()).format('DD'))) {
+      return true
+    }
+    return false
   }
 
   handleParams() {
@@ -72,33 +96,38 @@ export class ChiTietAnCaComponent implements OnInit, OnChanges, OnDestroy {
       this.paramsObject = { ...params.keys, ...params };
       this.dataRouter = this.paramsObject.params;
       this.custId = this.paramsObject.params.custId;
-      this.getAnCaInfo();
+      this.getEatingList();
     });
   };
 
 
   detailInfo = null;
-  listsData = []
+  menuDate = []
   columnDefs
   getAnCaInfo() {
     this.listViews = [];
-    this.listsData = [];
     const queryParams = queryString.stringify({ cusId: this.custId });
     this.apiService.getEatingInfo(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.listViews = cloneDeep(results.data.result.group_fields);
         this.detailInfo = results.data.result;
-        // this.listsData = cloneDeep(this.detailInfo.authorizes);
-        // this.columnDefs = [...AgGridFn(this.detailInfo.gridflexs || []), {
-        //   headerName: '',
-        //   field: 'button',
-        //   filter: '',
-        //   pinned: 'right',
-        //   width: 60,
-        //   cellRenderer: 'buttonRendererMutiComponent',
-        //   cellClass: ['border-right'],
-        //   cellRendererParams: params => this.showButton()
-        // }];
+        this.menuDate = cloneDeep(this.detailInfo.menuDate);
+      }
+    })
+  }
+  selectedDates = []
+  listDates = [];
+  getEatingList() {
+    const queryParams = queryString.stringify({
+      cusId: this.custId,
+      fromDate: moment(new Date()).startOf('month').format('DD/MM/YYYY'),
+      toDate: moment(new Date()).endOf('month').format('DD/MM/YYYY'),
+    });
+    this.apiService.getEatingList(queryParams).subscribe(results => {
+      if (results.status === 'success') {
+        this.selectedDates = results.data.result.dataList.data.map(d => d.menu_date);
+        this.getAnCaInfo();
+
       }
     })
   }
@@ -145,26 +174,26 @@ export class ChiTietAnCaComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   setCompanyInfo(data) {
-    // const params = {
-    //   ...this.detailInfo, group_fields: data
-    // };
-    // this.apiService.setCompanyInfo(params).subscribe((results: any) => {
-    //   if (results.status === 'success') {
-    //     this.displayUserInfo = false;
-    //     if(this.url === 'them-moi-nghi-phep') {
-    //       this.goBack()
-    //     }else {
-    //       this.manhinh = 'Edit';
-    //       this.getAnCaInfo();
-    //     }
-    //     this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Cập nhật thông tin thành công' });
-    //   } else {
-    //     this.messageService.add({
-    //       severity: 'error', summary: 'Thông báo', detail: results.message
-    //     });
-    //   }
-    // }, error => {
-    // });
+    const params = {
+      ...this.detailInfo, group_fields: data, menuDate: this.selectedDates
+    };
+    this.apiService.setEatingInfo(params).subscribe((results: any) => {
+      if (results.status === 'success') {
+        this.displayUserInfo = false;
+        if(this.url === 'them-moi-nghi-phep') {
+          this.goBack()
+        }else {
+          this.manhinh = 'Edit';
+          this.getAnCaInfo();
+        }
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Cập nhật thông tin thành công' });
+      } else {
+        this.messageService.add({
+          severity: 'error', summary: 'Thông báo', detail: results.message
+        });
+      }
+    }, error => {
+    });
   }
 
 
