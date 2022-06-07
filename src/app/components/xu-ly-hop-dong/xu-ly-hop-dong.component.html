@@ -154,8 +154,11 @@
                 </div>
         </div>
         <div class="col-md-2 mt-2">
-            <div class="field-group select valid">
-                <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
+            <div class="field-group valid">
+                <input type="number" name="Copies" [(ngModel)]="modelPrint.Copies">
+                <label for="" style="z-index: 2">Số lần in</label>
+            </div>
+                <!-- <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
                                 [options]="soLanIn" [(ngModel)]="modelPrint.Copies" name="Copies" >
                                 <ng-template let-item pTemplate="selectedItem">
                                     <span style="vertical-align:middle;">{{item.label}}</span>
@@ -165,9 +168,9 @@
                                         <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
                                     </div>
                                 </ng-template>
-                            </p-dropdown>
-                            <label for="" style="z-index: 2">Số lần in</label>
-                </div>
+                            </p-dropdown> -->
+                            
+                <!-- </div> -->
         </div>
         <div class="col-md-2 mt-2">
            <p-button label="Thực hiện" styleClass="p-button-sm btn-h56 mb-2" [disabled]="filesPrints.length === 0 || !modelPrint.PrinterName" (onClick)="openPrint()"></p-button>

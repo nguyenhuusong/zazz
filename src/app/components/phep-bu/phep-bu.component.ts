@@ -8,6 +8,7 @@ import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.comp
 import { AgGridFn } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import * as moment from 'moment';
 const MAX_SIZE = 100000000;
 
 @Component({
@@ -53,8 +54,8 @@ export class PhepBuComponent implements OnInit, AfterViewChecked {
     filter: '',
     offSet: 0,
     pageSize: 15,
-    year: 0,
-    month: 0,
+    year: moment().year(),
+    month: moment().month(),
     organizeId: ''
   }
   totalRecord = 0;
@@ -101,8 +102,8 @@ export class PhepBuComponent implements OnInit, AfterViewChecked {
       filter: '',
       offSet: 0,
       pageSize: 15,
-      year: 0,
-      month: 0,
+      year: moment().year(),
+      month: moment().month(),
       organizeId: '',
     }
     this.load();
