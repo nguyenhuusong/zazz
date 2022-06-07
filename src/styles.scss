@@ -2390,7 +2390,7 @@ div.p-organizationchart {
             }
         }
         &:focus + label { 
-            top: 8px;
+            top: 6px;
             -webkit-transition: 300ms ease all;
           transition: 300ms ease all;
          }
@@ -2843,7 +2843,7 @@ div.p-organizationchart {
     width: 100%;
 }
 .btn-h56{
-    height: 56px !important;
+    height: 50px !important;
 }
 .btn-with-filter{
     .p-button{

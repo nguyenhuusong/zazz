@@ -6,7 +6,7 @@
         <label>Tìm kiếm...</label>
         <p-button class="search-button" icon="pi pi-search" (click)="load()"></p-button>
       </div> -->
-      <div class="mr-1">
+      <div class="mr-1 x-1">
         <div class="field-group select label-8 mr-2 mb-0">
           <label>Trạng thái Push</label>
           <select class="form-control" name="push_st" [(ngModel)]="filter.push_st" #push_st="ngModel" (change)="load()">
@@ -15,7 +15,7 @@
           </select>
         </div>
       </div>
-      <div class="mr-1">
+      <div class="mr-1 x-1">
         <div class="field-group select label-8 mr-2 mb-0">
           <label>Trạng thái gửi Email</label>
           <select class="form-control" name="email_st" [(ngModel)]="filter.email_st" #email_st="ngModel" (change)="load()">
@@ -24,7 +24,7 @@
           </select>
         </div>
       </div>
-      <div class="">
+      <div class=" x-1">
         <div class="field-group select label-8 mb-0">
           <label>Trạng thái gửi Sms</label>
           <select class="form-control" name="sms_st" [(ngModel)]="filter.sms_st" #sms_st="ngModel" (change)="load()">

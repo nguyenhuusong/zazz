@@ -410,6 +410,13 @@ export class XuLyHopDongComponent implements OnInit {
   filesPrints = [];
   displayPrint = false;
   Prints() {
+    let letPrint = this.listRowSelects.some((value) => {
+        return value.contract_value === 0;
+    });
+    if(letPrint){
+      this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Không in trạng thái "mới tạo", vui lòng không chọn trạng thái mới tạo' });;
+      return;
+    }
     const params = this.listRowSelects.map((item, index) => {
       return {
         key: item.contractId,
