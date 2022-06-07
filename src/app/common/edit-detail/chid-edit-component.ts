@@ -37,6 +37,11 @@ export class AppTypeTextComponent implements OnInit {
   onChangeValue(value, field_name, element) {
     this.modelFields[field_name].error = this.modelFields[field_name].isRequire ? this.element.columnValue ? false : true : false
     this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
+    let numberDay = moment().daysInMonth();
+    if( this.element.columnValue > numberDay ){
+      this.modelFields[field_name].error = true;
+      this.modelFields[field_name].message = "Phép bù đã nhập lớn hơn số ngày trong tháng này";
+    }
   }
 
   foucusOut(e) {
