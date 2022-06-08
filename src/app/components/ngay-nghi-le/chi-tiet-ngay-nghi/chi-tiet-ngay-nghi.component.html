@@ -8,5 +8,123 @@
     <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButon"  [dataView]="listViews"
         (callback)="setHolidayInfo($event)" (callbackcancel)="quaylai($event)"></app-edit-detail>
    </div>
-   
+   <div class="box-weekend">
+       <div class="head d-flex middle bet">
+            <div class="text-left">
+                <div class="float-left">
+                    <p-dropdown [options]="whatDay" [(ngModel)]="whatDayName" optionLabel="name" name="whatDayName"></p-dropdown>
+                </div>
+            </div>
+            <div class="select-month d-flex bet middle">
+                <span>
+                    <svg width="10" height="16" viewBox="0 0 10 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M9.11086 0.916745C8.6778 0.504314 7.97569 0.504314 7.54264 0.916745L0.889242 7.25331C0.45619 7.66574 0.45619 8.33442 0.889242 8.74685L7.54264 15.0834C7.97569 15.4959 8.6778 15.4959 9.11086 15.0834C9.54391 14.671 9.54391 14.0023 9.11086 13.5899L3.24157 8.00008L9.11086 2.41029C9.54391 1.99786 9.54391 1.32918 9.11086 0.916745Z" fill="white"/>
+                    </svg>
+                </span>
+                <span>
+                    Tháng 4 2022 
+                </span>
+                <span>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M7.88914 4.91674C8.3222 4.50431 9.02431 4.50431 9.45736 4.91674L16.1108 11.2533C16.5438 11.6657 16.5438 12.3344 16.1108 12.7469L9.45736 19.0834C9.02431 19.4959 8.3222 19.4959 7.88914 19.0834C7.45609 18.671 7.45609 18.0023 7.88914 17.5899L13.7584 12.0001L7.88914 6.41029C7.45609 5.99786 7.45609 5.32918 7.88914 4.91674Z" fill="white"/>
+                    </svg>
+                </span>
+            </div>
+            <div class="text-right">
+                <span class="icon">
+                    <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M0 1.54882C0 0.969575 0.469574 0.5 1.04882 0.5H16.9512C17.5304 0.5 18 0.969574 18 1.54882V17.4512C18 18.0304 17.5304 18.5 16.9512 18.5H1.04882C0.469575 18.5 0 18.0304 0 17.4512V1.54882ZM16.3993 2.1007H1.6007V16.8993H16.3993V2.1007Z" fill="white"/>
+                    </svg>
+                </span>
+            </div>
+       </div>
+       <div class="content">
+           <div class="days d-flex">
+                <div class="a-day active" for="ny">
+                    <div class="d-flex middle">
+                        <p-checkbox value="empty" name="groupname" [(ngModel)]="selectedCities" inputId="ny"></p-checkbox>
+                    </div>
+                    <span class="date">01/4</span>
+                    <label for="ny"></label>
+                </div>
+                <div class="a-day">
+                    <div class="d-flex middle">
+                        <p-checkbox name="groupname" ></p-checkbox>
+                        Thứ 7
+                    </div>
+                    <span class="date">01/4</span>
+                </div>
+                <div class="a-day">
+                    <div class="d-flex middle">
+                        <p-checkbox name="groupname" ></p-checkbox>
+                        Thứ 7
+                    </div>
+                    <span class="date">01/4</span>
+                </div>
+                <div class="a-day">
+                    <div class="d-flex middle">
+                        <p-checkbox name="groupname" ></p-checkbox>
+                        Thứ 7
+                    </div>
+                    <span class="date">01/4</span>
+                </div>
+                <div class="a-day">
+                    <div class="d-flex middle">
+                        <p-checkbox name="groupname" ></p-checkbox>
+                        Thứ 7
+                    </div>
+                    <span class="date">01/4</span>
+                </div>
+                <div class="a-day">
+                    <div class="d-flex middle">
+                        <p-checkbox name="groupname" ></p-checkbox>
+                        Thứ 7
+                    </div>
+                    <span class="date">01/4</span>
+                </div>
+                <div class="a-day">
+                    <div class="d-flex middle">
+                        <p-checkbox name="groupname" ></p-checkbox>
+                        Thứ 7
+                    </div>
+                    <span class="date">01/4</span>
+                </div>
+                <div class="a-day">
+                    <div class="d-flex middle">
+                        <p-checkbox name="groupname" ></p-checkbox>
+                        Thứ 7
+                    </div>
+                    <span class="date">01/4</span>
+                </div>
+                <div class="a-day">
+                    <div class="d-flex middle">
+                        <p-checkbox name="groupname" ></p-checkbox>
+                        Thứ 7
+                    </div>
+                    <span class="date">01/4</span>
+                </div>
+                <div class="a-day">
+                    <div class="d-flex middle">
+                        <p-checkbox name="groupname" ></p-checkbox>
+                        Thứ 7
+                    </div>
+                    <span class="date">01/4</span>
+                </div>
+                <div class="a-day">
+                    <div class="d-flex middle">
+                        <p-checkbox name="groupname" ></p-checkbox>
+                        Thứ 7
+                    </div>
+                    <span class="date">01/4</span>
+                </div>
+                <div class="a-day">
+                    <div class="d-flex middle">
+                        <p-checkbox name="groupname" ></p-checkbox>
+                        Thứ 7
+                    </div>
+                    <span class="date">01/4</span>
+                </div>
+           </div>
+       </div>
+   </div>
 </div>

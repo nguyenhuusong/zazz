@@ -3390,3 +3390,81 @@ p-button{
         }
     }
 }
+.box-weekend{
+    max-width: 670px;
+    filter: drop-shadow(0px 2px 6px rgba(0, 0, 0, 0.1));
+    .head{
+        background: #528EFF;
+        border-radius: 8px 8px 0px 0px;
+        padding: 10px 20px;
+        .select-month{
+            font-size: 16px;
+            color: #ffffff
+        }
+        &>div{
+            width: 33.33%;
+
+        }
+    }
+    .p-dropdown{
+        background: #528EFF;
+        border: none;
+        &.p-focus{
+            box-shadow: none;
+        }
+        .p-dropdown-trigger{
+            .p-dropdown-trigger-icon{
+                width: 12px;
+                height: 7px;
+                background-size: contain;
+                background-image: url("data:image/svg+xml,%3Csvg width='12' height='7' viewBox='0 0 12 7' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0.410765 0.244078C0.736202 -0.0813592 1.26384 -0.0813592 1.58928 0.244078L6.00002 4.65482L10.4108 0.244078C10.7362 -0.0813592 11.2638 -0.0813592 11.5893 0.244078C11.9147 0.569515 11.9147 1.09715 11.5893 1.42259L6.58928 6.42259C6.26384 6.74803 5.7362 6.74803 5.41076 6.42259L0.410765 1.42259C0.0853278 1.09715 0.0853278 0.569515 0.410765 0.244078Z' fill='white'/%3E%3C/svg%3E%0A");
+            }
+        }
+    }
+    .p-dropdown-label{
+        font-size: 20px;
+        color: #fff;
+        padding-right: 5px;
+        padding-left: 0px;
+    }
+    .content{
+        padding: 0px;
+    }
+    .days{
+        flex-wrap: wrap;
+    }
+    .a-day{
+        color: #BDC4D8;
+        width: 14.285%;
+        padding: 15px 15px 25px 15px;
+        border: 0.5px solid #EDF1FA;
+        position: relative;
+        &.active,
+        &:hover{
+            background: #F3F8FF;
+            cursor: pointer;
+            .date{
+                color: #212633;
+            }
+        }
+        label{
+            position: absolute;
+            top: 0px;
+            height: 100%;
+            left: 0px;
+            width: 100%;
+            z-index: 2;
+            cursor: pointer;
+        }
+        .p-checkbox{
+            margin-right: 5px;
+            .p-checkbox-box{
+                border-color: rgba(43, 47, 51, 0.2);
+            }
+        }
+        .date{
+            margin-top: 8px;
+            display: block;
+        }
+    }
+}
