@@ -63,6 +63,8 @@ import { CaiDatPhongHopTheoTangComponent } from 'src/app/components/cai-dat-phon
 import { ChiTietPhongHopTheoTangComponent } from 'src/app/components/cai-dat-phong-hop-theo-tang/chi-tiet-phong-hop-theo-tang/chi-tiet-phong-hop-theo-tang.component';
 import { QuanLyNgayNghiComponent } from 'src/app/components/quan-ly-ngay-nghi/quan-ly-ngay-nghi.component';
 import { HrmBreadCrumbModule } from 'src/app/common/hrm-breadcrumb/hrm-breadcrumb.module';
+import { NgayNghiLeComponent } from 'src/app/components/ngay-nghi-le/ngay-nghi-le.component';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
 
 @NgModule({
   imports: [
@@ -96,6 +98,7 @@ import { HrmBreadCrumbModule } from 'src/app/common/hrm-breadcrumb/hrm-breadcrum
     DropdownModule,
     PageNotifyModule,
     TabViewModule,
+    OverlayPanelModule,
     PaginatorModule,
     GridAddModule,
     PanelModule,
@@ -134,7 +137,8 @@ import { HrmBreadCrumbModule } from 'src/app/common/hrm-breadcrumb/hrm-breadcrum
     ChiTietLyDoNghiViecComponent,
     CaiDatPhongHopTheoTangComponent,
     ChiTietPhongHopTheoTangComponent,
-    QuanLyNgayNghiComponent
+    QuanLyNgayNghiComponent,
+    NgayNghiLeComponent
   ],
   providers: []
 })

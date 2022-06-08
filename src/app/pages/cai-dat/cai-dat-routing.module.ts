@@ -26,6 +26,7 @@ import { ChiTietLyDoNghiViecComponent } from 'src/app/components/ly-do-nghi-viec
 import { CaiDatPhongHopTheoTangComponent } from 'src/app/components/cai-dat-phong-hop-theo-tang/cai-dat-phong-hop-theo-tang.component';
 import { ChiTietPhongHopTheoTangComponent } from 'src/app/components/cai-dat-phong-hop-theo-tang/chi-tiet-phong-hop-theo-tang/chi-tiet-phong-hop-theo-tang.component';
 import { QuanLyNgayNghiComponent } from 'src/app/components/quan-ly-ngay-nghi/quan-ly-ngay-nghi.component';
+import { NgayNghiLeComponent } from 'src/app/components/ngay-nghi-le/ngay-nghi-le.component';
 
 const routes: Routes = [
   {
@@ -167,7 +168,7 @@ const routes: Routes = [
   // cài đặt ngày nghỉ lễ
   {
     path: 'cai-dat-ngay-nghi-le',
-    component: QuanLyNgayNghiComponent,
+    component: NgayNghiLeComponent,
     data: {
       title: 'Danh sách ngày nghỉ lễ',
       url: 'cai-dat-ngay-nghi-le',

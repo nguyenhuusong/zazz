@@ -105,7 +105,7 @@ import {CheckboxModule} from 'primeng/checkbox';
     ChiTietThueThuNhapComponent,
     PhepNamComponent,
     PhepBuComponent,
-    ChiTietPhepBuComponent
+    ChiTietPhepBuComponent,
   ],
   providers: []
 })

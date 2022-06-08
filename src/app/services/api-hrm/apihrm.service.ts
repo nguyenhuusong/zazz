@@ -1251,8 +1251,28 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v1/holiday/GetHolidayPage?` + queryParams, this.options)
   }
 
+  holidayPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/holiday/HolidayPage?` + queryParams, this.options)
+  }
+
+  getHolidayInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/holiday/GetHolidayInfo?` + queryParams, this.options)
+  }
+
+  getHolidayDate(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/holiday/GetHolidayDate?` + queryParams, this.options)
+  }
+
+  setHolidayInfo(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/holiday/SetHolidayInfo` , queryParams, this.options)
+  }
+
   delHoliday(queryParams): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v1/holiday/DelHoliday?` + queryParams, this.options)
+  }
+
+  deleteHoliday(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v1/holiday/DeleteHoliday?` + queryParams, this.options)
   }
 
   setHolidayAdd(params): Observable<any> {
@@ -1276,6 +1296,5 @@ export class ApiHrmService {
     // return this.http.get<any>(`${apiHrmServer}/api/v2/dashboard/GetDashboardInfo?` + queryParams, this.options)
     return this.http.post<any>(`${apiHrmServer}/api/v2/dashboard/GetDashboardInfo`, params , this.options)
   }
-  
 
 }
