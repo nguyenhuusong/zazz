@@ -66,6 +66,7 @@ import { HrmBreadCrumbModule } from 'src/app/common/hrm-breadcrumb/hrm-breadcrum
 import { NgayNghiLeComponent } from 'src/app/components/ngay-nghi-le/ngay-nghi-le.component';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { ChiTietNgayNghiComponent } from 'src/app/components/ngay-nghi-le/chi-tiet-ngay-nghi/chi-tiet-ngay-nghi.component';
+import { CheckboxModule } from 'primeng/checkbox';
 
 @NgModule({
   imports: [
@@ -106,6 +107,7 @@ import { ChiTietNgayNghiComponent } from 'src/app/components/ngay-nghi-le/chi-ti
     HrmBreadCrumbModule,
     CommonSearchUserMasterModule,
     ConfirmDialogModule,
+    CheckboxModule,
     AgGridModule.withComponents([
       ButtonRendererComponent,
       ButtonRendererComponent1

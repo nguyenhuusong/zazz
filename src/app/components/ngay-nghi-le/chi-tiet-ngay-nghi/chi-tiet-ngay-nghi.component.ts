@@ -20,6 +20,12 @@ export class ChiTietNgayNghiComponent implements OnInit, OnDestroy {
     { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
     { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check'  }
   ]
+  whatDay = [
+    {name: 'Ngày thường', code: 'thuong'},
+    {name: 'Cuối tuần', code: 'RM'}
+  ]
+  whatDayName = 'thuong'
+  selectedCities: string[] = [];
   constructor(
     private activatedRoute: ActivatedRoute,
     private apiService: ApiHrmService,
