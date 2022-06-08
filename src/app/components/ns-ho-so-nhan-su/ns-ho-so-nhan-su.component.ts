@@ -478,6 +478,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
     ];
     this.getAgencyOrganizeMap();
     this.getEmployeeStatus();
+    this.getOrgan();
   }
   employeeStatus = []
   getEmployeeStatus() {
