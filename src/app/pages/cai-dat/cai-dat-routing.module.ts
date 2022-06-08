@@ -27,6 +27,7 @@ import { CaiDatPhongHopTheoTangComponent } from 'src/app/components/cai-dat-phon
 import { ChiTietPhongHopTheoTangComponent } from 'src/app/components/cai-dat-phong-hop-theo-tang/chi-tiet-phong-hop-theo-tang/chi-tiet-phong-hop-theo-tang.component';
 import { QuanLyNgayNghiComponent } from 'src/app/components/quan-ly-ngay-nghi/quan-ly-ngay-nghi.component';
 import { NgayNghiLeComponent } from 'src/app/components/ngay-nghi-le/ngay-nghi-le.component';
+import { ChiTietNgayNghiComponent } from 'src/app/components/ngay-nghi-le/chi-tiet-ngay-nghi/chi-tiet-ngay-nghi.component';
 
 const routes: Routes = [
   {
@@ -174,7 +175,22 @@ const routes: Routes = [
       url: 'cai-dat-ngay-nghi-le',
     },
   },
-
+  {
+    path: 'cai-dat-ngay-nghi-le/them-moi-ngay-nghi',
+    component: ChiTietNgayNghiComponent,
+    data: {
+      title: 'Thêm mới ngày nghỉ',
+      url: 'them-moi-ngay-nghi',
+    },
+  },
+  {
+    path: 'cai-dat-ngay-nghi-le/chi-tiet-ngay-nghi',
+    component: ChiTietNgayNghiComponent,
+    data: {
+      title: 'Chi tiết ngày nghỉ',
+      url: 'chi-tiet-ngay-nghi',
+    },
+  },
   // Cài đặt chức vụ
   {
     path: 'chuc-vu',

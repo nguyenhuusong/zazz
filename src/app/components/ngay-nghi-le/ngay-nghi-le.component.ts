@@ -191,11 +191,11 @@ export class NgayNghiLeComponent implements OnInit {
     )
   }
 
-  themnhanvien() {
+  themmoingaynghi() {
     const params = {
-      empId: 0
+      id: 0
     }
-    this.router.navigate(['/ho-so-nhan-su/them-moi-nhan-vien'], { queryParams: params });
+    this.router.navigate(['/cai-dat/cai-dat-ngay-nghi-le/them-moi-ngay-nghi'], { queryParams: params });
   }
 
 

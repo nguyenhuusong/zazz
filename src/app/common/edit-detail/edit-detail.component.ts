@@ -106,7 +106,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
           //callApi intentions
           if (element1.field_name === 'project_cd') {
 
-          } else if (element1.field_name === 'orgId') {
+          } else if (element1.field_name === 'orgId' || element1.field_name === 'departmentId') {
             if (element1.columnType === 'selectTree') {
               element1.isVisiable = false;
               const root_orgId = await this.getValueByKey('organizeId');
