@@ -368,6 +368,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
         this.listsData[0] = data.idcards || [];
         this.titles[0] = 'Giấy tờ tùy thân';
         this.columnDefs[1] = [...AgGridFn(data.gridflexdetails2 || [])];
+        console.log(this.columnDefs[1], 'this.columnDefs[1]')
         this.listsData[1] = data.records || [];
         this.titles[1] = 'Hồ sơ cá nhân';
         this.columnDefs[2] = [
