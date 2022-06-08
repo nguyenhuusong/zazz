@@ -49,9 +49,6 @@ export class QuanLyNgayNghiComponent implements OnInit, AfterViewChecked, OnDest
     {label: 'Lịch âm', value: 2},
   ]
   headerDate = DataHeaderDate
-
-
-
   pagingComponent = {
     total: 0
   }
@@ -270,7 +267,6 @@ export class QuanLyNgayNghiComponent implements OnInit, AfterViewChecked, OnDest
       }
     });
   }
-
 
 
   initGrid() {
