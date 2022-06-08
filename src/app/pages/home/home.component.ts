@@ -7,6 +7,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { stringify } from 'querystring';
 import { finalize } from 'rxjs';
 import * as moment from 'moment';
+import * as queryString from 'querystring';
 // import { ChartsModule } from 'ng2-charts';
 @Component({
   selector: 'app-home',
@@ -35,17 +36,19 @@ export class HomeComponent implements OnInit {
   basicOptions: any;
   basicOptions2: any;
   dataDou: any;
+
+  organs: any = []
   
   // nsMoi: nhan su moi, 
   dashboardData: any = null;
-  selectedMonth: any = ''
+  selectedMonth: any = {name: 'Tháng ' + (moment().month() + 1), code: (moment().month() + 1)}
   selectedYear: any = {
     name: 2022,
     code: 2022
   }
   queryDashboard = {
     orgid: "",
-    months: 1,
+    months: (moment().month() + 1),
     years: 2022
   }
   currentYear = moment().year()
@@ -104,6 +107,7 @@ export class HomeComponent implements OnInit {
     
     this.getYears();
     this.getAgencyOrganizeMap();
+    this.getOrgan();
   }
   ngOnDestroy() {
   }
@@ -111,6 +115,21 @@ export class HomeComponent implements OnInit {
  chartOptions = {
   responsive: true
 };
+
+getOrgan() {
+  const queryParams = queryString.stringify({ filter: '' });
+  this.apiService.getOrganizations(queryParams).subscribe(results => {
+    if (results.status === 'success') {
+      this.organs = results.data.map(d => {
+        return {
+          label: d.organizationName,
+          value: `${d.organizeId}`
+        }
+      });
+      this.organs = [...this.organs];
+    }
+  })
+}
 
 onChartClick(event) {
   console.log(event);
@@ -312,20 +331,13 @@ chartBDNhanSu() {
     let value = this.dashboardData.nhansu_sex.map( tongnv => {
       return tongnv.tongnv
     })
+    console.log(value, 'value fvalue value value')
     let datas = {
       labels: labels,
         datasets: [{
-          label: 'Công ty KSFinance - Đến ngày 20/10/2022',
+          label: '',
           data: value,
-          backgroundColor: [
-            '#4591FE',
-            '#FFA384',
-            '#F0D042',
-            '#FF7C59',
-            '#DA100B',
-            '#FFA384',
-            '#FFA384',
-          ],
+          backgroundColor: bg,
           borderWidth: 1,
           cornerRadius: 20,
           barThickness: 40,
@@ -347,10 +359,8 @@ chartBDNhanSu() {
   drawChart(configs, datas ) {
     if(configs.canvasID) {
       setTimeout(() => {
-        console.log(document.getElementById(configs.canvasID),'configs.canvasIDconfigs.canvasID ')
       let ctx:any = document.getElementById(configs.canvasID);
       ctx = ctx.getContext('2d');
-      console.log(ctx.canvas, 'ctx')
       let chart = new Chart(ctx, {
         type: configs.type,
         data: datas,

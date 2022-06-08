@@ -371,6 +371,7 @@ export class NgayNghiLeComponent implements OnInit {
       { label: 'Danh sách ngày nghỉ' },
     ];
     this.getAgencyOrganizeMap();
+    this.getOrgan();
   }
  
   organizeList = []
