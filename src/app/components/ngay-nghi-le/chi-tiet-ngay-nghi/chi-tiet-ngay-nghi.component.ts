@@ -6,6 +6,8 @@ import { cloneDeep } from 'lodash';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
+import * as moment from 'moment';
+import { getDaysOfMonth } from 'src/app/common/function-common/common';
 @Component({
   selector: 'app-chi-tiet-ngay-nghi',
   templateUrl: './chi-tiet-ngay-nghi.component.html',
@@ -21,8 +23,10 @@ export class ChiTietNgayNghiComponent implements OnInit, OnDestroy {
     { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check'  }
   ]
   whatDay = [
-    {name: 'Ngày thường', code: 'thuong'},
-    {name: 'Cuối tuần', code: 'RM'}
+    {name: 'Ngày thường', code: '0'},
+    {name: 'Cuối tuần', code: '1'},
+    {name: 'Ngày lễ', code: '2'},
+    {name: 'Thứ 7 xen kẽ', code: '3'},
   ]
   whatDayName = 'thuong'
   selectedCities: string[] = [];
@@ -41,6 +45,13 @@ export class ChiTietNgayNghiComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    console.log(getDaysOfMonth(2022,6))
+
+
+
+
+
+
     this.titlePage = this.activatedRoute.data['_value'].title;
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },

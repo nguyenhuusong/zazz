@@ -1,3 +1,4 @@
+import * as moment from "moment";
 import * as numeral from "numeral";
 
 export function AgGridFn(lists: Array<any>) {
@@ -231,3 +232,17 @@ export function TextFormatter(r){
       .replace(/[ùúûü]/g, 'u')
       .replace(/[ýÿ]/g, 'y');
 }
+
+export function getDaysOfMonth(year, month) {
+    var monthDate = moment(year+'-'+month, 'YYYY-MM');
+    var daysInMonth = monthDate.daysInMonth();
+    var arrDays = [];
+
+    while(daysInMonth) { 
+      var current = moment().date(daysInMonth);
+      arrDays.push(current.format('MM-DD-YYYY'));
+      daysInMonth--;
+    }
+
+    return arrDays;
+};
