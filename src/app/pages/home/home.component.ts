@@ -131,8 +131,13 @@ getOrgan() {
   })
 }
 
+  theOrginSelected: any = {}
+  getOriginLabelByid() {
+    this.theOrginSelected = this.organs.filter( d => d.value === this.queryDashboard.orgid)
+  }
+
 onChartClick(event) {
-  console.log(event);
+  console.log(event,this.queryDashboard.orgid);
 }
 // line chart end
 // bar chart
@@ -453,11 +458,13 @@ chartBDNhanSu() {
           this.detailOrganizeMap = this.selectedNode
           localStorage.setItem('organize', JSON.stringify(this.listAgencyMap[0]));
           this.queryDashboard.orgid = this.selectedNode.orgId;
+          this.getOriginLabelByid();
           // this.query.org_level = this.selectedNode.org_level;
           this.load();
         } else {
           this.selectedNode = JSON.parse(localStorage.getItem("organize"));
           this.queryDashboard.orgid = this.selectedNode.orgId;
+          this.getOriginLabelByid();
           // this.parseObjectProperties(this.listAgencyMap, this.selectedNode.organizeId);
           this.detailOrganizeMap = this.selectedNode
           if (type) {
@@ -478,6 +485,8 @@ chartBDNhanSu() {
     this.getDashboardInfo()
   }
   getDashboardInfo() {
+    
+    this.getOriginLabelByid();
     this.dashboardData = null;
     this.apiService.getDashboardInfo(this.queryDashboard)
     .pipe(
