@@ -100,9 +100,9 @@ export function AgGridFn(lists: Array<any>) {
                     sortable: false,
                     editable: value.editable ? value.editable : false,
                     filterParams: {
-                      caseSensitive: true,
-                      textFormatter:  (r) => TextFormatter(r),
-                      cellRenderer:  cellRendererSanPham,
+                        caseSensitive: true,
+                        textFormatter: (r) => TextFormatter(r),
+                        cellRenderer: cellRendererSanPham,
                     },
                     cellRenderer: value.isMasterDetail ? 'agGroupCellRenderer' : '',
                     hide: value.isHide ? true : false,
@@ -118,17 +118,17 @@ export function AgGridFn(lists: Array<any>) {
     return arrAgGrids
 }
 
-export function cellRendererSanPham(params){
+export function cellRendererSanPham(params) {
     console.log(params)
     let rowData = [];
     if (!params.value || params.value === '(Select All)') {
-      return params.value;
+        return params.value;
     }
     params.api.forEachNodeAfterFilter(node => {
         rowData.push(node.data)
-      } );
+    });
     return params.value;
-  }
+}
 
 export function stringtodate(datestring) {
     if (datestring) {
@@ -155,7 +155,7 @@ export function ShowFullScreen() {
     // const d: any = document.querySelector(".filterInput");
     const e: any = document.querySelector(".paginator");
     let eHeight = 0;
-    if(e){
+    if (e) {
         eHeight = e.clientHeight
     }
     const totalHeight = c.clientHeight + eHeight + 24;
@@ -173,7 +173,7 @@ export function HideFullScreen() {
     // const d: any = document.querySelector(".filterInput");
     const e: any = document.querySelector(".paginator");
     let eHeight = 0;
-    if(e){
+    if (e) {
         eHeight = e.clientHeight
     }
     const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + eHeight + 45;
@@ -207,42 +207,110 @@ export function CheckHideAction(path, action) {
     }
 }
 
-export function SumArray(mang){
+export function SumArray(mang) {
     let sum = 0;
     let i = 0;
-    while (i < mang.length){
+    while (i < mang.length) {
         sum += mang[i];
         i++;
     }
     return sum;
 }
 
-export function TextFormatter(r){
+export function TextFormatter(r) {
     if (r == null) return null;
     return r
-      .toLowerCase()
-      .replace(/[àáâãäå]/g, 'a')
-      .replace(/æ/g, 'ae')
-      .replace(/ç/g, 'c')
-      .replace(/[èéêë]/g, 'e')
-      .replace(/[ìíîï]/g, 'i')
-      .replace(/ñ/g, 'n')
-      .replace(/[òóôõö]/g, 'o')
-      .replace(/œ/g, 'oe')
-      .replace(/[ùúûü]/g, 'u')
-      .replace(/[ýÿ]/g, 'y');
+        .toLowerCase()
+        .replace(/[àáâãäå]/g, 'a')
+        .replace(/æ/g, 'ae')
+        .replace(/ç/g, 'c')
+        .replace(/[èéêë]/g, 'e')
+        .replace(/[ìíîï]/g, 'i')
+        .replace(/ñ/g, 'n')
+        .replace(/[òóôõö]/g, 'o')
+        .replace(/œ/g, 'oe')
+        .replace(/[ùúûü]/g, 'u')
+        .replace(/[ýÿ]/g, 'y');
 }
 
 export function getDaysOfMonth(year, month) {
-    var monthDate = moment(year+'-'+month, 'YYYY-MM');
+    var monthDate = moment(year + '-' + month, 'YYYY-MM');
     var daysInMonth = monthDate.daysInMonth();
     var arrDays = [];
-
-    while(daysInMonth) { 
-      var current = moment().date(daysInMonth);
-      arrDays.push(current.format('MM-DD-YYYY'));
-      daysInMonth--;
+    for (let i = 0; i < daysInMonth; i++) {
+        arrDays.push({
+            label: convertNumberToStringDay(moment(new Date(year, month - 1, i + 1)).day()),
+            value: moment(new Date(year, month - 1, i + 1)).format('DD-MM')
+        })
     }
+
+    // while(daysInMonth) { 
+    //   var current = moment().date(daysInMonth);
+    //   arrDays.push(current.format('MM-DD-YYYY'));
+    //   daysInMonth--;
+    // }
 
     return arrDays;
 };
+
+
+export function convertNumberToStringDay(day) {
+    let stringDay = ''
+    switch (day) {
+        case 0:
+            stringDay = 'Chủ nhật'
+            break;
+        case 1:
+            stringDay = 'Thứ 2'
+            break;
+        case 2:
+            stringDay = 'Thứ 3'
+            break;
+        case 3:
+            stringDay = 'Thứ 4'
+            break;
+        case 4:
+            stringDay = 'Thứ 5'
+            break;
+        case 5:
+            stringDay = 'Thứ 6'
+            break;
+        case 6:
+            stringDay = 'Thứ 7'
+            break;
+        default:
+            break;
+    }
+    return stringDay
+}
+
+
+export function getDaysOfEndWeek(year, month) {
+    var monthDate = moment(year + '-' + month, 'YYYY-MM');
+    console.log(monthDate)
+    var daysInMonth = monthDate.daysInMonth();
+    console.log(daysInMonth)
+    var arrDays = [];
+    for (let i = 0; i < daysInMonth; i++) {
+        const isdayWeek = isWeekend(new Date(year, month - 1, i + 1))
+        console.log(isdayWeek)
+        if (isdayWeek) {
+            arrDays.push({
+                label: moment(new Date(year, month - 1, i + 1)).day() === 6 ? 'Thứ 7' : 'Chủ nhật',
+                value: moment(new Date(year, month - 1, i + 1)).format('DD-MM')
+            });
+            console.log(arrDays)
+        }
+    }
+
+    // while(daysInMonth) { 
+    //   var current = moment().date(daysInMonth);
+    //   arrDays.push(current.format('MM-DD-YYYY'));
+    //   daysInMonth--;
+    // }
+
+    return arrDays;
+};
+export function isWeekend(date = new Date()) {
+    return date.getDay() === 6 || date.getDay() === 0;
+}

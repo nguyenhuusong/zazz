@@ -112,7 +112,7 @@ export class AppTypeSelectComponent implements OnInit {
   selector: 'app-type-selectTree',
   template: `  
     <div class="field-group select treeselect" [ngClass]="'valid'"> 
-      <p-treeSelect [(ngModel)]="element.columnValue" [options]="element.options" [required]="element.isRequire && element.isVisiable && !element.isEmpty" (onNodeSelect)="onChangeTree($event, element.field_name, element)" [disabled]="element.isDisable" selectionMode="single"  placeholder="Select Item"></p-treeSelect>
+      <p-treeSelect [filterInputAutoFocus]="true" [filter]="true" [metaKeySelection]="false" [(ngModel)]="element.columnValue" [options]="element.options" [required]="element.isRequire && element.isVisiable && !element.isEmpty" (onNodeSelect)="onChangeTree($event, element.field_name, element)" [disabled]="element.isDisable" selectionMode="single"  placeholder="Select Item"></p-treeSelect>
       <div *ngIf="element.isRequire && submit && !element.columnValue"
           class="alert-validation alert-danger">
           <div [hidden]="element.columnValue">
@@ -192,7 +192,7 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
 @Component({
   selector: 'app-type-dropdown',
   template: `   
-          <div class="field-group select" [ngClass]=" element.columnValue ? 'valid' : 'invalid' ">
+          <div class="field-group select valid" >
                 <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
                   [disabled]="element.isDisable" [options]="element.options" (onChange)="onChangeValue($event.value, element.field_name, element)" [filterBy]="'label'"
                   [required]="element.isRequire && element.isVisiable && !element.isEmpty" [(ngModel)]="element.columnValue"

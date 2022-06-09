@@ -7,7 +7,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as moment from 'moment';
-import { getDaysOfMonth } from 'src/app/common/function-common/common';
+import { getDaysOfEndWeek, getDaysOfMonth } from 'src/app/common/function-common/common';
 @Component({
   selector: 'app-chi-tiet-ngay-nghi',
   templateUrl: './chi-tiet-ngay-nghi.component.html',
@@ -23,10 +23,10 @@ export class ChiTietNgayNghiComponent implements OnInit, OnDestroy {
     { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check'  }
   ]
   whatDay = [
-    {name: 'Ngày thường', code: '0'},
-    {name: 'Cuối tuần', code: '1'},
-    {name: 'Ngày lễ', code: '2'},
-    {name: 'Thứ 7 xen kẽ', code: '3'},
+    {name: 'Ngày thường', code: 0},
+    {name: 'Cuối tuần', code: 1},
+    {name: 'Ngày lễ', code: 2},
+    {name: 'Thứ 7 xen kẽ', code: 3},
   ]
   whatDayName = 'thuong'
   selectedCities: string[] = [];
@@ -43,15 +43,13 @@ export class ChiTietNgayNghiComponent implements OnInit, OnDestroy {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
-
+  listDayWeeks = [];
+  dsNgayThuongs = [];
+  dates = [];
   ngOnInit(): void {
-    console.log(getDaysOfMonth(2022,6))
-
-
-
-
-
-
+    this.listDayWeeks = [...getDaysOfEndWeek(2022,6), ...getDaysOfEndWeek(2022,7),...getDaysOfEndWeek(2022,8), ...getDaysOfEndWeek(2022,9)];
+    this.dsNgayThuongs = [...getDaysOfMonth(2022,6)];
+    this.dates = this.dsNgayThuongs;
     this.titlePage = this.activatedRoute.data['_value'].title;
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
@@ -60,11 +58,20 @@ export class ChiTietNgayNghiComponent implements OnInit, OnDestroy {
       { label: `${this.titlePage}` },
     ];
     this.handleParams();
+  };
+
+  selecteOptionDate(event) {
+    if(event.value.code === 0) {
+      this.dates = this.dsNgayThuongs;
+    }else if(event.value.code === 1) {
+      this.dates = this.listDayWeeks ;
+    }
   }
+
   modelEdit = {
     id: "",
   }
-  titlePage = ''
+  titlePage = '';
   handleParams() {
     this.activatedRoute.queryParamMap
       .pipe(takeUntil(this.unsubscribe$))

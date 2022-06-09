@@ -11,7 +11,7 @@
        <div class="head d-flex middle bet">
             <div class="text-left">
                 <div class="float-left">
-                    <p-dropdown [options]="whatDay" [(ngModel)]="whatDayName" optionLabel="name" name="whatDayName"></p-dropdown>
+                    <p-dropdown [options]="whatDay" [(ngModel)]="whatDayName" optionLabel="name" name="whatDayName" (onChange)="selecteOptionDate($event)"></p-dropdown>
                 </div>
             </div>
             <div class="select-month d-flex bet middle">
@@ -39,12 +39,13 @@
        </div>
        <div class="content">
            <div class="days d-flex">
-                <div class="a-day active" for="ny">
+                <div class="a-day "  *ngFor="let item of dates; let i=index">
                     <div class="d-flex middle">
-                        <p-checkbox value="empty" name="groupname" [(ngModel)]="selectedCities" inputId="ny"></p-checkbox>
+                        <p-checkbox [value]="item.value" name="groupname" [(ngModel)]="selectedCities" inputId="{{i+ 1}}"></p-checkbox>
+                        <span style="white-space: nowrap;">{{item.label}}</span>
                     </div>
-                    <span class="date">01/4</span>
-                    <label for="ny"></label>
+                    <span class="date">{{item.value}}</span>
+                    <label for="{{i+ 1}}"></label>
                 </div>
                 <!-- <div class="a-day">
                     <div class="d-flex middle">

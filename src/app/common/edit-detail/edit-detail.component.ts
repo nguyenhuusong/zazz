@@ -110,7 +110,10 @@ export class EditDetailComponent implements OnInit, OnChanges {
             if (element1.columnType === 'selectTree') {
               element1.isVisiable = false;
               const root_orgId = await this.getValueByKey('organizeId');
-              this.getOrganizeTree(root_orgId, element1);
+              setTimeout(() => {
+                this.getOrganizeTree(root_orgId, element1);
+
+              }, 100);
             } else {
               setTimeout(() => {
                 this.getOrgRoots(element1);
