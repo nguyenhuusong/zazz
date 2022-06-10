@@ -15,25 +15,39 @@
                 </div>
             </div>
             <div class="select-month d-flex bet middle" *ngIf="whatDayName === 0">
-                <span>
+                <span (click)="prevDate()">
                     <svg width="10" height="16" viewBox="0 0 10 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M9.11086 0.916745C8.6778 0.504314 7.97569 0.504314 7.54264 0.916745L0.889242 7.25331C0.45619 7.66574 0.45619 8.33442 0.889242 8.74685L7.54264 15.0834C7.97569 15.4959 8.6778 15.4959 9.11086 15.0834C9.54391 14.671 9.54391 14.0023 9.11086 13.5899L3.24157 8.00008L9.11086 2.41029C9.54391 1.99786 9.54391 1.32918 9.11086 0.916745Z" fill="white"/>
                     </svg>
                 </span>
                 <span>
-                    Tháng 4 2022 
+                    Tháng {{modelMonth}} 2022 
                 </span>
-                <span>
+                <span (click)="nextDate()">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M7.88914 4.91674C8.3222 4.50431 9.02431 4.50431 9.45736 4.91674L16.1108 11.2533C16.5438 11.6657 16.5438 12.3344 16.1108 12.7469L9.45736 19.0834C9.02431 19.4959 8.3222 19.4959 7.88914 19.0834C7.45609 18.671 7.45609 18.0023 7.88914 17.5899L13.7584 12.0001L7.88914 6.41029C7.45609 5.99786 7.45609 5.32918 7.88914 4.91674Z" fill="white"/>
                     </svg>
                 </span>
             </div>
             <div class="text-right" *ngIf="whatDayName !== 0">
-                <div class="field-checkbox">
-                    <p-checkbox [(ngModel)]="checkAllday" (onChange)="checkAllDate()" [binary]="true" inputId="binary"></p-checkbox>
-                    <!-- <label for="binary">{{checked}}</label> -->
+                <div *ngIf="whatDayName ===4; else other">
+                    <div class="field-checkbox">
+                        <p-checkbox [(ngModel)]="checkAllT7Chan" (onChange)="checkAllDateT7Chan()" [binary]="true" inputId="binary"></p-checkbox>
+                        <label for="ny">Check Thứ 7 chắn</label>
+                    </div>
+                    <div class="field-checkbox">
+                        <p-checkbox [(ngModel)]="checkAllT7Le" (onChange)="checkAllDateT7Le()" [binary]="true" inputId="binary"></p-checkbox>
+                        <label for="ny">Check thứ 7 lẻ</label>
+                    </div>
                 </div>
+                <ng-template #other>
+                    <div class="field-checkbox">
+                        <p-checkbox [(ngModel)]="checkAllday" (onChange)="checkAllDate()" [binary]="true" inputId="binary"></p-checkbox>
+                        <label for="ny">Check All</label>
+                        <!-- <label for="binary">{{checked}}</label> -->
+                    </div>
+                </ng-template>
+                
             </div>
        </div>
        <div class="content">

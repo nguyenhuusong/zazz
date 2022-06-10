@@ -26,11 +26,12 @@ export class ChiTietNgayNghiComponent implements OnInit, OnDestroy {
     { label: 'Ngày thường', value: 0 },
     { label: 'Cuối tuần', value: 1 },
     // {label: 'Ngày lễ', value: 2},
-    { label: 'Thứ 7 xen kẽ', value: 3 },
     { label: 'Thứ 7', value: 4 },
     { label: 'Chủ nhật', value: 5 },
   ]
-  whatDayName = 0
+  whatDayName = 0;
+  checkAllT7Chan = false;
+  checkAllT7Le = false;
   selectedDates: string[] = [];
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -148,6 +149,40 @@ export class ChiTietNgayNghiComponent implements OnInit, OnDestroy {
 
   quaylai(data) {
     this.router.navigate(['/cai-dat/cai-dat-ngay-nghi-le']);
+  }
+  modelMonth = new Date().getMonth() + 1;
+  nextDate() {
+    if(this.modelMonth < 12) {
+      this.modelMonth = this.modelMonth + 1;
+      this.dates = this.dsNgayThuongs[this.modelMonth -1];
+    }
+   
+  }
+  prevDate() {
+    if(this.modelMonth > 0) {
+      this.modelMonth = this.modelMonth - 1;
+      this.dates = this.dsNgayThuongs[this.modelMonth-1];
+    }
+  }
+
+  checkAllDateT7Chan() {
+   if(this.checkAllT7Chan) {
+    this.dsSaturdays.forEach(date => {
+        const catDate = parseInt(date.value.split('-')[0]);
+        console.log(catDate % 2)
+        if(catDate % 2 === 0) {
+          this.selectedDates.push(date.id_date);
+          this.selectedDates = [...this.selectedDates]
+          console.log( this.selectedDates)
+        }
+    })
+   }else {
+    
+   }
+  }
+
+  checkAllDateT7Le() {
+
   }
 
 }
