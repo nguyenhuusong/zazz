@@ -103,6 +103,9 @@ export class XuLyHopDongComponent implements OnInit {
   file = null;
   loading = false;
   itemsToolOfGrid: any[] = [];
+  
+  isShowbtnPheDuyet = true;
+  paramsPheDuyet: any = []
 
   onGridReady(params) {
     this.gridApi = params.api;
@@ -444,6 +447,31 @@ export class XuLyHopDongComponent implements OnInit {
   }
   rowSelected(event) {
     this.listRowSelects = event;
+    if(this.listRowSelects.length> 0 ){
+      this.isShowbtnPheDuyet = false;
+    }
+  }
+
+  pheDuyetHopDong() {
+    if(this.listRowSelects.length> 0 ){
+      this.isShowbtnPheDuyet = false;
+      this.paramsPheDuyet = this.listRowSelects.map( d => {
+        return{
+          contractId: d.contractId,
+          fullName:  d.fullName,
+          contract_no:  d.contract_no,
+          status: 1,
+          comment:  d.contractId
+        }
+      })
+      this.apiService.setListContractStatus(this.paramsPheDuyet).subscribe((res: any) => {
+        if (res.status === 'success') {
+          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: res.data ? res.data : '' });
+        } else {
+          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: res.message });
+        }
+      });
+    }
   }
 
   openPrint() {

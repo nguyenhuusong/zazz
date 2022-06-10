@@ -1292,6 +1292,10 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v2/contract/Import`, data, customOptions);
   }
 
+  setListContractStatus(params): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v2/contract/SetListContractStatus`, params, this.options);
+  }
+
   getDashboardInfo(params): Observable<any> {
     // return this.http.get<any>(`${apiHrmServer}/api/v2/dashboard/GetDashboardInfo?` + queryParams, this.options)
     return this.http.post<any>(`${apiHrmServer}/api/v2/dashboard/GetDashboardInfo`, params , this.options)
