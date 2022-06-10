@@ -8,8 +8,9 @@
                 <div>
                     <p-button  (click)="menuButton.toggle($event)" label="Tiện ích" icon="pi pi-cog" styleClass="p-button-sm mr-2"> </p-button>
                     <p-button (click)="Prints()" label="PRINT" icon="pi pi-print" styleClass="p-button-sm mr-2"></p-button>
-                    <p-button class="" *ngIf="this.listPrints.length === 0" (click)="DowloadPlugin()" label="Plugin" styleClass="p-button-sm"></p-button>
-                    <p-menu [model]="itemsToolOfGrid" [appendTo]="'body'" [popup]="true" styleClass="menu-option-right" #menuButton></p-menu>
+                    <p-button class="" *ngIf="this.listPrints.length === 0" (click)="DowloadPlugin()" label="Plugin" styleClass="p-button-sm mr-2"></p-button>
+                    <p-menu [model]="itemsToolOfGrid" [appendTo]="'body'" [popup]="true" styleClass="menu-option-right mr-2" #menuButton></p-menu>
+                    <p-button  (click)="pheDuyetHopDong()" label="Phê duyệt" [disabled]="isShowbtnPheDuyet" icon="pi pi-cog" styleClass="p-button-sm mr-2"> </p-button>
                 </div>
             </div>
             
