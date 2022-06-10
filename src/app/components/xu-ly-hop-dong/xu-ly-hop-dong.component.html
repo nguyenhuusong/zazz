@@ -89,6 +89,40 @@
                 
                     </div>
                 </div>
+                <div class="x-1-2">
+                    <div class="field-group date mb-0 ">
+                        <p-calendar 
+                            (onSelect)="find()"
+                            panelStyleClass="datepicker-default"
+                            placeholder="DD/MM/YYYY" 
+                            [appendTo]="'body'" 
+                            [baseZIndex]="101"
+                            [(ngModel)]="query.fromDate" 
+                            [monthNavigator]="true" 
+                            [yearNavigator]="true"
+                            yearRange="2010:2030" 
+                            inputId="navigators"
+                            dateFormat="dd/mm/yy" name="fromDate"></p-calendar>
+                        <label>Từ ngày</label>
+                    </div>
+                </div>
+                <div class="x-1-2">
+                    <div class="field-group date mb-0 ">
+                        <p-calendar 
+                            (onSelect)="find()"
+                            panelStyleClass="datepicker-default"
+                            placeholder="DD/MM/YYYY" 
+                            [appendTo]="'body'" 
+                            [baseZIndex]="101"
+                            [(ngModel)]="query.toDate" 
+                            [monthNavigator]="true" 
+                            [yearNavigator]="true"
+                            yearRange="2010:2030" 
+                            inputId="navigators"
+                            dateFormat="dd/mm/yy" name="toDate"></p-calendar>
+                        <label>Đến ngày</label>
+                    </div>
+                </div>
                 <p-button class="btn-56-56 mr-2 ml-1"  icon="pi pi-refresh" (click)="cancel()" styleClass="p-button-secondary p-button-sm btn-56-56"></p-button>
             </div>
             <!-- <div class="col-2" >  -->
