@@ -103,7 +103,7 @@ export class XuLyHopDongComponent implements OnInit {
   file = null;
   loading = false;
   itemsToolOfGrid: any[] = [];
-  
+
   isShowbtnPheDuyet = true;
   paramsPheDuyet: any = []
 
@@ -449,12 +449,13 @@ export class XuLyHopDongComponent implements OnInit {
     this.listRowSelects = event;
     if(this.listRowSelects.length> 0 ){
       this.isShowbtnPheDuyet = false;
+    }else{
+      this.isShowbtnPheDuyet = true;
     }
   }
 
   pheDuyetHopDong() {
     if(this.listRowSelects.length> 0 ){
-      this.isShowbtnPheDuyet = false;
       this.paramsPheDuyet = this.listRowSelects.map( d => {
         return{
           contractId: d.contractId,
