@@ -107,7 +107,7 @@ export class NgayNghiLeComponent implements OnInit {
     DepartmentId: null,
     HoliType: null,
     HoliWorkType: null,
-    Year: 2020,
+    Year: 2022,
   }
   displayOrganize = false;
   listAgencyMap: TreeNode[];
@@ -127,7 +127,7 @@ export class NgayNghiLeComponent implements OnInit {
       DepartmentId: null,
       HoliType: null,
       HoliWorkType: null,
-      Year: null,
+      Year: 2022,
     }
     this.load();
   }
@@ -233,18 +233,18 @@ export class NgayNghiLeComponent implements OnInit {
   showButtons(event: any) {
     return {
       buttons: [
-        // {
-        //   onClick: this.EditEmployee.bind(this),
-        //   label: 'Thông tin chi tiết',
-        //   icon: 'pi pi-tablet',
-        //   class: 'btn-primary mr5',
-        // },
-        // {
-        //   onClick: this.xoanhanvien.bind(this),
-        //   label: 'Xóa nhân viên này',
-        //   icon: 'fa fa-trash',
-        //   class: 'btn-primary mr5',
-        // },
+        {
+          onClick: this.EditEmployee.bind(this),
+          label: 'Thông tin chi tiết',
+          icon: 'pi pi-tablet',
+          class: 'btn-primary mr5',
+        },
+        {
+          onClick: this.xoanhanvien.bind(this),
+          label: 'Xóa nhân viên này',
+          icon: 'fa fa-trash',
+          class: 'btn-primary mr5',
+        },
       ]
     };
   }
@@ -344,9 +344,9 @@ export class NgayNghiLeComponent implements OnInit {
 
   EditEmployee(event) {
     const params = {
-      empId: event.rowData.empId
+      id: event.rowData.id
     }
-    this.router.navigate(['/nhan-su/ho-so-nhan-su/chi-tiet-ho-so-nhan-su'], { queryParams: params });
+    this.router.navigate(['/cai-dat/cai-dat-ngay-nghi-le/chi-tiet-ngay-nghi'], { queryParams: params });
   }
 
   find() {

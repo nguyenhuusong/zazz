@@ -2,12 +2,12 @@ import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/co
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 const queryString = require('query-string');
-import { cloneDeep } from 'lodash';
+import { cloneDeep, flatten } from 'lodash';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as moment from 'moment';
-import { getDaysOfEndWeek, getDaysOfMonth } from 'src/app/common/function-common/common';
+import { getDaysOfEndWeek, getDaysOfMonth, getDaysOfSaturDay, getDaysOfSunday } from 'src/app/common/function-common/common';
 @Component({
   selector: 'app-chi-tiet-ngay-nghi',
   templateUrl: './chi-tiet-ngay-nghi.component.html',
@@ -20,16 +20,18 @@ export class ChiTietNgayNghiComponent implements OnInit, OnDestroy {
   listViews = [];
   optionsButon = [
     { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
-    { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check'  }
+    { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check' }
   ]
   whatDay = [
-    {name: 'Ngày thường', code: 0},
-    {name: 'Cuối tuần', code: 1},
-    {name: 'Ngày lễ', code: 2},
-    {name: 'Thứ 7 xen kẽ', code: 3},
+    { label: 'Ngày thường', value: 0 },
+    { label: 'Cuối tuần', value: 1 },
+    // {label: 'Ngày lễ', value: 2},
+    { label: 'Thứ 7 xen kẽ', value: 3 },
+    { label: 'Thứ 7', value: 4 },
+    { label: 'Chủ nhật', value: 5 },
   ]
-  whatDayName = 'thuong'
-  selectedCities: string[] = [];
+  whatDayName = 0
+  selectedDates: string[] = [];
   constructor(
     private activatedRoute: ActivatedRoute,
     private apiService: ApiHrmService,
@@ -43,16 +45,28 @@ export class ChiTietNgayNghiComponent implements OnInit, OnDestroy {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
+  checkAllday = false;
   listDayWeeks = [];
   dsNgayThuongs = [];
+  dsSaturdays = [];
+  dsSundays = [];
   dates = [];
   ngOnInit(): void {
-    this.listDayWeeks = [...getDaysOfEndWeek(2022,6), ...getDaysOfEndWeek(2022,7),...getDaysOfEndWeek(2022,8), ...getDaysOfEndWeek(2022,9)];
-    this.dsNgayThuongs = [...getDaysOfMonth(2022,6)];
-    this.dates = this.dsNgayThuongs;
+    const listDayWeeks = [], dsSaturdays = [], dsSundays = [];
+    for (let i = 0; i < 12; i++) {
+      listDayWeeks.push(getDaysOfEndWeek(2022, i + 1));
+      this.dsNgayThuongs.push(getDaysOfMonth(2022, i + 1))
+      dsSaturdays.push(getDaysOfSaturDay(2022, i + 1))
+      dsSundays.push(getDaysOfSunday(2022, i + 1))
+    }
+    console.log(this.dsNgayThuongs)
+    this.listDayWeeks = flatten(listDayWeeks)
+    this.dsSaturdays = flatten(dsSaturdays)
+    this.dsSundays = flatten(dsSundays)
+    this.dates = this.dsNgayThuongs[5];
     this.titlePage = this.activatedRoute.data['_value'].title;
     this.items = [
-      { label: 'Trang chủ' , routerLink: '/home' },
+      { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Cài đặt' },
       { label: 'Ngày nghỉ', routerLink: '/cai-dat/cai-dat-ngay-nghi-le' },
       { label: `${this.titlePage}` },
@@ -61,11 +75,24 @@ export class ChiTietNgayNghiComponent implements OnInit, OnDestroy {
   };
 
   selecteOptionDate(event) {
-    if(event.value.code === 0) {
-      this.dates = this.dsNgayThuongs;
-    }else if(event.value.code === 1) {
-      this.dates = this.listDayWeeks ;
+    if (event.value === 0) {
+      this.dates = this.dsNgayThuongs[new Date().getMonth()];
+    } else if (event.value === 1) {
+      this.dates = this.listDayWeeks;
+    } else if (event.value === 3 || event.value === 4) {
+      this.dates = this.dsSaturdays;
+    } else if (event.value === 5) {
+      this.dates = this.dsSundays;
     }
+  }
+
+  checkAllDate() {
+    if (this.checkAllday) {
+      this.selectedDates = this.dates.map(d => d.id_date)
+    } else {
+      this.selectedDates = [];
+    }
+
   }
 
   modelEdit = {
@@ -98,7 +125,7 @@ export class ChiTietNgayNghiComponent implements OnInit, OnDestroy {
   setHolidayInfo(data) {
     this.spinner.show();
     const params = {
-      ...this.detailInfo, group_fields: data
+      ...this.detailInfo, group_fields: data, dates: this.selectedDates
     }
     this.apiService.setHolidayInfo(params)
       .pipe(takeUntil(this.unsubscribe$))
