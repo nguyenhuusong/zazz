@@ -5,7 +5,8 @@ import { Component, Input, } from '@angular/core';
   styleUrls: ['./hrm-breadcrumb.component.css'],
 })
 export class HrmBreadCrumbComponent {
-  @Input() items: any = []
+  @Input() items: any = [];
+  @Input() displayTitle = false;
   constructor(
   ) { }
   contentTypes = [];
