@@ -1,3 +1,7 @@
+import { LoaiBieuMauComponent } from './../../components/bieu-mau/loai-bieu-mau/loai-bieu-mau.component';
+import { ChiTietLoaiBieuMauComponent } from '../../components/bieu-mau/loai-bieu-mau/chi-tiet-loai-bieu-mau/chi-tiet-loai-bieu-mau.component';
+import { BieuMauChiTietComponent } from '../../components/bieu-mau/bieu-mau-chi-tiet/bieu-mau-chi-tiet.component';
+import { BieuMauComponent } from './../../components/bieu-mau/bieu-mau.component';
 import { Routes } from '@angular/router';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
@@ -152,7 +156,39 @@ const routes: Routes = [
     url: 'chi-tiet-thue-thu-nhap',
   },
 },
-
+{
+  path: 'bieu-mau/:id',
+  component: BieuMauChiTietComponent,
+  data: {
+    title: 'Biểu mẫu chi tiết',
+    url: 'bieu-mau/:id',
+  },
+},
+{
+  path: 'bieu-mau',
+  component: BieuMauComponent,
+  data: {
+    title: 'Biểu mẫu',
+    url: 'bieu-mau',
+  },
+},
+{
+  path: 'loai-bieu-mau/:id',
+  component: ChiTietLoaiBieuMauComponent,
+  data: {
+    title: 'Chi tiết loại biểu mẫu chi tiết',
+    url: 'loai-bieu-mau/:id',
+  },
+},
+{
+  path: 'loai-bieu-mau',
+  pathMatch: 'full',
+  component: LoaiBieuMauComponent,
+  data: {
+    title: 'Loại biểu mẫu',
+    url: 'loai-bieu-mau',
+  },
+},
 ];
 
 @NgModule({

@@ -1,0 +1,22 @@
+
+<div class="main-grid product-detail">
+    <div class="bg-white mb-2 mt-2 p-3 pt-0">
+        <app-hrm-breadcrumb
+            [items] = "items"
+            [displayTitle]="true"
+        ></app-hrm-breadcrumb>
+    </div>
+
+   <div class="content">
+        <app-edit-detail
+            *ngIf="listViews.length> 0"
+            [detail]="detailInfo"
+            [manhinh]="'Edit'"
+            [optionsButtonsEdit]="optionsButon"
+            [dataView]="listViews"
+            (callback)="setWorkApprove($event)"
+            (callbackcancel)="quaylai($event)"
+        ></app-edit-detail>
+   </div>
+</div>
+

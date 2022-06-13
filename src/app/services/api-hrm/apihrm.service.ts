@@ -1301,4 +1301,39 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v2/dashboard/GetDashboardInfo`, params , this.options)
   }
 
+  getFormPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/form/GetFormPage?` + queryParams, this.options)
+  }
+
+  getFormInfo(formId: string): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/form/GetFormInfo?formId=${formId}`, this.options)
+  }
+
+  setFormInfo(data): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/form/SetFormInfo`, data , this.options)
+  }
+
+  delFormInfo(formId): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/v2/form/DelFormInfo?formId=${formId}`, this.options)
+  }
+
+  getFormTypePage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/form/GetFormTypePage?` + queryParams, this.options)
+  }
+
+  getFormTypes(filter: string = ''): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/form/GetFormTypes?filter=${filter}`, this.options)
+  }
+
+  getFormTypeInfo(formTypeId: string): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/form/GetFormTypeInfo?formTypeId=${formTypeId}`, this.options)
+  }
+
+  setFormTypeInfo(data): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/form/SetFormTypeInfo`, data , this.options)
+  }
+
+  delFormTypeInfo(formId: string): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/v2/form/DelFormTypeInfo?formId=${formId}`, this.options)
+  }
 }
