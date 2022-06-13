@@ -1334,6 +1334,6 @@ export class ApiHrmService {
   }
 
   delFormTypeInfo(formId: string): Observable<any> {
-    return this.http.delete<any>(`${apiHrmServer}/v2/form/DelFormTypeInfo?formId=${formId}`, this.options)
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/form/DelFormTypeInfo?formId=${formId}`, this.options)
   }
 }

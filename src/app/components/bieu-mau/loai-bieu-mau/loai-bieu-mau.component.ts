@@ -91,11 +91,11 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
         if (localStorage.getItem("organize") === null) {
           this.selectedNode = this.listAgencyMap[0];
           localStorage.setItem('organize', JSON.stringify(this.listAgencyMap[0]));
-          this.query.organizeId = this.selectedNode.orgId;
+          // this.query.organizeId = this.selectedNode.orgId;
           this.load();
         } else {
           this.selectedNode = JSON.parse(localStorage.getItem("organize"));
-          this.query.organizeId = this.selectedNode?.orgId;
+          // this.query.organizeId = this.selectedNode?.orgId;
           this.listAgencyMap = this.expanded(this.listAgencyMap, this.selectedNode.parentId)
           this.selected(this.listAgencyMap, this.query.organizeId);
           if (type) {
@@ -183,7 +183,7 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
     this.columnDefs = []
     this.spinner.show();
     const queryParams = queryString.stringify(this.query);
-    this.apiService.getFormPage(queryParams).subscribe(
+    this.apiService.getFormTypePage(queryParams).subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         if (this.query.offSet === 0) {
@@ -214,14 +214,14 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
     return {
       buttons: [
         {
-          onClick: this.EditEmployee.bind(this),
+          onClick: this.handleEdit.bind(this),
           label: 'Thông tin chi tiết',
           icon: 'pi pi-tablet',
           class: 'btn-primary mr5',
         },
         {
-          onClick: this.xoanhanvien.bind(this),
-          label: 'Xóa nhân viên này',
+          onClick: this.handleDelete.bind(this),
+          label: 'Xóa biểu mẫu',
           icon: 'fa fa-trash',
           class: 'btn-primary mr5',
         },
@@ -229,13 +229,15 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
     };
   }
 
-  xoanhanvien(event) {
+  handleDelete(event) {
+    console.log(event.rowData);
+    
     this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn xóa nhân viên?',
+      message: 'Bạn có chắc chắn muốn xóa biểu mẫu?',
       accept: () => {
-        this.apiService.deleteEmployee(event.rowData.empId).subscribe((results: any) => {
+        this.apiService.delFormTypeInfo(event.rowData.form_type_id).subscribe((results: any) => {
           if (results.status === 'success') {
-            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa nhân viên thành công' });
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa biểu mẫu thành công' });
             this.load();
           } else {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
@@ -245,11 +247,8 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  EditEmployee(event) {
-    const params = {
-      empId: event.rowData.empId
-    }
-    this.router.navigate(['/nhan-su/bieu-mau/bieu-mau-chi-tiet'], { queryParams: params });
+  handleEdit(event) {
+    this.router.navigateByUrl(`/chinh-sach/loai-bieu-mau/${event.rowData.form_type_id}`);
   }
 
   handleAdd(): void {
@@ -400,6 +399,7 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
         this.loadjs = 0;
       }
     }
+    this.changeDetector.detectChanges();
   }
 
   rowSelected(data) {
