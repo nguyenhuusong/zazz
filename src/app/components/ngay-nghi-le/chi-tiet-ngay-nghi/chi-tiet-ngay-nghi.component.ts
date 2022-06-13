@@ -60,7 +60,6 @@ export class ChiTietNgayNghiComponent implements OnInit, OnDestroy {
       dsSaturdays.push(getDaysOfSaturDay(2022, i + 1))
       dsSundays.push(getDaysOfSunday(2022, i + 1))
     }
-    console.log(this.dsNgayThuongs)
     this.listDayWeeks = flatten(listDayWeeks)
     this.dsSaturdays = flatten(dsSaturdays)
     this.dsSundays = flatten(dsSundays)
@@ -97,7 +96,7 @@ export class ChiTietNgayNghiComponent implements OnInit, OnDestroy {
   }
 
   modelEdit = {
-    id: "",
+    id: 0,
   }
   titlePage = '';
   handleParams() {
@@ -105,7 +104,7 @@ export class ChiTietNgayNghiComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((params) => {
         this.paramsObject = { ...params.keys, ...params };
-        this.modelEdit.id = this.paramsObject.params.id || ""
+        this.modelEdit.id = this.paramsObject.params.id || 0
         this.getHolidayInfo();
       });
   };
@@ -166,23 +165,30 @@ export class ChiTietNgayNghiComponent implements OnInit, OnDestroy {
   }
 
   checkAllDateT7Chan() {
-   if(this.checkAllT7Chan) {
     this.dsSaturdays.forEach(date => {
-        const catDate = parseInt(date.value.split('-')[0]);
-        console.log(catDate % 2)
-        if(catDate % 2 === 0) {
-          this.selectedDates.push(date.id_date);
-          this.selectedDates = [...this.selectedDates]
-          console.log( this.selectedDates)
-        }
-    })
-   }else {
-    
-   }
+      const catDate = parseInt(date.value.split('-')[0]);
+      if(catDate % 2 === 0) {
+        this.selectedDates.push(date.id_date);
+        console.log( this.selectedDates)
+      }
+  })
+  this.selectedDates = [...this.selectedDates]
+  }
+
+  removeCheckbox() {
+    this.selectedDates = [];
+    this.checkAllT7Chan =false;
+    this.checkAllT7Le =false;
   }
 
   checkAllDateT7Le() {
-
+    this.dsSaturdays.forEach(date => {
+      const catDate = parseInt(date.value.split('-')[0]);
+      if(catDate % 2 !== 0) {
+        this.selectedDates.push(date.id_date);
+      }
+  })
+  this.selectedDates = [...this.selectedDates]
   }
 
 }

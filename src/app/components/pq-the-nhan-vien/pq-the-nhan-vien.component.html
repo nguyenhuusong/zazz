@@ -55,7 +55,7 @@
                                 <!-- phòng ban -->
                                 <div class="col-4">
                                     <div class="field-group select mb-0 label-8">
-                                        <p-treeSelect [(ngModel)]="model.orgId" [ngClass]="[ departmentFiltes.length <= 0 ? 'tree-empty' : '' ]" [options]="departmentFiltes" selectionMode="single" name="orgId"
+                                        <p-treeSelect [(ngModel)]="model.orgId" [filterInputAutoFocus]="true" [filter]="true" [metaKeySelection]="false" [ngClass]="[ departmentFiltes.length <= 0 ? 'tree-empty' : '' ]" [options]="departmentFiltes" selectionMode="single" name="orgId"
                                         (onNodeSelect)="onChangeTree($event)" placeholder="Chọn phòng ban"></p-treeSelect>
                                         <label>Bộ phận</label>
                                     </div>

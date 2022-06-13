@@ -8,7 +8,7 @@
                         <div class="name">
                             <div class="field-group select mb-0 valid" [ngClass]="">
                                 <p-dropdown panelStyleClass="select-ori-panel" placeholder="Chọn tổ chức" appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
-                                    [options]="organs" [(ngModel)]="query.OrganizeId" name="OrganizeId" (onChange)="find()">
+                                    [options]="organs" [(ngModel)]="query.OrganizeId" name="OrganizeId" (onChange)="selectBoPhan()">
                                     <ng-template let-item pTemplate="selectedItem">
                                         <span style="vertical-align:middle;">{{item.label}}</span>
                                     </ng-template>
@@ -39,7 +39,7 @@
                             </ng-template>
                         </p-dropdown>
                     </div>
-                    <p-button label="Tìm kiếm nâng cao" styleClass="mr-2" icon="" (click)="op.toggle($event)">
+                    <p-button label="Tìm kiếm nâng cao" styleClass="mr-2" icon="" (click)="op.toggle($event); this.getOrganizeTree();">
                         <svg class="mr-2" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M0 0H16V16H0V0Z" fill="#E2EEFF"/>
                         </svg>
@@ -75,9 +75,9 @@
                                 <div class="header-filter-search grid mt-1">
                                   
                                 <div class="col-6">
-                                    <div class="field-group select mb-0" [ngClass]="query.HoliWorkType ? 'valid' : 'invalid'">
-                                        <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" [options]="employeeStatus"
-                                            [(ngModel)]="query.HoliWorkType" name="HoliWorkType" (onChange)="find()">
+                                    <div class="field-group select mb-0 valid" >
+                                        <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" [options]="holiTypes"
+                                            [(ngModel)]="query.HoliType" name="HoliType" (onChange)="find()">
                                             <ng-template let-item pTemplate="selectedItem">
                                                 <span style="vertical-align:middle;">{{item.label}}</span>
                                             </ng-template>
@@ -91,8 +91,8 @@
                                     </div>
                                 </div>
                                 <div class="col-6">
-                                        <div class="field-group select" [ngClass]="query.HoliWorkType ? 'valid' : 'invalid'">
-                                            <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" [options]="employeeStatus"
+                                        <div class="field-group select valid" >
+                                            <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" [options]="holiWorkType"
                                                 [(ngModel)]="query.HoliWorkType" name="HoliWorkType" (onChange)="find()">
                                                 <ng-template let-item pTemplate="selectedItem">
                                                     <span style="vertical-align:middle;">{{item.label}}</span>
@@ -106,20 +106,13 @@
                                             <label for="">Loại tính công: </label>
                                         </div>
                                 </div>
-                                <div class="col-6" >
-                                    <div class="field-group select" [ngClass]="query.HoliWorkType ? 'valid' : 'invalid'">
-                                        <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" [options]="employeeStatus"
-                                            [(ngModel)]="query.HoliWorkType" name="HoliWorkType" (onChange)="find()">
-                                            <ng-template let-item pTemplate="selectedItem">
-                                                <span style="vertical-align:middle;">{{item.label}}</span>
-                                            </ng-template>
-                                            <ng-template let-car pTemplate="item">
-                                                <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                                                    <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
-                                                </div>
-                                            </ng-template>
-                                        </p-dropdown>
-                                        <label for="">Bộ phận: </label>
+                                <div class="col-6">
+                                    <div class="field-group  select treeselect label-8 valid" >
+                                        <p-treeSelect [(ngModel)]="query.DepartmentId" [filterInputAutoFocus]="true" [filter]="true"
+                                            [metaKeySelection]="false" [options]="departmentFiltes" display="chip" (onNodeSelect)="onNodeSelect($event)"
+                                            selectionMode="single" appendTo="body" name="DepartmentId"
+                                            placeholder="Chọn phòng ban"></p-treeSelect>
+                                        <label for="">Bộ phận</label>
                                     </div>
                                 </div>
                                    

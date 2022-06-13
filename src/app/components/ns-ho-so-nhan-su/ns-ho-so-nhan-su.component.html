@@ -155,7 +155,7 @@
         </div>
         <div class="col-4">
             <div class="field-group select mb-0 label-8">
-                <p-treeSelect 
+                <p-treeSelect  [filterInputAutoFocus]="true" [filter]="true" [metaKeySelection]="false"
                     [(ngModel)]="aDepartment" 
                     [ngClass]="[ departmentFiltes.length <= 0 ? 'tree-empty' : '' ]" 
                     [options]="departmentFiltes" 

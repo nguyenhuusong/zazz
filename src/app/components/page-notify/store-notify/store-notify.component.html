@@ -19,7 +19,7 @@
     </div>
     <div class="col-md-6 ">
       <div class="field-group  select treeselect label-8" [ngClass]=" sub_prod_cd? 'valid' : 'invalid' ">
-        <p-treeSelect [(ngModel)]="sub_prod_cd" [options]="departmentFiltes" display="chip" (onNodeSelect)="onNodeSelect($event)" (onNodeUnselect)="onNodeUnselect($event)" [metaKeySelection]="false" selectionMode="multiple"  appendTo="body" name="sub_prod_cd" placeholder="Chọn phòng ban"></p-treeSelect>
+        <p-treeSelect [(ngModel)]="sub_prod_cd" [filterInputAutoFocus]="true" [filter]="true" [metaKeySelection]="false" [options]="departmentFiltes" display="chip" (onNodeSelect)="onNodeSelect($event)" (onNodeUnselect)="onNodeUnselect($event)" [metaKeySelection]="false" selectionMode="multiple"  appendTo="body" name="sub_prod_cd" placeholder="Chọn phòng ban"></p-treeSelect>
         <label for="">Bộ phận</label>
       </div>
     </div>

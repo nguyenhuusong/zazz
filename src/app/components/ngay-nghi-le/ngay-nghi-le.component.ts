@@ -123,7 +123,7 @@ export class NgayNghiLeComponent implements OnInit {
       gridWidth: 0,
       offSet: 0,
       pageSize: 15,
-      OrganizeId: null,
+      OrganizeId: this.query.OrganizeId,
       DepartmentId: null,
       HoliType: null,
       HoliWorkType: null,
@@ -260,9 +260,9 @@ export class NgayNghiLeComponent implements OnInit {
           return params.rowIndex + 1
         },
         cellClass: ['border-right', 'no-auto'],
-        checkboxSelection: true,
-        headerCheckboxSelection: true,
-        headerCheckboxSelectionFilteredOnly: true,
+        // checkboxSelection: true,
+        // headerCheckboxSelection: true,
+        // headerCheckboxSelectionFilteredOnly: true,
         field: 'checkbox2',
         suppressSizeToFit: true,
       },
@@ -365,6 +365,8 @@ export class NgayNghiLeComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getObjectList();
+    this.getObjectListWorkType();
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Cài đặt' },
@@ -372,6 +374,37 @@ export class NgayNghiLeComponent implements OnInit {
     ];
     this.getAgencyOrganizeMap();
     this.getOrgan();
+  }
+  holiTypes = []
+  getObjectList() {
+    const queryParams = queryString.stringify({ objKey: 'holi_type' });
+    this.apiService.getCustObjectListNew(false,queryParams).subscribe(results => {
+      if (results.status === 'success') {
+        this.holiTypes = results.data.map(d => {
+          return {
+            label: d.objName,
+            value: d.objCode
+          }
+        });
+        this.holiTypes = [{ label: 'Tất cả', value: null }, ...this.holiTypes]
+      }
+    })
+  }
+  
+  holiWorkType = []
+  getObjectListWorkType() {
+    const queryParams = queryString.stringify({ objKey: 'holi_work_type' });
+    this.apiService.getCustObjectListNew(false,queryParams).subscribe(results => {
+      if (results.status === 'success') {
+        this.holiWorkType = results.data.map(d => {
+          return {
+            label: d.objName,
+            value: d.objCode
+          }
+        });
+        this.holiWorkType = [{ label: 'Tất cả', value: null }, ...this.holiWorkType]
+      }
+    })
   }
  
   organizeList = []
@@ -431,20 +464,24 @@ export class NgayNghiLeComponent implements OnInit {
   }
 
   getOrganizeTree(): void {
-    // const queryParams = queryString.stringify({ parentId: this.organizeId });
-    // this.apiService.getOrganizeTree(queryParams)
-    //   .subscribe((results: any) => {
-    //     if (results && results.status === 'success') {
-    //       this.departmentFiltes = results.data;
-    //     }
-    //   },
-    //     error => { });
+    const queryParams = queryString.stringify({ parentId: this.query.OrganizeId });
+    this.apiService.getOrganizeTree(queryParams)
+      .subscribe((results: any) => {
+        if (results && results.status === 'success') {
+          this.departmentFiltes = results.data;
+        }
+      },
+        error => { });
   }
 
   handleChangeOrganize() {
     this.getOrganizeTree();
   }
  
+  selectBoPhan() {
+    this.getOrganizeTree();
+    this.find();
+  }
 
   listDataSelect = [];
   rowSelected(data) {
