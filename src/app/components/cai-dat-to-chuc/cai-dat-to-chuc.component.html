@@ -97,7 +97,7 @@
     </div>
     <div class=" col-md-12 mt-1">
       <div class="field-group treeselect select label-8" >
-          <p-treeSelect [(ngModel)]="selectedNodeTree" [options]="listOrganizeTree" (onNodeSelect)="onNodeSelectAdd($event)"
+          <p-treeSelect [(ngModel)]="selectedNodeTree" [filterInputAutoFocus]="true" [filter]="true" [metaKeySelection]="false" [options]="listOrganizeTree" (onNodeSelect)="onNodeSelectAdd($event)"
           selectionMode="single" placeholder="Select Item"></p-treeSelect>
           <!-- <p-dropdown appendTo="body" [disabled]="titleForm.value === 'Add'" *ngIf="titleForm.value === 'Add'"  [baseZIndex]="100" 
           [options]="organizeList" [required] [(ngModel)]="modeAgencyOrganize.parentId" name="parentId" [filter]="true">

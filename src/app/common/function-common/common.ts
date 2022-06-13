@@ -240,7 +240,8 @@ export function getDaysOfMonth(year, month) {
     for (let i = 0; i < daysInMonth; i++) {
         arrDays.push({
             label: convertNumberToStringDay(moment(new Date(year, month - 1, i + 1)).day()),
-            value: moment(new Date(year, month - 1, i + 1)).format('DD-MM')
+            value: moment(new Date(year, month - 1, i + 1)).format('DD-MM'),
+            id_date: moment(new Date(year, month - 1, i + 1)).format('YYYY-MM-DD')
         })
     }
 
@@ -297,20 +298,62 @@ export function getDaysOfEndWeek(year, month) {
         if (isdayWeek) {
             arrDays.push({
                 label: moment(new Date(year, month - 1, i + 1)).day() === 6 ? 'Thứ 7' : 'Chủ nhật',
-                value: moment(new Date(year, month - 1, i + 1)).format('DD-MM')
+                value: moment(new Date(year, month - 1, i + 1)).format('DD-MM'),
+                id_date: moment(new Date(year, month - 1, i + 1)).format('YYYY-MM-DD')
             });
-            console.log(arrDays)
         }
     }
-
-    // while(daysInMonth) { 
-    //   var current = moment().date(daysInMonth);
-    //   arrDays.push(current.format('MM-DD-YYYY'));
-    //   daysInMonth--;
-    // }
-
     return arrDays;
 };
+
+export function getDaysOfSaturDay(year, month) {
+    var monthDate = moment(year + '-' + month, 'YYYY-MM');
+    console.log(monthDate)
+    var daysInMonth = monthDate.daysInMonth();
+    console.log(daysInMonth)
+    var arrDays = [];
+    for (let i = 0; i < daysInMonth; i++) {
+        const isdayWeek = isSaturDay(new Date(year, month - 1, i + 1))
+        console.log(isdayWeek)
+        if (isdayWeek) {
+            arrDays.push({
+                label: 'Thứ 7',
+                value: moment(new Date(year, month - 1, i + 1)).format('DD-MM'),
+                id_date: moment(new Date(year, month - 1, i + 1)).format('YYYY-MM-DD')
+            });
+        }
+    }
+    return arrDays;
+};
+
+export function getDaysOfSunday(year, month) {
+    var monthDate = moment(year + '-' + month, 'YYYY-MM');
+    console.log(monthDate)
+    var daysInMonth = monthDate.daysInMonth();
+    console.log(daysInMonth)
+    var arrDays = [];
+    for (let i = 0; i < daysInMonth; i++) {
+        const isdayWeek = isSunday(new Date(year, month - 1, i + 1))
+        console.log(isdayWeek)
+        if (isdayWeek) {
+            arrDays.push({
+                label: 'Chủ nhật',
+                value: moment(new Date(year, month - 1, i + 1)).format('DD-MM'),
+                id_date: moment(new Date(year, month - 1, i + 1)).format('YYYY-MM-DD')
+            });
+        }
+    }
+    return arrDays;
+};
+
 export function isWeekend(date = new Date()) {
     return date.getDay() === 6 || date.getDay() === 0;
+}
+
+export function isSaturDay(date = new Date()) {
+    return date.getDay() === 6;
+}
+
+export function isSunday(date = new Date()) {
+    return date.getDay() === 0;
 }

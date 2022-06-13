@@ -15,7 +15,7 @@ import { WebsocketService2 } from 'src/app/services/websocket.service';
 import { Subject, takeUntil } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-
+import * as moment from 'moment';
 @Component({
   selector: 'app-xu-ly-hop-dong',
   templateUrl: './xu-ly-hop-dong.component.html',
@@ -85,7 +85,9 @@ export class XuLyHopDongComponent implements OnInit {
     organizeId: null,
     orgId: null,
     contract_st: null,
-    contractTypeId: null
+    contractTypeId: null,
+    fromDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).add(-1,'months').format("YYYY-MM-DD")),
+    toDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).format("YYYY-MM-DD")),
   }
   totalRecord = 0;
   DriverId = 0;
@@ -102,6 +104,9 @@ export class XuLyHopDongComponent implements OnInit {
   loading = false;
   itemsToolOfGrid: any[] = [];
 
+  isShowbtnPheDuyet = true;
+  paramsPheDuyet: any = []
+
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
@@ -115,7 +120,9 @@ export class XuLyHopDongComponent implements OnInit {
       organizeId: null,
       orgId: null,
       contract_st: null,
-      contractTypeId: null
+      contractTypeId: null,
+      fromDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth())).add(-1,'months').format()),
+      toDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth())).format()),
     }
     this.load();
   }
@@ -171,7 +178,12 @@ export class XuLyHopDongComponent implements OnInit {
   load() {
     this.columnDefs = []
     this.spinner.show();
-    const queryParams = queryString.stringify(this.query);
+    let params: any = {... this.query};
+    delete params.fromDate
+    delete params.toDate
+    params.fromDate = moment(new Date(this.query.fromDate)).format('YYYY-MM-DD')
+    params.toDate = moment(new Date(this.query.toDate)).format('YYYY-MM-DD')
+    const queryParams = queryString.stringify(params);
     this.apiService.getContractPage(queryParams).subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
@@ -435,6 +447,32 @@ export class XuLyHopDongComponent implements OnInit {
   }
   rowSelected(event) {
     this.listRowSelects = event;
+    if(this.listRowSelects.length> 0 ){
+      this.isShowbtnPheDuyet = false;
+    }else{
+      this.isShowbtnPheDuyet = true;
+    }
+  }
+
+  pheDuyetHopDong() {
+    if(this.listRowSelects.length> 0 ){
+      this.paramsPheDuyet = this.listRowSelects.map( d => {
+        return{
+          contractId: d.contractId,
+          fullName:  d.fullName,
+          contract_no:  d.contract_no,
+          status: 1,
+          comment:  d.contractId
+        }
+      })
+      this.apiService.setListContractStatus(this.paramsPheDuyet).subscribe((res: any) => {
+        if (res.status === 'success') {
+          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: res.data ? res.data : '' });
+        } else {
+          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: res.message });
+        }
+      });
+    }
   }
 
   openPrint() {
