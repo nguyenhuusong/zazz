@@ -7,14 +7,14 @@
     <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButon"  [dataView]="listViews"
         (callback)="setHolidayInfo($event)" (callbackcancel)="quaylai($event)"></app-edit-detail>
    </div>
-   <div class="box-weekend" [ngClass]="{'width-100': whatDayName !== 0}" *ngIf="modelEdit.id == 0">
+   <div class="box-weekend" [ngClass]="{'width-100': whatDayName !== 5}" *ngIf="modelEdit.id == 0">
        <div class="head d-flex middle bet">
             <div class="text-left">
                 <div class="float-left">
-                    <p-dropdown [options]="whatDay" [(ngModel)]="whatDayName"  name="whatDayName" (onChange)="selecteOptionDate($event)"></p-dropdown>
+                    <p-dropdown [options]="whatDay" [(ngModel)]="whatDayName" [disabled]="true" name="whatDayName" (onChange)="selecteOptionDate($event.value)"></p-dropdown>
                 </div>
             </div>
-            <div class="select-month d-flex bet middle" *ngIf="whatDayName === 0">
+            <div class="select-month d-flex bet middle" *ngIf="whatDayName === 5">
                 <span (click)="prevDate()">
                     <svg width="10" height="16" viewBox="0 0 10 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M9.11086 0.916745C8.6778 0.504314 7.97569 0.504314 7.54264 0.916745L0.889242 7.25331C0.45619 7.66574 0.45619 8.33442 0.889242 8.74685L7.54264 15.0834C7.97569 15.4959 8.6778 15.4959 9.11086 15.0834C9.54391 14.671 9.54391 14.0023 9.11086 13.5899L3.24157 8.00008L9.11086 2.41029C9.54391 1.99786 9.54391 1.32918 9.11086 0.916745Z" fill="white"/>
@@ -29,8 +29,8 @@
                     </svg>
                 </span>
             </div>
-            <div class="text-right" *ngIf="whatDayName !== 0">
-                <div *ngIf="whatDayName ===4; else other">
+            <div class="text-right" *ngIf="whatDayName !== 5">
+                <div *ngIf="whatDayName ===1 || whatDayName ===6; else other">
                    <div class="d-flex">
                         <div class="field-checkbox">
                             <p-checkbox [(ngModel)]="checkAllT7Chan" (onChange)="checkAllDateT7Chan()" [binary]="true" inputId="binary"></p-checkbox>

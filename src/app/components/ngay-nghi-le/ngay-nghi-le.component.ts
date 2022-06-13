@@ -241,7 +241,7 @@ export class NgayNghiLeComponent implements OnInit {
         },
         {
           onClick: this.xoanhanvien.bind(this),
-          label: 'Xóa nhân viên này',
+          label: 'Xóa',
           icon: 'fa fa-trash',
           class: 'btn-primary mr5',
         },
@@ -330,7 +330,8 @@ export class NgayNghiLeComponent implements OnInit {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa nhân viên?',
       accept: () => {
-        this.apiService.deleteEmployee(event.rowData.empId).subscribe((results: any) => {
+        const queryParams = queryString.stringify({ id: event.rowData.id });
+        this.apiService.deleteHoliday(queryParams).subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa nhân viên thành công' });
             this.load();

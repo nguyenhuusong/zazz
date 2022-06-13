@@ -112,7 +112,7 @@ export class AppTypeSelectComponent implements OnInit {
   selector: 'app-type-selectTree',
   template: `  
     <div class="field-group select treeselect" [ngClass]="'valid'"> 
-      <p-treeSelect [filterInputAutoFocus]="true" [filter]="true" [metaKeySelection]="false" [(ngModel)]="element.columnValue" [options]="element.options" [required]="element.isRequire && element.isVisiable && !element.isEmpty" (onNodeSelect)="onChangeTree($event, element.field_name, element)" [disabled]="element.isDisable" selectionMode="single"  placeholder="Select Item"></p-treeSelect>
+      <p-treeSelect [filterInputAutoFocus]="true" [filter]="true" [metaKeySelection]="false" name={{element.field_name}} [(ngModel)]="element.columnValue" [options]="element.options" [required]="element.isRequire && element.isVisiable && !element.isEmpty" (onNodeSelect)="onChangeTree($event, element.field_name, element)" [disabled]="element.isDisable" selectionMode="single"  placeholder="Select Item"></p-treeSelect>
       <div *ngIf="element.isRequire && submit && !element.columnValue"
           class="alert-validation alert-danger">
           <div [hidden]="element.columnValue">
@@ -302,7 +302,7 @@ export class AppTypeDropdownComponent implements OnInit {
     } else if (field_name === 'organizeId') {
       this.dataView.forEach(element => {
         element.fields.forEach(async element1 => {
-          if (element1.columnType === 'selectTree' && element1.field_name === 'orgId') {
+          if (element1.columnType === 'selectTree' && (element1.field_name === 'orgId' || element1.field_name === 'departmentId')) {
             this.getOrganizeTree(value, element1);
           } else if (element1.field_name === 'jobId') {
             const positionTypeCd = await this.getValueByKey('positionCd');
@@ -367,6 +367,8 @@ export class AppTypeDropdownComponent implements OnInit {
         });
       });
     } else if (field_name === 'contractTypeId') {
+      this.callback.emit(value);
+    }else if (field_name === 'holi_type') {
       this.callback.emit(value);
     }
   }

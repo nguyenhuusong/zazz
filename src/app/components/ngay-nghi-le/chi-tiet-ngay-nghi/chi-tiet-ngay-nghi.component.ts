@@ -23,11 +23,12 @@ export class ChiTietNgayNghiComponent implements OnInit, OnDestroy {
     { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check' }
   ]
   whatDay = [
-    { label: 'Ngày thường', value: 0 },
-    { label: 'Cuối tuần', value: 1 },
+    { label: 'Ngày thường', value: 5 },
+    { label: 'Thứ 7 xen kẽ', value: 6 },
+    { label: 'Cuối tuần', value: 3 },
     // {label: 'Ngày lễ', value: 2},
-    { label: 'Thứ 7', value: 4 },
-    { label: 'Chủ nhật', value: 5 },
+    { label: 'Thứ 7', value: 1 },
+    { label: 'Chủ nhật', value: 2 },
   ]
   whatDayName = 0;
   checkAllT7Chan = false;
@@ -68,20 +69,21 @@ export class ChiTietNgayNghiComponent implements OnInit, OnDestroy {
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Cài đặt' },
-      { label: 'Ngày nghỉ', routerLink: '/cai-dat/cai-dat-ngay-nghi-le' },
+      { label: 'Danh sách ngày nghỉ', routerLink: '/cai-dat/cai-dat-ngay-nghi-le' },
       { label: `${this.titlePage}` },
     ];
     this.handleParams();
   };
 
-  selecteOptionDate(event) {
-    if (event.value === 0) {
+  selecteOptionDate(value) {
+    console.log(value)
+    if (value === 5) {
       this.dates = this.dsNgayThuongs[new Date().getMonth()];
-    } else if (event.value === 1) {
+    } else if (value === 3) {
       this.dates = this.listDayWeeks;
-    } else if (event.value === 3 || event.value === 4) {
+    } else if (value === 1 || value === 6) {
       this.dates = this.dsSaturdays;
-    } else if (event.value === 5) {
+    } else if (value === 2) {
       this.dates = this.dsSundays;
     }
   }
@@ -147,7 +149,15 @@ export class ChiTietNgayNghiComponent implements OnInit, OnDestroy {
   }
 
   quaylai(data) {
-    this.router.navigate(['/cai-dat/cai-dat-ngay-nghi-le']);
+    if(data) {
+      console.log(data);
+      this.whatDayName = parseInt(data);
+      console.log(this.whatDayName)
+      this.selecteOptionDate(this.whatDayName)
+     
+    }else {
+      this.router.navigate(['/cai-dat/cai-dat-ngay-nghi-le']);
+    }
   }
   modelMonth = new Date().getMonth() + 1;
   nextDate() {

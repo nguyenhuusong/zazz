@@ -112,7 +112,6 @@ export class EditDetailComponent implements OnInit, OnChanges {
               const root_orgId = await this.getValueByKey('organizeId');
               setTimeout(() => {
                 this.getOrganizeTree(root_orgId, element1);
-
               }, 100);
             } else {
               setTimeout(() => {
