@@ -1,3 +1,5 @@
+import { OrganizationChartModule } from 'primeng/organizationchart';
+import { BieuMauComponent } from './../../components/bieu-mau/bieu-mau.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -49,6 +51,9 @@ import {OverlayPanelModule} from 'primeng/overlaypanel';
 import {TreeSelectModule} from 'primeng/treeselect';
 import { HrmBreadCrumbModule } from 'src/app/common/hrm-breadcrumb/hrm-breadcrumb.module';
 import {CheckboxModule} from 'primeng/checkbox';
+import { BieuMauChiTietComponent } from 'src/app/components/bieu-mau/bieu-mau-chi-tiet/bieu-mau-chi-tiet.component';
+import { LoaiBieuMauComponent } from 'src/app/components/bieu-mau/loai-bieu-mau/loai-bieu-mau.component';
+import { ChiTietLoaiBieuMauComponent } from 'src/app/components/bieu-mau/loai-bieu-mau/chi-tiet-loai-bieu-mau/chi-tiet-loai-bieu-mau.component';
 @NgModule({
   imports: [
     MessagesModule,
@@ -84,6 +89,7 @@ import {CheckboxModule} from 'primeng/checkbox';
     OverlayPanelModule,
     TreeSelectModule,
     HrmBreadCrumbModule,
+    OrganizationChartModule,
     AgGridModule.withComponents([
       ButtonRendererComponent,
       ButtonRendererComponent1
@@ -106,6 +112,10 @@ import {CheckboxModule} from 'primeng/checkbox';
     PhepNamComponent,
     PhepBuComponent,
     ChiTietPhepBuComponent,
+    BieuMauComponent,
+    BieuMauChiTietComponent,
+    LoaiBieuMauComponent,
+    ChiTietLoaiBieuMauComponent
   ],
   providers: []
 })

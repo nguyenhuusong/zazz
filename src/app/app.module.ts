@@ -57,6 +57,10 @@ import { BaoCaoComponent } from './components/bao-cao/bao-cao.component';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { ListGridAngularModule } from './common/list-grid-angular/list-grid-angular.module';
 import { OrganizationChartModule } from 'primeng/organizationchart';
+import { BieuMauComponent } from './components/bieu-mau/bieu-mau.component';
+import { BieuMauChiTietComponent } from './components/bieu-mau/bieu-mau-chi-tiet/bieu-mau-chi-tiet.component';
+import { LoaiBieuMauComponent } from './components/bieu-mau/loai-bieu-mau/loai-bieu-mau.component';
+import { ChiTietLoaiBieuMauComponent } from './components/bieu-mau/loai-bieu-mau/chi-tiet-loai-bieu-mau/chi-tiet-loai-bieu-mau.component';
 const APP_CONTAINERS = [DefaultLayoutComponent];
 @NgModule({
     declarations: [
@@ -71,7 +75,7 @@ const APP_CONTAINERS = [DefaultLayoutComponent];
         CustomTooltipComponent,
         TooltipSuggestionComponent,
         DropdownRendererComponent,
-        BaoCaoComponent,
+        BaoCaoComponent
     ],
     imports: [
         BrowserAnimationsModule,
