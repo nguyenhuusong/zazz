@@ -249,10 +249,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
   }
 
   EditEmployee(event) {
-    const params = {
-      empId: event.rowData.empId
-    }
-    this.router.navigate(['/nhan-su/bieu-mau/bieu-mau-chi-tiet'], { queryParams: params });
+    this.router.navigateByUrl(`/chinh-sach/bieu-mau/${event.rowData.form_id}`);
   }
 
 
