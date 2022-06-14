@@ -216,6 +216,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
             this.GetAnnualMonth(element1);
           }else if(element1.field_name === 'reason_code') { 
             this.getLeaveReasons(element1)
+          } else if (element1.field_name === 'parent_type_id' || element1.field_name === 'form_type') {
+            this.getFormTypePage(element1);
           } else {
             this.getCustObjectListNew(element1);
           }
@@ -226,6 +228,24 @@ export class EditDetailComponent implements OnInit, OnChanges {
         }
       });
     });
+  }
+
+  getFormTypePage(element1) {
+    this.apiService.getFormTypes()
+    .subscribe(response => {
+      if (response.status === 'success') {
+        element1.options = cloneDeep(response.data)
+        .map(d => {
+          return {
+            label: d.formTypeName,
+            value: d.formTypeId
+          }
+        });
+        element1.columnValue = element1.columnValue ? element1.columnValue: ''
+      } else {
+        console.error(response.message);
+      }
+    })
   }
 
   getLeaveReasons(element1) {

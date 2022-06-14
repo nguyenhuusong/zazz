@@ -40,7 +40,8 @@ export class BieuMauChiTietComponent implements OnInit, OnDestroy {
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Chính sách' },
-      { label: 'Chi tiết loại biểu mẫu' }
+      { label: 'Biểu mẫu', routerLink: '/chinh-sach/bieu-mau'},
+      { label: 'Chi tiết biểu mẫu' }
     ];
     this.handleParams();
   }
@@ -49,7 +50,7 @@ export class BieuMauChiTietComponent implements OnInit, OnDestroy {
     this.activatedRoute.params
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((params) => {
-        this.id = params.id;
+        this.id = params.id === 'them-moi' ? '' : params.id;
         this.getDetail();
       });
   };

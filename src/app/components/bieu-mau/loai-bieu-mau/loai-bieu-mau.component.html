@@ -58,36 +58,24 @@
                 </div>
                 <div class="x-2">
                     <div class="field-group select mb-0 label-8" [ngClass]=" query.typeForm">
-                        <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
-                                [options]="formTypes" [(ngModel)]="query.typeForm" name="typeForm"
-                                (onChange)="find()" [filter]="true">
-                                <ng-template let-item pTemplate="selectedItem">
-                                    <span>{{item.label}}</span>
-                                </ng-template>
-                                <ng-template let-car pTemplate="item">
-                                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                                        <div>{{car.label}}</div>
-                                    </div>
-                                </ng-template>
+                        <p-dropdown [showClear] = "true" appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" optionLabel="formTypeName" optionValue="formTypeId"
+                            [options]="formTypes" [(ngModel)]="query.typeForm" name="typeForm"
+                            (onChange)="find()" [filter]="true" >
+                            <ng-template let-item pTemplate="selectedItem">
+                                <span>{{item.formTypeName}}</span>
+                            </ng-template>
+                            <ng-template let-car pTemplate="item">
+                                <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                                    <div>{{car.formTypeName}}</div>
+                                </div>
+                            </ng-template>
                         </p-dropdown>
-                        <label>Loại biểu mẫu</label>
+                        <label>Cấp cha</label>
                     </div>
                 </div>
                 <div class="x-1">
                     <div class="field-group select mb-0 label-8" [ngClass]=" query.createDate">
-                        <p-calendar [(ngModel)]="query.createDate" [showIcon]="true" inputId="icon"></p-calendar>
-                        <!-- <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
-                                [options]="employeeStatus" [(ngModel)]="query.typeForm" name="typeForm"
-                                (onChange)="find()" [filter]="true">
-                                <ng-template let-item pTemplate="selectedItem">
-                                    <span>{{item.label}}</span>
-                                </ng-template>
-                                <ng-template let-car pTemplate="item">
-                                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                                        <div>{{car.label}}</div>
-                                    </div>
-                                </ng-template>
-                        </p-dropdown> -->
+                        <p-calendar [(ngModel)]="query.createDate" name = "createDate" [showIcon]="true" inputId="icon" (onSelect)="find()"></p-calendar>
                         <label>Ngày tạo</label>
                     </div>
                 </div>
@@ -115,63 +103,6 @@
         </div>
     </div>
 </div>
-
-<!-- <p-dialog  [modal]="true" [(visible)]="isShowAvatar" header="Ảnh Avartar">
-    <p-image class="img-popup" [src]="imgAvatar" alt="Image" [preview]="false"></p-image>
-</p-dialog> -->
-<!-- <p-dialog [modal]="true" [(visible)]="isTheOrganToMove" header="Chuyển tổ chức" [style]="{width: '60vw'}">
-    <div class="grid ">
-        <div class="col-4">
-            <div class="field-group select mb-0 label-8" [ngClass]="organizeId? 'valid': 'invalid' ">
-                <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" (onChange)="getOrganizeTree()"
-                    [options]="organs" [(ngModel)]="organizeId" name="organizeId" [filter]="true"
-                    (onChange)="handleChangeOrganize()"
-                    placeholder="Chọn tổ chức"
-                    >
-                    <ng-template let-item pTemplate="selectedItem">
-                        <span style="vertical-align:middle;">{{item?.label}}</span>
-                    </ng-template>
-                    <ng-template let-car pTemplate="item">
-                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                        <div style="font-size:14px;float:right;margin-top:4px">{{car?.label}}</div>
-                        </div>
-                    </ng-template>
-                </p-dropdown>
-                <label>Tổ chức</label>
-            </div>
-        </div>
-        <div class="col-4">
-            <div class="field-group select mb-0 label-8">
-                <p-treeSelect 
-                    [(ngModel)]="aDepartment" 
-                    [ngClass]="[ departmentFiltes.length <= 0 ? 'tree-empty' : '' ]" 
-                    [options]="departmentFiltes" 
-                    selectionMode="single" 
-                    name="aDepartment"
-                    (onNodeSelect)="onChangeTreeDepart()"
-                    placeholder="Chọn phòng ban">
-                </p-treeSelect>
-                <label>Bộ phận</label>
-            </div>
-        </div>
-        <div class="col-2">
-            <p-button label="Chuyển tổ chức" styleClass="btn-h56" (click)="moveOrganNow()" [disabled]="isButtonmoveOrganNow"></p-button>
-        </div>
-        <div class="col-12">
-            <div class="grid-default">
-                <app-list-grid-angular *ngIf="columnDefsMoveOrgan.length > 0" 
-                    [listsData]="theOrganToMoveData" 
-                    [height]="500"
-                    [idGrid]="'theOrganToMoveData'"
-                    [domLayout]="'autoHeight'" 
-                    [columnDefs]="columnDefsMoveOrgan"
-                    [rowSelection]="'multiple'"
-                    >
-                </app-list-grid-angular>
-            </div>
-        </div>
-    </div>
-</p-dialog> -->
 <p-dialog styleClass="hr-diagram" [appendTo]="'body'" [autoZIndex]="true" [(visible)]="isHrDiagram" [modal]="true" [breakpoints]="{'1024': '95vw', '640px': '100vw'}" [style]="{width: '90vw'}">
     <ng-template pTemplate="header">
         Lọc nhân sự theo sơ đồ tổ chức

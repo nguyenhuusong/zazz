@@ -64,15 +64,15 @@
                 </div>
                 <div class="x-2">
                     <div class="field-group select mb-0 label-8" [ngClass]=" query.typeForm">
-                        <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
+                        <p-dropdown [showClear] = "true" appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" optionLabel="formTypeName" optionValue="formTypeId"
                                 [options]="formTypes" [(ngModel)]="query.typeForm" name="typeForm"
-                                (onChange)="find()" [filter]="true">
+                                (onChange)="find()" [filter]="true" >
                                 <ng-template let-item pTemplate="selectedItem">
-                                    <span>{{item.label}}</span>
+                                    <span>{{item.formTypeName}}</span>
                                 </ng-template>
                                 <ng-template let-car pTemplate="item">
                                     <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                                        <div>{{car.label}}</div>
+                                        <div>{{car.formTypeName}}</div>
                                     </div>
                                 </ng-template>
                         </p-dropdown>
