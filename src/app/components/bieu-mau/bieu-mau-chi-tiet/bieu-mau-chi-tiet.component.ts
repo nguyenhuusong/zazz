@@ -76,7 +76,7 @@ export class BieuMauChiTietComponent implements OnInit, OnDestroy {
     const params = {
       ...this.detailInfo, group_fields: event
     };
-    this.apiService.setFormTypeInfo(params)
+    this.apiService.setFormInfo(params)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((results: any) => {
         if (results.status === 'success') {

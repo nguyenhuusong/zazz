@@ -81,7 +81,7 @@
                 </div>
                 <div class="x-1">
                     <div class="field-group select mb-0 label-8" [ngClass]=" query.createDate">
-                        <p-calendar [(ngModel)]="query.createDate" [showIcon]="true" inputId="icon"></p-calendar>
+                        <p-calendar [(ngModel)]="query.createDate" [showIcon]="true" inputId="icon" (onSelect)="find()"></p-calendar>
                         <label>Ngày tạo</label>
                     </div>
                 </div>
