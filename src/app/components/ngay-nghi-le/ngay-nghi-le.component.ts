@@ -1,17 +1,12 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router, Params } from '@angular/router';
-import * as queryString from 'querystring';
-import { ConfirmationService, MessageService, TreeNode } from 'primeng/api';
-import { ApiService } from 'src/app/services/api.service';
 import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ConfirmationService, MessageService, TreeNode } from 'primeng/api';
+import * as queryString from 'querystring';
 import { AgGridFn } from 'src/app/common/function-common/common';
-import { CustomTooltipComponent } from 'src/app/common/ag-component/customtooltip.component';
-import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
-import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.component';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { ExportFileService } from 'src/app/services/export-file.service';
-import { cloneDeep } from 'lodash';
 @Component({
   selector: 'app-ngay-nghi-le',
   templateUrl: './ngay-nghi-le.component.html',
@@ -66,10 +61,10 @@ export class NgayNghiLeComponent implements OnInit {
   // for the move organ
   departmentFiltes = [];
   years = [
-    {label: '2020', value: 2020},
-    {label: '2021', value: 2021},
-    {label: '2022', value: 2022},
-    {label: '2023', value: 2023},
+    { label: '2020', value: 2020 },
+    { label: '2021', value: 2021 },
+    { label: '2022', value: 2022 },
+    { label: '2023', value: 2023 },
   ]
   constructor(
     private apiService: ApiHrmService,
@@ -91,9 +86,6 @@ export class NgayNghiLeComponent implements OnInit {
       return 50;
     };
     this.frameworkComponents = {
-      customTooltip: CustomTooltipComponent,
-      buttonAgGridComponent: ButtonAgGridComponent,
-      avatarRendererFull: AvatarFullComponent,
     };
 
 
@@ -113,7 +105,7 @@ export class NgayNghiLeComponent implements OnInit {
   listAgencyMap: TreeNode[];
   detailOrganizeMap = null;
   isHrDiagram: boolean = false
-  employeeStatus= []
+  employeeStatus = []
   onmouseenter(event) {
     console.log(event)
   }
@@ -169,12 +161,12 @@ export class NgayNghiLeComponent implements OnInit {
         if (d.children.length > 0) this.expanded(d.children, this.selectedNode.parentId)
       }
       d.children.forEach((elm: { children: { expanded: boolean; }[]; expanded: boolean; }) => {
-        elm.children.forEach((e: { expanded: boolean; }) =>{
+        elm.children.forEach((e: { expanded: boolean; }) => {
           if (e.expanded === true) {
             elm.expanded = true
           }
         })
-      });      
+      });
     })
     return datas
   }
@@ -236,13 +228,13 @@ export class NgayNghiLeComponent implements OnInit {
         {
           onClick: this.EditEmployee.bind(this),
           label: 'Thông tin chi tiết',
-          icon: 'pi pi-tablet',
+          icon: 'icon-edit',
           class: 'btn-primary mr5',
         },
         {
           onClick: this.xoanhanvien.bind(this),
           label: 'Xóa',
-          icon: 'fa fa-trash',
+          icon: 'icon-delete',
           class: 'btn-primary mr5',
         },
       ]
@@ -267,16 +259,23 @@ export class NgayNghiLeComponent implements OnInit {
         suppressSizeToFit: true,
       },
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
+      // {
+      //   headerName: 'Thao tác',
+      //   filter: '',
+      //   maxWidth: 90,
+      //   pinned: 'right',
+      //   cellRenderer: 'buttonRendererComponent',
+      //   cellRendererParams: (params: any) => this.showButtons(params),
+      //   cellClass: ['action', 'border-right', 'no-auto'],
+      // },
       {
-        headerName: 'Thao tác',
-        filter: '',
-        maxWidth: 90,
-        pinned: 'right',
-        cellRenderer: 'buttonAgGridComponent',
-        cellClass: ['border-right', 'no-auto'],
+        headerName: 'Thao tác', field: 'button',
+        editable: false, width: 70,
+        cellRenderer: 'buttonRendererComponent',
         cellRendererParams: (params: any) => this.showButtons(params),
-        field: 'checkbox'
-      }]
+        cellClass: ['action', 'border-right', 'no-auto'],
+      },
+    ]
 
     this.detailCellRendererParams = {
       detailGridOptions: {
@@ -379,7 +378,7 @@ export class NgayNghiLeComponent implements OnInit {
   holiTypes = []
   getObjectList() {
     const queryParams = queryString.stringify({ objKey: 'holi_type' });
-    this.apiService.getCustObjectListNew(false,queryParams).subscribe(results => {
+    this.apiService.getCustObjectListNew(false, queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.holiTypes = results.data.map(d => {
           return {
@@ -391,11 +390,11 @@ export class NgayNghiLeComponent implements OnInit {
       }
     })
   }
-  
+
   holiWorkType = []
   getObjectListWorkType() {
     const queryParams = queryString.stringify({ objKey: 'holi_work_type' });
-    this.apiService.getCustObjectListNew(false,queryParams).subscribe(results => {
+    this.apiService.getCustObjectListNew(false, queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.holiWorkType = results.data.map(d => {
           return {
@@ -407,7 +406,7 @@ export class NgayNghiLeComponent implements OnInit {
       }
     })
   }
- 
+
   organizeList = []
   onNodeSelect(event) {
     this.detailOrganizeMap = event.node;
@@ -478,7 +477,7 @@ export class NgayNghiLeComponent implements OnInit {
   handleChangeOrganize() {
     this.getOrganizeTree();
   }
- 
+
   selectBoPhan() {
     this.getOrganizeTree();
     this.find();

@@ -4,6 +4,7 @@ import { CustomTooltipComponent } from '../ag-component/customtooltip.component'
 import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
 import { AvatarFullComponent } from '../ag-component/avatarFull.component';
 import { ActivatedRoute } from '@angular/router';
+import { ButtonRendererComponent } from 'src/app/utils/common/button-renderer.component';
 @Component({
   selector: 'app-list-grid-angular',
   templateUrl: './list-grid-angular.component.html',
@@ -79,11 +80,11 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
       fileName: this.titlePage ? this.titlePage : 'export',
       processCellCallback: params => {
         console.log(params)
-        if(params.node.data) {
+        if (params.node.data) {
           params.node.data.isContacted = params.node.data.isContacted ? params.node.data.isContacted.split('</span>').shift().split('ml5\">').pop() : '';
-          params.node.data.isProfileFull = params.node.data.isProfileFul ?  params.node.data.isProfileFull.split('</span>').shift().split('ml5\">').pop() :'';
-          params.node.data.lockName =params.node.data.isProfileFul ? params.node.data.lockName.split('</span>').shift().split('ml5\">').pop(): '';
-          params.node.data.status_name =params.node.data.isProfileFul ? params.node.data.status_name.split('</span>').shift().split('ml5\">').pop() : '';
+          params.node.data.isProfileFull = params.node.data.isProfileFul ? params.node.data.isProfileFull.split('</span>').shift().split('ml5\">').pop() : '';
+          params.node.data.lockName = params.node.data.isProfileFul ? params.node.data.lockName.split('</span>').shift().split('ml5\">').pop() : '';
+          params.node.data.status_name = params.node.data.isProfileFul ? params.node.data.status_name.split('</span>').shift().split('ml5\">').pop() : '';
         }
         return params.value
       }
@@ -115,7 +116,8 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
     this.frameworkComponents = {
       customTooltip: CustomTooltipComponent,
       buttonAgGridComponent: ButtonAgGridComponent,
-      avatarRendererFull: AvatarFullComponent
+      avatarRendererFull: AvatarFullComponent,
+      buttonRendererComponent: ButtonRendererComponent
     };
     this.tooltipShowDelay = 0
 
@@ -201,7 +203,7 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
         allColumnIds.push(column)
       });
     this.gridColumnApi.autoSizeColumns(allColumnIds, false);
-   
+
   }
 
   ngOnChanges() {

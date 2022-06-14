@@ -1,0 +1,28 @@
+:host::ng-deep {
+    .no-auto {
+        border-left: none;
+    }
+    .action {
+        button {
+            position: relative;
+            min-width: 20px !important;
+            &:first-child {
+                margin-right: 10px;
+            }
+            i {
+                position: absolute;
+                background-color: #525b73;
+                width: 20px !important;
+                height: 20px !important;
+                font: 20px Arial, sans-serif;
+                top: 42%;
+            }
+            .icon-edit {
+                mask-image: url("../../../assets/images/svg/icon-edit.svg");
+            }
+            .icon-delete {
+                mask-image: url("../../../assets/images/svg/icon-delete.svg");
+            }
+        }
+    }
+}
