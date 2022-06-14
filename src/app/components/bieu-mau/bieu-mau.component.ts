@@ -7,6 +7,7 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { Component, OnInit, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
 import * as queryString from 'querystring';
 import { AgGridFn } from 'src/app/common/function-common/common';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-bieu-mau',
@@ -89,11 +90,11 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
         if (localStorage.getItem("organize") === null) {
           this.selectedNode = this.listAgencyMap[0];
           localStorage.setItem('organize', JSON.stringify(this.listAgencyMap[0]));
-          this.query.organizeId = this.selectedNode.orgId;
+          // this.query.organizeId = this.selectedNode.orgId;
           this.load();
         } else {
           this.selectedNode = JSON.parse(localStorage.getItem("organize"));
-          this.query.organizeId = this.selectedNode?.orgId;
+          // this.query.organizeId = this.selectedNode?.orgId;
           this.listAgencyMap = this.expanded(this.listAgencyMap, this.selectedNode.parentId)
           this.selected(this.listAgencyMap, this.query.organizeId);
           if (type) {
@@ -179,7 +180,11 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
   load() {
     this.columnDefs = []
     this.spinner.show();
-    const queryParams = queryString.stringify(this.query);
+    const query = {...this.query};
+    if (query.createDate && typeof query.createDate !== 'string') {
+      query.createDate = moment(query.createDate).format('YYYY-MM-DD');
+    }
+    const queryParams = queryString.stringify(query);
     this.apiService.getFormPage(queryParams).subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
@@ -217,8 +222,8 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
           class: 'btn-primary mr5',
         },
         {
-          onClick: this.xoanhanvien.bind(this),
-          label: 'Xóa nhân viên này',
+          onClick: this.handleDelete.bind(this),
+          label: 'Xóa biểu mẫu',
           icon: 'fa fa-trash',
           class: 'btn-primary mr5',
         },
@@ -226,13 +231,14 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
     };
   }
 
-  xoanhanvien(event) {
+  handleDelete(event) {
+    console.log('t:', event);
     this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn xóa nhân viên?',
+      message: 'Bạn có chắc chắn muốn xóa biểu mẫu?',
       accept: () => {
-        this.apiService.deleteEmployee(event.rowData.empId).subscribe((results: any) => {
+        this.apiService.delFormInfo(event.rowData.form_id).subscribe((results: any) => {
           if (results.status === 'success') {
-            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa nhân viên thành công' });
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa biểu mẫu thành công!' });
             this.load();
           } else {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });

@@ -7,6 +7,7 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { ExportFileService } from 'src/app/services/export-file.service';
 import * as queryString from 'querystring';
 import { AgGridFn } from 'src/app/common/function-common/common';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-loai-bieu-mau',
@@ -74,7 +75,11 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
       finalize(() => this.spinner.hide())
     )
     .subscribe(response => {
-      this.formTypes = response.data.data;
+      if (response.status === 'success') {
+        this.formTypes = response.data;
+      } else {
+        console.error(response.message);
+      }
     })
   }
 
@@ -182,8 +187,13 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
   load() {
     this.columnDefs = []
     this.spinner.show();
-    const queryParams = queryString.stringify(this.query);
-    this.apiService.getFormTypePage(queryParams).subscribe(
+    const query = {...this.query};
+    if (query.createDate && typeof query.createDate !== 'string') {
+      query.createDate = moment(query.createDate).format('YYYY-MM-DD');
+    }
+    const queryParams = queryString.stringify(query);
+    this.apiService.getFormTypePage(queryParams)
+    .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         if (this.query.offSet === 0) {

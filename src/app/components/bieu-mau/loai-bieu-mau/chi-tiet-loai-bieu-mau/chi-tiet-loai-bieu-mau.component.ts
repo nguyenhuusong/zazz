@@ -1,11 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { cloneDeep } from 'lodash';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
-import { cloneDeep } from 'lodash';
-const queryString = require('query-string');
 
 @Component({
   selector: 'app-chi-tiet-loai-bieu-mau',
@@ -27,7 +26,6 @@ export class ChiTietLoaiBieuMauComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private apiService: ApiHrmService,
     private spinner: NgxSpinnerService,
-    private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private router: Router
   ) { }
@@ -42,6 +40,7 @@ export class ChiTietLoaiBieuMauComponent implements OnInit, OnDestroy {
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Chính sách' },
+      { label: 'Loại biểu mẫu', routerLink: '/chinh-sach/loai-bieu-mau' },
       { label: 'Chi tiết loại biểu mẫu' }
     ];
     this.handleParams();
