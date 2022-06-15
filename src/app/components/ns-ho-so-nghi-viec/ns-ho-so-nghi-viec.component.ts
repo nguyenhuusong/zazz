@@ -316,6 +316,8 @@ export class NsHoSoNghiViecComponent implements OnInit {
   xacnhan() {
     this.spinner.show();
     const params: any = { ...this.modelPheDuyet };
+    params.lst_status_key = params.status_key.map(d => d.code);
+    delete params.status_key;
     params.status_dt = moment(new Date(this.modelPheDuyet.status_dt)).format('DD/MM/YYYY');
     this.apiService.setTerminateStatus(params).subscribe(results => {
       if (results.status === 'success') {
@@ -357,8 +359,8 @@ export class NsHoSoNghiViecComponent implements OnInit {
     this.apiService.getObjectGroup(opts1.params.toString()).subscribe(results => {
       this.listTerminateKey = results.data.map(d => {
         return {
-          label: d.name,
-          value: d.value
+          name: d.name,
+          code: d.value
         }
       });
 
