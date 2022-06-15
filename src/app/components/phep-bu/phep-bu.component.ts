@@ -45,7 +45,7 @@ export class PhepBuComponent implements OnInit, AfterViewChecked {
   public agGridFn = AgGridFn;
   cols: any[];
   colsDetail: any[];
-  columnDefs= [];
+  columnDefs = [];
   defaultColDef;
   gridApi: any;
   clientWidth: any;
@@ -55,7 +55,7 @@ export class PhepBuComponent implements OnInit, AfterViewChecked {
     offSet: 0,
     pageSize: 15,
     year: moment().year(),
-    month: moment().month(),
+    month: moment().month() + 1,
     organizeId: ''
   }
   totalRecord = 0;
@@ -85,13 +85,13 @@ export class PhepBuComponent implements OnInit, AfterViewChecked {
     const b: any = document.querySelector(".sidebarBody");
     const c: any = document.querySelector(".bread-filter");
     const e: any = document.querySelector(".paginator");
-    this.loadjs ++ 
+    this.loadjs++
     if (this.loadjs === 5) {
-      if(b && b.clientHeight) {
+      if (b && b.clientHeight) {
         const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + e.clientHeight + 15;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
-      }else {
+      } else {
         this.loadjs = 0;
       }
     }
@@ -108,7 +108,7 @@ export class PhepBuComponent implements OnInit, AfterViewChecked {
     }
     this.load();
   }
-load() {
+  load() {
     this.columnDefs = []
     this.spinner.show();
     const queryParams = queryString.stringify(this.query);
@@ -129,16 +129,16 @@ load() {
           this.countRecord.currentRecordEnd = results.data.dataList.recordsTotal;
           setTimeout(() => {
             const noData = document.querySelector('.ag-overlay-no-rows-center');
-            if (noData) { noData.innerHTML = 'Không có kết quả phù hợp'}
+            if (noData) { noData.innerHTML = 'Không có kết quả phù hợp' }
           }, 100);
         }
         this.spinner.hide();
       },
       error => {
         this.spinner.hide();
-       });
+      });
   }
-  
+
   showButtons(event: any) {
     return {
       buttons: [
@@ -212,25 +212,25 @@ load() {
 
   ngOnInit() {
     this.items = [
-      { label: 'Trang chủ' , routerLink: '/home' },
+      { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Chính sách' },
       { label: 'Phép bù' },
     ];
     this.load();
     this.getOrgRoots();
     this.months = [
-      {label: 'Tháng 1', value: 1},
-      {label: 'Tháng 2', value: 2},
-      {label: 'Tháng 3', value: 3},
-      {label: 'Tháng 4', value: 4},
-      {label: 'Tháng 5', value: 5},
-      {label: 'Tháng 6', value: 6},
-      {label: 'Tháng 7', value: 7},
-      {label: 'Tháng 8', value: 8},
-      {label: 'Tháng 9', value: 9},
-      {label: 'Tháng 10', value: 10},
-      {label: 'Tháng 11', value: 11},
-      {label: 'Tháng 12', value: 12},
+      { label: 'Tháng 1', value: 1 },
+      { label: 'Tháng 2', value: 2 },
+      { label: 'Tháng 3', value: 3 },
+      { label: 'Tháng 4', value: 4 },
+      { label: 'Tháng 5', value: 5 },
+      { label: 'Tháng 6', value: 6 },
+      { label: 'Tháng 7', value: 7 },
+      { label: 'Tháng 8', value: 8 },
+      { label: 'Tháng 9', value: 9 },
+      { label: 'Tháng 10', value: 10 },
+      { label: 'Tháng 11', value: 11 },
+      { label: 'Tháng 12', value: 12 },
     ]
   }
 
@@ -246,7 +246,7 @@ load() {
             value: `${d.organizeId}`
           }
         });
-        this.orgRoots = [{label: 'Tất cả', value: null}, ...this.orgRoots]
+        this.orgRoots = [{ label: 'Tất cả', value: null }, ...this.orgRoots]
       }
     })
   }
@@ -267,19 +267,19 @@ load() {
     // if(this.querAddNewPhepBuDep.orgId === '' || this.querAddNewPhepBuDep.annualAdd === '' || this.querAddNewPhepBuDep.annualMonth === ''){
     //   this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Vui lòng điền đủ thông tin' });
     // }else{
-      this.apiService.setAnnualAddOrgInfo(this.querAddNewPhepBuDep).subscribe((results: any) => {
-        // console.log(results, 'fjdsofio')
-        // if (results.status === 'success') {
-        //   this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Thêm mới thành công' });
-        // }else{
-        //   this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
-        // }
-      })
+    this.apiService.setAnnualAddOrgInfo(this.querAddNewPhepBuDep).subscribe((results: any) => {
+      // console.log(results, 'fjdsofio')
+      // if (results.status === 'success') {
+      //   this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Thêm mới thành công' });
+      // }else{
+      //   this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+      // }
+    })
     // }
   }
   chonToChuc() {
     this.querAddNewPhepBuDep.orgId = '';
-    if(this.organizeIdForDep){
+    if (this.organizeIdForDep) {
       this.getDepartments(this.organizeIdForDep);
     }
   }
