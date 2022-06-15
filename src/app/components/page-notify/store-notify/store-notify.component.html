@@ -3,7 +3,7 @@
     <div class="col-md-6">
       <div class="field-group select" [ngClass]=" perent_id? 'valid' : 'invalid' ">
         <label for="">Tổ chức</label>
-        <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
+        <p-dropdown appendTo="body" [autoZIndex]="true" [autoDisplayFirst]="false" 
             [options]="moduleLists" [(ngModel)]="perent_id"  [required] (onChange)="getOrganizeTree($event.code)"
             name="perent_id" [filter]="true">
             <ng-template let-item pTemplate="selectedItem">

@@ -1,6 +1,6 @@
 <router-outlet>
     <ngx-spinner [zIndex]="9999999999999"></ngx-spinner>
-    <p-confirmDialog #cd header="Thông báo" [style]="{'z-index': 99999999999999999}" icon="pi pi-exclamation-triangle" [transitionOptions]="'0ms'">
+    <p-confirmDialog #cd header="Thông báo" maskStyleClass="confirm-top-zindex" [baseZIndex]="999999999999" icon="pi pi-exclamation-triangle" [transitionOptions]="'0ms'">
         <p-footer>
             <button type="button" pButton icon="pi pi-check" label="Đồng ý" (click)="cd.accept()"></button>
             <button type="button" class="p-button-secondary btn-cancel" pButton icon="pi pi-times" label="Hủy bỏ" (click)="cd.reject()"></button>
