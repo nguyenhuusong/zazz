@@ -263,19 +263,15 @@ load() {
   }
   // thêm mới Phép bù phòng ban
   setPhepBuDep() {
-    console.log('fjodsfji');
-    // if(this.querAddNewPhepBuDep.orgId === '' || this.querAddNewPhepBuDep.annualAdd === '' || this.querAddNewPhepBuDep.annualMonth === ''){
-    //   this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Vui lòng điền đủ thông tin' });
-    // }else{
-      this.apiService.setAnnualAddOrgInfo(this.querAddNewPhepBuDep).subscribe((results: any) => {
-        // console.log(results, 'fjdsofio')
+    let params: any = {...this.querAddNewPhepBuDep};
+      params.orgId = params.orgId.orgId;
+      this.apiService.setAnnualAddOrgInfo(params).subscribe((results: any) => {
         if (results.status === 'success') {
           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Thêm mới thành công' });
         }else{
           this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
         }
       })
-    // }
   }
   chonToChuc() {
     this.querAddNewPhepBuDep.orgId = '';
