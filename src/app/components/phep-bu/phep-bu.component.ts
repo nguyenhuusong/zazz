@@ -269,11 +269,11 @@ load() {
     // }else{
       this.apiService.setAnnualAddOrgInfo(this.querAddNewPhepBuDep).subscribe((results: any) => {
         // console.log(results, 'fjdsofio')
-        // if (results.status === 'success') {
-        //   this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Thêm mới thành công' });
-        // }else{
-        //   this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
-        // }
+        if (results.status === 'success') {
+          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Thêm mới thành công' });
+        }else{
+          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+        }
       })
     // }
   }
