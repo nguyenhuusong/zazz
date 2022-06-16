@@ -129,3 +129,30 @@ export function subtractArray(arrSubtrahend, arrMinuend) {
         return arrMinuend.indexOf(x) < 0;
     });
 }
+
+export function loopEveryNodeTree(o) {
+    for (var i in o) {
+        if (Array.isArray(o[i].children) && o[i].children.length) {
+            console.log('C:', o[i]);
+            loopEveryNodeTree(o[i].children);
+        } else {
+            console.log(i, o[i]);
+        }
+    }
+}
+
+export function findNodeInTree(list, nodeId): any {
+  for (let i = 0; i < list.length; i++) {
+      if (Array.isArray(list[i].children) && list[i].children.length) {
+        findNodeInTree(list[i].children, nodeId);
+      } else {
+        if (list[i].data === nodeId ) {
+            return list[i];
+        }
+      }
+  }
+}
+
+export function checkIsObject(data): boolean {
+    return typeof data === 'object' && data !== null
+}

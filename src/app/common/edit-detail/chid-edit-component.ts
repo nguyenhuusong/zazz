@@ -8,6 +8,7 @@ import { stringtodate } from '../function-common/common';
 import * as numeral from 'numeral';
 import * as moment from 'moment';
 import { ValidationNumberDayInMonth, ValidationNumberDayInMonthEmpty, ValidationNumber, ValidationNumberEmpty } from './validation';
+import { checkIsObject } from '../function-common/objects.helper';
 @Component({
   selector: 'app-type-text',
   template: ` <div class="field-group text" [ngClass]=" element.columnValue ? 'valid' : 'invalid' ">
@@ -111,8 +112,8 @@ export class AppTypeSelectComponent implements OnInit {
 @Component({
   selector: 'app-type-selectTree',
   template: `  
-    <div class="field-group select treeselect" [ngClass]="'valid'"> 
-      <p-treeSelect [filterInputAutoFocus]="true" [filter]="true" [metaKeySelection]="false" name={{element.field_name}} [(ngModel)]="element.columnValue" [options]="element.options" [required]="element.isRequire && element.isVisiable && !element.isEmpty" (onNodeSelect)="onChangeTree($event, element.field_name, element)" [disabled]="element.isDisable" selectionMode="single"  placeholder="Select Item"></p-treeSelect>
+     <div class="field-group select treeselect" [ngClass]="'valid'" *ngIf ="element && element.columnValue && checkIsObject(element.columnValue)"> 
+      <p-treeSelect [options]="element.options || []" [(ngModel)]="element.columnValue" [filterInputAutoFocus]="true"  selectionMode="single" [disabled]="element.isDisable" placeholder="Select Item" (onNodeSelect)="selectNode($event)" [required]="element && element.isRequire && element?.isVisiable && !element.isEmpty"></p-treeSelect>
       <div *ngIf="element.isRequire && submit && !element.columnValue"
           class="alert-validation alert-danger">
           <div [hidden]="element.columnValue">
@@ -120,7 +121,7 @@ export class AppTypeSelectComponent implements OnInit {
           </div>
       </div>
       <label class="text-nowrap label-tex" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
-    </div>
+    </div> 
                 `,
 })
 export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
@@ -137,7 +138,16 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
     //     element.value = parseInt(element.value);
     //   })
     // }
+    checkIsObject
   }
+
+  checkIsObject(data: any): boolean {
+    return checkIsObject(data);
+  }
+  
+  selectNode(event) {
+    console.log("selectNode", event.node)
+  } 
 
   getCompanyList(orgId, element1) {
     const queryParams = queryString.stringify({ orgId: orgId });
@@ -167,8 +177,8 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
     }
   }
   ngOnChanges(event) {
+    console.log('a:', cloneDeep(this.element));
     if (event && event.element) {
-      this.element = event.element.currentValue
     }
   }
 

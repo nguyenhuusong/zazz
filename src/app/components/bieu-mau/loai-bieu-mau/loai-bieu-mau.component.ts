@@ -22,7 +22,7 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
   query = {
     filter: '',
     organizeId: '',
-    typeForm: '',
+    typeForm: null,
     createDate: '',
     offSet: 0,
     pageSize: 15
@@ -69,6 +69,28 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
     this.getFormTypes();
   }
 
+  getNode(item) {
+    return {
+      label: item.formTypeName || item.formTypeId,
+      data: item.formTypeId,
+      expandedIcon: "pi pi-folder-open",
+      collapsedIcon: "pi pi-folder",
+      children: item.children
+    };
+  }
+
+  loopEveryNodeTree(list): void {
+    for (let i = 0; i < list.length; i++) {
+        if (Array.isArray(list[i].children) && list[i].children.length) {
+          list[i] = this.getNode(list[i]);
+          this.loopEveryNodeTree(list[i].children);
+        } else {
+          list[i] = this.getNode(list[i]);
+        }
+    }
+  }
+
+
   getFormTypes(): void {
     this.apiService.getFormTypes()
     .pipe(
@@ -76,7 +98,10 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
     )
     .subscribe(response => {
       if (response.status === 'success') {
-        this.formTypes = response.data;
+        const data = response.data;
+        this.loopEveryNodeTree(data)
+        this.formTypes = data
+        console.log("123456789", this.formTypes)
       } else {
         console.error(response.message);
       }
@@ -191,7 +216,11 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
     if (query.createDate && typeof query.createDate !== 'string') {
       query.createDate = moment(query.createDate).format('YYYY-MM-DD');
     }
+    if (typeof this.query.typeForm === 'object' && this.query && this.query.typeForm) {
+      query.typeForm = this.query.typeForm.data;
+    } 
     const queryParams = queryString.stringify(query);
+    console.log("query11111", query)
     this.apiService.getFormTypePage(queryParams)
     .subscribe(
       (results: any) => {
