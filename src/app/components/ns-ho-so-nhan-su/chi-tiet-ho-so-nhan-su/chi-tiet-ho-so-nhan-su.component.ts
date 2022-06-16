@@ -434,8 +434,8 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
               };
             },
           }];
-        this.listsData[3] = data.trad_adds || [];
-        this.titles[3] = 'Liên hệ khẩn cấp';
+        // this.listsData[3] = data.trad_adds || [];
+        // this.titles[3] = 'Liên hệ khẩn cấp';
         this.spinner.hide();
         break;
       case API_PROFILE.LIEN_HE:

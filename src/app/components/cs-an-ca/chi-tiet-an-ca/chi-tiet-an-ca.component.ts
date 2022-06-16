@@ -109,8 +109,8 @@ export class ChiTietAnCaComponent implements OnInit, OnChanges, OnDestroy {
     const queryParams = queryString.stringify({ cusId: this.custId });
     this.apiService.getEatingInfo(queryParams).subscribe(results => {
       if (results.status === 'success') {
-        this.listViews = cloneDeep(results.data.result.group_fields);
-        this.detailInfo = results.data.result;
+        this.listViews = cloneDeep(results.data.group_fields);
+        this.detailInfo = results.data;
         this.menuDate = cloneDeep(this.detailInfo.menuDate);
       }
     })
