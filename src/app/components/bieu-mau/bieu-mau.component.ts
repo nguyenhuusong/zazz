@@ -22,7 +22,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
   query = {
     filter: '',
     organizeId: '',
-    typeForm: '',
+    typeForm: null,
     createDate: '',
     offSet: 0,
     pageSize: 15
@@ -46,6 +46,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
   organizeList = []
   detailOrganizeMap = null;
   formTypes = [];
+  data=[];
   constructor(
     private apiService: ApiHrmService,
     private spinner: NgxSpinnerService,
@@ -67,13 +68,42 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
     this.getFormTypes();
   }
 
-  getFormTypes(): void {
+
+  getNode(item) {
+    return {
+      label: item.formTypeName || item.formTypeId,
+      data: item.formTypeId,
+      expandedIcon: "pi pi-folder-open",
+      collapsedIcon: "pi pi-folder",
+      children: item.children
+    };
+  }
+
+  loopEveryNodeTree(list): void {
+    for (let i = 0; i < list.length; i++) {
+        if (Array.isArray(list[i].children) && list[i].children.length) {
+          list[i] = this.getNode(list[i]);
+          this.loopEveryNodeTree(list[i].children);
+        } else {
+          list[i] = this.getNode(list[i]);
+        }
+    }
+  }
+
+  selectedNode11(event) {
+    // this.query.typeForm = event.node.data
+    // this.load();
+  }
+
+  getFormTypes(): void { 
     this.apiService.getFormTypes()
     .pipe(
       finalize(() => this.spinner.hide())
     )
     .subscribe(response => {
-      this.formTypes = response.data;
+      const data = response.data;
+      this.loopEveryNodeTree(data);
+      this.formTypes = data;
     })
   }
 
@@ -184,6 +214,9 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
     if (query.createDate && typeof query.createDate !== 'string') {
       query.createDate = moment(query.createDate).format('YYYY-MM-DD');
     }
+    if (typeof this.query.typeForm === 'object' && this.query && this.query.typeForm) {
+      query.typeForm = this.query.typeForm.data;
+    } 
     const queryParams = queryString.stringify(query);
     this.apiService.getFormPage(queryParams).subscribe(
       (results: any) => {
@@ -249,10 +282,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
   }
 
   EditEmployee(event) {
-    const params = {
-      empId: event.rowData.empId
-    }
-    this.router.navigate(['/nhan-su/bieu-mau/bieu-mau-chi-tiet'], { queryParams: params });
+    this.router.navigateByUrl(`/chinh-sach/bieu-mau/${event.rowData.form_id}`);
   }
 
 

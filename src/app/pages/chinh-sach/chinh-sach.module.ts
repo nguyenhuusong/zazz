@@ -47,13 +47,14 @@ import { ChiTietThueThuNhapComponent } from 'src/app/components/cs-thue-thu-nhap
 import { PhepNamComponent } from 'src/app/components/phep-nam/phep-nam.component';
 import { PhepBuComponent } from 'src/app/components/phep-bu/phep-bu.component';
 import { ChiTietPhepBuComponent } from 'src/app/components/phep-bu/chi-tiet-phep-bu/chi-tiet-phep-bu.component';
-import {OverlayPanelModule} from 'primeng/overlaypanel';
-import {TreeSelectModule} from 'primeng/treeselect';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { TreeSelectModule } from 'primeng/treeselect';
 import { HrmBreadCrumbModule } from 'src/app/common/hrm-breadcrumb/hrm-breadcrumb.module';
-import {CheckboxModule} from 'primeng/checkbox';
+import { CheckboxModule } from 'primeng/checkbox';
 import { BieuMauChiTietComponent } from 'src/app/components/bieu-mau/bieu-mau-chi-tiet/bieu-mau-chi-tiet.component';
 import { LoaiBieuMauComponent } from 'src/app/components/bieu-mau/loai-bieu-mau/loai-bieu-mau.component';
 import { ChiTietLoaiBieuMauComponent } from 'src/app/components/bieu-mau/loai-bieu-mau/chi-tiet-loai-bieu-mau/chi-tiet-loai-bieu-mau.component';
+
 @NgModule({
   imports: [
     MessagesModule,
@@ -92,7 +93,7 @@ import { ChiTietLoaiBieuMauComponent } from 'src/app/components/bieu-mau/loai-bi
     OrganizationChartModule,
     AgGridModule.withComponents([
       ButtonRendererComponent,
-      ButtonRendererComponent1
+      ButtonRendererComponent1,
     ]),
   ],
 
@@ -115,8 +116,8 @@ import { ChiTietLoaiBieuMauComponent } from 'src/app/components/bieu-mau/loai-bi
     BieuMauComponent,
     BieuMauChiTietComponent,
     LoaiBieuMauComponent,
-    ChiTietLoaiBieuMauComponent
+    ChiTietLoaiBieuMauComponent,
   ],
-  providers: []
+  providers: [],
 })
-export class ChinhSachModule { }
+export class ChinhSachModule {}

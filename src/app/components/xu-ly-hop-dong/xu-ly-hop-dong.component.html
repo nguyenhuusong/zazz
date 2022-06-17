@@ -46,7 +46,7 @@
                     <div class="field-group select label-8">
                         <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" [filter]="true"
                             [options]="listOrgRoots" [(ngModel)]="query.organizeId" name="organizeId"
-                            (onChange)="getContractTypes();find()">
+                            (onChange)="getContractTypes();find()" inputId="organizeId">
                             <ng-template let-item pTemplate="selectedItem">
                                 <span>{{item.label}}</span>
                             </ng-template>
@@ -56,7 +56,7 @@
                                 </div>
                             </ng-template>
                         </p-dropdown>
-                        <label for=""> Tổ chức: </label>
+                        <label for="organizeId"> Tổ chức: </label>
 
                     </div>
                 </div>
@@ -82,7 +82,7 @@
                     <div class="field-group select label-8">
                         <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" [filter]="true"
                             [options]="typeContracts" [(ngModel)]="query.contractTypeId" name="contractTypeId"
-                            (onChange)="find()">
+                            (onChange)="find()" [disabled]="!query.organizeId" inputId="contractTypeId">
                             <ng-template let-item pTemplate="selectedItem">
                                 <span>{{item.label}}</span>
                             </ng-template>
@@ -92,7 +92,7 @@
                                 </div>
                             </ng-template>
                         </p-dropdown>
-                        <label for=""> Loại hợp đông: </label>
+                        <label for="contractTypeId"> Loại hợp đông: </label>
 
                     </div>
                 </div>

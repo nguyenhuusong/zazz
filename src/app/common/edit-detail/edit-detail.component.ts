@@ -1,6 +1,6 @@
 import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
 import { HttpParams } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, OnChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, OnChanges, ChangeDetectorRef } from '@angular/core';
 import { cloneDeep } from 'lodash';
 import * as moment from 'moment';
 import { ApiService } from 'src/app/services/api.service';
@@ -10,7 +10,8 @@ import { MessageService } from 'primeng/api';
 import { AgGridFn } from 'src/app/utils/common/function-common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as numeral from 'numeral';
-import { delay, of, tap, timer } from 'rxjs';
+import { delay, lastValueFrom, of, tap, timer } from 'rxjs';
+import { findNodeInTree } from '../function-common/objects.helper';
 @Component({
   selector: 'app-edit-detail',
   templateUrl: './edit-detail.component.html',
@@ -21,6 +22,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
     private apiService: ApiHrmService,
     private messageService: MessageService,
     private apiServiceCore: ApiService,
+    private changeDetech: ChangeDetectorRef
   ) { }
   @Output() callback = new EventEmitter<any>();
   @Output() callbackcancel = new EventEmitter<any>();
@@ -68,8 +70,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
     gridWidth: 0
   };
   modelFields = {};
-  ngOnInit(): void {
-    this.callApiDrop();
+  async ngOnInit(): Promise<void> {
+    await this.callApiDrop();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -114,6 +116,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
               const root_orgId = await this.getValueByKey('organizeId');
               setTimeout(() => {
                 this.getOrganizeTree(root_orgId, element1);
+               
               }, 100);
             } else {
               setTimeout(() => {
@@ -219,7 +222,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
           }else if(element1.field_name === 'reason_code') { 
             this.getLeaveReasons(element1)
           } else if (element1.field_name === 'parent_type_id' || element1.field_name === 'form_type') {
-            this.getFormTypePage(element1);
+            await this.getFormTypePage(element1); 
           } else {
             if(element1.columnObject) {
               this.getCustObjectListNew(element1);
@@ -238,24 +241,39 @@ export class EditDetailComponent implements OnInit, OnChanges {
 
     }, 1000);
   }
-
-  getFormTypePage(element1) {
-    this.apiService.getFormTypes()
-    .subscribe(response => {
-      if (response.status === 'success') {
-        element1.options = cloneDeep(response.data)
-        .map(d => {
-          return {
-            label: d.formTypeName,
-            value: d.formTypeId
-          }
-        });
-        element1.columnValue = element1.columnValue ? element1.columnValue: ''
-      } else {
-        console.error(response.message);
-      }
-    })
+  
+  getNode(item) {
+    return {
+      label: item.formTypeName || item.formTypeId,
+      data: item.formTypeId,
+      expandedIcon: "pi pi-folder-open",
+      collapsedIcon: "pi pi-folder",
+      children: item.children
+    };
   }
+
+  loopEveryNodeTree(list): void {
+    for (let i = 0; i < list.length; i++) {
+        if (Array.isArray(list[i].children) && list[i].children.length) {
+          list[i] = this.getNode(list[i]);
+          this.loopEveryNodeTree(list[i].children);
+        } else {
+          list[i] = this.getNode(list[i]);
+        }
+    }
+  }
+
+   async getFormTypePage(element1) {
+      try {
+        const response = (await lastValueFrom(this.apiService.getFormTypes())).data;
+        this.loopEveryNodeTree(response);
+        element1.options = response;
+        element1.columnValue = findNodeInTree(element1.options, element1.columnValue) || element1.columnValue;
+        this.dataView = cloneDeep(this.dataView);
+     } catch (error) {
+       console.error('error:', error);
+     } 
+  } 
 
   getLeaveReasons(element1) {
       this.apiServiceCore.getLeaveReasons().subscribe(results => {
