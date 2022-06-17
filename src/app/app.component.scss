@@ -18,6 +18,12 @@
             width:100% !important  ;
     }
 }
+:host::ng-deep .confirm-top-zindex{
+    z-index: 9999999999999 !important;
+    .p-confirm-dialog{
+        z-index: 9999999999999 !important;
+    }
+}
 // :host::ng-deep .p-tree {
 //     padding: 0  ;
 //     min-height: 500px;

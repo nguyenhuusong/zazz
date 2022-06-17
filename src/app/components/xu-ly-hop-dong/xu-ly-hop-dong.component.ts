@@ -86,7 +86,7 @@ export class XuLyHopDongComponent implements OnInit {
     orgId: null,
     contract_st: null,
     contractTypeId: null,
-    fromDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).add(-1,'months').format("YYYY-MM-DD")),
+    fromDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).add(-1, 'months').format("YYYY-MM-DD")),
     toDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).format("YYYY-MM-DD")),
   }
   totalRecord = 0;
@@ -107,6 +107,7 @@ export class XuLyHopDongComponent implements OnInit {
   isShowbtnPheDuyet = true;
   paramsPheDuyet: any = []
 
+  isPrinted: boolean = false;
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
@@ -121,13 +122,13 @@ export class XuLyHopDongComponent implements OnInit {
       orgId: null,
       contract_st: null,
       contractTypeId: null,
-      fromDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth())).add(-1,'months').format()),
+      fromDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth())).add(-1, 'months').format()),
       toDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth())).format()),
     }
     this.load();
   }
 
-  DowloadPlugin(){
+  DowloadPlugin() {
     this.downloadButtonClicked('https://firebasestorage.googleapis.com/v0/b/sunshine-app-production.appspot.com/o/s_hrm%2Fhrm-plugin%2FUniPlugin.zip?alt=media&token=838880e5-f2e2-4044-8d5f-21e57a5f3335')
   }
 
@@ -161,7 +162,7 @@ export class XuLyHopDongComponent implements OnInit {
   listsData = [];
   listOrgRoots = [];
   getOrgRoots() {
-    const queryParams = queryString.stringify({filter: ''});
+    const queryParams = queryString.stringify({ filter: '' });
     this.apiService.getOrganizations(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.listOrgRoots = results.data.map(d => {
@@ -178,7 +179,7 @@ export class XuLyHopDongComponent implements OnInit {
   load() {
     this.columnDefs = []
     this.spinner.show();
-    let params: any = {... this.query};
+    let params: any = { ... this.query };
     delete params.fromDate
     delete params.toDate
     params.fromDate = moment(new Date(this.query.fromDate)).format('YYYY-MM-DD')
@@ -194,14 +195,14 @@ export class XuLyHopDongComponent implements OnInit {
         this.initGrid();
         this.countRecord.totalRecord = results.data.dataList.recordsTotal;
         this.countRecord.totalRecord = results.data.dataList.recordsTotal;
-        this.countRecord.currentRecordStart = results.data.dataList.recordsTotal === 0 ? this.query.offSet = 0 :  this.query.offSet + 1;
+        this.countRecord.currentRecordStart = results.data.dataList.recordsTotal === 0 ? this.query.offSet = 0 : this.query.offSet + 1;
         if ((results.data.dataList.recordsTotal - this.query.offSet) > this.query.pageSize) {
           this.countRecord.currentRecordEnd = this.query.offSet + Number(this.query.pageSize);
         } else {
           this.countRecord.currentRecordEnd = results.data.dataList.recordsTotal;
           setTimeout(() => {
             const noData = document.querySelector('.ag-overlay-no-rows-center');
-            if (noData) { noData.innerHTML = 'Không có kết quả phù hợp'}
+            if (noData) { noData.innerHTML = 'Không có kết quả phù hợp' }
           }, 100);
         }
         this.spinner.hide();
@@ -248,7 +249,7 @@ export class XuLyHopDongComponent implements OnInit {
   }
   // GET /api/v2/contract/GetContractInfo
   XemChiTiet(event) {
-  const modelContractInfo = {
+    const modelContractInfo = {
       contractId: event.rowData.contractId,
       contractTypeId: event.rowData.contractTypeId,
       empId: event.rowData.empId,
@@ -279,9 +280,9 @@ export class XuLyHopDongComponent implements OnInit {
         field: 'checkbox'
       }
     ]
-   
+
   }
-  
+
   find() {
     this.load();
   }
@@ -304,39 +305,39 @@ export class XuLyHopDongComponent implements OnInit {
   listPrints = []
   ngOnInit() {
     this.webSocketService.myWebSocket
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(
-      repon => {
-        repon = JSON.parse(repon)
-        if(repon && repon.data && repon.data.length > 0) {
-          this.listPrints = repon.data.map(d => {
-            return {
-              label: d,
-              value: d
-            }
-          })
-        }
-      },
-      err => {
-        console.log(err)
-      },
-    )
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        repon => {
+          repon = JSON.parse(repon)
+          if (repon && repon.data && repon.data.length > 0) {
+            this.listPrints = repon.data.map(d => {
+              return {
+                label: d,
+                value: d
+              }
+            })
+          }
+        },
+        err => {
+          console.log(err)
+        },
+      )
     this.getOrgRoots();
     this.getCustObjectListNew();
     this.items = [
-      { label: 'Trang chủ' , routerLink: '/home' },
-      { label: 'Nhân sự' },
-      { label: 'Xử lý hợp đồng' },
+      { label: 'Trang chủ', routerLink: '/home' },
+      { label: 'Cài đặt' },
+      { label: 'Danh sách loại hợp đồng' }
     ];
     this.load();
-    
 
-  this.itemsToolOfGrid = [
-    {
-      label: 'Import file',
-      code: 'Import',
-      icon: 'pi pi-file-excel',
-      command: () => {
+
+    this.itemsToolOfGrid = [
+      {
+        label: 'Import file',
+        code: 'Import',
+        icon: 'pi pi-file-excel',
+        command: () => {
           this.importFileExel();
         }
       },
@@ -352,7 +353,7 @@ export class XuLyHopDongComponent implements OnInit {
           value: d.objValue
         }
       });
-      this.statusContracts = [{label: 'Tất cả', value: null}, ...this.statusContracts]
+      this.statusContracts = [{ label: 'Tất cả', value: null }, ...this.statusContracts]
     });
   }
 
@@ -391,7 +392,7 @@ export class XuLyHopDongComponent implements OnInit {
   }
 
   getContractTypes() {
-    if(this.query.organizeId){
+    if (this.query.organizeId) {
       const queryParams = queryString.stringify({ organizeId: this.query.organizeId });
       this.apiService.getContractTypes(queryParams).subscribe(results => {
         if (results.status === 'success') {
@@ -401,7 +402,7 @@ export class XuLyHopDongComponent implements OnInit {
               value: `${d.contractTypeId}`
             }
           });
-          this.typeContracts = [{label: 'Tất cả', value: null}, ...this.typeContracts];
+          this.typeContracts = [{ label: 'Tất cả', value: null }, ...this.typeContracts];
         }
       })
     }
@@ -411,21 +412,21 @@ export class XuLyHopDongComponent implements OnInit {
     Copies: 1
   }
   soLanIn = [
-    {label: 'Một lần', value: 1},
-    {label: 'Hai lần', value: 2},
-    {label: 'Ba lần', value: 3},
-    {label: 'Bốn lần', value: 4},
-    {label: 'Năm lần', value: 5},
-    
+    { label: 'Một lần', value: 1 },
+    { label: 'Hai lần', value: 2 },
+    { label: 'Ba lần', value: 3 },
+    { label: 'Bốn lần', value: 4 },
+    { label: 'Năm lần', value: 5 },
+
   ]
   listRowSelects = []
   filesPrints = [];
   displayPrint = false;
   Prints() {
     let letPrint = this.listRowSelects.some((value) => {
-        return value.contract_value === 0;
+      return value.contract_value === 0;
     });
-    if(letPrint){
+    if (letPrint) {
       this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Không in trạng thái "mới tạo", vui lòng không chọn trạng thái mới tạo' });;
       return;
     }
@@ -437,32 +438,32 @@ export class XuLyHopDongComponent implements OnInit {
       }
     })
     this.apiService.getPrintFiles(params).subscribe(results => {
-      if(results.status ==='success') {
-          this.filesPrints = results.data;
-          this.initGridPrint();
-         this.displayPrint = true;
+      if (results.status === 'success') {
+        this.filesPrints = results.data;
+        this.initGridPrint();
+        this.displayPrint = true;
       }
 
     })
   }
   rowSelected(event) {
     this.listRowSelects = event;
-    if(this.listRowSelects.length> 0 ){
+    if (this.listRowSelects.length > 0) {
       this.isShowbtnPheDuyet = false;
-    }else{
+    } else {
       this.isShowbtnPheDuyet = true;
     }
   }
 
   pheDuyetHopDong() {
-    if(this.listRowSelects.length> 0 ){
-      this.paramsPheDuyet = this.listRowSelects.map( d => {
-        return{
+    if (this.listRowSelects.length > 0) {
+      this.paramsPheDuyet = this.listRowSelects.map(d => {
+        return {
           contractId: d.contractId,
-          fullName:  d.fullName,
-          contract_no:  d.contract_no,
+          fullName: d.fullName,
+          contract_no: d.contract_no,
           status: 1,
-          comment:  d.contractId
+          comment: d.contractId
         }
       })
       this.apiService.setListContractStatus(this.paramsPheDuyet).subscribe((res: any) => {
@@ -476,9 +477,10 @@ export class XuLyHopDongComponent implements OnInit {
   }
 
   openPrint() {
+    this.isPrinted = true;
     const data = {
       "action": "PRINT",
-      "data" : {
+      "data": {
         "PrinterName": this.modelPrint.PrinterName,
         "Copies": this.modelPrint.Copies,
         "Files": this.filesPrints.map(d => {
@@ -493,18 +495,24 @@ export class XuLyHopDongComponent implements OnInit {
     this.spinner.show();
     this.webSocketService.send(data);
     this.webSocketService.myWebSocket
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(
-      repon => {
-        this.spinner.hide();
-        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'In thành công' });
-      },
-      err => {
-        this.spinner.hide();
-        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'In Lỗi' });
-        console.log(err)
-      },
-    )
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        repon => {
+          if (this.isPrinted) {
+            this.spinner.hide();
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'In thành công' });
+            this.isPrinted = false;
+          }
+
+        },
+        err => {
+          if (this.isPrinted) {
+            this.spinner.hide();
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'In Lỗi' });
+            this.isPrinted = false;
+          }
+        },
+      )
   }
 
   initGridPrint() {

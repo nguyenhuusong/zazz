@@ -1,133 +1,124 @@
-
-
 <div class="grid main-grid">
     <div class="col-12 right max-w-full">
         <div class="bread-filter">
             <div class="d-flex bet end middle">
                 <app-hrm-breadcrumb [items]="items"></app-hrm-breadcrumb>
                 <div>
-                    <p-button  (click)="menuButton.toggle($event)" label="Tiện ích" icon="pi pi-cog" styleClass="p-button-sm mr-2"> </p-button>
-                    <p-button (click)="Prints()" label="PRINT" icon="pi pi-print" styleClass="p-button-sm mr-2"></p-button>
-                    <p-button class="" *ngIf="this.listPrints.length === 0" (click)="DowloadPlugin()" label="Plugin" styleClass="p-button-sm mr-2"></p-button>
-                    <p-menu [model]="itemsToolOfGrid" [appendTo]="'body'" [popup]="true" styleClass="menu-option-right mr-2" #menuButton></p-menu>
-                    <p-button  (click)="pheDuyetHopDong()" label="Phê duyệt" [disabled]="isShowbtnPheDuyet" icon="pi pi-cog" styleClass="p-button-sm mr-2"> </p-button>
+                    <p-button (click)="menuButton.toggle($event)" label="Tiện ích" icon="pi pi-cog"
+                        styleClass="p-button-sm mr-2"> </p-button>
+                    <p-button (click)="Prints()" label="PRINT" icon="pi pi-print" styleClass="p-button-sm mr-2"
+                        [disabled]="isShowbtnPheDuyet">
+                    </p-button>
+                    <p-button class="" *ngIf="this.listPrints.length === 0" (click)="DowloadPlugin()" label="Plugin"
+                        styleClass="p-button-sm mr-2"></p-button>
+                    <p-menu [model]="itemsToolOfGrid" [appendTo]="'body'" [popup]="true"
+                        styleClass="menu-option-right mr-2" #menuButton></p-menu>
+                    <p-button (click)="pheDuyetHopDong()" label="Phê duyệt" [disabled]="isShowbtnPheDuyet"
+                        icon="pi pi-cog" styleClass="p-button-sm mr-2"> </p-button>
                 </div>
             </div>
-            
+
             <div class="grid filter">
                 <div class="header-filter-search x-2">
                     <div class="field-group text search" [ngClass]="query.filter ? 'valid' : 'invalid' ">
-                        <input class="input-default" type="text"id="filter"
-                        (keydown.enter)="query.offSet = 0; first = 0;load()"
-                            [(ngModel)]="query.filter">
-                            <label>Tên</label>
-                            <span class="placeholder-icon" (click)="query.offSet = 0; first = 0; load()">
-                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" clip-rule="evenodd"
-                                        d="M10.1305 11.2619C9.28558 11.8771 8.24518 12.24 7.12002 12.24C4.29231 12.24 2 9.94772 2 7.12002C2 4.29231 4.29231 2 7.12002 2C9.94772 2 12.24 4.29231 12.24 7.12002C12.24 8.24518 11.8771 9.28558 11.2619 10.1305L13.7657 12.6343C14.0781 12.9467 14.0781 13.4533 13.7657 13.7657C13.4533 14.0781 12.9467 14.0781 12.6343 13.7657L10.1305 11.2619ZM11.28 7.12002C11.28 9.41753 9.41753 11.28 7.12002 11.28C4.8225 11.28 2.96 9.41753 2.96 7.12002C2.96 4.8225 4.8225 2.96 7.12002 2.96C9.41753 2.96 11.28 4.8225 11.28 7.12002Z"
-                                        fill="#808AA6" />
-                                </svg>
-                            </span>
-                            <!-- <svg class="placeholder-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <input class="input-default" type="text" id="filter"
+                            (keydown.enter)="query.offSet = 0; first = 0;load()" [(ngModel)]="query.filter">
+                        <label>Tên</label>
+                        <span class="placeholder-icon" (click)="query.offSet = 0; first = 0; load()">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M10.1305 11.2619C9.28558 11.8771 8.24518 12.24 7.12002 12.24C4.29231 12.24 2 9.94772 2 7.12002C2 4.29231 4.29231 2 7.12002 2C9.94772 2 12.24 4.29231 12.24 7.12002C12.24 8.24518 11.8771 9.28558 11.2619 10.1305L13.7657 12.6343C14.0781 12.9467 14.0781 13.4533 13.7657 13.7657C13.4533 14.0781 12.9467 14.0781 12.6343 13.7657L10.1305 11.2619ZM11.28 7.12002C11.28 9.41753 9.41753 11.28 7.12002 11.28C4.8225 11.28 2.96 9.41753 2.96 7.12002C2.96 4.8225 4.8225 2.96 7.12002 2.96C9.41753 2.96 11.28 4.8225 11.28 7.12002Z"
+                                    fill="#808AA6" />
+                            </svg>
+                        </span>
+                        <!-- <svg class="placeholder-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M10.1305 11.2619C9.28558 11.8771 8.24518 12.24 7.12002 12.24C4.29231 12.24 2 9.94772 2 7.12002C2 4.29231 4.29231 2 7.12002 2C9.94772 2 12.24 4.29231 12.24 7.12002C12.24 8.24518 11.8771 9.28558 11.2619 10.1305L13.7657 12.6343C14.0781 12.9467 14.0781 13.4533 13.7657 13.7657C13.4533 14.0781 12.9467 14.0781 12.6343 13.7657L10.1305 11.2619ZM11.28 7.12002C11.28 9.41753 9.41753 11.28 7.12002 11.28C4.8225 11.28 2.96 9.41753 2.96 7.12002C2.96 4.8225 4.8225 2.96 7.12002 2.96C9.41753 2.96 11.28 4.8225 11.28 7.12002Z" fill="#808AA6"/>
                             </svg> -->
-                            <!-- <i id="icon-search" class="pi pi-angle-down"></i> -->
-                            <!-- <p-button class="search-button" icon="pi pi-search" (click)="query.offSet = 0; first = 0; load()"></p-button>
+                        <!-- <i id="icon-search" class="pi pi-angle-down"></i> -->
+                        <!-- <p-button class="search-button" icon="pi pi-search" (click)="query.offSet = 0; first = 0; load()"></p-button>
                             <p-button class="search-button" icon="pi pi-refresh" (click)="cancel()" styleClass="btn-reload p-button-secondary p-button-sm"></p-button> -->
                     </div>
                     <div class="input-group-append dropdown">
                     </div>
                 </div>
-                <div class="x-1" > 
+                <div class="x-1">
                     <div class="field-group select label-8">
-                        <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" [filter] = "true"
-                        [options]="listOrgRoots" [(ngModel)]="query.organizeId" name="organizeId" (onChange)="getContractTypes();find()">
-                        <ng-template let-item pTemplate="selectedItem">
-                            <span>{{item.label}}</span>
-                        </ng-template>
-                        <ng-template let-car pTemplate="item">
-                            <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                                <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
-                            </div>
-                        </ng-template>
-                    </p-dropdown>
-                    <label  for=""> Tổ chức: </label>
-                
+                        <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" [filter]="true"
+                            [options]="listOrgRoots" [(ngModel)]="query.organizeId" name="organizeId"
+                            (onChange)="getContractTypes();find()" inputId="organizeId">
+                            <ng-template let-item pTemplate="selectedItem">
+                                <span>{{item.label}}</span>
+                            </ng-template>
+                            <ng-template let-car pTemplate="item">
+                                <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                                    <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                                </div>
+                            </ng-template>
+                        </p-dropdown>
+                        <label for="organizeId"> Tổ chức: </label>
+
                     </div>
                 </div>
-                <div class="x-1" > 
+                <div class="x-1">
                     <div class="field-group select label-8">
-                        <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" [filter] = "true"
-                        [options]="statusContracts" [(ngModel)]="query.contract_st" name="contract_st" (onChange)="find()">
-                        <ng-template let-item pTemplate="selectedItem">
-                            <span>{{item.label}}</span>
-                        </ng-template>
-                        <ng-template let-car pTemplate="item">
-                            <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                                <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
-                            </div>
-                        </ng-template>
-                    </p-dropdown>
-                    <label  for=""> Trạng thái: </label>
-                
+                        <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" [filter]="true"
+                            [options]="statusContracts" [(ngModel)]="query.contract_st" name="contract_st"
+                            (onChange)="find()">
+                            <ng-template let-item pTemplate="selectedItem">
+                                <span>{{item.label}}</span>
+                            </ng-template>
+                            <ng-template let-car pTemplate="item">
+                                <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                                    <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                                </div>
+                            </ng-template>
+                        </p-dropdown>
+                        <label for=""> Trạng thái: </label>
+
                     </div>
                 </div>
-                <div class="x-1" > 
+                <div class="x-1">
                     <div class="field-group select label-8">
-                        <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" [filter] = "true"
-                        [options]="typeContracts" [(ngModel)]="query.contractTypeId" name="contractTypeId" (onChange)="find()">
-                        <ng-template let-item pTemplate="selectedItem">
-                            <span>{{item.label}}</span>
-                        </ng-template>
-                        <ng-template let-car pTemplate="item">
-                            <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                                <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
-                            </div>
-                        </ng-template>
-                    </p-dropdown>
-                    <label  for=""> Loại hợp đông: </label>
-                
+                        <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" [filter]="true"
+                            [options]="typeContracts" [(ngModel)]="query.contractTypeId" name="contractTypeId"
+                            (onChange)="find()" [disabled]="!query.organizeId" inputId="contractTypeId">
+                            <ng-template let-item pTemplate="selectedItem">
+                                <span>{{item.label}}</span>
+                            </ng-template>
+                            <ng-template let-car pTemplate="item">
+                                <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                                    <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                                </div>
+                            </ng-template>
+                        </p-dropdown>
+                        <label for="contractTypeId"> Loại hợp đông: </label>
+
                     </div>
                 </div>
                 <div class="x-1-2">
                     <div class="field-group date mb-0 ">
-                        <p-calendar 
-                            (onSelect)="find()"
-                            panelStyleClass="datepicker-default"
-                            placeholder="DD/MM/YYYY" 
-                            [appendTo]="'body'" 
-                            [baseZIndex]="101"
-                            [(ngModel)]="query.fromDate" 
-                            [monthNavigator]="true" 
-                            [yearNavigator]="true"
-                            yearRange="2010:2030" 
-                            inputId="navigators"
-                            dateFormat="dd/mm/yy" name="fromDate"></p-calendar>
+                        <p-calendar (onSelect)="find()" panelStyleClass="datepicker-default" placeholder="DD/MM/YYYY"
+                            [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="query.fromDate" [monthNavigator]="true"
+                            [yearNavigator]="true" yearRange="2010:2030" inputId="navigators" dateFormat="dd/mm/yy"
+                            name="fromDate"></p-calendar>
                         <label>Từ ngày</label>
                     </div>
                 </div>
                 <div class="x-1-2">
                     <div class="field-group date mb-0 ">
-                        <p-calendar 
-                            (onSelect)="find()"
-                            panelStyleClass="datepicker-default"
-                            placeholder="DD/MM/YYYY" 
-                            [appendTo]="'body'" 
-                            [baseZIndex]="101"
-                            [(ngModel)]="query.toDate" 
-                            [monthNavigator]="true" 
-                            [yearNavigator]="true"
-                            yearRange="2010:2030" 
-                            inputId="navigators"
-                            dateFormat="dd/mm/yy" name="toDate"></p-calendar>
+                        <p-calendar (onSelect)="find()" panelStyleClass="datepicker-default" placeholder="DD/MM/YYYY"
+                            [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="query.toDate" [monthNavigator]="true"
+                            [yearNavigator]="true" yearRange="2010:2030" inputId="navigators" dateFormat="dd/mm/yy"
+                            name="toDate"></p-calendar>
                         <label>Đến ngày</label>
                     </div>
                 </div>
-                <p-button class="btn-56-56 mr-2 ml-1"  icon="pi pi-refresh" (click)="cancel()" styleClass="p-button-secondary p-button-sm btn-56-56"></p-button>
+                <p-button class="btn-56-56 mr-2 ml-1" icon="pi pi-refresh" (click)="cancel()"
+                    styleClass="p-button-secondary p-button-sm btn-56-56"></p-button>
             </div>
             <!-- <div class="col-2" >  -->
-                <!-- <div class="field-group select label-8">
+            <!-- <div class="field-group select label-8">
                     <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" [filter] = "true"
                     [options]="listOrgRoots" [(ngModel)]="query.organizeId" name="organizeId" (onChange)="find()">
                     <ng-template let-item pTemplate="selectedItem">
@@ -144,22 +135,22 @@
                 </div> -->
             <!-- </div> -->
             <!-- <div class="col-4 tools"> -->
-                <!-- <p-button styleClass="p-button-sm mr-1" icon="pi pi-plus" label="Thêm mới" (click)="addHopDong()"></p-button> -->
+            <!-- <p-button styleClass="p-button-sm mr-1" icon="pi pi-plus" label="Thêm mới" (click)="addHopDong()"></p-button> -->
             <!-- </div> -->
         </div>
- 
+
         <div class="grid-default" #container>
-            <app-list-grid-angular  *ngIf="columnDefs.length > 0"
-                [listsData]="listsData" [height]="heightGrid"
-                [rowSelection]="'multiple'"
-                (callback)="rowSelected($event)"
-                [columnDefs]="columnDefs"></app-list-grid-angular>
-                <div class="paginator">
-                    <span>Từ {{ countRecord.currentRecordStart }} đến
-                        {{ countRecord.currentRecordEnd }}
-                        trên tổng số
-                        {{ countRecord.totalRecord }} kết quả</span>
-                <p-paginator [rows]="query.pageSize" [totalRecords]="countRecord.totalRecord" [first]="first" (onPageChange)="paginate($event)" [rowsPerPageOptions]="[15,30,45,100,200,{ showAll: 'ALL' }]"></p-paginator>
+            <app-list-grid-angular *ngIf="columnDefs.length > 0" [listsData]="listsData" [height]="heightGrid"
+                [rowSelection]="'multiple'" (callback)="rowSelected($event)" [columnDefs]="columnDefs">
+            </app-list-grid-angular>
+            <div class="paginator">
+                <span>Từ {{ countRecord.currentRecordStart }} đến
+                    {{ countRecord.currentRecordEnd }}
+                    trên tổng số
+                    {{ countRecord.totalRecord }} kết quả</span>
+                <p-paginator [rows]="query.pageSize" [totalRecords]="countRecord.totalRecord" [first]="first"
+                    (onPageChange)="paginate($event)" [rowsPerPageOptions]="[15,30,45,100,200,{ showAll: 'ALL' }]">
+                </p-paginator>
             </div>
         </div>
     </div>
@@ -169,31 +160,31 @@
 <p-dialog [(visible)]="displayPrint" [baseZIndex]="99" [modal]="true" [style]="{width: '1300px', height: 'auto'}">
     <!-- <ngx-loading [show]="loading1" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading> -->
     <p-header>
-       Danh sách in
+        Danh sách in
     </p-header>
     <div class="row">
         <div class="col-md-8 mt-2">
             <div class="field-group select valid">
-                <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
-                                [options]="listPrints" [(ngModel)]="modelPrint.PrinterName" name="PrinterName" >
-                                <ng-template let-item pTemplate="selectedItem">
-                                    <span style="vertical-align:middle;">{{item.label}}</span>
-                                </ng-template>
-                                <ng-template let-car pTemplate="item">
-                                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                                        <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
-                                    </div>
-                                </ng-template>
-                            </p-dropdown>
-                            <label for="" style="z-index: 2">Danh sách máy in</label>
-                </div>
+                <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" [options]="listPrints"
+                    [(ngModel)]="modelPrint.PrinterName" name="PrinterName">
+                    <ng-template let-item pTemplate="selectedItem">
+                        <span style="vertical-align:middle;">{{item.label}}</span>
+                    </ng-template>
+                    <ng-template let-car pTemplate="item">
+                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                            <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+                <label for="" style="z-index: 2">Danh sách máy in</label>
+            </div>
         </div>
         <div class="col-md-2 mt-2">
             <div class="field-group valid">
                 <input type="number" name="Copies" [(ngModel)]="modelPrint.Copies">
                 <label for="" style="z-index: 2">Số lần in</label>
             </div>
-                <!-- <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
+            <!-- <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
                                 [options]="soLanIn" [(ngModel)]="modelPrint.Copies" name="Copies" >
                                 <ng-template let-item pTemplate="selectedItem">
                                     <span style="vertical-align:middle;">{{item.label}}</span>
@@ -204,24 +195,24 @@
                                     </div>
                                 </ng-template>
                             </p-dropdown> -->
-                            
-                <!-- </div> -->
+
+            <!-- </div> -->
         </div>
         <div class="col-md-2 mt-2">
-           <p-button label="Thực hiện" styleClass="p-button-sm btn-h56 mb-2" [disabled]="filesPrints.length === 0 || !modelPrint.PrinterName" (onClick)="openPrint()"></p-button>
+            <p-button label="Thực hiện" styleClass="p-button-sm btn-h56 mb-2"
+                [disabled]="filesPrints.length === 0 || !modelPrint.PrinterName || modelPrint.Copies === 0 || !modelPrint.Copies"
+                (onClick)="openPrint()"></p-button>
         </div>
     </div>
 
 
     <div class="grid-default border">
-        <app-list-grid-angular  *ngIf="columnDefsPrint.length > 0"
-            [listsData]="filesPrints"   [domLayout]="'autoHeight'" 
-            [rowSelection]="'multiple'" [idGrid]="'prints'"
-            (callback)="rowSelected($event)"
+        <app-list-grid-angular *ngIf="columnDefsPrint.length > 0" [listsData]="filesPrints" [domLayout]="'autoHeight'"
+            [rowSelection]="'multiple'" [idGrid]="'prints'" (callback)="rowSelected($event)"
             [columnDefs]="columnDefsPrint"></app-list-grid-angular>
-        </div>
- 
-   
+    </div>
+
+
     <!-- <div class="row mt-1">
         <div class="group-textarea" [ngClass]="modelAddHoliday?.holi_des ? 'valid' : 'invalid' ">
             <textarea type="text" id="holi_des"  class="form-control" [(ngModel)]="modelAddHoliday.holi_des" cols="30" rows="10" name="holi_des"></textarea>

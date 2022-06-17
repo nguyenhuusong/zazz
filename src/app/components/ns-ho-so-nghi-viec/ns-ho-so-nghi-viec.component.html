@@ -101,19 +101,9 @@
 
 <p-dialog header="Thay đổi trạng thái" [(visible)]="displayChangeStatus" [modal]="true" [style]="{width: '660px'}"
     [draggable]="false" [resizable]="false">
-    <div class="col-md-12 mt-1" style="padding: 0">
-        <div class="field-group select" [ngClass]=" modelPheDuyet.status_key ? 'valid' : 'invalid' ">
-            <p-dropdown [autoZIndex]="true" [autoDisplayFirst]="false" [style]="{'width': '100%'}" [options]="listTerminateKey"
-            [(ngModel)]="modelPheDuyet.status_key" name="status_key">
-            <ng-template let-item pTemplate="selectedItem">
-                <span>{{item.label}}</span>
-            </ng-template>
-            <ng-template let-car pTemplate="item">
-                <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                    <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
-                </div>
-            </ng-template>
-            </p-dropdown>
+    <div class="col-md-12 mt-1" style="padding: 0"> 
+        <div class="field-group multi-select" [ngClass]=" modelPheDuyet.status_key ? 'valid' : 'invalid' ">
+            <p-multiSelect [autoZIndex]="true" [options]="listTerminateKey" [(ngModel)]="modelPheDuyet.status_key" optionLabel="name"></p-multiSelect>
             <label for="">status_key</label>
         </div>
     </div>
