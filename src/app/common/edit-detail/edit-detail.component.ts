@@ -82,8 +82,10 @@ export class EditDetailComponent implements OnInit, OnChanges {
   }
   submit = false
 
-  async callApiDrop() {
-    this.dataView.forEach(async element => {
+  callApiDrop() {
+    let array = [...this.dataView];
+    this.dataView =[];
+    array.forEach(element => {
       element.fields.forEach(async element1 => {
         if (element1.columnType === 'markdown' || element1.columnType === 'linkUrl') {
           const dataValidation = {
@@ -130,8 +132,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
           } else if (element1.field_name === 'empId') {
             const root_orgId = await this.getValueByKey('organizeId');
             setTimeout(() => {
-              this.getEmployeePage(root_orgId, element1);
-            }, 100);
+            this.getEmployeePage(root_orgId, element1);
+            }, 500);
           } else if (element1.field_name === 'shift_cds') {
             this.getWorkShifts(element1, null)
           } else if (element1.field_name === 'work_cd') {
@@ -222,7 +224,9 @@ export class EditDetailComponent implements OnInit, OnChanges {
           } else if (element1.field_name === 'parent_type_id' || element1.field_name === 'form_type') {
             await this.getFormTypePage(element1); 
           } else {
-            this.getCustObjectListNew(element1);
+            if(element1.columnObject) {
+              this.getCustObjectListNew(element1);
+            }
           }
         }else if(element1.columnType === 'input'){
           if (element1.field_name === 'annualYear') {
@@ -231,6 +235,11 @@ export class EditDetailComponent implements OnInit, OnChanges {
         }
       });
     });
+    setTimeout(() => {
+      this.dataView =array;
+    console.log(this.dataView)
+
+    }, 1000);
   }
   
   getNode(item) {
@@ -514,16 +523,17 @@ export class EditDetailComponent implements OnInit, OnChanges {
   }
 
   getEmployeePage(orgId, element1) {
-    const queryParams = queryString.stringify({ orgId: orgId, pageSize: 100000 });
+    const queryParams = queryString.stringify({ orgId: orgId, pageSize: 100000000 });
     this.apiService.getEmployeePage(queryParams).subscribe(results => {
       if (results.status === 'success') {
-        element1.options = cloneDeep(results.data.dataList.data).map(d => {
-          return {
-            label: d.full_name + '-' + d.phone1,
-            value: `${d.empId}`
-          }
-        });
-        element1.columnValue = element1.columnValue ? element1.columnValue.toLowerCase() : ''
+        const options = results.data.dataList.data.map(d => {
+            return {
+              label: d.full_name + '-' + d.phone1,
+              value: d.empId
+            }
+          });
+          element1.options =options
+          element1.columnValue = element1.columnValue ? element1.columnValue.toLowerCase() : ''
       }
     })
   }
