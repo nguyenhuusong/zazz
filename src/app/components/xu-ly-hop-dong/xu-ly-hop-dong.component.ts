@@ -327,7 +327,7 @@ export class XuLyHopDongComponent implements OnInit {
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Cài đặt' },
-      { label: 'Danh sách loại hợp đồng' },
+      { label: 'Danh sách loại hợp đồng' }
     ];
     this.load();
 

@@ -1321,8 +1321,8 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v2/form/GetFormTypePage?` + queryParams, this.options)
   }
 
-  getFormTypes(filter: string = ''): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v2/form/GetFormTypes?filter=${filter}`, this.options)
+  getFormTypes(): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/form/GetFormTypes`, this.options)
   }
 
   getFormTypeInfo(formTypeId: string): Observable<any> {

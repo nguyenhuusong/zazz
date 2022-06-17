@@ -327,12 +327,12 @@ export class NgayNghiLeComponent implements OnInit {
 
   xoanhanvien(event) {
     this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn xóa nhân viên?',
+      message: 'Bạn có chắc chắn muốn xóa?',
       accept: () => {
         const queryParams = queryString.stringify({ id: event.rowData.id });
         this.apiService.deleteHoliday(queryParams).subscribe((results: any) => {
           if (results.status === 'success') {
-            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa nhân viên thành công' });
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
             this.load();
           } else {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });

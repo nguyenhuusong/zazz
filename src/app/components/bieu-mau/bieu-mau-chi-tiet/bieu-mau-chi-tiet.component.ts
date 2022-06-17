@@ -72,10 +72,10 @@ export class BieuMauChiTietComponent implements OnInit, OnDestroy {
   }
 
   handleSave(event) {
-    this.spinner.show();
     const params = {
       ...this.detailInfo, group_fields: event
     };
+
     this.apiService.setFormInfo(params)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((results: any) => {
@@ -93,7 +93,7 @@ export class BieuMauChiTietComponent implements OnInit, OnDestroy {
       }), error => {
         console.error('Error:', error);
         this.spinner.hide();
-      };
+      }; 
   }
 }
 
