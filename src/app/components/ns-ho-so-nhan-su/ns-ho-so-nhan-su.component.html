@@ -138,7 +138,6 @@
             <div class="field-group select mb-0 label-8" [ngClass]="organizeId? 'valid': 'invalid' ">
                 <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" (onChange)="getOrganizeTree()"
                     [options]="organs" [(ngModel)]="organizeId" name="organizeId" [filter]="true"
-                    (onChange)="handleChangeOrganize()"
                     placeholder="Chọn tổ chức"
                     >
                     <ng-template let-item pTemplate="selectedItem">
@@ -161,7 +160,7 @@
                     [options]="departmentFiltes" 
                     selectionMode="single" 
                     name="aDepartment"
-                    (onNodeSelect)="onChangeTreeDepart()"
+                    (onNodeSelect)="onChangeTreeDepart($event)"
                     placeholder="Chọn phòng ban">
                 </p-treeSelect>
                 <label>Bộ phận</label>
