@@ -688,22 +688,31 @@ export class NsHoSoNhanSuComponent implements OnInit {
         }
       },
         error => { });
+    this.queryStaffToMove.orgId = '';
+    this.aDepartment = '';
+    if(this.organizeId && this.queryStaffToMove.orgId){
+      this.isButtonmoveOrganNow = false;
+    }
+    else {
+      this.isButtonmoveOrganNow = true;
+    }
   }
 
-  handleChangeOrganize() {
-    this.getOrganizeTree();
-  }
-  onChangeTreeDepart() {
-    if (this.aDepartment.orgId && this.organizeId) {
+  // handleChangeOrganize() {
+  //   this.getOrganizeTree();
+  // }
+  onChangeTreeDepart(event) {
+    this.queryStaffToMove.orgId = event.node.orgId;
+    if(this.organizeId && event.node.orgId){
       this.isButtonmoveOrganNow = false;
-    } else {
+    }
+    else {
       this.isButtonmoveOrganNow = true;
     }
   }
   moveOrganNow() {
     if (this.theOrganToMoveData.length > 0) {
       this.queryStaffToMove.organizeId = this.organizeId;
-      this.queryStaffToMove.orgId = this.aDepartment.orgId;
       this.queryStaffToMove.members = this.theOrganToMoveData.map(o => {
         return {
           empId: o.empId,
