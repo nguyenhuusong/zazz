@@ -703,12 +703,15 @@ export class NsHoSoNhanSuComponent implements OnInit {
   // }
   onChangeTreeDepart(event) {
     this.queryStaffToMove.orgId = event.node.orgId;
-    if(this.organizeId && event.node.orgId){
-      this.isButtonmoveOrganNow = false;
-    }
-    else {
-      this.isButtonmoveOrganNow = true;
-    }
+    // if(this.organizeId && event.node.orgId){
+    //   this.isButtonmoveOrganNow = false;
+    // }
+    // else {
+    //   this.isButtonmoveOrganNow = true;
+    // }
+
+    //MS-773
+    this.isButtonmoveOrganNow = false;
   }
   moveOrganNow() {
     if (this.theOrganToMoveData.length > 0) {

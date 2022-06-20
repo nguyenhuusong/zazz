@@ -409,7 +409,8 @@ export class AppTypeDropdownComponent implements OnInit {
 
 
   getUserByPush(orgId, element1) {
-    this.apiService.getUserByPush({ organizeId: orgId, orgIds: [orgId] }).subscribe(results => {
+    const queryParams = queryString.stringify({ orgId: orgId});
+    this.apiService.getEmployeeSearch(queryParams).subscribe(results => {
       if (results.status === 'success') {
         element1.options = results.data.map(d => {
           return {
