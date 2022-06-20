@@ -81,11 +81,11 @@ export class EditDetailComponent implements OnInit, OnChanges {
     this.callbackcancel.emit(value);
   }
   submit = false
-
+  dataViewNew = []
   callApiDrop() {
-    let array = [...this.dataView];
+    this.dataViewNew = [...this.dataView];
     this.dataView =[];
-    array.forEach(element => {
+    this.dataViewNew.forEach(element => {
       element.fields.forEach(async element1 => {
         if (element1.columnType === 'markdown' || element1.columnType === 'linkUrl') {
           const dataValidation = {
@@ -194,6 +194,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
             this.getContractTypes(element1);
           } else if (element1.field_name === 'salary_type') {
             const contractTypeId =await this.getValueByKey('contractTypeId');
+            console.log(contractTypeId)
             this.getSalaryTypes(contractTypeId, element1);
           } else if (element1.field_name === 'base_id') {
             this.getSalaryBases(element1);
@@ -236,8 +237,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
       });
     });
     setTimeout(() => {
-      this.dataView =array;
-    console.log(this.dataView)
+      this.dataView =this.dataViewNew;
 
     }, 1000);
   }
@@ -792,12 +792,12 @@ export class EditDetailComponent implements OnInit, OnChanges {
 
 
   getValueByKey(key) {
-    if (this.dataView && this.dataView.length > 0) {
+    if (this.dataViewNew && this.dataViewNew.length > 0) {
       let value = ''
-      for (let i = 0; i < this.dataView.length; i++) {
-        for (let j = 0; j < this.dataView[i].fields.length; j++) {
-          if (this.dataView[i].fields[j].field_name === key) {
-            value = this.dataView[i].fields[j].columnValue;
+      for (let i = 0; i < this.dataViewNew.length; i++) {
+        for (let j = 0; j < this.dataViewNew[i].fields.length; j++) {
+          if (this.dataViewNew[i].fields[j].field_name === key) {
+            value = this.dataViewNew[i].fields[j].columnValue;
             break;
           }
         }
