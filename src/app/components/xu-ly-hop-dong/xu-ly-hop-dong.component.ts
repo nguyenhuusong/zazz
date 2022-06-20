@@ -122,8 +122,8 @@ export class XuLyHopDongComponent implements OnInit {
       orgId: null,
       contract_st: null,
       contractTypeId: null,
-      fromDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth())).add(-1, 'months').format()),
-      toDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth())).format()),
+      fromDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).add(-1, 'months').format("YYYY-MM-DD")),
+      toDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).format("YYYY-MM-DD")),
     }
     this.load();
   }
@@ -326,8 +326,8 @@ export class XuLyHopDongComponent implements OnInit {
     this.getCustObjectListNew();
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
-      { label: 'Cài đặt' },
-      { label: 'Danh sách loại hợp đồng' }
+      { label: 'Nhân sự' },
+      { label: 'Xử lý hợp đồng' }
     ];
     this.load();
 
