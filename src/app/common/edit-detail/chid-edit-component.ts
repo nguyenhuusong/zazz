@@ -112,7 +112,7 @@ export class AppTypeSelectComponent implements OnInit {
 @Component({
   selector: 'app-type-selectTree',
   template: `  
-     <div class="field-group select treeselect" [ngClass]="'valid'" *ngIf ="element && element.columnValue && checkIsObject(element.columnValue)"> 
+     <div class="field-group select treeselect" [ngClass]="'valid'" > 
       <p-treeSelect [options]="element.options || []" [(ngModel)]="element.columnValue" [filterInputAutoFocus]="true"  selectionMode="single" [disabled]="element.isDisable" placeholder="Select Item" (onNodeSelect)="selectNode($event)" [required]="element && element.isRequire && element?.isVisiable && !element.isEmpty"></p-treeSelect>
       <div *ngIf="element.isRequire && submit && !element.columnValue"
           class="alert-validation alert-danger">
