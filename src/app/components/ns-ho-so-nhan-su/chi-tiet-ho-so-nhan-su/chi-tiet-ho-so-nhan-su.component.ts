@@ -133,13 +133,10 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       { name: 'Thông tin cá nhân', code: API_PROFILE.THONG_TIN_CA_NHAN },
       { name: 'Vị trí công việc', code: API_PROFILE.CONG_VIEC },
       { name: 'Quạn hệ lao động C&B', code: API_PROFILE.QUAN_HE_LAO_DONG },
-      { name: 'Người quản lý', code: API_PROFILE.NGUOI_QUAN_LY },
-      // { name: 'Liên hệ', code: API_PROFILE.LIEN_HE },
+      // { name: 'Người quản lý', code: API_PROFILE.NGUOI_QUAN_LY },
       { name: 'Thuế bảo hiểm', code: API_PROFILE.THUE_BAO_HIEM },
-      // { name: 'Tiền lương', code: API_PROFILE.TIEN_LUONG },
       { name: 'Chuyên môn', code: API_PROFILE.CHUYEN_MON },
       { name: 'Tiện ích', code: API_PROFILE.TIEN_ICH },
-      // { name: 'Người dùng', code: API_PROFILE.NGUOI_DUNG },
     ];
     this.titlePage = this.activatedRoute.data['_value'].title;
     this.url = this.activatedRoute.data['_value'].url;
@@ -195,6 +192,8 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   }
 
   onChangeMenu(e): void {
+    this.listViewsReportTo =  [];
+    this.detailInfoReportTo = null;
     this.manhinh = 'Edit';
     if (this.selectedMenuCode === API_PROFILE.CONG_VIEC) {
       this.optionsButtonsView =
@@ -205,18 +204,16 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
           { label: 'Mở Lại hồ sơ', value: 'MoLaiHoSo', class: '', icon: 'pi pi-check' },
           { label: 'Tuyển dụng lại', value: 'TuyenDungLai', class: '', icon: 'pi pi-check' },
           { label: 'Nghỉ việc', value: 'NghiViec', class: '', icon: 'pi pi-check' },
-          // { label: 'Quay lại', value: 'Back', class: 'p-button-secondary', icon: 'pi pi-times' }
         ];
+
+        // this.getEmployeeByReportTo();
     } else if (this.selectedMenuCode === API_PROFILE.QUAN_HE_LAO_DONG) {
       this.optionsButtonsView =
         [
-          // { label: 'Sửa', value: 'Edit' },
           { label: 'Tạo hợp đồng', value: 'TaoHopDong', class: '', icon: 'pi pi-check' },
-          // { label: 'Quay lại', value: 'Back', class: 'p-button-secondary', icon: 'pi pi-times' }
         ];
     } else {
       this.optionsButtonsView = [{ label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check' },
-      //  { label: 'Quay lại', value: 'Back', class: 'p-button-secondary', icon: 'pi pi-times' }
       ];
     }
     this.initData();
@@ -231,6 +228,71 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       this.empId = this.paramsObject.params.empId;
       this.getEmployeeInfo();
     });
+  }
+  listViewsReportTo = [];
+  detailInfoReportTo = null;
+  getEmployeeByReportTo() {
+    this.spinner.show();
+    const queryParams = queryString.stringify({ empId: this.empId });
+    this.apiService.getEmployeeData('GetEmployeeByReportTo', queryParams).subscribe(results => {
+      if (results.status === 'success') {
+        this.listViewsReportTo = cloneDeep(results.data.group_fields || []);
+        this.detailInfoReportTo = results.data;
+        // this.columnDefs[0] = [...AgGridFn(data.gridflexdetails1 || [])];
+        // this.listsData[0] = data.reportTos || [];
+        // this.titles[0] = 'Báo cáo cho';
+        this.columnDefs[2] = [...AgGridFn(this.detailInfoReportTo.gridflexdetails2 || []),
+        {
+          headerName: '',
+          field: 'gridflexdetails1',
+          cellClass: ['border-right', 'no-auto'],
+          pinned: 'right',
+          width: 70,
+          cellRenderer: 'buttonAgGridComponent',
+          cellRendererParams: params => {
+            return {
+              buttons: [
+                {
+                  onClick: this.OnClick.bind(this),
+                  label: 'Xem chi tiêt',
+                  icon: 'fa fa-edit',
+                  key: 'taikhoanlogin',
+                  class: 'btn-primary mr-1',
+                },
+                {
+                  onClick: this.OnClick.bind(this),
+                  label: 'Xóa tài khoản đăng nhập',
+                  icon: 'pi pi-trash',
+                  key: 'xoataikhoandangnhap',
+                  class: 'btn-primary',
+                  hide: !params.data.lock_st
+                },
+                {
+                  onClick: this.OnClick.bind(this),
+                  label: 'Khóa',
+                  icon: 'fa fa-edit',
+                  key: 'dong-mo-tai-khoan',
+                  class: 'btn-primary mr-1',
+                  hide: params.data.lock_st === true
+                },
+                {
+                  onClick: this.OnClick.bind(this),
+                  label: 'Mở khóa',
+                  icon: 'pi pi-trash',
+                  key: 'dong-mo-tai-khoan',
+                  class: 'btn-danger',
+                  hide: params.data.lock_st === false
+                },
+              ]
+            };
+          },
+        }];
+        this.listsData[2] = this.detailInfoReportTo.users || [];
+        this.titles[2] = 'Người dùng';
+
+        this.spinner.hide();
+      }
+    })
   }
 
   getEmployeeInfo(): void {
@@ -264,6 +326,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
          this.getContractTypes();
         if (this.selectedMenuCode === API_PROFILE.CONG_VIEC) {
           this.bindingDataButton(results.data);
+          this.getEmployeeByReportTo();
         }
       }
     }, error => {
@@ -368,7 +431,6 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
         this.listsData[0] = data.idcards || [];
         this.titles[0] = 'Giấy tờ tùy thân';
         this.columnDefs[1] = [...AgGridFn(data.gridflexdetails2 || [])];
-        console.log(this.columnDefs[1], 'this.columnDefs[1]')
         this.listsData[1] = data.records || [];
         this.titles[1] = 'Hồ sơ cá nhân';
         this.columnDefs[2] = [
@@ -600,59 +662,59 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
         this.spinner.hide();
         break;
       case API_PROFILE.NGUOI_QUAN_LY:
-        this.columnDefs[0] = [...AgGridFn(data.gridflexdetails1 || [])];
-        this.listsData[0] = data.reportTos || [];
-        this.titles[0] = 'Báo cáo cho';
-        this.columnDefs[1] = [...AgGridFn(this.detailInfo.gridflexdetails2 || []),
-        {
-          headerName: '',
-          field: 'gridflexdetails1',
-          cellClass: ['border-right', 'no-auto'],
-          pinned: 'right',
-          width: 70,
-          cellRenderer: 'buttonAgGridComponent',
-          cellRendererParams: params => {
-            return {
-              buttons: [
-                {
-                  onClick: this.OnClick.bind(this),
-                  label: 'Xem chi tiêt',
-                  icon: 'fa fa-edit',
-                  key: 'taikhoanlogin',
-                  class: 'btn-primary mr-1',
-                },
-                {
-                  onClick: this.OnClick.bind(this),
-                  label: 'Xóa tài khoản đăng nhập',
-                  icon: 'pi pi-trash',
-                  key: 'xoataikhoandangnhap',
-                  class: 'btn-primary',
-                  hide: !params.data.lock_st
-                },
-                {
-                  onClick: this.OnClick.bind(this),
-                  label: 'Khóa',
-                  icon: 'fa fa-edit',
-                  key: 'dong-mo-tai-khoan',
-                  class: 'btn-primary mr-1',
-                  hide: params.data.lock_st === true
-                },
-                {
-                  onClick: this.OnClick.bind(this),
-                  label: 'Mở khóa',
-                  icon: 'pi pi-trash',
-                  key: 'dong-mo-tai-khoan',
-                  class: 'btn-danger',
-                  hide: params.data.lock_st === false
-                },
-              ]
-            };
-          },
-        }];
-        this.listsData[1] = data.users || [];
-        this.titles[1] = 'Người dùng';
-        this.spinner.hide();
-        break;
+        // this.columnDefs[0] = [...AgGridFn(data.gridflexdetails1 || [])];
+        // this.listsData[0] = data.reportTos || [];
+        // this.titles[0] = 'Báo cáo cho';
+        // this.columnDefs[1] = [...AgGridFn(this.detailInfo.gridflexdetails2 || []),
+        // {
+        //   headerName: '',
+        //   field: 'gridflexdetails1',
+        //   cellClass: ['border-right', 'no-auto'],
+        //   pinned: 'right',
+        //   width: 70,
+        //   cellRenderer: 'buttonAgGridComponent',
+        //   cellRendererParams: params => {
+        //     return {
+        //       buttons: [
+        //         {
+        //           onClick: this.OnClick.bind(this),
+        //           label: 'Xem chi tiêt',
+        //           icon: 'fa fa-edit',
+        //           key: 'taikhoanlogin',
+        //           class: 'btn-primary mr-1',
+        //         },
+        //         {
+        //           onClick: this.OnClick.bind(this),
+        //           label: 'Xóa tài khoản đăng nhập',
+        //           icon: 'pi pi-trash',
+        //           key: 'xoataikhoandangnhap',
+        //           class: 'btn-primary',
+        //           hide: !params.data.lock_st
+        //         },
+        //         {
+        //           onClick: this.OnClick.bind(this),
+        //           label: 'Khóa',
+        //           icon: 'fa fa-edit',
+        //           key: 'dong-mo-tai-khoan',
+        //           class: 'btn-primary mr-1',
+        //           hide: params.data.lock_st === true
+        //         },
+        //         {
+        //           onClick: this.OnClick.bind(this),
+        //           label: 'Mở khóa',
+        //           icon: 'pi pi-trash',
+        //           key: 'dong-mo-tai-khoan',
+        //           class: 'btn-danger',
+        //           hide: params.data.lock_st === false
+        //         },
+        //       ]
+        //     };
+        //   },
+        // }];
+        // this.listsData[1] = data.users || [];
+        // this.titles[1] = 'Người dùng';
+        // this.spinner.hide();
+        // break;
       case API_PROFILE.TIEN_ICH:
         this.columnDefs[0] = [...AgGridFn(data.gridflexdetails1 || [])];
         this.listsData[0] = data.utiliies || [];
@@ -722,10 +784,20 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     this.indexTab = index;
   }
 
-  setEmployeeInfo(data): void {
-    const params = {
+  saveReportTo() {
+    this.setEmployeeInfo(this.detailInfoReportTo.group_fields, true);
+  }
+
+  setEmployeeInfo(data, isReportTo = false): void {
+    let params = {
       ...this.detailInfo, group_fields: data
     };
+    if(isReportTo) {
+      params = {
+        ...this.detailInfoReportTo, group_fields: data
+      };
+    }
+
     this.apiService.setEmployeeInfo(params).subscribe((results: any) => {
       if (results.status === 'success') {
         this.displayUserInfo = false;
@@ -748,7 +820,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   lockCard(e) {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn thực hiện hành động này không?',
-      accept: () => {
+      accept: ()  => {
         this.apiService.lockUser(e.rowData.userId).subscribe(results => {
           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Khóa tài khoản thành công' });
           this.getEmployeeInfo();

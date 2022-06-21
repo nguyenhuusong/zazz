@@ -2910,11 +2910,12 @@ div.p-organizationchart {
             content: "";
             display: block;
             position: absolute;
-            top: -1px;
+            top: 0;
             box-shadow: 1px 1px 1px #ccc;
-            width: 6px;
-            height: 26px;
+            width: 2px;
             background: #0979FD;
+            left: 0px;
+            bottom: 10px;
         }
     // }
     .panel-heading{

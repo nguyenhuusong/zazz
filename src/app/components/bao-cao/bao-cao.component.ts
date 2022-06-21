@@ -119,8 +119,8 @@ export class BaoCaoComponent implements OnInit {
   ViewExcel(type): void {
     this.spinner.show();
     const params = this.getParams(type);
-    const name = this.listReports.find(t => t.value === this.query.report_type).label;
-    const api = this.listReports.find(t => t.value === this.query.report_type).api;
+    const name = this.listReports.filter(t => t.value === this.query.report_type)[0].label;
+    const api = this.listReports.filter(t => t.value === this.query.report_type)[0].api;
     if (api) {
       const queryParams = queryString.stringify(params);
       this.apiService.get(api, queryParams)
@@ -141,8 +141,8 @@ export class BaoCaoComponent implements OnInit {
   exportExcel(type): void {
     this.spinner.show();
     const params = this.getParams(type);
-    const name = this.listReports.find(t => t.value === this.query.report_type).label;
-    const api = this.listReports.find(t => t.value === this.query.report_type).api;
+    const name = this.listReports.filter(t => t.value === this.query.report_type)[0].label;
+    const api = this.listReports.filter(t => t.value === this.query.report_type)[0].api;
     if (api) {
       const queryParams = queryString.stringify(params);
       this.apiService.get(api, queryParams)
@@ -163,8 +163,8 @@ export class BaoCaoComponent implements OnInit {
   exportPdf(type): void {
     this.spinner.show();
     const params = this.getParams(type);
-    const name = this.listReports.find(t => t.value === this.query.report_type).label;
-    const api = this.listReports.find(t => t.value === this.query.report_type).api;
+    const name = this.listReports.filter(t => t.value === this.query.report_type)[0].label;
+    const api = this.listReports.filter(t => t.value === this.query.report_type)[0].api;
     if (api) {
       const queryParams = queryString.stringify(params);
       this.apiService.get(api, queryParams)

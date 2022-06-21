@@ -1,5 +1,5 @@
 import { cloneDeep } from 'lodash';
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { AfterViewChecked, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import * as queryString from 'querystring';
 import * as firebase from 'firebase';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -36,7 +36,7 @@ export class AppTypeTextComponent implements OnInit {
   }
 
   onChangeValue(value, field_name, element) {
-    this.modelFields[field_name].error = this.modelFields[field_name].isRequire ? this.element.columnValue ? false : true : false
+    this.modelFields[field_name].error = this.modelFields[field_name].isRequire &&  this.element.columnValue ? false : true 
     this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
     let numberDay = moment().daysInMonth();
     if(field_name === 'annualAdd')
@@ -100,7 +100,7 @@ export class AppTypeSelectComponent implements OnInit {
   }
 
   onChangeValue(value, field_name, element) {
-    this.modelFields[field_name].error = this.modelFields[field_name].isRequire ? this.element.columnValue ? false : true : false
+    this.modelFields[field_name].error = this.modelFields[field_name].isRequire && this.element.columnValue ? false : true
     this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
   }
 
@@ -162,7 +162,7 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
   }
 
   onChangeTree(event, field_name, element) {
-    this.modelFields[field_name].error = this.modelFields[field_name].isRequire ? this.element.columnValue ? false : true : false
+    this.modelFields[field_name].error = this.modelFields[field_name].isRequire &&  this.element.columnValue ? false : true 
     this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
     if (field_name === 'orgId') {
       this.dataView.forEach(element => {
@@ -202,11 +202,11 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
 @Component({
   selector: 'app-type-dropdown',
   template: `   
-          <div class="field-group select valid" >
+          <div class="field-group select " [ngClass]=" element.columnValue ? 'valid' : 'invalid' " >
                 <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
                   [disabled]="element.isDisable" [options]="element.options" (onChange)="onChangeValue($event.value, element.field_name, element)" [filterBy]="'label'"
                   [required]="element.isRequire && element.isVisiable && !element.isEmpty" [(ngModel)]="element.columnValue"
-                  name={{element.field_name}} [filter]="true">
+                  [name]="element.field_name" [filter]="true">
                   <ng-template let-item pTemplate="selectedItem">
                     <span style="vertical-align:middle;">{{item.label}}</span>
                   </ng-template>
@@ -225,7 +225,7 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
             </div>
                 `,
 })
-export class AppTypeDropdownComponent implements OnInit {
+export class AppTypeDropdownComponent implements OnInit,AfterViewChecked {
   @Input() element;
   @Input() dataView;
   @Input() paramsObject;
@@ -233,7 +233,8 @@ export class AppTypeDropdownComponent implements OnInit {
   @Input() modelFields;
   @Input() submit = false;
   constructor(
-    private apiService: ApiHrmService
+    private apiService: ApiHrmService,
+    private changeDetector: ChangeDetectorRef,
   ) { }
   async ngOnInit() {
     if (this.element.field_name === 'parentId') {
@@ -241,6 +242,10 @@ export class AppTypeDropdownComponent implements OnInit {
       const adm_st = await this.getValueByKey('adm_st');
       this.getAgentLeaders(orgId, this.element, adm_st);
     }
+  }
+
+  ngAfterViewChecked() {
+    this.changeDetector.detectChanges();
   }
 
   async getValueByKey(key) {
@@ -259,7 +264,8 @@ export class AppTypeDropdownComponent implements OnInit {
   }
 
   onChangeValue(value, field_name, element) {
-    this.modelFields[field_name].error = this.modelFields[field_name].isRequire ? this.element.columnValue ? false : true : false
+    console.log(value, field_name)
+    this.modelFields[field_name].error = this.modelFields[field_name].isRequire && this.element.columnValue ? false : true 
     this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
     if (field_name === 'orgId') {
       this.dataView.forEach(element => {
@@ -381,6 +387,7 @@ export class AppTypeDropdownComponent implements OnInit {
     }else if (field_name === 'holi_type') {
       this.callback.emit(value);
     }
+    console.log(this.modelFields)
   }
 
   getPositionTitles(positionId, element1) {
@@ -400,7 +407,7 @@ export class AppTypeDropdownComponent implements OnInit {
       element.fields.forEach( element1 => {
         if (element1.field_name === field_name) {
           element1.columnValue = value;
-          this.modelFields[field_name].error = this.modelFields[field_name].isRequire ? element1.columnValue ? false : true : false
+          this.modelFields[field_name].error = this.modelFields[field_name].isRequire && element1.columnValue ? false : true;
           this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
         }
       });
@@ -457,7 +464,7 @@ export class AppTypeDropdownComponent implements OnInit {
       if (results.status === 'success') {
         element1.options = results.data;
         element1.columnValue = results.data[0];
-        this.modelFields[element1.field_name].error = this.modelFields[element1.field_name].isRequire ? element1.columnValue ? false : true : false
+        this.modelFields[element1.field_name].error = this.modelFields[element1.field_name].isRequire && element1.columnValue ? false : true
         this.modelFields[element1.field_name].message = this.modelFields[element1.field_name].error ? 'Trường bắt buộc nhập !' : ''
       }
     })
@@ -562,7 +569,7 @@ export class AppTypeCurrencyComponent implements OnInit {
   }
 
   changePrice(event, field_name, element) {
-    this.modelFields[field_name].error = this.modelFields[field_name].isRequire ? this.element.columnValue ? false : true : false
+    this.modelFields[field_name].error = this.modelFields[field_name].isRequire && this.element.columnValue ? false : true
     this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
   }
 }
@@ -641,7 +648,7 @@ export class AppTypeTextareaComponent implements OnInit {
 
   }
   onChangeValue(value, field_name, element) {
-    this.modelFields[field_name].error = this.modelFields[field_name].isRequire ? this.element.columnValue ? false : true : false
+    this.modelFields[field_name].error = this.modelFields[field_name].isRequire && this.element.columnValue ? false : true;
     this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
 
   }
@@ -689,7 +696,7 @@ export class AppTypeDatetimeComponent implements OnInit, OnChanges {
   }
 
   onChangeValue(value, field_name) {
-    this.modelFields[field_name].error = this.modelFields[field_name].isRequire ? this.element.columnValue ? false : true : false;
+    this.modelFields[field_name].error = this.modelFields[field_name].isRequire && this.element.columnValue ? false : true;
     this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập' : '';
   }
 
