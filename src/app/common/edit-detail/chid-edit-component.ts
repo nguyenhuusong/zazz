@@ -36,7 +36,7 @@ export class AppTypeTextComponent implements OnInit {
   }
 
   onChangeValue(value, field_name, element) {
-    this.modelFields[field_name].error = this.modelFields[field_name].isRequire &&  this.element.columnValue ? false : true 
+    this.modelFields[field_name].error = this.modelFields[field_name].isRequire && !this.element.columnValue ? true : false 
     this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
     let numberDay = moment().daysInMonth();
     if(field_name === 'annualAdd')
@@ -100,7 +100,7 @@ export class AppTypeSelectComponent implements OnInit {
   }
 
   onChangeValue(value, field_name, element) {
-    this.modelFields[field_name].error = this.modelFields[field_name].isRequire && this.element.columnValue ? false : true
+    this.modelFields[field_name].error = this.modelFields[field_name].isRequire && !this.element.columnValue ? true : false;
     this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
   }
 
@@ -162,7 +162,7 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
   }
 
   onChangeTree(event, field_name, element) {
-    this.modelFields[field_name].error = this.modelFields[field_name].isRequire &&  this.element.columnValue ? false : true 
+    this.modelFields[field_name].error = this.modelFields[field_name].isRequire &&  !this.element.columnValue ? true : false; 
     this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
     if (field_name === 'orgId') {
       this.dataView.forEach(element => {
@@ -264,8 +264,7 @@ export class AppTypeDropdownComponent implements OnInit,AfterViewChecked {
   }
 
   onChangeValue(value, field_name, element) {
-    console.log(value, field_name)
-    this.modelFields[field_name].error = this.modelFields[field_name].isRequire && this.element.columnValue ? false : true 
+    this.modelFields[field_name].error = this.modelFields[field_name].isRequire && !this.element.columnValue ? true : false; 
     this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
     if (field_name === 'orgId') {
       this.dataView.forEach(element => {
@@ -407,7 +406,7 @@ export class AppTypeDropdownComponent implements OnInit,AfterViewChecked {
       element.fields.forEach( element1 => {
         if (element1.field_name === field_name) {
           element1.columnValue = value;
-          this.modelFields[field_name].error = this.modelFields[field_name].isRequire && element1.columnValue ? false : true;
+          this.modelFields[field_name].error = this.modelFields[field_name].isRequire && !element1.columnValue ? true : false;
           this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
         }
       });
@@ -464,7 +463,7 @@ export class AppTypeDropdownComponent implements OnInit,AfterViewChecked {
       if (results.status === 'success') {
         element1.options = results.data;
         element1.columnValue = results.data[0];
-        this.modelFields[element1.field_name].error = this.modelFields[element1.field_name].isRequire && element1.columnValue ? false : true
+        this.modelFields[element1.field_name].error = this.modelFields[element1.field_name].isRequire && !element1.columnValue ? true : false;
         this.modelFields[element1.field_name].message = this.modelFields[element1.field_name].error ? 'Trường bắt buộc nhập !' : ''
       }
     })
@@ -569,7 +568,7 @@ export class AppTypeCurrencyComponent implements OnInit {
   }
 
   changePrice(event, field_name, element) {
-    this.modelFields[field_name].error = this.modelFields[field_name].isRequire && this.element.columnValue ? false : true
+    this.modelFields[field_name].error = this.modelFields[field_name].isRequire && !this.element.columnValue ? true : false;
     this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
   }
 }
@@ -648,7 +647,7 @@ export class AppTypeTextareaComponent implements OnInit {
 
   }
   onChangeValue(value, field_name, element) {
-    this.modelFields[field_name].error = this.modelFields[field_name].isRequire && this.element.columnValue ? false : true;
+    this.modelFields[field_name].error = this.modelFields[field_name].isRequire && !this.element.columnValue ? true : false;
     this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
 
   }
@@ -696,7 +695,7 @@ export class AppTypeDatetimeComponent implements OnInit, OnChanges {
   }
 
   onChangeValue(value, field_name) {
-    this.modelFields[field_name].error = this.modelFields[field_name].isRequire && this.element.columnValue ? false : true;
+    this.modelFields[field_name].error = this.modelFields[field_name].isRequire && !this.element.columnValue ? true : false;
     this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập' : '';
   }
 

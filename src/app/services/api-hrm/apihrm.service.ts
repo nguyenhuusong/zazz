@@ -574,6 +574,14 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v2/compay/GetCompanyList?` + queryParams, this.options)
   }
 
+  getOrganizeParam(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/report/GetOrganizeParam?` + queryParams, this.options)
+  }
+
+  getDepartmentParams(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/report/GetDepartmentParams?` + queryParams, this.options)
+  }
+
   getUsersByAdmin(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/user/getUsersByAdmin?` + queryParams, this.options)
   }

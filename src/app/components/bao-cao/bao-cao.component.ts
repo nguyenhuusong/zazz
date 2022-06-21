@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import * as queryString from 'querystring';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -16,6 +16,7 @@ export class BaoCaoComponent implements OnInit {
   constructor(
     private spinner: NgxSpinnerService,
     private apiService: ApiHrmService,
+    private changeDetector: ChangeDetectorRef,
     private messageService: MessageService) {
   }
   
@@ -25,7 +26,12 @@ export class BaoCaoComponent implements OnInit {
   reports = [];
   listReports = [];
   chiTietThamSoBaoCao = null;
-  items = []
+  items = [];
+
+  ngAfterViewChecked() {
+    this.changeDetector.detectChanges();
+  }
+
   ngOnInit(): void {
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
@@ -41,11 +47,20 @@ export class BaoCaoComponent implements OnInit {
       (results: any) => {
         this.reports = results.data;
         this.listReports = results.data.map(d => {
-          return {
-            label: `${d.report_group} - ${d.report_name}`,
-            value: d.report_id,
-            api: d.api_url
-          };
+          if(d.report_id === 7) {
+            return {
+              label: `${d.report_group} - ${d.report_name}`,
+              value: d.report_id,
+              api: d.api_url,
+            };
+          }else {
+            return {
+              label: `${d.report_group} - ${d.report_name}`,
+              value: d.report_id,
+              api: d.api_url
+            };
+          }
+       
         });
         if (this.listReports.length > 0) {
           this.query.report_type = this.listReports[0].value;
@@ -60,6 +75,10 @@ export class BaoCaoComponent implements OnInit {
               if (element.param_cd === 'typeBM') {
                 this.getObjectList(element);
               }
+            }else if (element.param_type === 'multiSelect') {
+              if (element.param_cd === 'organizeId') {
+                this.getOrganizeParam(element);
+              }
             }
           });
         }
@@ -72,6 +91,11 @@ export class BaoCaoComponent implements OnInit {
   getDetailReport(event) {
     let items = this.reports.filter(d => d.report_id === this.query.report_type)
     this.chiTietThamSoBaoCao = items[0];
+    if(this.chiTietThamSoBaoCao.report_id == 7) {
+      this.chiTietThamSoBaoCao.paramaters[1] = {...this.chiTietThamSoBaoCao.paramaters[1], param_type: 'multiSelect'};
+      this.chiTietThamSoBaoCao.paramaters[2] = {...this.chiTietThamSoBaoCao.paramaters[2], param_type: 'multiSelect'};
+      this.chiTietThamSoBaoCao.paramaters = [...this.chiTietThamSoBaoCao.paramaters];
+    }
     this.chiTietThamSoBaoCao.paramaters.forEach(element => {
       if (element.param_type === 'datetime') {
         element[element.param_cd] = new Date();
@@ -82,8 +106,13 @@ export class BaoCaoComponent implements OnInit {
         if (element.param_cd === 'typeBM') {
           this.getObjectList(element);
         }
+      }else if (element.param_type === 'multiSelect') {
+        if (element.param_cd === 'organizeId') {
+          this.getOrganizeParam(element);
+        }
       }
     });
+   
   }
 
   getCompanyList(element1: any): void {
@@ -97,6 +126,53 @@ export class BaoCaoComponent implements OnInit {
           };
         });
         element1[element1.param_cd] = element1.param_default;
+      }
+    });
+  }
+
+  getOrganizeParam(element1: any): void {
+    const queryParams = queryString.stringify({ filter:'' });
+    this.apiService.getOrganizeParam(queryParams).subscribe(results => {
+      if (results.status === 'success') {
+        element1.options = results.data.map(res => {
+          return {
+            name: `${res.organizationName}`,
+            code: `${res.organizeId}`
+          };
+        });
+        element1[element1.param_cd] = element1.param_default;
+      }
+    });
+  }
+
+  selectChangeMultiSelect(event, name) {
+    if(name === 'organizeId') {
+        this.getDepartmentParams(event.value.filter(d => d != 1));
+    }else if(name === 'departmentId') {
+    }
+
+  }
+
+  getDepartmentParams(organizeId: any[]): void {
+    console.log(organizeId.map(d => d.code))
+    const queryParams = queryString.stringify({ organizeId: organizeId.map(d => d.code).toString() });
+    this.apiService.getDepartmentParams(queryParams).subscribe(results => {
+      if (results.status === 'success') {
+        this.setValue(results.data,'departmentId')
+      }
+    });
+  }
+
+  setValue(values, field_name) {
+    this.chiTietThamSoBaoCao.paramaters.forEach(element => {
+      if(element.param_cd === field_name) {
+        element.options = values.map(res => {
+          return {
+            name: `${res.departmentName}`,
+            code: `${res.departmentId}`
+          };
+        });
+        element[element.param_cd] = element.param_default;
       }
     });
   }
@@ -191,6 +267,16 @@ export class BaoCaoComponent implements OnInit {
         params[element.param_cd] = element[element.param_cd] ? moment(new Date(element[element.param_cd])).format('DD/MM/YYYY') : null;
       } else if (element.param_type === 'object') {
         params[element.param_cd] = element[element.param_cd];
+      }else if (element.param_type === 'multiSelect') {
+        if(element[element.param_cd] && element[element.param_cd].length > 0) {
+          const param_cds = element[element.param_cd].filter(d => d != 1);
+          if(element.param_cd === 'departmentId') {
+            params[element.param_cd] = param_cds.map(d => d.code).toString();
+          }else {
+            params[element.param_cd] = param_cds.map(d => d.code).toString();
+          }
+        }
+        
       }
     });
     return params;
