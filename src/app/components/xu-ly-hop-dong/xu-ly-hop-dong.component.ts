@@ -222,10 +222,11 @@ export class XuLyHopDongComponent implements OnInit {
           class: 'btn-primary mr5',
         },
         {
-          onClick: this.delMaternityInfo.bind(this),
+          onClick: this.XoaQuaTrinhHopDong.bind(this),
           label: 'Xóa ',
           icon: 'pi pi-trash',
           class: 'btn-primary mr5',
+          hide: event.data.contract_value > 0
         },
       ]
     };
@@ -259,9 +260,23 @@ export class XuLyHopDongComponent implements OnInit {
 
   }
 
-  delMaternityInfo(event) {
-
+  XoaQuaTrinhHopDong(event) {
+    this.confirmationService.confirm({
+      message: 'Bạn có chắc chắn muốn thực xóa hợp đồng?',
+      accept: () => {
+        const queryParams = queryString.stringify({ contractId: event.rowData.contractId });
+        this.apiService.delContractInfo(queryParams).subscribe((results: any) => {
+          if (results.status === 'success') {
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa hợp đồng thành công' });
+            this.load();
+          } else {
+            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+          }
+        });
+      }
+    });
   }
+
   columnDefsPrint = []
   initGrid() {
     this.columnDefs = [

@@ -47,19 +47,11 @@ export class BaoCaoComponent implements OnInit {
       (results: any) => {
         this.reports = results.data;
         this.listReports = results.data.map(d => {
-          if(d.report_id === 7) {
-            return {
-              label: `${d.report_group} - ${d.report_name}`,
-              value: d.report_id,
-              api: d.api_url,
-            };
-          }else {
-            return {
-              label: `${d.report_group} - ${d.report_name}`,
-              value: d.report_id,
-              api: d.api_url
-            };
-          }
+          return {
+            label: `${d.report_group} - ${d.report_name}`,
+            value: d.report_id,
+            api: d.api_url,
+          };
        
         });
         if (this.listReports.length > 0) {
@@ -91,11 +83,11 @@ export class BaoCaoComponent implements OnInit {
   getDetailReport(event) {
     let items = this.reports.filter(d => d.report_id === this.query.report_type)
     this.chiTietThamSoBaoCao = items[0];
-    if(this.chiTietThamSoBaoCao.report_id == 7) {
-      this.chiTietThamSoBaoCao.paramaters[1] = {...this.chiTietThamSoBaoCao.paramaters[1], param_type: 'multiSelect'};
-      this.chiTietThamSoBaoCao.paramaters[2] = {...this.chiTietThamSoBaoCao.paramaters[2], param_type: 'multiSelect'};
-      this.chiTietThamSoBaoCao.paramaters = [...this.chiTietThamSoBaoCao.paramaters];
-    }
+    // if(this.chiTietThamSoBaoCao.report_id == 7) {
+    //   this.chiTietThamSoBaoCao.paramaters[1] = {...this.chiTietThamSoBaoCao.paramaters[1], param_type: 'multiSelect'};
+    //   this.chiTietThamSoBaoCao.paramaters[2] = {...this.chiTietThamSoBaoCao.paramaters[2], param_type: 'multiSelect'};
+    //   this.chiTietThamSoBaoCao.paramaters = [...this.chiTietThamSoBaoCao.paramaters];
+    // }
     this.chiTietThamSoBaoCao.paramaters.forEach(element => {
       if (element.param_type === 'datetime') {
         element[element.param_cd] = new Date();

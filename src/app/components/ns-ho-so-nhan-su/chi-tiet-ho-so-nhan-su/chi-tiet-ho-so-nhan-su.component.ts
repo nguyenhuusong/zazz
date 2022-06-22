@@ -233,6 +233,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   detailInfoReportTo = null;
   getEmployeeByReportTo() {
     this.spinner.show();
+    this.listViewsReportTo = [];
     const queryParams = queryString.stringify({ empId: this.empId });
     this.apiService.getEmployeeData('GetEmployeeByReportTo', queryParams).subscribe(results => {
       if (results.status === 'success') {
@@ -785,7 +786,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   }
 
   saveReportTo() {
-    this.setEmployeeInfo(this.detailInfoReportTo.group_fields, true);
+    this.setEmployeeInfo(this.listViewsReportTo, true);
   }
 
   setEmployeeInfo(data, isReportTo = false): void {

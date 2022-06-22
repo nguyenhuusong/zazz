@@ -191,7 +191,12 @@ export class EditDetailComponent implements OnInit, OnChanges {
           } else if (element1.field_name === 'source_ref') {
             this.getNotifyRefList(element1);
           } else if (element1.field_name === 'contractTypeId') {
-            this.getContractTypes(element1);
+            if(this.detail.organizeId) {
+              this.getContractTypes(element1, this.detail.organizeId);
+            }else {
+              const contractTypeId =await this.getValueByKey('companyId');
+              this.getContractTypes(element1, contractTypeId);
+            }
           } else if (element1.field_name === 'salary_type') {
             const contractTypeId =await this.getValueByKey('contractTypeId');
             console.log(contractTypeId)
@@ -357,9 +362,9 @@ export class EditDetailComponent implements OnInit, OnChanges {
   }
 
 
-  getContractTypes(element1) {
-    if(this.detail.organizeId){
-      const queryParams = queryString.stringify({ organizeId: this.detail.organizeId });
+  getContractTypes(element1, organizeId) {
+    if(organizeId){
+      const queryParams = queryString.stringify({ organizeId: organizeId });
       this.apiService.getContractTypes(queryParams).subscribe(results => {
         if (results.status === 'success') {
           element1.options = cloneDeep(results.data).map(d => {
