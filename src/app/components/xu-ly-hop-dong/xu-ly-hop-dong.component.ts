@@ -58,6 +58,14 @@ export class XuLyHopDongComponent implements OnInit {
     label: 'Thêm mới tài khoản',
     value: 'Add'
   }
+
+  modelDuyetHopDong = {
+    contractId: null,
+    status: 1,
+    comment: '',
+    type: 'duyet_ho_so'
+  }
+
   statusContracts = [];
   typeContracts = []
   public modules: Module[] = AllModules;
@@ -222,6 +230,12 @@ export class XuLyHopDongComponent implements OnInit {
           class: 'btn-primary mr5',
         },
         {
+          onClick: this.updateStatus.bind(this),
+          label: 'Cập nhật trạng thái hợp đồng',
+          icon: 'fa fa-eye',
+          class: 'btn-primary mr5',
+        },
+        {
           onClick: this.XoaQuaTrinhHopDong.bind(this),
           label: 'Xóa ',
           icon: 'pi pi-trash',
@@ -258,6 +272,14 @@ export class XuLyHopDongComponent implements OnInit {
     }
     this.router.navigate(['/nhan-su/xu-ly-hop-dong/chi-tiet-xu-ly-hop-dong'], { queryParams: modelContractInfo });
 
+  }
+
+  updateStatus(event) {
+    this.modelDuyetHopDong.type = event.rowData.contract_value === 0 ? 'duyet_ho_so' : 'huy_duyet';
+    this.modelDuyetHopDong.contractId = event.rowData.contractId;
+    this.modelDuyetHopDong.status = 1;
+    this.modelDuyetHopDong.comment = '';
+    this.displayApproveContract = true;
   }
 
   XoaQuaTrinhHopDong(event) {
@@ -562,6 +584,42 @@ export class XuLyHopDongComponent implements OnInit {
   importFileExel() {
     this.router.navigate(['/nhan-su/xu-ly-hop-dong/import']);
   }
+
+  displayApproveContract = false
+  duyetHoSo() {
+    this.spinner.show();
+    let params = {...this.modelDuyetHopDong};
+    delete params.type;
+    this.apiService.setContractStatus(params)
+    .subscribe(results => {
+      if (results.status === 'success') {
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
+        this.displayApproveContract = false;
+        this.load();
+        this.spinner.hide();
+      } else {
+        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+        this.spinner.hide();
+      }
+    })
+  }
+
+  cancelContract() {
+    this.spinner.show();
+    this.apiService.setContractCancel({
+      contractId: this.modelDuyetHopDong.contractId
+    }).subscribe(results => {
+      if (results.status === 'success') {
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
+        this.load();
+        this.spinner.hide();
+      } else {
+        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+        this.spinner.hide();
+      }
+    })
+  }
+
 }
 
 
