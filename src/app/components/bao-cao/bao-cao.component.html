@@ -34,12 +34,12 @@
                     <ng-container *ngFor="let paramater of chiTietThamSoBaoCao?.paramaters">
                       <div *ngIf="paramater?.param_cd === 'exporttype'">
                         <div class="col-md-12 d-flex mb-3">
-                          <p-button label="Xem file Excel" icon="pi pi-eye" (click)="ViewExcel('view')"
-                            styleClass="mr-1 p-button-sm"></p-button>
-                          <p-button label="Xuất file Excel" icon="pi pi-file-excel" (click)="exportExcel('xlsx')"
-                            styleClass="mr-1 p-button-sm"></p-button>
-                          <p-button label="Xuất file PDf" icon="pi pi-file-pdf" styleClass="p-button-sm"
-                            (click)="exportPdf('pdf')"></p-button>
+                          <button pButton pRipple type="button" [disabled]="query.report_type===null ? true : false" 
+                          label="Xem file Excel" class="mr-2" icon="pi pi-eye" (click)="ViewExcel('view')"></button>
+                          <button pButton pRipple type="button" [disabled]="query.report_type===null ? true : false" 
+                          label="Xuất file Excel" class="mr-2"  icon="pi pi-file-excel" (click)="exportExcel('xlsx')"></button>
+                          <button pButton pRipple type="button" [disabled]="query.report_type===null ? true : false" 
+                          label="Xuất file PDf"  class="mr-2"  icon="pi pi-file-pdf"(click)="exportPdf('pdf')"></button>
                         </div>
                       </div>
                       <div *ngIf="paramater?.param_type === 'datetime'" class="col-md-4">
