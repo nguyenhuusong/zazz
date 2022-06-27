@@ -69,6 +69,20 @@
                             <label for="">{{paramater?.param_name}}: </label>
                           </div>
                       </div>
+                      <div *ngIf="paramater?.param_type === 'multiSelect'" class="col-md-12">
+                        <div class="field-group select" [ngClass]="paramater[paramater?.param_cd] ? 'valid' : 'invalid' ">
+                          <p-multiSelect [options]="paramater.options" [showToggleAll]="true"  (onChange)="selectChangeMultiSelect($event, paramater.param_cd)"
+                          [(ngModel)]="paramater[paramater?.param_cd]" optionLabel="name"  name={{paramater.param_cd}} [virtualScroll]="true"
+                            [filter]="true" [itemSize]="34" class="multiselect-custom-virtual-scroll">
+                            <ng-template let-country pTemplate="item">
+                                <div class="country-item">
+                                    <div>{{country.name}}</div>
+                                </div>
+                            </ng-template>
+                        </p-multiSelect>
+                          <label for="">{{paramater?.param_name}}: </label>
+                        </div>
+                    </div>
                     </ng-container>
 
                   </div>

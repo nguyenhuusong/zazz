@@ -33,7 +33,7 @@ export class CreateContractInfoComponent implements OnInit {
   ]
   listContractTypes = [];
   indexTab = 0;
-  @Input() modelContractInfo = null
+  @Input() modelContractInfo: any = null
   @Output() callback = new EventEmitter<any>();
   @Output() back = new EventEmitter<any>();
   titlePage = '';
