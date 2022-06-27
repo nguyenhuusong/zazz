@@ -260,7 +260,8 @@ export class BaoCaoComponent implements OnInit {
       } else if (element.param_type === 'object') {
         params[element.param_cd] = element[element.param_cd];
       }else if (element.param_type === 'multiSelect') {
-        if(element[element.param_cd] && element[element.param_cd].length > 0) {
+        console.log(element[element.param_cd] && (element[element.param_cd] != 1) && (element[element.param_cd].length > 0))
+        if( element[element.param_cd] && (element[element.param_cd] != 1) && (element[element.param_cd].length > 0)) {
           const param_cds = element[element.param_cd].filter(d => d != 1);
           if(element.param_cd === 'departmentId') {
             params[element.param_cd] = param_cds.map(d => d.code).toString();

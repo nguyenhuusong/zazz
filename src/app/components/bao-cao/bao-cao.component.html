@@ -42,7 +42,7 @@
                           label="Xuất file PDf"  class="mr-2"  icon="pi pi-file-pdf"(click)="exportPdf('pdf')"></button>
                         </div>
                       </div>
-                      <div *ngIf="paramater?.param_type === 'datetime'" class="col-md-4">
+                      <div *ngIf="paramater?.param_type === 'datetime'" class="col-md-6">
                           <div class="field-group date label-8">
                             <p-calendar placeholder="DD/MM/YYYY" appendTo="body" [baseZIndex]="101"
                               [(ngModel)]="paramater[paramater?.param_cd]" name="{{paramater?.param_cd}}"
@@ -52,7 +52,7 @@
                             <label for="">{{paramater?.param_name}}: </label>
                           </div>
                       </div>
-                      <div *ngIf="paramater?.param_type === 'object'" class="col-md-4">
+                      <div *ngIf="paramater?.param_type === 'object'" class="col-md-6">
                           <div class="field-group select" [ngClass]="paramater[paramater?.param_cd] ? 'valid' : 'invalid' ">
                             <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
                               [options]="paramater.options" [(ngModel)]="paramater[paramater?.param_cd]"
@@ -70,7 +70,7 @@
                           </div>
                       </div>
                       <div *ngIf="paramater?.param_type === 'multiSelect'" class="col-md-12">
-                        <div class="field-group select" [ngClass]="paramater[paramater?.param_cd] ? 'valid' : 'invalid' ">
+                        <div class="field-group multi-select" [ngClass]="paramater[paramater?.param_cd] ? 'valid' : 'invalid' ">
                           <p-multiSelect [options]="paramater.options" [showToggleAll]="true"  (onChange)="selectChangeMultiSelect($event, paramater.param_cd)"
                           [(ngModel)]="paramater[paramater?.param_cd]" optionLabel="name"  name={{paramater.param_cd}} [virtualScroll]="true"
                             [filter]="true" [itemSize]="34" class="multiselect-custom-virtual-scroll">
