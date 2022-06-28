@@ -234,6 +234,7 @@ export class XuLyHopDongComponent implements OnInit {
           label: 'Cập nhật trạng thái hợp đồng',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
+          hide: event.data.contract_value === 3
         },
         {
           onClick: this.XoaQuaTrinhHopDong.bind(this),
