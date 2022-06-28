@@ -76,8 +76,8 @@ export class CsChamCongComponent implements OnInit {
   getRowHeight;
   query = {
     organizeId: null,
-    fromDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).add(-1,'months').format()),
-    toDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).format()),
+    // fromDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).add(-1,'months').format()),
+    // toDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).format()),
     filter: '',
     offSet: 0,
     pageSize: 100,
@@ -120,8 +120,8 @@ export class CsChamCongComponent implements OnInit {
   cancel() {
     this.query = {
       organizeId: null,
-      fromDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).add(-1,'months').format()),
-      toDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).format()),
+      // fromDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).add(-1,'months').format()),
+      // toDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).format()),
       filter: '',
       offSet: 0,
       pageSize: 100000000,
@@ -136,8 +136,8 @@ export class CsChamCongComponent implements OnInit {
     // delete params.organizeId
     delete params.fromDate
     delete params.toDate
-    params.FromDate = moment(new Date(this.query.fromDate)).format('YYYY-MM-DD')
-    params.ToDate = moment(new Date(this.query.toDate)).format('YYYY-MM-DD')
+    // params.FromDate = moment(new Date(this.query.fromDate)).format('YYYY-MM-DD')
+    // params.ToDate = moment(new Date(this.query.toDate)).format('YYYY-MM-DD')
 
     const queryParams = queryString.stringify(params);
     this.spinner.show();
@@ -157,8 +157,8 @@ export class CsChamCongComponent implements OnInit {
     this.columnDefs = []
     this.spinner.show();
     let params: any = {... this.query};
-    params.fromDate = moment(new Date(this.query.fromDate)).format('YYYY-MM-DD')
-    params.toDate = moment(new Date(this.query.toDate)).format('YYYY-MM-DD')
+    // params.fromDate = moment(new Date(this.query.fromDate)).format('YYYY-MM-DD')
+    // params.toDate = moment(new Date(this.query.toDate)).format('YYYY-MM-DD')
     const queryParams = queryString.stringify(params);
     this.apiService.getEmployeeSalaryMonthPage(queryParams).subscribe(
       (results: any) => {
