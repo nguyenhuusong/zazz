@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 const host = {
-  socketServer: 'ws://localhost:6999',
+  socketServer: 'wss://localhost:6999',
   authServer: 'https://api.sunshinegroup.vn:5000',
   apiServer: 'https://api.sunshinegroup.vn',
   apShomeServer: 'https://apiresident.sunshinetech.com.vn',

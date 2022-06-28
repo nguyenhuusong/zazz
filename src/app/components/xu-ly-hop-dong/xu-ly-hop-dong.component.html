@@ -157,7 +157,7 @@
 </div>
 
 
-<p-dialog [(visible)]="displayPrint" [baseZIndex]="99" [modal]="true" [style]="{width: '1300px', height: 'auto'}">
+<p-dialog [(visible)]="displayPrint" [baseZIndex]="99" [modal]="true" [style]="{width: '1400px', height: 'auto'}">
     <!-- <ngx-loading [show]="loading1" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading> -->
     <p-header>
         Danh sách in
@@ -208,7 +208,7 @@
 
     <div class="grid-default border">
         <app-list-grid-angular *ngIf="columnDefsPrint.length > 0" [listsData]="filesPrints" [domLayout]="'autoHeight'"
-            [rowSelection]="'multiple'" [idGrid]="'prints'" (callback)="rowSelected($event)"
+            [rowSelection]="'multiple'" [idGrid]="'prints'" (callback)="rowSelected($event)" [detailCellRendererParams]="detailCellRendererParams"
             [columnDefs]="columnDefsPrint"></app-list-grid-angular>
     </div>
 

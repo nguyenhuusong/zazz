@@ -459,6 +459,7 @@ export class XuLyHopDongComponent implements OnInit {
   listRowSelects = []
   filesPrints = [];
   displayPrint = false;
+  dataPrint = null;
   Prints() {
     let letPrint = this.listRowSelects.some((value) => {
       return value.contract_value === 0;
@@ -476,7 +477,8 @@ export class XuLyHopDongComponent implements OnInit {
     })
     this.apiService.getPrintFiles(params).subscribe(results => {
       if (results.status === 'success') {
-        this.filesPrints = results.data;
+        this.filesPrints = results.data.dataList.data;
+        this.dataPrint = results.data;
         this.initGridPrint();
         this.displayPrint = true;
       }
@@ -515,12 +517,16 @@ export class XuLyHopDongComponent implements OnInit {
 
   openPrint() {
     this.isPrinted = true;
+    let filesPrints = [];
+    for(let item of this.filesPrints) {
+      filesPrints = [...item.contractFiles]
+    }
     const data = {
       "action": "PRINT",
       "data": {
         "PrinterName": this.modelPrint.PrinterName,
         "Copies": this.modelPrint.Copies,
-        "Files": this.filesPrints.map(d => {
+        "Files": filesPrints.map(d => {
           return {
             "Filename": d.filename,
             "Url": d.url,
@@ -554,30 +560,55 @@ export class XuLyHopDongComponent implements OnInit {
 
   initGridPrint() {
     this.columnDefsPrint = [
-      {
-        headerName: 'Tên file',
-        field: 'filename',
-      },
-      {
-        headerName: 'Loại file',
-        field: 'type',
-      },
-      {
-        headerName: 'Link url',
-        field: 'url',
-      },
-      // {
-      //   headerName: 'Thao tác',
-      //   filter: '',
-      //   minWidth: 100,
-      //   pinned: 'right',
-      //   cellRenderer: 'buttonAgGridComponent',
-      //   cellClass: ['border-right'],
-      //   cellRendererParams: (params: any) => this.showButtons1(params),
-      //   checkboxSelection: false,
-      //   field: 'checkbox'
-      // }
-    ]
+      ...AgGridFn(this.dataPrint.gridflexs.filter((d: any) => !d.isHide)),
+      ]
+
+      this.detailCellRendererParams = {
+        detailGridOptions: {
+          frameworkComponents: {},
+          getRowHeight: (params) => {
+            return 40;
+          },
+          columnDefs: [
+            ...AgGridFn(this.dataPrint.detailGrid),
+          ],
+
+          enableCellTextSelection: true,
+          onFirstDataRendered(params) {
+            let allColumnIds: any = [];
+            params.columnApi.getAllColumns()
+              .forEach((column: any) => {
+                if (column.colDef.cellClass.indexOf('auto') < 0) {
+                  allColumnIds.push(column)
+                } else {
+                  column.colDef.suppressSizeToFit = true;
+                  allColumnIds.push(column)
+                }
+              });
+            params.api.sizeColumnsToFit(allColumnIds);
+          },
+        },
+        getDetailRowData(params) {
+          params.successCallback(params.data.contractFiles);
+        },
+        excelStyles: [
+          {
+            id: 'stringType',
+            dataType: 'string'
+          }
+        ],
+        template: function (params) {
+          var personName = params.data.empName;
+          return (
+            '<div style="height: 100%; background-color: #EDF6FF; padding: 20px; box-sizing: border-box;">' +
+            `  <div style="height: 10%; padding: 2px; font-weight: bold;">###### Danh sách đính kèm (${params.data.contractFiles.length}) : [` +
+            personName + ']' +
+            '</div>' +
+            '  <div ref="eDetailGrid" style="height: 90%;"></div>' +
+            '</div>'
+          );
+        },
+      };
   }
 
 
