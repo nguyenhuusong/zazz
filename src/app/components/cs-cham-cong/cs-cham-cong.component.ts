@@ -125,8 +125,8 @@ export class CsChamCongComponent implements OnInit {
       filter: '',
       offSet: 0,
       pageSize: 100000000,
-      month: 0,
-      year: 0
+      month: new Date().getMonth() + 1,
+      year: new Date().getFullYear(),
     }
     this.load();
   }
