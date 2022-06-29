@@ -7,6 +7,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subject } from 'rxjs';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
+import { AgGridFn } from 'src/app/common/function-common/common';
 @Component({
   selector: 'app-chi-tiet-cham-cong',
   templateUrl: './chi-tiet-cham-cong.component.html',
@@ -16,7 +17,7 @@ export class ChiTietChamCongComponent implements OnInit, OnDestroy {
   private readonly unsubscribe$: Subject<void> = new Subject();
   manhinh = 'Edit';
   indexTab = 0;
-  optionsButtonsView = [{ label: 'Sửa', value: 'Edit' }, { label: 'Quay lại', value: 'Back' }];
+  optionsButtonsView = [{ label: 'Quay lại', value: 'Cancel', icon: 'pi pi-arrow-left' }];
   constructor(
     private apiService: ApiHrmService,
     private activatedRoute: ActivatedRoute,
@@ -43,6 +44,7 @@ export class ChiTietChamCongComponent implements OnInit, OnDestroy {
   detailInfo = null;
   listsData = []
   columnDefs
+  cols: any[];
   @Input() dataRouter = null
   @Output() back = new EventEmitter<any>();
 
@@ -68,8 +70,8 @@ export class ChiTietChamCongComponent implements OnInit, OnDestroy {
     this.activatedRoute.queryParamMap.subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.dataRouter = this.paramsObject.params;
-      this.recordId = this.paramsObject.params.recordId;
-        this.getChamCongInfo();
+      // this.recordId = this.paramsObject.params.recordId;
+      this.getChamCongInfo();
     });
   };
 
@@ -81,6 +83,9 @@ export class ChiTietChamCongComponent implements OnInit, OnDestroy {
       if (results.status === 'success') {
         this.listViews = cloneDeep(results.data.group_fields);
         this.detailInfo = results.data;
+        this.listsData = results.data.checkinouts;
+        this.columnDefs = [...AgGridFn(results.data.gridflexcheckinout.filter((d: any) => !d.isHide))]
+        console.log(this.columnDefs, 'columnDefs')
       }
     })
   }
@@ -112,6 +117,9 @@ export class ChiTietChamCongComponent implements OnInit, OnDestroy {
     // });
   }
 
+  initGrid() {
+    
+  }
 
   onChangeButtonView(event) {
     this.manhinh = event.value;
@@ -129,8 +137,9 @@ export class ChiTietChamCongComponent implements OnInit, OnDestroy {
   }
 
   cancelUpdate() {
-    this.manhinh = 'Edit';
-    this.getChamCongInfo();
+    // this.manhinh = 'Edit';
+    // this.getChamCongInfo();
+    this.router.navigate(['/chinh-sach/cham-cong']);
   }
 
 }

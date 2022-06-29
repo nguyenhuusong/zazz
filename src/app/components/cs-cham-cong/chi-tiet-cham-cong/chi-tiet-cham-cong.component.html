@@ -4,9 +4,15 @@
         <h3>{{titlePage}}</h3>
         <p-breadcrumb [model]="items"></p-breadcrumb>
     </div>
-   <div class="content">
-    <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'"  [dataView]="listViews"
+   <div class="content mb-3">
+    <app-edit-detail [optionsButtonsEdit]="optionsButtonsView"   *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'"  [dataView]="listViews"
         (callback)="setCompanyInfo($event)" (callbackcancel)="cancelUpdate()"></app-edit-detail>
    </div>
    
+   <div class="grid-default border">
+    <app-list-grid-angular 
+    [height]="480" *ngIf="columnDefs.length > 0"
+            [listsData]="listsData"
+            [columnDefs]="columnDefs"></app-list-grid-angular>
+    </div>
 </div>
