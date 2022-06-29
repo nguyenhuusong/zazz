@@ -100,6 +100,9 @@ export class CreateContractInfoComponent implements OnInit {
       if (results.status === 'success') {
         this.restData(results);
         this.activeIndex = results.data.flow_st;
+        if(this.activeIndex > 0) {
+          this.optionsButon =[];
+        }
         this.stepsLine = results.data.flowStatuses.map( d => {
           return {
             label: d.flow_name,
