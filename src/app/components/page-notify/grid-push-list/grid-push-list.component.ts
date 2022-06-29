@@ -83,7 +83,7 @@ export class GridPushListComponent implements OnInit, OnChanges {
   agGridFn = AgGridFn;
 
   ngOnInit(): void {
-    this.filter.notiId = this.notify.notiId
+    this.filter.notiId = this.notify ? this.notify.notiId : 0
     this.getFilterType();
     //test
     this.load();
@@ -96,7 +96,7 @@ export class GridPushListComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (this.notify.notiId) {
+    if (this.notify && this.notify.notiId) {
       this.filter.notiId = this.notify.notiId
       this.load();
     }

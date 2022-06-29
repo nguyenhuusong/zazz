@@ -218,8 +218,7 @@ export class CsChamCongComponent implements OnInit {
 
   XemChiTiet(event) {
     const params = {
-      // recordId: event.rowData.recordId,
-      empId: event.rowData.userid,
+      empId: event.rowData.empId,
       salary_month: this.query.month,
       salary_year: this.query.year
     }

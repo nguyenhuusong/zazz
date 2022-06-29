@@ -100,6 +100,9 @@ export class CreateContractInfoComponent implements OnInit {
       if (results.status === 'success') {
         this.restData(results);
         this.activeIndex = results.data.flow_st;
+        if(this.activeIndex > 0) {
+          this.optionsButon =[];
+        }
         this.stepsLine = results.data.flowStatuses.map( d => {
           return {
             label: d.flow_name,
@@ -203,7 +206,7 @@ export class CreateContractInfoComponent implements OnInit {
     this.listViews = cloneDeep(results.data.group_fields);
     this.detailInfo = results.data;
     // this.getContractTypes()
-    if(this.indexTab === 0) {
+    if(this.indexTab === 1) {
       this.listsData = cloneDeep(results.data.salary_components) || [];
     }else {
       this.listsData = cloneDeep(results.data.metafiles) || [];
@@ -213,7 +216,7 @@ export class CreateContractInfoComponent implements OnInit {
 
   handleChange(index) {
     this.indexTab = index
-    if (this.indexTab === 1) {
+    if (this.indexTab === 0) {
       this.listsData = this.detailInfo.metafiles || [];
     } else {
       this.listsData = this.detailInfo.salary_components || [];

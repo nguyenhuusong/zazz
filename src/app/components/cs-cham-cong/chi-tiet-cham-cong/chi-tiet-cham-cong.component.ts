@@ -85,7 +85,6 @@ export class ChiTietChamCongComponent implements OnInit, OnDestroy {
         this.detailInfo = results.data;
         this.listsData = results.data.checkinouts;
         this.columnDefs = [...AgGridFn(results.data.gridflexcheckinout.filter((d: any) => !d.isHide))]
-        console.log(this.columnDefs, 'columnDefs')
       }
     })
   }

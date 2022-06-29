@@ -11,7 +11,7 @@
    
    <div class="grid-default border">
     <app-list-grid-angular 
-    [height]="480" *ngIf="columnDefs.length > 0"
+    [height]="480" *ngIf="columnDefs?.length > 0"
             [listsData]="listsData"
             [columnDefs]="columnDefs"></app-list-grid-angular>
     </div>
