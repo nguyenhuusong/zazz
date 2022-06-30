@@ -903,6 +903,16 @@ div.p-menu-buttons{
         &:hover{
             cursor: pointer;
         }
+        &.blue-bg{
+            background: #0979FD;
+            border-radius: 0px 4px 4px 0px;
+            width: 52px;
+            svg{
+                path{
+                    fill: #fff;
+                }
+            }
+        }
     }
 }
 div{
@@ -2592,9 +2602,9 @@ div.p-organizationchart {
 
     // #type
     &.date{
-        label{
-            top: 6px;
-        }
+        // label{
+        //     top: 6px;
+        // }
         &.date-invalid{
             label{
                 top: 20px;
@@ -2654,6 +2664,12 @@ div.p-organizationchart {
                     z-index: 2;
                 }
             }
+        }
+        position: relative;
+        .icon{
+            position: absolute;
+            right: 15px;
+            top: 14px;
         }
     }
 
@@ -3499,4 +3515,20 @@ p-button{
     .a-day{
         width: 6.666% !important;
     }
+}
+.btn-thie-lap{
+    .p-button-label{
+        color: #0C3399;
+
+    }
+}
+.ag-theme-alpine .ag-header-row:not(:first-child) .ag-header-cell{
+    border-top-color: #E5E5E5;
+}
+.ag-theme-alpine .ag-pinned-right-header,
+.ag-theme-alpine .ag-cell.ag-cell-first-right-pinned:not(.ag-cell-range-left):not(.ag-cell-range-single-cell){
+    border-left-color: #E5E5E5;
+}
+.ag-theme-alpine .ag-pinned-left-header{
+    border-right-color: #E5E5E5;
 }

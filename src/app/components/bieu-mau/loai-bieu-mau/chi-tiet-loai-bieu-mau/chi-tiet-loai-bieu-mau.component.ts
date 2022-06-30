@@ -52,6 +52,10 @@ export class ChiTietLoaiBieuMauComponent implements OnInit, OnDestroy {
       .subscribe((params) => {
         this.id = params.id;
         this.getDetail();
+        if(this.id === 'them-moi'){
+          this.items[this.items.length-1].label = 'Tạo mới biểu mẫu';
+        }
+
       });
   };
 

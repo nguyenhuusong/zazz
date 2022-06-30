@@ -32,17 +32,13 @@
                         </div>
                     </div>
                     
-                    <p-button label="Thiết lập loại biểu mẫu" styleClass="p-button-outlined p-button-info" icon="" class="mr-2" (onClick)="handleFormType()">
+                    <p-button label="Thiết lập loại biểu mẫu" styleClass="p-button-outlined p-button-info btn-thie-lap" icon="" class="mr-2" (onClick)="handleFormType()">
                         <svg class="mr-2" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M0 0H16V16H0V0Z" fill="#0979FD"/>
                         </svg>
                     </p-button>
 
-                    <p-button label="Thêm mới" styleClass="" icon="" (click)="handleAdd()">
-                        <svg class="mr-2" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M0 0H16V16H0V0Z" fill="#E2EEFF"/>
-                        </svg>
-                    </p-button>
+                    <p-button label="Thêm mới" styleClass="" icon="pi pi-plus" (click)="handleAdd()"></p-button>
                 </div>
             </div>
             <div class="grid filter">
@@ -52,7 +48,7 @@
                             (keydown.enter)="query.offSet = 0; first = 0;load()"
                             [(ngModel)]="query.filter">
                         <label>Tìm kiếm</label>
-                        <span class="placeholder-icon" (click)="query.offSet = 0; first = 0; load()">
+                        <span class="placeholder-icon blue-bg" (click)="query.offSet = 0; first = 0; load()">
                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" clip-rule="evenodd"
@@ -63,7 +59,7 @@
                     </div>
                 </div>
                 <div class="x-2">
-                    <div class="field-group select mb-0 label-8" [ngClass]=" query.typeForm">
+                    <div class="field-group select mb-0" [ngClass]="query.typeForm ? 'valid' : 'invalid' ">
                         <p-treeSelect [(ngModel)]="query.typeForm"  
                         appendTo="body" 
                         [options]="formTypes" 
@@ -73,9 +69,20 @@
                     </div>
                 </div>
                 <div class="x-1">
-                    <div class="field-group select mb-0 label-8" [ngClass]=" query.createDate">
-                        <p-calendar [(ngModel)]="query.createDate" [showIcon]="true" inputId="icon" (onSelect)="find()"></p-calendar>
+                    <div class="field-group date mb-0" [ngClass]="query.createDate ? 'valid' : 'invalid' ">
+                        <p-calendar 
+                            [(ngModel)]="query.createDate" 
+                            inputId="icon" 
+                            (onSelect)="find()"></p-calendar>
                         <label>Ngày tạo</label>
+                        <span class="icon">
+                            <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M14.1143 1.89648C14.1143 1.3442 13.6665 0.896484 13.1143 0.896484C12.562 0.896484 12.1143 1.3442 12.1143 1.89648L12.1143 4.89648C12.1143 5.44877 12.562 5.89648 13.1143 5.89648C13.6665 5.89648 14.1143 5.44877 14.1143 4.89648L14.1143 1.89648Z" fill="#99A2BC"/>
+                                <path d="M6.11426 1.89649C6.11426 1.3442 5.66654 0.896488 5.11426 0.896488C4.56197 0.896488 4.11426 1.3442 4.11426 1.89649L4.11426 4.89648C4.11426 5.44877 4.56197 5.89648 5.11426 5.89648C5.66654 5.89648 6.11426 5.44877 6.11426 4.89648L6.11426 1.89649Z" fill="#99A2BC"/>
+                                <path d="M11.1143 2.83252H7.11426L7.11426 4.83252C7.11426 5.93709 6.21883 6.83252 5.11426 6.83252C4.00969 6.83252 3.11426 5.93709 3.11426 4.83252L3.11426 2.92088C2.27249 3.02253 1.72376 3.24112 1.25368 3.7112C0.463333 4.50155 0.38388 5.72516 0.375893 8.02148H17.6258C17.6257 5.26179 17.6172 4.58131 16.7471 3.7112C16.2978 3.26191 15.8362 3.04235 15.1143 2.93506L15.1143 4.83252C15.1143 5.93709 14.2188 6.83252 13.1143 6.83252C12.0097 6.83252 11.1143 5.93709 11.1143 4.83252L11.1143 2.83252Z" fill="#99A2BC"/>
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M17.6258 9.77148H0.375V13.1036C0.375 15.932 0.375 17.3462 1.25368 18.2249C2.13236 19.1036 3.28587 19.1036 6.1143 19.1036H12.1143C14.9427 19.1036 15.8684 19.1036 16.7471 18.2249C17.6258 17.3462 17.6258 15.932 17.6258 13.1036V9.77148ZM3.625 12.459C3.625 12.1483 3.87684 11.8965 4.1875 11.8965H5.3125C5.62316 11.8965 5.875 12.1483 5.875 12.459V13.584C5.875 13.8946 5.62316 14.1465 5.3125 14.1465H4.1875C3.87684 14.1465 3.625 13.8946 3.625 13.584V12.459ZM8.125 12.459C8.125 12.1483 8.37684 11.8965 8.6875 11.8965H9.8125C10.1232 11.8965 10.375 12.1483 10.375 12.459V13.584C10.375 13.8946 10.1232 14.1465 9.8125 14.1465H8.6875C8.37684 14.1465 8.125 13.8946 8.125 13.584V12.459ZM13.1875 11.8965C12.8768 11.8965 12.625 12.1483 12.625 12.459V13.584C12.625 13.8946 12.8768 14.1465 13.1875 14.1465H14.3125C14.6232 14.1465 14.875 13.8946 14.875 13.584V12.459C14.875 12.1483 14.6232 11.8965 14.3125 11.8965H13.1875Z" fill="#99A2BC"/>
+                            </svg>
+                        </span>
                     </div>
                 </div>
             </div>
