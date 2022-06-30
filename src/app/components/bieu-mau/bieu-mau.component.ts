@@ -291,7 +291,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
       {
         headerName: 'Stt',
         filter: '',
-        maxWidth: 90,
+        maxWidth: 130,
         pinned: 'left',
         cellRenderer: params => {
           return params.rowIndex + 1
@@ -307,7 +307,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
       {
         headerName: 'Thao tác',
         filter: '',
-        maxWidth: 90,
+        maxWidth: 120,
         pinned: 'right',
         cellRenderer: 'buttonAgGridComponent',
         cellClass: ['border-right', 'no-auto'],
