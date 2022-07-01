@@ -531,6 +531,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
                     icon: 'pi pi-check',
                     key: 'duyet-hop-dong',
                     class: 'btn-danger',
+                    hide: params.data.contract_value === 3
                   },
                   {
                     onClick: this.OnClick.bind(this),
@@ -538,6 +539,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
                     icon: 'pi pi-trash',
                     key: 'delete-qua-trinh-hop-dong',
                     class: 'btn-danger',
+                    hide: params.data.contract_value === 3
                   },
 
                 ]
