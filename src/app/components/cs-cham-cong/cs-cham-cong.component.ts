@@ -146,7 +146,7 @@ export class CsChamCongComponent implements OnInit {
         this.spinner.hide();
       } else {
         var blob = new Blob([results], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-        FileSaver.saveAs(blob, `Danh sách chấm công tháng ${moment(new Date()).format('MM')}` + ".xlsx");
+        FileSaver.saveAs(blob, `Danh sách chấm công tháng ${this.query.month}` + ".xlsx");
         this.spinner.hide();
       }
     })
