@@ -97,7 +97,7 @@
                     </div>
                 </div>
                 <div class="x-1-2">
-                    <div class="field-group date mb-0 ">
+                    <div class="field-group date mb-0 valid">
                         <p-calendar (onSelect)="find()" panelStyleClass="datepicker-default" placeholder="DD/MM/YYYY"
                             [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="query.fromDate" [monthNavigator]="true"
                             [yearNavigator]="true" yearRange="2010:2030" inputId="navigators" dateFormat="dd/mm/yy"
@@ -106,7 +106,7 @@
                     </div>
                 </div>
                 <div class="x-1-2">
-                    <div class="field-group date mb-0 ">
+                    <div class="field-group date mb-0 valid">
                         <p-calendar (onSelect)="find()" panelStyleClass="datepicker-default" placeholder="DD/MM/YYYY"
                             [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="query.toDate" [monthNavigator]="true"
                             [yearNavigator]="true" yearRange="2010:2030" inputId="navigators" dateFormat="dd/mm/yy"
