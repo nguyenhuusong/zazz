@@ -78,8 +78,6 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v1/feedback/GetFeedbackPage?`+ queryParams, this.options)
   }
 
-
-
   // end thông báo
   getEmployeeSearch(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/employee/GetEmployeeSearch?` + queryParams, this.options);

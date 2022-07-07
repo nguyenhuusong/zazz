@@ -545,6 +545,7 @@ export class XuLyHopDongComponent implements OnInit {
           if (this.isPrinted) {
             this.spinner.hide();
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'In thành công' });
+            this.load();
             this.isPrinted = false;
           }
 

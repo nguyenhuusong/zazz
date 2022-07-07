@@ -87,6 +87,7 @@ export class CreateContractInfoComponent implements OnInit {
   stepsLine = [];
   columnDefsSalaryComponents = [];
   getContractInfo() {
+    this.optionsButon = []
     this.detailInfo = null;
     this.listViews = [];
     this.listsData = [];
@@ -100,16 +101,31 @@ export class CreateContractInfoComponent implements OnInit {
       if (results.status === 'success') {
         this.restData(results);
         this.activeIndex = results.data.flow_st;
-        if(this.activeIndex === 1 || this.activeIndex === 2) {
-          this.optionsButon =[
-            { label: 'Đã ký', value: 'DaKyHD', class: '', icon: 'pi pi-check'  },
-          ];
-        }else if(this.activeIndex > 3) {
-          this.optionsButon =[
-            { label: 'Tải file', value: 'TaiFileHD', class: '', icon: 'pi pi-upload'  },
-            { label: 'Hoàn thành', value: 'HoanThanhHD', class: '', icon: 'pi pi-check'  }
-          ];
+        if(results.data.contract_st === 0) {
+          if (this.url === 'chi-tiet-xu-ly-hop-dong') {
+            this.optionsButon = [{ label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check'  }]
+          }else {
+            this.optionsButon= [
+              { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check'  },
+              { label: 'Tạm tính', value: 'TamTinh', class: '', icon: 'pi pi-check'  }
+            ]
+          }
+        }else {
+          this.optionsButon = [];
         }
+
+        const buttonsStep = [];
+        if(this.activeIndex === 3) {
+          buttonsStep.push( { label: 'Đã ký', value: 'DaKyHD', class: '', icon: 'pi pi-check'  });
+        }else if(this.activeIndex > 3) {
+          buttonsStep.push(  { label: 'Tải file', value: 'TaiFileHD', class: '', icon: 'pi pi-upload'  });
+          buttonsStep.push({ label: 'Hoàn thành', value: 'HoanThanhHD', class: '', icon: 'pi pi-check'  });
+        }
+        if(results.data.link_contract) {
+          this.optionsButon = [{ label: 'Xem File', value: 'XemFileHD', class: '', icon: 'pi pi-check'  }, ...this.optionsButon]
+        }
+
+        this.optionsButon = [...this.optionsButon, ...buttonsStep];
         this.stepsLine = results.data.flowStatuses.map( d => {
           return {
             label: d.flow_name,
@@ -287,8 +303,8 @@ export class CreateContractInfoComponent implements OnInit {
   handleUploadAll(datas) {
     if (datas.length > 0) {
       this.spinner.show();
-      const queryParams = queryString.stringify({linkContract: datas[0].url });
-      this.apiService.setContractSignedUpload(this.detailInfo.contractId, queryParams).subscribe(
+      const queryParams = queryString.stringify({contractId: this.detailInfo.contractId });
+      this.apiService.setContractSignedUpload(queryParams, {link_contract: datas[0].url }).subscribe(
         results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Upload hợp đồng thành công' });
@@ -478,13 +494,15 @@ export class CreateContractInfoComponent implements OnInit {
         
       }else if(value === 'TaiFileHD') {
         this.displayuploadcontractall = true;
+      }else if(value === 'XemFileHD') {
+        this.downloadButtonClicked(this.detailInfo.link_contract);
       }else if(value === 'HoanThanhHD') {
         this.confirmationService.confirm({
           message: 'Bạn có chắc chắn muốn thực hiện hành động này .?',
           accept: () => {
             this.spinner.show();
             const queryParams = queryString.stringify({contractId: this.detailInfo.contractId, isCompleted: true});
-            this.apiService.setContractSigned(queryParams).subscribe((results: any) => {
+            this.apiService.setContractComplete(queryParams).subscribe((results: any) => {
               if (results.status === 'success') {
                 this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xác nhận hoàn thành !' });
                 this.getContractInfo();
