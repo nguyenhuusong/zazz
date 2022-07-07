@@ -349,8 +349,20 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v2/contract/SetContractUpload`, params, this.options)
   }
 
+  setContractUploadAll(params): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v2/contract/SetContractUpload?` + params, null, this.options)
+  }
+
   getContractInfo(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/contract/GetContractInfo?` + queryParams, this.options)
+  }
+
+  setContractSigned(queryParams): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v2/contract/SetContractSigned?` + queryParams, null, this.options)
+  }
+
+  setContractComplete(queryParams): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v2/contract/SetContractComplete?` + queryParams, null, this.options)
   }
 
   setEmpAttach(params): Observable<any> {

@@ -99,13 +99,19 @@
 
 
 
+<p-dialog [(visible)]="displayuploadcontractall" [autoZIndex]="true" [modal]="true"   appendTo="body"
+    [style]="{width: '800px', height: 'auto'}">
+    <p-header>
+        Tải lên hợp đồng
+    </p-header>
+    <app-upload-file [maxFileSize]="8000000" [multiple]="" (callback)="handleUploadAll($event)" *ngIf="displayuploadcontractall"></app-upload-file>
+</p-dialog>
 
 
 
 
 
-
-<p-dialog [(visible)]="displayuploadcontract" [autoZIndex]="true" [modal]="true" [position]="'top-right'"  appendTo="body"
+<p-dialog [(visible)]="displayuploadcontract" [autoZIndex]="true" [modal]="true"  appendTo="body"
     [style]="{width: '800px', height: 'auto'}">
     <p-header>
         Tải lên hợp đồng [{{metafile?.meta_title}}]

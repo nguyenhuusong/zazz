@@ -100,8 +100,15 @@ export class CreateContractInfoComponent implements OnInit {
       if (results.status === 'success') {
         this.restData(results);
         this.activeIndex = results.data.flow_st;
-        if(this.activeIndex > 1) {
-          this.optionsButon =[];
+        if(this.activeIndex === 1 || this.activeIndex === 2) {
+          this.optionsButon =[
+            { label: 'Đã ký', value: 'DaKyHD', class: '', icon: 'pi pi-check'  },
+          ];
+        }else if(this.activeIndex > 3) {
+          this.optionsButon =[
+            { label: 'Tải file', value: 'TaiFileHD', class: '', icon: 'pi pi-upload'  },
+            { label: 'Hoàn thành', value: 'HoanThanhHD', class: '', icon: 'pi pi-check'  }
+          ];
         }
         this.stepsLine = results.data.flowStatuses.map( d => {
           return {
@@ -263,27 +270,38 @@ export class CreateContractInfoComponent implements OnInit {
 
   handleUpload(datas) {
     if (datas.length > 0) {
-      // const indexobj = this.listsData.findIndex(d => d.meta_id === this.metafile.meta_id);
-      //  let metafile = { ... this.listsData[indexobj] };
       this.apiService.setContractUpload({ metaId: this.metafile.metaId, meta_upload_url: datas[0].url }).subscribe(
         results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Upload hợp đồng ký thành công' });
             this.displayuploadcontract = false;
             this.getContractInfo();
-          }
-          if( results.status === "error" ){
+          }else {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
           }
         }
       );
-      // metafile.meta_file_url = datas[0].url;
-      // metafile.meta_file_type =datas[0].type;
-      // metafile.meta_file_size =datas[0].size;
-      // metafile.meta_file_name =datas[0].name;
-      // this.listsData[indexobj] = metafile;
-      // this.listsData = [... this.listsData];
-      // this.detailInfo.metafiles = this.listsData;
+    }
+  }
+
+  handleUploadAll(datas) {
+    if (datas.length > 0) {
+      this.spinner.show();
+      const queryParams = queryString.stringify({ contractId: this.detailInfo.contractId, linkContract: datas[0].url });
+      this.apiService.setContractUploadAll(queryParams).subscribe(
+        results => {
+          if (results.status === 'success') {
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Upload hợp đồng thành công' });
+            this.displayuploadcontractall = false;
+            this.getContractInfo();
+            this.spinner.hide();
+          }else {
+            this.spinner.hide();
+            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+          }
+         
+        }
+      );
     }
   }
 
@@ -436,13 +454,55 @@ export class CreateContractInfoComponent implements OnInit {
     })
   }
 
+  displayuploadcontractall = false;
   huy(value) {
     if(value) {
-      this.modelContractInfo.contractTypeId = value;
-      this.getContractInfo();
+      if(value === 'DaKyHD') {
+        this.confirmationService.confirm({
+          message: 'Bạn có chắc chắn muốn thực hiện hành động này .?',
+          accept: () => {
+            this.spinner.show();
+            const queryParams = queryString.stringify({contractId: this.detailInfo.contractId, isSigned: true});
+            this.apiService.setContractSigned(queryParams).subscribe((results: any) => {
+              if (results.status === 'success') {
+                this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xác nhận ký thành công !' });
+                this.getContractInfo();
+                this.spinner.hide();
+              } else {
+                this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+                this.spinner.hide();
+              }
+            });
+          }
+        });
+        
+      }else if(value === 'TaiFileHD') {
+        this.displayuploadcontractall = true;
+      }else if(value === 'HoanThanhHD') {
+        this.confirmationService.confirm({
+          message: 'Bạn có chắc chắn muốn thực hiện hành động này .?',
+          accept: () => {
+            this.spinner.show();
+            const queryParams = queryString.stringify({contractId: this.detailInfo.contractId, isCompleted: true});
+            this.apiService.setContractSigned(queryParams).subscribe((results: any) => {
+              if (results.status === 'success') {
+                this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xác nhận hoàn thành !' });
+                this.getContractInfo();
+                this.spinner.hide();
+              } else {
+                this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+                this.spinner.hide();
+              }
+            });
+          }
+        });
+      }else {
+        this.modelContractInfo.contractTypeId = value;
+        this.getContractInfo();
+      }
+      
     }else {
       this.back.emit();
     }
   }
-
 }
