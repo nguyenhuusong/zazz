@@ -126,11 +126,38 @@
       Tìm kiếm Tài khoản
   </p-header>
   <p-panel header="Nhập tên nhân viên tìm kiếm">
-      <div class="field-group text" [ngClass]="valueSearchUser ? 'valid' : 'invalid' ">
+    <div class="field-group select label-8">
+        <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
+        [options]="organizes" [(ngModel)]="orgId" name="orgId"   [filter]="true">
+        <ng-template let-item pTemplate="selectedItem">
+            <span>{{item?.label}}</span>
+        </ng-template>
+        <ng-template let-car pTemplate="item">
+            <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+            <div style="font-size:14px;float:right;margin-top:4px">{{car?.label}}</div>
+            </div>
+        </ng-template>
+        </p-dropdown>
+        <label for="">Chọn tổ chức</label>
+    </div>
+    <div class="field-group text label-8">
+        <p-autoComplete [(ngModel)]="valueSearchUser" name="valueSearchUser" placeholder="" [suggestions]="listUser" (onSelect)="onSelectUser($event)"
+        (completeMethod)="getListUserMaster($event)" field="label"></p-autoComplete>
+        <label>Tìm kiếm tên nhân viên</label> 
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    <!-- <div class="field-group text" [ngClass]="valueSearchUser ? 'valid' : 'invalid' ">
             <p-autoComplete [(ngModel)]="valueSearchUser" name="valueSearchUser" placeholder="" [suggestions]="listUser" (onSelect)="onSelectUser($event)"
             (completeMethod)="getListUserMaster($event)" field="label"></p-autoComplete>
             <label>Tìm kiếm tên nhân viên</label>
-        </div>
+        </div> -->
     </p-panel>
     <p-panel header="Thông tin tài khoản">
         <div class="grid-default border">

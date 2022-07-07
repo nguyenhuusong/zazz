@@ -14,6 +14,7 @@ export class AuthService {
     private firebaseAuthService: FirebaseAuthService,
     ) {
       this.manager.getUser().then(async user => {
+        console.log(user)
         this.user = user;
         if(this.user) {
           const token = this.getAccessTokenValue();
@@ -85,16 +86,16 @@ export class AuthService {
   }
 
  async getEmpDetail() {
-    if (localStorage.getItem("employeeId") === null) {
-      const headers = new HttpHeaders({ Authorization: this.getAuthorizationHeaderValue() });
-      return this.http.get(environment.apiBase + '/api/v2/employee/GetEmployee?employeeId=', { headers }).toPromise()
-        .then((emp: any) => {
-          if (emp && emp.data) {
-            localStorage.setItem('avatarUrl', emp.data.avatarUrl);
-            localStorage.setItem('employeeId', emp.data.employeeId);
-          }
-        });
-    }
+    // if (localStorage.getItem("employeeId") === null) {
+    //   const headers = new HttpHeaders({ Authorization: this.getAuthorizationHeaderValue() });
+    //   return this.http.get(environment.apiBase + '/api/v2/employee/GetEmployeeSearch?ftUserId=', { headers }).toPromise()
+    //     .then((emp: any) => {
+    //       if (emp && emp.data) {
+    //         localStorage.setItem('avatarUrl', emp.data.avatarUrl);
+    //         localStorage.setItem('employeeId', emp.data.employeeId);
+    //       }
+    //     });
+    // }
     
   }
 

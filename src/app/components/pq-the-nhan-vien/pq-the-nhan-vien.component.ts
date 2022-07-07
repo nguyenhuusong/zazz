@@ -241,10 +241,6 @@ export class PqTheNhanVienComponent implements OnInit {
                 value: d.organizeId
               };
             });
-          // if (this.organizes && this.organizes.length) {
-          //   this.model.organizeId = { org_cd: this.organizes[0].value.org_cd, orgId: this.organizes[0].value.orgId };
-          //   this.getOrganizeTree();
-          // }
           this.organizes = [{ label: 'Chọn tổ chức', value: '' }, ...this.organizes];
         }),
         error => { };

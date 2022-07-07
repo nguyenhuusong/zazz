@@ -235,6 +235,7 @@ export class PqQuyenNguoiDungComponent implements OnInit {
       { label: 'Phân quyền' },
       { label: 'Danh sách quyền người dùng' },
     ];
+    this.getOrganize();
     this.getJobTitles();
     this.getPositionList();
     this.getManagerList();
@@ -298,24 +299,43 @@ export class PqQuyenNguoiDungComponent implements OnInit {
     this.gridColumnApi1 = params.columnApi;
   }
 
-
   callApi(custId) {
-    this.apiService.getUsersByCust(custId).subscribe((result: any) => {
+    this.apiService.getUserSearchPage(custId).subscribe((result: any) => {
       if (result.status === 'success') {
-        this.gridApi1.setRowData(result.data);
-        this.managerInfoList = result.data;
+        // this.gridApi1.setRowData(result.data.dataList.data);
+        this.managerInfoList = result.data.dataList.data;
+        this.initAgrid();
+        this.spinner.hide();
       }
     });
   }
+  organizes = [];
+  getOrganize(): void {
+    const queryParams = queryString.stringify({ filter: ''});
+    this.apiService.getOrganizations(queryParams)
+      .subscribe(
+        (results: any) => {
+          this.organizes = results.data
+            .map(d => {
+              return {
+                label: d.organizationName || d.organizationCd,
+                value: d.organizeId
+              };
+            });
+          this.organizes = [{ label: 'Chọn tổ chức', value: '' }, ...this.organizes];
+        }),
+        error => { };
+  }
 
+  orgId = null;
   getListUserMaster(event) {
-    const opts = { params: new HttpParams({ fromString: `filter=${event.query}&isUser=-1&isApprove=-1&intVehicle=0&offSet=null&pageSize=null` }) };
-    this.apiService.getEmployeeList(opts.params.toString()).subscribe((result: any) => {
+    this.apiService.getEmployeeSearch(  queryString.stringify({ filter: event.query, orgId: this.orgId })).subscribe((result: any) => {
       this.listUserDetail = result.data;
       this.listUser = this.listUserDetail.map(res => {
         return {
           label: `${res.phone}---${res.email}`,
-          value: res.custId
+          value: res.custId,
+          ... res
         }
       });
     });
@@ -332,43 +352,40 @@ export class PqQuyenNguoiDungComponent implements OnInit {
   displayAdd = false;
 
   onSelectUser(event) {
-    this.detailUser = event.value;
-    this.callApi(event.value);
+    console.log(event)
+    this.detailUser = event;
+    this.callApi(event.phone);
   }
 
 
   initAgrid() {
-    this.columnDefs1 = [{
-      headerName: 'Tên đăng nhập',
-      field: 'userLogin',
-      resizable: true,
-      cellClass: ['border-right']
-    },
-    {
-      headerName: 'Trạng thái',
-      field: 'lockName',
-      cellClass: function (params) { return (params.value === 'Đang hoạt' ? ['border-right', 'text-center', 'text-success'] : ['border-right', 'text-center']); }
-    },
-    {
-      headerName: 'Is admin',
-      field: 'isAdmin',
-      resizable: true,
-      cellClass: ['border-right'],
-      cellRenderer: (params) => {
-        if (params.value) {
-          return '<i class="fa fa-check" style="color: #337ab7;" title="Hiển thị"></i>';
-        } else {
-          return '<i class="fa fa-close firebrick" title="Không hiển thị"></i>';
-        }
-      }
-    },
-    {
-      headerName: 'Thao tác',
-      field: 'button',
-      filter: '',
-      cellRenderer: 'buttonRenderer1',
-      cellRendererParams: (params) => this.showbuton(params)
-    },]
+    this.columnDefs1 = [
+      {
+        headerName: 'Tên đăng nhập',
+        field: 'loginName',
+        resizable: true,
+        cellClass: ['border-right']
+      },
+      {
+        headerName: 'Số điện thoại',
+        field: 'phone',
+        resizable: true,
+        cellClass: ['border-right']
+      },
+      {
+        headerName: 'Email',
+        field: 'email',
+        resizable: true,
+        cellClass: ['border-right']
+      },
+
+      {
+        headerName: 'Thao tác',
+        field: 'button',
+        filter: '',
+        cellRenderer: 'buttonAgGridComponent',
+        cellRendererParams: (params) => this.showbuton(params)
+      },]
     this.getRowHeight1 = params => {
       return 40;
     }
@@ -382,7 +399,6 @@ export class PqQuyenNguoiDungComponent implements OnInit {
           label: 'Chọn',
           icon: 'fa fa-check-square-o',
           class: 'btn-primary mg-5',
-          hide: true
         },
       ]
     }
@@ -403,7 +419,7 @@ export class PqQuyenNguoiDungComponent implements OnInit {
   checkSquare(e) {
     this.displayAdd = true;
     this.seachManager = false;
-    let items = this.listUserDetail.filter(res => res.custId === this.detailUser);
+    let items = this.listUserDetail.filter(res => res.custId === this.detailUser.custId);
     this.titleForm = 'Thêm mới quyền người dùng'
     this.chiTietNguoiDUng = items[0]
   }

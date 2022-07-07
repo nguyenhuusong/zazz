@@ -890,6 +890,11 @@ export class ApiHrmService {
       .get<any[]>(`${apiBaseUrl}/api/v1/user/GetUsersByCust?custId=${custId}`, this.options);
   }
 
+  getUserSearchPage(filter): Observable<any[]> {
+    return this.http
+      .get<any[]>(`${apiCore}/api/v1/coreuser/GetUserSearchPage?filter=${filter}`, this.options)
+  }
+
   setOrganizePosition(queryParams): Observable<any> {
     return this.http.put<any>(`${apiHrmServer}/api/v1/organize/SetOrganizePosition`, queryParams, this.options)
   }
