@@ -84,7 +84,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
   dataViewNew = []
   callApiDrop() {
     this.dataViewNew = [...this.dataView];
-    this.dataView =[];
+    this.dataView = [];
     this.dataViewNew.forEach(element => {
       element.fields.forEach(async element1 => {
         if (element1.columnType === 'markdown' || element1.columnType === 'linkUrl') {
@@ -107,58 +107,42 @@ export class EditDetailComponent implements OnInit, OnChanges {
         if (element1.columnType === 'select' || element1.columnType === 'dropdown' || element1.columnType === 'selectTree'
           || element1.columnType === 'checkboxList' || element1.columnType === 'checkboxradiolist'
           || element1.columnType === 'multiSelect') {
-          //callApi intentions
           if (element1.field_name === 'project_cd') {
-
           } else if (element1.field_name === 'orgId' || element1.field_name === 'departmentId') {
             if (element1.columnType === 'selectTree') {
               element1.isVisiable = false;
-              const root_orgId = await this.getValueByKey('organizeId');
-              setTimeout(() => {
-                this.getOrganizeTree(root_orgId, element1);
-               
-              }, 100);
+              const root_orgId = this.getValueByKey('organizeId');
+              this.getOrganizeTree(root_orgId, element1);
             } else {
-              setTimeout(() => {
-                this.getOrgRoots(element1);
-              }, 100);
+              this.getOrgRoots(element1);
             }
           } else if (element1.field_name === 'actionlist') {
-           setTimeout(() => {
             this.getActionlist(element1)
-           }, 500);
           } else if (element1.field_name === 'work_cds') {
             this.getWorkTimes(element1, null)
           } else if (element1.field_name === 'empId') {
-            const root_orgId = await this.getValueByKey('organizeId');
-            setTimeout(() => {
+            const root_orgId = this.getValueByKey('organizeId');
             this.getEmployeePage(root_orgId, element1);
-            }, 500);
           } else if (element1.field_name === 'shift_cds') {
             this.getWorkShifts(element1, null)
           } else if (element1.field_name === 'work_cd') {
-            setTimeout(() => {
-              this.getWorkTime(element1, this.detail.empId)
-            }, 100);
+            this.getWorkTime(element1, this.detail.empId)
           } else if (element1.field_name === 'shift_cd') {
             this.getWorkShift(element1, this.detail.empId)
           } else if (element1.field_name === 'bank_code') {
             this.getBankList(element1)
           } else if (element1.field_name === 'parentId') {
-            const orgId =await this.getValueByKey('orgId');
-            const adm_st =await this.getValueByKey('adm_st');
+            const orgId = this.getValueByKey('orgId');
+            const adm_st = this.getValueByKey('adm_st');
             this.getAgentLeaders(orgId, element1, adm_st);
           } else if (element1.field_name === 'posistionCd') {
             const root_orgId = this.detail.organizeId ? this.detail.organizeId : null;
             this.getOrgPositions(root_orgId, element1);
           } else if (element1.field_name === 'positionId') {
-            const orgId =await this.getValueByKey('orgId');
-            setTimeout(() => {
-              this.getPositionList(orgId, element1);
-            }, 100);
-          
+            const orgId = this.getValueByKey('orgId');
+            this.getPositionList(orgId, element1);
           } else if (element1.field_name === 'positionTitleId') {
-            const positionId =await this.getValueByKey('positionId');
+            const positionId = this.getValueByKey('positionId');
             this.getPositionTitles(positionId, element1);
           } if (element1.field_name === 'companyId') {
             this.getCompanyList(this.detail.organizeId ? this.detail.organizeId : null, element1);
@@ -171,30 +155,27 @@ export class EditDetailComponent implements OnInit, OnChanges {
             const cif_no = this.detail.cif_no
             this.getAccountList(element1, cif_no);
           } else if (element1.field_name === 'jobId') {
-            const root_orgId =await this.getValueByKey('organizeId');
-            const positionTypeCd =await this.getValueByKey('positionCd');
+            const root_orgId = this.getValueByKey('organizeId');
+            const positionTypeCd = this.getValueByKey('positionCd');
             this.getJobTitles(root_orgId, element1, positionTypeCd);
           } else if (element1.field_name === 'organizeId') {
             this.getOrgRoots(element1);
-          }else if(element1.field_name === 'organize_id'){
+          } else if (element1.field_name === 'organize_id') {
             this.getOrgRoots(element1);
           } else if (element1.field_name === 'org_cds') {
             this.getOrgRootsMuti(element1);
           } else if (element1.field_name === 'full_name') {
-            const org_cds =await this.getValueByKey('org_cds');
+            const org_cds = this.getValueByKey('org_cds');
             this.getUserByPush(org_cds, element1);
-          }else if(element1.field_name === 'requester_custId'){
-            // const org_cds =await this.getValueByKey('org_cds');
-            const root_orgId = await this.getValueByKey('organize_id');
-            console.log(root_orgId, 'root_orgId')
+          } else if (element1.field_name === 'requester_custId') {
+            const root_orgId = this.getValueByKey('organize_id');
             this.getEmployeePage(root_orgId, element1);
           } else if (element1.field_name === 'source_ref') {
             this.getNotifyRefList(element1);
           } else if (element1.field_name === 'contractTypeId') {
             this.getContractTypes(element1);
           } else if (element1.field_name === 'salary_type') {
-            const contractTypeId =await this.getValueByKey('contractTypeId');
-            console.log(contractTypeId)
+            const contractTypeId = this.getValueByKey('contractTypeId');
             this.getSalaryTypes(contractTypeId, element1);
           } else if (element1.field_name === 'base_id') {
             this.getSalaryBases(element1);
@@ -220,28 +201,27 @@ export class EditDetailComponent implements OnInit, OnChanges {
             this.GetYearPicker(element1);
           } else if (element1.field_name === 'annualMonth') {
             this.GetAnnualMonth(element1);
-          }else if(element1.field_name === 'reason_code') { 
+          } else if (element1.field_name === 'reason_code') {
             this.getLeaveReasons(element1)
           } else if (element1.field_name === 'parent_type_id' || element1.field_name === 'form_type') {
-            await this.getFormTypePage(element1); 
+            await this.getFormTypePage(element1);
           } else {
-            if(element1.columnObject) {
+            if (element1.columnObject) {
               this.getCustObjectListNew(element1);
             }
           }
-        }else if(element1.columnType === 'input'){
+        } else if (element1.columnType === 'input') {
           if (element1.field_name === 'annualYear') {
             this.GetAnnualYear(element1);
-          } 
+          }
         }
       });
     });
     setTimeout(() => {
-      this.dataView =this.dataViewNew;
-
-    }, 1000);
+      this.dataView = [...this.dataViewNew];
+    }, 500);
   }
-  
+
   getNode(item) {
     return {
       label: item.formTypeName || item.formTypeId,
@@ -254,39 +234,39 @@ export class EditDetailComponent implements OnInit, OnChanges {
 
   loopEveryNodeTree(list): void {
     for (let i = 0; i < list.length; i++) {
-        if (Array.isArray(list[i].children) && list[i].children.length) {
-          list[i] = this.getNode(list[i]);
-          this.loopEveryNodeTree(list[i].children);
-        } else {
-          list[i] = this.getNode(list[i]);
-        }
+      if (Array.isArray(list[i].children) && list[i].children.length) {
+        list[i] = this.getNode(list[i]);
+        this.loopEveryNodeTree(list[i].children);
+      } else {
+        list[i] = this.getNode(list[i]);
+      }
     }
   }
 
-   async getFormTypePage(element1) {
-      try {
-        const response = (await lastValueFrom(this.apiService.getFormTypes())).data;
-        this.loopEveryNodeTree(response);
-        element1.options = response;
-        element1.columnValue = findNodeInTree(element1.options, element1.columnValue) || element1.columnValue;
-        this.dataView = cloneDeep(this.dataView);
-     } catch (error) {
-       console.error('error:', error);
-     } 
-  } 
+  async getFormTypePage(element1) {
+    try {
+      const response = (await lastValueFrom(this.apiService.getFormTypes())).data;
+      this.loopEveryNodeTree(response);
+      element1.options = response;
+      element1.columnValue = findNodeInTree(element1.options, element1.columnValue) || element1.columnValue;
+      this.dataView = cloneDeep(this.dataView);
+    } catch (error) {
+      console.error('error:', error);
+    }
+  }
 
   getLeaveReasons(element1) {
-      this.apiServiceCore.getLeaveReasons().subscribe(results => {
-        if (results.status === 'success') {
-          element1.options = cloneDeep(results.data).map(d => {
-            return {
-              label: d.name,
-              value: d.code
-            }
-          });
-          element1.columnValue = element1.columnValue ? element1.columnValue: ''
-        }
-      })
+    this.apiServiceCore.getLeaveReasons().subscribe(results => {
+      if (results.status === 'success') {
+        element1.options = cloneDeep(results.data).map(d => {
+          return {
+            label: d.name,
+            value: d.code
+          }
+        });
+        element1.columnValue = element1.columnValue ? element1.columnValue : ''
+      }
+    })
   }
 
   getActionlist(element1) {
@@ -358,7 +338,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
 
 
   getContractTypes(element1) {
-    if(this.detail.organizeId){
+    if (this.detail.organizeId) {
       const queryParams = queryString.stringify({ organizeId: this.detail.organizeId });
       this.apiService.getContractTypes(queryParams).subscribe(results => {
         if (results.status === 'success') {
@@ -509,7 +489,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
   }
 
   getUserByPush(orgId, element1) {
-    const queryParams = queryString.stringify({ orgId: orgId});
+    const queryParams = queryString.stringify({ orgId: orgId });
     this.apiService.getEmployeeSearch(queryParams).subscribe(results => {
       if (results.status === 'success') {
         element1.options = cloneDeep(results.data).map(d => {
@@ -528,13 +508,13 @@ export class EditDetailComponent implements OnInit, OnChanges {
     this.apiService.getEmployeePage(queryParams).subscribe(results => {
       if (results.status === 'success') {
         const options = results.data.dataList.data.map(d => {
-            return {
-              label: d.full_name + '-' + d.phone1,
-              value: d.empId
-            }
-          });
-          element1.options =options
-          element1.columnValue = element1.columnValue ? element1.columnValue.toLowerCase() : ''
+          return {
+            label: d.full_name + '-' + d.phone1,
+            value: d.empId
+          }
+        });
+        element1.options = options
+        element1.columnValue = element1.columnValue ? element1.columnValue.toLowerCase() : ''
       }
     })
   }
@@ -559,7 +539,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
               }
             });
             element1.columnValue = newarray;
-            console.log( element1.columnValue)
+            console.log(element1.columnValue)
           }
         } else {
           element1.options = cloneDeep(results.data).map(d => {
@@ -686,7 +666,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
             };
           });
           element1.columnValue = element1.columnValue ? element1.columnValue : '';
-          if(element1.field_name === 'content_type' && element1.columnValue) {
+          if (element1.field_name === 'content_type' && element1.columnValue) {
             this.modelMarkdow.type = element1.columnValue;
           }
         }
@@ -790,7 +770,6 @@ export class EditDetailComponent implements OnInit, OnChanges {
       }
     })
   }
-
 
   getValueByKey(key) {
     if (this.dataViewNew && this.dataViewNew.length > 0) {
@@ -901,7 +880,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
       let group_fields = cloneDeep(this.dataView)
       this.callbackform(group_fields, 'TamTinh')
     } else if (event === 'ReHire') {
-      this.callbackButton.emit({type: 'rehire', data: null});
+      this.callbackButton.emit({ type: 'rehire', data: null });
     } else {
       this.cancel(event);
     }
@@ -935,7 +914,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
             if (data.columnValue && data.columnValue.length > 0) {
               data.columnValue = data.columnValue.map(d => d.code);
               data.columnValue = data.columnValue.toString()
-            }else {
+            } else {
               data.columnValue = null;
             }
             delete data.options;
