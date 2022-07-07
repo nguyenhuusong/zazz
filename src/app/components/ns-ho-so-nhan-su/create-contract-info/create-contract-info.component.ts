@@ -287,8 +287,8 @@ export class CreateContractInfoComponent implements OnInit {
   handleUploadAll(datas) {
     if (datas.length > 0) {
       this.spinner.show();
-      const queryParams = queryString.stringify({ contractId: this.detailInfo.contractId, linkContract: datas[0].url });
-      this.apiService.setContractUploadAll(queryParams).subscribe(
+      const queryParams = queryString.stringify({linkContract: datas[0].url });
+      this.apiService.setContractSignedUpload(this.detailInfo.contractId, queryParams).subscribe(
         results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Upload hợp đồng thành công' });
