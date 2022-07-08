@@ -117,6 +117,8 @@ export class CreateContractInfoComponent implements OnInit {
         const buttonsStep = [];
         if(this.activeIndex === 3) {
           buttonsStep.push( { label: 'Đã ký', value: 'DaKyHD', class: '', icon: 'pi pi-check'  });
+        }else if(this.activeIndex === 5) {
+          this.optionsButon = [{ label: 'Xem File', value: 'XemFileHD', class: '', icon: 'pi pi-check'  }]
         }else if(this.activeIndex > 3) {
           buttonsStep.push(  { label: 'Tải file', value: 'TaiFileHD', class: '', icon: 'pi pi-upload'  });
           buttonsStep.push({ label: 'Hoàn thành', value: 'HoanThanhHD', class: '', icon: 'pi pi-check'  });

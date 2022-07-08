@@ -83,6 +83,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
   submit = false
   dataViewNew = []
   callApiDrop() {
+    const source = timer(50);
     this.dataViewNew = [...this.dataView];
     this.dataView = [];
     this.dataViewNew.forEach(element => {
@@ -110,100 +111,140 @@ export class EditDetailComponent implements OnInit, OnChanges {
           if (element1.field_name === 'project_cd') {
           } else if (element1.field_name === 'orgId' || element1.field_name === 'departmentId') {
             if (element1.columnType === 'selectTree') {
+              console.log("element1.field_name", element1.field_name)
               element1.isVisiable = false;
               const root_orgId = this.getValueByKey('organizeId');
               this.getOrganizeTree(root_orgId, element1);
             } else {
-              this.getOrgRoots(element1);
+              console.log("element1.field_name", element1.field_name)
+               source.subscribe(val =>this.getOrgRoots(element1));
             }
           } else if (element1.field_name === 'actionlist') {
+            console.log("element1.field_name", element1.field_name)
             this.getActionlist(element1)
           } else if (element1.field_name === 'work_cds') {
+            console.log("element1.field_name", element1.field_name)
             this.getWorkTimes(element1, null)
           } else if (element1.field_name === 'empId') {
+            console.log("element1.field_name", element1.field_name)
             const root_orgId = this.getValueByKey('organizeId');
             this.getEmployeePage(root_orgId, element1);
           } else if (element1.field_name === 'shift_cds') {
+            console.log("element1.field_name", element1.field_name)
             this.getWorkShifts(element1, null)
           } else if (element1.field_name === 'work_cd') {
+            console.log("element1.field_name", element1.field_name)
             this.getWorkTime(element1, this.detail.empId)
           } else if (element1.field_name === 'shift_cd') {
+            console.log("element1.field_name", element1.field_name)
             this.getWorkShift(element1, this.detail.empId)
           } else if (element1.field_name === 'bank_code') {
+            console.log("element1.field_name", element1.field_name)
             this.getBankList(element1)
           } else if (element1.field_name === 'parentId') {
+            console.log("element1.field_name", element1.field_name)
             const orgId = this.getValueByKey('orgId');
             const adm_st = this.getValueByKey('adm_st');
             this.getAgentLeaders(orgId, element1, adm_st);
           } else if (element1.field_name === 'posistionCd') {
+            console.log("element1.field_name", element1.field_name)
             const root_orgId = this.detail.organizeId ? this.detail.organizeId : null;
             this.getOrgPositions(root_orgId, element1);
           } else if (element1.field_name === 'positionId') {
+            console.log("element1.field_name", element1.field_name)
             const orgId = this.getValueByKey('orgId');
             this.getPositionList(orgId, element1);
           } else if (element1.field_name === 'positionTitleId') {
+            console.log("element1.field_name", element1.field_name)
             const positionId = this.getValueByKey('positionId');
             this.getPositionTitles(positionId, element1);
           } if (element1.field_name === 'companyId') {
+            console.log("element1.field_name", element1.field_name)
             this.getCompanyList(this.detail.organizeId ? this.detail.organizeId : null, element1);
           } else if (element1.field_name === 'company_id') {
+            console.log("element1.field_name", element1.field_name)
             this.getCompanyList(this.detail.organizeId ? this.detail.organizeId : null, element1);
           } else if (element1.field_name === 'reportTo') {
+            console.log("element1.field_name", element1.field_name)
             const root_orgId = this.detail ? this.detail.organizeId : null
             this.getEmpLeaders(element1, root_orgId);
           } else if (element1.field_name === 'acc_no') {
+            console.log("element1.field_name", element1.field_name)
             const cif_no = this.detail.cif_no
             this.getAccountList(element1, cif_no);
           } else if (element1.field_name === 'jobId') {
+            console.log("element1.field_name", element1.field_name)
             const root_orgId = this.getValueByKey('organizeId');
             const positionTypeCd = this.getValueByKey('positionCd');
             this.getJobTitles(root_orgId, element1, positionTypeCd);
           } else if (element1.field_name === 'organizeId') {
+            console.log("element1.field_name", element1.field_name)
             this.getOrgRoots(element1);
           } else if (element1.field_name === 'organize_id') {
+            console.log("element1.field_name", element1.field_name)
             this.getOrgRoots(element1);
           } else if (element1.field_name === 'org_cds') {
+               console.log("element1.field_name", element1.field_name)
             this.getOrgRootsMuti(element1);
           } else if (element1.field_name === 'full_name') {
+               console.log("element1.field_name", element1.field_name)
             const org_cds = this.getValueByKey('org_cds');
             this.getUserByPush(org_cds, element1);
           } else if (element1.field_name === 'requester_custId') {
+               console.log("element1.field_name", element1.field_name)
             const root_orgId = this.getValueByKey('organize_id');
             this.getEmployeePage(root_orgId, element1);
           } else if (element1.field_name === 'source_ref') {
+               console.log("element1.field_name", element1.field_name)
             this.getNotifyRefList(element1);
           } else if (element1.field_name === 'contractTypeId') {
+               console.log("element1.field_name", element1.field_name)
             this.getContractTypes(element1);
           } else if (element1.field_name === 'salary_type') {
+               console.log("element1.field_name", element1.field_name)
             const contractTypeId = this.getValueByKey('contractTypeId');
             this.getSalaryTypes(contractTypeId, element1);
           } else if (element1.field_name === 'base_id') {
+               console.log("element1.field_name", element1.field_name)
             this.getSalaryBases(element1);
           } else if (element1.field_name === 'hiring_man_id') {
+               console.log("element1.field_name", element1.field_name)
             this.getUsersByAdmin(element1, 1);
           } else if (element1.field_name === 'hiring_user_id') {
+               console.log("element1.field_name", element1.field_name)
             this.getUsersByAdmin(element1, 0);
           } else if (element1.field_name === 'vacancyId') {
+               console.log("element1.field_name", element1.field_name)
             this.getVacancyPage(element1);
           } else if (element1.field_name === 'educationId') {
+               console.log("element1.field_name", element1.field_name)
             this.getEducations(element1);
           } else if (element1.field_name === 'workplaceId') {
+               console.log("element1.field_name", element1.field_name)
             this.getWorkplaces(element1);
           } else if (element1.field_name === 'sub_prod_cd' && element1.columnType === 'checkboxList') {
+               console.log("element1.field_name", element1.field_name)
             this.getProductProjs(element1);
           } else if (element1.field_name === 'roomId') {
+               console.log("element1.field_name", element1.field_name)
             this.getMeetRooms(element1);
           } else if (element1.field_name === 'content_type' || element1.field_name === 'isPublish') {
+               console.log("element1.field_name", element1.field_name)
             this.GetCustObjectList(element1);
           } else if (element1.field_name === 'vehicleTypeId') {
+               console.log("element1.field_name", element1.field_name)
             this.getVehicleTypes(element1);
           } else if (element1.field_name === 'year_of_birth') {
+               console.log("element1.field_name", element1.field_name)
             this.GetYearPicker(element1);
           } else if (element1.field_name === 'annualMonth') {
+               console.log("element1.field_name", element1.field_name)
             this.GetAnnualMonth(element1);
           } else if (element1.field_name === 'reason_code') {
+               console.log("element1.field_name", element1.field_name)
             this.getLeaveReasons(element1)
           } else if (element1.field_name === 'parent_type_id' || element1.field_name === 'form_type') {
+               console.log("element1.field_name", element1.field_name)
             await this.getFormTypePage(element1);
           } else {
             if (element1.columnObject) {
@@ -211,7 +252,9 @@ export class EditDetailComponent implements OnInit, OnChanges {
             }
           }
         } else if (element1.columnType === 'input') {
+             console.log("element1.field_name", element1.field_name)
           if (element1.field_name === 'annualYear') {
+               console.log("element1.field_name", element1.field_name)
             this.GetAnnualYear(element1);
           }
         }
@@ -558,13 +601,13 @@ export class EditDetailComponent implements OnInit, OnChanges {
     const queryParams = queryString.stringify({ filter: '' });
     this.apiService.getOrganizations(queryParams).subscribe(results => {
       if (results.status === 'success') {
-        element1.options = cloneDeep(results.data).map(d => {
+        element1.options = results.data.map(d => {
           return {
             label: d.organizationName,
             value: `${d.organizeId}`
           }
         });
-        element1.columnValue = element1.columnValue ? element1.columnValue.toLowerCase() : ''
+        // element1.columnValue = element1.columnValue ? element1.columnValue.toLowerCase() : ''
       }
     })
   }
