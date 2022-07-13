@@ -78,6 +78,28 @@ export function AgGridFn(lists: Array<any>) {
                     headerTooltip: value.columnCaption,
                     valueFormatter: value.customFormat ? formatMargin : formatNumber2
                 };
+            } else if (value.columnField === 'errors') {
+                row = {
+                    headerName: value.columnCaption,
+                    field: value.columnField,
+                    cellClass: value.cellClass || [],
+                    headerClass: value.headerClass,
+                    cellStyle: value.cellStyle,
+                    cellClassRules: value.conditionClass,
+                    filter: value.isFilter ? 'agTextColumnFilter' : '',
+                    sortable: false,
+                    width: value.columnWidth,
+                    cellRenderer: (params: any) => {
+                        return `<span class="status-cell text-center ${ params.value === 'Thành công' ? 'err-sus' : 'err-err'}">${params.value}</span>`
+                    },
+                    hide: value.isHide ? true : false,
+                    pinned: value.pinned,
+                    editable: value.editable ? value.editable : false,
+                    aggFunc: 'sum',
+                    tooltipField: value.columnField,
+                    headerTooltip: value.columnCaption,
+                    valueFormatter: value.customFormat ? formatMargin : formatNumber2
+                };
             } else {
                 row = {
                     // headerName: value.columnCaption,

@@ -558,8 +558,11 @@ body {
         .ag-row{
             .ag-cell{
                 &[col-id="errors"]{
-                    .ag-group-value{
+                    .err-err{
                         color: #ff0000;
+                    }
+                    .err-sus{
+                        color: #07bd07;
                     }
                 }
             }
