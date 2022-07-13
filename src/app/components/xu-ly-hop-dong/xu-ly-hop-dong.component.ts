@@ -86,7 +86,7 @@ export class XuLyHopDongComponent implements OnInit {
   objectActionDetail: any;
   gridflexs: any;
   getRowHeight;
-  query = {
+  query: any = {
     filter: '',
     offSet: 0,
     pageSize: 15,
@@ -190,8 +190,10 @@ export class XuLyHopDongComponent implements OnInit {
     let params: any = { ... this.query };
     delete params.fromDate
     delete params.toDate
-    params.fromDate = moment(new Date(this.query.fromDate)).format('YYYY-MM-DD')
-    params.toDate = moment(new Date(this.query.toDate)).format('YYYY-MM-DD')
+    // params.fromDate = moment(new Date(this.query.fromDate)).format('YYYY-MM-DD')
+    // params.toDate = moment(new Date(this.query.toDate)).format('YYYY-MM-DD')
+    params.fromDate = typeof this.query.fromDate === 'object' ? moment(new Date(this.query.fromDate)).format('YYYY-MM-DD') : this.query.fromDate;
+    params.toDate = typeof this.query.toDate === 'object' ? moment(new Date(this.query.toDate)).format('YYYY-MM-DD') : this.query.toDate;
     const queryParams = queryString.stringify(params);
     this.apiService.getContractPage(queryParams).subscribe(
       (results: any) => {
@@ -218,6 +220,7 @@ export class XuLyHopDongComponent implements OnInit {
       error => {
         this.spinner.hide();
       });
+      this.setQueryLocalStorage();
   }
 
   showButtons(event: any) {
@@ -367,6 +370,7 @@ export class XuLyHopDongComponent implements OnInit {
       { label: 'Nhân sự' },
       { label: 'Xử lý hợp đồng' }
     ];
+    this.getQueryLocalSotrage();
     this.load();
 
 
@@ -651,6 +655,31 @@ export class XuLyHopDongComponent implements OnInit {
         this.spinner.hide();
       }
     })
+  }
+
+  getQueryLocalSotrage() {
+    let queryLocal: any = JSON.parse(localStorage.getItem('queryXLHD'));
+    if(queryLocal) {
+      this.query.filter = queryLocal.filter;
+      this.query.organizeId = queryLocal.organizeId;
+      this.query.contract_st = queryLocal.contract_st;
+      this.query.contractTypeId = queryLocal.contractTypeId;
+      this.query.fromDate = new Date(queryLocal.fromDate);
+      this.query.toDate = new Date(queryLocal.toDate);
+    }
+  }
+
+  // query from storage
+  queryStorage: any = { }
+  setQueryLocalStorage() {
+    this.queryStorage.filter = this.query.filter;
+    this.queryStorage.organizeId = this.query.organizeId;
+    this.queryStorage.contract_st = this.query.contract_st;
+    this.queryStorage.contractTypeId = this.query.contractTypeId;
+    this.queryStorage.fromDate = moment(new Date(this.query.fromDate)).format('YYYY-MM-DD');
+    this.queryStorage.toDate = moment(new Date(this.query.toDate)).format('YYYY-MM-DD');
+
+    localStorage.setItem('queryXLHD', JSON.stringify(this.queryStorage))
   }
 
 }
