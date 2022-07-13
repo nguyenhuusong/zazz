@@ -659,7 +659,7 @@ export class AppTypeTextareaComponent implements OnInit {
 @Component({
   selector: 'app-type-datetime',
   template: `   
-  <div class="field-group date" [ngClass]=" element.columnValue ? 'valid' : 'invalid' ">
+  <div class="field-group date valid">
                   <p-calendar placeholder="DD/MM/YYYY" appendTo="body" [baseZIndex]="101" [disabled]="element.isDisable" (onSelect)="onChangeValue($event, element.field_name)"
                   [(ngModel)]="element.columnValue" [monthNavigator]="true" [yearNavigator]="true" (onBlur)="onChangeValue($event, element.field_name)"
                   yearRange="2000:2030" inputId="navigators" [required]="element.isRequire && element.isVisiable && !element.isEmpty"

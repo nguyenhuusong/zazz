@@ -256,7 +256,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
         },
         {
           onClick: this.handleDelete.bind(this),
-          label: 'Xóa tài liệu chung',
+          label: 'Xóa tài liệu',
           icon: 'fa fa-trash',
           class: 'btn-primary mr5',
         },
@@ -267,11 +267,11 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
   handleDelete(event) {
     console.log('t:', event);
     this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn xóa tài liệu chung?',
+      message: 'Bạn có chắc chắn muốn xóa tài liệu?',
       accept: () => {
         this.apiService.delFormInfo(event.rowData.form_id).subscribe((results: any) => {
           if (results.status === 'success') {
-            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa tài liệu chung thành công!' });
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa tài liệu thành công!' });
             this.load();
           } else {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
@@ -437,7 +437,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
   }
 
   handleFormType(): void {
-    this.router.navigateByUrl('/chinh-sach/loai-tai-lieu-chung');
+    this.router.navigateByUrl('/chinh-sach/loai-tai-lieu');
   }
 
   handleAdd(): void {

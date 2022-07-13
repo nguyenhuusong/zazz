@@ -3006,6 +3006,8 @@ div.p-organizationchart {
 
 .main .sidebarBody {
     border-radius:0 ;
+    position: relative;
+    z-index: 12;
 }
 .status-line{
     .p-steps-item{
