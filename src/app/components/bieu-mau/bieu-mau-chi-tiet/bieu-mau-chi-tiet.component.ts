@@ -42,7 +42,7 @@ export class BieuMauChiTietComponent implements OnInit, OnDestroy {
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Chính sách' },
       { label: 'Tài liệu chung', routerLink: '/chinh-sach/tai-lieu-chung'},
-      { label: 'Chi tiết tài liệu chung' }
+      { label: 'Chi tiết tài liệu' }
     ];
     this.handleParams();
   }
@@ -52,7 +52,7 @@ export class BieuMauChiTietComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((params) => {
         this.id = params.id === 'them-moi' ? '' : params.id;
-        this.items[3].label = params.id === 'them-moi' ? 'Thêm mới tài liệu chung' : 'Chi tiết tài liệu chung'
+        this.items[3].label = params.id === 'them-moi' ? 'Thêm mới tài liệu' : 'Chi tiết tài liệu'
         this.getDetail();
       });
   };

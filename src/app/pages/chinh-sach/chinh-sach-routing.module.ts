@@ -173,20 +173,20 @@ const routes: Routes = [
   },
 },
 {
-  path: 'loai-tai-lieu-chung/:id',
+  path: 'loai-tai-lieu/:id',
   component: ChiTietLoaiBieuMauComponent,
   data: {
-    title: 'Chi tiết loại Tài liệu chung chi tiết',
-    url: 'loai-tai-lieu-chung/:id',
+    title: 'Chi tiết loại Tài liệu',
+    url: 'loai-tai-lieu/:id',
   },
 },
 {
-  path: 'loai-tai-lieu-chung',
+  path: 'loai-tai-lieu',
   pathMatch: 'full',
   component: LoaiBieuMauComponent,
   data: {
-    title: 'Loại Tài liệu chung',
-    url: 'loai-tai-lieu-chung',
+    title: 'Loại Tài liệu',
+    url: 'loai-tai-lieu',
   },
 },
 ];
