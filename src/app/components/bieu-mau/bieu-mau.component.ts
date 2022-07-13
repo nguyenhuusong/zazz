@@ -61,7 +61,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Chính sách' },
-      { label: 'Thiết lập biểu mẫu' },
+      { label: 'Tài liệu chung' },
     ];
     this.getAgencyOrganizeMap();
     this.getOrgan();
@@ -256,7 +256,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
         },
         {
           onClick: this.handleDelete.bind(this),
-          label: 'Xóa biểu mẫu',
+          label: 'Xóa tài liệu chung',
           icon: 'fa fa-trash',
           class: 'btn-primary mr5',
         },
@@ -267,11 +267,11 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
   handleDelete(event) {
     console.log('t:', event);
     this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn xóa biểu mẫu?',
+      message: 'Bạn có chắc chắn muốn xóa tài liệu chung?',
       accept: () => {
         this.apiService.delFormInfo(event.rowData.form_id).subscribe((results: any) => {
           if (results.status === 'success') {
-            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa biểu mẫu thành công!' });
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa tài liệu chung thành công!' });
             this.load();
           } else {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
@@ -282,7 +282,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
   }
 
   EditEmployee(event) {
-    this.router.navigateByUrl(`/chinh-sach/bieu-mau/${event.rowData.form_id}`);
+    this.router.navigateByUrl(`/chinh-sach/tai-lieu-chung/${event.rowData.form_id}`);
   }
 
 
@@ -437,10 +437,10 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
   }
 
   handleFormType(): void {
-    this.router.navigateByUrl('/chinh-sach/loai-bieu-mau');
+    this.router.navigateByUrl('/chinh-sach/loai-tai-lieu-chung');
   }
 
   handleAdd(): void {
-    this.router.navigateByUrl('/chinh-sach/bieu-mau/them-moi');
+    this.router.navigateByUrl('/chinh-sach/tai-lieu-chung/them-moi');
   }
 }

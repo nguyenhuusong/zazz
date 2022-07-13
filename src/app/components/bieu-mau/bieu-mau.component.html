@@ -32,7 +32,7 @@
                         </div>
                     </div>
                     
-                    <p-button label="Thiết lập loại biểu mẫu" styleClass="p-button-outlined p-button-info btn-thie-lap" icon="" class="mr-2" (onClick)="handleFormType()">
+                    <p-button label="Thiết lập loại tài liệu chung" styleClass="p-button-outlined p-button-info btn-thie-lap" icon="" class="mr-2" (onClick)="handleFormType()">
                         <svg class="mr-2" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M0 0H16V16H0V0Z" fill="#0979FD"/>
                         </svg>
@@ -44,7 +44,7 @@
             <div class="grid filter">
                 <div class="header-filter-search x-2">
                     <div class="field-group valid text search mb-0">
-                        <input class="input-default" placeholder="Tìm kiếm theo mã, tiêu đề biểu mẫu" type="text" id="filter"
+                        <input class="input-default" placeholder="Tìm kiếm theo mã, tiêu đề tài liệu chung" type="text" id="filter"
                             (keydown.enter)="query.offSet = 0; first = 0;load()"
                             [(ngModel)]="query.filter">
                         <label>Tìm kiếm</label>
@@ -65,7 +65,7 @@
                         [options]="formTypes" 
                         (onNodeSelect)="selectedNode11($event)"
                        ></p-treeSelect>
-                        <label>Loại biểu mẫu</label>
+                        <label>Loại tài liệu chung</label>
                     </div>
                 </div>
                 <div class="x-1">

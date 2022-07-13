@@ -157,36 +157,36 @@ const routes: Routes = [
   },
 },
 {
-  path: 'bieu-mau/:id',
+  path: 'tai-lieu-chung/:id',
   component: BieuMauChiTietComponent,
   data: {
-    title: 'Biểu mẫu chi tiết',
-    url: 'bieu-mau/:id',
+    title: 'Tài liệu chung chi tiết',
+    url: 'tai-lieu-chung/:id',
   },
 },
 {
-  path: 'bieu-mau',
+  path: 'tai-lieu-chung',
   component: BieuMauComponent,
   data: {
-    title: 'Biểu mẫu',
-    url: 'bieu-mau',
+    title: 'Tài liệu chung',
+    url: 'tai-lieu-chung',
   },
 },
 {
-  path: 'loai-bieu-mau/:id',
+  path: 'loai-tai-lieu-chung/:id',
   component: ChiTietLoaiBieuMauComponent,
   data: {
-    title: 'Chi tiết loại biểu mẫu chi tiết',
-    url: 'loai-bieu-mau/:id',
+    title: 'Chi tiết loại Tài liệu chung chi tiết',
+    url: 'loai-tai-lieu-chung/:id',
   },
 },
 {
-  path: 'loai-bieu-mau',
+  path: 'loai-tai-lieu-chung',
   pathMatch: 'full',
   component: LoaiBieuMauComponent,
   data: {
-    title: 'Loại biểu mẫu',
-    url: 'loai-bieu-mau',
+    title: 'Loại Tài liệu chung',
+    url: 'loai-tai-lieu-chung',
   },
 },
 ];

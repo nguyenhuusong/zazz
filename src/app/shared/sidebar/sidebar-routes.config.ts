@@ -501,8 +501,8 @@ export const ROUTES: any[] =[
         },
         {
           "menuId": 640,
-          "path": "/chinh-sach/bieu-mau",
-          "title": "Thiết lập biểu mẫu",
+          "path": "/chinh-sach/tai-lieu-chung",
+          "title": "Tài liệu chung",
           "icon": "sun-icon-book",
           "classs": "nav-item",
           "badge": "",

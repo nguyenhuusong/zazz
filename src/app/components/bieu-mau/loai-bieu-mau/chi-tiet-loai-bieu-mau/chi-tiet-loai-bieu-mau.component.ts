@@ -40,8 +40,8 @@ export class ChiTietLoaiBieuMauComponent implements OnInit, OnDestroy {
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Chính sách' },
-      { label: 'Loại biểu mẫu', routerLink: '/chinh-sach/loai-bieu-mau' },
-      { label: 'Chi tiết loại biểu mẫu' }
+      { label: 'Loại tài liệu chung', routerLink: '/chinh-sach/loai-tai-lieu-chung' },
+      { label: 'Chi tiết loại tài liệu chung' }
     ];
     this.handleParams();
   }
@@ -53,7 +53,7 @@ export class ChiTietLoaiBieuMauComponent implements OnInit, OnDestroy {
         this.id = params.id;
         this.getDetail();
         if(this.id === 'them-moi'){
-          this.items[this.items.length-1].label = 'Tạo mới biểu mẫu';
+          this.items[this.items.length-1].label = 'Tạo mới tài liệu chung';
         }
 
       });
@@ -72,7 +72,7 @@ export class ChiTietLoaiBieuMauComponent implements OnInit, OnDestroy {
   }
 
   quaylai(data) {
-    this.router.navigateByUrl('/chinh-sach/loai-bieu-mau');
+    this.router.navigateByUrl('/chinh-sach/loai-tai-lieu-chung');
   }
 
   setWorkApprove(event) {
@@ -86,7 +86,7 @@ export class ChiTietLoaiBieuMauComponent implements OnInit, OnDestroy {
         if (results.status === 'success') {
           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
           this.spinner.hide();
-          this.router.navigateByUrl('/chinh-sach/loai-bieu-mau');
+          this.router.navigateByUrl('/chinh-sach/loai-tai-lieu-chung');
         } else {
           this.messageService.add({
             severity: 'error', summary: 'Thông báo',
