@@ -37,11 +37,12 @@ export class BieuMauChiTietComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.titlePage = this.activatedRoute.data['_value'].title;
+    console.log('this.titlePage', this.titlePage)
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Chính sách' },
-      { label: 'Biểu mẫu', routerLink: '/chinh-sach/bieu-mau'},
-      { label: 'Chi tiết biểu mẫu' }
+      { label: 'Tài liệu chung', routerLink: '/chinh-sach/tai-lieu-chung'},
+      { label: 'Chi tiết tài liệu chung' }
     ];
     this.handleParams();
   }
@@ -51,6 +52,7 @@ export class BieuMauChiTietComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((params) => {
         this.id = params.id === 'them-moi' ? '' : params.id;
+        this.items[3].label = params.id === 'them-moi' ? 'Thêm mới tài liệu chung' : 'Chi tiết tài liệu chung'
         this.getDetail();
       });
   };
@@ -68,7 +70,7 @@ export class BieuMauChiTietComponent implements OnInit, OnDestroy {
   }
 
   quaylai(data) {
-    this.router.navigateByUrl('/chinh-sach/bieu-mau');
+    this.router.navigateByUrl('/chinh-sach/tai-lieu-chung');
   }
 
   handleSave(event) {
@@ -82,7 +84,7 @@ export class BieuMauChiTietComponent implements OnInit, OnDestroy {
         if (results.status === 'success') {
           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
           this.spinner.hide();
-          this.router.navigateByUrl('/chinh-sach/bieu-mau');
+          this.router.navigateByUrl('/chinh-sach/tai-lieu-chung');
         } else {
           this.messageService.add({
             severity: 'error', summary: 'Thông báo',
