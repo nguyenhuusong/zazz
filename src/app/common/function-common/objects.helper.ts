@@ -143,12 +143,17 @@ export function loopEveryNodeTree(o) {
 
 export function findNodeInTree(list, nodeId): any {
   for (let i = 0; i < list.length; i++) {
-      if (Array.isArray(list[i].children) && list[i].children.length) {
+    //   if (Array.isArray(list[i].children) && list[i].children.length) {
+    //     findNodeInTree(list[i].children, nodeId);
+    //   } else {
+    //     if (list[i].data === nodeId ) {
+    //         return list[i];
+    //     }
+    //   }
+    if (list[i].data === nodeId ) {
+        return list[i];
+      }else if (Array.isArray(list[i].children) && list[i].children.length) {
         findNodeInTree(list[i].children, nodeId);
-      } else {
-        if (list[i].data === nodeId ) {
-            return list[i];
-        }
       }
   }
 }
