@@ -117,6 +117,18 @@ export class PageNotifyComponent implements OnInit, OnDestroy, AfterViewChecked 
     }
   }
 
+  
+  cancel() {
+    this.query = {
+      organizeId: this.query.organizeId,
+      filter: '',
+      gridWidth: 0,
+      offSet: 0,
+      pageSize: 15
+    }
+    this.load();
+  }
+
   ngOnInit() {
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },

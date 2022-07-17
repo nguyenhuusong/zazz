@@ -40,6 +40,7 @@ import { ChiTietGopYComponent } from 'src/app/components/gop-y-kien/chi-tiet-gop
 import { GopYRoutingModule } from './gop-y-routing.module';
 import { HrmBreadCrumbModule } from 'src/app/common/hrm-breadcrumb/hrm-breadcrumb.module';
 import { ConfigGridTableFormModule } from 'src/app/common/config-grid-table-form/config-grid-table-form.module';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
 
 @NgModule({
   imports: [
@@ -79,6 +80,7 @@ import { ConfigGridTableFormModule } from 'src/app/common/config-grid-table-form
     PanelModule,
     CommonSearchUserMasterModule,
     ConfirmDialogModule,
+    OverlayPanelModule,
     HrmBreadCrumbModule,
     AgGridModule.withComponents([
       ButtonRendererComponent,

@@ -2,8 +2,6 @@ import { AfterViewChecked, ChangeDetectorRef, Component, OnInit, ViewChild } fro
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import * as queryString from 'querystring';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { ApiService } from 'src/app/services/api.service';
-import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
 import { CustomTooltipComponent } from 'src/app/common/ag-component/customtooltip.component';
 import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
 import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.component';
@@ -139,7 +137,7 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
   cauhinh() {
     this.displaySetting = true;
   }
-  
+
   load() {
     this.columnDefs = []
     this.spinner.show();

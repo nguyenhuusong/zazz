@@ -569,6 +569,11 @@ body {
         }
     }
 }
+
+.height-56{
+    height: 50px;
+}
+
 .ag-body-horizontal-scroll-viewport{
     &::-webkit-scrollbar {
         cursor:pointer;
@@ -905,6 +910,10 @@ div.p-menu-buttons{
             }
         }
     }
+   
+}
+
+.filter-search {
     .placeholder-icon{
         height: 100%;
         width: 40px;
@@ -929,6 +938,8 @@ div.p-menu-buttons{
         }
     }
 }
+
+
 div{
     &.table-tool{
         margin-left: 0px;

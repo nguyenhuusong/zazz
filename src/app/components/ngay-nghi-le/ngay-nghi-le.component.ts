@@ -276,7 +276,7 @@ export class NgayNghiLeComponent implements OnInit {
       // },
       {
         headerName: 'Thao tác', field: 'button',
-        editable: false, width: 70,
+        editable: false, width: 100,
         cellRenderer: 'buttonRendererComponent',
         cellRendererParams: (params: any) => this.showButtons(params),
         cellClass: ['action', 'border-right', 'no-auto'],

@@ -27,6 +27,7 @@ import { ListGridAngularModule } from 'src/app/common/list-grid-angular/list-gri
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { HrmBreadCrumbModule } from 'src/app/common/hrm-breadcrumb/hrm-breadcrumb.module';
 import { ConfigGridTableFormModule } from 'src/app/common/config-grid-table-form/config-grid-table-form.module';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
 @NgModule({
   declarations: [
     PageNotifyComponent,
@@ -57,7 +58,8 @@ import { ConfigGridTableFormModule } from 'src/app/common/config-grid-table-form
     NotifyDetailModule,
     ManageMediaModule,
     HrmBreadCrumbModule,
-    ConfigGridTableFormModule
+    ConfigGridTableFormModule,
+    OverlayPanelModule
   ],
   exports: [PageNotifyComponent],
   entryComponents: [],
