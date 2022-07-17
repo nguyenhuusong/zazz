@@ -106,7 +106,11 @@ export class ChiTietPheDuyetComponent implements OnInit, OnDestroy {
   }
 
   quaylai(data) {
-    this.router.navigate(['/nhan-su/phe-duyet']);
+    if(data === 'CauHinh') {
+      this.getWorkflowInfo();
+    }else {
+      this.router.navigate(['/nhan-su/phe-duyet']);
+    }
   }
 
   pheDuyet() {

@@ -115,8 +115,12 @@ export class ChiTietNoiLamViecComponent implements OnInit, OnChanges {
    }
   }
 
-  cancelUpdate(e) {
-    this.goBack();
+  cancelUpdate(data) {
+    if(data === 'CauHinh') {
+      this.getWorkplaceInfo();
+    }else {
+      this.goBack();
+    }
   }
 
 

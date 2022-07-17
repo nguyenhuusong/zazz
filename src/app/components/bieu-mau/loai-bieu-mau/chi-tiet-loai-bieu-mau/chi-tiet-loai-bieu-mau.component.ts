@@ -72,7 +72,11 @@ export class ChiTietLoaiBieuMauComponent implements OnInit, OnDestroy {
   }
 
   quaylai(data) {
-    this.router.navigateByUrl('/chinh-sach/loai-tai-lieu');
+    if(data === 'CauHinh') {
+      this.getDetail();
+    }else {
+      this.router.navigateByUrl('/chinh-sach/loai-tai-lieu');
+    }
   }
 
   setWorkApprove(event) {

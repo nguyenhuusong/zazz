@@ -4,7 +4,6 @@ import * as queryString from 'querystring';
 import { ActivatedRoute, Router } from '@angular/router';
 import { cloneDeep } from 'lodash';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { ApiService } from 'src/app/services/api.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subject } from 'rxjs';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
@@ -212,9 +211,14 @@ export class ChiTietAnCaComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  cancelUpdate() {
-    this.manhinh = 'Edit';
-    this.getAnCaInfo();
+  cancelUpdate(data) {
+    if(data === 'CauHinh') {
+      this.getAnCaInfo();
+    }else {
+      this.manhinh = 'Edit';
+      this.getAnCaInfo();
+    }
+  
   }
 
 }

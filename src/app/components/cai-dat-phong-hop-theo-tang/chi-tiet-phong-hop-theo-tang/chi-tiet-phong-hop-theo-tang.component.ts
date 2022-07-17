@@ -4,8 +4,6 @@ import { MessageService, ConfirmationService } from 'primeng/api';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, OnDestroy } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
-import { ApiService } from 'src/app/services/api.service';
-import { AgGridFn } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 
 @Component({
@@ -105,9 +103,14 @@ export class ChiTietPhongHopTheoTangComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('/cai-dat/quan-ly-phong-hop-theo-tang');
   }
 
-  cancelUpdate(): void {
-    this.manhinh = 'Edit';
-    this.onBack();
+  cancelUpdate(data): void {
+    if(data === 'CauHinh') {
+      this.getMeetingFloorInfo()
+    }else {
+      this.manhinh = 'Edit';
+      this.onBack();
+    }
+ 
   }
 }
 

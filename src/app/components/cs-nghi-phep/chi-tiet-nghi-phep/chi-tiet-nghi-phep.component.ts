@@ -114,7 +114,11 @@ export class ChiTietNghiPhepComponent implements OnInit, OnDestroy {
   // }
 
   quaylai(data) {
-    this.router.navigate(['/chinh-sach/nghi-phep']);
+    if(data === 'CauHinh') {
+      this.getLeaveInfo();
+    }else {
+      this.router.navigate(['/chinh-sach/nghi-phep']);
+    }
 
   }
 

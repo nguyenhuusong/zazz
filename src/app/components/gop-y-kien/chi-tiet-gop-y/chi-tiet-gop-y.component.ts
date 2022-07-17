@@ -127,8 +127,12 @@ export class ChiTietGopYComponent implements OnInit, OnDestroy {
     }
   }
 
-  cancelUpdate() {
-    this.router.navigate(['/gop-y']);
+  cancelUpdate(data) {
+    if(data === 'CauHinh') {
+      this.getFeedbackInfo();
+    }else {
+      this.router.navigate(['/gop-y']);
+    }
   }
 
 }

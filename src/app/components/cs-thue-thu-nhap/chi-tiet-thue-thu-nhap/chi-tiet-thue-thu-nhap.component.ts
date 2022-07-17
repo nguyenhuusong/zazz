@@ -121,8 +121,12 @@ export class ChiTietThueThuNhapComponent implements OnInit, OnDestroy {
     }
   }
 
-  cancelUpdate() {
-    this.router.navigate(['/chinh-sach/thue-thu-nhap']);
+  cancelUpdate(data) {
+    if(data === 'CauHinh'){
+      this.getIncomeTaxInfo();
+    }else {
+      this.router.navigate(['/chinh-sach/thue-thu-nhap']);
+    }
   }
 
 }

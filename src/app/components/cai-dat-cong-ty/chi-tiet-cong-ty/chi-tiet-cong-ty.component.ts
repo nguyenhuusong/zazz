@@ -196,8 +196,12 @@ export class ChiTietCongTyComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  cancelUpdate() {
-    this.goBack();
+  cancelUpdate(data) {
+    if(data === 'CauHinh') {
+      this.getCompanyInfo();
+    }else {
+      this.goBack();
+    }
   }
 
   addComAuthorizeInfo() {
@@ -229,6 +233,14 @@ export class ChiTietCongTyComponent implements OnInit, OnChanges, OnDestroy {
         this.spinner.hide();
       }
     })
+  }
+
+  cancelAuthor(data) {
+    if(data === 'CauHinh') {
+      this.getComAuthorizeInfo();
+    }else {
+      this.displayScreemForm =false;
+    }
   }
 
   setComAuthorizeInfo(data) {

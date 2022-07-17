@@ -3,7 +3,6 @@ import * as queryString from 'querystring';
 import { ActivatedRoute, Router } from '@angular/router';
 import { cloneDeep } from 'lodash';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { ApiService } from 'src/app/services/api.service';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 @Component({
   selector: 'app-chi-tiet-loai-thong-bao',
@@ -113,8 +112,12 @@ export class ChiTietLoaiThongBaoComponent implements OnInit, OnChanges {
    }
   }
 
-  cancelUpdate() {
-    this.goBack();
+  cancelUpdate(event) {
+    if(event === 'CauHinh') {
+      this.getNotifyRefInfo();
+    }else {
+      this.goBack();
+    }
   }
 
 

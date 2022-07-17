@@ -228,8 +228,12 @@ export class ChiTietToChucComponent implements OnInit, OnChanges {
     }
   }
 
-  cancelUpdate() {
-    this.router.navigate(['/cai-dat/cai-dat-to-chuc']);
+  cancelUpdate(data) {
+    if(data === 'CauHinh') {
+      this.getOrganizeInfo();
+    }else {
+      this.router.navigate(['/cai-dat/cai-dat-to-chuc']);
+    }
   }
 
   submit(datas) {

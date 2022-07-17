@@ -96,7 +96,11 @@ export class ChiTietPhepBuComponent implements OnInit, OnDestroy {
   }
 
   quaylai(data) {
-    this.router.navigate(['/chinh-sach/phep-bu']);
+    if(data === 'CauHinh') {
+      this.getAnnualAddInfo();
+    }else {
+      this.router.navigate(['/chinh-sach/phep-bu']);
+    }
   }
 
 }

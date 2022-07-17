@@ -161,9 +161,14 @@ export class ChiTietLichHopComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('/cai-dat/cai-dat-lich-hop');
   }
 
-  cancelUpdate(): void {
-    this.manhinh = 'Edit';
-    this.onBack();
+  cancelUpdate(event): void {
+    if(event === 'CauHinh') {
+      this.getMeetingInfo();
+    }else {
+      this.manhinh = 'Edit';
+      this.onBack();
+    }
+ 
   }
 
   handleAddMember(): void {

@@ -96,7 +96,11 @@ export class ChiTietPhongHopComponent implements OnInit, OnDestroy {
   }
 
   quaylai(data) {
-    this.router.navigate(['/cai-dat/cai-dat-lich-hop/danh-sach-phong-hop']);
+    if(data === 'CauHinh') {
+      this.getMeetRoomInfo();
+    }else {
+      this.router.navigate(['/cai-dat/cai-dat-lich-hop/danh-sach-phong-hop']);
+    }
   }
 
 }

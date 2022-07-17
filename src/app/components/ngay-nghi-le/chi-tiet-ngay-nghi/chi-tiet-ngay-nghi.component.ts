@@ -149,15 +149,18 @@ export class ChiTietNgayNghiComponent implements OnInit, OnDestroy {
   }
 
   quaylai(data) {
-    if(data) {
-      console.log(data);
-      this.whatDayName = parseInt(data);
-      console.log(this.whatDayName)
-      this.selecteOptionDate(this.whatDayName)
-     
+    if(data === 'CauHinh') {
+      this.getHolidayInfo();
     }else {
-      this.router.navigate(['/cai-dat/cai-dat-ngay-nghi-le']);
+      if(data) {
+        this.whatDayName = parseInt(data);
+        console.log(this.whatDayName)
+        this.selecteOptionDate(this.whatDayName)
+      }else {
+        this.router.navigate(['/cai-dat/cai-dat-ngay-nghi-le']);
+      }
     }
+   
   }
   modelMonth = new Date().getMonth() + 1;
   nextDate() {

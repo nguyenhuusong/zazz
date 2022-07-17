@@ -144,10 +144,13 @@ export class ChiTietLichLamViecComponent implements OnInit, OnChanges {
 
   OnClick(e) {
   }
-  cancelUpdate(e) {
-    this.goBack();
+  cancelUpdate(data) {
+    if(data === 'CauHinh') {
+      this.getWorktimeInfo();
+    }else {
+      this.goBack();
+    }
   }
-
 
 }
 

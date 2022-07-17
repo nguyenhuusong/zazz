@@ -8,7 +8,7 @@
     <div >
         <app-edit-detail *ngIf="listViews && listViews.length> 0"
             [thongtinnhanvienNew]="true" [manhinh]="'Edit'" [dataView]="listViews"
-            (callback)="setMeetingFloorInfo($event)" (callbackcancel)="cancelUpdate()">
+            (callback)="setMeetingFloorInfo($event)" (callbackcancel)="cancelUpdate($event)">
         </app-edit-detail>
     </div>
         

@@ -97,7 +97,11 @@ export class ChiTietViTriTuyenDungComponent implements OnInit, OnDestroy {
   }
 
   quaylai(data) {
-    this.router.navigate(['/tuyen-dung/vi-tri-tuyen-dung']);
+    if(data === 'CauHinh') {
+      this.getVacancyInfo();
+    }else {
+      this.router.navigate(['/tuyen-dung/vi-tri-tuyen-dung']);
+    }
   }
 
 }

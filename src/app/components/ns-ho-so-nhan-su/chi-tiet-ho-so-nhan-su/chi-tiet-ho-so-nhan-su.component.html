@@ -215,7 +215,7 @@
                         [optionsButtonsEdit]="[]"  
                         [dataView]="listViewsReportTo"
                         (callback)="setEmployeeInfo($event)" 
-                        (callbackcancel)="cancelUpdate($event)">
+                        (callbackcancel)="cancelUpdateViewsReportTo($event)">
                     </app-edit-detail>
                 </div>
                 <div class="border-section">
@@ -336,7 +336,7 @@
     <app-edit-detail
         *ngIf="listViewsForm.length> 0 && displayDialog &&  (titleForm.type === 'DuyetHoSo' || titleForm.type === 'TuyenDungLai' || titleForm.type === 'ChuyenCongTac')"
         [detail]="detailInfo" [manhinh]="manhinh" [thongtinnhanvienNew]="true" [dataView]="listViewsForm"
-        (callback)="xacNhan($event)" (callbackcancel)="displayDialog = !displayDialog"></app-edit-detail>
+        (callback)="xacNhan($event)" (callbackcancel)="cancelViewsForm($event)"></app-edit-detail>
     <!-- <p-selectButton [options]="optionsButtonsSave"
         *ngIf="titleForm.type === 'HuyHoSo' || titleForm.type === 'MoLaiHoSo' || titleForm.type === 'NghiViec'"
         optionLabel="label" optionValue="value" (onChange)="onChangeButtonSave($event)"></p-selectButton> -->
@@ -482,7 +482,7 @@
     <app-edit-detail *ngIf="listViewsDependent.length> 0 && detailDependentInfo" [detailInfo]="detailInfo"
         [detail]="detailDependentInfo" [manhinh]="'Edit'" [thongtinnhanvienNew]="true"
         [dataView]="listViewsDependent" (callback)="setEmpDependen($event)"
-        (callbackcancel)="displayFormEditDetail = !displayFormEditDetail"></app-edit-detail>
+        (callbackcancel)="cancelDependentInfo($event)"></app-edit-detail>
 </p-dialog>
 
 

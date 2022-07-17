@@ -330,8 +330,20 @@ export class ChiTietHoSoNghiViecComponent implements OnInit, OnChanges, OnDestro
     }
   }
 
-  cancelUpdate() {
+  cancelUpdate(data) {
+    if(data === 'CauHinh') {
+      this.getTerminateInfo();
+    }else {
     this.router.navigate(['/nhan-su/ho-so-nghi-viec']);
+    }
+  }
+
+  cancelRehire(data) {
+    if(data === 'CauHinh') {
+      this.getEmployeeInfo();
+    }else {
+    this.showRehire = false;
+    }
   }
   
   ngOnDestroy() {

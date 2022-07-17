@@ -193,9 +193,13 @@ export class ChiTietTienLuongComponent implements OnInit, OnChanges, OnDestroy {
    }
   }
 
-  cancelUpdate() {
-    this.manhinh = 'Edit';
-    this.getSalaryRecordInfo();
+  cancelUpdate(data) {
+    if(data === 'CauHinh') {
+      this.getSalaryRecordInfo();
+    }else {
+      this.router.navigate(['/chinh-sach/tien-luong']);
+    }
+   
   }
   
 

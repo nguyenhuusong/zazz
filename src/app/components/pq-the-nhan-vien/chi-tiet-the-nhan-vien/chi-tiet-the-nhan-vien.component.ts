@@ -95,7 +95,11 @@ export class ChiTietTheNhanVienComponent implements OnInit, OnDestroy {
   }
 
   quaylai(data) {
-    this.router.navigate(['/phan-quyen/the-nhan-vien']);
+    if(data === 'CauHinh') {
+      this.GetEmployeeCardInfo();
+    }else {
+      this.router.navigate(['/phan-quyen/the-nhan-vien']);
+    }
   }
 
 }

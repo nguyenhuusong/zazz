@@ -19,7 +19,7 @@ export class ChiTietLinhVucTuyenDungComponent implements OnInit, OnDestroy {
   listViews = [];
   optionsButon = [
     { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
-    { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check'  }
+    { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check' }
   ]
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -38,8 +38,8 @@ export class ChiTietLinhVucTuyenDungComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.titlePage = this.activatedRoute.data['_value'].title;
     this.items = [
-      { label: 'Trang chủ' , routerLink: '/home' },
-      { label: 'Tuyển dụng'},
+      { label: 'Trang chủ', routerLink: '/home' },
+      { label: 'Tuyển dụng' },
       { label: 'Chuyên môn tuyển dụng', routerLink: '/tuyen-dung/chuyen-mon' },
       { label: `${this.titlePage}` },
     ];
@@ -97,7 +97,11 @@ export class ChiTietLinhVucTuyenDungComponent implements OnInit, OnDestroy {
   }
 
   quaylai(data) {
-    this.router.navigate(['/tuyen-dung/chuyen-mon']);
+    if (data === 'CauHinh') {
+      this.getJobInfo();
+    } else {
+      this.router.navigate(['/tuyen-dung/chuyen-mon']);
+    }
 
   }
 

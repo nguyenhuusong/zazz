@@ -6,7 +6,7 @@
     </div>
    <div class="content mb-3">
     <app-edit-detail [optionsButtonsEdit]="optionsButtonsView"   *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'"  [dataView]="listViews"
-        (callback)="setCompanyInfo($event)" (callbackcancel)="cancelUpdate()"></app-edit-detail>
+        (callback)="setCompanyInfo($event)" (callbackcancel)="cancelUpdate($event)"></app-edit-detail>
    </div>
    
    <div class="grid-default border">

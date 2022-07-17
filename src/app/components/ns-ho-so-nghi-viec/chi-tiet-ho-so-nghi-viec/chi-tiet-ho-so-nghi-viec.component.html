@@ -19,7 +19,7 @@
                     <app-edit-detail [optionsButtonsEdit]="optionsButtonsView"
                         *ngIf="listViews.length> 0 && manhinh === 'Edit'" [thongtinnhanvienNew]="true"
                         [manhinh]="'Edit'" [dataView]="listViews" (callback)="setTerminateInfo($event)"
-                        (callbackcancel)="cancelUpdate()" (callbackButton)="callbackButton($event)"></app-edit-detail>
+                        (callbackcancel)="cancelUpdate($event)" (callbackButton)="callbackButton($event)"></app-edit-detail>
                 </div>
             </p-tabPanel>
             <p-tabPanel header="Danh sách hồ sơ">
@@ -64,7 +64,7 @@
     [resizable]="false">
     <div class="pt-3" style="position: relative">
         <div *ngIf="showRehire">
-            <app-edit-detail [isViewButtonTop] = "true" *ngIf="listViewsFormEmp.length> 0" [detail]="detailInfoEmp" [manhinh]="manhinh" [thongtinnhanvienNew]="true" [dataView]="listViewsFormEmp" (callback)="handleRehire($event)" (callbackcancel)="showRehire = !showRehire"></app-edit-detail>
+            <app-edit-detail [isViewButtonTop] = "true" *ngIf="listViewsFormEmp.length> 0" [detail]="detailInfoEmp" [manhinh]="manhinh" [thongtinnhanvienNew]="true" [dataView]="listViewsFormEmp" (callback)="handleRehire($event)" (callbackcancel)="cancelRehire($event)"></app-edit-detail>
             <div class="col-md-6 mt-1">
                 <div class="field-group text" [ngClass]=" modelDuyet.full_name ? 'valid' : 'invalid' ">
                     <input type="text" [value]="modelDuyet.full_name || 'No name'" disabled name="full_name" class="form-control">

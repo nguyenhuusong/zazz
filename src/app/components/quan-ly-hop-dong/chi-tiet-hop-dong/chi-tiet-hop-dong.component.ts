@@ -170,7 +170,11 @@ export class ChiTietHopDongComponent implements OnInit, OnChanges {
   }
 
   cancelUpdate(e) {
-    this.goBack();
+    if(e === 'CauHinh') {
+      this.getContractTypeInfo();
+    }else {
+      this.goBack();
+    }
   }
 
 

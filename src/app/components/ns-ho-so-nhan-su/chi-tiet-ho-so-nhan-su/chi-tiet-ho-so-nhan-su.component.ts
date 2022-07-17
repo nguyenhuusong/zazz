@@ -3,10 +3,8 @@ import * as queryString from 'querystring';
 import { ActivatedRoute, Router } from '@angular/router';
 import { cloneDeep } from 'lodash';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { ApiService } from 'src/app/services/api.service';
 import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
-import * as firebase from 'firebase';
 import { API_PROFILE } from 'src/app/common/constants/constant';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { AgGridFn } from 'src/app/common/function-common/common';
@@ -294,6 +292,26 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
         this.spinner.hide();
       }
     })
+  }
+
+  cancelUpdateViewsReportTo(data) {
+    this.getEmployeeByReportTo();
+  }
+
+  cancelViewsForm(data) {
+    if(data === 'CauHinh') {
+      this.getEmployeeInfo();
+    }else {
+      this.displayDialog = false;
+    }
+  }
+
+  cancelDependentInfo(data) {
+    if(data === 'CauHinh') {
+      this.displayFormEditDetail = false;
+    }else {
+      this.displayFormEditDetail = false;
+    }
   }
 
   getEmployeeInfo(): void {
@@ -998,6 +1016,8 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     this.modelDuyet.full_name = this.detailInfo.fullName;
     if (button === 'Back') {
       this.goBack();
+    }else if(button === 'CauHinh') {
+      this.getEmployeeInfo();
     } else if (button === 'HuyHoSo') {
       this.titleForm.title = 'Xác nhận hủy hồ sơ';
       this.titleForm.type = button;

@@ -125,8 +125,12 @@ export class ChiTietLyDoNghiViecComponent implements OnInit, OnDestroy {
     }
   }
 
-  cancelUpdate() {
-    this.router.navigate(['/cai-dat/ly-do-nghi']);
+  cancelUpdate(data) {
+    if(data === 'CauHinh') {
+      this.getLeaveReason();
+    }else {
+      this.router.navigate(['/cai-dat/ly-do-nghi']);
+    }
   }
 
 }

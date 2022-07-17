@@ -125,7 +125,11 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
   }
 
   quaylai(data) {
-    this.router.navigate(['/nhan-su/thai-san']);
+    if(data === 'CauHinh') {
+      this.getMaternityInfo();
+    }else {
+      this.router.navigate(['/nhan-su/thai-san']);
+    }
   }
   modelAdd = {
     title: '',

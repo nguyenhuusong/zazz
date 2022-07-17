@@ -5,6 +5,6 @@
         <p-breadcrumb [model]="items"></p-breadcrumb>
     </div>
    <div class="content">
-    <app-edit-detail *ngIf="listViews.length> 0 && manhinh === 'Edit'"  [thongtinnhanvienNew]="true" [manhinh]="'Edit'" [dataView]="listViews" (callback)="setNotifyRef($event)" (callbackcancel)="cancelUpdate()"></app-edit-detail>
+    <app-edit-detail *ngIf="listViews.length> 0 && manhinh === 'Edit'"  [thongtinnhanvienNew]="true" [manhinh]="'Edit'" [dataView]="listViews" (callback)="setNotifyRef($event)" (callbackcancel)="cancelUpdate($event)"></app-edit-detail>
    </div>
 </div>

@@ -6,7 +6,7 @@
     </div>
    <div class="content">
     <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'"  [dataView]="listViews"
-        (callback)="setCompanyInfo($event)" [optionsButtonsEdit]="optionsButon" (callbackcancel)="cancelUpdate()"></app-edit-detail>
+        (callback)="setCompanyInfo($event)" [optionsButtonsEdit]="optionsButon" (callbackcancel)="cancelUpdate($event)"></app-edit-detail>
    </div>
    
 </div>

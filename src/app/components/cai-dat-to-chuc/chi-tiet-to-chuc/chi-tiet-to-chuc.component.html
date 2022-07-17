@@ -7,7 +7,7 @@
    <div class="content">
     <p-panel >
         <div class="">
-            <app-edit-detail *ngIf="listViews.length> 0" [thongtinnhanvienNew]="true" [manhinh]="'Edit'" [dataView]="listViews" (callback)="setOrganizeInfo($event)" (callbackcancel)="cancelUpdate()"></app-edit-detail>
+            <app-edit-detail *ngIf="listViews.length> 0" [thongtinnhanvienNew]="true" [manhinh]="'Edit'" [dataView]="listViews" (callback)="setOrganizeInfo($event)" (callbackcancel)="cancelUpdate($event)"></app-edit-detail>
         </div>
     </p-panel>
     <div class="row mt-1" >

@@ -116,8 +116,12 @@ export class ChiTietChucVuComponent implements OnInit, OnChanges {
    }
   }
 
-  cancelUpdate(e) {
-    this.goBack();
+  cancelUpdate(data) {
+    if(data === 'CauHinh') {
+      this.getPositionInfo();
+    }else {
+      this.goBack();
+    }
   }
 
 
