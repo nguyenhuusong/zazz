@@ -1641,6 +1641,9 @@ div.menu-agrid{
     .p-panel-header{
         padding-left: 0px;
         padding-right: 0px;
+        .p-panel-title {
+            font-size: 12px !important
+        }
     }
 }
 .multi-select{
@@ -2017,12 +2020,12 @@ button{
     }
 }
 .page-detail{
-    .p-panel-header{
-        margin-bottom: 20px;
-        padding: 10px 8px; 
-        border-bottom: 1px solid #cccccc7a;
-        border-top: 1px solid #cccccc7a;
-    }
+    // .p-panel-header{
+    //     margin-bottom: 20px;
+    //     padding: 10px 8px; 
+    //     border-bottom: 1px solid #cccccc7a;
+    //     border-top: 1px solid #cccccc7a;
+    // }
     .p-badge {
         min-width: 1.2rem;
         height: 1.2rem;

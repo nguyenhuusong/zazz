@@ -33,6 +33,7 @@ import { CustomTooltipComponent } from '../ag-component/customtooltip.component'
 import { ButtonRendererMutiComponent } from 'src/app/utils/common/button-renderermutibuttons.component';
 import { PageMarkdownModule } from '../page-markdown/page-markdown.module';
 import {ImageModule} from 'primeng/image';
+import {PanelModule} from 'primeng/panel';
 @NgModule({
   imports: [
     FormsModule,
@@ -42,6 +43,7 @@ import {ImageModule} from 'primeng/image';
     SharedModule,
     DialogModule,
     ToastModule,
+    PanelModule,
     ImageModule,
     DropdownModule,
     PaginatorModule,

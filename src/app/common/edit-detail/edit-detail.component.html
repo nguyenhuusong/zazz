@@ -1,121 +1,15 @@
 <div class="wrap-edit-detail">
-    <div *ngIf="isNested; else NotNested">
-        <div class="main-grid text-right btn-group-edit-detail" *ngIf = "isViewButtonTop" style="position: absolute; right: 0; z-index: 1; top: 5px;">
-            <ng-container *ngFor="let button of optionsButtonsEdit">
-                <p-button label="{{button.label}}" (onClick)="onChangeButtonEdit(button.value)" icon="{{button?.icon ? button?.icon : 'pi pi-plus'}}" styleClass="p-button-sm {{button?.class ? button?.class : ''}} mr-1"></p-button>
-            </ng-container>
-        </div>
-        <div *ngFor="let group of dataView; let idx = index">
-            <div class="fields-section border-section">
-                <p-card>
-                    <ng-template pTemplate="header">
-                        <div class="panel-heading">
-                            <h3 class="panel-title"> {{group.group_name}}</h3>
-                        </div>
-                    </ng-template>
-                    <div class="grid">
-                        <div class="col-4">
-                            <div *ngFor="let element of group.fields;let i=index" 
-                            [hidden]="!element.isVisiable || element.columnDisplay !== 1"
-                            [ngClass]="{'isEmpty': element.isEmpty, 'has-image': includeImage && element?.columnType === 'image', 'image-iam': element?.columnType === 'image'}" 
-                            class="{{element.columnClass}} ">
-                            <ng-container *ngIf="element.columnDisplay === 1">
-                                <app-type-text [modelFields]="modelFields" [element]="element" [submit]="submit" *ngIf="element?.columnType === 'input'"></app-type-text>
-                                <app-type-select [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'khongDung'"></app-type-select> 
-                                <app-type-selectTree [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'selectTree' && element.isVisiable" [dataView]="dataView"></app-type-selectTree>
-                                <app-type-dropdown [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'dropdown' || element.columnType === 'select'" [submit]="submit" [paramsObject]="paramsObject" [dataView]="dataView" (callback)="resetData($event)"></app-type-dropdown>
-                                <app-type-number [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'number'"></app-type-number>
-                                <app-type-currency [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'currency'"></app-type-currency>
-                                <app-type-checkbox [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'checkbox'"></app-type-checkbox>
-                                <app-type-textarea [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'textarea'"></app-type-textarea>
-                                <app-type-datetime [modelFields]="modelFields" [submit]="submit" [element]="element" *ngIf="element.columnType === 'datetime'"></app-type-datetime>
-                                <app-type-datefulltime [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'datefulltime'"></app-type-datefulltime>
-                                <app-type-timeonly [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'timeonly'"></app-type-timeonly>
-                                <app-type-multiSelect  [element]="element" *ngIf="element.columnType === 'multiSelect'" [modelFields]="modelFields" [submit]="submit" [dataView]="dataView"></app-type-multiSelect>
-                                <app-type-markdown [element]="element" [modelMarkdow]="modelMarkdow" *ngIf="element.columnType === 'markdown'"></app-type-markdown>
-                                <app-type-checkboxList [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'checkboxList'"></app-type-checkboxList>
-                                <app-type-checkboxradiolist [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'checkboxradiolist'"></app-type-checkboxradiolist>
-                                <app-type-linkurl [element]="element" *ngIf="element.columnType === 'linkUrl'" [dataView]="dataView"></app-type-linkurl>
-                            </ng-container>
-                        </div>
-                        </div>
-                        <div class="col-4">
-                            <div *ngFor="let element of group.fields;let i=index" 
-                            [hidden]="!element.isVisiable || element.columnDisplay !== 2"
-                            [ngClass]="{'isEmpty': element.isEmpty, 'has-image': includeImage && element?.columnType === 'image', 'image-iam': element?.columnType === 'image'}" 
-                            class="{{element.columnClass}} ">
-                            <ng-container *ngIf="element.columnDisplay === 2">
-                                <app-type-text [modelFields]="modelFields" [element]="element" [submit]="submit" *ngIf="element?.columnType === 'input'"></app-type-text>
-                                <app-type-select [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'khongDung'"></app-type-select> 
-                                <app-type-selectTree [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'selectTree' && element.isVisiable" [dataView]="dataView"></app-type-selectTree>
-                                <app-type-dropdown [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'dropdown' || element.columnType === 'select'" [submit]="submit" [paramsObject]="paramsObject" [dataView]="dataView" (callback)="resetData($event)"></app-type-dropdown>
-                                <app-type-number [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'number'"></app-type-number>
-                                <app-type-currency [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'currency'"></app-type-currency>
-                                <app-type-checkbox [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'checkbox'"></app-type-checkbox>
-                                <app-type-textarea [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'textarea'"></app-type-textarea>
-                                <app-type-datetime [modelFields]="modelFields" [submit]="submit" [element]="element" *ngIf="element.columnType === 'datetime'"></app-type-datetime>
-                                <app-type-datefulltime [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'datefulltime'"></app-type-datefulltime>
-                                <app-type-timeonly [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'timeonly'"></app-type-timeonly>
-                                <app-type-multiSelect  [element]="element" *ngIf="element.columnType === 'multiSelect'" [modelFields]="modelFields" [submit]="submit" [dataView]="dataView"></app-type-multiSelect>
-                                <app-type-markdown [element]="element" [modelMarkdow]="modelMarkdow" *ngIf="element.columnType === 'markdown'"></app-type-markdown>
-                                <app-type-checkboxList [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'checkboxList'"></app-type-checkboxList>
-                                <app-type-checkboxradiolist [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'checkboxradiolist'"></app-type-checkboxradiolist>
-                                <app-type-linkurl [element]="element" *ngIf="element.columnType === 'linkUrl'" [dataView]="dataView"></app-type-linkurl>
-                            </ng-container>
-                        </div>
-                        </div>
-                        <div class="col-4">
-                            <div *ngFor="let element of group.fields;let i=index" 
-                            [hidden]="!element.isVisiable || element.columnDisplay !== 3"
-                            [ngClass]="{'isEmpty': element.isEmpty, 'has-image': includeImage && element?.columnType === 'image', 'image-iam': element?.columnType === 'image'}" 
-                            class="{{element.columnClass}} ">
-                            <ng-container *ngIf="element.columnDisplay === 3">
-                                <app-type-text [modelFields]="modelFields" [element]="element" [submit]="submit" *ngIf="element?.columnType === 'input'"></app-type-text>
-                                <app-type-select [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'khongDung'"></app-type-select> 
-                                <app-type-selectTree [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'selectTree' && element.isVisiable" [dataView]="dataView"></app-type-selectTree>
-                                <app-type-dropdown [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'dropdown' || element.columnType === 'select'" [submit]="submit" [paramsObject]="paramsObject" [dataView]="dataView" (callback)="resetData($event)"></app-type-dropdown>
-                                <app-type-number [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'number'"></app-type-number>
-                                <app-type-currency [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'currency'"></app-type-currency>
-                                <app-type-checkbox [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'checkbox'"></app-type-checkbox>
-                                <app-type-textarea [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'textarea'"></app-type-textarea>
-                                <app-type-datetime [modelFields]="modelFields" [submit]="submit" [element]="element" *ngIf="element.columnType === 'datetime'"></app-type-datetime>
-                                <app-type-datefulltime [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'datefulltime'"></app-type-datefulltime>
-                                <app-type-timeonly [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'timeonly'"></app-type-timeonly>
-                                <app-type-multiSelect  [element]="element" *ngIf="element.columnType === 'multiSelect'" [modelFields]="modelFields" [submit]="submit" [dataView]="dataView"></app-type-multiSelect>
-                                <app-type-markdown [element]="element" [modelMarkdow]="modelMarkdow" *ngIf="element.columnType === 'markdown'"></app-type-markdown>
-                                <app-type-checkboxList [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'checkboxList'"></app-type-checkboxList>
-                                <app-type-checkboxradiolist [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'checkboxradiolist'"></app-type-checkboxradiolist>
-                                <app-type-linkurl [element]="element" *ngIf="element.columnType === 'linkUrl'" [dataView]="dataView"></app-type-linkurl>
-                            </ng-container>
-                        </div>
-                        </div>
-                    </div>
-                </p-card>
-            </div>
-        </div>
-        
-        <div class="main-grid text-right btn-group-edit-detail" *ngIf = "!isViewButtonTop">
-            <ng-container *ngFor="let button of optionsButtonsEdit">
-                <p-button label="{{button.label}}" (onClick)="onChangeButtonEdit(button.value)" icon="{{button?.icon ? button?.icon : 'pi pi-plus'}}" styleClass="p-button-sm {{button?.class ? button?.class : ''}} mr-1"></p-button>
-            </ng-container>
-        </div>
+    <div class="main-grid text-right btn-group-edit-detail" *ngIf = "isViewButtonTop" style="position: absolute; right: 0; z-index: 1; top: 5px;">
+        <ng-container *ngFor="let button of optionsButtonsEdit">
+            <p-button label="{{button.label}}" (onClick)="onChangeButtonEdit(button.value)" icon="{{button?.icon ? button?.icon : 'pi pi-plus'}}" styleClass="p-button-sm {{button?.class ? button?.class : ''}} mr-1"></p-button>
+        </ng-container>
     </div>
-
-    <ng-template #NotNested>
-        <div class="main-grid text-right btn-group-edit-detail" *ngIf = "isViewButtonTop" style="position: absolute; right: 0; z-index: 1; top: 15px;">
-            <ng-container *ngFor="let button of optionsButtonsEdit">
-                <p-button label="{{button.label}}" (onClick)="onChangeButtonEdit(button.value)" icon="{{button?.icon ? button?.icon : 'pi pi-plus'}}" styleClass="p-button-sm {{button?.class ? button?.class : ''}} mr-1"></p-button>
-            </ng-container>
-        </div>
-        <div *ngFor="let group of dataView; let idx = index">
-            <div class="fields-section border-section">
-                <p-card>
-                    <ng-template pTemplate="header">
-                        <div class="panel-heading">
-                            <h3 class="panel-title"> {{group.group_name}}</h3>
-                        </div>
-                    </ng-template>
-                    <div class="row">
+    <div class="grid">
+        <ng-container *ngFor="let group of dataView; let idx = index">
+            
+            <div class="{{group.group_column}} border-section">
+                <p-panel header="{{group.group_name}}">
+                    <div class="row d-flex" style="flex-wrap: wrap">
                         <div *ngFor="let element of group.fields;let i=index" 
                         [hidden]="!element.isVisiable"
                         [ngClass]="{'isEmpty': element.isEmpty, 'has-image': includeImage && element?.columnType === 'image', 'image-iam': element?.columnType === 'image'}" 
@@ -138,14 +32,13 @@
                         <app-type-linkurl [element]="element" *ngIf="element.columnType === 'linkUrl'" [dataView]="dataView"></app-type-linkurl>
                     </div>
                     </div>
-                </p-card>
+                </p-panel>
             </div>
-        </div>
-        
-        <div class="main-grid text-right btn-group-edit-detail" *ngIf = "!isViewButtonTop">
-            <ng-container *ngFor="let button of optionsButtonsEdit">
-                <p-button label="{{button.label}}" (onClick)="onChangeButtonEdit(button.value)" icon="{{button?.icon ? button?.icon : 'pi pi-plus'}}" styleClass="p-button-sm {{button?.class ? button?.class : ''}} mr-1"></p-button>
-            </ng-container>
-        </div>
-    </ng-template>
+        </ng-container>
+    </div>
+    <div class="main-grid text-right btn-group-edit-detail" *ngIf = "!isViewButtonTop">
+        <ng-container *ngFor="let button of optionsButtonsEdit">
+            <p-button label="{{button.label}}" (onClick)="onChangeButtonEdit(button.value)" icon="{{button?.icon ? button?.icon : 'pi pi-plus'}}" styleClass="p-button-sm {{button?.class ? button?.class : ''}} mr-1"></p-button>
+        </ng-container>
+    </div>
 </div>
