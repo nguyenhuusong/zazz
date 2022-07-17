@@ -30,34 +30,16 @@ import { TabViewModule } from 'primeng/tabview';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
 import { PageNotifyModule } from 'src/app/components/page-notify/page-notify.module';
-import { CaiDatLichHopComponent } from 'src/app/components/cai-dat-lich-hop/cai-dat-lich-hop.component';
-import { CaiDatToChucComponent } from 'src/app/components/cai-dat-to-chuc/cai-dat-to-chuc.component';
-import { CaiDatCongTyComponent } from 'src/app/components/cai-dat-cong-ty/cai-dat-cong-ty.component';
-import { CaiDatNgayNghiLeComponent } from 'src/app/components/cai-dat-ngay-nghi-le/cai-dat-ngay-nghi-le.component';
-import { ChiTietLichHopComponent } from 'src/app/components/cai-dat-lich-hop/chi-tiet-lich-hop/chi-tiet-lich-hop.component';
-import { MeetingScheduleMemberComponent } from 'src/app/components/cai-dat-lich-hop/meeting-schedule-member/meeting-schedule-member.component';
-import { DanhSachPhongHopComponent } from 'src/app/components/cai-dat-lich-hop/danh-sach-phong-hop/danh-sach-phong-hop.component';
-import { ChiTietPhongHopComponent } from 'src/app/components/cai-dat-lich-hop/danh-sach-phong-hop/chi-tiet-phong-hop/chi-tiet-phong-hop.component';
 import { TreeSelectModule } from 'primeng/treeselect';
 import { OrganizationChartModule } from 'primeng/organizationchart';
-import { ChiTietToChucComponent } from 'src/app/components/cai-dat-to-chuc/chi-tiet-to-chuc/chi-tiet-to-chuc.component';
 import { GridAddModule } from 'src/app/common/grid-add/grid-add.module';
 import { PanelModule } from 'primeng/panel';
-import { ChucVuComponent } from 'src/app/components/cai-dat-to-chuc/chuc-vu/chuc-vu.component';
-import { NoiLamViecComponent } from 'src/app/components/cai-dat-to-chuc/noi-lam-viec/noi-lam-viec.component';
-import { CaiDatThamSoComponent } from 'src/app/components/cai-dat-to-chuc/cai-dat-tham-so/cai-dat-tham-so.component';
-import { LichLamViecComponent } from 'src/app/components/cai-dat-to-chuc/lich-lam-viec/lich-lam-viec.component';
-import { ChiTietChucVuComponent } from 'src/app/components/cai-dat-to-chuc/chuc-vu/chi-tiet-chuc-vu/chi-tiet-chuc-vu.component';
-import { ChiTietNoiLamViecComponent } from 'src/app/components/cai-dat-to-chuc/noi-lam-viec/chi-tiet-noi-lam-viec/chi-tiet-noi-lam-viec.component';
-import { ChiTietLichLamViecComponent } from 'src/app/components/cai-dat-to-chuc/lich-lam-viec/chi-tiet-lich-lam-viec/chi-tiet-lich-lam-viec.component';
 import { CommonSearchUserMasterModule } from 'src/app/common/search-user-master/search-user-master.module';
-import { ChiTietCongTyComponent } from 'src/app/components/cai-dat-cong-ty/chi-tiet-cong-ty/chi-tiet-cong-ty.component';
-import { QuanLyHopDongComponent } from 'src/app/components/quan-ly-hop-dong/quan-ly-hop-dong.component';
-import { ChiTietHopDongComponent } from 'src/app/components/quan-ly-hop-dong/chi-tiet-hop-dong/chi-tiet-hop-dong.component';
 import { GopYKienComponent } from 'src/app/components/gop-y-kien/gop-y-kien.component';
 import { ChiTietGopYComponent } from 'src/app/components/gop-y-kien/chi-tiet-gop-y/chi-tiet-gop-y.component';
 import { GopYRoutingModule } from './gop-y-routing.module';
 import { HrmBreadCrumbModule } from 'src/app/common/hrm-breadcrumb/hrm-breadcrumb.module';
+import { ConfigGridTableFormModule } from 'src/app/common/config-grid-table-form/config-grid-table-form.module';
 
 @NgModule({
   imports: [
@@ -75,6 +57,7 @@ import { HrmBreadCrumbModule } from 'src/app/common/hrm-breadcrumb/hrm-breadcrum
     SplitButtonModule,
     CalendarModule,
     AutoCompleteModule,
+    ConfigGridTableFormModule,
     EditDetailModule,
     FileUploadModule,
     OrganizationChartModule,

@@ -1,0 +1,7 @@
+<div class="grid-default" #container>
+    <div class="wrap-grid grid-full-height">
+        <app-list-grid-angular [idGrid]="'editGrid'" *ngIf="columnDefs.length > 0" [isShowButton] ="true" [domLayout] = "'autoHeight'" [rowSelection]="'multiple'" [typeConfig]="typeConfig"
+        [listsData]="listsData" (doubleClicked)="doubleClicked($event)"
+        [columnDefs]="columnDefs"></app-list-grid-angular>
+    </div>
+</div>

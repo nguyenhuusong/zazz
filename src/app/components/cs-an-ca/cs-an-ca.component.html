@@ -42,6 +42,8 @@
                     </div>
                 </div>
                 <p-button styleClass="btn-with-filter p-button-secondary h-56" icon="pi pi-refresh" (click)="cancel()"></p-button>
+                <p-button styleClass="p-button-sm mr-1" icon="pi pi-plus" label="Cấu hình" (click)="cauhinh()"></p-button>
+
             </div>
         </div>
         <div class="grid-default" #container>
@@ -58,3 +60,8 @@
         </div>
     </div>
 </div>
+
+<p-dialog header="Cài đặt cấu hình" [(visible)]="displaySetting" (onHide)="find()" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
+    [draggable]="false" [resizable]="false" [focusTrap]="false" styleClass="popup-setting">
+    <app-config-grid-table-form *ngIf="displaySetting && gridKey" [typeConfig]="'TableInfo'"   [gridKey]="gridKey"></app-config-grid-table-form>
+</p-dialog>

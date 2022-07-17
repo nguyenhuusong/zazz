@@ -134,7 +134,12 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
     this.load();
   }
 
-
+  displaySetting = false;
+  gridKey = ''
+  cauhinh() {
+    this.displaySetting = true;
+  }
+  
   load() {
     this.columnDefs = []
     this.spinner.show();
@@ -142,6 +147,7 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
     this.apiService.getJobPage(queryParams).subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
+        this.gridKey= results.data.dataList.gridKey;
         if (this.query.offSet === 0) {
           this.cols = results.data.gridflexs;
           this.colsDetail = results.data.gridflexdetails ? results.data.gridflexdetails : [];

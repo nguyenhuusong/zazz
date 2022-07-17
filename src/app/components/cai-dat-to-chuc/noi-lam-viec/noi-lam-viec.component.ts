@@ -116,6 +116,11 @@ export class NoiLamViecComponent implements OnInit {
     }
   }
 
+  displaySetting = false;
+  gridKey = ''
+  cauhinh() {
+    this.displaySetting = true;
+  }
 
   listsData = [];
   load() {
@@ -125,6 +130,7 @@ export class NoiLamViecComponent implements OnInit {
     this.apiService.getWorkplacePage(queryParams).subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
+        this.gridKey= results.data.dataList.gridKey;
         if (this.query.offSet === 0) {
           this.cols = results.data.gridflexs;
           this.colsDetail = results.data.gridflexdetails ? results.data.gridflexdetails : [];

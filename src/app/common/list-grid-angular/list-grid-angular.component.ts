@@ -5,6 +5,10 @@ import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
 import { AvatarFullComponent } from '../ag-component/avatarFull.component';
 import { ActivatedRoute } from '@angular/router';
 import { ButtonRendererComponent } from 'src/app/utils/common/button-renderer.component';
+import { ApiService } from 'src/app/services/api.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { cloneDeep } from 'lodash';
+import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-list-grid-angular',
   templateUrl: './list-grid-angular.component.html',
@@ -27,8 +31,10 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
   @Input() pinnedTopRowData: any[] = [];
   @Input() floatingFilter: boolean = false;
   @Input() buttons = [];
+  @Input() isShowButton: boolean = false;
   @Input() title: string = '';
   @Input() idGrid: string = 'myGrid';
+  @Input() typeConfig: string = 'myGrid';
   // autoHeight
   @Input() defaultColDef: any = {
     tooltipComponent: 'customTooltip',
@@ -71,9 +77,14 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
   isRowMaster
   titlePage = '';
   excelExportParams
-  csvExportParams
+  csvExportParams;
+  listsDataCloone = [];
   constructor(
     private activatedRoute: ActivatedRoute,
+    private apiService: ApiService,
+    private spinner: NgxSpinnerService,
+    private messageService: MessageService,
+
   ) {
     this.titlePage = this.activatedRoute.data['_value'].title;
     this.excelExportParams = {
@@ -170,6 +181,7 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
+    this.listsDataCloone = cloneDeep(this.listsData);
     var pivotModeOn = document.getElementById(`${this.idGrid}`);
     pivotModeOn?.addEventListener('change', (event: any) => {
       if (event.target.ariaLabel === 'Press SPACE to toggle visibility (visible)' || event.target.ariaLabel === 'Press SPACE to toggle visibility (hidden)') {
@@ -191,20 +203,128 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
       }
     })
   }
-
-  onRowSelected(e) {
+  dataChange = null;
+  onRowSelected(event) {
+    if (!event.node.isSelected() && this.isChange) {
+      this.dataChange = event.data;
+      if(this.typeConfig === 'FormInfo') {
+        this.callApiForm();
+      }else {
+        this.callApi();
+      }
+    }
     this.callback.emit(this.gridApi.getSelectedRows())
   }
+
+  // xem lại
+  callApiForm() {
+    if (this.listsDataCloone.map(d => d.field_name).indexOf(this.dataChange.field_name) < 0) { 
+      for (let key in this.dataChange) {
+        if (key === 'isSpecial' || key === 'isRequire' || key === 'isDisable' || key === 'isVisiable' || key === 'hideInApp' || key === 'isChange' || key === 'isEmpty') {
+          this.dataChange[key] = this.dataChange[key] == 1 || this.dataChange[key] == true ? true : false
+        }
+      }
+      this.setGridViewInfo();
+    }else {
+      let items = this.listsData.filter(d => d.field_name === this.dataChange.field_name);
+      if(items.length > 1) {
+        let index = this.listsData.findIndex(d => d.id === this.dataChange.id);
+        this.listsData.splice(index, 1);
+        this.listsData = [...this.listsData];
+        this.dataChange = null;
+        this.isChange = false;
+        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: "Đã tồn tại tên trường !"});
+      }else {
+        for (let key in this.dataChange) {
+          if (key === 'isSpecial' || key === 'isRequire' || key === 'isDisable' || key === 'isVisiable' || key === 'hideInApp' || key === 'isChange' || key === 'isEmpty') {
+            this.dataChange[key] = this.dataChange[key] == 1 || this.dataChange[key] == true ? true : false
+          }
+        }
+        this.setGridViewInfo();
+      }
+    }
+  }
+
+  callApi() {
+    if (this.listsDataCloone.map(d => d.columnField).indexOf(this.dataChange.columnField) < 0) {
+      for (let key in this.dataChange) {
+        if (key === 'isUsed' || key === 'isHide' || key === 'isFilter' || key === 'isMasterDetail' || key === 'isStatusLable') {
+          this.dataChange[key] = this.dataChange[key] == 1 || this.dataChange[key] == true ? true : false
+        }
+      }
+      this.setGridViewInfo();
+    }else {
+      let items = this.listsData.filter(d => d.columnField === this.dataChange.columnField);
+      if(items.length > 1) {
+        let index = this.listsData.findIndex(d => d.id === this.dataChange.id);
+        this.listsData.splice(index, 1);
+        this.listsData = [...this.listsData];
+        this.dataChange = null;
+        this.isChange = false;
+        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: "Đã tồn tại tên trường !"});
+      }else {
+        for (let key in this.dataChange) {
+          if (key === 'isUsed' || key === 'isHide' || key === 'isFilter' || key === 'isMasterDetail' || key === 'isStatusLable') {
+            this.dataChange[key] = this.dataChange[key] == 1 || this.dataChange[key] == true ? true : false
+          }
+        }
+        this.setGridViewInfo();
+      }
+    }
+  }
+
+  setGridViewInfo() {
+    this.spinner.show();
+    this.apiService.setGridViewInfo(this.typeConfig === 'FormInfo' ? 'SetFormViewInfo' : 'SetGridViewInfo', this.dataChange).subscribe(results => {
+      if (results.status === 'success') {
+        this.listsDataCloone = [];
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Cập nhật thành công' });
+        this.isChange = false;
+        this.listsData = [...this.listsData];
+        this.listsDataCloone = cloneDeep(this.listsData);
+        this.dataChange = null;
+        // this.doubleClicked.emit()
+        this.spinner.hide();
+      } else {
+        setTimeout(() => {
+          let index = this.listsData.findIndex(d => d.id === this.dataChange.id)
+          this.gridApi.setFocusedCell(index, 'columnCaption');
+          this.gridApi.startEditingCell({
+            rowIndex: index,
+            colKey: 'columnCaption',
+          });
+          this.dataChange = null;
+        }, 500);
+        this.spinner.hide();
+        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+      }
+    })
+  }
+
+
+  isChange = false
+  onCellValueChanged(event) {
+    if (event.value != event.oldValue) {
+      this.isChange = true;
+    } else {
+      this.isChange = false;
+    }
+  }
+
 
   onGridReady(params: any) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
     let allColumnIds: any = [];
     this.gridColumnApi.getAllColumns()
-      .forEach((column: any) => {
+    .forEach((column: any) => {
+      if (column && column.colDef.cellClass && column.colDef.cellClass.length > 0 && column.colDef.cellClass.indexOf('no-auto') < 0) {
         allColumnIds.push(column)
-      });
-    this.gridColumnApi.autoSizeColumns(allColumnIds, false);
+      } else {
+        column.colDef.resizable = false;
+      }
+    });
+  this.gridColumnApi.autoSizeColumns(allColumnIds, false);
 
   }
 
@@ -295,6 +415,10 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
         this.autoSizeAll();
       }
     }
+
+  }
+
+  addRow() {
 
   }
 

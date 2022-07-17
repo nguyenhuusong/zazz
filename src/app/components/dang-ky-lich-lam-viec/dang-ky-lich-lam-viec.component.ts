@@ -152,7 +152,14 @@ export class DangKyLichLamViecComponent implements OnInit {
   listWorkCds = [];
   listAppSt = [];
   listIsFlexible = [];
-  listsData = []
+  listsData = [];
+
+  displaySetting = false;
+  gridKey = ''
+  cauhinh() {
+    this.displaySetting = true;
+  }
+  
   load() {
     this.columnDefs = []
     this.spinner.show();
@@ -164,6 +171,7 @@ export class DangKyLichLamViecComponent implements OnInit {
     this.apiService.getEmpWorkingPage(queryParams).subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
+        this.gridKey= results.data.dataList.gridKey;
         if (this.query.offSet === 0) {
           this.cols = results.data.gridflexs;
           this.colsDetail = results.data.gridflexdetails ? results.data.gridflexdetails : [];

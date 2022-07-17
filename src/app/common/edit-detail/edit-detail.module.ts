@@ -34,6 +34,7 @@ import { ButtonRendererMutiComponent } from 'src/app/utils/common/button-rendere
 import { PageMarkdownModule } from '../page-markdown/page-markdown.module';
 import {ImageModule} from 'primeng/image';
 import {PanelModule} from 'primeng/panel';
+import { ConfigGridTableFormModule } from '../config-grid-table-form/config-grid-table-form.module';
 @NgModule({
   imports: [
     FormsModule,
@@ -63,6 +64,7 @@ import {PanelModule} from 'primeng/panel';
     RadioButtonModule,
     ButtonModule,
     TooltipModule,
+    ConfigGridTableFormModule,
     AgGridModule.withComponents([
       ButtonRendererMutiComponent,
       CustomTooltipComponent

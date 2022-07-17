@@ -137,6 +137,11 @@ export class PqTheNhanVienComponent implements OnInit {
       });
   }
 
+	displaySetting = false;
+  gridKey = ''
+  cauhinh() {
+    this.displaySetting = true;
+  }
 
   listsData = [];
   load() {
@@ -149,6 +154,7 @@ export class PqTheNhanVienComponent implements OnInit {
     this.apiService.getEmployeeCardPage(queryParams).subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
+        this.gridKey= results.data.dataList.gridKey;
         if (this.model.offSet === 0) {
           this.gridflexs = results.data.gridflexs;
         }

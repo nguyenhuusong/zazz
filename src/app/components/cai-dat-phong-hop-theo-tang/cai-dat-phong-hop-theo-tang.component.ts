@@ -109,6 +109,12 @@ export class CaiDatPhongHopTheoTangComponent implements OnInit {
     };
   }
   listsData = [];
+  gridKey = '';
+  displaySetting = false;
+  cauhinh() {
+    this.displaySetting = true;
+  }
+
   load() {
     this.columnDefs = []
     this.spinner.show();
@@ -116,6 +122,7 @@ export class CaiDatPhongHopTheoTangComponent implements OnInit {
     this.apiService.getMeetingFloorPage(queryParams).subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
+        this.gridKey= results.data.dataList.gridKey;
         if (this.model.offSet === 0) {
           this.gridflexs = results.data.gridflexs;
         }

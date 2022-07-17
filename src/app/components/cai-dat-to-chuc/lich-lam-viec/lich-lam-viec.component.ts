@@ -119,6 +119,12 @@ public agGridFn = AgGridFn;
     }
   }
 
+  displaySetting = false;
+  gridKey = ''
+  cauhinh() {
+    this.displaySetting = true;
+  }
+
   listsData = [];
   load() {
     this.columnDefs = []
@@ -127,6 +133,7 @@ public agGridFn = AgGridFn;
     this.apiService.getWorktimePage(queryParams).subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
+        this.gridKey= results.data.dataList.gridKey
         if (this.query.offSet === 0) {
           this.cols = results.data.gridflexs;
           this.colsDetail = results.data.gridflexdetails ? results.data.gridflexdetails : [];

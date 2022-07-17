@@ -140,6 +140,109 @@ export function AgGridFn(lists: Array<any>) {
     return arrAgGrids
 }
 
+export function AgGridFnEdit(lists: Array<any>) {
+    let arrAgGrids = [];
+    for (let value of lists) {
+        let row: any = null;
+        if (value.isStatusLable) {
+            row = {
+                headerName: value.columnCaption,
+                field: value.columnField,
+                cellClass: value.cellClass,
+                filter: value.isFilter ? 'agTextColumnFilter' : '',
+                sortable: true,
+                width: value.columnWidth,
+                cellRenderer: (params: any) => {
+                    return `${params.value}`
+                },
+                hide: value.isHide ? true : false,
+                pinned: value.pinned,
+                headerTooltip: value.columnCaption,
+                tooltipField: value.columnField
+            }
+        } else {
+            if (value.columnField === 'avatarUrl' || value.fieldType === 'image') {
+                row = {
+                    headerName: value.columnCaption,
+                    field: value.columnField,
+                    // cellClass: value.cellClass,
+                    filter: value.isFilter ? 'agTextColumnFilter' : '',
+                    sortable: true,
+                    width: value.columnWidth,
+                    hide: value.isHide ? true : false,
+                    pinned: value.pinned,
+                    cellRenderer: "avatarRendererFull",
+                    headerTooltip: value.columnCaption,
+                    tooltipField: value.columnField,
+                    cellClass: ['text-center', 'text-right', 'border-right', 'd-flex', 'align-items-center', 'justify-content-center'],
+                    // valueFormatter: value.fieldType == 'decimal' ? ""
+                }
+            } else if (value.fieldType === 'check') {
+                row = {
+                    headerName: value.columnCaption,
+                    field: value.columnField,
+                    cellClass: value.cellClass,
+                    filter: value.isFilter ? 'agTextColumnFilter' : '',
+                    sortable: true,
+                    editable: true,
+                    width: value.columnWidth,
+                    cellRenderer: (params: any) => {
+                        return ` <span class="custom-control custom-checkbox float-left" style="margin-top: 7%;">
+                        <input type="checkbox" ${params.value ? 'checked' : ''} disabled class="custom-control-input"  >
+                        <label class="custom-control-label"></label>
+                      </span>`;
+                    },
+                    hide: value.isHide ? true : false,
+                    pinned: value.pinned,
+                    headerTooltip: value.columnCaption,
+                    // tooltipField: value.columnField
+                    // valueFormatter: value.fieldType == 'decimal' ? "x.toLocaleString()" : ""
+                }
+            } else if (value.fieldType === 'decimal') {
+                row = {
+                    headerName: value.columnCaption,
+                    field: value.columnField,
+                    cellClass: value.cellClass || [],
+                    headerClass: value.headerClass,
+                    cellStyle: value.cellStyle,
+                    cellClassRules: value.conditionClass,
+                    filter: value.isFilter ? 'agTextColumnFilter' : '',
+                    sortable: true,
+                    width: value.columnWidth,
+                    cellRenderer: value.isMasterDetail ? 'agGroupCellRenderer' : '',
+                    hide: value.isHide ? true : false,
+                    pinned: value.pinned,
+                    tooltipField: value.columnField,
+                    headerTooltip: value.columnCaption,
+                    valueFormatter: value.customFormat ? formatMargin : formatNumber2
+                };
+            } else {
+                row = {
+                    headerName: value.columnCaption,
+                    field: value.columnField,
+                    cellClass: value.cellClass,
+                    filter: value.isFilter ? 'agSetColumnFilter' : '',
+                    sortable: false,
+                    editable: true,
+                    filterParams: {
+                      caseSensitive: true,
+                      textFormatter:  (r) => TextFormatter(r),
+                      cellRenderer:  cellRendererSanPham,
+                    },
+                    cellRenderer: value.isMasterDetail ? 'agGroupCellRenderer' : '',
+                    hide: value.isHide ? true : false,
+                    pinned: value.pinned,
+                    tooltipField: value.columnField,
+                    headerTooltip: value.columnCaption
+                }
+            }
+        }
+
+        arrAgGrids.push(row);
+    }
+    return arrAgGrids
+}
+
 export function cellRendererSanPham(params) {
     console.log(params)
     let rowData = [];

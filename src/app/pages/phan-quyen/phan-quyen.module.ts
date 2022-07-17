@@ -44,6 +44,7 @@ import { CardDetailComponent } from 'src/app/components/pq-the-nhan-vien/card-de
 import { ChiTietTheNhanVienComponent } from 'src/app/components/pq-the-nhan-vien/chi-tiet-the-nhan-vien/chi-tiet-the-nhan-vien.component';
 import {OverlayPanelModule} from 'primeng/overlaypanel';
 import { HrmBreadCrumbModule } from 'src/app/common/hrm-breadcrumb/hrm-breadcrumb.module';
+import { ConfigGridTableFormModule } from 'src/app/common/config-grid-table-form/config-grid-table-form.module';
 @NgModule({
   imports: [
     MessagesModule,
@@ -61,6 +62,7 @@ import { HrmBreadCrumbModule } from 'src/app/common/hrm-breadcrumb/hrm-breadcrum
     CalendarModule,
     AutoCompleteModule,
     EditDetailModule,
+    ConfigGridTableFormModule,
     FileUploadModule,
     OrganizationChartModule,
     TreeSelectModule,

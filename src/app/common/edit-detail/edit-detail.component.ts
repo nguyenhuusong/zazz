@@ -997,4 +997,11 @@ export class EditDetailComponent implements OnInit, OnChanges {
     this.callbackcancel.emit(event);
   }
 
+  gridKey = '';
+  displaySetting = false;
+  CauHinh() {
+    this.gridKey = this.detail.tableKey
+    this.displaySetting = true;
+  }
+
 }

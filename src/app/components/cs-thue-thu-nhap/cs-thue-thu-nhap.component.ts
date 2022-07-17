@@ -137,6 +137,12 @@ export class CsThueThuNhapComponent implements OnInit, AfterViewChecked {
     anchor.href = url;
     anchor.click();
   }
+		
+	displaySetting = false;
+  gridKey = ''
+  cauhinh() {
+    this.displaySetting = true;
+  }
 
   listsData = []
   load() {
@@ -146,6 +152,7 @@ export class CsThueThuNhapComponent implements OnInit, AfterViewChecked {
     this.apiService.getIncomeTaxPage(queryParams).subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
+        this.gridKey= results.data.dataList.gridKey;
         if (this.query.offSet === 0) {
           this.gridflexs = results.data.gridflexs;
         }

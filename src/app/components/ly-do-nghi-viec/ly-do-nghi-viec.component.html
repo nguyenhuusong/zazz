@@ -6,6 +6,8 @@
             <div class="d-flex bet middle">            
                 <app-hrm-breadcrumb [items]="items"></app-hrm-breadcrumb>
                 <p-button styleClass="p-button-sm mr-1" icon="pi pi-plus" label="Thêm mới" (click)="create()"></p-button>
+                <p-button styleClass="p-button-sm mr-1" icon="pi pi-plus" label="Cấu hình" (click)="cauhinh()"></p-button>
+            </div>
             </div>
             <div class="grid filter">
                 <div class="header-filter-search x-2">
@@ -31,32 +33,23 @@
                 <p-button class="btn-with-filter" icon="pi pi-refresh" (click)="cancel()" styleClass="p-button-secondary p-button-sm h-56 mr-2"></p-button>
                
             </div>
-                <!-- <div class="field-group select label-8 mb-0" [ngClass]=" query.filter ? 'valid' : 'invalid' ">
-                    <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
-                    [options]="typeFeedBacks" [(ngModel)]="query.feedbackTypeId" name="feedbackTypeId" (onChange)="find()">
-                    <ng-template let-item pTemplate="selectedItem">
-                        <span >{{item.label}}</span>
-                    </ng-template>
-                    <ng-template let-car pTemplate="item">
-                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                            <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
-                        </div>
-                    </ng-template>
-                    </p-dropdown>
-                        <label for=""> Loại gợi ý: </label>
-                </div> -->
-        </div>
-        <div class="grid-default" #container>
-            <app-list-grid-angular  *ngIf="columnDefs.length > 0"
-                [listsData]="listsData" [height]="heightGrid"
-                [columnDefs]="columnDefs"></app-list-grid-angular>
-                <div class="paginator">
-                    <span>Từ {{ countRecord.currentRecordStart }} đến
-                        {{ countRecord.currentRecordEnd }}
-                        trên tổng số
-                        {{ countRecord.totalRecord }} kết quả</span>
-                <p-paginator [rows]="query.pageSize" [totalRecords]="countRecord.totalRecord" [first]="first" (onPageChange)="paginate($event)" [rowsPerPageOptions]="[15,30,45,100,200,{ showAll: 'ALL' }]"></p-paginator>
+            <div class="grid-default" #container>
+                <app-list-grid-angular  *ngIf="columnDefs.length > 0"
+                    [listsData]="listsData" [height]="heightGrid"
+                    [columnDefs]="columnDefs"></app-list-grid-angular>
+                    <div class="paginator">
+                        <span>Từ {{ countRecord.currentRecordStart }} đến
+                            {{ countRecord.currentRecordEnd }}
+                            trên tổng số
+                            {{ countRecord.totalRecord }} kết quả</span>
+                    <p-paginator [rows]="query.pageSize" [totalRecords]="countRecord.totalRecord" [first]="first" (onPageChange)="paginate($event)" [rowsPerPageOptions]="[15,30,45,100,200,{ showAll: 'ALL' }]"></p-paginator>
+                </div>
             </div>
         </div>
+       
     </div>
-</div>
+
+<p-dialog header="Cài đặt cấu hình" [(visible)]="displaySetting" (onHide)="find()" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
+    [draggable]="false" [resizable]="false" [focusTrap]="false" styleClass="popup-setting">
+    <app-config-grid-table-form *ngIf="displaySetting && gridKey" [typeConfig]="'TableInfo'"   [gridKey]="gridKey"></app-config-grid-table-form>
+</p-dialog>

@@ -160,5 +160,30 @@ export class ApiService {
     return this.http.get<any>(`${apiHrmBase}/api/v2/category/GetObjectList?objKey=${objKey}` , this.options);
   }
 
+  getGridViewPage(url, queryParams): Observable<any> {
+    return this.http.get(`${apiHrmBase}/api/v1/config/${url}?` + queryParams, this.options);
+  }
+
+  setGridViewInfo(url, queryParams): Observable<any> {
+    return this.http.post(`${apiHrmBase}/api/v1/config/${url}`, queryParams, this.options);
+  }
+
+  delFormViewInfo(url, queryParams): Observable<any> {
+    return this.http.delete(`${apiHrmBase}/api/v1/config/${url}?` + queryParams, this.options);
+  }
+
+  delGridViewInfo(queryParams): Observable<any> {
+    return this.http.delete(`${apiHrmBase}/api/v2/config/DelGridViewInfo?` + queryParams, this.options);
+  }
+
+  getFormViewPage(queryParams): Observable<any> {
+    return this.http.get(`${apiHrmBase}/api/v1/config/GetFormViewPage?` + queryParams, this.options);
+  }
+
+  setFormViewInfo(queryParams): Observable<any> {
+    return this.http.post(`${apiHrmBase}/api/v1/config/SetFormViewInfo`, queryParams, this.options);
+  }
+  
+
  
 }

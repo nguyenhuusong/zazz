@@ -105,6 +105,12 @@ export class CaiDatLichHopComponent implements OnInit {
       pageSize: 15
     };
   }
+  			
+	displaySetting = false;
+  gridKey = ''
+  cauhinh() {
+    this.displaySetting = true;
+  }
   listsData = [];
   load() {
     this.columnDefs = []
@@ -113,6 +119,7 @@ export class CaiDatLichHopComponent implements OnInit {
     this.apiService.getMeetingPage(queryParams).subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
+        this.gridKey= results.data.dataList.gridKey;
         if (this.model.offSet === 0) {
           this.gridflexs = results.data.gridflexs;
         }

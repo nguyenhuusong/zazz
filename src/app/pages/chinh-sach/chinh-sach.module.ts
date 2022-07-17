@@ -54,6 +54,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { BieuMauChiTietComponent } from 'src/app/components/bieu-mau/bieu-mau-chi-tiet/bieu-mau-chi-tiet.component';
 import { LoaiBieuMauComponent } from 'src/app/components/bieu-mau/loai-bieu-mau/loai-bieu-mau.component';
 import { ChiTietLoaiBieuMauComponent } from 'src/app/components/bieu-mau/loai-bieu-mau/chi-tiet-loai-bieu-mau/chi-tiet-loai-bieu-mau.component';
+import { ConfigGridTableFormModule } from 'src/app/common/config-grid-table-form/config-grid-table-form.module';
 
 @NgModule({
   imports: [
@@ -91,6 +92,7 @@ import { ChiTietLoaiBieuMauComponent } from 'src/app/components/bieu-mau/loai-bi
     TreeSelectModule,
     HrmBreadCrumbModule,
     OrganizationChartModule,
+    ConfigGridTableFormModule,
     AgGridModule.withComponents([
       ButtonRendererComponent,
       ButtonRendererComponent1,

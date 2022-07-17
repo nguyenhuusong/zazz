@@ -106,7 +106,14 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
     this.load();
   }
 
-  listsData = []
+  listsData = [];
+
+  displaySetting = false;
+  gridKey = ''
+  cauhinh() {
+    this.displaySetting = true;
+  }
+
   load() {
     this.columnDefs = []
     this.spinner.show();
@@ -114,6 +121,7 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
     this.apiService.getEatingPage(queryParams).subscribe(
       (results: any) => {
         this.listsData = results.data.result.dataList.data;
+        this.gridKey= results.data.result.dataList.gridKey;
         if (this.query.offSet === 0) {
           this.cols =  results.data.result.gridflexs;
           // this.colsDetail =  results.data.result.gridflexdetails ?  results.data.result.gridflexdetails : [];

@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { ListGridAngularComponent } from './list-grid-angular.component';
 import { AgGridModule } from '@ag-grid-community/angular';
+import { ButtonModule } from 'primeng/button';
 @NgModule({
     declarations: [ListGridAngularComponent],
     imports: [
@@ -11,7 +12,8 @@ import { AgGridModule } from '@ag-grid-community/angular';
         ReactiveFormsModule,
         CommonModule,
         RouterModule,
-        AgGridModule
+        AgGridModule,
+        ButtonModule
     ],
     entryComponents: [],
     exports: [

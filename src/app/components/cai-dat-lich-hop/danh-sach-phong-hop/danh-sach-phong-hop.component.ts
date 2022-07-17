@@ -108,6 +108,11 @@ export class DanhSachPhongHopComponent implements OnInit {
     }
   }
 
+  displaySetting = false;
+  gridKey = ''
+  cauhinh() {
+    this.displaySetting = true;
+  }
 
   listsData = [];
   load() {
@@ -117,6 +122,7 @@ export class DanhSachPhongHopComponent implements OnInit {
     this.apiService.getMeetRoomPage(queryParams).subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
+        this.gridKey= results.data.dataList.gridKey;
         if (this.model.offSet === 0) {
           this.gridflexs = results.data.gridflexs;
         }

@@ -22,6 +22,7 @@
                     <!-- <p-button class="search-button" styleClass="h-56" icon="pi pi-search" (click)="query.offSet = 0; first = 0; load()"></p-button> -->
                 </div>
                 <p-button class="btn-with-filter" icon="pi pi-refresh" (click)="cancel()" styleClass="p-button-secondary h-56 p-button-sm"></p-button>
+                <p-button styleClass="p-button-sm" icon="pi pi-plus" label="Cấu hình" (click)="cauhinh()"></p-button>
                 <p-button label="Tạo lịch" *ngIf="listDataSelect.length > 0" styleClass="p-button-sm h-56 ml-2" icon="pi pi-check" (click)="taolichlamviec()"></p-button>
                 <p-overlayPanel #op [style]="{width: '700px'}" styleClass="advance-seach">
                     <ng-template pTemplate>
@@ -223,5 +224,10 @@
             </div>
         </div>
     </div>
+</p-dialog>
+
+<p-dialog header="Cài đặt cấu hình" [(visible)]="displaySetting" (onHide)="find()" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
+    [draggable]="false" [resizable]="false" [focusTrap]="false" styleClass="popup-setting">
+    <app-config-grid-table-form *ngIf="displaySetting && gridKey" [typeConfig]="'TableInfo'"   [gridKey]="gridKey"></app-config-grid-table-form>
 </p-dialog>
   

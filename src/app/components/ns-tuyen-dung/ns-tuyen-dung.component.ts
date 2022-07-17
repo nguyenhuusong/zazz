@@ -50,7 +50,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   public agGridFn = AgGridFn;
   cols: any[];
   colsDetail: any[];
-  columnDefs= [];
+  columnDefs = [];
   detailRowHeight;
   defaultColDef;
   frameworkComponents;
@@ -97,13 +97,13 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     const c: any = document.querySelector(".bread-filter");
     // const d: any = document.querySelector(".filterInput");
     const e: any = document.querySelector(".paginator");
-    this.loadjs ++ 
+    this.loadjs++
     if (this.loadjs === 5) {
-      if(b && b.clientHeight) {
+      if (b && b.clientHeight) {
         const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + e.clientHeight + 25;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
-      }else {
+      } else {
         this.loadjs = 0;
       }
     }
@@ -122,13 +122,21 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     }
     this.load();
   }
-load() {
+
+  displaySetting = false;
+  gridKey = ''
+  cauhinh() {
+    this.displaySetting = true;
+  }
+
+  load() {
     this.columnDefs = []
     this.spinner.show();
     const queryParams = queryString.stringify(this.query);
     this.apiService.getCandidatePage(queryParams).subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
+        this.gridKey= results.data.dataList.gridKey;
         if (this.query.offSet === 0) {
           this.cols = results.data.gridflexs;
           this.colsDetail = results.data.gridflexdetails ? results.data.gridflexdetails : [];
@@ -143,16 +151,16 @@ load() {
           this.countRecord.currentRecordEnd = results.data.dataList.recordsTotal;
           setTimeout(() => {
             const noData = document.querySelector('.ag-overlay-no-rows-center');
-            if (noData) { noData.innerHTML = 'Không có kết quả phù hợp'}
+            if (noData) { noData.innerHTML = 'Không có kết quả phù hợp' }
           }, 100);
         }
         this.spinner.hide();
       },
       error => {
         this.spinner.hide();
-       });
+      });
   }
-  
+
   showButtons(event: any) {
     return {
       buttons: [
@@ -187,52 +195,52 @@ load() {
         field: 'checkbox'
       }]
 
-      this.detailCellRendererParams = {
-        detailGridOptions: {
-          frameworkComponents: {},
-          getRowHeight: (params) => {
-            return 40;
-          },
-          columnDefs: [
-            ...AgGridFn(this.colsDetail),
-          ],
-
-          enableCellTextSelection: true,
-          onFirstDataRendered(params) {
-            let allColumnIds: any = [];
-            params.columnApi.getAllColumns()
-              .forEach((column: any) => {
-                if (column.colDef.cellClass.indexOf('auto') < 0) {
-                  allColumnIds.push(column)
-                } else {
-                  column.colDef.suppressSizeToFit = true;
-                  allColumnIds.push(column)
-                }
-              });
-            params.api.sizeColumnsToFit(allColumnIds);
-          },
+    this.detailCellRendererParams = {
+      detailGridOptions: {
+        frameworkComponents: {},
+        getRowHeight: (params) => {
+          return 40;
         },
-        getDetailRowData(params) {
-          params.successCallback(params.data.Owns);
-        },
-        excelStyles: [
-          {
-            id: 'stringType',
-            dataType: 'string'
-          }
+        columnDefs: [
+          ...AgGridFn(this.colsDetail),
         ],
-        template: function (params) {
-          var personName = params.data.theme;
-          return (
-            '<div style="height: 100%; background-color: #EDF6FF; padding: 20px; box-sizing: border-box;">' +
-            `  <div style="height: 10%; padding: 2px; font-weight: bold;">###### Danh sách (${params.data.Owns.length}) : [` +
-            personName + ']' +
-            '</div>' +
-            '  <div ref="eDetailGrid" style="height: 90%;"></div>' +
-            '</div>'
-          );
+
+        enableCellTextSelection: true,
+        onFirstDataRendered(params) {
+          let allColumnIds: any = [];
+          params.columnApi.getAllColumns()
+            .forEach((column: any) => {
+              if (column.colDef.cellClass.indexOf('auto') < 0) {
+                allColumnIds.push(column)
+              } else {
+                column.colDef.suppressSizeToFit = true;
+                allColumnIds.push(column)
+              }
+            });
+          params.api.sizeColumnsToFit(allColumnIds);
         },
-      };
+      },
+      getDetailRowData(params) {
+        params.successCallback(params.data.Owns);
+      },
+      excelStyles: [
+        {
+          id: 'stringType',
+          dataType: 'string'
+        }
+      ],
+      template: function (params) {
+        var personName = params.data.theme;
+        return (
+          '<div style="height: 100%; background-color: #EDF6FF; padding: 20px; box-sizing: border-box;">' +
+          `  <div style="height: 10%; padding: 2px; font-weight: bold;">###### Danh sách (${params.data.Owns.length}) : [` +
+          personName + ']' +
+          '</div>' +
+          '  <div ref="eDetailGrid" style="height: 90%;"></div>' +
+          '</div>'
+        );
+      },
+    };
   }
 
   xoatuyendung(event) {
@@ -275,7 +283,7 @@ load() {
         this.positions = results.data.map(d => {
           return { label: d.positionName, value: d.positionCd }
         });
-        this.positions = [{label: 'Tất cả', value: null}, ...this.positions]
+        this.positions = [{ label: 'Tất cả', value: null }, ...this.positions]
       }
     })
   }
@@ -297,7 +305,7 @@ load() {
 
   ngOnInit() {
     this.items = [
-      { label: 'Trang chủ' , routerLink: '/home' },
+      { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Nhân sự' },
       { label: 'Danh sách tuyển dụng' },
     ];
@@ -315,7 +323,7 @@ load() {
           return {
             label: d.org_name + '-' + d.org_cd,
             value: `${d.orgId}`,
-            code:  `${d.orgId}`,
+            code: `${d.orgId}`,
           }
         });
 
@@ -326,7 +334,7 @@ load() {
 
   getObjectList() {
     const queryParams = queryString.stringify({ objKey: 'positiontype_group' });
-    this.apiService.getCustObjectListNew(false,queryParams).subscribe(results => {
+    this.apiService.getCustObjectListNew(false, queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.positiontypes = results.data.map(d => {
           return {
@@ -342,7 +350,7 @@ load() {
   listOrgRoots = [];
   positiontypes = [];
   listJobTitles = [];
-  positions = [{label: 'Tất cả', value: null}];
+  positions = [{ label: 'Tất cả', value: null }];
   getJobTitles() {
     this.apiService.getJobTitles().subscribe(results => {
       if (results.status === 'success') {

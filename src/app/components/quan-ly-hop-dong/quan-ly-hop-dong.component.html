@@ -6,6 +6,7 @@
             <div class="d-flex bet middle">
                 <app-hrm-breadcrumb [items]="items"></app-hrm-breadcrumb>
                 <p-button styleClass="p-button-sm" icon="pi pi-plus" label="Thêm mới" (click)="addHopDong()"></p-button>
+                <p-button styleClass="p-button-sm mr-1" icon="pi pi-plus" label="Cấu hình" (click)="cauhinh()"></p-button>
             </div>
             <div class="grid filter">
                 <div class="header-filter-search x-2">
@@ -66,3 +67,8 @@
         </div>
     </div>
 </div>
+
+<p-dialog header="Cài đặt cấu hình" [(visible)]="displaySetting" (onHide)="find()" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
+    [draggable]="false" [resizable]="false" [focusTrap]="false" styleClass="popup-setting">
+    <app-config-grid-table-form *ngIf="displaySetting && gridKey" [typeConfig]="'TableInfo'"   [gridKey]="gridKey"></app-config-grid-table-form>
+</p-dialog>

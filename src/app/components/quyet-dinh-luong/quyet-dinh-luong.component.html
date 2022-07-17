@@ -4,6 +4,8 @@
     <div class="col-12 right max-w-full">
         <div class="bread-filter">
             <app-hrm-breadcrumb [items]="items"></app-hrm-breadcrumb>
+
+            </div>
             <div class="grid filter">
                 <div class="header-filter-search x-2">
                     <div class="field-group text search multi-field" [ngClass]="query.filter ? 'valid' : 'invalid' ">
@@ -63,25 +65,28 @@
                     </div>
                 </div>
                 <p-button icon="pi pi-refresh" (click)="cancel()" styleClass="p-button-secondary p-button-sm h-56"></p-button>
+                 <p-button styleClass="p-button-sm mr-1 h-56" icon="pi pi-plus" label="Cấu hình" (click)="cauhinh()"></p-button>
+
             </div>
             
-                <!-- <div class="col-4 tools">
-                    <p-button styleClass="p-button-sm mr-1" icon="pi pi-plus" label="Thêm mới" (click)="addHopDong()"></p-button>
-                </div> -->
-            
+            <div class="grid-default" #container>
+                <app-list-grid-angular  *ngIf="columnDefs.length > 0"
+                    [listsData]="listsData" [height]="heightGrid"
+                    [columnDefs]="columnDefs"></app-list-grid-angular>
+                    <div class="paginator">
+                        <span>Từ {{ countRecord.currentRecordStart }} đến
+                            {{ countRecord.currentRecordEnd }}
+                            trên tổng số
+                            {{ countRecord.totalRecord }} kết quả</span>
+                    <p-paginator [rows]="query.pageSize" [totalRecords]="countRecord.totalRecord" [first]="first" (onPageChange)="paginate($event)" [rowsPerPageOptions]="[15,30,45,100,200,{ showAll: 'ALL' }]"></p-paginator>
+                </div>
+            </div>
         </div>
  
-        <div class="grid-default" #container>
-            <app-list-grid-angular  *ngIf="columnDefs.length > 0"
-                [listsData]="listsData" [height]="heightGrid"
-                [columnDefs]="columnDefs"></app-list-grid-angular>
-                <div class="paginator">
-                    <span>Từ {{ countRecord.currentRecordStart }} đến
-                        {{ countRecord.currentRecordEnd }}
-                        trên tổng số
-                        {{ countRecord.totalRecord }} kết quả</span>
-                <p-paginator [rows]="query.pageSize" [totalRecords]="countRecord.totalRecord" [first]="first" (onPageChange)="paginate($event)" [rowsPerPageOptions]="[15,30,45,100,200,{ showAll: 'ALL' }]"></p-paginator>
-            </div>
-        </div>
+       
     </div>
-</div>
+
+<p-dialog header="Cài đặt cấu hình" [(visible)]="displaySetting" (onHide)="find()" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
+    [draggable]="false" [resizable]="false" [focusTrap]="false" styleClass="popup-setting">
+    <app-config-grid-table-form *ngIf="displaySetting && gridKey" [typeConfig]="'TableInfo'"   [gridKey]="gridKey"></app-config-grid-table-form>
+</p-dialog>

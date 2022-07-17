@@ -26,6 +26,7 @@ import { DialogImageModule } from 'src/app/common/dialogimage/dialogimage.module
 import { ListGridAngularModule } from 'src/app/common/list-grid-angular/list-grid-angular.module';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { HrmBreadCrumbModule } from 'src/app/common/hrm-breadcrumb/hrm-breadcrumb.module';
+import { ConfigGridTableFormModule } from 'src/app/common/config-grid-table-form/config-grid-table-form.module';
 @NgModule({
   declarations: [
     PageNotifyComponent,
@@ -55,7 +56,8 @@ import { HrmBreadCrumbModule } from 'src/app/common/hrm-breadcrumb/hrm-breadcrum
     DialogModule,
     NotifyDetailModule,
     ManageMediaModule,
-    HrmBreadCrumbModule
+    HrmBreadCrumbModule,
+    ConfigGridTableFormModule
   ],
   exports: [PageNotifyComponent],
   entryComponents: [],

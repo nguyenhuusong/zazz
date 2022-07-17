@@ -3552,3 +3552,14 @@ p-button{
 .ag-theme-alpine .ag-pinned-left-header{
     border-right-color: #E5E5E5;
 }
+
+.popup-setting{
+    &.p-dialog{
+        position: relative;
+        .add-a-row{
+            position: absolute;
+            right: 122px;
+            top: 26px;
+        }
+    }
+}

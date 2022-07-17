@@ -222,6 +222,12 @@ export class NsHoSoNhanSuComponent implements OnInit {
     this.router.navigate(['/ho-so-nhan-su/them-moi-nhan-vien'], { queryParams: params });
   }
 
+  displaySetting = false;
+  gridKey = ''
+  cauhinh() {
+    this.displaySetting = true;
+  }
+
 
   load() {
     this.columnDefs = []
@@ -230,6 +236,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
     this.apiService.getEmployeePage(queryParams).subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
+        this.gridKey= results.data.dataList.gridKey;
         if (this.query.offSet === 0) {
           this.cols = results.data.gridflexs;
           this.colsDetail = results.data.gridflexdetails ? results.data.gridflexdetails : [];

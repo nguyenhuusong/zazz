@@ -113,7 +113,13 @@ export class PageMauThongBaoComponent implements OnInit, OnDestroy, AfterViewChe
     this.query.pageSize = event.rows;
     this.load();
   }
-  listsData = []
+  listsData = [];
+
+  displaySetting = false;
+  gridKey = ''
+  cauhinh() {
+    this.displaySetting = true;
+  }
 
   load() {
     this.columnDefs = []
@@ -122,6 +128,7 @@ export class PageMauThongBaoComponent implements OnInit, OnDestroy, AfterViewChe
     this.apiService.getNotifyTempPage(queryParams).subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
+        this.gridKey= results.data.dataList.gridKey;
         if (this.query.offSet === 0) {
           this.cols = results.data.gridflexs;
           this.colsDetail = results.data.gridflexdetails ? results.data.gridflexdetails : [];

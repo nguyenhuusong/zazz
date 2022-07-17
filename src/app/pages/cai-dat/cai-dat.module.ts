@@ -67,6 +67,7 @@ import { NgayNghiLeComponent } from 'src/app/components/ngay-nghi-le/ngay-nghi-l
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { ChiTietNgayNghiComponent } from 'src/app/components/ngay-nghi-le/chi-tiet-ngay-nghi/chi-tiet-ngay-nghi.component';
 import { CheckboxModule } from 'primeng/checkbox';
+import { ConfigGridTableFormModule } from 'src/app/common/config-grid-table-form/config-grid-table-form.module';
 
 @NgModule({
   imports: [
@@ -107,6 +108,7 @@ import { CheckboxModule } from 'primeng/checkbox';
     HrmBreadCrumbModule,
     CommonSearchUserMasterModule,
     ConfirmDialogModule,
+    ConfigGridTableFormModule,
     CheckboxModule,
     AgGridModule.withComponents([
       ButtonRendererComponent,

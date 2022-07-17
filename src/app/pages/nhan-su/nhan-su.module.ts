@@ -63,6 +63,7 @@ import { StepsModule } from 'primeng/steps';
 import { HrmBreadCrumbModule } from 'src/app/common/hrm-breadcrumb/hrm-breadcrumb.module';
 import { ExcelModule } from 'src/app/shared/components/excel/excel.module';
 import { ImportXyLyHopDongComponent } from 'src/app/components/xu-ly-hop-dong/import-xy-ly-hop-dong/import-xy-ly-hop-dong.component';
+import { ConfigGridTableFormModule } from 'src/app/common/config-grid-table-form/config-grid-table-form.module';
 @NgModule({
   imports: [
     MessagesModule,
@@ -90,6 +91,7 @@ import { ImportXyLyHopDongComponent } from 'src/app/components/xu-ly-hop-dong/im
     EditDetailModule,
     FileUploadModule,
     MenuModule,
+    ConfigGridTableFormModule,
     CardModule,
     OrganizationChartModule,
     BadgeModule,

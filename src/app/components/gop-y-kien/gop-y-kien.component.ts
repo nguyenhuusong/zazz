@@ -9,8 +9,6 @@ import { CustomTooltipComponent } from 'src/app/common/ag-component/customtoolti
 import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
 import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.component';
 import { AgGridFn } from 'src/app/common/function-common/common';
-import * as moment from 'moment';
-import * as FileSaver from 'file-saver';
 @Component({
   selector: 'app-gop-y-kien',
   templateUrl: './gop-y-kien.component.html',
@@ -122,6 +120,12 @@ export class GopYKienComponent implements OnInit {
     this.load();
   }
 
+  displaySetting = false;
+  gridKey = ''
+  cauhinh() {
+    this.displaySetting = true;
+  }
+
   listsData = []
   load() {
     this.columnDefs = []
@@ -131,6 +135,7 @@ export class GopYKienComponent implements OnInit {
     this.apiService.getFeedbackPage(queryParams).subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
+        this.gridKey= results.data.dataList.gridKey;
         if (this.query.offSet === 0) {
           this.cols = results.data.gridflexs;
           this.colsDetail = results.data.gridflexdetails ? results.data.gridflexdetails : [];

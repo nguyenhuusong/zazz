@@ -138,6 +138,13 @@ export class QuanLyHopDongComponent implements OnInit {
       }
     })
   }
+
+  displaySetting = false;
+  gridKey = ''
+  cauhinh() {
+    this.displaySetting = true;
+  }
+  
   load() {
     this.columnDefs = []
     this.spinner.show();
@@ -145,6 +152,7 @@ export class QuanLyHopDongComponent implements OnInit {
     this.apiService.getContractTypePage(queryParams).subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
+        this.gridKey= results.data.dataList.gridKey;
         if (this.query.offSet === 0) {
           this.cols = results.data.gridflexs;
           this.colsDetail = results.data.gridflexdetails ? results.data.gridflexdetails : [];
