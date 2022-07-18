@@ -920,7 +920,7 @@ div.p-menu-buttons{
         text-align: center;
         top: 0px;
         line-height: 60px;
-        right: 0px;
+        left: 0px;
         position: absolute;
         z-index: 2;
         &:hover{
@@ -2485,6 +2485,18 @@ div.p-organizationchart {
              }
         }
         &.search{
+            &::after{
+                background-image: url("data:image/svg+xml,%3Csvg width='6' height='4' viewBox='0 0 6 4' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M0.818891 0.5C0.682052 0.5 0.534394 0.555765 0.507618 0.695058C0.48372 0.819375 0.516049 0.953967 0.604605 1.05048L2.74746 3.38599C2.88694 3.538 3.11307 3.538 3.25254 3.38599L5.3954 1.05048C5.48395 0.953968 5.51628 0.819376 5.49238 0.695058C5.46561 0.555766 5.31795 0.5 5.18111 0.5L0.818891 0.5Z' fill='%23BDC4D8'/%3E%3C/svg%3E%0A");
+                content: "";
+                width: 10px;
+                height: 7px;
+                background-repeat: no-repeat;
+                position: absolute;
+                display: block;
+                right: 10px;
+                top: 22px;
+                background-size: cover;
+            }
             .icon-search{
                 position: absolute;
                 right: 67px;
@@ -2516,14 +2528,15 @@ div.p-organizationchart {
                 z-index: 2;
             }
             input{
-                padding-left: 12px;
-                padding-right: 54px;
+                padding-right: 12px;
+                padding-left: 36px;
+                width: 350px;
             }
             .placeholder-icon{
                 top: 0px;
             }
             label{
-                left: 12px;
+                left: 37px;
             }
         }
     }
@@ -2596,6 +2609,9 @@ div.p-organizationchart {
         }
         &.treeselect{
             z-index: 9;
+        }
+        &.height-56{
+            line-height: 50px;
         }
     }
 
@@ -3212,6 +3228,8 @@ div.p-organizationchart {
     }
     .dia{
         padding: 7px 9px;
+        align-items: center;
+        display: flex;
     }
     .field-group{
         .p-dropdown{
