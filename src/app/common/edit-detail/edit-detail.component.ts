@@ -244,7 +244,6 @@ export class EditDetailComponent implements OnInit, OnChanges {
                console.log("element1.field_name", element1.field_name)
             this.getLeaveReasons(element1)
           } else if (element1.field_name === 'parent_type_id' || element1.field_name === 'form_type') {
-               console.log("element1.field_name", element1.field_name)
             await this.getFormTypePage(element1);
           } else {
             if (element1.columnObject) {
@@ -291,13 +290,22 @@ export class EditDetailComponent implements OnInit, OnChanges {
       const response = (await lastValueFrom(this.apiService.getFormTypes())).data;
       this.loopEveryNodeTree(response);
       element1.options = response;
-      element1.columnValue = findNodeInTree(element1.options, element1.columnValue) || element1.columnValue;
+      this.findNodeInTree(element1.options, element1.columnValue, element1);
       this.dataView = cloneDeep(this.dataView);
     } catch (error) {
       console.error('error:', error);
     }
   }
 
+  findNodeInTree(list, nodeId, element1): any {
+    for (let i = 0; i < list.length; i++) {
+      if (list[i].data === nodeId ) {
+         element1.columnValue = list[i]
+        }else if (Array.isArray(list[i].children) && list[i].children.length) {
+          this.findNodeInTree(list[i].children, nodeId, element1);
+        }
+    }
+  }
   getLeaveReasons(element1) {
     this.apiServiceCore.getLeaveReasons().subscribe(results => {
       if (results.status === 'success') {
