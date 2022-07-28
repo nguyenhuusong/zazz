@@ -64,6 +64,7 @@ import { HrmBreadCrumbModule } from 'src/app/common/hrm-breadcrumb/hrm-breadcrum
 import { ExcelModule } from 'src/app/shared/components/excel/excel.module';
 import { ImportXyLyHopDongComponent } from 'src/app/components/xu-ly-hop-dong/import-xy-ly-hop-dong/import-xy-ly-hop-dong.component';
 import { ConfigGridTableFormModule } from 'src/app/common/config-grid-table-form/config-grid-table-form.module';
+import { ImportHoSoNhanSuComponent } from 'src/app/components/ns-ho-so-nhan-su/import-ho-so-nhan-su/import-ho-so-nhan-su.component';
 @NgModule({
   imports: [
     MessagesModule,
@@ -135,7 +136,8 @@ import { ConfigGridTableFormModule } from 'src/app/common/config-grid-table-form
     PheDuyetComponent,
     ChiTietPheDuyetComponent,
     QuyetDinhLuongComponent,
-    ImportXyLyHopDongComponent
+    ImportXyLyHopDongComponent,
+    ImportHoSoNhanSuComponent
   ],
   providers: [ ]
 })

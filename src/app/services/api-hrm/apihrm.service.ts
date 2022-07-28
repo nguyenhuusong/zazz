@@ -1359,4 +1359,12 @@ export class ApiHrmService {
   delFormTypeInfo(formId: string): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v2/form/DelFormTypeInfo?formId=${formId}`, this.options)
   }
+  employeeImport(data): Observable<any> {
+    const customOptions = {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue()
+      })
+    };
+    return this.http.post<any>(`${apiHrmServer}/api/v2/employee/Import`, data, customOptions);
+  }
 }
