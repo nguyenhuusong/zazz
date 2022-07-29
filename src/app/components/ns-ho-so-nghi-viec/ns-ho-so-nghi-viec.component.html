@@ -110,28 +110,28 @@
             <label for="">status_key</label>
         </div>
     </div>
-    <div class="col-md-12 mt-1" style="padding: 0">
+    <!-- <div class="col-md-12 mt-1" style="padding: 0">
         <div class="field-group select label-8" [ngClass]=" modelPheDuyet.status ? 'valid' : 'invalid' ">
-            <p-dropdown [autoZIndex]="true" [autoDisplayFirst]="false" [style]="{'width': '100%'}" [options]="listStatus"
-            [(ngModel)]="modelPheDuyet.status" name="status">
-            <ng-template let-item pTemplate="selectedItem">
-                <span>{{item.label}}</span>
-            </ng-template>
-            <ng-template let-car pTemplate="item">
-                <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                    <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
-                </div>
-            </ng-template>
-            </p-dropdown>
-        <label for="">Trạng thái phê duyệt</label>
-    </div>
-    </div>
+                <p-dropdown [autoZIndex]="true" [autoDisplayFirst]="false" [style]="{'width': '100%'}" [options]="listStatus"
+                [(ngModel)]="modelPheDuyet.status" name="status">
+                <ng-template let-item pTemplate="selectedItem">
+                    <span>{{item.label}}</span>
+                </ng-template>
+                <ng-template let-car pTemplate="item">
+                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                        <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                    </div>
+                </ng-template>
+                </p-dropdown>
+            <label for="">Trạng thái phê duyệt</label>
+        </div>
+    </div> -->
     <div class="col-md-12 mt-1" style="padding: 0">
-        <div class="field-group date">
-            <label for="">Ngày xác nhận</label>
-            <p-calendar placeholder="DD/MM/YYYY"  [baseZIndex]="101" [(ngModel)]="modelPheDuyet.status_dt"
+        <div class="field-group date valid">
+            <p-calendar placeholder="DD/MM/YYYY" appendTo="body" [baseZIndex]="101" [(ngModel)]="modelPheDuyet.status_dt"
                 [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" inputId="navigators"
                 dateFormat="dd/mm/yy" name="status_dt"></p-calendar>
+                <label for="">Ngày xác nhận</label>
             </div>
     </div>
 

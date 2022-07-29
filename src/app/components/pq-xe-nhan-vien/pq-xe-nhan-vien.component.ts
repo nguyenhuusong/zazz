@@ -73,6 +73,7 @@ export class PqXeNhanVienComponent implements OnInit {
   first = 0;
   model: any = {
     organizeId: '',
+    orgId: '',
     filter: '',
     status: -1,
     offSet: 0,
@@ -149,7 +150,7 @@ export class PqXeNhanVienComponent implements OnInit {
   }
 
   getOrganizeTree(): void {
-    const queryParams = queryString.stringify({ parentId: this.model.organizeId.orgId });
+    const queryParams = queryString.stringify({ parentId: this.model.organizeId });
     this.apiService.getOrganizeTree(queryParams)
       .subscribe((results: any) => {
         if (results && results.status === 'success') {

@@ -30,7 +30,7 @@
                                           <div class="col-6">
                                               <div class="field-group select valid">
                                                 <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
-                                                [options]="organizes" [(ngModel)]="model.organizeId" name="organizeId" (onChange)="find()">
+                                                [options]="organizes" [(ngModel)]="model.organizeId" name="organizeId" (onChange)="handleChangeOrganize()">
                                                 <ng-template let-item pTemplate="selectedItem">
                                                     <span style="vertical-align:middle;">{{item.label}}</span>
                                                 </ng-template>
@@ -43,6 +43,29 @@
                                             <label  for=""> Tổ chức: </label>
                                               </div>
                                           </div>
+                                          <div class="col-6">
+                                            <div class="field-group select mb-0 label-8">
+                                                <p-treeSelect [(ngModel)]="model.orgId" [filterInputAutoFocus]="true" [filter]="true" [metaKeySelection]="false" [ngClass]="[ departmentFiltes.length <= 0 ? 'tree-empty' : '' ]" [options]="departmentFiltes" selectionMode="single" name="orgId"
+                                                (onNodeSelect)="onChangeTree($event)" placeholder="Chọn phòng ban"></p-treeSelect>
+                                                <label>Bộ phận</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="field-group select valid">
+                                                <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"  (onChange)="find()"
+                                                [options]="listStatus" [(ngModel)]="model.status" name="status" [filter]="true">
+                                                <ng-template let-item pTemplate="selectedItem">
+                                                <span style="vertical-align:middle;">{{item.label}}</span>
+                                                </ng-template>
+                                                <ng-template let-car pTemplate="item">
+                                                <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                                                    <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                                                </div>
+                                                </ng-template>
+                                            </p-dropdown>
+                                        <label>Trạng thái</label>
+                                            </div>
+                                        </div>
                                         
                                       </div>
                                       <div class="input-group icon col-12 select-default pr-0 text-right">
