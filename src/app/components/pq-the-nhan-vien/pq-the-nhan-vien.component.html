@@ -64,9 +64,42 @@
                                                     </div>
                                                     </ng-template>
                                                 </p-dropdown>
-                                            <label>Trạng thái</label>
+                                                <label>Trạng thái</label>
                                                 </div>
                                             </div>
+                                            <div class="col-6">
+                                                <div class="field-group select valid">
+                                                    <label for="">Chức vụ</label>
+                                                    <p-dropdown placeholder="Chọn chức vụ" [filter]="true" appendTo="body" [baseZIndex]="100" (onChange)="find()" [autoDisplayFirst]="false"
+                                                    [options]="dataPositionList" [(ngModel)]="model.positionCd" name="position">
+                                                    <ng-template let-item pTemplate="selectedItem">
+                                                        <span>{{item.label}}</span>
+                                                    </ng-template>
+                                                    <ng-template let-car pTemplate="item">
+                                                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                                                            <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                                                        </div>
+                                                    </ng-template>
+                                                    </p-dropdown>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="field-group select valid">
+                                                    <label for="">Nơi làm việc</label>
+                                                    <p-dropdown placeholder="Nơi làm việc" appendTo="body" [filter]="true" [baseZIndex]="100" (onChange)="find()" [autoDisplayFirst]="false"
+                                                    [options]="workplaceOptions" [(ngModel)]="model.workplaceId" name="position">
+                                                    <ng-template let-item pTemplate="selectedItem">
+                                                        <span>{{item.label}}</span>
+                                                    </ng-template>
+                                                    <ng-template let-car pTemplate="item">
+                                                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                                                            <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                                                        </div>
+                                                    </ng-template>
+                                                    </p-dropdown>
+                                                </div>
+                                            </div>
+
                                         </div>
                                         <div class="input-group icon col-12 select-default pr-0 text-right">
                                             <label for="" style="visibility: hidden;">Classid <span class="pi pi-info-circle"

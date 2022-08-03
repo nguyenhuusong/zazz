@@ -65,14 +65,16 @@ export class PqXeNhanVienComponent implements OnInit {
   displayVehicleApprove = false;
   listStatus = [
     { label: 'Tất cả', value: -1 },
-    { label: 'Chờ phê duyệt', value: 0 },
-    { label: 'Đang hoạt động', value: 1 },
+    { label: 'Mới tạo', value: 0 },
+    { label: 'Hoạt động', value: 1 },
     { label: 'Khóa thẻ', value: 3 },
   ];
   cusId = null;
   first = 0;
   model: any = {
     organizeId: '',
+    workplaceId: '',
+    positionCd: '',
     orgId: '',
     filter: '',
     status: -1,
@@ -112,6 +114,8 @@ export class PqXeNhanVienComponent implements OnInit {
     this.loadVehicelTypes();
     this.getOrganize();
     this.load();
+    this.getPositionList();
+    this.getWorkplaces();
   }
 
   handleChangeOrganize(): void {
@@ -245,6 +249,35 @@ export class PqXeNhanVienComponent implements OnInit {
     };
   }
 
+  dataPositionList = []
+  getPositionList() {
+    const queryParams = queryString.stringify({ objKey: 'positiontype_group' });
+    this.apiService.getCustObjectListNew(false, queryParams).subscribe(results => {
+      if (results.status === 'success') {
+        this.dataPositionList = results.data.map(d => {
+          return {
+            label: d.objName,
+            value: d.objCode
+          }
+        });
+      }
+    })
+  }
+
+  workplaceOptions = []
+  getWorkplaces() {
+    this.apiService.getWorkplaces().subscribe(results => {
+      if (results.status === 'success') {
+        this.workplaceOptions = results.data.map(d => {
+          return {
+            label: d.workplaceName,
+            value: d.workplaceId
+          }
+        });
+      }
+    })
+  }
+
   initGrid() {
     this.columnDefs = [
       ...AgGridFn(this.gridflexs.filter((d: any) => !d.isHide)),
@@ -326,12 +359,39 @@ export class PqXeNhanVienComponent implements OnInit {
     return dd + '/' + mm + '/' + yyyy;
   }
 
+  // editVehicleCard(event): void {
+  //   const cardVehicleId = event.rowData.cardVehicleId;
+  //   if (cardVehicleId === null || cardVehicleId === 0) {
+  //     alert('Cần phê duyệt');
+  //   } else {
+  //     this.apiService.getCardVehicleDetail(cardVehicleId).subscribe(
+  //       (results: any) => {
+  //         this.modelTM.type = 2;
+  //         this.modelTM.cardVehicleId = results.data.cardVehicleId;
+  //         this.modelTM.vehicleNoTM = results.data.vehicleNo;
+  //         this.modelTM.organizeId = event.rowData.organizeId;
+  //         this.modelTM.vehicleNameTM = results.data.vehicleName;
+  //         this.modelTM.vehicleTypeIdTM = results.data.vehicleTypeId;
+  //         this.modelTM.vehiclecardCd = results.data.cardCd;
+  //         this.modelTM.startTimeTM = stringtodate(results.data.startTime);
+  //         this.modelTM.endTimeTM = results.data.endTime ? stringtodate(results.data.endTime) : '';
+  //         this.showVehicleCard = this.modelTM.endTimeTM ? true : false;
+  //         this.displayCreateVehicleCard = true;
+  //         this.modelTM.cusId = event.rowData.custId;
+  //         this.getUserByPush();
+  //         old --- this.search({ query: results.data.fullName }, 'edit');
+  //         old --- this.show_dialogcreate = true;
+  //       }, error => this.handlerError(error));
+  //   }
+
+  // }
+
   editVehicleCard(event): void {
     const cardVehicleId = event.rowData.cardVehicleId;
     if (cardVehicleId === null || cardVehicleId === 0) {
       alert('Cần phê duyệt');
     } else {
-      this.apiService.getCardVehicleDetail(cardVehicleId).subscribe(
+      this.apiService.getDetailEmployeeVehicleInfo(cardVehicleId).subscribe(
         (results: any) => {
           this.modelTM.type = 2;
           this.modelTM.cardVehicleId = results.data.cardVehicleId;
@@ -353,6 +413,7 @@ export class PqXeNhanVienComponent implements OnInit {
 
   }
 
+
   SaveVehicleCard(): void {
     let startTimeTm = null;
     let endTimeTm = null;
@@ -364,8 +425,8 @@ export class PqXeNhanVienComponent implements OnInit {
       endTimeTm = this.datetostring(this.modelTM.endTimeTM);
     }
     this.apiService.setCardVehicle(this.modelTM.cardVehicleId, this.modelTM.vehiclecardCd,
-      this.modelTM.vehicleTypeIdTM, this.modelTM.vehicleNoTM, this.modelTM.vehicleNameTM,
-      startTimeTm, endTimeTm, this.modelTM.cusId).subscribe((results: any) => {
+      this.modelTM.vehicleTypeIdTM, this.modelTM.vehicleNoTM, this.modelTM.vehicleColorTM, this.modelTM.vehicleNameTM,
+      startTimeTm, endTimeTm, this.modelTM.noteTM, this.modelTM.cusId).subscribe((results: any) => {
         if (results.status === 'error') {
           this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
         } else {
@@ -512,6 +573,12 @@ export class PqXeNhanVienComponent implements OnInit {
     this.modelTM.endTimeTM = new Date();
     this.modelTM.cusId = '';
     this.displayCreateVehicleCard = true;
+    this.modelTM.vehicleColorTM = '';
+    this.modelTM.noteTM = '';
+  }
+
+  getEmployeeVehicleInfo() {
+    
   }
 
   checkEnddateVehicleCard(isSend): void {
