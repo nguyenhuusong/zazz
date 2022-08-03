@@ -19,6 +19,7 @@ import { ChiTietThueThuNhapComponent } from 'src/app/components/cs-thue-thu-nhap
 import { PhepNamComponent } from 'src/app/components/phep-nam/phep-nam.component';
 import { PhepBuComponent } from 'src/app/components/phep-bu/phep-bu.component';
 import { ChiTietPhepBuComponent } from 'src/app/components/phep-bu/chi-tiet-phep-bu/chi-tiet-phep-bu.component';
+import { XemCongComponent } from 'src/app/components/cs-cham-cong/xem-cong/xem-cong.component';
 
 const routes: Routes = [
   {
@@ -66,6 +67,14 @@ const routes: Routes = [
     component: CsChamCongComponent,
     data: {
       title: 'Danh sách chấm công',
+      url: 'cham-cong',
+    },
+  },
+  {
+    path: 'cham-cong/xem-cong',
+    component: XemCongComponent,
+    data: {
+      title: 'Xem công',
       url: 'cham-cong',
     },
   },

@@ -204,6 +204,12 @@ export class CsChamCongComponent implements OnInit {
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
         },
+        {
+          onClick: this.XemCong.bind(this),
+          label: 'Xem công',
+          icon: 'fa fa-eye',
+          class: 'btn-primary mr5',
+        },
       ]
     };
   }
@@ -233,6 +239,15 @@ export class CsChamCongComponent implements OnInit {
     this.router.navigate(['/chinh-sach/cham-cong/chi-tiet-cham-cong'], { queryParams: params });
   }
 
+  XemCong(event) {
+    const params = {
+      empId: event.rowData.empId,
+      salary_month: this.query.month,
+      salary_year: this.query.year
+    }
+    this.router.navigate(['/chinh-sach/cham-cong/xem-cong'], { queryParams: params });
+  }
+
   find() {
     this.load();
   }
@@ -254,7 +269,6 @@ export class CsChamCongComponent implements OnInit {
       { label: 'Chính sách' },
       { label: 'Danh sách chấm công' },
     ];
-    this.load();
     this.getOrgRoots();
   }
 
@@ -267,7 +281,9 @@ export class CsChamCongComponent implements OnInit {
             value: `${d.orgId}`
           }
         });
-        this.listOrgRoots = [{ label: 'Tất cả', value: null }, ...this.listOrgRoots];
+        this.query.organizeId = this.listOrgRoots[0].value
+        this.load();
+        console.log('this.query.organizeId', this.query.organizeId)
       }
     })
   }

@@ -1,0 +1,24 @@
+
+<div class="main-grid product-detail">
+    <div class="bread-filter">
+        <div class="breadcrumb">
+            <h3>{{titlePage}}</h3>
+            <p-breadcrumb [model]="items"></p-breadcrumb>
+        </div>
+    </div>
+   <div class="grid-default border">
+    <app-list-grid-angular 
+    [height]="heightGrid" *ngIf="columnDefs?.length > 0"
+            [listsData]="listsData"
+            [columnDefs]="columnDefs"></app-list-grid-angular>
+            <div class="paginator">
+                <span>Từ {{ countRecord.currentRecordStart }} đến
+                    {{ countRecord.currentRecordEnd }}
+                    trên tổng số
+                    {{ countRecord.totalRecord }} kết quả</span>
+                <p-paginator [rows]="query.pageSize" [totalRecords]="countRecord.totalRecord" [first]="first"
+                    (onPageChange)="paginate($event)" [rowsPerPageOptions]="[15,30,45,100,200,{ showAll: 'ALL' }]">
+                </p-paginator>
+            </div>
+    </div>
+</div>
