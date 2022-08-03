@@ -1088,6 +1088,16 @@ export class AppTypeLinkUrlRadioListComponent implements OnInit {
         });
       });
     }
+    this.dataView[0].fields.forEach(element => {
+      if(element.field_name === "link_view"){
+        let fomrData = new FormData();
+        fomrData.append('file', event.target.files[0]);
+        this.apiService.uploadDrive(fomrData)
+        .subscribe(results => {
+          console.log('results', results)
+        })
+      }
+    })
   }
 
 }
