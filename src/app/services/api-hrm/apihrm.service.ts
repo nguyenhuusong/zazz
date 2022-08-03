@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { from, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AuthService } from '../auth.service';
@@ -1401,6 +1401,17 @@ export class ApiHrmService {
       })
     };
     return this.http.post<any>(`${apiHrmServer}/api/v2/cardvehicle/ImportCards`, data, customOptions);
+  }
+
+  
+  uploadDrive(data): Observable<HttpResponse <any>> {
+    const customOptions = {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+        
+      })
+    };
+    return this.http.post<any>(`${apiHrmServer}/api/v2/form/UploadDrive`, data, customOptions);
   }
 
 }
