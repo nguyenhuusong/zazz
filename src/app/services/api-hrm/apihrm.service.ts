@@ -1384,4 +1384,23 @@ export class ApiHrmService {
     };
     return this.http.post<any>(`${apiHrmServer}/api/v2/employee/Import`, data, customOptions);
   }
+
+  ImportVehicle(data): Observable<any> {
+    const customOptions = {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue()
+      })
+    };
+    return this.http.post<any>(`${apiHrmServer}/api/v2/cardvehicle/ImportVehicle`, data, customOptions);
+  }
+  
+  importCards(data): Observable<any> {
+    const customOptions = {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue()
+      })
+    };
+    return this.http.post<any>(`${apiHrmServer}/api/v2/cardvehicle/ImportCards`, data, customOptions);
+  }
+
 }

@@ -38,6 +38,7 @@ export class PqTheNhanVienComponent implements OnInit {
   departmentFiltes = [];
   listStatus = [
     { label: 'Tất cả', value: -1 },
+    { label: 'Mới tạo', value: 0 },
     { label: 'Hoạt động', value: 1 },
     { label: 'Khóa thẻ', value: 3 },
   ];
@@ -53,6 +54,7 @@ export class PqTheNhanVienComponent implements OnInit {
   pagingComponent = {
     total: 0
   };
+  itemsToolOfGrid: any[] = [];
   constructor(
     private apiService: ApiHrmService,
     private fileService: ExportFileService,
@@ -90,6 +92,24 @@ export class PqTheNhanVienComponent implements OnInit {
     this.getOrganize();
     this.getPositionList();
     this.getWorkplaces();
+    this.itemsToolOfGrid = [
+      {
+        label: 'Import file',
+        code: 'Import',
+        icon: 'pi pi-upload',
+        command: () => {
+          this.importFileExel();
+        }
+      },
+      {
+        label: 'Export file',
+        code: 'Import',
+        icon: 'pi pi-download',
+        command: () => {
+          this.exportexcel();
+        }
+      },
+    ]
   }
 
   initFilter(): void {
@@ -140,6 +160,11 @@ export class PqTheNhanVienComponent implements OnInit {
         console.error(error);
       });
   }
+
+  importFileExel() {
+    this.router.navigate(['/phan-quyen/the-nhan-vien/import']);
+  }
+
 
 	displaySetting = false;
   gridKey = ''

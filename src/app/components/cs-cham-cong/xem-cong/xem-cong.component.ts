@@ -60,7 +60,7 @@ export class XemCongComponent implements OnInit, OnDestroy {
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Chính sách' },
-      { label: 'Danh sách chấm công', routerLink: '/chinh-sach/xem-cong' },
+      { label: 'Danh sách chấm công', routerLink: '/chinh-sach/cham-cong' },
       { label: this.titlePage },
     ];
     this.url = this.activatedRoute.data['_value'].url;
@@ -104,6 +104,17 @@ export class XemCongComponent implements OnInit, OnDestroy {
         }
       }
     })
+  }
+
+  cancel() {
+    this.query = {
+      filter: '',
+      pageSize: 1000,
+      fromdate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).add(-1,'months').format()),
+      todate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).format()),
+      offSet: 0,
+    }
+    this.getXemCongInfo();
   }
 
   paginate(event: any) {

@@ -8,6 +8,8 @@ import { PqXeNhanVienComponent } from 'src/app/components/pq-xe-nhan-vien/pq-xe-
 import { ThietBiThangMayComponent } from 'src/app/components/thiet-bi-thang-may/thiet-bi-thang-may.component';
 import { ThietLapTangThangMayComponent } from 'src/app/components/thiet-lap-tang-thang-may/thiet-lap-tang-thang-may.component';
 import { ChiTietTheNhanVienComponent } from 'src/app/components/pq-the-nhan-vien/chi-tiet-the-nhan-vien/chi-tiet-the-nhan-vien.component';
+import { ImportXeNhanVienComponent } from 'src/app/components/pq-xe-nhan-vien/import-xe-nhan-vien/import-xe-nhan-vien.component';
+import { ImportTheNhanVienComponent } from 'src/app/components/pq-the-nhan-vien/import-the-nhan-vien/import-the-nhan-vien.component';
 
 const routes: Routes = [
   {
@@ -33,6 +35,16 @@ const routes: Routes = [
       url: 'the-nhan-vien',
     },
   },
+  //Import the nhan vien
+  {
+    path: 'the-nhan-vien/import',
+    component: ImportTheNhanVienComponent,
+    data: {
+      title: 'Import thẻ nhân viên',
+      url: 'import-the-nhan-vien',
+    },
+  },
+  
   // thêm mới thẻ nhân viên
   {
     path: 'the-nhan-vien/them-moi-the-nhan-vien',
@@ -67,6 +79,15 @@ const routes: Routes = [
     data: {
       title: 'Danh sách xe nhân viên',
       url: 'xe-nhan-vien',
+    },
+  },
+  //Import xe nhan vien
+  {
+    path: 'xe-nhan-vien/import',
+    component: ImportXeNhanVienComponent,
+    data: {
+      title: 'Import xe nhân viên',
+      url: 'import-xe-nhan-vien',
     },
   },
   //Quyền người dùng

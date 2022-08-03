@@ -84,6 +84,16 @@ export class CsChamCongComponent implements OnInit {
     month: new Date().getMonth() + 1,
     year: new Date().getFullYear(),
   }
+
+  queryCheckInOut = {
+    filter: '',
+    pageSize: 1000,
+    fromdate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).add(-1,'months').format()),
+    todate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).format()),
+    offSet: 0,
+  }
+
+
   totalRecord = 0;
   DriverId = 0;
   first = 0;
@@ -95,6 +105,7 @@ export class CsChamCongComponent implements OnInit {
 
   loadjs = 0;
   heightGrid = 0
+  itemsToolOfGrid: any[] = [];
   ngAfterViewChecked(): void {
     const a: any = document.querySelector(".header");
     const b: any = document.querySelector(".sidebarBody");
@@ -152,6 +163,10 @@ export class CsChamCongComponent implements OnInit {
     })
   }
 
+  ExportCheckInOut() {
+    this.router.navigate(['/chinh-sach/cham-cong/xem-cong']);
+  }
+
   displaySetting = false;
   gridKey = ''
   cauhinh() {
@@ -204,12 +219,6 @@ export class CsChamCongComponent implements OnInit {
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
         },
-        {
-          onClick: this.XemCong.bind(this),
-          label: 'Xem công',
-          icon: 'fa fa-eye',
-          class: 'btn-primary mr5',
-        },
       ]
     };
   }
@@ -239,14 +248,6 @@ export class CsChamCongComponent implements OnInit {
     this.router.navigate(['/chinh-sach/cham-cong/chi-tiet-cham-cong'], { queryParams: params });
   }
 
-  XemCong(event) {
-    const params = {
-      empId: event.rowData.empId,
-      salary_month: this.query.month,
-      salary_year: this.query.year
-    }
-    this.router.navigate(['/chinh-sach/cham-cong/xem-cong'], { queryParams: params });
-  }
 
   find() {
     this.load();
@@ -270,6 +271,24 @@ export class CsChamCongComponent implements OnInit {
       { label: 'Danh sách chấm công' },
     ];
     this.getOrgRoots();
+    this.itemsToolOfGrid = [
+      {
+        label: 'Check in/out',
+        code: 'Import',
+        icon: 'pi pi-sign-in',
+        command: () => {
+          this.ExportCheckInOut();
+        }
+      },
+      {
+        label: 'Export chấm công',
+        code: 'Import',
+        icon: 'pi pi-download',
+        command: () => {
+          this.Export();
+        }
+      },
+    ]
   }
 
   getOrgRoots() {

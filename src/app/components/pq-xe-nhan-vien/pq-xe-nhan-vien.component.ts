@@ -97,6 +97,7 @@ export class PqXeNhanVienComponent implements OnInit {
   departmentFiltes = [];
   organizes = [];
   itemsBreadcrumb = [];
+  itemsToolOfGrid: any[] = [];
   ngOnInit(): void {
     this.itemsBreadcrumb = [
       { label: 'Trang chủ', routerLink: '/home' },
@@ -116,7 +117,26 @@ export class PqXeNhanVienComponent implements OnInit {
     this.load();
     this.getPositionList();
     this.getWorkplaces();
+    this.itemsToolOfGrid = [
+      {
+        label: 'Import file',
+        code: 'Import',
+        icon: 'pi pi-upload',
+        command: () => {
+          this.importFileExel();
+        }
+      },
+      {
+        label: 'Export file',
+        code: 'Import',
+        icon: 'pi pi-download',
+        command: () => {
+          this.exportExel();
+        }
+      },
+    ]
   }
+  
 
   handleChangeOrganize(): void {
     this.model.orgId = '';
@@ -624,6 +644,10 @@ export class PqXeNhanVienComponent implements OnInit {
       this.spinner.hide();
 
     });
+  }
+
+  importFileExel() {
+    this.router.navigate(['/phan-quyen/xe-nhan-vien/import']);
   }
 
   listUsers = [];
