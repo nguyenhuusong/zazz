@@ -582,7 +582,7 @@ export class AppTypeCurrencyComponent implements OnInit {
                 <div class="field-group checkbox">
                   <p-checkbox name={{element.field_name}} [binary]="true" label="{{element.columnLabel}}"
                   [required]="element.isRequire && element.isVisiable && !element.isEmpty" [disabled]="element.isDisable"
-                  [(ngModel)]="element.columnValue" (onChange)="onChangeValue($event.value, element.field_name, element)"></p-checkbox>
+                  [(ngModel)]="element.columnValue" (onChange)="onChangeValue($event, element.field_name, element)"></p-checkbox>
                   <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
 
                 <div *ngIf="element.isRequire && submit && !element.columnValue"
@@ -599,6 +599,7 @@ export class AppTypeCheckboxComponent implements OnInit {
   @Input() element;
   @Input() modelFields;
   @Input() submit = false;
+  @Input() dataView;
   constructor(
     private apiService: ApiHrmService
   ) { }
@@ -606,7 +607,50 @@ export class AppTypeCheckboxComponent implements OnInit {
     this.element.columnValue = this.element.columnValue == 'true' || this.element.columnValue == true ? true : false
   }
 
+  setRequired(value) {
+    this.dataView.forEach(element => {
+      element.fields.forEach( element1 => {
+        if(value && !element1.columnValue){
+          if (element1.field_name === 'vehicleName') {
+              element1.isRequire = true;
+              this.modelFields[element1.field_name].isRequire = true;
+              this.modelFields[element1.field_name].error = this.modelFields[element1.field_name].isRequire && !element1.columnValue ? true : false;
+              this.modelFields[element1.field_name].message = this.modelFields[element1.field_name].error ? 'Trường bắt buộc nhập !' : ''
+          }else if(element1.field_name === 'vehicleNo') {
+              element1.isRequire = true;
+              this.modelFields[element1.field_name].isRequire = true;
+              this.modelFields[element1.field_name].error = this.modelFields[element1.field_name].isRequire && !element1.columnValue ? true : false;
+              this.modelFields[element1.field_name].message = this.modelFields[element1.field_name].error ? 'Trường bắt buộc nhập !' : ''
+          }else if(element1.field_name === 'vehicleTypeId') {
+              element1.isRequire = true;
+              this.modelFields[element1.field_name].isRequire = true;
+              this.modelFields[element1.field_name].error = this.modelFields[element1.field_name].isRequire && !element1.columnValue ? true : false;
+              this.modelFields[element1.field_name].message = this.modelFields[element1.field_name].error ? 'Trường bắt buộc nhập !' : ''
+          }  
+        }else{
+          if (element1.field_name === 'vehicleName') {
+              element1.isRequire = false;
+              this.modelFields[element1.field_name].isRequire = false;
+              this.modelFields[element1.field_name].error = false;
+          }else if(element1.field_name === 'vehicleNo') {
+              element1.isRequire = false;
+              this.modelFields[element1.field_name].isRequire = false;
+              this.modelFields[element1.field_name].error = false;
+          }else if(element1.field_name === 'vehicleTypeId') {
+              element1.isRequire = false;
+              this.modelFields[element1.field_name].isRequire = false;
+              this.modelFields[element1.field_name].error = false;
+          }
+          console.log('fdsfdsf')
+        }
+      });
+    });
+  }
+
   onChangeValue(value, field_name, element) {
+    if(field_name === 'isCardVehicle'){
+        this.setRequired(element.columnValue)
+    }
     this.modelFields[field_name].error = false
   }
 

@@ -73,7 +73,14 @@
                             </p-overlayPanel>
                         </div>
                     </div>
-                    <p-button styleClass="p-button-sm mr-1 ml-1 height-56" icon="pi pi-cloud-download" label="Export" (click)="Export()"></p-button>
+                    <!-- <p-button styleClass="p-button-sm mr-1 ml-1 height-56" icon="pi pi-cloud-download" label="Export" (click)="Export()"></p-button> -->
+
+                    <p-button (click)="menuButton.toggle($event)" label="Tiện ích" icon="pi pi-cog"
+                        styleClass="p-button-sm mr-1 height-56 ml-1"> </p-button>
+                        
+                    <p-menu [model]="itemsToolOfGrid" [appendTo]="'body'" [popup]="true"
+                    styleClass="menu-option-right mr-1" #menuButton></p-menu>
+                    
                     <p-button styleClass="p-button-sm height-56" icon="pi pi-plus" label="Cấu hình" (click)="cauhinh()"></p-button>
                 </div>
                

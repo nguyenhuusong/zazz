@@ -114,7 +114,14 @@
                           </p-overlayPanel>
                       </div>
                   </div>
-                  <p-button label="Xuất file" (click)="exportExel()" icon="fa fa-download" styleClass="p-button-sm  ml-1 height-56"></p-button>
+                  <!-- <p-button label="Xuất file" (click)="exportExel()" icon="fa fa-download" styleClass="p-button-sm  ml-1 height-56"></p-button> -->
+
+                  <p-button (click)="menuButton.toggle($event)" label="Tiện ích" icon="pi pi-cog"
+                        styleClass="p-button-sm mr-1 height-56 ml-1"> </p-button>
+
+                        <p-menu [model]="itemsToolOfGrid" [appendTo]="'body'" [popup]="true"
+                    styleClass="menu-option-right mr-1" #menuButton></p-menu>
+
                   <p-button styleClass="p-button-sm mr-1 ml-1 height-56" icon="pi pi-plus" label="Thêm mới" (click)="addVehicleCard()"></p-button>
                   <p-button styleClass="p-button-sm height-56" icon="pi pi-plus" label="Cấu hình" (click)="cauhinh()"></p-button>
               </div>

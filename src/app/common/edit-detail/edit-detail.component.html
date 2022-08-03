@@ -21,7 +21,7 @@
                         <app-type-dropdown [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'dropdown' || element.columnType === 'select'" [submit]="submit" [paramsObject]="paramsObject" [dataView]="dataView" (callback)="resetData($event)"></app-type-dropdown>
                         <app-type-number [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'number'"></app-type-number>
                         <app-type-currency [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'currency'"></app-type-currency>
-                        <app-type-checkbox [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'checkbox'"></app-type-checkbox>
+                        <app-type-checkbox  [dataView]="dataView" [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'checkbox'"></app-type-checkbox>
                         <app-type-textarea [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'textarea'"></app-type-textarea>
                         <app-type-datetime [modelFields]="modelFields" [submit]="submit" [element]="element" *ngIf="element.columnType === 'datetime'"></app-type-datetime>
                         <app-type-datefulltime [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'datefulltime'"></app-type-datefulltime>
