@@ -1404,11 +1404,10 @@ export class ApiHrmService {
   }
 
   
-  uploadDrive(data): Observable<HttpResponse <any>> {
+  uploadDrive(data): Observable<any> {
     const customOptions = {
       headers: new HttpHeaders({
         Authorization: this.authService.getAuthorizationHeaderValue(),
-        
       })
     };
     return this.http.post<any>(`${apiHrmServer}/api/v2/form/UploadDrive`, data, customOptions);

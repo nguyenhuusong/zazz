@@ -36,11 +36,11 @@ export class AppTypeTextComponent implements OnInit {
   }
 
   onChangeValue(value, field_name, element) {
-    this.modelFields[field_name].error = this.modelFields[field_name].isRequire && !this.element.columnValue ? true : false 
+    this.modelFields[field_name].error = this.modelFields[field_name].isRequire && !this.element.columnValue ? true : false
     this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
     let numberDay = moment().daysInMonth();
-    if(field_name === 'annualAdd')
-      if( this.element.columnValue > numberDay ){
+    if (field_name === 'annualAdd')
+      if (this.element.columnValue > numberDay) {
         this.modelFields[field_name].error = true;
         this.modelFields[field_name].message = "Phép bù đã nhập lớn hơn số ngày trong tháng này";
       }
@@ -144,10 +144,10 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
   checkIsObject(data: any): boolean {
     return checkIsObject(data);
   }
-  
+
   selectNode(event) {
     console.log("selectNode", event.node)
-  } 
+  }
 
   getCompanyList(orgId, element1) {
     const queryParams = queryString.stringify({ orgId: orgId });
@@ -162,7 +162,7 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
   }
 
   onChangeTree(event, field_name, element) {
-    this.modelFields[field_name].error = this.modelFields[field_name].isRequire &&  !this.element.columnValue ? true : false; 
+    this.modelFields[field_name].error = this.modelFields[field_name].isRequire && !this.element.columnValue ? true : false;
     this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
     if (field_name === 'orgId') {
       this.dataView.forEach(element => {
@@ -225,7 +225,7 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
             </div>
                 `,
 })
-export class AppTypeDropdownComponent implements OnInit,AfterViewChecked {
+export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
   @Input() element;
   @Input() dataView;
   @Input() paramsObject;
@@ -264,7 +264,7 @@ export class AppTypeDropdownComponent implements OnInit,AfterViewChecked {
   }
 
   onChangeValue(value, field_name, element) {
-    this.modelFields[field_name].error = this.modelFields[field_name].isRequire && !this.element.columnValue ? true : false; 
+    this.modelFields[field_name].error = this.modelFields[field_name].isRequire && !this.element.columnValue ? true : false;
     this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
     if (field_name === 'orgId') {
       this.dataView.forEach(element => {
@@ -285,20 +285,20 @@ export class AppTypeDropdownComponent implements OnInit,AfterViewChecked {
           }
         });
       });
-    }else if (field_name === 'type_salary') {
+    } else if (field_name === 'type_salary') {
       this.dataView.forEach(element => {
         element.fields.forEach(element1 => {
           if (element1.field_name === 'from_day') {
             element1.isVisiable = value == 2 ? true : false;
             this.setValue(25, element1.field_name)
-          }else if (element1.field_name === 'to_day') {
+          } else if (element1.field_name === 'to_day') {
             element1.isVisiable = value == 2 ? true : false;
             this.setValue(24, element1.field_name)
-          }else if (element1.field_name === 'salary_start_dt') {
-            const date = value == 1 ? new Date(moment().startOf('month').format()): new Date(new Date().getFullYear(), numeral(moment(new Date()).add(-2, 'months').format('MM')).value(), 25);
+          } else if (element1.field_name === 'salary_start_dt') {
+            const date = value == 1 ? new Date(moment().startOf('month').format()) : new Date(new Date().getFullYear(), numeral(moment(new Date()).add(-2, 'months').format('MM')).value(), 25);
             this.setValue(date, element1.field_name)
-          }else if (element1.field_name === 'salary_next_dt') {
-            const date = value == 1 ? new Date(moment().endOf('month').format()): new Date(new Date().getFullYear(), numeral(moment(new Date()).add(-1, 'months').format('MM')).value(), 24);
+          } else if (element1.field_name === 'salary_next_dt') {
+            const date = value == 1 ? new Date(moment().endOf('month').format()) : new Date(new Date().getFullYear(), numeral(moment(new Date()).add(-1, 'months').format('MM')).value(), 24);
             this.setValue(date, element1.field_name)
           }
         });
@@ -322,15 +322,15 @@ export class AppTypeDropdownComponent implements OnInit,AfterViewChecked {
           } else if (element1.field_name === 'jobId') {
             const positionTypeCd = await this.getValueByKey('positionCd');
             this.getJobTitles(value, element1, positionTypeCd)
-          }else if (element1.field_name === 'full_name' || element1.field_name === 'empId') {
+          } else if (element1.field_name === 'full_name' || element1.field_name === 'empId') {
             this.getUserByPush(value, element1)
           }
         });
       });
-    }else if(field_name === 'organize_id'){
+    } else if (field_name === 'organize_id') {
       this.dataView.forEach(element => {
         element.fields.forEach(async element1 => {
-          if(element1.field_name === 'requester_custId') {
+          if (element1.field_name === 'requester_custId') {
             this.getUserByPush(value, element1)
           }
         });
@@ -341,7 +341,7 @@ export class AppTypeDropdownComponent implements OnInit,AfterViewChecked {
         element.fields.forEach(async element1 => {
           if (element1.field_name === 'Phone') {
             this.setValue(items[0].phone, element1.field_name)
-          }else if(element1.field_name === 'email') {
+          } else if (element1.field_name === 'email') {
             this.setValue(items[0].email, element1.field_name)
           }
         });
@@ -383,7 +383,7 @@ export class AppTypeDropdownComponent implements OnInit,AfterViewChecked {
       });
     } else if (field_name === 'contractTypeId') {
       this.callback.emit(value);
-    }else if (field_name === 'holi_type') {
+    } else if (field_name === 'holi_type') {
       this.callback.emit(value);
     }
     console.log(this.modelFields)
@@ -403,7 +403,7 @@ export class AppTypeDropdownComponent implements OnInit,AfterViewChecked {
 
   setValue(value, field_name) {
     this.dataView.forEach(element => {
-      element.fields.forEach( element1 => {
+      element.fields.forEach(element1 => {
         if (element1.field_name === field_name) {
           element1.columnValue = value;
           this.modelFields[field_name].error = this.modelFields[field_name].isRequire && !element1.columnValue ? true : false;
@@ -415,7 +415,7 @@ export class AppTypeDropdownComponent implements OnInit,AfterViewChecked {
 
 
   getUserByPush(orgId, element1) {
-    const queryParams = queryString.stringify({ orgId: orgId});
+    const queryParams = queryString.stringify({ orgId: orgId });
     this.apiService.getEmployeeSearch(queryParams).subscribe(results => {
       if (results.status === 'success') {
         element1.options = results.data.map(d => {
@@ -503,7 +503,7 @@ export class AppTypeNumberComponent implements OnInit {
 
   onChangeValue(event, field_name, element) {
     // if(field_name === 'from_day' || field_name === 'to_day'){
-     
+
     // }else{
     //   this.modelFields[field_name].error = this.modelFields[field_name].isRequire ? this.element.columnValue ? false : true : false
     //   this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
@@ -514,20 +514,20 @@ export class AppTypeNumberComponent implements OnInit {
     //     this.modelFields[field_name] = {...this.modelFields[field_name], ...ValidationNumberDayInMonthEmpty(event.value)}
     // }
 
-    if(field_name === 'from_day' || field_name === 'to_day'){
-      if(element.isRequire) {
-        this.modelFields[field_name] = {...this.modelFields[field_name], ...ValidationNumberDayInMonth(event.value)}
-      }else{
-        this.modelFields[field_name] = {...this.modelFields[field_name], ...ValidationNumberDayInMonthEmpty(event.value)}
+    if (field_name === 'from_day' || field_name === 'to_day') {
+      if (element.isRequire) {
+        this.modelFields[field_name] = { ...this.modelFields[field_name], ...ValidationNumberDayInMonth(event.value) }
+      } else {
+        this.modelFields[field_name] = { ...this.modelFields[field_name], ...ValidationNumberDayInMonthEmpty(event.value) }
       }
-    }else{
-      if(element.isRequire) {
-        this.modelFields[field_name] = {...this.modelFields[field_name], ...ValidationNumber(event.value)}
-      }else{
-        this.modelFields[field_name] = {...this.modelFields[field_name], ...ValidationNumberEmpty(event.value)}
+    } else {
+      if (element.isRequire) {
+        this.modelFields[field_name] = { ...this.modelFields[field_name], ...ValidationNumber(event.value) }
+      } else {
+        this.modelFields[field_name] = { ...this.modelFields[field_name], ...ValidationNumberEmpty(event.value) }
       }
     }
-    
+
   }
 }
 
@@ -609,37 +609,37 @@ export class AppTypeCheckboxComponent implements OnInit {
 
   setRequired(value) {
     this.dataView.forEach(element => {
-      element.fields.forEach( element1 => {
-        if(value && !element1.columnValue){
+      element.fields.forEach(element1 => {
+        if (value && !element1.columnValue) {
           if (element1.field_name === 'vehicleName') {
-              element1.isRequire = true;
-              this.modelFields[element1.field_name].isRequire = true;
-              this.modelFields[element1.field_name].error = this.modelFields[element1.field_name].isRequire && !element1.columnValue ? true : false;
-              this.modelFields[element1.field_name].message = this.modelFields[element1.field_name].error ? 'Trường bắt buộc nhập !' : ''
-          }else if(element1.field_name === 'vehicleNo') {
-              element1.isRequire = true;
-              this.modelFields[element1.field_name].isRequire = true;
-              this.modelFields[element1.field_name].error = this.modelFields[element1.field_name].isRequire && !element1.columnValue ? true : false;
-              this.modelFields[element1.field_name].message = this.modelFields[element1.field_name].error ? 'Trường bắt buộc nhập !' : ''
-          }else if(element1.field_name === 'vehicleTypeId') {
-              element1.isRequire = true;
-              this.modelFields[element1.field_name].isRequire = true;
-              this.modelFields[element1.field_name].error = this.modelFields[element1.field_name].isRequire && !element1.columnValue ? true : false;
-              this.modelFields[element1.field_name].message = this.modelFields[element1.field_name].error ? 'Trường bắt buộc nhập !' : ''
-          }  
-        }else{
+            element1.isRequire = true;
+            this.modelFields[element1.field_name].isRequire = true;
+            this.modelFields[element1.field_name].error = this.modelFields[element1.field_name].isRequire && !element1.columnValue ? true : false;
+            this.modelFields[element1.field_name].message = this.modelFields[element1.field_name].error ? 'Trường bắt buộc nhập !' : ''
+          } else if (element1.field_name === 'vehicleNo') {
+            element1.isRequire = true;
+            this.modelFields[element1.field_name].isRequire = true;
+            this.modelFields[element1.field_name].error = this.modelFields[element1.field_name].isRequire && !element1.columnValue ? true : false;
+            this.modelFields[element1.field_name].message = this.modelFields[element1.field_name].error ? 'Trường bắt buộc nhập !' : ''
+          } else if (element1.field_name === 'vehicleTypeId') {
+            element1.isRequire = true;
+            this.modelFields[element1.field_name].isRequire = true;
+            this.modelFields[element1.field_name].error = this.modelFields[element1.field_name].isRequire && !element1.columnValue ? true : false;
+            this.modelFields[element1.field_name].message = this.modelFields[element1.field_name].error ? 'Trường bắt buộc nhập !' : ''
+          }
+        } else {
           if (element1.field_name === 'vehicleName') {
-              element1.isRequire = false;
-              this.modelFields[element1.field_name].isRequire = false;
-              this.modelFields[element1.field_name].error = false;
-          }else if(element1.field_name === 'vehicleNo') {
-              element1.isRequire = false;
-              this.modelFields[element1.field_name].isRequire = false;
-              this.modelFields[element1.field_name].error = false;
-          }else if(element1.field_name === 'vehicleTypeId') {
-              element1.isRequire = false;
-              this.modelFields[element1.field_name].isRequire = false;
-              this.modelFields[element1.field_name].error = false;
+            element1.isRequire = false;
+            this.modelFields[element1.field_name].isRequire = false;
+            this.modelFields[element1.field_name].error = false;
+          } else if (element1.field_name === 'vehicleNo') {
+            element1.isRequire = false;
+            this.modelFields[element1.field_name].isRequire = false;
+            this.modelFields[element1.field_name].error = false;
+          } else if (element1.field_name === 'vehicleTypeId') {
+            element1.isRequire = false;
+            this.modelFields[element1.field_name].isRequire = false;
+            this.modelFields[element1.field_name].error = false;
           }
           console.log('fdsfdsf')
         }
@@ -648,8 +648,8 @@ export class AppTypeCheckboxComponent implements OnInit {
   }
 
   onChangeValue(value, field_name, element) {
-    if(field_name === 'isCardVehicle'){
-        this.setRequired(element.columnValue)
+    if (field_name === 'isCardVehicle') {
+      this.setRequired(element.columnValue)
     }
     this.modelFields[field_name].error = false
   }
@@ -1021,7 +1021,7 @@ export class AppTypeLinkUrlRadioListComponent implements OnInit {
   @Input() dataView;
   @Input() submit = false;
   imagesUpload = '';
-  fileType: any =''
+  fileType: any = ''
   constructor(
     private apiService: ApiHrmService,
     private spinner: NgxSpinnerService,
@@ -1043,10 +1043,10 @@ export class AppTypeLinkUrlRadioListComponent implements OnInit {
 
   getFile() {
     this.dataView[0].fields.forEach(element => {
-      if(element.field_name === "meta_file_type"){
+      if (element.field_name === "meta_file_type") {
         this.fileType = element.columnValue;
       }
-      if(element.field_name === "meta_file_url"){
+      if (element.field_name === "meta_file_url") {
         this.imagesUpload = element.columnValue;
       }
     })
@@ -1084,20 +1084,32 @@ export class AppTypeLinkUrlRadioListComponent implements OnInit {
           }
 
         }).catch(error => {
-          this.spinner.show();
+          this.spinner.hide();
         });
       });
     }
-    this.dataView[0].fields.forEach(element => {
-      if(element.field_name === "link_view"){
-        let fomrData = new FormData();
-        fomrData.append('file', event.target.files[0]);
-        this.apiService.uploadDrive(fomrData)
+    if (this.element.field_name === 'file_attach') {
+      this.spinner.show();
+      let fomrData = new FormData();
+      fomrData.append('file', event.target.files[0]);
+      this.apiService.uploadDrive(fomrData)
         .subscribe(results => {
-          console.log('results', results)
+          if (results.status === 'success') {
+            this.dataView.forEach(element => {
+              element.fields.forEach(async element1 => {
+                if (element1.field_name === 'link_view') {
+                  element1.columnValue = results.data
+                }
+              });
+            });
+            this.spinner.hide();
+          } else {
+            this.spinner.hide();
+          }
+
         })
-      }
-    })
+    }
+
   }
 
 }
