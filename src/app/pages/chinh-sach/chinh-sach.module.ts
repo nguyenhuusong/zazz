@@ -55,6 +55,7 @@ import { BieuMauChiTietComponent } from 'src/app/components/bieu-mau/bieu-mau-ch
 import { LoaiBieuMauComponent } from 'src/app/components/bieu-mau/loai-bieu-mau/loai-bieu-mau.component';
 import { ChiTietLoaiBieuMauComponent } from 'src/app/components/bieu-mau/loai-bieu-mau/chi-tiet-loai-bieu-mau/chi-tiet-loai-bieu-mau.component';
 import { ConfigGridTableFormModule } from 'src/app/common/config-grid-table-form/config-grid-table-form.module';
+import { XemCongComponent } from 'src/app/components/cs-cham-cong/xem-cong/xem-cong.component';
 
 @NgModule({
   imports: [
@@ -119,6 +120,7 @@ import { ConfigGridTableFormModule } from 'src/app/common/config-grid-table-form
     BieuMauChiTietComponent,
     LoaiBieuMauComponent,
     ChiTietLoaiBieuMauComponent,
+    XemCongComponent,
   ],
   providers: [],
 })

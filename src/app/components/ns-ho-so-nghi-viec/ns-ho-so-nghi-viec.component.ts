@@ -300,20 +300,20 @@ export class NsHoSoNghiViecComponent implements OnInit {
   modelPheDuyet = {
     id: '',
     status_key: '',
-    status: 0,
+    status: 1,
     comment: '',
     status_dt: new Date()
   }
   listTerminateKey = [];
-  listStatus = [
-    { label: 'Đồng ý', value: 1 },
-    { label: 'Không đồng ý', value: 0 },
-  ]
+  // listStatus = [
+  //   { label: 'Đồng ý', value: 1 },
+  //   { label: 'Không đồng ý', value: 0 },
+  // ]
   changeStatus(event) {
     this.modelPheDuyet = {
       id: event.rowData.terminateId,
       status_key: this.listTerminateKey.length > 0 ? this.listTerminateKey[0].value : '',
-      status: 0,
+      status: 1,
       comment: '',
       status_dt: new Date()
     }
@@ -323,7 +323,11 @@ export class NsHoSoNghiViecComponent implements OnInit {
   xacnhan() {
     this.spinner.show();
     const params: any = { ...this.modelPheDuyet };
-    params.lst_status_key = params.status_key.map(d => d.code);
+    params.lst_status_key = [];
+    if(typeof params.status_key === 'object'){
+      params.lst_status_key = params.status_key.map(d => d.code);
+    }
+    delete params.status;
     delete params.status_key;
     params.status_dt = moment(new Date(this.modelPheDuyet.status_dt)).format('DD/MM/YYYY');
     this.apiService.setTerminateStatus(params).subscribe(results => {

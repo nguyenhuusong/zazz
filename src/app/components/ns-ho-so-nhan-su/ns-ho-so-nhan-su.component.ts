@@ -88,6 +88,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
   }
   organs = []
   isButtonmoveOrganNow = true;
+  itemsToolOfGrid: any[] = [];
   constructor(
     private apiService: ApiHrmService,
     private spinner: NgxSpinnerService,
@@ -486,6 +487,24 @@ export class NsHoSoNhanSuComponent implements OnInit {
     this.getAgencyOrganizeMap();
     this.getEmployeeStatus();
     this.getOrgan();
+    this.itemsToolOfGrid = [
+      {
+        label: 'Import file',
+        code: 'Import',
+        icon: 'pi pi-upload',
+        command: () => {
+          this.importFileExel();
+        }
+      },
+      {
+        label: 'Export file',
+        code: 'Import',
+        icon: 'pi pi-download',
+        command: () => {
+          this.exportExel();
+        }
+      },
+    ]
   }
   employeeStatus = []
   getEmployeeStatus() {
@@ -763,6 +782,10 @@ export class NsHoSoNhanSuComponent implements OnInit {
         this.loadjs = 0;
       }
     }
+  }
+
+  importFileExel() {
+    this.router.navigate(['/nhan-su/ho-so-nhan-su/import']);
   }
 
 }

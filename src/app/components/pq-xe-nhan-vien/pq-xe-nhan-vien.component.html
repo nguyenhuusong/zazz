@@ -30,7 +30,7 @@
                                           <div class="col-6">
                                               <div class="field-group select valid">
                                                 <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
-                                                [options]="organizes" [(ngModel)]="model.organizeId" name="organizeId" (onChange)="find()">
+                                                [options]="organizes" [(ngModel)]="model.organizeId" name="organizeId" (onChange)="handleChangeOrganize()">
                                                 <ng-template let-item pTemplate="selectedItem">
                                                     <span style="vertical-align:middle;">{{item.label}}</span>
                                                 </ng-template>
@@ -43,6 +43,61 @@
                                             <label  for=""> Tổ chức: </label>
                                               </div>
                                           </div>
+                                          <div class="col-6">
+                                            <div class="field-group select mb-0 label-8">
+                                                <p-treeSelect [(ngModel)]="model.orgId" [filterInputAutoFocus]="true" [filter]="true" [metaKeySelection]="false" [ngClass]="[ departmentFiltes.length <= 0 ? 'tree-empty' : '' ]" [options]="departmentFiltes" selectionMode="single" name="orgId"
+                                                (onNodeSelect)="onChangeTree($event)" placeholder="Chọn phòng ban"></p-treeSelect>
+                                                <label>Bộ phận</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="field-group select valid">
+                                                <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"  (onChange)="find()"
+                                                [options]="listStatus" [(ngModel)]="model.status" name="status" [filter]="true">
+                                                <ng-template let-item pTemplate="selectedItem">
+                                                <span style="vertical-align:middle;">{{item.label}}</span>
+                                                </ng-template>
+                                                <ng-template let-car pTemplate="item">
+                                                <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                                                    <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                                                </div>
+                                                </ng-template>
+                                            </p-dropdown>
+                                            <label>Trạng thái</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="field-group select valid">
+                                                <label for="">Chức vụ</label>
+                                                <p-dropdown placeholder="Chọn chức vụ" [filter]="true" appendTo="body" [baseZIndex]="100" (onChange)="find()" [autoDisplayFirst]="false"
+                                                [options]="dataPositionList" [(ngModel)]="model.positionCd" name="position">
+                                                <ng-template let-item pTemplate="selectedItem">
+                                                    <span>{{item.label}}</span>
+                                                </ng-template>
+                                                <ng-template let-car pTemplate="item">
+                                                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                                                        <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                                                    </div>
+                                                </ng-template>
+                                                </p-dropdown>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="field-group select valid">
+                                                <label for="">Nơi làm việc</label>
+                                                <p-dropdown placeholder="Nơi làm việc" appendTo="body" [filter]="true" [baseZIndex]="100" (onChange)="find()" [autoDisplayFirst]="false"
+                                                [options]="workplaceOptions" [(ngModel)]="model.workplaceId" name="position">
+                                                <ng-template let-item pTemplate="selectedItem">
+                                                    <span>{{item.label}}</span>
+                                                </ng-template>
+                                                <ng-template let-car pTemplate="item">
+                                                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                                                        <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                                                    </div>
+                                                </ng-template>
+                                                </p-dropdown>
+                                            </div>
+                                        </div>
                                         
                                       </div>
                                       <div class="input-group icon col-12 select-default pr-0 text-right">
@@ -204,7 +259,7 @@
           </div>
         </div>
 
-      <div class="col-sm-6" >
+      <div class="col-sm-6 mb-1" >
         <div class="mb-1" style="margin-bottom: 10px; font-weight: 500;display: block;">Ngày kết thúc</div>
         <div>
           <div class="checkbox-default d-flex mb-0">
@@ -214,7 +269,7 @@
           <div class="checkbox-default d-flex mb-0">
             <div class="checkbox-default d-flex mb-0">
               <input id="ngay-het-han" name="isEnddateVehicleCard" type="radio" [checked]="modelTM.endTimeTM" (click)="checkEnddateVehicleCard(false)">
-              <label for="ngay-het-han">Hết hạn ngày</label>
+              <label for="ngay-het-han" class="mb-0">Hết hạn ngày</label>
             </div>
             </div>
             <div class="datepicker-container" *ngIf="showVehicleCard">
@@ -227,12 +282,39 @@
         </div>
       </div>
 
+      <div class="col-sm-6">
+        <div class="field-group text label-8">
+          <input type="text" class="form-control" name="vehicleColorTM" [(ngModel)]="modelTM.vehicleColorTM"
+            id="vehicleColorTM"  #vehicleColorTM="ngModel" placeholder="Nhập màu xe">
+          <!-- required <div *ngIf="vehicleColor.errors && (vehicleColor.dirty || vehicleColor.touched)"
+            class="alert-validation alert-danger">
+            <div *ngIf="vehicleColor.errors.required">Trường này bắt buộc nhập</div>
+          </div> -->
+          <label>Màu xe
+            <!-- <span style="color:red">*</span> -->
+          </label>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="field-group textarea label-8">
+          <textarea class="form-control" name="noteTM" [(ngModel)]="modelTM.noteTM"
+            id="noteTM"  #noteTM="ngModel" placeholder="Nhập ghi chú"></textarea>
+          <!-- required <div *ngIf="vehicleColor.errors && (vehicleColor.dirty || vehicleColor.touched)"
+            class="alert-validation alert-danger">
+            <div *ngIf="vehicleColor.errors.required">Trường này bắt buộc nhập</div>
+          </div> -->
+          <label>Ghi chú
+            <!-- <span style="color:red">*</span> -->
+          </label>
+        </div>
+      </div>
+
     </div>
   </div>
     <div class="row mt-1">
       <div class="col-md-6"></div>
       <div class="col-md-6 text-right">
-        <p-button label="Tạo thẻ" icon="pi pi-check" styleClass="p-button-sm mr-1"
+        <p-button label="{{ modelTM.cardVehicleId ? ' Cập nhật ' : 'Tạo thẻ'}}" icon="pi pi-check" styleClass="p-button-sm mr-1"
           (onClick)="SaveVehicleCard(); createSMSF1.reset()"></p-button>
         <p-button label="Đóng" icon="pi pi-times" styleClass="p-button-sm p-button-secondary mr-1"
           (onClick)="displayCreateVehicleCard = !displayCreateVehicleCard"></p-button>

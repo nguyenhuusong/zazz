@@ -37,8 +37,8 @@ export class PqTheNhanVienComponent implements OnInit {
   organizes = [];
   departmentFiltes = [];
   listStatus = [
-    { label: 'Lọc theo trạng thái', value: -1 },
-    { label: 'Đang hoạt động', value: 1 },
+    { label: 'Tất cả', value: -1 },
+    { label: 'Hoạt động', value: 1 },
     { label: 'Khóa thẻ', value: 3 },
   ];
   first = 0;
@@ -88,6 +88,8 @@ export class PqTheNhanVienComponent implements OnInit {
     ];
     this.load();
     this.getOrganize();
+    this.getPositionList();
+    this.getWorkplaces();
   }
 
   initFilter(): void {
@@ -95,6 +97,8 @@ export class PqTheNhanVienComponent implements OnInit {
       organizeId: '',
       orgId: '',
       filter: '',
+      positionCd: '',
+      workplaceId: '',
       status: -1,
       offSet: 0,
       pageSize: 15
@@ -261,6 +265,35 @@ export class PqTheNhanVienComponent implements OnInit {
         }
       },
         error => { });
+  }
+
+  dataPositionList = []
+  getPositionList() {
+    const queryParams = queryString.stringify({ objKey: 'positiontype_group' });
+    this.apiService.getCustObjectListNew(false, queryParams).subscribe(results => {
+      if (results.status === 'success') {
+        this.dataPositionList = results.data.map(d => {
+          return {
+            label: d.objName,
+            value: d.objCode
+          }
+        });
+      }
+    })
+  }
+
+  workplaceOptions = []
+  getWorkplaces() {
+    this.apiService.getWorkplaces().subscribe(results => {
+      if (results.status === 'success') {
+        this.workplaceOptions = results.data.map(d => {
+          return {
+            label: d.workplaceName,
+            value: d.workplaceId
+          }
+        });
+      }
+    })
   }
 
   lockCard(event): void {

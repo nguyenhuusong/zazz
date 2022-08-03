@@ -304,6 +304,10 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v1/timekeeping/getTimekeepingInfo?` + queryParams, this.options)
   }
 
+  getTimekeepingDetail(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/timekeeping/GetTimekeepingDetail?` + queryParams, this.options)
+  }
+
   updateTimeKeeping(queryParams): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v1/timekeeping/UpdateTimeKeeping` , queryParams, this.options)
   }
@@ -1079,6 +1083,14 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v2/cardvehicle/GetEmployeeVehiclePage?` + queryParams, this.options);
   }
 
+  getEmployeeVehicleInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/cardvehicle/GetEmployeeVehicleInfo?` + queryParams, this.options);
+  }
+
+  setEmployeeVehicleInfo(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/cardvehicle/SetEmployeeVehicleInfo`, params, this.options)
+  }
+
   setVehicleApprove<T>(data) {
     return this.http.put<T>(`${apiHrmServer}/api/v2/cardvehicle/SetVehicleApprove`, data, this.options);
   }
@@ -1098,6 +1110,11 @@ export class ApiHrmService {
       .get<Vehicle>(`${apiBaseUrl}/api/v1/shome/GetCardVehicleDetail?cardVehicleId=${cardVehicleId}`, this.options);
   }
 
+  getDetailEmployeeVehicleInfo(cardVehicleId): Observable<Vehicle> {
+    return this.http
+      .get<Vehicle>(`${apiHrmServer}/api/v2/cardvehicle/GetDetailEmployeeVehicleInfo?cardVehicleId=${cardVehicleId}`, this.options);
+  }
+
   approveCardVehicle<T>(cardVehicleId) {
     const card = { cardVehicleId, status: 1 };
     return this.http.put<T>(`${apiBaseUrl}/api/v1/shome/SetCardVehicleServiceAuth`, card, this.options).toPromise();
@@ -1109,10 +1126,10 @@ export class ApiHrmService {
     return this.http.put<T>(`${apiHrmServer}/api/v2/cardvehicle/SetCardLock`, card, this.options);
   }
 
-  setCardVehicle<T>(cardVehicleId, cardCd = null, vehicleTypeId, vehicleNo, vehicleName, startTime, endTime, custId = null) {
+  setCardVehicle<T>(cardVehicleId, cardCd = null, vehicleTypeId, vehicleNo, vehicleColor = null, vehicleName, startTime, endTime, note = null, custId = null) {
     const cardSet = {
-      cardVehicleId, cardCd, vehicleTypeId, vehicleNo, vehicleName, serviceId: 0,
-      startTime, endTime, status: 0, custId, imageLinks: []
+      cardVehicleId, cardCd, vehicleTypeId, vehicleNo, vehicleColor, vehicleName, serviceId: 0,
+      startTime, endTime, note, status: 0, custId, imageLinks: []
     };
     return this.http.put<T>(`${apiHrmServer}/api/v2/cardvehicle/SetServiceVehicle`, cardSet, this.options);
   }
@@ -1358,5 +1375,13 @@ export class ApiHrmService {
 
   delFormTypeInfo(formId: string): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v2/form/DelFormTypeInfo?formId=${formId}`, this.options)
+  }
+  employeeImport(data): Observable<any> {
+    const customOptions = {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue()
+      })
+    };
+    return this.http.post<any>(`${apiHrmServer}/api/v2/employee/Import`, data, customOptions);
   }
 }

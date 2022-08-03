@@ -104,8 +104,8 @@ export class CardDetailComponent implements OnInit {
         .pipe(
           concatMap(response => {
             return this.apiService.setCardVehicle(
-              vehicleFormValue.cardVehicleId, cardFormValue.cardCd, vehicleFormValue.vehicleTypeId, vehicleFormValue.vehicleNo,
-              vehicleFormValue.vehicleName, this.dateToString(vehicleFormValue.startTime), this.dateToString(vehicleFormValue.endTime), custId)
+              vehicleFormValue.cardVehicleId, cardFormValue.cardCd, vehicleFormValue.vehicleTypeId, vehicleFormValue.vehicleNo, null,
+              vehicleFormValue.vehicleName, this.dateToString(vehicleFormValue.startTime), this.dateToString(vehicleFormValue.endTime), null, custId)
           })
         ).subscribe((response: any) => {
           if (response.status === 'success') {
