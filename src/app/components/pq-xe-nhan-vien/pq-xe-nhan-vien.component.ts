@@ -419,7 +419,7 @@ export class PqXeNhanVienComponent implements OnInit {
           this.modelTM.organizeId = event.rowData.organizeId;
           this.modelTM.vehicleNameTM = results.data.vehicleName;
           this.modelTM.vehicleTypeIdTM = results.data.vehicleTypeId;
-          this.modelTM.vehiclecardCd = results.data.cardCd;
+          // this.modelTM.vehiclecardCd = results.data.cardCd;
           this.modelTM.startTimeTM = stringtodate(results.data.startTime);
           this.modelTM.endTimeTM = results.data.endTime ? stringtodate(results.data.endTime) : '';
           this.showVehicleCard = this.modelTM.endTimeTM ? true : false;
@@ -444,7 +444,7 @@ export class PqXeNhanVienComponent implements OnInit {
       startTimeTm = this.datetostring(this.modelTM.startTimeTM);
       endTimeTm = this.datetostring(this.modelTM.endTimeTM);
     }
-    this.apiService.setCardVehicle(this.modelTM.cardVehicleId, this.modelTM.vehiclecardCd,
+    this.apiService.setCardVehicle(this.modelTM.cardVehicleId, null,
       this.modelTM.vehicleTypeIdTM, this.modelTM.vehicleNoTM, this.modelTM.vehicleColorTM, this.modelTM.vehicleNameTM,
       startTimeTm, endTimeTm, this.modelTM.noteTM, this.modelTM.cusId).subscribe((results: any) => {
         if (results.status === 'error') {
@@ -588,7 +588,7 @@ export class PqXeNhanVienComponent implements OnInit {
     this.modelTM.vehicleNoTM = '';
     this.modelTM.vehicleNameTM = '';
     this.modelTM.vehicleTypeIdTM = 1;
-    this.modelTM.vehiclecardCd = this.model.cardCd;
+    // this.modelTM.vehiclecardCd = this.model.cardCd;
     this.modelTM.startTimeTM = new Date();
     this.modelTM.endTimeTM = new Date();
     this.modelTM.cusId = '';

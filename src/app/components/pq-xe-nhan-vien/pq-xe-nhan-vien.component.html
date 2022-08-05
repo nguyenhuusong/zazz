@@ -204,7 +204,8 @@
             <label>Tên nhân viên<span style="color:red">*</span></label>
             </div>
         </div> -->
-        <div class="col-sm-6">
+
+        <!-- <div class="col-sm-6">
           <div class="field-group text label-8">
             <input type="text" class="form-control" name="vehiclecardCd" [(ngModel)]="modelTM.vehiclecardCd"
               id="vehiclecardCd" [required]="modelTM.vehicleTypeIdTM != 1" #vehiclecardCd="ngModel" placeholder="Mã thẻ">
@@ -216,7 +217,8 @@
               <span *ngIf="modelTM.vehicleTypeIdTM != 1" style="color:red">*</span>
             </label>
           </div>
-        </div>
+        </div> -->
+
         <div class="col-sm-6">
           <div class="field-group select label-8">
             <select [disabled]="modelTM.type == 2" [(ngModel)]="modelTM.vehicleTypeIdTM" class="form-control"
