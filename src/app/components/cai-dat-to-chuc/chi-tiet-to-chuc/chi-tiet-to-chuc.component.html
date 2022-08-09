@@ -53,8 +53,8 @@
               <div class="row">
                   <div class="col-md-9">
                         <div class="field-group text"  [ngClass]=" filter ? 'valid' : 'invalid' ">
-                            <input type="text" class="form-control" [(ngModel)]="filter" (keyup)="find1()" name="filter">
                             <label>Tìm kiếm</label>
+                            <input type="text" class="form-control" [(ngModel)]="filter" (keyup)="find1()" name="filter">
                         </div>
                   </div>
                   <div class="col-md-3 text-right" *ngIf="isPositions">

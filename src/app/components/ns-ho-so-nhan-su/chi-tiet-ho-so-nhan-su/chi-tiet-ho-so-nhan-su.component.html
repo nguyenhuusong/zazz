@@ -342,12 +342,13 @@
         optionLabel="label" optionValue="value" (onChange)="onChangeButtonSave($event)"></p-selectButton> -->
         <div class="col-md-6 mt-1">
             <div class="field-group text" [ngClass]=" modelDuyet.full_name ? 'valid' : 'invalid' ">
-                <input type="text" [value]="modelDuyet.full_name || 'No name'" disabled name="full_name" class="form-control">
                 <label for="">Nhân viên</label>
+                <input type="text" [value]="modelDuyet.full_name || 'No name'" disabled name="full_name" class="form-control">
             </div>
         </div>
         <div class="col-md-6 mt-1"  *ngIf="titleForm.type === 'NghiViec'">
             <div class="field-group select" [ngClass]=" modelDuyet.reason_id? 'valid' : 'invalid' ">
+                <label for="">Lý do</label>
                 <p-dropdown [autoZIndex]="true" [autoDisplayFirst]="false" [style]="{'width': '100%'}" [options]="terminateReasons"
                 [(ngModel)]="modelDuyet.reason_id" name="reason_id">
                 <ng-template let-item pTemplate="selectedItem">
@@ -359,7 +360,6 @@
                     </div>
                 </ng-template>
                 </p-dropdown>
-                <label for="">Lý do</label>
             </div>
         </div>
         <div class="col-md-6 mt-1 ">
@@ -505,9 +505,9 @@
             {{keyName === '' ? 'Thêm mới' : 'Chỉnh sửa'}}  tài khoản login
             </p-header>
             <div class="field-group text label-8" [ngClass]=" keyName ? 'valid' : 'invalid' ">
+                <label for="">Tên tài khoản</label>
                 <input class="form-control" type="text"
                 placeholder="Nhập tên user" id="filter" name="filter" [(ngModel)]="keyName" />
-                <label for="">Tên tài khoản</label>
             </div>
             <div class="row mt-1">
             <div class="col-md-6"></div>

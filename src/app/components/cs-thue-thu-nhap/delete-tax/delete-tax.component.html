@@ -1,12 +1,13 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="field-group date">
-            <p-calendar appendTo="body" [(ngModel)] = "datereport" name="datereport"  placeholder="dd/mm/yyyy" dateFormat="dd/mm/yy" [style]="{'width':'100%'}"></p-calendar>
             <label for="">Chọn ngày</label>
+            <p-calendar appendTo="body" [(ngModel)] = "datereport" name="datereport"  placeholder="dd/mm/yyyy" dateFormat="dd/mm/yy" [style]="{'width':'100%'}"></p-calendar>
         </div>
     </div>
     <div class="col-sm-12 form-group">
         <div class="field-group select label-8">
+            <label for="">Công ty</label>
             <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
             [options]="companies" [(ngModel)]="companyId" name="companyId" [filter]="true">
                 <ng-template let-item pTemplate="selectedItem">
@@ -18,7 +19,6 @@
                     </div>
                 </ng-template>
             </p-dropdown>
-            <label for="">Công ty</label>
         </div>
     </div>
     <div class="col-sm-12 form-group text-right mt-2">

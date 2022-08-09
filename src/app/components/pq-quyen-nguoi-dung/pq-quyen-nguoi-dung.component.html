@@ -8,10 +8,10 @@
                 <div class="d-flex align-items-center">
                     <div class="filter filter-search">
                         <div class="field-group text search mb-0" [ngClass]=" query.filter ? 'valid' : 'invalid' ">
+                            <label>Vị trí, chuyển môn ...</label>
                             <input class="input-default" type="text" autocomplete="off" id="filter"
                                 (click)="op.toggle($event)" (keydown.enter)="query.offSet = 0; first = 0;load()"
                                 [(ngModel)]="query.filter">
-                                <label>Vị trí, chuyển môn ...</label>
                                 <span class="placeholder-icon" (click)="query.offSet = 0; first = 0; load()">
                                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -88,26 +88,26 @@
     </p-header> 
     <div class="col-md-12">
         <div class="field-group text label-8">
-            <input type="text" class="form-control" [value]="chiTietNguoiDUng?.userLogin" name="userLogin" placeholder="Nhập tên đăng nhập">
             <label for="">Tên đăng nhập</label>
+            <input type="text" class="form-control" [value]="chiTietNguoiDUng?.userLogin" name="userLogin" placeholder="Nhập tên đăng nhập">
         </div>
     </div>
     <div class="col-md-12 mt-1">
         <div class="field-group text label-8">
-            <input type="text" class="form-control" [value]="chiTietNguoiDUng?.fullName" name="fullName" placeholder="Nhập họ và tên">
             <label for="">Họ và tên</label>
+            <input type="text" class="form-control" [value]="chiTietNguoiDUng?.fullName" name="fullName" placeholder="Nhập họ và tên">
         </div>
     </div>
     <div class="col-md-12  mt-1">
         <div class="field-group text label-8">
-            <input type="text" class="form-control" [value]="chiTietNguoiDUng?.phone" name="phone" placeholder="Nhập số điện thoại">
             <label for="">Số điện thoại</label>
+            <input type="text" class="form-control" [value]="chiTietNguoiDUng?.phone" name="phone" placeholder="Nhập số điện thoại">
         </div>
     </div>
     <div class="col-md-12  mt-1">
         <div class="field-group text label-8">
-            <input type="text" class="form-control" [value]="chiTietNguoiDUng?.email" name="email" placeholder="Nhập thư điện tử">
             <label for="">Thư điện tử</label>
+            <input type="text" class="form-control" [value]="chiTietNguoiDUng?.email" name="email" placeholder="Nhập thư điện tử">
         </div>
     </div>
     <!-- <div class="col-md-12  mt-1">
@@ -116,6 +116,7 @@
     </div> -->
     <div class="col-md-12  mt-1">
         <div class="field-group select" [ngClass]="modelAdd.parentId ? 'valid' : 'invalid' ">
+            <label for="">Người quản lý</label>
             <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
                 [options]="managerLists" [(ngModel)]="modelAdd.parentId" name="parentId">
                 <ng-template let-item pTemplate="selectedItem">
@@ -127,7 +128,6 @@
                     </div>
                 </ng-template>
             </p-dropdown>
-            <label for="">Người quản lý</label>
         </div>
     </div>
     <div class="col-md-12  mt-1">
@@ -164,6 +164,7 @@
   </p-header>
   <p-panel header="Nhập tên nhân viên tìm kiếm">
     <div class="field-group select label-8">
+        <label for="">Chọn tổ chức</label>
         <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
         [options]="organizes" [(ngModel)]="orgId" name="orgId"   [filter]="true">
         <ng-template let-item pTemplate="selectedItem">
@@ -175,7 +176,6 @@
             </div>
         </ng-template>
         </p-dropdown>
-        <label for="">Chọn tổ chức</label>
     </div>
     <div class="field-group text label-8">
         <p-autoComplete [(ngModel)]="valueSearchUser" name="valueSearchUser" placeholder="" [suggestions]="listUser" (onSelect)="onSelectUser($event)"

@@ -9,10 +9,10 @@
                 <div class="d-flex align-items-center">
                     <div class="filter filter-search">
                         <div class="field-group text search mb-0" [ngClass]=" query.filter ? 'valid' : 'invalid' ">
-                            <input class="input-default" type="text" autocomplete="off" id="filter"
+                            <input class="input-default" placeholder="Tìm kiếm" type="text" autocomplete="off" id="filter"
                                 (click)="op.toggle($event)" (keydown.enter)="query.offSet = 0; first = 0;getXemCongInfo()"
                                 [(ngModel)]="query.filter">
-                                <label>Tìm kiếm ...</label>
+                                <label></label>
                                 <span class="placeholder-icon" (click)="query.offSet = 0; first = 0; getXemCongInfo()">
                                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -29,20 +29,37 @@
                                     <div class="header-filter-search grid mt-1">
                                         <div class="icon col-12 pl-0" style="display: flex; flex-wrap: wrap;">
                                             <div class="col-6">
-                                                <div class="field-group date mb-0 valid">
-                                                    <p-calendar (onSelect)="getXemCongInfo()" panelStyleClass="datepicker-default" placeholder="DD/MM/YYYY"
-                                                        [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="query.fromdate" [monthNavigator]="true"
-                                                        [yearNavigator]="true" inputId="navigators" dateFormat="dd/mm/yy"
-                                                        name="fromdate"></p-calendar>
-                                                    <label>Từ ngày</label>
+                                                <div class="field-group select valid">
+                                                    <label>Công ty</label>
+                                                    <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
+                                                        [options]="listOrgRoots" [(ngModel)]="query.orgId"  (onChange)="getXemCongInfo()"
+                                                        name="orgId" [filter]="true">
+                                                        <ng-template let-item pTemplate="selectedItem">
+                                                            <span>{{item.label}}</span>
+                                                        </ng-template>
+                                                        <ng-template let-car pTemplate="item">
+                                                            <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                                                                <div style="font-size:14px;margin-top:4px">{{car.label}}</div>
+                                                            </div>
+                                                        </ng-template>
+                                                    </p-dropdown>
                                                 </div>
                                             </div>
                                             <div class="col-6">
                                                 <div class="field-group date mb-0 valid">
+                                                    <label>Từ ngày</label>
+                                                    <p-calendar (onSelect)="getXemCongInfo()" panelStyleClass="datepicker-default" placeholder="DD/MM/YYYY"
+                                                        [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="query.fromdate" [monthNavigator]="true"
+                                                        [yearNavigator]="true" inputId="navigators" dateFormat="dd/mm/yy"
+                                                        name="fromdate"></p-calendar>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="field-group date mb-0 valid">
+                                                    <label>Đến ngày</label>
                                                     <p-calendar (onSelect)="getXemCongInfo()" panelStyleClass="datepicker-default" placeholder="DD/MM/YYYY"
                                                         [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="query.todate" [monthNavigator]="true"  inputId="navigators" dateFormat="dd/mm/yy"
                                                         name="todate"></p-calendar>
-                                                    <label>Đến ngày</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -51,6 +68,7 @@
                                                     style="font-size: 13px;color: orange;"></span></label>
                                             <p-button label="Tìm kiếm" styleClass="mr-1" icon="pi pi-search" (click)="getXemCongInfo()">
                                             </p-button>
+                                            
                                             <p-button label="Làm mới" icon="pi pi-times" (click)="cancel()"
                                                 styleClass="p-button-secondary">
                                             </p-button>

@@ -8,10 +8,9 @@
                 <div class="d-flex align-items-center">
                     <div class="filter filter-search">
                         <div class="field-group text search mb-0" [ngClass]=" query.filter ? 'valid' : 'invalid' ">
-                            <input class="input-default" type="text" autocomplete="off" id="filter"
+                            <input placeholder="Vị trí, chuyển môn ..." class="input-default" type="text" autocomplete="off" id="filter"
                                 (click)="op.toggle($event)" (keydown.enter)="query.offSet = 0; first = 0;load()"
                                 [(ngModel)]="query.filter">
-                                <label>Vị trí, chuyển môn ...</label>
                                 <span class="placeholder-icon" (click)="query.offSet = 0; first = 0; load()">
                                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -29,6 +28,7 @@
                                         <div class="icon col-12 pl-0" style="display: flex; flex-wrap: wrap;">
                                             <div class="col-6">
                                                 <div class="field-group select valid">
+                                                    <label>Tổ chức</label>
                                                     <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
                                                     (onChange)="handleChangeOrganize()"
                                                     [options]="organizes" [(ngModel)]="query.organizeId" name="organizeId" [filter]="true">
@@ -41,19 +41,19 @@
                                                         </div>
                                                     </ng-template>
                                                     </p-dropdown>
-                                                    <label>Tổ chức</label>
                                                 </div>
                                             </div>
                                            
                                             <div class="col-6">
                                                 <div class="field-group select mb-0 label-8">
+                                                    <label>Bộ phận</label>
                                                     <p-treeSelect [filterInputAutoFocus]="true" [filter]="true" [metaKeySelection]="false" [(ngModel)]="query.orgId" [ngClass]="[ departmentFiltes.length <= 0 ? 'tree-empty' : '' ]" [options]="departmentFiltes" selectionMode="single" name="orgId"
                                                     (onNodeSelect)="onChangeTree($event)" placeholder="Chọn phòng ban"></p-treeSelect>
-                                                    <label>Bộ phận</label>
                                                 </div>
                                             </div>
                                             <div class="col-6">
                                                 <div class="field-group select valid">
+                                                    <label>Lịch làm việc</label>
                                                     <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"  (onChange)="find()"
                                                         [options]="listWorkCds" [(ngModel)]="query.work_cd" name="work_cd" [filter]="true">
                                                         <ng-template let-item pTemplate="selectedItem">
@@ -65,11 +65,11 @@
                                                         </div>
                                                         </ng-template>
                                                     </p-dropdown>
-                                                <label>Lịch làm việc</label>
                                                 </div>
                                             </div>
                                             <div class="col-6">
                                                 <div class="field-group select valid">
+                                                    <label>Trạng thái</label>
                                                     <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"  (onChange)="find()"
                                                     [options]="listAppSt" [(ngModel)]="query.app_st" name="app_st" [filter]="true">
                                                     <ng-template let-item pTemplate="selectedItem">
@@ -81,11 +81,11 @@
                                                     </div>
                                                     </ng-template>
                                                 </p-dropdown>
-                                                <label>Trạng thái</label>
                                                 </div>
                                             </div>
                                             <div class="col-6">
                                                 <div class="field-group select valid">
+                                                    <label>Loại thời gian</label>
                                                     <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"  (onChange)="find()"
                                                         [options]="listIsFlexible" [(ngModel)]="query.is_flexible" name="is_flexible" [filter]="true">
                                                         <ng-template let-item pTemplate="selectedItem">
@@ -97,7 +97,6 @@
                                                         </div>
                                                         </ng-template>
                                                     </p-dropdown>
-                                                <label>Loại thời gian</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -149,6 +148,7 @@
    <div class="grid ">
     <div class="col-5">
         <div class="field-group select mb-0 label-8">
+            <label>Lịch làm việc</label>
             <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"  (onChange)="find()"
                 [options]="listWorkCds" [(ngModel)]="modelChangeStatus.work_cd" name="work_cd" [filter]="true">
                 <ng-template let-item pTemplate="selectedItem">
@@ -160,18 +160,17 @@
                 </div>
                 </ng-template>
             </p-dropdown>
-        <label>Lịch làm việc</label>
     </div>
     </div>
     <div class="col-5">
         <div class="field-group date mb-0">
+            <label>Ngày áp dụng</label>
             <p-calendar
             panelStyleClass="datepicker-default" 
             placeholder="DD/MM/YYYY" [appendTo]="'body'" [baseZIndex]="101"
             [(ngModel)]="modelChangeStatus.start_dt" [monthNavigator]="true" [yearNavigator]="true"
             yearRange="2010:2030" inputId="navigators"
             dateFormat="dd/mm/yy" name="start_dt"></p-calendar>
-            <label>Ngày áp dụng</label>
         </div>
     </div>
     <div class="col-2">
@@ -196,6 +195,7 @@
     <div class="grid ">
         <div class="col-4">
             <div class="field-group select mb-0 label-8">
+                <label>Lịch làm việc</label>
                 <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
                     [options]="listWorkCds" [(ngModel)]="modelChangeStatus.work_cd" name="work_cd" [filter]="true">
                     <ng-template let-item pTemplate="selectedItem">
@@ -207,18 +207,17 @@
                     </div>
                     </ng-template>
                 </p-dropdown>
-            <label>Lịch làm việc</label>
         </div>
         </div>
         <div class="col-3">
             <div class="field-group date mb-0">
+                <label>Ngày áp dụng</label>
                 <p-calendar
                 panelStyleClass="datepicker-default" 
                 placeholder="DD/MM/YYYY" [appendTo]="'body'" [baseZIndex]="101"
                 [(ngModel)]="modelChangeStatus.start_dt" [monthNavigator]="true" [yearNavigator]="true"
                 yearRange="2010:2030" inputId="navigators"
                 dateFormat="dd/mm/yy" name="start_dt"></p-calendar>
-                <label>Ngày áp dụng</label>
             </div>
         </div>
         <div class="col-1">

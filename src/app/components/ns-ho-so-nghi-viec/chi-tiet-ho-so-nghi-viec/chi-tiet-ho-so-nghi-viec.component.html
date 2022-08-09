@@ -67,8 +67,8 @@
             <app-edit-detail [isViewButtonTop] = "true" *ngIf="listViewsFormEmp.length> 0" [detail]="detailInfoEmp" [manhinh]="manhinh" [thongtinnhanvienNew]="true" [dataView]="listViewsFormEmp" (callback)="handleRehire($event)" (callbackcancel)="cancelRehire($event)"></app-edit-detail>
             <div class="col-md-6 mt-1">
                 <div class="field-group text" [ngClass]=" modelDuyet.full_name ? 'valid' : 'invalid' ">
-                    <input type="text" [value]="modelDuyet.full_name || 'No name'" disabled name="full_name" class="form-control">
                     <label for="">Nhân viên</label>
+                    <input type="text" [value]="modelDuyet.full_name || 'No name'" disabled name="full_name" class="form-control">
                 </div>
             </div>
             <div class="col-md-6 mt-1 ">

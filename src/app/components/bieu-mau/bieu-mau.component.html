@@ -9,10 +9,9 @@
                 <div class="d-flex align-items-center">
                     <div class="filter filter-search">
                         <div class="field-group text search mb-0" [ngClass]=" query.filter ? 'valid' : 'invalid' ">
-                            <input class="input-default" type="text" autocomplete="off" id="filter"
+                            <input placeholder="Tìm kiếm" class="input-default" type="text" autocomplete="off" id="filter"
                                 (click)="op.toggle($event)" (keydown.enter)="query.offSet = 0; first = 0;load()"
                                 [(ngModel)]="query.filter">
-                                <label>Vị trí, chuyển môn ...</label>
                                 <span class="placeholder-icon" (click)="query.offSet = 0; first = 0; load()">
                                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -30,21 +29,21 @@
                                         <div class="icon col-12 pl-0" style="display: flex; flex-wrap: wrap;">
                                             <div class="col-6">
                                                 <div class="field-group select valid">
+                                                    <label>Loại tài liệu</label>
                                                     <p-treeSelect [(ngModel)]="query.typeForm"  
                                                     appendTo="body" 
                                                     [options]="formTypes" 
                                                     (onNodeSelect)="selectedNode11($event)"
                                                    ></p-treeSelect>
-                                                    <label>Loại tài liệu</label>
                                                 </div>
                                             </div>
                                             <div class="col-6">
                                                 <div class="field-group date mb-0" [ngClass]="query.createDate ? 'valid' : 'invalid' ">
+                                                    <label>Ngày tạo</label>
                                                     <p-calendar 
                                                         [(ngModel)]="query.createDate" 
                                                         inputId="icon" 
                                                         (onSelect)="find()"></p-calendar>
-                                                    <label>Ngày tạo</label>
                                                     <span class="icon">
                                                         <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                             <path d="M14.1143 1.89648C14.1143 1.3442 13.6665 0.896484 13.1143 0.896484C12.562 0.896484 12.1143 1.3442 12.1143 1.89648L12.1143 4.89648C12.1143 5.44877 12.562 5.89648 13.1143 5.89648C13.6665 5.89648 14.1143 5.44877 14.1143 4.89648L14.1143 1.89648Z" fill="#99A2BC"/>

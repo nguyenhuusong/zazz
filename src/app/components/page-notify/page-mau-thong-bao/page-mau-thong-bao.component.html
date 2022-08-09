@@ -7,10 +7,10 @@
         <div class="table-tool grid white-background black-box-shadow-005 filterInput">
             <div class="header-filter-search col-4 ">
                 <div class="field-group text search mb-0" [ngClass]=" query.filter ? 'valid' : 'invalid' ">
+                    <label>Tên mẫu ...</label>
                     <input class="input-default" type="text" id="filter"
                         (keydown.enter)="query.offSet = 0; first = 0;load()"
                         [(ngModel)]="query.filter">
-                    <label>Tên mẫu ...</label>
                     <svg class="placeholder-icon" width="16" height="16" viewBox="0 0 16 16" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd"

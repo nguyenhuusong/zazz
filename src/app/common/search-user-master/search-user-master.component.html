@@ -4,6 +4,7 @@
             <div class="p-inputgroup">
                 <div class="col-5 pt-0 pb-0">
                     <div class="field-group select label-8">
+                        <label>Tìm kiếm theo</label>
                         <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" [options]="listTypeCustomer"
                             [required] (onChange)="changeKeyType($event)" [(ngModel)]="modelSearchOrder.keyType" name="keyType"
                             [filter]="true">
@@ -18,14 +19,13 @@
                                 </div>
                             </ng-template>
                         </p-dropdown>
-                        <label>Tìm kiếm theo</label>
                     </div>
                 </div>
                 <div class="col-5 pt-0 pb-0">
                     <div class="field-group text label-8">
+                        <label>{{detailType?.label}}</label>
                         <input style="width: 100%" type="text" pInputText placeholder="Nhập {{detailType?.label}}"
                             [(ngModel)]="modelSearchOrder.filter">
-                            <label>{{detailType?.label}}</label>
                         </div>
                 </div>
                 <div class="col-2 p-0">
@@ -59,6 +59,7 @@
             <div class="p-inputgroup">
                 <div class="col-5 pt-0 pb-0">
                     <div class="field-group select label-8">
+                        <label>Tìm kiếm theo</label>
                         <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" [options]="listTypeCustomerCorp"
                             [required] (onChange)="changeKeyType($event)" [(ngModel)]="modelSearchOrder.keyType" name="keyType"
                             [filter]="true">
@@ -72,14 +73,13 @@
                                 </div>
                             </ng-template>
                         </p-dropdown>
-                        <label>Tìm kiếm theo</label>
                     </div>
                 </div>
                 <div class="col-5 pt-0 pb-0">
                     <div class="field-group text label-8">
+                            <label>{{detailType?.label}}</label>
                         <input style="width: 100%" type="text" pInputText placeholder="Nhập {{detailType?.label}}"
                             [(ngModel)]="modelSearchOrder.filter">
-                            <label>{{detailType?.label}}</label>
                     </div>
                 </div>
                 <div class="col-2 p-0">

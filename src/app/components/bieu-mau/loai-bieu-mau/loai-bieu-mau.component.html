@@ -42,10 +42,10 @@
             <div class="grid filter">
                 <div class="header-filter-search x-2">
                     <div class="field-group valid text search mb-0">
+                        <label>Tìm kiếm</label>
                         <input class="input-default" placeholder="Tìm kiếm theo mã, tên loại tài liệu" type="text" id="filter"
                             (keydown.enter)="query.offSet = 0; first = 0;load()"
                             [(ngModel)]="query.filter">
-                        <label>Tìm kiếm</label>
                         <span class="placeholder-icon" (click)="query.offSet = 0; first = 0; load()">
                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -80,8 +80,8 @@
                 </div>
                 <div class="x-1">
                     <div class="field-group date mb-0" [ngClass]="query.createDate ? 'valid' : 'invalid' ">
-                        <p-calendar [(ngModel)]="query.createDate" name = "createDate" inputId="icon" (onSelect)="find()"></p-calendar>
                         <label>Ngày tạo</label>
+                        <p-calendar [(ngModel)]="query.createDate" name = "createDate" inputId="icon" (onSelect)="find()"></p-calendar>
                         <span class="icon">
                             <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M14.1143 1.89648C14.1143 1.3442 13.6665 0.896484 13.1143 0.896484C12.562 0.896484 12.1143 1.3442 12.1143 1.89648L12.1143 4.89648C12.1143 5.44877 12.562 5.89648 13.1143 5.89648C13.6665 5.89648 14.1143 5.44877 14.1143 4.89648L14.1143 1.89648Z" fill="#99A2BC"/>

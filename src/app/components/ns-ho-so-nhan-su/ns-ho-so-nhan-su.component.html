@@ -4,15 +4,14 @@
         <div class="bread-filter">
             <div class="d-flex bet end middle">
                 <div>
-                    <app-hrm-breadcrumb [items]="items"></app-hrm-breadcrumb>
+                    <app-hrm-breadcrumb [displayTitle]="true" [items]="items"></app-hrm-breadcrumb>
                 </div>
                 <div class="d-flex align-items-center">
                     <div class="filter filter-search">
                         <div class="field-group text search mb-0" [ngClass]=" query.filter ? 'valid' : 'invalid' ">
-                            <input class="input-default" type="text" autocomplete="off" id="filter"
+                            <input class="input-default" placeholder="Vị trí, chuyển môn ..." type="text" autocomplete="off" id="filter"
                                 (click)="op.toggle($event)" (keydown.enter)="query.offSet = 0; first = 0;load()"
                                 [(ngModel)]="query.filter">
-                                <label>Vị trí, chuyển môn ...</label>
                                 <span class="placeholder-icon" (click)="query.offSet = 0; first = 0; load()">
                                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -30,6 +29,7 @@
                                         <div class="icon col-12 pl-0" style="display: flex; flex-wrap: wrap;">
                                             <div class="col-12">
                                                 <div class="field-group select valid">
+                                                    <label>Trạng thái</label>
                                                     <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
                                                     [options]="employeeStatus" [(ngModel)]="query.emp_st" name="emp_st"
                                                     (onChange)="find()" [filter]="true">
@@ -42,7 +42,6 @@
                                                         </div>
                                                     </ng-template>
                                                     </p-dropdown>
-                                                    <label>Trạng thái</label>
                                                 </div>
                                             </div>
                                            
@@ -61,26 +60,28 @@
                             </p-overlayPanel>
                         </div>
                     </div>
-                    <div class="select-ori mr-1 ml-1">
-                        <div class="name">
-                            <div class="field-group select mb-0 valid height-56" [ngClass]="">
-                                <p-dropdown panelStyleClass="select-ori-panel" placeholder="Chọn tổ chức" appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
-                                    [options]="organs" [(ngModel)]="query.orgId" name="orgId" (onChange)="find()">
-                                    <ng-template let-item pTemplate="selectedItem">
-                                        <span style="vertical-align:middle;">{{item.label}}</span>
-                                    </ng-template>
-                                    <ng-template let-car pTemplate="item">
-                                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                                            <div style="">{{car.label}}</div>
-                                        </div>
-                                    </ng-template>
-                                </p-dropdown>
+                    <div class=" mr-1 ml-1">
+                        <div class="select-ori">
+                            <div class="name">
+                                <div class="field-group select mb-0 valid height-56" [ngClass]="">
+                                    <p-dropdown panelStyleClass="select-ori-panel" placeholder="Chọn tổ chức" appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
+                                        [options]="organs" [(ngModel)]="query.orgId" name="orgId" (onChange)="find()">
+                                        <ng-template let-item pTemplate="selectedItem">
+                                            <span style="vertical-align:middle;">{{item.label}}</span>
+                                        </ng-template>
+                                        <ng-template let-car pTemplate="item">
+                                            <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                                                <div style="">{{car.label}}</div>
+                                            </div>
+                                        </ng-template>
+                                    </p-dropdown>
+                                </div>
                             </div>
-                        </div>
-                        <div class="dia" (click)="hrDiagram()">
-                            <svg width="22" height="19" viewBox="0 0 22 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M11 0C8.92893 0 7.25 1.67148 7.25 3.73335C7.25 5.54325 8.54366 7.05234 10.2606 7.39415V10.5496H4.49291C4.29682 10.5496 4.10876 10.6272 3.9701 10.7652C3.83144 10.9033 3.75354 11.0905 3.75354 11.2857V14.8684H1.23937C1.04328 14.8684 0.855215 14.946 0.716557 15.084C0.577898 15.2221 0.5 15.4093 0.5 15.6045V17.7639C0.5 17.9591 0.577898 18.1464 0.716557 18.2844C0.855215 18.4224 1.04328 18.5 1.23937 18.5C1.43546 18.5 1.62353 18.4224 1.76218 18.2844C1.90084 18.1464 1.97874 17.9591 1.97874 17.7639V16.3406H7.00709V17.7639C7.00709 17.9591 7.08498 18.1464 7.22364 18.2844C7.3623 18.4224 7.55036 18.5 7.74646 18.5C7.94255 18.5 8.13061 18.4224 8.26927 18.2844C8.40793 18.1464 8.48583 17.9591 8.48583 17.7639V15.6045C8.48583 15.4093 8.40793 15.2221 8.26927 15.084C8.13061 14.946 7.94255 14.8684 7.74646 14.8684H5.23229V12.0218H16.7677V14.8684H14.2535C14.0575 14.8684 13.8694 14.946 13.7307 15.084C13.5921 15.2221 13.5142 15.4093 13.5142 15.6045V17.7639C13.5142 17.9591 13.5921 18.1464 13.7307 18.2844C13.8694 18.4224 14.0575 18.5 14.2535 18.5C14.4496 18.5 14.6377 18.4224 14.7764 18.2844C14.915 18.1464 14.9929 17.9591 14.9929 17.7639V16.3406H20.0213V17.7639C20.0213 17.9591 20.0992 18.1464 20.2378 18.2844C20.3765 18.4224 20.5645 18.5 20.7606 18.5C20.9567 18.5 21.1448 18.4224 21.2834 18.2844C21.4221 18.1464 21.5 17.9591 21.5 17.7639V15.6045C21.5 15.4093 21.4221 15.2221 21.2834 15.084C21.1448 14.946 20.9567 14.8684 20.7606 14.8684H18.2465V11.2857C18.2465 11.0905 18.1686 10.9033 18.0299 10.7652C17.8912 10.6272 17.7032 10.5496 17.5071 10.5496H11.7394V7.39415C13.4563 7.05234 14.75 5.54325 14.75 3.73335C14.75 1.67148 13.0711 0 11 0Z" fill="#0979FD"/>
-                            </svg>
+                            <div class="dia" (click)="hrDiagram()">
+                                <svg width="22" height="19" viewBox="0 0 22 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M11 0C8.92893 0 7.25 1.67148 7.25 3.73335C7.25 5.54325 8.54366 7.05234 10.2606 7.39415V10.5496H4.49291C4.29682 10.5496 4.10876 10.6272 3.9701 10.7652C3.83144 10.9033 3.75354 11.0905 3.75354 11.2857V14.8684H1.23937C1.04328 14.8684 0.855215 14.946 0.716557 15.084C0.577898 15.2221 0.5 15.4093 0.5 15.6045V17.7639C0.5 17.9591 0.577898 18.1464 0.716557 18.2844C0.855215 18.4224 1.04328 18.5 1.23937 18.5C1.43546 18.5 1.62353 18.4224 1.76218 18.2844C1.90084 18.1464 1.97874 17.9591 1.97874 17.7639V16.3406H7.00709V17.7639C7.00709 17.9591 7.08498 18.1464 7.22364 18.2844C7.3623 18.4224 7.55036 18.5 7.74646 18.5C7.94255 18.5 8.13061 18.4224 8.26927 18.2844C8.40793 18.1464 8.48583 17.9591 8.48583 17.7639V15.6045C8.48583 15.4093 8.40793 15.2221 8.26927 15.084C8.13061 14.946 7.94255 14.8684 7.74646 14.8684H5.23229V12.0218H16.7677V14.8684H14.2535C14.0575 14.8684 13.8694 14.946 13.7307 15.084C13.5921 15.2221 13.5142 15.4093 13.5142 15.6045V17.7639C13.5142 17.9591 13.5921 18.1464 13.7307 18.2844C13.8694 18.4224 14.0575 18.5 14.2535 18.5C14.4496 18.5 14.6377 18.4224 14.7764 18.2844C14.915 18.1464 14.9929 17.9591 14.9929 17.7639V16.3406H20.0213V17.7639C20.0213 17.9591 20.0992 18.1464 20.2378 18.2844C20.3765 18.4224 20.5645 18.5 20.7606 18.5C20.9567 18.5 21.1448 18.4224 21.2834 18.2844C21.4221 18.1464 21.5 17.9591 21.5 17.7639V15.6045C21.5 15.4093 21.4221 15.2221 21.2834 15.084C21.1448 14.946 20.9567 14.8684 20.7606 14.8684H18.2465V11.2857C18.2465 11.0905 18.1686 10.9033 18.0299 10.7652C17.8912 10.6272 17.7032 10.5496 17.5071 10.5496H11.7394V7.39415C13.4563 7.05234 14.75 5.54325 14.75 3.73335C14.75 1.67148 13.0711 0 11 0Z" fill="#0979FD"/>
+                                </svg>
+                            </div>
                         </div>
                     </div>
                     <!-- <p-button styleClass="p-button-sm mr-1 ml-1 height-56" icon="pi pi-plus" label="Thêm mới" (click)="addJob()"></p-button> -->
@@ -102,15 +103,6 @@
            
         </div>
         <div class="grid-default" #container>
-            <div class="paginator">
-                <span>Từ {{ countRecord.currentRecordStart }} đến
-                    {{ countRecord.currentRecordEnd }}
-                    trên tổng số
-                    {{ countRecord.totalRecord }} kết quả</span>
-                <p-paginator [rows]="query.pageSize" [totalRecords]="countRecord.totalRecord" [first]="first"
-                    (onPageChange)="paginate($event)" [rowsPerPageOptions]="[15,30,45,100,200,{ showAll: 'ALL' }]">
-                </p-paginator>
-            </div>
             <p-button label="Chuyển tổ chức" (click)="theOrganToMove()" styleClass="move-organ" *ngIf="listDataSelect.length > 0"></p-button>
             <app-list-grid-angular *ngIf="columnDefs.length > 0" 
                 [listsData]="listsData" 
@@ -121,7 +113,15 @@
                 (callback)="rowSelected($event)"
                 >
             </app-list-grid-angular>
-           
+            <div class="paginator">
+                <span>Từ {{ countRecord.currentRecordStart }} đến
+                    {{ countRecord.currentRecordEnd }}
+                    trên tổng số
+                    {{ countRecord.totalRecord }} kết quả</span>
+                <p-paginator [rows]="query.pageSize" [totalRecords]="countRecord.totalRecord" [first]="first"
+                    (onPageChange)="paginate($event)" [rowsPerPageOptions]="[15,30,45,100,200,{ showAll: 'ALL' }]">
+                </p-paginator>
+            </div>
         </div>
     </div>
 </div>
@@ -133,6 +133,7 @@
     <div class="grid ">
         <div class="col-4">
             <div class="field-group select mb-0 label-8" [ngClass]="organizeId? 'valid': 'invalid' ">
+                <label>Tổ chức</label>
                 <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" (onChange)="getOrganizeTree()"
                     [options]="organs" [(ngModel)]="organizeId" name="organizeId" [filter]="true"
                     placeholder="Chọn tổ chức"
@@ -146,11 +147,11 @@
                         </div>
                     </ng-template>
                 </p-dropdown>
-                <label>Tổ chức</label>
             </div>
         </div>
         <div class="col-4">
             <div class="field-group select mb-0 label-8">
+                <label>Bộ phận</label>
                 <p-treeSelect  [filterInputAutoFocus]="true" [filter]="true" [metaKeySelection]="false"
                     [(ngModel)]="aDepartment" 
                     [ngClass]="[ departmentFiltes.length <= 0 ? 'tree-empty' : '' ]" 
@@ -160,7 +161,6 @@
                     (onNodeSelect)="onChangeTreeDepart($event)"
                     placeholder="Chọn phòng ban">
                 </p-treeSelect>
-                <label>Bộ phận</label>
             </div>
         </div>
         <div class="col-2">

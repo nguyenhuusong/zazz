@@ -13,6 +13,7 @@
                 <div class="row d-flex justify-content-center">
                   <div class="col-md-6">
                     <div class="field-group select" [ngClass]="query.report_type ? 'valid' : 'invalid' ">
+                      <label for="">Loại báo cáo</label>
                       <p-dropdown appendTo="body" (onChange)="getDetailReport($event)" [baseZIndex]="100" [autoDisplayFirst]="false" [options]="listReports"
                         [(ngModel)]="query.report_type" name="report_type" [filter]="true">
                         <ng-template let-item pTemplate="selectedItem">
@@ -24,7 +25,6 @@
                           </div>
                         </ng-template>
                       </p-dropdown>
-                      <label for="">Loại báo cáo</label>
                     </div>
                   </div>
                 </div>
@@ -44,16 +44,17 @@
                       </div>
                       <div *ngIf="paramater?.param_type === 'datetime'" class="col-md-6">
                           <div class="field-group date label-8">
+                            <label for="">{{paramater?.param_name}}: </label>
                             <p-calendar placeholder="DD/MM/YYYY" appendTo="body" [baseZIndex]="101"
                               [(ngModel)]="paramater[paramater?.param_cd]" name="{{paramater?.param_cd}}"
                               [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" inputId="navigators"
                               dateFormat="dd/mm/yy" name="datereport">
                             </p-calendar>
-                            <label for="">{{paramater?.param_name}}: </label>
                           </div>
                       </div>
                       <div *ngIf="paramater?.param_type === 'object'" class="col-md-6">
                           <div class="field-group select" [ngClass]="paramater[paramater?.param_cd] ? 'valid' : 'invalid' ">
+                            <label for="">{{paramater?.param_name}}: </label>
                             <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
                               [options]="paramater.options" [(ngModel)]="paramater[paramater?.param_cd]"
                               name={{paramater.param_cd}} [filter]="true">
@@ -66,11 +67,11 @@
                                 </div>
                               </ng-template>
                             </p-dropdown>
-                            <label for="">{{paramater?.param_name}}: </label>
                           </div>
                       </div>
                       <div *ngIf="paramater?.param_type === 'multiSelect'" class="col-md-12">
                         <div class="field-group multi-select" [ngClass]="paramater[paramater?.param_cd] ? 'valid' : 'invalid' ">
+                          <label for="">{{paramater?.param_name}}: </label>
                           <p-multiSelect [options]="paramater.options" [showToggleAll]="true"  (onChange)="selectChangeMultiSelect($event, paramater.param_cd)"
                           [(ngModel)]="paramater[paramater?.param_cd]" optionLabel="name"  name={{paramater.param_cd}} [virtualScroll]="true"
                             [filter]="true" [itemSize]="34" class="multiselect-custom-virtual-scroll">
@@ -80,7 +81,6 @@
                                 </div>
                             </ng-template>
                         </p-multiSelect>
-                          <label for="">{{paramater?.param_name}}: </label>
                         </div>
                     </div>
                     </ng-container>

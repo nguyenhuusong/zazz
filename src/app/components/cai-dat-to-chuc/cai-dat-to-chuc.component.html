@@ -8,10 +8,9 @@
               <div class="d-flex align-items-center">
                   <div class="filter filter-search">
                       <div class="field-group text search mb-0" [ngClass]=" query.filter ? 'valid' : 'invalid' ">
-                          <input class="input-default" type="text" autocomplete="off" id="filter"
+                          <input placeholder="Tìm kiếm" class="input-default" type="text" autocomplete="off" id="filter"
                               (click)="op.toggle($event)" (keydown.enter)="query.offSet = 0; first = 0;load()"
                               [(ngModel)]="query.filter">
-                              <label>Vị trí, chuyển môn ...</label>
                               <span class="placeholder-icon" (click)="query.offSet = 0; first = 0; load()">
                                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
                                       xmlns="http://www.w3.org/2000/svg">
@@ -111,7 +110,7 @@
     </p-header>
     <div class=" col-md-12 mt-1">
       <div class="field-group treeselect select label-8" > 
-    
+        <label for="">Tổ chức</label>
           <p-dropdown appendTo="body"  [baseZIndex]="100" 
           [options]="organizes" [(ngModel)]="modeAgencyOrganize.organizeId" [disabled]="true" (onChange)="getOrganizeList($event.query)" name="organizeId" [filter]="true">
           <ng-template let-item pTemplate="selectedItem">
@@ -123,11 +122,11 @@
             </div>
           </ng-template>
         </p-dropdown>
-        <label for="">Tổ chức</label>
       </div>
     </div>
     <div class=" col-md-12 mt-1">
       <div class="field-group treeselect select label-8" >
+        <label for="">Trực thuộc</label>
           <p-treeSelect [(ngModel)]="selectedNodeTree" [filterInputAutoFocus]="true" [filter]="true" [metaKeySelection]="false" [options]="listOrganizeTree" (onNodeSelect)="onNodeSelectAdd($event)"
           selectionMode="single" placeholder="Select Item"></p-treeSelect>
           <!-- <p-dropdown appendTo="body" [disabled]="titleForm.value === 'Add'" *ngIf="titleForm.value === 'Add'"  [baseZIndex]="100" 
@@ -141,11 +140,11 @@
             </div>
           </ng-template>
         </p-dropdown> -->
-        <label for="">Trực thuộc</label>
       </div>
     </div>
     <div class=" col-md-12 mt-1">
       <div class="field-group select" [ngClass]=" modeAgencyOrganize.org_level ? 'valid' : 'invalid' ">
+        <label for="">Phân cấp</label>
           <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" [required]
           [options]="organizeLevelList"  [(ngModel)]="modeAgencyOrganize.org_level" name="org_level" [filter]="true">
           <ng-template let-item pTemplate="selectedItem">
@@ -157,11 +156,11 @@
             </div>
           </ng-template>
         </p-dropdown>
-        <label for="">Phân cấp</label>
       </div>
     </div>
     <div class=" col-md-12 mt-1">
       <div class="field-group select" [ngClass]=" modeAgencyOrganize.de_cd ? 'valid' : 'invalid' ">
+        <label for="">Danh sách phòng ban</label>
         <p-dropdown appendTo="body" (onChange)="selectDepartment($event)" [baseZIndex]="100" [autoDisplayFirst]="false"
           [options]="departments" [required] [(ngModel)]="modeAgencyOrganize.de_cd" name="de_cd" [filter]="true">
           <ng-template let-item pTemplate="selectedItem">
@@ -173,7 +172,6 @@
             </div>
           </ng-template>
         </p-dropdown>
-        <label for="">Danh sách phòng ban</label>
       </div>
     </div>
     <!-- <div class=" col-md-12 mt-1">
@@ -184,8 +182,8 @@
     </div> -->
     <div class=" col-md-12 mt-1">
         <div class="field-group text" [ngClass]=" modeAgencyOrganize.org_name ? 'valid' : 'invalid' ">
-          <input type="text" [(ngModel)]="modeAgencyOrganize.org_name" name="org_name" class="form-control">
           <label for="">Tên phòng ban  <span style="color:red" >*</span></label>
+          <input type="text" [(ngModel)]="modeAgencyOrganize.org_name" name="org_name" class="form-control">
         </div>
     </div>
    

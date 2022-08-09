@@ -9,10 +9,9 @@
                 <div class="d-flex align-items-center">
                     <div class="filter filter-search">
                         <div class="field-group text search mb-0" [ngClass]=" query.filter ? 'valid' : 'invalid' ">
-                            <input class="input-default" type="text" autocomplete="off" id="filter"
+                            <input placeholder="Vị trí, chuyển môn ..." class="input-default" type="text" autocomplete="off" id="filter"
                                 (click)="op.toggle($event)" (keydown.enter)="query.offSet = 0; first = 0;load()"
                                 [(ngModel)]="query.filter">
-                                <label>Vị trí, chuyển môn ...</label>
                                 <span class="placeholder-icon" (click)="query.offSet = 0; first = 0; load()">
                                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -30,6 +29,7 @@
                                         <div class="icon col-12 pl-0" style="display: flex; flex-wrap: wrap;">
                                             <div class="col-6">
                                                 <div class="field-group select valid">
+                                                    <label>Trạng thái</label>
                                                     <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
                                                     [options]="employeeStatus" [(ngModel)]="query.status" name="status"
                                                     (onChange)="find()" [filter]="true">
@@ -42,7 +42,6 @@
                                                         </div>
                                                     </ng-template>
                                             </p-dropdown>
-                                            <label>Trạng thái</label>
                                                 </div>
                                             </div>
                                        
@@ -106,8 +105,8 @@
     [draggable]="false" [resizable]="false">
     <div class="col-md-12 mt-1" style="padding: 0"> 
         <div class="field-group multi-select" [ngClass]=" modelPheDuyet.status_key ? 'valid' : 'invalid' ">
-            <p-multiSelect [autoZIndex]="true" [options]="listTerminateKey" [(ngModel)]="modelPheDuyet.status_key" optionLabel="name"></p-multiSelect>
             <label for="">status_key</label>
+            <p-multiSelect [autoZIndex]="true" [options]="listTerminateKey" [(ngModel)]="modelPheDuyet.status_key" optionLabel="name"></p-multiSelect>
         </div>
     </div>
     <!-- <div class="col-md-12 mt-1" style="padding: 0">
@@ -128,10 +127,10 @@
     </div> -->
     <div class="col-md-12 mt-1" style="padding: 0">
         <div class="field-group date valid">
+            <label for="">Ngày xác nhận</label>
             <p-calendar placeholder="DD/MM/YYYY" appendTo="body" [baseZIndex]="101" [(ngModel)]="modelPheDuyet.status_dt"
                 [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" inputId="navigators"
                 dateFormat="dd/mm/yy" name="status_dt"></p-calendar>
-                <label for="">Ngày xác nhận</label>
             </div>
     </div>
 
@@ -157,8 +156,8 @@
     (callback)="xacNhanTuyenDungLai($event)" (callbackcancel)="displayDialog = !displayDialog"></app-edit-detail>
     <div class="col-md-6 mt-1">
         <div class="field-group text" [ngClass]="modelDuyet?.full_name ? 'valid' : 'invalid' ">
-            <input type="text" [value]="modelDuyet?.full_name || 'No name'" disabled name="full_name" class="form-control">
             <label for="">Nhân viên</label>
+            <input type="text" [value]="modelDuyet?.full_name || 'No name'" disabled name="full_name" class="form-control">
         </div>
     </div>
     <div class="col-md-6 mt-1 ">

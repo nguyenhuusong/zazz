@@ -1,14 +1,14 @@
 // @import "primeng/resources/themes/md-light-indigo/theme.css";
 :root {
 
-    --body-backgound: #F8F9FA;
+    --body-backgound: #fff;
 
     --surface-ground:#ffffff;
     --text-color: #212633;
-    --main-background: #0979FD;
+    --main-background: #182850;
     --main-background-hover: #0868d9;
     --color-with-background: #ffffff;
-    --main-color: #0979FD;
+    --main-color: #4C97E4;
     --white-background: #ffffff;
     --orange-background: #FF7C59;
 
@@ -102,18 +102,18 @@ body{
                     .p-menuitem-icon{
                         color: var(--525B73);
                     }
-                    border-bottom-color: var(--main-color);
                 }
                 .p-menuitem-icon{
                     color: var(--525B73);
                 }
                 &.p-menuitem-link-active{
-                    border-bottom-color: var(--main-color);
                 }
             }
             &.parent_active{
                 &>.p-menuitem-link{
-                    border-bottom-color: var(--main-color);
+                    .p-submenu-icon{
+                        color: var(--main-color);
+                    }
                 }
             }
             &>.p-menuitem-link{
@@ -149,7 +149,7 @@ body{
                 .p-submenu-list{
                     &>li.active{
                         &>a{
-                            background: var(--main-background);
+                            background: var(--main-color);
                             .p-menuitem-text{
                                 color: var(--white-color);
                             }
@@ -174,7 +174,7 @@ body{
                 a{
                     &:focus,
                     &:hover{
-                        background: var(--main-background);
+                        background: var(--main-color);
                         span{
                             color: var(--white-color) !important;
                         }
@@ -200,7 +200,6 @@ body{
                 span{
                     color: var(--f7941e) !important;
                 }
-                border-bottom-color: var(--main-color);
             }
         }
     }
@@ -211,8 +210,7 @@ body{
         }
     }
     background: var(--white-background);
-    // box-shadow: var(--black-box-shadow-005);
-    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.05);
+    border-bottom: 3px solid #F6FBFF !important;
 }
 
 /* #p-tree */
@@ -282,7 +280,6 @@ body{
 
 /*#paginator */
 .paginator{
-    box-shadow: var(--black-box-shadow-005);
     .p-paginator-rpp-options{
         .p-dropdown-label{
             color: var(--white-color);
@@ -302,29 +299,30 @@ body{
 }
 
 /*#grid-default*/
-.grid-default{
-    box-shadow: var(--black-filter-shadow-005);
-    background: var(--white-background);
-    .ag-header{
-        border-bottom: none;
-        .ag-header-cell-text{
-            color: var(--ink-color);
-        }
-        background-color: var(--white-background) !important;
-    }
-    .ag-header-viewport{
-        filter: var(--black-filter-shadow-005);
-    }
-    .ag-root-wrapper{
-        .ag-header-row{
-         .ag-header-cell{
-            background: var(--white-background);
-            span{
-                color: var(--525B73);
-            }
-         }   
-        }
-    }
+// .grid-default{
+//     box-shadow: var(--black-filter-shadow-005);
+//     background: var(--white-background);
+//     .ag-header{
+//         border-bottom: none;
+//         .ag-header-cell-text{
+//             color: var(--ink-color);
+//         }
+//         background-color: var(--white-background) !important;
+//     }
+//     .ag-header-viewport{
+//         filter: var(--black-filter-shadow-005);
+//     }
+//     .ag-root-wrapper{
+//         .ag-header-row{
+//          .ag-header-cell{
+//             background: var(--white-background);
+//             span{
+//                 color: var(--525B73);
+//             }
+//          }   
+//         }
+//     }
+// }
 
     .ag-body-viewport{
         &::-webkit-scrollbar-track {
@@ -349,7 +347,9 @@ body{
             background: var(--BDC4D8); 
         }
     }
-}
+
+
+
 /*#scroll*/
 .ag-virtual-list-viewport,
 .p-dropdown-items-wrapper{
@@ -490,10 +490,10 @@ body{
 }
 
 .p-button{
-    background: var(--main-background)
+    background: var(--main-color)
 }
 .p-button:enabled:hover{
-    background: var(--main-background-hover);
+    background: var(--main-color);
 }
 
 .header-filter-search{

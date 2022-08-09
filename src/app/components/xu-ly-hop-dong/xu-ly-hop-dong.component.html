@@ -8,10 +8,9 @@
                 <div class="d-flex align-items-center">
                     <div class="filter filter-search">
                         <div class="field-group text search mb-0" [ngClass]=" query.filter ? 'valid' : 'invalid' ">
-                            <input class="input-default" type="text" autocomplete="off" id="filter"
+                            <input placeholder="Vị trí, chuyển môn ..." class="input-default" type="text" autocomplete="off" id="filter"
                                 (click)="op.toggle($event)" (keydown.enter)="query.offSet = 0; first = 0;load()"
                                 [(ngModel)]="query.filter">
-                                <label>Vị trí, chuyển môn ...</label>
                                 <span class="placeholder-icon" (click)="query.offSet = 0; first = 0; load()">
                                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -29,6 +28,7 @@
                                         <div class="icon col-12 pl-0" style="display: flex; flex-wrap: wrap;">
                                             <div class="col-6">
                                                 <div class="field-group select valid">
+                                                    <label for="organizeId"> Tổ chức: </label>
                                                     <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" [filter]="true"
                                                     [options]="listOrgRoots" [(ngModel)]="query.organizeId" name="organizeId"
                                                     (onChange)="getContractTypes();find()" inputId="organizeId">
@@ -41,11 +41,11 @@
                                                         </div>
                                                     </ng-template>
                                                 </p-dropdown>
-                                                <label for="organizeId"> Tổ chức: </label>
                                                 </div>
                                             </div>
                                             <div class="col-6">
                                                 <div class="field-group select label-8 valid">
+                                                    <label for=""> Trạng thái: </label>
                                                     <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" [filter]="true"
                                                     [options]="statusContracts" [(ngModel)]="query.contract_st" name="contract_st"
                                                     (onChange)="find()">
@@ -58,11 +58,11 @@
                                                         </div>
                                                     </ng-template>
                                                 </p-dropdown>
-                                                <label for=""> Trạng thái: </label>
                                                 </div>
                                             </div>
                                             <div class="col-6">
                                                 <div class="field-group select label-8 valid">
+                                                    <label for="contractTypeId"> Loại hợp đồng: </label>
                                                     <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" [filter]="true"
                                                     [options]="typeContracts" [(ngModel)]="query.contractTypeId" name="contractTypeId"
                                                     (onChange)="find()" [disabled]="!query.organizeId" inputId="contractTypeId">
@@ -75,25 +75,24 @@
                                                         </div>
                                                     </ng-template>
                                                 </p-dropdown>
-                                                <label for="contractTypeId"> Loại hợp đồng: </label>
                                                 </div>
                                             </div>
                                             <div class="col-6">
                                                 <div class="field-group date mb-0 valid">
+                                                    <label>Từ ngày</label>
                                                     <p-calendar (onSelect)="find()" panelStyleClass="datepicker-default" placeholder="DD/MM/YYYY"
                                                         [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="query.fromDate" [monthNavigator]="true"
                                                         [yearNavigator]="true" yearRange="2010:2030" inputId="navigators" dateFormat="dd/mm/yy"
                                                         name="fromDate"></p-calendar>
-                                                    <label>Từ ngày</label>
                                                 </div>
                                             </div>
                                             <div class="col-6">
                                                 <div class="field-group date mb-0 valid">
+                                                    <label>Đến ngày</label>
                                                     <p-calendar (onSelect)="find()" panelStyleClass="datepicker-default" placeholder="DD/MM/YYYY"
                                                         [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="query.toDate" [monthNavigator]="true"
                                                         [yearNavigator]="true" yearRange="2010:2030" inputId="navigators" dateFormat="dd/mm/yy"
                                                         name="toDate"></p-calendar>
-                                                    <label>Đến ngày</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -154,6 +153,7 @@
     <div class="row">
         <div class="col-md-8 mt-2">
             <div class="field-group select valid">
+                <label for="" style="z-index: 2">Danh sách máy in</label>
                 <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" [options]="listPrints"
                     [(ngModel)]="modelPrint.PrinterName" name="PrinterName">
                     <ng-template let-item pTemplate="selectedItem">
@@ -165,7 +165,6 @@
                         </div>
                     </ng-template>
                 </p-dropdown>
-                <label for="" style="z-index: 2">Danh sách máy in</label>
             </div>
         </div>
         <div class="col-md-2 mt-2">

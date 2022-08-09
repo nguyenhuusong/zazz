@@ -8,10 +8,9 @@
                 <div class="d-flex align-items-center">
                     <div class="filter filter-search">
                         <div class="field-group text search mb-0" [ngClass]=" query.filter ? 'valid' : 'invalid' ">
-                            <input class="input-default" type="text" autocomplete="off" id="filter"
+                            <input class="input-default" placeholder="Vị trí, chuyển môn ..." type="text" autocomplete="off" id="filter"
                                 (click)="op.toggle($event)" (keydown.enter)="query.offSet = 0; first = 0;load()"
                                 [(ngModel)]="query.filter">
-                                <label>Vị trí, chuyển môn ...</label>
                                 <span class="placeholder-icon" (click)="query.offSet = 0; first = 0; load()">
                                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -29,33 +28,33 @@
                                         <div class="icon col-12 pl-0" style="display: flex; flex-wrap: wrap;">
                                             <div class="col-6">
                                                 <div class="field-group select valid">
+                                                    <label>Công ty</label>
                                                     <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
-                                                    [options]="listOrgRoots" [(ngModel)]="query.organizeId"  (onChange)="find()"
-                                                    name="organizeId" [filter]="true">
-                                                    <ng-template let-item pTemplate="selectedItem">
-                                                        <span>{{item.label}}</span>
-                                                    </ng-template>
-                                                    <ng-template let-car pTemplate="item">
-                                                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                                                            <div style="font-size:14px;margin-top:4px">{{car.label}}</div>
-                                                        </div>
-                                                    </ng-template>
-                                                </p-dropdown>
-                                                <label>Công ty</label>
+                                                        [options]="listOrgRoots" [(ngModel)]="query.organizeId"  (onChange)="find()"
+                                                        name="organizeId" [filter]="true">
+                                                        <ng-template let-item pTemplate="selectedItem">
+                                                            <span>{{item.label}}</span>
+                                                        </ng-template>
+                                                        <ng-template let-car pTemplate="item">
+                                                            <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                                                                <div style="font-size:14px;margin-top:4px">{{car.label}}</div>
+                                                            </div>
+                                                        </ng-template>
+                                                    </p-dropdown>
                                                 </div>
                                             </div>
                                             <div class="col-6">
                                                 <div class="field-group text label-8 mb-0">
+                                                    <label>Tháng</label>
                                                     <input type="number" class="input-default" id="" placeholder="Tháng"
                                                         [(ngModel)]="query.month">
-                                                    <label>Tháng</label>
                                                 </div>
                                             </div>
                                             <div class="col-6">
                                                 <div class="field-group text label-8 mb-0">
+                                                    <label>Năm</label>
                                                     <input type="number" class="input-default" id="" placeholder="Năm"
                                                         [(ngModel)]="query.year">
-                                                    <label>Năm</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -73,13 +72,14 @@
                             </p-overlayPanel>
                         </div>
                     </div>
-                    <!-- <p-button styleClass="p-button-sm mr-1 ml-1 height-56" icon="pi pi-cloud-download" label="Export" (click)="Export()"></p-button> -->
-
+                    <p-button styleClass="p-button-sm mr-1 ml-1 height-56" icon="pi pi-sign-in" label="Check In/Out" (click)="ExportCheckInOut()"></p-button>
+                    <p-button styleClass="p-button-sm mr-1 ml-1 height-56" icon="pi pi-cloud-download" label="Export" (click)="Export()"></p-button>
+<!-- 
                     <p-button (click)="menuButton.toggle($event)" label="Tiện ích" icon="pi pi-cog"
                         styleClass="p-button-sm mr-1 height-56 ml-1"> </p-button>
                         
                     <p-menu [model]="itemsToolOfGrid" [appendTo]="'body'" [popup]="true"
-                    styleClass="menu-option-right mr-1" #menuButton></p-menu>
+                    styleClass="menu-option-right mr-1" #menuButton></p-menu> -->
                     
                     <p-button styleClass="p-button-sm height-56" icon="pi pi-plus" label="Cấu hình" (click)="cauhinh()"></p-button>
                 </div>

@@ -11,9 +11,8 @@
         <div class="grid filter">
           <div class="header-filter-search x-2">
               <div class="field-group text mb-0 " [ngClass]="key_car ? 'valid' : 'invalid' ">
-                  <p-autoComplete [(ngModel)]="key_car" name="key_car" [suggestions]="listCars" (onSelect)="selectedItem1($event)"
+                  <p-autoComplete placeholder="Nhập mã thẻ để tìm kiếm" [(ngModel)]="key_car" name="key_car" [suggestions]="listCars" (onSelect)="selectedItem1($event)"
                   (completeMethod)="getCardCustomers($event)" field="fullNameAndCar"></p-autoComplete>
-                  <label>Nhập mã thẻ để tìm kiếm</label> 
               </div>
               <div class="input-group-append dropdown">
               </div>

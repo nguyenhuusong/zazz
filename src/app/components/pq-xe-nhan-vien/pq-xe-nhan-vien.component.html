@@ -8,10 +8,9 @@
               <div class="d-flex align-items-center">
                   <div class="filter filter-search">
                       <div class="field-group text search mb-0" [ngClass]=" model.filter ? 'valid' : 'invalid' ">
-                          <input class="input-default" type="text" autocomplete="off" id="filter"
+                          <input placeholder="Tìm kiếm" class="input-default" type="text" autocomplete="off" id="filter"
                               (click)="op.toggle($event)" (keydown.enter)="model.offSet = 0; first = 0;load()"
                               [(ngModel)]="model.filter">
-                              <label>Vị trí, chuyển môn ...</label>
                               <span class="placeholder-icon" (click)="model.offSet = 0; first = 0; load()">
                                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
                                       xmlns="http://www.w3.org/2000/svg">
@@ -29,6 +28,7 @@
                                       <div class="icon col-12 pl-0" style="display: flex; flex-wrap: wrap;">
                                           <div class="col-6">
                                               <div class="field-group select valid">
+                                                <label  for=""> Tổ chức: </label>
                                                 <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
                                                 [options]="organizes" [(ngModel)]="model.organizeId" name="organizeId" (onChange)="handleChangeOrganize()">
                                                 <ng-template let-item pTemplate="selectedItem">
@@ -40,18 +40,18 @@
                                                     </div>
                                                 </ng-template>
                                             </p-dropdown>
-                                            <label  for=""> Tổ chức: </label>
                                               </div>
                                           </div>
                                           <div class="col-6">
                                             <div class="field-group select mb-0 label-8">
+                                              <label>Bộ phận</label>
                                                 <p-treeSelect [(ngModel)]="model.orgId" [filterInputAutoFocus]="true" [filter]="true" [metaKeySelection]="false" [ngClass]="[ departmentFiltes.length <= 0 ? 'tree-empty' : '' ]" [options]="departmentFiltes" selectionMode="single" name="orgId"
                                                 (onNodeSelect)="onChangeTree($event)" placeholder="Chọn phòng ban"></p-treeSelect>
-                                                <label>Bộ phận</label>
                                             </div>
                                         </div>
                                         <div class="col-6">
                                             <div class="field-group select valid">
+                                              <label>Trạng thái</label>
                                                 <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"  (onChange)="find()"
                                                 [options]="listStatus" [(ngModel)]="model.status" name="status" [filter]="true">
                                                 <ng-template let-item pTemplate="selectedItem">
@@ -63,7 +63,6 @@
                                                 </div>
                                                 </ng-template>
                                             </p-dropdown>
-                                            <label>Trạng thái</label>
                                             </div>
                                         </div>
                                         <div class="col-6">
@@ -157,6 +156,7 @@
       <div class="row">
       <div class="col-sm-6 form-group">
         <div class="field-group select label-8">
+          <label for="">Chọn tổ chức</label>
             <p-dropdown appendTo="body"  [baseZIndex]="100" 
                 [options]="organizesAdds" [(ngModel)]="modelTM.organizeId" [autoDisplayFirst]="false" (onChange)="getUserByPush()" name="organizeId" [filter]="true">
                 <ng-template let-item pTemplate="selectedItem">
@@ -168,11 +168,11 @@
                     </div>
                 </ng-template>
                 </p-dropdown>
-            <label for="">Chọn tổ chức</label>
         </div>
     </div>
     <div class="col-sm-6 form-group">
         <div class="field-group select" [ngClass]="modelTM.cusId ? 'valid' : 'invalid'">
+          <label for="">Nhân viên</label>
             <p-dropdown appendTo="body"  [baseZIndex]="100" 
                 [options]="listUsers" [(ngModel)]="modelTM.cusId" [autoDisplayFirst]="false" name="cusId" [filter]="true">
                 <ng-template let-item pTemplate="selectedItem">
@@ -184,7 +184,6 @@
                     </div>
                 </ng-template>
                 </p-dropdown>
-            <label for="">Nhân viên</label>
         </div>
     </div>
 
@@ -221,50 +220,50 @@
 
         <div class="col-sm-6">
           <div class="field-group select label-8">
+            <label>Loại xe</label>
             <select [disabled]="modelTM.type == 2" [(ngModel)]="modelTM.vehicleTypeIdTM" class="form-control"
               name="vehicleTypeIdTM" id="vehicleTypeIdTM" #vehicleTypeIdTM="ngModel">
               <option *ngFor="let advert of vehicleTypes; let i = index" value="{{vehicleTypes[i].vehicleTypeId}}"
                 [selected]="i==0"> {{vehicleTypes[i].vehicleTypeName}} </option>
             </select>
-            <label>Loại xe</label>
           </div>
         </div>
 
         <div class="col-sm-6">
           <div class="field-group text label-8">
+            <label>Biển số xe
+              <span style="color:red">*</span>
+            </label>
             <input type="text" class="form-control" name="vehicleNoTM" [(ngModel)]="modelTM.vehicleNoTM" id="vehicleNoTM"
               required #vehicleNoTM="ngModel" placeholder="Biển số xe">
             <div *ngIf="vehicleNoTM.errors && (vehicleNoTM.dirty || vehicleNoTM.touched)"
               class="alert-validation alert-danger">
               <div *ngIf="vehicleNoTM.errors.required">Trường này bắt buộc nhập</div>
             </div>
-            <label>Biển số xe
-              <span style="color:red">*</span>
-            </label>
           </div>
         </div>
 
         <div class="col-sm-6">
           <div class="field-group text label-8">
+            <label>Tên xe
+              <span style="color:red">*</span>
+            </label>
             <input type="text" class="form-control" name="vehicleNameTM" [(ngModel)]="modelTM.vehicleNameTM"
               id="vehicleNameTM" required #vehicleNameTM="ngModel" placeholder="Tên xe">
             <div *ngIf="vehicleNameTM.errors && (vehicleNameTM.dirty || vehicleNameTM.touched)"
               class="alert-validation alert-danger">
               <div *ngIf="vehicleNameTM.errors.required">Trường này bắt buộc nhập</div>
             </div>
-            <label>Tên xe
-              <span style="color:red">*</span>
-            </label>
           </div>
         </div>
 
         <div class="col-sm-6">
           <div class="field-group date label-8">
             <div class="datepicker-container">
+              <label>Ngày bắt đầu</label>
               <p-calendar [(ngModel)]="modelTM.startTimeTM" appendTo="body" [baseZIndex]="100" name="startTimeTM"
                 dateFormat="dd/mm/yy"></p-calendar>
             </div>
-            <label>Ngày bắt đầu</label>
           </div>
         </div>
 
@@ -283,9 +282,9 @@
             </div>
             <div class="datepicker-container" *ngIf="showVehicleCard">
               <div class="field-group date label-8" [ngClass]="modelTM.endTimeTM ? 'valid' : 'date-invalid' ">
+                <label>Ngày hạn</label>
                 <p-calendar [(ngModel)]="modelTM.endTimeTM" appendTo="body" [baseZIndex]="100" name="endTimeTM"
                   dateFormat="dd/mm/yy"></p-calendar>
-                  <label>Ngày hạn</label>
                 </div>
             </div>
         </div>
@@ -293,28 +292,28 @@
 
       <div class="col-sm-6">
         <div class="field-group text label-8">
+          <label>Màu xe
+            <!-- <span style="color:red">*</span> -->
+          </label>
           <input type="text" class="form-control" name="vehicleColorTM" [(ngModel)]="modelTM.vehicleColorTM"
             id="vehicleColorTM"  #vehicleColorTM="ngModel" placeholder="Nhập màu xe">
           <!-- required <div *ngIf="vehicleColor.errors && (vehicleColor.dirty || vehicleColor.touched)"
             class="alert-validation alert-danger">
             <div *ngIf="vehicleColor.errors.required">Trường này bắt buộc nhập</div>
           </div> -->
-          <label>Màu xe
-            <!-- <span style="color:red">*</span> -->
-          </label>
         </div>
       </div>
       <div class="col-sm-6">
         <div class="field-group textarea label-8">
+          <label>Ghi chú
+            <!-- <span style="color:red">*</span> -->
+          </label>
           <textarea class="form-control" name="noteTM" [(ngModel)]="modelTM.noteTM"
             id="noteTM"  #noteTM="ngModel" placeholder="Nhập ghi chú"></textarea>
           <!-- required <div *ngIf="vehicleColor.errors && (vehicleColor.dirty || vehicleColor.touched)"
             class="alert-validation alert-danger">
             <div *ngIf="vehicleColor.errors.required">Trường này bắt buộc nhập</div>
           </div> -->
-          <label>Ghi chú
-            <!-- <span style="color:red">*</span> -->
-          </label>
         </div>
       </div>
 
@@ -342,11 +341,11 @@
   
         <div class="col-md-12">
             <div class="field-group text label-8">
+              <label>Mã thẻ
+                <span style="color:red">*</span>
+              </label>
               <input type="text" class="form-control" name="cardCd" [(ngModel)]="modelApprove.cardCd" id="cardCd" required
                 #cardCd="ngModel" placeholder="Mã thẻ">
-                <label>Mã thẻ
-                  <span style="color:red">*</span>
-                </label>
               <div *ngIf="cardCd.errors && (cardCd.dirty || cardCd.touched)" class="alert-validation alert-danger">
                 <div *ngIf="cardCd.errors.required">Trường này bắt buộc nhập</div>
               </div>
@@ -365,9 +364,9 @@
             </div>
             <div class="datepicker-container" *ngIf="show">
               <div class="field-group date" [ngClass]="modelTM.endTime ? 'valid' : 'date-invalid' ">
+                <label>Ngày hạn</label>
                   <p-calendar [(ngModel)]="modelTM.endTime" appendTo="body" [baseZIndex]="100" name="endTime"
                     dateFormat="dd/mm/yy"></p-calendar>
-                    <label>Ngày hạn</label>
                 </div>
             </div>
         </div>

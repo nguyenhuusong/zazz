@@ -284,9 +284,9 @@ export class NsHoSoNhanSuComponent implements OnInit {
   initGrid() {
     this.columnDefs = [
       {
-        headerName: 'Stt',
+        headerName: 'STT',
         filter: '',
-        maxWidth: 90,
+        maxWidth: 120,
         pinned: 'left',
         cellRenderer: params => {
           return params.rowIndex + 1
@@ -300,7 +300,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
       },
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       {
-        headerName: 'Thao tác',
+        headerName: '...',
         filter: '',
         maxWidth: 90,
         pinned: 'right',
@@ -775,7 +775,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
     this.loadjs++
     if (this.loadjs === 5) {
       if (b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + e.clientHeight + 35;
+        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + e.clientHeight + 22;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       } else {

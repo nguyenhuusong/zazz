@@ -36,7 +36,9 @@ export class XemCongComponent implements OnInit, OnDestroy {
   columnDefs
   cols: any[];
   query = {
+    orgId: '',
     filter: '',
+    emp_st: -1,
     pageSize: 1000,
     fromdate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).add(-1,'months').format()),
     todate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).format()),
@@ -65,7 +67,8 @@ export class XemCongComponent implements OnInit, OnDestroy {
     ];
     this.url = this.activatedRoute.data['_value'].url;
     this.manhinh = 'Edit';
-      this.handleParams()
+    this.handleParams()
+    this.getOrgRoots();
   }
 
   handleParams() {
@@ -108,6 +111,8 @@ export class XemCongComponent implements OnInit, OnDestroy {
 
   cancel() {
     this.query = {
+      orgId: '',
+      emp_st: -1,
       filter: '',
       pageSize: 1000,
       fromdate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).add(-1,'months').format()),
@@ -148,6 +153,22 @@ export class XemCongComponent implements OnInit, OnDestroy {
   }
 
   setCompanyInfo(data) {
+  }
+
+  listOrgRoots = []
+  getOrgRoots() {
+    this.apiService.getOrgRoots().subscribe(results => {
+      if (results.status === 'success') {
+        this.listOrgRoots = results.data.map(d => {
+          return {
+            label: d.org_name,
+            value: `${d.orgId}`
+          }
+        });
+        this.query.orgId = this.listOrgRoots[0].value
+        this.getXemCongInfo();
+      }
+    })
   }
 
   initGrid() {

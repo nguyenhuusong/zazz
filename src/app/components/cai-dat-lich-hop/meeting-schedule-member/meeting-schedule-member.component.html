@@ -4,6 +4,7 @@
             <div class="row">
                 <div class="col-sm-3 form-group">
                     <div class="field-group select label-8">
+                        <label for="">Chọn tổ chức</label>
                         <p-dropdown appendTo="body"  [baseZIndex]="100" 
                             [options]="organizes" [(ngModel)]="modeAgencyOrganize.organizeId" [autoDisplayFirst]="false" (onChange)="getUserByPush($event.query)" name="organizeId" [filter]="true">
                             <ng-template let-item pTemplate="selectedItem">
@@ -15,11 +16,11 @@
                                 </div>
                             </ng-template>
                             </p-dropdown>
-                        <label for="">Chọn tổ chức</label>
                     </div>
                 </div>
                 <div class="col-sm-3 form-group">
                     <div class="field-group select label-8" >
+                        <label for="">Nhân viên</label>
                         <p-dropdown appendTo="body"  [baseZIndex]="100" 
                             [options]="listUsers" [(ngModel)]="modeAgencyOrganize.cusId" [autoDisplayFirst]="false" name="cusId" (onChange)="selectUser($event.query)"  [filter]="true">
                             <ng-template let-item pTemplate="selectedItem">
@@ -31,7 +32,6 @@
                                 </div>
                             </ng-template>
                             </p-dropdown>
-                        <label for="">Nhân viên</label>
                     </div>
                 </div>
                 <div class="col-sm-6 form-group text-right">

@@ -9,10 +9,10 @@
         <div class="table-tool grid white-background filterInput">
             <div class="header-filter-search x-2">
                 <div class="field-group text mb-0 search" [ngClass]="model.filter ? 'valid' : 'invalid' ">
+                  <label>Mã, tên nhóm</label>
                     <input class="input-default" type="text" id="filter"
                         (keydown.enter)="model.offset = 0; first = 0;load()"
                         [(ngModel)]="model.filter">
-                        <label>Mã, tên nhóm</label>
                         <span class="placeholder-icon" (click)="model.offSet = 0; first = 0; load()">
                           <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
                               xmlns="http://www.w3.org/2000/svg">
@@ -142,11 +142,11 @@
               </select>
           </div>
           <div class="field-group text label-8" [ngClass]="modelElevator.hardwareId ? 'valid' : 'invalid' ">
+            <label class="control-label">Mã thiết bị
+              <span style="color:red">*</span>
+            </label>
               <input type="text" class="form-control" [(ngModel)]="modelElevator.hardwareId" id="hardwareId" #hardwareId="ngModel"  required name="hardwareId"
                       placeholder="Mã thiết bị">
-                      <label class="control-label">Mã thiết bị
-                        <span style="color:red">*</span>
-                      </label>
           </div>
           <!-- <div class="form-row" style="margin:10px 0px;">
             <label class="col-sm-3 control-label">Khu thang máy

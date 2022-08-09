@@ -8,10 +8,9 @@
                 <div class="d-flex align-items-center">
                     <div class="filter filter-search">
                         <div class="field-group text search mb-0" [ngClass]=" query.filter ? 'valid' : 'invalid' ">
-                            <input class="input-default" type="text" autocomplete="off" id="filter"
+                            <input placeholder="Tìm kiếm" class="input-default" type="text" autocomplete="off" id="filter"
                                 (click)="op.toggle($event)" (keydown.enter)="query.offSet = 0; first = 0;load()"
                                 [(ngModel)]="query.filter">
-                                <label>Vị trí, chuyển môn ...</label>
                                 <span class="placeholder-icon" (click)="query.offSet = 0; first = 0; load()">
                                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -29,20 +28,21 @@
                                         <div class="icon col-12 pl-0" style="display: flex; flex-wrap: wrap;">
                                             <div class="col-6">
                                                 <div class="field-group text label-8 mb-0">
+                                                    <label>Tháng</label>
                                                     <input type="number" class="input-default" id="" placeholder="Tháng"
                                                         [(ngModel)]="query.month">
-                                                    <label>Tháng</label>
                                                 </div>
                                             </div>
                                             <div class="col-6">
                                                 <div class="field-group text label-8 mb-0">
+                                                    <label>Năm</label>
                                                     <input type="number" class="input-default" id="" placeholder="Năm"
                                                         [(ngModel)]="query.year">
-                                                    <label>Năm</label>
                                                 </div>
                                             </div>
                                             <div class="col-6">
                                                 <div class="field-group select label-8 valid">
+                                                    <label  for=""> Tổ chức: </label>
                                                         <p-dropdown placeholder="Chọn tổ chức" appendTo="body" [baseZIndex]="100" [filter]="true" [autoDisplayFirst]="false" 
                                                         [options]="orgRoots" [(ngModel)]="query.organizeId" name="organizeId" (onChange)="find()">
                                                         <ng-template let-item pTemplate="selectedItem">
@@ -54,7 +54,6 @@
                                                             </div>
                                                         </ng-template>
                                                     </p-dropdown>
-                                                    <label  for=""> Tổ chức: </label>
                                                 </div>
                                             </div>
                                         </div>
@@ -132,19 +131,20 @@
                   </ng-template>
                 </p-dropdown>(onNodeSelect)="onNodeSelectAdd($event)
                 <label for="">Phòng ban</label> -->
+          <label for="">Phòng ban</label>
                 <p-treeSelect placeholder="Chọn Phòng ban" [filterInputAutoFocus]="true" [filter]="true" [metaKeySelection]="false" appendTo="body" [(ngModel)]="querAddNewPhepBuDep.orgId" [options]="departments"
           selectionMode="single" placeholder="Select Item"></p-treeSelect>
-          <label for="">Phòng ban</label>
               </div>
           </div>
         <div class="col-2">
             <div class="field-group label-8">
+                <label>Số phép được bù</label>
                 <input class="form-control" min="1" type="number" [(ngModel)]="querAddNewPhepBuDep.annualAdd" placeholder="Nhập số phép được bù" name="annualAdd">
-                    <label>Số phép được bù</label>
             </div>
         </div>
         <div class="col-2">
             <div class="field-group select label-8">
+                <label for="">Tháng thêm phép bù</label>
                 <p-dropdown placeholder="Nhập số phép được bù" appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
                   [options]="months" [required] [(ngModel)]="querAddNewPhepBuDep.annualMonth" name="annualMonth" [filter]="true">
                   <ng-template let-item pTemplate="selectedItem">
@@ -156,7 +156,6 @@
                     </div>
                   </ng-template>
                 </p-dropdown>
-                <label for="">Tháng thêm phép bù</label>
               </div>
         </div>
         <div class="col-1">

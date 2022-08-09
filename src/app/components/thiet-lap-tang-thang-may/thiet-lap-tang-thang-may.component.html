@@ -7,10 +7,10 @@
         <div class="table-tool grid white-background black-box-shadow-005 filterInput">
             <div class="header-filter-search col-4 ">
                 <div class="field-group text search" [ngClass]="model.filter ?'valid' : 'invalid'">
+                    <label>Mã, tên nhóm</label>
                     <input class="input-default" type="text" id="filter"
                         (keydown.enter)="model.offset = 0; first = 0;load()"
                         [(ngModel)]="model.filter">
-                    <label>Mã, tên nhóm</label>
                         <svg class="placeholder-icon" width="16" height="16" viewBox="0 0 16 16" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" clip-rule="evenodd"
@@ -113,55 +113,55 @@
     <form #createElevatorfloor="ngForm" class="form-horizontal ng-pristine ng-valid ng-scope">
         <div class="box-body" style="padding:10px;">
           <div class="field-group select label-8">
+            <label class="control-label">Mã dự án
+              <span style="color:red">*</span>
+            </label>
               <select class="form-control" (change)="changeBuilding($event)" name="projectCd" [(ngModel)]="elevatorfloorModel.projectCd"
                 id="projectCd" #projectCd="ngModel">
                 <option value="">Chọn dự án</option>
                 <option *ngFor="let advert of projects; let i = index" value="{{advert.projectCd}}">
                     {{advert.projectName}} </option>
                 </select>
-                <label class="control-label">Mã dự án
-                  <span style="color:red">*</span>
-                </label>
           </div>
           <div class="field-group select label-8">
+            <label class="control-label">Tòa<span style="color:red">*</span></label>
               <select class="form-control" (change)="changebuildName($event)" name="buildCd" [(ngModel)]="elevatorfloorModel.buildCd"
                 id="buildCd" #buildCd="ngModel">
                 <option value="">Chọn tòa</option>
                 <option *ngFor="let advert of buidings; let i = index" value="{{advert.buildCd}}">
                     {{advert.buildName}} </option>
                 </select>
-                <label class="control-label">Tòa<span style="color:red">*</span></label>
           </div>
           <div class="field-group select label-8">
+            <label class="control-label">Khu vực<span style="color:red">*</span></label>
               <select class="form-control" name="buildZone" [(ngModel)]="elevatorfloorModel.buildZone"
                 id="buildZone" #buildZone="ngModel">
                 <option value="">Chọn khu vực</option>
                 <option *ngFor="let advert of buildingZones; let i = index" value="{{advert.buildZoneName}}">
                     {{advert.buildZoneName}} </option>
                 </select>
-                <label class="control-label">Khu vực<span style="color:red">*</span></label>
           </div>
           <div class="field-group select label-8">
+            <label class="control-label">Tầng
+              <span style="color:red">*</span>
+            </label>
               <select class="form-control" name="floorNumber" [(ngModel)]="elevatorfloorModel.floorNumber"
                 id="floorNumber" #floorNumber="ngModel">
                 <option value="">Chọn tầng</option>
                 <option *ngFor="let advert of floorsCreate; let i = index" value="{{advert.floorNumber}}">
                     {{advert.floorName}} </option>
                 </select>
-                <label class="control-label">Tầng
-                  <span style="color:red">*</span>
-                </label>
           </div>
           <div class="field-group select label-8">
+            <label class="control-label">Loại tầng
+              <span style="color:red">*</span>
+            </label>
               <select class="form-control" name="floorType" [(ngModel)]="elevatorfloorModel.floorType"
                     id="floorType" #floorType="ngModel">
                     <option value="">Chọn loại tầng</option>
                     <option *ngFor="let advert of floorsTypes; let i = index" value="{{advert.floorTypeName}}">
                         {{advert.floorTypeName}} </option>
                     </select>
-                    <label class="control-label">Loại tầng
-                      <span style="color:red">*</span>
-                    </label>
           </div>
           <div class="form-row text-right">
             <p-button label="Lưu lại" (click)="onSave()" styleClass="mr-2"></p-button>

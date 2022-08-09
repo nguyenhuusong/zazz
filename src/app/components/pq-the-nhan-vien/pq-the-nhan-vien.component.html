@@ -8,10 +8,9 @@
                 <div class="d-flex align-items-center">
                     <div class="filter filter-search">
                         <div class="field-group text search mb-0" [ngClass]=" model.filter ? 'valid' : 'invalid' ">
-                            <input class="input-default" type="text" autocomplete="off" id="filter"
+                            <input placeholder="Vị trí, chuyển môn ..." class="input-default" type="text" autocomplete="off" id="filter"
                                 (click)="op.toggle($event)" (keydown.enter)="model.offSet = 0; first = 0;load()"
                                 [(ngModel)]="model.filter">
-                                <label>Vị trí, chuyển môn ...</label>
                                 <span class="placeholder-icon" (click)="model.offSet = 0; first = 0; load()">
                                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -29,6 +28,7 @@
                                         <div class="icon col-12 pl-0" style="display: flex; flex-wrap: wrap;">
                                             <div class="col-6">
                                                 <div class="field-group select valid">
+                                                    <label>Tổ chức</label>
                                                     <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
                                                     (onChange)="handleChangeOrganize()"
                                                     [options]="organizes" [(ngModel)]="model.organizeId" name="organizeId" [filter]="true">
@@ -41,18 +41,18 @@
                                                         </div>
                                                     </ng-template>
                                                     </p-dropdown>
-                                                    <label>Tổ chức</label>
                                                 </div>
                                             </div>
                                             <div class="col-6">
                                                 <div class="field-group select mb-0 label-8">
+                                                    <label>Bộ phận</label>
                                                     <p-treeSelect [(ngModel)]="model.orgId" [filterInputAutoFocus]="true" [filter]="true" [metaKeySelection]="false" [ngClass]="[ departmentFiltes.length <= 0 ? 'tree-empty' : '' ]" [options]="departmentFiltes" selectionMode="single" name="orgId"
                                                     (onNodeSelect)="onChangeTree($event)" placeholder="Chọn phòng ban"></p-treeSelect>
-                                                    <label>Bộ phận</label>
                                                 </div>
                                             </div>
                                             <div class="col-6">
                                                 <div class="field-group select valid">
+                                                    <label>Trạng thái</label>
                                                     <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"  (onChange)="find()"
                                                     [options]="listStatus" [(ngModel)]="model.status" name="status" [filter]="true">
                                                     <ng-template let-item pTemplate="selectedItem">
@@ -64,7 +64,6 @@
                                                     </div>
                                                     </ng-template>
                                                 </p-dropdown>
-                                                <label>Trạng thái</label>
                                                 </div>
                                             </div>
                                             <div class="col-6">

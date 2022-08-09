@@ -11,6 +11,7 @@
             <div class="grid filter">
                 <div class="x-1"> 
                     <div class="field-group select label-8">
+                        <label  for=""> Năm: </label>
                         <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
                         [options]="arrayYear" [(ngModel)]="query.year" name="year" (onChange)="load()">
                         <ng-template let-item pTemplate="selectedItem">
@@ -22,7 +23,6 @@
                             </div>
                         </ng-template>
                     </p-dropdown>
-                    <label  for=""> Năm: </label>
                     </div>
                 </div>
             </div>

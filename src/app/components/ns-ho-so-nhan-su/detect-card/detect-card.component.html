@@ -1,6 +1,7 @@
 <div class="row">
     <div class="col-md-4">
         <div class="field-group select label-8">
+            <label>Loại giấy tờ:</label>
             <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" [disabled]="true" (onChange)="onChangeTypeCards()"
             [options]="typeCards" [(ngModel)]="custIndi.typeCard"
         name="iol_st" [filter]="true">
@@ -13,7 +14,6 @@
             </div>
         </ng-template>
             </p-dropdown>
-            <label>Loại giấy tờ:</label>
         </div>
     </div>
     <!-- <div class="col-md-3">
