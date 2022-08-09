@@ -37,6 +37,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
   @Input() paramsObject;
   @Input() detailInfo = null;
   @Input() isViewButtonTop = true;
+  @Input() optionsEdit = null;
   buttonSave = 'Update';
   @Input() optionsButtonsEdit: any = [
     { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },

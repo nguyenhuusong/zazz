@@ -302,10 +302,10 @@ export class NsHoSoNhanSuComponent implements OnInit {
       {
         headerName: '...',
         filter: '',
-        maxWidth: 90,
+        maxWidth: 64,
         pinned: 'right',
         cellRenderer: 'buttonAgGridComponent',
-        cellClass: ['border-right', 'no-auto'],
+        cellClass: ['border-right cell-action', 'no-auto'],
         cellRendererParams: (params: any) => this.showButtons(params),
         field: 'checkbox'
       }]
@@ -771,11 +771,12 @@ export class NsHoSoNhanSuComponent implements OnInit {
     const a: any = document.querySelector(".header");
     const b: any = document.querySelector(".sidebarBody");
     const c: any = document.querySelector(".bread-filter");
+    const d: any = document.querySelector(".bread-crumb");
     const e: any = document.querySelector(".paginator");
     this.loadjs++
     if (this.loadjs === 5) {
       if (b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + e.clientHeight + 22;
+        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + d.clientHeight + e.clientHeight + 34;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       } else {

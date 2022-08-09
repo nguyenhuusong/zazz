@@ -14,10 +14,11 @@
             background: #ffffff;
             padding-left: 0px;
             padding-right: 0px;
+            display: none;
         }
         .btn-group-edit-detail{
             right: 8px !important;
-            top: 0px !important;
+            top: 10px !important;
         }
         .popup-btngroup-edit-detail{
             .p-dialog-header{
@@ -28,7 +29,7 @@
                 // right: 52px !important;
                 // top: 22px !important;
                 right: 40px !important;
-                top: 23px !important;
+                top: 45px !important;
             }
         }
         .page-detail{
@@ -48,6 +49,33 @@
                 position: static;
             }
         }
+        .p-panel{
+            box-shadow: none;
+            border-radius: 0;
+        }
+        .p-panel-header{
+            padding-left: 0px;
+            padding-right: 0px;
+            .p-panel-title {
+                font-size: 20px !important;
+                font-weight: 500;
+                color: #2F3E62;
+                font-family: 'SFProTextMedium';
+                position: relative;
+                padding-left: 16px;
+                padding-top: 3px;
+                &::after{
+                    content: '';
+                    width: 4px;
+                    height: 24px;
+                    background: #4C97E4;
+                    display: block !important;
+                    position: absolute;
+                    left: 0px;
+                    top: 0px;
+                }
+            }
+        }
     }
     .xemthongtin-giayto-for-btn{
         .btn-group-edit-detail{
@@ -55,11 +83,34 @@
             top: -8px !important;
         }
     }
+    .p-panel-content{
+        padding-left: 0px;
+        padding-right: 0px;
+        padding-bottom: 0px;
+        .border-section{
+            padding: 0px;
+            .p-panel-header{
+                display: block;
+                margin-bottom: 16px;
+            }
+            .p-panel{
+                padding-left: 16px;
+                padding-right: 16px;
+                margin-bottom: 16px;
+            }
+        }
+        .avatar-c{
+            .p-image{
+                max-width: 260px;
+            }
+        }
+    }
 }
 :host::ng-deep{
     .border-section{
         &::after{
             bottom: 0px;
+            display: none;
         }
     }
     .chi-tiet-ho-so-nhan-su{
@@ -68,7 +119,74 @@
             }
         }
     }
+    .head-detail{
+        .breadcrumb{
+            margin-bottom: 16px;
+        }
+        .p-listbox{
+            border: none;
+            .p-listbox-list{
+                display: flex;
+                .p-listbox-item{
+                    position: relative;
+                    &::after{
+                        content: '';
+                        height: 2px;
+                        position: absolute;
+                        display: block;
+                        bottom: 0px;
+                        width: 100%;
+                        left: 0px;
+                    }
+                    .country-item{
+                        span{
+                            font-size: 14px;
+                            font-family: 'SFProTextRegular';
+                            line-height: 20px;
+                            font-weight: 400;
+                            color: #5D6985;
+                        }
+                    }
+                    &:hover,
+                    &.p-highlight{
+                        background: none;
+                        .country-item{
+                            span{
+                                color: #4C97E4
+                            }
+                        }
+                        &::after{
+                            background: #4C97E4;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .plr-16{
+        padding-left: 16px;
+        padding-right: 16px;
+    }
 }
-.status-line{
-    // padding-top: 20px;
+.base-info-em{
+    ul{
+        display: flex;
+        background: #F3F4F6;
+        border-radius: 4px 4px 0px 0px;
+        padding: 7px 16px 4px;
+    }
+    li{
+        font-size: 14px;
+        color: #2F3E62;
+        display: inline-block;
+        font-family: 'SFProTextRegular';
+        &.spre{
+            margin: 0px 16px;
+        }
+        .value{
+            font-family: 'SFProTextMedium';
+            font-weight: 500;
+            color: #4C97E4
+        }
+    }
 }

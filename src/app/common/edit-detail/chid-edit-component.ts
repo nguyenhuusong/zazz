@@ -704,11 +704,11 @@ export class AppTypeTextareaComponent implements OnInit {
   selector: 'app-type-datetime',
   template: `   
   <div class="field-group date valid">
+  <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
                   <p-calendar placeholder="DD/MM/YYYY" appendTo="body" [baseZIndex]="101" [disabled]="element.isDisable" (onSelect)="onChangeValue($event, element.field_name)"
                   [(ngModel)]="element.columnValue" [monthNavigator]="true" [yearNavigator]="true" (onBlur)="onChangeValue($event, element.field_name)"
                   yearRange="2000:2030" inputId="navigators" [required]="element.isRequire && element.isVisiable && !element.isEmpty"
                   dateFormat="dd/mm/yy" name={{element.field_name}}></p-calendar>
-                  <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
 
                 <div *ngIf="element.isRequire && submit && !element.columnValue"
                     class="alert-validation alert-danger">
