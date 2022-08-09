@@ -29,6 +29,36 @@
                                     <div class="header-filter-search grid mt-1">
                                         <div class="icon col-12 pl-0" style="display: flex; flex-wrap: wrap;">
                                             <div class="col-6">
+                                                <div class="field-group select valid">
+                                                    <label>Công ty</label>
+                                                    <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
+                                                        [options]="listOrgRoots" [(ngModel)]="query.organizeId" (onChange)="changeOrgani()"
+                                                        name="organizeId" [filter]="true">
+                                                        <ng-template let-item pTemplate="selectedItem">
+                                                            <span>{{item.label}}</span>
+                                                        </ng-template>
+                                                        <ng-template let-car pTemplate="item">
+                                                            <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                                                                <div style="font-size:14px;margin-top:4px">{{car.label}}</div>
+                                                            </div>
+                                                        </ng-template>
+                                                    </p-dropdown>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-6">
+                                                <div class="field-group select mb-0 label-8">
+                                                    <p-treeSelect [(ngModel)]="query.orgId" 
+                                                    [filterInputAutoFocus]="true" 
+                                                    [filter]="true" [metaKeySelection]="false" 
+                                                    [ngClass]="[ departmentFiltes.length <= 0 ? 'tree-empty' : '' ]" 
+                                                    [options]="departmentFiltes" selectionMode="single" name="orgId"
+                                                    (onNodeSelect)="onChangeTree()" placeholder="Chọn phòng ban"></p-treeSelect>
+                                                    <label>Bộ phận</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-6">
                                                 <div class="field-group date mb-0 valid">
                                                     <p-calendar (onSelect)="getXemCongInfo()" panelStyleClass="datepicker-default" placeholder="DD/MM/YYYY"
                                                         [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="query.fromdate" [monthNavigator]="true"
