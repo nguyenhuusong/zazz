@@ -491,17 +491,26 @@ export class PqXeNhanVienComponent implements OnInit {
       message: 'Bạn có chắc chắn muốn thực hiện Khóa dịch vụ gửi xe này?',
       accept: () => {
         this.apiService.lockCardVehicle(event.rowData.cardVehicleId)
-          .subscribe(results => {
-            this.load();
-            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Khóa dịch vụ gửi xe thành công' });
+          .subscribe((results : any) => {
+            if(results.status === 'success') {
+              this.load();
+              this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Khóa dịch vụ gửi xe thành công' });
+            }else {
+              this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
+            }
           }, error => this.handlerError(error));
       }
     });
   }
 
   approveCardVehicle(event): void {
-    this.apiService.approveCardVehicle(event.rowData.cardVehicleId).then(results => {
-      this.load();
+    this.apiService.approveCardVehicle(event.rowData.cardVehicleId).then((results: any) => {
+      if(results.status === 'success') {
+        this.load();
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Thành công' });
+      }else {
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
+      }
     }, error => this.handlerError(error));
   }
 
@@ -510,9 +519,14 @@ export class PqXeNhanVienComponent implements OnInit {
       message: 'Bạn có chắc chắn muốn thực hiện Mở khóa dịch vụ gửi xe này?',
       accept: () => {
         this.apiService.unlockCardVehicle(event.rowData.cardVehicleId)
-          .subscribe(results => {
-            this.load();
-            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Mở khóa dịch vụ gửi xe thành công' });
+          .subscribe((results: any) => {
+            if(results.status === 'success') {
+              this.load();
+              this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Mở khóa dịch vụ gửi xe thành công' });
+            }else {
+              this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
+            }
+           
           }, error => this.handlerError(error));
       }
     });
