@@ -434,11 +434,12 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
     const a: any = document.querySelector(".header");
     const b: any = document.querySelector(".sidebarBody");
     const c: any = document.querySelector(".bread-filter");
+    const d: any = document.querySelector(".bread-crumb");
     const e: any = document.querySelector(".paginator");
     this.loadjs++
     if (this.loadjs === 5) {
       if (b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + e.clientHeight + 35;
+        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + d.clientHeight + e.clientHeight + 25;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       } else {

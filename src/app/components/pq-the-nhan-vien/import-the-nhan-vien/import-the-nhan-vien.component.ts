@@ -78,11 +78,19 @@ export class ImportTheNhanVienComponent implements OnInit {
   }
 
   initGrid() {
-    if(this.cols){
     this.columnDefs = [
-      ...AgGridFn(this.cols.filter((d: any) => !d.isHide))
+      { headerName: 'Tên nhân viên', cellClass: [], field: 'empName'},
+      { headerName: 'Loại thẻ', cellClass: [], field: 'cardType'},
+      { headerName: 'Mã thẻ', cellClass: [], field: 'checkbox'},
+      { headerName: 'Tổ chức', cellClass: [], field: 'organizeName'},
+      { headerName: 'Số điện thoại', cellClass: [], field: 'empPhone' },
+      { headerName: 'Thư điện tử', cellClass: [], field: 'empEmail' },
+      { headerName: 'Ngày hết hạn', cellClass: [], field: 'expireDate' },
+      { headerName: 'Vé gửi xe', cellClass: [], field: 'isVehicle' },
+      { headerName: 'Tên xe', cellClass: [], field: 'vehicleName' },
+      { headerName: 'Biển số xe', cellClass: [], field: 'vehicleNo' },
+      { headerName: 'Loại xe máy', cellClass: [], field: 'vehicleType' }
     ]
-  }
    
   }
 

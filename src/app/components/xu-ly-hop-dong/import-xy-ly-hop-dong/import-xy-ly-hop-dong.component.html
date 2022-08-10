@@ -1,11 +1,14 @@
 
 
-<div class="grid main-grid">
-    <div class="col-12 right max-w-full">
-        <div class="bread-filter">
-            <div class="d-flex bet end middle">
-                <app-hrm-breadcrumb [items]="items"></app-hrm-breadcrumb>
-                <div class="d-flex middle">
+
+<div class="main-grid">
+    <section class="bread-crumb">
+      <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
+    </section>
+    <section class="bread-filter">
+        <div class="d-flex bet end bottom gap-16">
+            <div class="col-item">
+                <div class="d-flex align-items-center gap-16">
                     <p-button type="button" class="p-button-sm mr-2" (click)="toggleGrid()" icon="pi pi-th-large" pTooltip="{{isFullScreen ? 'Ẩn toàn màn hình' : 'Hiển thị toàn màn hình'}}" tooltipPosition="top"></p-button>
                     <p-button styleClass="p-button-sm mr-2" (click)="getTemfileImport()" icon="pi pi-download" label="Tải file mẫu" *ngIf="isShowUpload"></p-button>
                     <p-fileUpload mode="basic" 
@@ -17,9 +20,11 @@
                     <p-button styleClass="p-button-sm p-button-secondary" (click)="refetchFile()" icon="pi pi-times" label="làm mới" *ngIf="!isShowUpload"></p-button>
                 </div>
             </div>
-
         </div>
+    </section>
+</div>
 
+<section>
         <div class="grid-default" #container *ngIf="listsData.length > 0">
             <app-list-grid-angular  
                 [listsData]="listsData" *ngIf="columnDefs.length > 0 && heightGrid > 0"
@@ -36,8 +41,8 @@
                         {{ countRecord.totalRecord }} kết quả</span>
                 <p-paginator [rows]="query.pageSize" [totalRecords]="countRecord.totalRecord" [first]="first" (onPageChange)="paginate($event)" [rowsPerPageOptions]="[15,30,45,100,200]"></p-paginator>
             </div> -->
-        </div>
     </div>
+</section>
             
 
 

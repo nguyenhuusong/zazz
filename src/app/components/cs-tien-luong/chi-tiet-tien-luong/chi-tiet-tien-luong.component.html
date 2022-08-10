@@ -1,28 +1,31 @@
 <div class="main-grid product-detail">
-    <div class="breadcrumb">
-        <h3>{{titlePage}}</h3>
-        <p-breadcrumb [model]="items"></p-breadcrumb>
-    </div>
-   <div class="content">
+    <section>
+        <div class="breadcrumb">
+            <p-breadcrumb [model]="items"></p-breadcrumb>
+            <h3>{{titlePage}}</h3>
+        </div>
+    </section>
+    <section>
     <p-tabView [(activeIndex)]="indexTab" (onChange)="handleChange($event.index)">
         <p-tabPanel header="Thông tin chung">
               <div class="" *ngIf="detailInfo">
                   <app-edit-detail *ngIf="listViews.length> 0 && manhinh === 'Edit'" [thongtinnhanvienNew]="true"  [manhinh]="manhinh" [dataView]="listViews" (callback)="setSalaryRecordInfo($event)" (callbackcancel)="cancelUpdate($event)"></app-edit-detail>
                   <p-card styleClass="fields-section border-section"  >
                   <ng-template pTemplate="header">
-                      <div class="row d-flex">
-                          <div class="col-md-6">
-                              <div class="panel-heading" style="padding: 10px;">
-                                  <h5 class="panel-title" style="color: black; font-weight: 500;">
-                                      Ngày công <p-badge *ngIf="listsData.length > 0"
-                                        value="{{listsData.length}}" styleClass="p-mr-2">
-                                      </p-badge>
-                                  </h5>
-                              </div>
-                          </div>
-                      </div>
+                        <div class="panel-heading" >
+                            <h5 style=" font-size: 20px !important;
+                            font-weight: 500;
+                            color: #2F3E62;
+                            font-family: 'SFProTextMedium';
+                            position: relative;margin-bottom: 10px;padding-left: 0px;
+                            padding-top: 3px;">
+                                Ngày công <p-badge *ngIf="listsData.length > 0"
+                                value="{{listsData.length}}" styleClass="p-mr-2">
+                                </p-badge>
+                            </h5>
+                        </div>
                   </ng-template>
-                  <div class="grid-default" style="margin-top:-40px ;">
+                  <div class="grid-default" style="max-height: 600px; overflow: auto">
                     <app-list-grid-angular [domLayout]="'autoHeight'" [heightRow]="40" [title]="'Danh sách liên hệ'" *ngIf="listsData.length > 0"
                         [listsData]="listsData"  (FnClick)="OnClick($event)" [floatingFilter]="true"
                         [columnDefs]="columnDefs"></app-list-grid-angular>
@@ -35,14 +38,19 @@
                 <ng-template pTemplate="header">
                  <div class="row d-flex">
                     <div class="col-md-6">
-                        <div class="panel-heading" style="padding: 10px;"><h5 class="panel-title" style="color: black; font-weight: 500;">Danh sách nhân viên<p-badge *ngIf="listsData.length > 0" value="{{listsData.length}}" styleClass="p-mr-2"></p-badge></h5></div>
+                        <div class="panel-heading" style="padding: 10px;"><h5 class="panel-title" style=" font-size: 20px !important;
+                            font-weight: 500;
+                            color: #2F3E62;
+                            font-family: 'SFProTextMedium';
+                            position: relative;margin-bottom: 10px;padding-left: 0px;
+                            padding-top: 3px;">Danh sách nhân viên<p-badge *ngIf="listsData.length > 0" value="{{listsData.length}}" styleClass="p-mr-2"></p-badge></h5></div>
                     </div>
                     <!-- <div class="col-md-6 justify-content-end text-right">
                         <p-button label="Thêm mới" styleClass="p-button-sm" (click)="addComAuthorizeInfo()"></p-button>
                     </div> -->
                  </div>
                 </ng-template>
-                <div class="grid-default " style="margin-top: -20px;">
+                <div class="grid-default ">
                     <app-list-grid-angular [domLayout]="'autoHeight'" *ngIf="indexTab === 1"
                     [title]="'Chứng chỉ'" [listsData]="listsData"  (FnClick)="OnClick($event)"
                     [columnDefs]="columnDefs"></app-list-grid-angular>
@@ -51,6 +59,6 @@
                 </p-card>
       </p-tabPanel>
       </p-tabView>
-   </div>
+   </section>
    
 </div>

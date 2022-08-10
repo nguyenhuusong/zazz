@@ -662,13 +662,13 @@ export class AppTypeCheckboxComponent implements OnInit {
   selector: 'app-type-textarea',
   template: `   
               <div class="field-group textarea">
+              <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
                   <textarea type="text" placeholder="" class="form-control"
                   [(ngModel)]="element.columnValue" name={{element.field_name}} [disabled]="element.isDisable"
                   [required]="element.isRequire && element.isVisiable && !element.isEmpty"
                   (change)="onChangeValue($event.target, element.field_name, element)"
                   maxlength="200"
                   ></textarea>
-                  <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
 
                 <div *ngIf="element.isRequire && submit && !element.columnValue"
                     class="alert-validation alert-danger">
@@ -753,11 +753,11 @@ export class AppTypeDatetimeComponent implements OnInit, OnChanges {
   selector: 'app-type-datefulltime',
   template: `   
             <div class="field-group date" [ngClass]=" element.columnValue ? 'valid' : 'invalid' ">
+            <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
             <p-calendar placeholder="DD/MM/YYYY hh:ss" appendTo="body" [baseZIndex]="101" [disabled]="element.isDisable"
                   [(ngModel)]="element.columnValue" [monthNavigator]="true" [showTime]="true" hourFormat="24" [yearNavigator]="true"
                   yearRange="2000:2030" inputId="navigators" [required]="element.isRequire && element.isVisiable && !element.isEmpty"
                   dateFormat="dd/mm/yy" name={{element.field_name}}></p-calendar>
-            <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
 
           <div *ngIf="element.isRequire && submit && !element.columnValue"
               class="alert-validation alert-danger">
@@ -824,10 +824,10 @@ export class AppTypeTimeonlyComponent implements OnInit {
 @Component({
   selector: 'app-type-multiSelect',
   template: `   <div class="field-group multi-select">
+                  <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
                   <p-multiSelect [options]="element.options" [(ngModel)]="element.columnValue" (onChange)="onChangeValue($event.value, element.field_name)"
                   name={{element.field_name}} defaultLabel="Select a option" optionLabel="name" display="chip">
                 </p-multiSelect>
-                <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
 
                 <div *ngIf="modelFields[element.field_name].isRequire && submit && modelFields[element.field_name].error"
                     class="alert-validation alert-danger">

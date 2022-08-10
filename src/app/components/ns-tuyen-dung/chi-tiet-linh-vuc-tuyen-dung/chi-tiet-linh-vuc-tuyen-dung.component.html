@@ -1,9 +1,11 @@
 
 <div class="main-grid product-detail">
-    <div class="breadcrumb">
-        <h3>{{titlePage}}</h3>
-        <p-breadcrumb [model]="items"></p-breadcrumb>
-    </div>
+    <section>
+        <div class="breadcrumb">
+            <p-breadcrumb [model]="items"></p-breadcrumb>
+            <h3>{{titlePage}}</h3>
+        </div>
+    </section>
    <div class="content">
     <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButon"  [dataView]="listViews"
         (callback)="setJobInfo($event)" (callbackcancel)="quaylai($event)"></app-edit-detail>

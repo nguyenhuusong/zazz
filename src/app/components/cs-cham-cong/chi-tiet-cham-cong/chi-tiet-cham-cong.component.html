@@ -1,18 +1,22 @@
 
 <div class="main-grid product-detail">
-    <div class="breadcrumb">
-        <h3>{{titlePage}}</h3>
-        <p-breadcrumb [model]="items"></p-breadcrumb>
-    </div>
-   <div class="content mb-3">
+    <section>
+        <div class="breadcrumb">
+            <p-breadcrumb [model]="items"></p-breadcrumb>
+            <h3>{{titlePage}}</h3>
+        </div>
+    </section>
+   <section>
     <app-edit-detail [optionsButtonsEdit]="optionsButtonsView"   *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'"  [dataView]="listViews"
         (callback)="setCompanyInfo($event)" (callbackcancel)="cancelUpdate($event)"></app-edit-detail>
-   </div>
+    </section>
    
-   <div class="grid-default border">
-    <app-list-grid-angular 
-    [height]="480" *ngIf="columnDefs?.length > 0"
-            [listsData]="listsData"
-            [columnDefs]="columnDefs"></app-list-grid-angular>
-    </div>
+    <section>
+     <div class="grid-default border">
+        <app-list-grid-angular 
+        [height]="480" *ngIf="columnDefs?.length > 0"
+                [listsData]="listsData"
+                [columnDefs]="columnDefs"></app-list-grid-angular>
+        </div>
+    </section>
 </div>

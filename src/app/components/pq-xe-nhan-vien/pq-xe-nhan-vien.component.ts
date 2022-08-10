@@ -419,7 +419,7 @@ export class PqXeNhanVienComponent implements OnInit {
           this.modelTM.organizeId = event.rowData.organizeId;
           this.modelTM.vehicleNameTM = results.data.vehicleName;
           this.modelTM.vehicleTypeIdTM = results.data.vehicleTypeId;
-          // this.modelTM.vehiclecardCd = results.data.cardCd;
+          this.modelTM.vehiclecardCd = results.data.cardCd;
           this.modelTM.startTimeTM = stringtodate(results.data.startTime);
           this.modelTM.endTimeTM = results.data.endTime ? stringtodate(results.data.endTime) : '';
           this.showVehicleCard = this.modelTM.endTimeTM ? true : false;
@@ -510,9 +510,11 @@ export class PqXeNhanVienComponent implements OnInit {
       message: 'Bạn có chắc chắn muốn thực hiện Mở khóa dịch vụ gửi xe này?',
       accept: () => {
         this.apiService.unlockCardVehicle(event.rowData.cardVehicleId)
-          .subscribe(results => {
+          .subscribe((results: any) => {
             this.load();
-            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Mở khóa dịch vụ gửi xe thành công' });
+            if (results.status === 'success') {
+              this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Mở khóa dịch vụ gửi xe thành công' });
+            }
           }, error => this.handlerError(error));
       }
     });
@@ -548,11 +550,12 @@ export class PqXeNhanVienComponent implements OnInit {
     const a: any = document.querySelector(".header");
     const b: any = document.querySelector(".sidebarBody");
     const c: any = document.querySelector(".bread-filter");
+    const d: any = document.querySelector(".bread-crumb");
     const e: any = document.querySelector(".paginator");
     this.loadjs++
     if (this.loadjs === 5) {
       if (b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + e.clientHeight + 15;
+        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + d.clientHeight + e.clientHeight + 25;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       } else {
@@ -588,7 +591,7 @@ export class PqXeNhanVienComponent implements OnInit {
     this.modelTM.vehicleNoTM = '';
     this.modelTM.vehicleNameTM = '';
     this.modelTM.vehicleTypeIdTM = 1;
-    // this.modelTM.vehiclecardCd = this.model.cardCd;
+    this.modelTM.vehiclecardCd = this.model.cardCd;
     this.modelTM.startTimeTM = new Date();
     this.modelTM.endTimeTM = new Date();
     this.modelTM.cusId = '';

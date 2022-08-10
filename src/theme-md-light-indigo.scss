@@ -134,6 +134,13 @@ body{
                     }
                 }
             }
+            &>a{
+                &:hover{
+                    &>.p-menuitem-text{
+                        color: var(--main-color) !important;
+                    }
+                }
+            }
             &.parent_active{
                 &>a{
                     &>.p-menuitem-text{
@@ -292,7 +299,7 @@ body{
         .p-paginator-element{
             &.p-highlight{
                 background: var(--F3F8FF);
-                color: var(--main-background);
+                color: var(--main-color);
             }
         }
     }
