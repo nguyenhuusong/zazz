@@ -633,10 +633,11 @@ export class PqXeNhanVienComponent implements OnInit {
         for (let elementName of gridflexs) {
           if (arrKey.indexOf(elementName.columnField) > -1 && !elementName.isHide && elementName.columnField !== 'statusName') {
             data[elementName.columnCaption] = elementValue[elementName.columnField] || '';
+          
           }
 
         }
-
+        data['Trạng thái'] = elementValue.statusId === 0 ? 'Mới tạo' : elementValue.statusId === 1 ? 'Hoạt động' : 'Khóa thẻ';
         dataExport.push(data);
       }
       this.fileService.exportAsExcelFile(dataExport, 'Danh sách xe nhân viên ' + new Date());
