@@ -616,3 +616,14 @@ export function autoCompleteValueValidate(event, allowNonWord?: boolean) {
   }
 }
 
+export function getFieldValueAggrid(form, fieldName, fieldValue = ''): any {
+  let result = '';
+  form.group_fields.forEach(results => {
+    results.fields.forEach(data => {
+      if (data.field_name === fieldName) {
+        result = data[fieldValue || 'columnValue'];
+      }
+    });
+  });
+  return result;
+}

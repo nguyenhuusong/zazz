@@ -497,7 +497,15 @@ body{
 }
 
 .p-button{
-    background: var(--main-color)
+    background: var(--main-color);
+    &.p-button-secondary{
+        background: var(--white-background);
+        color: #5D6985;
+        border: 1px solid #D1D4DC;
+        &:hover{
+            background: var(--white-background);
+        }
+    }
 }
 .p-button:enabled:hover{
     background: var(--main-color);

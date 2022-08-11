@@ -9,7 +9,7 @@ import { API_PROFILE } from 'src/app/common/constants/constant';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { AgGridFn } from 'src/app/common/function-common/common';
 import { ApiCoreService } from 'src/app/services/api-core/apicore.service';
-
+import { getFieldValueAggrid } from 'src/app/utils/common/function-common';
 @Component({
   selector: 'app-chi-tiet-ho-so-nhan-su',
   templateUrl: './chi-tiet-ho-so-nhan-su.component.html',
@@ -100,6 +100,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   selectedMenuCode = API_PROFILE.THONG_TIN_CA_NHAN;
   stepsLine = [];
   activeIndex: number = 0;
+  codeStaff = '';
   constructor(
     private apiService: ApiHrmService,
     private apiCoreService: ApiCoreService,
@@ -323,6 +324,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     const queryParams = queryString.stringify({ empId: this.empId });
     this.apiService.getEmployeeData(this.selectedMenuCode, queryParams).subscribe(results => {
       if (results.status === 'success') {
+        this.codeStaff = getFieldValueAggrid(results.data, 'code');
         this.listViews = cloneDeep(results.data.group_fields || []);
         this.listViewsForm = cloneDeep(results.data.group_fields || []);
         this.detailInfo = results.data;

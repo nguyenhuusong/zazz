@@ -172,13 +172,15 @@
         display: flex;
         background: #F3F4F6;
         border-radius: 4px 4px 0px 0px;
-        padding: 7px 16px 4px;
+        padding: 17px;
+        align-items: center;
     }
     li{
         font-size: 14px;
         color: #2F3E62;
         display: inline-block;
         font-family: 'SFProTextRegular';
+        line-height: 1;
         &.spre{
             margin: 0px 16px;
         }
