@@ -195,12 +195,12 @@ export class ThietLapWifiComponent implements OnInit, AfterViewChecked {
 
   xoaThietLapWifi(event) {
     this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn xóa công ty?',
+      message: 'Bạn có chắc chắn muốn xóa thiết lập wifi?',
       accept: () => {
         const queryParams = queryString.stringify({ id: event.rowData.id });
         this.apiService.delTimekeepingWifiInfo(queryParams).subscribe(results => {
           if (results.status === 'success') {
-            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa công ty thành công' });
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
             this.load();
           } else {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
