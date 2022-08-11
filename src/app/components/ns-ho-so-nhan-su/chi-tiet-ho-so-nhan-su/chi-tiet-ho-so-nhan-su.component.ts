@@ -19,7 +19,8 @@ import { getFieldValueAggrid } from 'src/app/utils/common/function-common';
 export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   optionsButtonsView = [
     // { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
-    { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check' }
+    { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check' },
+    { label: 'Duyệt hồ sơ', value: 'DuyetHoSo', class: '', icon: 'pi pi-check' },
   ]
   API_PROFILE = API_PROFILE
   @Input() dataRouter = null;
@@ -199,10 +200,10 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
         [
           { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check' },
           { label: 'Duyệt hồ sơ', value: 'DuyetHoSo', class: '', icon: 'pi pi-check' },
-          { label: 'Hủy hồ sơ', value: 'HuyHoSo', class: '', icon: 'pi pi-check' },
+          { label: 'Hủy hồ sơ', value: 'HuyHoSo', class: 'p-button-secondary', icon: 'pi pi-check' },
           { label: 'Mở Lại hồ sơ', value: 'MoLaiHoSo', class: '', icon: 'pi pi-check' },
           { label: 'Tuyển dụng lại', value: 'TuyenDungLai', class: '', icon: 'pi pi-check' },
-          { label: 'Nghỉ việc', value: 'NghiViec', class: '', icon: 'pi pi-check' },
+          { label: 'Nghỉ việc', value: 'NghiViec', class: 'p-button-secondary', icon: 'pi pi-check' },
         ];
 
         // this.getEmployeeByReportTo();
@@ -213,6 +214,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
         ];
     } else {
       this.optionsButtonsView = [{ label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check' },
+      { label: 'Duyệt hồ sơ', value: 'DuyetHoSo', class: '', icon: 'pi pi-check' },
       ];
     }
     this.initData();
@@ -322,6 +324,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     this.detailInfo = null;
     this.listsData = [[], [], [], []];
     const queryParams = queryString.stringify({ empId: this.empId });
+    console.log('this.selectedMenuCode', this.selectedMenuCode)
     this.apiService.getEmployeeData(this.selectedMenuCode, queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.codeStaff = getFieldValueAggrid(results.data, 'code');
@@ -329,7 +332,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
         this.listViewsForm = cloneDeep(results.data.group_fields || []);
         this.detailInfo = results.data;
         this.menuItems[0].name = 'Thông tin cá nhân';
-        this.menuItems[0].name = this.menuItems[0].name + ' - '+ this.detailInfo.fullName
+        this.menuItems[0].name = this.menuItems[0].name
         this.stepsLine = results.data.flowStatuses.map( d => {
           return {
             label: d.flow_name,
@@ -375,7 +378,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
           [
             { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check' },
             { label: 'Duyệt hồ sơ', value: 'DuyetHoSo', class: '', icon: 'pi pi-check' },
-            { label: 'Hủy hồ sơ', value: 'HuyHoSo', class: '', icon: 'pi pi-check' },
+            { label: 'Hủy hồ sơ', value: 'HuyHoSo', class: 'p-button-secondary', icon: 'pi pi-check' },
             // { label: 'Quay lại', value: 'Back', class: 'p-button-secondary', icon: 'pi pi-times' }
           ];
         break;
@@ -384,7 +387,8 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
           [
             // { label: 'Sửa', value: 'Edit' },
             { label: 'Chuyển công tác', value: 'ChuyenCongTac', class: '', icon: 'pi pi-check' },
-            { label: 'Nghỉ việc', value: 'NghiViec', class: '', icon: 'pi pi-check' },
+            { label: 'Duyệt hồ sơ', value: 'DuyetHoSo', class: '', icon: 'pi pi-check' },
+            { label: 'Nghỉ việc', value: 'NghiViec', class: 'p-button-secondary', icon: 'pi pi-check' },
             // { label: 'Quay lại', value: 'Back', class: 'p-button-secondary', icon: 'pi pi-times' }
           ];
         break;
@@ -413,10 +417,10 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
           [
             { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check' },
             { label: 'Duyệt hồ sơ', value: 'DuyetHoSo', class: '', icon: 'pi pi-check' },
-            { label: 'Hủy hồ sơ', value: 'HuyHoSo', class: '', icon: 'pi pi-check' },
+            { label: 'Hủy hồ sơ', value: 'HuyHoSo', class: 'p-button-secondary', icon: 'pi pi-check' },
             { label: 'Mở Lại hồ sơ', value: 'MoLaiHoSo', class: '', icon: 'pi pi-check' },
             { label: 'Tuyển dụng lại', value: 'TuyenDungLai', class: '', icon: 'pi pi-check' },
-            { label: 'Nghỉ việc', value: 'NghiViec', class: '', icon: 'pi pi-check' },
+            { label: 'Nghỉ việc', value: 'NghiViec', class: 'p-button-secondary', icon: 'pi pi-check' },
             // { label: 'Quay lại', value: 'Back', class: 'p-button-secondary', icon: 'pi pi-times' }
           ];
         break;

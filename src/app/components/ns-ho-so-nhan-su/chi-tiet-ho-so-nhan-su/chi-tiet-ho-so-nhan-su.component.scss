@@ -5,44 +5,36 @@
             padding-left: 15px;
             padding-right: 15px;
         }
-        .p-dialog-header-icons{
-            position: absolute;
-            top: 20px;
-            right: 8px;
-        }
         .p-panel-header{
             background: #ffffff;
             padding-left: 0px;
             padding-right: 0px;
         }
-        .btn-group-edit-detail{
-            right: 8px !important;
-            top: 10px !important;
-        }
+        // .btn-group-edit-detail{
+        //     right: 16px !important;
+        //     top: 187px !important;
+        //     z-index: 999 !important;
+        // }
         .popup-btngroup-edit-detail{
-            .p-dialog-header{
-                padding-left: 15px;
-                padding-right: 15px;
-            }
             .btn-group-edit-detail{
                 // right: 52px !important;
                 // top: 22px !important;
-                right: 40px !important;
-                top: 45px !important;
+                // right: 40px !important;
+                // top: 45px !important;
             }
         }
-        .page-detail{
-            p-dialog{
-                .p-dialog{
-                    .wrap-edit-detail{
-                        .main-grid{
-                            right: 50px !important;
-                            top: 21px !important;
-                        }
-                    }
-                }
-            }
-        }
+        // .page-detail{
+        //     p-dialog{
+        //         .p-dialog{
+        //             .wrap-edit-detail{
+        //                 .main-grid{
+        //                     // right: 50px !important;
+        //                     // top: 21px !important;
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
         .khachHangWrapper{
             .col-md-12{
                 position: static;
@@ -190,4 +182,9 @@
             color: #4C97E4
         }
     }
+}
+
+
+.chi-tiet-ho-so-nhan-su .page-detail{
+    position: static;
 }

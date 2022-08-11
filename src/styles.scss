@@ -3012,10 +3012,6 @@ div.p-organizationchart {
         padding-left: 15px;
         padding-right: 15px;
     }
-    .btn-group-edit-detail{
-        right: 52px !important;
-        top: 29px !important;
-    }
 }
 .chi-tiet-ho-so-nhan-su{
     height: 100%;
@@ -3503,15 +3499,29 @@ div.p-organizationchart {
             }
         }
     }
+    .btn-group-edit-detail{
+        position: absolute;
+        right: 16px;
+        top: 187px;
+        z-index: 998;
+    }
 }
 p-dialog{
-    .p-dialog-content{
-        padding-left: 32px;
-        padding-right: 32px;
-        .wrap-edit-detail{
-            padding-left: 0;
-            padding-right: 0px;
-            padding-top: 0px;
+    .p-dialog{
+        .p-dialog-content{
+            padding: 16px;
+            .wrap-edit-detail{
+                padding-left: 0;
+                padding-right: 0px;
+                padding-top: 0px;
+                .btn-group-edit-detail{
+                    position: absolute;
+                    right: 32px;
+                    z-index: 998;
+                    top: auto;
+                    bottom: 16px;
+                }
+            }
         }
     }
 }
@@ -4046,5 +4056,32 @@ section{
 .no-header{
     .p-panel-header{
         display: none;
+    }
+}
+.p-dialog {
+    background: #fff;
+    &.popup-btngroup-edit-detail{
+        padding-bottom: 40px;
+    }
+    .p-dialog-header{
+        border-radius: 0px;
+        background: #182850;
+        box-shadow: inset 0px -1px 0px #F0F0F0;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 20px;
+        padding: 16px 20px;
+        .p-dialog-title{
+            color: #fff;
+    
+        }
+        button{
+            &.p-dialog-header-icon,
+            &.p-dialog-header-close{
+                height: auto;
+                color: #fff;
+            }
+
+        }
     }
 }

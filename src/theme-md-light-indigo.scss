@@ -502,13 +502,23 @@ body{
         background: var(--white-background);
         color: #5D6985;
         border: 1px solid #D1D4DC;
+        &:focus,
         &:hover{
-            background: var(--white-background);
+            background: var(--ink-color-40) !important;
+            color: #5D6985 !important;
+            border: 1px solid #D1D4DC !important;
         }
     }
 }
 .p-button:enabled:hover{
     background: var(--main-color);
+}
+p-button{
+    button{
+        &.p-button-sm{
+            border: 1px solid #4C97E4;
+        }
+    }
 }
 
 .header-filter-search{
@@ -677,7 +687,6 @@ body{
 .product-detail{
     .content{
         background: var(--white-background);
-        position: relative;
         .p-selectbutton{
             position: absolute;
             right: 15px;

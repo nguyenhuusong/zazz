@@ -88,7 +88,7 @@ export const ROUTES: any[] =[
         {
           "menuId": 618,
           "path": "/nhan-su/ho-so-nhan-su",
-          "title": "Hồ sơ nhân sự (mới)",
+          "title": "Hồ sơ nhân sự",
           "icon": "pi pi-users",
           "classs": "nav-item",
           "badge": "",
@@ -444,7 +444,7 @@ export const ROUTES: any[] =[
         {
           "menuId": 631,
           "path": "/chinh-sach/cham-cong",
-          "title": "Chấm công(new)",
+          "title": "Chấm công",
           "icon": "pi pi-check",
           "classs": "nav-item",
           "badge": "",
