@@ -68,6 +68,8 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { ChiTietNgayNghiComponent } from 'src/app/components/ngay-nghi-le/chi-tiet-ngay-nghi/chi-tiet-ngay-nghi.component';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ConfigGridTableFormModule } from 'src/app/common/config-grid-table-form/config-grid-table-form.module';
+import { ChiTietThietLapWifiComponent } from 'src/app/components/thiet-lap-wifi/chi-tiet-thiet-lap-wifi/chi-tiet-thiet-lap-wifi.component';
+import { ThietLapWifiComponent } from 'src/app/components/thiet-lap-wifi/thiet-lap-wifi.component';
 
 @NgModule({
   imports: [
@@ -144,7 +146,9 @@ import { ConfigGridTableFormModule } from 'src/app/common/config-grid-table-form
     ChiTietPhongHopTheoTangComponent,
     QuanLyNgayNghiComponent,
     NgayNghiLeComponent,
-    ChiTietNgayNghiComponent
+    ChiTietNgayNghiComponent,
+    ThietLapWifiComponent,
+    ChiTietThietLapWifiComponent
   ],
   providers: []
 })

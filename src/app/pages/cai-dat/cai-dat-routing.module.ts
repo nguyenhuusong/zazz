@@ -28,6 +28,8 @@ import { ChiTietPhongHopTheoTangComponent } from 'src/app/components/cai-dat-pho
 import { QuanLyNgayNghiComponent } from 'src/app/components/quan-ly-ngay-nghi/quan-ly-ngay-nghi.component';
 import { NgayNghiLeComponent } from 'src/app/components/ngay-nghi-le/ngay-nghi-le.component';
 import { ChiTietNgayNghiComponent } from 'src/app/components/ngay-nghi-le/chi-tiet-ngay-nghi/chi-tiet-ngay-nghi.component';
+import { ThietLapWifiComponent } from 'src/app/components/thiet-lap-wifi/thiet-lap-wifi.component';
+import { ChiTietThietLapWifiComponent } from 'src/app/components/thiet-lap-wifi/chi-tiet-thiet-lap-wifi/chi-tiet-thiet-lap-wifi.component';
 
 const routes: Routes = [
   {
@@ -349,6 +351,32 @@ const routes: Routes = [
     data: {
       title: 'Tham số chung',
       url: 'tham-so-chung',
+    },
+  },
+
+  // Cài đặt thiết lập wifi
+  {
+    path: 'thiet-lap-wifi',
+    component: ThietLapWifiComponent,
+    data: {
+      title: 'Danh sách thiết lập wifi',
+      url: 'thiet-lap-wifi',
+    },
+  },
+  {
+    path: 'thiet-lap-wifi/them-moi',
+    component: ChiTietThietLapWifiComponent,
+    data: {
+      title: 'Thêm mới thiết lập wifi',
+      url: 'them-moi-thiet-lap-wifi',
+    },
+  },
+  {
+    path: 'thiet-lap-wifi/chi-tiet',
+    component: ChiTietThietLapWifiComponent,
+    data: {
+      title: 'Chi tiết thiết lập wifi',
+      url: 'chi-tiet-thiet-lap-wifi',
     },
   },
 ];

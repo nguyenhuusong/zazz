@@ -22,25 +22,40 @@
                                 </div>
                                 <div class="header-filter-search grid mt-1">
                                     <div class="icon col-12 pl-0" style="display: flex; flex-wrap: wrap;">
-                                        <!-- <div class="col-6">
+                                        <div class="col-6">
+                                            <div class="field-group select valid height-56" [ngClass]="">
+                                                <label for="">Tổ chức</label>
+                                                <p-dropdown panelStyleClass="select-ori-panel" placeholder="Chọn tổ chức" appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
+                                                    [options]="organs" [(ngModel)]="query.orgId" name="orgId">
+                                                    <ng-template let-item pTemplate="selectedItem">
+                                                        <span style="vertical-align:middle;">{{item.label}}</span>
+                                                    </ng-template>
+                                                    <ng-template let-car pTemplate="item">
+                                                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                                                            <div style="">{{car.label}}</div>
+                                                        </div>
+                                                    </ng-template>
+                                                </p-dropdown>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
                                             <div class="field-group select valid">
-                                                <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
-                                                [options]="orgRoots" [(ngModel)]="query.organizeId" name="organizeId" (onChange)="find()">
+                                                <label for="">Nơi làm việc</label>
+                                                <p-dropdown placeholder="Nơi làm việc" appendTo="body" [filter]="true" [baseZIndex]="100" [autoDisplayFirst]="false"
+                                                [options]="workplaceOptions" [(ngModel)]="query.workplaceId" name="position">
                                                 <ng-template let-item pTemplate="selectedItem">
-                                                    <span style="vertical-align:middle;">{{item.label}}</span>
+                                                    <span>{{item.label}}</span>
                                                 </ng-template>
                                                 <ng-template let-car pTemplate="item">
                                                     <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                                                        <div style="">{{car.label}}</div>
+                                                        <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
                                                     </div>
                                                 </ng-template>
-                                            </p-dropdown>
-                                            <label  for=""> Tổ chức: </label>
+                                                </p-dropdown>
                                             </div>
-                                        </div> -->
-                                       
+                                        </div>
                                     </div>
-                                    <div class="input-group icon col-12 select-default pr-0 text-right">
+                                    <div class="input-group icon col-12 select-default text-right">
                                         <label for="" style="visibility: hidden;">Classid <span class="pi pi-info-circle"
                                                 style="font-size: 13px;color: orange;"></span></label>
                                         <p-button label="Tìm kiếm" styleClass="mr-1" icon="pi pi-search" (click)="load()">
@@ -57,7 +72,7 @@
             </div>
             <div class="col-item">
                 <div class="d-flex align-items-center gap-16">
-                    <p-button styleClass="p-button-sm height-56" icon="pi pi-plus" label="Thêm mới" (click)="addCongTy()"></p-button>
+                    <p-button styleClass="p-button-sm height-56" icon="pi pi-plus" label="Thêm mới" (click)="addNew()"></p-button>
                     <p-button styleClass="p-button-sm height-56" icon="pi pi-plus" label="Cấu hình" (click)="cauhinh()"></p-button>
                 </div>
             </div>
