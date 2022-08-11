@@ -9,52 +9,51 @@
     </section>
    <div class="content">
     <div *ngIf="listViews.length > 0">
-        <div class="row">
-            <div class="col-md-8">
+        <section>
              <div class="status-line">
                  <p-steps [model]="stepsLine" [(activeIndex)]="activeIndex" [readonly]="true"></p-steps>
              </div>
-            </div>
-            <div class="col-md-2"></div>
-         </div>
-         <div class="mt-1" *ngIf="modelContractInfo">
+         </section>
+
+        <div *ngIf="modelContractInfo">
             <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButon" [thongtinnhanvienNew]="true" [dataView]="listViews"
                 (callback)="setContractInfo($event)" (callback1)="saveCallback1($event)" (callbackcancel)="huy($event)"></app-edit-detail>
-         </div>
+            </div>
        
-        <p-card styleClass="" *ngIf="listViews.length> 0">
-            <!-- <ng-template pTemplate="header">
-                <div class="panel-heading" style="padding: 10px;">
-                    <h6 class="panel-title" style="color: black; font-weight: 500;">Danh sách đính kèm <p-badge
-                            *ngIf="listsData.length > 0" [value]="listsData.length" styleClass="p-mr-2"></p-badge>
-                    </h6>
-                </div>
-            </ng-template> -->
-            <p-tabView [(activeIndex)]="indexTab" (onChange)="handleChange($event.index)">
-                <p-tabPanel>
-                    <ng-template pTemplate="header">
-                        Hồ sơ hợp đồng <p-badge *ngIf="listsData.length > 0" [value]="detailInfo.metafiles.length" styleClass="p-mr-2 ml-1"></p-badge>
-                    </ng-template>
-                    <div class="grid-default border mt-2">
-                        <app-list-grid-angular [domLayout]="'autoHeight'" *ngIf="indexTab === 0 && this.listsData.length > 0" [title]="'Chứng chỉ'"
-                            [listsData]="listsData" (FnClick)="OnClick($event)" [columnDefs]="columnDefsMetafiles"></app-list-grid-angular>
+        <section *ngIf="listViews.length> 0">
+            <p-card styleClass="" *ngIf="listViews.length> 0">
+                <!-- <ng-template pTemplate="header">
+                    <div class="panel-heading" style="padding: 10px;">
+                        <h6 class="panel-title" style="color: black; font-weight: 500;">Danh sách đính kèm <p-badge
+                                *ngIf="listsData.length > 0" [value]="listsData.length" styleClass="p-mr-2"></p-badge>
+                        </h6>
                     </div>
-                </p-tabPanel>
-                <p-tabPanel >
-                    <ng-template pTemplate="header">
-                        Thành phần lương<p-badge *ngIf="listsData.length > 0" [value]="detailInfo.salary_components.length" styleClass="p-mr-2 ml-1"></p-badge>
-                    </ng-template>
-                    <div class="grid-default border mt-2">
-                        <app-list-grid-angular [domLayout]="'autoHeight'" *ngIf="indexTab === 1" [title]="'Chứng chỉ'"
-                        [listsData]="listsData" (FnClick)="OnClick($event)" [columnDefs]="columnDefsSalaryComponents"></app-list-grid-angular>
-                    </div>
-                </p-tabPanel>
+                </ng-template> -->
+                <p-tabView [(activeIndex)]="indexTab" (onChange)="handleChange($event.index)">
+                    <p-tabPanel>
+                        <ng-template pTemplate="header">
+                            Hồ sơ hợp đồng <p-badge *ngIf="listsData.length > 0" [value]="detailInfo.metafiles.length" styleClass="p-mr-2 ml-1"></p-badge>
+                        </ng-template>
+                        <div class="grid-default border mt-2">
+                            <app-list-grid-angular [domLayout]="'autoHeight'" *ngIf="indexTab === 0 && this.listsData.length > 0" [title]="'Chứng chỉ'"
+                                [listsData]="listsData" (FnClick)="OnClick($event)" [columnDefs]="columnDefsMetafiles"></app-list-grid-angular>
+                        </div>
+                    </p-tabPanel>
+                    <p-tabPanel >
+                        <ng-template pTemplate="header">
+                            Thành phần lương<p-badge *ngIf="listsData.length > 0" [value]="detailInfo.salary_components.length" styleClass="p-mr-2 ml-1"></p-badge>
+                        </ng-template>
+                        <div class="grid-default border mt-2">
+                            <app-list-grid-angular [domLayout]="'autoHeight'" *ngIf="indexTab === 1" [title]="'Chứng chỉ'"
+                            [listsData]="listsData" (FnClick)="OnClick($event)" [columnDefs]="columnDefsSalaryComponents"></app-list-grid-angular>
+                        </div>
+                    </p-tabPanel>
+                    
                 
-              
-            </p-tabView>
-           
-        </p-card>
-    
+                </p-tabView>
+            
+            </p-card>
+        </section>
     </div>
    </div>
    

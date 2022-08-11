@@ -104,8 +104,8 @@
                                             <div class="row d-flex">
                                                 <div class="col-md-6">
                                                     <div class="panel-heading p-panel-header">
-                                                        <h6 class="panel-title p-panel-title mb-0" style="color: black; ">
-                                                            {{titles[0]}} <p-badge *ngIf="listsData[0].length > 0"
+                                                        <h6 class="panel-title p-panel-title  d-flex middle">
+                                                            {{titles[0]}} &nbsp;<p-badge *ngIf="listsData[0].length > 0"
                                                                 value="{{listsData[0].length}}" styleClass="p-mr-2">
                                                             </p-badge>
                                                         </h6>
@@ -170,8 +170,8 @@
                                         <div class="row d-flex">
                                             <div class="col-md-6">
                                                 <div class="panel-heading p-panel-header" >
-                                                    <h6 class="panel-title p-panel-title mb-0" style="color: black; ">
-                                                        {{titles[0]}} <p-badge *ngIf="listsData[0].length > 0"
+                                                    <h6 class="panel-title p-panel-title d-flex middle" >
+                                                        {{titles[0]}} &nbsp;<p-badge *ngIf="listsData[0].length > 0"
                                                             value="{{listsData[0].length}}" styleClass="p-mr-2">
                                                         </p-badge>
                                                     </h6>
@@ -207,8 +207,8 @@
                                     <div class="row d-flex">
                                         <div class="col-md-6">
                                             <div class="panel-heading p-panel-header" >
-                                                <h6 class="panel-title mb-0 p-panel-title" style="color: black; ">
-                                                    {{titles[1]}} <p-badge *ngIf="listsData[1].length > 0"
+                                                <h6 class="panel-title mb-0 p-panel-title d-flex middle">
+                                                    {{titles[1]}} &nbsp;<p-badge *ngIf="listsData[1].length > 0"
                                                         value="{{listsData[1].length}}" styleClass="p-mr-2">
                                                     </p-badge>
                                                 </h6>
@@ -262,8 +262,8 @@
                                 <div class="row d-flex">
                                     <div class="col-md-6">
                                         <div class="panel-heading p-panel-header">
-                                            <h6 class="panel-title p-panel-title" style="color: black; ">
-                                                {{titles[2]}} <p-badge *ngIf="listsData[2].length > 0"
+                                            <h6 class="panel-title p-panel-title d-flex middle" >
+                                                {{titles[2]}} &nbsp;<p-badge *ngIf="listsData[2].length > 0"
                                                     value="{{listsData[2].length}}" styleClass="p-mr-2"></p-badge>
                                             </h6>
                                         </div>
@@ -297,8 +297,8 @@
                                 <div class="row d-flex">
                                     <div class="col-md-6">
                                         <div class="panel-heading">
-                                            <h6 class="panel-title" style="color: black; ">
-                                                {{titles[3]}} <p-badge *ngIf="listsData[3].length > 0"
+                                            <h6 class="panel-title d-flex middle">
+                                                {{titles[3]}} &nbsp;<p-badge *ngIf="listsData[3].length > 0"
                                                     value="{{listsData[3].length}}" styleClass="p-mr-2"></p-badge>
                                             </h6>
                                         </div>
@@ -457,7 +457,7 @@
         </p-dialog>
 
         <p-dialog styleClass="popup-btngroup-edit-detail" header="{{modelAttach.metaId > 0 ? 'Xem chi tiết file đính kèm' : 'Thêm file đính kèm'}}" [(visible)]="displayAttach" [modal]="true" [draggable]="false" [resizable]="false"
-            [style]="{width: '600px'}" [autoZIndex]=true [draggable]="false" [resizable]="false">
+            [style]="{width: '800px'}" [autoZIndex]=true [draggable]="false" [resizable]="false">
 
             <app-emp-attach-file *ngIf="displayAttach" [modelAttach]="modelAttach" (callback)="emitAttach($event)"
                 (back)="displayAttach = !displayAttach"></app-emp-attach-file>

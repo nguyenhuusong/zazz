@@ -2418,7 +2418,6 @@ div.p-organizationchart {
 .p-card-header-custom{
     .p-card-header{
         // border-bottom: 1px solid #cccccc75;
-        padding-bottom: 13px;
     }
 }
 .product-detail .content .p-selectbutton{
@@ -3491,7 +3490,7 @@ div.p-organizationchart {
     // position: relative;
     padding-left: 16px;
     padding-right: 16px;
-    padding-top: 25px;
+    padding-top: 16px;
     .border-section{
         .p-panel-content{
             .row{
@@ -3972,9 +3971,19 @@ ul{
     }
 }
 .wrap-edit-detail{
+    .p-panel{
+        margin-bottom: 8px;
+    }
+    .panel-heading{
+        padding-bottom: 0px;
+        padding-top: 0px;
+    }
+    .avatar-c {
+        margin-bottom: 32px;
+    }
     .p-panel-header{
-        padding-left: 0px;
-        padding-right: 0px;
+        padding: 0px;
+        margin-bottom: 32px;
         .p-panel-title {
             font-size: 20px !important;
             font-weight: 500;
@@ -3982,7 +3991,8 @@ ul{
             font-family: 'SFProTextMedium';
             position: relative;
             padding-left: 16px;
-            padding-top: 3px;
+            line-height: 28px;
+            display: block;
             &::after{
                 content: '';
                 width: 4px;
@@ -3991,8 +4001,18 @@ ul{
                 display: block !important;
                 position: absolute;
                 left: 0px;
-                top: 0px;
+                top: 2px;
             }
         }
+    }
+}
+.header-filter-search{
+    .col-6{
+        padding-top: 0;
+        padding-bottom: 0px;
+    }
+    &>.input-group{
+        padding-left: 12px;
+        padding-right: 12px;
     }
 }

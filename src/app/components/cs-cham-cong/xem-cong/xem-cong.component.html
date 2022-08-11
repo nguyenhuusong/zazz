@@ -1,12 +1,10 @@
-
-<div class="grid main-grid">
-    <div class="col-12 right">
-        <div class="bread-filter">
-            <div class="d-flex bet end middle">
-                <div>
-                    <app-hrm-breadcrumb [items]="items"></app-hrm-breadcrumb>
-                </div>
-                <div class="d-flex align-items-center">
+    <div class="main-grid">
+        <section class="bread-crumb">
+            <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
+        </section>
+        <section class="bread-filter">
+            <div class="d-flex bet end bottom gap-16">
+                <div class="col-item">
                     <div class="filter filter-search">
                         <div class="field-group text search mb-0" [ngClass]=" query.filter ? 'valid' : 'invalid' ">
                             <input class="input-default" placeholder="Tìm kiếm" type="text" autocomplete="off" id="filter"
@@ -21,84 +19,95 @@
                                             fill="#808AA6" />
                                     </svg>
                                 </span>
-                            <p-overlayPanel #op [style]="{width: '700px'}" styleClass="advance-seach">
-                                <ng-template pTemplate>
-                                    <div class="header-filter-search  grid">
-                                        <h3>Tìm kiếm nâng cao</h3>
-                                    </div>
-                                    <div class="header-filter-search grid mt-1">
-                                        <div class="icon col-12 pl-0" style="display: flex; flex-wrap: wrap;">
-                                            <div class="col-6">
-                                                <div class="field-group select valid">
-                                                    <label>Công ty</label>
-                                                    <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
-                                                        [options]="listOrgRoots" [(ngModel)]="query.orgId"  (onChange)="getXemCongInfo()"
-                                                        name="orgId" [filter]="true">
-                                                        <ng-template let-item pTemplate="selectedItem">
-                                                            <span>{{item.label}}</span>
-                                                        </ng-template>
-                                                        <ng-template let-car pTemplate="item">
-                                                            <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                                                                <div style="font-size:14px;margin-top:4px">{{car.label}}</div>
-                                                            </div>
-                                                        </ng-template>
-                                                    </p-dropdown>
-                                                </div>
-                                            </div>
-                                            <div class="col-6">
-                                                <div class="field-group date mb-0 valid">
-                                                    <label>Từ ngày</label>
-                                                    <p-calendar (onSelect)="getXemCongInfo()" panelStyleClass="datepicker-default" placeholder="DD/MM/YYYY"
-                                                        [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="query.fromdate" [monthNavigator]="true"
-                                                        [yearNavigator]="true" inputId="navigators" dateFormat="dd/mm/yy"
-                                                        name="fromdate"></p-calendar>
-                                                </div>
-                                            </div>
-                                            <div class="col-6">
-                                                <div class="field-group date mb-0 valid">
-                                                    <label>Đến ngày</label>
-                                                    <p-calendar (onSelect)="getXemCongInfo()" panelStyleClass="datepicker-default" placeholder="DD/MM/YYYY"
-                                                        [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="query.todate" [monthNavigator]="true"  inputId="navigators" dateFormat="dd/mm/yy"
-                                                        name="todate"></p-calendar>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="input-group icon col-12 select-default pr-0 text-right">
-                                            <label for="" style="visibility: hidden;">Classid <span class="pi pi-info-circle"
-                                                    style="font-size: 13px;color: orange;"></span></label>
-                                            <p-button label="Tìm kiếm" styleClass="mr-1" icon="pi pi-search" (click)="getXemCongInfo()">
-                                            </p-button>
-                                            
-                                            <p-button label="Làm mới" icon="pi pi-times" (click)="cancel()"
-                                                styleClass="p-button-secondary">
-                                            </p-button>
-                                        </div>
-                                    </div>
-                                </ng-template>
-                            </p-overlayPanel>
                         </div>
                     </div>
                 </div>
-            
             </div>
-        
-        </div>
+            <p-overlayPanel #op [style]="{width: '700px'}" styleClass="advance-seach">
+                <ng-template pTemplate>
+                    <div class="header-filter-search  grid">
+                        <h3>Tìm kiếm nâng cao</h3>
+                    </div>
+                    <div class="header-filter-search grid mt-1">
+                        <div class="icon col-12 pl-0" style="display: flex; flex-wrap: wrap;">
+                            <div class="col-6">
+                                <div class="field-group select valid">
+                                    <label>Công ty</label>
+                                    <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
+                                        [options]="listOrgRoots" [(ngModel)]="query.organizeId" (onChange)="changeOrgani()"
+                                        name="organizeId" [filter]="true">
+                                        <ng-template let-item pTemplate="selectedItem">
+                                            <span>{{item.label}}</span>
+                                        </ng-template>
+                                        <ng-template let-car pTemplate="item">
+                                            <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                                                <div style="font-size:14px;margin-top:4px">{{car.label}}</div>
+                                            </div>
+                                        </ng-template>
+                                    </p-dropdown>
+                                </div>
+                            </div>
 
+                            <div class="col-6">
+                                <div class="field-group select mb-0 label-8">
+                                    <label>Bộ phận</label>
+                                    <p-treeSelect [(ngModel)]="query.orgId" 
+                                    [filterInputAutoFocus]="true" 
+                                    [filter]="true" [metaKeySelection]="false" 
+                                    [ngClass]="[ departmentFiltes.length <= 0 ? 'tree-empty' : '' ]" 
+                                    [options]="departmentFiltes" selectionMode="single" name="orgId"
+                                    (onNodeSelect)="onChangeTree()" placeholder="Chọn phòng ban"></p-treeSelect>
+                                </div>
+                            </div>
 
-    <div class="grid-default border">
-        <app-list-grid-angular 
-        [height]="heightGrid" *ngIf="columnDefs?.length > 0"
-                [listsData]="listsData"
-                [columnDefs]="columnDefs"></app-list-grid-angular>
-                <div class="paginator">
-                    <span>Từ {{ countRecord.currentRecordStart }} đến
-                        {{ countRecord.currentRecordEnd }}
-                        trên tổng số
-                        {{ countRecord.totalRecord }} kết quả</span>
-                    <p-paginator [rows]="query.pageSize" [totalRecords]="countRecord.totalRecord" [first]="first"
-                        (onPageChange)="paginate($event)" [rowsPerPageOptions]="[15,30,45,100,200,{ showAll: 'ALL' }]">
-                    </p-paginator>
-                </div>
-        </div>
-    </div>
+                            <div class="col-6">
+                                <div class="field-group date mb-0 valid">
+                                    <label>Từ ngày</label>
+                                    <p-calendar (onSelect)="getXemCongInfo()" panelStyleClass="datepicker-default" placeholder="DD/MM/YYYY"
+                                        [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="query.fromdate" [monthNavigator]="true"
+                                        [yearNavigator]="true" inputId="navigators" dateFormat="dd/mm/yy"
+                                        name="fromdate"></p-calendar>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="field-group date mb-0 valid">
+                                    <label>Đến ngày</label>
+                                    <p-calendar (onSelect)="getXemCongInfo()" panelStyleClass="datepicker-default" placeholder="DD/MM/YYYY"
+                                        [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="query.todate" [monthNavigator]="true"  inputId="navigators" dateFormat="dd/mm/yy"
+                                        name="todate"></p-calendar>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group icon col-12 select-default text-right">
+                            <label for="" style="visibility: hidden;">Classid <span class="pi pi-info-circle"
+                                    style="font-size: 13px;color: orange;"></span></label>
+                            <p-button label="Tìm kiếm" styleClass="mr-1" icon="pi pi-search" (click)="getXemCongInfo()">
+                            </p-button>
+                            
+                            <p-button label="Làm mới" icon="pi pi-times" (click)="cancel()"
+                                styleClass="p-button-secondary">
+                            </p-button>
+                        </div>
+                    </div>
+                </ng-template>
+            </p-overlayPanel>
+        </section>
+
+    <section class="content pb-0">
+        <div class="grid-default border">
+            <app-list-grid-angular 
+            [height]="heightGrid" *ngIf="columnDefs?.length > 0"
+                    [listsData]="listsData"
+                    [columnDefs]="columnDefs"></app-list-grid-angular>
+                    <div class="paginator">
+                        <span>Từ {{ countRecord.currentRecordStart }} đến
+                            {{ countRecord.currentRecordEnd }}
+                            trên tổng số
+                            {{ countRecord.totalRecord }} kết quả</span>
+                        <p-paginator [rows]="query.pageSize" [totalRecords]="countRecord.totalRecord" [first]="first"
+                            (onPageChange)="paginate($event)" [rowsPerPageOptions]="[15,30,45,100,200,{ showAll: 'ALL' }]">
+                        </p-paginator>
+                    </div>
+            </div>
+    </section>
 </div>

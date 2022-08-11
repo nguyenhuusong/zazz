@@ -38,13 +38,13 @@ export class XemCongComponent implements OnInit, OnDestroy {
   query = {
     orgId: '',
     filter: '',
-    emp_st: -1,
-    pageSize: 1000,
+    organizeId: '',
+    pageSize: 100000,
     fromdate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).add(-1,'months').format()),
     todate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).format()),
     offSet: 0,
   }
-
+  departmentFiltes = [];
   countRecord: any = {
     totalRecord: 0,
     currentRecordStart: 0,
@@ -67,8 +67,8 @@ export class XemCongComponent implements OnInit, OnDestroy {
     ];
     this.url = this.activatedRoute.data['_value'].url;
     this.manhinh = 'Edit';
-    this.handleParams()
     this.getOrgRoots();
+      this.handleParams()
   }
 
   handleParams() {
@@ -82,13 +82,16 @@ export class XemCongComponent implements OnInit, OnDestroy {
     this.listViews = [];
     this.listsData = [];
     let params: any = {... this.query};
+    params.orgId = typeof params.orgId === 'string' ? params.orgId : params.orgId.orgId;
     delete params.fromdate
     delete params.todate
     params.FromDate = moment(new Date(this.query.fromdate)).format('YYYY-MM-DD')
     params.ToDate = moment(new Date(this.query.todate)).format('YYYY-MM-DD')
     const queryParams = queryString.stringify(params);
+    this.spinner.show();
     this.apiService.getTimekeepingDetail(queryParams).subscribe(results => {
       if (results.status === 'success') {
+        this.spinner.hide();
         this.columnDefs = results.data.gridflexs;
         this.listViews = cloneDeep(results.data.group_fields);
         this.listsData = results.data.dataList.data;
@@ -109,11 +112,62 @@ export class XemCongComponent implements OnInit, OnDestroy {
     })
   }
 
+
+  listOrgRoots = []
+  getOrgRoots() {
+    // this.apiService.getOrgRoots().subscribe(results => {
+    //   if (results.status === 'success') {
+    //     this.listOrgRoots = results.data.map(d => {
+    //       return {
+    //         label: d.org_name,
+    //         value: `${d.orgId}`
+    //       }
+    //     });
+    //     this.query.orgId = this.listOrgRoots[0].value
+    //     this.getXemCongInfo();
+    //   }
+    // })
+    const queryParams = queryString.stringify({ filter: ''});
+    this.apiService.getOrganizations(queryParams)
+      .subscribe(
+        (results: any) => {
+          this.listOrgRoots = results.data
+            .map(d => {
+              return {
+                label: d.organizationName || d.organizationCd,
+                value: d.organizeId
+              };
+            });
+            this.getXemCongInfo();
+          this.listOrgRoots = [{ label: 'Chọn tổ chức', value: '' }, ...this.listOrgRoots];
+        }),
+        error => { };
+  }
+
+  changeOrgani() {
+    this.getXemCongInfo();
+    this.getOrganizeTree();
+  }
+  onChangeTree() {
+    this.getXemCongInfo();
+  }
+  getOrganizeTree(): void {
+    const queryParams = queryString.stringify({ parentId: this.query.organizeId});
+    this.apiService.getOrganizeTree(queryParams)
+      .subscribe((results: any) => {
+        if (results && results.status === 'success') {
+          this.departmentFiltes = results.data;
+        }
+      },
+        error => { });
+  }
+
+
   cancel() {
     this.query = {
       orgId: '',
-      emp_st: -1,
       filter: '',
+      organizeId: '',
       pageSize: 1000,
       fromdate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).add(-1,'months').format()),
       todate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).format()),
@@ -135,11 +189,12 @@ export class XemCongComponent implements OnInit, OnDestroy {
     const a: any = document.querySelector(".header");
     const b: any = document.querySelector(".sidebarBody");
     const c: any = document.querySelector(".bread-filter");
+    const d: any = document.querySelector(".bread-crumb");
     const e: any = document.querySelector(".paginator");
     this.loadjs++
     if (this.loadjs === 5) {
       if (b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + e.clientHeight + 25;
+        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + d.clientHeight + e.clientHeight + 25;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       } else {
@@ -155,21 +210,21 @@ export class XemCongComponent implements OnInit, OnDestroy {
   setCompanyInfo(data) {
   }
 
-  listOrgRoots = []
-  getOrgRoots() {
-    this.apiService.getOrgRoots().subscribe(results => {
-      if (results.status === 'success') {
-        this.listOrgRoots = results.data.map(d => {
-          return {
-            label: d.org_name,
-            value: `${d.orgId}`
-          }
-        });
-        this.query.orgId = this.listOrgRoots[0].value
-        this.getXemCongInfo();
-      }
-    })
-  }
+  // listOrgRoots = []
+  // getOrgRoots() {
+  //   this.apiService.getOrgRoots().subscribe(results => {
+  //     if (results.status === 'success') {
+  //       this.listOrgRoots = results.data.map(d => {
+  //         return {
+  //           label: d.org_name,
+  //           value: `${d.orgId}`
+  //         }
+  //       });
+  //       this.query.orgId = this.listOrgRoots[0].value
+  //       this.getXemCongInfo();
+  //     }
+  //   })
+  // }
 
   initGrid() {
     this.columnDefs = [

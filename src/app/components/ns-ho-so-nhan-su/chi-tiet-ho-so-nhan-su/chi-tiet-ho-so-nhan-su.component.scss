@@ -14,7 +14,6 @@
             background: #ffffff;
             padding-left: 0px;
             padding-right: 0px;
-            display: none;
         }
         .btn-group-edit-detail{
             right: 8px !important;
@@ -37,7 +36,7 @@
                 .p-dialog{
                     .wrap-edit-detail{
                         .main-grid{
-                            right: 35px !important;
+                            right: 50px !important;
                             top: 21px !important;
                         }
                     }
@@ -54,16 +53,17 @@
             border-radius: 0;
         }
         .p-panel-header{
-            padding-left: 0px;
-            padding-right: 0px;
+            padding: 0px;
+            margin-bottom: 32px;
             .p-panel-title {
                 font-size: 20px !important;
                 font-weight: 500;
                 color: #2F3E62;
-                font-family: 'SFProTextMedium';
+                font-family: "SFProTextMedium";
                 position: relative;
                 padding-left: 16px;
-                padding-top: 3px;
+                line-height: 28px;
+                display: block;
                 &::after{
                     content: '';
                     width: 4px;
@@ -72,7 +72,7 @@
                     display: block !important;
                     position: absolute;
                     left: 0px;
-                    top: 0px;
+                    top: 2px;
                 }
             }
         }
@@ -91,12 +91,11 @@
             padding: 0px;
             .p-panel-header{
                 display: block;
-                margin-bottom: 16px;
             }
             .p-panel{
                 // padding-left: 16px;
                 // padding-right: 16px;
-                margin-bottom: 16px;
+                // margin-bottom: 16px;
             }
         }
         .avatar-c{
