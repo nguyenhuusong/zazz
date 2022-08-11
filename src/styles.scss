@@ -4016,3 +4016,30 @@ ul{
         padding-right: 12px;
     }
 }
+section{
+    .title{
+        font-size: 20px;
+        font-weight: 500;
+        color: #2F3E62;
+        font-family: "SFProTextMedium";
+        position: relative;
+        padding-left: 16px;
+        line-height: 28px;
+        display: block;
+        margin-top: 0px;
+        margin-bottom: 32px;
+        &::after{
+            content: "";
+            width: 4px;
+            height: 24px;
+            background: #4C97E4;
+            display: block !important;
+            position: absolute;
+            left: 0px;
+            top: 2px;
+        }
+    }
+}
+.pd-0{
+    padding: 0 !important
+}
