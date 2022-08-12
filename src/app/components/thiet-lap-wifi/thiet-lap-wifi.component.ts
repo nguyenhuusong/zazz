@@ -169,7 +169,7 @@ export class ThietLapWifiComponent implements OnInit, AfterViewChecked {
         },
         {
           onClick: this.xoaThietLapWifi.bind(this),
-          label: 'Xóa thiết lập wifi',
+          label: 'Xóa',
           icon: 'pi pi-trash',
           class: 'btn-primary mr5',
         },

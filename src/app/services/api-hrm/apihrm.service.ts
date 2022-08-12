@@ -1417,16 +1417,16 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v1/timekeeping/GetTimekeepingWifiPage?` + queryParams, this.options)
   }
 
-  getTimekeepingWifiInfo(id: string): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/timekeeping/GetTimekeepingWifiInfo?id=${id}`, this.options)
+  getTimekeepingWifiInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/timekeeping/GetTimekeepingWifiInfo?${queryParams}`, this.options)
   }
 
   setTimekeepingWifiInfo(data): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v1/timekeeping/SetTimekeepingWifiInfo`, data , this.options)
   }
 
-  delTimekeepingWifiInfo(id): Observable<any> {
-    return this.http.delete<any>(`${apiHrmServer}/api/v1/timekeeping/DelTimekeepingWifiInfo?id=${id}`, this.options)
+  delTimekeepingWifiInfo(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v1/timekeeping/DelTimekeepingWifiInfo?${queryParams}`, this.options)
   }
 
 }

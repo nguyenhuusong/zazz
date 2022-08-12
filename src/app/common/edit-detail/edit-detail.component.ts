@@ -246,6 +246,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
             this.getLeaveReasons(element1)
           } else if (element1.field_name === 'parent_type_id' || element1.field_name === 'form_type') {
             await this.getFormTypePage(element1);
+          } else if(element1.field_name === 'workplace_id'){
+            this.getWorkplaces(element1);
           } else {
             if (element1.columnObject) {
               this.getCustObjectListNew(element1);

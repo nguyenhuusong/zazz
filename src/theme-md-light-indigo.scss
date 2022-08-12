@@ -896,12 +896,12 @@ p-button{
 }
 .p-dialog-footer{
     .p-button{
-        &.btn-cancel{
-            background: var(--red);
-            &:hover{
-                background: var(--c10000);
-            }
-        }
+        // &.btn-cancel{
+        //     background: var(--red);
+        //     &:hover{
+        //         background: var(--c10000);
+        //     }
+        // }
     }
 }
 .create-order{
