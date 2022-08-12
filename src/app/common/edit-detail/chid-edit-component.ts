@@ -985,11 +985,14 @@ export class AppTypeCheckboxRadioListComponent implements OnInit {
   selector: 'app-type-linkurl',
   template: `   
             <div class="field-group attach-file">
+            <label  class="text-nowrap label-text" >{{element.columnLabel}}</label>
                     <div class="control-image" style="display: flex" *ngIf="this.element.columnValue">
                       <input type="text" class="form-control" (change)="setvalueImage($event)" [value]="this.element.columnValue">
                       <button pButton pRipple type="button" (click)="removeAttach()" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-text"></button>
+                      <div *ngIf="imagesUpload && (fileType ==='image/jpeg' || fileType ==='image/png' || fileType ==='image/jpg' || fileType ==='image/gif') else otherFile" >
+                        <p-image  src="{{imagesUpload}}" alt="Image" width="250" height="250" ></p-image>
+                      </div>
                     </div>
-                    <label  class="text-nowrap label-text" >{{element.columnLabel}}</label>
                     <div *ngIf="!this.element.columnValue" class="upload_file"><input class="" type="file"  accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/pdf, application/msword, image/*, application/vnd.ms-powerpoint,
                     text/plain, application/vnd.ms-excel" (change)="onUploadOutputImage($event)" ></div>
                     <input type="file" style="display: none" id="sign_second" name="sign_second"  accept="image/jpeg,image/png,image/jpg,image/gif" (change)="onUploadOutputImage($event)">
@@ -999,9 +1002,6 @@ export class AppTypeCheckboxRadioListComponent implements OnInit {
                           Trường bắt buộc nhập!
                         </div>
                     </div> 
-                    <div *ngIf="imagesUpload && (fileType ==='image/jpeg' || fileType ==='image/png' || fileType ==='image/jpg' || fileType ==='image/gif') else otherFile" >
-                      <p-image  src="{{imagesUpload}}" alt="Image" width="250" height="250" ></p-image>
-                    </div>
                     <ng-template #otherFile class="">
                       <div *ngIf="imagesUpload">
                           <a style="display: block;

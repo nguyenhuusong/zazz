@@ -3525,6 +3525,11 @@ p-dialog{
         }
     }
 }
+.p-confirm-dialog {
+    .p-dialog-content{
+        padding-top: 16px;
+    }   
+}
 .product-detail{
     .p-tabview-panels{
         padding-left: 0px;

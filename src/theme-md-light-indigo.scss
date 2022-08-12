@@ -517,6 +517,9 @@ p-button{
     button{
         &.p-button-sm{
             border: 1px solid #4C97E4;
+            &.p-disabled{
+                border-color: transparent
+            }
         }
     }
 }
