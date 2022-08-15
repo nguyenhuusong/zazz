@@ -2460,7 +2460,7 @@ div.p-organizationchart {
     input-file: .attach-file 
 */
 .field-group{
-    margin-bottom: 30px;
+    margin-bottom: 16px;
     position: relative;
     label{
         color: #465373;
@@ -2472,6 +2472,11 @@ div.p-organizationchart {
         line-height: 20px;
         margin-bottom: 4px;
         display: block;
+    }
+    .icon-date{
+        position: absolute;
+        right: 10px;
+        bottom: 10px;
     }
     input{
         width: 100%;
@@ -3371,6 +3376,7 @@ div.p-organizationchart {
         display: flex;
     }
     .field-group{
+        height: 38px;
         .p-dropdown{
             border: none;
             min-height: 0px;
@@ -3961,6 +3967,9 @@ ul{
 }
 .gap-16{
     gap: 16px;
+}
+.gap-12{
+    gap: 12px;
 }
 .bread-filter{
     .field-group{

@@ -284,19 +284,20 @@ export class NsHoSoNhanSuComponent implements OnInit {
   initGrid() {
     this.columnDefs = [
       {
-        headerName: 'STT',
-        filter: '',
-        maxWidth: 120,
+        headerName: '',
+        filter: false,
+        maxWidth: 50,
         pinned: 'left',
         cellRenderer: params => {
-          return params.rowIndex + 1
+          // return params.rowIndex + 1
         },
         cellClass: ['border-right', 'no-auto'],
         checkboxSelection: true,
         headerCheckboxSelection: true,
-        headerCheckboxSelectionFilteredOnly: true,
+        headerCheckboxSelectionFilteredOnly: false,
         field: 'checkbox2',
-        suppressSizeToFit: true,
+        suppressSizeToFit: false,
+        suppressColumnsToolPanel: false,
       },
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       {

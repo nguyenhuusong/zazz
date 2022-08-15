@@ -709,7 +709,9 @@ export class AppTypeTextareaComponent implements OnInit {
                   [(ngModel)]="element.columnValue" [monthNavigator]="true" [yearNavigator]="true" (onBlur)="onChangeValue($event, element.field_name)"
                   yearRange="2000:2030" inputId="navigators" [required]="element.isRequire && element.isVisiable && !element.isEmpty"
                   dateFormat="dd/mm/yy" name={{element.field_name}}></p-calendar>
-
+                  <svg width="19" class="icon-date" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12.8498 2.8V0.5H15.0998V2.8H18.7998V19H0.799805L0.808805 2.8H4.4998V0.5H6.7498V2.8H12.8498ZM2.5998 17.2H16.9998V9.1H2.5998V17.2ZM2.5998 7.3V4.6H16.9998V7.3H2.5998Z" fill="#2B2F33" fill-opacity="0.6"/>
+                  </svg>
                 <div *ngIf="element.isRequire && submit && !element.columnValue"
                     class="alert-validation alert-danger">
                     <div [hidden]="element.columnValue">
