@@ -18,13 +18,12 @@
     [isRowMaster]="isRowMaster"
     [groupDefaultExpanded]="groupDefaultExpanded"
     [masterDetail]="true"
-    [stopEditingWhenCellsLoseFocus]="true"
-    [modules]="modules"
+    [stopEditingWhenCellsLoseFocus]="true"    [modules]="modules"
+    [groupDisplayType]="'groupRows'"
     [rowClassRules]="rowClassRules"
     [overlayNoRowsTemplate]="noRowsTemplate"
     [detailCellRendererParams]="detailCellRendererParams"
     [tooltipShowDelay]="tooltipShowDelay"
-    [suppressRowClickSelection]="true"
     (bodyScroll)="handleScroll($event)"
     [rowSelection]="rowSelection"
     (gridReady)="onGridReady($event)"
@@ -36,9 +35,13 @@
     [enableRangeSelection]="false"
     [getRowHeight]="getRowHeight"
     (rowSelected)="onRowSelected($event)"
+    (cellValueChanged)="onCellValueChanged($event)"
     [accentedSort]="true"
     (cellClicked)="CellClicked($event)"
+    [isRowSelectable]="isRowSelectable"
     [frameworkComponents]="frameworkComponents">
   </ag-grid-angular>
 </div>
 <!-- [sideBar]="sideBar" -->
+
+<!-- [suppressRowClickSelection]="true" -->

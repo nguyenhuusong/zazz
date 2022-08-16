@@ -35,6 +35,7 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
   @Input() title: string = '';
   @Input() idGrid: string = 'myGrid';
   @Input() typeConfig: string = 'myGrid';
+  isRowSelectable;
   // autoHeight
   @Input() defaultColDef: any = {
     tooltipComponent: 'customTooltip',
@@ -86,6 +87,9 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
     private messageService: MessageService,
 
   ) {
+    this.isRowSelectable = (rowNode) => {
+      return rowNode.data.tontai ? false : true;
+    };
     this.titlePage = this.activatedRoute.data['_value'].title;
     this.excelExportParams = {
       fileName: this.titlePage ? this.titlePage : 'export',
@@ -205,6 +209,9 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
   }
   dataChange = null;
   onRowSelected(event) {
+    console.log(event);
+    console.log(this.isChange);
+
     if (!event.node.isSelected() && this.isChange) {
       this.dataChange = event.data;
       if(this.typeConfig === 'FormInfo') {
@@ -304,6 +311,8 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
 
   isChange = false
   onCellValueChanged(event) {
+    console.log(event)
+    console.log(event.value != event.oldValue)
     if (event.value != event.oldValue) {
       this.isChange = true;
     } else {
