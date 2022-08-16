@@ -160,6 +160,14 @@ export class ApiService {
     return this.http.get<any>(`${apiHrmBase}/api/v2/category/GetObjectList?objKey=${objKey}` , this.options);
   }
 
+  getGroupInfo(queryParams): Observable<any> {
+    return this.http.get(`${apiHrmBase}/api/v1/config/GetGroupInfo?` + queryParams, this.options);
+  }
+
+  setGroupInfo(queryParams): Observable<any> {
+    return this.http.post(`${apiHrmBase}/api/v1/config/SetGroupInfo`, queryParams, this.options);
+  }
+
   getGridViewPage(url, queryParams): Observable<any> {
     return this.http.get(`${apiHrmBase}/api/v1/config/${url}?` + queryParams, this.options);
   }

@@ -10,8 +10,9 @@ import { MessageService } from 'primeng/api';
 import { AgGridFn } from 'src/app/utils/common/function-common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as numeral from 'numeral';
-import { delay, lastValueFrom, of, tap, timer } from 'rxjs';
+import { delay, lastValueFrom, of, Subject, takeUntil, tap, timer } from 'rxjs';
 import { findNodeInTree } from '../function-common/objects.helper';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-edit-detail',
   templateUrl: './edit-detail.component.html',
@@ -22,7 +23,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
     private apiService: ApiHrmService,
     private messageService: MessageService,
     private apiServiceCore: ApiService,
-    private changeDetech: ChangeDetectorRef
+    private changeDetech: ChangeDetectorRef,
+    private spinner: NgxSpinnerService,
   ) { }
   @Output() callback = new EventEmitter<any>();
   @Output() callbackcancel = new EventEmitter<any>();
@@ -62,6 +64,12 @@ export class EditDetailComponent implements OnInit, OnChanges {
     { id: 'email', itemName: this.CONSTANTS_NOTIFY.EMAIL }
   ];
   @Input() detail;
+  gridKey = '';
+  displaySetting = false;
+  listViews = [];
+  detailInfoConfig = null;
+  group_cd = '';
+  displaySetting1 = false;
   public modules: Module[] = AllModules;
   public agGridFn = AgGridFn;
   query = {
@@ -1008,11 +1016,63 @@ export class EditDetailComponent implements OnInit, OnChanges {
     this.callbackcancel.emit(event);
   }
 
-  gridKey = '';
-  displaySetting = false;
   CauHinh() {
     this.gridKey = this.detail.tableKey
     this.displaySetting = true;
+  }
+
+  callbackConfigGridTanle(event) {
+    this.group_cd = event;
+    this.getGroupInfo();
+  }
+  
+  getGroupInfo() {
+    const queryParams = queryString.stringify({ group_key: this.detail.groupKey, group_cd: this.group_cd });
+    this.apiServiceCore.getGroupInfo(queryParams)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(results => {
+        if (results.status === 'success') {
+          const listViews = cloneDeep(results.data.group_fields);
+          this.listViews = [...listViews];
+          this.detailInfoConfig = results.data;
+          this.displaySetting1 = true;
+        }
+      });
+  }
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
+  setGroupInfo(data) {
+    this.spinner.show();
+    const params = {
+      ...this.detailInfoConfig, group_fields: data
+    }
+    this.apiServiceCore.setGroupInfo(params)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((results: any) => {
+        if (results.status === 'success') {
+          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
+          this.spinner.hide();
+          this.displaySetting1 = false;
+          // this.load();
+        } else {
+          this.messageService.add({
+            severity: 'error', summary: 'Thông báo',
+            detail: results.message
+          });
+          this.spinner.hide();
+        }
+      }), error => {
+        this.spinner.hide();
+      };
+  }
+
+  quaylai(data) {
+    this.displaySetting1 = false;
   }
 
 }

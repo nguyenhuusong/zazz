@@ -330,9 +330,8 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     const queryParams = queryString.stringify({ empId: this.empId });
     this.apiService.getEmployeeData(this.selectedMenuCode, queryParams).subscribe(results => {
       if (results.status === 'success') {
-        this.codeStaff = getFieldValueAggrid(results.data, 'code');
         if(!this.codeStaff){
-          this.codeStaff = getFieldValueAggrid(results.data, 'code3');
+          this.codeStaff = getFieldValueAggrid(results.data, 'code');
         }
         this.listViews = cloneDeep(results.data.group_fields || []);
         this.listViewsForm = cloneDeep(results.data.group_fields || []);

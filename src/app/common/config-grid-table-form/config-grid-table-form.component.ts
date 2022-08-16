@@ -1,4 +1,4 @@
-import { AfterViewChecked, ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewChecked, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import * as queryString from 'querystring';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -15,6 +15,7 @@ const MAX_SIZE = 100000000;
 export class ConfigGridTableFormComponent implements OnInit {
   dataRouter: any;
   @Input() gridKey;
+  @Output() callbackF = new EventEmitter<any>();
   @Input() typeConfig;
   constructor(
     private spinner: NgxSpinnerService,
@@ -93,6 +94,12 @@ export class ConfigGridTableFormComponent implements OnInit {
     return {
       buttons: [
         {
+          onClick: this.chitietgroup.bind(this),
+          label: 'Chi tiết group',
+          icon: 'pi pi-trash',
+          class: 'btn-primary mr5',
+        },
+        {
           onClick: this.Delete.bind(this),
           label: 'Xóa',
           icon: 'pi pi-trash',
@@ -102,6 +109,10 @@ export class ConfigGridTableFormComponent implements OnInit {
       ]
     };
   }
+
+  chitietgroup(event) {
+    this.callbackF.emit(event.rowData.group_cd)
+  } 
 
   initGrid() {
     this.columnDefs = [
