@@ -154,9 +154,9 @@
     }
 }
 .base-info-em{
+    background: #F3F4F6;
     ul{
         display: flex;
-        background: #F3F4F6;
         border-radius: 4px 4px 0px 0px;
         padding: 17px;
         align-items: center;
@@ -177,7 +177,19 @@
         }
     }
 }
-
+:host::ng-deep{
+    .base-info-em{
+        .buttons{
+            button{
+                line-height: 20px;
+                font-size: 14px;
+            }
+            svg{
+                height: 16px;
+            }
+        }
+    }
+}
 
 .chi-tiet-ho-so-nhan-su .page-detail{
     position: static;

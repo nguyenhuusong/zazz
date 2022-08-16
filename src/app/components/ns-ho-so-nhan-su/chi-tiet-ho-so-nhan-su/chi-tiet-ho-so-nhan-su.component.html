@@ -32,7 +32,7 @@
         </div>
     </section>
     <section>
-        <div class="bg-grey base-info-em">
+        <div class="bg-grey base-info-em d-flex middle bet">
             <ul>
                 <li>
                     <span class="label">Nhân viên:</span>
@@ -47,6 +47,20 @@
                     <span class="value"> {{codeStaff}}</span>
                 </li>
             </ul>
+            <div class="buttons" *ngIf="selectedMenuCode === API_PROFILE.CONG_VIEC && detailInfo?.emp_st === 1" >
+                <p-button (click)="cancelUpdate('ChuyenCongTac')">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6.59 5.17L1.41 0L0 1.41L5.17 6.58L6.59 5.17ZM10.5 0L12.54 2.04L0 14.59L1.41 16L13.96 3.46L16 5.5V0H10.5ZM10.83 9.41L9.42 10.82L12.55 13.95L10.5 16H16V10.5L13.96 12.54L10.83 9.41Z" fill="#F3F8FF"/>
+                    </svg>
+                    &nbsp;
+                    Chuyển công tác</p-button>&nbsp;
+                <p-button (click)="cancelUpdate('NghiViec')">
+                    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M8.42992 2.57992H12.4299V4.57992H8.82992L10.8299 6.57992H18.4299V14.1799L20.4299 16.1799V6.57992C20.4299 5.46992 19.5399 4.57992 18.4299 4.57992H14.4299V2.57992C14.4299 1.46992 13.5399 0.579922 12.4299 0.579922H8.42992C7.43992 0.579922 6.62992 1.27992 6.46992 2.21992L8.42992 4.17992V2.57992ZM1.82992 0.419922L0.419922 1.82992L3.16992 4.57992H2.42992C1.31992 4.57992 0.439922 5.46992 0.439922 6.57992L0.429922 17.5799C0.429922 18.6899 1.31992 19.5799 2.42992 19.5799H18.1699L20.1699 21.5799L21.5799 20.1699L1.82992 0.419922ZM2.42992 17.5799V6.57992H5.16992L16.1699 17.5799H2.42992Z" fill="#F3F8FF"/>
+                    </svg>
+                    &nbsp;
+                    Nghỉ việc</p-button>
+            </div>
         </div>
         <div class="content page-detail" style="padding: 0;">
             <p-panel styleClass="no-header">
@@ -239,10 +253,10 @@
                         </div>
 
                     
-                        <div class="page-detail-edit-detail" *ngIf="listViewsReportTo.length> 0">
+                        <!-- <div class="page-detail-edit-detail" *ngIf="listViewsReportTo.length> 0">
                             <div class="d-flex justify-content-end" style="margin-bottom: 0;position: absolute; z-index: 9;right: 20px;">
                                     <p-button label="Lưu lại" icon="pi pi-check" (click)="saveReportTo()" styleClass="p-button-sm"></p-button>
-                            </div>
+                            </div>dsfdsf
                             <app-edit-detail *ngIf="listViewsReportTo.length> 0"
                                 [detail]="detailInfoReportTo" 
                                 [thongtinnhanvienNew]="true" 
@@ -252,7 +266,8 @@
                                 (callback)="setEmployeeInfo($event)" 
                                 (callbackcancel)="cancelUpdateViewsReportTo($event)">
                             </app-edit-detail>
-                        </div>
+                        </div> -->
+
                         <div class="border-section mt-5" *ngIf="selectedMenuCode === API_PROFILE.CHUYEN_MON || selectedMenuCode === API_PROFILE.THONG_TIN_CA_NHAN
                         || selectedMenuCode === API_PROFILE.CONG_VIEC">
                                 <p-card styleClass="mt-1 mb-4 p-card-header-custom plr-16" >
@@ -485,11 +500,11 @@
             <app-add-address-contact *ngIf="isShowAddress" [thongtinlienhe]="thongtinlienhe" (back)="reloaddanhsachlienhe()"></app-add-address-contact>
         </p-dialog>
 
-        <p-dialog styleClass="popup-btngroup-edit-detail" [(visible)]="displayFormEditDetail" [draggable]="false"  [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '1200px', height: 'auto'}">
+        <p-dialog styleClass="popup-btngroup-edit-detail" [(visible)]="displayFormEditDetail" [draggable]="false"  [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '600px', height: 'auto'}">
             <p-header>
                 {{titleType0}}
             </p-header>
-            <app-edit-detail *ngIf="listViewsDependent.length> 0 && detailDependentInfo" [detailInfo]="detailInfo"
+            <app-edit-detail [optionsButtonsEdit]="optionsButtonsPopup" *ngIf="listViewsDependent.length> 0 && detailDependentInfo" [detailInfo]="detailInfo"
                 [detail]="detailDependentInfo" [manhinh]="'Edit'" [thongtinnhanvienNew]="true"
                 [dataView]="listViewsDependent" (callback)="setEmpDependen($event)"
                 (callbackcancel)="cancelDependentInfo($event)"></app-edit-detail>
