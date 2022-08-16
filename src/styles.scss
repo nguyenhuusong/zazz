@@ -276,7 +276,7 @@ body {
         &:last-child{
             a{
                 .p-menuitem-text{
-                    color: #4C97E4 !important;
+                    // color: #4C97E4 !important;
                 }
             }
         }
@@ -3141,7 +3141,7 @@ div.p-organizationchart {
 }
 .status-line{
     .p-steps-item{
-        max-width: 200px;
+        width: 20%;
         .p-menuitem-link{
             display: block;
             .p-steps-number{
@@ -3521,7 +3521,7 @@ p-dialog{
                 padding-right: 0px;
                 padding-top: 0px;
                 .btn-group-edit-detail{
-                    position: absolute;
+                    position: static;
                     right: 32px;
                     z-index: 998;
                     top: auto;
@@ -4075,7 +4075,7 @@ section{
 .p-dialog {
     background: #fff;
     &.popup-btngroup-edit-detail{
-        padding-bottom: 40px;
+        // padding-bottom: 40px;
     }
     .p-dialog-header{
         border-radius: 0px;

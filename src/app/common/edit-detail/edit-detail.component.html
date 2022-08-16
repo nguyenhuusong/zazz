@@ -1,10 +1,4 @@
 <div class="wrap-edit-detail">
-    <div class="main-grid text-right btn-group-edit-detail" *ngIf = "isViewButtonTop">
-        <ng-container *ngFor="let button of optionsButtonsEdit">
-            <p-button label="{{button.label}}" (onClick)="onChangeButtonEdit(button.value)" styleClass="p-button-sm {{button?.class ? button?.class : ''}} mr-1"></p-button>
-        </ng-container>
-        <p-button label="Cấu hình" styleClass="p-button-sm" icon="pi pi-cog" (click)="CauHinh()"></p-button>
-    </div>
     <div class="grid">
         <ng-container *ngFor="let group of dataView; let idx = index">
             
@@ -42,6 +36,13 @@
                 </p-panel>
             </div>
         </ng-container>
+    </div>
+    
+    <div class="main-grid text-right btn-group-edit-detail" *ngIf = "isViewButtonTop">
+        <ng-container *ngFor="let button of optionsButtonsEdit">
+            <p-button label="{{button.label}}" (onClick)="onChangeButtonEdit(button.value)" styleClass="p-button-sm {{button?.class ? button?.class : ''}} mr-1"></p-button>
+        </ng-container>
+        <p-button label="Cấu hình" styleClass="p-button-sm" icon="pi pi-cog" (click)="CauHinh()"></p-button>
     </div>
     <div class="main-grid text-right btn-group-edit-detail" *ngIf = "!isViewButtonTop">
         <ng-container *ngFor="let button of optionsButtonsEdit">

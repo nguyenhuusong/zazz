@@ -123,9 +123,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     this.titlePage = this.activatedRoute.data['_value'].title;
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
-      { label: 'Nhân sự' },
-      { label: 'Hồ sơ nhân sự', routerLink: '/nhan-su/ho-so-nhan-su' },
-      { label: `${this.titlePage}` },
+      { label: 'Quản lý nhân sự', routerLink: '/nhan-su/ho-so-nhan-su' },
+      // { label: 'Hồ sơ nhân sự', routerLink: '/nhan-su/ho-so-nhan-su' },
+      // { label: `${this.titlePage}` },
     ];
     this.getUsersByAdmin();
     this.getTerminateReasons();
@@ -324,10 +324,12 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     this.detailInfo = null;
     this.listsData = [[], [], [], []];
     const queryParams = queryString.stringify({ empId: this.empId });
-    console.log('this.selectedMenuCode', this.selectedMenuCode)
     this.apiService.getEmployeeData(this.selectedMenuCode, queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.codeStaff = getFieldValueAggrid(results.data, 'code');
+        if(!this.codeStaff){
+          this.codeStaff = getFieldValueAggrid(results.data, 'code3');
+        }
         this.listViews = cloneDeep(results.data.group_fields || []);
         this.listViewsForm = cloneDeep(results.data.group_fields || []);
         this.detailInfo = results.data;
@@ -1441,7 +1443,6 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   }
 
   handleUpload(datas) {
-    console.log(datas)
     if (datas.length > 0) {
       const indexobj = this.listsDataRecord.findIndex(d => d.sourceId === this.record.sourceId);
       let record = { ... this.listsDataRecord[indexobj] };
