@@ -165,7 +165,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
           } else if (element1.field_name === 'company_id') {
             console.log("element1.field_name", element1.field_name)
             this.getCompanyList(this.detail.organizeId ? this.detail.organizeId : null, element1);
-          } else if (element1.field_name === 'reportTo') {
+          } else if (element1.field_name === 'reportTo' || element1.field_name === 'reportTo1') {
             console.log("element1.field_name", element1.field_name)
             const root_orgId = this.detail ? this.detail.organizeId : null
             this.getEmpLeaders(element1, root_orgId);

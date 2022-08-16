@@ -29,6 +29,10 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   indexTab = 0;
   // optionsButtonsView = [{ label: 'Sửa', value: 'Edit' }, { label: 'Quay lại', value: 'Back' }];
   optionsButtonsSave = [{ label: 'Lưu lại', value: 'Save' }, { label: 'Hủy', value: 'Back' }];
+  optionsButtonsPopup = [
+    { label: 'Bỏ qua', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
+    { label: 'Xác nhận', value: 'Update', class: '' }
+  ]
   empId = null;
   listViews = [];
   listViewsForm = [];
@@ -388,9 +392,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
         this.optionsButtonsView =
           [
             // { label: 'Sửa', value: 'Edit' },
-            { label: 'Chuyển công tác', value: 'ChuyenCongTac', class: '', icon: 'pi pi-check' },
+            // { label: 'Chuyển công tác', value: 'ChuyenCongTac', class: '', icon: 'pi pi-check' }, tạm ẩn
             // { label: 'Duyệt hồ sơ', value: 'DuyetHoSo', class: '', icon: 'pi pi-check' },
-            { label: 'Nghỉ việc', value: 'NghiViec', class: 'p-button-secondary', icon: 'pi pi-check' },
+            // { label: 'Nghỉ việc', value: 'NghiViec', class: 'p-button-secondary', icon: 'pi pi-check' }, tạm ẩn
             // { label: 'Quay lại', value: 'Back', class: 'p-button-secondary', icon: 'pi pi-times' }
           ];
         break;
@@ -1598,6 +1602,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       this.displayNguoiDung = true;
     } else if (this.selectedMenuCode === API_PROFILE.CONG_VIEC) {
       this.titleType0 = 'Thêm mới thời gian làm việc';
+
       const queryParams = queryString.stringify({ empId: this.detailInfo.empId, gd: null });
       this.getEmpWorking(queryParams);
     }
