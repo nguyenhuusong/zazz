@@ -325,6 +325,8 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
             this.getJobTitles(value, element1, positionTypeCd)
           } else if (element1.field_name === 'full_name' || element1.field_name === 'empId') {
             this.getUserByPush(value, element1)
+          } else if (element1.field_name === 'work_cd') {
+            this.getWorkTime(element1, value)
           }
         });
       });
@@ -387,6 +389,18 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
     } else if (field_name === 'holi_type') {
       this.callback.emit(value);
     }
+  }
+
+  getWorkTime(element1, root_orgId) {
+    const queryParams = queryString.stringify({ organizeId: root_orgId });
+    this.apiService.getWorktimeList(queryParams).subscribe(results => {
+      if (results.status === 'success') {
+        element1.options = cloneDeep(results.data).map(d => {
+          return { label: d.work_times + '-' + d.work_name, value: d.work_cd }
+        });
+        element1.columnValue = element1.columnValue ? element1.columnValue : '';
+      }
+    })
   }
 
   getPositionTitles(positionId, element1) {
