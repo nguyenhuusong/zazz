@@ -47,7 +47,7 @@
                     <span class="value"> {{codeStaff}}</span>
                 </li>
             </ul>
-            <div class="buttons" *ngIf="selectedMenuCode === API_PROFILE.CONG_VIEC && detailInfo?.emp_st === 1" >
+            <div class="buttons" *ngIf="detailInfo?.emp_st === 1" >
                 <p-button (click)="cancelUpdate('ChuyenCongTac')">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M6.59 5.17L1.41 0L0 1.41L5.17 6.58L6.59 5.17ZM10.5 0L12.54 2.04L0 14.59L1.41 16L13.96 3.46L16 5.5V0H10.5ZM10.83 9.41L9.42 10.82L12.55 13.95L10.5 16H16V10.5L13.96 12.54L10.83 9.41Z" fill="#F3F8FF"/>
@@ -304,7 +304,7 @@
                                             </div>
                                 </p-card>
                         </div>
-
+<!-- 
                         <div class="border-section mt-5"  *ngIf="selectedMenuCode === API_PROFILE.CHUYEN_MON || selectedMenuCode === API_PROFILE.THONG_TIN_CA_NHAN">
                                 <p-card styleClass="mt-1 mb-4 plr-16">
                                     <ng-template pTemplate="header">
@@ -321,8 +321,8 @@
                                                 <p-button *ngIf="selectedMenuCode === API_PROFILE.THONG_TIN_CA_NHAN" 
                                                     label="Thêm mới" styleClass="p-button-sm"
                                                     icon="pi pi-plus" (click)="addType3()"></p-button>
-                                                    <!-- <p-button label="Thêm mới CMND/CCCD/HC" *ngIf="selectedMenuCode === API_PROFILE.THONG_TIN_CA_NHAN" icon="pi pi-plus" styleClass="p-button-sm p-button-info"
-                                                    (click)="showPopupUploadCard()"></p-button> -->
+                                                    <p-button label="Thêm mới CMND/CCCD/HC" *ngIf="selectedMenuCode === API_PROFILE.THONG_TIN_CA_NHAN" icon="pi pi-plus" styleClass="p-button-sm p-button-info"
+                                                    (click)="showPopupUploadCard()"></p-button> cũ - ẩn
                                             </div>
                                         </div>
 
@@ -333,7 +333,7 @@
                                             [columnDefs]="columnDefs[3]"></app-list-grid-angular>
                                         </div>
                                 </p-card>
-                        </div>
+                        </div> -->
 
                         <!-- <p-card styleClass="mt-1" *ngIf="selectedMenuCode === API_PROFILE.THONG_TIN_CA_NHAN">
                             <ng-template pTemplate="header">
@@ -358,61 +358,63 @@
             <!-- </div> -->
             <p-dialog styleClass="popup-btngroup-edit-detail" header="{{titleForm.title}}" [(visible)]="displayDialog" [modal]="true" [draggable]="false"
             [resizable]="false" [style]="{width: '75vw'}" [autoZIndex]=true [draggable]="false" [resizable]="false">
-            <app-edit-detail
-                *ngIf="listViewsForm.length> 0 && displayDialog &&  (titleForm.type === 'DuyetHoSo' || titleForm.type === 'TuyenDungLai' || titleForm.type === 'ChuyenCongTac')"
-                [detail]="detailInfo" [manhinh]="manhinh" [thongtinnhanvienNew]="true" [dataView]="listViewsForm"
-                (callback)="xacNhan($event)" (callbackcancel)="cancelViewsForm($event)"></app-edit-detail>
-            <!-- <p-selectButton [options]="optionsButtonsSave"
-                *ngIf="titleForm.type === 'HuyHoSo' || titleForm.type === 'MoLaiHoSo' || titleForm.type === 'NghiViec'"
-                optionLabel="label" optionValue="value" (onChange)="onChangeButtonSave($event)"></p-selectButton> -->
-                <div class="col-md-6 mt-1">
-                    <div class="field-group text" [ngClass]=" modelDuyet.full_name ? 'valid' : 'invalid' ">
-                        <label for="">Nhân viên</label>
-                        <input type="text" [value]="modelDuyet.full_name || 'No name'" disabled name="full_name" class="form-control">
-                    </div>
-                </div>
-                <div class="col-md-6 mt-1"  *ngIf="titleForm.type === 'NghiViec'">
-                    <div class="field-group select" [ngClass]=" modelDuyet.reason_id? 'valid' : 'invalid' ">
-                        <label for="">Lý do</label>
-                        <p-dropdown [autoZIndex]="true" [autoDisplayFirst]="false" [style]="{'width': '100%'}" [options]="terminateReasons"
-                        [(ngModel)]="modelDuyet.reason_id" name="reason_id">
-                        <ng-template let-item pTemplate="selectedItem">
-                            <span style="vertical-align:middle; margin-left: .5em">{{item.name}}</span>
-                        </ng-template>
-                        <ng-template let-car pTemplate="item">
-                            <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                                <div style="font-size:14px;float:right;margin-top:4px">{{car.name}}</div>
+                    <app-edit-detail
+                        *ngIf="listViewsForm.length> 0 && displayDialog &&  (titleForm.type === 'DuyetHoSo' || titleForm.type === 'TuyenDungLai' || titleForm.type === 'ChuyenCongTac')"
+                        [detail]="detailInfoForm" [manhinh]="manhinh" [thongtinnhanvienNew]="true" [dataView]="listViewsForm"
+                        (callback)="xacNhan($event)" (callbackcancel)="cancelViewsForm($event)"></app-edit-detail>
+                    <!-- <p-selectButton [options]="optionsButtonsSave"
+                        *ngIf="titleForm.type === 'HuyHoSo' || titleForm.type === 'MoLaiHoSo' || titleForm.type === 'NghiViec'"
+                        optionLabel="label" optionValue="value" (onChange)="onChangeButtonSave($event)"></p-selectButton> -->
+                    <div *ngIf="titleForm.type !== 'ChuyenCongTac'">
+                            <div class="col-md-6 mt-1">
+                                <div class="field-group text" [ngClass]=" modelDuyet.full_name ? 'valid' : 'invalid' ">
+                                    <label for="">Nhân viên</label>
+                                    <input type="text" [value]="modelDuyet.full_name || 'No name'" disabled name="full_name" class="form-control">
+                                </div>
                             </div>
-                        </ng-template>
-                        </p-dropdown>
+                            <div class="col-md-6 mt-1"  *ngIf="titleForm.type === 'NghiViec'">
+                                <div class="field-group select" [ngClass]=" modelDuyet.reason_id? 'valid' : 'invalid' ">
+                                    <label for="">Lý do</label>
+                                    <p-dropdown [autoZIndex]="true" [autoDisplayFirst]="false" [style]="{'width': '100%'}" [options]="terminateReasons"
+                                    [(ngModel)]="modelDuyet.reason_id" name="reason_id">
+                                    <ng-template let-item pTemplate="selectedItem">
+                                        <span style="vertical-align:middle; margin-left: .5em">{{item.name}}</span>
+                                    </ng-template>
+                                    <ng-template let-car pTemplate="item">
+                                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                                            <div style="font-size:14px;float:right;margin-top:4px">{{car.name}}</div>
+                                        </div>
+                                    </ng-template>
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mt-1 ">
+                                <div class="field-group date">
+                                    <label for="">Ngày xác nhận</label>
+                                    <p-calendar placeholder="DD/MM/YYYY" appendTo="body" [baseZIndex]="101" [(ngModel)]="modelDuyet.workDt"
+                                        [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" inputId="navigators"
+                                        dateFormat="dd/mm/yy" name="workDt"></p-calendar>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mt-1" *ngIf="titleForm.type === 'NghiViec'">
+                                <div class="field-group date">
+                                    <label for="">Ngày chốt nghỉ</label>
+                                    <p-calendar placeholder="DD/MM/YYYY" appendTo="body" [baseZIndex]="101" [(ngModel)]="modelDuyet.exprire_date"
+                                        [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" inputId="navigators"
+                                        dateFormat="dd/mm/yy" name="exprire_date"></p-calendar>
+                                </div>
+                            </div>
+                                <div class="col-md-12 mt-1">
+                                    <div class="field-group textarea">
+                                        <label for="">Ghi chú</label>
+                                        <textarea [(ngModel)]="modelDuyet.comments" name="comments" cols="30" rows="10" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                    <div class="col-md-12 mt-1 text-right"  *ngIf="titleForm.type === 'HuyHoSo' || titleForm.type === 'MoLaiHoSo' || titleForm.type === 'NghiViec'">
+                        <p-button label="Hủy" (click)="onChangeButtonSave('Back')" icon="pi pi-times" styleClass="p-button-sm p-button-secondary mr-1"></p-button>
+                        <p-button label="Lưu lại" (click)="onChangeButtonSave('Save')" icon="pi pi-check" styleClass="p-button-sm "></p-button>
                     </div>
                 </div>
-                <div class="col-md-6 mt-1 ">
-                    <div class="field-group date">
-                        <label for="">Ngày xác nhận</label>
-                        <p-calendar placeholder="DD/MM/YYYY" appendTo="body" [baseZIndex]="101" [(ngModel)]="modelDuyet.workDt"
-                            [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" inputId="navigators"
-                            dateFormat="dd/mm/yy" name="workDt"></p-calendar>
-                    </div>
-                </div>
-                <div class="col-md-6 mt-1" *ngIf="titleForm.type === 'NghiViec'">
-                    <div class="field-group date">
-                        <label for="">Ngày chốt nghỉ</label>
-                        <p-calendar placeholder="DD/MM/YYYY" appendTo="body" [baseZIndex]="101" [(ngModel)]="modelDuyet.exprire_date"
-                            [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" inputId="navigators"
-                            dateFormat="dd/mm/yy" name="exprire_date"></p-calendar>
-                    </div>
-                </div>
-                    <div class="col-md-12 mt-1">
-                        <div class="field-group textarea">
-                            <label for="">Ghi chú</label>
-                            <textarea [(ngModel)]="modelDuyet.comments" name="comments" cols="30" rows="10" class="form-control"></textarea>
-                        </div>
-                    </div>
-            <div class="col-md-12 mt-1 text-right"  *ngIf="titleForm.type === 'HuyHoSo' || titleForm.type === 'MoLaiHoSo' || titleForm.type === 'NghiViec'">
-                <p-button label="Hủy" (click)="onChangeButtonSave('Back')" icon="pi pi-times" styleClass="p-button-sm p-button-secondary mr-1"></p-button>
-                <p-button label="Lưu lại" (click)="onChangeButtonSave('Save')" icon="pi pi-check" styleClass="p-button-sm "></p-button>
-            </div>
         </p-dialog>
 
         <p-dialog header="Duyệt hợp đồng" [(visible)]="displayApproveContract" [modal]="true" [draggable]="false"
