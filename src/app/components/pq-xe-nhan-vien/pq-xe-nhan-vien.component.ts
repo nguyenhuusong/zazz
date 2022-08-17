@@ -200,7 +200,7 @@ export class PqXeNhanVienComponent implements OnInit {
     this.spinner.show();
     const query = { ...this.model };
     // query.organizeId = typeof query.organizeId === 'string' ? query.organizeId : query.organizeId.org_cd;
-    // query.orgId = typeof query.orgId === 'string' ? query.orgId : query.orgId.orgId;
+    query.orgId = typeof query.orgId === 'string' ? query.orgId : query.orgId.orgId;
     const queryParams = queryString.stringify(query);
     this.apiService.getEmployeeVehiclePage(queryParams).subscribe(
       (results: any) => {
@@ -590,6 +590,16 @@ export class PqXeNhanVienComponent implements OnInit {
   }
 
   cancel(): void {
+    this.model = {
+      organizeId: '',
+      workplaceId: '',
+      positionCd: '',
+      orgId: '',
+      filter: '',
+      status: -1,
+      offSet: 0,
+      pageSize: 15
+    };
     this.model.filter = '';
     this.model.status = -1;
     this.model.departmentCd = '';
