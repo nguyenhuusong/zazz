@@ -2969,7 +2969,7 @@ div.p-organizationchart {
             position: absolute;
             bottom: 8px;
         }
-        height: 56px;
+        min-height: 64px;
         .p-checkbox-label{
             color: rgba(0, 0, 0, 0.87);
             font-size: 16px;
@@ -3191,15 +3191,16 @@ div.p-organizationchart {
                 font-family: $fontRegular;
             }
         }
-        // &.p-steps-current{
-        //     .p-steps-number{
-        //         text-indent: 0;
-        //         background: #0979FD;
-        //         &::after{
-        //             background: none;
-        //         }
-        //     }
-        // }
+        &.p-steps-current{
+            .p-steps-number{
+                text-indent: 0;
+                background: #4C97E4;
+                color: #fff;
+                &::after{
+                    background: none;
+                }
+            }
+        }
         text-align: center;
         &::before{
             position: absolute;

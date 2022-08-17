@@ -493,6 +493,7 @@ export const API_PROFILE  = {
     CHUYEN_MON: "GetEmployeeByQualification",
     TIEN_ICH: "GetEmployeeByUtility",
     NGUOI_DUNG: "GetEmployeeByUser",
+    CHUYEN_CONG_TAC: "GetEmployeeChangeInfo"
   }
 
 

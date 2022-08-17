@@ -12,13 +12,13 @@ import { checkIsObject } from '../function-common/objects.helper';
 @Component({
   selector: 'app-type-text',
   template: ` <div class="field-group text" [ngClass]=" element.columnValue ? 'valid' : 'invalid' ">
-  <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="modelFields[element.field_name].isRequire">*</span></label>
+  <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="modelFields[element.field_name] && modelFields[element.field_name].isRequire">*</span></label>
                   <input type="text" class="form-control" [(ngModel)]="element.columnValue" (change)="onChangeValue($event.target, element.field_name, element)"
                   name={{element.field_name}} [disabled]="element.isDisable"
                   (focus)="foucusIn($event)"
                   (focusout)="foucusOut($event)"
                   [required]="element.isRequire && element.isVisiable && !element.isEmpty">
-                  <div *ngIf="modelFields[element.field_name].isRequire && submit && modelFields[element.field_name].error"
+                  <div *ngIf="modelFields[element.field_name] && modelFields[element.field_name].isRequire && submit && modelFields[element.field_name].error"
                       class="alert-validation alert-danger">
                       <div [hidden]="!modelFields[element.field_name].error">
                         {{modelFields[element.field_name].message}}
@@ -138,6 +138,7 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
     //     element.value = parseInt(element.value);
     //   })
     // }
+    console.log('element', this.element)
     checkIsObject
   }
 
@@ -217,7 +218,7 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
                     </div>
                   </ng-template>
                 </p-dropdown>
-                <div *ngIf="modelFields[element.field_name].isRequire && submit && modelFields[element.field_name].error"
+                <div *ngIf="modelFields[element.field_name] && modelFields[element.field_name].isRequire && submit && modelFields[element.field_name].error"
                   class="alert-validation alert-danger">
                   <div [hidden]="!modelFields[element.field_name].error">
                   {{modelFields[element.field_name].message}}
@@ -386,7 +387,6 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
     } else if (field_name === 'holi_type') {
       this.callback.emit(value);
     }
-    console.log(this.modelFields)
   }
 
   getPositionTitles(positionId, element1) {
@@ -580,10 +580,10 @@ export class AppTypeCurrencyComponent implements OnInit {
   selector: 'app-type-checkbox',
   template: `   
                 <div class="field-group checkbox">
-                  <p-checkbox name={{element.field_name}} [binary]="true" label="{{element.columnLabel}}"
+                <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
+                 <div class="checkbox-wrap"> <p-checkbox name={{element.field_name}} [binary]="true" 
                   [required]="element.isRequire && element.isVisiable && !element.isEmpty" [disabled]="element.isDisable"
-                  [(ngModel)]="element.columnValue" (onChange)="onChangeValue($event, element.field_name, element)"></p-checkbox>
-                  <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
+                  [(ngModel)]="element.columnValue" (onChange)="onChangeValue($event, element.field_name, element)"></p-checkbox></div>
 
                 <div *ngIf="element.isRequire && submit && !element.columnValue"
                     class="alert-validation alert-danger">
@@ -641,7 +641,6 @@ export class AppTypeCheckboxComponent implements OnInit {
             this.modelFields[element1.field_name].isRequire = false;
             this.modelFields[element1.field_name].error = false;
           }
-          console.log('fdsfdsf')
         }
       });
     });
