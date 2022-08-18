@@ -136,8 +136,11 @@ export class EditDetailComponent implements OnInit, OnChanges {
           } else if (element1.field_name === 'shift_cds') {
             this.getWorkShifts(element1, null)
           } else if (element1.field_name === 'work_cd') {
-            const root_orgId = this.getValueByKey('organizeId');
-            this.getWorkTime(element1, root_orgId)
+            let root_orgIdOrigin = this.getValueByKey('organizeId');
+            if(!root_orgIdOrigin){
+              root_orgIdOrigin = this.detailInfo.organizeId;
+            }
+            source.subscribe(val =>this.getWorkTime(element1, root_orgIdOrigin));
           } else if (element1.field_name === 'shift_cd') {
             this.getWorkShift(element1, this.detail.empId)
           } else if (element1.field_name === 'bank_code') {
@@ -561,7 +564,6 @@ export class EditDetailComponent implements OnInit, OnChanges {
               }
             });
             element1.columnValue = newarray;
-            console.log(element1.columnValue)
           }
         } else {
           element1.options = cloneDeep(results.data).map(d => {
@@ -732,7 +734,6 @@ export class EditDetailComponent implements OnInit, OnChanges {
         element1.columnValue = element1.columnValue ? element1.columnValue : ''
       }
     })
-    console.log('positionId' + positionId, element1.options)
   }
   getPositionList(orgId, element1) {
     const queryParams = queryString.stringify({ orgId: orgId });
