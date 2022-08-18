@@ -328,7 +328,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     this.detailInfo = null;
     this.listsData = [[], [], [], []];
     const queryParams = queryString.stringify({ empId: this.empId });
-    this.detailMenu.code = this.selectedMenuCode
+    // this.detailMenu.code = this.selectedMenuCode
     this.apiService.getEmployeeData(this.selectedMenuCode, queryParams).subscribe(results => {
       if (results.status === 'success') {
         if(!this.codeStaff){
