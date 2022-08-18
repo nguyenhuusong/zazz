@@ -136,7 +136,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
           } else if (element1.field_name === 'shift_cds') {
             this.getWorkShifts(element1, null)
           } else if (element1.field_name === 'work_cd') {
-            this.getWorkTime(element1, this.detail.empId)
+            const root_orgId = this.getValueByKey('organizeId');
+            this.getWorkTime(element1, root_orgId)
           } else if (element1.field_name === 'shift_cd') {
             this.getWorkShift(element1, this.detail.empId)
           } else if (element1.field_name === 'bank_code') {
@@ -344,10 +345,10 @@ export class EditDetailComponent implements OnInit, OnChanges {
   GetAnnualYear(element1) {
     element1.columnValue = moment().year();
   }
-
-  getWorkTime(element1, empId) {
-    const queryParams = queryString.stringify({ empId: empId });
-    this.apiService.getWorkTimes(queryParams).subscribe(results => {
+  // GET /api/v2/worktime/GetWorktimeList
+  getWorkTime(element1, root_orgId) {
+    const queryParams = queryString.stringify({ organizeId: root_orgId });
+    this.apiService.getWorktimeList(queryParams).subscribe(results => {
       if (results.status === 'success') {
         element1.options = cloneDeep(results.data).map(d => {
           return { label: d.work_times + '-' + d.work_name, value: d.work_cd }
