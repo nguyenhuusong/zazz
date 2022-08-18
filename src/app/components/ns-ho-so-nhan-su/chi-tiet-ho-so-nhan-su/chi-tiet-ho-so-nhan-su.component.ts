@@ -999,7 +999,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       if (results.status === 'success') {
         this.displayDialog = false;
         this.manhinh = 'Edit';
-        this.selectedMenuCode = API_PROFILE.THONG_TIN_CA_NHAN
+        this.selectedMenuCode = API_PROFILE.CONG_VIEC
         this.getEmployeeInfo();
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Xác nhận duyệt thành công' });
       } else {
