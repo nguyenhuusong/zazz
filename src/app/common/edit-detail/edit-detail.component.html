@@ -40,7 +40,7 @@
     
     <div class="main-grid text-right btn-group-edit-detail" *ngIf = "isViewButtonTop">
         <ng-container *ngFor="let button of optionsButtonsEdit">
-            <p-button label="{{button.label}}" (onClick)="onChangeButtonEdit(button.value)" styleClass="p-button-sm {{button?.class ? button?.class : ''}} mr-1"></p-button>
+            <p-button icon="{{ button.icon }}" label="{{button.label}}" (onClick)="onChangeButtonEdit(button.value)" styleClass="p-button-sm {{button?.class ? button?.class : ''}} mr-1"></p-button>
         </ng-container>
         <p-button styleClass="p-button-sm" (click)="CauHinh()">
             <svg width="20" height="14px" viewBox="0 0 20 17" fill="none" xmlns="http://www.w3.org/2000/svg">

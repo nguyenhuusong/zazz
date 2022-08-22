@@ -19,7 +19,7 @@ import { getFieldValueAggrid } from 'src/app/utils/common/function-common';
 export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   optionsButtonsView = [
     // { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
-    { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check' },
+    { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-save' },
     // { label: 'Duyệt hồ sơ', value: 'DuyetHoSo', class: '', icon: 'pi pi-check' },
   ]
   API_PROFILE = API_PROFILE
@@ -385,16 +385,16 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       case 0:
         this.optionsButtonsView =
           [
-            { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check' },
-            { label: 'Duyệt hồ sơ', value: 'DuyetHoSo', class: '', icon: 'pi pi-check' },
-            { label: 'Hủy hồ sơ', value: 'HuyHoSo', class: 'p-button-secondary', icon: 'pi pi-check' },
+            { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-save' },
+            { label: 'Duyệt hồ sơ', value: 'DuyetHoSo', class: '', icon: 'uni-icon icon-dhs' },
+            { label: 'Hủy hồ sơ', value: 'HuyHoSo', class: 'p-button-danger ', icon: 'pi pi-times-circle' },
             // { label: 'Quay lại', value: 'Back', class: 'p-button-secondary', icon: 'pi pi-times' }
           ];
           if (this.selectedMenuCode === API_PROFILE.QUAN_HE_LAO_DONG) {
             this.optionsButtonsView = [
-              { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check' },
-              { label: 'Duyệt hồ sơ', value: 'DuyetHoSo', class: '', icon: 'pi pi-check' },
-              { label: 'Hủy hồ sơ', value: 'HuyHoSo', class: 'p-button-secondary', icon: 'pi pi-check' },
+              { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-save' },
+              { label: 'Duyệt hồ sơ', value: 'DuyetHoSo', class: '', icon: 'uni-icon icon-dhs' },
+              { label: 'Hủy hồ sơ', value: 'HuyHoSo', class: 'p-button-danger', icon: 'pi pi-times-circle' },
               { label: 'Tạo hợp đồng', value: 'TaoHopDong', class: '', icon: 'pi pi-check' },
             ];
           }
@@ -412,14 +412,14 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       case 2:
         this.optionsButtonsView =
           [
-            { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check' },
+            { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-save' },
             { label: 'Mở Lại hồ sơ', value: 'MoLaiHoSo', class: '', icon: 'pi pi-check' },
             // { label: 'Quay lại', value: 'Back', class: 'p-button-secondary', icon: 'pi pi-times' }
           ];
           if (this.selectedMenuCode === API_PROFILE.QUAN_HE_LAO_DONG) {
             this.optionsButtonsView =
               [
-                { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check' },
+                { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-save' },
                 { label: 'Mở Lại hồ sơ', value: 'MoLaiHoSo', class: '', icon: 'pi pi-check' },
                 { label: 'Tạo hợp đồng', value: 'TaoHopDong', class: '', icon: 'pi pi-check' },
               ];
@@ -428,14 +428,14 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       case 3:
         this.optionsButtonsView =
           [
-            { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check' },
+            { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-save' },
             { label: 'Tuyển dụng lại', value: 'TuyenDungLai', class: '', icon: 'pi pi-check' },
             // { label: 'Quay lại', value: 'Back', class: 'p-button-secondary', icon: 'pi pi-times' }
           ];
           if (this.selectedMenuCode === API_PROFILE.QUAN_HE_LAO_DONG) {
             this.optionsButtonsView =
               [
-                { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check' },
+                { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-save' },
                 { label: 'Tuyển dụng lại', value: 'TuyenDungLai', class: '', icon: 'pi pi-check' },
                 { label: 'Tạo hợp đồng', value: 'TaoHopDong', class: '', icon: 'pi pi-check' },
               ];
@@ -450,9 +450,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       default:
         this.optionsButtonsView =
           [
-            { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check' },
-            { label: 'Duyệt hồ sơ', value: 'DuyetHoSo', class: '', icon: 'pi pi-check' },
-            { label: 'Hủy hồ sơ', value: 'HuyHoSo', class: 'p-button-secondary', icon: 'pi pi-check' },
+            { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-save' },
+            { label: 'Duyệt hồ sơ', value: 'DuyetHoSo', class: '', icon: 'uni-icon icon-dhs' },
+            { label: 'Hủy hồ sơ', value: 'HuyHoSo', class: 'p-button-danger', icon: 'pi pi-check' },
             { label: 'Mở Lại hồ sơ', value: 'MoLaiHoSo', class: '', icon: 'pi pi-check' },
             { label: 'Tuyển dụng lại', value: 'TuyenDungLai', class: '', icon: 'pi pi-check' },
             { label: 'Nghỉ việc', value: 'NghiViec', class: 'p-button-secondary', icon: 'pi pi-check' },

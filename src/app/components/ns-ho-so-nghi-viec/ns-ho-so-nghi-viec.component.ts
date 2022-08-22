@@ -95,7 +95,7 @@ export class NsHoSoNghiViecComponent implements OnInit {
       org_level: 0,
       offSet: 0,
       pageSize: 15,
-      orgId: 0,
+      orgId: this.query.orgId,
       reason_id: 0,
       status: -1
     }
