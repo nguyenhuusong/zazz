@@ -1786,11 +1786,18 @@ div.menu-agrid{
 button{
     &.p-button{
         // padding: 0px 10px;
-        border-radius: 3px;
+        border-radius: 4px;
         // height: 35px;
         // line-height: 35px;
         line-height: 1;
         padding: 11px 24px;
+        &.p-button-danger {
+            background: #FF3B49;
+            border-radius: 4px;
+            .p-button-icon{
+                font-size: 16px;
+            }
+        }
     }
 }
 p-dialog{
@@ -4172,5 +4179,16 @@ section{
 .main{
     .content{
         background: #fff;
+    }
+}
+
+.uni-icon{
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 12px;
+    height: 14px;
+    &.icon-dhs{
+        background-image: url("data:image/svg+xml,%3Csvg width='14' height='18' viewBox='0 0 14 18' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6.21585 13.3652L11.0618 8.46154L9.88526 7.27101L6.21585 10.9841L4.39516 9.14175L3.21864 10.3323L6.21585 13.3652Z' fill='%23F6FBFF'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M10.1374 0.666748H3.86291V1.85722H0.333496L0.333496 17.3334H13.6668V1.85722H10.1374V0.666748ZM5.43154 3.44453V1.85722H8.56879V3.44453H5.43154ZM10.1374 4.635V3.44453H12.0982V15.7461H1.90212V3.44453H3.86291V4.635H10.1374Z' fill='%23F6FBFF'/%3E%3C/svg%3E%0A");
     }
 }

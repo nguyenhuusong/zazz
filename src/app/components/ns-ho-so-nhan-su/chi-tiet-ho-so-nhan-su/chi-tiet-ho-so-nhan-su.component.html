@@ -49,14 +49,15 @@
             </ul>
             <div class="buttons" *ngIf="detailInfo?.emp_st === 1 && selectedMenuCode === 'GetEmployeeByJob'" >
                 <p-button (click)="cancelUpdate('ChuyenCongTac')">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M6.59 5.17L1.41 0L0 1.41L5.17 6.58L6.59 5.17ZM10.5 0L12.54 2.04L0 14.59L1.41 16L13.96 3.46L16 5.5V0H10.5ZM10.83 9.41L9.42 10.82L12.55 13.95L10.5 16H16V10.5L13.96 12.54L10.83 9.41Z" fill="#F3F8FF"/>
-                    </svg>
+                    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M8.42992 2.57992H12.4299V4.57992H8.82992L10.8299 6.57992H18.4299V14.1799L20.4299 16.1799V6.57992C20.4299 5.46992 19.5399 4.57992 18.4299 4.57992H14.4299V2.57992C14.4299 1.46992 13.5399 0.579922 12.4299 0.579922H8.42992C7.43992 0.579922 6.62992 1.27992 6.46992 2.21992L8.42992 4.17992V2.57992ZM1.82992 0.419922L0.419922 1.82992L3.16992 4.57992H2.42992C1.31992 4.57992 0.439922 5.46992 0.439922 6.57992L0.429922 17.5799C0.429922 18.6899 1.31992 19.5799 2.42992 19.5799H18.1699L20.1699 21.5799L21.5799 20.1699L1.82992 0.419922ZM2.42992 17.5799V6.57992H5.16992L16.1699 17.5799H2.42992Z" fill="white"/>
+                        </svg>
+                        
                     &nbsp;
                     Chuyển công tác</p-button>&nbsp;
                 <p-button (click)="cancelUpdate('NghiViec')">
-                    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M8.42992 2.57992H12.4299V4.57992H8.82992L10.8299 6.57992H18.4299V14.1799L20.4299 16.1799V6.57992C20.4299 5.46992 19.5399 4.57992 18.4299 4.57992H14.4299V2.57992C14.4299 1.46992 13.5399 0.579922 12.4299 0.579922H8.42992C7.43992 0.579922 6.62992 1.27992 6.46992 2.21992L8.42992 4.17992V2.57992ZM1.82992 0.419922L0.419922 1.82992L3.16992 4.57992H2.42992C1.31992 4.57992 0.439922 5.46992 0.439922 6.57992L0.429922 17.5799C0.429922 18.6899 1.31992 19.5799 2.42992 19.5799H18.1699L20.1699 21.5799L21.5799 20.1699L1.82992 0.419922ZM2.42992 17.5799V6.57992H5.16992L16.1699 17.5799H2.42992Z" fill="#F3F8FF"/>
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6.59 5.17L1.41 0L0 1.41L5.17 6.58L6.59 5.17ZM10.5 0L12.54 2.04L0 14.59L1.41 16L13.96 3.46L16 5.5V0H10.5ZM10.83 9.41L9.42 10.82L12.55 13.95L10.5 16H16V10.5L13.96 12.54L10.83 9.41Z" fill="white"/>
                     </svg>
                     &nbsp;
                     Nghỉ việc</p-button>
@@ -127,9 +128,12 @@
                                                 </div>
                                                 <div class="col-md-6 justify-content-end text-right"
                                                     style="padding-right: 15px;">
-                                                    <p-button *ngIf="selectedMenuCode === API_PROFILE.CONG_VIEC" 
-                                                        label="Thêm mới" styleClass="p-button-sm"
-                                                        icon="pi pi-plus" (click)="addType0()"></p-button>
+                                                    <p-button *ngIf="selectedMenuCode === API_PROFILE.CONG_VIEC" styleClass="p-button-sm" (click)="addType0()">
+                                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M11 5H9V9H5V11H9V15H11V11H15V9H11V5ZM10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM10 18C5.59 18 2 14.41 2 10C2 5.59 5.59 2 10 2C14.41 2 18 5.59 18 10C18 14.41 14.41 18 10 18Z" fill="#F3F8FF"/>
+                                                            </svg>
+                                                            &nbsp;Thêm mới
+                                                    </p-button>
                                                 </div>
                                             </div>
                                         </ng-template>
@@ -193,9 +197,12 @@
                                             </div>
                                             <div class="col-md-6 justify-content-end text-right">
                                                 <p-button *ngIf="selectedMenuCode === API_PROFILE.THUE_BAO_HIEM
-                                                || selectedMenuCode === API_PROFILE.NGUOI_DUNG" 
-                                                    label="Thêm mới" styleClass="p-button-sm"
-                                                    icon="pi pi-plus" (click)="addType0()"></p-button>
+                                                || selectedMenuCode === API_PROFILE.NGUOI_DUNG" styleClass="p-button-sm" (click)="addType0()">
+                                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M11 5H9V9H5V11H9V15H11V11H15V9H11V5ZM10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM10 18C5.59 18 2 14.41 2 10C2 5.59 5.59 2 10 2C14.41 2 18 5.59 18 10C18 14.41 14.41 18 10 18Z" fill="#F3F8FF"/>
+                                                        </svg>
+                                                        &nbsp;Thêm mới
+                                                </p-button>
                                             </div>
                                         </div>
                                     </ng-template>
@@ -233,13 +240,21 @@
                                                 label="Thông tin hồ sơ" icon="pi pi-book"
                                                 styleClass="p-button-sm" (click)="createContract()"></p-button>
                                             <p-button
-                                                *ngIf=" selectedMenuCode === API_PROFILE.THUE_BAO_HIEM"
-                                                label="Thêm mới" icon="pi pi-file" styleClass="p-button-sm"
-                                                (click)="createAttach()"></p-button>
+                                                *ngIf=" selectedMenuCode === API_PROFILE.THUE_BAO_HIEM" styleClass="p-button-sm"
+                                                (click)="createAttach()">
+                                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M11 5H9V9H5V11H9V15H11V11H15V9H11V5ZM10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM10 18C5.59 18 2 14.41 2 10C2 5.59 5.59 2 10 2C14.41 2 18 5.59 18 10C18 14.41 14.41 18 10 18Z" fill="#F3F8FF"/>
+                                                    </svg>
+                                                    &nbsp;Thêm mới
+                                            </p-button>
                                                 <p-button
-                                                *ngIf=" selectedMenuCode === API_PROFILE.NGUOI_QUAN_LY"
-                                                label="Thêm mới" icon="pi pi-plus" styleClass="p-button-sm"
-                                                (click)="onAddUserLogin()"></p-button>    
+                                                *ngIf=" selectedMenuCode === API_PROFILE.NGUOI_QUAN_LY" styleClass="p-button-sm"
+                                                (click)="onAddUserLogin()">
+                                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M11 5H9V9H5V11H9V15H11V11H15V9H11V5ZM10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM10 18C5.59 18 2 14.41 2 10C2 5.59 5.59 2 10 2C14.41 2 18 5.59 18 10C18 14.41 14.41 18 10 18Z" fill="#F3F8FF"/>
+                                                    </svg>
+                                                    &nbsp;Thêm mới
+                                            </p-button>    
                                         </div>
                                     </div>
                                 </ng-template>
@@ -284,13 +299,21 @@
                                             </div>
                                             <div class="col-md-6 justify-content-end text-right">
                                                 <p-button
-                                                    *ngIf="selectedMenuCode === API_PROFILE.THONG_TIN_CA_NHAN "
-                                                    label="Thêm mới" icon="pi pi-plus" styleClass="p-button-sm"
-                                                    (click)="createAttach()"></p-button>
+                                                    *ngIf="selectedMenuCode === API_PROFILE.THONG_TIN_CA_NHAN " styleClass="p-button-sm"
+                                                    (click)="createAttach()">
+                                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M11 5H9V9H5V11H9V15H11V11H15V9H11V5ZM10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM10 18C5.59 18 2 14.41 2 10C2 5.59 5.59 2 10 2C14.41 2 18 5.59 18 10C18 14.41 14.41 18 10 18Z" fill="#F3F8FF"/>
+                                                        </svg>
+                                                        &nbsp;Thêm mới
+                                                </p-button>
                                                     <p-button
-                                                    *ngIf=" selectedMenuCode === API_PROFILE.CONG_VIEC"
-                                                    label="Thêm mới" icon="pi pi-plus" styleClass="p-button-sm"
-                                                    (click)="onAddUserLogin()"></p-button>  
+                                                    *ngIf=" selectedMenuCode === API_PROFILE.CONG_VIEC" styleClass="p-button-sm"
+                                                    (click)="onAddUserLogin()">
+                                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M11 5H9V9H5V11H9V15H11V11H15V9H11V5ZM10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM10 18C5.59 18 2 14.41 2 10C2 5.59 5.59 2 10 2C14.41 2 18 5.59 18 10C18 14.41 14.41 18 10 18Z" fill="#F3F8FF"/>
+                                                        </svg>
+                                                        &nbsp;Thêm mới
+                                                </p-button>  
                                             </div>
                                         </div>
                                     </ng-template>
