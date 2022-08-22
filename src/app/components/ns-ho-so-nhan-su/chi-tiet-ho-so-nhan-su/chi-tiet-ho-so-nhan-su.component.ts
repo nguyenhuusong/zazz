@@ -33,6 +33,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     { label: 'Bỏ qua', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
     { label: 'Xác nhận', value: 'Update', class: '' }
   ]
+  keyParamGetInfo = '';
   empId = null;
   listViews = [];
   listViewsForm = [];
@@ -199,6 +200,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     this.listViewsReportTo =  [];
     this.detailInfoReportTo = null;
     this.manhinh = 'Edit';
+    this.keyParamGetInfo = '';
     // if (this.selectedMenuCode === API_PROFILE.CONG_VIEC) {
     //   this.optionsButtonsView =
     //     [
@@ -1079,6 +1081,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     } else if (button === 'ChuyenCongTac') {
       this.titleForm.title = 'Chuyển công tác';
       // this.selectedMenuCode = API_PROFILE.CHUYEN_CONG_TAC
+      this.keyParamGetInfo = API_PROFILE.CHUYEN_CONG_TAC
       this.getEmployeeChangeInfo();
       this.titleForm.type = button;
       this.manhinh = 'Edit';
@@ -1104,7 +1107,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   getEmployeeChangeInfo() {
     this.listViewsForm = []
     const queryParams = queryString.stringify({ empId: this.empId });
-    this.apiService.getEmployeeData(this.indexTab === 1 ? API_PROFILE.CHUYEN_CONG_TAC : this.selectedMenuCode, queryParams).subscribe(results => {
+    this.apiService.getEmployeeData(this.keyParamGetInfo === 'GetEmployeeChangeInfo' ? 'GetEmployeeChangeInfo': this.selectedMenuCode, queryParams).subscribe(results => {
       if (results.status === 'success') {
         // this.listViews = cloneDeep(results.data.group_fields || []);
         this.listViewsForm = cloneDeep(results.data.group_fields || []);
