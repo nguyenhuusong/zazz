@@ -2152,10 +2152,14 @@ p-dialog{
     }
     .bg-success, .bg-info{
         background: #2cab02;
-        color: #fff;
+        color: #fff !important;
         font-size: 12px;
         padding: 3px 6px;
         border-radius: 5px;
+        text-align: center;
+        &::after{
+            display: none;
+        }
     }
     .box{
         border: 1px solid #e0e0e0;
@@ -2385,28 +2389,53 @@ div.p-organizationchart {
     border-radius: 2px;
     padding: 3px 6px;
     line-height: 1;
-    text-align: center;
     margin-top: 9px;
     font-size: 12px;
     font-family: "SFProTextRegular";
     font-weight: 400;
     width: 100%;
+    position: relative;
+    padding-left: 10px;
+    &:after {
+        content: '';
+        width: 4px;
+        height: 4px;
+        display: block;
+        position: absolute;
+        top: 8px;
+        left: 0px;
+        border-radius: 100%;
+    }
     &.bg-secondary {
-        background: #6c757d;
-        border: 1px solid #6c757d;
+        // background: #6c757d;
+        // border: 1px solid #6c757d;
+        color: #6c757d;
+        
+        &:after {
+            background: #6c757d;
+        }
     }
     &.bg-danger{
-        background: #c82333;
-        color: #ffffff;
+        // background: #c82333;
+        color: #c82333;
+        &:after {
+            background: #c82333;
+        }
     }
     &.bg-warning{
-        background: #ffc107;
-        color: #ffffff;
+        // background: #ffc107;
+        color: #ffc107;
+        &:after {
+            background: #ffc107;
+        }
     }
     &.bg-success{
-        color: #fff;
-        background: #34C759;
+        color: #34C759;
+        // background: #34C759;
         width: 100%;
+        &:after {
+            background: #34C759;
+        }
     }
     &.bg-dark{
         color: #ffffff;
