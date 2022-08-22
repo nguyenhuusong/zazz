@@ -42,7 +42,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
   @Input() optionsEdit = null;
   buttonSave = 'Update';
   @Input() optionsButtonsEdit: any = [
-    { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
+    { label: 'Bỏ qua', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times-circle' },
     { label: 'Lưu lại', value: 'Update', class: '' }
   ];
   @Input() modelMarkdow = {
