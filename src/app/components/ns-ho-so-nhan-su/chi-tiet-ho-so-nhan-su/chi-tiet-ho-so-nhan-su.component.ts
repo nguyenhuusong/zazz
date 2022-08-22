@@ -1078,7 +1078,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
 
     } else if (button === 'ChuyenCongTac') {
       this.titleForm.title = 'Chuyển công tác';
-      this.selectedMenuCode = API_PROFILE.CHUYEN_CONG_TAC
+      // this.selectedMenuCode = API_PROFILE.CHUYEN_CONG_TAC
       this.getEmployeeChangeInfo();
       this.titleForm.type = button;
       this.manhinh = 'Edit';
@@ -1104,7 +1104,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   getEmployeeChangeInfo() {
     this.listViewsForm = []
     const queryParams = queryString.stringify({ empId: this.empId });
-    this.apiService.getEmployeeData(this.selectedMenuCode, queryParams).subscribe(results => {
+    this.apiService.getEmployeeData(this.indexTab === 1 ? API_PROFILE.CHUYEN_CONG_TAC : this.selectedMenuCode, queryParams).subscribe(results => {
       if (results.status === 'success') {
         // this.listViews = cloneDeep(results.data.group_fields || []);
         this.listViewsForm = cloneDeep(results.data.group_fields || []);

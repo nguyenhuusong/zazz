@@ -209,9 +209,6 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
   }
   dataChange = null;
   onRowSelected(event) {
-    console.log(event);
-    console.log(this.isChange);
-
     if (!event.node.isSelected() && this.isChange) {
       this.dataChange = event.data;
       if(this.typeConfig === 'FormInfo') {
