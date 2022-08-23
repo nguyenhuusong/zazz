@@ -1531,10 +1531,11 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   }
 
   taohopdong() {
+    console.log('flkjdsofjid',this.listContractTypes)
     this.modelContractInfo = {
       detailInfo: this.detailInfo,
       contractId: this.detailInfo.contractId || null,
-      contractTypeId: this.listContractTypes[0].value,
+      contractTypeId: this.listContractTypes[0]?.value,
       empId: this.detailInfo.empId,
       organizeId: this.detailInfo.organizeId
     }
