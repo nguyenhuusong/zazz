@@ -89,6 +89,7 @@
                     <ng-template pTemplate="header">
                         Hồ sơ hợp đồng <p-badge *ngIf="listsData.length > 0" [value]="detailInfo.metafiles.length" styleClass="p-mr-2 ml-1"></p-badge>
                     </ng-template>
+                    <br>
                     <app-list-grid-angular [domLayout]="'autoHeight'" *ngIf="indexTab === 0 && this.listsData.length > 0" [title]="'Chứng chỉ'"
                         [listsData]="listsData" (FnClick)="OnClick($event)" [columnDefs]="columnDefsMetafiles"></app-list-grid-angular>
                 </p-tabPanel>
@@ -96,6 +97,7 @@
                     <ng-template pTemplate="header">
                         Thành phần lương<p-badge *ngIf="listsData.length > 0" [value]="detailInfo.salary_components.length" styleClass="p-mr-2 ml-1"></p-badge>
                     </ng-template>
+                    <br>
                     <app-list-grid-angular [domLayout]="'autoHeight'" *ngIf="indexTab === 1" [title]="'Chứng chỉ'"
                 [listsData]="listsData" (FnClick)="OnClick($event)" [columnDefs]="columnDefsSalaryComponents"></app-list-grid-angular>
                 </p-tabPanel>
