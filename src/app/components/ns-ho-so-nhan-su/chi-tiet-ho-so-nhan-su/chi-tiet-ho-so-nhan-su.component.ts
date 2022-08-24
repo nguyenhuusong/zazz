@@ -395,7 +395,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
               { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-save' },
               { label: 'Duyệt hồ sơ', value: 'DuyetHoSo', class: '', icon: 'uni-icon icon-dhs' },
               { label: 'Hủy hồ sơ', value: 'HuyHoSo', class: 'p-button-danger', icon: 'pi pi-times-circle' },
-              { label: 'Tạo hợp đồng', value: 'TaoHopDong', class: '', icon: 'pi pi-check' },
+              // { label: 'Tạo hợp đồng', value: 'TaoHopDong', class: '', icon: 'pi pi-check' },
             ];
           }
         break;
@@ -421,7 +421,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
               [
                 { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-save' },
                 { label: 'Mở Lại hồ sơ', value: 'MoLaiHoSo', class: '', icon: 'pi pi-check' },
-                { label: 'Tạo hợp đồng', value: 'TaoHopDong', class: '', icon: 'pi pi-check' },
+                // { label: 'Tạo hợp đồng', value: 'TaoHopDong', class: '', icon: 'pi pi-check' },
               ];
           }
         break;
@@ -437,7 +437,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
               [
                 { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-save' },
                 { label: 'Tuyển dụng lại', value: 'TuyenDungLai', class: '', icon: 'pi pi-check' },
-                { label: 'Tạo hợp đồng', value: 'TaoHopDong', class: '', icon: 'pi pi-check' },
+                // { label: 'Tạo hợp đồng', value: 'TaoHopDong', class: '', icon: 'pi pi-check' },
               ];
           }
         break;
@@ -1531,7 +1531,6 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   }
 
   taohopdong() {
-    console.log('flkjdsofjid',this.listContractTypes)
     this.modelContractInfo = {
       detailInfo: this.detailInfo,
       contractId: this.detailInfo.contractId || null,
