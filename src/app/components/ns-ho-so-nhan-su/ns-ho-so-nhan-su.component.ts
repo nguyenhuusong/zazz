@@ -292,12 +292,15 @@ export class NsHoSoNhanSuComponent implements OnInit {
           // return params.rowIndex + 1
         },
         cellClass: ['border-right', 'no-auto'],
-        checkboxSelection: true,
         headerCheckboxSelection: true,
         headerCheckboxSelectionFilteredOnly: false,
         field: 'checkbox2',
         suppressSizeToFit: false,
         suppressColumnsToolPanel: false,
+        checkboxSelection: (params) => {
+          return !!params.data && params.data.emp_st === 0;
+        },
+        showDisabledCheckboxes: true,
       },
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       {

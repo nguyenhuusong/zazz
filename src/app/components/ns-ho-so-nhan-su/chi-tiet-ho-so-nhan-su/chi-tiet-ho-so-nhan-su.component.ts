@@ -142,6 +142,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       { name: 'Thuế bảo hiểm', code: API_PROFILE.THUE_BAO_HIEM },
       { name: 'Chuyên môn', code: API_PROFILE.CHUYEN_MON },
       { name: 'Tiện ích', code: API_PROFILE.TIEN_ICH },
+      { name: 'Quản lý tài khoản', code: API_PROFILE.QUAN_LY_TAI_KHOAN },
     ];
     this.titlePage = this.activatedRoute.data['_value'].title;
     this.url = this.activatedRoute.data['_value'].url;
@@ -246,7 +247,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       if (results.status === 'success') {
         this.listViewsReportTo = cloneDeep(results.data.group_fields || []);
         this.detailInfoReportTo = results.data;
-        // this.columnDefs[0] = [...AgGridFn(data.gridflexdetails1 || [])];
+        // this.columnDefs[0] = [...AgGridFn(this.detailInfoReportTo.gridflexdetails1 || [])];
         // this.listsData[0] = data.reportTos || [];
         // this.titles[0] = 'Báo cáo cho';
         this.columnDefs[2] = [...AgGridFn(this.detailInfoReportTo.gridflexdetails2 || []),
@@ -331,7 +332,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     this.listsData = [[], [], [], []];
     const queryParams = queryString.stringify({ empId: this.empId });
     // this.detailMenu.code = this.selectedMenuCode
-    this.apiService.getEmployeeData(this.selectedMenuCode, queryParams).subscribe(results => {
+    this.apiService.getEmployeeData(this.selectedMenuCode !== 'quanLyTaiKhoan' ? this.selectedMenuCode : 'GetEmployeeByReportTo', queryParams).subscribe(results => {
       if (results.status === 'success') {
         if(!this.codeStaff){
           this.codeStaff = getFieldValueAggrid(results.data, 'code');
@@ -352,13 +353,17 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
         }, 100)
         
         if(this.selectedMenuCode === API_PROFILE.THONG_TIN_CA_NHAN) {
-          this.activeIndex = this.detailInfo.flow_st
+          this.activeIndex = this.detailInfo.flow_st;
+          this.getRecordInfo();
         }
         this.bindingData(results.data);
          this.getContractTypes();
         if (this.selectedMenuCode === API_PROFILE.CONG_VIEC) {
           // this.bindingDataButton(results.data);
           this.getEmployeeByReportTo();
+        }else if(this.selectedMenuCode === API_PROFILE.QUAN_LY_TAI_KHOAN){
+          this.getEmployeeByReportTo();
+          this.titles[0] = 'Người Dùng'
         }
         this.bindingDataButton(results.data);
       }
@@ -492,7 +497,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
         this.titles[0] = 'Giấy tờ tùy thân';
         this.columnDefs[1] = [...AgGridFn(data.gridflexdetails2 || [])];
         this.listsData[1] = data.records || [];
-        this.titles[1] = 'Hồ sơ cá nhân';
+        this.titles[1] = 'Thông tin hồ sơ cá nhân';
         this.columnDefs[2] = [
           ...AgGridFn(data.gridflexdetails3 || []),
           {
@@ -558,6 +563,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
           }];
         // this.listsData[3] = data.trad_adds || [];
         // this.titles[3] = 'Liên hệ khẩn cấp';
+        this.columnDefs[4] = [...AgGridFn(data.gridflexdetails5 || [])];
+        this.listsData[4] = data.device_register;
+        this.titles[4] = 'Lịch sử thiết bị chấm công';
         this.spinner.hide();
         break;
       case API_PROFILE.LIEN_HE:
@@ -717,7 +725,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
         this.listsData[0] = data.workings || [];
         this.listsData[1] = data.timelines || [];
         this.titles[0] = 'Thời gian làm việc';
-        this.titles[1] = 'Dòng thời gian';
+        this.titles[1] = 'Quá trình làm việc';
         this.columnDefs[1] = [
           ...AgGridFn(data.gridflexdetails2 || []),
         ];
@@ -780,7 +788,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       case API_PROFILE.TIEN_ICH:
         this.columnDefs[0] = [...AgGridFn(data.gridflexdetails1 || [])];
         this.listsData[0] = data.utiliies || [];
-        this.titles[0] = 'Tiện ích';
+        this.titles[0] = 'Xe nhân viên';
         this.spinner.hide();
         break;
       case API_PROFILE.NGUOI_DUNG:
@@ -823,7 +831,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       case API_PROFILE.CHUYEN_MON:
         this.columnDefs[0] = [...AgGridFn(data.gridflexdetails1 || [])];
         this.listsData[0] = data.works || [];
-        this.titles[0] = 'Quá trình làm việc';
+        this.titles[0] = 'Quá trình đào tạo học vấn';
         this.columnDefs[1] = [...AgGridFn(data.gridflexdetails2 || [])];
         this.listsData[1] = data.education || [];
         this.titles[1] = 'Đào tạo';

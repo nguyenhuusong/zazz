@@ -1,0 +1,9 @@
+:host::ng-deep .tao-hop-dong .btn-group-edit-detail{
+    bottom: 12px !important;
+    top: auto !important;
+    position: absolute !important;
+    right: 20px !important;
+}
+:host::ng-deep .tao-hop-dong{
+    padding-bottom: 30px;
+}

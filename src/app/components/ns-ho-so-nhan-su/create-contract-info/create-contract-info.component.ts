@@ -28,8 +28,8 @@ export class CreateContractInfoComponent implements OnInit {
 
   optionsButon = [
     // { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
-    { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check'  },
-    { label: 'Tạm tính', value: 'TamTinh', class: '', icon: 'pi pi-check'  }
+    { label: 'Tạm tính', value: 'TamTinh', class: '', icon: 'uni-icon icon-tam-tinh bg-none'  },
+    { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-save'  },
   ]
   listContractTypes = [];
   indexTab = 0;
@@ -55,8 +55,8 @@ export class CreateContractInfoComponent implements OnInit {
       this.handleParams();
     } else {
       this.optionsButon= [
-        { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check'  },
-        { label: 'Tạm tính', value: 'TamTinh', class: '', icon: 'pi pi-check'  }
+        { label: 'Tạm tính', value: 'TamTinh', class: '', icon: 'uni-icon icon-tam-tinh bg-none'  },
+        { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-save'  },
       ]
       this.getContractInfo();
     }
@@ -106,8 +106,8 @@ export class CreateContractInfoComponent implements OnInit {
             this.optionsButon = [{ label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check'  }]
           }else {
             this.optionsButon= [
-              { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check'  },
-              { label: 'Tạm tính', value: 'TamTinh', class: '', icon: 'pi pi-check'  }
+              { label: 'Tạm tính', value: 'TamTinh', class: '', icon: 'uni-icon icon-tam-tinh bg-none'  },
+              { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-save'  },
             ]
           }
         }else {
@@ -227,10 +227,14 @@ export class CreateContractInfoComponent implements OnInit {
     }
   }
 
+  dataMetafiles = []
+  dataSalary = []
   restData(results) {
     this.listViews = cloneDeep(results.data.group_fields);
     this.detailInfo = results.data;
     // this.getContractTypes()
+    this.dataMetafiles = this.detailInfo.metafiles || [];
+    this.dataSalary = this.detailInfo.salary_components || [];
     if(this.indexTab === 1) {
       this.listsData = cloneDeep(results.data.salary_components) || [];
     }else {
@@ -238,7 +242,6 @@ export class CreateContractInfoComponent implements OnInit {
     }
    
   }
-
   handleChange(index) {
     this.indexTab = index
     if (this.indexTab === 0) {
@@ -274,7 +277,6 @@ export class CreateContractInfoComponent implements OnInit {
   }
 
   DowloadFileDemo(event, type) {
-    console.log(event, 'fjdosfjio');
     this.downloadButtonClicked(type === 'taivehosomau' ? event.rowData.temp_download_url : event.rowData.temp_view_url);
   }
 
