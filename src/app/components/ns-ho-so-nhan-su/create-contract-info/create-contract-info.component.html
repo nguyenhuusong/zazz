@@ -73,7 +73,7 @@
 </div>
 
 <ng-template #taoHopDong>
-    <div *ngIf="listViews.length > 0">
+    <div class=" tao-hop-dong" *ngIf="listViews.length > 0">
         <app-edit-detail *ngIf="listViews.length> 0" [detail]="modelContractInfo" [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButon" [thongtinnhanvienNew]="true" [dataView]="listViews"
             (callback)="setContractInfo($event)" (callback1)="saveCallback1($event)" (callbackcancel)="huy($event)"></app-edit-detail>
         <p-card styleClass="" *ngIf="listViews.length> 0">
@@ -84,7 +84,23 @@
                     </h6>
                 </div>
             </ng-template> -->
-            <p-tabView [(activeIndex)]="indexTab" (onChange)="handleChange($event.index)">
+            <div class="wrap-edit-detail">
+                <div class="col-12">
+                    <div class="panel-heading p-panel-header">
+                        <h6 class="panel-title p-panel-title" >Hồ sơ hợp đồng</h6>
+                    </div>
+                    <app-list-grid-angular [domLayout]="'autoHeight'" *ngIf="indexTab === 0 && this.listsData.length > 0" [title]="'Chứng chỉ'"
+                        [listsData]="dataMetafiles" (FnClick)="OnClick($event)" [columnDefs]="columnDefsMetafiles"></app-list-grid-angular>
+                </div>
+                <div class="col-12">
+                    <div class="panel-heading p-panel-header">
+                        <h6 class="panel-title p-panel-title" >Thành phần lương</h6>
+                    </div>
+                    <app-list-grid-angular [domLayout]="'autoHeight'" *ngIf="indexTab === 1" [title]="'Chứng chỉ'"
+                [listsData]="dataSalary" (FnClick)="OnClick($event)" [columnDefs]="columnDefsSalaryComponents"></app-list-grid-angular>
+                </div>
+            </div>
+            <!-- <p-tabView [(activeIndex)]="indexTab" (onChange)="handleChange($event.index)">
                 <p-tabPanel>
                     <ng-template pTemplate="header">
                         Hồ sơ hợp đồng <p-badge *ngIf="listsData.length > 0" [value]="detailInfo.metafiles.length" styleClass="p-mr-2 ml-1"></p-badge>
@@ -103,7 +119,7 @@
                 </p-tabPanel>
              
               
-            </p-tabView>
+            </p-tabView> -->
            
         </p-card>
     
