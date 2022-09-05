@@ -4,10 +4,10 @@
     </section>
     <section class="bread-filter">
         <div class="d-flex bet end bottom gap-16">
-            <div class="col-item">
+            <div class="col-item ">
                 <div class="filter filter-search">
                     <div class="field-group text search mb-0" [ngClass]=" model.filter ? 'valid' : 'invalid' ">
-                        <input placeholder="Vị trí, chuyển môn ..." class="input-default" type="text" autocomplete="off" id="filter"
+                        <input placeholder="Tìm kiếm mã thẻ, Tên nhân viên, sđt" class="input-default" type="text" autocomplete="off" id="filter"
                             (click)="op.toggle($event)" (keydown.enter)="model.offSet = 0; first = 0;load()"
                             [(ngModel)]="model.filter">
                             <span class="placeholder-icon" (click)="model.offSet = 0; first = 0; load()">
@@ -50,7 +50,7 @@
                                         <div class="col-6">
                                             <div class="field-group select valid">
                                                 <label>Trạng thái</label>
-                                                <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"  (onChange)="find()"
+                                                <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
                                                 [options]="listStatus" [(ngModel)]="model.status" name="status" [filter]="true">
                                                 <ng-template let-item pTemplate="selectedItem">
                                                 <span style="vertical-align:middle;">{{item.label}}</span>
@@ -66,7 +66,7 @@
                                         <div class="col-6">
                                             <div class="field-group select valid">
                                                 <label for="">Chức vụ</label>
-                                                <p-dropdown placeholder="Chọn chức vụ" [filter]="true" appendTo="body" [baseZIndex]="100" (onChange)="find()" [autoDisplayFirst]="false"
+                                                <p-dropdown placeholder="Chọn chức vụ" [filter]="true" appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
                                                 [options]="dataPositionList" [(ngModel)]="model.positionCd" name="position">
                                                 <ng-template let-item pTemplate="selectedItem">
                                                     <span>{{item.label}}</span>
@@ -82,7 +82,7 @@
                                         <div class="col-6">
                                             <div class="field-group select valid">
                                                 <label for="">Nơi làm việc</label>
-                                                <p-dropdown placeholder="Nơi làm việc" appendTo="body" [filter]="true" [baseZIndex]="100" (onChange)="find()" [autoDisplayFirst]="false"
+                                                <p-dropdown placeholder="Nơi làm việc" appendTo="body" [filter]="true" [baseZIndex]="100" [autoDisplayFirst]="false"
                                                 [options]="workplaceOptions" [(ngModel)]="model.workplaceId" name="position">
                                                 <ng-template let-item pTemplate="selectedItem">
                                                     <span>{{item.label}}</span>
