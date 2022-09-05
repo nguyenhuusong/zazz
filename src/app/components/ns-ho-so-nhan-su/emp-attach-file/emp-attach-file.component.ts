@@ -23,6 +23,7 @@ export class EmpAttachFileComponent implements OnInit {
   ) { }
   listViews = [];
   detailInfo= null
+  note = ''
   ngOnInit(): void {
     this.getContractInfo();
   }
@@ -38,23 +39,83 @@ export class EmpAttachFileComponent implements OnInit {
       }
     })
   }
+  theData = []
   setUploadFile(data) {
-    const params = {
-      ...this.detailInfo, group_fields: data
-    }
-    this.spinner.show();
-    this.apiService.setEmpAttach(params).subscribe(results => {
-      if(results.status === 'success') {
-        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data: 'Thêm mới file đình kèm thành công !'});
-        this.callback.emit();
-        this.spinner.hide();
-      }else {
-        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message});
-        this.spinner.hide();
+    if (this.downloadURL) {
+      data[0].fields.forEach(element => {
+        if(element.field_name === "meta_file_url"){
+          element.columnValue = this.downloadURL;
+        }else if(element.field_name === "meta_title"){
+          element.columnValue = this.note
+        }else if(element.columnType === "meta_file_name"){
+          element.columnValue = this.theFileUploaded.name
+        }else if(element.columnType === "meta_file_type"){
+          element.columnValue = this.theFileUploaded.type
+        }else if(element.columnType === "meta_file_size"){
+          element.columnValue = this.theFileUploaded.size
+        }
+      });
+      console.log('theFileUploaded', this.theFileUploaded)
+      this.theData = data;
+      const params = {
+        ...this.detailInfo, group_fields: data
       }
-    })
+      this.spinner.show();
+      this.apiService.setEmpAttach(params).subscribe(results => {
+        if(results.status === 'success') {
+          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data: 'Thêm mới file đình kèm thành công !'});
+          this.callback.emit();
+          this.spinner.hide();
+        }else {
+          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message});
+          this.spinner.hide();
+        }
+      })
+    }else{
+      this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Chưa upload file'});
+    }
   }
 
+  removeImage() {
+    this.uploadedFiles = []
+    this.downloadURL = ''
+    this.theData[0].fields.forEach(element => {
+      if(element.field_name === "meta_file_url"){
+        element.columnValue = '';
+      }else if(element.field_name === "meta_title"){
+        element.columnValue = ''
+      }
+    });
+  }
+  
+  uploadedFiles: any[] = [];
+  downloadURL = '';
+  theFileUploaded = null
+  uploadHandler(event) {
+      for(let file of event.files) {
+          this.uploadedFiles.push(file);
+      }
+      console.log('uploadedFiles', this.listViews)
+      // this.messageService.add({severity: 'info', summary: 'File Uploaded', detail: ''});
+
+      // this.spinner.show();
+      if (event.currentFiles[0] && event.currentFiles[0].size > 0) {
+        const getDAte = new Date();
+        const getTime = getDAte.getTime();
+        const storageRef = firebase.storage().ref();
+        const uploadTask = storageRef.child(`ksbond/images/${getTime}-${event.currentFiles[0].name}`).put(event.currentFiles[0]);
+        uploadTask.on('state_changed', (snapshot) => {
+        }, (error) => {
+        }, () => {
+          uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+            this.downloadURL = downloadURL;
+            this.theFileUploaded = event.currentFiles[0]
+          }).catch(error => {
+            this.spinner.hide();
+          });
+        });
+    }
+  }
 
   huy() {
     this.back.emit();

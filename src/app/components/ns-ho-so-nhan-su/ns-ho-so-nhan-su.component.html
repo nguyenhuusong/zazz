@@ -2,7 +2,7 @@
 <div class="main-grid">
         <section class="bread-crumb">
             <div class="d-flex bet bottom">
-                 <app-hrm-breadcrumb [displayTitle]="true" [items]="items"></app-hrm-breadcrumb>
+                 <app-hrm-breadcrumb [displayTitle]="true" [items]="items" [title]="'Hồ sơ nhân sự'"></app-hrm-breadcrumb>
                  <div class="d-flex bet mid bottom gap-12">
                     <p-button (click)="theOrganToMove()" styleClass="height-56" *ngIf="listDataSelect.length > 0">
                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -48,7 +48,7 @@
                 <div class="d-flex align-items-center">
                     <div class="filter filter-search">
                         <div class="field-group text search mb-0" [ngClass]=" query.filter ? 'valid' : 'invalid' ">
-                            <input class="input-default" placeholder="Vị trí, chuyên môn ..." type="text" autocomplete="off" id="filter"
+                            <input class="input-default" placeholder="Tìm kiếm" type="text" autocomplete="off" id="filter"
                                  (keydown.enter)="query.offSet = 0; first = 0;load()"
                                 [(ngModel)]="query.filter">
                                 <span class="placeholder-icon" (click)="query.offSet = 0; first = 0; load()">

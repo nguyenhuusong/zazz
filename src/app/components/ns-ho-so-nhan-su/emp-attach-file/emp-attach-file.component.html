@@ -1,3 +1,41 @@
+<div class="upload-attact-detail">
+   <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'" [thongtinnhanvienNew]="true" [dataView]="listViews"
+      (callback)="setUploadFile($event)" (callbackcancel)="huy()"></app-edit-detail>
 
- <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'" [thongtinnhanvienNew]="true" [dataView]="listViews"
-    (callback)="setUploadFile($event)" (callbackcancel)="huy()"></app-edit-detail>
+<div class="wrap-upload">
+   <p-fileUpload [chooseLabel]="''" [chooseIcon]="''" [showUploadButton]="false" [showCancelButton]="false" [customUpload]="true" name="demo[]" url="./upload.php" 
+      [multiple]="false" accept="" (onSelect)="uploadHandler($event)" [maxFileSize]="1000000">
+      <ng-template pTemplate="toolbar">
+
+      </ng-template>
+      <ng-template pTemplate="content">
+         <div class="content-upload text-center">
+            <!-- <svg width="33" height="32" viewBox="0 0 33 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+               <path d="M29.3333 20.4999V27.8333H3.66667V20.4999H0V31.4999H33V20.4999H29.3333Z" fill="#4C97E4"/>
+               <path d="M23.0817 12.0849L18.3333 7.35492V22.3333H14.6667V7.35492L9.91833 12.0849L7.33333 9.49992L16.5 0.333252L25.6667 9.49992L23.0817 12.0849Z" fill="#4C97E4"/>
+               </svg> -->
+               <h3 style="color: #182850;">Tải tệp & Kéo tệp</h3>
+               <p>Supported formates: JPEG, PNG, GIF, MP4, PDF, PSD, AI, Word, PPT</p>
+         </div>
+      </ng-template>
+   </p-fileUpload>
+</div>
+<div class="file-uploaded" *ngIf="uploadedFiles.length">
+   <h3 class="uploaded-title">Đã upload xong</h3>
+   <ul>
+      <li class="d-flex middle bet" *ngFor="let file of uploadedFiles">{{file.name}} 
+         <span (click)="removeImage()">
+            <svg width="12" height="14" viewBox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+               <path d="M9.33366 5.33341V12.0001H2.66699V5.33341H9.33366ZM8.33366 0.666748H3.66699L3.00033 1.33341H0.666992V2.66675H11.3337V1.33341H9.00033L8.33366 0.666748ZM10.667 4.00008H1.33366V12.0001C1.33366 12.7334 1.93366 13.3334 2.66699 13.3334H9.33366C10.067 13.3334 10.667 12.7334 10.667 12.0001V4.00008Z" fill="#FF3B49"/>
+               <path fill-rule="evenodd" clip-rule="evenodd" d="M4.00033 10.3334V6.66675H5.33366V10.3334H4.00033Z" fill="#FF3B49"/>
+               <path fill-rule="evenodd" clip-rule="evenodd" d="M6.66699 10.3334V6.66675H8.00033V10.3334H6.66699Z" fill="#FF3B49"/>
+            </svg>
+         </span>
+      </li>
+   </ul>
+</div>
+<div class="field-group textarea mt-3">
+   <label>Chú thích</label>
+   <textarea [(ngModel)]="note"></textarea>
+</div>
+</div>

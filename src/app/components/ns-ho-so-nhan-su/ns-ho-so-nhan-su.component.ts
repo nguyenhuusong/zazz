@@ -485,8 +485,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
   ngOnInit() {
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
-      { label: 'Nhân sự' },
-      { label: 'Danh sách hồ sơ nhân sự' },
+      { label: 'Quản lý nhân sự' },
     ];
     this.getAgencyOrganizeMap();
     this.getEmployeeStatus();
@@ -524,7 +523,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
           }
         }
         )
-        this.employeeStatus = [{ label: 'Tất cả', value: -1 }, ...this.employeeStatus];
+        this.employeeStatus = [{ label: 'Chọn trạng thái', value: -1 }, ...this.employeeStatus];
       }
     })
   }

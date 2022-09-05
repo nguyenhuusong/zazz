@@ -7,6 +7,7 @@ import { Component, Input, } from '@angular/core';
 export class HrmBreadCrumbComponent {
   @Input() items: any = [];
   @Input() displayTitle = true;
+  @Input() title = '';
   constructor(
   ) { }
   contentTypes = [];

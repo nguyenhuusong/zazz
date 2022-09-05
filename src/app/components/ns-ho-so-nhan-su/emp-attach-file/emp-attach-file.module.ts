@@ -8,6 +8,7 @@ import { PanelModule } from 'primeng/panel';
 import {BadgeModule} from 'primeng/badge';
 import { EmpAttachFileComponent } from './emp-attach-file.component';
 import { EditDetailModule } from 'src/app/common/edit-detail/edit-detail.module';
+import { FileUploadModule } from 'primeng/fileupload';
 @NgModule({
     imports: [
       FormsModule,
@@ -17,6 +18,7 @@ import { EditDetailModule } from 'src/app/common/edit-detail/edit-detail.module'
       EditDetailModule,
       PanelModule,
       BadgeModule,
+      FileUploadModule
     ],
     
     declarations: [
