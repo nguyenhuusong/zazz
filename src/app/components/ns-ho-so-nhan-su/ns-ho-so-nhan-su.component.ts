@@ -765,7 +765,11 @@ export class NsHoSoNhanSuComponent implements OnInit {
   }
   listDataSelect = [];
   rowSelected(data) {
-    this.listDataSelect = data
+    if(data[0] && data[0].emp_st !== 1){
+      this.listDataSelect = data
+    }else{
+      this.listDataSelect = [];
+    }
   }
 
   loadjs = 0;

@@ -128,7 +128,7 @@ export class PqTheNhanVienComponent implements OnInit {
   handleChangeOrganize(): void {
     this.model.orgId = '';
     this.getOrganizeTree();
-    this.find();
+    // this.find();
   }
 
   exportexcel(): void {
@@ -418,7 +418,7 @@ export class PqTheNhanVienComponent implements OnInit {
   }
 
   onChangeTree(a): void {
-    this.find();
+    // this.find();
   }
 }
 
