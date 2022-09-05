@@ -544,7 +544,7 @@
             <app-add-address-contact *ngIf="isShowAddress" [thongtinlienhe]="thongtinlienhe" (back)="reloaddanhsachlienhe()"></app-add-address-contact>
         </p-dialog>
 
-        <p-dialog styleClass="popup-btngroup-edit-detail" [(visible)]="displayFormEditDetail" [draggable]="false"  [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '600px', height: 'auto'}">
+        <p-dialog styleClass="popup-btngroup-edit-detail" [ngClass]="hideTitlePopup ? 'hide-title-popup' : ''" [(visible)]="displayFormEditDetail" [draggable]="false"  [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '600px', height: 'auto'}">
             <p-header>
                 {{titleType0}}
             </p-header>

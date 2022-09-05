@@ -153,7 +153,7 @@ export class PqTheNhanVienComponent implements OnInit {
           data['Số lượng xe'] = element.countVehicle || '0';
           dataExport.push(data);
         });
-        this.fileService.exportAsExcelFile(dataExport, 'Danh sách thẻ xe ' + new Date());
+        this.fileService.exportAsExcelFile(dataExport, 'Danh sách thẻ nhân viên - ' + new Date());
         this.spinner.hide();
       }, error => {
         this.spinner.hide();

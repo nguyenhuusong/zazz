@@ -346,6 +346,8 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
             this.setValue(items[0].phone, element1.field_name)
           } else if (element1.field_name === 'email') {
             this.setValue(items[0].email, element1.field_name)
+          } else if (element1.field_name === 'departmentName') {
+            this.setValue(items[0].departmentName, element1.field_name)
           }
         });
       });

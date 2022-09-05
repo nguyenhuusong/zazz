@@ -31,7 +31,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   optionsButtonsSave = [{ label: 'Lưu lại', value: 'Save' }, { label: 'Hủy', value: 'Back' }];
   optionsButtonsPopup = [
     { label: 'Bỏ qua', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
-    { label: 'Xác nhận', value: 'Update', class: '' }
+    { label: 'Xác nhận', value: 'Update', class: 'btn-accept' }
   ]
   keyParamGetInfo = '';
   empId = null;
@@ -55,7 +55,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     empId: null,
     metaId: null
   }
-
+  hideTitlePopup = false;
   statusApprover = [{ label: "Từ chối", value: 0 }, { label: 'Đồng ý', value: 1 }];
   modelDuyetHopDong = {
     contractId: null,
@@ -1657,7 +1657,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       this.displayNguoiDung = true;
     } else if (this.selectedMenuCode === API_PROFILE.CONG_VIEC) {
       this.titleType0 = 'Thêm mới thời gian làm việc';
-
+      this.hideTitlePopup = true;
       const queryParams = queryString.stringify({ empId: this.detailInfo.empId, gd: null });
       this.getEmpWorking(queryParams);
     }
