@@ -65,6 +65,7 @@ import { ExcelModule } from 'src/app/shared/components/excel/excel.module';
 import { ImportXyLyHopDongComponent } from 'src/app/components/xu-ly-hop-dong/import-xy-ly-hop-dong/import-xy-ly-hop-dong.component';
 import { ConfigGridTableFormModule } from 'src/app/common/config-grid-table-form/config-grid-table-form.module';
 import { ImportHoSoNhanSuComponent } from 'src/app/components/ns-ho-so-nhan-su/import-ho-so-nhan-su/import-ho-so-nhan-su.component';
+import { QtThayDoiLuongComponent } from 'src/app/components/qt-thay-doi-luong/qt-thay-doi-luong.component';
 @NgModule({
   imports: [
     MessagesModule,
@@ -137,7 +138,8 @@ import { ImportHoSoNhanSuComponent } from 'src/app/components/ns-ho-so-nhan-su/i
     ChiTietPheDuyetComponent,
     QuyetDinhLuongComponent,
     ImportXyLyHopDongComponent,
-    ImportHoSoNhanSuComponent
+    ImportHoSoNhanSuComponent,
+    QtThayDoiLuongComponent
   ],
   providers: [ ]
 })

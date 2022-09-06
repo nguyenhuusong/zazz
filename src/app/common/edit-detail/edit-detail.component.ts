@@ -172,7 +172,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
             const root_orgId = this.getValueByKey('organizeId');
             const positionTypeCd = this.getValueByKey('positionCd');
             this.getJobTitles(root_orgId, element1, positionTypeCd);
-          } else if (element1.field_name === 'organizeId') {
+          } else if (element1.field_name === 'organizeId' || element1.field_name === 'CompanyId') {
             this.getOrgRoots(element1);
           } else if (element1.field_name === 'organize_id') {
             this.getOrgRoots(element1);

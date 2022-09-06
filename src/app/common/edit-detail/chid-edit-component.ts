@@ -286,6 +286,14 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
           }
         });
       });
+    }else if (field_name === 'CompanyId') {
+      this.dataView.forEach(element => {
+        element.fields.forEach(element1 => {
+          if (element1.field_name === 'EmployeeId') {
+            this.getUserByPush(value, element1)
+          }
+        });
+      });
     } else if (field_name === 'type_salary') {
       this.dataView.forEach(element => {
         element.fields.forEach(element1 => {

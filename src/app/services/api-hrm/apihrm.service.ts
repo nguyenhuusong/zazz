@@ -1429,4 +1429,25 @@ export class ApiHrmService {
     return this.http.delete<any>(`${apiHrmServer}/api/v1/timekeeping/DelTimekeepingWifiInfo?${queryParams}`, this.options)
   }
 
+
+  getHrmPayrollRecordPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/payrollRecord/GetHrmPayrollRecordPage?` + queryParams, this.options)
+  }
+
+  getHrmPayrollRecordInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/payrollRecord/GetHrmPayrollRecordInfo?${queryParams}`, this.options)
+  }
+
+  setHrmPayrollRecordInfo(data): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/payrollRecord/SetHrmPayrollRecordInfo`, data , this.options)
+  }
+
+  delHrmPayrollRecord(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v1/payrollRecord/DelHrmPayrollRecord?${queryParams}`, this.options)
+  }
+
+  timekeepingDeviceStatus(data): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/timekeeping/TimekeepingDeviceStatus`, data , this.options)
+  }
+  
 }
