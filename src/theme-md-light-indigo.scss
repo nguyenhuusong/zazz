@@ -333,25 +333,25 @@ body{
 
     .ag-body-viewport{
         &::-webkit-scrollbar-track {
-            box-shadow: inset 0 0 2px var(--grey-color); 
+            box-shadow: inset 0 0 2px var(--main-color); 
         }
         &::-webkit-scrollbar-thumb {
-            background: var(--BDC4D8); 
+            background: var(--main-color); 
             border-radius: 4px;
         }
         &::-webkit-scrollbar-thumb:hover {
-            background: var(--BDC4D8); 
+            background: var(--main-color); 
         }
     }
     .ag-body-horizontal-scroll-viewport{
         &::-webkit-scrollbar-track {
-            box-shadow: inset 0 0 2px var(--grey-color); 
+            box-shadow: inset 0 0 2px var(--main-color); 
         }
         &::-webkit-scrollbar-thumb {
-            background: var(--BDC4D8); 
+            background: var(--main-color); 
         }
         &::-webkit-scrollbar-thumb:hover {
-            background: var(--BDC4D8); 
+            background: var(--main-color); 
         }
     }
 
@@ -361,13 +361,13 @@ body{
 .ag-virtual-list-viewport,
 .p-dropdown-items-wrapper{
     &::-webkit-scrollbar-track {
-        box-shadow: inset 0 0 2px var(--grey-color); 
+        box-shadow: inset 0 0 2px var(--main-color); 
     }
     &::-webkit-scrollbar-thumb {
-        background: var(--main-background); 
+        background: var(--main-color); 
     }
     &::-webkit-scrollbar-thumb:hover {
-        background: var(--header-background); 
+        background: var(--main-color); 
     }
 }
 
