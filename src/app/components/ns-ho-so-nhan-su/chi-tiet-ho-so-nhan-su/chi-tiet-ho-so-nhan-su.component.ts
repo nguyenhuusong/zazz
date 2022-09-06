@@ -563,7 +563,41 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
           }];
         // this.listsData[3] = data.trad_adds || [];
         // this.titles[3] = 'Liên hệ khẩn cấp';
-        this.columnDefs[4] = [...AgGridFn(data.gridflexdetails5 || [])];
+        this.columnDefs[4] = [
+          ...AgGridFn(data.gridflexdetails5 || []),
+          {
+            headerName: '',
+            field: 'gridflexdetails1',
+            cellClass: ['border-right', 'no-auto'],
+            pinned: 'right',
+            width: 70,
+            cellRenderer: 'buttonAgGridComponent',
+            cellRendererParams: params => {
+              console.log('fjdosjfio', params)
+              return {
+                buttons: [
+                  {
+                    onClick: this.pheDuyetWifi.bind(this),
+                    label: 'Phê duyệt',
+                    icon: 'pi pi-cloud-upload',
+                    key: 'view-qua-trinh-hop-dong',
+                    class: 'btn-primary mr5',
+                    hide: params.data.status_device !== 2
+                  },
+                  {
+                    onClick: this.tuChoiWifi.bind(this),
+                    label: 'Từ chối',
+                    icon: 'pi pi-check',
+                    key: 'duyet-hop-dong',
+                    class: 'btn-danger',
+                    hide: params.data.status_device !== 2
+                  },
+
+                ]
+              };
+            },
+          }
+        ];
         this.listsData[4] = data.device_register;
         this.titles[4] = 'Lịch sử thiết bị chấm công';
         this.spinner.hide();
@@ -1262,6 +1296,46 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
         this.XoaQuaTrinhHopDong(event)
       }
     }
+  }
+
+  pheDuyetWifi(e) {
+    const data = {
+      device_id: e.rowData.device_id,
+      request_st: 1
+    }
+    this.confirmationService.confirm({
+      message: 'Bạn có chắc chắn muốn phê duyệt?',
+      accept: () => {
+        this.apiService.timekeepingDeviceStatus(data).subscribe(results => {
+          if (results.status === 'success') {
+            this.selectedMenuCode = API_PROFILE.THONG_TIN_CA_NHAN;
+            this.listsData[4] = []
+            this.getEmployeeInfo();
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
+          }
+        })
+      }
+    });
+  }
+
+  tuChoiWifi(e) {
+    const data = {
+      device_id: e.rowData.device_id,
+      request_st: 0
+    }
+    this.confirmationService.confirm({
+      message: 'Bạn có chắc chắn từ chối phê duyệt?',
+      accept: () => {
+        this.apiService.timekeepingDeviceStatus(data).subscribe(results => {
+          if (results.status === 'success') {
+            this.selectedMenuCode = API_PROFILE.THONG_TIN_CA_NHAN;
+            this.listsData[4] = []
+            this.getEmployeeInfo();
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
+          }
+        })
+      }
+    });
   }
 
   duyetHoSo() {
