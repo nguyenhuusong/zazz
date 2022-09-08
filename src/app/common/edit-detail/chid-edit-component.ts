@@ -1173,7 +1173,7 @@ export class AppTypeLinkUrlRadioListComponent implements OnInit {
             <div>
             <div class="wrap-upload">
                       <p-fileUpload [chooseLabel]="''" [chooseIcon]="''" [showUploadButton]="false" [showCancelButton]="false" [customUpload]="true" name="demo[]" url="./upload.php" 
-                          [multiple]="false" [fileLimit]=1 accept="" (onSelect)="uploadHandler($event)" [maxFileSize]="10000000">
+                       (onSelect)="uploadHandler($event)" [maxFileSize]="10000000">
                           <ng-template pTemplate="toolbar">
 
                           </ng-template>
@@ -1193,7 +1193,7 @@ export class AppTypeLinkUrlRadioListComponent implements OnInit {
                       <h3 class="uploaded-title">Đã upload xong</h3>
                       <ul>
                           <li class="d-flex middle bet" *ngFor="let file of uploadedFiles">{{file.name}} 
-                            <span (click)="removeImage()">
+                            <span (click)="removeImage($event)">
                                 <svg width="12" height="14" viewBox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                   <path d="M9.33366 5.33341V12.0001H2.66699V5.33341H9.33366ZM8.33366 0.666748H3.66699L3.00033 1.33341H0.666992V2.66675H11.3337V1.33341H9.00033L8.33366 0.666748ZM10.667 4.00008H1.33366V12.0001C1.33366 12.7334 1.93366 13.3334 2.66699 13.3334H9.33366C10.067 13.3334 10.667 12.7334 10.667 12.0001V4.00008Z" fill="#FF3B49"/>
                                   <path fill-rule="evenodd" clip-rule="evenodd" d="M4.00033 10.3334V6.66675H5.33366V10.3334H4.00033Z" fill="#FF3B49"/>
@@ -1222,7 +1222,7 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  removeImage() {
+  removeImage(event) {
     this.downloadURL = ''
     this.element.columnValue = '';
     this.uploadedFiles = []
@@ -1230,6 +1230,7 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
   
   uploadHandler(event) {
       for(let file of event.files) {
+        this.uploadedFiles = []
           this.uploadedFiles.push(file);
       }
       // this.messageService.add({severity: 'info', summary: 'File Uploaded', detail: ''});
