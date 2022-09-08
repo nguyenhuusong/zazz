@@ -158,7 +158,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
           } else if (element1.field_name === 'positionTitleId') {
             const positionId = this.getValueByKey('positionId');
             source.subscribe(val =>this.getPositionTitles(positionId, element1));
-          } if (element1.field_name === 'companyId') {
+          }else if (element1.field_name === 'companyId') {
             this.getCompanyList(this.detail.organizeId ? this.detail.organizeId : null, element1);
           } else if (element1.field_name === 'company_id') {
             this.getCompanyList(this.detail.organizeId ? this.detail.organizeId : null, element1);
@@ -174,7 +174,13 @@ export class EditDetailComponent implements OnInit, OnChanges {
             this.getJobTitles(root_orgId, element1, positionTypeCd);
           } else if (element1.field_name === 'organizeId' || element1.field_name === 'CompanyId') {
             this.getOrgRoots(element1);
-          } else if (element1.field_name === 'organize_id') {
+          } else if (element1.field_name === 'EmployeeId') {
+            const org_cds = this.getValueByKey('CompanyId');
+            this.getUserByPushByEmpId(org_cds, element1);
+          } else if (element1.field_name === 'PayrollTypeId') {
+            const org_cds = this.getValueByKey('CompanyId');
+            this.getPayrollTypeList(org_cds, element1);
+          }  else if (element1.field_name === 'organize_id') {
             this.getOrgRoots(element1);
           } else if (element1.field_name === 'org_cds') {
             this.getOrgRootsMuti(element1);
@@ -524,6 +530,40 @@ export class EditDetailComponent implements OnInit, OnChanges {
           }
         });
         element1.columnValue = element1.columnValue ? element1.columnValue.toLowerCase() : ''
+      }
+    })
+  }
+
+  getUserByPushByEmpId(orgId, element1) {
+    const queryParams = queryString.stringify({ orgId: orgId });
+    this.apiService.getEmployeeSearch(queryParams).subscribe(results => {
+      if (results.status === 'success') {
+        element1.options = cloneDeep(results.data).map(d => {
+          return {
+            label: d.fullName + '-' + d.phone,
+            value: `${d.empId}`
+          }
+        });
+        element1.columnValue = element1.columnValue ? element1.columnValue.toLowerCase() : ''
+      }
+    })
+  }
+
+  getPayrollTypeList(orgId, element1) {
+    const queryParams = queryString.stringify({organizeId: orgId});
+    this.apiService.getHrmPayrollTypePage(queryParams).subscribe(results => {
+      if (results.status === 'success') {
+        if(results.data && results.data.dataList.data.length > 0){
+          element1.options = cloneDeep(results.data.dataList.data).map(d => {
+            return {
+              label: `${d.name}`,
+              value: `${d.id}`
+            }
+          });
+          element1.columnValue = element1.columnValue ? element1.columnValue : ''
+        }else {
+          element1.options = []
+        }
       }
     })
   }

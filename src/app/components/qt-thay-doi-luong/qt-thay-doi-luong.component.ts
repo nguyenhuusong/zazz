@@ -268,9 +268,11 @@ export class QtThayDoiLuongComponent implements OnInit {
       ]
     };
   }
-
+  idEdit = null;
   EditRow(event) {
-    
+    this.addNewPopup = true;
+    this.idEdit = event.rowData.id;
+    this.getInfo();
   }
 
   deleteRow(event) {
@@ -709,18 +711,19 @@ export class QtThayDoiLuongComponent implements OnInit {
   }
   listViews = []
   detailPayrollRecordInfo = []
-  getInfo(Id = null) {
-    const queryParams = queryString.stringify({ Id: Id });
+  getInfo() {
+    this.listViews = [];
+    const queryParams = queryString.stringify({ Id: this.idEdit });
     this.apiService.getHrmPayrollRecordInfo(queryParams).subscribe({
       next: (value) => {
         this.listViews = cloneDeep(value.data.group_fields || []);
         this.detailPayrollRecordInfo = value.data;
-        console.log('value', value)
       }
     })
   }
   addNewPopup = false
   addNew() {
+    this.idEdit = null;
     this.addNewPopup = true;
     this.getInfo();
   }
@@ -743,7 +746,9 @@ export class QtThayDoiLuongComponent implements OnInit {
   }
 
   cancelHrmPayrollRecordInfo(event) {
-
+    if(event === 'CauHinh') {
+      this.getInfo();
+    }
   }
 
 }

@@ -293,7 +293,7 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
         element.fields.forEach(element1 => {
           if (element1.field_name === 'EmployeeId') {
             this.loading = true;
-            this.getUserByPush(value, element1)
+            this.getUserByPushByEmpId(value, element1)
           }else if (element1.field_name === 'PayrollTypeId') {
             this.getPayrollTypeList(value, element1)
           }
@@ -445,7 +445,6 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
 
   getUserByPush(orgId, element1) {
     const queryParams = queryString.stringify({ orgId: orgId });
-    
     this.apiService.getEmployeeSearch(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.loading = false;
@@ -456,7 +455,23 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
             ...d
           }
         });
-        element1.columnValue = element1.columnValue ? element1.columnValue : ''
+        // element1.columnValue = element1.columnValue ? element1.columnValue : ''
+      }
+    })
+  }
+
+  
+  getUserByPushByEmpId(orgId, element1) {
+    const queryParams = queryString.stringify({ orgId: orgId });
+    this.apiService.getEmployeeSearch(queryParams).subscribe(results => {
+      if (results.status === 'success') {
+        element1.options = cloneDeep(results.data).map(d => {
+          return {
+            label: d.fullName + '-' + d.phone,
+            value: `${d.empId}`
+          }
+        });
+        element1.columnValue = element1.columnValue ? element1.columnValue.toLowerCase() : ''
       }
     })
   }
@@ -465,15 +480,16 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
     const queryParams = queryString.stringify({organizeId: orgId});
     this.apiService.getHrmPayrollTypePage(queryParams).subscribe(results => {
       if (results.status === 'success') {
-        if(results.data.length>0){
-          element1.options = cloneDeep(results.data).map(d => {
+        if(results.data && results.data.dataList.data.length > 0){
+          element1.options = cloneDeep(results.data.dataList.data).map(d => {
             return {
-              label: `${d.workplaceName}`,
-              value: `${d.workplaceId}`
+              label: `${d.name}`,
+              value: `${d.id}`
             }
           });
+        }else {
+          element1.options = []
         }
-        element1.columnValue = element1.columnValue ? element1.columnValue.toLowerCase() : ''
       }
     })
   }
@@ -1220,6 +1236,13 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
     private spinner: NgxSpinnerService,
   ) { }
   ngOnInit(): void {
+    this.dataView.forEach(element => {
+      element.fields.forEach(async element1 => {
+        if (element1.field_name === 'AttachName' && element1.columnValue) {
+          this.uploadedFiles.push({name: element1.columnValue});
+        } 
+      });
+    });
   }
 
   removeImage(event) {
@@ -1229,23 +1252,30 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
   }
   
   uploadHandler(event) {
-      for(let file of event.files) {
-        this.uploadedFiles = []
-          this.uploadedFiles.push(file);
-      }
-      // this.messageService.add({severity: 'info', summary: 'File Uploaded', detail: ''});
-
-      // this.spinner.show();
+       this.uploadedFiles = []
+      // for(let file of event.files) {
+      
+      // }
+      this.spinner.show();
       if (event.currentFiles[0] && event.currentFiles[0].size > 0) {
         const getDAte = new Date();
         const getTime = getDAte.getTime();
         const storageRef = firebase.storage().ref();
-        const uploadTask = storageRef.child(`ksbond/images/${getTime}-${event.currentFiles[0].name}`).put(event.currentFiles[0]);
+        const uploadTask = storageRef.child(`s-hrm/images/${getTime}-${event.currentFiles[0].name}`).put(event.currentFiles[0]);
         uploadTask.on('state_changed', (snapshot) => {
         }, (error) => {
         }, () => {
           uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
             this.element.columnValue = downloadURL;
+            this.spinner.hide();
+            this.dataView.forEach(element => {
+              element.fields.forEach(async element1 => {
+                if (element1.field_name === 'AttachName') {
+                  element1.columnValue = event.currentFiles[0].name;
+                  this.uploadedFiles.push({name: event.currentFiles[0].name});
+                } 
+              });
+            });
           }).catch(error => {
             this.spinner.hide();
           });
