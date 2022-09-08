@@ -19,7 +19,7 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { FileUploadModule } from 'primeng/fileupload';
 import { TooltipModule } from 'primeng/tooltip';
 import { AppTypeCheckboxComponent, AppTypeCheckboxListComponent, AppTypeCheckboxRadioListComponent,
-   AppTypeCurrencyComponent, AppTypeDatefulltimeComponent, AppTypeDatetimeComponent, AppTypeDropdownComponent, AppTypeLinkUrlRadioListComponent,
+   AppTypeCurrencyComponent, AppTypeDatefulltimeComponent, AppTypeDatetimeComponent, AppTypeDropdownComponent, AppTypeLinkUrlDragComponent, AppTypeLinkUrlRadioListComponent,
     AppTypeMarkdownComponent, AppTypeMultiSelectComponent, AppTypeNumberComponent, AppTypeSelectComponent, AppTypeSelectTreeComponent, AppTypeTextareaComponent, AppTypeTextComponent, AppTypeTimeonlyComponent } from './chid-edit-component';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { EditDetailComponent } from './edit-detail.component';
@@ -88,6 +88,7 @@ import { ConfigGridTableFormModule } from '../config-grid-table-form/config-grid
     AppTypeCheckboxListComponent,
     AppTypeCheckboxRadioListComponent,
     AppTypeLinkUrlRadioListComponent,
+    AppTypeLinkUrlDragComponent,
     AppTypeSelectTreeComponent
     // AppTypeTextComponent
   ],

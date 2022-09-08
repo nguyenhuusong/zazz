@@ -31,6 +31,7 @@
                         <app-type-checkboxList [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'checkboxList'"></app-type-checkboxList>
                         <app-type-checkboxradiolist [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'checkboxradiolist'"></app-type-checkboxradiolist>
                         <app-type-linkurl [element]="element" *ngIf="element.columnType === 'linkUrl'" [dataView]="dataView"></app-type-linkurl>
+                        <app-type-linkurl-drag [element]="element" *ngIf="element.columnType === 'linkUrlDrag'" [dataView]="dataView"></app-type-linkurl-drag>
                     </div>
                     </div>
                 </p-panel>

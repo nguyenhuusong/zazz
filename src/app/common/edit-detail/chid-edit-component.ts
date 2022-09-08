@@ -204,6 +204,7 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
   selector: 'app-type-dropdown',
   template: `   
           <div class="field-group select " [ngClass]=" element.columnValue ? 'valid' : 'invalid' " >
+          <div class="uni-load " [ngClass]="loading ? 'loading' : ''"></div>
           <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
                 <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
                   [disabled]="element.isDisable" [options]="element.options" (onChange)="onChangeValue($event.value, element.field_name, element)" [filterBy]="'label'"
@@ -233,6 +234,7 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
   @Output() callback = new EventEmitter<any>();
   @Input() modelFields;
   @Input() submit = false;
+  loading = false;
   constructor(
     private apiService: ApiHrmService,
     private changeDetector: ChangeDetectorRef,
@@ -290,7 +292,10 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
       this.dataView.forEach(element => {
         element.fields.forEach(element1 => {
           if (element1.field_name === 'EmployeeId') {
+            this.loading = true;
             this.getUserByPush(value, element1)
+          }else if (element1.field_name === 'PayrollTypeId') {
+            this.getPayrollTypeList(value, element1)
           }
         });
       });
@@ -440,8 +445,10 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
 
   getUserByPush(orgId, element1) {
     const queryParams = queryString.stringify({ orgId: orgId });
+    
     this.apiService.getEmployeeSearch(queryParams).subscribe(results => {
       if (results.status === 'success') {
+        this.loading = false;
         element1.options = results.data.map(d => {
           return {
             label: d.fullName + '-' + d.phone,
@@ -453,6 +460,24 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
       }
     })
   }
+
+  getPayrollTypeList(orgId, element1) {
+    const queryParams = queryString.stringify({organizeId: orgId});
+    this.apiService.getHrmPayrollTypePage(queryParams).subscribe(results => {
+      if (results.status === 'success') {
+        if(results.data.length>0){
+          element1.options = cloneDeep(results.data).map(d => {
+            return {
+              label: `${d.workplaceName}`,
+              value: `${d.workplaceId}`
+            }
+          });
+        }
+        element1.columnValue = element1.columnValue ? element1.columnValue.toLowerCase() : ''
+      }
+    })
+  }
+
 
   getJobTitles(orgId, element1, positionTypeCd) {
     const queryParams = queryString.stringify({ orgId: orgId, positionTypeCd: positionTypeCd });
@@ -1136,5 +1161,97 @@ export class AppTypeLinkUrlRadioListComponent implements OnInit {
     }
 
   }
+
+}
+
+
+
+// linkUrl
+@Component({
+  selector: 'app-type-linkurl-drag',
+  template: `   
+            <div>
+            <div class="wrap-upload">
+                      <p-fileUpload [chooseLabel]="''" [chooseIcon]="''" [showUploadButton]="false" [showCancelButton]="false" [customUpload]="true" name="demo[]" url="./upload.php" 
+                       (onSelect)="uploadHandler($event)" [maxFileSize]="10000000">
+                          <ng-template pTemplate="toolbar">
+
+                          </ng-template>
+                          <ng-template pTemplate="content">
+                            <div class="content-upload text-center">
+                                <!-- <svg width="33" height="32" viewBox="0 0 33 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <path d="M29.3333 20.4999V27.8333H3.66667V20.4999H0V31.4999H33V20.4999H29.3333Z" fill="#4C97E4"/>
+                                  <path d="M23.0817 12.0849L18.3333 7.35492V22.3333H14.6667V7.35492L9.91833 12.0849L7.33333 9.49992L16.5 0.333252L25.6667 9.49992L23.0817 12.0849Z" fill="#4C97E4"/>
+                                  </svg> -->
+                                  <h3 style="color: #182850;">Tải tệp & Kéo tệp</h3>
+                                  <p>Supported formates: JPEG, PNG, GIF, MP4, PDF, PSD, AI, Word, PPT</p>
+                            </div>
+                          </ng-template>
+                      </p-fileUpload>
+                    </div>
+                    <div class="file-uploaded" *ngIf="uploadedFiles.length">
+                      <h3 class="uploaded-title">Đã upload xong</h3>
+                      <ul>
+                          <li class="d-flex middle bet" *ngFor="let file of uploadedFiles">{{file.name}} 
+                            <span (click)="removeImage($event)">
+                                <svg width="12" height="14" viewBox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <path d="M9.33366 5.33341V12.0001H2.66699V5.33341H9.33366ZM8.33366 0.666748H3.66699L3.00033 1.33341H0.666992V2.66675H11.3337V1.33341H9.00033L8.33366 0.666748ZM10.667 4.00008H1.33366V12.0001C1.33366 12.7334 1.93366 13.3334 2.66699 13.3334H9.33366C10.067 13.3334 10.667 12.7334 10.667 12.0001V4.00008Z" fill="#FF3B49"/>
+                                  <path fill-rule="evenodd" clip-rule="evenodd" d="M4.00033 10.3334V6.66675H5.33366V10.3334H4.00033Z" fill="#FF3B49"/>
+                                  <path fill-rule="evenodd" clip-rule="evenodd" d="M6.66699 10.3334V6.66675H8.00033V10.3334H6.66699Z" fill="#FF3B49"/>
+                                </svg>
+                            </span>
+                          </li>
+                      </ul>
+                    </div>
+                </div>
+                `,
+})
+
+export class AppTypeLinkUrlDragComponent implements OnInit {
+  @Input() element;
+  @Input() dataView;
+  @Input() submit = false;
+  uploadedFiles: any[] = [];
+  downloadURL = '';
+  imagesUpload = '';
+  fileType: any = ''
+  constructor(
+    private apiService: ApiHrmService,
+    private spinner: NgxSpinnerService,
+  ) { }
+  ngOnInit(): void {
+  }
+
+  removeImage(event) {
+    this.downloadURL = ''
+    this.element.columnValue = '';
+    this.uploadedFiles = []
+  }
+  
+  uploadHandler(event) {
+      for(let file of event.files) {
+        this.uploadedFiles = []
+          this.uploadedFiles.push(file);
+      }
+      // this.messageService.add({severity: 'info', summary: 'File Uploaded', detail: ''});
+
+      // this.spinner.show();
+      if (event.currentFiles[0] && event.currentFiles[0].size > 0) {
+        const getDAte = new Date();
+        const getTime = getDAte.getTime();
+        const storageRef = firebase.storage().ref();
+        const uploadTask = storageRef.child(`ksbond/images/${getTime}-${event.currentFiles[0].name}`).put(event.currentFiles[0]);
+        uploadTask.on('state_changed', (snapshot) => {
+        }, (error) => {
+        }, () => {
+          uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+            this.element.columnValue = downloadURL;
+          }).catch(error => {
+            this.spinner.hide();
+          });
+        });
+    }
+  }
+
 
 }

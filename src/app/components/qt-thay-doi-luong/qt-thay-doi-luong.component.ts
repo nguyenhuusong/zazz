@@ -210,12 +210,6 @@ export class QtThayDoiLuongComponent implements OnInit {
     )
   }
 
-  themnhanvien() {
-    const params = {
-      empId: 0
-    }
-    this.router.navigate(['/ho-so-nhan-su/them-moi-nhan-vien'], { queryParams: params });
-  }
 
   displaySetting = false;
   gridKey = ''
@@ -260,8 +254,8 @@ export class QtThayDoiLuongComponent implements OnInit {
     return {
       buttons: [
         {
-          // onClick: this.EditEmployee.bind(this),
-          label: 'Thông tin chi tiết',
+          onClick: this.EditRow.bind(this),
+          label: 'Sửa',
           icon: 'pi pi-tablet',
           class: 'btn-primary mr5',
         },
@@ -273,6 +267,10 @@ export class QtThayDoiLuongComponent implements OnInit {
         },
       ]
     };
+  }
+
+  EditRow(event) {
+    
   }
 
   deleteRow(event) {

@@ -1449,5 +1449,23 @@ export class ApiHrmService {
   timekeepingDeviceStatus(data): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v1/timekeeping/TimekeepingDeviceStatus`, data , this.options)
   }
+
+  getHrmPayrollTypePage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/payrollType/GetHrmPayrollTypePage?` + queryParams, this.options)
+  }
+
+  getHrmPayrollTypeInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/payrollType/GetHrmPayrollTypeInfo?${queryParams}`, this.options)
+  }
+
+  setHrmPayrollTypeInfo(data): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/payrollType/SetHrmPayrollTypeInfo`, data , this.options)
+  }
+
+  delHrmPayrollType(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v1/payrollType/DelHrmPayrollType?${queryParams}`, this.options)
+  }
+
+
   
 }

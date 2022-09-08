@@ -664,6 +664,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
     })
   }
 
+
   getMeetRooms(element1): void {
     this.apiService.getMeetRooms()
       .subscribe(results => {
