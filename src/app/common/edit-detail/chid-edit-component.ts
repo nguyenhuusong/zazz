@@ -346,7 +346,7 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
     } else if (field_name === 'organize_id') {
       this.dataView.forEach(element => {
         element.fields.forEach(async element1 => {
-          if (element1.field_name === 'requester_custId') {
+          if (element1.field_name === 'requester_custId' || element1.field_name === 'empId') {
             this.getUserByPush(value, element1)
           }
         });
