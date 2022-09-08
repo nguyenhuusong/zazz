@@ -48,6 +48,10 @@ const appRoutes: Routes = [
         loadChildren: () => import('../app/pages/phan-quyen/phan-quyen.module').then(m => m.PhanQuyenModule)
       },
       {
+        path: 'luong-thue',
+        loadChildren: () => import('../app/pages/luong-thue/luong-thue.module').then(m => m.LuongThueModule)
+      },
+      {
         path: 'bao-cao',
         component: BaoCaoComponent,
         data: {
