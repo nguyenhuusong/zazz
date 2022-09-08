@@ -279,7 +279,8 @@ export class QtThayDoiLuongComponent implements OnInit {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa?',
       accept: () => {
-        this.apiService.deleteEmployee(event.rowData.empId).subscribe((results: any) => {
+        const queryParams = queryString.stringify({Id: event.rowData.id});
+        this.apiService.delHrmPayrollRecord(queryParams).subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa nhân viên thành công' });
             this.load();
@@ -732,11 +733,15 @@ export class QtThayDoiLuongComponent implements OnInit {
     const params = {
       ...this.detailPayrollRecordInfo, group_fields: data
     };
-    this.apiService.setCompanyInfo(params).subscribe((results: any) => {
+    this.spinner.show();
+    this.apiService.setHrmPayrollRecordInfo(params).subscribe((results: any) => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Cập nhật thông tin thành công' });
         this.addNewPopup = false;
+        this.load();
+        this.spinner.hide();
       } else {
+        this.spinner.hide();
         this.messageService.add({
           severity: 'error', summary: 'Thông báo', detail: results.message
         });
