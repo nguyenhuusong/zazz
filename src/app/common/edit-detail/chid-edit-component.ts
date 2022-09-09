@@ -465,6 +465,7 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
     const queryParams = queryString.stringify({ orgId: orgId });
     this.apiService.getEmployeeSearch(queryParams).subscribe(results => {
       if (results.status === 'success') {
+        this.loading = false
         element1.options = cloneDeep(results.data).map(d => {
           return {
             label: d.fullName + '-' + d.phone,
