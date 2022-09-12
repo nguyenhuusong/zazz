@@ -19,8 +19,10 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { FileUploadModule } from 'primeng/fileupload';
 import { TooltipModule } from 'primeng/tooltip';
 import { AppTypeCheckboxComponent, AppTypeCheckboxListComponent, AppTypeCheckboxRadioListComponent,
+   AppTypeChips,
    AppTypeCurrencyComponent, AppTypeDatefulltimeComponent, AppTypeDatetimeComponent, AppTypeDropdownComponent, AppTypeLinkUrlDragComponent, AppTypeLinkUrlRadioListComponent,
-    AppTypeMarkdownComponent, AppTypeMultiSelectComponent, AppTypeNumberComponent, AppTypeSelectComponent, AppTypeSelectTreeComponent, AppTypeTextareaComponent, AppTypeTextComponent, AppTypeTimeonlyComponent } from './chid-edit-component';
+    AppTypelistMch,
+    AppTypeMarkdownComponent, AppTypeMembers, AppTypeMultiSelectComponent, AppTypeNumberComponent, AppTypeSelectComponent, AppTypeSelectTreeComponent, AppTypeTextareaComponent, AppTypeTextComponent, AppTypeTimeonlyComponent } from './chid-edit-component';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { EditDetailComponent } from './edit-detail.component';
 import { SelectButtonModule } from 'primeng/selectbutton';
@@ -35,6 +37,7 @@ import { PageMarkdownModule } from '../page-markdown/page-markdown.module';
 import {ImageModule} from 'primeng/image';
 import {PanelModule} from 'primeng/panel';
 import { ConfigGridTableFormModule } from '../config-grid-table-form/config-grid-table-form.module';
+import {ChipsModule} from 'primeng/chips';
 @NgModule({
   imports: [
     FormsModule,
@@ -64,6 +67,7 @@ import { ConfigGridTableFormModule } from '../config-grid-table-form/config-grid
     RadioButtonModule,
     ButtonModule,
     TooltipModule,
+    ChipsModule,
     ConfigGridTableFormModule,
     AgGridModule.withComponents([
       ButtonRendererMutiComponent,
@@ -89,6 +93,9 @@ import { ConfigGridTableFormModule } from '../config-grid-table-form/config-grid
     AppTypeCheckboxRadioListComponent,
     AppTypeLinkUrlRadioListComponent,
     AppTypeLinkUrlDragComponent,
+    AppTypeMembers,
+    AppTypeChips,
+    AppTypelistMch,
     AppTypeSelectTreeComponent
     // AppTypeTextComponent
   ],

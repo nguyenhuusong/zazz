@@ -4418,6 +4418,7 @@ p-dialog{
 .wrap-upload{
     border: 1px dashed #4C97E4;
     border-radius: 4px;
+    margin-bottom: 16px;
 }
 .wrap-upload .p-fileupload-content{
     border: none;
@@ -4499,4 +4500,130 @@ p-tabview{
         padding-left: 0px;
         padding-right: 0px;
     }
+}
+.members-filed{
+    display: flex;
+    align-items: center;
+    li{
+        margin-right: 8px;
+        display: flex;
+        align-items: center;
+        span{
+            &:first-child{
+                width: 24px;
+                height: 24px;
+                border-radius: 100%;
+                margin-right: 8px;
+                display: block;
+                background-color: #cccccc8f;
+                img{
+                    width: 100%;
+                    height: auto;
+                }
+            }
+            &:last-child{
+                color: #59637E;
+                font-size: 16px;
+                line-height: 20px;
+                font-family: $fontRegular;
+            }
+            &.more-member{
+                background: #E2E9FC;
+                font-weight: 500;
+                font-size: 12px;
+                line-height: 24px;
+                color: #0979FD;
+                font-family: $fontMmedium;
+                cursor: pointer;
+            }
+        }
+    }
+}
+.wrap-members{
+    .add-member{
+        height: 32px;
+        background: #F3F8FF;
+        box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.016);
+        border-radius: 4px;
+        padding: 8px;
+        color: #0979FD;
+        cursor: pointer;
+    }
+    .in{
+        border: 1px solid rgba(43, 47, 51, 0.1);
+        border-radius: 2px;
+        padding: 11px 16px;
+    }
+}
+p-chips{
+    .p-chips{
+        width: 100%;
+    }
+    .p-chips-multiple-container{
+        border: 1px solid rgba(43, 47, 51, 0.1) !important;
+        border-radius: 2px;
+        width: 100%;
+        li{
+            padding: 6px 16px !important;
+            margin-right: 12px !important;
+            border: 1px solid #E2E9FC !important;
+            border-radius: 53px !important;
+            margin-bottom: 5px;
+            margin-top: 5px;
+            .p-chips-token-label{
+                font-weight: 500;
+                font-size: 16px;
+                line-height: 20px;
+                font-family: $fontMmedium;
+                color: #59637E;
+            }
+            .p-chips-token-icon{
+                display: none;
+            }
+            &:hover{
+                color: #4C97E4 !important;
+                border: 1px solid #4C97E4 !important;
+                .p-chips-token-label{
+                    color: #4C97E4;
+                }
+                .p-chips-token-icon{
+                    display: block;
+                }
+            }
+            &.p-chips-input-token{
+                border: none !important;
+            }
+            &:last-child{
+                opacity: 0;
+            }
+        }
+    }
+}
+.list-mch{
+    .wrap-label{
+        margin-bottom: 18px;
+    }
+    ul{
+        li{
+            font-weight: 400;
+            font-size: 12px;
+            line-height: 16px;
+            color: #465373;
+            padding: 10px 16px;
+            border: 1px solid #4C97E4;
+            border-radius: 2px;
+            margin-bottom: 8px;
+            &.more{
+                display: inline-block;
+                border: none;
+                color: #4C97E4;
+                font-size: 16px;
+                line-height: 20px;
+                cursor: pointer;
+            }
+        }
+    }
+    padding: 16px;
+    border: 1px solid #E8E9ED;
+    border-radius: 2px;
 }

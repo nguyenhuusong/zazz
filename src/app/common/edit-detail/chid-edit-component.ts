@@ -1283,6 +1283,128 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
         });
     }
   }
+}
+// Members
+  @Component({
+    selector: 'app-type-members',
+    template: `   <div class="wrap-members field-group">
+                    <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
+                    <div class="in d-flex bet middle">
+                      <ul class="members-filed">
+                        <li><span><img></span><span>trangbh</span></li>
+                        <li><span class="more-member">+12</span></li>
+                      </ul>
+                      <span class="add-member">
+                        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5 0.9375C5.31066 0.9375 5.5625 1.18934 5.5625 1.5V4.4375H8.5C8.81066 4.4375 9.0625 4.68934 9.0625 5C9.0625 5.31066 8.81066 5.5625 8.5 5.5625H5.5625V8.5C5.5625 8.81066 5.31066 9.0625 5 9.0625C4.68934 9.0625 4.4375 8.81066 4.4375 8.5V5.5625H1.5C1.18934 5.5625 0.9375 5.31066 0.9375 5C0.9375 4.68934 1.18934 4.4375 1.5 4.4375H4.4375V1.5C4.4375 1.18934 4.68934 0.9375 5 0.9375Z" fill="#0979FD"/>
+                        </svg> &nbsp;
+                      Thêm thành viên</span>
+                    </div>
+                    <div *ngIf="element.isRequire && submit && !element.columnValue"
+                        class="alert-validation alert-danger">
+                        <div [hidden]="element.columnValue">
+                        Trường bắt buộc nhập!
+                        </div>
+                    </div>
+                  </div>
+                  `,
+  })
 
+  export class AppTypeMembers implements OnInit {
+    @Input() element;
+    @Input() modelFields;
+    @Input() submit = false;
+    @Input() dataView;
+    constructor(
+      private apiService: ApiHrmService
+    ) { }
+    ngOnInit(): void {
+      this.modelFields[this.element.field_name].error = false;
+    }
+
+  }
+
+// chips, member out company
+@Component({
+  selector: 'app-type-chips',
+  template: `   <div class="fileds field-group">
+                  <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
+                  <div class="">
+                    <p-chips [(ngModel)]="element.columnValue"></p-chips>
+                  </div>
+                  <div *ngIf="element.isRequire && submit && !element.columnValue"
+                      class="alert-validation alert-danger">
+                      <div [hidden]="element.columnValue">
+                      Trường bắt buộc nhập!
+                      </div>
+                  </div>
+                </div>
+                `,
+})
+
+export class AppTypeChips implements OnInit {
+  @Input() element;
+  @Input() modelFields;
+  @Input() submit = false;
+  @Input() dataView;
+  constructor(
+    private apiService: ApiHrmService
+  ) { }
+  ngOnInit(): void {
+    this.modelFields[this.element.field_name].error = false;
+  }
+
+}
+
+
+// chips, member out company
+@Component({
+  selector: 'app-type-listMch',
+  template: `   <div class="fileds field-group list-mch">
+                  <div class="d-flex middle wrap-label">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M20.5 16.9509C20.5 15.694 18.8369 15.0288 18.8369 13.7718V9.72547C18.8369 5.73495 15.7663 2.5 11.9786 2.5C8.19084 2.5 5.12027 5.73495 5.12027 9.72547V13.8181C5.12027 15.0495 3.5 15.7195 3.5 16.9509C3.5 17.4497 3.88382 17.8541 4.35729 17.8541H19.6427C20.1162 17.8541 20.5 17.4497 20.5 16.9509Z" fill="#4C97E4"/>
+                          <path d="M9.05009 18.8777C9.05009 19.2221 9.12705 19.5631 9.27655 19.8812C9.42606 20.1994 9.6452 20.4885 9.92145 20.732C10.1977 20.9755 10.5257 21.1686 10.8866 21.3004C11.2476 21.4322 11.6344 21.5 12.0251 21.5C12.4158 21.5 12.8026 21.4322 13.1636 21.3004C13.5245 21.1686 13.8525 20.9755 14.1287 20.732C14.405 20.4885 14.6241 20.1994 14.7736 19.8812C14.9231 19.5631 15.0001 19.2221 15.0001 18.8777H9.05009Z" fill="#4C97E4"/>
+                        </svg>&nbsp;
+                    <label class="text-nowrap label-text" >
+                      {{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
+                  </div>
+                  
+                  <div class="">
+                    <ul>
+                      <li class="d-flex bet middle">Trước 10 phút<span></span>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="20" height="20" rx="10" fill="#FAE7E8"/>
+                        <path d="M13.3337 8.33366V15.0003H6.66699V8.33366H13.3337ZM12.3337 3.66699H7.66699L7.00033 4.33366H4.66699V5.66699H15.3337V4.33366H13.0003L12.3337 3.66699ZM14.667 7.00033H5.33366V15.0003C5.33366 15.7337 5.93366 16.3337 6.66699 16.3337H13.3337C14.067 16.3337 14.667 15.7337 14.667 15.0003V7.00033Z" fill="#FF3B49"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M8.00033 13.3337V9.66699H9.33366V13.3337H8.00033Z" fill="#FF3B49"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M10.667 13.3337V9.66699H12.0003V13.3337H10.667Z" fill="#FF3B49"/>
+                        </svg>
+                      </li>
+                      <li class="more">
+                        Thêm lời nhắc
+                        </li>
+                    </ul>
+                  </div>
+                  <div *ngIf="element.isRequire && submit && !element.columnValue"
+                      class="alert-validation alert-danger">
+                      <div [hidden]="element.columnValue">
+                      Trường bắt buộc nhập!
+                      </div>
+                  </div>
+                </div>
+                `,
+})
+
+export class AppTypelistMch implements OnInit {
+  @Input() element;
+  @Input() modelFields;
+  @Input() submit = false;
+  @Input() dataView;
+  constructor(
+    private apiService: ApiHrmService
+  ) { }
+  ngOnInit(): void {
+    this.modelFields[this.element.field_name].error = false;
+  }
 
 }
