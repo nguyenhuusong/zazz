@@ -49,4 +49,12 @@
             top: 10px;
         }
     }
+    .p-image-mask{
+        .ng-trigger{
+            height: calc(100% - 120px);
+            img{
+                height: 100%;
+            }
+        }
+    }
 }
