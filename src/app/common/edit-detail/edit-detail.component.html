@@ -32,6 +32,9 @@
                         <app-type-checkboxradiolist [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'checkboxradiolist'"></app-type-checkboxradiolist>
                         <app-type-linkurl [element]="element" *ngIf="element.columnType === 'linkUrl'" [dataView]="dataView"></app-type-linkurl>
                         <app-type-linkurl-drag [element]="element" *ngIf="element.columnType === 'linkUrlDrag'" [dataView]="dataView"></app-type-linkurl-drag>
+                        <app-type-members [element]="element" *ngIf="element.columnType === 'members'" [dataView]="dataView"></app-type-members>
+                        <app-type-chips [element]="element" *ngIf="element.columnType === 'chips'" [dataView]="dataView"></app-type-chips>
+                        <app-type-listMch [element]="element" *ngIf="element.columnType === 'listMch'" [dataView]="dataView"></app-type-listMch>
                     </div>
                     </div>
                 </p-panel>

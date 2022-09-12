@@ -495,17 +495,23 @@ export class PqXeNhanVienComponent implements OnInit {
       startTimeTm = this.datetostring(this.modelTM.startTimeTM);
       endTimeTm = this.datetostring(this.modelTM.endTimeTM);
     }
-    this.apiService.setCardVehicle(this.modelTM.cardVehicleId, null,
-      this.modelTM.vehicleTypeIdTM, this.modelTM.vehicleNoTM, this.modelTM.vehicleColorTM, this.modelTM.vehicleNameTM,
-      startTimeTm, endTimeTm, this.modelTM.noteTM, this.modelTM.cusId, this.modelTM.imageLinks).subscribe((results: any) => {
-        if (results.status === 'error') {
-          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
-        } else {
-          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Cập nhật vé xe thành công' });
-          this.displayCreateVehicleCard = false;
-          this.load();
-        }
-      }, error => { });
+    if(this.imageLinksCard[0].url && this.imageLinksCard[1].url && this.imageLinksCard[2].url) {
+      this.apiService.setCardVehicle(this.modelTM.cardVehicleId, null,
+        this.modelTM.vehicleTypeIdTM, this.modelTM.vehicleNoTM, this.modelTM.vehicleColorTM, this.modelTM.vehicleNameTM,
+        startTimeTm, endTimeTm, this.modelTM.noteTM, this.modelTM.cusId, this.modelTM.imageLinks).subscribe((results: any) => {
+          if (results.status === 'error') {
+            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
+          } else {
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Cập nhật vé xe thành công' });
+            this.displayCreateVehicleCard = false;
+            this.load();
+          }
+        }, error => { });
+      }
+      else{
+        this.displayCreateVehicleCard = false;
+        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Vui lòng cập nhật ảnh' });
+      }
     // this.loadCardVip(this.model.custId);
 
   }
