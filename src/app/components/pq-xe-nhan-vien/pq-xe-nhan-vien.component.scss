@@ -30,3 +30,23 @@
         }
     }
 }
+
+:host::ng-deep .image-vehicle{
+    .img{
+        position: relative;
+        max-height: 180px;
+        border: 1px solid #cccc;
+        overflow: hidden;
+        text-align: center;
+        img{
+            width: 100%;
+            height: auto;
+            min-height: 160px;
+        }
+        .p-fileupload-choose{
+            position: absolute;
+            right: 10px;
+            top: 10px;
+        }
+    }
+}

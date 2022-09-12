@@ -47,6 +47,7 @@ import { HrmBreadCrumbModule } from 'src/app/common/hrm-breadcrumb/hrm-breadcrum
 import { ConfigGridTableFormModule } from 'src/app/common/config-grid-table-form/config-grid-table-form.module';
 import { ImportXeNhanVienComponent } from 'src/app/components/pq-xe-nhan-vien/import-xe-nhan-vien/import-xe-nhan-vien.component';
 import { ImportTheNhanVienComponent } from 'src/app/components/pq-the-nhan-vien/import-the-nhan-vien/import-the-nhan-vien.component';
+import { ImageModule } from 'primeng/image';
 @NgModule({
   imports: [
     MessagesModule,
@@ -85,6 +86,7 @@ import { ImportTheNhanVienComponent } from 'src/app/components/pq-the-nhan-vien/
     ConfirmDialogModule,
     OverlayPanelModule,
     HrmBreadCrumbModule,
+    ImageModule,
     AgGridModule.withComponents([
       ButtonRendererComponent,
       ButtonRendererComponent1

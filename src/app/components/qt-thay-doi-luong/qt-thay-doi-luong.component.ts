@@ -12,6 +12,7 @@ import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.comp
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { ExportFileService } from 'src/app/services/export-file.service';
 import { cloneDeep } from 'lodash';
+import { flatten } from '@angular/compiler';
 @Component({
   selector: 'app-qt-thay-doi-luong',
   templateUrl: './qt-thay-doi-luong.component.html',
@@ -294,25 +295,6 @@ export class QtThayDoiLuongComponent implements OnInit {
 
   initGrid() {
     this.columnDefs = [
-      {
-        headerName: '',
-        filter: false,
-        maxWidth: 50,
-        pinned: 'left',
-        cellRenderer: params => {
-          // return params.rowIndex + 1
-        },
-        cellClass: ['border-right', 'no-auto'],
-        headerCheckboxSelection: true,
-        headerCheckboxSelectionFilteredOnly: false,
-        field: 'checkbox2',
-        suppressSizeToFit: false,
-        suppressColumnsToolPanel: false,
-        checkboxSelection: (params) => {
-          return !!params.data && params.data.emp_st === 0;
-        },
-        showDisabledCheckboxes: true,
-      },
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       {
         headerName: '...',
@@ -527,57 +509,6 @@ export class QtThayDoiLuongComponent implements OnInit {
     return string.replace(/(<([^>]+)>)/gi, "");
   }
 
-  columnDefsMoveOrgan = [];
-  getColumnDefsMoveOrgan() {
-    this.columnDefsMoveOrgan = [
-      {
-        headerName: 'Stt',
-        filter: '',
-        maxWidth: 90,
-        pinned: 'left',
-        cellRenderer: params => {
-          return params.rowIndex + 1
-        },
-        cellClass: ['border-right', 'no-auto'],
-      },
-      {
-        headerName: 'Mã NV',
-        filter: '',
-        cellClass: ['border-right', 'yellow-bg'],
-        field: 'code',
-        editable: true
-      },
-      {
-        headerName: 'Họ tên',
-        filter: '',
-        cellClass: ['border-right'],
-        field: 'full_name',
-      },
-      {
-        headerName: 'Số ĐT',
-        filter: '',
-        cellClass: ['border-right'],
-        field: 'phone1',
-      },
-      {
-        headerName: 'Tổ chức',
-        filter: '',
-        cellClass: ['border-right'],
-        field: 'organization',
-      },
-      {
-        headerName: 'Thao tác',
-        filter: '',
-        maxWidth: 120,
-        pinned: 'right',
-        cellRenderer: 'buttonAgGridComponent',
-        cellClass: ['border-right', 'no-auto'],
-        cellRendererParams: (params: any) => this.showButtons2(params),
-        field: 'button'
-      }
-    ]
-  }
-
   showButtons2(params) {
     return {
       buttons: [
@@ -596,17 +527,7 @@ export class QtThayDoiLuongComponent implements OnInit {
       this.isButtonmoveOrganNow = true
     }
   }
-  theOrganToMove() {
-    // ColumnDefs for data move 
-    this.getColumnDefsMoveOrgan();
-    this.getOrgan();
-    if (this.listDataSelect.length > 0) {
-      this.theOrganToMoveData = cloneDeep(this.listDataSelect);
-      this.isTheOrganToMove = true;
-    } else {
-      this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Vui lòng nhân sự' });
-    }
-  }
+
 
   getOrgan() {
     const queryParams = queryString.stringify({ filter: '' });
@@ -656,35 +577,6 @@ export class QtThayDoiLuongComponent implements OnInit {
 
     //MS-773
     this.isButtonmoveOrganNow = false;
-  }
-  moveOrganNow() {
-    if (this.theOrganToMoveData.length > 0) {
-      this.queryStaffToMove.organizeId = this.organizeId;
-      this.queryStaffToMove.members = this.theOrganToMoveData.map(o => {
-        return {
-          empId: o.empId,
-          code: o.code
-        }
-      })
-      this.apiService.setListEmployeeChange(this.queryStaffToMove).subscribe(results => {
-        if (results.status === 'success') {
-          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Cập nhật thành công' });
-          this.load();
-          this.listDataSelect = []
-          this.isTheOrganToMove = false
-        } else {
-          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
-        }
-      })
-    }
-  }
-  listDataSelect = [];
-  rowSelected(data) {
-    if(data[0] && data[0].emp_st !== 1){
-      this.listDataSelect = data
-    }else{
-      this.listDataSelect = [];
-    }
   }
 
   loadjs = 0;
@@ -751,6 +643,7 @@ export class QtThayDoiLuongComponent implements OnInit {
   }
 
   cancelHrmPayrollRecordInfo(event) {
+    this.addNewPopup = false;
     if(event === 'CauHinh') {
       this.getInfo();
     }

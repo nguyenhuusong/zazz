@@ -10,6 +10,7 @@ import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-render
 import { Vehicle, VehicleType } from 'src/app/models/cardinfo.model';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ExportFileService } from 'src/app/services/export-file.service';
+import * as firebase from 'firebase';
 declare var jQuery: any;
 
 @Component({
@@ -63,6 +64,7 @@ export class PqXeNhanVienComponent implements OnInit {
   departmentList = [];
   listEmployees = [];
   displayVehicleApprove = false;
+  imageLinksCard = []
   listStatus = [
     { label: 'Tất cả', value: -1 },
     { label: 'Mới tạo', value: 0 },
@@ -104,6 +106,26 @@ export class PqXeNhanVienComponent implements OnInit {
       { label: 'Phân quyền' },
       { label: 'Danh sách xe nhân viên' },
     ];
+    this.imageLinksCard = [
+      {
+        cardVehicleId: null,
+        id: null,
+        type: "LICENSE",
+        url: '',
+      },
+      {
+        cardVehicleId: null,
+        id: null,
+        type: "LICENSE",
+        url: '',
+      },
+      {
+        cardVehicleId: null,
+        id: null,
+        type: "LICENSE_PLATE",
+        url: '',
+      },
+    ]
     this.model = {
       organizeId: '',
       orgId: '',
@@ -409,6 +431,7 @@ export class PqXeNhanVienComponent implements OnInit {
 
   editVehicleCard(event): void {
     const cardVehicleId = event.rowData.cardVehicleId;
+    this.modelTM.imageLinks = this.imageLinksCard;
     if (cardVehicleId === null || cardVehicleId === 0) {
       alert('Cần phê duyệt');
     } else {
@@ -426,6 +449,11 @@ export class PqXeNhanVienComponent implements OnInit {
           this.showVehicleCard = this.modelTM.endTimeTM ? true : false;
           this.displayCreateVehicleCard = true;
           this.modelTM.cusId = event.rowData.custId;
+          
+          this.modelTM.imageLinks[0].cardVehicleId = this.modelTM.cardVehicleId;
+          this.modelTM.imageLinks[1].cardVehicleId = this.modelTM.cardVehicleId;
+          this.modelTM.imageLinks[2].cardVehicleId = this.modelTM.cardVehicleId;
+          this.getImageUrl(results.data.imageLinks)
           this.getUserByPush();
           // this.search({ query: results.data.fullName }, 'edit');
           // this.show_dialogcreate = true;
@@ -434,7 +462,20 @@ export class PqXeNhanVienComponent implements OnInit {
 
   }
 
+  getImageUrl(datas) {
 
+    if(datas[0]){
+      this.modelTM.imageLinks[0] = datas[0]
+    }
+    if(datas[1]){
+      this.modelTM.imageLinks[1] = datas[1]
+    }
+    if(datas[2]){
+      this.modelTM.imageLinks[2] = datas[2]
+    }
+  }
+
+  multipleImage = true;
   SaveVehicleCard(): void {
     let startTimeTm = null;
     let endTimeTm = null;
@@ -447,7 +488,7 @@ export class PqXeNhanVienComponent implements OnInit {
     }
     this.apiService.setCardVehicle(this.modelTM.cardVehicleId, null,
       this.modelTM.vehicleTypeIdTM, this.modelTM.vehicleNoTM, this.modelTM.vehicleColorTM, this.modelTM.vehicleNameTM,
-      startTimeTm, endTimeTm, this.modelTM.noteTM, this.modelTM.cusId).subscribe((results: any) => {
+      startTimeTm, endTimeTm, this.modelTM.noteTM, this.modelTM.cusId, this.modelTM.imageLinks).subscribe((results: any) => {
         if (results.status === 'error') {
           this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
         } else {
@@ -459,12 +500,40 @@ export class PqXeNhanVienComponent implements OnInit {
     // this.loadCardVip(this.model.custId);
 
   }
+
+  uploadImageVehicle(event, index) {
+    if (event.currentFiles.length > 0) {
+      for (let file of event.currentFiles) {
+        const getDAte = new Date();
+        const getTime = getDAte.getTime();
+        const storageRef = firebase.storage().ref();
+        const uploadTask = storageRef.child(`s-hrm/file-attach/${getTime}-${file.name}`).put(file);
+        uploadTask.on('state_changed', (snapshot) => {
+        }, (error) => {
+          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: error.message });
+          this.spinner.hide();
+        }, () => {
+          uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+            if (downloadURL) {
+              this.spinner.hide();
+              if(this.modelTM.imageLinks[index]){
+                this.modelTM.imageLinks[index].url = downloadURL;
+              }
+            }
+          });
+        });
+      }
+    }
+    else{
+      this.spinner.hide();
+    }
+  }
+
   addVehicleApprove(event): void {
     this.modelApprove.cardCd = '';
     this.modelApprove.cardVehicleId = event.rowData.cardVehicleId;
     this.modelApprove.endTime = new Date();
     this.displayVehicleApprove = true;
-
   }
 
   SaveVehicleApprove(): void {
