@@ -10,6 +10,7 @@ import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-render
 import { Vehicle, VehicleType } from 'src/app/models/cardinfo.model';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ExportFileService } from 'src/app/services/export-file.service';
+import { cloneDeep } from 'lodash';
 import * as firebase from 'firebase';
 declare var jQuery: any;
 
@@ -431,7 +432,7 @@ export class PqXeNhanVienComponent implements OnInit {
 
   editVehicleCard(event): void {
     const cardVehicleId = event.rowData.cardVehicleId;
-    this.modelTM.imageLinks = this.imageLinksCard;
+    this.modelTM.imageLinks = cloneDeep(this.imageLinksCard);
     if (cardVehicleId === null || cardVehicleId === 0) {
       alert('Cần phê duyệt');
     } else {
@@ -450,9 +451,10 @@ export class PqXeNhanVienComponent implements OnInit {
           this.displayCreateVehicleCard = true;
           this.modelTM.cusId = event.rowData.custId;
           
-          this.modelTM.imageLinks[0].cardVehicleId = this.modelTM.cardVehicleId;
-          this.modelTM.imageLinks[1].cardVehicleId = this.modelTM.cardVehicleId;
-          this.modelTM.imageLinks[2].cardVehicleId = this.modelTM.cardVehicleId;
+          this.imageLinksCard[0].cardVehicleId = this.modelTM.cardVehicleId;
+          this.imageLinksCard[1].cardVehicleId = this.modelTM.cardVehicleId;
+          this.imageLinksCard[2].cardVehicleId = this.modelTM.cardVehicleId;
+          console.log('this.modelTM.cardVehicleId', this.modelTM.cardVehicleId)
           this.getImageUrl(results.data.imageLinks)
           this.getUserByPush();
           // this.search({ query: results.data.fullName }, 'edit');
@@ -463,15 +465,22 @@ export class PqXeNhanVienComponent implements OnInit {
   }
 
   getImageUrl(datas) {
-
+    console.log('this.imageLinksCard[0]', this.imageLinksCard[0])
     if(datas[0]){
       this.modelTM.imageLinks[0] = datas[0]
+    }else{
+      this.modelTM.imageLinks[0] = this.imageLinksCard[0]
+      console.log('undoidjfoijsdofji')
     }
     if(datas[1]){
       this.modelTM.imageLinks[1] = datas[1]
+    }else{
+      this.modelTM.imageLinks[1] = this.imageLinksCard[1]
     }
     if(datas[2]){
       this.modelTM.imageLinks[2] = datas[2]
+    }else{
+      this.modelTM.imageLinks[2] = this.imageLinksCard[2]
     }
   }
 
