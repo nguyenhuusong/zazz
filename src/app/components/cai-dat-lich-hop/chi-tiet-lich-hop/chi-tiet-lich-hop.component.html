@@ -9,11 +9,12 @@
    <div class="content">
     <div >
         <app-edit-detail *ngIf="listViews && listViews.length> 0" [isNested]="true"
+            [detail]="detailInfo"
             [thongtinnhanvienNew]="true" [manhinh]="'Edit'" [dataView]="listViews"
             (callback)="setMeetRoomInfo($event)" (callbackcancel)="cancelUpdate($event)">
         </app-edit-detail>
     </div>
-    <div class="members mt-2">
+    <!-- <div class="members mt-2">
         <div class="row">
             <div class="col-sm-6">
                 <h4>Thành viên cuộc họp</h4>
@@ -30,7 +31,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
         
    </div>
    
