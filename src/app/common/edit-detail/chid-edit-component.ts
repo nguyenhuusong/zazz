@@ -1189,7 +1189,7 @@ export class AppTypeLinkUrlRadioListComponent implements OnInit {
   template: `   
             <div>
             <div class="wrap-upload">
-                      <p-fileUpload [chooseLabel]="''" [chooseIcon]="''" [showUploadButton]="false" [showCancelButton]="false" [customUpload]="true" name="demo[]" url="./upload.php" 
+                      <p-fileUpload [chooseLabel]="''" [chooseIcon]="''" [multiple]="true" [showUploadButton]="false" [showCancelButton]="false" [customUpload]="true" name="demo[]" url="./upload.php" 
                        (onSelect)="uploadHandler($event)" [maxFileSize]="10000000">
                           <ng-template pTemplate="toolbar">
 
@@ -1237,6 +1237,7 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
     private spinner: NgxSpinnerService,
   ) { }
   ngOnInit(): void {
+    this.element.columnValue = this.element.columnValue ? this.element.columnValue.split(',') : []
     this.dataView.forEach(element => {
       element.fields.forEach(async element1 => {
         if (element1.field_name === 'AttachName' && element1.columnValue) {
@@ -1254,26 +1255,23 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
   
   uploadHandler(event) {
        this.uploadedFiles = []
-      // for(let file of event.files) {
-      
-      // }
       this.spinner.show();
-      if (event.currentFiles[0] && event.currentFiles[0].size > 0) {
+      for(let index in event.currentFiles) {
         const getDAte = new Date();
         const getTime = getDAte.getTime();
         const storageRef = firebase.storage().ref();
-        const uploadTask = storageRef.child(`s-hrm/images/${getTime}-${event.currentFiles[0].name}`).put(event.currentFiles[0]);
+        const uploadTask = storageRef.child(`s-hrm/images/${getTime}-${event.currentFiles[index].name}`).put(event.currentFiles[index]);
         uploadTask.on('state_changed', (snapshot) => {
         }, (error) => {
         }, () => {
           uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-            this.element.columnValue = downloadURL;
+            this.element.columnValue.push(downloadURL)
             this.spinner.hide();
             this.dataView.forEach(element => {
               element.fields.forEach(async element1 => {
                 if (element1.field_name === 'AttachName') {
-                  element1.columnValue = event.currentFiles[0].name;
-                  this.uploadedFiles.push({name: event.currentFiles[0].name});
+                  element1.columnValue = event.currentFiles[index].name;
+                  this.uploadedFiles.push({name: event.currentFiles[index].name});
                 } 
               });
             });
@@ -1281,7 +1279,7 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
             this.spinner.hide();
           });
         });
-    }
+      }
   }
 }
 // Members
@@ -1291,8 +1289,13 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
                     <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
                     <div class="in d-flex bet middle">
                       <ul class="members-filed">
-                        <li><span><img></span><span>trangbh</span></li>
-                        <li><span class="more-member">+12</span></li>
+                        <li *ngFor="let user of selectMembers; let i = index" (click)="activeName(i)">
+                          <span>
+                          <img src="{{user.avatarUrl}}">
+                          </span>
+                          <span *ngIf="user.isCheck">{{user.fullName}}</span>
+                        </li>
+                        <li *ngIf="selectMembers.length > 0"><span class="more-member">+12</span></li>
                       </ul>
                       <span class="add-member" (click)="addNewMember()">
                         <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1315,10 +1318,10 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M9.05536 2.5748C5.47625 2.5748 2.5748 5.47625 2.5748 9.05536C2.5748 12.6345 5.47625 15.5359 9.05536 15.5359C10.7206 15.5359 12.2392 14.9078 13.3871 13.8756L13.8756 13.3871C14.9078 12.2392 15.5359 10.7206 15.5359 9.05536C15.5359 5.47625 12.6345 2.5748 9.05536 2.5748ZM15.871 14.3507C17.0085 12.8888 17.6859 11.0512 17.6859 9.05536C17.6859 4.28884 13.8219 0.424805 9.05536 0.424805C4.28884 0.424805 0.424805 4.28884 0.424805 9.05536C0.424805 13.8219 4.28884 17.6859 9.05536 17.6859C11.0512 17.6859 12.8888 17.0085 14.3507 15.871L18.4998 20.0201L20.0201 18.4998L15.871 14.3507Z" fill="#2B2F33" fill-opacity="0.6"/>
                       </svg>
                     </div>
-                    <div class="room" *ngFor="let member of members; let i = index">
-                      <p-checkbox name="groupname" [value]="member" [(ngModel)]="member.isCheck" label="{{member.group}}" (onChange)="handleChangeParent(member, i)" ></p-checkbox> ({{member.child.length}})
+                    <div class="room" *ngFor="let member of element.options; let i = index">
+                     <input id="president_{{member.group}}_{{i}}" type="checkbox" style="margin-right: 5px" name="{{member.group}}_{{i}}" (change)="handleChangeParent(member, i)" [checked]="member?.isCheck" /> {{member.group}} ({{member.child.length}})
                       <div class="item d-flex middle gap16" *ngFor="let user of member.child; let idx = index">
-                        <p-checkbox name="groupname" [value]="user"  [(ngModel)]="user.isCheck" (onChange)="handleChangeChild(user, i, member)" ></p-checkbox>
+                      <input id="president_{{user.userId}}_{{idx}}" type="checkbox" style="margin-right: 5px" name="president_{{user.userId}}_{{idx}}" (change)="handleChangeChild(user, i, member, idx)" [checked]="user?.isCheck" />
                         <div class="img" *ngIf="!user.avatarUrl"><img src="../../../assets/images/avatar.jpg"></div>
                         <div class="img" *ngIf="user.avatarUrl"><img src="{{user.avatarUrl}}"></div>
                         <div class="name"><span>{{user.fullName}}</span><span>{{user.position}}</span></div>
@@ -1327,7 +1330,7 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
                   </div>
                 <div class="d-flex">
                 <p-button styleClass="p-button-sm p-button-secondary" label="Bỏ qua" icon="pi pi-times-circle"></p-button>&nbsp;
-                <p-button>Xác nhận</p-button>
+                <p-button (click)="xacNhan()">Xác nhận</p-button>
                 </div>
                   </p-dialog>
                   `,
@@ -1339,53 +1342,77 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
     @Input() submit = false;
     @Input() dataView;
     members = [];
+    selectMembers =[];
     newMember = false
     constructor(
       private apiService: ApiHrmService
     ) { }
     ngOnInit(): void {
       this.modelFields[this.element.field_name].error = false;
+      this.selectMembers = [];
+      const dataNew = this.element.columnValue.split(',');
+      for(let item of this.element.options) {
+        for(let item1 of item.child) {
+          if(dataNew.indexOf(item1.userId) > -1) {
+            item1.isCheck = true;
+            this.selectMembers.push({...item1, isCheck: this.selectMembers.length === 0 ? true : false});
+          }
+          const isCheckAll =item.child.filter(d => d.isCheck === true);
+          if(isCheckAll.length === item.child.length) {
+            item.isCheck = true;
+          }
+        }
+       
+      }
+      this.element.options = [...this.element.options]
+    }
+
+    activeName(i) {
+      for(let index in this.selectMembers) {
+        if(index == i) {
+          this.selectMembers[index].isCheck = true;
+        }else {
+          this.selectMembers[index].isCheck = false;
+        }
+      }
+      this.selectMembers = [...this.selectMembers]
+    }
+
+    xacNhan() {
+      this.selectMembers = [];
+      for(let item of this.element.options) {
+        for(let index in item.child) {
+          if(item.child[index].isCheck) {
+            this.selectMembers.push({...item.child[index], isCheck: parseInt(index) === 0 ? true : false});
+          }
+        }
+      }
+      this.element.columnValue = this.selectMembers.map(item => item.userId).toString();
+      this.newMember = false;
     }
 
     handleChangeParent(member, index) {
-      let newMember = {...member};
-      newMember.child.forEach(user => {
-        user.isCheck = newMember.isCheck;
+      this.element.options[index].isCheck = !this.element.options[index].isCheck
+      this.element.options[index].child.forEach(user => {
+        user.isCheck = this.element.options[index].isCheck;
       });
-      this.members[index] =newMember
-      this.members = [...this.members];
+      this.element.options = [...this.element.options];
     }
 
-    handleChangeChild(user, index, member) {
-      console.log("member", member)
-      const isCheckAll =member.child.filter(d => d.isCheck = true);
-      console.log(isCheckAll.length)
-      console.log(isCheckAll.length === member.child.length)
-      if(isCheckAll.length === member.child.length) {
-        this.members[index].isCheck = true;
-        this.members = [...this.members]
+    handleChangeChild(user, index, member, idx) {
+      this.element.options[index].child[idx].isCheck = !this.element.options[index].child[idx].isCheck;
+      const isCheckAll =this.element.options[index].child.filter(d => d.isCheck === true);
+      if(isCheckAll.length === this.element.options[index].child.length) {
+        this.element.options[index].isCheck = true;
+        this.element.options = [...this.element.options]
       }else {
-        this.members[index].isCheck = false;
-        this.members = [...this.members]
+        this.element.options[index].isCheck = false;
+        this.element.options = [...this.element.options]
       }
     }
 
     addNewMember() {
       this.newMember = true;
-      const queryParams = queryString.stringify({ offSet: 0, pageSize: 50 })
-      this.apiService.getHrmMeetingPerson(queryParams).subscribe( res => {
-        if(res.status === 'success') {
-          this.members = res.data.meetingProperties;
-           this.members.forEach(member => {
-            member.isCheck = false;
-            member.child.forEach(user => {
-              // user.name = user.fullName,
-              // user.key = 
-              user.isCheck = false;
-            })
-          })
-        }
-      })
     }
   }
 
@@ -1395,7 +1422,7 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
   template: `   <div class="fileds field-group">
                   <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
                   <div class="">
-                    <p-chips [(ngModel)]="element.columnValue"></p-chips>
+                    <p-chips [(ngModel)]="element.columnValue" name="{{element.field_name}}"></p-chips>
                   </div>
                   <div *ngIf="element.isRequire && submit && !element.columnValue"
                       class="alert-validation alert-danger">
@@ -1417,6 +1444,10 @@ export class AppTypeChips implements OnInit {
   ) { }
   ngOnInit(): void {
     this.modelFields[this.element.field_name].error = false;
+  }
+
+  luau() {
+    console.log(this.element.columnValue)
   }
 
 }
@@ -1469,6 +1500,7 @@ export class AppTypelistMch implements OnInit {
     private apiService: ApiHrmService
   ) { }
   ngOnInit(): void {
+    this.element.columnValue = "10,20,30"
     this.modelFields[this.element.field_name].error = false;
   }
 

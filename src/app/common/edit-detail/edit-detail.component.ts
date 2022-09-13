@@ -236,12 +236,31 @@ export class EditDetailComponent implements OnInit, OnChanges {
           if (element1.field_name === 'annualYear') {
             this.GetAnnualYear(element1);
           }
+        }else if( element1.columnType === 'members') {
+          this.getHrmMeetingPerson(element1);
+        }else if( element1.columnType === 'chips') {
+          element1.columnValue = element1.columnValue ? element1.columnValue.split(',') : [];
         }
       });
     });
     setTimeout(() => {
       this.dataView = [...this.dataViewNew];
     }, 500);
+  }
+
+  getHrmMeetingPerson(element1) {
+    const queryParams = queryString.stringify({ offSet: 0, pageSize: 50 })
+    this.apiService.getHrmMeetingPerson(queryParams).subscribe( res => {
+      if(res.status === 'success') {
+        element1.options = [...res.data.meetingProperties];
+        element1.options.forEach(member => {
+          member.isCheck = false;
+          member.child.forEach(user => {
+            user.isCheck = false;
+          })
+        })
+      }
+    })
   }
 
   getNode(item) {
@@ -548,6 +567,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
       }
     })
   }
+  
 
   getPayrollTypeList(orgId, element1) {
     const queryParams = queryString.stringify({organizeId: orgId});
@@ -973,6 +993,10 @@ export class EditDetailComponent implements OnInit, OnChanges {
           delete data.options;
         } else if (data.columnType === 'currency') {
           data.columnValue = numeral(data.columnValue).value()
+        } else if (data.columnType === 'members') {
+          delete data.options;
+        }else if (data.columnType === 'linkUrlDrag') {
+          data.columnValue =data.columnValue ? data.columnValue.toString() : '';
         } else if ((data.columnType === 'select' || data.columnType === 'multiSelect' || data.columnType === 'dropdown' || data.columnType === 'checkboxList') && data.options) {
           if (data.columnType === 'multiSelect') {
             if (data.columnValue && data.columnValue.length > 0) {
@@ -993,6 +1017,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
             delete data.options;
 
           }
+        }else if( data.columnType === 'chips') {
+          data.columnValue = data.columnValue.toString();
         } else {
           data.columnValue = data.columnValue;
           if (data.columnType === 'number' && data.data_type === 'int') {
