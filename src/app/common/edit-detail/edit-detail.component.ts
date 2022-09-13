@@ -1020,6 +1020,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
 
   CauHinh() {
     this.gridKey = this.detail.tableKey
+    console.log('this.detail.tableKey', this.detail.tableKey)
     this.displaySetting = true;
   }
 

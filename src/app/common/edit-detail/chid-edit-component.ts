@@ -1294,7 +1294,7 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
                         <li><span><img></span><span>trangbh</span></li>
                         <li><span class="more-member">+12</span></li>
                       </ul>
-                      <span class="add-member">
+                      <span class="add-member" (click)="addNewMember()">
                         <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M5 0.9375C5.31066 0.9375 5.5625 1.18934 5.5625 1.5V4.4375H8.5C8.81066 4.4375 9.0625 4.68934 9.0625 5C9.0625 5.31066 8.81066 5.5625 8.5 5.5625H5.5625V8.5C5.5625 8.81066 5.31066 9.0625 5 9.0625C4.68934 9.0625 4.4375 8.81066 4.4375 8.5V5.5625H1.5C1.18934 5.5625 0.9375 5.31066 0.9375 5C0.9375 4.68934 1.18934 4.4375 1.5 4.4375H4.4375V1.5C4.4375 1.18934 4.68934 0.9375 5 0.9375Z" fill="#0979FD"/>
                         </svg> &nbsp;
@@ -1307,6 +1307,12 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
                         </div>
                     </div>
                   </div>
+                  <p-dialog header="Thêm thành viên" [(visible)]="newMember" [style]="{width: '415px'}">
+                    <div class="d-flex">
+                    <p-button styleClass="p-button-sm p-button-secondary" label="Bỏ qua" icon="pi pi-times-circle"></p-button>&nbsp;
+                    <p-button>Xác nhận</p-button>
+                    </div>
+                  </p-dialog>
                   `,
   })
 
@@ -1315,6 +1321,8 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
     @Input() modelFields;
     @Input() submit = false;
     @Input() dataView;
+    
+    newMember = false
     constructor(
       private apiService: ApiHrmService
     ) { }
@@ -1322,6 +1330,13 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
       this.modelFields[this.element.field_name].error = false;
     }
 
+    addNewMember() {
+      this.newMember = true;
+      const queryParams = queryString.stringify({ offSet: 0, pageSize: 50 })
+      this.apiService.getHrmMeetingPerson(queryParams).subscribe( res => {
+        console.log('res', res)
+      })
+    }
   }
 
 // chips, member out company

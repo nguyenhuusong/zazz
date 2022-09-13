@@ -1466,6 +1466,9 @@ export class ApiHrmService {
     return this.http.delete<any>(`${apiHrmServer}/api/v1/payrollType/DelHrmPayrollType?${queryParams}`, this.options)
   }
 
-
+  getHrmMeetingPerson(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/meeting/GetHrmMeetingPerson?${queryParams}`, this.options)
+  }
+  
   
 }

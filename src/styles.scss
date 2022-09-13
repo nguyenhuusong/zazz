@@ -4627,3 +4627,8 @@ p-chips{
     border: 1px solid #E8E9ED;
     border-radius: 2px;
 }
+p-dialog button{
+    &.p-button-sm{
+        width: auto !important;
+    }
+}

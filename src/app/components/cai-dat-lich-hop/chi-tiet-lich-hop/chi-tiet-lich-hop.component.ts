@@ -73,15 +73,15 @@ export class ChiTietLichHopComponent implements OnInit, OnDestroy {
     this.apiService.getMeetingInfo(`?meet_ud=${this.meet_ud || ''}`).subscribe(results => {
       if (results.status === 'success') {
         results.data.group_fields.forEach(group => {
-          group.fields.forEach(d=> {
-            if(d.field_name === 'meet_name' ||  d.field_name === 'meet_time') {
-              d.columnDisplay = 1
-              d.columnClass = 'col-12'
-            }else {
-              d.columnDisplay = 2,
-              d.columnClass = 'col-12'
-            }
-          })
+          // group.fields.forEach(d=> {
+          //   if(d.field_name === 'meet_name' ||  d.field_name === 'meet_time') {
+          //     d.columnDisplay = 1
+          //     d.columnClass = 'col-12'
+          //   }else {
+          //     d.columnDisplay = 2,
+          //     d.columnClass = 'col-12'
+          //   }
+          // })
         })
         this.listViews = cloneDeep(results.data.group_fields);
         this.detailInfo = results.data;
