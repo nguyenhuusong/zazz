@@ -2,7 +2,7 @@ import { finalize } from 'rxjs';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService, ConfirmationService, TreeNode } from 'primeng/api';
 import { ExportFileService } from './../../services/export-file.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { Component, OnInit, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
 import * as queryString from 'querystring';
@@ -47,6 +47,8 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
   detailOrganizeMap = null;
   formTypes = [];
   data=[];
+  formId = null;
+  dataRouter = null;
   constructor(
     private apiService: ApiHrmService,
     private spinner: NgxSpinnerService,
@@ -54,14 +56,17 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
     private messageService: MessageService,
     private fileService: ExportFileService,
     private changeDetector: ChangeDetectorRef,
-    private router: Router
-  ) { }
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
+    this.dataRouter = this.route.data['_value'];
+   }
 
   ngOnInit(): void {
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Chính sách' },
-      { label: 'Tài liệu chung' },
+      { label: this.dataRouter.title },
     ];
     this.getAgencyOrganizeMap();
     this.getOrgan();
@@ -224,7 +229,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
       query.typeForm = this.query.typeForm.data;
     } 
     const queryParams = queryString.stringify(query);
-    this.apiService.getFormPage(queryParams).subscribe(
+    this.apiService.getFormGeneral(queryParams, this.dataRouter.url === 'tai-lieu-chung' ? 'GetFormGeneral' : 'GetFormPersonal').subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         this.gridKey= results.data.dataList.gridKey
@@ -276,7 +281,8 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa tài liệu?',
       accept: () => {
-        this.apiService.delFormInfo(event.rowData.form_id).subscribe((results: any) => {
+        const queryParams = queryString.stringify({form_id: event.rowData.form_id});
+        this.apiService.delFormsInfo(queryParams).subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa tài liệu thành công!' });
             this.load();
@@ -289,7 +295,9 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
   }
 
   EditEmployee(event) {
-    this.router.navigateByUrl(`/chinh-sach/tai-lieu-chung/${event.rowData.form_id}`);
+    // this.router.navigateByUrl(`/chinh-sach/tai-lieu-chung/${event.rowData.form_id}`);
+    this.formId = event.rowData.form_id;
+    this.addNewPopup = true;
   }
 
 
@@ -447,8 +455,14 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
   handleFormType(): void {
     this.router.navigateByUrl('/chinh-sach/loai-tai-lieu');
   }
-
+  addNewPopup = false;
   handleAdd(): void {
-    this.router.navigateByUrl('/chinh-sach/tai-lieu-chung/them-moi');
+    this.formId = null;
+    this.addNewPopup = true;
+  }
+
+  handleCallbackForm() {
+    this.load();
+    this.addNewPopup = false;
   }
 }

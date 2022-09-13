@@ -487,7 +487,7 @@ export class TinhLuongComponent implements OnInit {
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Lương - thuế' },
-      { label: 'Thiết lập tham sô' },
+      { label: 'Thiết lập tham Số' },
     ];
     this.getAgencyOrganizeMap();
     this.getEmployeeStatus();

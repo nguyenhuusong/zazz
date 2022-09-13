@@ -128,3 +128,11 @@
         </ng-template>
     </p-organizationChart>
 </p-dialog>
+
+
+<p-dialog header="Thêm loại biểu mẫu" 
+    [(visible)]="addNewPopup" 
+    [modal]="true" [style]="{width: '600px'}"
+    [draggable]="false" [resizable]="false" [focusTrap]="false" >
+   <app-chi-tiet-loai-bieu-mau [formTypeId]="formTypeId" (callback)="handleCallbackForm()" *ngIf="addNewPopup"></app-chi-tiet-loai-bieu-mau>
+</p-dialog>

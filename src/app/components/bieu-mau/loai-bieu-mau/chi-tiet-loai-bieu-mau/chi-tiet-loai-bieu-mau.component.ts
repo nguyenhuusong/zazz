@@ -1,11 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { cloneDeep } from 'lodash';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MenuItem, MessageService } from 'primeng/api';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
-
+import * as queryString from 'querystring';
 @Component({
   selector: 'app-chi-tiet-loai-bieu-mau',
   templateUrl: './chi-tiet-loai-bieu-mau.component.html',
@@ -20,8 +20,9 @@ export class ChiTietLoaiBieuMauComponent implements OnInit, OnDestroy {
     { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
     { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check' }
   ];
-  id: any = '';
   titlePage = '';
+  @Input() formTypeId: string = null;
+  @Output() callback = new EventEmitter<any>();
   constructor(
     private activatedRoute: ActivatedRoute,
     private apiService: ApiHrmService,
@@ -36,31 +37,13 @@ export class ChiTietLoaiBieuMauComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.titlePage = this.activatedRoute.data['_value'].title;
-    this.items = [
-      { label: 'Trang chủ', routerLink: '/home' },
-      { label: 'Chính sách' },
-      { label: 'Thiết lập loại tài liệu', routerLink: '/chinh-sach/loai-tai-lieu' },
-      { label: 'Chi tiết loại tài liệu' }
-    ];
-    this.handleParams();
+    this.getDetail();
+   
   }
 
-  handleParams() {
-    this.activatedRoute.params
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((params) => {
-        this.id = params.id;
-        this.getDetail();
-        if(this.id === 'them-moi'){
-          this.items[this.items.length-1].label = 'Tạo mới loại tài liệu';
-        }
-
-      });
-  };
-
   getDetail() {
-    this.apiService.getFormTypeInfo(this.id)
+    const queryParams = queryString.stringify({formTypeId: this.formTypeId});
+    this.apiService.getFormsTypeInfo(this.formTypeId)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {
         if (results.status === 'success') {
@@ -84,13 +67,13 @@ export class ChiTietLoaiBieuMauComponent implements OnInit, OnDestroy {
     const params = {
       ...this.detailInfo, group_fields: event
     };
-    this.apiService.setFormTypeInfo(params)
+    this.apiService.setFormsTypeInfo(params)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((results: any) => {
         if (results.status === 'success') {
           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
           this.spinner.hide();
-          this.router.navigateByUrl('/chinh-sach/loai-tai-lieu');
+          this.callback.emit();
         } else {
           this.messageService.add({
             severity: 'error', summary: 'Thông báo',

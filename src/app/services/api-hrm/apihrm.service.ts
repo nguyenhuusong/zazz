@@ -1469,6 +1469,63 @@ export class ApiHrmService {
   getHrmMeetingPerson(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/meeting/GetHrmMeetingPerson?${queryParams}`, this.options)
   }
+
+  // Forms
+
+  getFormGeneral(queryParams, urlLink): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/forms/${urlLink}?${queryParams}`, this.options)
+  }
+
+  getFormPersonal(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/forms/GetFormPersonal?${queryParams}`, this.options)
+  }
+
+  getFormsInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/forms/getFormsInfo?${queryParams}`, this.options)
+  }
+
+  setFormsInfo(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/forms/SetFormsInfo`,queryParams, this.options)
+  }
+
+  setFormsTypeInfo(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/forms/SetFormsTypeInfo`,queryParams, this.options)
+  }
+
+  shareToApp(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/forms/ShareToApp`,queryParams, this.options)
+  }
+
+  uploadDrives(data): Observable<any> {
+    const customOptions = {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      })
+    };
+    return this.http.post<any>(`${apiHrmServer}/api/v2/forms/UploadDrive`, data, customOptions);
+  }
+
+  delFormsInfo(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/forms/DelFormsInfo?${queryParams}`, this.options)
+  }
+
+  delFormsTypeInfo(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/forms/DelFormsTypeInfo?${queryParams}`, this.options)
+  }
+
+  getFormsTypePage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/forms/GetFormsTypePage?${queryParams}`, this.options)
+  }
+
+  getFormsTypes(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/forms/GetFormsTypes?${queryParams}`, this.options)
+  }
+
+  getFormsTypeInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/forms/GetFormsTypeInfo?${queryParams}`, this.options)
+  }
+
+
   
   
 }

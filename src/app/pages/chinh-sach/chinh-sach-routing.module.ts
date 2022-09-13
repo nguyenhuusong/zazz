@@ -182,6 +182,14 @@ const routes: Routes = [
   },
 },
 {
+  path: 'tai-lieu-ca-nhan',
+  component: BieuMauComponent,
+  data: {
+    title: 'Tài liệu chung',
+    url: 'tai-lieu-ca-nhan',
+  },
+},
+{
   path: 'loai-tai-lieu/:id',
   component: ChiTietLoaiBieuMauComponent,
   data: {

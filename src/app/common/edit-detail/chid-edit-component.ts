@@ -1159,7 +1159,7 @@ export class AppTypeLinkUrlRadioListComponent implements OnInit {
       this.spinner.show();
       let fomrData = new FormData();
       fomrData.append('file', event.target.files[0]);
-      this.apiService.uploadDrive(fomrData)
+      this.apiService.uploadDrives(fomrData)
         .subscribe(results => {
           if (results.status === 'success') {
             this.dataView.forEach(element => {

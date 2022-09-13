@@ -101,7 +101,6 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
         const data = response.data;
         this.loopEveryNodeTree(data)
         this.formTypes = data
-        console.log("123456789", this.formTypes)
       } else {
         console.error(response.message);
       }
@@ -143,7 +142,6 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
     // this.query.orgId = this.selectedNode?.orgId;
     this.query.organizeId = this.detailOrganizeMap?.orgId;
     this.isHrDiagram = false;
-
     this.load()
   }
 
@@ -226,8 +224,7 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
       query.typeForm = this.query.typeForm.data;
     } 
     const queryParams = queryString.stringify(query);
-    console.log("query11111", query)
-    this.apiService.getFormTypePage(queryParams)
+    this.apiService.getFormsTypePage(queryParams)
     .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
@@ -276,12 +273,11 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
   }
 
   handleDelete(event) {
-    console.log(event.rowData);
-    
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa tài liệu?',
       accept: () => {
-        this.apiService.delFormTypeInfo(event.rowData.form_type_id).subscribe((results: any) => {
+        const queryParams = queryString.stringify({formTypeId: event.rowData.form_type_id});
+        this.apiService.delFormsTypeInfo(queryParams).subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa tài liệu thành công' });
             this.load();
@@ -294,11 +290,13 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
   }
 
   handleEdit(event) {
-    this.router.navigateByUrl(`/chinh-sach/loai-tai-lieu/${event.rowData.form_type_id}`);
+    this.formTypeId = event.rowData.form_type_id;
+    this.addNewPopup = true;
   }
 
   handleAdd(): void {
-    this.router.navigateByUrl('/chinh-sach/loai-tai-lieu/them-moi');
+    this.formTypeId = null;
+    this.addNewPopup = true;
   }
 
   initGrid() {
@@ -451,5 +449,12 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
 
   rowSelected(data) {
     this.listDataSelect = data
+  }
+
+  addNewPopup = false;
+  formTypeId = null;
+  handleCallbackForm() {
+    this.load();
+    this.addNewPopup = false;
   }
 }

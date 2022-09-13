@@ -1,10 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MenuItem, MessageService } from 'primeng/api';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { cloneDeep } from 'lodash';
+import * as queryString from 'querystring';
 
 @Component({
   selector: 'app-bieu-mau-chi-tiet',
@@ -20,8 +21,10 @@ export class BieuMauChiTietComponent implements OnInit, OnDestroy {
     { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
     { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check' }
   ];
-  id: any = '';
   titlePage = '';
+  @Input() formId: string  = null;
+  @Output() callback = new EventEmitter<any>();
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private apiService: ApiHrmService,
@@ -36,29 +39,13 @@ export class BieuMauChiTietComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.titlePage = this.activatedRoute.data['_value'].title;
-    console.log('this.titlePage', this.titlePage)
-    this.items = [
-      { label: 'Trang chủ', routerLink: '/home' },
-      { label: 'Chính sách' },
-      { label: 'Tài liệu chung', routerLink: '/chinh-sach/tai-lieu-chung'},
-      { label: 'Chi tiết tài liệu' }
-    ];
-    this.handleParams();
+    this.getDetail();
   }
 
-  handleParams() {
-    this.activatedRoute.params
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((params) => {
-        this.id = params.id === 'them-moi' ? '' : params.id;
-        this.items[3].label = params.id === 'them-moi' ? 'Thêm mới tài liệu' : 'Chi tiết tài liệu'
-        this.getDetail();
-      });
-  };
-
+ 
   getDetail() {
-    this.apiService.getFormInfo(this.id)
+    const queryParams = queryString.stringify({formId: this.formId});
+    this.apiService.getFormsInfo(queryParams)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {
         if (results.status === 'success') {
@@ -70,7 +57,9 @@ export class BieuMauChiTietComponent implements OnInit, OnDestroy {
   }
 
   quaylai(data) {
-    this.router.navigateByUrl('/chinh-sach/tai-lieu-chung');
+   if(data === 'CauHinh') {
+    this.getDetail();
+   }
   }
 
   handleSave(event) {
@@ -78,13 +67,13 @@ export class BieuMauChiTietComponent implements OnInit, OnDestroy {
       ...this.detailInfo, group_fields: event
     };
 
-    this.apiService.setFormInfo(params)
+    this.apiService.setFormsInfo(params)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((results: any) => {
         if (results.status === 'success') {
           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
           this.spinner.hide();
-          this.router.navigateByUrl('/chinh-sach/tai-lieu-chung');
+          this.callback.emit();
         } else {
           this.messageService.add({
             severity: 'error', summary: 'Thông báo',
