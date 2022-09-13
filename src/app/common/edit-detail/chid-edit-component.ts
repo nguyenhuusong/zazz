@@ -1315,28 +1315,20 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M9.05536 2.5748C5.47625 2.5748 2.5748 5.47625 2.5748 9.05536C2.5748 12.6345 5.47625 15.5359 9.05536 15.5359C10.7206 15.5359 12.2392 14.9078 13.3871 13.8756L13.8756 13.3871C14.9078 12.2392 15.5359 10.7206 15.5359 9.05536C15.5359 5.47625 12.6345 2.5748 9.05536 2.5748ZM15.871 14.3507C17.0085 12.8888 17.6859 11.0512 17.6859 9.05536C17.6859 4.28884 13.8219 0.424805 9.05536 0.424805C4.28884 0.424805 0.424805 4.28884 0.424805 9.05536C0.424805 13.8219 4.28884 17.6859 9.05536 17.6859C11.0512 17.6859 12.8888 17.0085 14.3507 15.871L18.4998 20.0201L20.0201 18.4998L15.871 14.3507Z" fill="#2B2F33" fill-opacity="0.6"/>
                       </svg>
                     </div>
-                    <div class="room">
-                      <p-checkbox name="groupname" value="val1" label="Phòng nhân sự" ></p-checkbox>
-                      <div class="item d-flex middle gap16">
-                        <p-checkbox name="groupname" value="val1" ></p-checkbox>
-                        <div class="img"><img src="../../../assets/images/avatar.jpg"></div>
-                        <div class="name"><span>Nguyễn Văn Minh</span><span>Phó chủ tịch tập đoàn</span></div>
+                    <div class="room" *ngFor="let member of members; let i = index">
+                      <p-checkbox name="groupname" [value]="member" [(ngModel)]="member.isCheck" label="{{member.group}}" (onChange)="handleChangeParent(member, i)" ></p-checkbox> ({{member.child.length}})
+                      <div class="item d-flex middle gap16" *ngFor="let user of member.child; let idx = index">
+                        <p-checkbox name="groupname" [value]="user"  [(ngModel)]="user.isCheck" (onChange)="handleChangeChild(user, i, member)" ></p-checkbox>
+                        <div class="img" *ngIf="!user.avatarUrl"><img src="../../../assets/images/avatar.jpg"></div>
+                        <div class="img" *ngIf="user.avatarUrl"><img src="{{user.avatarUrl}}"></div>
+                        <div class="name"><span>{{user.fullName}}</span><span>{{user.position}}</span></div>
                       </div>
                     </div>
-                    <div class="room">
-                      <p-checkbox name="groupname" value="val1" label="Phòng nhân sự" ></p-checkbox>
-                      <div class="item d-flex middle gap16">
-                        <p-checkbox name="groupname" value="val1" ></p-checkbox>
-                        <div class="img"><img src="../../../assets/images/avatar.jpg"></div>
-                        <div class="name"><span>Nguyễn Văn Minh</span><span>Phó chủ tịch tập đoàn</span></div>
-                      </div>
-                    </div>
-
                   </div>
-                    <div class="d-flex">
-                    <p-button styleClass="p-button-sm p-button-secondary" label="Bỏ qua" icon="pi pi-times-circle"></p-button>&nbsp;
-                    <p-button>Xác nhận</p-button>
-                    </div>
+                <div class="d-flex">
+                <p-button styleClass="p-button-sm p-button-secondary" label="Bỏ qua" icon="pi pi-times-circle"></p-button>&nbsp;
+                <p-button>Xác nhận</p-button>
+                </div>
                   </p-dialog>
                   `,
   })
@@ -1346,7 +1338,7 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
     @Input() modelFields;
     @Input() submit = false;
     @Input() dataView;
-    
+    members = [];
     newMember = false
     constructor(
       private apiService: ApiHrmService
@@ -1355,11 +1347,44 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
       this.modelFields[this.element.field_name].error = false;
     }
 
+    handleChangeParent(member, index) {
+      let newMember = {...member};
+      newMember.child.forEach(user => {
+        user.isCheck = newMember.isCheck;
+      });
+      this.members[index] =newMember
+      this.members = [...this.members];
+    }
+
+    handleChangeChild(user, index, member) {
+      console.log("member", member)
+      const isCheckAll =member.child.filter(d => d.isCheck = true);
+      console.log(isCheckAll.length)
+      console.log(isCheckAll.length === member.child.length)
+      if(isCheckAll.length === member.child.length) {
+        this.members[index].isCheck = true;
+        this.members = [...this.members]
+      }else {
+        this.members[index].isCheck = false;
+        this.members = [...this.members]
+      }
+    }
+
     addNewMember() {
       this.newMember = true;
       const queryParams = queryString.stringify({ offSet: 0, pageSize: 50 })
       this.apiService.getHrmMeetingPerson(queryParams).subscribe( res => {
-        console.log('res', res)
+        if(res.status === 'success') {
+          this.members = res.data.meetingProperties;
+           this.members.forEach(member => {
+            member.isCheck = false;
+            member.child.forEach(user => {
+              // user.name = user.fullName,
+              // user.key = 
+              user.isCheck = false;
+            })
+          })
+        }
       })
     }
   }
