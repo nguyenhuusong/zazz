@@ -4632,3 +4632,60 @@ p-dialog button{
         width: auto !important;
     }
 }
+.list-member{
+    .img{
+        width: 32px;
+        height: 32px;
+        border-radius: 100%;
+        overflow: hidden;
+        img{
+            width: 100%;
+            height: auto;
+        }
+    }
+    .room{
+        margin-bottom: 16px;
+        &>p-checkbox{
+            label{
+                color: #A3A9B9;
+                font-size: 14px;
+                line-height: 20px;
+            }
+        }
+    }
+    .search{
+        position: relative;
+        margin-bottom: 16px;
+        input{
+            border: 1px solid rgba(43, 47, 51, 0.1);
+            width: 100%;
+            border: 1px solid rgba(43, 47, 51, 0.1);
+            height: 40px;
+            padding: 10px 16px;
+        }
+        svg{
+            position: absolute;
+            right: 12px;
+            top: 9px;
+            z-index: 9999;
+        }
+    }
+    .item{
+        padding-top: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #F3F4F6;
+        span{
+            display: block;
+            &:first-child{
+                color: #182850;
+                font-weight: 500;
+                font-family: $fontMmedium;
+                font-size: 16px;
+                line-height: 20px;
+            }
+        }
+    }
+}
+.gap16{
+    gap: 16px;
+}
