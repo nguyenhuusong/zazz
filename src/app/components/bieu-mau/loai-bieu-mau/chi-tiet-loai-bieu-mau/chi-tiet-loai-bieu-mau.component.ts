@@ -59,6 +59,7 @@ export class ChiTietLoaiBieuMauComponent implements OnInit, OnDestroy {
       this.getDetail();
     }else {
       this.router.navigateByUrl('/chinh-sach/loai-tai-lieu');
+      this.callback.emit();
     }
   }
 
