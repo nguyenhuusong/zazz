@@ -18,7 +18,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
   items = [];
   organs = [];
   loadjs = 0;
-  heightGrid = 0;
+  heightGrid = 300;
   query = {
     filter: '',
     organizeId: '',
@@ -437,6 +437,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
     const d: any = document.querySelector(".bread-crumb");
     const e: any = document.querySelector(".paginator");
     this.loadjs++
+    console.log('dojfodisjf', this.heightGrid)
     if (this.loadjs === 5) {
       if (b && b.clientHeight) {
         const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + d.clientHeight + e.clientHeight + 35;
