@@ -1468,8 +1468,8 @@ export class AppTypeChips implements OnInit {
                   
                   <div class="">
                     <ul>
-                      <li class="d-flex bet middle">Trước 10 phút<span></span>
-                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <li *ngFor="let time of element.columnValue; let i= index" class="d-flex bet middle">Trước {{time}} phút<span></span>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"  (click)="deleteTimeNoti(i)">
                         <rect width="20" height="20" rx="10" fill="#FAE7E8"/>
                         <path d="M13.3337 8.33366V15.0003H6.66699V8.33366H13.3337ZM12.3337 3.66699H7.66699L7.00033 4.33366H4.66699V5.66699H15.3337V4.33366H13.0003L12.3337 3.66699ZM14.667 7.00033H5.33366V15.0003C5.33366 15.7337 5.93366 16.3337 6.66699 16.3337H13.3337C14.067 16.3337 14.667 15.7337 14.667 15.0003V7.00033Z" fill="#FF3B49"/>
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M8.00033 13.3337V9.66699H9.33366V13.3337H8.00033Z" fill="#FF3B49"/>
@@ -1500,8 +1500,12 @@ export class AppTypelistMch implements OnInit {
     private apiService: ApiHrmService
   ) { }
   ngOnInit(): void {
-    this.element.columnValue = "10,20,30"
+    this.element.columnValue = [10,20,30]
     this.modelFields[this.element.field_name].error = false;
   }
+
+  deleteTimeNoti(index) {
+    this.element.columnValue.splice(index, 1);
+  } 
 
 }

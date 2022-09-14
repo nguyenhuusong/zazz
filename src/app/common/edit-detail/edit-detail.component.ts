@@ -995,7 +995,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
           data.columnValue = numeral(data.columnValue).value()
         } else if (data.columnType === 'members') {
           delete data.options;
-        }else if (data.columnType === 'linkUrlDrag') {
+        }else if (data.columnType === 'linkUrlDrag' || data.columnType === 'listMch') {
           data.columnValue =data.columnValue ? data.columnValue.toString() : '';
         } else if ((data.columnType === 'select' || data.columnType === 'multiSelect' || data.columnType === 'dropdown' || data.columnType === 'checkboxList') && data.options) {
           if (data.columnType === 'multiSelect') {
