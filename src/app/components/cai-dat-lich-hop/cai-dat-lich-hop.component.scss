@@ -1,0 +1,11 @@
+:host::ng-deep{
+    .noti-number{
+        background: #FF3B49;
+        border-radius: 2px;
+        color: #F3F4F6;
+        padding: 2px 4px;
+        &::after{
+            display: none;
+        }
+    }
+}

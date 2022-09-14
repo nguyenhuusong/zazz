@@ -63,7 +63,7 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Hoạt động' },
       { label: '...' },
-      { label: 'Tài liệu' },
+      { label: 'Tài liệu', routerLink: '/chinh-sach/tai-lieu-chung' },
       { label: 'Thiết lập loại tài liệu' },
     ];
     this.getAgencyOrganizeMap();

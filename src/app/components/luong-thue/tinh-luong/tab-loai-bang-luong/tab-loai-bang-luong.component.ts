@@ -1,8 +1,9 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, Output, SimpleChanges, ViewChild, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import * as queryString from 'querystring';
 import { ConfirmationService, MessageService, TreeNode } from 'primeng/api';
-import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
+import { Subject, takeUntil } from 'rxjs';
+import { AllModules, ColumnsToolPanelModule, Module } from '@ag-grid-enterprise/all-modules';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AgGridFn } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
@@ -14,39 +15,27 @@ import { cloneDeep } from 'lodash';
   styleUrls: ['./tab-loai-bang-luong.component.scss']
 })
 export class TabLoaiBangLuongComponent implements OnInit {
-  
-  pagingComponent = {
-    total: 0
-  };
-  projects = []
-  public modules: Module[] = AllModules;
+  @Input() organizeId: null
+  @Input() isNew: boolean = false
+  @Output() offIsNewPopup = new EventEmitter<any>();
   public agGridFn = AgGridFn;
-  cols: any[];
-  colsDetail: any[];
   items = [];
   columnDefs = [];
-  detailRowHeight;
+  isEdit = false
   defaultColDef;
   frameworkComponents;
-  groupDefaultExpanded;
-  detailCellRendererParams;
   gridApi: any;
-  clientWidth: any;
-  gridColumnApi: any;
-  objectAction: any;
-  objectActionDetail: any;
   gridflexs: any;
-  getRowHeight;
   listsData = null;
-  selectedNode
   totalRecord = 0;
   first = 0;
+  listViews = []
+  detailInfo = []
   countRecord: any = {
     totalRecord: 0,
     currentRecordStart: 0,
     currentRecordEnd: 0
   }
-  modelTM: any = {};
   itemsToolOfGrid: any[] = [];
   constructor(
     private apiService: ApiHrmService,
@@ -59,80 +48,39 @@ export class TabLoaiBangLuongComponent implements OnInit {
     private router: Router) {
 
     }
+  private readonly unsubscribe$: Subject<void> = new Subject();
   query = {
+    organizeId: '',
     filter: '',
     gridWidth: 0,
     offSet: 0,
     pageSize: 15,
-    orgId: 0,
-    isLock: -1,
-    isApprove: -1,
-    emp_st: -1
   }
 
   cancel() {
     this.query = {
+      organizeId: '',
       filter: '',
       gridWidth: 0,
       offSet: 0,
       pageSize: 15,
-      orgId: 0,
-      isLock: -1,
-      isApprove: -1,
-      emp_st: -1
     }
     this.load();
   }
 
   onGridReady(params) {
     this.gridApi = params.api;
-    this.gridColumnApi = params.columnApi;
   }
 
 
   load() {
-    this.columnDefs = [
-      {
-        headerName: 'STT',
-        filter: '',
-        maxWidth: 90,
-        pinned: 'left',
-        cellRenderer: params => {
-          return params.rowIndex + 1
-        },
-        cellClass: ['border-right', 'no-auto'],
-      },
-      {
-        headerName: 'Mã chỉ tiêu',
-        filter: '',
-        cellClass: ['border-right', 'yellow-bg'],
-        field: 'code',
-        editable: true
-      },
-      {
-        headerName: 'Tên chỉ tiêu',
-        filter: '',
-        cellClass: ['border-right', 'yellow-bg'],
-        field: 'code',
-        editable: true
-      },
-      {
-        headerName: 'Loại chỉ tiêu',
-        filter: '',
-        cellClass: ['border-right', 'yellow-bg'],
-        field: 'code',
-        editable: true
-      },
-    ]
+    this.query.organizeId = this.organizeId;
     this.spinner.show();
     const queryParams = queryString.stringify(this.query);
-    this.apiService.getEmployeePage(queryParams).subscribe(
+    this.apiService.getHrmPayrollTypePage(queryParams).subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
-        if (this.query.offSet === 0) {
-          this.cols = results.data.gridflexs;
-          this.colsDetail = results.data.gridflexdetails ? results.data.gridflexdetails : [];
-        }
+        this.columnDefs = results.data.gridflexs;
         this.initGrid();
         this.countRecord.totalRecord = results.data.dataList.recordsTotal;
         this.countRecord.totalRecord = results.data.dataList.recordsTotal;
@@ -164,27 +112,33 @@ export class TabLoaiBangLuongComponent implements OnInit {
         },
         {
           onClick: this.deleteRow.bind(this),
-          label: 'Xóa nhân viên này',
+          label: 'Xóa',
           icon: 'fa fa-trash',
           class: 'btn-primary mr5',
         },
       ]
     };
   }
-
   editRow(event) {
-
+    this.getInfo(event.rowData.Id)
   }
 
-  initGrid() {
-    
+  getInfo(id = null) {
+    const queryParams = queryString.stringify({ Id: id })
+    this.apiService.getHrmPayrollTypeInfo(queryParams).subscribe( results => {
+      if (results.status === 'success') {
+        const listViews = cloneDeep(results.data.group_fields);
+        this.listViews = cloneDeep(listViews);
+        this.detailInfo = results.data;
+      }
+    })
   }
 
   deleteRow(event) {
     this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn xóa nhân viên?',
+      message: 'Bạn có chắc chắn muốn xóa bản ghi này?',
       accept: () => {
-        this.apiService.deleteEmployee(event.rowData.empId).subscribe((results: any) => {
+        this.apiService.delHrmPayrollType(event.rowData.Id).subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa nhân viên thành công' });
             this.load();
@@ -194,6 +148,51 @@ export class TabLoaiBangLuongComponent implements OnInit {
         });
       }
     });
+  }
+
+  handleSave(event) {
+    const params = {
+      ...this.detailInfo, group_fields: event
+    };
+    this.spinner.show();
+    this.apiService.setHrmPayrollTypeInfo(params)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((results: any) => {
+        if (results.status === 'success') {
+          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
+          this.spinner.hide();
+          this.load();
+        } else {
+          this.messageService.add({
+            severity: 'error', summary: 'Thông báo',
+            detail: results.message
+          });
+          this.spinner.hide();
+        }
+      }), error => {
+        console.error('Error:', error);
+        this.spinner.hide();
+      }; 
+  }
+
+  quaylai(e){
+    this.isEdit = false;
+    this.offIsNewPopup.emit(false)
+  }
+
+  initGrid() {
+    this.columnDefs = [
+      ...AgGridFn(this.columnDefs.filter((d: any) => !d.isHide)),
+      {
+        headerName: '...',
+        filter: '',
+        maxWidth: 64,
+        pinned: 'right',
+        cellRenderer: 'buttonAgGridComponent',
+        cellClass: ['border-right cell-action', 'no-auto'],
+        cellRendererParams: (params: any) => this.showButtons(params),
+        field: 'checkbox'
+      }]
   }
 
   find() {
@@ -215,8 +214,8 @@ export class TabLoaiBangLuongComponent implements OnInit {
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Lương - thuế' },
+      { label: 'Loại bảng lương' },
     ];
-    this.getEmployeeStatus();
     this.itemsToolOfGrid = [
       {
         label: 'Import file',
@@ -231,67 +230,13 @@ export class TabLoaiBangLuongComponent implements OnInit {
         code: 'Import',
         icon: 'pi pi-download',
         command: () => {
-          this.exportExel();
+          // this.exportExel();
         }
       },
     ]
     this.load();
   }
-  employeeStatus = []
-  getEmployeeStatus() {
-    this.apiService.getEmployeeStatus().subscribe(results => {
-      if (results.status === 'success') {
-        this.employeeStatus = []
-        results.data.forEach(s => {
-          if (s.value != "3") {
-            this.employeeStatus.push({
-              label: s.name,
-              value: s.value
-            })
-          }
-        }
-        )
-        this.employeeStatus = [{ label: '---Chọn mã chỉ tiêu---', value: -1 }, ...this.employeeStatus];
-      }
-    })
-  }
- 
 
-  exportExel() {
-    this.spinner.show();
-    this.query.pageSize = 1000000;
-    const query = { ...this.query };
-    const queryParams = queryString.stringify(query);
-    this.apiService.getEmployeePage(queryParams).subscribe(
-      (results: any) => {
-        const dataExport = [];
-        let gridflexs = results.data.gridflexs;
-        let arrKey = gridflexs.map(elementName => elementName.columnField);
-
-        let dataList = results.data.dataList.data;
-        for (let elementValue of dataList) {
-          const data: any = {};
-          for (let elementName of gridflexs) {
-            if (arrKey.indexOf(elementName.columnField) > -1 && !elementName.isHide && elementName.columnField !== 'statusName') {
-              let valueColumn = elementValue[elementName.columnField];
-              if (elementName.columnField == 'status_name' || elementName.columnField == 'isContacted' || elementName.columnField == 'isProfileFull' || elementName.columnField == 'lockName') {
-                valueColumn = this.replaceHtmlToText(valueColumn);
-              }
-              data[elementName.columnCaption] = valueColumn || '';
-            }
-
-          }
-
-          dataExport.push(data);
-        }
-        this.fileService.exportAsExcelFile(dataExport, 'Danh sách hồ sơ nhân sự ' + new Date());
-
-        this.spinner.hide();
-      },
-      error => {
-        this.spinner.hide();
-      });
-  }
 
   replaceHtmlToText(string) {
     return string.replace(/(<([^>]+)>)/gi, "");
@@ -300,20 +245,33 @@ export class TabLoaiBangLuongComponent implements OnInit {
   loadjs = 0;
   heightGrid = 300
   ngAfterViewChecked(): void {
-    const a: any = document.querySelector(".header");
-    const b: any = document.querySelector(".sidebarBody");
-    const c: any = document.querySelector(".bread-filter");
-    const d: any = document.querySelector(".bread-crumb");
-    const e: any = document.querySelector(".paginator");
-    this.loadjs++
-    if (this.loadjs === 5) {
-      if (b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + d.clientHeight + e.clientHeight + 25;
-        this.heightGrid = window.innerHeight - totalHeight
-        this.changeDetector.detectChanges();
-      } else {
-        this.loadjs = 0;
-      }
+    // const a: any = document.querySelector(".header");
+    // const b: any = document.querySelector(".sidebarBody");
+    // const c: any = document.querySelector(".bread-filter");
+    // const d: any = document.querySelector(".bread-crumb");
+    // const e: any = document.querySelector(".paginator");
+    // this.loadjs++
+    // if (this.loadjs === 5) {
+    //   if (b && b.clientHeight) {
+    //     const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + d.clientHeight + e.clientHeight + 25;
+    //     this.heightGrid = window.innerHeight - totalHeight
+    //     this.changeDetector.detectChanges();
+    //   } else {
+    //     this.loadjs = 0;
+    //   }
+    // }
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if(changes['isNew'].currentValue){
+      this.isEdit = true;
+      this.getInfo()
+    }
+  }
+
+  hidePoup(event) {
+    if(event){
+      this.offIsNewPopup.emit(false)
     }
   }
 
