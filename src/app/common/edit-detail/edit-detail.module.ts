@@ -22,7 +22,7 @@ import { AppTypeCheckboxComponent, AppTypeCheckboxListComponent, AppTypeCheckbox
    AppTypeChips,
    AppTypeCurrencyComponent, AppTypeDatefulltimeComponent, AppTypeDatetimeComponent, AppTypeDropdownComponent, AppTypeLinkUrlDragComponent, AppTypeLinkUrlRadioListComponent,
     AppTypelistMch,
-    AppTypeMarkdownComponent, AppTypeMembers, AppTypeMultiSelectComponent, AppTypeNumberComponent, AppTypeSelectComponent, AppTypeSelectTreeComponent, AppTypeTextareaComponent, AppTypeTextComponent, AppTypeTimeonlyComponent } from './chid-edit-component';
+    AppTypeMarkdownComponent, AppTypeMembers, AppTypeMultiSelectComponent, AppTypeNumberComponent, AppTypeSelectComponent, AppTypeSelectTreeComponent, AppTypeSelectTreesComponent, AppTypeTextareaComponent, AppTypeTextComponent, AppTypeTimeonlyComponent } from './chid-edit-component';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { EditDetailComponent } from './edit-detail.component';
 import { SelectButtonModule } from 'primeng/selectbutton';
@@ -96,7 +96,8 @@ import {ChipsModule} from 'primeng/chips';
     AppTypeMembers,
     AppTypeChips,
     AppTypelistMch,
-    AppTypeSelectTreeComponent
+    AppTypeSelectTreeComponent,
+    AppTypeSelectTreesComponent
     // AppTypeTextComponent
   ],
   exports: [

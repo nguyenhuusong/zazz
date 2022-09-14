@@ -114,7 +114,7 @@ export class AppTypeSelectComponent implements OnInit {
   template: `  
      <div class="field-group select treeselect" [ngClass]="'valid'" > 
      <label class="text-nowrap label-tex" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
-      <p-treeSelect [appendTo]="'body'" [options]="element.options || []" [(ngModel)]="element.columnValue" [filterInputAutoFocus]="true"  selectionMode="single" [disabled]="element.isDisable" placeholder="Select Item" (onNodeSelect)="selectNode($event)" [required]="element && element.isRequire && element?.isVisiable && !element.isEmpty"></p-treeSelect>
+      <p-treeSelect [appendTo]="'body'" [name]="element.field_name" [filterInputAutoFocus]="true" [filter]="true" [options]="element.options || []" [(ngModel)]="element.columnValue" [filterInputAutoFocus]="true"  selectionMode="single" [disabled]="element.isDisable" placeholder="Select Item" (onNodeSelect)="selectNode($event)" [required]="element && element.isRequire && element?.isVisiable && !element.isEmpty"></p-treeSelect>
       <div *ngIf="element.isRequire && submit && !element.columnValue"
           class="alert-validation alert-danger">
           <div [hidden]="element.columnValue">
@@ -179,6 +179,92 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
   }
   ngOnChanges(event) {
     console.log('a:', cloneDeep(this.element));
+    if (event && event.element) {
+    }
+  }
+
+  getPositionList(orgId, element1) {
+    const queryParams = queryString.stringify({ orgId: orgId });
+    this.apiService.getPositionList(queryParams).subscribe(results => {
+      if (results.status === 'success') {
+        element1.options = cloneDeep(results.data).map(d => {
+          return { label: d.positionName, value: d.positionId }
+        });
+        element1.columnValue = element1.columnValue ? element1.columnValue : ''
+      }
+    })
+  }
+}
+
+
+// selectTrees nhiều
+
+@Component({
+  selector: 'app-type-selectTrees',
+  template: `  
+     <div class="field-group select treeselect" [ngClass]="'valid'" > 
+     <label class="text-nowrap label-tex" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
+     <p-treeSelect [appendTo]="'body'"
+       [options]="element.options || []" [(ngModel)]="element.columnValue"  [filterInputAutoFocus]="true" [filter]="true" [metaKeySelection]="false" selectionMode="checkbox"
+        [disabled]="element.isDisable" placeholder="Select Item" (onNodeSelect)="selectNode($event)"
+        ></p-treeSelect>
+      <div *ngIf="element.isRequire && submit && !element.columnValue"
+          class="alert-validation alert-danger">
+          <div [hidden]="element.columnValue">
+            Trường bắt buộc nhập!
+          </div>
+      </div>
+    </div> 
+                `,
+})
+export class AppTypeSelectTreesComponent implements OnInit, OnChanges {
+  @Input() element;
+  @Input() dataView;
+  @Input() modelFields;
+  @Input() submit = false;
+  constructor(
+    private apiService: ApiHrmService
+  ) { }
+  ngOnInit(): void {
+    checkIsObject
+  }
+
+  checkIsObject(data: any): boolean {
+    return checkIsObject(data);
+  }
+
+  selectNode(event) {
+    console.log("selectNode", this.element.columnValue)
+  }
+
+  getCompanyList(orgId, element1) {
+    const queryParams = queryString.stringify({ orgId: orgId });
+    this.apiService.getCompanyList(queryParams).subscribe(results => {
+      if (results.status === 'success') {
+        element1.options = cloneDeep(results.data).map(d => {
+          return { label: d.companyName, value: d.companyId }
+        });
+        element1.columnValue = element1.columnValue ? parseInt(element1.columnValue) : ''
+      }
+    })
+  }
+
+  onChangeTree(event, field_name, element) {
+    this.modelFields[field_name].error = this.modelFields[field_name].isRequire && !this.element.columnValue ? true : false;
+    this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
+    if (field_name === 'orgId') {
+      this.dataView.forEach(element => {
+        element.fields.forEach(async element1 => {
+          if (element1.field_name === 'companyId') {
+            this.getCompanyList(event.node.orgId, element1);
+          } else if (element1.field_name === 'positionId') {
+            this.getPositionList(event.node.orgId, element1);
+          }
+        });
+      });
+    }
+  }
+  ngOnChanges(event) {
     if (event && event.element) {
     }
   }
@@ -329,9 +415,12 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
         });
       });
     } else if (field_name === 'organizeId') {
+      console.log('fjdosfjiodifj')
       this.dataView.forEach(element => {
         element.fields.forEach(async element1 => {
-          if (element1.columnType === 'selectTree' && (element1.field_name === 'orgId' || element1.field_name === 'departmentId')) {
+          if ((element1.columnType === 'selectTree') && ((element1.field_name === 'orgId') || (element1.field_name === 'departmentId'))) {
+            this.getOrganizeTree(value, element1);
+          }else if (element1.columnType === 'selectTrees') {
             this.getOrganizeTree(value, element1);
           } else if (element1.field_name === 'jobId') {
             const positionTypeCd = await this.getValueByKey('positionCd');
@@ -340,6 +429,9 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
             this.getUserByPush(value, element1)
           } else if (element1.field_name === 'work_cd') {
             this.getWorkTime(element1, value)
+          }else if(element1.field_name === 'CompanyId') {
+            console.log('fjdosfjiodifj')
+            this.getCompaniesByOrganize(element1, value)
           }
         });
       });
@@ -412,6 +504,21 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
       if (results.status === 'success') {
         element1.options = cloneDeep(results.data).map(d => {
           return { label: d.work_times + '-' + d.work_name, value: d.work_cd }
+        });
+        element1.columnValue = element1.columnValue ? element1.columnValue : '';
+      }
+    })
+  }
+
+  getCompaniesByOrganize(element1, root_orgId) {
+    const queryParams = queryString.stringify({ organizeId: root_orgId, filter: '' });
+    this.apiService.getCompaniesByOrganize(queryParams).subscribe(results => {
+      if (results.status === 'success') {
+        element1.options = results.data.map(d => {
+          return {
+            label: d.companyName,
+            value: `${d.companyId}`
+          }
         });
         element1.columnValue = element1.columnValue ? element1.columnValue : '';
       }
@@ -528,7 +635,7 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
     this.apiService.getOrganizeTree(queryParams).subscribe(results => {
       if (results.status === 'success') {
         element1.options = results.data;
-        element1.columnValue = results.data[0];
+        // element1.columnValue = results.data[0];
         this.modelFields[element1.field_name].error = this.modelFields[element1.field_name].isRequire && !element1.columnValue ? true : false;
         this.modelFields[element1.field_name].message = this.modelFields[element1.field_name].error ? 'Trường bắt buộc nhập !' : ''
       }
@@ -1154,28 +1261,29 @@ export class AppTypeLinkUrlRadioListComponent implements OnInit {
           this.spinner.hide();
         });
       });
-    }
-    if (this.element.field_name === 'file_attach') {
-      this.spinner.show();
-      let fomrData = new FormData();
-      fomrData.append('file', event.target.files[0]);
-      this.apiService.uploadDrives(fomrData)
-        .subscribe(results => {
-          if (results.status === 'success') {
-            this.dataView.forEach(element => {
-              element.fields.forEach(async element1 => {
-                if (element1.field_name === 'link_view') {
-                  element1.columnValue = results.data
-                }
+      if (this.element.field_name === 'file_attach') {
+        this.spinner.show();
+        let fomrData = new FormData();
+        fomrData.append('file', event.target.files[0]);
+        this.apiService.uploadDrives(fomrData)
+          .subscribe(results => {
+            if (results.status === 'success') {
+              this.dataView.forEach(element => {
+                element.fields.forEach(async element1 => {
+                  if (element1.field_name === 'link_view') {
+                    element1.columnValue = results.data
+                  }
+                });
               });
-            });
-            this.spinner.hide();
-          } else {
-            this.spinner.hide();
-          }
-
-        })
+              this.spinner.hide();
+            } else {
+              this.spinner.hide();
+            }
+  
+          })
+      }
     }
+   
 
   }
 
@@ -1209,8 +1317,8 @@ export class AppTypeLinkUrlRadioListComponent implements OnInit {
                     <div class="file-uploaded" *ngIf="uploadedFiles.length">
                       <h3 class="uploaded-title">Đã upload xong</h3>
                       <ul>
-                          <li class="d-flex middle bet" *ngFor="let file of uploadedFiles">{{file.name}} 
-                            <span (click)="removeImage($event)">
+                          <li class="d-flex middle bet" *ngFor="let file of uploadedFiles; let i=index">{{file.name}} 
+                            <span (click)="removeImage(i)">
                                 <svg width="12" height="14" viewBox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                   <path d="M9.33366 5.33341V12.0001H2.66699V5.33341H9.33366ZM8.33366 0.666748H3.66699L3.00033 1.33341H0.666992V2.66675H11.3337V1.33341H9.00033L8.33366 0.666748ZM10.667 4.00008H1.33366V12.0001C1.33366 12.7334 1.93366 13.3334 2.66699 13.3334H9.33366C10.067 13.3334 10.667 12.7334 10.667 12.0001V4.00008Z" fill="#FF3B49"/>
                                   <path fill-rule="evenodd" clip-rule="evenodd" d="M4.00033 10.3334V6.66675H5.33366V10.3334H4.00033Z" fill="#FF3B49"/>
@@ -1240,21 +1348,29 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
     this.element.columnValue = this.element.columnValue ? this.element.columnValue.split(',') : []
     this.dataView.forEach(element => {
       element.fields.forEach(async element1 => {
-        if (element1.field_name === 'AttachName' && element1.columnValue) {
+        if (((element1.field_name === 'AttachName') || (element1.field_name === 'attached_name') || (element1.field_name === 'attachName')) && element1.columnValue ) {
           this.uploadedFiles.push({name: element1.columnValue});
         } 
       });
     });
   }
 
-  removeImage(event) {
-    this.downloadURL = ''
-    this.element.columnValue = '';
-    this.uploadedFiles = []
+  removeImage(index) {
+    this.element.columnValue.splice(index, 1);
+    this.uploadedFiles.splice(index, 1);
+    this.dataView.forEach(element => {
+      element.fields.forEach(async element1 => {
+        if ((element1.field_name === 'AttachName') || (element1.field_name === 'attached_name')|| (element1.field_name === 'attachName')) {
+          element1.columnValue = this.uploadedFiles.toString();
+        }else if(element1.field_name ===  'link_view') {
+          element1.columnValue.splice(index, 1);
+        } 
+      });
+    });
   }
   
   uploadHandler(event) {
-       this.uploadedFiles = []
+      //  this.uploadedFiles = []
       this.spinner.show();
       for(let index in event.currentFiles) {
         const getDAte = new Date();
@@ -1269,9 +1385,9 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
             this.spinner.hide();
             this.dataView.forEach(element => {
               element.fields.forEach(async element1 => {
-                if (element1.field_name === 'AttachName') {
-                  element1.columnValue = event.currentFiles[index].name;
+                if ((element1.field_name === 'AttachName') || (element1.field_name === 'attached_name') || (element1.field_name === 'attachName')) {
                   this.uploadedFiles.push({name: event.currentFiles[index].name});
+                  element1.columnValue = this.uploadedFiles.map(d => d.name).toString();
                 } 
               });
             });
@@ -1279,6 +1395,28 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
             this.spinner.hide();
           });
         });
+        if (this.element.field_name === 'file_attach') {
+          this.spinner.show();
+          let fomrData = new FormData();
+          fomrData.append('file', event.currentFiles[index]);
+          this.apiService.uploadDrives(fomrData)
+            .subscribe(results => {
+              if (results.status === 'success') {
+                this.dataView.forEach(element => {
+                  element.fields.forEach(async element1 => {
+                    if (element1.field_name === 'link_view') {
+                      element1.columnValue.push(results.data)
+                    }
+                  });
+                });
+                this.spinner.hide();
+              } else {
+                this.spinner.hide();
+              }
+    
+            })
+        }
+       
       }
   }
 }
@@ -1290,10 +1428,10 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
                     <div class="in d-flex bet middle">
                       <ul class="members-filed">
                         <li *ngFor="let user of selectMembers; let i = index" (click)="activeName(i)">
-                          <span>
+                          <span class="avatar-radius">
                           <img src="{{user.avatarUrl}}">
                           </span>
-                          <span *ngIf="user.isCheck">{{user.fullName}}</span>
+                          <span >{{user.fullName}}</span>
                         </li>
                         <li *ngIf="selectMembers.length > 0"><span class="more-member">+12</span></li>
                       </ul>
@@ -1319,7 +1457,7 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
                       </svg>
                     </div>
                     <div class="room" *ngFor="let member of element.options; let i = index">
-                     <input id="president_{{member.group}}_{{i}}" type="checkbox" style="margin-right: 5px" name="{{member.group}}_{{i}}" (change)="handleChangeParent(member, i)" [checked]="member?.isCheck" /> {{member.group}} ({{member.child.length}})
+                     <div class="head"><input id="president_{{member.group}}_{{i}}" type="checkbox" style="margin-right: 5px" name="{{member.group}}_{{i}}" (change)="handleChangeParent(member, i)" [checked]="member?.isCheck" /> <h3 class="title">{{member.group}} ({{member.child.length}})</h3></div>
                       <div class="item d-flex middle gap16" *ngFor="let user of member.child; let idx = index">
                       <input id="president_{{user.userId}}_{{idx}}" type="checkbox" style="margin-right: 5px" name="president_{{user.userId}}_{{idx}}" (change)="handleChangeChild(user, i, member, idx)" [checked]="user?.isCheck" />
                         <div class="img" *ngIf="!user.avatarUrl"><img src="../../../assets/images/avatar.jpg"></div>
@@ -1328,10 +1466,12 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
                       </div>
                     </div>
                   </div>
-                <div class="d-flex">
-                <p-button styleClass="p-button-sm p-button-secondary" label="Bỏ qua" icon="pi pi-times-circle"></p-button>&nbsp;
-                <p-button (click)="xacNhan()">Xác nhận</p-button>
-                </div>
+                  <ng-template pTemplate="footer">
+                    <div class="d-flex end">
+                      <p-button styleClass="p-button-sm p-button-secondary" label="Bỏ qua" icon="pi pi-times-circle"></p-button>&nbsp;
+                      <p-button (click)="xacNhan()">Xác nhận</p-button>
+                    </div>
+                </ng-template>
                   </p-dialog>
                   `,
   })
@@ -1350,7 +1490,7 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
     ngOnInit(): void {
       this.modelFields[this.element.field_name].error = false;
       this.selectMembers = [];
-      const dataNew = this.element.columnValue.split(',');
+      const dataNew = this.element.columnValue ?  this.element.columnValue.split(',') : [];
       for(let item of this.element.options) {
         for(let item1 of item.child) {
           if(dataNew.indexOf(item1.userId) > -1) {

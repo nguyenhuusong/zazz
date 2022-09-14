@@ -97,7 +97,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
     this.dataView = [];
     this.dataViewNew.forEach(element => {
       element.fields.forEach(async element1 => {
-        if (element1.columnType === 'markdown' || element1.columnType === 'linkUrl') {
+        if ((element1.columnType === 'markdown') || (element1.columnType === 'linkUrl') || (element1.columnType === 'linkUrlDrag')) {
           const dataValidation = {
             key: element1.field_name,
             isRequire: false,
@@ -114,13 +114,13 @@ export class EditDetailComponent implements OnInit, OnChanges {
           }
           this.modelFields[element1.field_name] = dataValidation
         }
-        if (element1.columnType === 'select' || element1.columnType === 'dropdown' || element1.columnType === 'selectTree'
+        if (element1.columnType === 'select' || element1.columnType === 'dropdown' || element1.columnType === 'selectTree' || element1.columnType === 'selectTrees'
           || element1.columnType === 'checkboxList' || element1.columnType === 'checkboxradiolist'
           || element1.columnType === 'multiSelect') {
           if (element1.field_name === 'project_cd') {
-          } else if (element1.field_name === 'orgId' || element1.field_name === 'departmentId') {
-            if (element1.columnType === 'selectTree') {
-              element1.isVisiable = false;
+          } else if ((element1.field_name === 'orgId') || (element1.field_name === 'departmentId') || (element1.field_name === 'org_Id')) {
+            if ((element1.columnType === 'selectTree') || (element1.columnType === 'selectTrees')) {
+              // element1.isVisiable = false;
               const root_orgId = this.getValueByKey('organizeId');
               this.getOrganizeTree(root_orgId, element1);
             } else {
@@ -172,8 +172,11 @@ export class EditDetailComponent implements OnInit, OnChanges {
             const root_orgId = this.getValueByKey('organizeId');
             const positionTypeCd = this.getValueByKey('positionCd');
             this.getJobTitles(root_orgId, element1, positionTypeCd);
-          } else if (element1.field_name === 'organizeId' || element1.field_name === 'CompanyId') {
+          } else if (element1.field_name === 'organizeId') {
             this.getOrgRoots(element1);
+          } else if (element1.field_name === 'CompanyId') {
+            const root_orgId = this.getValueByKey('organizeId');
+            this.getCompaniesByOrganize(element1, root_orgId);
           } else if (element1.field_name === 'EmployeeId') {
             const org_cds = this.getValueByKey('CompanyId');
             this.getUserByPushByEmpId(org_cds, element1);
@@ -238,6 +241,10 @@ export class EditDetailComponent implements OnInit, OnChanges {
           }
         }else if( element1.columnType === 'members') {
           this.getHrmMeetingPerson(element1);
+        }else if( element1.columnType === 'linkUrlDrag') {
+          if (element1.field_name === 'link_view') {
+            element1.columnValue = element1.columnValue ? element1.columnValue.split(',') : null
+          }
         }else if( element1.columnType === 'chips') {
           element1.columnValue = element1.columnValue ? element1.columnValue.split(',') : [];
         }
@@ -305,6 +312,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
         }
     }
   }
+  
   getLeaveReasons(element1) {
     this.apiServiceCore.getLeaveReasons().subscribe(results => {
       if (results.status === 'success') {
@@ -638,6 +646,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
       }
     })
   }
+
   getOrgRoots(element1) {
     const queryParams = queryString.stringify({ filter: '' });
     this.apiService.getOrganizations(queryParams).subscribe(results => {
@@ -649,6 +658,21 @@ export class EditDetailComponent implements OnInit, OnChanges {
           }
         });
         // element1.columnValue = element1.columnValue ? element1.columnValue.toLowerCase() : ''
+      }
+    })
+  }
+
+  getCompaniesByOrganize(element1, root_orgId) {
+    const queryParams = queryString.stringify({ organizeId: root_orgId, filter: '' });
+    this.apiService.getCompaniesByOrganize(queryParams).subscribe(results => {
+      if (results.status === 'success') {
+        element1.options = results.data.map(d => {
+          return {
+            label: d.companyName,
+            value: `${d.companyId}`
+          }
+        });
+        element1.columnValue = element1.columnValue ? element1.columnValue.toLowerCase() : ''
       }
     })
   }
@@ -832,22 +856,45 @@ export class EditDetailComponent implements OnInit, OnChanges {
     })
   }
 
+  findNodeInTree1(list, ids, element1, results): any {
+    for (let i = 0; i < list.length; i++) {
+      if (list[i].children && list[i].children.length) {
+        this.findNodeInTree1(list[i].children, ids, element1, results);
+      }
+      if (ids.includes(list[i].data)) {
+        results.push(list[i]);
+      }
+    }
+  }
+
   getOrganizeTree(orgId, element1) {
     const queryParams = queryString.stringify({ parentId: orgId });
     this.apiService.getOrganizeTree(queryParams).subscribe(results => {
       if (results.status === 'success') {
         element1.options = results.data;
         if (element1.columnValue) {
-          const queryParams1 = queryString.stringify({ parentId: element1.columnValue });
-          this.apiService.getOrganizeTree(queryParams1).subscribe(results => {
-            if (results.status === 'success' && results.data.length > 0) {
-              element1.columnValue = results.data.length > 0 ? results.data[0] : null;
-              element1.isVisiable = true;
-            } else {
-              element1.columnValue = null;
-              element1.isVisiable = true;
-            }
-          })
+          if(element1.columnType === 'selectTrees' && element1.field_name === 'org_Id') {
+            const ids = element1.columnValue ? element1.columnValue.split(',') : []
+              const results = [];
+              this.findNodeInTree1(element1.options, ids, element1, results);
+              element1.columnValue = results;
+            }else {
+              this.findNodeInTree(element1.options, element1.columnValue, element1);
+
+            // const queryParams1 = queryString.stringify({ parentId: element1.columnValue });
+            // // this.apiService.getOrganizeTree(queryParams1).subscribe(results => {
+            // //   if (results.status === 'success' && results.data.length > 0) {
+            // //     element1.columnValue = results.data.length > 0 ? results.data[0] : null;
+            // //     element1.isVisiable = true;
+            // //   } else {
+            // //     element1.columnValue = null;
+            // //     element1.isVisiable = true;
+            // //   }
+            // // })
+          }
+
+
+         
         } else {
           element1.columnValue = null;
           element1.isVisiable = true;
@@ -945,6 +992,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
       this.submit = true;
       for (let item in this.modelFields) {
         if (this.modelFields[item].error) {
+           console.log(this.modelFields[item])
+
           this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Dữ liệu thiếu !' });
           return
         }
@@ -990,6 +1039,9 @@ export class EditDetailComponent implements OnInit, OnChanges {
           data.columnValue = typeof data.columnValue === 'string' ? `${data.columnValue}:00` : moment(data.columnValue).format('HH:mm:ss');
         } else if (data.columnType === 'selectTree') {
           data.columnValue = data.columnValue ? data.columnValue.data : null;
+          delete data.options;
+        }else if (data.columnType === 'selectTrees') {
+          data.columnValue =data.columnValue.length > 0 ? data.columnValue.map(d => d.orgId).toString() : null;
           delete data.options;
         } else if (data.columnType === 'currency') {
           data.columnValue = numeral(data.columnValue).value()

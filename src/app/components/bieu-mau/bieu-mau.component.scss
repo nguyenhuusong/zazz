@@ -1,0 +1,21 @@
+:host::ng-deep{
+    p-dialog{
+        .field-group{
+            &.checkbox{
+                display: flex;
+                flex-direction: row-reverse;
+                justify-content: start;
+                align-items: center;
+                min-height: 0px;
+                gap: 18px;
+                .p-checkbox{
+                    position: static;
+                }
+                label{
+                    position: static;
+                    margin-bottom: 0px;
+                }
+            }
+        }
+    }
+}

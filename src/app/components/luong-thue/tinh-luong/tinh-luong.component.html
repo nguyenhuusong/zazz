@@ -4,14 +4,21 @@
             <div class="d-flex bet bottom">
                  <app-hrm-breadcrumb [displayTitle]="true" [items]="items" [title]="'Tính lương'"></app-hrm-breadcrumb>
                  <div class="d-flex bet mid bottom gap-12">
-                    <p-button styleClass="p-button-sm height-56" >
+                    <p-button styleClass="p-button-sm height-56 btn-dele" >
                         <svg width="16" height="18" viewBox="0 0 16 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M4.50938 0.666748H15.5V14.2943H11.8929V17.3334H0.5V4.11827H4.50938V0.666748ZM6.17604 4.11827H11.8929V12.6277H13.8333V2.33341H6.17604V4.11827ZM2.16667 5.78493V15.6667H10.2263V5.78493H2.16667Z" fill="#F6FBFF"/>
                         </svg>
                         &nbsp;
                         Nhân bản
                     </p-button>
-                    <p-button styleClass="p-button-sm height-56" >
+                    <p-button styleClass="p-button-sm height-56 btn-dele" >
+                        <svg width="18" height="15" viewBox="0 0 18 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M2.26223 2.90476L12.1908 7.04762L2.25429 5.46032L2.26223 2.90476ZM12.1829 8.23809L2.25429 12.381V9.8254L12.1829 8.23809ZM0.674929 0.5L0.666992 6.84921L7.0162 7.64286L0.666992 8.43651L0.674929 14.7857L17.3337 7.64286L0.674929 0.5Z" fill="#F6FBFF"/>
+                        </svg>
+                        &nbsp;
+                        Gửi bảng lương
+                    </p-button>
+                    <p-button (click)="addNew()" styleClass="p-button-sm height-56" >
                         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M13.6668 8.08835H8.0886V13.6666H5.91173V8.08835H0.333496V5.91148H5.91173V0.333252H8.0886V5.91148H13.6668V8.08835Z" fill="#F6FBFF"/>
                         </svg>
@@ -21,8 +28,8 @@
                     <div class="select-ori">
                         <div class="name">
                             <div class="field-group select mb-0 valid height-56" [ngClass]="">
-                                <p-dropdown panelStyleClass="select-ori-panel" placeholder="Chọn tổ chức" appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
-                                    [options]="organs" [(ngModel)]="query.orgId" name="orgId" (onChange)="find()">
+                                <p-dropdown (onChange)="changeOrigin()" panelStyleClass="select-ori-panel" placeholder="Chọn tổ chức" appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
+                                    [options]="organs" [(ngModel)]="orgId" name="orgId" >
                                     <ng-template let-item pTemplate="selectedItem">
                                         <span style="vertical-align:middle;">{{item.label}}</span>
                                     </ng-template>
@@ -51,18 +58,18 @@
             </div>
         </section>
     <section>
-        <p-tabView>
-            <p-tabPanel header="Bảng Lương">
+        <p-tabView (onChange)="handleChange($event.index)" [(activeIndex)]="tabIndex">
+            <p-tabPanel header="Bảng Lương" >
                <app-tab-bang-luong></app-tab-bang-luong>
             </p-tabPanel>
             <p-tabPanel header="Thiết lâp tham số">
                 <app-tab-thiet-lap-tham-so></app-tab-thiet-lap-tham-so>
             </p-tabPanel>
             <p-tabPanel header="Thành phần lương">
-               <app-tab-thanh-phan-luong></app-tab-thanh-phan-luong>
+               <app-tab-thanh-phan-luong [organizeId]="orgId" *ngIf="tabIndex === 2"></app-tab-thanh-phan-luong>
             </p-tabPanel>
             <p-tabPanel header="Loại bảng lương">
-                <app-tab-loai-bang-luong></app-tab-loai-bang-luong>
+                <app-tab-loai-bang-luong [organizeId]="orgId" (offIsNewPopup)="getIsNewPopup($event)" [isNew]="isNew" *ngIf="tabIndex === 3"></app-tab-loai-bang-luong>
             </p-tabPanel>
         </p-tabView>
     </section>
@@ -70,3 +77,18 @@
 
 <!-- <p-menu [model]="itemsToolOfGrid" [appendTo]="'body'" [popup]="true"
 styleClass="menu-option-right" #menuButton></p-menu> -->
+
+
+<!-- <p-dialog header="{{ titleAddnew }}" 
+        [(visible)]="isNew" 
+        [modal]="true" [style]="{width: '600px'}"
+        [draggable]="false" [resizable]="false" [focusTrap]="false" >
+    <app-edit-detail
+        *ngIf="listViews.length> 0"
+        [detail]="detailInfo"
+        [manhinh]="'Edit'"
+        [dataView]="listViews"
+        (callback)="handleSave($event)"
+        (callbackcancel)="quaylai($event)"
+    ></app-edit-detail>
+</p-dialog> -->
