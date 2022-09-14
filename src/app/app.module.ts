@@ -58,6 +58,7 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { ListGridAngularModule } from './common/list-grid-angular/list-grid-angular.module';
 import { OrganizationChartModule } from 'primeng/organizationchart';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { FullCalendarModule } from '@fullcalendar/angular';
 const APP_CONTAINERS = [DefaultLayoutComponent];
 @NgModule({
     declarations: [
@@ -115,8 +116,8 @@ const APP_CONTAINERS = [DefaultLayoutComponent];
         CalendarModule,
         AutoCompleteModule,
         CardModule,
-        TimelineModule
-
+        TimelineModule,
+        FullCalendarModule
     ],
     entryComponents: [
         ExcelComponent

@@ -70,7 +70,18 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { ConfigGridTableFormModule } from 'src/app/common/config-grid-table-form/config-grid-table-form.module';
 import { ChiTietThietLapWifiComponent } from 'src/app/components/thiet-lap-wifi/chi-tiet-thiet-lap-wifi/chi-tiet-thiet-lap-wifi.component';
 import { ThietLapWifiComponent } from 'src/app/components/thiet-lap-wifi/thiet-lap-wifi.component';
-
+import { ChonLichHopComponent } from 'src/app/components/cai-dat-lich-hop/chon-lich-hop/chon-lich-hop.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
+import interactionPlugin from '@fullcalendar/interaction'; // a plugin!
+import timeGridPlugin from '@fullcalendar/timegrid';
+import { ChonThoiGianComponent } from 'src/app/components/cai-dat-lich-hop/chon-thoi-gian/chon-thoi-gian.component';
+FullCalendarModule.registerPlugins([
+  // register FullCalendar plugins
+  dayGridPlugin,
+  interactionPlugin,
+  timeGridPlugin
+]);
 @NgModule({
   imports: [
     MessagesModule,
@@ -116,6 +127,7 @@ import { ThietLapWifiComponent } from 'src/app/components/thiet-lap-wifi/thiet-l
       ButtonRendererComponent,
       ButtonRendererComponent1
     ]),
+    FullCalendarModule
   ],
 
   declarations: [
@@ -148,7 +160,9 @@ import { ThietLapWifiComponent } from 'src/app/components/thiet-lap-wifi/thiet-l
     NgayNghiLeComponent,
     ChiTietNgayNghiComponent,
     ThietLapWifiComponent,
-    ChiTietThietLapWifiComponent
+    ChiTietThietLapWifiComponent,
+    ChonLichHopComponent,
+    ChonThoiGianComponent
   ],
   providers: []
 })

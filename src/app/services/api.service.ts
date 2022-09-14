@@ -191,7 +191,8 @@ export class ApiService {
   setFormViewInfo(queryParams): Observable<any> {
     return this.http.post(`${apiHrmBase}/api/v1/config/SetFormViewInfo`, queryParams, this.options);
   }
-  
 
- 
+  getMeetRoomForCheck(queryParams): Observable<any> {
+    return this.http.get(`${apiHrmBase}/api/v2/meeting/GetMeetRoomForCheck?` + queryParams, this.options);
+  }
 }

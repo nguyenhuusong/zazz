@@ -1,0 +1,30 @@
+<form class="grid" (ngSubmit)="handleSave()" [formGroup]="chooseTimeForm">
+    <div class="form-group col-12">
+        <label>Ngày bắt đầu <span class="text-danger"> *</span></label>
+        <p-calendar appendTo="body" [showIcon]="true" yearRange="2022:2805" [style]="{'width': '100%'}" id="startDate" formControlName="startDate" name="startDate" [required] = "true" ></p-calendar>
+        <div *ngIf="(chooseTimeFormControl?.startDate?.touched || submitted) && chooseTimeFormControl?.startDate?.errors?.required" class="text-danger">
+            Chọn Ngày bắt đầu
+        </div>
+    </div>
+    <div class="form-group col-6">
+        <label>Giờ bắt đầu <span class="text-danger"> *</span></label>
+        <p-calendar [timeOnly]="true" inputId="timeonly" appendTo="body" [showIcon]="true" icon="pi pi-clock" id="startTime" formControlName="startTime" name="startTime" [required] = "true" ></p-calendar>
+        <div *ngIf="(chooseTimeFormControl?.startTime?.touched || submitted) && chooseTimeFormControl?.startTime?.errors?.required" class="text-danger">
+            Chọn Giờ bắt đầu
+        </div>
+    </div>
+    <div class="form-group col-6">
+        <label>Giờ kết thúc <span class="text-danger"> *</span></label>
+        <p-calendar [timeOnly]="true" inputId="timeonly" appendTo="body" [showIcon]="true" icon="pi pi-clock" id="endTime" formControlName="endTime" name="endTime" [required] = "true" ></p-calendar>
+        <div *ngIf="(chooseTimeFormControl?.endTime?.touched || submitted) && chooseTimeFormControl?.endTime?.errors?.required" class="text-danger">
+            Chọn Giờ kết thúc
+        </div>
+    </div>
+    <div class="col-12">
+        <i class="pi pi-clock"></i> Thời gian cuộc họp 2 tiếng
+    </div>
+    <div class="col-12 text-right">
+        <button pButton pRipple type="button" label="Bỏ qua" icon = "pi pi-times-circle" class="p-button-outlined mr-2"></button>
+        <button pButton pRipple type="button" label="Xác nhận" icon = "pi pi-check-circle" type="submit"></button>
+    </div>
+</form>

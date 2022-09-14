@@ -1,11 +1,9 @@
 
-import { cloneDeep } from 'lodash';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { MessageService, ConfirmationService } from 'primeng/api';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges, OnDestroy } from '@angular/core';
+import { cloneDeep } from 'lodash';
+import { MessageService } from 'primeng/api';
 import { Subject, takeUntil } from 'rxjs';
-import { ApiService } from 'src/app/services/api.service';
 import { AgGridFn } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 
@@ -19,12 +17,11 @@ export class ChiTietLichHopComponent implements OnInit, OnDestroy {
   manhinh = 'View';
   indexTab = 0;
   optionsButtonsView = [{ label: 'Sửa', value: 'Edit' }, { label: 'Quay lại', value: 'Back' }];
+  showChooseCalander = false;
   constructor(
     private apiService: ApiHrmService,
     private activatedRoute: ActivatedRoute,
     private messageService: MessageService,
-    private confirmationService: ConfirmationService,
-    private spinner: NgxSpinnerService,
     private router: Router
   ) { }
   displayScreemForm = false;
@@ -168,7 +165,6 @@ export class ChiTietLichHopComponent implements OnInit, OnDestroy {
       this.manhinh = 'Edit';
       this.onBack();
     }
- 
   }
 
   handleAddMember(): void {
