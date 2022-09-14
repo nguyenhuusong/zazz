@@ -61,7 +61,9 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
   ngOnInit(): void {
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
-      { label: 'Chính sách' },
+      { label: 'Hoạt động' },
+      { label: '...' },
+      { label: 'Tài liệu' },
       { label: 'Thiết lập loại tài liệu' },
     ];
     this.getAgencyOrganizeMap();
@@ -456,5 +458,6 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
   handleCallbackForm() {
     this.load();
     this.addNewPopup = false;
+    console.log('fdjosfjidso')
   }
 }

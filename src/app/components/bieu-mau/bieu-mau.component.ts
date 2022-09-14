@@ -65,7 +65,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
   ngOnInit(): void {
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
-      { label: 'Chính sách' },
+      { label: 'Tài liệu' },
       { label: this.dataRouter.title },
     ];
     this.getAgencyOrganizeMap();
