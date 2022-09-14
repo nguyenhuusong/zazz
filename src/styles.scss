@@ -3501,12 +3501,12 @@ div.p-organizationchart {
             .p-dropdown-label{
                 border: none;
                 padding-bottom: 10px;
-                padding-top: 10px;
                 min-height: 0px;
                 padding-right: 0px;
                 padding-right: 17px;
                 padding-left: 0px;
                 color: #212633;
+                padding-top: 14px;
             }
         }
     }
@@ -3960,6 +3960,15 @@ p-button{
         }
         .ag-row-odd{
             background: #F3F4F6;
+        }
+        .ag-center-cols-container{
+            .ag-row{
+                &:last-child{
+                    .ag-cell{
+                        border-bottom: 0.5px solid #D1D4DC !important;
+                    }
+                }
+            }
         }
     }
 }
@@ -4688,4 +4697,7 @@ p-dialog button{
 }
 .gap16{
     gap: 16px;
+}
+.gap12{
+    gap: 12px;
 }
