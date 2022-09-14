@@ -97,7 +97,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
     this.dataView = [];
     this.dataViewNew.forEach(element => {
       element.fields.forEach(async element1 => {
-        if (element1.columnType === 'markdown' || element1.columnType === 'linkUrl') {
+        if ((element1.columnType === 'markdown') || (element1.columnType === 'linkUrl') || (element1.columnType === 'linkUrlDrag')) {
           const dataValidation = {
             key: element1.field_name,
             isRequire: false,
@@ -114,12 +114,12 @@ export class EditDetailComponent implements OnInit, OnChanges {
           }
           this.modelFields[element1.field_name] = dataValidation
         }
-        if (element1.columnType === 'select' || element1.columnType === 'dropdown' || element1.columnType === 'selectTree'
+        if (element1.columnType === 'select' || element1.columnType === 'dropdown' || element1.columnType === 'selectTree' || element1.columnType === 'selectTrees'
           || element1.columnType === 'checkboxList' || element1.columnType === 'checkboxradiolist'
           || element1.columnType === 'multiSelect') {
           if (element1.field_name === 'project_cd') {
           } else if (element1.field_name === 'orgId' || element1.field_name === 'departmentId') {
-            if (element1.columnType === 'selectTree') {
+            if ((element1.columnType === 'selectTree') || (element1.columnType === 'selectTrees')) {
               element1.isVisiable = false;
               const root_orgId = this.getValueByKey('organizeId');
               this.getOrganizeTree(root_orgId, element1);
@@ -238,6 +238,10 @@ export class EditDetailComponent implements OnInit, OnChanges {
           }
         }else if( element1.columnType === 'members') {
           this.getHrmMeetingPerson(element1);
+        }else if( element1.columnType === 'linkUrlDrag') {
+          if (element1.field_name === 'link_view') {
+            element1.columnValue = element1.columnValue ? element1.columnValue.split(',') : []
+          }
         }else if( element1.columnType === 'chips') {
           element1.columnValue = element1.columnValue ? element1.columnValue.split(',') : [];
         }
@@ -945,6 +949,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
       this.submit = true;
       for (let item in this.modelFields) {
         if (this.modelFields[item].error) {
+           console.log(this.modelFields[item])
+
           this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Dữ liệu thiếu !' });
           return
         }
@@ -990,6 +996,9 @@ export class EditDetailComponent implements OnInit, OnChanges {
           data.columnValue = typeof data.columnValue === 'string' ? `${data.columnValue}:00` : moment(data.columnValue).format('HH:mm:ss');
         } else if (data.columnType === 'selectTree') {
           data.columnValue = data.columnValue ? data.columnValue.data : null;
+          delete data.options;
+        }else if (data.columnType === 'selectTrees') {
+          data.columnValue =data.columnValue.length > 0 ? data.columnValue.map(d => d.orgId).toString() : null;
           delete data.options;
         } else if (data.columnType === 'currency') {
           data.columnValue = numeral(data.columnValue).value()
