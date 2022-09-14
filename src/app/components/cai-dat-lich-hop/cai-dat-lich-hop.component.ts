@@ -72,8 +72,8 @@ export class CaiDatLichHopComponent implements OnInit {
   ngOnInit(): void {
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
-      { label: 'Cài đặt' },
-      { label: 'Danh sách quản lý lịch họp' },
+      { label: 'Hoạt động' },
+      { label: 'Lịch họp' },
     ];
     this.load();
   }
