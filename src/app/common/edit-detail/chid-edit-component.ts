@@ -114,7 +114,7 @@ export class AppTypeSelectComponent implements OnInit {
   template: `  
      <div class="field-group select treeselect" [ngClass]="'valid'" > 
      <label class="text-nowrap label-tex" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
-      <p-treeSelect [appendTo]="'body'" [name]="element.field_name" [options]="element.options || []" [(ngModel)]="element.columnValue" [filterInputAutoFocus]="true"  selectionMode="single" [disabled]="element.isDisable" placeholder="Select Item" (onNodeSelect)="selectNode($event)" [required]="element && element.isRequire && element?.isVisiable && !element.isEmpty"></p-treeSelect>
+      <p-treeSelect [appendTo]="'body'" [name]="element.field_name" [filterInputAutoFocus]="true" [filter]="true" [options]="element.options || []" [(ngModel)]="element.columnValue" [filterInputAutoFocus]="true"  selectionMode="single" [disabled]="element.isDisable" placeholder="Select Item" (onNodeSelect)="selectNode($event)" [required]="element && element.isRequire && element?.isVisiable && !element.isEmpty"></p-treeSelect>
       <div *ngIf="element.isRequire && submit && !element.columnValue"
           class="alert-validation alert-danger">
           <div [hidden]="element.columnValue">
@@ -204,7 +204,7 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
   template: `  
      <div class="field-group select treeselect" [ngClass]="'valid'" > 
      <label class="text-nowrap label-tex" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
-     <p-treeSelect
+     <p-treeSelect [appendTo]="'body'"
        [options]="element.options || []" [(ngModel)]="element.columnValue"  [filterInputAutoFocus]="true" [filter]="true" [metaKeySelection]="false" selectionMode="checkbox"
         [disabled]="element.isDisable" placeholder="Select Item" (onNodeSelect)="selectNode($event)"
         ></p-treeSelect>
@@ -226,14 +226,6 @@ export class AppTypeSelectTreesComponent implements OnInit, OnChanges {
     private apiService: ApiHrmService
   ) { }
   ngOnInit(): void {
-    this.element.columnValue = this.element.columnValue ? this.element.columnValue : [];
-    console.log(this.element.columnValue)
-    // if (this.element.options && this.element.options.length > 0) {
-    //   this.element.options = this.element.options.forEach(element => {
-    //     element.value = parseInt(element.value);
-    //   })
-    // }
-    console.log('element', this.element)
     checkIsObject
   }
 

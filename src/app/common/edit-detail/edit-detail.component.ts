@@ -118,9 +118,9 @@ export class EditDetailComponent implements OnInit, OnChanges {
           || element1.columnType === 'checkboxList' || element1.columnType === 'checkboxradiolist'
           || element1.columnType === 'multiSelect') {
           if (element1.field_name === 'project_cd') {
-          } else if (element1.field_name === 'orgId' || element1.field_name === 'departmentId') {
+          } else if ((element1.field_name === 'orgId') || (element1.field_name === 'departmentId') || (element1.field_name === 'org_Id')) {
             if ((element1.columnType === 'selectTree') || (element1.columnType === 'selectTrees')) {
-              element1.isVisiable = false;
+              // element1.isVisiable = false;
               const root_orgId = this.getValueByKey('organizeId');
               this.getOrganizeTree(root_orgId, element1);
             } else {
@@ -240,7 +240,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
           this.getHrmMeetingPerson(element1);
         }else if( element1.columnType === 'linkUrlDrag') {
           if (element1.field_name === 'link_view') {
-            element1.columnValue = element1.columnValue ? element1.columnValue.split(',') : []
+            element1.columnValue = element1.columnValue ? element1.columnValue.split(',') : null
           }
         }else if( element1.columnType === 'chips') {
           element1.columnValue = element1.columnValue ? element1.columnValue.split(',') : [];
@@ -309,6 +309,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
         }
     }
   }
+  
   getLeaveReasons(element1) {
     this.apiServiceCore.getLeaveReasons().subscribe(results => {
       if (results.status === 'success') {
@@ -836,22 +837,45 @@ export class EditDetailComponent implements OnInit, OnChanges {
     })
   }
 
+  findNodeInTree1(list, ids, element1, results): any {
+    for (let i = 0; i < list.length; i++) {
+      if (list[i].children && list[i].children.length) {
+        this.findNodeInTree1(list[i].children, ids, element1, results);
+      }
+      if (ids.includes(list[i].data)) {
+        results.push(list[i]);
+      }
+    }
+  }
+
   getOrganizeTree(orgId, element1) {
     const queryParams = queryString.stringify({ parentId: orgId });
     this.apiService.getOrganizeTree(queryParams).subscribe(results => {
       if (results.status === 'success') {
         element1.options = results.data;
         if (element1.columnValue) {
-          const queryParams1 = queryString.stringify({ parentId: element1.columnValue });
-          this.apiService.getOrganizeTree(queryParams1).subscribe(results => {
-            if (results.status === 'success' && results.data.length > 0) {
-              element1.columnValue = results.data.length > 0 ? results.data[0] : null;
-              element1.isVisiable = true;
-            } else {
-              element1.columnValue = null;
-              element1.isVisiable = true;
-            }
-          })
+          if(element1.columnType === 'selectTrees' && element1.field_name === 'org_Id') {
+            const ids = element1.columnValue ? element1.columnValue.split(',') : []
+              const results = [];
+              this.findNodeInTree1(element1.options, ids, element1, results);
+              element1.columnValue = results;
+            }else {
+              this.findNodeInTree(element1.options, element1.columnValue, element1);
+
+            // const queryParams1 = queryString.stringify({ parentId: element1.columnValue });
+            // // this.apiService.getOrganizeTree(queryParams1).subscribe(results => {
+            // //   if (results.status === 'success' && results.data.length > 0) {
+            // //     element1.columnValue = results.data.length > 0 ? results.data[0] : null;
+            // //     element1.isVisiable = true;
+            // //   } else {
+            // //     element1.columnValue = null;
+            // //     element1.isVisiable = true;
+            // //   }
+            // // })
+          }
+
+
+         
         } else {
           element1.columnValue = null;
           element1.isVisiable = true;
