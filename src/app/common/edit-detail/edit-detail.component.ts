@@ -172,8 +172,11 @@ export class EditDetailComponent implements OnInit, OnChanges {
             const root_orgId = this.getValueByKey('organizeId');
             const positionTypeCd = this.getValueByKey('positionCd');
             this.getJobTitles(root_orgId, element1, positionTypeCd);
-          } else if (element1.field_name === 'organizeId' || element1.field_name === 'CompanyId') {
+          } else if (element1.field_name === 'organizeId') {
             this.getOrgRoots(element1);
+          } else if (element1.field_name === 'CompanyId') {
+            const root_orgId = this.getValueByKey('organizeId');
+            this.getCompaniesByOrganize(element1, root_orgId);
           } else if (element1.field_name === 'EmployeeId') {
             const org_cds = this.getValueByKey('CompanyId');
             this.getUserByPushByEmpId(org_cds, element1);
@@ -638,6 +641,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
       }
     })
   }
+
   getOrgRoots(element1) {
     const queryParams = queryString.stringify({ filter: '' });
     this.apiService.getOrganizations(queryParams).subscribe(results => {
@@ -649,6 +653,21 @@ export class EditDetailComponent implements OnInit, OnChanges {
           }
         });
         // element1.columnValue = element1.columnValue ? element1.columnValue.toLowerCase() : ''
+      }
+    })
+  }
+
+  getCompaniesByOrganize(element1, root_orgId) {
+    const queryParams = queryString.stringify({ organizeId: root_orgId, filter: '' });
+    this.apiService.getCompaniesByOrganize(queryParams).subscribe(results => {
+      if (results.status === 'success') {
+        element1.options = results.data.map(d => {
+          return {
+            label: d.companyName,
+            value: `${d.companyId}`
+          }
+        });
+        element1.columnValue = element1.columnValue ? element1.columnValue.toLowerCase() : ''
       }
     })
   }

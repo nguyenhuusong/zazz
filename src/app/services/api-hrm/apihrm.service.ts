@@ -1450,6 +1450,7 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v1/timekeeping/TimekeepingDeviceStatus`, data , this.options)
   }
 
+  // loai bang luong
   getHrmPayrollTypePage(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/payrollType/GetHrmPayrollTypePage?` + queryParams, this.options)
   }
@@ -1525,7 +1526,25 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v2/forms/GetFormsTypeInfo?${queryParams}`, this.options)
   }
 
+  getCompaniesByOrganize(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/compay/GetCompaniesByOrganize?` + queryParams, this.options);
+  }
 
-  
+  // thành phần lương
+  getHrmPayrollAttributePage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/payrollAttribute/GetHrmPayrollAttributePage?` + queryParams, this.options)
+  }
+
+  getHrmPayrollAttributeInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/payrollAttribute/GetHrmPayrollAttributeInfo?${queryParams}`, this.options)
+  }
+
+  setHrmPayrollAttributeInfo(data): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/payrollAttribute/SetHrmPayrollAttributeInfo`, data , this.options)
+  }
+
+  delHrmPayrollAttribute(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v1/payrollAttribute/DelHrmPayrollAttribute?${queryParams}`, this.options)
+  }
   
 }

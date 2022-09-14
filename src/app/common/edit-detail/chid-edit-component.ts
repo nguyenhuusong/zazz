@@ -329,6 +329,7 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
         });
       });
     } else if (field_name === 'organizeId') {
+      console.log('fjdosfjiodifj')
       this.dataView.forEach(element => {
         element.fields.forEach(async element1 => {
           if (element1.columnType === 'selectTree' && (element1.field_name === 'orgId' || element1.field_name === 'departmentId')) {
@@ -340,6 +341,9 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
             this.getUserByPush(value, element1)
           } else if (element1.field_name === 'work_cd') {
             this.getWorkTime(element1, value)
+          }else if(element1.field_name === 'CompanyId') {
+            console.log('fjdosfjiodifj')
+            this.getCompaniesByOrganize(element1, value)
           }
         });
       });
@@ -412,6 +416,21 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
       if (results.status === 'success') {
         element1.options = cloneDeep(results.data).map(d => {
           return { label: d.work_times + '-' + d.work_name, value: d.work_cd }
+        });
+        element1.columnValue = element1.columnValue ? element1.columnValue : '';
+      }
+    })
+  }
+
+  getCompaniesByOrganize(element1, root_orgId) {
+    const queryParams = queryString.stringify({ organizeId: root_orgId, filter: '' });
+    this.apiService.getCompaniesByOrganize(queryParams).subscribe(results => {
+      if (results.status === 'success') {
+        element1.options = results.data.map(d => {
+          return {
+            label: d.companyName,
+            value: `${d.companyId}`
+          }
         });
         element1.columnValue = element1.columnValue ? element1.columnValue : '';
       }
@@ -1290,10 +1309,10 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
                     <div class="in d-flex bet middle">
                       <ul class="members-filed">
                         <li *ngFor="let user of selectMembers; let i = index" (click)="activeName(i)">
-                          <span>
+                          <span class="avatar-radius">
                           <img src="{{user.avatarUrl}}">
                           </span>
-                          <span *ngIf="user.isCheck">{{user.fullName}}</span>
+                          <span >{{user.fullName}}</span>
                         </li>
                         <li *ngIf="selectMembers.length > 0"><span class="more-member">+12</span></li>
                       </ul>
@@ -1319,7 +1338,7 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
                       </svg>
                     </div>
                     <div class="room" *ngFor="let member of element.options; let i = index">
-                     <input id="president_{{member.group}}_{{i}}" type="checkbox" style="margin-right: 5px" name="{{member.group}}_{{i}}" (change)="handleChangeParent(member, i)" [checked]="member?.isCheck" /> {{member.group}} ({{member.child.length}})
+                     <div class="head"><input id="president_{{member.group}}_{{i}}" type="checkbox" style="margin-right: 5px" name="{{member.group}}_{{i}}" (change)="handleChangeParent(member, i)" [checked]="member?.isCheck" /> <h3 class="title">{{member.group}} ({{member.child.length}})</h3></div>
                       <div class="item d-flex middle gap16" *ngFor="let user of member.child; let idx = index">
                       <input id="president_{{user.userId}}_{{idx}}" type="checkbox" style="margin-right: 5px" name="president_{{user.userId}}_{{idx}}" (change)="handleChangeChild(user, i, member, idx)" [checked]="user?.isCheck" />
                         <div class="img" *ngIf="!user.avatarUrl"><img src="../../../assets/images/avatar.jpg"></div>
@@ -1328,10 +1347,12 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
                       </div>
                     </div>
                   </div>
-                <div class="d-flex">
-                <p-button styleClass="p-button-sm p-button-secondary" label="Bỏ qua" icon="pi pi-times-circle"></p-button>&nbsp;
-                <p-button (click)="xacNhan()">Xác nhận</p-button>
-                </div>
+                  <ng-template pTemplate="footer">
+                    <div class="d-flex end">
+                      <p-button styleClass="p-button-sm p-button-secondary" label="Bỏ qua" icon="pi pi-times-circle"></p-button>&nbsp;
+                      <p-button (click)="xacNhan()">Xác nhận</p-button>
+                    </div>
+                </ng-template>
                   </p-dialog>
                   `,
   })

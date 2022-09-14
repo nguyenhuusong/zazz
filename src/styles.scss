@@ -1466,10 +1466,14 @@ div{
 .p-checkbox{
     .p-checkbox-box{
         &.p-highlight{
-            background: var(--main-background);
-            border-color: var(--main-background) !important;
+            background: #4C97E4;
+            border-color: #4C97E4 !important;
         }
     }
+}
+.p-checkbox .p-checkbox-box{
+    border-color: #A3A9B9;
+    border-radius: 0;
 }
 .input-group{
     .p-checkbox-label{
@@ -4513,16 +4517,17 @@ p-tabview{
 .members-filed{
     display: flex;
     align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
     li{
-        margin-right: 8px;
         display: flex;
         align-items: center;
         span{
             &:first-child{
                 width: 24px;
                 height: 24px;
+                min-width: 24px;
                 border-radius: 100%;
-                margin-right: 8px;
                 display: block;
                 background-color: #cccccc8f;
                 img{
@@ -4535,6 +4540,8 @@ p-tabview{
                 font-size: 16px;
                 line-height: 20px;
                 font-family: $fontRegular;
+                white-space: nowrap;
+                display: none;
             }
             &.more-member{
                 background: #E2E9FC;
@@ -4544,6 +4551,22 @@ p-tabview{
                 color: #0979FD;
                 font-family: $fontMmedium;
                 cursor: pointer;
+                display: block;
+            }
+        }
+        
+        &.active{
+            span{
+                &:last-child{
+                    display: block;
+                }
+            }
+        }
+        &:first-child{
+            span{
+                &:last-child{
+                    display: block;
+                }
             }
         }
     }
@@ -4557,6 +4580,7 @@ p-tabview{
         padding: 8px;
         color: #0979FD;
         cursor: pointer;
+        min-width: 150px;
     }
     .in{
         border: 1px solid rgba(43, 47, 51, 0.1);
@@ -4647,9 +4671,15 @@ p-dialog button{
         height: 32px;
         border-radius: 100%;
         overflow: hidden;
+        position: relative;
         img{
             width: 100%;
             height: auto;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
         }
     }
     .room{
@@ -4659,6 +4689,57 @@ p-dialog button{
                 color: #A3A9B9;
                 font-size: 14px;
                 line-height: 20px;
+            }
+        }
+        .head{
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 8px;
+        }
+        .title{
+            color: #A3A9B9;
+            font-size: 14px;
+            line-height: 20px;
+            font-weight: 400;
+            margin: 0px;
+        }
+        input[type="checkbox"]{
+            width: 16px;
+            height: 16px;
+            background: #F3F4F6;
+            border: 1px solid #D1D4DC !important;
+            position: relative;
+            &::after{
+                content: '';
+                width: 100%;
+                height: 100%;
+                display: block;
+                background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='16' height='16' fill='%234C97E4'/%3E%3Cpath d='M6.50387 10.0905C6.51822 10.1054 6.53796 10.1138 6.55858 10.1138C6.57921 10.1138 6.59895 10.1054 6.6133 10.0905L11.6414 4.87372C11.8807 4.62543 12.2677 4.62543 12.5071 4.87372C12.7477 5.12334 12.7477 5.52903 12.5071 5.77865L6.99139 11.5013C6.75208 11.7496 6.36509 11.7496 6.12578 11.5013L3.36795 8.63997C3.12735 8.39034 3.12735 7.98466 3.36795 7.73503C3.60726 7.48674 3.99425 7.48674 4.23356 7.73503L6.50387 10.0905Z' fill='white'/%3E%3C/svg%3E%0A");
+                opacity: 0;
+                position: absolute;
+                left: 0px;
+                top: 0;
+            }
+            &::before{
+                content: '';
+                width: 100%;
+                height: 100%;
+                display: block;
+                opacity: 1;
+                position: absolute;
+                left: 0px;
+                top: 0;
+                background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='0.5' y='0.5' width='15' height='15' fill='%23F3F4F6' stroke='%23D1D4DC'/%3E%3C/svg%3E%0A");
+            }
+            &:checked{
+                background: #4C97E4;
+                &::after{
+                    opacity: 1;
+                }
+                &::before{
+                    opacity: 0;
+                }
             }
         }
     }
@@ -4681,8 +4762,8 @@ p-dialog button{
     }
     .item{
         padding-top: 8px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid #F3F4F6;
+        padding-bottom: 8px;
+        border-bottom: 1px solid #F3F4F6;
         span{
             display: block;
             &:first-child{
@@ -4691,6 +4772,13 @@ p-dialog button{
                 font-family: $fontMmedium;
                 font-size: 16px;
                 line-height: 20px;
+                margin-bottom: 4px;
+            }
+            &:last-child{
+                color: #747E96;
+                font-size: 14px;
+                line-height: 20px;  
+                font-family: $fontRegular;
             }
         }
     }
@@ -4700,4 +4788,18 @@ p-dialog button{
 }
 .gap12{
     gap: 12px;
+}
+
+.avatar-radius{
+    border-radius: 100%;
+    overflow: hidden;
+    position: relative;
+    min-width: 24px;
+    img{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        object-fit: cover;
+    }
 }
