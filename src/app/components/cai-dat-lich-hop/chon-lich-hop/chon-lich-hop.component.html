@@ -1,7 +1,7 @@
 <div class="main-grid product-detail p-4">
     <div class="grid">
         <div class="col-6 ">
-            <span (click) ="back()" class="pointer"><i class="pi pi-chevron-left"></i> Lịch họp phòng IT</span>
+            <!-- <span (click) ="back()" class="pointer"><i class="pi pi-chevron-left"></i> Lịch họp phòng IT</span> -->
         </div>
         <div class="col-6 text-right">
             <p-button (click) ="handleAdd()" 
@@ -18,5 +18,5 @@
 </div>
 
 <p-dialog header="Chọn thời gian" [(visible)]="showChooseDate" [style]="{width: '500px'}">
-    <app-chon-thoi-gian *ngIf = 'showChooseDate' (chooseTime) = "handleChooseTime($event)"></app-chon-thoi-gian>
+    <app-chon-thoi-gian *ngIf = 'showChooseDate' (chooseTime) = "handleChooseTime($event)" [forTime]="meetingInfo"></app-chon-thoi-gian>
 </p-dialog>

@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { ActivatedRoute, Router } from '@angular/router';
 import { cloneDeep } from 'lodash';
 import { MessageService } from 'primeng/api';
-import { Subject, takeUntil } from 'rxjs';
+import { flatMap, Subject, takeUntil } from 'rxjs';
 import { AgGridFn } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 
@@ -42,6 +42,13 @@ export class ChiTietLichHopComponent implements OnInit, OnDestroy {
   }
   titlePage = '';
   items = [];
+  roomId = '';
+  meetingInfo = {
+    roomId: '',
+    floorNo: '',
+    meet_at: '',
+    filter: ''
+  }
   ngOnInit(): void {
     this.titlePage = this.activatedRoute.data['_value'].title;
     this.items = [
@@ -161,6 +168,10 @@ export class ChiTietLichHopComponent implements OnInit, OnDestroy {
   cancelUpdate(event): void {
     if(event === 'CauHinh') {
       this.getMeetingInfo();
+    }else if( event.name === 'roomId'){
+      this.showChooseCalander = true;
+      this.meetingInfo.roomId = event.id
+      console.log('this.meetingInfo', this.meetingInfo)
     }else {
       this.manhinh = 'Edit';
       this.onBack();
@@ -169,6 +180,19 @@ export class ChiTietLichHopComponent implements OnInit, OnDestroy {
 
   handleAddMember(): void {
     this.showChooseMember = true;
+  }
+
+  theDateChoosed(event){
+    this.showChooseCalander = false;
+    console.log('event', event)
+    console.log('event', this.listViews)
+    this.listViews[0].fields.forEach( field => {
+      // if(field.)
+    })
+  }
+
+  addMoreTime() {
+
   }
 }
 

@@ -1550,5 +1550,9 @@ export class ApiHrmService {
   getFloorNo(): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/meeting/GetFloorNo`, this.options)
   }
+  checkTimeHrm(data): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/meeting/CheckTimeHrm`, data , this.options)
+  }
+  
   
 }
