@@ -57,6 +57,17 @@ export class ChonLichHopComponent implements OnInit, OnChanges {
         center: '',
         right: 'dayGridMonth, timeGridWeek, dayGridDay customButtons'
       },
+      views: {
+        dayGridMonth: {
+          buttonText: 'Tháng'
+        },
+        timeGridWeek: {
+          buttonText: 'Tuần'
+        },
+        dayGridDay: {
+          buttonText: 'Ngày'
+        }
+      },
       editable: false,
       selectable: true,
       selectMirror: false,
