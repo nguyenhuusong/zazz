@@ -46,14 +46,11 @@ export class ChonLichHopComponent implements OnInit, OnChanges {
       },
       customButtons: {
         myCustomButton: {
-          text: 'fdsfdsf',
-          click: function() {
-            alert('clicked the custom button!');
-          }
+          text: 'Tháng 3, 2022 '
         }
       },
       headerToolbar: {
-        left: 'prev today next',
+        left: 'myCustomButton prev today next',
         center: '',
         right: 'dayGridMonth, timeGridWeek, dayGridDay'
       },
@@ -71,9 +68,6 @@ export class ChonLichHopComponent implements OnInit, OnChanges {
         dayGridDay: {
           buttonText: 'Ngày'
         },
-        today: {
-          buttonText: 'Hôm nay'
-        }
       },
       editable: false,
       selectable: true,
