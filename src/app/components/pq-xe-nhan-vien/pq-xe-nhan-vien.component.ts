@@ -454,8 +454,8 @@ export class PqXeNhanVienComponent implements OnInit {
           this.imageLinksCard[0].cardVehicleId = this.modelTM.cardVehicleId;
           this.imageLinksCard[1].cardVehicleId = this.modelTM.cardVehicleId;
           this.imageLinksCard[2].cardVehicleId = this.modelTM.cardVehicleId;
-          console.log('this.modelTM.cardVehicleId', this.modelTM.cardVehicleId)
           this.getImageUrl(results.data.imageLinks)
+          console.log('this.modelTM.imageLinks', this.modelTM.imageLinks)
           this.getUserByPush();
           // this.search({ query: results.data.fullName }, 'edit');
           // this.show_dialogcreate = true;
@@ -465,12 +465,10 @@ export class PqXeNhanVienComponent implements OnInit {
   }
 
   getImageUrl(datas) {
-    console.log('this.imageLinksCard[0]', this.imageLinksCard[0])
     if(datas[0]){
       this.modelTM.imageLinks[0] = datas[0]
     }else{
       this.modelTM.imageLinks[0] = this.imageLinksCard[0]
-      console.log('undoidjfoijsdofji')
     }
     if(datas[1]){
       this.modelTM.imageLinks[1] = datas[1]
@@ -495,7 +493,7 @@ export class PqXeNhanVienComponent implements OnInit {
       startTimeTm = this.datetostring(this.modelTM.startTimeTM);
       endTimeTm = this.datetostring(this.modelTM.endTimeTM);
     }
-    if(this.imageLinksCard[0].url && this.imageLinksCard[1].url && this.imageLinksCard[2].url) {
+    console.log('this.modelTM.imageLinks', this.modelTM)
       this.apiService.setCardVehicle(this.modelTM.cardVehicleId, null,
         this.modelTM.vehicleTypeIdTM, this.modelTM.vehicleNoTM, this.modelTM.vehicleColorTM, this.modelTM.vehicleNameTM,
         startTimeTm, endTimeTm, this.modelTM.noteTM, this.modelTM.cusId, this.modelTM.imageLinks).subscribe((results: any) => {
@@ -507,11 +505,12 @@ export class PqXeNhanVienComponent implements OnInit {
             this.load();
           }
         }, error => { });
-      }
-      else{
-        this.displayCreateVehicleCard = false;
-        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Vui lòng cập nhật ảnh' });
-      }
+        // if(this.imageLinksCard[0].url && this.imageLinksCard[1].url && this.imageLinksCard[2].url) {
+      // }
+      // else{
+      // this.displayCreateVehicleCard = false;
+      //   this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Vui lòng cập nhật ảnh' });
+      // }
     // this.loadCardVip(this.model.custId);
 
   }

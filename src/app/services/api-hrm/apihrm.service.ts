@@ -1129,7 +1129,7 @@ export class ApiHrmService {
   setCardVehicle<T>(cardVehicleId, cardCd = null, vehicleTypeId, vehicleNo, vehicleColor = null, vehicleName, startTime, endTime, note = null, custId = null, imageLinks = null) {
     const cardSet = {
       cardVehicleId, cardCd, vehicleTypeId, vehicleNo, vehicleColor, vehicleName, serviceId: 0,
-      startTime, endTime, note, status: 0, custId, imageLinks: []
+      startTime, endTime, note, status: 0, custId, imageLinks: imageLinks
     };
     return this.http.put<T>(`${apiHrmServer}/api/v2/cardvehicle/SetServiceVehicle`, cardSet, this.options);
   }
