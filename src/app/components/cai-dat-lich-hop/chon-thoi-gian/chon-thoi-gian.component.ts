@@ -59,7 +59,7 @@ export class ChonThoiGianComponent implements OnInit {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((params) => {
         this.paramsObject = { ...params.keys, ...params };
-        this.meet_ud = this.paramsObject.params.meet_ud;
+        this.meet_ud = this.paramsObject.params.meet_ud || null;
       });
   };
   
@@ -83,7 +83,7 @@ export class ChonThoiGianComponent implements OnInit {
   getTime() {
     const value = this.chooseTimeForm.value;
     const queryParam = {
-      meet_ud: this.meet_ud,
+      meet_ud: this.meet_ud || null,
       roomId: this.forTime.roomId,
       meet_at: moment(value.startDate).format("YYYY-MM-DD"),
       meet_start: `${value.startTime.getHours()}:${value.startTime.getMinutes()}`,
