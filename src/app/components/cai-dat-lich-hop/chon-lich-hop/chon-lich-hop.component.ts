@@ -57,7 +57,11 @@ export class ChonLichHopComponent implements OnInit, OnChanges {
         center: '',
         right: 'dayGridMonth, timeGridWeek, dayGridDay'
       },
+      buttonText: { today: "Hôm nay" },
       views: {
+        today: {
+          buttonText: 'Hôm nay'
+        },
         dayGridMonth: {
           buttonText: 'Tháng'
         },
