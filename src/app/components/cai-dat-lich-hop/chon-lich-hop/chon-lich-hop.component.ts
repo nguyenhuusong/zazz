@@ -55,7 +55,7 @@ export class ChonLichHopComponent implements OnInit, OnChanges {
       headerToolbar: {
         left: 'prev today next',
         center: '',
-        right: 'dayGridMonth, timeGridWeek, dayGridDay customButtons'
+        right: 'dayGridMonth, timeGridWeek, dayGridDay'
       },
       views: {
         dayGridMonth: {
@@ -66,6 +66,9 @@ export class ChonLichHopComponent implements OnInit, OnChanges {
         },
         dayGridDay: {
           buttonText: 'Ngày'
+        },
+        today: {
+          buttonText: 'Hôm nay'
         }
       },
       editable: false,
