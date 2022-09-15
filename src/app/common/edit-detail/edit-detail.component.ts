@@ -305,8 +305,12 @@ export class EditDetailComponent implements OnInit, OnChanges {
 
   findNodeInTree(list, nodeId, element1): any {
     for (let i = 0; i < list.length; i++) {
+      console.log("list[i].data", list[i].data)
+      console.log("nodeId", nodeId)
       if (list[i].data === nodeId ) {
-         element1.columnValue = list[i]
+         element1.columnValue = list[i];
+        
+
         }else if (Array.isArray(list[i].children) && list[i].children.length) {
           this.findNodeInTree(list[i].children, nodeId, element1);
         }
@@ -879,18 +883,17 @@ export class EditDetailComponent implements OnInit, OnChanges {
               this.findNodeInTree1(element1.options, ids, element1, results);
               element1.columnValue = results;
             }else {
-              this.findNodeInTree(element1.options, element1.columnValue, element1);
-
+              this.findNodeInTree(element1.options, element1.columnValue.toUpperCase(), element1);
             // const queryParams1 = queryString.stringify({ parentId: element1.columnValue });
-            // // this.apiService.getOrganizeTree(queryParams1).subscribe(results => {
-            // //   if (results.status === 'success' && results.data.length > 0) {
-            // //     element1.columnValue = results.data.length > 0 ? results.data[0] : null;
-            // //     element1.isVisiable = true;
-            // //   } else {
-            // //     element1.columnValue = null;
-            // //     element1.isVisiable = true;
-            // //   }
-            // // })
+            // this.apiService.getOrganizeTree(queryParams1).subscribe(results => {
+            //   if (results.status === 'success' && results.data.length > 0) {
+            //     element1.columnValue = results.data.length > 0 ? results.data[0] : null;
+            //     element1.isVisiable = true;
+            //   } else {
+            //     element1.columnValue = null;
+            //     element1.isVisiable = true;
+            //   }
+            // })
           }
 
 
