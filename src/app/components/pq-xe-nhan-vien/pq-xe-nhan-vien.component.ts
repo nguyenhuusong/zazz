@@ -704,6 +704,7 @@ export class PqXeNhanVienComponent implements OnInit {
     this.displayCreateVehicleCard = true;
     this.modelTM.vehicleColorTM = '';
     this.modelTM.noteTM = '';
+    this.modelTM.imageLinks = this.imageLinksCard;
   }
 
   getEmployeeVehicleInfo() {
