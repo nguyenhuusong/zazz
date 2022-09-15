@@ -44,10 +44,18 @@ export class ChonLichHopComponent implements OnInit, OnChanges {
       titleFormat: function () {
         return 'Lịch làm việc';
       },
+      customButtons: {
+        myCustomButton: {
+          text: 'fdsfdsf',
+          click: function() {
+            alert('clicked the custom button!');
+          }
+        }
+      },
       headerToolbar: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'dayGridMonth, timeGridWeek, dayGridDay'
+        left: 'prev today next',
+        center: '',
+        right: 'dayGridMonth, timeGridWeek, dayGridDay customButtons'
       },
       editable: false,
       selectable: true,

@@ -230,6 +230,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
             await this.getFormTypePage(element1);
           } else if(element1.field_name === 'workplace_id'){
             this.getWorkplaces(element1);
+          } else if(element1.field_name === 'floor_No'){
+            this.getFloor(element1);
           } else {
             if (element1.columnObject) {
               this.getCustObjectListNew(element1);
@@ -961,6 +963,20 @@ export class EditDetailComponent implements OnInit, OnChanges {
           });
           element1.columnValue = newarray.map(d => d.value);
         }
+      }
+    })
+  }
+
+  getFloor(element1) {
+    this.apiService.getFloorNo().subscribe(results => {
+      if (results.status === 'success') {
+        element1.options = cloneDeep(results.data).map(d => {
+          return { 
+            label: 'Tầng' + ' ' + d.floorNo, 
+            value: d.floorNo 
+          }
+        });
+        element1.columnValue = element1.columnValue ? element1.columnValue.toLowerCase() : ''
       }
     })
   }
