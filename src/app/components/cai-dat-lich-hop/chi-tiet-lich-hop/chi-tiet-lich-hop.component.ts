@@ -184,11 +184,18 @@ export class ChiTietLichHopComponent implements OnInit, OnDestroy {
 
   theDateChoosed(event){
     this.showChooseCalander = false;
-    console.log('event', event)
-    console.log('event', this.listViews)
-    this.listViews[0].fields.forEach( field => {
-      // if(field.)
-    })
+    this.listViews.forEach(element => {
+      element.fields.forEach(async element1 => {
+        if (element1.field_name === 'meet_at') {
+          element1.columnValue = new Date(event.meet_at)
+        } else if (element1.field_name === 'meet_start') {
+          const newMeeStart = `${event.meet_at} ${event.meet_start}`
+          element1.columnValue = new Date(newMeeStart)
+        }else if (element1.field_name === 'meet_time') {
+          element1.columnValue = event.meet_time
+        }
+      });
+    });
   }
 
   addMoreTime() {

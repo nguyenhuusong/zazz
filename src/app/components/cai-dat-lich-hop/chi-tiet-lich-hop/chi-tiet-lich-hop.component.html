@@ -6,7 +6,7 @@
         </div>
     </section>
     <div class="content" [hidden]="showChooseCalander">
-        <button (click)="showChooseCalander = true">Thêm thời gian họp</button>
+        <!-- <button (click)="showChooseCalander = true">Thêm thời gian họp</button> -->
         <div>
             <app-edit-detail *ngIf="listViews && listViews.length> 0" [isNested]="true" [detail]="detailInfo"
                 [thongtinnhanvienNew]="true" [manhinh]="'Edit'" [dataView]="listViews"
