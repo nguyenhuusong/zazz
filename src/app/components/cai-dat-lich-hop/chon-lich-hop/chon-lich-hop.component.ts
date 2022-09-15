@@ -44,9 +44,14 @@ export class ChonLichHopComponent implements OnInit, OnChanges {
       titleFormat: function () {
         return 'Lịch làm việc';
       },
+      customButtons: {
+        myCustomButton: {
+          text: 'Tháng 3, 2022 '
+        }
+      },
       headerToolbar: {
-        left: 'prev,next today',
-        center: 'title',
+        left: 'myCustomButton prev today next',
+        center: '',
         right: 'dayGridMonth, timeGridWeek, dayGridDay'
       },
       buttonText: { today: "Hôm nay" },
@@ -62,7 +67,7 @@ export class ChonLichHopComponent implements OnInit, OnChanges {
         },
         dayGridDay: {
           buttonText: 'Ngày'
-        }
+        },
       },
       editable: false,
       selectable: true,

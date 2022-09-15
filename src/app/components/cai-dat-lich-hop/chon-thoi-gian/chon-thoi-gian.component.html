@@ -13,11 +13,17 @@
             Chọn Giờ bắt đầu
         </div>
     </div>
-    <div class="form-group col-6">
+    <!-- <div class="form-group col-6">
         <label>Giờ kết thúc <span class="text-danger"> *</span></label>
         <p-calendar [timeOnly]="true" inputId="timeonly" appendTo="body" [showIcon]="true" icon="pi pi-clock" id="endTime" formControlName="endTime" name="endTime" [required] = "true" ></p-calendar>
         <div *ngIf="(chooseTimeFormControl?.endTime?.touched || submitted) && chooseTimeFormControl?.endTime?.errors?.required" class="text-danger">
             Chọn Giờ kết thúc
+        </div>
+    </div> -->
+    <div class="form-group col-6">
+        <div class="field-group">
+            <label>Giờ kết thúc <span class="text-danger"> *</span></label>
+            <input type="number" formControlName="meet_time" name="meet_time">
         </div>
     </div>
     <div class="col-12">

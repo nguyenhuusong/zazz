@@ -415,7 +415,6 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
         });
       });
     } else if (field_name === 'organizeId') {
-      console.log('fjdosfjiodifj')
       this.dataView.forEach(element => {
         element.fields.forEach(async element1 => {
           if ((element1.columnType === 'selectTree') && ((element1.field_name === 'orgId') || (element1.field_name === 'departmentId'))) {
@@ -495,6 +494,12 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
       this.callback.emit(value);
     } else if (field_name === 'holi_type') {
       this.callback.emit(value);
+    } else if(field_name === 'roomId'){
+      const emitType = {
+        name: 'roomId',
+        id: value
+      }
+      this.callback.emit(emitType);
     }
   }
 

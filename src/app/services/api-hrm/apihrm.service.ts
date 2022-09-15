@@ -1546,5 +1546,13 @@ export class ApiHrmService {
   delHrmPayrollAttribute(queryParams): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v1/payrollAttribute/DelHrmPayrollAttribute?${queryParams}`, this.options)
   }
+
+  getFloorNo(): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/meeting/GetFloorNo`, this.options)
+  }
+  checkTimeHrm(data): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/meeting/CheckTimeHrm`, data , this.options)
+  }
+  
   
 }

@@ -4810,3 +4810,200 @@ p-dialog button{
 .pointer {
     cursor: pointer;
 }
+
+.fc-header-toolbar{
+    .fc-toolbar-chunk{
+        &:first-child{
+            button{
+                margin-left: 0px;
+                background: none !important;
+                font-weight: 600;
+                font-size: 16px;
+                line-height: 20px;
+                border: 1px solid rgba(43, 47, 51, 0.1) !important;
+                box-shadow: none !important;
+                outline: none;
+                border-width: 1px;
+                height: 48px;
+                line-height: 48px;
+                padding: 0px 16px;
+                border-radius: 0;
+                &:nth-child(1){
+                    border: none !important;
+                    color: #2B2F33 !important;
+                    position: relative;
+                    padding-right: 40px;
+                    &::after{
+                        position: absolute;
+                        width: 24px;
+                        height: 24px;
+                        content: '';
+                        right: 10px;
+                        top: 11px;
+                        background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M7.88914 4.91674C8.32219 4.50431 9.02431 4.50431 9.45736 4.91674L16.1108 11.2533C16.5438 11.6657 16.5438 12.3344 16.1108 12.7469L9.45736 19.0834C9.02431 19.4959 8.32219 19.4959 7.88914 19.0834C7.45609 18.671 7.45609 18.0023 7.88914 17.5899L13.7584 12.0001L7.88914 6.41029C7.45609 5.99786 7.45609 5.32918 7.88914 4.91674Z' fill='%234C97E4'/%3E%3C/svg%3E%0A");
+                    }
+                }
+                &:nth-child(3){
+                    color: #2B2F33 !important;
+                    font-weight: 600;
+                    font-size: 16px;
+                    line-height: 20px;
+                    opacity: 1 !important;
+                    border-radius: 0;
+                    border-left: 0px !important;
+                    border-right: 0px !important;
+                    &:hover{
+                        background: #4C97E4 !important;
+                        color:  #ffffff !important;
+                    }
+                    &:disabled{
+                        &:hover{
+                            background: none !important;
+                            color:  #2B2F33 !important;
+                        }
+                    }
+                }
+                &:nth-child(2){
+                    color:  #4C97E4;
+                    border-radius: 2px 0px 0px 2px;
+                    &:hover{
+                        background: #4C97E4 !important;
+                    }
+                }
+                &:last-child{
+                    color:  #4C97E4;
+                    border-radius: 0px 2px 2px 0px;
+                    &:hover{
+                        background: #4C97E4 !important;
+                    }
+                }
+            }
+        }
+        &:last-child{
+            background: #F4F5F7;
+            border-radius: 2px;
+            padding: 2px;
+            .fc-button{
+                margin-left: 0px !important;
+                background: none !important;
+                color: #465373 !important;
+                outline: none;
+                box-shadow: none !important;
+                transition: none !important;
+                &.fc-button-active{
+                    background: #FFFFFF !important;
+                    color: #465373 !important;
+                    box-shadow: 0px 2px 10px 2px rgb(112 144 176 / 10%) !important;
+                    border-radius: 8px !important;
+                    color: #0979FD !important;
+                }
+            }
+            .fc-button-group{
+                background: #F4F5F7;
+                margin-left: 0px !important;
+                border-radius: 2px;
+                button{
+                    background: none !important;
+                    color: #465373;
+                    border: none !important;
+                    &.fc-button-active{
+                        background: #FFFFFF !important;
+                        box-shadow: 0px 2px 10px 2px rgb(112 144 176 / 10%) !important;
+                        border-radius: 8px !important;
+                        color: #0979FD !important;
+                    }
+                }
+                .fc--button{
+                    display: none;
+                    button{
+                        background: none;
+                        border: none;
+                    }
+                }
+            }
+        }
+    }
+}
+.fc-daygrid-day-events{
+    .fc-daygrid-day-top{
+        display: none;
+    }
+    .fc-daygrid-event{
+        background: #EBF4EF;
+        border-radius: 2px;
+        &.fc-event-today{
+            background: #FFF6DE;
+            margin-bottom: 2px;
+        }
+        &.fc-event-past{
+            background: #FAF0F1;
+        }
+        .custom-event-label{
+            padding: 4px 16px !important;
+            .text-bold{
+                font-weight: 500;
+                font-size: 10px;
+                line-height: 14px;
+                color: #2F3E62;
+                font-family: $fontMmedium;
+                margin-bottom: 6px;
+            }
+            .grid{
+                gap: 16px;
+                .col-6{
+                    padding: 0px;
+                    width: auto;
+                    &:first-child{
+                        font-weight: 400;
+                        font-size: 10px;
+                        line-height: 14px;
+                        color: #59637E;
+                        font-family: $fontRegular;
+                    }
+                    &:last-child{
+                        font-style: normal;
+                        font-weight: 400;
+                        font-size: 10px;
+                        line-height: 14px;
+                        color: #4C97E4;
+                        font-family: $fontRegular;
+                    }
+                }
+            }
+        }
+    }
+}
+full-calendar{
+    .fc-daygrid-body{
+        .fc-daygrid-day-top{
+            display: none;
+        }
+        table{
+            tr{
+                td{
+                    border: 2px solid #e0e0e0;
+                }
+            }
+        }
+    }
+    .fc-daygrid{
+        &>table{
+            tr>th{
+                border: 2px solid #e0e0e0;
+            }
+            &>tbody{
+                &>tr{
+                    // &>td{
+                    //     border: none;
+                    //     border-left: 1px solid #e0e0e0;
+                    // }
+                }
+            }
+        }
+    }
+}
+app-chon-lich-hop{
+    .product-detail{
+        background: #fff;
+    }
+}

@@ -33,12 +33,7 @@
     </div> -->
     </div>
     <div *ngIf="showChooseCalander">
-        <app-chon-lich-hop (chooseDate)="showChooseCalander = false" [meetingInfo]="{
-            roomId: 'aff44085-ef87-430f-b10a-7beeb34218bd',
-            floorNo: '10',
-            meet_at: '',
-            filter: ''
-          }"></app-chon-lich-hop>
+        <app-chon-lich-hop (chooseDate)="theDateChoosed($event)" [meetingInfo]="meetingInfo"></app-chon-lich-hop>
     </div>
 </div>
 
