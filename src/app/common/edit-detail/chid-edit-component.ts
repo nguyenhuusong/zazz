@@ -1300,7 +1300,7 @@ export class AppTypeLinkUrlRadioListComponent implements OnInit {
 @Component({
   selector: 'app-type-linkurl-drag',
   template: `   
-            <div>
+            <div class="linkurl-drag">
             <div class="wrap-upload">
                       <p-fileUpload [chooseLabel]="''" [chooseIcon]="''" [multiple]="true" [showUploadButton]="false" [showCancelButton]="false" [customUpload]="true" name="demo[]" url="./upload.php" 
                        (onSelect)="uploadHandler($event)" [maxFileSize]="10000000">
@@ -1661,8 +1661,8 @@ export class AppTypelistMch implements OnInit {
   selector: 'app-type-roomImg',
   template: `   <div class="fileds room-img">
                   <div class="img">
-                  <span *ngIf="!element.columnValue">Không có ảnh</span>
-                    <img src="{{ element.columnValue }}">
+                  <span *ngIf="!element.columnValue">Tải ảnh lên</span>
+                    <img *ngIf="element.columnValue" src="{{ element.columnValue }}">
                   </div>
                   <div class="upload">
                     <svg width="41" height="40" viewBox="0 0 41 40" fill="none" xmlns="http://www.w3.org/2000/svg">

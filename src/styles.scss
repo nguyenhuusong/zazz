@@ -5008,13 +5008,16 @@ app-chon-lich-hop{
     }
 }
 .room-img{
+    border: 1px dashed #4C97E4;
+    border-radius: 2px;
+    position: relative;
     .img{
         position: relative;
         &::before{
             content: "";
             padding-top: 100%;
             display: block;
-            background-color: #f3f2f2;
+            background: #F6FBFF;
         }
         img{
             position: absolute;
@@ -5034,7 +5037,7 @@ app-chon-lich-hop{
             top: 50%;
             z-index: 2;
             transform: translateX(-50%);
-            color: #d3d3d3;
+            color: #4C97E4;
             white-space: nowrap;
         }
     }
@@ -5102,4 +5105,10 @@ app-chon-lich-hop{
         align-items: center;
         justify-content: space-between;
     }
+}
+.linkurl-drag{
+    margin-bottom: 16px;
+    border: 1px solid #D1D4DC;
+    border-radius: 2px;
+    padding: 16px;
 }
