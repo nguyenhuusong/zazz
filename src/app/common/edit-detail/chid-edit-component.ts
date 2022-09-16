@@ -1654,3 +1654,104 @@ export class AppTypelistMch implements OnInit {
   } 
 
 }
+
+
+// avatar Room
+@Component({
+  selector: 'app-type-roomImg',
+  template: `   <div class="fileds room-img">
+                  <div class="img">
+                  <span *ngIf="!element.columnValue">Không có ảnh</span>
+                    <img src="{{ element.columnValue }}">
+                  </div>
+                  <div class="upload">
+                    <svg width="41" height="40" viewBox="0 0 41 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <rect x="0.5" width="40" height="40" rx="4" fill="#4C97E4"/>
+                      <path d="M18.1587 20.8113C18.1587 19.5376 19.2243 18.5357 20.4992 18.5357C21.7741 18.5357 22.8397 19.5376 22.8397 20.8113C22.8397 22.085 21.7741 23.0868 20.4992 23.0868C19.2243 23.0868 18.1587 22.085 18.1587 20.8113Z" fill="white"/>
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M17.3582 12.3129C17.493 12.1178 17.7242 12 17.9723 12H23.0277C23.2758 12 23.507 12.1178 23.6418 12.3129L25.1107 14.4381H28.0831C28.7311 14.4381 29.348 14.6865 29.7995 15.122C30.2503 15.5569 30.5 16.1425 30.5 16.7492V25.6889C30.5 26.2956 30.2503 26.8812 29.7995 27.3161C29.348 27.7516 28.7311 28 28.0831 28H12.9169C12.2689 28 11.652 27.7516 11.2005 27.3161C10.7497 26.8812 10.5 26.2956 10.5 25.6889V16.7492C10.5 16.1425 10.7497 15.5569 11.2005 15.122C11.652 14.6865 12.2689 14.4381 12.9169 14.4381H15.8893L17.3582 12.3129ZM20.4992 16.5852C18.0514 16.5852 16.0991 18.4943 16.0991 20.8113C16.0991 23.1283 18.0514 25.0373 20.4992 25.0373C22.9471 25.0373 24.8993 23.1283 24.8993 20.8113C24.8993 18.4943 22.9471 16.5852 20.4992 16.5852Z" fill="white"/>
+                    </svg>
+                    <p-fileUpload mode="basic" name="demo[]" url="./upload.php" accept="image/*" [maxFileSize]="10000000" (onSelect)="onBasicUpload($event)"></p-fileUpload>
+                    <span class="pi pi-times delete-image" *ngIf="element.columnValue" (click)="deleteImg()"></span>
+                  </div>
+                 </div>
+                `,
+})
+
+export class AppTyperoomImg implements OnInit {
+  @Input() element;
+  @Input() modelFields;
+  @Input() submit = false;
+  @Input() dataView;
+  constructor(
+    private apiService: ApiHrmService,
+    private spinner: NgxSpinnerService,
+  ) { }
+  ngOnInit(): void {
+    this.modelFields[this.element.field_name].error = false;
+  }
+  deleteImg() {
+    this.element.columnValue = '';
+  }
+  onBasicUpload(event) {
+    if (event.currentFiles.length > 0) {
+        const getDAte = new Date();
+        const getTime = getDAte.getTime();
+        const storageRef = firebase.storage().ref();
+        const uploadTask = storageRef.child(`s-hrm/file-attach/${getTime}-${event.currentFiles[0].name}`).put(event.currentFiles[0]);
+        uploadTask.on('state_changed', (snapshot) => {
+        }, (error) => {
+          this.spinner.hide();
+        }, () => {
+          uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+            if (downloadURL) {
+              this.spinner.hide();
+              this.element.columnValue = downloadURL;
+            }
+          });
+        });
+    }
+    else{
+      this.spinner.hide();
+    }
+  }
+
+}
+
+
+// onoff -title
+@Component({
+  selector: 'app-type-onOff',
+  template: `   <div class="fileds onoff">
+                    <div class="d-flex">
+                      <span>{{element.columnLabel}}</span>
+                      <p-inputSwitch [(ngModel)]="element.columnValue"></p-inputSwitch>
+                    </div>
+                 </div>
+                `,
+})
+
+export class AppTypeonOff implements OnInit {
+  @Input() element;
+  @Input() modelFields;
+  @Input() submit = false;
+  @Input() dataView;
+  value = false
+  constructor(
+    private apiService: ApiHrmService,
+    private spinner: NgxSpinnerService,
+  ) { }
+  ngOnInit(): void {
+    this.modelFields[this.element.field_name].error = false;
+  }
+
+  ngOnChanges(event) {
+    if (event && event.element) {
+      if(event.element.currentValue.columnValue === "0"){
+        this.element.columnValue = false
+      }else if(event.element.currentValue.columnValue === "1"){
+        this.element.columnValue = true
+      }
+    }
+  }
+  
+}

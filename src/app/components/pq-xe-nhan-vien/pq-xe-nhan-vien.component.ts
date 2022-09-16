@@ -543,6 +543,10 @@ export class PqXeNhanVienComponent implements OnInit {
     }
   }
 
+  deleteImg(index){
+    this.modelTM.imageLinks[index].url = '';
+  }
+
   addVehicleApprove(event): void {
     this.modelApprove.cardCd = '';
     this.modelApprove.cardVehicleId = event.rowData.cardVehicleId;

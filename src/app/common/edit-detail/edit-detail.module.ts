@@ -22,7 +22,7 @@ import { AppTypeCheckboxComponent, AppTypeCheckboxListComponent, AppTypeCheckbox
    AppTypeChips,
    AppTypeCurrencyComponent, AppTypeDatefulltimeComponent, AppTypeDatetimeComponent, AppTypeDropdownComponent, AppTypeLinkUrlDragComponent, AppTypeLinkUrlRadioListComponent,
     AppTypelistMch,
-    AppTypeMarkdownComponent, AppTypeMembers, AppTypeMultiSelectComponent, AppTypeNumberComponent, AppTypeSelectComponent, AppTypeSelectTreeComponent, AppTypeSelectTreesComponent, AppTypeTextareaComponent, AppTypeTextComponent, AppTypeTimeonlyComponent } from './chid-edit-component';
+    AppTypeMarkdownComponent, AppTypeMembers, AppTypeMultiSelectComponent, AppTypeNumberComponent, AppTypeonOff, AppTyperoomImg, AppTypeSelectComponent, AppTypeSelectTreeComponent, AppTypeSelectTreesComponent, AppTypeTextareaComponent, AppTypeTextComponent, AppTypeTimeonlyComponent } from './chid-edit-component';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { EditDetailComponent } from './edit-detail.component';
 import { SelectButtonModule } from 'primeng/selectbutton';
@@ -38,6 +38,7 @@ import {ImageModule} from 'primeng/image';
 import {PanelModule} from 'primeng/panel';
 import { ConfigGridTableFormModule } from '../config-grid-table-form/config-grid-table-form.module';
 import {ChipsModule} from 'primeng/chips';
+import {InputSwitchModule} from 'primeng/inputswitch';
 @NgModule({
   imports: [
     FormsModule,
@@ -68,6 +69,7 @@ import {ChipsModule} from 'primeng/chips';
     ButtonModule,
     TooltipModule,
     ChipsModule,
+    InputSwitchModule,
     ConfigGridTableFormModule,
     AgGridModule.withComponents([
       ButtonRendererMutiComponent,
@@ -97,7 +99,9 @@ import {ChipsModule} from 'primeng/chips';
     AppTypeChips,
     AppTypelistMch,
     AppTypeSelectTreeComponent,
-    AppTypeSelectTreesComponent
+    AppTypeSelectTreesComponent,
+    AppTyperoomImg,
+    AppTypeonOff
     // AppTypeTextComponent
   ],
   exports: [

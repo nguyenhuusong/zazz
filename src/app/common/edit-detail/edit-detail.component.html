@@ -36,6 +36,8 @@
                         <app-type-members [element]="element" *ngIf="element.columnType === 'members'" [modelFields]="modelFields" [dataView]="dataView"></app-type-members>
                         <app-type-chips [element]="element" *ngIf="element.columnType === 'chips'" [modelFields]="modelFields" [dataView]="dataView"></app-type-chips>
                         <app-type-listMch [element]="element" *ngIf="element.columnType === 'listMch'" [modelFields]="modelFields" [dataView]="dataView"></app-type-listMch>
+                        <app-type-roomImg [element]="element" *ngIf="element.columnType === 'roomImg'" [modelFields]="modelFields" [dataView]="dataView"></app-type-roomImg>
+                        <app-type-onOff [element]="element" *ngIf="element.columnType === 'onOff'" [modelFields]="modelFields" [dataView]="dataView"></app-type-onOff>
                     </div>
                     </div>
                 </p-panel>
