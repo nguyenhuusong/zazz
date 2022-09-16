@@ -31,7 +31,25 @@ export class CaiDatLichHopComponent implements OnInit {
   getRowHeight;
   cards = [];
   first = 0;
-  model;
+  model = {
+      filter: '',
+      gridWidth: '',
+      offSet: 0,
+      pageSize: 15,
+      Floor_No: '',
+      Meet_status: '',
+      Time: '',
+  }
+  statusRoom = [
+    {
+      label: 'Hoạt Động',
+      value: 1
+    },
+    {
+      label: 'Không hoạt Động',
+      value: 1
+    }
+  ]
   totalRecord = 0;
   countRecord: any = {
     totalRecord: 0,
@@ -75,6 +93,7 @@ export class CaiDatLichHopComponent implements OnInit {
       { label: 'Hoạt động' },
       { label: 'Lịch họp' },
     ];
+    this.getFloor();
     this.load();
   }
 
@@ -93,6 +112,9 @@ export class CaiDatLichHopComponent implements OnInit {
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       }else {
+        const totalHeight = a.clientHeight + c.clientHeight + d.clientHeight + e.clientHeight + 25;
+        this.heightGrid = window.innerHeight - totalHeight
+        this.changeDetector.detectChanges();
         this.loadjs = 0;
       }
     }
@@ -103,7 +125,10 @@ export class CaiDatLichHopComponent implements OnInit {
       filter: '',
       gridWidth: '',
       offSet: 0,
-      pageSize: 15
+      pageSize: 15,
+      Floor_No: '',
+      Meet_status: '',
+      Time: '',
     };
   }
   			
@@ -180,6 +205,20 @@ export class CaiDatLichHopComponent implements OnInit {
         field: 'checkbox'
       }]
 
+  }
+
+  floors = []
+  getFloor() {
+    this.apiService.getFloorNo().subscribe(results => {
+      if (results.status === 'success') {
+        this.floors = (results.data).map(d => {
+          return { 
+            label: 'Tầng' + ' ' + d.floorNo, 
+            value: d.floorNo 
+          }
+        });
+      }
+    })
   }
 
   handleDelete(e): void {

@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { Calendar, CalendarOptions, FullCalendarComponent } from '@fullcalendar/angular';
 import { ApiService } from 'src/app/services/api.service';
 import * as queryString from 'querystring';
+import { dateFormatter } from 'src/app/utils/common/function-common';
 
 @Component({
   selector: 'app-chon-lich-hop',
@@ -46,7 +47,7 @@ export class ChonLichHopComponent implements OnInit, OnChanges {
       },
       customButtons: {
         myCustomButton: {
-          // text: this.calendarApi
+          // text: new date()
         }
       },
       headerToolbar: {
