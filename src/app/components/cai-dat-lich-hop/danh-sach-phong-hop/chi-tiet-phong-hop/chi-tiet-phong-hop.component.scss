@@ -45,4 +45,22 @@
         box-shadow: 1px 1px 3px #ccc;
         text-align: center;
     }
+    .field-group{
+        &.checkbox{
+            display: flex;
+            align-items: center;
+            min-height: 0px;
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+            gap: 12px;
+            padding-left: 18px;
+            label{
+                position: static;
+                margin-bottom: 0px;
+            }
+            .p-checkbox{
+                position: static;
+            }
+        }
+    }
 }
