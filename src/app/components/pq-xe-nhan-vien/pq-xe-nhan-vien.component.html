@@ -350,11 +350,11 @@
              mode="basic" 
              name="demo[]" 
              [chooseIcon]="'pi pi-upload'"
-             url="./upload.php" 
              accept="image/*" 
              [maxFileSize]="10000000" 
              (onSelect)="uploadImageVehicle($event, indexImg)">
            </p-fileUpload>
+           <span class="pi pi-times delete-image" *ngIf="imgUrl?.url" (click)="deleteImg(indexImg)"></span>
          </div>
        </div>
     </div>

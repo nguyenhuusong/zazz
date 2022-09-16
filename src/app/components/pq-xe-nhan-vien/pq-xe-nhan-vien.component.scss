@@ -47,6 +47,8 @@
             position: absolute;
             right: 10px;
             top: 10px;
+            width: 48px;
+        height: 30px;
         }
     }
     .p-image-mask{
@@ -56,5 +58,22 @@
                 height: 100%;
             }
         }
+    }
+}
+:host::ng-deep{
+    .delete-image{
+        width: 50px;
+        height: 31px;
+        position: absolute;
+        top: 10px;
+        right: 9px;
+        background: #fff;
+        line-height: 31px;
+        color: red;
+        z-index: 7;
+        cursor: pointer;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        box-shadow: 1px 1px 3px #ccc;
     }
 }
