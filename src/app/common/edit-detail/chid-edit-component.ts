@@ -9,6 +9,7 @@ import * as numeral from 'numeral';
 import * as moment from 'moment';
 import { ValidationNumberDayInMonth, ValidationNumberDayInMonthEmpty, ValidationNumber, ValidationNumberEmpty } from './validation';
 import { checkIsObject } from '../function-common/objects.helper';
+import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-type-text',
   template: ` <div class="field-group text" [ngClass]=" element.columnValue ? 'valid' : 'invalid' ">
@@ -324,6 +325,7 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
   constructor(
     private apiService: ApiHrmService,
     private changeDetector: ChangeDetectorRef,
+    private messageService: MessageService,
   ) { }
   async ngOnInit() {
     if (this.element.field_name === 'parentId') {
@@ -500,6 +502,15 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
       this.callback.emit(value);
     } else if (field_name === 'holi_type') {
       this.callback.emit(value);
+    } else if(field_name === 'floor_No') {
+      this.dataView.forEach(element => {
+        element.fields.forEach(async element1 => {
+          if(element1.field_name === 'roomId'){
+            this.getRooms(element1, value);
+          }
+        })
+      })
+
     } else if(field_name === 'roomId'){
       const emitType = {
         name: 'roomId',
@@ -519,6 +530,26 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
         element1.columnValue = element1.columnValue ? element1.columnValue : '';
       }
     })
+  }
+
+  getRooms(element1, value) {
+    const queryParams = queryString.stringify( { filter: '', floor_No: value })
+    this.apiService.getMeetRooms(queryParams)
+      .subscribe(results => {
+        if (results.status === 'success') {
+          if(value){
+            element1.options = results.data.map(d => {
+              return {
+                label: d.room_name,
+                value: d.roomId,
+              }
+            })  
+          }else{
+            element1.options = []
+          }
+             
+        }
+      });
   }
 
   getCompaniesByOrganize(element1, root_orgId) {
