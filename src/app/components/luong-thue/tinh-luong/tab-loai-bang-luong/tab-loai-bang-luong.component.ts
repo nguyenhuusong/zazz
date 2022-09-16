@@ -161,6 +161,7 @@ export class TabLoaiBangLuongComponent implements OnInit {
         if (results.status === 'success') {
           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
           this.spinner.hide();
+          this.isEdit = false
           this.load();
         } else {
           this.messageService.add({
