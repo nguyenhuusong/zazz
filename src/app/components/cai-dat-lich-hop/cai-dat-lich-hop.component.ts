@@ -43,7 +43,7 @@ export class CaiDatLichHopComponent implements OnInit {
   statusRoom = [
     {
       label: 'Hoạt Động',
-      value: 1
+      value: 1,
     },
     {
       label: 'Không hoạt Động',
