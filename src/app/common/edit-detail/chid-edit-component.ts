@@ -343,7 +343,7 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
     this.changeDetector.detectChanges();
   }
 
-  async getValueByKey(key) {
+   getValueByKey(key) {
     if (this.dataView && this.dataView.length > 0) {
       let value = ''
       for (let i = 0; i < this.dataView.length; i++) {
@@ -354,7 +354,7 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
           }
         }
       }
-      return await value
+      return value
     }
   }
 

@@ -131,12 +131,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
           } else if (element1.field_name === 'work_cds') {
             this.getWorkTimes(element1, null)
           } else if (element1.field_name === 'empId') {
-            let root_orgId = this.getValueByKey('organizeId');
-            if(!root_orgId){
-              root_orgId = this.getValueByKey('organize_id');
-            }
-            // this.getEmployeePage(root_orgId, element1)
-            source.subscribe(val =>this.getEmployeePage(root_orgId, element1));
+            const root_orgId = this.getValueByKey('organize_id');
+            this.getEmployeePage(root_orgId, element1);
           } else if (element1.field_name === 'shift_cds') {
             this.getWorkShifts(element1, null)
           } else if (element1.field_name === 'work_cd') {
@@ -256,9 +252,13 @@ export class EditDetailComponent implements OnInit, OnChanges {
         }
       });
     });
-    setTimeout(() => {
+    this.spinner.show();
+    const source1 = timer(2000);
+    source1.subscribe(val => {
       this.dataView = [...this.dataViewNew];
-    }, 500);
+      this.spinner.hide();
+    })
+   
   }
 
   getHrmMeetingPerson(element1, fullName = null) {
@@ -311,12 +311,9 @@ export class EditDetailComponent implements OnInit, OnChanges {
 
   findNodeInTree(list, nodeId, element1): any {
     for (let i = 0; i < list.length; i++) {
-      console.log("list[i].data", list[i].data)
-      console.log("nodeId", nodeId)
       if (list[i].data === nodeId ) {
          element1.columnValue = list[i];
         
-
         }else if (Array.isArray(list[i].children) && list[i].children.length) {
           this.findNodeInTree(list[i].children, nodeId, element1);
         }
@@ -607,7 +604,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
   }
 
   getEmployeePage(orgId, element1) {
-    const queryParams = queryString.stringify({ orgId: orgId, pageSize: 100000000 });
+    const queryParams = queryString.stringify({ orgId: orgId, pageSize: 100000 });
     this.apiService.getEmployeePage(queryParams).subscribe(results => {
       if (results.status === 'success') {
         const options = results.data.dataList.data.map(d => {
