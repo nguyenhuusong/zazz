@@ -46,7 +46,7 @@ export class ChonLichHopComponent implements OnInit, OnChanges {
       },
       customButtons: {
         myCustomButton: {
-          text: 'Tháng 3, 2022 '
+          // text: this.calendarApi
         }
       },
       headerToolbar: {
@@ -140,6 +140,7 @@ export class ChonLichHopComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
+    console.log('this.calendarApi', this.calendarApi.today())
   }
 
   ngAfterViewChecked(): void {

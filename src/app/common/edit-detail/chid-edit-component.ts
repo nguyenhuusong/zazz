@@ -333,6 +333,12 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
     }
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.element && this.element && this.element.columnValue) {
+      console.log('fdsfdsf', this.element.columnValue)
+    }
+  }
+
   ngAfterViewChecked() {
     this.changeDetector.detectChanges();
   }
@@ -1456,7 +1462,7 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
                   <p-dialog header="Thêm thành viên" [(visible)]="newMember" [style]="{width: '415px'}">
                   <div class="list-member">
                     <div class="fields search">
-                      <input type="text" placeholder="Tìm kiếm">
+                      <input type="text" placeholder="Tìm kiếm" [(ngModel)]="searchText" (change)="searchEm()">
                       <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M9.05536 2.5748C5.47625 2.5748 2.5748 5.47625 2.5748 9.05536C2.5748 12.6345 5.47625 15.5359 9.05536 15.5359C10.7206 15.5359 12.2392 14.9078 13.3871 13.8756L13.8756 13.3871C14.9078 12.2392 15.5359 10.7206 15.5359 9.05536C15.5359 5.47625 12.6345 2.5748 9.05536 2.5748ZM15.871 14.3507C17.0085 12.8888 17.6859 11.0512 17.6859 9.05536C17.6859 4.28884 13.8219 0.424805 9.05536 0.424805C4.28884 0.424805 0.424805 4.28884 0.424805 9.05536C0.424805 13.8219 4.28884 17.6859 9.05536 17.6859C11.0512 17.6859 12.8888 17.0085 14.3507 15.871L18.4998 20.0201L20.0201 18.4998L15.871 14.3507Z" fill="#2B2F33" fill-opacity="0.6"/>
                       </svg>
@@ -1486,9 +1492,11 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
     @Input() modelFields;
     @Input() submit = false;
     @Input() dataView;
+    @Output() searchMember = new EventEmitter<any>();
     members = [];
     selectMembers =[];
-    newMember = false
+    newMember = false;
+    searchText = '';
     constructor(
       private apiService: ApiHrmService
     ) { }
@@ -1511,7 +1519,9 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
       }
       this.element.options = [...this.element.options]
     }
-
+    searchEm() {
+      this.searchMember.emit(this.searchText);
+    }
     activeName(i) {
       for(let index in this.selectMembers) {
         if(index == i) {

@@ -131,8 +131,12 @@ export class EditDetailComponent implements OnInit, OnChanges {
           } else if (element1.field_name === 'work_cds') {
             this.getWorkTimes(element1, null)
           } else if (element1.field_name === 'empId') {
-            const root_orgId = this.getValueByKey('organizeId');
-            this.getEmployeePage(root_orgId, element1);
+            let root_orgId = this.getValueByKey('organizeId');
+            if(!root_orgId){
+              root_orgId = this.getValueByKey('organize_id');
+            }
+            // this.getEmployeePage(root_orgId, element1)
+            source.subscribe(val =>this.getEmployeePage(root_orgId, element1));
           } else if (element1.field_name === 'shift_cds') {
             this.getWorkShifts(element1, null)
           } else if (element1.field_name === 'work_cd') {
@@ -257,8 +261,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
     }, 500);
   }
 
-  getHrmMeetingPerson(element1) {
-    const queryParams = queryString.stringify({ offSet: 0, pageSize: 50 })
+  getHrmMeetingPerson(element1, fullName = null) {
+    const queryParams = queryString.stringify({ offSet: 0, pageSize: 50, fullName: fullName })
     this.apiService.getHrmMeetingPerson(queryParams).subscribe( res => {
       if(res.status === 'success') {
         element1.options = [...res.data.meetingProperties];
@@ -663,7 +667,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
             value: `${d.organizeId}`
           }
         });
-        // element1.columnValue = element1.columnValue ? element1.columnValue.toLowerCase() : ''
+        element1.columnValue = element1.columnValue ? element1.columnValue.toLowerCase() : ''
       }
     })
   }
@@ -1171,6 +1175,10 @@ export class EditDetailComponent implements OnInit, OnChanges {
       }), error => {
         this.spinner.hide();
       };
+  }
+
+  memberGetQuery(event, element) {
+    this.getHrmMeetingPerson(element, event)
   }
 
   quaylai(data) {

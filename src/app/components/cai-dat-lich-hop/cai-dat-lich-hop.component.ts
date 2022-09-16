@@ -250,6 +250,10 @@ export class CaiDatLichHopComponent implements OnInit {
     this.router.navigate(['/cai-dat/cai-dat-lich-hop/them-moi-lich-hop'], { queryParams: params });
   }
 
+  toManagerRoom(): void {
+    this.router.navigate(['/cai-dat/cai-dat-lich-hop/danh-sach-phong-hop']);
+  }
+
   importSuccess(): void {
     this.load();
     this.showImportExcel = false;

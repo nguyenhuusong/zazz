@@ -33,7 +33,7 @@
                         <app-type-checkboxradiolist [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'checkboxradiolist'"></app-type-checkboxradiolist>
                         <app-type-linkurl [element]="element" *ngIf="element.columnType === 'linkUrl'" [dataView]="dataView"></app-type-linkurl>
                         <app-type-linkurl-drag [element]="element" *ngIf="element.columnType === 'linkUrlDrag'" [dataView]="dataView"></app-type-linkurl-drag>
-                        <app-type-members [element]="element" *ngIf="element.columnType === 'members'" [modelFields]="modelFields" [dataView]="dataView"></app-type-members>
+                        <app-type-members (searchMember)="memberGetQuery($event, element)" [element]="element" *ngIf="element.columnType === 'members'" [modelFields]="modelFields" [dataView]="dataView"></app-type-members>
                         <app-type-chips [element]="element" *ngIf="element.columnType === 'chips'" [modelFields]="modelFields" [dataView]="dataView"></app-type-chips>
                         <app-type-listMch [element]="element" *ngIf="element.columnType === 'listMch'" [modelFields]="modelFields" [dataView]="dataView"></app-type-listMch>
                         <app-type-roomImg [element]="element" *ngIf="element.columnType === 'roomImg'" [modelFields]="modelFields" [dataView]="dataView"></app-type-roomImg>
