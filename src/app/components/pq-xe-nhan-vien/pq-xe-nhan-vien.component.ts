@@ -449,7 +449,8 @@ export class PqXeNhanVienComponent implements OnInit {
           this.showVehicleCard = this.modelTM.endTimeTM ? true : false;
           this.displayCreateVehicleCard = true;
           this.modelTM.cusId = event.rowData.custId;
-          
+          this.modelTM.noteTM = results.data.note;
+          this.modelTM.vehicleColorTM = results.data.vehicleColor;
           this.imageLinksCard[0].cardVehicleId = this.modelTM.cardVehicleId;
           this.imageLinksCard[1].cardVehicleId = this.modelTM.cardVehicleId;
           this.imageLinksCard[2].cardVehicleId = this.modelTM.cardVehicleId;
