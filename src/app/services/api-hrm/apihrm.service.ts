@@ -525,8 +525,8 @@ export class ApiHrmService {
   delMeetingInfo(id): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v2/meeting/DelMeetingInfo?meet_ud=` + id, this.options);
   }
-  getMeetRooms(filter = ''): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v2/meeting/GetMeetRooms?filter=${filter}`, this.options);
+  getMeetRooms(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/meeting/GetMeetRooms?${queryParams}`, this.options);
   }
 
   // meetingFloor
