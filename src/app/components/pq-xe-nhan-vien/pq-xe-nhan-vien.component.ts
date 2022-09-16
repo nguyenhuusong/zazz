@@ -65,7 +65,26 @@ export class PqXeNhanVienComponent implements OnInit {
   departmentList = [];
   listEmployees = [];
   displayVehicleApprove = false;
-  imageLinksCard = []
+  imageLinksCard = [
+    {
+      cardVehicleId: null,
+      id: null,
+      type: "LICENSE",
+      url: '',
+    },
+    {
+      cardVehicleId: null,
+      id: null,
+      type: "LICENSE",
+      url: '',
+    },
+    {
+      cardVehicleId: null,
+      id: null,
+      type: "LICENSE_PLATE",
+      url: '',
+    },
+  ]
   listStatus = [
     { label: 'Tất cả', value: -1 },
     { label: 'Mới tạo', value: 0 },
@@ -107,26 +126,6 @@ export class PqXeNhanVienComponent implements OnInit {
       { label: 'Phân quyền' },
       { label: 'Danh sách xe nhân viên' },
     ];
-    this.imageLinksCard = [
-      {
-        cardVehicleId: null,
-        id: null,
-        type: "LICENSE",
-        url: '',
-      },
-      {
-        cardVehicleId: null,
-        id: null,
-        type: "LICENSE",
-        url: '',
-      },
-      {
-        cardVehicleId: null,
-        id: null,
-        type: "LICENSE_PLATE",
-        url: '',
-      },
-    ]
     this.model = {
       organizeId: '',
       orgId: '',
@@ -708,7 +707,7 @@ export class PqXeNhanVienComponent implements OnInit {
     this.displayCreateVehicleCard = true;
     this.modelTM.vehicleColorTM = '';
     this.modelTM.noteTM = '';
-    this.modelTM.imageLinks = this.imageLinksCard;
+    this.modelTM.imageLinks = cloneDeep(this.imageLinksCard);
   }
 
   getEmployeeVehicleInfo() {
