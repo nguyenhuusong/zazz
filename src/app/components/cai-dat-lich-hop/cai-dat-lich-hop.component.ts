@@ -9,6 +9,7 @@ import { CustomTooltipComponent } from 'src/app/common/ag-component/customtoolti
 import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-cai-dat-lich-hop',
@@ -38,7 +39,7 @@ export class CaiDatLichHopComponent implements OnInit {
       pageSize: 15,
       Floor_No: '',
       Meet_status: '',
-      Time: '',
+      Time: null,
   }
   statusRoom = [
     {
@@ -145,6 +146,7 @@ export class CaiDatLichHopComponent implements OnInit {
   load() {
     this.columnDefs = []
     this.spinner.show();
+    this.model.Time = moment(this.model.Time).format('HH:mm')
     const queryParams = queryString.stringify(this.model);
     this.apiService.getMeetingPage(queryParams).subscribe(
       (results: any) => {

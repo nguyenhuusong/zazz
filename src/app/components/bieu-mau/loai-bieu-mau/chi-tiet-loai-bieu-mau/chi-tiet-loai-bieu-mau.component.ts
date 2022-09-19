@@ -43,7 +43,7 @@ export class ChiTietLoaiBieuMauComponent implements OnInit, OnDestroy {
 
   getDetail() {
     const queryParams = queryString.stringify({formTypeId: this.formTypeId});
-    this.apiService.getFormsTypeInfo(this.formTypeId)
+    this.apiService.getFormsTypeInfo(queryParams)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {
         if (results.status === 'success') {

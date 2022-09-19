@@ -233,6 +233,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
             this.getWorkplaces(element1);
           } else if(element1.field_name === 'floor_No'){
             this.getFloor(element1);
+            this.callback1.emit(element1)
           } else {
             if (element1.columnObject) {
               this.getCustObjectListNew(element1);
@@ -1067,7 +1068,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
           data.columnValue = data.columnValue ? data.columnValue.data : null;
           delete data.options;
         }else if (data.columnType === 'selectTrees') {
-          data.columnValue =data.columnValue.length > 0 ? data.columnValue.map(d => d.orgId).toString() : null;
+          data.columnValue = data.columnValue && data.columnValue.length > 0 ? data.columnValue.map(d => d.orgId).toString() : null;
           delete data.options;
         } else if (data.columnType === 'currency') {
           data.columnValue = numeral(data.columnValue).value()

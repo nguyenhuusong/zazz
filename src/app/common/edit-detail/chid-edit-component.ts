@@ -322,6 +322,7 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
   @Input() modelFields;
   @Input() submit = false;
   loading = false;
+  floorID = '';
   constructor(
     private apiService: ApiHrmService,
     private changeDetector: ChangeDetectorRef,
@@ -385,12 +386,13 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
     }else if (field_name === 'CompanyId') {
       this.dataView.forEach(element => {
         element.fields.forEach(element1 => {
-          if (element1.field_name === 'EmployeeId') {
-            this.loading = true;
-            this.getUserByPushByEmpId(value, element1)
-          }else if (element1.field_name === 'PayrollTypeId') {
+          if (element1.field_name === 'PayrollTypeId') {
             this.getPayrollTypeList(value, element1)
           }
+          // if (element1.field_name === 'EmployeeId') {
+          //   this.loading = true;
+          //   this.getUserByPushByEmpId(value, element1)
+          // }else 
         });
       });
     } else if (field_name === 'type_salary') {
@@ -432,14 +434,16 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
           } else if (element1.field_name === 'jobId') {
             const positionTypeCd = await this.getValueByKey('positionCd');
             this.getJobTitles(value, element1, positionTypeCd)
-          } else if (element1.field_name === 'full_name' || element1.field_name === 'empId') {
+          } else if (element1.field_name === 'full_name' || element1.field_name === 'empId' || element1.field_name === 'EmployeeId') {
             this.getUserByPush(value, element1)
           } else if (element1.field_name === 'work_cd') {
             this.getWorkTime(element1, value)
           }else if(element1.field_name === 'CompanyId') {
-            console.log('fjdosfjiodifj')
             this.getCompaniesByOrganize(element1, value)
           }
+          // else if(element1.field_name === 'EmployeeId') {
+
+          // }
         });
       });
     } else if (field_name === 'organize_id') {
@@ -503,19 +507,26 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
     } else if (field_name === 'holi_type') {
       this.callback.emit(value);
     } else if(field_name === 'floor_No') {
+      this.floorID = value
       this.dataView.forEach(element => {
         element.fields.forEach(async element1 => {
           if(element1.field_name === 'roomId'){
             this.getRooms(element1, value);
+            const emitType = {
+              name: 'floor_no',
+              id: value
+            }
+            this.callback.emit(emitType);
           }
         })
       })
-
     } else if(field_name === 'roomId'){
       const emitType = {
         name: 'roomId',
-        id: value
+        id: value,
+        floorID: this.floorID
       }
+      console.log('emitType', emitType)
       this.callback.emit(emitType);
     }
   }
@@ -1359,7 +1370,7 @@ export class AppTypeLinkUrlRadioListComponent implements OnInit {
                     <div class="file-uploaded" *ngIf="uploadedFiles.length">
                       <h3 class="uploaded-title">Đã upload xong</h3>
                       <ul>
-                          <li class="d-flex middle bet" *ngFor="let file of uploadedFiles; let i=index">{{file.name}} 
+                          <li class="d-flex middle bet" *ngFor="let file of uploadedFiles; let i=index">{{file}} 
                             <span (click)="removeImage(i)">
                                 <svg width="12" height="14" viewBox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                   <path d="M9.33366 5.33341V12.0001H2.66699V5.33341H9.33366ZM8.33366 0.666748H3.66699L3.00033 1.33341H0.666992V2.66675H11.3337V1.33341H9.00033L8.33366 0.666748ZM10.667 4.00008H1.33366V12.0001C1.33366 12.7334 1.93366 13.3334 2.66699 13.3334H9.33366C10.067 13.3334 10.667 12.7334 10.667 12.0001V4.00008Z" fill="#FF3B49"/>
@@ -1392,7 +1403,7 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
     this.dataView.forEach(element => {
       element.fields.forEach(async element1 => {
         if (((element1.field_name === 'AttachName') || (element1.field_name === 'attached_name') || (element1.field_name === 'attachName')) && element1.columnValue ) {
-          this.uploadedFiles.push({name: element1.columnValue});
+          this.uploadedFiles = element1.columnValue.split(',')
         } 
       });
     });
@@ -1430,7 +1441,7 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
             this.dataView.forEach(element => {
               element.fields.forEach(async element1 => {
                 if ((element1.field_name === 'AttachName') || (element1.field_name === 'attached_name') || (element1.field_name === 'attachName')) {
-                  this.uploadedFiles.push({name: event.currentFiles[index].name});
+                  this.uploadedFiles.push(event.currentFiles[index].name);
                   element1.columnValue = this.uploadedFiles.map(d => d.name).toString();
                 } 
               });
@@ -1460,6 +1471,7 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
     
             })
         }
+        console.log('element1.columnValue', this.element.columnValue)
        
       }
 
@@ -1475,13 +1487,15 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
                     <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
                     <div class="in d-flex bet middle">
                       <ul class="members-filed">
-                        <li *ngFor="let user of selectMembers; let i = index" (click)="activeName(i)">
-                          <span class="avatar-radius">
-                          <img src="{{user.avatarUrl}}">
-                          </span>
-                          <span >{{user.fullName}}</span>
-                        </li>
-                        <li *ngIf="selectMembers.length > 0"><span class="more-member">+12</span></li>
+                        <ng-container *ngFor="let user of selectMembers; let i = index">
+                          <li *ngIf="i < 33" (click)="activeName(i)" >
+                              <span class="avatar-radius">
+                              <img src="{{user.avatarUrl}}">
+                              </span>
+                              <span >{{user.fullName}}</span>
+                          </li>
+                        </ng-container>
+                        <li *ngIf="selectMembers.length > 33"><span class="more-member">+12</span></li>
                       </ul>
                       <span class="add-member" (click)="addNewMember()">
                         <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1499,8 +1513,8 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
                   <p-dialog header="Thêm thành viên" [(visible)]="newMember" [style]="{width: '415px'}">
                   <div class="list-member">
                     <div class="fields search">
-                      <input type="text" placeholder="Tìm kiếm" [(ngModel)]="searchText" (change)="searchEm()">
-                      <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <input type="text" placeholder="Tìm kiếm" [(ngModel)]="searchText">
+                      <svg class="cur-pointer" (click)="searchEm()" width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M9.05536 2.5748C5.47625 2.5748 2.5748 5.47625 2.5748 9.05536C2.5748 12.6345 5.47625 15.5359 9.05536 15.5359C10.7206 15.5359 12.2392 14.9078 13.3871 13.8756L13.8756 13.3871C14.9078 12.2392 15.5359 10.7206 15.5359 9.05536C15.5359 5.47625 12.6345 2.5748 9.05536 2.5748ZM15.871 14.3507C17.0085 12.8888 17.6859 11.0512 17.6859 9.05536C17.6859 4.28884 13.8219 0.424805 9.05536 0.424805C4.28884 0.424805 0.424805 4.28884 0.424805 9.05536C0.424805 13.8219 4.28884 17.6859 9.05536 17.6859C11.0512 17.6859 12.8888 17.0085 14.3507 15.871L18.4998 20.0201L20.0201 18.4998L15.871 14.3507Z" fill="#2B2F33" fill-opacity="0.6"/>
                       </svg>
                     </div>
@@ -1557,7 +1571,37 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
       this.element.options = [...this.element.options]
     }
     searchEm() {
-      this.searchMember.emit(this.searchText);
+      // this.searchMember.emit(this.searchText);
+      const queryParams = queryString.stringify({ offSet: 0, pageSize: 50, fullName: this.searchText })
+      this.apiService.getHrmMeetingPerson(queryParams).subscribe( res => {
+        if(res.status === 'success') {
+          this.element.options = [...res.data.meetingProperties];
+          this.element.options.forEach(member => {
+            member.isCheck = false;
+            member.child.forEach(user => {
+              user.isCheck = false;
+            })
+          })
+
+          const dataNew = this.element.columnValue ?  this.element.columnValue.split(',') : [];
+          for(let item of this.element.options) {
+            for(let item1 of item.child) {
+              if(dataNew.indexOf(item1.userId) > -1) {
+                item1.isCheck = true;
+                this.selectMembers.push({...item1, isCheck: this.selectMembers.length === 0 ? true : false});
+              }
+              const isCheckAll =item.child.filter(d => d.isCheck === true);
+              if(isCheckAll.length === item.child.length) {
+                item.isCheck = true;
+              }
+            }
+          
+          }
+          this.element.options = [...this.element.options]
+        }
+      })
+
+
     }
     activeName(i) {
       for(let index in this.selectMembers) {

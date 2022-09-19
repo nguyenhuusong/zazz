@@ -3,6 +3,8 @@ import { Calendar, CalendarOptions, FullCalendarComponent } from '@fullcalendar/
 import { ApiService } from 'src/app/services/api.service';
 import * as queryString from 'querystring';
 import { dateFormatter } from 'src/app/utils/common/function-common';
+import * as moment from 'moment';
+import timeGridPlugin from '@fullcalendar/timegrid';
 
 @Component({
   selector: 'app-chon-lich-hop',
@@ -27,6 +29,7 @@ export class ChonLichHopComponent implements OnInit, OnChanges {
   constructor(
     private apiService: ApiService
   ) {
+    
     this.calendarOptions = {
       dateClick: (info) => {
         // const getDay = new Date();
@@ -47,7 +50,8 @@ export class ChonLichHopComponent implements OnInit, OnChanges {
       },
       customButtons: {
         myCustomButton: {
-          // text: new date()
+          text: moment().format('MMM DD, YYYY')
+          // text: ''+currentDate,
         }
       },
       headerToolbar: {
@@ -70,14 +74,22 @@ export class ChonLichHopComponent implements OnInit, OnChanges {
           buttonText: 'Ngày'
         },
       },
+      displayEventTime: true,
       editable: false,
       selectable: true,
       selectMirror: false,
-      weekends: true,
+      plugins: [ timeGridPlugin ],
+      // timeGridWeek
       initialView: 'dayGridMonth',
+      eventMinHeight: 120,
+      allDayText: '',
       slotDuration: '00:30:00', // Bao nhiêu phút thì tách thành 1 khoảng thời gian
       scrollTime: '10:00:00',
       eventTimeFormat: { // like '14:30:00'
+        // hour: '2-digit',
+        // minute: '2-digit',
+        // second: '2-digit',
+        // hour12: false
         hour: '2-digit',
         minute: '2-digit',
         second: '2-digit',
@@ -90,7 +102,7 @@ export class ChonLichHopComponent implements OnInit, OnChanges {
             <div class="text-bold"><b>${event.title}</b></div>
             <div class = "grid">
               <div class="col-6">
-                <span>Phòng school</span>
+                <span>${event.title}</span>
               </div>
               <div class="col-6 text-right">
                 <span>${event.start.getHours() + ':' + event.start.getMinutes()}</span> -  <span>${event.end.getHours() + ':' + event.start.getMinutes()}</span>
@@ -101,6 +113,14 @@ export class ChonLichHopComponent implements OnInit, OnChanges {
       },
       events: []
     };
+  }
+
+
+  currentDate = null
+  test() {
+    // console.log(this.calendarApi.getCurrentData());
+    console.log(this.calendarApi.getDate());
+    this.currentDate = this.calendarApi.getDate()
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -139,9 +159,9 @@ export class ChonLichHopComponent implements OnInit, OnChanges {
       resourceId: data.roomId || '--'
     };
   }
-
   ngOnInit(): void {
-    console.log('this.calendarApi', this.calendarApi.today())
+    this.currentDate = this.calendarApi.getDate();
+    this.test();
   }
 
   ngAfterViewChecked(): void {
@@ -158,7 +178,6 @@ export class ChonLichHopComponent implements OnInit, OnChanges {
   }
 
   handleChooseTime(data): void {
-    console.log('data:', data);
     this.showChooseDate = false;
     this.chooseDate.emit(data);
     // let calendarApi = this.calendarComponent.getApi();
