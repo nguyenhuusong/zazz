@@ -1347,7 +1347,7 @@ export class AppTypeLinkUrlRadioListComponent implements OnInit {
   template: `   
             <div class="linkurl-drag">
             <div class="wrap-upload">
-                      <p-fileUpload [chooseLabel]="''" [chooseIcon]="''" [multiple]="true" [showUploadButton]="false" [showCancelButton]="false" [customUpload]="true" name="demo[]" url="./upload.php" 
+                      <p-fileUpload *ngIf="!isUpload" [chooseLabel]="''" [chooseIcon]="''" [multiple]="true" [showUploadButton]="false" [showCancelButton]="false" [customUpload]="true" name="demo[]" url="./upload.php" 
                        (onSelect)="uploadHandler($event)" [maxFileSize]="10000000">
                           <ng-template pTemplate="toolbar">
 
@@ -1391,6 +1391,7 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
   downloadURL = '';
   imagesUpload = '';
   fileType: any = ''
+  isUpload = false;
   constructor(
     private apiService: ApiHrmService,
     private spinner: NgxSpinnerService,
@@ -1422,6 +1423,7 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
   
   uploadHandler(event) {
       //  this.uploadedFiles = []
+      this.isUpload = true;
       this.spinner.show();
       for(let index in event.currentFiles) {
         const getDAte = new Date();
@@ -1471,6 +1473,10 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
         console.log('element1.columnValue', this.element.columnValue)
        
       }
+
+      setTimeout(() => {
+        this.isUpload = false;
+      }, 1000);
   }
 }
 // Members
