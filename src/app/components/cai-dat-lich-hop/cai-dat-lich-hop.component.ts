@@ -42,12 +42,16 @@ export class CaiDatLichHopComponent implements OnInit {
   }
   statusRoom = [
     {
-      label: 'Hoạt Động',
-      value: 1,
+      label: 'Đã họp',
+      value: "Đã họp",
     },
     {
-      label: 'Không hoạt Động',
-      value: 1
+      label: 'Đang họp',
+      value: "Đang họp"
+    },
+    {
+      label: 'Sắp họp',
+      value: "Sắp họp"
     }
   ]
   totalRecord = 0;

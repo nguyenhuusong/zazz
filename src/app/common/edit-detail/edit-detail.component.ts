@@ -215,7 +215,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
           } else if (element1.field_name === 'sub_prod_cd' && element1.columnType === 'checkboxList') {
             this.getProductProjs(element1);
           } else if (element1.field_name === 'roomId') {
-            this.getMeetRooms(element1);
+            const floorId = this.getValueByKey('floor_No');
+            this.getMeetRooms(element1, floorId);
           } else if (element1.field_name === 'content_type' || element1.field_name === 'isPublish') {
             this.GetCustObjectList(element1);
           } else if (element1.field_name === 'vehicleTypeId') {
@@ -756,17 +757,22 @@ export class EditDetailComponent implements OnInit, OnChanges {
   }
 
 
-  getMeetRooms(element1): void {
-    this.apiService.getMeetRooms()
+  getMeetRooms(element1, floorId): void {
+    const queryParams = queryString.stringify( { filter: '', floor_No: floorId })
+    this.apiService.getMeetRooms(queryParams)
       .subscribe(results => {
         if (results.status === 'success') {
-          element1.options = cloneDeep(results.data).map(d => {
-            return {
-              label: `${d.room_name}`,
-              value: `${d.roomId}`
-            };
-          });
-          element1.columnValue = element1.columnValue ? element1.columnValue.toLowerCase() : '';
+          if(floorId){
+            element1.options = cloneDeep(results.data).map(d => {
+              return {
+                label: `${d.room_name}`,
+                value: `${d.roomId}`
+              };
+            });
+            element1.columnValue = element1.columnValue ? element1.columnValue.toLowerCase() : '';
+          }else{
+            element1.options = []
+          }
         }
       });
   }
