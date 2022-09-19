@@ -73,6 +73,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
   ngOnInit(): void {
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
+      { label: 'Hoạt động' },
       { label: 'Tài liệu' },
       { label: this.dataRouter.title },
     ];
@@ -295,7 +296,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa tài liệu?',
       accept: () => {
-        const queryParams = queryString.stringify({form_id: event.rowData.form_id});
+        const queryParams = queryString.stringify({formId: event.rowData.form_id});
         this.apiService.delFormsInfo(queryParams).subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa tài liệu thành công!' });
@@ -560,7 +561,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
           class: 'btn-primary mr5',
         },
         {
-          onClick: this.handleDelete.bind(this),
+          onClick: this.handleDelete2.bind(this),
           label: 'Xóa tài liệu',
           icon: 'fa fa-trash',
           class: 'btn-primary mr5',
@@ -602,6 +603,22 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
     this.formTypeId2 = event.rowData.form_type_id;
     this.addNewPopup2 = true;
     this.getDetail();
+  }
+  handleDelete2(event) {
+    this.confirmationService.confirm({
+      message: 'Bạn có chắc chắn muốn xóa tài liệu?',
+      accept: () => {
+        const queryParams = queryString.stringify({formId: event.rowData.form_type_id});
+        this.apiService.delFormsTypeInfo(queryParams).subscribe((results: any) => {
+          if (results.status === 'success') {
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa tài liệu thành công' });
+            this.load2();
+          } else {
+            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+          }
+        });
+      }
+    });
   }
 
   cancel2() {

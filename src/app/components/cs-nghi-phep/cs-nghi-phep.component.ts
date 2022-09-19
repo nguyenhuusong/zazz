@@ -403,6 +403,7 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
   listViews = []
   detailInfo = []
   getLeaveInfo(id = null) {
+    this.listViews = []
     this.addEdit = true;
     this.leaveId = id;
     const queryParams = queryString.stringify({ id: id });

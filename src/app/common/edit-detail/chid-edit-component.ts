@@ -386,12 +386,13 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
     }else if (field_name === 'CompanyId') {
       this.dataView.forEach(element => {
         element.fields.forEach(element1 => {
-          if (element1.field_name === 'EmployeeId') {
-            this.loading = true;
-            this.getUserByPushByEmpId(value, element1)
-          }else if (element1.field_name === 'PayrollTypeId') {
+          if (element1.field_name === 'PayrollTypeId') {
             this.getPayrollTypeList(value, element1)
           }
+          // if (element1.field_name === 'EmployeeId') {
+          //   this.loading = true;
+          //   this.getUserByPushByEmpId(value, element1)
+          // }else 
         });
       });
     } else if (field_name === 'type_salary') {
@@ -433,14 +434,16 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
           } else if (element1.field_name === 'jobId') {
             const positionTypeCd = await this.getValueByKey('positionCd');
             this.getJobTitles(value, element1, positionTypeCd)
-          } else if (element1.field_name === 'full_name' || element1.field_name === 'empId') {
+          } else if (element1.field_name === 'full_name' || element1.field_name === 'empId' || element1.field_name === 'EmployeeId') {
             this.getUserByPush(value, element1)
           } else if (element1.field_name === 'work_cd') {
             this.getWorkTime(element1, value)
           }else if(element1.field_name === 'CompanyId') {
-            console.log('fjdosfjiodifj')
             this.getCompaniesByOrganize(element1, value)
           }
+          // else if(element1.field_name === 'EmployeeId') {
+
+          // }
         });
       });
     } else if (field_name === 'organize_id') {
@@ -1364,11 +1367,10 @@ export class AppTypeLinkUrlRadioListComponent implements OnInit {
                           </ng-template>
                       </p-fileUpload>
                     </div>
-                    uploadedFiles {{ uploadedFiles | json }}
                     <div class="file-uploaded" *ngIf="uploadedFiles.length">
                       <h3 class="uploaded-title">Đã upload xong</h3>
                       <ul>
-                          <li class="d-flex middle bet" *ngFor="let file of uploadedFiles; let i=index">{{file.name}} 
+                          <li class="d-flex middle bet" *ngFor="let file of uploadedFiles; let i=index">{{file}} 
                             <span (click)="removeImage(i)">
                                 <svg width="12" height="14" viewBox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                   <path d="M9.33366 5.33341V12.0001H2.66699V5.33341H9.33366ZM8.33366 0.666748H3.66699L3.00033 1.33341H0.666992V2.66675H11.3337V1.33341H9.00033L8.33366 0.666748ZM10.667 4.00008H1.33366V12.0001C1.33366 12.7334 1.93366 13.3334 2.66699 13.3334H9.33366C10.067 13.3334 10.667 12.7334 10.667 12.0001V4.00008Z" fill="#FF3B49"/>
@@ -1401,7 +1403,7 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
     this.dataView.forEach(element => {
       element.fields.forEach(async element1 => {
         if (((element1.field_name === 'AttachName') || (element1.field_name === 'attached_name') || (element1.field_name === 'attachName')) && element1.columnValue ) {
-          this.uploadedFiles.push({name: element1.columnValue});
+          this.uploadedFiles = element1.columnValue.split(',')
         } 
       });
     });
@@ -1439,9 +1441,8 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
             this.dataView.forEach(element => {
               element.fields.forEach(async element1 => {
                 if ((element1.field_name === 'AttachName') || (element1.field_name === 'attached_name') || (element1.field_name === 'attachName')) {
-                  this.uploadedFiles.push({name: event.currentFiles[index].name});
+                  this.uploadedFiles.push(event.currentFiles[index].name);
                   element1.columnValue = this.uploadedFiles.map(d => d.name).toString();
-                  element1.columnValue = [...element1.columnValue]
                 } 
               });
             });

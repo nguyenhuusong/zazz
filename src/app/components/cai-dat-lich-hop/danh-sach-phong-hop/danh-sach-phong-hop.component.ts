@@ -31,7 +31,15 @@ export class DanhSachPhongHopComponent implements OnInit {
   getRowHeight;
   cards = [];
   first = 0;
-  model;
+  model = {
+    filter: '',
+    gridWidth: '',
+    offSet: 0,
+    pageSize: 15,
+    floor_No: '',
+    workplaceId: '',
+    roomId: '',
+  };
   totalRecord = 0;
   countRecord: any = {
     totalRecord: 0,
@@ -76,6 +84,7 @@ export class DanhSachPhongHopComponent implements OnInit {
       { label: 'Lịch họp'},
       { label: 'Quản lý phòng họp'},
     ];
+    this.getFloor();
     this.load();
   }
 
@@ -84,7 +93,10 @@ export class DanhSachPhongHopComponent implements OnInit {
       filter: '',
       gridWidth: '',
       offSet: 0,
-      pageSize: 15
+      pageSize: 15,
+      floor_No: '',
+      workplaceId: '',
+      roomId: '',
     };
   }
 
@@ -145,6 +157,45 @@ export class DanhSachPhongHopComponent implements OnInit {
       error => {
         this.spinner.hide();
        });
+  }
+
+  floors = []
+  getFloor() {
+    this.apiService.getFloorNo().subscribe(results => {
+      if (results.status === 'success') {
+        this.floors = (results.data).map(d => {
+          return { 
+            label: 'Tầng' + ' ' + d.floorNo, 
+            value: d.floorNo 
+          }
+        });
+      }
+    })
+  }
+
+  changeFloor() {
+    this.getRooms();
+  }
+
+  rooms = []
+  getRooms() {
+    const queryParams = queryString.stringify( { filter: '', floor_No: this.model.floor_No })
+    this.apiService.getMeetRooms(queryParams)
+      .subscribe(results => {
+        if (results.status === 'success') {
+          if(this.model.floor_No){
+            this.rooms = results.data.map(d => {
+              return {
+                label: d.room_name,
+                value: d.roomId,
+              }
+            })  
+          }else{
+            this.rooms = []
+          }
+          this.load();
+        }
+      });
   }
   
   showButtons(event: any) {

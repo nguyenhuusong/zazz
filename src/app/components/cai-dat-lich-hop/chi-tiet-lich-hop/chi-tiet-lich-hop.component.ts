@@ -6,6 +6,7 @@ import { MessageService } from 'primeng/api';
 import { flatMap, Subject, takeUntil } from 'rxjs';
 import { AgGridFn } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-chi-tiet-lich-hop',
@@ -22,7 +23,8 @@ export class ChiTietLichHopComponent implements OnInit, OnDestroy {
     private apiService: ApiHrmService,
     private activatedRoute: ActivatedRoute,
     private messageService: MessageService,
-    private router: Router
+    private router: Router,
+    private spinner: NgxSpinnerService,
   ) { }
   displayScreemForm = false;
   displaysearchUserMaster = false;
@@ -139,18 +141,22 @@ export class ChiTietLichHopComponent implements OnInit, OnDestroy {
   }
 
   setMeetRoomInfo(data): void {
+    this.spinner.show();
     const params = {
       ...this.detailInfo, group_fields: data, members: this.listsData
     };
     this.apiService.setMeetingInfo(params).subscribe((results: any) => {
       if (results.status === 'success') {
+        this.spinner.hide();
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data });
       this.onBack()
       } else {
         this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
+        this.spinner.hide();
       }
     }, error => {
       this.messageService.add({severity: 'error', summary: 'Thông báo', detail: 'Thao tác thất bại'});
+      this.spinner.hide();
     });
   }
 
