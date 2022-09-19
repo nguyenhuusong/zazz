@@ -170,8 +170,7 @@ export class ChiTietLichHopComponent implements OnInit, OnDestroy {
       this.getMeetingInfo();
     }else if( event.name === 'roomId'){
       this.showChooseCalander = true;
-      this.meetingInfo.roomId = event.id
-      console.log('this.meetingInfo', this.meetingInfo)
+      this.meetingInfo.roomId = event.id;
     }else {
       this.manhinh = 'Edit';
       this.onBack();
@@ -183,24 +182,30 @@ export class ChiTietLichHopComponent implements OnInit, OnDestroy {
   }
 
   theDateChoosed(event){
-    console.log('event', event)
     this.showChooseCalander = false;
-    this.listViews.forEach(element => {
-      element.fields.forEach(async element1 => {
-        if (element1.field_name === 'meet_at') {
-          element1.columnValue = new Date(event.meet_at)
-        } else if (element1.field_name === 'meet_start') {
-          const newMeeStart = `${event.meet_at} ${event.meet_start}`
-          element1.columnValue = event.meet_start
-        }else if (element1.field_name === 'meet_time') {
-          element1.columnValue = event.meet_time
-        }
+    if(!event){
+      this.showChooseCalander = false;
+    }else{
+      this.listViews.forEach(element => {
+        element.fields.forEach(async element1 => {
+          if (element1.field_name === 'meet_at') {
+            element1.columnValue = new Date(event.meet_at)
+          } else if (element1.field_name === 'meet_start') {
+            const newMeeStart = `${event.meet_at} ${event.meet_start}`
+            element1.columnValue = event.meet_start
+          }else if (element1.field_name === 'meet_time') {
+            element1.columnValue = event.meet_time
+          }
+        });
       });
-    });
+    }
   }
 
   addMoreTime() {
 
+  }
+  getValueElemetn(event) {
+    this.meetingInfo.floorNo = event.columnValue
   }
 }
 

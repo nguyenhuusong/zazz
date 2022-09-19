@@ -194,10 +194,10 @@
           </div>
       </div>
       <div class="col-sm-6 form-group">
-          <div class="field-group select" [ngClass]="modelTM.cusId ? 'valid' : 'invalid'">
+          <div class="field-group select" [ngClass]="modelTM?.cusId ? 'valid' : 'invalid'">
             <label for="">Nhân viên</label>
               <p-dropdown appendTo="body"  [baseZIndex]="100" 
-                  [options]="listUsers" [(ngModel)]="modelTM.cusId" [autoDisplayFirst]="false" name="cusId" [filter]="true">
+                  [options]="listUsers" [(ngModel)]="modelTM.cusId" (onChange)="onChangeUser($event)" [autoDisplayFirst]="false" name="cusId" [filter]="true">
                   <ng-template let-item pTemplate="selectedItem">
                       <span>{{item.label}}</span>
                   </ng-template>
@@ -228,12 +228,29 @@
         </div> -->
 
         <div class="col-sm-6">
-          <div class="field-group text label-8">
+          <div class="field-group select label-8">
             <label>Mã thẻ
               <span *ngIf="modelTM.vehicleTypeIdTM != 1" style="color:red">*</span>
             </label>
-            <input type="text" class="form-control" name="vehiclecardCd" [(ngModel)]="modelTM.vehiclecardCd"
-              id="vehiclecardCd" [required]="modelTM.vehicleTypeIdTM != 1" #vehiclecardCd="ngModel" placeholder="Mã thẻ">
+            <!-- <input type="text" class="form-control" name="vehiclecardCd" [(ngModel)]="modelTM.vehiclecardCd"
+              id="vehiclecardCd" [required]="modelTM.vehicleTypeIdTM != 1" #vehiclecardCd="ngModel" placeholder="Mã thẻ"> -->
+  
+              <p-dropdown 
+                appendTo="body" 
+                #vehiclecardCd="ngModel"
+                [required]="modelTM.vehicleTypeIdTM != 1"
+                [baseZIndex]="100" [autoDisplayFirst]="false" 
+                  [options]="listCard" [(ngModel)]="modelTM.vehiclecardCd" name="vehiclecardCd" >
+                  <ng-template let-item pTemplate="selectedItem">
+                      <span style="vertical-align:middle;">{{item.label}}</span>
+                  </ng-template>
+                  <ng-template let-car pTemplate="item">
+                      <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                          <div style="">{{car.label}}</div>
+                      </div>
+                  </ng-template>
+              </p-dropdown>
+
             <div *ngIf="vehiclecardCd.errors && (vehiclecardCd.dirty || vehiclecardCd.touched)"
               class="alert-validation alert-danger">
               <div *ngIf="vehiclecardCd.errors.required">Trường này bắt buộc nhập</div>

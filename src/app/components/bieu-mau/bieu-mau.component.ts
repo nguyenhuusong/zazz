@@ -8,7 +8,8 @@ import { Component, OnInit, ChangeDetectorRef, AfterViewChecked } from '@angular
 import * as queryString from 'querystring';
 import { AgGridFn } from 'src/app/common/function-common/common';
 import * as moment from 'moment';
-
+import { Subject, takeUntil } from 'rxjs';
+import { cloneDeep } from 'lodash';
 @Component({
   selector: 'app-bieu-mau',
   templateUrl: './bieu-mau.component.html',
@@ -49,6 +50,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
   data=[];
   formId = null;
   dataRouter = null;
+  indexTab = 0;
   constructor(
     private apiService: ApiHrmService,
     private spinner: NgxSpinnerService,
@@ -62,6 +64,12 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
     this.dataRouter = this.route.data['_value'];
    }
 
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   ngOnInit(): void {
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
@@ -71,6 +79,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
     this.getAgencyOrganizeMap();
     this.getOrgan();
     this.getFormTypes();
+    this.load();
   }
 
 
@@ -198,7 +207,12 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
   }
 
   find() {
-    this.load();
+    if(this.indexTab === 0){
+      this.load();
+    }else{
+      this.load2();
+    }
+    
   }
   
   changePageSize() {
@@ -434,13 +448,12 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
     const a: any = document.querySelector(".header");
     const b: any = document.querySelector(".sidebarBody");
     const c: any = document.querySelector(".bread-filter");
-    const d: any = document.querySelector(".bread-crumb");
+    // const d: any = document.querySelector(".bread-crumb");
     const e: any = document.querySelector(".paginator");
     this.loadjs++
-    console.log('dojfodisjf', this.heightGrid)
     if (this.loadjs === 5) {
       if (b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + d.clientHeight + e.clientHeight + 35;
+        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight +  e.clientHeight + 200;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       } else {
@@ -457,13 +470,192 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
     this.router.navigateByUrl('/chinh-sach/loai-tai-lieu');
   }
   addNewPopup = false;
+  formTypeId2
+  addNewPopup2 = false
   handleAdd(): void {
-    this.formId = null;
-    this.addNewPopup = true;
+    if(this.indexTab === 0){
+      this.formId = null;
+      this.addNewPopup = true;
+      this.addNewPopup2 = false;
+    }else{
+      this.formTypeId2 = null;
+      this.addNewPopup2 = true;
+      this.addNewPopup = false;
+    }
   }
 
   handleCallbackForm() {
     this.load();
     this.addNewPopup = false;
+  }
+
+  handleChange(event) {
+    console.log('event', event)
+    if(event.index === 1){
+      this.load2();
+    }else{
+      this.load();
+    }
+  }
+
+  query2 = {
+    filter: '',
+    organizeId: this.query.organizeId,
+    typeForm: null,
+    createDate: '',
+    offSet: 0,
+    pageSize: 15
+  };
+  listsData2 = []
+  cols2 = []
+  colsDetail2 = []
+  load2() {
+    this.query2.organizeId = this.query.organizeId;
+    this.columnDefs2 = []
+    this.spinner.show();
+    const query = {...this.query2};
+    if (query.createDate && typeof query.createDate !== 'string') {
+      query.createDate = moment(query.createDate).format('YYYY-MM-DD');
+    }
+    if (typeof this.query2.typeForm === 'object' && this.query && this.query.typeForm) {
+      query.typeForm = this.query2.typeForm.data;
+    } 
+    const queryParams = queryString.stringify(query);
+    this.apiService.getFormsTypePage(queryParams)
+    .subscribe(
+      (results: any) => {
+        this.listsData2 = results.data.dataList.data;
+        this.gridKey= results.data.dataList.gridKey
+        if (this.query2.offSet === 0) {
+          this.cols2 = results.data.gridflexs;
+          this.colsDetail2 = results.data.gridflexdetails ? results.data.gridflexdetails : [];
+        }
+        this.initGrid2();
+        this.countRecord.totalRecord = results.data.dataList.recordsTotal;
+        this.countRecord.totalRecord = results.data.dataList.recordsTotal;
+        this.countRecord.currentRecordStart = results.data.dataList.recordsTotal === 0 ? this.query2.offSet = 0 : this.query2.offSet + 1;
+        if ((results.data.dataList.recordsTotal - this.query2.offSet) > this.query2.pageSize) {
+          this.countRecord.currentRecordEnd = this.query2.offSet + Number(this.query2.pageSize);
+        } else {
+          this.countRecord.currentRecordEnd = results.data.dataList.recordsTotal;
+          setTimeout(() => {
+            const noData = document.querySelector('.ag-overlay-no-rows-center');
+            if (noData) { noData.innerHTML = 'Không có kết quả phù hợp' }
+          }, 100);
+        }
+        this.spinner.hide();
+      },
+      error => {
+        this.spinner.hide();
+      });
+  }
+
+  showButtons2(event: any) {
+    return {
+      buttons: [
+        {
+          onClick: this.handleEdit2.bind(this),
+          label: 'Thông tin chi tiết',
+          icon: 'pi pi-tablet',
+          class: 'btn-primary mr5',
+        },
+        {
+          onClick: this.handleDelete.bind(this),
+          label: 'Xóa tài liệu',
+          icon: 'fa fa-trash',
+          class: 'btn-primary mr5',
+        },
+      ]
+    };
+  }
+  columnDefs2 = []
+  initGrid2() {
+    this.columnDefs2 = [
+      {
+        headerName: 'Stt',
+        filter: '',
+        maxWidth: 120,
+        pinned: 'left',
+        cellRenderer: params => {
+          return params.rowIndex + 1
+        },
+        cellClass: ['border-right', 'no-auto'],
+        checkboxSelection: true,
+        headerCheckboxSelection: true,
+        headerCheckboxSelectionFilteredOnly: true,
+        field: 'checkbox2',
+        suppressSizeToFit: true,
+      },
+      ...AgGridFn(this.cols2.filter((d: any) => !d.isHide)),
+      {
+        headerName: 'Thao tác',
+        filter: '',
+        maxWidth: 120,
+        pinned: 'right',
+        cellRenderer: 'buttonAgGridComponent',
+        cellClass: ['border-right', 'no-auto'],
+        cellRendererParams: (params: any) => this.showButtons2(params),
+        field: 'checkbox'
+      }]
+  }
+  handleEdit2(event) {
+    this.formTypeId2 = event.rowData.form_type_id;
+    this.addNewPopup2 = true;
+    this.getDetail();
+  }
+
+  cancel2() {
+    this.query2 = {
+      organizeId: this.query.organizeId,
+      filter: '',
+      typeForm: '',
+      createDate: '',
+      offSet: 0,
+      pageSize: 10
+    }
+    this.load2();
+  }
+  listViews = []
+  detailInfo = []
+  getDetail() {
+    const queryParams = queryString.stringify({formTypeId: this.formTypeId2});
+    this.apiService.getFormsTypeInfo(queryParams)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(results => {
+        if (results.status === 'success') {
+          const listViews = cloneDeep(results.data.group_fields);
+          this.listViews = cloneDeep(listViews);
+          this.detailInfo = results.data;
+        }
+      });
+  }
+
+  setWorkApprove(event){
+    this.spinner.show();
+    const params = {
+      ...this.detailInfo, group_fields: event
+    };
+    this.apiService.setFormsTypeInfo(params)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((results: any) => {
+        if (results.status === 'success') {
+          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
+          this.spinner.hide();
+          this.addNewPopup2 = false;
+          this.load2();
+        } else {
+          this.messageService.add({
+            severity: 'error', summary: 'Thông báo',
+            detail: results.message
+          });
+          this.spinner.hide();
+        }
+      }), error => {
+        console.error('Error:', error);
+        this.spinner.hide();
+      };
+  }
+  quaylai(r) {
+    this.addNewPopup2 = false;
   }
 }

@@ -3,6 +3,7 @@ import { Calendar, CalendarOptions, FullCalendarComponent } from '@fullcalendar/
 import { ApiService } from 'src/app/services/api.service';
 import * as queryString from 'querystring';
 import { dateFormatter } from 'src/app/utils/common/function-common';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-chon-lich-hop',
@@ -47,7 +48,7 @@ export class ChonLichHopComponent implements OnInit, OnChanges {
       },
       customButtons: {
         myCustomButton: {
-          // text: new date()
+          text: moment().format('MMM DD, YYYY')
         }
       },
       headerToolbar: {
@@ -104,6 +105,7 @@ export class ChonLichHopComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    console.log('changes', changes)
     if (changes.meetingInfo && this.meetingInfo.roomId && this.meetingInfo.floorNo) {
       const queryParams = queryString.stringify(this.meetingInfo);
       this.apiService.getMeetRoomForCheck(queryParams)
@@ -158,7 +160,6 @@ export class ChonLichHopComponent implements OnInit, OnChanges {
   }
 
   handleChooseTime(data): void {
-    console.log('data:', data);
     this.showChooseDate = false;
     this.chooseDate.emit(data);
     // let calendarApi = this.calendarComponent.getApi();

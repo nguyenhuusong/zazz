@@ -89,9 +89,9 @@
                 <div class="icon col-12 pl-0" style="display: flex; flex-wrap: wrap;">
                     <div class="col-12">
                         <div class="field-group select mb-0">
-                            <label>Tầng họp</label>
+                            <label>Nơi làm việc</label>
                             <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
-                            [options]="floors" [(ngModel)]="model.Floor_No" name="Floor_No"
+                            [options]="floors" placeholder="---Chọn---" [(ngModel)]="model.Floor_No" name="Floor_No"
                             (onChange)="find()" >
                             <ng-template let-item pTemplate="selectedItem">
                                 <span>{{item.label}}</span>
@@ -104,7 +104,11 @@
                             </p-dropdown>
                         </div>
                     </div>
-                    
+                    <!-- <div class="field-group col-12">
+                        <label for="timeonly">Thời gian</label>
+                        <p-calendar [(ngModel)]="model.Time" [timeOnly]="true" inputId="timeonly"></p-calendar>
+                    </div>
+                     -->
                     <!-- <div class="col-6">
                         <div class="field-group select valid">
                             <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 

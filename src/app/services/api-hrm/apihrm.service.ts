@@ -1553,6 +1553,11 @@ export class ApiHrmService {
   checkTimeHrm(data): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/meeting/CheckTimeHrm`, data , this.options)
   }
+
+  getHrmCardByCustId(query): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/cardvehicle/GetHrmCardByCustId?${query}`, this.options)
+  }
+  
   
   
 }

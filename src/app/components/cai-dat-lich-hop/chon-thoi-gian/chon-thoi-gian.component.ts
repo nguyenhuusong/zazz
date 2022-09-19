@@ -100,4 +100,8 @@ export class ChonThoiGianComponent implements OnInit {
       this.messageService.add({severity: 'error', summary: 'Thông báo', detail: 'Thao tác thất bại'});
     });
   }
+
+  cancle() {
+    this.chooseTime.emit(false);
+  }
 }
