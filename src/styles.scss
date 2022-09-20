@@ -4976,6 +4976,17 @@ p-dialog button{
         }
     }
 }
+.fc-daygrid-day{
+    &.fc-day-past{
+        .fc-daygrid-day-frame{
+            .fc-daygrid-day-events{
+                .fc-daygrid-event{
+                    background: #FAF0F1;
+                }
+            }
+        }
+    }
+}
 full-calendar{
     .fc-daygrid-body{
         // .fc-daygrid-day-top{
