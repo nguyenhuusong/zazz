@@ -139,7 +139,8 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
     //     element.value = parseInt(element.value);
     //   })
     // }
-    console.log('element', this.element)
+
+    this.element.columnValue  = typeof this.element.columnValue === 'object' ? this.element.columnValue : null
     checkIsObject
   }
 

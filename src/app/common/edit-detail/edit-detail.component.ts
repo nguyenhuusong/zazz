@@ -315,7 +315,6 @@ export class EditDetailComponent implements OnInit, OnChanges {
     for (let i = 0; i < list.length; i++) {
       if (list[i].data === nodeId ) {
          element1.columnValue = list[i];
-        
         }else if (Array.isArray(list[i].children) && list[i].children.length) {
           this.findNodeInTree(list[i].children, nodeId, element1);
         }
@@ -886,32 +885,31 @@ export class EditDetailComponent implements OnInit, OnChanges {
     this.apiService.getOrganizeTree(queryParams).subscribe(results => {
       if (results.status === 'success') {
         element1.options = results.data;
-        if (element1.columnValue) {
-          if(element1.columnType === 'selectTrees' && element1.field_name === 'org_Id') {
-            const ids = element1.columnValue ? element1.columnValue.split(',') : []
-              const results = [];
-              this.findNodeInTree1(element1.options, ids, element1, results);
-              element1.columnValue = results;
-            }else {
+        if((element1.columnType === 'selectTrees') && (element1.field_name === 'org_Id')) {
+          const ids = element1.columnValue ? element1.columnValue.split(',') : []
+            const results = [];
+            this.findNodeInTree1(element1.options, ids, element1, results);
+            element1.columnValue = results;
+
+          }else {
+            if (element1.columnValue) {
               this.findNodeInTree(element1.options, element1.columnValue.toUpperCase(), element1);
-            // const queryParams1 = queryString.stringify({ parentId: element1.columnValue });
-            // this.apiService.getOrganizeTree(queryParams1).subscribe(results => {
-            //   if (results.status === 'success' && results.data.length > 0) {
-            //     element1.columnValue = results.data.length > 0 ? results.data[0] : null;
-            //     element1.isVisiable = true;
-            //   } else {
-            //     element1.columnValue = null;
-            //     element1.isVisiable = true;
-            //   }
-            // })
-          }
-
-
+            } else {
+              element1.columnValue = null;
+            }
          
-        } else {
-          element1.columnValue = null;
-          element1.isVisiable = true;
+          // const queryParams1 = queryString.stringify({ parentId: element1.columnValue });
+          // this.apiService.getOrganizeTree(queryParams1).subscribe(results => {
+          //   if (results.status === 'success' && results.data.length > 0) {
+          //     element1.columnValue = results.data.length > 0 ? results.data[0] : null;
+          //     element1.isVisiable = true;
+          //   } else {
+          //     element1.columnValue = null;
+          //     element1.isVisiable = true;
+          //   }
+          // })
         }
+       
       }
     })
   }
@@ -1019,8 +1017,6 @@ export class EditDetailComponent implements OnInit, OnChanges {
       this.submit = true;
       for (let item in this.modelFields) {
         if (this.modelFields[item].error) {
-           console.log(this.modelFields[item])
-
           this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Dữ liệu thiếu !' });
           return
         }
@@ -1127,7 +1123,6 @@ export class EditDetailComponent implements OnInit, OnChanges {
 
   CauHinh() {
     this.gridKey = this.detail.tableKey
-    console.log('this.detail.tableKey', this.detail.tableKey)
     this.displaySetting = true;
   }
 
