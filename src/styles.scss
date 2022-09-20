@@ -5126,3 +5126,16 @@ app-chon-lich-hop{
     border-radius: 2px;
     padding: 16px;
 }
+.cell-options{
+    .ag-cell-value{
+        app-button-renderer{
+            .p-button-text{
+                padding: 0px;
+                height: 100%;
+                width: 54px;
+                transform: rotate(90deg);
+                padding-right: 18px;
+            }
+        }
+    }
+}
