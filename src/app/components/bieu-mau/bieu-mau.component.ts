@@ -596,7 +596,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
       }]
   }
   handleEdit2(event) {
-    this.formTypeId2 = event.rowData.form_type_id;
+    this.formTypeId2 = event.rowData.form_id;
     this.addNewPopup2 = true;
     this.getDetail();
   }
@@ -632,7 +632,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
   detailInfo = []
   getDetail() {
     const queryParams = queryString.stringify({formTypeId: this.formTypeId2});
-    this.apiService.getFormsTypeInfo(queryParams)
+    this.apiService.getFormsInfo(queryParams)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {
         if (results.status === 'success') {

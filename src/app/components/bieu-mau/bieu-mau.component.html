@@ -235,7 +235,7 @@
 </p-dialog>
 
 
-<p-dialog header="Thêm mới tài liệu" 
+<p-dialog header="Tài liệu chung" 
     [(visible)]="addNewPopup" 
     [modal]="true" [style]="{width: '1000px'}"
     [draggable]="false" [resizable]="false" [focusTrap]="false" >
@@ -245,9 +245,9 @@
 
 
 <!-- Tài liệu cá nhân -->
-<p-dialog styleClass="hideHeaderForm" header="Thiết lập loại tài liệu" 
+<p-dialog styleClass="hideHeaderForm" header="Tài liệu cá nhân" 
     [(visible)]="addNewPopup2" 
-    [modal]="true" [style]="{width: '600px'}"
+    [modal]="true" [style]="{width: '1000px'}"
     [draggable]="false" [resizable]="false" [focusTrap]="false" >
     <app-edit-detail
         *ngIf="listViews.length> 0"
