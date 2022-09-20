@@ -479,6 +479,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
       this.formTypeId2 = null;
       this.addNewPopup2 = true;
       this.addNewPopup = false;
+      this.getDetail();
     }
   }
 
