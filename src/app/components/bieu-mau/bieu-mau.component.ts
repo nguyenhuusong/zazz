@@ -511,6 +511,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
   cols2 = []
   colsDetail2 = []
   load2() {
+
     this.query2.organizeId = this.query.organizeId;
     this.columnDefs2 = []
     this.spinner.show();
@@ -522,7 +523,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
       query.typeForm = this.query2.typeForm.data;
     } 
     const queryParams = queryString.stringify(query);
-    this.apiService.getFormsTypePage(queryParams)
+    this.apiService.getFormPersonal(queryParams)
     .subscribe(
       (results: any) => {
         this.listsData2 = results.data.dataList.data;
