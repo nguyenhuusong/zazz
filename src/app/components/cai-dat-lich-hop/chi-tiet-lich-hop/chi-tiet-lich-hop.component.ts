@@ -177,7 +177,10 @@ export class ChiTietLichHopComponent implements OnInit, OnDestroy {
     }else if( event.name === 'roomId'){
       this.showChooseCalander = true;
       this.meetingInfo.roomId = event.id;
-    }else {
+    }else if( event.name === 'floor_no'){
+      this.meetingInfo.floorNo = event.id;
+    }
+    else {
       this.manhinh = 'Edit';
       this.onBack();
     }
