@@ -200,12 +200,12 @@ export class CaiDatLichHopComponent implements OnInit {
     this.columnDefs = [
       ...AgGridFn(this.gridflexs.filter((d: any) => !d.isHide)),
       {
-        headerName: 'Thao tác',
+        headerName: '...',
         filter: '',
-        width: 100,
+        width: 80,
         pinned: 'right',
         cellRenderer: 'buttonAgGridComponent',
-        cellClass: ['border-right', 'no-auto'],
+        cellClass: ['border-right', 'no-auto', 'text-center'],
         cellRendererParams: (params: any) => this.showButtons(params),
         checkboxSelection: false,
         field: 'checkbox'
