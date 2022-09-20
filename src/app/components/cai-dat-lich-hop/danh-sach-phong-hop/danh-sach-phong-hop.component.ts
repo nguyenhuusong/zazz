@@ -221,9 +221,21 @@ export class DanhSachPhongHopComponent implements OnInit {
 
   initGrid() {
     this.columnDefs = [
+      {
+        headerName: 'STT',
+        filter: '',
+        maxWidth: 70,
+        pinned: 'left',
+        cellRenderer: params => {
+          return params.rowIndex + 1
+        },
+        cellClass: ['border-right', 'no-auto', 'text-center'],
+        field: 'checkbox2',
+        suppressSizeToFit: true,
+      },
       ...AgGridFn(this.gridflexs.filter((d: any) => !d.isHide)),
       {
-        headerName: 'Thao tác',
+        headerName: '...',
         filter: '',
         width: 100,
         pinned: 'right',
