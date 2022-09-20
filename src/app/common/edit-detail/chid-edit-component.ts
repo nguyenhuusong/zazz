@@ -1,4 +1,4 @@
-import { cloneDeep } from 'lodash';
+import { cloneDeep, uniqBy } from 'lodash';
 import { AfterViewChecked, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import * as queryString from 'querystring';
 import * as firebase from 'firebase';
@@ -1555,6 +1555,7 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
     ngOnInit(): void {
       this.modelFields[this.element.field_name].error = false;
       this.selectMembers = [];
+      this.members = [];
       const dataNew = this.element.columnValue ?  this.element.columnValue.split(',') : [];
       for(let item of this.element.options) {
         for(let item1 of item.child) {
@@ -1576,11 +1577,12 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
       const queryParams = queryString.stringify({ offSet: 0, pageSize: 50, fullName: this.searchText })
       this.apiService.getHrmMeetingPerson(queryParams).subscribe( res => {
         if(res.status === 'success') {
+          this.members = cloneDeep(this.element.options);
           this.element.options = [...res.data.meetingProperties];
           this.element.options.forEach(member => {
-            member.isCheck = false;
+            member.isCheck = member.isCheck ? member.isCheck : false;
             member.child.forEach(user => {
-              user.isCheck = false;
+              user.isCheck = user.isCheck ? user.isCheck: false;
             })
           })
 
@@ -1616,7 +1618,7 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
     }
 
     xacNhan() {
-      this.selectMembers = [];
+      // this.selectMembers = [];
       for(let item of this.element.options) {
         for(let index in item.child) {
           if(item.child[index].isCheck) {
@@ -1624,6 +1626,7 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
           }
         }
       }
+      this.selectMembers =uniqBy(this.selectMembers, 'userId');
       this.element.columnValue = this.selectMembers.map(item => item.userId).toString();
       this.newMember = false;
     }
@@ -1649,6 +1652,18 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
     }
 
     addNewMember() {
+      if(this.members.length > 0) {
+        this.element.options = cloneDeep(this.members);
+        for(let item of this.element.options) {
+          for(let item1 of item.child) {
+            if(this.selectMembers.map(d => d.userId).indexOf(item1.userId) > -1) {
+              item1.isCheck = true;
+            }
+          }
+          
+        }
+        // this.element.options = [...this.element.options]
+      }
       this.newMember = true;
     }
   }
