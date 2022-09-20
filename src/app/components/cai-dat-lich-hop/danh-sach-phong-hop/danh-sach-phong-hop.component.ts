@@ -237,7 +237,7 @@ export class DanhSachPhongHopComponent implements OnInit {
       {
         headerName: '   ...',
         filter: '',
-        width: 100,
+        width: 70,
         pinned: 'right',
         cellRenderer: 'buttonAgGridComponent',
         cellClass: ['border-right', 'no-auto', 'cell-options'],
