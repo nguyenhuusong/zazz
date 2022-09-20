@@ -1728,10 +1728,18 @@ export class AppTypeChips implements OnInit {
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M10.667 13.3337V9.66699H12.0003V13.3337H10.667Z" fill="#FF3B49"/>
                         </svg>
                       </li>
-                      <li class="more" (click)="addMoreLm()">
-                        Thêm lời nhắc
-                        </li>
                     </ul>
+                    <div *ngIf="isNewTime" class="add-time-notis">
+                      <p-inputNumber [min]="10" [max]="30000" [(ngModel)]="timeInput">
+                      </p-inputNumber>
+                      <div class="buttons">
+                        <p-button styleClass="p-button-sm height-56" (click)="saveTimeNotis()"><i class="pi pi-save"> </i></p-button>
+                        <p-button styleClass="p-button-sm height-56 p-button-danger" (click)="cancelTimeNotis()"><i class="pi pi-times"> </i></p-button>
+                      </div>
+                    </div>
+                    <div *ngIf="!isNewTime" class="more" (click)="addMoreLm()">
+                      Thêm lời nhắc
+                      </div>
                   </div>
                   <div *ngIf="element.isRequire && submit && !element.columnValue"
                       class="alert-validation alert-danger">
@@ -1748,11 +1756,14 @@ export class AppTypelistMch implements OnInit {
   @Input() modelFields;
   @Input() submit = false;
   @Input() dataView;
+  timeInput = 10;
+  isNewTime = false
   constructor(
     private apiService: ApiHrmService
   ) { }
   ngOnInit(): void {
-      this.element.columnValue = [10,20,30]
+      // this.element.columnValue = [10,20,30]
+    this.element.columnValue = this.element.columnValue.split(",");
     this.modelFields[this.element.field_name].error = false;
   }
 
@@ -1760,8 +1771,22 @@ export class AppTypelistMch implements OnInit {
     this.element.columnValue.splice(index, 1);
   } 
 
-  addMoreLm() {
+  cancelTimeNotis() {
+    this.isNewTime = false
+  }
 
+  saveTimeNotis() {
+    this.isNewTime = false;
+    if(!this.element.columnValue){
+      this.element.columnValue = []
+    }
+    this.element.columnValue.push(this.timeInput)
+    console.log('this.timeInput', this.timeInput)
+  }
+
+  addMoreLm() {
+    this.isNewTime = true;
+    this.timeInput = 10;
   }
 
 }
