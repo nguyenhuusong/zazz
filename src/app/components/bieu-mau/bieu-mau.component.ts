@@ -319,28 +319,25 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
   initGrid() {
     this.columnDefs = [
       {
-        headerName: 'Stt',
+        headerName: 'STT',
         filter: '',
-        maxWidth: 130,
+        maxWidth: 70,
         pinned: 'left',
         cellRenderer: params => {
           return params.rowIndex + 1
         },
-        cellClass: ['border-right', 'no-auto'],
-        checkboxSelection: true,
-        headerCheckboxSelection: true,
-        headerCheckboxSelectionFilteredOnly: true,
+        cellClass: ['border-right', 'no-auto', 'cell-options'],
         field: 'checkbox2',
         suppressSizeToFit: true,
       },
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       {
-        headerName: 'Thao tác',
+        headerName: '    ...',
         filter: '',
-        maxWidth: 120,
+        maxWidth: 80,
         pinned: 'right',
         cellRenderer: 'buttonAgGridComponent',
-        cellClass: ['border-right', 'no-auto'],
+        cellClass: ['border-right', 'no-auto', 'cell-options'],
         cellRendererParams: (params: any) => this.showButtons(params),
         field: 'checkbox'
       }]
@@ -574,7 +571,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
   initGrid2() {
     this.columnDefs2 = [
       {
-        headerName: 'Stt',
+        headerName: 'STT',
         filter: '',
         maxWidth: 120,
         pinned: 'left',
@@ -582,20 +579,17 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
           return params.rowIndex + 1
         },
         cellClass: ['border-right', 'no-auto'],
-        checkboxSelection: true,
-        headerCheckboxSelection: true,
-        headerCheckboxSelectionFilteredOnly: true,
         field: 'checkbox2',
         suppressSizeToFit: true,
       },
       ...AgGridFn(this.cols2.filter((d: any) => !d.isHide)),
       {
-        headerName: 'Thao tác',
+        headerName: '    ...',
         filter: '',
-        maxWidth: 120,
+        maxWidth: 80,
         pinned: 'right',
         cellRenderer: 'buttonAgGridComponent',
-        cellClass: ['border-right', 'no-auto'],
+        cellClass: ['border-right', 'no-auto', 'cell-options'],
         cellRendererParams: (params: any) => this.showButtons2(params),
         field: 'checkbox'
       }]

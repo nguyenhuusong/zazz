@@ -178,6 +178,7 @@ export class QtThayDoiLuongComponent implements OnInit {
         }
       }
     })
+    this.load();
   }
 
 
@@ -295,6 +296,18 @@ export class QtThayDoiLuongComponent implements OnInit {
 
   initGrid() {
     this.columnDefs = [
+      {
+        headerName: 'STT',
+        filter: '',
+        maxWidth: 70,
+        pinned: 'left',
+        cellRenderer: params => {
+          return params.rowIndex + 1
+        },
+        cellClass: ['border-right', 'no-auto', 'cell-options'],
+        field: 'checkbox2',
+        suppressSizeToFit: true,
+      },
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       {
         headerName: '...',

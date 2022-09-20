@@ -198,14 +198,26 @@ export class CaiDatLichHopComponent implements OnInit {
 
   initGrid() {
     this.columnDefs = [
+      {
+        headerName: 'STT',
+        filter: '',
+        maxWidth: 70,
+        pinned: 'left',
+        cellRenderer: params => {
+          return params.rowIndex + 1
+        },
+        cellClass: ['border-right', 'no-auto', 'cell-options'],
+        field: 'checkbox2',
+        suppressSizeToFit: true,
+      },
       ...AgGridFn(this.gridflexs.filter((d: any) => !d.isHide)),
       {
-        headerName: '...',
+        headerName: '    ...',
         filter: '',
         width: 80,
         pinned: 'right',
         cellRenderer: 'buttonAgGridComponent',
-        cellClass: ['border-right', 'no-auto', 'text-center'],
+        cellClass: ['border-right', 'no-auto', 'text-center', 'cell-options'],
         cellRendererParams: (params: any) => this.showButtons(params),
         checkboxSelection: false,
         field: 'checkbox'

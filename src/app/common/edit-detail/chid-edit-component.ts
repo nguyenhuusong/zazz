@@ -1712,7 +1712,7 @@ export class AppTypeChips implements OnInit {
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M10.667 13.3337V9.66699H12.0003V13.3337H10.667Z" fill="#FF3B49"/>
                         </svg>
                       </li>
-                      <li class="more">
+                      <li class="more" (click)="addMoreLm()">
                         Thêm lời nhắc
                         </li>
                     </ul>
@@ -1736,13 +1736,17 @@ export class AppTypelistMch implements OnInit {
     private apiService: ApiHrmService
   ) { }
   ngOnInit(): void {
-    this.element.columnValue = [10,20,30]
+      this.element.columnValue = [10,20,30]
     this.modelFields[this.element.field_name].error = false;
   }
 
   deleteTimeNoti(index) {
     this.element.columnValue.splice(index, 1);
   } 
+
+  addMoreLm() {
+
+  }
 
 }
 

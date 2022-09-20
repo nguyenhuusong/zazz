@@ -99,7 +99,7 @@ export class ChonLichHopComponent implements OnInit, OnChanges {
         var event = arg.event;
         return { html: `
           <div class="custom-event-label p-1" style="width: '100%'">
-            <div class="text-bold"><b>${event.title}</b></div>
+            <div class="text-bold"><b>${event.extendedProps.meetname}</b></div>
             <div class = "grid">
               <div class="col-6">
                 <span>${event.title}</span>
@@ -153,6 +153,7 @@ export class ChonLichHopComponent implements OnInit, OnChanges {
 
   convertDataToEvent(data) {
     return {
+      meetname: data.meet_name || '--',
       title: data.room_name || '--',
       start: data.meet_at ? new Date(data.meet_at) : null,
       end: data.meet_at ? this.addMinutes(new Date(data.meet_at), data.meet_time) : null,
