@@ -5139,3 +5139,42 @@ app-chon-lich-hop{
         }
     }
 }
+.add-time-notis{
+    display: inline-block;
+    position: relative;
+    margin-bottom: 10px;
+    input{
+        border: 1px solid #D1D4DC;
+        padding-right: 35px;
+        &:focus{
+            border: 1px solid #0979FD !important;
+            box-shadow: none !important;
+        }
+    }
+    .buttons{
+        position: absolute;
+        z-index: 2;
+        top: 0px;
+        right: auto;
+        left: 100%;
+        display: flex;
+    }
+    p-button{
+        
+        button{
+            min-width: 0px;
+        }
+        .p-button-label{
+            display: none;
+        }
+    }
+}
+.list-mch{
+    .more{
+        color: #4C97E4;
+        font-size: 16px;
+        line-height: 20px;
+        cursor: pointer;
+        display: inline-block;
+    }
+}
