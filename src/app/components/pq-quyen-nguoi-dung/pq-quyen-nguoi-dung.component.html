@@ -5,6 +5,10 @@
     <section class="bread-filter">
         <div class="d-flex bet end bottom gap-16">
             <div class="col-item">
+                <p-button label="Cài đặt quyền" styleClass="mr-1" (click)="goToSettingRole()">
+                </p-button>
+            </div>
+            <div class="col-item">
                 <div class="filter filter-search">
                     <div class="field-group text search mb-0" [ngClass]=" query.filter ? 'valid' : 'invalid' ">
                         <input class="input-default" placeholder="Tìm kiếm" type="text" autocomplete="off" id="filter"
@@ -66,6 +70,7 @@
                      
                     </div>
                     <div class="input-group icon col-12 select-default text-right">
+                     
                         <label for="" style="visibility: hidden;">Classid <span class="pi pi-info-circle"
                                 style="font-size: 13px;color: orange;"></span></label>
                         <p-button label="Tìm kiếm" styleClass="mr-1" icon="pi pi-search" (click)="load()">

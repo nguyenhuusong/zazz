@@ -48,6 +48,11 @@ import { ConfigGridTableFormModule } from 'src/app/common/config-grid-table-form
 import { ImportXeNhanVienComponent } from 'src/app/components/pq-xe-nhan-vien/import-xe-nhan-vien/import-xe-nhan-vien.component';
 import { ImportTheNhanVienComponent } from 'src/app/components/pq-the-nhan-vien/import-the-nhan-vien/import-the-nhan-vien.component';
 import { ImageModule } from 'primeng/image';
+import { ChiTietCaiDatQuyenComponent } from 'src/app/components/pq-quyen-nguoi-dung/chi-tiet-cai-dat-quyen/chi-tiet-cai-dat-quyen.component';
+// import { DanhSachActionComponent } from 'src/app/components/pq-quyen-nguoi-dung/danh-sach-action/danh-sach-action.component';
+import { DanhSachMenuComponent } from 'src/app/components/pq-quyen-nguoi-dung/danh-sach-menu/danh-sach-menu.component';
+// import { DanhSachRoleComponent } from 'src/app/components/pq-quyen-nguoi-dung/danh-sach-role/danh-sach-role.component';
+import { PickListModule } from 'primeng/picklist';
 @NgModule({
   imports: [
     MessagesModule,
@@ -87,6 +92,7 @@ import { ImageModule } from 'primeng/image';
     OverlayPanelModule,
     HrmBreadCrumbModule,
     ImageModule,
+    PickListModule,
     AgGridModule.withComponents([
       ButtonRendererComponent,
       ButtonRendererComponent1
@@ -103,7 +109,11 @@ import { ImageModule } from 'primeng/image';
     CardDetailComponent,
     ChiTietTheNhanVienComponent,
     ImportXeNhanVienComponent,
-    ImportTheNhanVienComponent
+    ImportTheNhanVienComponent,
+    ChiTietCaiDatQuyenComponent,
+    // DanhSachActionComponent,
+    DanhSachMenuComponent,
+    // DanhSachRoleComponent
   ],
   providers: []
 })

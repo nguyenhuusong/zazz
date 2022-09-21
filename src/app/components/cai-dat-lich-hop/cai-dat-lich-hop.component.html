@@ -89,7 +89,7 @@
                 <div class="icon col-12 pl-0" style="display: flex; flex-wrap: wrap;">
                     <div class="col-12">
                         <div class="field-group select mb-0">
-                            <label>Nơi làm việc</label>
+                            <label>Tầng làm việc</label>
                             <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
                             [options]="floors" placeholder="---Chọn---" [(ngModel)]="model.Floor_No" name="Floor_No"
                             (onChange)="find()" >
@@ -102,6 +102,24 @@
                                 </div>
                             </ng-template>
                             </p-dropdown>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="field-group date mb-0 valid">
+                            <label>Từ ngày</label>
+                            <p-calendar panelStyleClass="datepicker-default" placeholder="DD/MM/YYYY"
+                                [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="model.fromDate" [monthNavigator]="true"
+                                [yearNavigator]="true" yearRange="2010:2030" inputId="navigators" dateFormat="dd/mm/yy"
+                                name="fromDate"></p-calendar>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="field-group date mb-0 valid">
+                            <label>Đến ngày</label>
+                            <p-calendar panelStyleClass="datepicker-default" placeholder="DD/MM/YYYY"
+                                [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="model.toDate" [monthNavigator]="true"
+                                [yearNavigator]="true" yearRange="2010:2030" inputId="navigators" dateFormat="dd/mm/yy"
+                                name="toDate"></p-calendar>
                         </div>
                     </div>
                     <!-- <div class="field-group col-12">

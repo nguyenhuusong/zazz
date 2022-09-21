@@ -1770,7 +1770,9 @@ export class AppTypelistMch implements OnInit {
   ) { }
   ngOnInit(): void {
       // this.element.columnValue = [10,20,30]
-    this.element.columnValue = this.element.columnValue.split(",");
+    if(this.element.columnValue){
+      this.element.columnValue = this.element.columnValue.split(",");
+    }
     this.modelFields[this.element.field_name].error = false;
   }
 

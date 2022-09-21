@@ -39,6 +39,7 @@ export class DanhSachPhongHopComponent implements OnInit {
     floor_No: '',
     workplaceId: '',
     roomId: '',
+    status_meet: '',
   };
   totalRecord = 0;
   countRecord: any = {
@@ -53,6 +54,21 @@ export class DanhSachPhongHopComponent implements OnInit {
   };
   showDeleteTax = false;
   showImportExcel = false;
+
+  statusRoom = [
+    {
+      label: 'Đang trống',
+      value: "Đang trống",
+    },
+    {
+      label: 'Đang họp',
+      value: "Đang họp"
+    },
+    {
+      label: 'Sắp họp',
+      value: "Sắp họp"
+    }
+  ]
   constructor(
     private apiService: ApiHrmService,
     private router: Router,
@@ -97,6 +113,7 @@ export class DanhSachPhongHopComponent implements OnInit {
       floor_No: '',
       workplaceId: '',
       roomId: '',
+      status_meet: '',
     };
   }
 

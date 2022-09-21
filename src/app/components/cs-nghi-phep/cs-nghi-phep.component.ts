@@ -93,7 +93,9 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
     year: '',
     month: '',
     offSet: 0,
-    pageSize: 15
+    pageSize: 15,
+    fromdate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).add(-1,'months').format()),
+    todate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).format()),
   }
   totalRecord = 0;
   DriverId = 0;
@@ -139,7 +141,9 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
       year: '',
       month: '',
       offSet: 0,
-      pageSize: 15
+      pageSize: 15,
+      fromdate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).add(-1,'months').format()),
+      todate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).format()),
     }
     this.load();
   }
@@ -155,6 +159,8 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
     this.columnDefs = []
     this.spinner.show();
     const queryParams: any = {...this.query};
+    queryParams.fromdate = typeof this.query.fromdate === 'object' ? moment(new Date(this.query.fromdate)).format('YYYY-MM-DD') : this.query.fromdate;
+    queryParams.todate = typeof this.query.todate === 'object' ? moment(new Date(this.query.todate)).format('YYYY-MM-DD') : this.query.todate;
     if (this.time) {
       queryParams.year = this.time.getFullYear();
       queryParams.month = this.time.getMonth() + 1;
