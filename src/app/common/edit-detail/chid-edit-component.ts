@@ -1623,6 +1623,10 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
         for(let index in item.child) {
           if(item.child[index].isCheck) {
             this.selectMembers.push({...item.child[index], isCheck: parseInt(index) === 0 ? true : false});
+          }else {
+           const newIndex = this.selectMembers.findIndex(d => d.userId === item.child[index].userId);
+           if(newIndex > -1) this.selectMembers.splice(newIndex,1);
+           this.selectMembers = [...this.selectMembers];
           }
         }
       }
@@ -1641,6 +1645,7 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
 
     handleChangeChild(user, index, member, idx) {
       this.element.options[index].child[idx].isCheck = !this.element.options[index].child[idx].isCheck;
+      console.log(this.element.options[index].child[idx].isCheck)
       const isCheckAll =this.element.options[index].child.filter(d => d.isCheck === true);
       if(isCheckAll.length === this.element.options[index].child.length) {
         this.element.options[index].isCheck = true;
@@ -1658,6 +1663,8 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
           for(let item1 of item.child) {
             if(this.selectMembers.map(d => d.userId).indexOf(item1.userId) > -1) {
               item1.isCheck = true;
+            }else {
+              item1.isCheck = false;
             }
           }
           
