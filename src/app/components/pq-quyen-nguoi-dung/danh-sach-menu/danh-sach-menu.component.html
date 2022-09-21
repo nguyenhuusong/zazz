@@ -1,0 +1,37 @@
+<div class="d-flex are-tab-btns">
+    <p-button styleClass="p-button-sm btn-tab" (click)="create()" label="Thêm mới" icon="pi pi-icon"></p-button>
+    <p-button label="Cấu hình" icon="pi pi-cog" styleClass="p-button-sm ml-2 addNew" (click)="cauhinh()"></p-button>
+</div>
+
+<div class="grid-default border">
+    <app-list-grid-angular *ngIf="columnDefs.length > 0"
+        [listsData]="listsData" [height]="heightGrid" 
+        [columnDefs]="columnDefs"></app-list-grid-angular>
+</div>
+<p-dialog [(visible)]="displayInfo" [autoZIndex]="true" [modal]="true" [style]="{width: '1300px', height: 'auto'}">
+<p-header>
+   Thông tin menu
+</p-header>
+<app-edit-detail *ngIf="listViews.length> 0" [detail]="detailDetailInfo" [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButon"  [dataView]="listViews"
+    (callback)="setConfigMenu($event)" (callbackcancel)="cancelUpdate($event)"></app-edit-detail>
+    <div class=" text-right mt-1" >
+        <p-pickList [source]="sourceActions" [target]="targetActions" [targetStyle]="{'height':'30rem'}"  [sourceStyle]="{'height':'30rem'}" [showSourceControls]="false" [showTargetControls]="false"
+         sourceHeader="Danh sách action được chọn" targetHeader="Danh sách action chưa chọn" [responsive]="true" filterBy="actionName" (onTargetFilter)="onTargetFilter($event)"
+        [dragdrop]="true" sourceFilterPlaceholder="Tìm theo tên actionCd" targetFilterPlaceholder="Tìm theo tên actionCd">
+    <ng-template let-car pTemplate="item">
+        <div class="image-container">
+            <span style="font-weight: 600"></span>+ {{car.actionName}}
+    </div>
+        <div class="ui-helper-clearfix">
+            <p style="display:inline-block;margin:2px 0 2px 2px"></p>
+            <p style="font-size:14px;float:right;margin:2px 0 2px 2px">[{{car.actionCd}}]</p>
+        </div>
+    </ng-template>
+    </p-pickList>
+    </div>
+</p-dialog>
+      
+<!-- <p-dialog header="Cài đặt cấu hình " [(visible)]="displaySetting" (onHide)="getClientMenuPageByWebId()" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
+    [draggable]="false" [resizable]="false" [focusTrap]="false" styleClass="popup-setting">
+    <app-config-grid-table-form *ngIf="displaySetting && gridKey" [typeConfig]="'TableInfo'"   [gridKey]="gridKey"></app-config-grid-table-form>
+</p-dialog> -->

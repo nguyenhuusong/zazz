@@ -40,6 +40,8 @@ export class CaiDatLichHopComponent implements OnInit {
       Floor_No: '',
       Meet_status: '',
       Time: null,
+      fromDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).format("YYYY-MM-DD")),
+      toDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).add(+10, 'months').format("YYYY-MM-DD")),
   }
   statusRoom = [
     {
@@ -134,6 +136,8 @@ export class CaiDatLichHopComponent implements OnInit {
       Floor_No: '',
       Meet_status: '',
       Time: '',
+      fromDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).format("YYYY-MM-DD")),
+      toDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).add(+10, 'months').format("YYYY-MM-DD")),
     };
   }
   			
@@ -146,8 +150,11 @@ export class CaiDatLichHopComponent implements OnInit {
   load() {
     this.columnDefs = []
     this.spinner.show();
-    this.model.Time = moment(this.model.Time).format('HH:mm')
-    const queryParams = queryString.stringify(this.model);
+    // this.model.Time = moment(this.model.Time).format('HH:mm')
+    let params: any = { ... this.model };
+    params.fromDate = typeof this.model.fromDate === 'object' ? moment(new Date(this.model.fromDate)).format('YYYY-MM-DD') : this.model.fromDate;
+    params.toDate = typeof this.model.toDate === 'object' ? moment(new Date(this.model.toDate)).format('YYYY-MM-DD') : this.model.toDate;
+    const queryParams = queryString.stringify(params);
     this.apiService.getMeetingPage(queryParams).subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;

@@ -447,5 +447,9 @@ export class PqQuyenNguoiDungComponent implements OnInit {
     })
   }
 
+  goToSettingRole() {
+    this.router.navigateByUrl('/phan-quyen/quyen-nguoi-dung/chi-tiet-quyen-nguoi-dung');
+  }
+
 }
 
