@@ -76,6 +76,7 @@ export class ChiTietCaiDatQuyenComponent implements OnInit, OnDestroy {
       { label: `${this.titlePage}` },
     ];
     this.handleParams();
+    this.GetMenuConfigInfo();
   }
 
   ngOnDestroy() {
@@ -96,6 +97,29 @@ export class ChiTietCaiDatQuyenComponent implements OnInit, OnDestroy {
         // this.callApiGetInfo(0);
       });
   };
+
+  
+  // data grid for tab
+  menusTab: any = {}
+  rolesTab: any = {}
+  clientactionGrid = []
+  GetMenuConfigInfo() {
+    const query = {  }
+    this.apiService.getMenuConfigInfo(queryString.stringify(query)).subscribe((results: any) => {
+      if(results.status === 'success'){
+        this.menusTab.menus = results.data.menus
+        this.menusTab.menutree = results.data.menutree
+        this.menusTab.gridsMmenu = results.data.view_grids_menu
+        
+        this.rolesTab.roles = results.data.roles;
+        this.rolesTab.gridsRoles = results.data.view_grids_roles;
+        
+        this.rolesTab.clientaction = results.data.clientaction;
+        this.rolesTab.clientaction = results.data.view_grids_action;
+      }
+    })
+  }
+  
 
   dataFieldsInfo = null;
   listViewWebInfo = []

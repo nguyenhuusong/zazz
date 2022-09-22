@@ -185,10 +185,10 @@
             </section>
             <section class="content pb-0">
                 <div class="grid-default" #container>
-                    <app-list-grid-angular *ngIf="columnDefs2.length > 0"
-                        [listsData]="listsData2" 
+                    <app-list-grid-angular *ngIf="columnDefs.length > 0"
+                        [listsData]="listsData" 
                         [height]="heightGrid"
-                        [columnDefs]="columnDefs2"
+                        [columnDefs]="columnDefs"
                         [rowSelection]="'multiple'"
                         (callback)="rowSelected($event)"
                         >
@@ -235,7 +235,7 @@
 </p-dialog>
 
 
-<p-dialog header="Tài liệu chung" 
+<p-dialog header="{{ titleHeader }}" 
     [(visible)]="addNewPopup" 
     [modal]="true" [style]="{width: '1000px'}"
     [draggable]="false" [resizable]="false" [focusTrap]="false" >
