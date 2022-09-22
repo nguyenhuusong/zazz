@@ -247,20 +247,36 @@ export class CaiDatLichHopComponent implements OnInit {
     })
   }
 
+  isReasonDelete = false;
+  queryDeleteLichHop = {
+    meet_ud: '',
+    reason_cancel: ''
+  }
   handleDelete(e): void {
+    this.isReasonDelete = true;
+    this.queryDeleteLichHop.meet_ud = e.rowData.meet_ud
+  }
+
+  deleteLichHop() {
+    if(!this.queryDeleteLichHop.reason_cancel){
+      this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: `Vui lòng điền lý do` });
+      return
+    }
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa không?',
       accept: () => {
-        this.apiService.delMeetingInfo(e.rowData.meet_ud)
+        this.apiService.delMeetingInfo(queryString.stringify(this.queryDeleteLichHop))
           .subscribe(response => {
             if (response.status === 'success') {
               this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: `Xóa thành công` });
               this.load();
+              this.isReasonDelete = false;
             } else {
               this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: `Xóa thất bại` });
             }
           }, error => {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: `Xóa thất bại` });
+            this.isReasonDelete = false;
           });
       }
     });
