@@ -13,6 +13,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 })
 export class DanhSachMenuComponent implements OnInit {
   @Input() detailInfo: any = null;
+  @Input() menusGrid: any = null;
   @Output() callback = new EventEmitter<any>();
   optionsButon = [
     // { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
@@ -35,6 +36,8 @@ export class DanhSachMenuComponent implements OnInit {
     this.displaySetting = true;
   }
   ngOnInit(): void {
+    this.columnDefs = this.menusGrid.gridsMmenu
+    this.initGrid(this.columnDefs);
     this.getUserMenus()
     // this.getClientActionListByWebId()
   }
@@ -76,7 +79,7 @@ export class DanhSachMenuComponent implements OnInit {
   }
 
   create() {
-    this.getMenuConfigInfo(null)
+    this.getConfigMenu(null)
   }
 
   initGrid(gridflexs) {
@@ -134,7 +137,7 @@ export class DanhSachMenuComponent implements OnInit {
     if (event.colDef.field === 'intPosEdit' || event.colDef.field === 'intPosEditParent') {
       this.spinner.show();
       const queryParams = queryString.stringify({ menuId: event.data.menuId, webId: this.detailInfo.webId });
-      this.apiService.getMenuConfigInfo(queryParams).subscribe(results => {
+      this.apiService.getConfigMenu(queryParams).subscribe(results => {
         if (results.status === 'success') {
           const listViews = results.data.group_fields.forEach(element => {
             element.fields.forEach(element1 => {
@@ -158,16 +161,20 @@ export class DanhSachMenuComponent implements OnInit {
 
 
   suaThongTin(event) {
-    this.getMenuConfigInfo(event.rowData.menuId);
+    this.getConfigMenu(event.rowData.menuId);
   }
 
   listViews = [];
   detailDetailInfo = null;
   displayInfo = false;
-  getMenuConfigInfo(menuId) {
+  getConfigMenu(menuId) {
+    const query: any = { }
+    if(menuId){
+      query.menuId = menuId;
+    }
     this.listViews = [];
-    const queryParams = queryString.stringify({ menuId: menuId, webId: this.detailInfo.webId });
-    this.apiService.getMenuConfigInfo(queryParams).subscribe(results => {
+    const queryParams = queryString.stringify(query);
+    this.apiService.getConfigMenu(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.listViews = cloneDeep(results.data.group_fields);
         this.detailDetailInfo = results.data;
@@ -217,7 +224,7 @@ export class DanhSachMenuComponent implements OnInit {
 
   cancelUpdate(data) {
     if (data === 'CauHinh') {
-      this.getMenuConfigInfo(this.detailDetailInfo.menuId);
+      this.getConfigMenu(this.detailDetailInfo.menuId);
     }
   }
 

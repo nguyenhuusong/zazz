@@ -433,6 +433,7 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
         if (results.status === 'success') {
           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
           this.spinner.hide();
+          this.addEdit = false
         } else {
           this.messageService.add({
             severity: 'error', summary: 'Thông báo',

@@ -21,6 +21,7 @@ export class PqQuyenNguoiDungComponent implements OnInit {
   dataQuyenNguoiDung: any;
   constructor(
     private apiService: ApiHrmService,
+    private api: ApiService,
     private route: ActivatedRoute,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
@@ -132,7 +133,7 @@ export class PqQuyenNguoiDungComponent implements OnInit {
         this.spinner.hide();
        });
   }
-  
+
   showButtons(event: any) {
     return {
       buttons: [

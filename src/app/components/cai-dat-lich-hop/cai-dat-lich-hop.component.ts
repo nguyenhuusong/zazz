@@ -184,20 +184,21 @@ export class CaiDatLichHopComponent implements OnInit {
   
   showButtons(event: any) {
     return {
+      // đã họp và đang họp
       buttons: [
         {
           onClick: this.handleEdit.bind(this),
           label: 'Sửa',
           icon: 'fa fa-pencil-square-o',
           class: 'btn-primary mr5',
-          hide: (event.data.status === 3)
+          hide: (event.data.is_edit !== 1)
         },
         {
           onClick: this.handleDelete.bind(this),
           label: 'Xóa',
           icon: 'fa fa-trash',
           class: 'btn-danger mr5',
-          hide: (event.data.status === 3)
+          hide: (event.data.is_edit !== 1)
         },
       ]
     };

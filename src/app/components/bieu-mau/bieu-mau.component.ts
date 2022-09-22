@@ -51,6 +51,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
   formId = null;
   dataRouter = null;
   indexTab = 0;
+  titleHeader = '';
   constructor(
     private apiService: ApiHrmService,
     private spinner: NgxSpinnerService,
@@ -132,7 +133,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
     this.apiService.getAgencyOrganizeMap().subscribe(results => {
       if (results.status === 'success') {
         this.listAgencyMap = [...results.data.root];
-        if (localStorage.getItem("organize") === null) {
+        if (localStorage.getItem("organize") === null || localStorage.getItem("organize") === 'undefined') {
           this.selectedNode = this.listAgencyMap[0];
           localStorage.setItem('organize', JSON.stringify(this.listAgencyMap[0]));
           // this.query.organizeId = this.selectedNode.orgId;
@@ -244,7 +245,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
       query.typeForm = this.query.typeForm.data;
     } 
     const queryParams = queryString.stringify(query);
-    this.apiService.getFormGeneral(queryParams, this.dataRouter.url === 'tai-lieu-chung' ? 'GetFormGeneral' : 'GetFormPersonal').subscribe(
+    this.apiService.getFormGeneral(queryParams, this.indexTab === 0 ? 'GetFormGeneral' : 'GetFormPersonal').subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         this.gridKey= results.data.dataList.gridKey
@@ -292,7 +293,6 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
   }
 
   handleDelete(event) {
-    console.log('t:', event);
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa tài liệu?',
       accept: () => {
@@ -313,6 +313,11 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
     // this.router.navigateByUrl(`/chinh-sach/tai-lieu-chung/${event.rowData.form_id}`);
     this.formId = event.rowData.form_id;
     this.addNewPopup = true;
+    if(this.indexTab === 0){
+      this.titleHeader = 'Sửa tài liệu chung'
+    }else {
+      this.titleHeader = 'Sửa tài liệu cá nhân'
+    }
   }
 
 
@@ -471,16 +476,9 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
   formTypeId2
   addNewPopup2 = false
   handleAdd(): void {
-    if(this.indexTab === 0){
       this.formId = null;
       this.addNewPopup = true;
-      this.addNewPopup2 = false;
-    }else{
-      this.formTypeId2 = null;
-      this.addNewPopup2 = true;
-      this.addNewPopup = false;
-      this.getDetail();
-    }
+      this.titleHeader = 'Thêm mới tài liệu'
   }
 
   handleCallbackForm() {
@@ -489,12 +487,8 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
   }
 
   handleChange(event) {
-    console.log('event', event)
-    if(event.index === 1){
-      this.load2();
-    }else{
-      this.load();
-    }
+    this.indexTab = event.index
+    this.load();
   }
 
   query2 = {
@@ -554,13 +548,13 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
     return {
       buttons: [
         {
-          onClick: this.handleEdit2.bind(this),
+          onClick: this.EditEmployee.bind(this),
           label: 'Thông tin chi tiết',
           icon: 'pi pi-tablet',
           class: 'btn-primary mr5',
         },
         {
-          onClick: this.handleDelete2.bind(this),
+          onClick: this.handleDelete.bind(this),
           label: 'Xóa tài liệu',
           icon: 'fa fa-trash',
           class: 'btn-primary mr5',
@@ -591,7 +585,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
         pinned: 'right',
         cellRenderer: 'buttonAgGridComponent',
         cellClass: ['border-right', 'no-auto', 'cell-options'],
-        cellRendererParams: (params: any) => this.showButtons2(params),
+        cellRendererParams: (params: any) => this.showButtons(params),
         field: 'checkbox'
       }]
   }

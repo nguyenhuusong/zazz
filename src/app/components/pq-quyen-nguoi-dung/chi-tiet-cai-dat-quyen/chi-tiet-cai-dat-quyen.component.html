@@ -24,7 +24,7 @@
                                       [enableRangeSelection]="true" [animateRows]="true"
                                       [getRowHeight]="getRowHeight1" [frameworkComponents]="frameworkComponents"></ag-grid-angular>
                                     </div> -->
-                                    <app-danh-sach-menu *ngIf="indexTab === 0"></app-danh-sach-menu>
+                                    <app-danh-sach-menu [menusGrid]="menusTab" *ngIf="indexTab === 0"></app-danh-sach-menu>
                                   </p-tabPanel>
                                   <p-tabPanel header="Danh sách các Action">
                                     <!-- <button pButton  type="button" class="p-button-sm btn-addnew" icon="pi pi-plus" (click)="addAction()" label="Thêm mới"></button>
