@@ -522,8 +522,8 @@ export class ApiHrmService {
   delMeetRoomInfo(id): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v2/meeting/DelMeetRoomInfo?roomId=` + id, this.options);
   }
-  delMeetingInfo(id): Observable<any> {
-    return this.http.delete<any>(`${apiHrmServer}/api/v2/meeting/DelMeetingInfo?meet_ud=` + id, this.options);
+  delMeetingInfo(query): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/meeting/DelMeetingInfo?` + query, this.options);
   }
   getMeetRooms(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/meeting/GetMeetRooms?${queryParams}`, this.options);
