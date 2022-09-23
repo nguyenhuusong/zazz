@@ -37,6 +37,7 @@ export class DanhSachActionComponent implements OnInit {
    }
   ngOnInit(): void {
     this.getClientActions();
+    this.getActions();
   }
  
  
@@ -56,7 +57,7 @@ export class DanhSachActionComponent implements OnInit {
     const query = {  }
     this.apiService.getMenuConfigInfo(queryString.stringify(query)).subscribe((results: any) => {
       if (results.status === 'success') {
-        this.listsData = cloneDeep(results?.data?.clientaction);
+        // this.listsData = cloneDeep(results?.data?.clientaction);
         if(results.data && results.data.view_grids_action){
           this.initGrid(results.data.view_grids_action);
         }
@@ -65,27 +66,35 @@ export class DanhSachActionComponent implements OnInit {
     })
   }
 
+  getActions() {
+    this.apiService.getConfigActionList().subscribe((results: any) => {
+      if (results.status === 'success') {
+        this.listsData = cloneDeep(results?.data);
+        this.gridKey = results?.data?.dataList?.gridKey
+      }
+    })
+  }
+
   create() {
     this.modelAction = {
-      actionId: null,
-      actionCd: '',
-      actionName: '',
-      webId: this.detailInfo.webId
+      actionId: 0,
+      actionCd: "",
+      actionName: ""
     }
     this.displayInfo = true;
   }
 
   saveAction() {
-    // this.apiService.setClientAction(this.modelAction).subscribe(results => {
-    //   if (results.status === 'success') {
-    //     this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Thêm mới action thành công' });
-    //     this.displayInfo = false;
-    //     this.getClientActionListByWebId();
-    //   } else {
-    //     this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Thêm action không thành công' });
-    //     this.displayInfo = false;
-    //   }
-    // })
+    this.apiService.setConfigMenuAction(this.modelAction).subscribe(results => {
+      if (results.status === 'success') {
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Thêm mới action thành công' });
+        this.displayInfo = false;
+        this.getActions();
+      } else {
+        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Thêm action không thành công' });
+        this.displayInfo = false;
+      }
+    })
   }
 
   initGrid(gridflexs) {
@@ -131,7 +140,6 @@ export class DanhSachActionComponent implements OnInit {
         actionId: event.rowData.actionId,
         actionCd: event.rowData.actionCd,
         actionName: event.rowData.actionName,
-        webId: this.detailInfo.webId
       }
   }
   displayInfo = false;
@@ -139,26 +147,26 @@ export class DanhSachActionComponent implements OnInit {
     actionId: null,
     actionCd: '',
     actionName: '',
-    webId: null
   }
 
   listViews = [];
  
 
   delete(event) {
-    // this.confirmationService.confirm({
-    //   message: 'Bạn có chắc chắn muốn thực hiện hành động này?',
-    //   accept: () => {
-    //     const queryParams = queryString.stringify({ menuId: event.rowData.menuId });
-    //     this.apiService.delClientMenu(queryParams).subscribe(results => {
-    //       if (results.status === 'success') {
-    //         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
-    //       } else {
-    //         this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
-    //       }
-    //     });
-    //   }
-    // })
+    this.confirmationService.confirm({
+      message: 'Bạn có chắc chắn muốn thực hiện hành động này?',
+      accept: () => {
+        const queryParams = queryString.stringify({ actionId: event.rowData.actionId });
+        this.apiService.delConfigMenuAction(queryParams).subscribe(results => {
+          if (results.status === 'success') {
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
+            this.getActions();
+          } else {
+            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
+          }
+        });
+      }
+    })
   }
 
   setClientMenuInfo(data) {

@@ -1494,7 +1494,7 @@ export class ApiHrmService {
   }
 
   shareToApp(queryParams): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v2/forms/ShareToApp`,queryParams, this.options)
+    return this.http.post<any>(`${apiHrmServer}/api/v2/forms/ShareToApp?` + queryParams, null, this.options)
   }
 
   uploadDrives(data): Observable<any> {

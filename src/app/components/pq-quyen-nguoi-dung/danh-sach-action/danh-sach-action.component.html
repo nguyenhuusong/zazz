@@ -8,21 +8,21 @@
         [listsData]="listsData" [height]="heightGrid" 
         [columnDefs]="columnDefs"></app-list-grid-angular>
 </div>
-<p-dialog [(visible)]="displayInfo" [autoZIndex]="true" [modal]="true" [style]="{width: '1300px', height: 'auto'}">
+<p-dialog [(visible)]="displayInfo" [autoZIndex]="true" [modal]="true" [style]="{width: '800px', height: 'auto'}">
 <p-header>
    Thông tin action
 </p-header>
 <div class="row">
     <div class="col-md-12 ">
-      <div class="group-field" [ngClass]=" modelAction.actionCd ? 'valid' : 'invalid' ">
+      <div class="field-group text" [ngClass]=" modelAction.actionCd ? 'valid' : 'invalid' ">
+        <label for="">Mã action<span style="color:red">*</span></label>
           <input type="text" [(ngModel)]="modelAction.actionCd" class="form-control" required>
-          <label for="">Mã action<span style="color:red">*</span></label>
         </div>
     </div>
     <div class="col-md-12">
-      <div class="group-field"  [ngClass]=" modelAction.actionName ? 'valid' : 'invalid' ">
-          <input type="text" [(ngModel)]="modelAction.actionName" class="form-control" required>
+      <div class="field-group text"  [ngClass]=" modelAction.actionName ? 'valid' : 'invalid' ">
           <label for="">Tên action<span style="color:red">*</span></label>
+          <input type="text" [(ngModel)]="modelAction.actionName" class="form-control" required>
         </div>
     </div>
   </div>

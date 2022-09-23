@@ -26,7 +26,8 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
     typeForm: null,
     createDate: '',
     offSet: 0,
-    pageSize: 15
+    pageSize: 15,
+    form_status: null,
   };
   cols: any[];
   totalRecord = 0;
@@ -38,6 +39,11 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
   }
   listsData = [];
   columnDefs = [];
+  statusTaiLieu = [
+    { label: 'Đang hoạt động', value: 1 },
+    { label: 'Hết hạn', value: 2 },
+    { label: 'Đã lên app', value: 3 }
+  ]
   detailCellRendererParams;
   colsDetail: any[];
   listDataSelect = [];
@@ -209,11 +215,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
   }
 
   find() {
-    if(this.indexTab === 0){
       this.load();
-    }else{
-      this.load2();
-    }
     
   }
   
@@ -322,6 +324,15 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
 
 
   initGrid() {
+    if(this.indexTab === 0){
+      this.columnDef();
+    }else {
+      this.columnDef2();
+    }
+  }
+
+  // chung
+  columnDef() {
     this.columnDefs = [
       {
         headerName: 'STT',
@@ -346,53 +357,36 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
         cellRendererParams: (params: any) => this.showButtons(params),
         field: 'checkbox'
       }]
-
-    this.detailCellRendererParams = {
-      detailGridOptions: {
-        frameworkComponents: {},
-        getRowHeight: (params) => {
-          return 40;
+  }
+  //ca nhan
+  columnDef2() {
+    this.columnDefs = [
+      {
+        headerName: 'STT',
+        filter: '',
+        maxWidth: 120,
+        pinned: 'left',
+        cellRenderer: params => {
+          return params.rowIndex + 1
         },
-        columnDefs: [
-          ...AgGridFn(this.colsDetail),
-        ],
-
-        enableCellTextSelection: true,
-        onFirstDataRendered(params) {
-          let allColumnIds: any = [];
-          params.columnApi.getAllColumns()
-            .forEach((column: any) => {
-              if (column.colDef.cellClass.indexOf('auto') < 0) {
-                allColumnIds.push(column)
-              } else {
-                column.colDef.suppressSizeToFit = true;
-                allColumnIds.push(column)
-              }
-            });
-          params.api.sizeColumnsToFit(allColumnIds);
-        },
+        cellClass: ['border-right', 'no-auto'],
+        field: 'checkbox2',
+        checkboxSelection: true,
+        headerCheckboxSelection: true,
+        headerCheckboxSelectionFilteredOnly: true,
+        suppressSizeToFit: true,
       },
-      getDetailRowData(params) {
-        params.successCallback(params.data.AgencyGenerals);
-      },
-      excelStyles: [
-        {
-          id: 'stringType',
-          dataType: 'string'
-        }
-      ],
-      template: function (params) {
-        var personName = params.data.theme;
-        return (
-          '<div style="height: 100%; background-color: #EDF6FF; padding: 20px; box-sizing: border-box;">' +
-          `  <div style="height: 10%; padding: 2px; font-weight: bold;">###### Danh sách (${params.data.AgencyGenerals.length}) : [` +
-          personName + ']' +
-          '</div>' +
-          '  <div ref="eDetailGrid" style="height: 90%;"></div>' +
-          '</div>'
-        );
-      },
-    };
+      ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
+      {
+        headerName: '    ...',
+        filter: '',
+        maxWidth: 80,
+        pinned: 'right',
+        cellRenderer: 'buttonAgGridComponent',
+        cellClass: ['border-right', 'no-auto', 'cell-options'],
+        cellRendererParams: (params: any) => this.showButtons(params),
+        field: 'checkbox'
+      }]
   }
 
   exportExel() {
@@ -442,7 +436,8 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
       typeForm: '',
       createDate: '',
       offSet: 0,
-      pageSize: 10
+      pageSize: 10,
+      form_status: null,
     }
     this.load();
   }
@@ -463,10 +458,6 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
         this.loadjs = 0;
       }
     }
-  }
-
-  rowSelected(data) {
-    this.listDataSelect = data
   }
 
   handleFormType(): void {
@@ -491,137 +482,6 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
     this.load();
   }
 
-  query2 = {
-    filter: '',
-    organizeId: this.query.organizeId,
-    typeForm: null,
-    createDate: '',
-    offSet: 0,
-    pageSize: 15
-  };
-  listsData2 = []
-  cols2 = []
-  colsDetail2 = []
-  load2() {
-
-    this.query2.organizeId = this.query.organizeId;
-    this.columnDefs2 = []
-    this.spinner.show();
-    const query = {...this.query2};
-    if (query.createDate && typeof query.createDate !== 'string') {
-      query.createDate = moment(query.createDate).format('YYYY-MM-DD');
-    }
-    if (typeof this.query2.typeForm === 'object' && this.query && this.query.typeForm) {
-      query.typeForm = this.query2.typeForm.data;
-    } 
-    const queryParams = queryString.stringify(query);
-    this.apiService.getFormPersonal(queryParams)
-    .subscribe(
-      (results: any) => {
-        this.listsData2 = results.data.dataList.data;
-        this.gridKey= results.data.dataList.gridKey
-        if (this.query2.offSet === 0) {
-          this.cols2 = results.data.gridflexs;
-          this.colsDetail2 = results.data.gridflexdetails ? results.data.gridflexdetails : [];
-        }
-        this.initGrid2();
-        this.countRecord.totalRecord = results.data.dataList.recordsTotal;
-        this.countRecord.totalRecord = results.data.dataList.recordsTotal;
-        this.countRecord.currentRecordStart = results.data.dataList.recordsTotal === 0 ? this.query2.offSet = 0 : this.query2.offSet + 1;
-        if ((results.data.dataList.recordsTotal - this.query2.offSet) > this.query2.pageSize) {
-          this.countRecord.currentRecordEnd = this.query2.offSet + Number(this.query2.pageSize);
-        } else {
-          this.countRecord.currentRecordEnd = results.data.dataList.recordsTotal;
-          setTimeout(() => {
-            const noData = document.querySelector('.ag-overlay-no-rows-center');
-            if (noData) { noData.innerHTML = 'Không có kết quả phù hợp' }
-          }, 100);
-        }
-        this.spinner.hide();
-      },
-      error => {
-        this.spinner.hide();
-      });
-  }
-
-  showButtons2(event: any) {
-    return {
-      buttons: [
-        {
-          onClick: this.EditEmployee.bind(this),
-          label: 'Thông tin chi tiết',
-          icon: 'pi pi-tablet',
-          class: 'btn-primary mr5',
-        },
-        {
-          onClick: this.handleDelete.bind(this),
-          label: 'Xóa tài liệu',
-          icon: 'fa fa-trash',
-          class: 'btn-primary mr5',
-        },
-      ]
-    };
-  }
-  columnDefs2 = []
-  initGrid2() {
-    this.columnDefs2 = [
-      {
-        headerName: 'STT',
-        filter: '',
-        maxWidth: 120,
-        pinned: 'left',
-        cellRenderer: params => {
-          return params.rowIndex + 1
-        },
-        cellClass: ['border-right', 'no-auto'],
-        field: 'checkbox2',
-        suppressSizeToFit: true,
-      },
-      ...AgGridFn(this.cols2.filter((d: any) => !d.isHide)),
-      {
-        headerName: '    ...',
-        filter: '',
-        maxWidth: 80,
-        pinned: 'right',
-        cellRenderer: 'buttonAgGridComponent',
-        cellClass: ['border-right', 'no-auto', 'cell-options'],
-        cellRendererParams: (params: any) => this.showButtons(params),
-        field: 'checkbox'
-      }]
-  }
-  handleEdit2(event) {
-    this.formTypeId2 = event.rowData.form_id;
-    this.addNewPopup2 = true;
-    this.getDetail();
-  }
-  handleDelete2(event) {
-    this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn xóa tài liệu?',
-      accept: () => {
-        const queryParams = queryString.stringify({formId: event.rowData.form_type_id});
-        this.apiService.delFormsTypeInfo(queryParams).subscribe((results: any) => {
-          if (results.status === 'success') {
-            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa tài liệu thành công' });
-            this.load2();
-          } else {
-            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
-          }
-        });
-      }
-    });
-  }
-
-  cancel2() {
-    this.query2 = {
-      organizeId: this.query.organizeId,
-      filter: '',
-      typeForm: '',
-      createDate: '',
-      offSet: 0,
-      pageSize: 10
-    }
-    this.load2();
-  }
   listViews = []
   detailInfo = []
   getDetail() {
@@ -649,7 +509,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
           this.spinner.hide();
           this.addNewPopup2 = false;
-          this.load2();
+          this.load();
         } else {
           this.messageService.add({
             severity: 'error', summary: 'Thông báo',
@@ -665,4 +525,40 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
   quaylai(r) {
     this.addNewPopup2 = false;
   }
+  
+
+  isShareButton = false;
+  pushToApp() {
+    let form_id = String(this.listDataSelect)
+    if(this.listDataSelect.length > 0){
+      const ids = queryString.stringify( { form_id: form_id})
+      this.apiService.shareToApp(ids)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((results: any) => {
+          if (results.status === 'success') {
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
+            this.spinner.hide();
+            this.load();
+          } else {
+            this.messageService.add({
+              severity: 'error', summary: 'Thông báo',
+              detail: results.message
+            });
+            this.spinner.hide();
+          }
+        }), error => {
+          console.error('Error:', error);
+          this.spinner.hide();
+        };
+    }
+    
+  }
+
+  rowSelected(data) {
+    this.listDataSelect = []
+    data.forEach(element => {
+      this.listDataSelect.push(element.form_id)
+    });
+  }
+
 }
