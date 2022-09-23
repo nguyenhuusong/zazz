@@ -49,9 +49,9 @@ import { ImportXeNhanVienComponent } from 'src/app/components/pq-xe-nhan-vien/im
 import { ImportTheNhanVienComponent } from 'src/app/components/pq-the-nhan-vien/import-the-nhan-vien/import-the-nhan-vien.component';
 import { ImageModule } from 'primeng/image';
 import { ChiTietCaiDatQuyenComponent } from 'src/app/components/pq-quyen-nguoi-dung/chi-tiet-cai-dat-quyen/chi-tiet-cai-dat-quyen.component';
-// import { DanhSachActionComponent } from 'src/app/components/pq-quyen-nguoi-dung/danh-sach-action/danh-sach-action.component';
+import { DanhSachActionComponent } from 'src/app/components/pq-quyen-nguoi-dung/danh-sach-action/danh-sach-action.component';
 import { DanhSachMenuComponent } from 'src/app/components/pq-quyen-nguoi-dung/danh-sach-menu/danh-sach-menu.component';
-// import { DanhSachRoleComponent } from 'src/app/components/pq-quyen-nguoi-dung/danh-sach-role/danh-sach-role.component';
+import { DanhSachRoleComponent } from 'src/app/components/pq-quyen-nguoi-dung/danh-sach-role/danh-sach-role.component';
 import { PickListModule } from 'primeng/picklist';
 @NgModule({
   imports: [
@@ -111,9 +111,9 @@ import { PickListModule } from 'primeng/picklist';
     ImportXeNhanVienComponent,
     ImportTheNhanVienComponent,
     ChiTietCaiDatQuyenComponent,
-    // DanhSachActionComponent,
+    DanhSachActionComponent,
     DanhSachMenuComponent,
-    // DanhSachRoleComponent
+    DanhSachRoleComponent
   ],
   providers: []
 })

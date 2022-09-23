@@ -36,18 +36,31 @@ export class DanhSachActionComponent implements OnInit {
      this.displaySetting = true;
    }
   ngOnInit(): void {
-    this.getClientActionListByWebId()
+    this.getClientActions();
   }
  
  
   getClientActionListByWebId() {
-    this.columnDefs = []
-    const queryParams = queryString.stringify({ webId: this.detailInfo.webId });
-    this.apiService.getClientActionListByWebId(queryParams).subscribe(results => {
+    // this.columnDefs = []
+    // const queryParams = queryString.stringify({ webId: this.detailInfo.webId });
+    // this.apiService.getClientActionListByWebId(queryParams).subscribe(results => {
+    //   if (results.status === 'success') {
+    //     this.listsData = cloneDeep(results.data.dataList.data);
+    //     this.initGrid(results.data.gridflexs);
+    //     this.gridKey = results.data.dataList.gridKey
+    //   }
+    // })
+  }
+  getClientActions() {
+  this.columnDefs = []
+    const query = {  }
+    this.apiService.getMenuConfigInfo(queryString.stringify(query)).subscribe((results: any) => {
       if (results.status === 'success') {
-        this.listsData = cloneDeep(results.data.dataList.data);
-        this.initGrid(results.data.gridflexs);
-        this.gridKey = results.data.dataList.gridKey
+        this.listsData = cloneDeep(results?.data?.clientaction);
+        if(results.data && results.data.view_grids_action){
+          this.initGrid(results.data.view_grids_action);
+        }
+        this.gridKey = results?.data?.dataList?.gridKey
       }
     })
   }
@@ -63,16 +76,16 @@ export class DanhSachActionComponent implements OnInit {
   }
 
   saveAction() {
-    this.apiService.setClientAction(this.modelAction).subscribe(results => {
-      if (results.status === 'success') {
-        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Thêm mới action thành công' });
-        this.displayInfo = false;
-        this.getClientActionListByWebId();
-      } else {
-        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Thêm action không thành công' });
-        this.displayInfo = false;
-      }
-    })
+    // this.apiService.setClientAction(this.modelAction).subscribe(results => {
+    //   if (results.status === 'success') {
+    //     this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Thêm mới action thành công' });
+    //     this.displayInfo = false;
+    //     this.getClientActionListByWebId();
+    //   } else {
+    //     this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Thêm action không thành công' });
+    //     this.displayInfo = false;
+    //   }
+    // })
   }
 
   initGrid(gridflexs) {
@@ -133,19 +146,19 @@ export class DanhSachActionComponent implements OnInit {
  
 
   delete(event) {
-    this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn thực hiện hành động này?',
-      accept: () => {
-        const queryParams = queryString.stringify({ menuId: event.rowData.menuId });
-        this.apiService.delClientMenu(queryParams).subscribe(results => {
-          if (results.status === 'success') {
-            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
-          } else {
-            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
-          }
-        });
-      }
-    })
+    // this.confirmationService.confirm({
+    //   message: 'Bạn có chắc chắn muốn thực hiện hành động này?',
+    //   accept: () => {
+    //     const queryParams = queryString.stringify({ menuId: event.rowData.menuId });
+    //     this.apiService.delClientMenu(queryParams).subscribe(results => {
+    //       if (results.status === 'success') {
+    //         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
+    //       } else {
+    //         this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
+    //       }
+    //     });
+    //   }
+    // })
   }
 
   setClientMenuInfo(data) {

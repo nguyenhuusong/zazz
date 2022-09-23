@@ -107,15 +107,15 @@ export class ChiTietCaiDatQuyenComponent implements OnInit, OnDestroy {
     const query = {  }
     this.apiService.getMenuConfigInfo(queryString.stringify(query)).subscribe((results: any) => {
       if(results.status === 'success'){
-        this.menusTab.menus = results.data.menus
+        this.menusTab.data = results.data.menus
         this.menusTab.menutree = results.data.menutree
-        this.menusTab.gridsMmenu = results.data.view_grids_menu
+        this.menusTab.gridflexs = results.data.view_grids_menu
         
-        this.rolesTab.roles = results.data.roles;
-        this.rolesTab.gridsRoles = results.data.view_grids_roles;
+        this.rolesTab.data = results.data.roles;
+        this.rolesTab.gridflexs = results.data.view_grids_roles;
         
-        this.rolesTab.clientaction = results.data.clientaction;
-        this.rolesTab.clientaction = results.data.view_grids_action;
+        this.rolesTab.data = results.data.clientaction;
+        this.rolesTab.gridflexs = results.data.view_grids_action;
       }
     })
   }

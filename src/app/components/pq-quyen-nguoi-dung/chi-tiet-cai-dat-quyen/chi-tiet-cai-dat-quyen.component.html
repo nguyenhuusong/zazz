@@ -24,7 +24,7 @@
                                       [enableRangeSelection]="true" [animateRows]="true"
                                       [getRowHeight]="getRowHeight1" [frameworkComponents]="frameworkComponents"></ag-grid-angular>
                                     </div> -->
-                                    <app-danh-sach-menu [menusGrid]="menusTab" *ngIf="indexTab === 0"></app-danh-sach-menu>
+                                    <app-danh-sach-menu *ngIf="indexTab === 0"></app-danh-sach-menu>
                                   </p-tabPanel>
                                   <p-tabPanel header="Danh sách các Action">
                                     <!-- <button pButton  type="button" class="p-button-sm btn-addnew" icon="pi pi-plus" (click)="addAction()" label="Thêm mới"></button>
@@ -38,7 +38,7 @@
                                         [enableRangeSelection]="true" [animateRows]="true"
                                         [getRowHeight]="getRowHeight" [frameworkComponents]="frameworkComponents"></ag-grid-angular>
                                     </div> -->
-                                    <!-- <app-danh-sach-action [detailInfo]="dataFieldsInfo" *ngIf="dataFieldsInfo && indexTab === 1"></app-danh-sach-action> -->
+                                    <app-danh-sach-action *ngIf="indexTab === 1"></app-danh-sach-action>
                                   </p-tabPanel>
                                   <p-tabPanel header="Danh sách các quyền">
                                     <!-- <button pButton  type="button" class="p-button-sm btn-addnew" icon="pi pi-plus" (click)="addRole()" label="Thêm mới"></button>
@@ -52,7 +52,7 @@
                                       [enableRangeSelection]="true" [animateRows]="true"
                                       [getRowHeight]="getRowHeight" [frameworkComponents]="frameworkComponents"></ag-grid-angular>
                                     </div> -->
-                                    <!-- <app-danh-sach-role [detailInfo]="dataFieldsInfo" *ngIf="dataFieldsInfo && indexTab === 2"></app-danh-sach-role> -->
+                                    <app-danh-sach-role *ngIf="indexTab === 2"></app-danh-sach-role>
                                   </p-tabPanel>
                             
                             </p-tabView>

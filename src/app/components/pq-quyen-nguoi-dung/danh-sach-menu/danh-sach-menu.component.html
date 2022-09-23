@@ -1,11 +1,10 @@
-<div class="d-flex are-tab-btns">
+<div class="d-flex are-tab-btns mt-2 mb-2">
     <p-button styleClass="p-button-sm btn-tab" (click)="create()" label="Thêm mới" icon="pi pi-icon"></p-button>
     <p-button label="Cấu hình" icon="pi pi-cog" styleClass="p-button-sm ml-2 addNew" (click)="cauhinh()"></p-button>
 </div>
 
 <div class="grid-default border">
-    <app-list-grid-angular *ngIf="columnDefs?.length > 0"
-        [listsData]="menusGrid.menus" [height]="heightGrid" 
+    <app-list-grid-angular *ngIf="columnDefs?.length > 0" [height]="heightGrid" 
         [columnDefs]="columnDefs"></app-list-grid-angular>
 </div>
 <p-dialog [(visible)]="displayInfo" [autoZIndex]="true" [modal]="true" [style]="{width: '1300px', height: 'auto'}">
