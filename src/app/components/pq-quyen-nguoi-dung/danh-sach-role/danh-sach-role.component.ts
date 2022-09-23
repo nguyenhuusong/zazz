@@ -35,16 +35,30 @@ export class DanhSachRoleComponent implements OnInit {
     this.displaySetting = true;
   }
   ngOnInit(): void {
-    this.getClientRolePageByWebId()
-    // this.getWebMenuTree()v
+    // this.getClientRolePageByWebId()
+    // this.getWebMenuTree()
+    this.getRoles();
   }
 
+  getRoles() {
+    this.columnDefs = []
+    const query = {  }
+    this.apiService.getMenuConfigInfo(queryString.stringify(query)).subscribe((results: any) => {
+      if (results.status === 'success') {
+        this.listsData = cloneDeep(results?.data?.roles);
+        if(results.data && results.data.view_grids_action){
+          this.initGrid(results.data.view_grids_roles);
+        }
+        this.gridKey = results?.data?.dataList?.gridKey
+      }
+    })
+  }
 
   getClientRolePageByWebId() {
     this.columnDefs = []
     this.apiService.getUserMenus().subscribe(results => {
       if (results.status === 'success') {
-        this.listsData = cloneDeep(results.data.dataList.data);
+        this.listsData = cloneDeep(results.data.dataList.roles);
         this.initGrid(results.data.gridflexs);
         this.gridKey = results.data.dataList.gridKey
       }
@@ -93,7 +107,6 @@ export class DanhSachRoleComponent implements OnInit {
               {
                 onClick: this.suaThongTin.bind(this),
                 label: 'Xem thông tin',
-                key: 'chinhsualaixuat',
                 icon: 'fa fa-edit',
                 class: 'btn-primary mr5',
               },
@@ -101,7 +114,6 @@ export class DanhSachRoleComponent implements OnInit {
               {
                 onClick: this.delete.bind(this),
                 label: 'Xóa',
-                key: 'xoalaixuat',
                 icon: 'pi pi-trash',
                 class: 'btn-primary mr5',
               },
@@ -139,7 +151,7 @@ export class DanhSachRoleComponent implements OnInit {
       message: 'Bạn có chắc chắn muốn thực hiện hành động này?',
       accept: () => {
         const queryParams = queryString.stringify({ menuId: event.rowData.menuId });
-        this.apiService.delConfigMenu(queryParams).subscribe(results => {
+        this.apiService.deleteRole(queryParams).subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
             this.callback.emit();
@@ -157,11 +169,11 @@ export class DanhSachRoleComponent implements OnInit {
     const params = {
       ...this.detailDetailInfo, group_fields: data
     };
-    this.apiService.setConfigMenu(params).subscribe((results: any) => {
+    this.apiService.SetRoleInfo(params).subscribe((results: any) => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data });
         this.spinner.hide();
-        this.getClientRolePageByWebId();
+        this.getRoles();
         this.displayInfo = false;
       } else {
         this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
@@ -274,7 +286,6 @@ export class DanhSachRoleComponent implements OnInit {
   }
 
   clickRowRoleGetMenu(event) {
-    console.log(event)
     this.detailDetailInfo = null;
     this.menus.forEach(m => {
       m.isCheck = false;
@@ -291,7 +302,7 @@ export class DanhSachRoleComponent implements OnInit {
   listMenuRoles = []
   getRoleInfoSidebar(id) {
     const queryParams = queryString.stringify({ roleId: id, webId: this.detailInfo.webId });
-    this.apiService.getConfigMenu(queryParams).subscribe(results => {
+    this.apiService.getRoleInfo(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.detailDetailInfo = results.data;
         this.listMenuRoles = cloneDeep(this.detailDetailInfo.rolemenu);

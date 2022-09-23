@@ -13,7 +13,6 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 })
 export class DanhSachMenuComponent implements OnInit {
   @Input() detailInfo: any = null;
-  @Input() menusGrid: any = null;
   @Output() callback = new EventEmitter<any>();
   optionsButon = [
     // { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
@@ -35,8 +34,8 @@ export class DanhSachMenuComponent implements OnInit {
   cauhinh() {
     this.displaySetting = true;
   }
+
   ngOnInit(): void {
-    this.columnDefs = this.menusGrid.gridsMmenu
     this.initGrid(this.columnDefs);
     this.getUserMenus()
     // this.getClientActionListByWebId()
@@ -45,12 +44,12 @@ export class DanhSachMenuComponent implements OnInit {
 
   getUserMenus() {
     this.columnDefs = []
-    // const queryParams = queryString.stringify({ webId: this.detailInfo.webId });
-    this.apiService.getUserMenus().subscribe(results => {
+    const query = {  }
+    this.apiService.getMenuConfigInfo(queryString.stringify(query)).subscribe((results: any) => {
       if (results.status === 'success') {
-        this.listsData = cloneDeep(results?.data?.dataList?.data);
-        if(results.data && results.data.gridflexs){
-          this.initGrid(results.data.gridflexs);
+        this.listsData = cloneDeep(results?.data?.menus);
+        if(results.data && results.data.view_grids_menu){
+          this.initGrid(results.data.view_grids_menu);
         }
         this.gridKey = results?.data?.dataList?.gridKey
       }
@@ -83,6 +82,7 @@ export class DanhSachMenuComponent implements OnInit {
   }
 
   initGrid(gridflexs) {
+    console.log('columnDefs', gridflexs)
     this.columnDefs = [
       ...AgGridFn(gridflexs),
       {
