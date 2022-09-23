@@ -87,7 +87,7 @@ export class DanhSachRoleComponent implements OnInit {
   }
 
   create() {
-    this.getMenuConfigInfo(null)
+    this.getRoleInfo()
   }
 
   initGrid(gridflexs) {
@@ -127,16 +127,17 @@ export class DanhSachRoleComponent implements OnInit {
 
 
   suaThongTin(event) {
-    this.getMenuConfigInfo(event.rowData.webRoleId);
+    this.getRoleInfo(event.rowData.webRoleId);
   }
 
   listViews = [];
   detailDetailInfo = null;
   displayInfo = false;
-  getMenuConfigInfo(roleId) {
+  getRoleInfo(id = null) {
     this.listViews = [];
-    const queryParams = queryString.stringify({ gridWidth: ''});
-    this.apiService.getMenuConfigInfo(queryParams).subscribe(results => {
+    this.displayInfo = true;
+    const queryParams = queryString.stringify({ id: id});
+    this.apiService.getRoleInfo(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.listViews = cloneDeep(results.data.group_fields);
         this.detailDetailInfo = results.data;
@@ -389,7 +390,7 @@ export class DanhSachRoleComponent implements OnInit {
 
   cancelUpdate(data) {
     if (data === 'CauHinh') {
-      this.getMenuConfigInfo(this.detailDetailInfo.roleId);
+      this.getRoleInfo(this.detailDetailInfo.roleId);
     }
   }
 

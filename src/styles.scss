@@ -5178,3 +5178,25 @@ app-chon-lich-hop{
         display: inline-block;
     }
 }
+.btn-active-on-off{
+    background: #BDC2CF;
+    width: auto !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    cursor: auto !important;
+    &:hover{
+        background: #BDC2CF !important;
+    }
+    &.active{
+        background: #4C97E4;
+        cursor: pointer !important;
+    }
+}
+p-button{
+    &.active{
+        .btn-active-on-off{
+            background: #4C97E4;
+            cursor: pointer !important;
+        }
+    }
+}
