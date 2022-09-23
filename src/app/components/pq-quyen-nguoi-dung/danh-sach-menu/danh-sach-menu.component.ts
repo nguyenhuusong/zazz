@@ -37,17 +37,18 @@ export class DanhSachMenuComponent implements OnInit {
 
   ngOnInit(): void {
     this.initGrid(this.columnDefs);
-    this.getUserMenus()
+    this.getMenuConfigInfo()
     // this.getClientActionListByWebId()
   }
 
 
-  getUserMenus() {
+  getMenuConfigInfo(id = null) {
     this.columnDefs = []
-    const query = {  }
+    const query = { gridWidth: id }
     this.apiService.getMenuConfigInfo(queryString.stringify(query)).subscribe((results: any) => {
       if (results.status === 'success') {
         this.listsData = cloneDeep(results?.data?.menus);
+        this.sourceActions = results.data.actions;
         if(results.data && results.data.view_grids_menu){
           this.initGrid(results.data.view_grids_menu);
         }
@@ -211,7 +212,7 @@ export class DanhSachMenuComponent implements OnInit {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data });
         this.spinner.hide();
-        this.getUserMenus();
+        this.getMenuConfigInfo();
         this.displayInfo = false;
       } else {
         this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
