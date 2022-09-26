@@ -5200,3 +5200,6 @@ p-button{
         }
     }
 }
+.menu-agrid .p-menu-list:empty {
+    display: none;
+}
