@@ -234,6 +234,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
           } else if(element1.field_name === 'floor_No'){
             this.getFloor(element1);
             this.callback1.emit(element1)
+          }else if(element1.field_name === 'form_status'){
+            this.getFormStatus(element1)
           } else {
             if (element1.columnObject) {
               this.getCustObjectListNew(element1);
@@ -988,6 +990,15 @@ export class EditDetailComponent implements OnInit, OnChanges {
         element1.columnValue = element1.columnValue ? element1.columnValue.toLowerCase() : ''
       }
     })
+  }
+
+  getFormStatus(element1) {
+    element1.options = [
+      { label: 'Đang hoạt động', value: 1},
+      { label: 'Hết hạn', value: 2},
+      { label: 'Đã lên app', value: 3 },
+    ]
+    element1.columnValue = element1.columnValue ? parseInt(element1.columnValue) : ''
   }
 
   getCustObjectListNew(element1) {
