@@ -34,9 +34,9 @@
 :host::ng-deep .wrap-upload .p-fileupload-buttonbar .p-fileupload-choose .p-button-label{
     display: none;
 }
-:host::ng-deep .upload-attact-detail .wrap-edit-detail>.grid{
+/* :host::ng-deep .upload-attact-detail .wrap-edit-detail>.grid{
     display: none;
-}
+} */
 :host::ng-deep .upload-attact-detail .wrap-edit-detail .btn-group-edit-detail{
     position: absolute !important;
     bottom: 12px !important;
@@ -44,4 +44,8 @@
 }
 :host::ng-deep .upload-attact-detail{
     padding-bottom: 40px;
+}
+:host::ng-deep .linkurl-drag{
+    border: none;
+    padding: 0px;
 }

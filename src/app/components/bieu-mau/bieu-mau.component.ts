@@ -283,12 +283,14 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
           label: 'Thông tin chi tiết',
           icon: 'pi pi-tablet',
           class: 'btn-primary mr5',
+          hide: this.indexTab === 0
         },
         {
           onClick: this.handleDelete.bind(this),
           label: 'Xóa tài liệu',
           icon: 'fa fa-trash',
           class: 'btn-primary mr5',
+          hide: this.indexTab === 0
         },
       ]
     };
@@ -461,7 +463,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
   }
 
   handleFormType(): void {
-    this.router.navigateByUrl('/chinh-sach/loai-tai-lieu');
+    this.router.navigateByUrl('/hoat-dong/loai-tai-lieu');
   }
   addNewPopup = false;
   formTypeId2

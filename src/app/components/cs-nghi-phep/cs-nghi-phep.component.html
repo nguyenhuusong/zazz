@@ -89,7 +89,7 @@
         <div class="header-filter-search grid mt-1">
             <div class="icon col-12 pl-0" style="display: flex; flex-wrap: wrap;">
                 <div class="col-6">
-                    <div class="field-group date mb-0 valid">
+                    <div class="field-group date valid">
                         <label>Từ ngày</label>
                         <p-calendar panelStyleClass="datepicker-default" placeholder="DD/MM/YYYY"
                             [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="query.fromdate" [monthNavigator]="true"
@@ -98,7 +98,7 @@
                     </div>
                 </div>
                 <div class="col-6">
-                    <div class="field-group date mb-0 valid">
+                    <div class="field-group date valid">
                         <label>Đến ngày</label>
                         <p-calendar panelStyleClass="datepicker-default" placeholder="DD/MM/YYYY"
                             [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="query.todate" [monthNavigator]="true"
@@ -110,7 +110,7 @@
                     <div class="field-group select valid">
                         <label>Công ty</label>
                         <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
-                            [options]="listOrgRoots" [(ngModel)]="query.organizeId"  (onChange)="find()"
+                            [options]="listOrgRoots" [(ngModel)]="query.organizeId" 
                             name="organizeId" [filter]="true">
                             <ng-template let-item pTemplate="selectedItem">
                                 <span>{{item.label}}</span>
@@ -127,7 +127,7 @@
                     <div class="field-group select label-8 valid">
                         <label>Trạng thái</label>
                         <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
-                        [options]="listStatus" [(ngModel)]="query.request_status"  (onChange)="find()"
+                        [options]="listStatus" [(ngModel)]="query.request_status"
                         name="request_status" [filter]="true">
                         <ng-template let-item pTemplate="selectedItem">
                             <span style="vertical-align:middle;">{{item.name}}</span>
@@ -144,7 +144,7 @@
                     <div class="field-group select label-8 valid">
                         <label>Lí do</label>
                         <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
-                            [options]="leaveReasons" [(ngModel)]="query.reason_code"  (onChange)="find()"
+                            [options]="leaveReasons" [(ngModel)]="query.reason_code" 
                             name="reason_code" [filter]="true">
                             <ng-template let-item pTemplate="selectedItem">
                                 <span style="vertical-align:middle;">{{item.name}}</span>
@@ -160,7 +160,7 @@
                 <div class="col-6">
                     <div class="field-group date mb-0" [ngClass]=" time ? 'valid' : 'invalid' ">
                         <label>Thời gian</label>
-                        <p-calendar [(ngModel)]="time" name="time" view="month" dateFormat="mm/yy" [readonlyInput]="true" inputId="monthpicker" (onSelect) = "load()"></p-calendar>
+                        <p-calendar [(ngModel)]="time" name="time" view="month" dateFormat="mm/yy" [readonlyInput]="true" inputId="monthpicker"></p-calendar>
                     </div>
                 </div>
             </div>

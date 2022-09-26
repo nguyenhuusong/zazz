@@ -278,7 +278,7 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa tài liệu?',
       accept: () => {
-        const queryParams = queryString.stringify({formTypeId: event.rowData.form_type_id});
+        const queryParams = queryString.stringify({formId: event.rowData.form_type_id});
         this.apiService.delFormsTypeInfo(queryParams).subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa tài liệu thành công' });
