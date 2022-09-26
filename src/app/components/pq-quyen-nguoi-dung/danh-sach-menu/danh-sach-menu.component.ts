@@ -44,7 +44,12 @@ export class DanhSachMenuComponent implements OnInit {
 
   getMenuConfigInfo(id = null) {
     this.columnDefs = []
-    const query = { gridWidth: id }
+    let query = {}
+    if(id){
+      query = { gridWidth: id }
+    }else{
+      query = {}
+    }
     this.apiService.getMenuConfigInfo(queryString.stringify(query)).subscribe((results: any) => {
       if (results.status === 'success') {
         this.listsData = cloneDeep(results?.data?.menus);
