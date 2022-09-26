@@ -558,9 +558,11 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
 
   rowSelected(data) {
     this.listDataSelect = []
-    data.forEach(element => {
-      this.listDataSelect.push(element.form_id)
-    });
+    if(this.indexTab === 1){
+      data.forEach(element => {
+        this.listDataSelect.push(element.form_id)
+      });
+    }
   }
 
 }
