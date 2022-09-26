@@ -289,7 +289,7 @@ export class DanhSachPhongHopComponent implements OnInit {
     const params = {
       roomId: e.rowData.roomId
     }
-    this.router.navigate(['/cai-dat/cai-dat-lich-hop/danh-sach-phong-hop/chi-tiet-phong-hop'], { queryParams: params });
+    this.router.navigate(['hoat-dong/lich-hop/danh-sach-phong-hop/chi-tiet-phong-hop'], { queryParams: params });
   }
 
   onGridReady(params): void {
@@ -327,7 +327,7 @@ export class DanhSachPhongHopComponent implements OnInit {
     const params = {
       roomId: ''
     }
-    this.router.navigate(['/cai-dat/cai-dat-lich-hop/danh-sach-phong-hop/them-moi-phong-hop'], { queryParams: params });
+    this.router.navigate(['hoat-dong/lich-hop/danh-sach-phong-hop/them-moi-phong-hop'], { queryParams: params });
   }
 }
 

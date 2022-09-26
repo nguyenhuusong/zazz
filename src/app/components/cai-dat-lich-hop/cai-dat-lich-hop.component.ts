@@ -3,7 +3,7 @@ import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
 import * as queryString from 'querystring';
 import { ApiService } from 'src/app/services/api.service';
 import { Router } from '@angular/router';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService, TreeNode } from 'primeng/api';
 import { AgGridFn } from 'src/app/common/function-common/common';
 import { CustomTooltipComponent } from 'src/app/common/ag-component/customtooltip.component';
 import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
@@ -32,6 +32,11 @@ export class CaiDatLichHopComponent implements OnInit {
   getRowHeight;
   cards = [];
   first = 0;
+  organs = [];
+  selectedNode;
+  listAgencyMap: TreeNode[];
+  isHrDiagram: boolean = false;
+  detailOrganizeMap = null;
   model = {
       filter: '',
       gridWidth: '',
@@ -40,6 +45,7 @@ export class CaiDatLichHopComponent implements OnInit {
       Floor_No: '',
       Meet_status: '',
       Time: null,
+      organization: '',
       fromDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).format("YYYY-MM-DD")),
       toDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).add(+10, 'months').format("YYYY-MM-DD")),
   }
@@ -55,7 +61,11 @@ export class CaiDatLichHopComponent implements OnInit {
     {
       label: 'Sắp họp',
       value: "Sắp họp"
-    }
+    },
+    {
+      label: 'Đã lên lịch',
+      value: "Đã lên lịch"
+    },
   ]
   totalRecord = 0;
   countRecord: any = {
@@ -102,6 +112,7 @@ export class CaiDatLichHopComponent implements OnInit {
     ];
     this.getFloor();
     this.load();
+    this.getOrgan();
   }
 
   loadjs = 0;
@@ -136,6 +147,7 @@ export class CaiDatLichHopComponent implements OnInit {
       Floor_No: '',
       Meet_status: '',
       Time: '',
+      organization: '',
       fromDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).format("YYYY-MM-DD")),
       toDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).add(+10, 'months').format("YYYY-MM-DD")),
     };
@@ -282,6 +294,80 @@ export class CaiDatLichHopComponent implements OnInit {
     });
   }
 
+  getOrgan() {
+    const queryParams = queryString.stringify({ filter: '' });
+    this.apiService.getOrganizations(queryParams).subscribe(results => {
+      if (results.status === 'success') {
+        this.organs = results.data.map(d => {
+          return {
+            label: d.organizationName,
+            value: `${d.organizeId}`
+          }
+        });
+        this.organs = [...this.organs];
+      }
+    })
+  }
+
+  hrDiagram() {
+    this.selectedNode = null;
+    this.listAgencyMap = []
+    this.getAgencyOrganizeMap(true);
+  }
+
+  selected(datas = [], orgId = '') {
+    datas.forEach(d => {
+      if (d.orgId == orgId) {
+        this.selectedNode = d;
+        this.detailOrganizeMap = d;
+      } else {
+        if (d.children.length > 0) this.selected(d.children, this.selectedNode.orgId)
+      }
+    }
+    )
+  }
+
+  expanded(datas = [], orgId = 0) {
+    datas.forEach(d => {
+      if (d.orgId === orgId) {
+        d.expanded = true;
+      } else {
+        if (d.children.length > 0) this.expanded(d.children, this.selectedNode.parentId)
+      }
+      d.children.forEach((elm: { children: { expanded: boolean; }[]; expanded: boolean; }) => {
+        elm.children.forEach((e: { expanded: boolean; }) =>{
+          if (e.expanded === true) {
+            elm.expanded = true
+          }
+        })
+      });      
+    })
+    return datas
+  }
+
+  getAgencyOrganizeMap(type = false) {
+    this.apiService.getAgencyOrganizeMap().subscribe(results => {
+      if (results.status === 'success') {
+        this.listAgencyMap = [...results.data.root];
+        if (localStorage.getItem("organize") === null || localStorage.getItem("organize") === 'undefined') {
+          this.selectedNode = this.listAgencyMap[0];
+          localStorage.setItem('organize', JSON.stringify(this.listAgencyMap[0]));
+          // this.query.organizeId = this.selectedNode.orgId;
+          this.load();
+        } else {
+          this.selectedNode = JSON.parse(localStorage.getItem("organize"));
+          // this.query.organizeId = this.selectedNode?.orgId;
+          this.listAgencyMap = this.expanded(this.listAgencyMap, this.selectedNode.parentId)
+          this.selected(this.listAgencyMap, this.model.organization);
+          if (type) {
+            this.isHrDiagram = true;
+          }
+          this.load();
+        }
+      }
+    })
+  }
+
   manageBuilding(): void {
     this.router.navigate(['/cai-dat/cai-dat-lich-hop/danh-sach-phong-hop']);
   }
@@ -332,7 +418,7 @@ export class CaiDatLichHopComponent implements OnInit {
   }
 
   toManagerRoom(): void {
-    this.router.navigate(['/cai-dat/cai-dat-lich-hop/danh-sach-phong-hop']);
+    this.router.navigate(['/hoat-dong/lich-hop/danh-sach-phong-hop']);
   }
 
   importSuccess(): void {

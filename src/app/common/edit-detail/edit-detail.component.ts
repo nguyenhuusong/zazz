@@ -996,7 +996,6 @@ export class EditDetailComponent implements OnInit, OnChanges {
     element1.options = [
       { label: 'Đang hoạt động', value: 1},
       { label: 'Hết hạn', value: 2},
-      { label: 'Đã lên app', value: 3 },
     ]
     element1.columnValue = element1.columnValue ? parseInt(element1.columnValue) : ''
   }

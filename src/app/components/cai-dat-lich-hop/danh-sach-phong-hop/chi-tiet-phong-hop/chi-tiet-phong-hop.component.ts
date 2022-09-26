@@ -99,7 +99,7 @@ export class ChiTietPhongHopComponent implements OnInit, OnDestroy {
     if(data === 'CauHinh') {
       this.getMeetRoomInfo();
     }else {
-      this.router.navigate(['/cai-dat/cai-dat-lich-hop/danh-sach-phong-hop']);
+      this.router.navigate(['hoat-dong/lich-hop/danh-sach-phong-hop']);
     }
   }
 
