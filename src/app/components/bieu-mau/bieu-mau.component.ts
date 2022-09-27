@@ -237,6 +237,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
   }
   
   load() {
+    this.listDataSelect = []
     this.columnDefs = []
     this.spinner.show();
     const query = {...this.query};
