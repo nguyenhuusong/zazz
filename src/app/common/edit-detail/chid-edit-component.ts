@@ -1425,7 +1425,7 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
     });
   }
   removeImage1(i) {
-    this.element.columnValue = [];
+    this.element.columnValue.splice(i, 1);
   }
 
   removeImage(index) {
