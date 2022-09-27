@@ -1765,3 +1765,22 @@ export class AppTypeonOff implements OnInit {
   }
   
 }
+
+@Component({
+  selector: 'app-type-label',
+  template: `
+    <div class="fileds field-group">
+      <div style = "color: #465373; font-weight: 500; font-size: 14px;">{{element.columnLabel}}</div>
+    </div>`,
+})
+
+export class AppLabel implements OnInit {
+  @Input() element;
+  @Input() modelFields;
+  @Input() submit = false;
+  @Input() dataView;
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+}
