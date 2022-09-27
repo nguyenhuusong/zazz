@@ -52,6 +52,10 @@ const appRoutes: Routes = [
         loadChildren: () => import('../app/pages/luong-thue/luong-thue.module').then(m => m.LuongThueModule)
       },
       {
+        path: 'hoat-dong',
+        loadChildren: () => import('../app/pages/hoat-dong/hoat-dong.module').then(m => m.HoatDongModule)
+      },
+      {
         path: 'bao-cao',
         component: BaoCaoComponent,
         data: {

@@ -21,17 +21,17 @@
         </div>
     </div> -->
     <div class="form-group col-6">
-        <label class="text-nowrap label-text">Giờ kết thúc <span class="text-danger"> *</span></label>
+        <label class="text-nowrap label-text">Thời gian họp <span class="text-danger"> *</span></label>
         <input style="padding: 16px;
         border-radius: 5px;
         width: 100%;
         border: 1px solid #a0a0ab;" type="number" formControlName="meet_time" name="meet_time">
     </div>
     <div class="col-12">
-        <i class="pi pi-clock"></i> Thời gian cuộc họp <span style="color:#4C97E4 ;">{{chooseTimeFormControl?.meet_time?.value}} tiếng</span>
+        <i class="pi pi-clock"></i> Thời gian cuộc họp <span style="color:#4C97E4 ;">{{chooseTimeFormControl?.meet_time?.value}} phút</span>
     </div>
     <div class="col-12 text-right">
-        <button pButton pRipple type="button" label="Bỏ qua" icon = "pi pi-times-circle" class="p-button-outlined mr-2"></button>
+        <button pButton pRipple type="button" label="Bỏ qua" (click)="cancle()" icon = "pi pi-times-circle" class="p-button-outlined mr-2"></button>
         <button pButton pRipple type="button" label="Xác nhận" icon = "pi pi-check-circle" type="submit"></button>
     </div>
 </form>

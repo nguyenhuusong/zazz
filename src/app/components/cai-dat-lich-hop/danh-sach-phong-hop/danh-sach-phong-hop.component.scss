@@ -1,0 +1,23 @@
+:host::ng-deep{
+    #myGrid .avatar-wrap{
+        border-radius: 0px !important;
+       img{
+            border-radius: 0px !important;
+       }
+    }
+}
+
+:host::ng-deep{
+    .noti-number{
+        background: #FF3B49;
+        border-radius: 2px;
+        color: #F3F4F6;
+        padding: 2px 4px;
+        &::after{
+            display: none;
+        }
+        &.bg-success{
+            background: #FEC318;
+        }
+    }
+}

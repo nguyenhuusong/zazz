@@ -31,7 +31,16 @@ export class DanhSachPhongHopComponent implements OnInit {
   getRowHeight;
   cards = [];
   first = 0;
-  model;
+  model = {
+    filter: '',
+    gridWidth: '',
+    offSet: 0,
+    pageSize: 15,
+    floor_No: '',
+    workplaceId: '',
+    roomId: '',
+    status_meet: '',
+  };
   totalRecord = 0;
   countRecord: any = {
     totalRecord: 0,
@@ -45,6 +54,21 @@ export class DanhSachPhongHopComponent implements OnInit {
   };
   showDeleteTax = false;
   showImportExcel = false;
+
+  statusRoom = [
+    {
+      label: 'Đang trống',
+      value: "Đang trống",
+    },
+    {
+      label: 'Đang họp',
+      value: "Đang họp"
+    },
+    {
+      label: 'Sắp họp',
+      value: "Sắp họp"
+    }
+  ]
   constructor(
     private apiService: ApiHrmService,
     private router: Router,
@@ -76,6 +100,7 @@ export class DanhSachPhongHopComponent implements OnInit {
       { label: 'Lịch họp'},
       { label: 'Quản lý phòng họp'},
     ];
+    this.getFloor();
     this.load();
   }
 
@@ -84,7 +109,11 @@ export class DanhSachPhongHopComponent implements OnInit {
       filter: '',
       gridWidth: '',
       offSet: 0,
-      pageSize: 15
+      pageSize: 15,
+      floor_No: '',
+      workplaceId: '',
+      roomId: '',
+      status_meet: '',
     };
   }
 
@@ -146,6 +175,45 @@ export class DanhSachPhongHopComponent implements OnInit {
         this.spinner.hide();
        });
   }
+
+  floors = []
+  getFloor() {
+    this.apiService.getFloorNo().subscribe(results => {
+      if (results.status === 'success') {
+        this.floors = (results.data).map(d => {
+          return { 
+            label: 'Tầng' + ' ' + d.floorNo, 
+            value: d.floorNo 
+          }
+        });
+      }
+    })
+  }
+
+  changeFloor() {
+    this.getRooms();
+  }
+
+  rooms = []
+  getRooms() {
+    const queryParams = queryString.stringify( { filter: '', floor_No: this.model.floor_No })
+    this.apiService.getMeetRooms(queryParams)
+      .subscribe(results => {
+        if (results.status === 'success') {
+          if(this.model.floor_No){
+            this.rooms = results.data.map(d => {
+              return {
+                label: d.room_name,
+                value: d.roomId,
+              }
+            })  
+          }else{
+            this.rooms = []
+          }
+          this.load();
+        }
+      });
+  }
   
   showButtons(event: any) {
     return {
@@ -170,14 +238,26 @@ export class DanhSachPhongHopComponent implements OnInit {
 
   initGrid() {
     this.columnDefs = [
+      {
+        headerName: 'STT',
+        filter: '',
+        maxWidth: 70,
+        pinned: 'left',
+        cellRenderer: params => {
+          return params.rowIndex + 1
+        },
+        cellClass: ['border-right', 'no-auto', 'text-center'],
+        field: 'checkbox2',
+        suppressSizeToFit: true,
+      },
       ...AgGridFn(this.gridflexs.filter((d: any) => !d.isHide)),
       {
-        headerName: 'Thao tác',
+        headerName: '   ...',
         filter: '',
-        width: 100,
+        width: 70,
         pinned: 'right',
         cellRenderer: 'buttonAgGridComponent',
-        cellClass: ['border-right', 'no-auto'],
+        cellClass: ['border-right', 'no-auto', 'cell-options'],
         cellRendererParams: (params: any) => this.showButtons(params),
         checkboxSelection: false,
         field: 'checkbox'
@@ -209,7 +289,7 @@ export class DanhSachPhongHopComponent implements OnInit {
     const params = {
       roomId: e.rowData.roomId
     }
-    this.router.navigate(['/cai-dat/cai-dat-lich-hop/danh-sach-phong-hop/chi-tiet-phong-hop'], { queryParams: params });
+    this.router.navigate(['hoat-dong/lich-hop/danh-sach-phong-hop/chi-tiet-phong-hop'], { queryParams: params });
   }
 
   onGridReady(params): void {
@@ -247,7 +327,7 @@ export class DanhSachPhongHopComponent implements OnInit {
     const params = {
       roomId: ''
     }
-    this.router.navigate(['/cai-dat/cai-dat-lich-hop/danh-sach-phong-hop/them-moi-phong-hop'], { queryParams: params });
+    this.router.navigate(['hoat-dong/lich-hop/danh-sach-phong-hop/them-moi-phong-hop'], { queryParams: params });
   }
 }
 

@@ -195,4 +195,55 @@ export class ApiService {
   getMeetRoomForCheck(queryParams): Observable<any> {
     return this.http.get(`${apiHrmBase}/api/v2/meeting/GetMeetRoomForCheck?` + queryParams, this.options);
   }
+
+
+  // WebMenu
+  getUserMenus(): Observable<any> {
+    return this.http.get(`${apiHrmBase}/api/v2/menu/GetUserMenus`, this.options);
+  }
+  getMenuConfigInfo(query): Observable<any> {
+    return this.http.get(`${apiHrmBase}/api/v2/menu/GetMenuConfigInfo?` + query, this.options);
+  }
+  getConfigMenu(query): Observable<any> {
+    return this.http.get(`${apiHrmBase}/api/v2/menu/GetConfigMenu?` + query, this.options);
+  }
+  setConfigMenu(data): Observable<any> {
+    return this.http.post(`${apiHrmBase}/api/v2/menu/SetConfigMenu`, data, this.options);
+  }
+  delConfigMenu(queryParams): Observable<any> {
+    return this.http.delete(`${apiHrmBase}/api/v2/menu/DelConfigMenu?` + queryParams, this.options);
+  }
+  getConfigActionList(): Observable<any> {
+    return this.http.get(`${apiHrmBase}/api/v2/menu/GetConfigActionList`, this.options);
+  }
+  setConfigMenuAction(data): Observable<any> {
+    return this.http.post(`${apiHrmBase}/api/v2/menu/SetConfigMenuAction`, data, this.options);
+  }
+  delConfigMenuAction(queryParams): Observable<any> {
+    return this.http.delete(`${apiHrmBase}/api/v2/menu/DelConfigMenuAction?` + queryParams, this.options);
+  }
+
+  // UserRole
+  setFunctionsToRole(data): Observable<any> {
+    return this.http.post(`${apiHrmBase}/api/v2/userrole/SetFunctionsToRole`, data, this.options);
+  }
+  getRolePermissionInfo(query): Observable<any> {
+    return this.http.get(`${apiHrmBase}/api/v2/userrole/GetRolePermissionInfo?` + query, this.options);
+  }
+  getRolePage(query): Observable<any> {
+    return this.http.get(`${apiHrmBase}/api/v2/userrole/GetRolePage?` + query, this.options);
+  }
+  getRoleInfo(query): Observable<any> {
+    return this.http.get(`${apiHrmBase}/api/v2/userrole/GetRoleInfo?` + query, this.options);
+  }
+  SetRoleInfo(data): Observable<any> {
+    return this.http.post(`${apiHrmBase}/api/v2/userrole/SetRoleInfo`, data, this.options);
+  }
+  deleteRole(queryParams): Observable<any> {
+    return this.http.delete(`${apiHrmBase}/api/v2/userrole/DeleteRole?` + queryParams, this.options);
+  }
+  getRoleTypes(query): Observable<any> {
+    return this.http.get(`${apiHrmBase}/api/v2/userrole/GetRoleTypes`, this.options);
+  }
 }
+

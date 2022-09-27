@@ -1,0 +1,50 @@
+<div class="d-flex are-tab-btns mt-2 mb-2">
+    <p-button styleClass="p-button-sm btn-tab" (click)="create()" label="Thêm mới" icon="pi pi-icon"></p-button>
+    <p-button label="Cấu hình" icon="pi pi-cog" styleClass="p-button-sm ml-2 addNew" (click)="cauhinh()"></p-button>
+</div>
+
+<div class="grid-default border">
+    <app-list-grid-angular *ngIf="columnDefs.length > 0" 
+        [listsData]="listsData" [height]="heightGrid" (rowDoubleClicked)="clickRowRoleGetMenu($event)"
+        [columnDefs]="columnDefs"></app-list-grid-angular>
+</div>
+<p-dialog [(visible)]="displayInfo" [autoZIndex]="true" [modal]="true" [style]="{width: '1300px', height: 'auto'}">
+<p-header>
+   Thông tin nhóm quyền
+</p-header>
+<app-edit-detail *ngIf="listViews.length> 0" [detail]="detailDetailInfo" [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButon"  [dataView]="listViews"
+    (callback)="setConfigMenu($event)" (callbackcancel)="cancelUpdate($event)"></app-edit-detail>
+</p-dialog>
+      
+<p-dialog header="Cài đặt cấu hình " [(visible)]="displaySetting" (onHide)="getClientRolePageByWebId()" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
+    [draggable]="false" [resizable]="false" [focusTrap]="false" styleClass="popup-setting">
+    <app-config-grid-table-form *ngIf="displaySetting && gridKey" [typeConfig]="'TableInfo'"   [gridKey]="gridKey"></app-config-grid-table-form>
+</p-dialog>
+
+
+<p-sidebar styleClass="danh-sach-chuc-nang-sidebar" [(visible)]="displayMenuRole" position="right" (onHide)="onHideMenuRole($event)" [baseZIndex]="10000">
+    <h3 class="d-flex align-items-center"><i class="pi pi-cog mr-2"></i>Danh sách chức năng</h3>
+    <ul class="checktree mt-2" >
+          <li *ngFor="let menu of menus; let i=index" title="Menu Cha" >
+            <!-- <input id="administration" type="checkbox" [checked]="menu?.isCheckAll" name="{{menu?.title}}_{{i}}_{{menu?.isCheckAll}}" (change)="changeMenuParentAll(menu, i)"/> -->
+            <input id="administration_{{menu.menuId}}_{{i}}" type="checkbox" [checked]="menu?.isCheck" name="{{menu?.title}}_{{i}}" (change)="changeMenuParent(menu, i)" style="margin-right: 5px"/><input type="number" [ngModel]="menu.intPos" name="intPos_{{menu.intPos}}_{{menu.menuId}}" (change)="changeModelintPosParent($event, i)" > <label  for="administration_{{menu.menuId}}_{{i}}" style="font-weight: 600; margin-left: 5px; font-size: 13px;"> {{menu?.title}}</label>
+            <ul style="margin-left:5px">
+              <li *ngFor="let menuChirlden of  menu.submenus; let idx=index" title="Menu con">
+                <input id="president_{{menuChirlden.menuId}}_{{idx}}" type="checkbox" style="margin-right: 5px" name="{{menuChirlden?.title}}_{{idx}}" (change)="changeMenuChirlden(i, idx)" [checked]="menuChirlden?.isCheck" /><input type="number" [ngModel]="menuChirlden.intPos" name="intPos_{{menuChirlden.intPos}}_{{menu.menuId}}" (change)="changeModelintPosChilrden($event, i, idx)"> <label for="president_{{menuChirlden.menuId}}_{{idx}}" style="font-weight: 600; margin-left: 5px;font-size: 13px;"> {{menuChirlden?.title}}</label>
+                <ul style="margin-left:5px">
+                    <li *ngFor="let action of  menuChirlden.actions; let actionIdx=index" title="Action con">
+                      <input id="president_{{action.id}}_{{actionIdx}}" type="checkbox" style="margin-right: 5px" name="{{action?.actionName}}_{{actionIdx}}" (change)="changeActionChirlden(i, idx , actionIdx)" [checked]="action?.isCheck" /><label for="president_{{menuChirlden.menuId}}_{{idx}}"> {{action?.actionName}} <span _ngcontent-bpg-c6="" [ngClass]="{'bg-dropbox': action?.isCheck}" class="noti-number text-white pointer ng-star-inserted">Action</span></label>
+                    </li>
+                  </ul>
+              </li>
+            </ul>
+            <ul style="margin-left:35px" *ngIf="menu?.actions?.length > 0">
+              <li *ngFor="let action of menu.actions; let actionIdx=index" title="Action cha">
+                <input id="president_{{action.id}}_{{actionIdx}}" type="checkbox" style="margin-right: 5px" name="{{action?.actionName}}_{{actionIdx}}" (change)="changeActionAdministration(i, actionIdx)" [checked]="action?.isCheck" /><label for="president_{{menu.menuId}}_{{i}}"> {{action?.actionName}} <span _ngcontent-bpg-c6="" [ngClass]="{'bg-dropbox': action?.isCheck}" class="noti-number  text-white pointer ng-star-inserted">Action</span></label>
+              </li>
+            </ul>
+          </li>
+          
+        </ul>
+  
+  </p-sidebar>

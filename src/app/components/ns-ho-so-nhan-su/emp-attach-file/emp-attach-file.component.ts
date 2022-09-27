@@ -41,22 +41,21 @@ export class EmpAttachFileComponent implements OnInit {
   }
   theData = []
   setUploadFile(data) {
-    if (this.downloadURL) {
-      data[0].fields.forEach(element => {
-        if(element.field_name === "meta_file_url"){
-          element.columnValue = this.downloadURL;
-        }else if(element.field_name === "meta_title"){
-          element.columnValue = this.note
-        }else if(element.columnType === "meta_file_name"){
-          element.columnValue = this.theFileUploaded.name
-        }else if(element.columnType === "meta_file_type"){
-          element.columnValue = this.theFileUploaded.type
-        }else if(element.columnType === "meta_file_size"){
-          element.columnValue = this.theFileUploaded.size
-        }
-      });
-      console.log('theFileUploaded', this.theFileUploaded)
-      this.theData = data;
+    // if (this.downloadURL) {
+      // data[0].fields.forEach(element => {
+      //   if(element.field_name === "meta_file_url"){
+      //     element.columnValue = this.downloadURL;
+      //   }else if(element.field_name === "meta_title"){
+      //     element.columnValue = this.note
+      //   }else if(element.columnType === "meta_file_name"){
+      //     element.columnValue = this.theFileUploaded.name
+      //   }else if(element.columnType === "meta_file_type"){
+      //     element.columnValue = this.theFileUploaded.type
+      //   }else if(element.columnType === "meta_file_size"){
+      //     element.columnValue = this.theFileUploaded.size
+      //   }
+      // });
+      // this.theData = data;
       const params = {
         ...this.detailInfo, group_fields: data
       }
@@ -71,9 +70,9 @@ export class EmpAttachFileComponent implements OnInit {
           this.spinner.hide();
         }
       })
-    }else{
-      this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Chưa upload file'});
-    }
+    // }else{
+    //   this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Chưa upload file'});
+    // }
   }
 
   removeImage() {

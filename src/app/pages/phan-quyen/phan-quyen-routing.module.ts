@@ -10,6 +10,7 @@ import { ThietLapTangThangMayComponent } from 'src/app/components/thiet-lap-tang
 import { ChiTietTheNhanVienComponent } from 'src/app/components/pq-the-nhan-vien/chi-tiet-the-nhan-vien/chi-tiet-the-nhan-vien.component';
 import { ImportXeNhanVienComponent } from 'src/app/components/pq-xe-nhan-vien/import-xe-nhan-vien/import-xe-nhan-vien.component';
 import { ImportTheNhanVienComponent } from 'src/app/components/pq-the-nhan-vien/import-the-nhan-vien/import-the-nhan-vien.component';
+import { ChiTietCaiDatQuyenComponent } from 'src/app/components/pq-quyen-nguoi-dung/chi-tiet-cai-dat-quyen/chi-tiet-cai-dat-quyen.component';
 
 const routes: Routes = [
   {
@@ -99,6 +100,17 @@ const routes: Routes = [
       url: 'quyen-nguoi-dung',
     },
   },
+
+  // chi tiet quyen nguoi dung
+  {
+    path: 'quyen-nguoi-dung/chi-tiet-quyen-nguoi-dung',
+    component: ChiTietCaiDatQuyenComponent,
+    data: {
+      title: 'Chi tiết quyền người dùng',
+      url: 'chi-tiet-quyen-nguoi-dung',
+    },
+  },
+  
 ];
 
 @NgModule({

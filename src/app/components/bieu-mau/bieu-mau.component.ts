@@ -8,7 +8,8 @@ import { Component, OnInit, ChangeDetectorRef, AfterViewChecked } from '@angular
 import * as queryString from 'querystring';
 import { AgGridFn } from 'src/app/common/function-common/common';
 import * as moment from 'moment';
-
+import { Subject, takeUntil } from 'rxjs';
+import { cloneDeep } from 'lodash';
 @Component({
   selector: 'app-bieu-mau',
   templateUrl: './bieu-mau.component.html',
@@ -25,7 +26,8 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
     typeForm: null,
     createDate: '',
     offSet: 0,
-    pageSize: 15
+    pageSize: 15,
+    form_status: null,
   };
   cols: any[];
   totalRecord = 0;
@@ -37,6 +39,11 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
   }
   listsData = [];
   columnDefs = [];
+  statusTaiLieu = [
+    { label: 'Đang hoạt động', value: 1 },
+    { label: 'Hết hạn', value: 2 },
+    { label: 'Đã lên app', value: 3 }
+  ]
   detailCellRendererParams;
   colsDetail: any[];
   listDataSelect = [];
@@ -49,6 +56,8 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
   data=[];
   formId = null;
   dataRouter = null;
+  indexTab = 0;
+  titleHeader = '';
   constructor(
     private apiService: ApiHrmService,
     private spinner: NgxSpinnerService,
@@ -62,15 +71,23 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
     this.dataRouter = this.route.data['_value'];
    }
 
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   ngOnInit(): void {
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
+      { label: 'Hoạt động' },
       { label: 'Tài liệu' },
       { label: this.dataRouter.title },
     ];
     this.getAgencyOrganizeMap();
     this.getOrgan();
     this.getFormTypes();
+    this.load();
   }
 
 
@@ -122,7 +139,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
     this.apiService.getAgencyOrganizeMap().subscribe(results => {
       if (results.status === 'success') {
         this.listAgencyMap = [...results.data.root];
-        if (localStorage.getItem("organize") === null) {
+        if (localStorage.getItem("organize") === null || localStorage.getItem("organize") === 'undefined') {
           this.selectedNode = this.listAgencyMap[0];
           localStorage.setItem('organize', JSON.stringify(this.listAgencyMap[0]));
           // this.query.organizeId = this.selectedNode.orgId;
@@ -198,7 +215,8 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
   }
 
   find() {
-    this.load();
+      this.load();
+    
   }
   
   changePageSize() {
@@ -219,6 +237,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
   }
   
   load() {
+    this.listDataSelect = []
     this.columnDefs = []
     this.spinner.show();
     const query = {...this.query};
@@ -229,7 +248,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
       query.typeForm = this.query.typeForm.data;
     } 
     const queryParams = queryString.stringify(query);
-    this.apiService.getFormGeneral(queryParams, this.dataRouter.url === 'tai-lieu-chung' ? 'GetFormGeneral' : 'GetFormPersonal').subscribe(
+    this.apiService.getFormGeneral(queryParams, this.indexTab === 0 ? 'GetFormGeneral' : 'GetFormPersonal').subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         this.gridKey= results.data.dataList.gridKey
@@ -265,23 +284,24 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
           label: 'Thông tin chi tiết',
           icon: 'pi pi-tablet',
           class: 'btn-primary mr5',
+          hide: this.indexTab === 0
         },
         {
           onClick: this.handleDelete.bind(this),
           label: 'Xóa tài liệu',
           icon: 'fa fa-trash',
           class: 'btn-primary mr5',
+          hide: this.indexTab === 0
         },
       ]
     };
   }
 
   handleDelete(event) {
-    console.log('t:', event);
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa tài liệu?',
       accept: () => {
-        const queryParams = queryString.stringify({form_id: event.rowData.form_id});
+        const queryParams = queryString.stringify({formId: event.rowData.form_id});
         this.apiService.delFormsInfo(queryParams).subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa tài liệu thành công!' });
@@ -298,84 +318,78 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
     // this.router.navigateByUrl(`/chinh-sach/tai-lieu-chung/${event.rowData.form_id}`);
     this.formId = event.rowData.form_id;
     this.addNewPopup = true;
+    if(this.indexTab === 0){
+      this.titleHeader = 'Sửa tài liệu chung'
+    }else {
+      this.titleHeader = 'Sửa tài liệu cá nhân'
+    }
   }
 
 
   initGrid() {
+    if(this.indexTab === 0){
+      this.columnDef();
+    }else {
+      this.columnDef2();
+    }
+  }
+
+  // chung
+  columnDef() {
     this.columnDefs = [
       {
-        headerName: 'Stt',
+        headerName: 'STT',
         filter: '',
-        maxWidth: 130,
+        maxWidth: 70,
         pinned: 'left',
         cellRenderer: params => {
           return params.rowIndex + 1
         },
-        cellClass: ['border-right', 'no-auto'],
-        checkboxSelection: true,
-        headerCheckboxSelection: true,
-        headerCheckboxSelectionFilteredOnly: true,
+        cellClass: ['border-right', 'no-auto', 'cell-options'],
         field: 'checkbox2',
         suppressSizeToFit: true,
       },
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       {
-        headerName: 'Thao tác',
+        headerName: '    ...',
         filter: '',
-        maxWidth: 120,
+        maxWidth: 80,
         pinned: 'right',
         cellRenderer: 'buttonAgGridComponent',
-        cellClass: ['border-right', 'no-auto'],
+        cellClass: ['border-right', 'no-auto', 'cell-options'],
         cellRendererParams: (params: any) => this.showButtons(params),
         field: 'checkbox'
       }]
-
-    this.detailCellRendererParams = {
-      detailGridOptions: {
-        frameworkComponents: {},
-        getRowHeight: (params) => {
-          return 40;
+  }
+  //ca nhan
+  columnDef2() {
+    this.columnDefs = [
+      {
+        headerName: 'STT',
+        filter: '',
+        maxWidth: 120,
+        pinned: 'left',
+        cellRenderer: params => {
+          return params.rowIndex + 1
         },
-        columnDefs: [
-          ...AgGridFn(this.colsDetail),
-        ],
-
-        enableCellTextSelection: true,
-        onFirstDataRendered(params) {
-          let allColumnIds: any = [];
-          params.columnApi.getAllColumns()
-            .forEach((column: any) => {
-              if (column.colDef.cellClass.indexOf('auto') < 0) {
-                allColumnIds.push(column)
-              } else {
-                column.colDef.suppressSizeToFit = true;
-                allColumnIds.push(column)
-              }
-            });
-          params.api.sizeColumnsToFit(allColumnIds);
-        },
+        cellClass: ['border-right', 'no-auto'],
+        field: 'checkbox2',
+        checkboxSelection: true,
+        headerCheckboxSelection: true,
+        headerCheckboxSelectionFilteredOnly: true,
+        suppressSizeToFit: true,
       },
-      getDetailRowData(params) {
-        params.successCallback(params.data.AgencyGenerals);
-      },
-      excelStyles: [
-        {
-          id: 'stringType',
-          dataType: 'string'
-        }
-      ],
-      template: function (params) {
-        var personName = params.data.theme;
-        return (
-          '<div style="height: 100%; background-color: #EDF6FF; padding: 20px; box-sizing: border-box;">' +
-          `  <div style="height: 10%; padding: 2px; font-weight: bold;">###### Danh sách (${params.data.AgencyGenerals.length}) : [` +
-          personName + ']' +
-          '</div>' +
-          '  <div ref="eDetailGrid" style="height: 90%;"></div>' +
-          '</div>'
-        );
-      },
-    };
+      ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
+      {
+        headerName: '    ...',
+        filter: '',
+        maxWidth: 80,
+        pinned: 'right',
+        cellRenderer: 'buttonAgGridComponent',
+        cellClass: ['border-right', 'no-auto', 'cell-options'],
+        cellRendererParams: (params: any) => this.showButtons(params),
+        field: 'checkbox'
+      }]
   }
 
   exportExel() {
@@ -425,7 +439,8 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
       typeForm: '',
       createDate: '',
       offSet: 0,
-      pageSize: 10
+      pageSize: 10,
+      form_status: null,
     }
     this.load();
   }
@@ -434,13 +449,12 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
     const a: any = document.querySelector(".header");
     const b: any = document.querySelector(".sidebarBody");
     const c: any = document.querySelector(".bread-filter");
-    const d: any = document.querySelector(".bread-crumb");
+    // const d: any = document.querySelector(".bread-crumb");
     const e: any = document.querySelector(".paginator");
     this.loadjs++
-    console.log('dojfodisjf', this.heightGrid)
     if (this.loadjs === 5) {
       if (b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + d.clientHeight + e.clientHeight + 35;
+        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight +  e.clientHeight + 200;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       } else {
@@ -449,21 +463,107 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
     }
   }
 
-  rowSelected(data) {
-    this.listDataSelect = data
-  }
-
   handleFormType(): void {
-    this.router.navigateByUrl('/chinh-sach/loai-tai-lieu');
+    this.router.navigateByUrl('/hoat-dong/loai-tai-lieu');
   }
   addNewPopup = false;
+  formTypeId2
+  addNewPopup2 = false
   handleAdd(): void {
-    this.formId = null;
-    this.addNewPopup = true;
+      this.formId = null;
+      this.addNewPopup = true;
+      this.titleHeader = 'Thêm mới tài liệu'
   }
 
   handleCallbackForm() {
     this.load();
     this.addNewPopup = false;
   }
+
+  handleChange(event) {
+    this.indexTab = event.index
+    this.load();
+  }
+
+  listViews = []
+  detailInfo = []
+  getDetail() {
+    const queryParams = queryString.stringify({formTypeId: this.formTypeId2});
+    this.apiService.getFormsInfo(queryParams)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(results => {
+        if (results.status === 'success') {
+          const listViews = cloneDeep(results.data.group_fields);
+          this.listViews = cloneDeep(listViews);
+          this.detailInfo = results.data;
+        }
+      });
+  }
+
+  setWorkApprove(event){
+    this.spinner.show();
+    const params = {
+      ...this.detailInfo, group_fields: event
+    };
+    this.apiService.setFormsTypeInfo(params)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((results: any) => {
+        if (results.status === 'success') {
+          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
+          this.spinner.hide();
+          this.addNewPopup2 = false;
+          this.load();
+        } else {
+          this.messageService.add({
+            severity: 'error', summary: 'Thông báo',
+            detail: results.message
+          });
+          this.spinner.hide();
+        }
+      }), error => {
+        console.error('Error:', error);
+        this.spinner.hide();
+      };
+  }
+  quaylai(r) {
+    this.addNewPopup2 = false;
+  }
+  
+
+  isShareButton = false;
+  pushToApp() {
+    let form_id = String(this.listDataSelect)
+    if(this.listDataSelect.length > 0){
+      const ids = queryString.stringify( { form_id: form_id})
+      this.apiService.shareToApp(ids)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((results: any) => {
+          if (results.status === 'success') {
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
+            this.spinner.hide();
+            this.load();
+          } else {
+            this.messageService.add({
+              severity: 'error', summary: 'Thông báo',
+              detail: results.message
+            });
+            this.spinner.hide();
+          }
+        }), error => {
+          console.error('Error:', error);
+          this.spinner.hide();
+        };
+    }
+    
+  }
+
+  rowSelected(data) {
+    this.listDataSelect = []
+    if(this.indexTab === 1){
+      data.forEach(element => {
+        this.listDataSelect.push(element.form_id)
+      });
+    }
+  }
+
 }

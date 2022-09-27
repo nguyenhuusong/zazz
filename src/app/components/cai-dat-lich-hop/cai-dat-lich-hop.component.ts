@@ -3,12 +3,13 @@ import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
 import * as queryString from 'querystring';
 import { ApiService } from 'src/app/services/api.service';
 import { Router } from '@angular/router';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService, TreeNode } from 'primeng/api';
 import { AgGridFn } from 'src/app/common/function-common/common';
 import { CustomTooltipComponent } from 'src/app/common/ag-component/customtooltip.component';
 import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-cai-dat-lich-hop',
@@ -31,6 +32,11 @@ export class CaiDatLichHopComponent implements OnInit {
   getRowHeight;
   cards = [];
   first = 0;
+  organs = [];
+  selectedNode;
+  listAgencyMap: TreeNode[];
+  isHrDiagram: boolean = false;
+  detailOrganizeMap = null;
   model = {
       filter: '',
       gridWidth: '',
@@ -38,17 +44,28 @@ export class CaiDatLichHopComponent implements OnInit {
       pageSize: 15,
       Floor_No: '',
       Meet_status: '',
-      Time: '',
+      Time: null,
+      organization: '',
+      fromDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).format("YYYY-MM-DD")),
+      toDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).add(+10, 'months').format("YYYY-MM-DD")),
   }
   statusRoom = [
     {
-      label: 'Hoạt Động',
-      value: 1,
+      label: 'Đã họp',
+      value: "Đã họp",
     },
     {
-      label: 'Không hoạt Động',
-      value: 1
-    }
+      label: 'Đang họp',
+      value: "Đang họp"
+    },
+    {
+      label: 'Sắp họp',
+      value: "Sắp họp"
+    },
+    {
+      label: 'Đã lên lịch',
+      value: "Đã lên lịch"
+    },
   ]
   totalRecord = 0;
   countRecord: any = {
@@ -95,6 +112,7 @@ export class CaiDatLichHopComponent implements OnInit {
     ];
     this.getFloor();
     this.load();
+    this.getOrgan();
   }
 
   loadjs = 0;
@@ -129,6 +147,9 @@ export class CaiDatLichHopComponent implements OnInit {
       Floor_No: '',
       Meet_status: '',
       Time: '',
+      organization: '',
+      fromDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).format("YYYY-MM-DD")),
+      toDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).add(+10, 'months').format("YYYY-MM-DD")),
     };
   }
   			
@@ -141,7 +162,11 @@ export class CaiDatLichHopComponent implements OnInit {
   load() {
     this.columnDefs = []
     this.spinner.show();
-    const queryParams = queryString.stringify(this.model);
+    // this.model.Time = moment(this.model.Time).format('HH:mm')
+    let params: any = { ... this.model };
+    params.fromDate = typeof this.model.fromDate === 'object' ? moment(new Date(this.model.fromDate)).format('YYYY-MM-DD') : this.model.fromDate;
+    params.toDate = typeof this.model.toDate === 'object' ? moment(new Date(this.model.toDate)).format('YYYY-MM-DD') : this.model.toDate;
+    const queryParams = queryString.stringify(params);
     this.apiService.getMeetingPage(queryParams).subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
@@ -171,20 +196,21 @@ export class CaiDatLichHopComponent implements OnInit {
   
   showButtons(event: any) {
     return {
+      // đã họp và đang họp
       buttons: [
         {
           onClick: this.handleEdit.bind(this),
           label: 'Sửa',
           icon: 'fa fa-pencil-square-o',
           class: 'btn-primary mr5',
-          hide: (event.data.status === 3)
+          hide: (event.data.is_edit !== 1)
         },
         {
           onClick: this.handleDelete.bind(this),
           label: 'Xóa',
           icon: 'fa fa-trash',
           class: 'btn-danger mr5',
-          hide: (event.data.status === 3)
+          hide: (event.data.is_edit !== 1)
         },
       ]
     };
@@ -192,14 +218,26 @@ export class CaiDatLichHopComponent implements OnInit {
 
   initGrid() {
     this.columnDefs = [
+      {
+        headerName: 'STT',
+        filter: '',
+        maxWidth: 70,
+        pinned: 'left',
+        cellRenderer: params => {
+          return params.rowIndex + 1
+        },
+        cellClass: ['border-right', 'no-auto', 'cell-options'],
+        field: 'checkbox2',
+        suppressSizeToFit: true,
+      },
       ...AgGridFn(this.gridflexs.filter((d: any) => !d.isHide)),
       {
-        headerName: 'Thao tác',
+        headerName: '    ...',
         filter: '',
-        width: 100,
+        width: 80,
         pinned: 'right',
         cellRenderer: 'buttonAgGridComponent',
-        cellClass: ['border-right', 'no-auto'],
+        cellClass: ['border-right', 'no-auto', 'text-center', 'cell-options'],
         cellRendererParams: (params: any) => this.showButtons(params),
         checkboxSelection: false,
         field: 'checkbox'
@@ -221,23 +259,113 @@ export class CaiDatLichHopComponent implements OnInit {
     })
   }
 
+  isReasonDelete = false;
+  queryDeleteLichHop = {
+    meet_ud: '',
+    reason_cancel: ''
+  }
   handleDelete(e): void {
+    this.isReasonDelete = true;
+    this.queryDeleteLichHop.meet_ud = e.rowData.meet_ud
+  }
+
+  deleteLichHop() {
+    if(!this.queryDeleteLichHop.reason_cancel){
+      this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: `Vui lòng điền lý do` });
+      return
+    }
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa không?',
       accept: () => {
-        this.apiService.delMeetingInfo(e.rowData.meet_ud)
+        this.apiService.delMeetingInfo(queryString.stringify(this.queryDeleteLichHop))
           .subscribe(response => {
             if (response.status === 'success') {
               this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: `Xóa thành công` });
               this.load();
+              this.isReasonDelete = false;
             } else {
               this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: `Xóa thất bại` });
             }
           }, error => {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: `Xóa thất bại` });
+            this.isReasonDelete = false;
           });
       }
     });
+  }
+
+  getOrgan() {
+    const queryParams = queryString.stringify({ filter: '' });
+    this.apiService.getOrganizations(queryParams).subscribe(results => {
+      if (results.status === 'success') {
+        this.organs = results.data.map(d => {
+          return {
+            label: d.organizationName,
+            value: `${d.organizeId}`
+          }
+        });
+        this.organs = [...this.organs];
+      }
+    })
+  }
+
+  hrDiagram() {
+    this.selectedNode = null;
+    this.listAgencyMap = []
+    this.getAgencyOrganizeMap(true);
+  }
+
+  selected(datas = [], orgId = '') {
+    datas.forEach(d => {
+      if (d.orgId == orgId) {
+        this.selectedNode = d;
+        this.detailOrganizeMap = d;
+      } else {
+        if (d.children.length > 0) this.selected(d.children, this.selectedNode.orgId)
+      }
+    }
+    )
+  }
+
+  expanded(datas = [], orgId = 0) {
+    datas.forEach(d => {
+      if (d.orgId === orgId) {
+        d.expanded = true;
+      } else {
+        if (d.children.length > 0) this.expanded(d.children, this.selectedNode.parentId)
+      }
+      d.children.forEach((elm: { children: { expanded: boolean; }[]; expanded: boolean; }) => {
+        elm.children.forEach((e: { expanded: boolean; }) =>{
+          if (e.expanded === true) {
+            elm.expanded = true
+          }
+        })
+      });      
+    })
+    return datas
+  }
+
+  getAgencyOrganizeMap(type = false) {
+    this.apiService.getAgencyOrganizeMap().subscribe(results => {
+      if (results.status === 'success') {
+        this.listAgencyMap = [...results.data.root];
+        if (localStorage.getItem("organize") === null || localStorage.getItem("organize") === 'undefined') {
+          this.selectedNode = this.listAgencyMap[0];
+          localStorage.setItem('organize', JSON.stringify(this.listAgencyMap[0]));
+          // this.query.organizeId = this.selectedNode.orgId;
+          this.load();
+        } else {
+          this.selectedNode = JSON.parse(localStorage.getItem("organize"));
+          // this.query.organizeId = this.selectedNode?.orgId;
+          this.listAgencyMap = this.expanded(this.listAgencyMap, this.selectedNode.parentId)
+          this.selected(this.listAgencyMap, this.model.organization);
+          if (type) {
+            this.isHrDiagram = true;
+          }
+          this.load();
+        }
+      }
+    })
   }
 
   manageBuilding(): void {
@@ -290,7 +418,7 @@ export class CaiDatLichHopComponent implements OnInit {
   }
 
   toManagerRoom(): void {
-    this.router.navigate(['/cai-dat/cai-dat-lich-hop/danh-sach-phong-hop']);
+    this.router.navigate(['/hoat-dong/lich-hop/danh-sach-phong-hop']);
   }
 
   importSuccess(): void {

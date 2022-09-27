@@ -1,4 +1,4 @@
-import { cloneDeep } from 'lodash';
+import { cloneDeep, uniqBy } from 'lodash';
 import { AfterViewChecked, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import * as queryString from 'querystring';
 import * as firebase from 'firebase';
@@ -9,6 +9,7 @@ import * as numeral from 'numeral';
 import * as moment from 'moment';
 import { ValidationNumberDayInMonth, ValidationNumberDayInMonthEmpty, ValidationNumber, ValidationNumberEmpty } from './validation';
 import { checkIsObject } from '../function-common/objects.helper';
+import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-type-text',
   template: ` <div class="field-group text" [ngClass]=" element.columnValue ? 'valid' : 'invalid' ">
@@ -138,7 +139,8 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
     //     element.value = parseInt(element.value);
     //   })
     // }
-    console.log('element', this.element)
+
+    this.element.columnValue  = typeof this.element.columnValue === 'object' ? this.element.columnValue : null
     checkIsObject
   }
 
@@ -321,9 +323,11 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
   @Input() modelFields;
   @Input() submit = false;
   loading = false;
+  floorID = '';
   constructor(
     private apiService: ApiHrmService,
     private changeDetector: ChangeDetectorRef,
+    private messageService: MessageService,
   ) { }
   async ngOnInit() {
     if (this.element.field_name === 'parentId') {
@@ -383,12 +387,13 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
     }else if (field_name === 'CompanyId') {
       this.dataView.forEach(element => {
         element.fields.forEach(element1 => {
-          if (element1.field_name === 'EmployeeId') {
-            this.loading = true;
-            this.getUserByPushByEmpId(value, element1)
-          }else if (element1.field_name === 'PayrollTypeId') {
+          if (element1.field_name === 'PayrollTypeId') {
             this.getPayrollTypeList(value, element1)
           }
+          // if (element1.field_name === 'EmployeeId') {
+          //   this.loading = true;
+          //   this.getUserByPushByEmpId(value, element1)
+          // }else 
         });
       });
     } else if (field_name === 'type_salary') {
@@ -430,14 +435,16 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
           } else if (element1.field_name === 'jobId') {
             const positionTypeCd = await this.getValueByKey('positionCd');
             this.getJobTitles(value, element1, positionTypeCd)
-          } else if (element1.field_name === 'full_name' || element1.field_name === 'empId') {
+          } else if (element1.field_name === 'full_name' || element1.field_name === 'empId' || element1.field_name === 'EmployeeId') {
             this.getUserByPush(value, element1)
           } else if (element1.field_name === 'work_cd') {
             this.getWorkTime(element1, value)
           }else if(element1.field_name === 'CompanyId') {
-            console.log('fjdosfjiodifj')
             this.getCompaniesByOrganize(element1, value)
           }
+          // else if(element1.field_name === 'EmployeeId') {
+
+          // }
         });
       });
     } else if (field_name === 'organize_id') {
@@ -500,11 +507,27 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
       this.callback.emit(value);
     } else if (field_name === 'holi_type') {
       this.callback.emit(value);
+    } else if(field_name === 'floor_No') {
+      this.floorID = value
+      this.dataView.forEach(element => {
+        element.fields.forEach(async element1 => {
+          if(element1.field_name === 'roomId'){
+            this.getRooms(element1, value);
+            const emitType = {
+              name: 'floor_no',
+              id: value
+            }
+            this.callback.emit(emitType);
+          }
+        })
+      })
     } else if(field_name === 'roomId'){
       const emitType = {
         name: 'roomId',
-        id: value
+        id: value,
+        floorID: this.floorID
       }
+      console.log('emitType', emitType)
       this.callback.emit(emitType);
     }
   }
@@ -519,6 +542,26 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
         element1.columnValue = element1.columnValue ? element1.columnValue : '';
       }
     })
+  }
+
+  getRooms(element1, value) {
+    const queryParams = queryString.stringify( { filter: '', floor_No: value })
+    this.apiService.getMeetRooms(queryParams)
+      .subscribe(results => {
+        if (results.status === 'success') {
+          if(value){
+            element1.options = results.data.map(d => {
+              return {
+                label: d.room_name,
+                value: d.roomId,
+              }
+            })  
+          }else{
+            element1.options = []
+          }
+             
+        }
+      });
   }
 
   getCompaniesByOrganize(element1, root_orgId) {
@@ -1308,7 +1351,7 @@ export class AppTypeLinkUrlRadioListComponent implements OnInit {
   template: `   
             <div class="linkurl-drag">
             <div class="wrap-upload">
-                      <p-fileUpload [chooseLabel]="''" [chooseIcon]="''" [multiple]="true" [showUploadButton]="false" [showCancelButton]="false" [customUpload]="true" name="demo[]" url="./upload.php" 
+                      <p-fileUpload *ngIf="!isUpload" [chooseLabel]="''" [chooseIcon]="''" [multiple]="true" [showUploadButton]="false" [showCancelButton]="false" [customUpload]="true" name="demo[]" url="./upload.php" 
                        (onSelect)="uploadHandler($event)" [maxFileSize]="10000000">
                           <ng-template pTemplate="toolbar">
 
@@ -1325,10 +1368,10 @@ export class AppTypeLinkUrlRadioListComponent implements OnInit {
                           </ng-template>
                       </p-fileUpload>
                     </div>
-                    <div class="file-uploaded" *ngIf="uploadedFiles.length">
-                      <h3 class="uploaded-title">Đã upload xong</h3>
-                      <ul>
-                          <li class="d-flex middle bet" *ngFor="let file of uploadedFiles; let i=index">{{file.name}} 
+                    <div class="file-uploaded" *ngIf="element.columnValue.length > 0">
+                      <h3 class="uploaded-title">Đã upload xong {{ element.columnValue.length }} file</h3>
+                      <ul *ngIf="uploadedFiles.length > 0">
+                          <li class="d-flex middle bet" *ngFor="let file of uploadedFiles; let i=index">{{file}} 
                             <span (click)="removeImage(i)">
                                 <svg width="12" height="14" viewBox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                   <path d="M9.33366 5.33341V12.0001H2.66699V5.33341H9.33366ZM8.33366 0.666748H3.66699L3.00033 1.33341H0.666992V2.66675H11.3337V1.33341H9.00033L8.33366 0.666748ZM10.667 4.00008H1.33366V12.0001C1.33366 12.7334 1.93366 13.3334 2.66699 13.3334H9.33366C10.067 13.3334 10.667 12.7334 10.667 12.0001V4.00008Z" fill="#FF3B49"/>
@@ -1339,9 +1382,24 @@ export class AppTypeLinkUrlRadioListComponent implements OnInit {
                           </li>
                       </ul>
                     </div>
+                    <div class="file-uploaded" *ngIf="(element.columnValue.length > 0) && (uploadedFiles.length === 0)">
+                    <ul>
+                        <li class="d-flex middle bet" *ngFor="let file of element.columnValue; let i=index">{{file}} 
+                          <span (click)="removeImage1(i)">
+                              <svg width="12" height="14" viewBox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M9.33366 5.33341V12.0001H2.66699V5.33341H9.33366ZM8.33366 0.666748H3.66699L3.00033 1.33341H0.666992V2.66675H11.3337V1.33341H9.00033L8.33366 0.666748ZM10.667 4.00008H1.33366V12.0001C1.33366 12.7334 1.93366 13.3334 2.66699 13.3334H9.33366C10.067 13.3334 10.667 12.7334 10.667 12.0001V4.00008Z" fill="#FF3B49"/>
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M4.00033 10.3334V6.66675H5.33366V10.3334H4.00033Z" fill="#FF3B49"/>
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M6.66699 10.3334V6.66675H8.00033V10.3334H6.66699Z" fill="#FF3B49"/>
+                              </svg>
+                          </span>
+                        </li>
+                    </ul>
+                    </div>
                 </div>
                 `,
 })
+
+
 
 export class AppTypeLinkUrlDragComponent implements OnInit {
   @Input() element;
@@ -1351,19 +1409,23 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
   downloadURL = '';
   imagesUpload = '';
   fileType: any = ''
+  isUpload = false;
   constructor(
     private apiService: ApiHrmService,
     private spinner: NgxSpinnerService,
   ) { }
   ngOnInit(): void {
-    this.element.columnValue = this.element.columnValue ? this.element.columnValue.split(',') : []
+    this.element.columnValue = this.element.columnValue && (typeof this.element.columnValue === 'string') ? this.element.columnValue.split(',') : []
     this.dataView.forEach(element => {
       element.fields.forEach(async element1 => {
         if (((element1.field_name === 'AttachName') || (element1.field_name === 'attached_name') || (element1.field_name === 'attachName')) && element1.columnValue ) {
-          this.uploadedFiles.push({name: element1.columnValue});
+          this.uploadedFiles = element1.columnValue.split(',')
         } 
       });
     });
+  }
+  removeImage1(i) {
+    this.element.columnValue.splice(i, 1);
   }
 
   removeImage(index) {
@@ -1382,6 +1444,7 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
   
   uploadHandler(event) {
       //  this.uploadedFiles = []
+      this.isUpload = true;
       this.spinner.show();
       for(let index in event.currentFiles) {
         const getDAte = new Date();
@@ -1397,8 +1460,8 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
             this.dataView.forEach(element => {
               element.fields.forEach(async element1 => {
                 if ((element1.field_name === 'AttachName') || (element1.field_name === 'attached_name') || (element1.field_name === 'attachName')) {
-                  this.uploadedFiles.push({name: event.currentFiles[index].name});
-                  element1.columnValue = this.uploadedFiles.map(d => d.name).toString();
+                  this.uploadedFiles.push(event.currentFiles[index].name);
+                  element1.columnValue = this.uploadedFiles.toString();
                 } 
               });
             });
@@ -1427,8 +1490,13 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
     
             })
         }
+        console.log('element1.columnValue', this.element.columnValue)
        
       }
+
+      setTimeout(() => {
+        this.isUpload = false;
+      }, 1000);
   }
 }
 // Members
@@ -1438,13 +1506,15 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
                     <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
                     <div class="in d-flex bet middle">
                       <ul class="members-filed">
-                        <li *ngFor="let user of selectMembers; let i = index" (click)="activeName(i)">
-                          <span class="avatar-radius">
-                          <img src="{{user.avatarUrl}}">
-                          </span>
-                          <span >{{user.fullName}}</span>
-                        </li>
-                        <li *ngIf="selectMembers.length > 0"><span class="more-member">+12</span></li>
+                        <ng-container *ngFor="let user of selectMembers; let i = index">
+                          <li *ngIf="i < 33" (click)="activeName(i)" >
+                              <span class="avatar-radius">
+                              <img src="{{user.avatarUrl}}">
+                              </span>
+                              <span >{{user.fullName}}</span>
+                          </li>
+                        </ng-container>
+                        <li *ngIf="selectMembers.length > 33"><span class="more-member">+12</span></li>
                       </ul>
                       <span class="add-member" (click)="addNewMember()">
                         <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1462,8 +1532,8 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
                   <p-dialog header="Thêm thành viên" [(visible)]="newMember" [style]="{width: '415px'}">
                   <div class="list-member">
                     <div class="fields search">
-                      <input type="text" placeholder="Tìm kiếm" [(ngModel)]="searchText" (change)="searchEm()">
-                      <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <input type="text" placeholder="Tìm kiếm" [(ngModel)]="searchText">
+                      <svg class="cur-pointer" (click)="searchEm()" width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M9.05536 2.5748C5.47625 2.5748 2.5748 5.47625 2.5748 9.05536C2.5748 12.6345 5.47625 15.5359 9.05536 15.5359C10.7206 15.5359 12.2392 14.9078 13.3871 13.8756L13.8756 13.3871C14.9078 12.2392 15.5359 10.7206 15.5359 9.05536C15.5359 5.47625 12.6345 2.5748 9.05536 2.5748ZM15.871 14.3507C17.0085 12.8888 17.6859 11.0512 17.6859 9.05536C17.6859 4.28884 13.8219 0.424805 9.05536 0.424805C4.28884 0.424805 0.424805 4.28884 0.424805 9.05536C0.424805 13.8219 4.28884 17.6859 9.05536 17.6859C11.0512 17.6859 12.8888 17.0085 14.3507 15.871L18.4998 20.0201L20.0201 18.4998L15.871 14.3507Z" fill="#2B2F33" fill-opacity="0.6"/>
                       </svg>
                     </div>
@@ -1503,6 +1573,7 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
     ngOnInit(): void {
       this.modelFields[this.element.field_name].error = false;
       this.selectMembers = [];
+      this.members = [];
       const dataNew = this.element.columnValue ?  this.element.columnValue.split(',') : [];
       for(let item of this.element.options) {
         for(let item1 of item.child) {
@@ -1520,7 +1591,38 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
       this.element.options = [...this.element.options]
     }
     searchEm() {
-      this.searchMember.emit(this.searchText);
+      // this.searchMember.emit(this.searchText);
+      const queryParams = queryString.stringify({ offSet: 0, pageSize: 50, fullName: this.searchText })
+      this.apiService.getHrmMeetingPerson(queryParams).subscribe( res => {
+        if(res.status === 'success') {
+          this.members = cloneDeep(this.element.options);
+          this.element.options = [...res.data.meetingProperties];
+          this.element.options.forEach(member => {
+            member.isCheck = member.isCheck ? member.isCheck : false;
+            member.child.forEach(user => {
+              user.isCheck = user.isCheck ? user.isCheck: false;
+            })
+          })
+
+          const dataNew = this.element.columnValue ?  this.element.columnValue.split(',') : [];
+          for(let item of this.element.options) {
+            for(let item1 of item.child) {
+              if(dataNew.indexOf(item1.userId) > -1) {
+                item1.isCheck = true;
+                this.selectMembers.push({...item1, isCheck: this.selectMembers.length === 0 ? true : false});
+              }
+              const isCheckAll =item.child.filter(d => d.isCheck === true);
+              if(isCheckAll.length === item.child.length) {
+                item.isCheck = true;
+              }
+            }
+          
+          }
+          this.element.options = [...this.element.options]
+        }
+      })
+
+
     }
     activeName(i) {
       for(let index in this.selectMembers) {
@@ -1534,14 +1636,19 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
     }
 
     xacNhan() {
-      this.selectMembers = [];
+      // this.selectMembers = [];
       for(let item of this.element.options) {
         for(let index in item.child) {
           if(item.child[index].isCheck) {
             this.selectMembers.push({...item.child[index], isCheck: parseInt(index) === 0 ? true : false});
+          }else {
+           const newIndex = this.selectMembers.findIndex(d => d.userId === item.child[index].userId);
+           if(newIndex > -1) this.selectMembers.splice(newIndex,1);
+           this.selectMembers = [...this.selectMembers];
           }
         }
       }
+      this.selectMembers =uniqBy(this.selectMembers, 'userId');
       this.element.columnValue = this.selectMembers.map(item => item.userId).toString();
       this.newMember = false;
     }
@@ -1556,6 +1663,7 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
 
     handleChangeChild(user, index, member, idx) {
       this.element.options[index].child[idx].isCheck = !this.element.options[index].child[idx].isCheck;
+      console.log(this.element.options[index].child[idx].isCheck)
       const isCheckAll =this.element.options[index].child.filter(d => d.isCheck === true);
       if(isCheckAll.length === this.element.options[index].child.length) {
         this.element.options[index].isCheck = true;
@@ -1567,6 +1675,20 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
     }
 
     addNewMember() {
+      if(this.members.length > 0) {
+        this.element.options = cloneDeep(this.members);
+        for(let item of this.element.options) {
+          for(let item1 of item.child) {
+            if(this.selectMembers.map(d => d.userId).indexOf(item1.userId) > -1) {
+              item1.isCheck = true;
+            }else {
+              item1.isCheck = false;
+            }
+          }
+          
+        }
+        // this.element.options = [...this.element.options]
+      }
       this.newMember = true;
     }
   }
@@ -1631,10 +1753,18 @@ export class AppTypeChips implements OnInit {
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M10.667 13.3337V9.66699H12.0003V13.3337H10.667Z" fill="#FF3B49"/>
                         </svg>
                       </li>
-                      <li class="more">
-                        Thêm lời nhắc
-                        </li>
                     </ul>
+                    <div *ngIf="isNewTime" class="add-time-notis">
+                      <p-inputNumber [min]="10" [max]="30000" [(ngModel)]="timeInput">
+                      </p-inputNumber>
+                      <div class="buttons">
+                        <p-button styleClass="p-button-sm height-56" (click)="saveTimeNotis()"><i class="pi pi-save"> </i></p-button>
+                        <p-button styleClass="p-button-sm height-56 p-button-danger" (click)="cancelTimeNotis()"><i class="pi pi-times"> </i></p-button>
+                      </div>
+                    </div>
+                    <div *ngIf="!isNewTime" class="more" (click)="addMoreLm()">
+                      Thêm lời nhắc
+                      </div>
                   </div>
                   <div *ngIf="element.isRequire && submit && !element.columnValue"
                       class="alert-validation alert-danger">
@@ -1651,17 +1781,40 @@ export class AppTypelistMch implements OnInit {
   @Input() modelFields;
   @Input() submit = false;
   @Input() dataView;
+  timeInput = 10;
+  isNewTime = false
   constructor(
     private apiService: ApiHrmService
   ) { }
   ngOnInit(): void {
-    this.element.columnValue = [10,20,30]
+      // this.element.columnValue = [10,20,30]
+    if(this.element.columnValue){
+      this.element.columnValue = this.element.columnValue.split(",");
+    }
     this.modelFields[this.element.field_name].error = false;
   }
 
   deleteTimeNoti(index) {
     this.element.columnValue.splice(index, 1);
   } 
+
+  cancelTimeNotis() {
+    this.isNewTime = false
+  }
+
+  saveTimeNotis() {
+    this.isNewTime = false;
+    if(!this.element.columnValue){
+      this.element.columnValue = []
+    }
+    this.element.columnValue.push(this.timeInput)
+    console.log('this.timeInput', this.timeInput)
+  }
+
+  addMoreLm() {
+    this.isNewTime = true;
+    this.timeInput = 10;
+  }
 
 }
 

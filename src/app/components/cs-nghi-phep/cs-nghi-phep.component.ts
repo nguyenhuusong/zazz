@@ -11,7 +11,8 @@ import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-render
 import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.component';
 import { AgGridFn } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
-
+import { flatMap, Subject, takeUntil } from 'rxjs';
+import { cloneDeep } from 'lodash';
 @Component({
   selector: 'app-cs-nghi-phep',
   templateUrl: './cs-nghi-phep.component.html',
@@ -19,7 +20,10 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 })
 export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
 
+  private readonly unsubscribe$: Subject<void> = new Subject();
   dataNghiPhep: any;
+  addEdit = false;
+  leaveId = '';
   constructor(
     private spinner: NgxSpinnerService,
     private apiService: ApiHrmService,
@@ -44,6 +48,11 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
       buttonAgGridComponent: ButtonAgGridComponent,
       avatarRendererFull: AvatarFullComponent,
     };
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
   listStatus = [];
   listOrgRoots = [];
@@ -84,7 +93,9 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
     year: '',
     month: '',
     offSet: 0,
-    pageSize: 15
+    pageSize: 15,
+    fromdate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).add(-1,'months').format()),
+    todate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).format()),
   }
   totalRecord = 0;
   DriverId = 0;
@@ -130,7 +141,9 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
       year: '',
       month: '',
       offSet: 0,
-      pageSize: 15
+      pageSize: 15,
+      fromdate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).add(-1,'months').format()),
+      todate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).format()),
     }
     this.load();
   }
@@ -146,6 +159,8 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
     this.columnDefs = []
     this.spinner.show();
     const queryParams: any = {...this.query};
+    queryParams.fromdate = typeof this.query.fromdate === 'object' ? moment(new Date(this.query.fromdate)).format('YYYY-MM-DD') : this.query.fromdate;
+    queryParams.todate = typeof this.query.todate === 'object' ? moment(new Date(this.query.todate)).format('YYYY-MM-DD') : this.query.todate;
     if (this.time) {
       queryParams.year = this.time.getFullYear();
       queryParams.month = this.time.getMonth() + 1;
@@ -292,10 +307,12 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
   }
 
   XemChiTiet(event) {
-    const params = {
-      id: event.rowData.id
-    }
-    this.router.navigate(['/chinh-sach/nghi-phep/chi-tiet-nghi-phep'], { queryParams: params });
+    // const params = {
+    //   id: event.rowData.id
+    // }
+    // this.router.navigate(['/chinh-sach/nghi-phep/chi-tiet-nghi-phep'], { queryParams: params });
+    this.getLeaveInfo(event.rowData.id);
+
   }
 
   find() {
@@ -382,12 +399,55 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
   }
 
   addNewNghiPhep() {
-    const params = {
-      id: ''
-    }
-    this.router.navigate(['/chinh-sach/nghi-phep/chi-tiet-nghi-phep'], { queryParams: params });
+    // const params = {
+    //   id: ''
+    // }
+    // this.router.navigate(['/chinh-sach/nghi-phep/chi-tiet-nghi-phep'], { queryParams: params });
+    this.getLeaveInfo();
   }
 
+  listViews = []
+  detailInfo = []
+  getLeaveInfo(id = null) {
+    this.listViews = []
+    this.addEdit = true;
+    this.leaveId = id;
+    const queryParams = queryString.stringify({ id: id });
+    this.apiService.getLeaveInfo(queryParams)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(results => {
+        if (results.status === 'success') {
+          const listViews = cloneDeep(results.data.group_fields);
+          this.listViews = [...listViews];
+          this.detailInfo = results.data;
+        }
+      });
+  }
+  setLeaveInfo(data) {
+      const params = {
+        ...this.detailInfo, group_fields: data
+      }
+      this.apiService.setLeaveInfo(params)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((results: any) => {
+        if (results.status === 'success') {
+          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
+          this.spinner.hide();
+          this.addEdit = false
+        } else {
+          this.messageService.add({
+            severity: 'error', summary: 'Thông báo',
+            detail: results.message
+          });
+          this.spinner.hide();
+        }
+      }), error => {
+        this.spinner.hide();
+      };
+  }
+  quaylai(event){
+    this.addEdit = false
+  }
 }
 
 

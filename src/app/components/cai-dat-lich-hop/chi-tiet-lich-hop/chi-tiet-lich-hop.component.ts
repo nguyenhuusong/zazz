@@ -6,6 +6,7 @@ import { MessageService } from 'primeng/api';
 import { flatMap, Subject, takeUntil } from 'rxjs';
 import { AgGridFn } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-chi-tiet-lich-hop',
@@ -22,7 +23,8 @@ export class ChiTietLichHopComponent implements OnInit, OnDestroy {
     private apiService: ApiHrmService,
     private activatedRoute: ActivatedRoute,
     private messageService: MessageService,
-    private router: Router
+    private router: Router,
+    private spinner: NgxSpinnerService,
   ) { }
   displayScreemForm = false;
   displaysearchUserMaster = false;
@@ -139,18 +141,22 @@ export class ChiTietLichHopComponent implements OnInit, OnDestroy {
   }
 
   setMeetRoomInfo(data): void {
+    this.spinner.show();
     const params = {
       ...this.detailInfo, group_fields: data, members: this.listsData
     };
     this.apiService.setMeetingInfo(params).subscribe((results: any) => {
       if (results.status === 'success') {
+        this.spinner.hide();
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data });
       this.onBack()
       } else {
         this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
+        this.spinner.hide();
       }
     }, error => {
       this.messageService.add({severity: 'error', summary: 'Thông báo', detail: 'Thao tác thất bại'});
+      this.spinner.hide();
     });
   }
 
@@ -170,9 +176,11 @@ export class ChiTietLichHopComponent implements OnInit, OnDestroy {
       this.getMeetingInfo();
     }else if( event.name === 'roomId'){
       this.showChooseCalander = true;
-      this.meetingInfo.roomId = event.id
-      console.log('this.meetingInfo', this.meetingInfo)
-    }else {
+      this.meetingInfo.roomId = event.id;
+    }else if( event.name === 'floor_no'){
+      this.meetingInfo.floorNo = event.id;
+    }
+    else {
       this.manhinh = 'Edit';
       this.onBack();
     }
@@ -184,22 +192,29 @@ export class ChiTietLichHopComponent implements OnInit, OnDestroy {
 
   theDateChoosed(event){
     this.showChooseCalander = false;
-    this.listViews.forEach(element => {
-      element.fields.forEach(async element1 => {
-        if (element1.field_name === 'meet_at') {
-          element1.columnValue = new Date(event.meet_at)
-        } else if (element1.field_name === 'meet_start') {
-          const newMeeStart = `${event.meet_at} ${event.meet_start}`
-          element1.columnValue = new Date(newMeeStart)
-        }else if (element1.field_name === 'meet_time') {
-          element1.columnValue = event.meet_time
-        }
+    if(!event){
+      this.showChooseCalander = false;
+    }else{
+      this.listViews.forEach(element => {
+        element.fields.forEach(async element1 => {
+          if (element1.field_name === 'meet_at') {
+            element1.columnValue = new Date(event.meet_at)
+          } else if (element1.field_name === 'meet_start') {
+            const newMeeStart = `${event.meet_at} ${event.meet_start}`
+            element1.columnValue = event.meet_start
+          }else if (element1.field_name === 'meet_time') {
+            element1.columnValue = event.meet_time
+          }
+        });
       });
-    });
+    }
   }
 
   addMoreTime() {
 
+  }
+  getValueElemetn(event) {
+    this.meetingInfo.floorNo = event.columnValue
   }
 }
 

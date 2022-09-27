@@ -21,6 +21,7 @@ export class PqQuyenNguoiDungComponent implements OnInit {
   dataQuyenNguoiDung: any;
   constructor(
     private apiService: ApiHrmService,
+    private api: ApiService,
     private route: ActivatedRoute,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
@@ -132,7 +133,7 @@ export class PqQuyenNguoiDungComponent implements OnInit {
         this.spinner.hide();
        });
   }
-  
+
   showButtons(event: any) {
     return {
       buttons: [
@@ -445,6 +446,10 @@ export class PqQuyenNguoiDungComponent implements OnInit {
         this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
       }
     })
+  }
+
+  goToSettingRole() {
+    this.router.navigateByUrl('/phan-quyen/quyen-nguoi-dung/chi-tiet-quyen-nguoi-dung');
   }
 
 }

@@ -63,6 +63,7 @@ export class BieuMauChiTietComponent implements OnInit, OnDestroy {
   }
 
   handleSave(event) {
+    console.log('handleSave', event)
     const params = {
       ...this.detailInfo, group_fields: event
     };

@@ -522,11 +522,11 @@ export class ApiHrmService {
   delMeetRoomInfo(id): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v2/meeting/DelMeetRoomInfo?roomId=` + id, this.options);
   }
-  delMeetingInfo(id): Observable<any> {
-    return this.http.delete<any>(`${apiHrmServer}/api/v2/meeting/DelMeetingInfo?meet_ud=` + id, this.options);
+  delMeetingInfo(query): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/meeting/DelMeetingInfo?` + query, this.options);
   }
-  getMeetRooms(filter = ''): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v2/meeting/GetMeetRooms?filter=${filter}`, this.options);
+  getMeetRooms(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/meeting/GetMeetRooms?${queryParams}`, this.options);
   }
 
   // meetingFloor
@@ -1494,7 +1494,7 @@ export class ApiHrmService {
   }
 
   shareToApp(queryParams): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v2/forms/ShareToApp`,queryParams, this.options)
+    return this.http.post<any>(`${apiHrmServer}/api/v2/forms/ShareToApp?` + queryParams, null, this.options)
   }
 
   uploadDrives(data): Observable<any> {
@@ -1553,6 +1553,11 @@ export class ApiHrmService {
   checkTimeHrm(data): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/meeting/CheckTimeHrm`, data , this.options)
   }
+
+  getHrmCardByCustId(query): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/cardvehicle/GetHrmCardByCustId?${query}`, this.options)
+  }
+  
   
   
 }

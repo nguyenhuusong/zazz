@@ -159,6 +159,9 @@ export class PqXeNhanVienComponent implements OnInit {
     ]
   }
   
+  onChangeUser(event) {
+    this.GetHrmCardByCustId();
+  }
 
   handleChangeOrganize(): void {
     this.model.orgId = '';
@@ -430,6 +433,7 @@ export class PqXeNhanVienComponent implements OnInit {
   // }
 
   editVehicleCard(event): void {
+    console.log('event event event event', event)
     const cardVehicleId = event.rowData.cardVehicleId;
     this.modelTM.imageLinks = cloneDeep(this.imageLinksCard);
     if (cardVehicleId === null || cardVehicleId === 0) {
@@ -443,26 +447,28 @@ export class PqXeNhanVienComponent implements OnInit {
           this.modelTM.organizeId = event.rowData.organizeId;
           this.modelTM.vehicleNameTM = results.data.vehicleName;
           this.modelTM.vehicleTypeIdTM = results.data.vehicleTypeId;
-          this.modelTM.vehiclecardCd = results.data.cardCd;
+          this.modelTM.vehiclecardCd = results.data.cardId;
           this.modelTM.startTimeTM = stringtodate(results.data.startTime);
           this.modelTM.endTimeTM = results.data.endTime ? stringtodate(results.data.endTime) : '';
           this.showVehicleCard = this.modelTM.endTimeTM ? true : false;
           this.displayCreateVehicleCard = true;
-          this.modelTM.cusId = event.rowData.custId;
           this.modelTM.noteTM = results.data.note;
           this.modelTM.vehicleColorTM = results.data.vehicleColor;
           this.imageLinksCard[0].cardVehicleId = this.modelTM.cardVehicleId;
           this.imageLinksCard[1].cardVehicleId = this.modelTM.cardVehicleId;
           this.imageLinksCard[2].cardVehicleId = this.modelTM.cardVehicleId;
+          this.modelTM.cusId = event.rowData.custId;
+          // this.modelTM.cardId = results.data.cardId;
           this.getImageUrl(results.data.imageLinks)
-          console.log('this.modelTM.imageLinks', this.modelTM.imageLinks)
           this.getUserByPush();
+          this.GetHrmCardByCustId();
           // this.search({ query: results.data.fullName }, 'edit');
           // this.show_dialogcreate = true;
         }, error => this.handlerError(error));
     }
 
   }
+
 
   getImageUrl(datas) {
     if(datas[0]){
@@ -493,7 +499,12 @@ export class PqXeNhanVienComponent implements OnInit {
       startTimeTm = this.datetostring(this.modelTM.startTimeTM);
       endTimeTm = this.datetostring(this.modelTM.endTimeTM);
     }
-    console.log('this.modelTM.imageLinks', this.modelTM)
+    
+    if(!this.modelTM.imageLinks[0].url || !this.modelTM.imageLinks[1].url || !this.modelTM.imageLinks[2].url){
+      this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Vui lòng upload ảnh' });
+      return;
+    }
+    
       this.apiService.setCardVehicle(this.modelTM.cardVehicleId, null,
         this.modelTM.vehicleTypeIdTM, this.modelTM.vehicleNoTM, this.modelTM.vehicleColorTM, this.modelTM.vehicleNameTM,
         startTimeTm, endTimeTm, this.modelTM.noteTM, this.modelTM.cusId, this.modelTM.imageLinks).subscribe((results: any) => {
@@ -515,6 +526,17 @@ export class PqXeNhanVienComponent implements OnInit {
 
   }
 
+  listCard = []
+  GetHrmCardByCustId() {
+    const queryParam = queryString.stringify({ custId: this.modelTM.cusId })
+    this.apiService.getHrmCardByCustId(queryParam).subscribe((results : any) => {
+      if(results.status === 'success') {
+        this.listCard = results.data.map( d => { 
+          return  { label: d.cardCd, value: d.cardId }
+        })
+      }
+    }, error => this.handlerError(error));
+  }
   uploadImageVehicle(event, index) {
     if (event.currentFiles.length > 0) {
       for (let file of event.currentFiles) {
@@ -662,6 +684,7 @@ export class PqXeNhanVienComponent implements OnInit {
         this.loadjs = 0;
       }
     }
+    this.changeDetector.detectChanges();
   }
 
   loadVehicelTypes(): void {
@@ -701,7 +724,7 @@ export class PqXeNhanVienComponent implements OnInit {
     this.modelTM.vehicleNoTM = '';
     this.modelTM.vehicleNameTM = '';
     this.modelTM.vehicleTypeIdTM = 1;
-    this.modelTM.vehiclecardCd = this.model.cardCd;
+    this.modelTM.vehiclecardCd = this.model.cardId;
     this.modelTM.startTimeTM = new Date();
     this.modelTM.endTimeTM = new Date();
     this.modelTM.cusId = '';
@@ -778,6 +801,7 @@ export class PqXeNhanVienComponent implements OnInit {
             ...d
           }
         });
+      
         this.modelTM.cusId = this.modelTM.cusId ? this.modelTM.cusId : this.listUsers[0].value;
         this.spinner.hide();
       } else {

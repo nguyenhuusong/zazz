@@ -4666,6 +4666,9 @@ p-dialog button{
         width: auto !important;
     }
 }
+.cur-pointer{
+    cursor: pointer;
+}
 .list-member{
     .img{
         width: 32px;
@@ -4973,11 +4976,22 @@ p-dialog button{
         }
     }
 }
+.fc-daygrid-day{
+    &.fc-day-past{
+        .fc-daygrid-day-frame{
+            .fc-daygrid-day-events{
+                .fc-daygrid-event{
+                    background: #FAF0F1;
+                }
+            }
+        }
+    }
+}
 full-calendar{
     .fc-daygrid-body{
-        .fc-daygrid-day-top{
-            display: none;
-        }
+        // .fc-daygrid-day-top{
+        //     display: none;
+        // }
         table{
             tr{
                 td{
@@ -5111,4 +5125,81 @@ app-chon-lich-hop{
     border: 1px solid #D1D4DC;
     border-radius: 2px;
     padding: 16px;
+}
+.cell-options{
+    .ag-cell-value{
+        app-button-renderer{
+            .p-button-text{
+                padding: 0px;
+                height: 100%;
+                width: 54px;
+                transform: rotate(90deg);
+                padding-right: 18px;
+            }
+        }
+    }
+}
+.add-time-notis{
+    display: inline-block;
+    position: relative;
+    margin-bottom: 10px;
+    input{
+        border: 1px solid #D1D4DC;
+        padding-right: 35px;
+        &:focus{
+            border: 1px solid #0979FD !important;
+            box-shadow: none !important;
+        }
+    }
+    .buttons{
+        position: absolute;
+        z-index: 2;
+        top: 0px;
+        right: auto;
+        left: 100%;
+        display: flex;
+    }
+    p-button{
+        
+        button{
+            min-width: 0px;
+        }
+        .p-button-label{
+            display: none;
+        }
+    }
+}
+.list-mch{
+    .more{
+        color: #4C97E4;
+        font-size: 16px;
+        line-height: 20px;
+        cursor: pointer;
+        display: inline-block;
+    }
+}
+.btn-active-on-off{
+    background: #BDC2CF;
+    width: auto !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    cursor: auto !important;
+    &:hover{
+        background: #BDC2CF !important;
+    }
+    &.active{
+        background: #4C97E4;
+        cursor: pointer !important;
+    }
+}
+p-button{
+    &.active{
+        .btn-active-on-off{
+            background: #4C97E4;
+            cursor: pointer !important;
+        }
+    }
+}
+.menu-agrid .p-menu-list:empty {
+    display: none;
 }

@@ -7,5 +7,17 @@
         &::after{
             display: none;
         }
+        &.bg-success{
+            background: #FEC318;
+        }
+    }
+
+    [col-id="meet_status"]{
+            justify-content: center;
+        .ag-cell-label-container{
+            .ag-header-cell-menu-button{
+                display: none;
+            }
+        }
     }
 }
