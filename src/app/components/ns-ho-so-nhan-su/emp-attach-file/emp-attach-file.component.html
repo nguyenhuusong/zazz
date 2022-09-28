@@ -1,6 +1,6 @@
 <div class="upload-attact-detail">
    <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'" [thongtinnhanvienNew]="true" [dataView]="listViews"
-      (callback)="setUploadFile($event)" (callbackcancel)="huy()"></app-edit-detail>
+      (callback)="setUploadFile($event)" (callback1)="getFilesDetail($event)" (callbackcancel)="huy()"></app-edit-detail>
 
 <!-- <div class="wrap-upload">
    <p-fileUpload [chooseLabel]="''" [chooseIcon]="''" [showUploadButton]="false" [showCancelButton]="false" [customUpload]="true" name="demo[]" url="./upload.php" 

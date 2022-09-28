@@ -24,6 +24,7 @@ export class EmpAttachFileComponent implements OnInit {
   listViews = [];
   detailInfo= null
   note = ''
+  files = null
   ngOnInit(): void {
     this.getContractInfo();
   }
@@ -56,6 +57,18 @@ export class EmpAttachFileComponent implements OnInit {
       //   }
       // });
       // this.theData = data;
+      if(this.files){
+        data[0].fields.forEach(element => {
+          if(element.field_name === "meta_file_size") {
+            element.columnValue = this.files[0].size
+          }else if(element.field_name === "meta_file_type") {
+            element.columnValue = this.files[0].type;
+          }
+          // else if(element.field_name === "meta_title") {
+          //   element.columnValue = this.files[0].name;
+          // }
+        });
+      }
       const params = {
         ...this.detailInfo, group_fields: data
       }
@@ -94,9 +107,6 @@ export class EmpAttachFileComponent implements OnInit {
       for(let file of event.files) {
           this.uploadedFiles.push(file);
       }
-      console.log('uploadedFiles', this.listViews)
-      // this.messageService.add({severity: 'info', summary: 'File Uploaded', detail: ''});
-
       // this.spinner.show();
       if (event.currentFiles[0] && event.currentFiles[0].size > 0) {
         const getDAte = new Date();
@@ -114,6 +124,11 @@ export class EmpAttachFileComponent implements OnInit {
           });
         });
     }
+  }
+
+  getFilesDetail(event) {
+    console.log('djsofjidosf', event)
+    this.files = event;
   }
 
   huy() {

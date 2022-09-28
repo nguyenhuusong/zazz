@@ -5,7 +5,7 @@
 
 <div class="grid-default border">
     <app-list-grid-angular *ngIf="columnDefs?.length > 0" [height]="heightGrid" 
-        [columnDefs]="columnDefs"></app-list-grid-angular>
+        [columnDefs]="columnDefs" [listsData]="listsData" ></app-list-grid-angular>
 </div>
 <p-dialog [(visible)]="displayInfo" [autoZIndex]="true" [modal]="true" [style]="{width: '1300px', height: 'auto'}">
     <p-header>

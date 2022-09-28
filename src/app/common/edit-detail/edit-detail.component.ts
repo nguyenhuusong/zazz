@@ -236,7 +236,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
             this.callback1.emit(element1)
           }else if(element1.field_name === 'form_status'){
             this.getFormStatus(element1)
-          } else {
+          }else {
             if (element1.columnObject) {
               this.getCustObjectListNew(element1);
             }
@@ -266,7 +266,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
   }
 
   getHrmMeetingPerson(element1, fullName = null) {
-    const queryParams = queryString.stringify({ offSet: 0, pageSize: 50, fullName: fullName })
+    const queryParams = queryString.stringify({ offSet: 0, pageSize: 1000, fullName: fullName })
     this.apiService.getHrmMeetingPerson(queryParams).subscribe( res => {
       if(res.status === 'success') {
         element1.options = [...res.data.meetingProperties];
@@ -998,6 +998,14 @@ export class EditDetailComponent implements OnInit, OnChanges {
       { label: 'Hết hạn', value: 2},
     ]
     element1.columnValue = element1.columnValue ? parseInt(element1.columnValue) : ''
+    if(parseInt(element1.columnValue) === 3){
+      element1.options = [
+        { label: 'Đang hoạt động', value: 1},
+        { label: 'Hết hạn', value: 2},
+        { label: 'Đã đẩy lên app', value: 3},
+      ]
+      element1.isDisable = true;
+    }
   }
 
   getCustObjectListNew(element1) {
@@ -1188,6 +1196,10 @@ export class EditDetailComponent implements OnInit, OnChanges {
 
   memberGetQuery(event, element) {
     this.getHrmMeetingPerson(element, event)
+  }
+
+  getFilesDrag(event) {
+    this.callback1.emit(event);
   }
 
   quaylai(data) {
