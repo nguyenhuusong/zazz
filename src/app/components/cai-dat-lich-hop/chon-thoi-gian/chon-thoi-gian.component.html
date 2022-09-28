@@ -22,10 +22,10 @@
     </div> -->
     <div class="form-group col-6">
         <label class="text-nowrap label-text">Thời gian họp <span class="text-danger"> *</span></label>
-        <input style="padding: 16px;
-        border-radius: 5px;
-        width: 100%;
-        border: 1px solid #a0a0ab;" type="number" formControlName="meet_time" name="meet_time">
+        <input style="padding: 16px;border-radius: 5px; width: 100%;border: 1px solid #a0a0ab;" type="number" formControlName="meet_time" name="meet_time" [required] = "true">
+           <div *ngIf="(chooseTimeFormControl?.meet_time?.touched || submitted) && chooseTimeFormControl?.meet_time?.errors?.required" class="text-danger">
+            Chọn thời gian họp
+        </div>
     </div>
     <div class="col-12">
         <i class="pi pi-clock"></i> Thời gian cuộc họp <span style="color:#4C97E4 ;">{{chooseTimeFormControl?.meet_time?.value}} phút</span>
