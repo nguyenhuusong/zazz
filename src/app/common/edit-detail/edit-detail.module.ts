@@ -18,7 +18,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { FileUploadModule } from 'primeng/fileupload';
 import { TooltipModule } from 'primeng/tooltip';
-import { AppTypeCheckboxComponent, AppTypeCheckboxListComponent, AppTypeCheckboxRadioListComponent,
+import { AppLabel, AppTypeCheckboxComponent, AppTypeCheckboxListComponent, AppTypeCheckboxRadioListComponent,
    AppTypeChips,
    AppTypeCurrencyComponent, AppTypeDatefulltimeComponent, AppTypeDatetimeComponent, AppTypeDropdownComponent, AppTypeLinkUrlDragComponent, AppTypeLinkUrlRadioListComponent,
     AppTypelistMch,
@@ -101,7 +101,8 @@ import {InputSwitchModule} from 'primeng/inputswitch';
     AppTypeSelectTreeComponent,
     AppTypeSelectTreesComponent,
     AppTyperoomImg,
-    AppTypeonOff
+    AppTypeonOff,
+    AppLabel
     // AppTypeTextComponent
   ],
   exports: [
