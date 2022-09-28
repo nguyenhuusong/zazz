@@ -1835,7 +1835,7 @@ export class AppTypelistMch implements OnInit {
                       <path d="M18.1587 20.8113C18.1587 19.5376 19.2243 18.5357 20.4992 18.5357C21.7741 18.5357 22.8397 19.5376 22.8397 20.8113C22.8397 22.085 21.7741 23.0868 20.4992 23.0868C19.2243 23.0868 18.1587 22.085 18.1587 20.8113Z" fill="white"/>
                       <path fill-rule="evenodd" clip-rule="evenodd" d="M17.3582 12.3129C17.493 12.1178 17.7242 12 17.9723 12H23.0277C23.2758 12 23.507 12.1178 23.6418 12.3129L25.1107 14.4381H28.0831C28.7311 14.4381 29.348 14.6865 29.7995 15.122C30.2503 15.5569 30.5 16.1425 30.5 16.7492V25.6889C30.5 26.2956 30.2503 26.8812 29.7995 27.3161C29.348 27.7516 28.7311 28 28.0831 28H12.9169C12.2689 28 11.652 27.7516 11.2005 27.3161C10.7497 26.8812 10.5 26.2956 10.5 25.6889V16.7492C10.5 16.1425 10.7497 15.5569 11.2005 15.122C11.652 14.6865 12.2689 14.4381 12.9169 14.4381H15.8893L17.3582 12.3129ZM20.4992 16.5852C18.0514 16.5852 16.0991 18.4943 16.0991 20.8113C16.0991 23.1283 18.0514 25.0373 20.4992 25.0373C22.9471 25.0373 24.8993 23.1283 24.8993 20.8113C24.8993 18.4943 22.9471 16.5852 20.4992 16.5852Z" fill="white"/>
                     </svg>
-                    <p-fileUpload mode="advanced" name="demo[]" url="./upload.php" [auto]="true" accept="image/*" #attachments [maxFileSize]="10000000" (onSelect)="onBasicUpload($event)"></p-fileUpload>
+                    <p-fileUpload mode="advanced" name="demo[]" [auto]="true" accept="image/*" #attachments [maxFileSize]="10000000" (onSelect)="onBasicUpload($event)"></p-fileUpload>
                     <span class="pi pi-times delete-image" *ngIf="element.columnValue" (click)="deleteImg()"></span>
                   </div>
                  </div>
