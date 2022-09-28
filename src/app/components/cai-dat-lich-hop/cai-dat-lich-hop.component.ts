@@ -207,8 +207,8 @@ export class CaiDatLichHopComponent implements OnInit {
         },
         {
           onClick: this.handleDelete.bind(this),
-          label: 'Xóa',
-          icon: 'fa fa-trash',
+          label: 'Hủy',
+          icon: 'pi pi-times',
           class: 'btn-danger mr5',
           hide: (event.data.is_edit !== 1)
         },

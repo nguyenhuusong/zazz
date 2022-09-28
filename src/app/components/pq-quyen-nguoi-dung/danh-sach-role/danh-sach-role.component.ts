@@ -296,13 +296,14 @@ export class DanhSachRoleComponent implements OnInit {
       })
     });
     // this.detailRole = event.data
-    this.getRoleInfoSidebar(event.data.webRoleId);
+    console.log('event', event)
+    this.getRoleInfoSidebar(event.data.roleId);
     this.displayMenuRole = true;
   }
 
   listMenuRoles = []
   getRoleInfoSidebar(id) {
-    const queryParams = queryString.stringify({ roleId: id, webId: this.detailInfo.webId });
+    const queryParams = queryString.stringify({ id: id });
     this.apiService.getRoleInfo(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.detailDetailInfo = results.data;

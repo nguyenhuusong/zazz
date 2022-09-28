@@ -23,7 +23,7 @@ export class ButtonAgGridComponent implements ICellRendererAngularComp {
     this.params = params;
     for(let index in this.params.buttons) {
       if(!this.params.buttons[index].hide) {
-        const object ={label:  this.params.buttons[index].label, icon: 'pi pi-plus', key: this.params.buttons[index].key,  command: ($event: any) => {
+        const object ={label:  this.params.buttons[index].label, icon: this.params.buttons[index].icon , key: this.params.buttons[index].key,  command: ($event: any) => {
           this.onClick($event,index);
         }}
         this.items.push(object);

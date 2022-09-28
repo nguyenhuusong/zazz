@@ -236,7 +236,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
             this.callback1.emit(element1)
           }else if(element1.field_name === 'form_status'){
             this.getFormStatus(element1)
-          } else {
+          }else {
             if (element1.columnObject) {
               this.getCustObjectListNew(element1);
             }
@@ -998,6 +998,14 @@ export class EditDetailComponent implements OnInit, OnChanges {
       { label: 'Hết hạn', value: 2},
     ]
     element1.columnValue = element1.columnValue ? parseInt(element1.columnValue) : ''
+    if(parseInt(element1.columnValue) === 3){
+      element1.options = [
+        { label: 'Đang hoạt động', value: 1},
+        { label: 'Hết hạn', value: 2},
+        { label: 'Đã đẩy lên app', value: 3},
+      ]
+      element1.isDisable = true;
+    }
   }
 
   getCustObjectListNew(element1) {
