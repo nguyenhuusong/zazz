@@ -344,7 +344,6 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.element && this.element && this.element.columnValue) {
-      console.log('fdsfdsf', this.element.columnValue)
     }
   }
 
@@ -1356,7 +1355,7 @@ export class AppTypeLinkUrlRadioListComponent implements OnInit {
   template: `   
             <div class="linkurl-drag">
             <div class="wrap-upload">
-                      <p-fileUpload accept="image/jpeg,image/png,image/jpg,image/gif,.mp4,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/pdf,application/msword,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.wordprocessingml.document" *ngIf="!isUpload" [chooseLabel]="''" [chooseIcon]="''" [multiple]="true" [showUploadButton]="false" [showCancelButton]="false" [customUpload]="true" name="demo[]" 
+                      <p-fileUpload accept="image/jpeg,image/png,image/jpg,image/gif,.mp4,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/pdf,application/msword,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.wordprocessingml.document" *ngIf="!isUpload" [chooseLabel]="''" [chooseIcon]="''" [multiple]="false" [showUploadButton]="false" [showCancelButton]="false" [customUpload]="true" name="demo[]" 
                        (onSelect)="uploadHandler($event)" [maxFileSize]="10000000">
                           <ng-template pTemplate="toolbar">
                           </ng-template>
@@ -1409,6 +1408,7 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
   @Input() element;
   @Input() dataView;
   @Input() submit = false;
+  @Output() callback = new EventEmitter<any>();
   uploadedFiles: any[] = [];
   downloadURL = '';
   imagesUpload = '';
@@ -1451,7 +1451,7 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
       //  this.uploadedFiles = []
       this.isUpload = true;
       this.spinner.show();
-      console.log('event', event)
+      if(event.currentFiles.length > 0){
         for(let index in event.currentFiles) {
           const getDAte = new Date();
           const getTime = getDAte.getTime();
@@ -1468,6 +1468,7 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
                   if ((element1.field_name === 'AttachName') || (element1.field_name === 'attached_name') || (element1.field_name === 'attachName')) {
                     this.uploadedFiles.push(event.currentFiles[index].name);
                     element1.columnValue = this.uploadedFiles.toString();
+                    console.log('111111')
                   } 
                 });
               });
@@ -1496,27 +1497,35 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
       
               })
           }
+          
         }
-
-      for(let i = 0; i < event.files.length; i++){
-        if(event.files[i].type === 'image/jpeg,image/png,image/jpg,image/gif' ||
-          event.files[i].type === "video/mp4" || 
-          event.files[i].type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" || 
-          event.files[i].type === "application/pdf" ||
-          event.files[i].type === "application/msword" ||
-          event.files[i].type === "application/vnd.ms-powerpoint" ||
-          event.files[i].type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-          ){
-          }else{
-            this.spinner.hide();
-            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Không hỗ trợ định dạng file' });
-          }
+      }else{
+        this.spinner.hide();
+        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Không hỗ trợ định dạng file' });
       }
-
+      this.callback.emit(event.files);
       setTimeout(() => {
         this.isUpload = false;
       }, 1000);
   }
+
+  checkFileType(type){
+    if(type === "image/png" ||
+      type === "image/jpeg" ||
+      type === "image/jpg" ||
+      type === "image/gif" ||
+      type === "video/mp4" || 
+      type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" || 
+      type === "application/pdf" ||
+      type === "application/msword" ||
+      type === "application/vnd.ms-powerpoint" ||
+      type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      ){ }
+      else{
+        this.spinner.hide();
+        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Không hỗ trợ định dạng file' });
+      }
+    }
 }
 // Members
   @Component({
@@ -1551,7 +1560,7 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
                   <p-dialog header="Thêm thành viên" [(visible)]="newMember" [style]="{width: '415px'}">
                   <div class="list-member">
                     <div class="fields search">
-                      <input type="text" placeholder="Tìm kiếm" [(ngModel)]="searchText">
+                      <input type="text" placeholder="Tìm kiếm" (keyup.enter)="searchEm()" [(ngModel)]="searchText">
                       <svg class="cur-pointer" (click)="searchEm()" width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M9.05536 2.5748C5.47625 2.5748 2.5748 5.47625 2.5748 9.05536C2.5748 12.6345 5.47625 15.5359 9.05536 15.5359C10.7206 15.5359 12.2392 14.9078 13.3871 13.8756L13.8756 13.3871C14.9078 12.2392 15.5359 10.7206 15.5359 9.05536C15.5359 5.47625 12.6345 2.5748 9.05536 2.5748ZM15.871 14.3507C17.0085 12.8888 17.6859 11.0512 17.6859 9.05536C17.6859 4.28884 13.8219 0.424805 9.05536 0.424805C4.28884 0.424805 0.424805 4.28884 0.424805 9.05536C0.424805 13.8219 4.28884 17.6859 9.05536 17.6859C11.0512 17.6859 12.8888 17.0085 14.3507 15.871L18.4998 20.0201L20.0201 18.4998L15.871 14.3507Z" fill="#2B2F33" fill-opacity="0.6"/>
                       </svg>

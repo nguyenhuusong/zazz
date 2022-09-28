@@ -22,10 +22,11 @@
     </div> -->
     <div class="form-group col-6">
         <label class="text-nowrap label-text">Thời gian họp <span class="text-danger"> *</span></label>
-        <input style="padding: 16px;
+        <!-- <input style="padding: 16px;
         border-radius: 5px;
         width: 100%;
-        border: 1px solid #a0a0ab;" type="number" formControlName="meet_time" name="meet_time">
+        border: 1px solid #a0a0ab;" min="10" type="number" formControlName="meet_time" name="meet_time"> -->
+        <p-inputNumber formControlName="meet_time" [min]="10" name="meet_time"></p-inputNumber>
     </div>
     <div class="col-12">
         <i class="pi pi-clock"></i> Thời gian cuộc họp <span style="color:#4C97E4 ;">{{chooseTimeFormControl?.meet_time?.value}} phút</span>

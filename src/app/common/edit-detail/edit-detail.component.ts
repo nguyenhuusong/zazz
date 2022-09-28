@@ -266,7 +266,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
   }
 
   getHrmMeetingPerson(element1, fullName = null) {
-    const queryParams = queryString.stringify({ offSet: 0, pageSize: 50, fullName: fullName })
+    const queryParams = queryString.stringify({ offSet: 0, pageSize: 1000, fullName: fullName })
     this.apiService.getHrmMeetingPerson(queryParams).subscribe( res => {
       if(res.status === 'success') {
         element1.options = [...res.data.meetingProperties];
@@ -1196,6 +1196,10 @@ export class EditDetailComponent implements OnInit, OnChanges {
 
   memberGetQuery(event, element) {
     this.getHrmMeetingPerson(element, event)
+  }
+
+  getFilesDrag(event) {
+    this.callback1.emit(event);
   }
 
   quaylai(data) {
