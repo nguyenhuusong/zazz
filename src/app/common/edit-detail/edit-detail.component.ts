@@ -41,6 +41,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
   @Input() isViewButtonTop = true;
   @Input() optionsEdit = null;
   buttonSave = 'Update';
+  @Input() formTypeId: string = '';
   @Input() optionsButtonsEdit: any = [
     { label: 'Bỏ qua', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times-circle' },
     { label: 'Lưu lại', value: 'Update', class: '' }
@@ -303,7 +304,9 @@ export class EditDetailComponent implements OnInit, OnChanges {
 
   async getFormTypePage(element1) {
     try {
-      const response = (await lastValueFrom(this.apiService.getFormTypes())).data;
+      
+      const queryParams = queryString.stringify({ form_type_id: this.formTypeId})
+      const response = (await lastValueFrom(this.apiService.getFormsTypes(queryParams))).data;
       this.loopEveryNodeTree(response);
       element1.options = response;
       this.findNodeInTree(element1.options, element1.columnValue, element1);
@@ -996,16 +999,17 @@ export class EditDetailComponent implements OnInit, OnChanges {
     element1.options = [
       { label: 'Đang hoạt động', value: 1},
       { label: 'Hết hạn', value: 2},
+      { label: 'Đã đẩy lên app', value: 3},
     ]
     element1.columnValue = element1.columnValue ? parseInt(element1.columnValue) : ''
-    if(parseInt(element1.columnValue) === 3){
-      element1.options = [
-        { label: 'Đang hoạt động', value: 1},
-        { label: 'Hết hạn', value: 2},
-        { label: 'Đã đẩy lên app', value: 3},
-      ]
-      element1.isDisable = true;
-    }
+    // if(parseInt(element1.columnValue) === 3){
+    //   element1.options = [
+    //     { label: 'Đang hoạt động', value: 1},
+    //     { label: 'Hết hạn', value: 2},
+    //     { label: 'Đã đẩy lên app', value: 3},
+    //   ]
+    //   element1.isDisable = true;
+    // }
   }
 
   getCustObjectListNew(element1) {

@@ -73,7 +73,7 @@
                             <div class="col-6">
                                 <div class="field-group date mb-0 valid">
                                     <label>Từ ngày</label>
-                                    <p-calendar (onSelect)="getXemCongInfo()" panelStyleClass="datepicker-default" placeholder="DD/MM/YYYY"
+                                    <p-calendar  panelStyleClass="datepicker-default" placeholder="DD/MM/YYYY"
                                         [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="query.fromdate" [monthNavigator]="true"
                                         [yearNavigator]="true" inputId="navigators" dateFormat="dd/mm/yy"
                                         name="fromdate"></p-calendar>
@@ -82,7 +82,7 @@
                             <div class="col-6">
                                 <div class="field-group date mb-0 valid">
                                     <label>Đến ngày</label>
-                                    <p-calendar (onSelect)="getXemCongInfo()" panelStyleClass="datepicker-default" placeholder="DD/MM/YYYY"
+                                    <p-calendar  panelStyleClass="datepicker-default" placeholder="DD/MM/YYYY"
                                         [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="query.todate" [monthNavigator]="true"  inputId="navigators" dateFormat="dd/mm/yy"
                                         name="todate"></p-calendar>
                                 </div>
