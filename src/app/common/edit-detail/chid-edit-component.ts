@@ -48,6 +48,9 @@ export class AppTypeTextComponent implements OnInit {
           this.modelFields[field_name].message = "Phép bù đã nhập lớn hơn số ngày trong tháng này";
         }
       return;
+    }else {
+      this.modelFields[field_name].error =false;
+      this.modelFields[field_name].message = ''
     }
   }
 
