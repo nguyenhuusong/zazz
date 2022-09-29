@@ -8,6 +8,7 @@ import { Subject } from 'rxjs';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { AgGridFn } from 'src/app/common/function-common/common';
 import * as moment from 'moment';
+import * as FileSaver from 'file-saver';
 @Component({
   selector: 'app-xem-cong',
   templateUrl: './xem-cong.component.html',
@@ -39,7 +40,7 @@ export class XemCongComponent implements OnInit, OnDestroy {
     orgId: '',
     filter: '',
     organizeId: '',
-    pageSize: 100000,
+    pageSize: 15,
     fromdate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).add(-1,'months').format()),
     todate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).format()),
     offSet: 0,
@@ -168,7 +169,7 @@ export class XemCongComponent implements OnInit, OnDestroy {
       orgId: '',
       filter: '',
       organizeId: '',
-      pageSize: 1000,
+      pageSize: 15,
       fromdate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).add(-1,'months').format()),
       todate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).format()),
       offSet: 0,
@@ -179,7 +180,7 @@ export class XemCongComponent implements OnInit, OnDestroy {
   paginate(event: any) {
     this.query.offSet = event.first;
     this.first = event.first;
-    this.query.pageSize = event.rows === 4 ? 100000000 : event.rows;
+    this.query.pageSize = event.rows
     this.getXemCongInfo();
   }
 
@@ -241,6 +242,26 @@ export class XemCongComponent implements OnInit, OnDestroy {
       //   field: 'checkbox'
       // }
     ]
+  }
+
+  Export() {
+    let params: any = {... this.query};
+    params.orgId = typeof params.orgId === 'string' ? params.orgId : params.orgId.orgId;
+    delete params.fromdate
+    delete params.todate
+    params.FromDate = moment(new Date(this.query.fromdate)).format('YYYY-MM-DD')
+    params.ToDate = moment(new Date(this.query.todate)).format('YYYY-MM-DD')
+    const queryParams = queryString.stringify(params);
+    this.spinner.show();
+    this.apiService.exportTimekeeping(queryParams).subscribe(results => {
+      if (results.type === 'application/json') {
+        this.spinner.hide();
+      } else {
+        var blob = new Blob([results], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        FileSaver.saveAs(blob, `Danh sách xem công tháng ${params.FromDate} - ${params.ToDate}` +".xlsx");
+        this.spinner.hide();
+      }
+    })
   }
 
 }

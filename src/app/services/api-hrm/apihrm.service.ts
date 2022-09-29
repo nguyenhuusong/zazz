@@ -312,6 +312,15 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v1/timekeeping/UpdateTimeKeeping` , queryParams, this.options)
   }
 
+  exportTimekeeping(queryParams): Observable<any> {
+    return this.http.get(`${apiHrmServer}/api/v1/timekeeping/ExportTimekeeping/?${queryParams}`, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
+  }
+
   getExportReport(url,queryParams: any): Observable<Blob> {
     return this.http.get(`${apiHrmServer}/api/v1/report/${url}?${queryParams}`, {
       headers: new HttpHeaders({

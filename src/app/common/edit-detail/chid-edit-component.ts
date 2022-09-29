@@ -1577,7 +1577,7 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
                   </div>
                   <ng-template pTemplate="footer">
                     <div class="d-flex end">
-                      <p-button styleClass="p-button-sm p-button-secondary" label="Bỏ qua" icon="pi pi-times-circle"></p-button>&nbsp;
+                      <p-button (click)="cancelAdd()" styleClass="p-button-sm p-button-secondary" label="Bỏ qua" icon="pi pi-times-circle"></p-button>&nbsp;
                       <p-button (click)="xacNhan()">Xác nhận</p-button>
                     </div>
                 </ng-template>
@@ -1618,6 +1618,9 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
        
       }
       this.element.options = [...this.element.options]
+    }
+    cancelAdd() {
+      this.newMember = false
     }
     searchEm() {
       // this.searchMember.emit(this.searchText);
