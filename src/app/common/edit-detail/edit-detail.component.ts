@@ -1043,7 +1043,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
           return
         }
       }
-      this.submit = false;
+      // this.submit = false;
       let group_fields = cloneDeep(this.dataView)
       this.callbackform(group_fields, 'Update')
     } else if (event === 'TamTinh') {
