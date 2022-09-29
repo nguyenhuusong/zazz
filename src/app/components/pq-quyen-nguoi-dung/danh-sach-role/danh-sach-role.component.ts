@@ -31,6 +31,7 @@ export class DanhSachRoleComponent implements OnInit {
   heightGrid = 500;
   gridKey = ''
   displaySetting = false;
+  dataMenuActionRole: any = []
   cauhinh() {
     this.displaySetting = true;
   }
@@ -46,6 +47,8 @@ export class DanhSachRoleComponent implements OnInit {
     this.apiService.getMenuConfigInfo(queryString.stringify(query)).subscribe((results: any) => {
       if (results.status === 'success') {
         this.listsData = cloneDeep(results?.data?.roles);
+        this.dataMenuActionRole = results.data;
+        this.menus = cloneDeep(results?.data?.menutree);
         if(results.data && results.data.view_grids_action){
           this.initGrid(results.data.view_grids_roles);
         }
@@ -127,7 +130,7 @@ export class DanhSachRoleComponent implements OnInit {
 
 
   suaThongTin(event) {
-    this.getRoleInfo(event.rowData.webRoleId);
+    this.getRoleInfo(event.rowData.roleId);
   }
 
   listViews = [];
@@ -172,7 +175,7 @@ export class DanhSachRoleComponent implements OnInit {
     };
     this.apiService.SetRoleInfo(params).subscribe((results: any) => {
       if (results.status === 'success') {
-        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data });
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
         this.spinner.hide();
         this.getRoles();
         this.displayInfo = false;
@@ -207,24 +210,26 @@ export class DanhSachRoleComponent implements OnInit {
               actions: res.actions && res.actions.length > 0 ? res.actions.filter(action => action.isCheck) : []
             })
           }
-          res.submenus.forEach(element => {
-            if (element.isCheck) {
-              arrayMenus.push({
-                menuRoleId: element.menuRoleId,
-                menuId: element.menuId,
-                menuCd: element.menuCd,
-                webId: element.webId,
-                webRoleId: element.webRoleId,
-                userId: element.userId,
-                roleCd: element.roleCd,
-                title: element.title,
-                tabId: element.tabId,
-                tabCd: element.tabCd,
-                intPos: element.intPos,
-                actions: element.actions && element.actions.length > 0 ? element.actions.filter(action => action.isCheck) : []
-              })
-            }
-          });
+          if(res.submenus){
+            res.submenus.forEach(element => {
+              if (element.isCheck) {
+                arrayMenus.push({
+                  menuRoleId: element.menuRoleId,
+                  menuId: element.menuId,
+                  menuCd: element.menuCd,
+                  webId: element.webId,
+                  webRoleId: element.webRoleId,
+                  userId: element.userId,
+                  roleCd: element.roleCd,
+                  title: element.title,
+                  tabId: element.tabId,
+                  tabCd: element.tabCd,
+                  intPos: element.intPos,
+                  actions: element.actions && element.actions.length > 0 ? element.actions.filter(action => action.isCheck) : []
+                })
+              }
+            });
+          }
         })
         this.detailDetailInfo.rolemenu = arrayMenus;
         this.setConfigMenu(this.detailDetailInfo.group_fields);
@@ -288,12 +293,15 @@ export class DanhSachRoleComponent implements OnInit {
 
   clickRowRoleGetMenu(event) {
     this.detailDetailInfo = null;
+    this.menus = cloneDeep(this.dataMenuActionRole.menutree);
     this.menus.forEach(m => {
       m.isCheck = false;
       m.isCheckAll = false;
-      m.submenus.forEach(d => {
-        d.isCheck = false
-      })
+      if(m.submenus){
+        m.submenus.forEach(d => {
+          d.isCheck = false
+        })
+      }
     });
     // this.detailRole = event.data
     console.log('event', event)

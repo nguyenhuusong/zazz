@@ -57,7 +57,7 @@ export class ChonLichHopComponent implements OnInit, OnChanges {
       headerToolbar: {
         left: 'myCustomButton prev today next',
         center: '',
-        right: 'dayGridMonth, timeGridWeek, dayGridDay'
+        right: 'timeGridMonth, timeGridWeek, dayGridDay'
       },
       buttonText: { today: "Hôm nay" },
       views: {
@@ -119,8 +119,7 @@ export class ChonLichHopComponent implements OnInit, OnChanges {
   currentDate = null
   test() {
     // console.log(this.calendarApi.getCurrentData());
-    console.log(this.calendarApi.getDate());
-    this.currentDate = this.calendarApi.getDate()
+    this.currentDate = this.calendarApi?.getDate()
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -161,7 +160,7 @@ export class ChonLichHopComponent implements OnInit, OnChanges {
     };
   }
   ngOnInit(): void {
-    this.currentDate = this.calendarApi.getDate();
+    this.currentDate = this.calendarApi?.getDate();
     this.test();
   }
 
@@ -192,5 +191,9 @@ export class ChonLichHopComponent implements OnInit, OnChanges {
 
   back(): void {
     this.handleBack.emit();
+  }
+
+  goBack() {
+    this.chooseDate.emit(false);
   }
 }
