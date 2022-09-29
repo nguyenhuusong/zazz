@@ -41,6 +41,7 @@
     [accentedSort]="true"
     (cellClicked)="CellClicked($event)"
     [isRowSelectable]="isRowSelectable"
+    (firstDataRendered)="onFirstDataRendered($event)"
     [frameworkComponents]="frameworkComponents">
   </ag-grid-angular>
 </div>

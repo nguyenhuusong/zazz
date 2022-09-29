@@ -225,8 +225,8 @@
                         [columnDefs]="columnDefs"
                         [rowSelection]="'multiple'"
                         (callback)="rowSelected($event)"
-
                         >
+                        <!-- (firstDataRendered)="onFirstDataRendered($event)" -->
                     </app-list-grid-angular>
                     <div class="paginator">
                         <span>Từ {{ countRecord.currentRecordStart }} đến
