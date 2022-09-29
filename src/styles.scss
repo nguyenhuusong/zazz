@@ -1937,7 +1937,7 @@ p-dialog{
     .p-picklist-list-wrapper{
         &:first-child{
             .p-picklist-header{
-                background: #0868d9;
+                background: #4C97E4;
                 .p-picklist-title{
                     color: #fff;
                 }
@@ -1966,18 +1966,18 @@ p-dialog{
             }
             &.p-picklist-source{
                 .p-picklist-item{
-                    background: #0868d9;
+                    background: #4C97E4;
                     color: #fff;
                     &.p-highlight{
                         background: #e3e3e3;
-                        color: #0651a9;
+                        color: #4C97E4;
                     }
                 }
             }
             &.p-picklist-target{
                 .p-picklist-item{
                     &.p-highlight{
-                        background: #0868d9;
+                        background: #4C97E4;
                         color: #fff;
                     }
                 }

@@ -1419,6 +1419,7 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private messageService: MessageService,
   ) { }
+
   ngOnInit(): void {
     this.element.columnValue = this.element.columnValue && (typeof this.element.columnValue === 'string') ? this.element.columnValue.split(',') : []
     this.dataView.forEach(element => {
@@ -1499,7 +1500,10 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
           }
           
         }
-        this.callback.emit(event.currentFiles);
+        if (this.element.field_name === 'meta_file_url') {
+          // danh sach file dinh kem, ct ns
+          this.callback.emit(event.currentFiles);
+        }
       }else{
         this.spinner.hide();
         this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Không hỗ trợ định dạng file' });
@@ -1509,23 +1513,23 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
       }, 1000);
   }
 
-  checkFileType(type){
-    if(type === "image/png" ||
-      type === "image/jpeg" ||
-      type === "image/jpg" ||
-      type === "image/gif" ||
-      type === "video/mp4" || 
-      type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" || 
-      type === "application/pdf" ||
-      type === "application/msword" ||
-      type === "application/vnd.ms-powerpoint" ||
-      type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-      ){ }
-      else{
-        this.spinner.hide();
-        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Không hỗ trợ định dạng file' });
-      }
-    }
+  // checkFileType(type){
+  //   if(type === "image/png" ||
+  //     type === "image/jpeg" ||
+  //     type === "image/jpg" ||
+  //     type === "image/gif" ||
+  //     type === "video/mp4" || 
+  //     type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" || 
+  //     type === "application/pdf" ||
+  //     type === "application/msword" ||
+  //     type === "application/vnd.ms-powerpoint" ||
+  //     type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+  //     ){ }
+  //     else{
+  //       this.spinner.hide();
+  //       this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Không hỗ trợ định dạng file' });
+  //     }
+  //   }
 }
 // Members
   @Component({

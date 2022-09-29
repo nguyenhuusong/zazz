@@ -80,14 +80,14 @@ export class CsChamCongComponent implements OnInit {
     // toDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).format()),
     filter: '',
     offSet: 0,
-    pageSize: 100,
+    pageSize: 15,
     month: new Date().getMonth() + 1,
     year: new Date().getFullYear(),
   }
 
   queryCheckInOut = {
     filter: '',
-    pageSize: 1000,
+    pageSize: 15,
     fromdate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).add(-1,'months').format()),
     todate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).format()),
     offSet: 0,
@@ -136,7 +136,7 @@ export class CsChamCongComponent implements OnInit {
       // toDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).format()),
       filter: '',
       offSet: 0,
-      pageSize: 100000000,
+      pageSize: 15,
       month: new Date().getMonth() + 1,
       year: new Date().getFullYear(),
     }

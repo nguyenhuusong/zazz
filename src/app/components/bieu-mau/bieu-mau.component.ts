@@ -118,7 +118,8 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
   }
 
   getFormTypes(): void { 
-    this.apiService.getFormTypes()
+    const queryParams = queryString.stringify({ filter: '', form_type_id: ''})
+    this.apiService.getFormsTypes(queryParams)
     .pipe(
       finalize(() => this.spinner.hide())
     )

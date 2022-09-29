@@ -34,7 +34,7 @@ export class XemCongComponent implements OnInit, OnDestroy {
   url: string = '';
   detailInfo = null;
   listsData = []
-  columnDefs
+  columnDefs: any = []
   cols: any[];
   query = {
     orgId: '',
@@ -146,11 +146,11 @@ export class XemCongComponent implements OnInit, OnDestroy {
   }
 
   changeOrgani() {
-    this.getXemCongInfo();
+    // this.getXemCongInfo();
     this.getOrganizeTree();
   }
   onChangeTree() {
-    this.getXemCongInfo();
+    // this.getXemCongInfo();
   }
   getOrganizeTree(): void {
     const queryParams = queryString.stringify({ parentId: this.query.organizeId});
