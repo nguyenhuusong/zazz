@@ -513,7 +513,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
                   {
                     onClick: this.OnClick.bind(this),
                     label: 'Xem chi tiết',
-                    icon: 'pi pi-cloud-upload',
+                    icon: 'fa fa-edit',
                     key: 'xem-chi-tiet-file-dinh-kem',
                     class: 'btn-primary mr5',
                   },
@@ -622,7 +622,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
                   {
                     onClick: this.OnClick.bind(this),
                     label: 'Xem chi tiết',
-                    icon: 'pi pi-cloud-upload',
+                    icon: 'fa fa-edit',
                     key: 'view-qua-trinh-hop-dong',
                     class: 'btn-primary mr5',
                   },
@@ -705,7 +705,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
                   {
                     onClick: this.OnClick.bind(this),
                     label: 'Xem chi tiết',
-                    icon: 'pi pi-cloud-upload',
+                    icon: 'fa fa-edit',
                     key: 'xem-chi-tiet-file-dinh-kem',
                     class: 'btn-primary mr5',
                   },
@@ -1200,7 +1200,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
                   {
                     onClick: this.OnClick.bind(this),
                     label: 'Xem hồ sơ',
-                    icon: 'pi pi-cloud-upload',
+                    icon: 'fa fa-edit',
                     key: 'xemhoso',
                     class: 'btn-primary mr5',
                     hide: !params.data.meta_file_url

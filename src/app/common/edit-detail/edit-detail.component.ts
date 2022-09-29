@@ -233,7 +233,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
             this.getWorkplaces(element1);
           } else if(element1.field_name === 'floor_No'){
             this.getFloor(element1);
-            this.callback1.emit(element1)
+            // this.callback1.emit(element1)
           }else if(element1.field_name === 'form_status'){
             this.getFormStatus(element1)
           }else {
