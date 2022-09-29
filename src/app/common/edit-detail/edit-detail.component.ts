@@ -257,7 +257,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
       });
     });
     this.spinner.show();
-    const source1 = timer(2000);
+    const source1 = timer(4000);
     source1.subscribe(val => {
       this.dataView = [...this.dataViewNew];
       this.spinner.hide();

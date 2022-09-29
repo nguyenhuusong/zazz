@@ -39,16 +39,19 @@ export class BieuMauChiTietComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.spinner.show();
     this.getDetail();
   }
 
  
   getDetail() {
+    this.spinner.show();
     const queryParams = queryString.stringify({formId: this.formId});
     this.apiService.getFormsInfo(queryParams)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {
         if (results.status === 'success') {
+          this.spinner.hide();
           const listViews = cloneDeep(results.data.group_fields);
           this.listViews = cloneDeep(listViews);
           this.detailInfo = results.data;
@@ -63,7 +66,6 @@ export class BieuMauChiTietComponent implements OnInit, OnDestroy {
   }
 
   handleSave(event) {
-    console.log('handleSave', event)
     const params = {
       ...this.detailInfo, group_fields: event
     };
