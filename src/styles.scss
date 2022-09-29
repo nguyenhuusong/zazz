@@ -4756,6 +4756,11 @@ p-dialog button{
             border: 1px solid rgba(43, 47, 51, 0.1);
             height: 40px;
             padding: 10px 16px;
+            outline: none !important;
+            &:target{
+                border: 1px solid rgba(43, 47, 51, 0.1);
+                outline: none !important;
+            }
         }
         svg{
             position: absolute;
