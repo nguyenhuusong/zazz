@@ -10,6 +10,9 @@ import { AgGridFn } from 'src/app/common/function-common/common';
 import * as moment from 'moment';
 import { Subject, takeUntil } from 'rxjs';
 import { cloneDeep } from 'lodash';
+import {
+  FirstDataRenderedEvent,
+} from '@ag-grid-community/core';
 @Component({
   selector: 'app-bieu-mau',
   templateUrl: './bieu-mau.component.html',
@@ -375,10 +378,16 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
         },
         cellClass: ['border-right', 'no-auto'],
         field: 'checkbox2',
-        checkboxSelection: true,
         headerCheckboxSelection: true,
         headerCheckboxSelectionFilteredOnly: true,
         suppressSizeToFit: true,
+        suppressRowClickSelection: true,
+        checkboxSelection: (
+          params: any
+        ) => {
+          return !!params.data && params.data.form_status !== 2;
+        },
+        showDisabledCheckboxes: true,
       },
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       {
@@ -391,6 +400,13 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
         cellRendererParams: (params: any) => this.showButtons(params),
         field: 'checkbox'
       }]
+  }
+
+  onFirstDataRendered(params: any) {
+    console.log('params', params)
+    params.api.forEachNode((node) =>
+      node.setSelected(!!node.data && node.data.form_status === 2)
+    );
   }
 
   exportExel() {
@@ -562,7 +578,9 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
     this.listDataSelect = []
     if(this.indexTab === 1){
       data.forEach(element => {
-        this.listDataSelect.push(element.form_id)
+        if(element.form_status !== 2){
+          this.listDataSelect.push(element.form_id)
+        }
       });
     }
   }
