@@ -1499,11 +1499,11 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
           }
           
         }
+        this.callback.emit(event.currentFiles);
       }else{
         this.spinner.hide();
         this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Không hỗ trợ định dạng file' });
       }
-      this.callback.emit(event.files);
       setTimeout(() => {
         this.isUpload = false;
       }, 1000);

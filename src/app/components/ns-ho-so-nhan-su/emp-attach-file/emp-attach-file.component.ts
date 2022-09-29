@@ -57,17 +57,18 @@ export class EmpAttachFileComponent implements OnInit {
       //   }
       // });
       // this.theData = data;
-      if(this.files){
+      if(this.files.length > 0){
         data[0].fields.forEach(element => {
           if(element.field_name === "meta_file_size") {
             element.columnValue = this.files[0].size
           }else if(element.field_name === "meta_file_type") {
             element.columnValue = this.files[0].type;
           }
-          // else if(element.field_name === "meta_title") {
-          //   element.columnValue = this.files[0].name;
-          // }
+          else if(element.field_name === "meta_file_name") {
+            element.columnValue = this.files[0].name;
+          }
         });
+        console.log('this.files', this.files)
       }
       const params = {
         ...this.detailInfo, group_fields: data
