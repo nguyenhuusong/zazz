@@ -38,18 +38,17 @@ export class AppTypeTextComponent implements OnInit {
 
   onChangeValue(value, field_name, element) {
     element.columnValue = element.columnValue.trim();
-    if (element.columnValue === ''){
-        this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : '';
-        return;
+    if (element.columnValue === '') {
+      this.modelFields[field_name].error = this.modelFields[field_name].isRequire && !this.element.columnValue ? true : false
+      this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
+      let numberDay = moment().daysInMonth();
+      if (field_name === 'annualAdd')
+        if (this.element.columnValue > numberDay) {
+          this.modelFields[field_name].error = true;
+          this.modelFields[field_name].message = "Phép bù đã nhập lớn hơn số ngày trong tháng này";
+        }
+      return;
     }
-    this.modelFields[field_name].error = this.modelFields[field_name].isRequire && !this.element.columnValue ? true : false
-    this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
-    let numberDay = moment().daysInMonth();
-    if (field_name === 'annualAdd')
-      if (this.element.columnValue > numberDay) {
-        this.modelFields[field_name].error = true;
-        this.modelFields[field_name].message = "Phép bù đã nhập lớn hơn số ngày trong tháng này";
-      }
   }
 
   foucusOut(e) {
@@ -145,7 +144,7 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
     //   })
     // }
 
-    this.element.columnValue  = typeof this.element.columnValue === 'object' ? this.element.columnValue : null
+    this.element.columnValue = typeof this.element.columnValue === 'object' ? this.element.columnValue : null
     checkIsObject
   }
 
@@ -351,7 +350,7 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
     this.changeDetector.detectChanges();
   }
 
-   getValueByKey(key) {
+  getValueByKey(key) {
     if (this.dataView && this.dataView.length > 0) {
       let value = ''
       for (let i = 0; i < this.dataView.length; i++) {
@@ -388,7 +387,7 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
           }
         });
       });
-    }else if (field_name === 'CompanyId') {
+    } else if (field_name === 'CompanyId') {
       this.dataView.forEach(element => {
         element.fields.forEach(element1 => {
           if (element1.field_name === 'PayrollTypeId') {
@@ -434,7 +433,7 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
         element.fields.forEach(async element1 => {
           if ((element1.columnType === 'selectTree') && ((element1.field_name === 'orgId') || (element1.field_name === 'departmentId'))) {
             this.getOrganizeTree(value, element1);
-          }else if (element1.columnType === 'selectTrees') {
+          } else if (element1.columnType === 'selectTrees') {
             this.getOrganizeTree(value, element1);
           } else if (element1.field_name === 'jobId') {
             const positionTypeCd = await this.getValueByKey('positionCd');
@@ -443,7 +442,7 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
             this.getUserByPush(value, element1)
           } else if (element1.field_name === 'work_cd') {
             this.getWorkTime(element1, value)
-          }else if(element1.field_name === 'CompanyId') {
+          } else if (element1.field_name === 'CompanyId') {
             this.getCompaniesByOrganize(element1, value)
           }
           // else if(element1.field_name === 'EmployeeId') {
@@ -511,11 +510,11 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
       this.callback.emit(value);
     } else if (field_name === 'holi_type') {
       this.callback.emit(value);
-    } else if(field_name === 'floor_No') {
+    } else if (field_name === 'floor_No') {
       this.floorID = value
       this.dataView.forEach(element => {
         element.fields.forEach(async element1 => {
-          if(element1.field_name === 'roomId'){
+          if (element1.field_name === 'roomId') {
             this.getRooms(element1, value);
             const emitType = {
               name: 'floor_no',
@@ -525,7 +524,7 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
           }
         })
       })
-    } else if(field_name === 'roomId'){
+    } else if (field_name === 'roomId') {
       const emitType = {
         name: 'roomId',
         id: value,
@@ -549,21 +548,21 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
   }
 
   getRooms(element1, value) {
-    const queryParams = queryString.stringify( { filter: '', floor_No: value })
+    const queryParams = queryString.stringify({ filter: '', floor_No: value })
     this.apiService.getMeetRooms(queryParams)
       .subscribe(results => {
         if (results.status === 'success') {
-          if(value){
+          if (value) {
             element1.options = results.data.map(d => {
               return {
                 label: d.room_name,
                 value: d.roomId,
               }
-            })  
-          }else{
+            })
+          } else {
             element1.options = []
           }
-             
+
         }
       });
   }
@@ -625,7 +624,7 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
     })
   }
 
-  
+
   getUserByPushByEmpId(orgId, element1) {
     const queryParams = queryString.stringify({ orgId: orgId });
     this.apiService.getEmployeeSearch(queryParams).subscribe(results => {
@@ -643,17 +642,17 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
   }
 
   getPayrollTypeList(orgId, element1) {
-    const queryParams = queryString.stringify({organizeId: orgId});
+    const queryParams = queryString.stringify({ organizeId: orgId });
     this.apiService.getHrmPayrollTypePage(queryParams).subscribe(results => {
       if (results.status === 'success') {
-        if(results.data && results.data.dataList.data.length > 0){
+        if (results.data && results.data.dataList.data.length > 0) {
           element1.options = cloneDeep(results.data.dataList.data).map(d => {
             return {
               label: `${d.name}`,
               value: `${d.id}`
             }
           });
-        }else {
+        } else {
           element1.options = []
         }
       }
@@ -1337,11 +1336,11 @@ export class AppTypeLinkUrlRadioListComponent implements OnInit {
             } else {
               this.spinner.hide();
             }
-  
+
           })
       }
     }
-   
+
 
   }
 
@@ -1424,9 +1423,9 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
     this.element.columnValue = this.element.columnValue && (typeof this.element.columnValue === 'string') ? this.element.columnValue.split(',') : []
     this.dataView.forEach(element => {
       element.fields.forEach(async element1 => {
-        if (((element1.field_name === 'AttachName') || (element1.field_name === 'attached_name') || (element1.field_name === 'attachName')) && element1.columnValue ) {
+        if (((element1.field_name === 'AttachName') || (element1.field_name === 'attached_name') || (element1.field_name === 'attachName')) && element1.columnValue) {
           this.uploadedFiles = element1.columnValue.split(',')
-        } 
+        }
       });
     });
   }
@@ -1439,78 +1438,78 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
     this.uploadedFiles.splice(index, 1);
     this.dataView.forEach(element => {
       element.fields.forEach(async element1 => {
-        if ((element1.field_name === 'AttachName') || (element1.field_name === 'attached_name')|| (element1.field_name === 'attachName')) {
+        if ((element1.field_name === 'AttachName') || (element1.field_name === 'attached_name') || (element1.field_name === 'attachName')) {
           element1.columnValue = this.uploadedFiles.toString();
-        }else if(element1.field_name ===  'link_view') {
+        } else if (element1.field_name === 'link_view') {
           element1.columnValue.splice(index, 1);
-        } 
+        }
       });
     });
   }
-  
+
   uploadHandler(event) {
-      //  this.uploadedFiles = []
-      this.isUpload = true;
-      this.spinner.show();
-      if(event.currentFiles.length > 0){
-        for(let index in event.currentFiles) {
-          const getDAte = new Date();
-          const getTime = getDAte.getTime();
-          const storageRef = firebase.storage().ref();
-          const uploadTask = storageRef.child(`s-hrm/images/${getTime}-${event.currentFiles[index].name}`).put(event.currentFiles[index]);
-          uploadTask.on('state_changed', (snapshot) => {
-          }, (error) => {
-          }, () => {
-            uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-              this.element.columnValue.push(downloadURL)
-              this.spinner.hide();
-              this.dataView.forEach(element => {
-                element.fields.forEach(async element1 => {
-                  if ((element1.field_name === 'AttachName') || (element1.field_name === 'attached_name') || (element1.field_name === 'attachName')) {
-                    this.uploadedFiles.push(event.currentFiles[index].name);
-                    element1.columnValue = this.uploadedFiles.toString();
-                    console.log('111111')
-                  } 
-                });
-              });
-            }).catch(error => {
-              this.spinner.hide();
-            });
-          });
-          if (this.element.field_name === 'file_attach') {
-            this.spinner.show();
-            let fomrData = new FormData();
-            fomrData.append('file', event.currentFiles[index]);
-            this.apiService.uploadDrives(fomrData)
-              .subscribe(results => {
-                if (results.status === 'success') {
-                  this.dataView.forEach(element => {
-                    element.fields.forEach(async element1 => {
-                      if (element1.field_name === 'link_view') {
-                        element1.columnValue.push(results.data)
-                      }
-                    });
-                  });
-                  this.spinner.hide();
-                } else {
-                  this.spinner.hide();
+    //  this.uploadedFiles = []
+    this.isUpload = true;
+    this.spinner.show();
+    if (event.currentFiles.length > 0) {
+      for (let index in event.currentFiles) {
+        const getDAte = new Date();
+        const getTime = getDAte.getTime();
+        const storageRef = firebase.storage().ref();
+        const uploadTask = storageRef.child(`s-hrm/images/${getTime}-${event.currentFiles[index].name}`).put(event.currentFiles[index]);
+        uploadTask.on('state_changed', (snapshot) => {
+        }, (error) => {
+        }, () => {
+          uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+            this.element.columnValue.push(downloadURL)
+            this.spinner.hide();
+            this.dataView.forEach(element => {
+              element.fields.forEach(async element1 => {
+                if ((element1.field_name === 'AttachName') || (element1.field_name === 'attached_name') || (element1.field_name === 'attachName')) {
+                  this.uploadedFiles.push(event.currentFiles[index].name);
+                  element1.columnValue = this.uploadedFiles.toString();
+                  console.log('111111')
                 }
-      
-              })
-          }
-          
+              });
+            });
+          }).catch(error => {
+            this.spinner.hide();
+          });
+        });
+        if (this.element.field_name === 'file_attach') {
+          this.spinner.show();
+          let fomrData = new FormData();
+          fomrData.append('file', event.currentFiles[index]);
+          this.apiService.uploadDrives(fomrData)
+            .subscribe(results => {
+              if (results.status === 'success') {
+                this.dataView.forEach(element => {
+                  element.fields.forEach(async element1 => {
+                    if (element1.field_name === 'link_view') {
+                      element1.columnValue.push(results.data)
+                    }
+                  });
+                });
+                this.spinner.hide();
+              } else {
+                this.spinner.hide();
+              }
+
+            })
         }
-        if (this.element.field_name === 'meta_file_url') {
-          // danh sach file dinh kem, ct ns
-          this.callback.emit(event.currentFiles);
-        }
-      }else{
-        this.spinner.hide();
-        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Không hỗ trợ định dạng file' });
+
       }
-      setTimeout(() => {
-        this.isUpload = false;
-      }, 1000);
+      if (this.element.field_name === 'meta_file_url') {
+        // danh sach file dinh kem, ct ns
+        this.callback.emit(event.currentFiles);
+      }
+    } else {
+      this.spinner.hide();
+      this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Không hỗ trợ định dạng file' });
+    }
+    setTimeout(() => {
+      this.isUpload = false;
+    }, 1000);
   }
 
   // checkFileType(type){
@@ -1532,9 +1531,9 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
   //   }
 }
 // Members
-  @Component({
-    selector: 'app-type-members',
-    template: `   <div class="wrap-members field-group">
+@Component({
+  selector: 'app-type-members',
+  template: `   <div class="wrap-members field-group">
                     <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
                     <div class="in d-flex bet middle">
                       <ul class="members-filed">
@@ -1587,146 +1586,146 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
                 </ng-template>
                   </p-dialog>
                   `,
-  })
+})
 
-  export class AppTypeMembers implements OnInit {
-    @Input() element;
-    @Input() modelFields;
-    @Input() submit = false;
-    @Input() dataView;
-    @Output() searchMember = new EventEmitter<any>();
-    members = [];
-    selectMembers =[];
-    newMember = false;
-    searchText = '';
-    constructor(
-      private apiService: ApiHrmService,
-      private spinner: NgxSpinnerService,
-    ) { }
-    ngOnInit(): void {
-      this.modelFields[this.element.field_name].error = false;
-      this.selectMembers = [];
-      this.members = [];
-      const dataNew = this.element.columnValue ?  this.element.columnValue.split(',') : [];
-      for(let item of this.element.options) {
-        for(let item1 of item.child) {
-          if(dataNew.indexOf(item1.userId) > -1) {
-            item1.isCheck = true;
-            this.selectMembers.push({...item1, isCheck: this.selectMembers.length === 0 ? true : false});
-          }
-          const isCheckAll =item.child.filter(d => d.isCheck === true);
-          if(isCheckAll.length === item.child.length) {
-            item.isCheck = true;
-          }
+export class AppTypeMembers implements OnInit {
+  @Input() element;
+  @Input() modelFields;
+  @Input() submit = false;
+  @Input() dataView;
+  @Output() searchMember = new EventEmitter<any>();
+  members = [];
+  selectMembers = [];
+  newMember = false;
+  searchText = '';
+  constructor(
+    private apiService: ApiHrmService,
+    private spinner: NgxSpinnerService,
+  ) { }
+  ngOnInit(): void {
+    this.modelFields[this.element.field_name].error = false;
+    this.selectMembers = [];
+    this.members = [];
+    const dataNew = this.element.columnValue ? this.element.columnValue.split(',') : [];
+    for (let item of this.element.options) {
+      for (let item1 of item.child) {
+        if (dataNew.indexOf(item1.userId) > -1) {
+          item1.isCheck = true;
+          this.selectMembers.push({ ...item1, isCheck: this.selectMembers.length === 0 ? true : false });
         }
-       
+        const isCheckAll = item.child.filter(d => d.isCheck === true);
+        if (isCheckAll.length === item.child.length) {
+          item.isCheck = true;
+        }
       }
+
+    }
+    this.element.options = [...this.element.options]
+  }
+  cancelAdd() {
+    this.newMember = false
+  }
+  searchEm() {
+    // this.searchMember.emit(this.searchText);
+    this.spinner.show();
+    const queryParams = queryString.stringify({ offSet: 0, pageSize: 50, fullName: this.searchText })
+    this.apiService.getHrmMeetingPerson(queryParams).subscribe(res => {
+      this.spinner.hide();
+      if (res.status === 'success') {
+        this.members = cloneDeep(this.element.options);
+        this.element.options = [...res.data.meetingProperties];
+        this.element.options.forEach(member => {
+          member.isCheck = member.isCheck ? member.isCheck : false;
+          member.child.forEach(user => {
+            user.isCheck = user.isCheck ? user.isCheck : false;
+          })
+        })
+        const dataNew = this.element.columnValue ? this.element.columnValue.split(',') : [];
+        for (let item of this.element.options) {
+          for (let item1 of item.child) {
+            if (dataNew.indexOf(item1.userId) > -1) {
+              item1.isCheck = true;
+              // this.selectMembers.push({...item1, isCheck: this.selectMembers.length === 0 ? true : false});
+            }
+            const isCheckAll = item.child.filter(d => d.isCheck === true);
+            if (isCheckAll.length === item.child.length) {
+              item.isCheck = true;
+            }
+          }
+
+        }
+        this.element.options = [...this.element.options]
+      }
+    })
+  }
+  activeName(i) {
+    for (let index in this.selectMembers) {
+      if (index == i) {
+        this.selectMembers[index].isCheck = true;
+      } else {
+        this.selectMembers[index].isCheck = false;
+      }
+    }
+    this.selectMembers = [...this.selectMembers]
+  }
+
+  xacNhan() {
+    // this.selectMembers = [];
+    for (let item of this.element.options) {
+      for (let index in item.child) {
+        if (item.child[index].isCheck) {
+          this.selectMembers.push({ ...item.child[index], isCheck: parseInt(index) === 0 ? true : false });
+        } else {
+          const newIndex = this.selectMembers.findIndex(d => d.userId === item.child[index].userId);
+          if (newIndex > -1) this.selectMembers.splice(newIndex, 1);
+          this.selectMembers = [...this.selectMembers];
+        }
+      }
+    }
+    this.selectMembers = uniqBy(this.selectMembers, 'userId');
+    this.element.columnValue = this.selectMembers.map(item => item.userId).toString();
+    this.newMember = false;
+  }
+
+  handleChangeParent(member, index) {
+    this.element.options[index].isCheck = !this.element.options[index].isCheck
+    this.element.options[index].child.forEach(user => {
+      user.isCheck = this.element.options[index].isCheck;
+    });
+    this.element.options = [...this.element.options];
+  }
+
+  handleChangeChild(user, index, member, idx) {
+    this.element.options[index].child[idx].isCheck = !this.element.options[index].child[idx].isCheck;
+    const isCheckAll = this.element.options[index].child.filter(d => d.isCheck === true);
+    if (isCheckAll.length === this.element.options[index].child.length) {
+      this.element.options[index].isCheck = true;
+      this.element.options = [...this.element.options]
+    } else {
+      this.element.options[index].isCheck = false;
       this.element.options = [...this.element.options]
     }
-    cancelAdd() {
-      this.newMember = false
-    }
-    searchEm() {
-      // this.searchMember.emit(this.searchText);
-      this.spinner.show();
-        const queryParams = queryString.stringify({ offSet: 0, pageSize: 50, fullName: this.searchText })
-        this.apiService.getHrmMeetingPerson(queryParams).subscribe( res => {
-          this.spinner.hide();
-          if(res.status === 'success') {
-            this.members = cloneDeep(this.element.options);
-            this.element.options = [...res.data.meetingProperties];
-            this.element.options.forEach(member => {
-              member.isCheck = member.isCheck ? member.isCheck : false;
-              member.child.forEach(user => {
-                user.isCheck = user.isCheck ? user.isCheck: false;
-              })
-            })
-            const dataNew = this.element.columnValue ?  this.element.columnValue.split(',') : [];
-            for(let item of this.element.options) {
-              for(let item1 of item.child) {
-                if(dataNew.indexOf(item1.userId) > -1) {
-                  item1.isCheck = true;
-                  // this.selectMembers.push({...item1, isCheck: this.selectMembers.length === 0 ? true : false});
-                }
-                const isCheckAll =item.child.filter(d => d.isCheck === true);
-                if(isCheckAll.length === item.child.length) {
-                  item.isCheck = true;
-                }
-              }
-            
-            }
-            this.element.options = [...this.element.options]
-          }
-        })
-    }
-    activeName(i) {
-      for(let index in this.selectMembers) {
-        if(index == i) {
-          this.selectMembers[index].isCheck = true;
-        }else {
-          this.selectMembers[index].isCheck = false;
-        }
-      }
-      this.selectMembers = [...this.selectMembers]
-    }
-
-    xacNhan() {
-      // this.selectMembers = [];
-      for(let item of this.element.options) {
-        for(let index in item.child) {
-          if(item.child[index].isCheck) {
-            this.selectMembers.push({...item.child[index], isCheck: parseInt(index) === 0 ? true : false});
-          }else {
-           const newIndex = this.selectMembers.findIndex(d => d.userId === item.child[index].userId);
-           if(newIndex > -1) this.selectMembers.splice(newIndex,1);
-           this.selectMembers = [...this.selectMembers];
-          }
-        }
-      }
-      this.selectMembers =uniqBy(this.selectMembers, 'userId');
-      this.element.columnValue = this.selectMembers.map(item => item.userId).toString();
-      this.newMember = false;
-    }
-
-    handleChangeParent(member, index) {
-      this.element.options[index].isCheck = !this.element.options[index].isCheck
-      this.element.options[index].child.forEach(user => {
-        user.isCheck = this.element.options[index].isCheck;
-      });
-      this.element.options = [...this.element.options];
-    }
-
-    handleChangeChild(user, index, member, idx) {
-      this.element.options[index].child[idx].isCheck = !this.element.options[index].child[idx].isCheck;
-      const isCheckAll =this.element.options[index].child.filter(d => d.isCheck === true);
-      if(isCheckAll.length === this.element.options[index].child.length) {
-        this.element.options[index].isCheck = true;
-        this.element.options = [...this.element.options]
-      }else {
-        this.element.options[index].isCheck = false;
-        this.element.options = [...this.element.options]
-      }
-    }
-
-    addNewMember() {
-      this.searchText = '';
-      if(this.members.length > 0) {
-        this.element.options = cloneDeep(this.members);
-        for(let item of this.element.options) {
-          for(let item1 of item.child) {
-            if(this.selectMembers.map(d => d.userId).indexOf(item1.userId) > -1) {
-              item1.isCheck = true;
-            }else {
-              item1.isCheck = false;
-            }
-          }
-          
-        }
-        // this.element.options = [...this.element.options]
-      }
-      this.newMember = true;
-    }
   }
+
+  addNewMember() {
+    this.searchText = '';
+    if (this.members.length > 0) {
+      this.element.options = cloneDeep(this.members);
+      for (let item of this.element.options) {
+        for (let item1 of item.child) {
+          if (this.selectMembers.map(d => d.userId).indexOf(item1.userId) > -1) {
+            item1.isCheck = true;
+          } else {
+            item1.isCheck = false;
+          }
+        }
+
+      }
+      // this.element.options = [...this.element.options]
+    }
+    this.newMember = true;
+  }
+}
 
 // chips, member out company
 @Component({
@@ -1822,8 +1821,8 @@ export class AppTypelistMch implements OnInit {
     private apiService: ApiHrmService
   ) { }
   ngOnInit(): void {
-      // this.element.columnValue = [10,20,30]
-    if(this.element.columnValue){
+    // this.element.columnValue = [10,20,30]
+    if (this.element.columnValue) {
       this.element.columnValue = this.element.columnValue.split(",");
     }
     this.modelFields[this.element.field_name].error = false;
@@ -1831,7 +1830,7 @@ export class AppTypelistMch implements OnInit {
 
   deleteTimeNoti(index) {
     this.element.columnValue.splice(index, 1);
-  } 
+  }
 
   cancelTimeNotis() {
     this.isNewTime = false
@@ -1839,10 +1838,10 @@ export class AppTypelistMch implements OnInit {
 
   saveTimeNotis() {
     this.isNewTime = false;
-    if(!this.element.columnValue){
+    if (!this.element.columnValue) {
       this.element.columnValue = []
     }
-    if(!this.timeInput){
+    if (!this.timeInput) {
       this.timeInput = 10;
     }
     this.element.columnValue.push(this.timeInput)
@@ -1901,23 +1900,23 @@ export class AppTyperoomImg implements OnInit {
   }
   onBasicUpload(event) {
     if (event.currentFiles.length > 0) {
-        const getDAte = new Date();
-        const getTime = getDAte.getTime();
-        const storageRef = firebase.storage().ref();
-        const uploadTask = storageRef.child(`s-hrm/file-attach/${getTime}-${event.currentFiles[0].name}`).put(event.currentFiles[0]);
-        uploadTask.on('state_changed', (snapshot) => {
-        }, (error) => {
-          this.spinner.hide();
-        }, () => {
-          uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-            if (downloadURL) {
-              this.spinner.hide();
-              this.element.columnValue = downloadURL;
-            }
-          });
+      const getDAte = new Date();
+      const getTime = getDAte.getTime();
+      const storageRef = firebase.storage().ref();
+      const uploadTask = storageRef.child(`s-hrm/file-attach/${getTime}-${event.currentFiles[0].name}`).put(event.currentFiles[0]);
+      uploadTask.on('state_changed', (snapshot) => {
+      }, (error) => {
+        this.spinner.hide();
+      }, () => {
+        uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+          if (downloadURL) {
+            this.spinner.hide();
+            this.element.columnValue = downloadURL;
+          }
         });
+      });
     }
-    else{
+    else {
       this.spinner.hide();
     }
   }
@@ -1953,14 +1952,14 @@ export class AppTypeonOff implements OnInit {
 
   ngOnChanges(event) {
     if (event && event.element) {
-      if(event.element.currentValue.columnValue === "0"){
+      if (event.element.currentValue.columnValue === "0") {
         this.element.columnValue = false
-      }else if(event.element.currentValue.columnValue === "1"){
+      } else if (event.element.currentValue.columnValue === "1") {
         this.element.columnValue = true
       }
     }
   }
-  
+
 }
 
 @Component({
