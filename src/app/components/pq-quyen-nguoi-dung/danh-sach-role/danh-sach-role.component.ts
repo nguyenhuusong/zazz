@@ -70,7 +70,7 @@ export class DanhSachRoleComponent implements OnInit {
   listActions = [];
   sourceActions = [];
   targetActions = [];
-  menus = [];
+  menus: any = [];
   // getWebMenuTree() {
   //   this.columnDefs = []
   //   const queryParams = queryString.stringify({ webId: this.detailInfo.webId });
@@ -263,13 +263,17 @@ export class DanhSachRoleComponent implements OnInit {
   changeMenuParent(menu, index) {
     this.menus[index].isCheck = !this.menus[index].isCheck;
     if (this.menus[index].isCheck) {
-      this.menus[index].submenus = this.menus[index].submenus.map(result => {
-        return { ...result, isCheck: true };
-      })
+      if(this.menus[index].submenus){
+        this.menus[index].submenus = this.menus[index].submenus.map(result => {
+          return { ...result, isCheck: true };
+        })
+      }
     } else {
-      this.menus[index].submenus = this.menus[index].submenus.map(result => {
-        return { ...result, isCheck: false };
-      })
+      if(this.menus[index].submenus){
+        this.menus[index].submenus = this.menus[index].submenus.map(result => {
+          return { ...result, isCheck: false };
+        })
+      }
     }
 
     this.menus = [...this.menus];
@@ -339,42 +343,44 @@ export class DanhSachRoleComponent implements OnInit {
           } else {
             m.isCheck = false;
           }
-          m.submenus.forEach(d => {
-            if (this.listMenuRoles.map(q => q.menuId).indexOf(d.menuId) > -1) {
-              d.isCheck = true;
-              //load is check action
-        
-              this.listMenuRoles.forEach(a => {
-                if (d.menuId === a.menuId) {
-                  if (a.actions && a.actions.length > 0) {
-                    d.actions.forEach(action => {
-                      a.actions.forEach(action1 => {
-                        if (action.actionId === action1.actionId) {
-                          action.isCheck = true;
-                        }
-                      })
-                    });
-                  } else {
-                    d.actions.forEach(action => action.isCheck = false)
+          if(m.submenus){
+            m.submenus.forEach(d => {
+              if (this.listMenuRoles.map(q => q.menuId).indexOf(d.menuId) > -1) {
+                d.isCheck = true;
+                //load is check action
+          
+                this.listMenuRoles.forEach(a => {
+                  if (d.menuId === a.menuId) {
+                    if (a.actions && a.actions.length > 0) {
+                      d.actions.forEach(action => {
+                        a.actions.forEach(action1 => {
+                          if (action.actionId === action1.actionId) {
+                            action.isCheck = true;
+                          }
+                        })
+                      });
+                    } else {
+                      d.actions.forEach(action => action.isCheck = false)
+                    }
+          
                   }
-        
+                })
+              } else {
+                d.isCheck = false;
+              }
+              this.listMenuRoles.forEach(g => {
+                if (g.menuId === d.menuId) {
+                  d.intPos = g.intPos;
                 }
               })
-            } else {
-              d.isCheck = false;
-            }
+            });
+            m.submenus.sort(this.compare_qty)
             this.listMenuRoles.forEach(g => {
-              if (g.menuId === d.menuId) {
-                d.intPos = g.intPos;
+              if (g.menuId === m.menuId) {
+                m.intPos = g.intPos;
               }
             })
-          });
-          m.submenus.sort(this.compare_qty)
-          this.listMenuRoles.forEach(g => {
-            if (g.menuId === m.menuId) {
-              m.intPos = g.intPos;
-            }
-          })
+          }
         });
         this.menus = [...this.menus].sort(this.compare_qty);
         console.log(this.menus )
