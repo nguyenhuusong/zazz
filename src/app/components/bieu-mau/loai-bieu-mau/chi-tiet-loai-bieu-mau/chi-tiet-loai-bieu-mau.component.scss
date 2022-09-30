@@ -2,4 +2,18 @@
     .p-treeselect-items-wrapper{
         max-height: 200px !important;
     }
+    .field-group{
+        &.checkbox{
+            display: flex;
+            min-height: 0px;
+            align-items: center;
+            gap: 12px;
+            label{
+                margin-bottom: 0px;
+            }
+            .p-checkbox{
+                position: static;
+            }
+        }
+    }
 }
