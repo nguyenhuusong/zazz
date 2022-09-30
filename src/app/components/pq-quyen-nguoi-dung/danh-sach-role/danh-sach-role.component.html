@@ -22,7 +22,7 @@
 </p-dialog>
 
 
-<p-sidebar styleClass="danh-sach-chuc-nang-sidebar" [(visible)]="displayMenuRole" position="right" (onHide)="onHideMenuRole($event)" [baseZIndex]="10000">
+<p-sidebar styleClass="danh-sach-chuc-nang-sidebar sidebar-role" [(visible)]="displayMenuRole" position="right" (onHide)="onHideMenuRole($event)" [baseZIndex]="10000">
     <h3 class="d-flex align-items-center"><i class="pi pi-cog mr-2"></i>Danh sách chức năng</h3>
     <ul class="checktree mt-2" >
           <li *ngFor="let menu of menus; let i=index" title="Menu Cha" >

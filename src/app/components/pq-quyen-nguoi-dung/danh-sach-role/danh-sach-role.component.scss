@@ -72,3 +72,42 @@
   :host ::ng-deep .p-dialog .p-button {
       min-width: 6rem;
   }
+  
+:host::ng-deep .p-sidebar-right{
+    width: 31rem !important; 
+    overflow: scroll;
+  }
+:host::ng-deep .p-picklist-item{
+  justify-content: space-between !important;
+  display: flex !important;
+  align-items: flex-end !important;
+  border: 1px solid #ccc;
+  }
+
+  select {
+    height: calc(2.3rem + 2px) !important;
+  }
+
+ul {
+  list-style-type:none;
+  margin:3px;
+  /* margin-left: -36px; */
+}
+ 
+ul.checktree li:before {
+  height:1em;
+  width:12px;
+  border-bottom:1px dashed;
+  content:"";
+  display: inline-block;
+  top:-0.3em;
+}
+ul.checktree li {border-left:1px dashed; }
+ul.checktree li:last-child:before {border-left:1px dashed; }
+ul.checktree li:last-child {border-left:none; }
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}

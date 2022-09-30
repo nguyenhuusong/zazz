@@ -515,6 +515,7 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
       this.callback.emit(value);
     } else if (field_name === 'floor_No') {
       this.floorID = value
+      console.log('value', value)
       this.dataView.forEach(element => {
         element.fields.forEach(async element1 => {
           if (element1.field_name === 'roomId') {

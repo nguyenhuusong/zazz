@@ -242,7 +242,7 @@ export class ApiService {
   deleteRole(queryParams): Observable<any> {
     return this.http.delete(`${apiHrmBase}/api/v2/userrole/DeleteRole?` + queryParams, this.options);
   }
-  getRoleTypes(query): Observable<any> {
+  getRoleTypes(): Observable<any> {
     return this.http.get(`${apiHrmBase}/api/v2/userrole/GetRoleTypes`, this.options);
   }
 }

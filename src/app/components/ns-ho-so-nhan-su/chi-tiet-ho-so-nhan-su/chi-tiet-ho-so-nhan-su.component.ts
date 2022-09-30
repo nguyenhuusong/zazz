@@ -1587,6 +1587,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       this.listsDataRecord = [... this.listsDataRecord];
       this.listViewsRecordInfo.records = this.listsDataRecord;
       this.displayuploadcontract = false;
+      this.saveCreateContract();
     }
   }
   saveCreateContract() {

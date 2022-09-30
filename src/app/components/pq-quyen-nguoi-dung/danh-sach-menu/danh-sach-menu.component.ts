@@ -199,7 +199,7 @@ export class DanhSachMenuComponent implements OnInit {
         this.apiService.delConfigMenu(queryParams).subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
-            this.callback.emit();
+            this.getMenuConfigInfo()
             this.displayInfo = false
           } else {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
@@ -216,7 +216,7 @@ export class DanhSachMenuComponent implements OnInit {
     };
     this.apiService.setConfigMenu(params).subscribe((results: any) => {
       if (results.status === 'success') {
-        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data });
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
         this.spinner.hide();
         this.getMenuConfigInfo();
         this.displayInfo = false;
