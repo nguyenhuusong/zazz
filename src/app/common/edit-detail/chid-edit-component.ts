@@ -1567,7 +1567,7 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
                     <div class="in d-flex bet middle">
                       <ul class="members-filed">
                         <ng-container *ngFor="let user of selectMembers; let i = index">
-                          <li *ngIf="i < 33" (click)="activeName(i)" >
+                          <li *ngIf="i < 33 && element.columnValue" (click)="activeName(i)" >
                               <span class="avatar-radius">
                               <img src="{{user.avatarUrl}}">
                               </span>
@@ -1639,10 +1639,10 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
     getSelectMembers() {
       this.selectMembers = [];
       this.members = [];
-      const dataNew = this.element.columnValue ?  this.element.columnValue.split(',') : [];
+      // const dataNew = this.element.columnValue ?  this.element.columnValue.split(',') : [];
       for(let item of this.element.options) {
         for(let item1 of item.child) {
-          if(dataNew.indexOf(item1.userId) > -1) {
+          if(this.element.columnValue.indexOf(item1.userId) > -1) {
             item1.isCheck = true;
             this.selectMembers.push({...item1, isCheck: this.selectMembers.length === 0 ? true : false});
           }
@@ -1654,6 +1654,7 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
        
       }
       this.element.options = [...this.element.options]
+      
     }
 
     cancelAdd() {
@@ -1752,6 +1753,9 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
       this.searchText = '';
       this.getSelectMembers();
       this.searchEm();
+      if(this.element.field_name === "org_Id"){
+        this.setValue('', 'User_Id')
+      }
       if(this.members.length > 0) {
         this.element.options = cloneDeep(this.members);
         for(let item of this.element.options) {
@@ -1782,6 +1786,18 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
         }
         return value
       }
+    }
+
+    setValue(value, field_name) {
+      this.dataView.forEach(element => {
+        element.fields.forEach(element1 => {
+          if (element1.field_name === field_name) {
+            element1.columnValue = value;
+            this.modelFields[field_name].error = this.modelFields[field_name].isRequire && !element1.columnValue ? true : false;
+            this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
+          }
+        });
+      });
     }
   }
 
