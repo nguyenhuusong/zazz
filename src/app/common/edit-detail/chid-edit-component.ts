@@ -38,19 +38,22 @@ export class AppTypeTextComponent implements OnInit {
 
   onChangeValue(value, field_name, element) {
     element.columnValue = element.columnValue.trim();
-    if (element.columnValue === ''){
-        this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : '';
-        return;
+    if (element.columnValue === '') {
+      this.modelFields[field_name].error = this.modelFields[field_name].isRequire && !this.element.columnValue ? true : false
+      this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
+      let numberDay = moment().daysInMonth();
+      if (field_name === 'annualAdd')
+        if (this.element.columnValue > numberDay) {
+          this.modelFields[field_name].error = true;
+          this.modelFields[field_name].message = "Phép bù đã nhập lớn hơn số ngày trong tháng này";
+        }
+      return;
+    }else {
+      this.modelFields[field_name].error =false;
+      this.modelFields[field_name].message = ''
     }
-    this.modelFields[field_name].error = this.modelFields[field_name].isRequire && !this.element.columnValue ? true : false
-    this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
-    let numberDay = moment().daysInMonth();
-    if (field_name === 'annualAdd')
-      if (this.element.columnValue > numberDay) {
-        this.modelFields[field_name].error = true;
-        this.modelFields[field_name].message = "Phép bù đã nhập lớn hơn số ngày trong tháng này";
-      }
   }
+
 
   foucusOut(e) {
 
