@@ -41,6 +41,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
   @Input() detailInfo = null;
   @Input() isViewButtonTop = true;
   @Input() optionsEdit = null;
+  
   buttonSave = 'Update';
   @Input() formTypeId: string = '';
   @Input() optionsButtonsEdit: any = [
@@ -248,11 +249,13 @@ export class EditDetailComponent implements OnInit, OnChanges {
             this.GetAnnualYear(element1);
           }
         }else if( element1.columnType === 'members') {
-          this.getHrmMeetingPerson(element1);
+          const organizeId = this.getValueByKey('organizeId');
+          const orgId = this.getValueByKey('org_Id');
+          this.getHrmMeetingPerson(element1, null, organizeId, orgId);
         }else if( element1.columnType === 'linkUrlDrag') {
           if (element1.field_name === 'link_view') {
-            element1.columnValue = element1.columnValue ? element1.columnValue.split(',') : null;
-            console.log('element1.columnValue', element1.columnValue)
+            // element1.columnValue = element1.columnValue ? element1.columnValue.split(',') : null;
+            // tem filed columnValue
           }
         }else if( element1.columnType === 'chips') {
           element1.columnValue = element1.columnValue ? element1.columnValue.split(',') : [];
@@ -265,22 +268,38 @@ export class EditDetailComponent implements OnInit, OnChanges {
       this.dataView = [...this.dataViewNew];
       this.spinner.hide();
     })
-   
   }
 
-  getHrmMeetingPerson(element1, fullName = null) {
-    const queryParams = queryString.stringify({ offSet: 0, pageSize: 1000, fullName: fullName })
-    this.apiService.getHrmMeetingPerson(queryParams).subscribe( res => {
-      if(res.status === 'success') {
-        element1.options = [...res.data.meetingProperties];
-        element1.options.forEach(member => {
-          member.isCheck = false;
-          member.child.forEach(user => {
-            user.isCheck = false;
-          })
+  getHrmMeetingPerson(element1, fullName = null, organizeId, orgId) {
+   
+    const queryParams = queryString.stringify(
+      { fullName: fullName, offSet: 0, pageSize: 1000, organizeId: organizeId, orgId: orgId  })
+        this.apiService.getHrmFormsPerson(queryParams).subscribe( res => {
+          if(res.status === 'success') {
+            element1.options = [...res.data.meetingProperties];
+            element1.options.forEach(member => {
+              member.isCheck = false;
+              member.child.forEach(user => {
+                user.isCheck = false;
+              })
+            })
+          }else{
+            element1.options = []
+          }
         })
-      }
-    })
+     // const queryParams = queryString.stringify({ offSet: 0, pageSize: 1000, fullName: fullName })
+    // this.apiService.getHrmMeetingPerson(queryParams).subscribe( res => {
+    //   if(res.status === 'success') {
+    //     element1.options = [...res.data.meetingProperties];
+    //     element1.options.forEach(member => {
+    //       member.isCheck = false;
+    //       member.child.forEach(user => {
+    //         user.isCheck = false;
+    //       })
+    //     })
+    //   }
+    // })
+
   }
 
   getNode(item) {
@@ -1202,8 +1221,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
       };
   }
 
-  memberGetQuery(event, element) {
-    this.getHrmMeetingPerson(element, event)
+  memberGetQuery(event) {
+    // this.getHrmMeetingPerson(element, event, organizeId, orgId )
   }
 
   getFilesDrag(event) {

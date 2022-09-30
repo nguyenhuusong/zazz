@@ -24,7 +24,6 @@ export class BieuMauChiTietComponent implements OnInit, OnDestroy {
   titlePage = '';
   @Input() formId: string  = null;
   @Output() callback = new EventEmitter<any>();
-
   constructor(
     private activatedRoute: ActivatedRoute,
     private apiService: ApiHrmService,

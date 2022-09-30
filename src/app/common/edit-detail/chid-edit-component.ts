@@ -157,7 +157,9 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
   }
 
   selectNode(event) {
-    console.log("selectNode", event.node)
+    if(this.element.field_name === "org_Id"){
+      this.setValue('', 'User_Id')
+    }
   }
 
   getCompanyList(orgId, element1) {
@@ -170,6 +172,18 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
         element1.columnValue = element1.columnValue ? parseInt(element1.columnValue) : ''
       }
     })
+  }
+
+  setValue(value, field_name) {
+    this.dataView.forEach(element => {
+      element.fields.forEach(element1 => {
+        if (element1.field_name === field_name) {
+          element1.columnValue = value;
+          this.modelFields[field_name].error = this.modelFields[field_name].isRequire && !element1.columnValue ? true : false;
+          this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
+        }
+      });
+    });
   }
 
   onChangeTree(event, field_name, element) {
@@ -1619,6 +1633,10 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
     ) { }
     ngOnInit(): void {
       this.modelFields[this.element.field_name].error = false;
+      this.getSelectMembers();
+    }
+
+    getSelectMembers() {
       this.selectMembers = [];
       this.members = [];
       const dataNew = this.element.columnValue ?  this.element.columnValue.split(',') : [];
@@ -1637,14 +1655,22 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
       }
       this.element.options = [...this.element.options]
     }
+
     cancelAdd() {
       this.newMember = false
     }
-    searchEm() {
+    async searchEm() {
       // this.searchMember.emit(this.searchText);
+      // const queryParams = queryString.stringify(
+      //   { fullName: fullName, offSet: 0, pageSize: 1000, organizeId: organizeId, orgId: orgId  })
+      //     this.apiService.getHrmFormsPerson(queryParams).subscribe( res => {
       this.spinner.show();
-        const queryParams = queryString.stringify({ offSet: 0, pageSize: 50, fullName: this.searchText })
-        this.apiService.getHrmMeetingPerson(queryParams).subscribe( res => {
+      const organizeId = await this.getValueByKey('organizeId');
+      let orgId:any = await this.getValueByKey('org_Id');
+      orgId = typeof orgId === 'string' ? orgId : orgId.orgId;
+        const queryParams = queryString.stringify(
+          { fullName: this.searchText, offSet: 0, pageSize: 50, organizeId: organizeId, orgId: orgId})
+        this.apiService.getHrmFormsPerson(queryParams).subscribe( res => {
           this.spinner.hide();
           if(res.status === 'success') {
             this.members = cloneDeep(this.element.options);
@@ -1724,6 +1750,8 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
 
     addNewMember() {
       this.searchText = '';
+      this.getSelectMembers();
+      this.searchEm();
       if(this.members.length > 0) {
         this.element.options = cloneDeep(this.members);
         for(let item of this.element.options) {
@@ -1739,6 +1767,21 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
         // this.element.options = [...this.element.options]
       }
       this.newMember = true;
+    }
+
+    getValueByKey(key) {
+      if (this.dataView && this.dataView.length > 0) {
+        let value = ''
+        for (let i = 0; i < this.dataView.length; i++) {
+          for (let j = 0; j < this.dataView[i].fields.length; j++) {
+            if (this.dataView[i].fields[j].field_name === key) {
+              value = this.dataView[i].fields[j].columnValue;
+              break;
+            }
+          }
+        }
+        return value
+      }
     }
   }
 
