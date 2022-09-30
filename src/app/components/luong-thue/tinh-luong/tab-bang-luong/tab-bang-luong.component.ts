@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import * as queryString from 'querystring';
 import { ConfirmationService, MessageService, TreeNode } from 'primeng/api';
@@ -14,7 +14,7 @@ import { cloneDeep } from 'lodash';
   styleUrls: ['./tab-bang-luong.component.scss']
 })
 export class TabBangLuongComponent implements OnInit {
-  
+  @Output() idOutPut = new EventEmitter<any>();
   pagingComponent = {
     total: 0
   };
@@ -64,10 +64,6 @@ export class TabBangLuongComponent implements OnInit {
     gridWidth: 0,
     offSet: 0,
     pageSize: 15,
-    orgId: 0,
-    isLock: -1,
-    isApprove: -1,
-    emp_st: -1
   }
 
   cancel() {
@@ -76,10 +72,6 @@ export class TabBangLuongComponent implements OnInit {
       gridWidth: 0,
       offSet: 0,
       pageSize: 15,
-      orgId: 0,
-      isLock: -1,
-      isApprove: -1,
-      emp_st: -1
     }
     this.load();
   }
@@ -89,17 +81,15 @@ export class TabBangLuongComponent implements OnInit {
     this.gridColumnApi = params.columnApi;
   }
 
-
   load() {
     
     this.spinner.show();
     const queryParams = queryString.stringify(this.query);
-    this.apiService.getEmployeePage(queryParams).subscribe(
+    this.apiService.getPayrollAppInfoPage(queryParams).subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         if (this.query.offSet === 0) {
           this.cols = results.data.gridflexs;
-          this.colsDetail = results.data.gridflexdetails ? results.data.gridflexdetails : [];
         }
         this.initGrid();
         this.countRecord.totalRecord = results.data.dataList.recordsTotal;
@@ -132,25 +122,7 @@ export class TabBangLuongComponent implements OnInit {
         },
         {
           onClick: this.deleteRow.bind(this),
-          label: 'Cấu trúc bảng lương',
-          icon: 'fa fa-trash',
-          class: 'btn-primary mr5',
-        },
-        {
-          onClick: this.deleteRow.bind(this),
-          label: 'Công thức tính lương',
-          icon: 'fa fa-trash',
-          class: 'btn-primary mr5',
-        },
-        {
-          onClick: this.deleteRow.bind(this),
-          label: 'Sửa',
-          icon: 'fa fa-trash',
-          class: 'btn-primary mr5',
-        },
-        {
-          onClick: this.deleteRow.bind(this),
-          label: 'Xóa',
+          label: 'Xóa',
           icon: 'fa fa-trash',
           class: 'btn-primary mr5',
         },
@@ -161,20 +133,32 @@ export class TabBangLuongComponent implements OnInit {
 
 
   editRow(event) {
-
+    this.idOutPut.emit(event)
   }
 
   initGrid() {
-    
+    this.columnDefs = [
+      ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
+      {
+        headerName: 'Thao tác',
+        filter: '',
+        width: 100,
+        pinned: 'right',
+        cellRenderer: 'buttonAgGridComponent',
+        cellClass: ['border-right', 'no-auto'],
+        cellRendererParams: (params: any) => this.showButtons(params),
+        checkboxSelection: false,
+        field: 'checkbox'
+      }]
   }
 
   deleteRow(event) {
     this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn xóa nhân viên?',
+      message: 'Bạn có chắc chắn muốn xóa',
       accept: () => {
-        this.apiService.deleteEmployee(event.rowData.empId).subscribe((results: any) => {
+        this.apiService.delPayrollAppInfo(event.rowData.empId).subscribe((results: any) => {
           if (results.status === 'success') {
-            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa nhân viên thành công' });
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa công' });
             this.load();
           } else {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
@@ -205,78 +189,26 @@ export class TabBangLuongComponent implements OnInit {
       { label: 'Lương - thuế' },
     ];
     this.getEmployeeStatus();
-    this.itemsToolOfGrid = [
-      {
-        label: 'Import file',
-        code: 'Import',
-        icon: 'pi pi-upload',
-        command: () => {
-          // this.importFileExel();
-        }
-      },
-      {
-        label: 'Export file',
-        code: 'Import',
-        icon: 'pi pi-download',
-        command: () => {
-          this.exportExel();
-        }
-      },
-    ]
-    this.columnDefs = [
-      {
-        headerName: 'STT',
-        filter: '',
-        maxWidth: 90,
-        pinned: 'left',
-        cellRenderer: params => {
-          return params.rowIndex + 1
-        },
-        cellClass: ['border-right', 'no-auto'],
-      },
-      {
-        headerName: 'Mã chỉ tiêu',
-        filter: '',
-        cellClass: ['border-right'],
-        field: 'code',
-      },
-      {
-        headerName: 'Tên chỉ tiêu',
-        filter: '',
-        cellClass: ['border-right'],
-        field: 'code2',
-      },
-      {
-        headerName: 'Loại chỉ tiêu',
-        filter: '',
-        cellClass: ['border-right'],
-        field: 'code3',
-      },
-      {
-        headerName: '...',
-        filter: '',
-        maxWidth: 64,
-        pinned: 'right',
-        cellRenderer: 'buttonAgGridComponent',
-        cellClass: ['border-right cell-action', 'no-auto'],
-        cellRendererParams: (params: any) => this.showButtons(params),
-        field: 'checkbox'
-      }
-    ]
+    // this.itemsToolOfGrid = [
+    //   {
+    //     label: 'Import file',
+    //     code: 'Import',
+    //     icon: 'pi pi-upload',
+    //     command: () => {
+    //       // this.importFileExel();
+    //     }
+    //   },
+    //   {
+    //     label: 'Export file',
+    //     code: 'Import',
+    //     icon: 'pi pi-download',
+    //     command: () => {
+    //       this.exportExel();
+    //     }
+    //   },
+    // ]
     
-    this.listsData = [
-      {
-        code: 'Mã NV',
-        code2: 'Họ và tên',
-        code3: 'Mã công ty',
-      },
-      {
-        code: 'Mã NV',
-        code2: 'Họ và tên',
-        code3: 'Mã công ty',
-      }
-    ]
-    // this.load();
+    this.load();
   }
   employeeStatus = []
   getEmployeeStatus() {
@@ -340,22 +272,22 @@ export class TabBangLuongComponent implements OnInit {
 
   loadjs = 0;
   heightGrid = 300
-  // ngAfterViewChecked(): void {
-  //   const a: any = document.querySelector(".header");
-  //   const b: any = document.querySelector(".sidebarBody");
-  //   const c: any = document.querySelector(".bread-filter");
-  //   const d: any = document.querySelector(".bread-crumb");
-  //   const e: any = document.querySelector(".paginator");
-  //   this.loadjs++
-  //   if (this.loadjs === 5) {
-  //     if (b && b.clientHeight) {
-  //       const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + d.clientHeight + e.clientHeight + 25;
-  //       this.heightGrid = window.innerHeight - totalHeight
-  //       this.changeDetector.detectChanges();
-  //     } else {
-  //       this.loadjs = 0;
-  //     }
-  //   }
-  // }
+  ngAfterViewChecked(): void {
+    const a: any = document.querySelector(".header");
+    const b: any = document.querySelector(".sidebarBody");
+    const c: any = document.querySelector(".bread-filter");
+    const d: any = document.querySelector(".bread-crumb");
+    const e: any = document.querySelector(".paginator");
+    this.loadjs++
+    if (this.loadjs === 5) {
+      if (b && b.clientHeight) {
+        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + d.clientHeight + e.clientHeight + 25;
+        this.heightGrid = window.innerHeight - totalHeight
+        this.changeDetector.detectChanges();
+      } else {
+        this.loadjs = 0;
+      }
+    }
+  }
 
 }

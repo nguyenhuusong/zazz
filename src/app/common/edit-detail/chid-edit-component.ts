@@ -1356,7 +1356,8 @@ export class AppTypeLinkUrlRadioListComponent implements OnInit {
   template: `   
             <div class="linkurl-drag">
             <div class="wrap-upload">
-                      <p-fileUpload accept="image/jpeg,image/png,image/jpg,image/gif,.mp4,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/pdf,application/msword,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.wordprocessingml.document" *ngIf="!isUpload" [chooseLabel]="''" [chooseIcon]="''" [multiple]="false" [showUploadButton]="false" [showCancelButton]="false" [customUpload]="true" name="demo[]" 
+                      <p-fileUpload accept="image/jpeg,image/png,image/jpg,image/gif,.mp4,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/pdf,application/msword,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.wordprocessingml.document" *ngIf="!isUpload" [chooseLabel]="''" [chooseIcon]="''"  
+                      [multiple]="isUploadMultiple ? true : null" [showUploadButton]="false" [showCancelButton]="false" [customUpload]="true" name="demo[]" 
                        (onSelect)="uploadHandler($event)" [maxFileSize]="10000000">
                           <ng-template pTemplate="toolbar">
                           </ng-template>
@@ -1415,6 +1416,7 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
   imagesUpload = '';
   fileType: any = ''
   isUpload = false;
+  @Input() isUploadMultiple:boolean = true;
   constructor(
     private apiService: ApiHrmService,
     private spinner: NgxSpinnerService,
@@ -1463,14 +1465,19 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
           }, (error) => {
           }, () => {
             uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+              if(!this.isUploadMultiple){
+                this.element.columnValue = []
+              }
               this.element.columnValue.push(downloadURL)
               this.spinner.hide();
               this.dataView.forEach(element => {
                 element.fields.forEach(async element1 => {
                   if ((element1.field_name === 'AttachName') || (element1.field_name === 'attached_name') || (element1.field_name === 'attachName')) {
+                    if(!this.isUploadMultiple){
+                      this.uploadedFiles = []
+                    }
                     this.uploadedFiles.push(event.currentFiles[index].name);
                     element1.columnValue = this.uploadedFiles.toString();
-                    console.log('111111')
                   } 
                 });
               });
@@ -1488,7 +1495,10 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
                   this.dataView.forEach(element => {
                     element.fields.forEach(async element1 => {
                       if (element1.field_name === 'link_view') {
-                        element1.columnValue.push(results.data)
+                        if(!this.isUploadMultiple){
+                          element1.columnValue = []
+                        }
+                        element1.columnValue.push(results.data);
                       }
                     });
                   });

@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TabLoaiBangLuongComponent } from './tab-loai-bang-luong.component';
+import { TabCapBacLuongComponent } from './tab-cap-bac-luong.component';
 
-describe('TabLoaiBangLuongComponent', () => {
-  let component: TabLoaiBangLuongComponent;
-  let fixture: ComponentFixture<TabLoaiBangLuongComponent>;
+describe('TabCapBacLuongComponent', () => {
+  let component: TabCapBacLuongComponent;
+  let fixture: ComponentFixture<TabCapBacLuongComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TabLoaiBangLuongComponent ]
+      declarations: [ TabCapBacLuongComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TabLoaiBangLuongComponent);
+    fixture = TestBed.createComponent(TabCapBacLuongComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

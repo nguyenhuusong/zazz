@@ -31,6 +31,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
   @Output() callback1 = new EventEmitter<any>();
   @Output() callbackButton = new EventEmitter<any>();
   @Input() thongtinnhanvienNew: boolean = false;
+  @Input() isUploadMultiple: boolean = true;
   @Input() isNested: boolean = false;
   @Input() manhinh;
   @Input() dataView = [];
@@ -250,7 +251,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
           this.getHrmMeetingPerson(element1);
         }else if( element1.columnType === 'linkUrlDrag') {
           if (element1.field_name === 'link_view') {
-            element1.columnValue = element1.columnValue ? element1.columnValue.split(',') : null
+            element1.columnValue = element1.columnValue ? element1.columnValue.split(',') : null;
+            console.log('element1.columnValue', element1.columnValue)
           }
         }else if( element1.columnType === 'chips') {
           element1.columnValue = element1.columnValue ? element1.columnValue.split(',') : [];
@@ -1094,6 +1096,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
           delete data.options;
         }else if (data.columnType === 'linkUrlDrag' || data.columnType === 'listMch') {
           data.columnValue =data.columnValue ? data.columnValue.toString() : '';
+          console.log(data.columnValue)
         } else if ((data.columnType === 'select' || data.columnType === 'multiSelect' || data.columnType === 'dropdown' || data.columnType === 'checkboxList') && data.options) {
           if (data.columnType === 'multiSelect') {
             if (data.columnValue && data.columnValue.length > 0) {
@@ -1129,6 +1132,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
       })
     });
     if (type === 'Update') {
+      console.log('group_fields', group_fields)
       this.callback.emit(group_fields);
     } else {
       this.callback1.emit(group_fields);
