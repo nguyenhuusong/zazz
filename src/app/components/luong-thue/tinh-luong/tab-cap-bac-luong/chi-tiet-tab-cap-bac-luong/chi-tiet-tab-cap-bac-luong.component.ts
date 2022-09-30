@@ -7,11 +7,11 @@ import { Subject, takeUntil } from 'rxjs';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as queryString from 'querystring';
 @Component({
-  selector: 'app-chi-tiet-thanh-phan-luong',
-  templateUrl: './chi-tiet-thanh-phan-luong.component.html',
-  styleUrls: ['./chi-tiet-thanh-phan-luong.component.scss']
+  selector: 'app-chi-tiet-tab-cap-bac-luong',
+  templateUrl: './chi-tiet-tab-cap-bac-luong.component.html',
+  styleUrls: ['./chi-tiet-tab-cap-bac-luong.component.scss']
 })
-export class ChiTietThanhPhanLuongComponent implements OnInit, OnDestroy {
+export class ChiTietTabCapBacLuongComponent implements OnInit, OnDestroy {
   items: MenuItem[] = [];
   paramsObject = null;
   detailInfo = null
@@ -43,7 +43,7 @@ export class ChiTietThanhPhanLuongComponent implements OnInit, OnDestroy {
 
   getDetail() {
     const queryParams = queryString.stringify({Id: null});
-    this.apiService.getPayrollComponentInfo(queryParams)
+    this.apiService.getPayrollLevelBaseInfo(queryParams)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {
         if (results.status === 'success') {
@@ -67,7 +67,7 @@ export class ChiTietThanhPhanLuongComponent implements OnInit, OnDestroy {
     const params = {
       ...this.detailInfo, group_fields: event
     };
-    this.apiService.setPayrollComponentInfo(params)
+    this.apiService.setPayrollLevelBaseInfo(params)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((results: any) => {
         if (results.status === 'success') {

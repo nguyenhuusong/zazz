@@ -128,7 +128,7 @@
                                 </svg>
                             </p-button>
                         </div>
-                        <div class="col-item">
+                        <div class="col-item d-flex gap12">
                             <p-button (click)="op.toggle($event)" 
                                     styleClass="p-button-sm height-56 ">
                                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -138,6 +138,13 @@
                                     </svg> &nbsp;&nbsp;
                                     Bộ Lọc
                               </p-button>
+                              <p-button styleClass="p-button-sm height-56" (click)="cauhinh()">
+                                <svg width="20" height="17" viewBox="0 0 20 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M19.5 17V0H0.50855L0.5 17H19.5ZM6.675 15.3187H2.21V6.81868H6.675V15.3187ZM8.575 15.3187V6.81868H17.79V15.3187H8.575ZM2.21 1.68132V5.13736H17.79V1.68132H2.21Z" fill="#F3F8FF"/>
+                                </svg>
+                                &nbsp;
+                                Cấu hình
+                            </p-button>
                         </div>
                     </div>
                 </div>
@@ -204,7 +211,7 @@
                                 </svg>
                             </p-button>
                         </div>
-                        <div class="col-item">
+                        <div class="col-item d-flex gap12">
                             <p-button (click)="op.toggle($event)" 
                                     styleClass="p-button-sm height-56 ">
                                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -214,6 +221,13 @@
                                     </svg> &nbsp;&nbsp;
                                     Bộ Lọc
                               </p-button>
+                              <p-button styleClass="p-button-sm height-56" (click)="cauhinh()">
+                                <svg width="20" height="17" viewBox="0 0 20 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M19.5 17V0H0.50855L0.5 17H19.5ZM6.675 15.3187H2.21V6.81868H6.675V15.3187ZM8.575 15.3187V6.81868H17.79V15.3187H8.575ZM2.21 1.68132V5.13736H17.79V1.68132H2.21Z" fill="#F3F8FF"/>
+                                </svg>
+                                &nbsp;
+                                Cấu hình
+                            </p-button>
                         </div>
                     </div>
                 </div>
@@ -275,7 +289,7 @@
     [(visible)]="addNewPopup" 
     [modal]="true" [style]="{width: '1000px'}"
     [draggable]="false" [resizable]="false" [focusTrap]="false" >
-   <app-bieu-mau-chi-tiet [formId]="formId" (callback)="handleCallbackForm()" *ngIf="addNewPopup"></app-bieu-mau-chi-tiet>
+   <app-bieu-mau-chi-tiet  [formId]="formId" (callback)="handleCallbackForm()" *ngIf="addNewPopup"></app-bieu-mau-chi-tiet>
 </p-dialog>
 
 <!-- Tài liệu cá nhân -->

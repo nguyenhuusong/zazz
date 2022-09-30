@@ -43,7 +43,6 @@ import { ConfigGridTableFormModule } from 'src/app/common/config-grid-table-form
 import { BangLuongComponent } from 'src/app/components/luong-thue/bang-luong/bang-luong.component';
 import {ListboxModule} from 'primeng/listbox';
 import { ChiTietBangLuongComponent } from 'src/app/components/luong-thue/bang-luong/chi-tiet-bang-luong/chi-tiet-bang-luong.component';
-import { TabLoaiBangLuongComponent } from 'src/app/components/luong-thue/tinh-luong/tab-loai-bang-luong/tab-loai-bang-luong.component';
 import { TabBangLuongComponent } from 'src/app/components/luong-thue/tinh-luong/tab-bang-luong/tab-bang-luong.component';
 import { TabThietLapThamSoComponent } from 'src/app/components/luong-thue/tinh-luong/tab-thiet-lap-tham-so/tab-thiet-lap-tham-so.component';
 import { TabThanhPhanLuongComponent } from 'src/app/components/luong-thue/tinh-luong/tab-thanh-phan-luong/tab-thanh-phan-luong.component';
@@ -51,6 +50,10 @@ import { TinhLuongComponent } from 'src/app/components/luong-thue/tinh-luong/tin
 import { CauTrucBangLuongComponent } from 'src/app/components/luong-thue/bang-luong/cau-truc-bang-luong/cau-truc-bang-luong.component';
 import { CongThucLuongComponent } from 'src/app/components/luong-thue/bang-luong/cong-thuc-luong/cong-thuc-luong.component';
 import { ChiTietThanhPhanLuongComponent } from 'src/app/components/luong-thue/tinh-luong/tab-thanh-phan-luong/chi-tiet-thanh-phan-luong/chi-tiet-thanh-phan-luong.component';
+import { ChiTietTabBangLuongComponent } from 'src/app/components/luong-thue/tinh-luong/tab-bang-luong/chi-tiet-tab-bang-luong/chi-tiet-tab-bang-luong.component';
+import { ChiTietTabThietLapThamSoComponent } from 'src/app/components/luong-thue/tinh-luong/tab-thiet-lap-tham-so/chi-tiet-tab-thiet-lap-tham-so/chi-tiet-tab-thiet-lap-tham-so.component';
+import { TabCapBacLuongComponent } from 'src/app/components/luong-thue/tinh-luong/tab-cap-bac-luong/tab-cap-bac-luong.component';
+import { ChiTietTabCapBacLuongComponent } from 'src/app/components/luong-thue/tinh-luong/tab-cap-bac-luong/chi-tiet-tab-cap-bac-luong/chi-tiet-tab-cap-bac-luong.component';
 
 @NgModule({
   imports: [
@@ -107,17 +110,20 @@ import { ChiTietThanhPhanLuongComponent } from 'src/app/components/luong-thue/ti
     TabBangLuongComponent,
     TabThietLapThamSoComponent,
     TabThanhPhanLuongComponent,
-    TabLoaiBangLuongComponent,
+    TabCapBacLuongComponent,
     ChiTietBangLuongComponent,
     CauTrucBangLuongComponent,
     CongThucLuongComponent,
-    ChiTietThanhPhanLuongComponent
+    ChiTietThanhPhanLuongComponent,
+    ChiTietTabBangLuongComponent,
+    ChiTietTabThietLapThamSoComponent,
+    ChiTietTabCapBacLuongComponent
   ],
   exports: [
     TabBangLuongComponent,
     TabThietLapThamSoComponent,
     TabThanhPhanLuongComponent,
-    TabLoaiBangLuongComponent,
+    TabCapBacLuongComponent,
     ChiTietThanhPhanLuongComponent
   ],
   providers: []
