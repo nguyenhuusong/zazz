@@ -574,6 +574,20 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
     
   }
 
+  onCellClicked(event){ 
+    console.log('evennnnnn', event)
+    if(event.colDef.field === "link_view"){
+      if(event.data.link_view){
+        var url = event.data.link_view;
+        var elem = document.createElement('a');
+        elem.href = url;
+        elem.target = 'hiddenIframe';
+        elem.click();
+      }
+      
+    }
+  }
+
   rowSelected(data) {
     this.listDataSelect = []
     if(this.indexTab === 1){

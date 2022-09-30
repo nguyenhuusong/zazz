@@ -1418,16 +1418,17 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn thực hiện hủy hồ sơ này ?',
       accept: () => {
-        const indexobj = this.listsData[3].findIndex(d => d.source_id === event.rowData.source_id);
-        let record = { ... this.listsData[3][indexobj] };
+        const indexobj = this.listsDataRecord.findIndex(d => d.sourceId === event.rowData.sourceId);
+        let record = { ... this.listsDataRecord[indexobj] };
         record.meta_file_url = "";
         record.meta_file_size = "";
         record.meta_file_name = "";
         record.meta_file_size_name = "";
         record.meta_file_type = "";
-        this.listsData[3][indexobj] = record;
-        this.listsData[3] = [... this.listsData[3]];
-        this.listViewsRecordInfo.records = this.listsData[3];
+        this.listsDataRecord[indexobj] = record;
+        this.listsDataRecord = [... this.listsDataRecord];
+        this.listViewsRecordInfo.records = this.listsDataRecord;
+        this.saveCreateContract();
       }
     });
   }

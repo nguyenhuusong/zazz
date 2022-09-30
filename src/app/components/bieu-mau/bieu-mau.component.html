@@ -150,6 +150,7 @@
                         [columnDefs]="columnDefs"
                         [rowSelection]="'multiple'"
                         (callback)="rowSelected($event)"
+                        (onCellClicked)="onCellClicked($event)"
                         >
                     </app-list-grid-angular>
                     <div class="paginator">

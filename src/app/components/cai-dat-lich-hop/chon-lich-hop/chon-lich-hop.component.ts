@@ -82,6 +82,7 @@ export class ChonLichHopComponent implements OnInit, OnChanges {
       // timeGridWeek
       initialView: 'dayGridMonth',
       eventMinHeight: 120,
+      slotEventOverlap: false,
       allDayText: '',
       slotDuration: '00:30:00', // Bao nhiêu phút thì tách thành 1 khoảng thời gian
       scrollTime: '10:00:00',
