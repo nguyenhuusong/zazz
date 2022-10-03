@@ -5212,3 +5212,22 @@ p-button{
 .menu-agrid .p-menu-list:empty {
     display: none;
 }
+.warm-cool{
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    background: #4c97e42e;
+    gap: 10px;
+    .pi{
+        color: #4C97E4;
+    }
+    h4{
+        margin-top: 0px;
+        margin-bottom: 0px;
+        color: #4C97E4;
+    }
+    p{
+        margin-bottom: 0px;
+        margin-top: 5px;
+    }
+}
