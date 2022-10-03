@@ -203,8 +203,17 @@
 </p-dialog>
 <p-dialog header="Lý do hủy lịch họp" [(visible)]="isReasonDelete" [modal]="true" [style]="{width: '600px'}" [maximizable]="true"
     [draggable]="false" [resizable]="false" [focusTrap]="false" >
-    <div class="field-group">
-        <input type="text" placeholder="Lý do hủy lịch họp" [(ngModel)]="queryDeleteLichHop.reason_cancel" required>
+    <div class="warm-cool d-flex">
+        <span class="pi pi-bookmark-fill"></span>
+        <div class="">
+            <h4>Cho biết lí do bạn muốn hủy</h4>
+            <p>
+                Lý do này sẽ được gửi đến người tham gia cuộc họp để nắm được đầy đủ thông tin
+            </p>
+        </div>
+    </div>
+    <div class="field-group textarea">
+        <textarea placeholder="Lý do hủy lịch họp" [(ngModel)]="queryDeleteLichHop.reason_cancel" required></textarea>
     </div>
     <ng-template pTemplate="footer">
         <button type="button" class="p-button-secondary btn-cancel" pButton icon="pi pi-times" label="Hủy bỏ" (click)="isReasonDelete = !isReasonDelete"></button>
