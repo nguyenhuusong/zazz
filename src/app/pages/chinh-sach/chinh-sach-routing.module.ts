@@ -88,19 +88,19 @@ const routes: Routes = [
   },
 //nghỉ phép
 {
-  path: 'nghi-phep',
+  path: 'giai-trinh-cong',
   component: CsNghiPhepComponent,
   data: {
-    title: 'Danh sách nghỉ phép',
-    url: 'nghi-phep',
+    title: 'Giải trình công',
+    url: 'giai-trinh-cong',
   },
 },
 {
-  path: 'nghi-phep/chi-tiet-nghi-phep',
+  path: 'giai-trinh-cong/chi-tiet-giai-trinh-cong',
   component: ChiTietNghiPhepComponent,
   data: {
     title: 'Chi tiết nghỉ phép',
-    url: 'nghi-phep/chi-tiet-nghi-phep',
+    url: 'giai-trinh-cong/chi-tiet-giai-trinh-cong',
   },
 },
 

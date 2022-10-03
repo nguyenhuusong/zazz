@@ -266,7 +266,12 @@ export class EditDetailComponent implements OnInit, OnChanges {
             // element1.columnValue = element1.columnValue ? element1.columnValue.split(',') : null;
             // tem filed columnValue
           }
-        }else if( element1.columnType === 'chips') {
+        }else if(element1.columnType === 'timeonly') {
+          let tmp = element1.columnValue.split(':');
+          element1.columnValue = new Date();
+          element1.columnValue.setHours(parseInt(tmp[0]));
+          element1.columnValue.setMinutes(parseInt(tmp[1]));
+         }else if( element1.columnType === 'chips') {
           element1.columnValue = element1.columnValue ? element1.columnValue.split(',') : [];
         }
       });
