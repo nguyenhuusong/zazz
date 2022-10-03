@@ -4749,8 +4749,11 @@ p-dialog button{
         }
     }
     .search{
-        position: relative;
         margin-bottom: 16px;
+        position: sticky;
+        top: 0;
+        background: #fff;
+        z-index: 2;
         input{
             border: 1px solid rgba(43, 47, 51, 0.1);
             width: 100%;

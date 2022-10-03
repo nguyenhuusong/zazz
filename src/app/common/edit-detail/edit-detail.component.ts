@@ -280,34 +280,38 @@ export class EditDetailComponent implements OnInit, OnChanges {
   }
 
   getHrmMeetingPerson(element1, fullName = null, organizeId, orgId) {
-   
-    const queryParams = queryString.stringify(
-      { fullName: fullName, offSet: 0, pageSize: 1000, organizeId: organizeId, orgId: orgId  })
-        this.apiService.getHrmFormsPerson(queryParams).subscribe( res => {
-          if(res.status === 'success') {
-            element1.options = [...res.data.meetingProperties];
-            element1.options.forEach(member => {
-              member.isCheck = false;
-              member.child.forEach(user => {
-                user.isCheck = false;
-              })
+    if(element1.field_name === "userId"){
+      const queryParams = queryString.stringify({ offSet: 0, pageSize: 1000, fullName: fullName })
+      this.apiService.getHrmMeetingPerson(queryParams).subscribe( res => {
+        if(res.status === 'success') {
+          element1.options = [...res.data.meetingProperties];
+          element1.options.forEach(member => {
+            member.isCheck = false;
+            member.child.forEach(user => {
+              user.isCheck = false;
             })
-          }else{
-            element1.options = []
-          }
-        })
-     // const queryParams = queryString.stringify({ offSet: 0, pageSize: 1000, fullName: fullName })
-    // this.apiService.getHrmMeetingPerson(queryParams).subscribe( res => {
-    //   if(res.status === 'success') {
-    //     element1.options = [...res.data.meetingProperties];
-    //     element1.options.forEach(member => {
-    //       member.isCheck = false;
-    //       member.child.forEach(user => {
-    //         user.isCheck = false;
-    //       })
-    //     })
-    //   }
-    // })
+          })
+        }
+      })
+    }
+    else{
+      const queryParams = queryString.stringify(
+        { fullName: fullName, offSet: 0, pageSize: 1000, organizeId: organizeId, orgId: orgId  })
+          this.apiService.getHrmFormsPerson(queryParams).subscribe( res => {
+            if(res.status === 'success') {
+              element1.options = [...res.data.meetingProperties];
+              element1.options.forEach(member => {
+                member.isCheck = false;
+                member.child.forEach(user => {
+                  user.isCheck = false;
+                })
+              })
+            }else{
+              element1.options = []
+            }
+          })
+    }
+     
 
   }
 
