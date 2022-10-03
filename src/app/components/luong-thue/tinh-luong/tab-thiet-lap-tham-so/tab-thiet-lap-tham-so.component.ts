@@ -107,7 +107,7 @@ export class TabThietLapThamSoComponent implements OnInit {
         {
           onClick: this.editRow.bind(this),
           label: 'Xem chi tiết',
-          icon: 'pi pi-tablet',
+          icon: 'fa fa-eye',
           class: 'btn-primary mr5',
         },
         {
@@ -194,7 +194,7 @@ export class TabThietLapThamSoComponent implements OnInit {
     this.loadjs++
     if (this.loadjs === 5) {
       if (b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + d.clientHeight + e.clientHeight + 85;
+        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + d.clientHeight + e.clientHeight + 75;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       } else {
