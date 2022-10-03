@@ -234,7 +234,7 @@ export class NgayNghiLeComponent implements OnInit {
         {
           onClick: this.EditEmployee.bind(this),
           label: 'Thông tin chi tiết',
-          icon: 'icon-edit',
+          icon: 'fa fa-eye',
           class: 'btn-primary mr5',
         },
         {

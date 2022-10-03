@@ -268,7 +268,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
         {
           onClick: this.EditEmployee.bind(this),
           label: 'Thông tin chi tiết',
-          icon: 'pi pi-tablet',
+          icon: 'fa fa-eye',
           class: 'btn-primary mr5',
         },
         {

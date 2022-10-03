@@ -263,7 +263,7 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
         {
           onClick: this.handleEdit.bind(this),
           label: 'Thông tin chi tiết',
-          icon: 'pi pi-tablet',
+          icon: 'fa fa-eye',
           class: 'btn-primary mr5',
           hide: event.is_edit !== 1
         },

@@ -193,7 +193,7 @@
       this.loadjs++
       if (this.loadjs === 5) {
         if (b && b.clientHeight) {
-          const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + d.clientHeight + e.clientHeight + 85;
+          const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + d.clientHeight + e.clientHeight + 75;
           this.heightGrid = window.innerHeight - totalHeight
           this.changeDetector.detectChanges();
         } else {

@@ -267,10 +267,12 @@ export class EditDetailComponent implements OnInit, OnChanges {
             // tem filed columnValue
           }
         }else if(element1.columnType === 'timeonly') {
-          let tmp = element1.columnValue.split(':');
-          element1.columnValue = new Date();
-          element1.columnValue.setHours(parseInt(tmp[0]));
-          element1.columnValue.setMinutes(parseInt(tmp[1]));
+          if(element1.columnValue){
+            let tmp = element1.columnValue.split(':');
+            element1.columnValue = new Date();
+            element1.columnValue.setHours(parseInt(tmp[0]));
+            element1.columnValue.setMinutes(parseInt(tmp[1]));
+          }
          }else if( element1.columnType === 'chips') {
           element1.columnValue = element1.columnValue ? element1.columnValue.split(',') : [];
         }
@@ -1120,7 +1122,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
             data.columnValue = data.columnValue;
           }
         } else if (data.columnType === 'timeonly') {
-          data.columnValue = typeof data.columnValue === 'string' ? `${data.columnValue}:00` : moment(data.columnValue).format('HH:mm:ss');
+          data.columnValue = typeof data.columnValue === 'string' ? `${data.columnValue}:00` : null;
+          // console.log('data.columnValue', moment(data.columnValue).format('HH:mm:ss'))
         } else if (data.columnType === 'selectTree') {
           data.columnValue = data.columnValue ? data.columnValue.data : null;
           delete data.options;
