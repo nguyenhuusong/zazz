@@ -449,7 +449,7 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
     } else if (field_name === 'organizeId') {
       this.dataView.forEach(element => {
         element.fields.forEach(async element1 => {
-          if ((element1.columnType === 'selectTree') && ((element1.field_name === 'orgId') || (element1.field_name === 'departmentId'))) {
+          if ((element1.columnType === 'selectTree') && ((element1.field_name === 'orgId') || (element1.field_name === 'departmentId') || (element1.field_name === 'org_Id'))) {
             this.getOrganizeTree(value, element1);
           }else if (element1.columnType === 'selectTrees') {
             this.getOrganizeTree(value, element1);

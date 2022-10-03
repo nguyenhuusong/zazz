@@ -9,12 +9,21 @@ import { AgGridFn } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { ExportFileService } from 'src/app/services/export-file.service';
 import { cloneDeep } from 'lodash';
+import { TabBangLuongComponent } from './tab-bang-luong/tab-bang-luong.component';
+import { TabThietLapThamSoComponent } from './tab-thiet-lap-tham-so/tab-thiet-lap-tham-so.component';
+import { TabThanhPhanLuongComponent } from './tab-thanh-phan-luong/tab-thanh-phan-luong.component';
+import { TabCapBacLuongComponent } from './tab-cap-bac-luong/tab-cap-bac-luong.component';
 @Component({
   selector: 'app-tinh-luong',
   templateUrl: './tinh-luong.component.html',
   styleUrls: ['./tinh-luong.component.scss']
 })
 export class TinhLuongComponent implements OnInit {
+  @ViewChild('tabBangLuong') tabBangLuong: TabBangLuongComponent;
+  @ViewChild('tabThietLapThamSo') tabThietLapThamSo: TabThietLapThamSoComponent;
+  @ViewChild('tabThanhPhanLuong') tabThanhPhanLuong: TabThanhPhanLuongComponent;
+  @ViewChild('TabCapBacLuongComponent') TabCapBacLuongComponent: TabCapBacLuongComponent;
+  
   tabsItem = []
   pagingComponent = {
     total: 0
@@ -75,8 +84,19 @@ export class TinhLuongComponent implements OnInit {
   }
 
   editEvent(event) {
+    let id = null;
+    console.log('event', event)
+    if(this.tabIndex === 0){
+      this.idForm = event.rowData.appInfoId
+    }else if(this.tabIndex === 1){
+      this.idForm = event.rowData.id
+    }else if(this.tabIndex === 2){
+      this.idForm = event.rowData.componentId
+    }else if(this.tabIndex === 3){
+      this.idForm = event.rowData.baseId
+    }
     this.isFormDetail = true;
-    this.idForm = event
+    
     const queryParams = queryString.stringify({recordId: event.rowData.id});
     // this.apiService.getPayrollAppInfo(queryParams).subscribe(results => {
     //   if (results.status === 'success') {
@@ -90,12 +110,16 @@ export class TinhLuongComponent implements OnInit {
   addNew() {
     if(this.tabIndex === 0){
       this.isFormDetail = true;
+      this.idForm = null
     }else if(this.tabIndex === 1){
       this.isFormDetail = true;
+      this.idForm = null
     }else if(this.tabIndex === 2){
       this.isFormDetail = true;
+      this.idForm = null
     }else if(this.tabIndex === 3){
       this.isFormDetail = true;
+      this.idForm = null
     }
   }
 
@@ -283,7 +307,20 @@ export class TinhLuongComponent implements OnInit {
 
   // from detail
   theEventDetail(event){
-     this.isFormDetail = false
+     this.isFormDetail = false;
+     if(this.tabIndex === 0) {
+      this.tabBangLuong.load();
+     }
+     if(this.tabIndex === 1) {
+      this.tabThietLapThamSo.load();
+     }
+     if(this.tabIndex === 2) {
+      this.tabThanhPhanLuong.load();
+     }
+     if(this.tabIndex === 3) {
+      this.TabCapBacLuongComponent.load();
+     }
+     
   }
 
 }

@@ -42,7 +42,7 @@ export class ChiTietTabThietLapThamSoComponent implements OnInit, OnDestroy {
   }
 
   getDetail() {
-    const queryParams = queryString.stringify({Id: null});
+    const queryParams = queryString.stringify({Id: this.idForm});
     this.apiService.getPayrollAppParamInfo(queryParams)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {

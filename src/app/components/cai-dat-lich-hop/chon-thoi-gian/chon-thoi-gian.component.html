@@ -1,7 +1,7 @@
 <form class="grid" (ngSubmit)="handleSave()" [formGroup]="chooseTimeForm">
     <div class="form-group col-12">
         <label class="text-nowrap label-text">Ngày bắt đầu <span class="text-danger"> *</span></label>
-        <p-calendar appendTo="body" [showIcon]="true" yearRange="2022:2805" [style]="{'width': '100%'}" id="startDate" formControlName="startDate" name="startDate" [required] = "true" ></p-calendar>
+        <p-calendar dateFormat="dd/mm/yy" appendTo="body" [showIcon]="true" yearRange="2022:2805" [style]="{'width': '100%'}" id="startDate" formControlName="startDate" name="startDate" [required] = "true" ></p-calendar>
         <div *ngIf="(chooseTimeFormControl?.startDate?.touched || submitted) && chooseTimeFormControl?.startDate?.errors?.required" class="text-danger">
             Chọn Ngày bắt đầu
         </div>
