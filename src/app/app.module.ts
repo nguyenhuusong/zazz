@@ -59,6 +59,7 @@ import { ListGridAngularModule } from './common/list-grid-angular/list-grid-angu
 import { OrganizationChartModule } from 'primeng/organizationchart';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { FullCalendarModule } from '@fullcalendar/angular';
+import { ApiHrmV2Service } from './services/api-hrm/apihrmv2.service';
 const APP_CONTAINERS = [DefaultLayoutComponent];
 @NgModule({
     declarations: [
@@ -135,6 +136,7 @@ const APP_CONTAINERS = [DefaultLayoutComponent];
         NotificationService,
         ConfirmationService,
         MessageService,
+        ApiHrmV2Service,
         { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     ],
     bootstrap: [AppComponent]

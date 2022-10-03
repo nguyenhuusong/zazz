@@ -13,6 +13,7 @@ import * as numeral from 'numeral';
 import { delay, lastValueFrom, of, Subject, takeUntil, tap, timer } from 'rxjs';
 import { findNodeInTree } from '../function-common/objects.helper';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ApiHrmV2Service } from 'src/app/services/api-hrm/apihrmv2.service';
 @Component({
   selector: 'app-edit-detail',
   templateUrl: './edit-detail.component.html',
@@ -23,6 +24,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
     private apiService: ApiHrmService,
     private messageService: MessageService,
     private apiServiceCore: ApiService,
+    private apiHrmV2Service: ApiHrmV2Service,
     private changeDetech: ChangeDetectorRef,
     private spinner: NgxSpinnerService,
   ) { }
@@ -95,6 +97,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
   submit = false
   dataViewNew = []
   callApiDrop() {
+    const promissall = [];
     const source = timer(50);
     this.dataViewNew = [...this.dataView];
     this.dataView = [];
@@ -126,18 +129,24 @@ export class EditDetailComponent implements OnInit, OnChanges {
               // element1.isVisiable = false;
               const root_orgId = this.getValueByKey('organizeId');
               this.getOrganizeTree(root_orgId, element1);
+              promissall.push(this.apiHrmV2Service.getOrganizeTreeV2(queryString.stringify({ parentId: root_orgId }), element1.field_name));
+
             } else {
                source.subscribe(val =>this.getOrgRoots(element1));
+               promissall.push(this.apiHrmV2Service.getOrganizationsV2(queryString.stringify({ filter: '' }), element1.field_name));
             }
           } else if (element1.field_name === 'actionlist') {
             this.getActionlist(element1)
           } else if (element1.field_name === 'work_cds') {
             this.getWorkTimes(element1, null)
+            promissall.push(this.apiHrmV2Service.getWorkTimesV2(queryString.stringify({ empId: null}), element1.field_name));
           } else if (element1.field_name === 'empId') {
             const root_orgId = this.getValueByKey('organize_id');
             this.getEmployeePage(root_orgId, element1);
+            promissall.push(this.apiHrmV2Service.getEmployeePageV2(queryString.stringify({ orgId: root_orgId, pageSize: 100000 }), element1.field_name));
           } else if (element1.field_name === 'shift_cds') {
             this.getWorkShifts(element1, null)
+            promissall.push(this.apiHrmV2Service.getWorkShiftsV2(queryString.stringify({ empId: null}), element1.field_name));
           } else if (element1.field_name === 'work_cd') {
             let root_orgIdOrigin = this.getValueByKey('organizeId');
             if(!root_orgIdOrigin){
