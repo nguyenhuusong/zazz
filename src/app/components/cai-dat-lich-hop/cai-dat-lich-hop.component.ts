@@ -47,7 +47,7 @@ export class CaiDatLichHopComponent implements OnInit {
       Time: null,
       organization: '',
       fromDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).format("YYYY-MM-DD")),
-      toDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).add(+10, 'months').format("YYYY-MM-DD")),
+      toDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).format("YYYY-MM-DD")),
   }
   statusRoom = [
     {
@@ -149,7 +149,7 @@ export class CaiDatLichHopComponent implements OnInit {
       Time: '',
       organization: '',
       fromDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).format("YYYY-MM-DD")),
-      toDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).add(+10, 'months').format("YYYY-MM-DD")),
+      toDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).format("YYYY-MM-DD")),
     };
   }
   			

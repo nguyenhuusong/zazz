@@ -1040,7 +1040,7 @@ export class AppTypeDatefulltimeComponent implements OnInit {
   template: `   <div class="field-group date" [ngClass]=" element.columnValue ? 'valid' : 'invalid' ">
                 <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
                 <div>
-                <p-calendar placeholder="DD/MM/YYYY" appendTo="body" [baseZIndex]="101" [disabled]="element.isDisable"
+                <p-calendar appendTo="body" [baseZIndex]="101" [disabled]="element.isDisable"
                 [(ngModel)]="element.columnValue" [timeOnly]="true" inputId="timeonly"
                 [required]="element.isRequire && element.isVisiable && !element.isEmpty" placeholder="HH:mm" name={{element.field_name}}>
               </p-calendar>

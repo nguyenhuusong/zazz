@@ -84,7 +84,7 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
   objectActionDetail: any;
   gridflexs: any;
   getRowHeight;
-  time = null;
+  // time = null;
   query = {
     organizeId: null,
     request_status: '',
@@ -132,7 +132,7 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
   }
 
   cancel() {
-    this.time = null;
+    // this.time = null;
     this.query = {
       organizeId: null,
       request_status: '',
@@ -161,10 +161,10 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
     const queryParams: any = {...this.query};
     queryParams.fromdate = typeof this.query.fromdate === 'object' ? moment(new Date(this.query.fromdate)).format('YYYY-MM-DD') : this.query.fromdate;
     queryParams.todate = typeof this.query.todate === 'object' ? moment(new Date(this.query.todate)).format('YYYY-MM-DD') : this.query.todate;
-    if (this.time) {
-      queryParams.year = this.time.getFullYear();
-      queryParams.month = this.time.getMonth() + 1;
-    }
+    // if (this.time) {
+    //   queryParams.year = this.time.getFullYear();
+    //   queryParams.month = this.time.getMonth() + 1;
+    // }
     if (typeof queryParams.request_status !== 'string') {
       queryParams.request_status = queryParams.request_status.code;
     }
@@ -334,7 +334,7 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Chính sách' },
-      { label: 'Danh sách nghỉ phép' },
+      { label: 'Giải trình công' },
     ];
     this.getOrgRoots();
     this.getLeaveReasons();
