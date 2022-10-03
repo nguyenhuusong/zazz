@@ -30,7 +30,7 @@ export class DanhSachActionComponent implements OnInit {
   columnDefs = [];
   listsData = []
   heightGrid = 500;
-  gridKey = ''
+  gridKey = 'view_sysconfig_actions'
  displaySetting = false;
    cauhinh() {
      this.displaySetting = true;
@@ -61,7 +61,6 @@ export class DanhSachActionComponent implements OnInit {
         if(results.data && results.data.view_grids_action){
           this.initGrid(results.data.view_grids_action);
         }
-        this.gridKey = results?.data?.dataList?.gridKey
       }
     })
   }
@@ -70,7 +69,6 @@ export class DanhSachActionComponent implements OnInit {
     this.apiService.getConfigActionList().subscribe((results: any) => {
       if (results.status === 'success') {
         this.listsData = cloneDeep(results?.data);
-        this.gridKey = results?.data?.dataList?.gridKey
       }
     })
   }

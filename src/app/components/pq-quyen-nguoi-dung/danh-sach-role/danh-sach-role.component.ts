@@ -29,7 +29,7 @@ export class DanhSachRoleComponent implements OnInit {
   columnDefs = [];
   listsData = []
   heightGrid = 500;
-  gridKey = ''
+  gridKey = 'view_sysconfig_roles'
   displaySetting = false;
   dataMenuActionRole: any = []
   cauhinh() {
@@ -52,7 +52,6 @@ export class DanhSachRoleComponent implements OnInit {
         if(results.data && results.data.view_grids_action){
           this.initGrid(results.data.view_grids_roles);
         }
-        this.gridKey = results?.data?.dataList?.gridKey
       }
     })
   }
@@ -63,7 +62,6 @@ export class DanhSachRoleComponent implements OnInit {
       if (results.status === 'success') {
         this.listsData = cloneDeep(results.data.dataList.roles);
         this.initGrid(results.data.gridflexs);
-        this.gridKey = results.data.dataList.gridKey
       }
     })
   }

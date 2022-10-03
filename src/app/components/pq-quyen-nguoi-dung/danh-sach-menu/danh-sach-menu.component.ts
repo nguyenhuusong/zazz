@@ -29,7 +29,7 @@ export class DanhSachMenuComponent implements OnInit {
   columnDefs = [];
   listsData = []
   heightGrid = 500;
-  gridKey = ''
+  gridKey = 'view_sysconfig_menus'
   displaySetting = false;
   cauhinh() {
     this.displaySetting = true;
@@ -58,7 +58,6 @@ export class DanhSachMenuComponent implements OnInit {
         if(results.data && results.data.view_grids_menu){
           this.initGrid(results.data.view_grids_menu);
         }
-        this.gridKey = results?.data?.dataList?.gridKey
       }
     })
   }
