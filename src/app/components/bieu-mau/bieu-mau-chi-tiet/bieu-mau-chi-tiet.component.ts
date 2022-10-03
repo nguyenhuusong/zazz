@@ -24,7 +24,6 @@ export class BieuMauChiTietComponent implements OnInit, OnDestroy {
   titlePage = '';
   @Input() formId: string  = null;
   @Output() callback = new EventEmitter<any>();
-
   constructor(
     private activatedRoute: ActivatedRoute,
     private apiService: ApiHrmService,
@@ -62,7 +61,10 @@ export class BieuMauChiTietComponent implements OnInit, OnDestroy {
   quaylai(data) {
    if(data === 'CauHinh') {
     this.getDetail();
+   }else if(data === 'Cancel'){
+    this.callback.emit('Cancel');
    }
+   
   }
 
   handleSave(event) {

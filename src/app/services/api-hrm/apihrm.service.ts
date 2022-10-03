@@ -1480,6 +1480,10 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v2/meeting/GetHrmMeetingPerson?${queryParams}`, this.options)
   }
 
+  getHrmFormsPerson(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/forms/GetHrmFormsPerson?${queryParams}`, this.options)
+  }
+
   // Forms
 
   getFormGeneral(queryParams, urlLink): Observable<any> {

@@ -57,19 +57,19 @@
                  </div>
             </div>
         </section>
-    <section>
+    <section class="pb-0">
         <p-tabView (onChange)="handleChange($event.index)" [(activeIndex)]="tabIndex">
             <p-tabPanel header="Bảng Lương" >
-               <app-tab-bang-luong (idOutPut)="editEvent($event)" *ngIf="tabIndex === 0"></app-tab-bang-luong>
+               <app-tab-bang-luong #tabBangLuong (idOutPut)="editEvent($event)" *ngIf="tabIndex === 0"></app-tab-bang-luong>
             </p-tabPanel>
             <p-tabPanel header="Thiết lâp tham số">
-                <app-tab-thiet-lap-tham-so (idOutPut)="editEvent($event)" *ngIf="tabIndex === 1"></app-tab-thiet-lap-tham-so>
+                <app-tab-thiet-lap-tham-so #tabThietLapThamSo (idOutPut)="editEvent($event)" *ngIf="tabIndex === 1"></app-tab-thiet-lap-tham-so>
             </p-tabPanel>
             <p-tabPanel header="Thành phần lương">
-               <app-tab-thanh-phan-luong (idOutPut)="editEvent($event)" *ngIf="tabIndex === 2"></app-tab-thanh-phan-luong>
+               <app-tab-thanh-phan-luong #tabThanhPhanLuong (idOutPut)="editEvent($event)" *ngIf="tabIndex === 2"></app-tab-thanh-phan-luong>
             </p-tabPanel>
             <p-tabPanel header="Cấp bậc lương">
-                <app-tab-cap-bac-bang-luong (idOutPut)="editEvent($event)" *ngIf="tabIndex === 3"></app-tab-cap-bac-bang-luong>
+                <app-tab-cap-bac-bang-luong #tabCapBacLuong (idOutPut)="editEvent($event)" *ngIf="tabIndex === 3"></app-tab-cap-bac-bang-luong>
             </p-tabPanel>
         </p-tabView>
     </section>
@@ -84,7 +84,7 @@ styleClass="menu-option-right" #menuButton></p-menu> -->
         [modal]="true" [style]="{width: '600px'}"
         [draggable]="false" [resizable]="false" [focusTrap]="false" >
     <app-chi-tiet-tab-bang-luong (detailOut)="theEventDetail($event)" *ngIf="isFormDetail && tabIndex ===0" [idForm]="idForm"></app-chi-tiet-tab-bang-luong>
-    <app-chi-tiet-tab-thiet-lap-tham-so *ngIf="isFormDetail && tabIndex ===1"></app-chi-tiet-tab-thiet-lap-tham-so>
-    <app-chi-tiet-thanh-phan-luong *ngIf="isFormDetail && tabIndex ===2"></app-chi-tiet-thanh-phan-luong>
-    <app-chi-tiet-tab-cap-bac-luong *ngIf="isFormDetail && tabIndex ===3"></app-chi-tiet-tab-cap-bac-luong>
+    <app-chi-tiet-tab-thiet-lap-tham-so (detailOut)="theEventDetail($event)" *ngIf="isFormDetail && tabIndex ===1" [idForm]="idForm"></app-chi-tiet-tab-thiet-lap-tham-so>
+    <app-chi-tiet-thanh-phan-luong (detailOut)="theEventDetail($event)" *ngIf="isFormDetail && tabIndex ===2" [idForm]="idForm"></app-chi-tiet-thanh-phan-luong>
+    <app-chi-tiet-tab-cap-bac-luong (detailOut)="theEventDetail($event)" *ngIf="isFormDetail && tabIndex ===3" [idForm]="idForm"></app-chi-tiet-tab-cap-bac-luong>
 </p-dialog>

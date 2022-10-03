@@ -21,7 +21,7 @@ export class ChiTietTabBangLuongComponent implements OnInit, OnDestroy {
     { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check' }
   ];
   titlePage = '';
-  @Input() idForm: string = null;
+  @Input() idForm: any = null;
   @Output() detailOut = new EventEmitter<any>();
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -38,11 +38,11 @@ export class ChiTietTabBangLuongComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getDetail();
-   
   }
 
   getDetail() {
-    const queryParams = queryString.stringify({Id: null});
+    console.log('fdsjofijdoi', this.idForm)
+    const queryParams = queryString.stringify({Id: this.idForm });
     this.apiService.getPayrollAppInfo(queryParams)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {
