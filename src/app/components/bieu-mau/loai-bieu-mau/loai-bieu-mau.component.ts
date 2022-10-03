@@ -95,7 +95,7 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
 
   getFormTypes(): void {
     const queryParams = queryString.stringify({ filter: '', form_type_id: ''})
-    this.apiService.getFormTypes(queryParams)
+    this.apiService.getFormsTypes(queryParams)
     .pipe(
       finalize(() => this.spinner.hide())
     )
@@ -257,6 +257,7 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
   }
 
   showButtons(event: any) {
+    console.log('event event event', event)
     return {
       buttons: [
         {
@@ -264,12 +265,14 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
           label: 'Thông tin chi tiết',
           icon: 'pi pi-tablet',
           class: 'btn-primary mr5',
+          hide: event.is_edit !== 1
         },
         {
           onClick: this.handleDelete.bind(this),
           label: 'Xóa tài liệu',
           icon: 'fa fa-trash',
           class: 'btn-primary mr5',
+          hide: event.is_edit !== 1
         },
       ]
     };

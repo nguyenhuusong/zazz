@@ -129,7 +129,7 @@
                     <div class="col-12">
                         <div class="field-group date mb-0 valid">
                             <label>Từ ngày</label>
-                            <p-calendar panelStyleClass="datepicker-default" placeholder="DD/MM/YYYY"
+                            <p-calendar dateFormat="dd/mm/yy" panelStyleClass="datepicker-default" placeholder="DD/MM/YYYY"
                                 [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="model.fromDate" [monthNavigator]="true"
                                 [yearNavigator]="true" yearRange="2010:2030" inputId="navigators" dateFormat="dd/mm/yy"
                                 name="fromDate"></p-calendar>
@@ -138,7 +138,7 @@
                     <div class="col-12">
                         <div class="field-group date mb-0 valid">
                             <label>Đến ngày</label>
-                            <p-calendar panelStyleClass="datepicker-default" placeholder="DD/MM/YYYY"
+                            <p-calendar dateFormat="dd/mm/yy" panelStyleClass="datepicker-default" placeholder="DD/MM/YYYY"
                                 [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="model.toDate" [monthNavigator]="true"
                                 [yearNavigator]="true" yearRange="2010:2030" inputId="navigators" dateFormat="dd/mm/yy"
                                 name="toDate"></p-calendar>
@@ -201,10 +201,10 @@
     [draggable]="false" [resizable]="false" [focusTrap]="false" styleClass="popup-setting">
     <app-config-grid-table-form *ngIf="displaySetting && gridKey" [typeConfig]="'TableInfo'"   [gridKey]="gridKey"></app-config-grid-table-form>
 </p-dialog>
-<p-dialog header="Lý do nghỉ" [(visible)]="isReasonDelete" [modal]="true" [style]="{width: '600px'}" [maximizable]="true"
+<p-dialog header="Lý do hủy lịch họp" [(visible)]="isReasonDelete" [modal]="true" [style]="{width: '600px'}" [maximizable]="true"
     [draggable]="false" [resizable]="false" [focusTrap]="false" >
     <div class="field-group">
-        <input type="text" placeholder="Lý do nghỉ" [(ngModel)]="queryDeleteLichHop.reason_cancel" required>
+        <input type="text" placeholder="Lý do hủy lịch họp" [(ngModel)]="queryDeleteLichHop.reason_cancel" required>
     </div>
     <ng-template pTemplate="footer">
         <button type="button" class="p-button-secondary btn-cancel" pButton icon="pi pi-times" label="Hủy bỏ" (click)="isReasonDelete = !isReasonDelete"></button>

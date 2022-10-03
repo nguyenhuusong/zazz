@@ -57,7 +57,7 @@ export class ChonLichHopComponent implements OnInit, OnChanges {
       headerToolbar: {
         left: 'myCustomButton prev today next',
         center: '',
-        right: 'timeGridMonth, timeGridWeek, dayGridDay'
+        right: 'dayGridMonth, timeGridWeek, dayGridDay'
       },
       buttonText: { today: "Hôm nay" },
       views: {

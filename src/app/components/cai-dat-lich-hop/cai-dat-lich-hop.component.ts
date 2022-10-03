@@ -271,23 +271,23 @@ export class CaiDatLichHopComponent implements OnInit {
 
   deleteLichHop() {
     if(!this.queryDeleteLichHop.reason_cancel){
-      this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: `Vui lòng điền lý do` });
+      this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: `Vui lòng điền lý do hủy` });
       return
     }
     this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn xóa không?',
+      message: 'Bạn có chắc chắn muốn hủy lịch họp không?',
       accept: () => {
         this.apiService.delMeetingInfo(queryString.stringify(this.queryDeleteLichHop))
           .subscribe(response => {
             if (response.status === 'success') {
-              this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: `Xóa thành công` });
+              this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: `Hủy lịch họp thành công` });
               this.load();
               this.isReasonDelete = false;
             } else {
-              this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: `Xóa thất bại` });
+              this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: `Hủy lịch họp thất bại` });
             }
           }, error => {
-            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: `Xóa thất bại` });
+            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: `Hủy lịch họp thất bại` });
             this.isReasonDelete = false;
           });
       }
