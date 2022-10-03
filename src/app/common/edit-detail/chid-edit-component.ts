@@ -1640,18 +1640,20 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
       this.selectMembers = [];
       this.members = [];
       // const dataNew = this.element.columnValue ?  this.element.columnValue.split(',') : [];
-      for(let item of this.element.options) {
-        for(let item1 of item.child) {
-          if(this.element.columnValue.indexOf(item1.userId) > -1) {
-            item1.isCheck = true;
-            this.selectMembers.push({...item1, isCheck: this.selectMembers.length === 0 ? true : false});
+      if(this.element.columnValue){
+        for(let item of this.element.options) {
+          for(let item1 of item.child) {
+            if(this.element.columnValue.indexOf(item1.userId) > -1) {
+              item1.isCheck = true;
+              this.selectMembers.push({...item1, isCheck: this.selectMembers.length === 0 ? true : false});
+            }
+            const isCheckAll =item.child.filter(d => d.isCheck === true);
+            if(isCheckAll.length === item.child.length) {
+              item.isCheck = true;
+            }
           }
-          const isCheckAll =item.child.filter(d => d.isCheck === true);
-          if(isCheckAll.length === item.child.length) {
-            item.isCheck = true;
-          }
+        
         }
-       
       }
       this.element.options = [...this.element.options]
       
@@ -1666,39 +1668,72 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
       //   { fullName: fullName, offSet: 0, pageSize: 1000, organizeId: organizeId, orgId: orgId  })
       //     this.apiService.getHrmFormsPerson(queryParams).subscribe( res => {
       this.spinner.show();
-      const organizeId = await this.getValueByKey('organizeId');
-      let orgId:any = await this.getValueByKey('org_Id');
-      orgId = typeof orgId === 'string' ? orgId : orgId.orgId;
-        const queryParams = queryString.stringify(
-          { fullName: this.searchText, offSet: 0, pageSize: 50, organizeId: organizeId, orgId: orgId})
-        this.apiService.getHrmFormsPerson(queryParams).subscribe( res => {
+      if(this.element.field_name === "userId"){
+        const queryParams = queryString.stringify({ offSet: 0, pageSize: 50, fullName: this.searchText })
+        this.apiService.getHrmMeetingPerson(queryParams).subscribe( res => {
           this.spinner.hide();
-          if(res.status === 'success') {
-            this.members = cloneDeep(this.element.options);
-            this.element.options = [...res.data.meetingProperties];
-            this.element.options.forEach(member => {
-              member.isCheck = member.isCheck ? member.isCheck : false;
-              member.child.forEach(user => {
-                user.isCheck = user.isCheck ? user.isCheck: false;
-              })
-            })
-            const dataNew = this.element.columnValue ?  this.element.columnValue.split(',') : [];
-            for(let item of this.element.options) {
-              for(let item1 of item.child) {
-                if(dataNew.indexOf(item1.userId) > -1) {
-                  item1.isCheck = true;
-                  // this.selectMembers.push({...item1, isCheck: this.selectMembers.length === 0 ? true : false});
+              if(res.status === 'success') {
+                this.members = cloneDeep(this.element.options);
+                this.element.options = [...res.data.meetingProperties];
+                this.element.options.forEach(member => {
+                  member.isCheck = member.isCheck ? member.isCheck : false;
+                  member.child.forEach(user => {
+                    user.isCheck = user.isCheck ? user.isCheck: false;
+                  })
+                })
+                const dataNew = this.element.columnValue ?  this.element.columnValue.split(',') : [];
+                for(let item of this.element.options) {
+                  for(let item1 of item.child) {
+                    if(dataNew.indexOf(item1.userId) > -1) {
+                      item1.isCheck = true;
+                      // this.selectMembers.push({...item1, isCheck: this.selectMembers.length === 0 ? true : false});
+                    }
+                    const isCheckAll =item.child.filter(d => d.isCheck === true);
+                    if(isCheckAll.length === item.child.length) {
+                      item.isCheck = true;
+                    }
+                  }
+                
                 }
-                const isCheckAll =item.child.filter(d => d.isCheck === true);
-                if(isCheckAll.length === item.child.length) {
-                  item.isCheck = true;
-                }
+                this.element.options = [...this.element.options]
               }
-            
-            }
-            this.element.options = [...this.element.options]
-          }
         })
+      }else{
+        const organizeId = await this.getValueByKey('organizeId');
+        let orgId:any = await this.getValueByKey('org_Id');
+        orgId = typeof orgId === 'string' ? orgId : orgId.orgId;
+          const queryParams = queryString.stringify(
+            { fullName: this.searchText, offSet: 0, pageSize: 50, organizeId: organizeId, orgId: orgId})
+              this.apiService.getHrmFormsPerson(queryParams).subscribe( res => {
+                this.spinner.hide();
+                if(res.status === 'success') {
+                  this.members = cloneDeep(this.element.options);
+                  this.element.options = [...res.data.meetingProperties];
+                  this.element.options.forEach(member => {
+                    member.isCheck = member.isCheck ? member.isCheck : false;
+                    member.child.forEach(user => {
+                      user.isCheck = user.isCheck ? user.isCheck: false;
+                    })
+                  })
+                  const dataNew = this.element.columnValue ?  this.element.columnValue.split(',') : [];
+                  for(let item of this.element.options) {
+                    for(let item1 of item.child) {
+                      if(dataNew.indexOf(item1.userId) > -1) {
+                        item1.isCheck = true;
+                        // this.selectMembers.push({...item1, isCheck: this.selectMembers.length === 0 ? true : false});
+                      }
+                      const isCheckAll =item.child.filter(d => d.isCheck === true);
+                      if(isCheckAll.length === item.child.length) {
+                        item.isCheck = true;
+                      }
+                    }
+                  
+                  }
+                  this.element.options = [...this.element.options]
+                }
+              })
+      }
+      
     }
     activeName(i) {
       for(let index in this.selectMembers) {
