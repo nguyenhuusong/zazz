@@ -69,7 +69,7 @@
                <app-tab-thanh-phan-luong #tabThanhPhanLuong (idOutPut)="editEvent($event)" *ngIf="tabIndex === 2"></app-tab-thanh-phan-luong>
             </p-tabPanel>
             <p-tabPanel header="Cấp bậc lương">
-                <app-tab-cap-bac-bang-luong #tabCapBacLuong (idOutPut)="editEvent($event)" *ngIf="tabIndex === 3"></app-tab-cap-bac-bang-luong>
+                <app-tab-cap-bac-bang-luong #TabCapBacLuongComponent (idOutPut)="editEvent($event)" *ngIf="tabIndex === 3"></app-tab-cap-bac-bang-luong>
             </p-tabPanel>
         </p-tabView>
     </section>
