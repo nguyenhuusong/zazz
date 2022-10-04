@@ -57,7 +57,7 @@ export class EmpAttachFileComponent implements OnInit {
       //   }
       // });
       // this.theData = data;
-      if(this.files.length > 0){
+      if(this.files && this.files.length > 0){
         data[0].fields.forEach(element => {
           if(element.field_name === "meta_file_size") {
             element.columnValue = this.files[0].size
@@ -128,7 +128,6 @@ export class EmpAttachFileComponent implements OnInit {
   }
 
   getFilesDetail(event) {
-    console.log('djsofjidosf', event)
     this.files = event;
   }
 
