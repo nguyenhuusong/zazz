@@ -1702,10 +1702,11 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
       }else{
         const organizeId = await this.getValueByKey('organizeId');
         let orgId:any = await this.getValueByKey('org_Id');
+        console.log('orgId', orgId)
         if(orgId) {
-          orgId = typeof orgId === 'string' ? orgId : orgId?.orgId;
+          // orgId = typeof orgId === 'string' ? orgId : orgId?.orgId;
           const queryParams = queryString.stringify(
-            { fullName: this.searchText, offSet: 0, pageSize: 50, organizeId: organizeId, orgId: orgId})
+            { fullName: this.searchText, offSet: 0, pageSize: 50, organizeId: organizeId, orgId: orgId.map( d => d.data).toString()})
               this.apiService.getHrmFormsPerson(queryParams).subscribe( res => {
                 this.spinner.hide();
                 if(res.status === 'success') {
