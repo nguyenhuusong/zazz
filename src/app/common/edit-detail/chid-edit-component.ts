@@ -634,7 +634,7 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
         element1.options = results.data.map(d => {
           return {
             label: d.fullName + '-' + d.phone,
-            value: element1.field_name === 'CustId' ? d.custId : d.userId,
+            value: element1.field_name === 'CustId' ? d.custId :  element1.field_name === 'empId' ? d.empId : d.userId,
             ...d
           }
         });
@@ -1486,7 +1486,7 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
                 this.element.columnValue = []
               }
               this.element.columnValue.push(downloadURL)
-              this.spinner.hide();
+              // this.spinner.hide();
               this.dataView.forEach(element => {
                 element.fields.forEach(async element1 => {
                   if ((element1.field_name === 'AttachName') || (element1.field_name === 'attached_name') || (element1.field_name === 'attachName')) {
@@ -1510,7 +1510,7 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
               .subscribe(results => {
                 if (results.status === 'success') {
                   this.dataView.forEach(element => {
-                    element.fields.forEach(async element1 => {
+                    element.fields.forEach(element1 => {
                       if (element1.field_name === 'link_view') {
                         if(!this.isUploadMultiple){
                           element1.columnValue = []
@@ -1525,6 +1525,8 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
                 }
       
               })
+          }else{
+            this.spinner.hide();
           }
           
         }

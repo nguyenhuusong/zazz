@@ -424,6 +424,7 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
       });
   }
   setLeaveInfo(data) {
+    this.spinner.show();
       const params = {
         ...this.detailInfo, group_fields: data
       }
