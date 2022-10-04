@@ -1630,6 +1630,7 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
     constructor(
       private apiService: ApiHrmService,
       private spinner: NgxSpinnerService,
+      private messageService: MessageService,
     ) { }
     ngOnInit(): void {
       this.modelFields[this.element.field_name].error = false;
@@ -1701,7 +1702,8 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
       }else{
         const organizeId = await this.getValueByKey('organizeId');
         let orgId:any = await this.getValueByKey('org_Id');
-        orgId = typeof orgId === 'string' ? orgId : orgId.orgId;
+        if(orgId) {
+          orgId = typeof orgId === 'string' ? orgId : orgId?.orgId;
           const queryParams = queryString.stringify(
             { fullName: this.searchText, offSet: 0, pageSize: 50, organizeId: organizeId, orgId: orgId})
               this.apiService.getHrmFormsPerson(queryParams).subscribe( res => {
@@ -1732,6 +1734,10 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
                   this.element.options = [...this.element.options]
                 }
               })
+          }else{
+            this.spinner.hide();
+            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Vui lòng chọn tổ chức và phòng ban' });
+          }
       }
       
     }

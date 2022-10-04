@@ -143,7 +143,8 @@ export class TabThanhPhanLuongComponent implements OnInit {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa?',
       accept: () => {
-        this.apiService.delPayrollAppParam(event.rowData.empId).subscribe((results: any) => {
+        const query = queryString.stringify({Id: event.rowData.componentId})
+        this.apiService.delPayrollAppParam(query).subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
             this.load();
