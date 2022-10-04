@@ -265,14 +265,14 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
           label: 'Thông tin chi tiết',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
-          hide: event.is_edit !== 1
+          hide: event.data.is_edit !== 1
         },
         {
           onClick: this.handleDelete.bind(this),
           label: 'Xóa tài liệu',
           icon: 'fa fa-trash',
           class: 'btn-primary mr5',
-          hide: event.is_edit !== 1
+          hide: event.data.is_edit !== 1
         },
       ]
     };
