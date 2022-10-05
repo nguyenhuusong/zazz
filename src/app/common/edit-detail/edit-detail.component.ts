@@ -248,6 +248,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
             // this.callback1.emit(element1)
           }else if(element1.field_name === 'form_status'){
             this.getFormStatus(element1)
+          }else if(element1.field_name === 'roleType') {
+            this.getRoleTypes(element1)
           }else {
             if (element1.columnObject) {
               this.getCustObjectListNew(element1);
@@ -1053,6 +1055,20 @@ export class EditDetailComponent implements OnInit, OnChanges {
     // }
   }
 
+  getRoleTypes(element1) {
+    this.apiServiceCore.getRoleTypes().subscribe(results => {
+      if (results.status === 'success') {
+        element1.options = cloneDeep(results.data).map(d => {
+          return { 
+            label: d.name, 
+            value: d.id 
+          }
+        });
+        element1.columnValue = element1.columnValue ? element1.columnValue.toLowerCase() : ''
+      }
+    })
+  }
+
   getCustObjectListNew(element1) {
     const opts1 = { params: new HttpParams({ fromString: `objKey=${element1.columnObject}` }) };
     this.apiService.getCustObjectListNew(null, opts1.params.toString()).subscribe(results => {
@@ -1122,8 +1138,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
             data.columnValue = data.columnValue;
           }
         } else if (data.columnType === 'timeonly') {
-          data.columnValue = typeof data.columnValue === 'string' ? `${data.columnValue}:00` : null;
-          // console.log('data.columnValue', moment(data.columnValue).format('HH:mm:ss'))
+          data.columnValue = typeof data.columnValue === 'string' ?  `${data.columnValue}:00` : moment(data.columnValue).format('HH:mm');
+          // data.columnValue = typeof data.columnValue === 'string' ? `${data.columnValue}:00` : null;
         } else if (data.columnType === 'selectTree') {
           data.columnValue = data.columnValue ? data.columnValue.data : null;
           delete data.options;
@@ -1135,7 +1151,6 @@ export class EditDetailComponent implements OnInit, OnChanges {
         } else if (data.columnType === 'members') {
           delete data.options;
         }else if (data.columnType === 'linkUrlDrag' || data.columnType === 'listMch') {
-          console.log('data.columnValue', data.columnValue)
           data.columnValue =data.columnValue ? data.columnValue.toString() : '';
         } else if ((data.columnType === 'select' || data.columnType === 'multiSelect' || data.columnType === 'dropdown' || data.columnType === 'checkboxList') && data.options) {
           if (data.columnType === 'multiSelect') {

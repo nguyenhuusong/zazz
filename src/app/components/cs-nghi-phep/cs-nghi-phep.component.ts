@@ -210,6 +210,12 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
         },
+        {
+          onClick: this.showHuyDuyet.bind(this),
+          label: 'Hủy duyệt',
+          icon: 'pi pi-times',
+          class: 'btn-primary mr5',
+        },
         // {
         //   onClick: this.xoaTienLuong.bind(this),
         //   label: 'Xóa',
@@ -225,6 +231,43 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
       ]
     };
   }
+
+  reason_cancel = '';
+  isReason = false;
+  queryHuyDuyet = {
+    gd: '',
+    status: 0,
+    comment: '',
+  }
+  showHuyDuyet(event) {
+    this.isReason = true;
+    this.queryHuyDuyet.gd = event.rowData.id;
+    this.queryHuyDuyet.status = 0;
+  }
+
+  huyDuyet() {
+    this.queryHuyDuyet.comment = this.reason_cancel;
+    if(!this.queryHuyDuyet.comment){
+      this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Vui lòng nhập lý do' });
+      return
+    }
+    this.confirmationService.confirm({
+      message: 'Bạn có chắc chắn muốn hủy duyệt?',
+      accept: () => {
+        this.apiService.cancelLeaveStatuses(this.queryHuyDuyet).subscribe(results => {
+          if (results.status === 'success') {
+            this.isReason = false;
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Hủy duyệt thành công' });
+            this.load();
+          } else {
+            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+          }
+        });
+      }
+    });
+  }
+
+  
 
   initGrid() {
     this.columnDefs = [

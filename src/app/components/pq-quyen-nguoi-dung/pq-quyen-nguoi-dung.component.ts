@@ -221,6 +221,7 @@ export class PqQuyenNguoiDungComponent implements OnInit {
     this.modelAdd.position = rowData.position;
     this.modelAdd.parentId = rowData.parentId;
     this.displayAdd = true;
+    this.getRoles();
   }
 
   find() {
@@ -366,6 +367,24 @@ export class PqQuyenNguoiDungComponent implements OnInit {
     this.callApi(event.phone);
   }
 
+  roles = []
+  getRoles() {
+    const query = queryString.stringify({ filter: ''})
+    this.api.getRolePage(query).subscribe(
+      (results: any) => {
+        if(results.status === "success")
+          this.roles = results.data.dataList.data
+            .map(d => {
+              return {
+                label: d.id,
+                value: d.name
+              };
+            });
+          this.roles = [{ label: 'Chọn nhóm quyền', value: '' }, ...this.roles];
+      }),
+      error => { };
+  }
+
 
   initAgrid() {
     this.columnDefs1 = [
@@ -423,7 +442,8 @@ export class PqQuyenNguoiDungComponent implements OnInit {
     position: '',
     userId: '',
     admin_st: false,
-    parentId: ''
+    parentId: '',
+    roles: []
   }
   checkSquare(e) {
     this.displayAdd = true;
