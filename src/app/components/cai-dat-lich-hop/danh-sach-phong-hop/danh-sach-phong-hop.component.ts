@@ -97,7 +97,7 @@ export class DanhSachPhongHopComponent implements OnInit {
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Hoạt động' },
-      { label: 'Lịch họp'},
+      { label: 'Lịch họp', routerLink: '/hoat-dong/lich-hop' },
       { label: 'Quản lý phòng họp'},
     ];
     this.getFloor();
