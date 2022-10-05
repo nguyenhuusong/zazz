@@ -79,8 +79,23 @@
     [draggable]="false" [resizable]="false" [focusTrap]="false" styleClass="popup-setting">
     <app-config-grid-table-form *ngIf="displaySetting && gridKey" [typeConfig]="'TableInfo'"   [gridKey]="gridKey"></app-config-grid-table-form>
 </p-dialog>
-
-
+<p-dialog header="Lý do hủy" [(visible)]="isReason"  [style]="{width: '600px'}">
+    <div class="warm-cool d-flex">
+        <span class="pi pi-bookmark-fill"></span>
+        <div class="">
+            <h4>Cho biết lý do bạn muốn hủy duyệt</h4>
+        </div>
+    </div>
+    <div class="field-group textarea">
+        <textarea placeholder="Lý do hủy duyệt" [(ngModel)]="reason_cancel" required></textarea>
+    </div>
+    <ng-template pTemplate="footer">
+        <button type="button" class="p-button-secondary btn-cancel" pButton icon="pi pi-times" label="Hủy bỏ" (click)="isReason = !isReason"></button>
+        <p-button styleClass="p-button-sm mr-1 height-56" (click)="huyDuyet()">
+            Thực hiện
+        </p-button>
+    </ng-template>
+</p-dialog>
 <p-overlayPanel #op [style]="{width: '700px'}" styleClass="advance-seach">
     <ng-template pTemplate>
         <div class="header-filter-search  grid">

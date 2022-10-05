@@ -170,6 +170,13 @@
             </p-dropdown>
         </div>
     </div>
+    <div class="col-md-12  mt-1">
+        <div class="field-group multi-select">
+            <label for="">Phân nhóm quyền</label>
+            <p-multiSelect appendTo="body" [options]="roles" [(ngModel)]="modelAdd.roles"></p-multiSelect>
+        </div>
+    </div>
+    
    <div class="col-md-12 mt-1 text-right">
        <p-button label="Lưu lại" icon="pi pi-check" styleClass="p-button-sm" (click)="save()" ></p-button>
    </div>
