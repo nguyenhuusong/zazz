@@ -18,7 +18,7 @@
                         <app-type-text [modelFields]="modelFields" [element]="element" [submit]="submit" *ngIf="element?.columnType === 'input'"></app-type-text>
                         <app-type-select [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'khongDung'"></app-type-select> 
                         <app-type-selectTree [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'selectTree' && element.isVisiable" [dataView]="dataView"></app-type-selectTree>
-                        <app-type-selectTrees [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'selectTrees' && element.isVisiable" [dataView]="dataView"></app-type-selectTrees>
+                        <app-type-selectTrees (emitTreeValue)="getValueTree($event)" [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'selectTrees' && element.isVisiable" [dataView]="dataView"></app-type-selectTrees>
                         <app-type-dropdown [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'dropdown' || element.columnType === 'select'" [submit]="submit" [paramsObject]="paramsObject" [dataView]="dataView" (callback)="resetData($event)"></app-type-dropdown>
                         <app-type-number [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'number'"></app-type-number>
                         <app-type-currency [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'currency'"></app-type-currency>

@@ -220,6 +220,7 @@ export class PqQuyenNguoiDungComponent implements OnInit {
     this.modelAdd.admin_st = rowData.admin_st;
     this.modelAdd.position = rowData.position;
     this.modelAdd.parentId = rowData.parentId;
+    this.modelAdd.roles = rowData.roles;
     this.displayAdd = true;
     this.getRoles();
   }

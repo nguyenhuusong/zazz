@@ -381,8 +381,8 @@ export class ApiHrmV2Service {
     )
   }
 
-  getEducationsV2( queryParams , field_name): Observable<any> {
-    return this.httpClient.get(`${apiHrmServer}/api/v2/category/GetEducations?` + queryParams, this.options).pipe(
+  getEducationsV2(field_name): Observable<any> {
+    return this.httpClient.get(`${apiHrmServer}/api/v2/category/GetEducations`, this.options).pipe(
       map((repon: any) => {
         return { key: field_name, result: repon.data.map(d => {
           return {
@@ -396,7 +396,7 @@ export class ApiHrmV2Service {
     )
   }
 
-  getWorkplacesV2(  field_name): Observable<any> {
+  getWorkplacesV2(field_name): Observable<any> {
     return this.httpClient.get(`${apiHrmServer}/api/v2/category/GetWorkplaces` , this.options).pipe(
       map((repon: any) => {
         return { key: field_name, result: repon.data.map(d => {
@@ -411,8 +411,8 @@ export class ApiHrmV2Service {
     )
   }
 
-  getProductProjsV2(  field_name): Observable<any> {
-    return this.httpClient.put(`${apiCore}/api/v1/coreagent/GetProductProjs` , this.options).pipe(
+  getProductProjsV2(field_name): Observable<any> {
+    return this.httpClient.get(`${apiCore}/api/v1/coreagent/GetProductProjs` , this.options).pipe(
       map((repon: any) => {
         return { key: field_name, result: repon.data.map(d => {
           return {
@@ -426,8 +426,8 @@ export class ApiHrmV2Service {
     )
   }
 
-  getMeetRoomsV2(  field_name): Observable<any> {
-    return this.httpClient.put(`${apiHrmServer}/api/v2/meeting/GetMeetRooms` , this.options).pipe(
+  getMeetRoomsV2(queryParams, field_name): Observable<any> {
+    return this.httpClient.get(`${apiHrmServer}/api/v2/meeting/GetMeetRooms?` + queryParams, this.options).pipe(
       map((repon: any) => {
         return { key: field_name, result: repon.data.map(d => {
           return {
@@ -441,8 +441,8 @@ export class ApiHrmV2Service {
     )
   }
 
-  getObjectListV2(  field_name): Observable<any> {
-    return this.httpClient.put(`${apiHrmServer}/api/v2/category/GetObjectList` , this.options).pipe(
+  getObjectListV2(queryParams, field_name): Observable<any> {
+    return this.httpClient.get(`${apiHrmServer}/api/v2/category/GetObjectList?` + queryParams , this.options).pipe(
       map((repon: any) => {
         return { key: field_name, result: repon.data.map(d => {
           return {
@@ -456,6 +456,85 @@ export class ApiHrmV2Service {
     )
   }
 
+  getVehicleTypesV2(field_name): Observable<any> {
+    return this.httpClient.get(`${apiBaseUrl}/api/v1/shome/GetVehicleTypes` , this.options).pipe(
+      map((repon: any) => {
+        return { key: field_name, result: repon.data.map(d => {
+          return {
+            label: d.vehicleTypeName,
+            value: `${d.vehicleTypeId}`
+          }
+        }) };
+      }), catchError(error => {
+        return throwError('Capital not found!');
+      })
+    )
+  }
+
+  getLeaveReasonsV2(field_name): Observable<any> {
+    return this.httpClient.get(`${apiHrmServer}/api/v2/leave/GetLeaveReasons` , this.options).pipe(
+      map((repon: any) => {
+        return { key: field_name, result: repon.data.map(d => {
+          return {
+            label: d.name,
+            value: d.code
+          }
+        }) };
+      }), catchError(error => {
+        return throwError('Capital not found!');
+      })
+    )
+  }
+
+  getFloorNoV2(field_name): Observable<any> {
+    return this.httpClient.get(`${apiHrmServer}/api/v2/meeting/GetFloorNo` , this.options).pipe(
+      map((repon: any) => {
+        return { key: field_name, result: repon.data.map(d => {
+          return { 
+            label: 'Tầng' + ' ' + d.floorNo, 
+            value: d.floorNo 
+          }
+        }) };
+      }), catchError(error => {
+        return throwError('Capital not found!');
+      })
+    )
+  }
+
+  getHrmMeetingPersonV2(queryParams, field_name): Observable<any> {
+    return this.httpClient.get(`${apiHrmServer}/api/v2/meeting/GetHrmMeetingPerson?` + queryParams , this.options).pipe(
+      map((repon: any) => {
+        return { key: field_name, result: repon.data.meetingProperties };
+      }), catchError(error => {
+        return throwError('Capital not found!');
+      })
+    )
+  }
+
+  getHrmFormsPersonV2(queryParams, field_name): Observable<any> {
+    return this.httpClient.get(`${apiHrmServer}/api/v2/forms/GetHrmFormsPerson?` + queryParams , this.options).pipe(
+      map((repon: any) => {
+        return { key: field_name, result: repon.data.meetingProperties };
+      }), catchError(error => {
+        return throwError('Capital not found!');
+      })
+    )
+  }
+
+  getRoleTypesV2(field_name) {
+    return this.httpClient.get(`${apiHrmServer}/api/v2/userrole/GetRoleTypes` , this.options).pipe(
+      map((repon: any) => {
+        return { key: field_name, result: repon.data.map(d => {
+          return {
+            label: d.name,
+            value: d.id
+          }
+        }) };
+      }), catchError(error => {
+        return throwError('Capital not found!');
+      })
+    )
+  }
 
 }
 
