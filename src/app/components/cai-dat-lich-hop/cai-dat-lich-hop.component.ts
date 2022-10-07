@@ -10,6 +10,7 @@ import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-render
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import * as moment from 'moment';
+import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 
 @Component({
   selector: 'app-cai-dat-lich-hop',
@@ -18,6 +19,9 @@ import * as moment from 'moment';
 })
 export class CaiDatLichHopComponent implements OnInit {
   public modules: Module[] = AllModules;
+  MENUACTIONROLEAPI = MENUACTIONROLEAPI;
+  ACTIONS = ACTIONS
+
   public agGridFn = AgGridFn;
   loading = false;
   columnDefs;

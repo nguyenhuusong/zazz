@@ -5,9 +5,10 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { CustomTooltipComponent } from 'src/app/common/ag-component/customtooltip.component';
 import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
 import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.component';
-import { AgGridFn } from 'src/app/common/function-common/common';
+import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 const MAX_SIZE = 100000000;
 
 @Component({
@@ -19,6 +20,9 @@ export class PheDuyetComponent implements OnInit, AfterViewChecked {
 
   listsData: any[] = [];
   items = []
+  MENUACTIONROLEAPI = MENUACTIONROLEAPI;
+  ACTIONS = ACTIONS
+
   constructor(
     private apiService: ApiHrmService,
     private route: ActivatedRoute,
@@ -157,6 +161,8 @@ export class PheDuyetComponent implements OnInit, AfterViewChecked {
           label: 'Xem chi tiết',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
+          hide: CheckHideAction(MENUACTIONROLEAPI.GetWorkflowPage.url, ACTIONS.VIEW)
+
         },
         // {
         //   onClick: this.delMaternityInfo.bind(this),

@@ -4,11 +4,12 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import * as queryString from 'querystring';
 import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { AgGridFn } from 'src/app/common/function-common/common';
+import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { CustomTooltipComponent } from 'src/app/common/ag-component/customtooltip.component';
 import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 
 @Component({
   selector: 'app-danh-sach-phong-hop',
@@ -18,6 +19,9 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class DanhSachPhongHopComponent implements OnInit {
   public modules: Module[] = AllModules;
   public agGridFn = AgGridFn;
+  MENUACTIONROLEAPI = MENUACTIONROLEAPI;
+  ACTIONS = ACTIONS
+
   loading = false;
   columnDefs;
   detailRowHeight;
@@ -223,17 +227,40 @@ export class DanhSachPhongHopComponent implements OnInit {
           label: 'Sửa',
           icon: 'fa fa-pencil-square-o',
           class: 'btn-primary mr5',
-          hide: (event.data.status === 3)
+          hide: this.CheckHideXem(event)
         },
         {
           onClick: this.handleDelete.bind(this),
           label: 'Xóa',
           icon: 'fa fa-trash',
           class: 'btn-danger mr5',
-          hide: (event.data.status === 3)
+          hide: this.CheckHideXoa(event)
         },
       ]
     };
+  }
+
+  CheckHideXem(event) {
+    if(CheckHideAction(MENUACTIONROLEAPI.GetMeetRoomPage.url, ACTIONS.VIEW)) {
+      return true;
+    }else {
+      if(event.data.status === 3) {
+        return true;
+      }else {
+        return false;
+      }
+    }
+  }
+  CheckHideXoa(event) {
+    if(CheckHideAction(MENUACTIONROLEAPI.GetMeetRoomPage.url, ACTIONS.DELETE)) {
+      return true;
+    }else {
+      if(event.data.status === 3) {
+        return true;
+      }else {
+        return false;
+      }
+    }
   }
 
   initGrid() {

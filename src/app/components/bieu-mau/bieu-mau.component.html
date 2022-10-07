@@ -3,7 +3,9 @@
         <div class="d-flex bet bottom">
             <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
             <div class="d-flex middle gap12">
-                <p-button *ngIf="indexTab === 1" [ngClass]="{ 'active' : listDataSelect.length > 0  }" styleClass="height-56 btn-active-on-off" (click)="pushToApp()">
+                <p-button *ngIf="indexTab === 1" 
+                [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetFormGeneral.url, action: ACTIONS.DAY_LEN_APP}"
+                [ngClass]="{ 'active' : listDataSelect.length > 0  }" styleClass="height-56 btn-active-on-off" (click)="pushToApp()">
                     <svg width="14" height="20" viewBox="0 0 14 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M0.333008 18.333C0.333008 18.7932 0.706104 19.1663 1.16634 19.1663H12.833C13.2932 19.1663 13.6663 18.7932 13.6663 18.333V1.66634C13.6663 1.2061 13.2932 0.833008 12.833 0.833008H1.16634C0.706104 0.833008 0.333008 1.2061 0.333008 1.66634V18.333ZM1.99967 2.49967H11.9997V17.4997H1.99967V2.49967Z" fill="#F6FBFF"/>
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M4.49982 15.3097C4.49982 14.9083 4.82181 14.583 5.219 14.583H8.78064C9.17783 14.583 9.49982 14.9083 9.49982 15.3097C9.49982 15.711 9.17783 16.0364 8.78064 16.0364H5.219C4.82181 16.0364 4.49982 15.711 4.49982 15.3097Z" fill="#F6FBFF"/>
@@ -15,7 +17,9 @@
                      <path fill-rule="evenodd" clip-rule="evenodd" d="M8.19928 4.08301L6.53262 1.99967H2.33366V11.9997H15.667V4.08301H8.19928ZM17.3337 2.41634V13.6663H0.666992V0.333008H7.33366L9.00033 2.41634H17.3337Z" fill="#F6FBFF"/>
                     </svg> &nbsp;&nbsp;
                 </p-button>
-                <p-button *ngIf="indexTab === 1" label="Thêm mới" styleClass="height-56" icon="pi pi-plus " (click)="handleAdd()"></p-button>
+                <p-button *ngIf="indexTab === 1" 
+                [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetFormGeneral.url, action: ACTIONS.ADD}"
+                label="Thêm mới" styleClass="height-56" icon="pi pi-plus " (click)="handleAdd()"></p-button>
                 <div class="select-ori ml-1 height-56">
                     <div class="name">
                         <div class="field-group select mb-0 valid" [ngClass]="">

@@ -76,6 +76,7 @@ import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
 import interactionPlugin from '@fullcalendar/interaction'; // a plugin!
 import timeGridPlugin from '@fullcalendar/timegrid';
 import { ChonThoiGianComponent } from 'src/app/components/cai-dat-lich-hop/chon-thoi-gian/chon-thoi-gian.component';
+import { CheckHideActionsDirectiveModule } from 'src/app/directive/check-action.module';
 FullCalendarModule.registerPlugins([
   // register FullCalendar plugins
   dayGridPlugin,
@@ -123,6 +124,7 @@ FullCalendarModule.registerPlugins([
     ConfirmDialogModule,
     ConfigGridTableFormModule,
     CheckboxModule,
+    CheckHideActionsDirectiveModule,
     AgGridModule.withComponents([
       ButtonRendererComponent,
       ButtonRendererComponent1

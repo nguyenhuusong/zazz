@@ -5,7 +5,7 @@ import { ConfirmationService, MessageService, TreeNode } from 'primeng/api';
 import { ApiService } from 'src/app/services/api.service';
 import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { AgGridFn } from 'src/app/common/function-common/common';
+import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { CustomTooltipComponent } from 'src/app/common/ag-component/customtooltip.component';
 import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
 import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.component';
@@ -13,12 +13,16 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { ExportFileService } from 'src/app/services/export-file.service';
 import { cloneDeep } from 'lodash';
 import { flatten } from '@angular/compiler';
+import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 @Component({
   selector: 'app-qt-thay-doi-luong',
   templateUrl: './qt-thay-doi-luong.component.html',
   styleUrls: ['./qt-thay-doi-luong.component.scss']
 })
 export class QtThayDoiLuongComponent implements OnInit {
+  MENUACTIONROLEAPI = MENUACTIONROLEAPI;
+  ACTIONS = ACTIONS
+
   excelStyles = [
     {
       id: 'stringType',
@@ -260,12 +264,14 @@ export class QtThayDoiLuongComponent implements OnInit {
           label: 'Sửa',
           icon: 'pi pi-tablet',
           class: 'btn-primary mr5',
+          hide: CheckHideAction(MENUACTIONROLEAPI.GetHrmPayrollRecordPage.url, ACTIONS.VIEW)
         },
         {
           onClick: this.deleteRow.bind(this),
           label: 'Xóa nhân viên này',
           icon: 'fa fa-trash',
           class: 'btn-primary mr5',
+          hide: CheckHideAction(MENUACTIONROLEAPI.GetHrmPayrollRecordPage.url, ACTIONS.DELETE)
         },
       ]
     };

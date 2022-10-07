@@ -8,7 +8,8 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { CustomTooltipComponent } from 'src/app/common/ag-component/customtooltip.component';
 import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
 import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.component';
-import { AgGridFn } from 'src/app/common/function-common/common';
+import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
+import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 @Component({
   selector: 'app-gop-y-kien',
   templateUrl: './gop-y-kien.component.html',
@@ -16,6 +17,9 @@ import { AgGridFn } from 'src/app/common/function-common/common';
 })
 export class GopYKienComponent implements OnInit {
   dataChamCong: any;
+  MENUACTIONROLEAPI = MENUACTIONROLEAPI;
+  ACTIONS = ACTIONS
+
   constructor(
     private spinner: NgxSpinnerService,
     private apiService: ApiHrmService,
@@ -169,6 +173,7 @@ export class GopYKienComponent implements OnInit {
           label: 'Xem chi tiết',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
+          hide: CheckHideAction(MENUACTIONROLEAPI.GetFeedbackPage.url, ACTIONS.VIEW)
         },
       ]
     };

@@ -6,7 +6,8 @@ import { cloneDeep } from 'lodash';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
-import { AgGridFn } from 'src/app/common/function-common/common';
+import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
+import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 
 @Component({
   selector: 'app-chi-tiet-thai-san',
@@ -18,9 +19,11 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
   paramsObject = null;
   detailInfo = null
   listViews = [];
+  MENUACTIONROLEAPI = MENUACTIONROLEAPI;
+  ACTIONS = ACTIONS
   optionsButon = [
     { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
-    { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check' }
+    { label: 'Lưu lại', value: 'Update', class: CheckHideAction(MENUACTIONROLEAPI.GetMaternityPage.url, ACTIONS.EDIT) ? 'hidden' : '', icon: 'pi pi-check' }
   ];
   modelEdit = {
     maternityId: null,

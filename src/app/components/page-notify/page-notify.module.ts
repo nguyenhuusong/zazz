@@ -28,6 +28,7 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { HrmBreadCrumbModule } from 'src/app/common/hrm-breadcrumb/hrm-breadcrumb.module';
 import { ConfigGridTableFormModule } from 'src/app/common/config-grid-table-form/config-grid-table-form.module';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { CheckHideActionsDirectiveModule } from 'src/app/directive/check-action.module';
 @NgModule({
   declarations: [
     PageNotifyComponent,
@@ -59,7 +60,8 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
     ManageMediaModule,
     HrmBreadCrumbModule,
     ConfigGridTableFormModule,
-    OverlayPanelModule
+    OverlayPanelModule,
+    CheckHideActionsDirectiveModule
   ],
   exports: [PageNotifyComponent],
   entryComponents: [],

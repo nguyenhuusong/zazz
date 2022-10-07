@@ -462,7 +462,12 @@ export const ACTIONS = {
     HOAN_THANH: 'hoan_thanh',
     TAI_LEN: 'tai_len',
     TUYEN_DUNG_LAI: 'tuyen_dung_lai',
-    DOI_LICH_LAM_VIEC: 'doi_lich_lam_viec'
+    DOI_LICH_LAM_VIEC: 'doi_lich_lam_viec',
+    THEM_KHAM_THAI: 'them_kham_thai',
+    THEM_CON_NHO: 'them_con_nho',
+    LUU_THONG_BAO: 'luu_thong_bao',
+    CONG_BO: 'cong_bo',
+    DAY_LEN_APP: 'day_len_app'
 }
 
 export const MessageErrorAction = {
@@ -557,5 +562,50 @@ export const API_PROFILE  = {
         'menu': '',
         'url': '/nhan-su/thai-san'
     },
+    'GetHrmPayrollRecordPage': {
+        'name': 'Quá trình thay đổi lương',
+        'api': '0eed6cc8-55f4-4285-9f8e-bfc0ba572253',
+        'menu': '',
+        'url': '/nhan-su/qua-trinh-thay-doi-luong'
+    },
+    'GetWorkflowPage': {
+        'name': 'Danh sách phê duyệt',
+        'api': '0eed6cc8-55f4-4285-9f8e-bfc0ba572253',
+        'menu': '',
+        'url': '/nhan-su/phe-duyet'
+    },
+    'GetAppNotifyPage': {
+        'name': 'Danh sách thông báo',
+        'api': '0eed6cc8-55f4-4285-9f8e-bfc0ba572253',
+        'menu': '',
+        'url': '/cai-dat/thong-bao/danh-sach-thong-bao'
+    },
+    'GetMeetingPage': {
+        'name': 'Quản lý lịch họp',
+        'api': '0eed6cc8-55f4-4285-9f8e-bfc0ba572253',
+        'menu': '',
+        'url': '/hoat-dong/lich-hop'
+    },
+    'GetMeetRoomPage': {
+        'name': 'Quản lý phòng họp',
+        'api': '0eed6cc8-55f4-4285-9f8e-bfc0ba572253',
+        'menu': '',
+        'url': '/hoat-dong/lich-hop/danh-sach-phong-hop'
+    },
+    
+    'GetFeedbackPage': {
+        'name': 'Góp ý',
+        'api': '0eed6cc8-55f4-4285-9f8e-bfc0ba572253',
+        'menu': '',
+        'url': '/gop-y'
+    },
+    'GetFormGeneral': {
+        'name': 'Tài liệu chung',
+        'api': '0eed6cc8-55f4-4285-9f8e-bfc0ba572253',
+        'menu': '',
+        'url': '/hoat-dong/tai-lieu-chung'
+    },
+    
+    
     
   }

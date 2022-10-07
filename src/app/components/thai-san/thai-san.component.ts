@@ -162,7 +162,7 @@ export class ThaiSanComponent implements OnInit, AfterViewChecked {
           label: 'Xem chi tiết',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
-          hide: CheckHideAction(MENUACTIONROLEAPI.GetMaternityPage.url, ACTIONS.VIEW)
+          // hide: CheckHideAction(MENUACTIONROLEAPI.GetMaternityPage.url, ACTIONS.VIEW)
         },
         {
           onClick: this.delMaternityInfo.bind(this),

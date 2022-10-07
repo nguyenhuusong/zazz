@@ -56,6 +56,7 @@ import { LoaiBieuMauComponent } from 'src/app/components/bieu-mau/loai-bieu-mau/
 import { ChiTietLoaiBieuMauComponent } from 'src/app/components/bieu-mau/loai-bieu-mau/chi-tiet-loai-bieu-mau/chi-tiet-loai-bieu-mau.component';
 import { ConfigGridTableFormModule } from 'src/app/common/config-grid-table-form/config-grid-table-form.module';
 import { XemCongComponent } from 'src/app/components/cs-cham-cong/xem-cong/xem-cong.component';
+import { CheckHideActionsDirectiveModule } from 'src/app/directive/check-action.module';
 
 @NgModule({
   imports: [
@@ -94,6 +95,7 @@ import { XemCongComponent } from 'src/app/components/cs-cham-cong/xem-cong/xem-c
     HrmBreadCrumbModule,
     OrganizationChartModule,
     ConfigGridTableFormModule,
+    CheckHideActionsDirectiveModule,
     AgGridModule.withComponents([
       ButtonRendererComponent,
       ButtonRendererComponent1,

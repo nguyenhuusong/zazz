@@ -6,19 +6,23 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { Component, OnInit, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
 import * as queryString from 'querystring';
-import { AgGridFn } from 'src/app/common/function-common/common';
+import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import * as moment from 'moment';
 import { Subject, takeUntil } from 'rxjs';
 import { cloneDeep } from 'lodash';
 import {
   FirstDataRenderedEvent,
 } from '@ag-grid-community/core';
+import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 @Component({
   selector: 'app-bieu-mau',
   templateUrl: './bieu-mau.component.html',
   styleUrls: ['./bieu-mau.component.scss']
 })
 export class BieuMauComponent implements OnInit, AfterViewChecked {
+  MENUACTIONROLEAPI = MENUACTIONROLEAPI;
+  ACTIONS = ACTIONS
+
   items = [];
   organs = [];
   loadjs = 0;
@@ -288,14 +292,15 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
           label: 'Thông tin chi tiết',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
-          hide: this.indexTab === 0
+          hide: CheckHideAction(MENUACTIONROLEAPI.GetFormGeneral.url, ACTIONS.VIEW)
+
         },
         {
           onClick: this.handleDelete.bind(this),
           label: 'Xóa tài liệu',
           icon: 'fa fa-trash',
           class: 'btn-primary mr5',
-          hide: this.indexTab === 0
+          hide: CheckHideAction(MENUACTIONROLEAPI.GetFormGeneral.url, ACTIONS.DELETE)
         },
       ]
     };

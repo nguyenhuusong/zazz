@@ -7,10 +7,11 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiService } from 'src/app/services/api.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
-import { AgGridFn } from 'src/app/common/function-common/common';
+import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
 import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.component';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
+import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 @Component({
   selector: 'app-page-notify',
   templateUrl: './page-notify.component.html',
@@ -24,6 +25,9 @@ export class PageNotifyComponent implements OnInit, OnDestroy, AfterViewChecked 
     label: 'Danh sách thông báo',
     value: 'Lists'
   }
+  MENUACTIONROLEAPI = MENUACTIONROLEAPI;
+  ACTIONS = ACTIONS
+
   constructor(
     private route: ActivatedRoute,
     private apiService: ApiHrmService,
@@ -245,24 +249,28 @@ export class PageNotifyComponent implements OnInit, OnDestroy, AfterViewChecked 
           label: 'Sửa',
           icon: 'fa fa-edit',
           class: 'btn-dropbox text-white',
+          hide: CheckHideAction(MENUACTIONROLEAPI.GetAppNotifyPage.url, ACTIONS.VIEW)
         },
         {
           onClick: this.handleAdd.bind(this),
           label: 'Lưu thông báo',
           icon: 'fa fa-check',
           class: 'btn-dropbox text-white',
+          hide: CheckHideAction(MENUACTIONROLEAPI.GetAppNotifyPage.url, ACTIONS.LUU_THONG_BAO)
         },
         {
           onClick: this.handleChangeStatus.bind(this),
           label: event.data.isPublish ? 'Hủy công bố' : 'Công bố',
           icon: 'fa fa-check',
           class: 'btn-dropbox text-white',
+          hide: CheckHideAction(MENUACTIONROLEAPI.GetAppNotifyPage.url, ACTIONS.CONG_BO)
         },
         {
           onClick: this.handleDelete.bind(this),
           label: 'Xóa',
           icon: 'fa fa-trash',
           class: 'btn-google text-white',
+          hide: CheckHideAction(MENUACTIONROLEAPI.GetAppNotifyPage.url, ACTIONS.DELETE)
         }
       ]
     };

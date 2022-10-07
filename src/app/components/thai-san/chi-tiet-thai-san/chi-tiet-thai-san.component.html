@@ -18,7 +18,7 @@
                             Khám thai
                         </div>
                         <div class="col-md-6 text-right">
-                            <p-button label="Thêm mới" styleClass="p-button-sm" (click)="addKhamThai()"></p-button>
+                            <p-button label="Thêm mới" [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetMaternityPage.url, action: ACTIONS.THEM_KHAM_THAI}" styleClass="p-button-sm" (click)="addKhamThai()"></p-button>
                         </div>
                     </ng-template>
                     <div class="grid-default border">
@@ -33,7 +33,7 @@
                           Con nhỏ
                         </div>
                         <div class="col-md-6 text-right">
-                            <p-button label="Thêm mới" styleClass="p-button-sm" (click)="addConNho()"></p-button>
+                            <p-button label="Thêm mới" styleClass="p-button-sm"  [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetMaternityPage.url, action: ACTIONS.THEM_CON_NHO}" (click)="addConNho()"></p-button>
                         </div>
                     </ng-template>
                     <div class="grid-default border">
