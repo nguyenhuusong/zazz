@@ -5,7 +5,8 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import * as queryString from 'querystring';
 import { cloneDeep } from 'lodash';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
-import { AgGridFn } from 'src/app/common/function-common/common';
+import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
+import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 @Component({
   selector: 'app-create-contract-info',
   templateUrl: './create-contract-info.component.html',
@@ -28,8 +29,8 @@ export class CreateContractInfoComponent implements OnInit {
 
   optionsButon = [
     // { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
-    { label: 'Tạm tính', value: 'TamTinh', class: '', icon: 'uni-icon icon-tam-tinh bg-none'  },
-    { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-save'  },
+    { label: 'Tạm tính', value: 'TamTinh', class: CheckHideAction(MENUACTIONROLEAPI.GetContractPage.url, ACTIONS.TAM_TINH) ? 'hidden' : '', icon: 'uni-icon icon-tam-tinh bg-none'  },
+    { label: 'Lưu lại', value: 'Update', class: CheckHideAction(MENUACTIONROLEAPI.GetContractPage.url, ACTIONS.EDIT) ? 'hidden' : '', icon: 'pi pi-save'  },
   ]
   listContractTypes = [];
   indexTab = 0;
@@ -55,8 +56,8 @@ export class CreateContractInfoComponent implements OnInit {
       this.handleParams();
     } else {
       this.optionsButon= [
-        { label: 'Tạm tính', value: 'TamTinh', class: '', icon: 'uni-icon icon-tam-tinh bg-none'  },
-        { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-save'  },
+        { label: 'Tạm tính', value: 'TamTinh', class: CheckHideAction(MENUACTIONROLEAPI.GetContractPage.url, ACTIONS.TAM_TINH) ? 'hidden' : '', icon: 'uni-icon icon-tam-tinh bg-none'  },
+        { label: 'Lưu lại', value: 'Update', class: CheckHideAction(MENUACTIONROLEAPI.GetContractPage.url, ACTIONS.EDIT) ? 'hidden' : '', icon: 'pi pi-save'  },
       ]
       this.getContractInfo();
     }
@@ -103,11 +104,11 @@ export class CreateContractInfoComponent implements OnInit {
         this.activeIndex = results.data.flow_st;
         if(results.data.contract_st === 0) {
           if (this.url === 'chi-tiet-xu-ly-hop-dong') {
-            this.optionsButon = [{ label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check'  }]
+            this.optionsButon = [{ label: 'Lưu lại', value: 'Update', class: CheckHideAction(MENUACTIONROLEAPI.GetContractPage.url, ACTIONS.EDIT) ? 'hidden' : '', icon: 'pi pi-check'  }]
           }else {
             this.optionsButon= [
-              { label: 'Tạm tính', value: 'TamTinh', class: '', icon: 'uni-icon icon-tam-tinh bg-none'  },
-              { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-save'  },
+              { label: 'Tạm tính', value: 'TamTinh', class: CheckHideAction(MENUACTIONROLEAPI.GetContractPage.url, ACTIONS.TAM_TINH) ? 'hidden' : '', icon: 'uni-icon icon-tam-tinh bg-none'  },
+              { label: 'Lưu lại', value: 'Update', class: CheckHideAction(MENUACTIONROLEAPI.GetContractPage.url, ACTIONS.EDIT) ? 'hidden' : '', icon: 'pi pi-save'  },
             ]
           }
         }else {
@@ -116,15 +117,15 @@ export class CreateContractInfoComponent implements OnInit {
 
         const buttonsStep = [];
         if(this.activeIndex === 3) {
-          buttonsStep.push( { label: 'Đã ký', value: 'DaKyHD', class: '', icon: 'pi pi-check'  });
+          buttonsStep.push( { label: 'Đã ký', value: 'DaKyHD', class: CheckHideAction(MENUACTIONROLEAPI.GetContractPage.url, ACTIONS.DA_KY) ? 'hidden' : '', icon: 'pi pi-check'  });
         }else if(this.activeIndex === 5) {
           this.optionsButon = []
         }else if(this.activeIndex > 3) {
-          buttonsStep.push(  { label: 'Tải file', value: 'TaiFileHD', class: '', icon: 'pi pi-upload'  });
-          buttonsStep.push({ label: 'Hoàn thành', value: 'HoanThanhHD', class: '', icon: 'pi pi-check'  });
+          buttonsStep.push(  { label: 'Tải file', value: 'TaiFileHD', class: CheckHideAction(MENUACTIONROLEAPI.GetContractPage.url, ACTIONS.TAI_VE) ? 'hidden' : '', icon: 'pi pi-upload'  });
+          buttonsStep.push({ label: 'Hoàn thành', value: 'HoanThanhHD', class: CheckHideAction(MENUACTIONROLEAPI.GetContractPage.url, ACTIONS.HOAN_THANH) ? 'hidden' : '', icon: 'pi pi-check'  });
         }
         if(results.data.link_contract) {
-          this.optionsButon = [{ label: 'Xem File', value: 'XemFileHD', class: '', icon: 'pi pi-check'  }, ...this.optionsButon]
+          this.optionsButon = [{ label: 'Xem File', value: 'XemFileHD', class: CheckHideAction(MENUACTIONROLEAPI.GetContractPage.url, ACTIONS.XEM_FILE) ? 'hidden' : '', icon: 'pi pi-check'  }, ...this.optionsButon]
         }
 
         this.optionsButon = [...this.optionsButon, ...buttonsStep];
@@ -417,14 +418,14 @@ export class CreateContractInfoComponent implements OnInit {
                     icon: 'pi pi-cloud-upload',
                     key: 'taivehosomau',
                     class: 'btn-primary mr5',
-                    hide: !params.data.temp_download_url
+                    hide: this.CheckHideTaiVeHoSoMau(params)
                   }, {
                     onClick: this.OnClick.bind(this),
                     label: 'Xem hồ sơ mẫu',
                     icon: 'pi pi-cloud-upload',
                     key: 'xemhosomau',
                     class: 'btn-primary mr5',
-                    hide: !params.data.temp_view_url
+                    hide: this.CheckHideXemHoSoMau(params)
                   },
                 ]
               };
@@ -445,7 +446,7 @@ export class CreateContractInfoComponent implements OnInit {
                     icon: 'pi pi-cloud-download',
                     class: 'btn-primary mr5',
                     key: 'tailenhoso',
-                    hide: !params.data.meta_id
+                    hide: this.CheckHideTaiLenHoSo(params)
                   },
                   {
                     onClick: this.OnClick.bind(this),
@@ -453,7 +454,7 @@ export class CreateContractInfoComponent implements OnInit {
                     icon: 'pi pi-cloud-upload',
                     key: 'xemhoso',
                     class: 'btn-primary mr5',
-                    hide: !params.data.meta_upload_url
+                    hide: this.CheckHideXemHoSo(params)
                   },
                   // {
                   //   onClick: this.OnClick.bind(this),
@@ -472,6 +473,54 @@ export class CreateContractInfoComponent implements OnInit {
         this.spinner.hide();
       }
     })
+  }
+
+  CheckHideTaiVeHoSoMau(event) {
+    if(CheckHideAction(MENUACTIONROLEAPI.GetContractPage.url, ACTIONS.TAI_VE)) {
+      return true;
+    }else {
+      if(!event.data.temp_download_url) {
+        return true;
+      }else {
+        return false;
+      }
+    }
+  }
+
+  CheckHideXemHoSoMau(event) {
+    if(CheckHideAction(MENUACTIONROLEAPI.GetContractPage.url, ACTIONS.XEM_HO_SO_MAU)) {
+      return true;
+    }else {
+      if(!event.data.temp_view_url) {
+        return true;
+      }else {
+        return false;
+      }
+    }
+  }
+
+  CheckHideTaiLenHoSo(event) {
+    if(CheckHideAction(MENUACTIONROLEAPI.GetContractPage.url, ACTIONS.TAI_LEN)) {
+      return true;
+    }else {
+      if(!event.data.meta_id) {
+        return true;
+      }else {
+        return false;
+      }
+    }
+  }
+
+  CheckHideXemHoSo(event) {
+    if(CheckHideAction(MENUACTIONROLEAPI.GetContractPage.url, ACTIONS.XEM_HO_SO)) {
+      return true;
+    }else {
+      if(!event.data.meta_upload_url) {
+        return true;
+      }else {
+        return false;
+      }
+    }
   }
 
   displayuploadcontractall = false;

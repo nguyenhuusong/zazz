@@ -8,9 +8,10 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { CustomTooltipComponent } from 'src/app/common/ag-component/customtooltip.component';
 import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
 import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.component';
-import { AgGridFn } from 'src/app/common/function-common/common';
+import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import * as moment from 'moment';
 import { cloneDeep } from 'lodash';
+import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 @Component({
   selector: 'app-dang-ky-lich-lam-viec',
   templateUrl: './dang-ky-lich-lam-viec.component.html',
@@ -18,6 +19,12 @@ import { cloneDeep } from 'lodash';
 })
 export class DangKyLichLamViecComponent implements OnInit {
   dataChamCong: any;
+  MENUACTIONROLEAPI = MENUACTIONROLEAPI;
+  ACTIONS = ACTIONS
+  optionsButon = [
+    { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
+    { label: 'Lưu lại', value: 'Update', class: CheckHideAction(MENUACTIONROLEAPI.GetEmpWorkingPage.url, ACTIONS.EDIT) ? 'hidden' : '', icon: 'pi pi-check'  }
+  ]
   constructor(
     private spinner: NgxSpinnerService,
     private apiService: ApiHrmService,
@@ -210,12 +217,14 @@ export class DangKyLichLamViecComponent implements OnInit {
           label: 'Xem chi tiết',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
+          hide: CheckHideAction(MENUACTIONROLEAPI.GetEmpWorkingPage.url, ACTIONS.VIEW)
         },
         {
           onClick: this.doiLichLamViec.bind(this),
           label: 'Đổi lịch làm việc',
           icon: 'pi pi-trash',
           class: 'btn-primary mr5',
+          hide: CheckHideAction(MENUACTIONROLEAPI.GetEmpWorkingPage.url, ACTIONS.DOI_LICH_LAM_VIEC)
         }
       ]
     };

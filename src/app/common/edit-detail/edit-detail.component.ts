@@ -240,7 +240,6 @@ export class EditDetailComponent implements OnInit, OnChanges {
           }else if(element1.field_name === 'roleType') {
             promissall.push(this.apiHrmV2Service.getRoleTypesV2(element1.field_name));
           }else if(element1.field_name === 'menuParentId') {
-            console.log('this.menus', this.menus)
             element1.options = cloneDeep(this.menus.map(t => ({...t, label: t.title, value: t.menuId})));
           }else {
             if (element1.columnObject) {
@@ -278,8 +277,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
         }
       });
     });
-    this.spinner.show();
     if (promissall.length > 0) {
+    this.spinner.show();
       forkJoin(promissall).subscribe((results: any) => {
         this.spinner.hide();
         console.log('character', results);

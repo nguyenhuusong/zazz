@@ -152,11 +152,12 @@ export class DanhSachRoleComponent implements OnInit {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn thực hiện hành động này?',
       accept: () => {
-        const queryParams = queryString.stringify({ menuId: event.rowData.menuId });
+        const queryParams = queryString.stringify({ id: event.rowData.roleId });
         this.apiService.deleteRole(queryParams).subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
             this.callback.emit();
+            this.getRoles();
             this.displayInfo = false
           } else {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });

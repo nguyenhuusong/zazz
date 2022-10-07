@@ -14,7 +14,6 @@ export class AuthService {
     private firebaseAuthService: FirebaseAuthService,
     ) {
       this.manager.getUser().then(async user => {
-        console.log(user)
         this.user = user;
         if(this.user) {
           const token = this.getAccessTokenValue();
@@ -30,7 +29,7 @@ export class AuthService {
       }
 
   isLoggedIn(): Promise<boolean> {
-    localStorage.removeItem('menuItems');
+    // localStorage.removeItem('menuItems');
     if (this.user != null) {
       return new Promise((resolve, reject) => resolve(!this.user.expired));
     }

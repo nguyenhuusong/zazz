@@ -198,6 +198,7 @@
     </p-header>
     <app-edit-detail *ngIf="listViewsDependent.length> 0 && detailDependentInfo"
         [detail]="detailDependentInfo" [manhinh]="'Edit'" [thongtinnhanvienNew]="true"
+        [optionsButtonsEdit]="optionsButon"
         [dataView]="listViewsDependent" (callback)="setEmpDependen($event)"
         (callbackcancel)="displayFormEditDetail = !displayFormEditDetail"></app-edit-detail>
 </p-dialog>

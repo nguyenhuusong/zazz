@@ -452,7 +452,17 @@ export const ACTIONS = {
     THIET_BI_THANG_MAY : 'thiet_bi_thang_may',
     TANG_THANG_MAY : 'tang_thang_may',
     TAI_VE : 'tai_ve',
+    XEM_FILE: 'xem_file',
+    XEM_HO_SO_MAU: 'xem_ho_so_mau',
+    XEM_HO_SO: 'xem_ho_so',
+    TAM_TINH: 'tam_tinh',
     EXPORT: 'export',
+    CAP_NHAT_TT: 'cap_nhat_tt',
+    DA_KY: 'da_ky',
+    HOAN_THANH: 'hoan_thanh',
+    TAI_LEN: 'tai_len',
+    TUYEN_DUNG_LAI: 'tuyen_dung_lai',
+    DOI_LICH_LAM_VIEC: 'doi_lich_lam_viec'
 }
 
 export const MessageErrorAction = {
@@ -503,6 +513,49 @@ export const API_PROFILE  = {
         'name': 'Danh sách tuyển dụng',
         'api': '0eed6cc8-55f4-4285-9f8e-bfc0ba572253',
         'menu': '',
-        'url': 'tuyen-dung'
+        'url': '/tuyen-dung/ds-tuyen-dung'
     },
+    'GetJobPage': {
+        'name': 'Danh sách Chuyên môn tuyển dụng',
+        'api': '0eed6cc8-55f4-4285-9f8e-bfc0ba572253',
+        'menu': '',
+        'url': '/tuyen-dung/chuyen-mon'
+    },
+    'GetVacancyPage': {
+        'name': 'Danh sách vị trí tuyển dụng',
+        'api': '0eed6cc8-55f4-4285-9f8e-bfc0ba572253',
+        'menu': '',
+        'url': '/tuyen-dung/vi-tri-tuyen-dung'
+    },
+    'GetEmployeePage': {
+        'name': 'Hồ sơ nhân sự',
+        'api': '0eed6cc8-55f4-4285-9f8e-bfc0ba572253',
+        'menu': '',
+        'url': '/nhan-su/ho-so-nhan-su'
+    },
+    'GetContractPage': {
+        'name': 'Xử lý hợp đồng',
+        'api': '0eed6cc8-55f4-4285-9f8e-bfc0ba572253',
+        'menu': '',
+        'url': '/nhan-su/xu-ly-hop-dong'
+    },
+    'GetTerminatePage': {
+        'name': 'Danh sách hồ sơ nghỉ việc',
+        'api': '0eed6cc8-55f4-4285-9f8e-bfc0ba572253',
+        'menu': '',
+        'url': '/nhan-su/ho-so-nghi-viec'
+    },
+    'GetEmpWorkingPage': {
+        'name': 'Danh sách đăng ký lịch làm việc',
+        'api': '0eed6cc8-55f4-4285-9f8e-bfc0ba572253',
+        'menu': '',
+        'url': '/nhan-su/dang-ky-lich-lam-viec'
+    },
+    'GetMaternityPage': {
+        'name': 'Danh sách thai sản',
+        'api': '0eed6cc8-55f4-4285-9f8e-bfc0ba572253',
+        'menu': '',
+        'url': '/nhan-su/thai-san'
+    },
+    
   }

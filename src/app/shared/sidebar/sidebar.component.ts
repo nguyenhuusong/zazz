@@ -51,6 +51,12 @@ export class SidebarComponent implements OnInit {
                 // localStorage.setItem('menuItems',JSON.stringify(results.data));
 
             })
+            this.apiService.getUserMenus().subscribe(results => {
+                if (results.status === 'success') {
+                    localStorage.setItem('menuItems',JSON.stringify(results.data));
+                }
+            });
+
         });
 
         // this.menuItems = ROUTES.filter(menuItem => menuItem);

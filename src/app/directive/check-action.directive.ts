@@ -35,11 +35,11 @@ export class CheckHideActionsDirective implements OnInit, AfterViewInit, AfterCo
     this.el.nativeElement.hidden = true;
     this.manager.getUser().then(user => {
         const query = {  }
-        this.apiService.getMenuConfigInfo().subscribe((results: any) => {
+        this.apiService.getUserMenus().subscribe((results: any) => {
       // this.apiService.getListMenuByUserId(this.authService.getClaims().sub, '3133579B-4FD9-449E-9CEA-4B384884E7D3').subscribe(results => {
           if (results.status === 'success') {
               let newArray = []
-              results.data.menus.forEach(element => {
+              results.data.forEach(element => {
                   newArray.push(element);
                   if (element.submenus && element.submenus.length > 0) {
                       element.submenus.forEach(element1 => {

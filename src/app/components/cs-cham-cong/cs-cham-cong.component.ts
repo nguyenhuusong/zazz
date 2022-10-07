@@ -301,7 +301,8 @@ export class CsChamCongComponent implements OnInit {
             value: `${d.orgId}`
           }
         });
-        this.query.organizeId = this.listOrgRoots[0].value
+        this.listOrgRoots = [{ label: 'Tất cả', value: null }, ...this.listOrgRoots];
+        // this.query.organizeId = this.listOrgRoots[0].value
         this.load();
         console.log('this.query.organizeId', this.query.organizeId)
       }

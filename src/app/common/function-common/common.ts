@@ -306,31 +306,36 @@ export function HideFullScreen() {
 }
 
 export function CheckHideAction(path, action) {
-    const accountAPI = localStorage.hasOwnProperty('account') ? JSON.parse(localStorage.getItem('account')) : null;
-    if (accountAPI) {
-        if (accountAPI.roles.indexOf('admin') > -1) {
-            return false
-        } else {
-            const dsMenu = accountAPI.permissions.filter(p => p.rsname === path);
-            if (path && dsMenu.length > 0) {
-                const items = dsMenu;
-                if (items.length > 0) {
-                    if (items[0].scopes.indexOf(action) > -1) {
-                        return false
-                    } else {
-                        return true
-                    }
+    const menuItems = localStorage.hasOwnProperty('menuItems') ? JSON.parse(localStorage.getItem('menuItems')) : null;
+    if (menuItems && menuItems.length > 0) {
+        let newArray = []
+        menuItems.forEach(element => {
+            newArray.push(element);
+            if (element.submenus && element.submenus.length > 0) {
+                element.submenus.forEach(element1 => {
+                    newArray.push(element1);
+                });
+            }
+        });
+        if (newArray.length > 0) {
+            const menus = newArray.find(m => m.path === path);
+            if (menus && menus.actions.length > 0) {
+                const arrAction = menus.actions.map(d => d.actionCd);
+                if (arrAction.indexOf(action) > -1) {
+                    return  false;
                 } else {
-                    return true
+                    return true;
                 }
-            } else {
+            }else {
                 return true;
             }
+        }else {
+            return true;
         }
-    } else {
+
+    }else {
         return true;
     }
-    console.log('path', path)
 }
 
 export function SumArray(mang) {

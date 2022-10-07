@@ -35,8 +35,8 @@ const routes: Routes = [
     path: 'ds-tuyen-dung/chi-tiet-tuyen-dung',
     component: ChiTietTuyenDungComponent,
     data: {
-      title: 'Chi tiết tuyển dụng tuyển dụng',
-      url: 'chi-tiet-tuyen-dung/:canId',
+      title: 'Chi tiết tuyển dụng ',
+      url: 'chi-tiet-tuyen-dung',
     },
   },
   {

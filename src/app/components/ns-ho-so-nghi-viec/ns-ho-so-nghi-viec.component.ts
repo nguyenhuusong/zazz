@@ -7,12 +7,13 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { HttpParams } from '@angular/common/http';
 import { cloneDeep } from 'lodash';
 import * as moment from 'moment';
-import { AgGridFn } from 'src/app/common/function-common/common';
+import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { CustomTooltipComponent } from 'src/app/common/ag-component/customtooltip.component';
 import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
 import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.component';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { Tree } from 'primeng/tree';
+import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 @Component({
   selector: 'app-ns-ho-so-nghi-viec',
   templateUrl: './ns-ho-so-nghi-viec.component.html',
@@ -22,6 +23,9 @@ export class NsHoSoNghiViecComponent implements OnInit {
   pagingComponent = {
     total: 0
   };
+  MENUACTIONROLEAPI = MENUACTIONROLEAPI;
+  ACTIONS = ACTIONS
+
   projects = []
   public modules: Module[] = AllModules;
   public agGridFn = AgGridFn;
@@ -206,24 +210,29 @@ export class NsHoSoNghiViecComponent implements OnInit {
           label: 'Xem chi tiết',
           icon: 'fa fa-edit',
           class: 'btn-primary mr5',
+          hide: CheckHideAction(MENUACTIONROLEAPI.GetTerminatePage.url, ACTIONS.VIEW)
+
         },
         {
           onClick: this.delTerminateInfo.bind(this),
           label: 'Xóa',
           icon: 'fa fa-edit',
           class: 'btn-primary mr5',
+          hide: CheckHideAction(MENUACTIONROLEAPI.GetTerminatePage.url, ACTIONS.DELETE)
         },
         {
           onClick: this.tuyenDungLai.bind(this),
           label: 'Tuyển dụng lại',
           icon: 'fa fa-edit',
           class: 'btn-primary mr5',
+          hide: CheckHideAction(MENUACTIONROLEAPI.GetTerminatePage.url, ACTIONS.TUYEN_DUNG_LAI)
         },
         {
           onClick: this.changeStatus.bind(this),
           label: 'Thay đổi trạng thái',
           icon: 'fa fa-check',
           class: 'btn-primary mr5',
+          hide: CheckHideAction(MENUACTIONROLEAPI.GetTerminatePage.url, ACTIONS.CAP_NHAT_TT)
         },
       ]
     };

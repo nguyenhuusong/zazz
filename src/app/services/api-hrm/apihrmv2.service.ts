@@ -369,14 +369,14 @@ export class ApiHrmV2Service {
   getVacancyPageV2( queryParams , field_name): Observable<any> {
     return this.httpClient.get(`${apiHrmServer}/api/v1/recruitment/GetVacancyPage?` + queryParams, this.options).pipe(
       map((repon: any) => {
-        return { key: field_name, result: repon.data.map(d => {
+        return { key: field_name, result: repon.data.dataList.data.map(d => {
           return {
             label: `${d.vacancy_name}`,
             value: `${d.vacancyId}`
           }
         }) };
       }), catchError(error => {
-        return throwError('Capital not found!');
+        return throwError('GetVacancyPage not found!', error);
       })
     )
   }

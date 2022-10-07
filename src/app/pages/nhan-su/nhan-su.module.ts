@@ -66,6 +66,7 @@ import { ImportXyLyHopDongComponent } from 'src/app/components/xu-ly-hop-dong/im
 import { ConfigGridTableFormModule } from 'src/app/common/config-grid-table-form/config-grid-table-form.module';
 import { ImportHoSoNhanSuComponent } from 'src/app/components/ns-ho-so-nhan-su/import-ho-so-nhan-su/import-ho-so-nhan-su.component';
 import { QtThayDoiLuongComponent } from 'src/app/components/qt-thay-doi-luong/qt-thay-doi-luong.component';
+import { CheckHideActionsDirectiveModule } from 'src/app/directive/check-action.module';
 @NgModule({
   imports: [
     MessagesModule,
@@ -114,6 +115,7 @@ import { QtThayDoiLuongComponent } from 'src/app/components/qt-thay-doi-luong/qt
     StepsModule,
     HrmBreadCrumbModule,
     ExcelModule,
+    CheckHideActionsDirectiveModule,
     AgGridModule.withComponents([
       ButtonRendererComponent,
       ButtonRendererComponent1

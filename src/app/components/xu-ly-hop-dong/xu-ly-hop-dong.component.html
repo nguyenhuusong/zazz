@@ -9,7 +9,7 @@
                         </svg>
                            &nbsp;Tiện ích      
                 </p-button>
-                    <p-button (click)="pheDuyetHopDong()" [disabled]="isShowbtnPheDuyet"  styleClass="p-button-sm height-56">
+                    <p-button (click)="pheDuyetHopDong()" [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetContractPage.url, action: ACTIONS.PHE_DUYET}" [disabled]="isShowbtnPheDuyet"  styleClass="p-button-sm height-56">
                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M0 0H16V16H0V0Z" fill="#F3F8FF"/>
                             </svg>

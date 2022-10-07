@@ -7,8 +7,9 @@ import { ApiService } from 'src/app/services/api.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subject } from 'rxjs';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
-import { AgGridFn } from 'src/app/common/function-common/common';
+import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import * as moment from 'moment';
+import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 @Component({
   selector: 'app-chi-tiet-ho-so-nghi-viec',
   templateUrl: './chi-tiet-ho-so-nghi-viec.component.html',
@@ -19,8 +20,8 @@ export class ChiTietHoSoNghiViecComponent implements OnInit, OnChanges, OnDestro
   manhinh = 'View';
   indexTab = 0;
   optionsButtonsView = [
-    { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check' },
-    { label: 'Tuyển dụng lại', value: 'ReHire', icon: 'pi pi-refresh' },
+    { label: 'Lưu lại', value: 'Update', class: CheckHideAction(MENUACTIONROLEAPI.GetTerminatePage.url, ACTIONS.EDIT) ? 'hidden' : '', icon: 'pi pi-check' },
+    { label: 'Tuyển dụng lại', value: 'ReHire', class: CheckHideAction(MENUACTIONROLEAPI.GetTerminatePage.url, ACTIONS.TUYEN_DUNG_LAI) ? 'hidden' : '', icon: 'pi pi-refresh' },
     { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' }
   ];
   constructor(

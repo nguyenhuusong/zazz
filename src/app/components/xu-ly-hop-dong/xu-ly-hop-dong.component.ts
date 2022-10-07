@@ -8,7 +8,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { CustomTooltipComponent } from 'src/app/common/ag-component/customtooltip.component';
 import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
 import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.component';
-import { AgGridFn } from 'src/app/common/function-common/common';
+import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { HttpParams } from '@angular/common/http';
 import { WebsocketService2 } from 'src/app/services/websocket.service';
@@ -16,13 +16,15 @@ import { Subject, takeUntil } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import * as moment from 'moment';
+import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 @Component({
   selector: 'app-xu-ly-hop-dong',
   templateUrl: './xu-ly-hop-dong.component.html',
   styleUrls: ['./xu-ly-hop-dong.component.scss']
 })
 export class XuLyHopDongComponent implements OnInit {
-
+  MENUACTIONROLEAPI = MENUACTIONROLEAPI;
+  ACTIONS = ACTIONS
   dataContractTypes: any;
   constructor(
     private apiService: ApiHrmService,
@@ -240,23 +242,49 @@ export class XuLyHopDongComponent implements OnInit {
           label: 'Xem chi tiết',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
+          hide: CheckHideAction(MENUACTIONROLEAPI.GetContractPage.url, ACTIONS.VIEW)
+
         },
         {
           onClick: this.updateStatus.bind(this),
           label: 'Cập nhật trạng thái hợp đồng',
-          icon: 'fa fa-eye',
+          icon: 'pi pi-pencil',
           class: 'btn-primary mr5',
-          hide: event.data.contract_value === 3
+          hide: this.CheckHideUpdateStatus(event),
         },
         {
-          onClick: this.XoaQuaTrinhHopDong.bind(this),
+          onClick: this.CheckHideXoaStatus.bind(this),
           label: 'Xóa ',
           icon: 'pi pi-trash',
           class: 'btn-primary mr5',
-          hide: event.data.contract_value > 0
+          hide: this.CheckHideXoaStatus(event)
         },
       ]
     };
+  }
+
+  CheckHideUpdateStatus(event) {
+    if(CheckHideAction(MENUACTIONROLEAPI.GetContractPage.url, ACTIONS.CAP_NHAT_TT)) {
+      return true;
+    }else {
+      if(event.data.contract_value === 3) {
+        return true;
+      }else {
+        return false;
+      }
+    }
+  }
+
+  CheckHideXoaStatus(event) {
+    if(CheckHideAction(MENUACTIONROLEAPI.GetContractPage.url, ACTIONS.DELETE)) {
+      return true;
+    }else {
+      if(event.data.contract_value > 0) {
+        return true;
+      }else {
+        return false;
+      }
+    }
   }
 
   showButtons1(event: any) {

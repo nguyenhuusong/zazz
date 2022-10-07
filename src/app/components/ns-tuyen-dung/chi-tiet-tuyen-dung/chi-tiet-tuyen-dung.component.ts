@@ -6,6 +6,8 @@ import { cloneDeep } from 'lodash';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
+import { CheckHideAction } from 'src/app/common/function-common/common';
+import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 @Component({
   selector: 'app-chi-tiet-tuyen-dung',
   templateUrl: './chi-tiet-tuyen-dung.component.html',
@@ -18,7 +20,7 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
   listViews = [];
   optionsButon = [
     { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
-    { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check'  }
+    { label: 'Lưu lại', value: 'Update', class: CheckHideAction(MENUACTIONROLEAPI.GetCandidatePage.url, ACTIONS.EDIT) ? 'hidden' : '', icon: 'pi pi-check'  }
   ]
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -69,7 +71,6 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
           this.detailInfo = results.data;
         }
       });
-      console.log('app-chi-tiet-tuyen-dung')
   }
 
   setCandidateInfo(data) {
