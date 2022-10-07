@@ -11,7 +11,7 @@
     <p-header>
     Thông tin menu
     </p-header>
-    <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailDetailInfo" [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButon"  [dataView]="listViews"
+    <app-edit-detail *ngIf="listViews.length> 0" [menus]="listsData" [detail]="detailDetailInfo" [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButon"  [dataView]="listViews"
         (callback)="setConfigMenu($event)" (callbackcancel)="cancelUpdate($event)"></app-edit-detail>
         <div class=" text-right mt-1" >
             <p-pickList [source]="sourceActions" [target]="targetActions" [targetStyle]="{'height':'30rem'}"  [sourceStyle]="{'height':'30rem'}" [showSourceControls]="false" [showTargetControls]="false"

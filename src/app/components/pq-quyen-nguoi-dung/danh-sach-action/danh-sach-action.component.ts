@@ -57,7 +57,7 @@ export class DanhSachActionComponent implements OnInit {
     const query = {  }
     this.apiService.getMenuConfigInfo(queryString.stringify(query)).subscribe((results: any) => {
       if (results.status === 'success') {
-        // this.listsData = cloneDeep(results?.data?.clientaction);
+        this.listsData = cloneDeep(results?.data?.clientaction);
         if(results.data && results.data.view_grids_action){
           this.initGrid(results.data.view_grids_action);
         }
@@ -66,11 +66,11 @@ export class DanhSachActionComponent implements OnInit {
   }
 
   getActions() {
-    this.apiService.getConfigActionList().subscribe((results: any) => {
-      if (results.status === 'success') {
-        this.listsData = cloneDeep(results?.data);
-      }
-    })
+    // this.apiService.getConfigActionList().subscribe((results: any) => {
+    //   if (results.status === 'success') {
+    //     this.listsData = cloneDeep(results?.data);
+    //   }
+    // })
   }
 
   create() {

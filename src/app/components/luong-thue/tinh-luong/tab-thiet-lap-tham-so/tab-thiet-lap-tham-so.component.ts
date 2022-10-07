@@ -36,6 +36,7 @@ export class TabThietLapThamSoComponent implements OnInit {
   listsData = null;
   totalRecord = 0;
   first = 0;
+  displaySetting = false
   countRecord: any = {
     totalRecord: 0,
     currentRecordStart: 0,
@@ -56,6 +57,8 @@ export class TabThietLapThamSoComponent implements OnInit {
     offSet: 0,
     pageSize: 15,
   }
+
+  gridKey = ''
 
   cancel() {
     this.query = {
@@ -78,6 +81,7 @@ export class TabThietLapThamSoComponent implements OnInit {
     this.apiService.getPayrollAppParamPage(queryParams).subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
+        this.gridKey= results.data.dataList.gridKey;
         if (this.query.offSet === 0) {
           this.cols = results.data.gridflexs;
         }
@@ -202,6 +206,10 @@ export class TabThietLapThamSoComponent implements OnInit {
         this.loadjs = 0;
       }
     }
+  }
+
+  cauhinh() {
+    this.displaySetting = true;
   }
 
 }

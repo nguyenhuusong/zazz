@@ -49,6 +49,7 @@ import { EmpAttachFileModule } from 'src/app/components/ns-ho-so-nhan-su/emp-att
 import { TuyenDungRoutingModule } from './tuyen-dung-routing.module';
 import { HrmBreadCrumbModule } from 'src/app/common/hrm-breadcrumb/hrm-breadcrumb.module';
 import { ConfigGridTableFormModule } from 'src/app/common/config-grid-table-form/config-grid-table-form.module';
+import { CheckHideActionsDirectiveModule } from 'src/app/directive/check-action.module';
 @NgModule({
   imports: [
     MessagesModule,
@@ -93,6 +94,7 @@ import { ConfigGridTableFormModule } from 'src/app/common/config-grid-table-form
     UploadFileModule,
     EmpAttachFileModule,
     HrmBreadCrumbModule,
+    CheckHideActionsDirectiveModule,
     AgGridModule.withComponents([
       ButtonRendererComponent,
       ButtonRendererComponent1

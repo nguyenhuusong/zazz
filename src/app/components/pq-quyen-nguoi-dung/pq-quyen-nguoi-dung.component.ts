@@ -217,12 +217,15 @@ export class PqQuyenNguoiDungComponent implements OnInit {
     this.chiTietNguoiDUng.phone = rowData.phone;
     this.chiTietNguoiDUng.email = rowData.email;
     this.modelAdd.userId = rowData.userId;
-    this.modelAdd.admin_st = rowData.admin_st;
+    // this.modelAdd.admin_st = rowData.admin_status;
     this.modelAdd.position = rowData.position;
-    this.modelAdd.parentId = rowData.parentId;
-    this.modelAdd.roles = rowData.roles;
+    this.modelAdd.parent_id = rowData.parent_id;
+    this.modelAdd.ord_id = rowData.org_id;
+    this.modelAdd.loginName = rowData.loginName;
     this.displayAdd = true;
-    this.getRoles();
+    this.getRoleActive(rowData.role_id)
+    this.getOrganizes();
+    this.getPositionList();
   }
 
   find() {
@@ -250,6 +253,7 @@ export class PqQuyenNguoiDungComponent implements OnInit {
     this.getJobTitles();
     this.getPositionList();
     this.getManagerList();
+    this.getRoles();
     this.load();
   }
   listJobTitles = []
@@ -292,7 +296,7 @@ export class PqQuyenNguoiDungComponent implements OnInit {
 
   dataPositionList = []
   getPositionList() {
-    const queryParams = queryString.stringify({ org_level: 0 });
+    const queryParams = queryString.stringify({ filter: '', orgId: this.modelAdd.ord_id });
     this.apiService.getPositionList(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.dataPositionList = results.data.map(d => {
@@ -303,6 +307,10 @@ export class PqQuyenNguoiDungComponent implements OnInit {
         });
       }
     })
+  }
+
+  changeOragin() {
+    this.getPositionList();
   }
 
   onGridReady1(params) {
@@ -377,11 +385,41 @@ export class PqQuyenNguoiDungComponent implements OnInit {
           this.roles = results.data.dataList.data
             .map(d => {
               return {
-                label: d.id,
-                value: d.name
+                label: d.name,
+                code: d.id
               };
             });
-          this.roles = [{ label: 'Chọn nhóm quyền', value: '' }, ...this.roles];
+      }),
+      error => { };
+  }
+
+  getRoleActive(data) {
+    this.modelAdd.roles = []
+    if(data){
+      let roleIds = data.split(',');
+        for(let i = 0; i < roleIds.length; i++){
+          for(let j = 0; j < this.roles.length; j ++){
+            if(roleIds[i].toLowerCase() === this.roles[j].code){
+              this.modelAdd.roles.push(this.roles[j])
+            }
+          }
+        }
+    }
+  }
+
+  detailOrganizes = []
+  getOrganizes() {
+    this.apiService.getOrgRoots().subscribe(
+      (results: any) => {
+        if(results.status === "success")
+          this.detailOrganizes = results.data
+            .map(d => {
+              return {
+                label: d.org_name,
+                value: d.organizeId
+              };
+            });
+          this.detailOrganizes = [{ label: 'Chọn tổ chức', value: '' }, ...this.detailOrganizes];
       }),
       error => { };
   }
@@ -442,10 +480,13 @@ export class PqQuyenNguoiDungComponent implements OnInit {
   modelAdd = {
     position: '',
     userId: '',
-    admin_st: false,
-    parentId: '',
-    roles: []
+    // admin_st: false,
+    parent_id: '',
+    loginName: '',
+    ord_id: '',
+    roles: [],
   }
+  roleids = []
   checkSquare(e) {
     this.displayAdd = true;
     this.seachManager = false;
@@ -455,8 +496,14 @@ export class PqQuyenNguoiDungComponent implements OnInit {
   }
 
   save() {
+    this.modelAdd
+    if(this.chiTietNguoiDUng.userId){
+      this.modelAdd.userId = this.chiTietNguoiDUng.userId
+    }
+    let roles = this.modelAdd.roles;
+    roles = roles.map( d => d.code)
     const params = {
-      ...this.modelAdd, userId: this.chiTietNguoiDUng.userId
+      ...this.modelAdd, roles: roles
     }
     this.apiService.setUserAdd(params).subscribe(results => {
       if (results.status === 'success') {

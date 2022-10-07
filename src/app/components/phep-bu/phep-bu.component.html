@@ -113,13 +113,14 @@
 </div>
 
 
-<p-dialog [(visible)]="isShowAddPhepBuDep" [draggable]="false" [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '1200px', height: 'auto'}">
+<p-dialog [(visible)]="isShowAddPhepBuDep" [draggable]="false" [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '800px', height: 'auto'}">
     <p-header>
         Thêm mới Phép bù phòng ban 
     </p-header>
     <div class="grid">
-        <div class="col-3">
+        <div class="col-6">
             <div class="field-group select mb-0 valid">
+                <label  for=""> Tổ chức: </label>
                 <p-dropdown panelStyleClass="mh-300" [style]="{maxHeight: '300px'}" placeholder="Chọn tổ chức" appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
                     [options]="orgRoots" [required] [(ngModel)]="organizeIdForDep" name="organizeIdForDep" (onChange)="chonToChuc()">
                     <ng-template let-item pTemplate="selectedItem">
@@ -131,10 +132,9 @@
                         </div>
                     </ng-template>
                 </p-dropdown>
-                <label  for=""> Tổ chức: </label>
             </div>
         </div>
-        <div class=" col-3 mb-0">
+        <div class=" col-6 mb-0">
             <div class="field-group select treeselect label-8">
                 <!-- <p-dropdown placeholder="Chọn Phòng ban" appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
                   [options]="departments" [required] [(ngModel)]="querAddNewPhepBuDep.orgId" name="orgId" [filter]="true">
@@ -153,13 +153,13 @@
           selectionMode="single" placeholder="Select Item"></p-treeSelect>
               </div>
           </div>
-        <div class="col-2">
+        <div class="col-6">
             <div class="field-group label-8">
                 <label>Số phép được bù</label>
                 <input class="form-control" min="1" type="number" [(ngModel)]="querAddNewPhepBuDep.annualAdd" placeholder="Nhập số phép được bù" name="annualAdd">
             </div>
         </div>
-        <div class="col-2">
+        <div class="col-6">
             <div class="field-group select label-8">
                 <label for="">Tháng thêm phép bù</label>
                 <p-dropdown placeholder="Nhập số phép được bù" appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
@@ -175,7 +175,7 @@
                 </p-dropdown>
               </div>
         </div>
-        <div class="col-1">
+        <div class="col-12 text-right">
             <p-button styleClass="p-button-sm mr-1 h-56" icon="pi pi-plus" label="Thêm" (click)="setPhepBuDep()">
             </p-button>
         </div>

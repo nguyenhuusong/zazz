@@ -55,8 +55,8 @@ export class ApiHrmV2Service {
       map((repon: any) => {
         return { key: field_name, result: repon.data.map(item => {
           return {
-            name: item.work_times + '-' + item.work_cd,
-            code: item.work_cd
+            label: item.work_times + '-' + item.work_cd,
+            value: item.work_cd
           }
         }) };
       }), catchError(error => {

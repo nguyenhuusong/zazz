@@ -91,11 +91,17 @@ export class ImportTheNhanVienComponent implements OnInit {
       { headerName: 'Biển số xe', cellClass: [], field: 'vehicleNo' },
       { headerName: 'Loại xe máy', cellClass: [], field: 'vehicleType' },
       { headerName: 'Thông báo', cellClass: [], field: 'error', 
-      maxWidth: 200,  flex: 1,
-      resizable: true,
-      sortable: true,
-      wrapText: true,
-      autoHeight: true,},
+        width: 200, 
+        resizable: true,
+        sortable: true,
+        autoHeight: true,
+        wrapText: true,
+        flex: 1,
+        cellRenderer: (params: any) => {
+          return `<span class="${ (params.value.toLowerCase() === 'ok') ? '' : 'bg-red' }">${params.value}
+        </span>`;
+      },
+      },
       
     ]
    

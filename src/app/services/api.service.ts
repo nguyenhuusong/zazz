@@ -201,7 +201,7 @@ export class ApiService {
   getUserMenus(): Observable<any> {
     return this.http.get(`${apiHrmBase}/api/v2/menu/GetUserMenus`, this.options);
   }
-  getMenuConfigInfo(query): Observable<any> {
+  getMenuConfigInfo(query = ''): Observable<any> {
     return this.http.get(`${apiHrmBase}/api/v2/menu/GetMenuConfigInfo?` + query, this.options);
   }
   getConfigMenu(query): Observable<any> {

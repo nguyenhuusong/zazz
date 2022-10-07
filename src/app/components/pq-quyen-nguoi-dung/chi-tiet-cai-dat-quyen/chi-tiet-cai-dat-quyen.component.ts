@@ -72,7 +72,7 @@ export class ChiTietCaiDatQuyenComponent implements OnInit, OnDestroy {
     this.titlePage = this.route.data['_value'].title;
     this.itemsBreadcrumb = [
       { label: 'Trang chủ' },
-      { label: 'Danh sách trang', routerLink: '/setting-role' },
+      { label: 'Quyền người dùng', routerLink: '/phan-quyen/quyen-nguoi-dung' },
       { label: `${this.titlePage}` },
     ];
     this.handleParams();

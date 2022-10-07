@@ -330,6 +330,7 @@ export function CheckHideAction(path, action) {
     } else {
         return true;
     }
+    console.log('path', path)
 }
 
 export function SumArray(mang) {

@@ -18,6 +18,9 @@ export class TabBangLuongComponent implements OnInit {
   pagingComponent = {
     total: 0
   };
+  gridKey = ''
+  displaySetting = false
+
   projects = []
   public modules: Module[] = AllModules;
   public agGridFn = AgGridFn;
@@ -88,6 +91,8 @@ export class TabBangLuongComponent implements OnInit {
     this.apiService.getPayrollAppInfoPage(queryParams).subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
+        this.gridKey= results.data.dataList.gridKey;
+
         if (this.query.offSet === 0) {
           this.cols = results.data.gridflexs;
         }
@@ -290,5 +295,10 @@ export class TabBangLuongComponent implements OnInit {
       }
     }
   }
+
+  cauhinh() {
+    this.displaySetting = true;
+  }
+
 
 }

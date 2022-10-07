@@ -35,6 +35,9 @@
     listsData = null;
     totalRecord = 0;
     first = 0;
+    gridKey = ''
+  displaySetting = false
+
     countRecord: any = {
       totalRecord: 0,
       currentRecordStart: 0,
@@ -77,6 +80,7 @@
       this.apiService.getPayrollLevelBasePage(queryParams).subscribe(
         (results: any) => {
           this.listsData = results.data.dataList.data;
+          this.gridKey= results.data.dataList.gridKey;
           if (this.query.offSet === 0) {
             this.cols = results.data.gridflexs;
           }
@@ -202,6 +206,10 @@
         }
       }
     }
+    cauhinh() {
+      this.displaySetting = true;
+    }
+  
   
   }
   

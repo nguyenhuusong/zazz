@@ -550,7 +550,6 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
       this.callback.emit(value);
     } else if(field_name === 'floor_No') {
       this.floorID = value
-      console.log('value', value)
       this.dataView.forEach(element => {
         element.fields.forEach(async element1 => {
           if(element1.field_name === 'roomId'){
@@ -752,7 +751,7 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
   selector: 'app-type-number',
   template: `   <div class="field-group" [ngClass]=" element.columnValue ? 'valid' : 'invalid' ">
   <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
-                  <input type="number" class="form-control" [(ngModel)]="element.columnValue"
+                  <input type="number" class="form-control" [(ngModel)]="element.columnValue" [min]=0
                     name={{element.field_name}} [disabled]="element.isDisable" (change)="onChangeValue($event.target, element.field_name, element)"
                     [required]="element.isRequire && element.isVisiable && !element.isEmpty">
                   <div *ngIf="submit && modelFields[element.field_name].error" class="alert-validation alert-danger"> 
@@ -1465,7 +1464,8 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.element.columnValue = this.element.columnValue && (typeof this.element.columnValue === 'string') ? this.element.columnValue.split(',') : this.element.columnValue
+    this.element.columnValue = this.element.columnValue && (typeof this.element.columnValue === 'string') ? this.element.columnValue.split(',') : this.element.columnValue 
+    this.element.columnValue = this.element.columnValue && this.element.columnValue.length > 0 ? this.element.columnValue : []
     this.dataView.forEach(element => {
       element.fields.forEach(async element1 => {
         if (((element1.field_name === 'AttachName') || (element1.field_name === 'attached_name') || (element1.field_name === 'attachName')) && element1.columnValue ) {
@@ -1508,6 +1508,7 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
           const uploadTask = storageRef.child(`s-hrm/images/${getTime}-${event.currentFiles[index].name}`).put(event.currentFiles[index]);
           uploadTask.on('state_changed', (snapshot) => {
           }, (error) => {
+            console.log('error error error 1', error)
           }, () => {
             uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
               if(!this.isUploadMultiple){
@@ -1527,9 +1528,11 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
                 });
               });
             }).catch(error => {
+              console.log('error error error', error)
               this.spinner.hide();
             });
           });
+          console.log('testest sejosdijfoijs')
           if (this.element.field_name === 'file_attach') {
             this.spinner.show();
             let fomrData = new FormData();

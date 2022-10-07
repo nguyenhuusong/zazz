@@ -69,6 +69,7 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
           this.detailInfo = results.data;
         }
       });
+      console.log('app-chi-tiet-tuyen-dung')
   }
 
   setCandidateInfo(data) {

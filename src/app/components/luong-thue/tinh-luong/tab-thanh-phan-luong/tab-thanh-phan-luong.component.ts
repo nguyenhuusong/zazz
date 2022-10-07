@@ -35,6 +35,8 @@ export class TabThanhPhanLuongComponent implements OnInit {
   listsData = null;
   totalRecord = 0;
   first = 0;
+  gridKey = ''
+  displaySetting = false
   countRecord: any = {
     totalRecord: 0,
     currentRecordStart: 0,
@@ -77,6 +79,7 @@ export class TabThanhPhanLuongComponent implements OnInit {
     this.apiService.getPayrollComponentPage(queryParams).subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
+        this.gridKey= results.data.dataList.gridKey;
         if (this.query.offSet === 0) {
           this.cols = results.data.gridflexs;
         }
@@ -201,6 +204,10 @@ export class TabThanhPhanLuongComponent implements OnInit {
         this.loadjs = 0;
       }
     }
+  }
+
+  cauhinh() {
+    this.displaySetting = true;
   }
 
 }

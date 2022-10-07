@@ -1,12 +1,14 @@
 
-  <div class="breadcrumb col-12 d-flex" style="padding: 0;">
-    <div class="col-8">
-        <h3>{{titlePage}}</h3>
-        <p-breadcrumb [model]="itemsBreadcrumb"></p-breadcrumb>
-    </div>
-    <div class="col-4 justify-content-end d-flex" >
-    </div>
-</div>
+
+  <section class="bread-crumb">
+      <div class="d-flex" >
+        <div class="col-8">
+          <app-hrm-breadcrumb [items]="itemsBreadcrumb" ></app-hrm-breadcrumb>
+        </div>
+        <div class="col-4 justify-content-end d-flex" >
+        </div>
+      </div>
+  </section>
 <main class="custom-detail-fields" >
     <div class="khachHangWrapper">
         <div class="grid d-flex justify-content-start">

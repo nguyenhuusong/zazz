@@ -43,6 +43,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
   @Input() detailInfo = null;
   @Input() isViewButtonTop = true;
   @Input() optionsEdit = null;
+  @Input() menus = [];
   
   buttonSave = 'Update';
   @Input() formTypeId: string = '';
@@ -145,7 +146,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
             if (!root_orgIdOrigin) {
               root_orgIdOrigin = this.detailInfo.organizeId;
             }
-            promissall.push(this.apiHrmV2Service.getWorkTimesV2(queryString.stringify({ organizeId: root_orgIdOrigin }), element1.field_name));
+            promissall.push(this.apiHrmV2Service.getWorkTimesV2(queryString.stringify({ empId: this.detail.empId }), element1.field_name));
           } else if (element1.field_name === 'shift_cd') {
             promissall.push(this.apiHrmV2Service.getWorkShiftsV2(queryString.stringify({ empId: this.detail.empId }), element1.field_name));
           } else if (element1.field_name === 'bank_code') {
@@ -238,6 +239,9 @@ export class EditDetailComponent implements OnInit, OnChanges {
             this.getFormStatus(element1)
           }else if(element1.field_name === 'roleType') {
             promissall.push(this.apiHrmV2Service.getRoleTypesV2(element1.field_name));
+          }else if(element1.field_name === 'menuParentId') {
+            console.log('this.menus', this.menus)
+            element1.options = cloneDeep(this.menus.map(t => ({...t, label: t.title, value: t.menuId})));
           }else {
             if (element1.columnObject) {
               promissall.push(this.apiHrmV2Service.getObjectListV2(queryString.stringify({ objKey: element1.columnObject }), element1.field_name));
@@ -251,8 +255,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
           const organizeId = this.getValueByKey('organizeId');
           const orgId = this.getValueByKey('org_Id');
           // this.getHrmMeetingPerson(element1, null, organizeId, orgId);
-         
-          if(organizeId){
+         console.log('organizeId', organizeId)
+          if(organizeId || organizeId === null){
             promissall.push(this.apiHrmV2Service.getHrmFormsPersonV2(queryString.stringify({ offSet: 0, pageSize: 1000, fullName: null, organizeId: organizeId }), element1.field_name));
           }else{
             promissall.push(this.apiHrmV2Service.getHrmMeetingPersonV2(queryString.stringify({ offSet: 0, pageSize: 1000, fullName: null }), element1.field_name));
@@ -578,7 +582,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
         } else if (data.columnType === 'members') {
           delete data.options;
         }else if (data.columnType === 'linkUrlDrag' || data.columnType === 'listMch') {
-          data.columnValue =data.columnValue.length > 0 ? data.columnValue.toString() : '';
+          data.columnValue = (data.columnValue && data.columnValue.length) > 0 ? data.columnValue.toString() : '';
         } else if ((data.columnType === 'select' || data.columnType === 'multiSelect' || data.columnType === 'dropdown' || data.columnType === 'checkboxList') && data.options) {
           if (data.columnType === 'multiSelect') {
             if (data.columnValue && data.columnValue.length > 0) {
