@@ -5,10 +5,11 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { CustomTooltipComponent } from 'src/app/common/ag-component/customtooltip.component';
 import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
 import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.component';
-import { AgGridFn } from 'src/app/common/function-common/common';
+import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import * as moment from 'moment';
+import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 const MAX_SIZE = 100000000;
 
 @Component({
@@ -17,6 +18,8 @@ const MAX_SIZE = 100000000;
   styleUrls: ['./phep-bu.component.scss']
 })
 export class PhepBuComponent implements OnInit, AfterViewChecked {
+  MENUACTIONROLEAPI = MENUACTIONROLEAPI;
+  ACTIONS = ACTIONS
 
   listsData: any[] = [];
   items = []
@@ -156,12 +159,14 @@ export class PhepBuComponent implements OnInit, AfterViewChecked {
           label: 'Xem chi tiết',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
+          hide: CheckHideAction(MENUACTIONROLEAPI.GetAnnualAddPage.url, ACTIONS.VIEW)
         },
         {
           onClick: this.delRecord.bind(this),
           label: 'Xóa',
           icon: 'pi pi-trash',
           class: 'btn-primary mr5',
+          hide: CheckHideAction(MENUACTIONROLEAPI.GetAnnualAddPage.url, ACTIONS.DELETE)
         },
       ]
     };

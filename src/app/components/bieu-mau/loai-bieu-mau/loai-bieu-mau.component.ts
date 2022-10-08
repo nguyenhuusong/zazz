@@ -6,8 +6,9 @@ import { finalize } from 'rxjs';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { ExportFileService } from 'src/app/services/export-file.service';
 import * as queryString from 'querystring';
-import { AgGridFn } from 'src/app/common/function-common/common';
+import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import * as moment from 'moment';
+import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 
 @Component({
   selector: 'app-loai-bieu-mau',
@@ -15,6 +16,9 @@ import * as moment from 'moment';
   styleUrls: ['./loai-bieu-mau.component.scss']
 })
 export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
+  MENUACTIONROLEAPI = MENUACTIONROLEAPI;
+  ACTIONS = ACTIONS
+
   items = [];
   organs = [];
   loadjs = 0;
@@ -257,7 +261,6 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
   }
 
   showButtons(event: any) {
-    console.log('event event event', event)
     return {
       buttons: [
         {
@@ -265,17 +268,43 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
           label: 'Thông tin chi tiết',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
-          hide: event.data.is_edit !== 1
+          hide: this.CheckHideSua(event)
         },
         {
           onClick: this.handleDelete.bind(this),
           label: 'Xóa tài liệu',
           icon: 'fa fa-trash',
           class: 'btn-primary mr5',
-          hide: event.data.is_edit !== 1
+          hide: this.CheckHideXoa(event)
         },
       ]
     };
+  }
+
+  CheckHideSua(event) {
+    let checkValue = CheckHideAction(MENUACTIONROLEAPI.GetFormsTypePage.url, ACTIONS.VIEW);
+    if(checkValue) {
+      return true;
+    }else {
+      if(event.data.is_edit !== 1) {
+        return true;
+      }else {
+        return false;
+      }
+    }
+  }
+
+  CheckHideXoa(event) {
+    let checkValue = CheckHideAction(MENUACTIONROLEAPI.GetFormsTypePage.url, ACTIONS.DELETE);
+    if(checkValue) {
+      return true;
+    }else {
+      if(event.data.is_edit !== 1) {
+        return true;
+      }else {
+        return false;
+      }
+    }
   }
 
   handleDelete(event) {

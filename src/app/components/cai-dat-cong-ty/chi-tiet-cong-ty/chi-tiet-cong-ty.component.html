@@ -10,7 +10,9 @@
     <p-tabView [(activeIndex)]="indexTab" (onChange)="handleChange($event.index)">
         <p-tabPanel header="Thông tin chung">
               <div class="" *ngIf="detailInfo">
-                  <app-edit-detail *ngIf="listViews.length> 0 " [thongtinnhanvienNew]="true"  [manhinh]="'Edit'" [dataView]="listViews" (callback)="setCompanyInfo($event)" (callbackcancel)="cancelUpdate($event)"></app-edit-detail>
+                  <app-edit-detail *ngIf="listViews.length> 0 " [thongtinnhanvienNew]="true"  [manhinh]="'Edit'" [dataView]="listViews"
+                    [optionsButtonsEdit]="optionsButtonsView" 
+                    (callback)="setCompanyInfo($event)" (callbackcancel)="cancelUpdate($event)"></app-edit-detail>
               </div>
         </p-tabPanel>
         <p-tabPanel header="Đăng ký người duyệt">

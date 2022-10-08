@@ -8,7 +8,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
-import { AgGridFn } from 'src/app/common/function-common/common';
+import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
+import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 @Component({
   selector: 'app-chi-tiet-cong-ty',
   templateUrl: './chi-tiet-cong-ty.component.html',
@@ -18,7 +19,7 @@ export class ChiTietCongTyComponent implements OnInit, OnChanges, OnDestroy {
   private readonly unsubscribe$: Subject<void> = new Subject();
   manhinh = 'View';
   indexTab = 0;
-  optionsButtonsView = [{ label: 'Sửa', value: 'Edit' }, { label: 'Quay lại', value: 'Back' }];
+  optionsButtonsView = [{ label: 'Sửa', value: 'Edit', class: CheckHideAction(MENUACTIONROLEAPI.GetCompanyPage.url, ACTIONS.EDIT) ? 'hidden' : '' }, { label: 'Quay lại', value: 'Back' }];
   constructor(
     private apiService: ApiHrmService,
     private activatedRoute: ActivatedRoute,

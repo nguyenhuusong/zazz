@@ -54,6 +54,7 @@ import { DanhSachMenuComponent } from 'src/app/components/pq-quyen-nguoi-dung/da
 import { DanhSachRoleComponent } from 'src/app/components/pq-quyen-nguoi-dung/danh-sach-role/danh-sach-role.component';
 import { PickListModule } from 'primeng/picklist';
 import { CheckboxModule } from 'primeng/checkbox';
+import { CheckHideActionsDirectiveModule } from 'src/app/directive/check-action.module';
 @NgModule({
   imports: [
     MessagesModule,
@@ -95,6 +96,7 @@ import { CheckboxModule } from 'primeng/checkbox';
     ImageModule,
     PickListModule,
     CheckboxModule,
+    CheckHideActionsDirectiveModule,
     AgGridModule.withComponents([
       ButtonRendererComponent,
       ButtonRendererComponent1

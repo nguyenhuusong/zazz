@@ -6,10 +6,11 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.component';
 import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
 import { CustomTooltipComponent } from 'src/app/common/ag-component/customtooltip.component';
-import { AgGridFn } from 'src/app/common/function-common/common';
+import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as queryString from 'querystring';
 import { HttpParams } from '@angular/common/http';
+import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 
 @Component({
   selector: 'app-tham-so-chung-list',
@@ -17,6 +18,8 @@ import { HttpParams } from '@angular/common/http';
   styleUrls: ['./tham-so-chung-list.component.scss']
 })
 export class ThamSoChungListComponent implements OnInit {
+  MENUACTIONROLEAPI = MENUACTIONROLEAPI;
+  ACTIONS = ACTIONS
 
   dataContractTypes: any;
   constructor(
@@ -206,6 +209,7 @@ export class ThamSoChungListComponent implements OnInit {
           label: 'Xem chi tiết',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
+          hide: CheckHideAction(MENUACTIONROLEAPI.GetParameterPage.url, ACTIONS.VIEW)
         },
         // {
         //   onClick: this.handleDelete.bind(this),

@@ -7,6 +7,8 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subject } from 'rxjs';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
+import { CheckHideAction } from 'src/app/common/function-common/common';
+import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 @Component({
   selector: 'app-chi-tiet-ly-do-nghi-viec',
   templateUrl: './chi-tiet-ly-do-nghi-viec.component.html',
@@ -18,7 +20,9 @@ export class ChiTietLyDoNghiViecComponent implements OnInit, OnDestroy {
   indexTab = 0;
   optionsButon = [
     { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
-    { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check' },
+    { label: 'Lưu lại', value: 'Update',
+     icon: 'pi pi-check',  class: CheckHideAction(MENUACTIONROLEAPI.GetLeaveReasonPage.url, ACTIONS.EDIT) ? 'hidden' : ''
+  },
   ];
   constructor(
     private apiService: ApiHrmService,

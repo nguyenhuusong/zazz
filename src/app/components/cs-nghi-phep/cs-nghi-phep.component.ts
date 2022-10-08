@@ -9,17 +9,24 @@ import * as moment from 'moment';
 import { CustomTooltipComponent } from 'src/app/common/ag-component/customtooltip.component';
 import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
 import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.component';
-import { AgGridFn } from 'src/app/common/function-common/common';
+import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { flatMap, Subject, takeUntil } from 'rxjs';
 import { cloneDeep } from 'lodash';
+import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 @Component({
   selector: 'app-cs-nghi-phep',
   templateUrl: './cs-nghi-phep.component.html',
   styleUrls: ['./cs-nghi-phep.component.scss']
 })
 export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
-
+  MENUACTIONROLEAPI = MENUACTIONROLEAPI;
+  ACTIONS = ACTIONS
+  optionsButon = [
+    { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
+    { label: 'Lưu lại', value: 'Update', class: CheckHideAction(MENUACTIONROLEAPI.GetLeavePage.url, ACTIONS.EDIT) ? 'hidden' : ''
+    , icon: 'pi pi-check'  }
+  ]
   private readonly unsubscribe$: Subject<void> = new Subject();
   dataNghiPhep: any;
   addEdit = false;
@@ -209,12 +216,15 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
           label: 'Xem chi tiết',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
+          hide: CheckHideAction(MENUACTIONROLEAPI.GetLeavePage.url, ACTIONS.VIEW)
+
         },
         {
           onClick: this.showHuyDuyet.bind(this),
           label: 'Hủy duyệt',
           icon: 'pi pi-times',
           class: 'btn-primary mr5',
+          hide: CheckHideAction(MENUACTIONROLEAPI.GetLeavePage.url, ACTIONS.HUY_DUYET)
         },
         // {
         //   onClick: this.xoaTienLuong.bind(this),

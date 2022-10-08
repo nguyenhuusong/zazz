@@ -8,15 +8,18 @@ import { HttpParams } from '@angular/common/http';
 import { CustomTooltipComponent } from 'src/app/common/ag-component/customtooltip.component';
 import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
 import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.component';
-import { AgGridFn } from 'src/app/common/function-common/common';
+import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 @Component({
   selector: 'app-noi-lam-viec',
   templateUrl: './noi-lam-viec.component.html',
   styleUrls: ['./noi-lam-viec.component.scss']
 })
 export class NoiLamViecComponent implements OnInit {
+  MENUACTIONROLEAPI = MENUACTIONROLEAPI;
+  ACTIONS = ACTIONS
 
   dataWorkplace: any;
   constructor(
@@ -164,12 +167,15 @@ export class NoiLamViecComponent implements OnInit {
           label: 'Thông tin chi tiết',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
+          hide: CheckHideAction(MENUACTIONROLEAPI.GetWorkplacePage.url, ACTIONS.VIEW)
+
         },
         {
           onClick: this.xoacongty.bind(this),
           label: 'Xóa ',
           icon: 'pi pi-trash',
           class: 'btn-primary mr5',
+          hide: CheckHideAction(MENUACTIONROLEAPI.GetWorkplacePage.url, ACTIONS.DELETE)
         },
       
       ]

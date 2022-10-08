@@ -53,6 +53,7 @@ export class DanhSachMenuComponent implements OnInit {
     this.apiService.getMenuConfigInfo(queryString.stringify(query)).subscribe((results: any) => {
       if (results.status === 'success') {
         this.listsData = cloneDeep(results?.data?.menus);
+        
         this.sourceActions = results.data.actions;
         this.targetActions = results.data.clientaction
         if(results.data && results.data.view_grids_menu){

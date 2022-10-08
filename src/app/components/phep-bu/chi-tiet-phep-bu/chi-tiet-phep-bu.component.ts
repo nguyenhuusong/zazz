@@ -6,6 +6,8 @@ import { cloneDeep } from 'lodash';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
+import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import { CheckHideAction } from 'src/app/common/function-common/common';
 @Component({
   selector: 'app-chi-tiet-phep-bu',
   templateUrl: './chi-tiet-phep-bu.component.html',
@@ -13,12 +15,13 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 })
 export class ChiTietPhepBuComponent implements OnInit, OnDestroy {
   items: MenuItem[] = [];
+
   paramsObject = null;
   detailInfo = null
   listViews = [];
   optionsButon = [
     { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
-    { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check'  }
+    { label: 'Lưu lại', value: 'Update', class: CheckHideAction(MENUACTIONROLEAPI.GetAnnualAddPage.url, ACTIONS.EDIT) ? 'hidden' : '', icon: 'pi pi-check'  }
   ]
   constructor(
     private activatedRoute: ActivatedRoute,

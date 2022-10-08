@@ -8,15 +8,18 @@ import { HttpParams } from '@angular/common/http';
 import { CustomTooltipComponent } from 'src/app/common/ag-component/customtooltip.component';
 import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
 import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.component';
-import { AgGridFn } from 'src/app/common/function-common/common';
+import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 @Component({
   selector: 'app-lich-lam-viec',
   templateUrl: './lich-lam-viec.component.html',
   styleUrls: ['./lich-lam-viec.component.scss']
 })
 export class LichLamViecComponent implements OnInit {
+  MENUACTIONROLEAPI = MENUACTIONROLEAPI;
+  ACTIONS = ACTIONS
 
   dataWorkTime: any;
   constructor(
@@ -167,12 +170,14 @@ public agGridFn = AgGridFn;
           label: 'Thông tin chi tiết',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
+          hide: CheckHideAction(MENUACTIONROLEAPI.GetWorktimePage.url, ACTIONS.VIEW)
         },
         {
           onClick: this.delWorktimeInfo.bind(this),
           label: 'Xóa ',
           icon: 'pi pi-trash',
           class: 'btn-primary mr5',
+          hide: CheckHideAction(MENUACTIONROLEAPI.GetWorktimePage.url, ACTIONS.DELETE)
         },
         
       ]

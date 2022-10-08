@@ -3,7 +3,7 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as queryString from 'querystring';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { AgGridFn, stringtodate } from 'src/app/common/function-common/common';
+import { AgGridFn, CheckHideAction, stringtodate } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { CustomTooltipComponent } from 'src/app/common/ag-component/customtooltip.component';
 import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
@@ -12,6 +12,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ExportFileService } from 'src/app/services/export-file.service';
 import { cloneDeep } from 'lodash';
 import * as firebase from 'firebase';
+import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 declare var jQuery: any;
 
 @Component({
@@ -21,6 +22,9 @@ declare var jQuery: any;
 })
 export class PqXeNhanVienComponent implements OnInit {
   public modules: Module[] = AllModules;
+  MENUACTIONROLEAPI = MENUACTIONROLEAPI;
+  ACTIONS = ACTIONS
+
   public agGridFn = AgGridFn;
   constructor(
     private apiService: ApiHrmService,
@@ -263,36 +267,74 @@ export class PqXeNhanVienComponent implements OnInit {
           label: 'Phê duyệt',
           icon: 'fa fa-thumbs-up',
           class: 'btn-primary mr5',
-          hide: event.data.statusId !== 0
+          hide: this.CheckHideApprove(event)
         },
         {
           onClick: this.editVehicleCard.bind(this),
           label: 'Sửa xe',
           icon: 'fa fa-edit',
           class: 'btn-primary mr5',
+          hide: CheckHideAction(MENUACTIONROLEAPI.GetEmployeeVehiclePage.url, ACTIONS.VIEW)
         },
         {
           onClick: this.deleteCardVehicle.bind(this),
           label: 'Xóa xe',
           icon: 'pi pi-trash',
           class: 'btn-danger mr5',
+          hide: CheckHideAction(MENUACTIONROLEAPI.GetEmployeeVehiclePage.url, ACTIONS.DELETE)
         },
         {
           onClick: this.lockCardVehicle.bind(this),
           label: 'Khóa',
           icon: 'fa fa-lock',
           class: 'btn-primary mr5',
-          hide: event.data.statusId !== 1
+          hide: this.CheckHideLock(event)
         },
         {
           onClick: this.unlockCardVehicle.bind(this),
           label: 'Mở khóa',
           icon: 'fa fa-unlock',
           class: 'btn-primary mr5',
-          hide: event.data.statusId !== 3
+          hide: this.CheckHideUnLock(event)
         },
       ]
     };
+  }
+  CheckHideUnLock(event) {
+    let checkValue = CheckHideAction(MENUACTIONROLEAPI.GetEmployeeVehiclePage.url, ACTIONS.UNLOCK_CARD);
+    if(checkValue) {
+      return true;
+    }else {
+      if(event.data.statusId !== 3) {
+        return true;
+      }else {
+        return false;
+      }
+    }
+  }
+  CheckHideLock(event) {
+    let checkValue = CheckHideAction(MENUACTIONROLEAPI.GetEmployeeVehiclePage.url, ACTIONS.LOCK_CARD);
+    if(checkValue) {
+      return true;
+    }else {
+      if(event.data.statusId !== 1) {
+        return true;
+      }else {
+        return false;
+      }
+    }
+  }
+  CheckHideApprove(event) {
+    let checkValue = CheckHideAction(MENUACTIONROLEAPI.GetEmployeeVehiclePage.url, ACTIONS.PHE_DUYET);
+    if(checkValue) {
+      return true;
+    }else {
+      if(event.data.statusId !== 0) {
+        return true;
+      }else {
+        return false;
+      }
+    }
   }
 
   dataPositionList = []

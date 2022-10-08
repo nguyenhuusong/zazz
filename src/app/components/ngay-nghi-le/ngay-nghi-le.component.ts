@@ -4,7 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService, TreeNode } from 'primeng/api';
 import * as queryString from 'querystring';
-import { AgGridFn } from 'src/app/common/function-common/common';
+import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { ExportFileService } from 'src/app/services/export-file.service';
 @Component({
@@ -13,6 +14,9 @@ import { ExportFileService } from 'src/app/services/export-file.service';
   styleUrls: ['./ngay-nghi-le.component.scss']
 })
 export class NgayNghiLeComponent implements OnInit {
+  MENUACTIONROLEAPI = MENUACTIONROLEAPI;
+  ACTIONS = ACTIONS
+
   excelStyles = [
     {
       id: 'stringType',
@@ -236,12 +240,14 @@ export class NgayNghiLeComponent implements OnInit {
           label: 'Thông tin chi tiết',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
+          hide: CheckHideAction(MENUACTIONROLEAPI.HolidayPage.url, ACTIONS.VIEW)
         },
         {
           onClick: this.xoanhanvien.bind(this),
           label: 'Xóa',
           icon: 'icon-delete',
           class: 'btn-primary mr5',
+          hide: CheckHideAction(MENUACTIONROLEAPI.HolidayPage.url, ACTIONS.DELETE)
         },
       ]
     };

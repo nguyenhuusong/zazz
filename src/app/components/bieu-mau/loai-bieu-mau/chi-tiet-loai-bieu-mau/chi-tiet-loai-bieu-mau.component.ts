@@ -6,6 +6,8 @@ import { MenuItem, MessageService } from 'primeng/api';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as queryString from 'querystring';
+import { CheckHideAction } from 'src/app/common/function-common/common';
+import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 @Component({
   selector: 'app-chi-tiet-loai-bieu-mau',
   templateUrl: './chi-tiet-loai-bieu-mau.component.html',
@@ -18,7 +20,7 @@ export class ChiTietLoaiBieuMauComponent implements OnInit, OnDestroy {
   listViews = [];
   optionsButon = [
     { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
-    { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check' }
+    { label: 'Lưu lại', value: 'Update', class: CheckHideAction(MENUACTIONROLEAPI.GetFormsTypePage.url, ACTIONS.EDIT) ? 'hidden' : '', icon: 'pi pi-check' }
   ];
   titlePage = '';
   @Input() formTypeId: string = null;

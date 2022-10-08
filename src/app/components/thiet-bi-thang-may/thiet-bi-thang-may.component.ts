@@ -2,7 +2,8 @@
 import { AfterViewChecked, ChangeDetectorRef, Component, OnInit,ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { AgGridFn } from 'src/app/common/function-common/common';
+import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 
 declare var jQuery: any;
@@ -22,6 +23,9 @@ export class ThietBiThangMayComponent implements OnInit, AfterViewChecked {
       this.titleModal = 'Thêm thiết Lập';
      }
     items = [];
+    MENUACTIONROLEAPI = MENUACTIONROLEAPI;
+    ACTIONS = ACTIONS
+  
     listShafts = [];
     model: any = {
       filter: '',
@@ -129,6 +133,8 @@ export class ThietBiThangMayComponent implements OnInit, AfterViewChecked {
           label: 'Xem chi tiết',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
+          hide: CheckHideAction(MENUACTIONROLEAPI.GetElevatorDevicePage.url, ACTIONS.VIEW)
+
         },
       ]
     };
@@ -248,12 +254,13 @@ export class ThietBiThangMayComponent implements OnInit, AfterViewChecked {
     const a: any = document.querySelector(".header");
     const b: any = document.querySelector(".sidebarBody");
     const c: any = document.querySelector(".breadcrumb");
-    const d: any = document.querySelector(".filterInput");
     const e: any = document.querySelector(".paginator");
+    const d: any = document.querySelector(".bread-filter");
+    
     this.loadjs ++ 
     if (this.loadjs === 5) {
       if(b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + d.clientHeight + e.clientHeight + 55;
+        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + d.clientHeight + e.clientHeight + 73;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       }else {

@@ -4,7 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { cloneDeep } from 'lodash';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
-import { AgGridFn } from 'src/app/common/function-common/common';
+import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
+import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 
 @Component({
   selector: 'app-chi-tiet-hop-dong',
@@ -14,7 +15,7 @@ import { AgGridFn } from 'src/app/common/function-common/common';
 export class ChiTietHopDongComponent implements OnInit, OnChanges {
   manhinh = 'View';
   indexTab = 0;
-  optionsButtonsView = [{ label: 'Sửa', value: 'Edit' }, { label: 'Quay lại', value: 'Back' }];
+  optionsButtonsView = [{ label: 'Sửa', value: 'Edit', class: CheckHideAction(MENUACTIONROLEAPI.GetContractTypePage.url, ACTIONS.EDIT) ? 'hidden' : '' }, { label: 'Quay lại', value: 'Back' }];
   constructor(
     private apiService: ApiHrmService,
     private activatedRoute: ActivatedRoute,

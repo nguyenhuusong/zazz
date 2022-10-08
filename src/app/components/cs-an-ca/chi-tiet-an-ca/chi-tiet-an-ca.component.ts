@@ -8,6 +8,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { Subject } from 'rxjs';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as moment from 'moment';
+import { CheckHideAction } from 'src/app/common/function-common/common';
+import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 @Component({
   selector: 'app-chi-tiet-an-ca',
   templateUrl: './chi-tiet-an-ca.component.html',
@@ -18,6 +20,10 @@ export class ChiTietAnCaComponent implements OnInit, OnChanges, OnDestroy {
   manhinh = 'View';
   indexTab = 0;
   optionsButtonsView = [{ label: 'Sửa', value: 'Edit' }, { label: 'Quay lại', value: 'Back' }];
+  optionsButon = [
+    { label: 'Hủy', value: 'Back', class: 'p-button-secondary', icon: 'pi pi-times' },
+    { label: 'Lưu lại', value: 'Update', class: CheckHideAction(MENUACTIONROLEAPI.GetFormsTypePage.url, ACTIONS.EDIT) ? 'hidden' : '', icon: 'pi pi-check' }
+  ];
   constructor(
     private apiService: ApiHrmService,
     private activatedRoute: ActivatedRoute,

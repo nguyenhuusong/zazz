@@ -4,7 +4,7 @@ import * as queryString from 'querystring';
 import { ApiService } from 'src/app/services/api.service';
 import { Router } from '@angular/router';
 import { ConfirmationService, MessageService, TreeNode } from 'primeng/api';
-import { AgGridFn } from 'src/app/common/function-common/common';
+import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { CustomTooltipComponent } from 'src/app/common/ag-component/customtooltip.component';
 import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
@@ -207,17 +207,42 @@ export class CaiDatLichHopComponent implements OnInit {
           label: 'Sửa',
           icon: 'fa fa-pencil-square-o',
           class: 'btn-primary mr5',
-          hide: (event.data.is_edit !== 1)
+          hide: this.CheckHideSua(event)
         },
         {
           onClick: this.handleDelete.bind(this),
           label: 'Hủy',
           icon: 'pi pi-times',
           class: 'btn-danger mr5',
-          hide: (event.data.is_edit !== 1)
+          hide: this.CheckHideDele(event)
         },
       ]
     };
+  }
+
+  CheckHideSua(event) {
+    let checkValue = CheckHideAction(MENUACTIONROLEAPI.GetMeetingPage.url, ACTIONS.VIEW);
+    if(checkValue) {
+      return true;
+    }else {
+      if(event.data.is_edit !== 1) {
+        return true;
+      }else {
+        return false;
+      }
+    }
+  }
+
+  CheckHideDele(event) {
+    if(CheckHideAction(MENUACTIONROLEAPI.GetMeetingPage.url, ACTIONS.DELETE)) {
+      return true;
+    }else {
+      if(event.data.is_edit !== 1) {
+        return true;
+      }else {
+        return false;
+      }
+    }
   }
 
   initGrid() {

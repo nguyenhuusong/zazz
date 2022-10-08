@@ -8,15 +8,18 @@ import { HttpParams } from '@angular/common/http';
 import { CustomTooltipComponent } from 'src/app/common/ag-component/customtooltip.component';
 import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
 import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.component';
-import { AgGridFn } from 'src/app/common/function-common/common';
+import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 @Component({
   selector: 'app-pq-quyen-nguoi-dung',
   templateUrl: './pq-quyen-nguoi-dung.component.html',
   styleUrls: ['./pq-quyen-nguoi-dung.component.scss']
 })
 export class PqQuyenNguoiDungComponent implements OnInit {
+  MENUACTIONROLEAPI = MENUACTIONROLEAPI;
+  ACTIONS = ACTIONS
 
   dataQuyenNguoiDung: any;
   constructor(
@@ -142,12 +145,15 @@ export class PqQuyenNguoiDungComponent implements OnInit {
           label: 'Xem chi tiết',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
+          hide: CheckHideAction(MENUACTIONROLEAPI.GetUserPage.url, ACTIONS.VIEW)
+
         },
         {
           onClick: this.xoaNguoiDung.bind(this),
           label: 'Xóa tài khoản',
           icon: 'pi pi-trash',
           class: 'btn-primary mr5',
+          hide: CheckHideAction(MENUACTIONROLEAPI.GetUserPage.url, ACTIONS.DELETE)
         },
 
       ]

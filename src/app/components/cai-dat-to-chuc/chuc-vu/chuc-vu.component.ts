@@ -7,16 +7,18 @@ import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
 import { HttpParams } from '@angular/common/http';
 import { CustomTooltipComponent } from 'src/app/common/ag-component/customtooltip.component';
 import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
-import { AgGridFn } from 'src/app/common/function-common/common';
+import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 @Component({
   selector: 'app-chuc-vu',
   templateUrl: './chuc-vu.component.html',
   styleUrls: ['./chuc-vu.component.scss']
 })
 export class ChucVuComponent implements OnInit, AfterViewChecked {
-
+  MENUACTIONROLEAPI = MENUACTIONROLEAPI;
+  ACTIONS = ACTIONS
   dataChucVu: any;
   constructor(
     private apiService: ApiHrmService,
@@ -179,11 +181,13 @@ export class ChucVuComponent implements OnInit, AfterViewChecked {
           label: 'Thông tin chi tiết',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
+          hide: CheckHideAction(MENUACTIONROLEAPI.GetPositionPage.url, ACTIONS.VIEW)
         },
         {
           onClick: this.xoacongty.bind(this),
           label: 'Xóa chức vụ',
           icon: 'pi pi-trash',
+          hide: CheckHideAction(MENUACTIONROLEAPI.GetPositionPage.url, ACTIONS.DELETE)
         },
       ]
     };

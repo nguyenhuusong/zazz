@@ -8,6 +8,6 @@
     </section>
     <section>
         <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'"  [dataView]="listViews"
-        (callback)="setAccountInfo($event)" (callbackcancel)="cancelUpdate($event)"></app-edit-detail>
+        (callback)="setAccountInfo($event)" (callbackcancel)="cancelUpdate($event)" [optionsButtonsEdit]="optionsButtonsView"></app-edit-detail>
     </section>
 </div>

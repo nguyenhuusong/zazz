@@ -24,12 +24,15 @@
                         </svg>
                     </p-button>
                     <p-button label="Nhập Excel" (click)="showImportExcel = true" icon="fa fa-upload"
+                    [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetIncomeTaxPage.url, action: ACTIONS.IMPORT}"
                     styleClass="p-button-sm height-56">
                     </p-button>
                     <p-button label="Tải file mẫu" (click)="dowloadTemplate()" icon="fa fa-download"
+                    [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetIncomeTaxPage.url, action: ACTIONS.TAI_FILE_MAU}"
                         styleClass="p-button-sm height-56">
                     </p-button>
                     <p-button label="Xóa" (click)="handleDelete()" icon="fa fa-trash"
+                    [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetIncomeTaxPage.url, action: ACTIONS.DELETE}"
                         styleClass="p-button-sm p-button-danger height-56">
                     </p-button>
                     <p-button styleClass="p-button-sm height-56" (click)="cauhinh()">

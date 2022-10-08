@@ -5,11 +5,12 @@ import { ConfirmationService, MessageService, TreeNode } from 'primeng/api';
 import { ApiService } from 'src/app/services/api.service';
 import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { AgGridFn } from 'src/app/common/function-common/common';
+import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { CustomTooltipComponent } from 'src/app/common/ag-component/customtooltip.component';
 import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
 import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.component';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
+import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 @Component({
   selector: 'app-cai-dat-to-chuc',
   templateUrl: './cai-dat-to-chuc.component.html',
@@ -19,6 +20,9 @@ export class CaiDatToChucComponent implements OnInit {
   pagingComponent = {
     total: 0
   };
+  MENUACTIONROLEAPI = MENUACTIONROLEAPI;
+  ACTIONS = ACTIONS
+
   projects = []
   public modules: Module[] = AllModules;
   public agGridFn = AgGridFn;
@@ -268,6 +272,8 @@ export class CaiDatToChucComponent implements OnInit {
           label: 'Thông tin tổ chức',
           icon: 'fa fa-edit',
           class: 'btn-primary mr5',
+          hide: CheckHideAction(MENUACTIONROLEAPI.GetOrganizePage.url, ACTIONS.VIEW)
+
         },
 
       ]

@@ -457,6 +457,8 @@ export const ACTIONS = {
     XEM_HO_SO: 'xem_ho_so',
     TAM_TINH: 'tam_tinh',
     EXPORT: 'export',
+    TAI_FILE_MAU: 'tai_file_mau',
+    IMPORT: 'import',
     CAP_NHAT_TT: 'cap_nhat_tt',
     DA_KY: 'da_ky',
     HOAN_THANH: 'hoan_thanh',
@@ -467,7 +469,14 @@ export const ACTIONS = {
     THEM_CON_NHO: 'them_con_nho',
     LUU_THONG_BAO: 'luu_thong_bao',
     CONG_BO: 'cong_bo',
-    DAY_LEN_APP: 'day_len_app'
+    DAY_LEN_APP: 'day_len_app',
+    ADD_PHEP_BU_PHONG_BAN: 'them_phep_bu_phong_ban',
+    HUY_DUYET: 'huy_duyet',
+    XUAT_CHUNG_TU_THUE_1: 'xuat_chung_tu_thue_1',
+    XUAT_CHUNG_TU_THUE_2: 'xuat_chung_tu_thue_2',
+    XUAT_THU_XAC_NHAN_THUE: 'xuat_thu_xac_nhan_thue',
+    LOCK_CARD: 'lock_card',
+    UNLOCK_CARD: 'unlock_card'
 }
 
 export const MessageErrorAction = {
@@ -605,6 +614,143 @@ export const API_PROFILE  = {
         'menu': '',
         'url': '/hoat-dong/tai-lieu-chung'
     },
+    'GetFormsTypePage': {
+        'name': 'Thiết lập tài liệu',
+        'api': '0eed6cc8-55f4-4285-9f8e-bfc0ba572253',
+        'menu': '',
+        'url': '/hoat-dong/loai-tai-lieu'
+    },
+    'GetAnnualAddPage': {
+        'name': 'Phép bùa',
+        'api': '0eed6cc8-55f4-4285-9f8e-bfc0ba572253',
+        'menu': '',
+        'url': '/chinh-sach/phep-bu'
+    },
+    'GetLeavePage': {
+        'name': 'Giải trình công',
+        'api': '0eed6cc8-55f4-4285-9f8e-bfc0ba572253',
+        'menu': '',
+        'url': '/chinh-sach/giai-trinh-cong'
+    },
+    'GetEmployeeSalaryMonthPage': {
+        'name': 'Danh sách chấm công',
+        'api': '0eed6cc8-55f4-4285-9f8e-bfc0ba572253',
+        'menu': '',
+        'url': '/chinh-sach/cham-cong'
+    },
+    'GetTimekeepingDetail': {
+        'name': 'Xem công',
+        'api': '0eed6cc8-55f4-4285-9f8e-bfc0ba572253',
+        'menu': '',
+        'url': '/chinh-sach/cham-cong/xem-cong'
+    },
+    
+    'GetEatingPage': {
+        'name': 'Ăn ca',
+        'api': '0eed6cc8-55f4-4285-9f8e-bfc0ba572253',
+        'menu': '',
+        'url': '/chinh-sach/an-ca'
+    },
+    
+    'GetSalaryRecordPage': {
+        'name': 'Danh sách tiền lương',
+        'api': '0eed6cc8-55f4-4285-9f8e-bfc0ba572253',
+        'menu': '',
+        'url': '/chinh-sach/tien-luong'
+    },
+    'GetIncomeTaxPage': {
+        'name': 'Danh sách thuế thu nhập',
+        'api': '0eed6cc8-55f4-4285-9f8e-bfc0ba572253',
+        'menu': '',
+        'url': '/chinh-sach/thue-thu-nhap'
+    },
+    'GetElevatorDevicePage': {
+        'name': 'Phân quyền thang máy',
+        'api': '0eed6cc8-55f4-4285-9f8e-bfc0ba572253',
+        'menu': '',
+        'url': '/phan-quyen/thiet-bi-thang-may'
+    },
+    'GetEmployeeCardPage': {
+        'name': 'Danh sách thẻ nhân viên',
+        'api': '0eed6cc8-55f4-4285-9f8e-bfc0ba572253',
+        'menu': '',
+        'url': '/phan-quyen/the-nhan-vien'
+    },
+    'GetEmployeeVehiclePage': {
+        'name': 'Danh sách xe nhân viên',
+        'api': '0eed6cc8-55f4-4285-9f8e-bfc0ba572253',
+        'menu': '',
+        'url': '/phan-quyen/xe-nhan-vien'
+    },
+    'GetUserPage': {
+        'name': 'Danh sách quyền người dùng',
+        'api': '0eed6cc8-55f4-4285-9f8e-bfc0ba572253',
+        'menu': '',
+        'url': '/phan-quyen/quyen-nguoi-dung'
+    },
+    
+    'GetOrganizePage': {
+        'name': 'Danh sách tổ chức',
+        'api': '0eed6cc8-55f4-4285-9f8e-bfc0ba572253',
+        'menu': '',
+        'url': '/cai-dat/cai-dat-to-chuc'
+    },
+    
+    'GetPositionPage': {
+        'name': 'Danh sách chức vụ',
+        'api': '0eed6cc8-55f4-4285-9f8e-bfc0ba572253',
+        'menu': '',
+        'url': '/cai-dat/chuc-vu'
+    },
+    'GetWorkplacePage': {
+        'name': '  Danh sách nơi làm việc',
+        'api': '0eed6cc8-55f4-4285-9f8e-bfc0ba572253',
+        'menu': '',
+        'url': '/cai-dat/noi-lam-viec'
+    },
+    'GetWorktimePage': {
+        'name': '  Lịch làm việc',
+        'api': '0eed6cc8-55f4-4285-9f8e-bfc0ba572253',
+        'menu': '',
+        'url': '/cai-dat/lich-lam-viec'
+    },
+    'GetLeaveReasonPage': {
+        'name': '  Lý do nghỉ',
+        'api': '0eed6cc8-55f4-4285-9f8e-bfc0ba572253',
+        'menu': '',
+        'url': '/cai-dat/ly-do-nghi'
+    },
+    'GetCompanyPage': {
+        'name': 'Danh sách công ty',
+        'api': '0eed6cc8-55f4-4285-9f8e-bfc0ba572253',
+        'menu': '',
+        'url': '/cai-dat/cai-dat-cong-ty'
+    },
+    'GetContractTypePage': {
+        'name': 'Danh sách loại hợp đồng',
+        'api': '0eed6cc8-55f4-4285-9f8e-bfc0ba572253',
+        'menu': '',
+        'url': '/cai-dat/quan-ly-hop-dong'
+    },
+    'GetParameterPage': {
+        'name': '  Tham số chung',
+        'api': '0eed6cc8-55f4-4285-9f8e-bfc0ba572253',
+        'menu': '',
+        'url': '/cai-dat/tham-so-chung'
+    },
+    'HolidayPage': {
+        'name': ' Danh sách ngày nghỉ',
+        'api': '0eed6cc8-55f4-4285-9f8e-bfc0ba572253',
+        'menu': '',
+        'url': '/cai-dat/cai-dat-ngay-nghi-le'
+    },
+    'GetTimekeepingWifiPage': {
+        'name': ' Danh sách thiết lập wifi',
+        'api': '0eed6cc8-55f4-4285-9f8e-bfc0ba572253',
+        'menu': '',
+        'url': '/cai-dat/thiet-lap-wifi'
+    },
+    
     
     
     

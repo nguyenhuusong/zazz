@@ -6,6 +6,8 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subject } from 'rxjs';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
+import { CheckHideAction } from 'src/app/common/function-common/common';
+import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 @Component({
   selector: 'app-chi-tiet-thue-thu-nhap',
   templateUrl: './chi-tiet-thue-thu-nhap.component.html',
@@ -15,7 +17,8 @@ export class ChiTietThueThuNhapComponent implements OnInit, OnDestroy {
   private readonly unsubscribe$: Subject<void> = new Subject();
   manhinh = 'Edit';
   indexTab = 0;
-  optionsButtonsView = [{ label: 'Sửa', value: 'Edit' }, { label: 'Quay lại', value: 'Back' }];
+  optionsButtonsView = [{ label: 'Sửa', value: 'Edit', class: CheckHideAction(MENUACTIONROLEAPI.GetIncomeTaxPage.url, ACTIONS.EDIT) ? 'hidden' : ''
+}, { label: 'Quay lại', value: 'Back' }];
   constructor(
     private apiService: ApiHrmService,
     private activatedRoute: ActivatedRoute,

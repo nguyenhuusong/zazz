@@ -9,9 +9,10 @@ import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
 import { CustomTooltipComponent } from 'src/app/common/ag-component/customtooltip.component';
 import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
-import { AgGridFn } from 'src/app/common/function-common/common';
+import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { NgxSpinnerService } from 'ngx-spinner';
 import * as FileSaver from 'file-saver';
+import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 
 @Component({
   selector: 'app-cs-thue-thu-nhap',
@@ -19,6 +20,9 @@ import * as FileSaver from 'file-saver';
   styleUrls: ['./cs-thue-thu-nhap.component.scss']
 })
 export class CsThueThuNhapComponent implements OnInit, AfterViewChecked {
+  MENUACTIONROLEAPI = MENUACTIONROLEAPI;
+  ACTIONS = ACTIONS
+
   public modules: Module[] = AllModules;
   public agGridFn = AgGridFn;
   loading = false;
@@ -184,6 +188,8 @@ export class CsThueThuNhapComponent implements OnInit, AfterViewChecked {
           label: 'Sửa',
           icon: 'fa fa-pencil-square-o',
           class: 'btn-primary mr5',
+          hide: CheckHideAction(MENUACTIONROLEAPI.GetIncomeTaxPage.url, ACTIONS.VIEW)
+
           // hide: (params.data.status === 3)
         },
         {
@@ -191,21 +197,21 @@ export class CsThueThuNhapComponent implements OnInit, AfterViewChecked {
           label: 'Xuất chứng từ thuế mẫu 1',
           icon: 'fa fa-trash',
           class: 'btn-danger mr5',
-          hide: false
+          hide: CheckHideAction(MENUACTIONROLEAPI.GetIncomeTaxPage.url, ACTIONS.XUAT_CHUNG_TU_THUE_1)
         },
         {
           onClick: this.handleExportTax2.bind(this),
           label: 'Xuất chứng từ thuế mẫu 2',
           icon: 'fa fa-trash',
           class: 'btn-danger mr5',
-          hide: false
+          hide: CheckHideAction(MENUACTIONROLEAPI.GetIncomeTaxPage.url, ACTIONS.XUAT_CHUNG_TU_THUE_2)
         },
         {
           onClick: this.handleExportApproveTax.bind(this),
           label: 'Xuất thư xác nhận thuế',
           icon: 'fa fa-trash',
           class: 'btn-danger mr5',
-          hide: false
+          hide: CheckHideAction(MENUACTIONROLEAPI.GetIncomeTaxPage.url, ACTIONS.XUAT_THU_XAC_NHAN_THUE)
         },
       ]
     };
