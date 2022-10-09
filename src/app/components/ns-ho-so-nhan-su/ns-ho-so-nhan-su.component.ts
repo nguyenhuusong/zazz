@@ -274,7 +274,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
           label: 'Thông tin chi tiết',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
-          hide: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.VIEW)
+          // hide: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.VIEW)
         },
         {
           onClick: this.xoanhanvien.bind(this),

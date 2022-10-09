@@ -4,7 +4,9 @@
             <div class="d-flex bet bottom">
                  <app-hrm-breadcrumb [displayTitle]="true" [items]="items" [title]="'Hồ sơ nhân sự'"></app-hrm-breadcrumb>
                  <div class="d-flex bet mid bottom gap-12">
-                    <p-button (click)="theOrganToMove()" styleClass="height-56" *ngIf="listDataSelect.length > 0">
+                    <p-button (click)="theOrganToMove()" styleClass="height-56" *ngIf="listDataSelect.length > 0"
+                        [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetEmployeePage.url, action: ACTIONS.CHUYEN_TO_CHUC}"
+                        >
                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M0 0H16V16H0V0Z" fill="#F3F8FF"/>
                         </svg> 

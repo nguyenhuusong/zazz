@@ -17,6 +17,9 @@ import { getFieldValueAggrid } from 'src/app/utils/common/function-common';
 })
 
 export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
+  MENUACTIONROLEAPI = MENUACTIONROLEAPI;
+  ACTIONS = ACTIONS
+
   optionsButtonsView = [
     // { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
     { label: 'Lưu lại', value: 'Update', class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.EDIT) ? 'hidden' : '', icon: 'pi pi-save' },
@@ -267,6 +270,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
                   icon: 'fa fa-edit',
                   key: 'taikhoanlogin',
                   class: 'btn-primary mr-1',
+                  hide: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_NGUOI_DUNG_XEM_CHI_TIET)
                 },
                 {
                   onClick: this.OnClick.bind(this),
@@ -274,7 +278,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
                   icon: 'pi pi-trash',
                   key: 'xoataikhoandangnhap',
                   class: 'btn-primary',
-                  hide: !params.data.lock_st
+                  hide: this.checkHideNguoiDungXoaTaiKhoan(params)
                 },
                 {
                   onClick: this.OnClick.bind(this),
@@ -282,7 +286,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
                   icon: 'fa fa-edit',
                   key: 'dong-mo-tai-khoan',
                   class: 'btn-primary mr-1',
-                  hide: params.data.lock_st === true
+                  hide: this.checkHideNguoiDungKhoaTaiKhoan(params)
                 },
                 {
                   onClick: this.OnClick.bind(this),
@@ -290,7 +294,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
                   icon: 'pi pi-trash',
                   key: 'dong-mo-tai-khoan',
                   class: 'btn-danger',
-                  hide: params.data.lock_st === false
+                  hide: this.checkHideNguoiDungMoTaiKhoan(params)
                 },
               ]
             };
@@ -302,6 +306,41 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
         this.spinner.hide();
       }
     })
+  }
+  checkHideNguoiDungMoTaiKhoan(params){
+    if(CheckHideAction(MENUACTIONROLEAPI.GetMeetingPage.url, ACTIONS.CHI_TIET_HO_SO_NGUOI_DUNG_MO_KHOA)) {
+      return true;
+    }else {
+      if(params.data.lock_st === false) {
+        return true;
+      }else {
+        return false;
+      }
+    }
+  }
+
+  checkHideNguoiDungKhoaTaiKhoan(params){
+    if(CheckHideAction(MENUACTIONROLEAPI.GetMeetingPage.url, ACTIONS.CHI_TIET_HO_SO_NGUOI_DUNG_KHOA)) {
+      return true;
+    }else {
+      if(params.data.lock_st === true) {
+        return true;
+      }else {
+        return false;
+      }
+    }
+  }
+
+  checkHideNguoiDungXoaTaiKhoan(params){
+    if(CheckHideAction(MENUACTIONROLEAPI.GetMeetingPage.url, ACTIONS.CHI_TIET_HO_SO_NGUOI_DUNG_XOA)) {
+      return true;
+    }else {
+      if(!params.data.lock_st) {
+        return true;
+      }else {
+        return false;
+      }
+    }
   }
 
   cancelUpdateViewsReportTo(data) {
@@ -391,15 +430,24 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
         this.optionsButtonsView =
           [
             { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-save' },
-            { label: 'Duyệt hồ sơ', value: 'DuyetHoSo', class: '', icon: 'uni-icon icon-dhs' },
-            { label: 'Hủy hồ sơ', value: 'HuyHoSo', class: 'p-button-danger ', icon: 'pi pi-times-circle' },
+            { label: 'Duyệt hồ sơ', value: 'DuyetHoSo', 
+            class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_DUYET_HO_SO) ? 'hidden' : ''
+            , icon: 'uni-icon icon-dhs' },
+            { label: 'Hủy hồ sơ', value: 'HuyHoSo', 
+            class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_HUY_HO_SO) ? 'hidden' : 'p-button-danger', 
+            icon: 'pi pi-times-circle' },
             // { label: 'Quay lại', value: 'Back', class: 'p-button-secondary', icon: 'pi pi-times' }
           ];
           if (this.selectedMenuCode === API_PROFILE.QUAN_HE_LAO_DONG) {
             this.optionsButtonsView = [
-              { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-save' },
-              { label: 'Duyệt hồ sơ', value: 'DuyetHoSo', class: '', icon: 'uni-icon icon-dhs' },
-              { label: 'Hủy hồ sơ', value: 'HuyHoSo', class: 'p-button-danger', icon: 'pi pi-times-circle' },
+              { label: 'Lưu lại', value: 'Update', 
+                class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.EDIT) ? 'hidden' : ''
+              , icon: 'pi pi-save' },
+              { label: 'Duyệt hồ sơ', value: 'DuyetHoSo', 
+                class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_DUYET_HO_SO) ? 'hidden' : '', icon: 'uni-icon icon-dhs' },
+              { label: 'Hủy hồ sơ', value: 'HuyHoSo', 
+                class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_HUY_HO_SO) ? 'hidden' : 'p-button-danger',
+                icon: 'pi pi-times-circle' },
               // { label: 'Tạo hợp đồng', value: 'TaoHopDong', class: '', icon: 'pi pi-check' },
             ];
           }
@@ -417,15 +465,19 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       case 2:
         this.optionsButtonsView =
           [
-            { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-save' },
-            { label: 'Mở Lại hồ sơ', value: 'MoLaiHoSo', class: '', icon: 'pi pi-check' },
+            { label: 'Lưu lại', value: 'Update', 
+            class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.EDIT) ? 'hidden' : '', icon: 'pi pi-save' },
+            { label: 'Mở Lại hồ sơ', value: 'MoLaiHoSo', 
+            class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.MO_LAI_HO_SO) ? 'hidden' : '', icon: 'pi pi-check' },
             // { label: 'Quay lại', value: 'Back', class: 'p-button-secondary', icon: 'pi pi-times' }
           ];
           if (this.selectedMenuCode === API_PROFILE.QUAN_HE_LAO_DONG) {
             this.optionsButtonsView =
               [
-                { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-save' },
-                { label: 'Mở Lại hồ sơ', value: 'MoLaiHoSo', class: '', icon: 'pi pi-check' },
+                { label: 'Lưu lại', value: 'Update', 
+                class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.EDIT) ? 'hidden' : '', icon: 'pi pi-save' },
+                { label: 'Mở Lại hồ sơ', value: 'MoLaiHoSo', 
+                class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.MO_LAI_HO_SO) ? 'hidden' : '', icon: 'pi pi-check' },
                 // { label: 'Tạo hợp đồng', value: 'TaoHopDong', class: '', icon: 'pi pi-check' },
               ];
           }
@@ -433,15 +485,19 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       case 3:
         this.optionsButtonsView =
           [
-            { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-save' },
-            { label: 'Tuyển dụng lại', value: 'TuyenDungLai', class: '', icon: 'pi pi-check' },
+            { label: 'Lưu lại', value: 'Update', 
+            class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.EDIT) ? 'hidden' : '', icon: 'pi pi-save' },
+            { label: 'Tuyển dụng lại', value: 'TuyenDungLai', 
+              class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.TUYEN_DUNG_LAI) ? 'hidden' : '', icon: 'pi pi-check' },
             // { label: 'Quay lại', value: 'Back', class: 'p-button-secondary', icon: 'pi pi-times' }
           ];
           if (this.selectedMenuCode === API_PROFILE.QUAN_HE_LAO_DONG) {
             this.optionsButtonsView =
               [
-                { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-save' },
-                { label: 'Tuyển dụng lại', value: 'TuyenDungLai', class: '', icon: 'pi pi-check' },
+                { label: 'Lưu lại', value: 'Update', 
+                class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.EDIT) ? 'hidden' : '', icon: 'pi pi-save' },
+                { label: 'Tuyển dụng lại', value: 'TuyenDungLai', 
+                class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.TUYEN_DUNG_LAI) ? 'hidden' : '', icon: 'pi pi-check' },
                 // { label: 'Tạo hợp đồng', value: 'TaoHopDong', class: '', icon: 'pi pi-check' },
               ];
           }
@@ -455,12 +511,19 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       default:
         this.optionsButtonsView =
           [
-            { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-save' },
-            { label: 'Duyệt hồ sơ', value: 'DuyetHoSo', class: '', icon: 'uni-icon icon-dhs' },
-            { label: 'Hủy hồ sơ', value: 'HuyHoSo', class: 'p-button-danger', icon: 'pi pi-check' },
-            { label: 'Mở Lại hồ sơ', value: 'MoLaiHoSo', class: '', icon: 'pi pi-check' },
-            { label: 'Tuyển dụng lại', value: 'TuyenDungLai', class: '', icon: 'pi pi-check' },
-            { label: 'Nghỉ việc', value: 'NghiViec', class: 'p-button-secondary', icon: 'pi pi-check' },
+            { label: 'Lưu lại', value: 'Update', 
+            class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.EDIT) ? 'hidden' : '', icon: 'pi pi-save' },
+            { label: 'Duyệt hồ sơ', value: 'DuyetHoSo', 
+            class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_DUYET_HO_SO) ? 'hidden' : '', icon: 'uni-icon icon-dhs' },
+            { label: 'Hủy hồ sơ', value: 'HuyHoSo', 
+              class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_HUY_HO_SO) ? 'hidden' : 'p-button-danger',
+             icon: 'pi pi-check' },
+            { label: 'Mở Lại hồ sơ', value: 'MoLaiHoSo', 
+              class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.MO_LAI_HO_SO) ? 'hidden' : '', icon: 'pi pi-check' },
+            { label: 'Tuyển dụng lại', value: 'TuyenDungLai', 
+              class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.TUYEN_DUNG_LAI) ? 'hidden' : '', icon: 'pi pi-check' },
+            { label: 'Nghỉ việc', value: 'NghiViec', 
+              class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.NGHI_VIEC) ? 'hidden' : 'p-button-secondary', icon: 'pi pi-check' },
             // { label: 'Quay lại', value: 'Back', class: 'p-button-secondary', icon: 'pi pi-times' }
           ];
         break;
@@ -488,6 +551,8 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
                     icon: 'fa fa-edit',
                     key: 'xemchitietCard',
                     class: 'btn-primary mr-1',
+                    hide: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.XEM_CHI_TIET_GIAY_TO_TUY_THAN)
+
                   },
                 ]
               };
@@ -1196,6 +1261,8 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
                     icon: 'pi pi-cloud-download',
                     class: 'btn-primary mr5',
                     key: 'tailenhoso',
+                    hide: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.TAI_LEN_HO_SO)
+
                   },
                   {
                     onClick: this.OnClick.bind(this),
@@ -1203,7 +1270,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
                     icon: 'fa fa-edit',
                     key: 'xemhoso',
                     class: 'btn-primary mr5',
-                    hide: !params.data.meta_file_url
+                    hide: this.CheckHideXemHoSo(params)
                   },
                   {
                     onClick: this.OnClick.bind(this),
@@ -1211,6 +1278,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
                     icon: 'pi pi-trash',
                     key: 'huyhosocanhan',
                     class: 'btn-danger',
+                    hide: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.HUY_HO_SO)
                   },
 
                 ]
@@ -1221,6 +1289,19 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
         this.displayCreateContract = true;
       }
     });
+  }
+
+  CheckHideXemHoSo(params) {
+    let checkValue = CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.XEM_HO_SO);
+    if(checkValue) {
+      return true;
+    }else {
+      if(!params.data.meta_file_url) {
+        return true;
+      }else {
+        return false;
+      }
+    }
   }
 
   OnClick(event): void {

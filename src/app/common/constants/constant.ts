@@ -476,7 +476,21 @@ export const ACTIONS = {
     XUAT_CHUNG_TU_THUE_2: 'xuat_chung_tu_thue_2',
     XUAT_THU_XAC_NHAN_THUE: 'xuat_thu_xac_nhan_thue',
     LOCK_CARD: 'lock_card',
-    UNLOCK_CARD: 'unlock_card'
+    UNLOCK_CARD: 'unlock_card',
+    CHUYEN_TO_CHUC: 'chuyen_to_chuc',
+    XEM_CHI_TIET_GIAY_TO_TUY_THAN: 'xem_chi_tiet_giay_to_tuy_than',
+    TAI_LEN_HO_SO: 'tai_len_ho_so',
+    HUY_HO_SO: 'huy_ho_so',
+    CHI_TIET_HO_SO_THEM_MOI_CONG_VIEC: 'chi_tiet_ho_so_them_moi_cong_viec',
+    CHI_TIET_HO_SO_THEM_MOI_FILE_DINH_KEM: 'chi_tiet_ho_so_them_moi_file_dinh_kem',
+    CHI_TIET_HO_SO_THEM_MOI_THOI_GIAN_LAM_VIEC: 'chi_tiet_ho_so_them_moi_thoi_gian_lam_viec',
+    CHI_TIET_HO_SO_HUY_HO_SO: 'chi_tiet_ho_so_huy_ho_so',
+    CHI_TIET_HO_SO_DUYET_HO_SO: 'chi_tiet_ho_so_duyet_ho_so',
+    CHI_TIET_HO_SO_NGUOI_DUNG_XEM_CHI_TIET: 'chi_tiet_ho_so_nguoi_dung_xem_chi_tiet',
+    CHI_TIET_HO_SO_NGUOI_DUNG_KHOA: 'chi_tiet_ho_so_nguoi_dung_khoa',
+    CHI_TIET_HO_SO_NGUOI_DUNG_MO_KHOA: 'chi_tiet_ho_so_nguoi_dung_mo_khoa',
+    CHI_TIET_HO_SO_NGUOI_DUNG_XOA: 'chi_tiet_ho_so_nguoi_dung_xoa',
+    MO_LAI_HO_SO: 'mo_lai_ho_so',
 }
 
 export const MessageErrorAction = {
