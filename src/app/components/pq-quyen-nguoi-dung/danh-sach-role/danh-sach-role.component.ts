@@ -261,19 +261,32 @@ export class DanhSachRoleComponent implements OnInit {
   }
 
   changeMenuParent(menu, index) {
+    // this.menus[index].isCheck = !this.menus[index].isCheck;
+    // if (this.menus[index].isCheck) {
+    //   if(this.menus[index].submenus){
+    //     this.menus[index].submenus = this.menus[index].submenus.map(result => {
+    //       return { ...result, isCheck: true };
+    //     })
+    //   }
+    // } else {
+    //   if(this.menus[index].submenus){
+    //     this.menus[index].submenus = this.menus[index].submenus.map(result => {
+    //       return { ...result, isCheck: false };
+    //     })
+    //   }
+    // }
+
+    // this.menus = [...this.menus];
+
     this.menus[index].isCheck = !this.menus[index].isCheck;
     if (this.menus[index].isCheck) {
-      if(this.menus[index].submenus){
-        this.menus[index].submenus = this.menus[index].submenus.map(result => {
-          return { ...result, isCheck: true };
-        })
-      }
+      this.menus[index].submenus = this.menus[index].submenus.map(result => {
+        return { ...result, isCheck: true };
+      })
     } else {
-      if(this.menus[index].submenus){
-        this.menus[index].submenus = this.menus[index].submenus.map(result => {
-          return { ...result, isCheck: false };
-        })
-      }
+      this.menus[index].submenus = this.menus[index].submenus.map(result => {
+        return { ...result, isCheck: false };
+      })
     }
 
     this.menus = [...this.menus];
@@ -292,7 +305,17 @@ export class DanhSachRoleComponent implements OnInit {
         this.menus[idxParent].isCheck = false;
       }
     }
-    this.menus[idxParent].listmenu[index] = [...this.menus[idxParent].listmenu[index]];
+    
+    if (this.menus[idxParent].submenus[index].isCheck) {
+      this.menus[idxParent].submenus[index].actions = this.menus[idxParent].submenus[index].actions.map(result => {
+        return { ...result, isCheck: true };
+      })
+    } else {
+      this.menus[idxParent].submenus[index].actions = this.menus[idxParent].submenus[index].actions.map(result => {
+        return { ...result, isCheck: false };
+      })
+    }
+    // this.menus[idxParent].listmenu[index] = [...this.menus[idxParent].listmenu[index]];
   }
 
   clickRowRoleGetMenu(event) {
