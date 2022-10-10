@@ -6,6 +6,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { CustomTooltipComponent } from 'src/app/utils/common/customtooltip.component';
+import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
+import { KEYBUTTON } from 'src/app/shared/constants';
 @Component({
   selector: 'app-danh-sach-menu',
   templateUrl: './danh-sach-menu.component.html',
@@ -31,12 +34,12 @@ export class DanhSachMenuComponent implements OnInit {
   heightGrid = 500;
   gridKey = 'view_sysconfig_menus'
   displaySetting = false;
+  cols: any[];
   cauhinh() {
     this.displaySetting = true;
   }
 
   ngOnInit(): void {
-    this.initGrid(this.columnDefs);
     this.getMenuConfigInfo()
     // this.getClientActionListByWebId()
   }
@@ -52,11 +55,11 @@ export class DanhSachMenuComponent implements OnInit {
     }
     this.apiService.getMenuConfigInfo(queryString.stringify(query)).subscribe((results: any) => {
       if (results.status === 'success') {
-        this.listsData = cloneDeep(results?.data?.menus);
-        
+        this.listsData = cloneDeep(results?.data?.menutree);
         this.sourceActions = results.data.actions;
         this.targetActions = results.data.clientaction
         if(results.data && results.data.view_grids_menu){
+          this.cols = results.data.view_grids_menu;
           this.initGrid(results.data.view_grids_menu);
         }
       }
@@ -88,8 +91,8 @@ export class DanhSachMenuComponent implements OnInit {
     this.getConfigMenu(null)
   }
 
+  detailCellRendererParams;
   initGrid(gridflexs) {
-    console.log('columnDefs', gridflexs)
     this.columnDefs = [
       ...AgGridFn(gridflexs),
       {
@@ -138,7 +141,115 @@ export class DanhSachMenuComponent implements OnInit {
         },
       },
     ];
+  this.detailCellRendererParams = {
+    detailGridOptions: {
+      frameworkComponents: {
+        customTooltip: CustomTooltipComponent,
+        buttonAgGridComponent: ButtonAgGridComponent,
+      },
+      getRowHeight: (params) => {
+        return 40;
+      },
+      columnDefs: [
+        ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
+        {
+          headerName: 'Thao tác',
+          field: 'button',
+          filter: '',
+          pinned:  'right',
+          width:100,
+          cellRenderer: 'buttonAgGridComponent',
+          cellClass:  ['border-right'],
+            cellRendererParams: params => {
+              return {
+                buttons: [
+                  {
+                    onClick: this.OnClickRow.bind(this),
+                    label: 'Xem chi tiết',
+                    icon: 'pi pi-pencil',
+                    class: 'btn-primary mr5',
+                    key: KEYBUTTON.XEMCHITIET
+                  },
+                  {
+                    onClick: this.OnClickRow.bind(this),
+                    label: 'Xóa',
+                    icon: 'pi pi-trash',
+                    class: 'btn-danger',
+                    key: KEYBUTTON.XOATHONGTIN
+                  },
+                ]
+              };
+            },
+          },
+      ],
+      defaultColDef: {
+        tooltipComponent: 'customTooltip',
+        resizable: true,
+      },
+      enableCellTextSelection: true,
+      onFirstDataRendered(params) {
+        let allColumnIds: any = [];
+        params.columnApi.getAllColumns()
+          .forEach((column: any) => {
+            if (column.colDef.cellClass.indexOf('no-auto') < 0) {
+              allColumnIds.push(column)
+            } else {
+              column.colDef.suppressSizeToFit = true;
+              allColumnIds.push(column)
+            }
+          });
+        params.api.sizeColumnsToFit(allColumnIds);
+      },
+    },
+    getDetailRowData(params) {
+      params.successCallback(params.data.submenus);
+    },
+    template: function (params) {
+      var personName = params.data.Name;
+      return (
+        '<div style="height: 100%; background-color: #EDF6FF; padding: 20px; box-sizing: border-box;">' +
+        `  <div style="height: 10%; padding: 2px; font-weight: bold;"> Danh sách (${params.data.submenus.length}) : [` +
+        personName + ']' +
+        '</div>' +
+        '  <div ref="eDetailGrid" style="height: 90%;"></div>' +
+        '</div>'
+      );
+    },
+  };
   }
+
+  OnClickRow(event: any) {
+    if (event.event.item.key === KEYBUTTON.XEMCHITIET) {
+      this.btnEdit(event);
+    }else {
+      this.btnDelete(event);
+    }
+  }
+
+  btnEdit(e) {
+    this.getConfigMenu(e.rowData.menuId);
+  }
+
+  btnDelete(e) {
+    this.confirmationService.confirm({
+      message: 'Bạn có chắc chắn muốn thực hiện hành động này?',
+      accept: () => {
+        const queryParams = queryString.stringify({ menuId: e.rowData.menuId });
+        this.apiService.delConfigMenu(queryParams).subscribe(results => {
+          if (results.status === 'success') {
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
+            this.getMenuConfigInfo()
+            this.displayInfo = false
+          } else {
+            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
+          }
+        });
+    }
+  });
+  }
+  
+
+
   expanded = null
   onCellValueChanged(event) {
     if (event.colDef.field === 'intPosEdit' || event.colDef.field === 'intPosEditParent') {
@@ -205,6 +316,7 @@ export class DanhSachMenuComponent implements OnInit {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
           }
         });
+      
       }
     })
   }

@@ -240,7 +240,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
           }else if(element1.field_name === 'roleType') {
             promissall.push(this.apiHrmV2Service.getRoleTypesV2(element1.field_name));
           }else if(element1.field_name === 'menuParentId') {
-            element1.options = cloneDeep(this.menus.map(t => ({...t, label: t.title, value: t.menuId})));
+            element1.columnValue = parseInt(element1.columnValue)
+            element1.options = cloneDeep(this.menus.map(t => ({label: t.title, value: t.menuId})));
           }else {
             if (element1.columnObject) {
               promissall.push(this.apiHrmV2Service.getObjectListV2(queryString.stringify({ objKey: element1.columnObject }), element1.field_name));
@@ -254,11 +255,12 @@ export class EditDetailComponent implements OnInit, OnChanges {
           const organizeId = this.getValueByKey('organizeId');
           const orgId = this.getValueByKey('org_Id');
           // this.getHrmMeetingPerson(element1, null, organizeId, orgId);
-         console.log('organizeId', organizeId)
-          if(organizeId || organizeId === null){
-            promissall.push(this.apiHrmV2Service.getHrmFormsPersonV2(queryString.stringify({ offSet: 0, pageSize: 1000, fullName: null, organizeId: organizeId }), element1.field_name));
-          }else{
-            promissall.push(this.apiHrmV2Service.getHrmMeetingPersonV2(queryString.stringify({ offSet: 0, pageSize: 1000, fullName: null }), element1.field_name));
+          if(element1.columnValue){
+            if(organizeId || organizeId === null){
+              promissall.push(this.apiHrmV2Service.getHrmFormsPersonV2(queryString.stringify({ offSet: 0, pageSize: 1000, fullName: null, organizeId: organizeId }), element1.field_name));
+            }else{
+              promissall.push(this.apiHrmV2Service.getHrmMeetingPersonV2(queryString.stringify({ offSet: 0, pageSize: 1000, fullName: null }), element1.field_name));
+            }
           }
         }else if( element1.columnType === 'linkUrlDrag') {
           if (element1.field_name === 'link_view') {

@@ -40,7 +40,7 @@ export class DanhSachRoleComponent implements OnInit {
     // this.getWebMenuTree()
     this.getRoles();
   }
-
+  listMenuTree = []
   getRoles() {
     this.columnDefs = []
     const query = {  }
@@ -48,7 +48,8 @@ export class DanhSachRoleComponent implements OnInit {
       if (results.status === 'success') {
         this.listsData = cloneDeep(results?.data?.roles);
         this.dataMenuActionRole = results.data;
-        this.menus = cloneDeep(results?.data?.menutree);
+        this.listMenuTree = cloneDeep(results?.data?.menutree)
+        this.menus = cloneDeep(this.listMenuTree);
         if(results.data && results.data.view_grids_action){
           this.initGrid(results.data.view_grids_roles);
         }
@@ -296,7 +297,7 @@ export class DanhSachRoleComponent implements OnInit {
 
   clickRowRoleGetMenu(event) {
     this.detailDetailInfo = null;
-    this.menus = cloneDeep(this.dataMenuActionRole.menutree);
+    this.menus = cloneDeep(this.listMenuTree);
     this.menus.forEach(m => {
       m.isCheck = false;
       m.isCheckAll = false;
@@ -307,7 +308,6 @@ export class DanhSachRoleComponent implements OnInit {
       }
     });
     // this.detailRole = event.data
-    console.log('event', event)
     this.getRoleInfoSidebar(event.data.roleId);
     this.displayMenuRole = true;
   }

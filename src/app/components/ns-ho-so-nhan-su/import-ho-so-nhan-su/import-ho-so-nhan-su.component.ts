@@ -56,7 +56,7 @@ export class ImportHoSoNhanSuComponent implements OnInit {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {
         if (results.status === 'success') {
-          if(results.data && results.data.dataList.data && results.data.dataList.data.length > 0) {
+          if(results.data && results.data.data && results.data.data.length > 0) {
             console.log(results, 'results')
             this.cols = results.data.gridflexs;
             this.initGrid();
@@ -115,7 +115,7 @@ export class ImportHoSoNhanSuComponent implements OnInit {
   }
 
   getTemfileImport() {
-    this.apiService.exportReportLocalhost('assets/tpl-import-file/import_Employee.xlsx').subscribe((data: any) => {
+    this.apiService.exportReportLocalhost('assets/tpl-import-file/file_mau_import_ho_so.xlsx').subscribe((data: any) => {
       this.createImageFromBlob(data)
     });
   }

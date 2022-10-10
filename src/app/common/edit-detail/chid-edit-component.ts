@@ -1707,7 +1707,7 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
       let orgId:any = await this.getValueByKey('org_Id');
         
       if(!organizeId){
-        const queryParams = queryString.stringify({ offSet: 0, pageSize: 50, fullName: this.searchText })
+        const queryParams = queryString.stringify({ offSet: 0, pageSize: 20, fullName: this.searchText })
         this.apiService.getHrmMeetingPerson(queryParams).subscribe( res => {
           this.spinner.hide();
               if(res.status === 'success') {
@@ -1789,19 +1789,21 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
     }
 
     chooseMember() {
-      for(let item of this.element.options) {
-        for(let index in item.child) {
-          if(item.child[index].isCheck) {
-            this.selectMembers.push({...item.child[index], isCheck: parseInt(index) === 0 ? true : false});
-          }else {
-           const newIndex = this.selectMembers.findIndex(d => d.userId === item.child[index].userId);
-           if(newIndex > -1) this.selectMembers.splice(newIndex,1);
-           this.selectMembers = [...this.selectMembers];
+      if(this.element.options){
+        for(let item of this.element.options) {
+          for(let index in item.child) {
+            if(item.child[index].isCheck) {
+              this.selectMembers.push({...item.child[index], isCheck: parseInt(index) === 0 ? true : false});
+            }else {
+            const newIndex = this.selectMembers.findIndex(d => d.userId === item.child[index].userId);
+            if(newIndex > -1) this.selectMembers.splice(newIndex,1);
+            this.selectMembers = [...this.selectMembers];
+            }
           }
         }
+        this.selectMembers =uniqBy(this.selectMembers, 'userId');
+        this.element.columnValue = this.selectMembers.map(item => item.userId).toString();
       }
-      this.selectMembers =uniqBy(this.selectMembers, 'userId');
-      this.element.columnValue = this.selectMembers.map(item => item.userId).toString();
     }
 
     handleChangeParent(member, index) {

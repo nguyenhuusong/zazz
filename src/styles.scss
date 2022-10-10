@@ -3399,8 +3399,9 @@ div.p-organizationchart {
         .ag-row-odd{
             background: #fff;
         }
+        .ag-row-focus,
         .ag-row-hover{
-            background: none !important;
+            background: #cbe5ff !important;
         }
     }
 
@@ -5003,7 +5004,8 @@ full-calendar{
         table{
             tr{
                 td{
-                    border: 2px solid #e0e0e0;
+                    border: 2px solid #EDF1FA;
+                    border-color: #EDF1FA !important;
                 }
             }
         }
@@ -5226,5 +5228,150 @@ p-button{
     p{
         margin-bottom: 0px;
         margin-top: 5px;
+    }
+}
+.fc-timeGridWeek-view{
+    table.fc-scrollgrid{
+        border-color: #EDF1FA !important;
+        border-left: none;
+        border-top: none;
+    }
+    .fc-cell-shaded{
+        display: none;
+    }
+    td {
+        &.fc-timegrid-slot-minor{
+            border-top-style: none !important;
+        }
+        &.fc-theme-standard .fc-view-harness td{
+            border-color: #EDF1FA !important;
+            border-width: 2px !important;
+        }
+        &.fc-theme-standard .fc-view-harness .fc-cell-shaded{
+            border: none !important;
+            border-width: 0 !important;
+        }
+        &.fc-theme-standard .fc-view-harness th{
+            &:first-child{
+                border: none !important;
+            }
+        }
+        &.fc-theme-standard .fc-view-harness .fc-scrollgrid{
+            border: none;
+        }
+    }
+    .fc-col-header {
+        thead{
+            tr{
+                th{
+                    border-color: #EDF1FA !important;
+                    border-bottom: 2px solid #EDF1FA;
+                    div{
+                        border-top: 1px solid #EDF1FA;
+                    }
+                    &:first-child{
+                        div{
+                            border-top: none;
+                        }
+                        border-bottom: 0px;
+                    }
+                }
+            }
+        }
+    }
+    .fc-timegrid-cols{
+        tbody{
+            .fc-timegrid-col{
+                border-color: #EDF1FA !important;
+                border-left: 2px solid;
+                border-right: 2px solid;
+            }
+        }
+    }
+    tbody{
+        .fc-theme-standard td{
+            border-color: #EDF1FA !important;
+            border-top: 2px solid;
+        }
+        .fc-scrollgrid-section-body{
+            .fc-timegrid-body{
+                tr{
+                    td{
+                        &.fc-timegrid-slot-lane{
+                            border-color: #EDF1FA !important;
+                            border-top: 2px solid;
+                        }
+                    }
+                }
+            }
+        }
+        .fc-scrollgrid-section-body{
+            td{
+                // border-left: none;
+                // border-top: none;
+                &.fc-timegrid-slot-label-frame{
+                    color: #5D6985;
+                    font-weight: 400;
+                    font-size: 20px;
+                }
+            }
+            
+        }
+    }
+    .fc .fc-timegrid-slot{
+        height: 2.5em;
+    }
+    .fc-timegrid-body{
+        table{
+            tr{
+                td{
+                    &.fc-timegrid-slot-label{
+                        color: #5D6985;
+                        font-weight: 400;
+                        font-size: 16px;
+                    }
+                }
+            }
+        }
+    }
+    .fc-timegrid-slots{
+        tbody{
+            tr{
+                td{
+                    &:first-child{
+                        border: none !important;
+                    }
+                }
+            }
+        }
+        tr{
+           .fc-timegrid-slot{
+            height: 2em;
+           } 
+        }
+    }
+    .fc-col-header-cell{
+        .fc-col-header-cell-cushion {
+            display: block;
+            padding: 10px;
+            span{
+                font-size: 16px;
+                line-height: 26px;
+                color: #525B73;
+                font-weight: normal;
+            }
+            span.week-day{
+                display: block;
+                color: #2F3E62;
+                font-weight: 600;
+                font-size: 14px;
+                line-height: 26px;
+            }
+            span.to-day-day{
+                background: #4C97E4;
+                color: #FFFFFF;
+                display: block;
+            }
+        }
     }
 }

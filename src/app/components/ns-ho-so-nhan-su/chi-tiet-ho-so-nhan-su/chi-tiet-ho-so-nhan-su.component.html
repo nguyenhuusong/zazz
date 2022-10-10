@@ -405,7 +405,7 @@
                 <!-- <p-listbox [options]="menuItems" [(ngModel)]="selectedMenuCode" optionLabel="name" (onChange)="onChangeMenu($event.value)" optionValue="code"></p-listbox> -->
             <!-- </div> -->
             <p-dialog styleClass="popup-btngroup-edit-detail" header="{{titleForm.title}}" [(visible)]="displayDialog" [modal]="true" [draggable]="false"
-            [resizable]="false" [style]="{width: '75vw'}" [autoZIndex]=true [draggable]="false" [resizable]="false">
+            [resizable]="false" [style]="{width: '1200px'}" [autoZIndex]=true [draggable]="false" [resizable]="false">
                     <app-edit-detail
                         *ngIf="listViewsForm.length> 0 && displayDialog &&  (titleForm.type === 'DuyetHoSo' || titleForm.type === 'TuyenDungLai' || titleForm.type === 'ChuyenCongTac')"
                         [detail]="detailInfoForm" [manhinh]="manhinh" [thongtinnhanvienNew]="true" [dataView]="listViewsForm"

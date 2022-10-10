@@ -26,6 +26,8 @@ export class ChonLichHopComponent implements OnInit, OnChanges {
   calendarApi: Calendar;
   showChooseDate = false;
 
+  weeks = ['Chủ nhật', 'Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7']
+
   constructor(
     private apiService: ApiService
   ) {
@@ -73,17 +75,40 @@ export class ChonLichHopComponent implements OnInit, OnChanges {
         dayGridDay: {
           buttonText: 'Ngày'
         },
+        timelineDay: {
+          slotLabelFormat: ['H:mm'],
+        },
+        timelineMonth: {
+          slotLabelFormat: ['DD'],
+        },
       },
       displayEventTime: true,
       editable: false,
       selectable: true,
       selectMirror: false,
+      allDaySlot: false,
       plugins: [ timeGridPlugin ],
-      // timeGridWeek
-      initialView: 'dayGridMonth',
+      // dayGridMonth
+      initialView: 'timeGridWeek',
       eventMinHeight: 120,
       slotEventOverlap: false,
+      height: 550,
       allDayText: '',
+      dayHeaderContent: (args) => {
+        let currentDay:any = moment().day();
+        let day = moment(args.date);
+        let dayMonth = moment(args.date).format('DD-MM');
+        let placeTitle = document.createElement('span');
+        placeTitle.innerHTML = this.weeks[day.day()];
+        placeTitle.className = 'week-day'; 
+        let dayTitle: any = document.createElement('span');
+        dayTitle.innerHTML = dayMonth;
+        dayTitle.className = day.day() === currentDay ? 'to-day-day' : '';
+        return { domNodes: [
+          placeTitle,
+          dayTitle
+        ]};
+      },
       slotDuration: '00:30:00', // Bao nhiêu phút thì tách thành 1 khoảng thời gian
       scrollTime: '10:00:00',
       eventTimeFormat: { // like '14:30:00'
@@ -91,10 +116,10 @@ export class ChonLichHopComponent implements OnInit, OnChanges {
         // minute: '2-digit',
         // second: '2-digit',
         // hour12: false
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: false
+        // hour: 'numeric',
+        // minute: '2-digit',
+        // meridiem: 'short',
+        // hour12: false
       },
       eventContent: function (arg) {
         var event = arg.event;

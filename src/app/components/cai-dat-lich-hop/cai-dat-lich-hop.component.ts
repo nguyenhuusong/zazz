@@ -207,7 +207,7 @@ export class CaiDatLichHopComponent implements OnInit {
           label: 'Sửa',
           icon: 'fa fa-pencil-square-o',
           class: 'btn-primary mr5',
-          hide: this.CheckHideSua(event)
+          // hide: this.CheckHideSua(event)
         },
         {
           onClick: this.handleDelete.bind(this),
