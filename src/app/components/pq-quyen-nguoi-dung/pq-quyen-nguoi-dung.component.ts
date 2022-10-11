@@ -280,6 +280,10 @@ export class PqQuyenNguoiDungComponent implements OnInit {
   seachManager = false
   themmoi() {
     this.seachManager = true;
+    this.orgId = null;
+    this.valueSearchUser = null;
+    this.managerInfoList = []
+    this.getOrganizes();
     this.initAgrid();
 
   }
@@ -302,7 +306,11 @@ export class PqQuyenNguoiDungComponent implements OnInit {
 
   dataPositionList = []
   getPositionList() {
-    const queryParams = queryString.stringify({ filter: '', orgId: this.modelAdd.ord_id });
+    let oriID = this.modelAdd.ord_id
+    if(!oriID) {
+      oriID = this.orgId;
+    }
+    const queryParams = queryString.stringify({ filter: '', orgId: oriID });
     this.apiService.getPositionList(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.dataPositionList = results.data.map(d => {
@@ -325,10 +333,19 @@ export class PqQuyenNguoiDungComponent implements OnInit {
   }
 
   callApi(custId) {
+    this.spinner.show();
     this.apiService.getUserSearchPage(custId).subscribe((result: any) => {
       if (result.status === 'success') {
         // this.gridApi1.setRowData(result.data.dataList.data);
-        this.managerInfoList = result.data.dataList.data;
+        // this.managerInfoList = result.data.dataList.data;
+        this.managerInfoList = []
+        let listUserOfUser = result.data.dataList.data;
+        listUserOfUser.forEach(user => {
+          let userLoginName = user.loginName.substring(0,4);
+          if(userLoginName !== 'shrm') {
+            this.managerInfoList.push(user)
+          }
+        })
         this.initAgrid();
         this.spinner.hide();
       }
@@ -363,6 +380,7 @@ export class PqQuyenNguoiDungComponent implements OnInit {
           ... res
         }
       });
+      
     });
   }
   valueSearchUser
@@ -494,11 +512,18 @@ export class PqQuyenNguoiDungComponent implements OnInit {
   }
   roleids = []
   checkSquare(e) {
+    this.getPositionList();
     this.displayAdd = true;
     this.seachManager = false;
     let items = this.listUserDetail.filter(res => res.custId === this.detailUser.custId);
     this.titleForm = 'Thêm mới quyền người dùng'
-    this.chiTietNguoiDUng = items[0]
+    
+    this.chiTietNguoiDUng = {...items[0], loginName: e.rowData.loginName}
+    this.modelAdd.ord_id = this.chiTietNguoiDUng.organizeId;
+    // this.chiTietNguoiDUng = e.rowData
+    console.log('items', e)
+    console.log('items items', items)
+    
   }
 
   save() {
