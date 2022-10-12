@@ -274,7 +274,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
           label: 'Thông tin chi tiết',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
-          // hide: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.VIEW)
+          hide: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.VIEW)
         },
         {
           onClick: this.xoanhanvien.bind(this),
@@ -501,6 +501,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
         label: 'Import file',
         code: 'Import',
         icon: 'pi pi-upload',
+        disabled: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.IMPORT),
         command: () => {
           this.importFileExel();
         }
@@ -509,6 +510,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
         label: 'Export file',
         code: 'Import',
         icon: 'pi pi-download',
+        disabled: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.EXPORT),
         command: () => {
           this.exportExel();
         }

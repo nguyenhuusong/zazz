@@ -416,6 +416,7 @@ export class XuLyHopDongComponent implements OnInit {
         label: 'Import file',
         code: 'Import',
         icon: 'pi pi-file-excel',
+        disabled: CheckHideAction(MENUACTIONROLEAPI.GetContractPage.url, ACTIONS.IMPORT),
         command: () => {
           this.importFileExel();
         }
