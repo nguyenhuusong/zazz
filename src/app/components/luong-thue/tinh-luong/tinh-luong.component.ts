@@ -5,7 +5,7 @@ import { ConfirmationService, MessageService, TreeNode } from 'primeng/api';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { AgGridFn } from 'src/app/common/function-common/common';
+import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { ExportFileService } from 'src/app/services/export-file.service';
 import { cloneDeep } from 'lodash';
@@ -13,6 +13,7 @@ import { TabBangLuongComponent } from './tab-bang-luong/tab-bang-luong.component
 import { TabThietLapThamSoComponent } from './tab-thiet-lap-tham-so/tab-thiet-lap-tham-so.component';
 import { TabThanhPhanLuongComponent } from './tab-thanh-phan-luong/tab-thanh-phan-luong.component';
 import { TabCapBacLuongComponent } from './tab-cap-bac-luong/tab-cap-bac-luong.component';
+import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 @Component({
   selector: 'app-tinh-luong',
   templateUrl: './tinh-luong.component.html',
@@ -60,6 +61,9 @@ export class TinhLuongComponent implements OnInit {
   displaySetting = false;
   gridKey = ''
   tabIndex = 0;
+  MENUACTIONROLEAPI = MENUACTIONROLEAPI;
+  ACTIONS = ACTIONS
+  isAddNewButton = false;
   cauhinh() {
     this.displaySetting = true;
   }
@@ -81,11 +85,25 @@ export class TinhLuongComponent implements OnInit {
         }
       },
     ]
+    this.checkIsAddNew();
+  }
+
+  checkIsAddNew() {
+    if(this.tabIndex === 0 && !CheckHideAction(MENUACTIONROLEAPI.GetPayrollAppInfoPage.url, ACTIONS.ADD_TINH_LUONG_BANG_LUONG)){
+      this.isAddNewButton = true;
+    }else if(this.tabIndex === 1 && !CheckHideAction(MENUACTIONROLEAPI.GetPayrollAppInfoPage.url, ACTIONS.ADD_TINH_LUONG_THIET_LAP_THAM_SO)){
+      this.isAddNewButton = true;
+    }else if(this.tabIndex === 2 && !CheckHideAction(MENUACTIONROLEAPI.GetPayrollAppInfoPage.url, ACTIONS.ADD_TINH_LUONG_THANH_PHAN_LUONG)){
+      this.isAddNewButton = true;
+    }else if(this.tabIndex === 3 && !CheckHideAction(MENUACTIONROLEAPI.GetPayrollAppInfoPage.url, ACTIONS.ADD_TINH_LUONG_CAP_BAC_LUONG)){
+      this.isAddNewButton = true;
+    }else{
+      this.isAddNewButton = false;
+    }
   }
 
   editEvent(event) {
     let id = null;
-    console.log('event', event)
     if(this.tabIndex === 0){
       this.idForm = event.rowData.appInfoId
     }else if(this.tabIndex === 1){
@@ -224,7 +242,8 @@ export class TinhLuongComponent implements OnInit {
 
   handleChange(e){
     this.tabIndex = e;
-    this.checkTitleAddNew()
+    this.checkTitleAddNew();
+    this.checkIsAddNew();
   }
   
 

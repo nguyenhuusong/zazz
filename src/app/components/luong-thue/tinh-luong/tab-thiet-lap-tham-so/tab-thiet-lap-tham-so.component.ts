@@ -4,10 +4,11 @@ import * as queryString from 'querystring';
 import { ConfirmationService, MessageService, TreeNode } from 'primeng/api';
 import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { AgGridFn } from 'src/app/common/function-common/common';
+import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { ExportFileService } from 'src/app/services/export-file.service';
 import { cloneDeep } from 'lodash';
+import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 @Component({
   selector: 'app-tab-thiet-lap-tham-so',
   templateUrl: './tab-thiet-lap-tham-so.component.html',
@@ -42,6 +43,8 @@ export class TabThietLapThamSoComponent implements OnInit {
     currentRecordStart: 0,
     currentRecordEnd: 0
   }
+  MENUACTIONROLEAPI = MENUACTIONROLEAPI;
+  ACTIONS = ACTIONS
   constructor(
     private apiService: ApiHrmService,
     private spinner: NgxSpinnerService,
@@ -113,12 +116,14 @@ export class TabThietLapThamSoComponent implements OnInit {
           label: 'Xem chi tiết',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
+          hide: CheckHideAction(MENUACTIONROLEAPI.GetPayrollAppInfoPage.url, ACTIONS.VIEW_TINH_LUONG_THIET_LAP_THAM_SO)
         },
         {
           onClick: this.deleteRow.bind(this),
           label: 'Xóa',
           icon: 'fa fa-trash',
           class: 'btn-primary mr5',
+          hide: CheckHideAction(MENUACTIONROLEAPI.GetPayrollAppInfoPage.url, ACTIONS.DELETE_TINH_LUONG_THIET_LAP_THAM_SO)
         },
       ]
     };
