@@ -145,7 +145,7 @@ export class PqQuyenNguoiDungComponent implements OnInit {
           label: 'Xem chi tiết',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
-          hide: CheckHideAction(MENUACTIONROLEAPI.GetUserPage.url, ACTIONS.VIEW)
+          // hide: CheckHideAction(MENUACTIONROLEAPI.GetUserPage.url, ACTIONS.VIEW)
 
         },
         {
@@ -220,6 +220,7 @@ export class PqQuyenNguoiDungComponent implements OnInit {
     this.titleForm = 'Chỉnh sửa quyền người dùng'
     this.chiTietNguoiDUng.userLogin = rowData.loginName;
     this.chiTietNguoiDUng.fullName = rowData.fullName;
+    this.chiTietNguoiDUng.loginName = rowData.loginName;
     this.chiTietNguoiDUng.phone = rowData.phone;
     this.chiTietNguoiDUng.email = rowData.email;
     this.modelAdd.userId = rowData.userId;
@@ -229,6 +230,7 @@ export class PqQuyenNguoiDungComponent implements OnInit {
     this.modelAdd.ord_id = rowData.org_id;
     this.modelAdd.loginName = rowData.loginName;
     this.displayAdd = true;
+    console.log('rowData', rowData)
     this.getRoleActive(rowData.role_id)
     this.getOrganizes();
     this.getPositionList();
@@ -520,17 +522,22 @@ export class PqQuyenNguoiDungComponent implements OnInit {
     
     this.chiTietNguoiDUng = {...items[0], loginName: e.rowData.loginName}
     this.modelAdd.ord_id = this.chiTietNguoiDUng.organizeId;
-    // this.chiTietNguoiDUng = e.rowData
+    this.modelAdd.userId = e.rowData.userId
     console.log('items', e)
     console.log('items items', items)
     
   }
-
+  saveAddUser = false;
   save() {
-    this.modelAdd
-    if(this.chiTietNguoiDUng.userId){
-      this.modelAdd.userId = this.chiTietNguoiDUng.userId
+    console.log('position', this.modelAdd.position)
+    this.saveAddUser = true;
+    if(!this.modelAdd.position){
+      return
     }
+    if(!this.modelAdd.roles){
+      return
+    }
+    this.modelAdd.loginName = this.chiTietNguoiDUng.loginName;
     let roles = this.modelAdd.roles;
     roles = roles.map( d => d.code)
     const params = {

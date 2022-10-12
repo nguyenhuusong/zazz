@@ -134,7 +134,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
             }
           } else if (element1.field_name === 'actionlist') {
             this.getActionlist(element1)
-          } else if (element1.field_name === 'work_cds') {
+          } else if (element1.field_name === 'work_cds' || element1.field_name === 'work_cd') {
             promissall.push(this.apiHrmV2Service.getWorkTimesV2(queryString.stringify({ empId: null }), element1.field_name));
           } else if (element1.field_name === 'empId') {
             const root_orgId = this.getValueByKey('organize_id');

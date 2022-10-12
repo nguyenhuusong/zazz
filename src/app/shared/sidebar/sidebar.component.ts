@@ -28,7 +28,7 @@ export class SidebarComponent implements OnInit {
          ).subscribe((e: RouterEvent) => {
              if(this.menuItems.length > 0) {
                 const pathname  = window.location.pathname ;
-                this.parseObjectProperties(this.menuItems, e.url);
+                this.parseObjectProperties(this.menuItems, pathname);
                 this.menuItems = [...this.menuItems];
              }
          });
@@ -43,22 +43,14 @@ export class SidebarComponent implements OnInit {
             this.firebaseAuthService.customLogin(customToken);
           }
         }
-        this.manager.getUser().then(user => {
-            this.apiService.getListMenuByUserId(user.profile.sub, '3133579B-4FD9-449E-9CEA-4B384884E7D3').subscribe(results => {
-                this.menuItems = results.data.filter(menuItem => menuItem);
-                this.parseObjectProperties(this.menuItems, pathname);
-                this.menuItems = [...this.menuItems];
-                // localStorage.setItem('menuItems',JSON.stringify(results.data));
-
-            })
-            this.apiService.getUserMenus().subscribe(results => {
+       this.apiService.getUserMenus().subscribe(results => {
                 if (results.status === 'success') {
+                    this.menuItems = results.data;
                     localStorage.setItem('menuItems',JSON.stringify(results.data));
+                    this.parseObjectProperties(this.menuItems, pathname);
+                    this.menuItems = [...this.menuItems];
                 }
             });
-
-        });
-
         // this.menuItems = ROUTES.filter(menuItem => menuItem);
         //         this.parseObjectProperties(this.menuItems, pathname);
         //         this.menuItems = [...this.menuItems];
@@ -67,36 +59,38 @@ export class SidebarComponent implements OnInit {
     parseObjectProperties(obj: any[], pathname) {
         for (let k of obj) {
             k.label = k.title;
-            if (k.path && k.classs !== 'navigation-header') {
+            if (k.path && k.class !== 'navigation-header') {
                 k.routerLink = k.path
+                k.styleClass = 'nav-item';
+                k.class = 'nav-item';
             }
             if (k.submenus && k.submenus.length > 0) {
-                k.items = k.submenus.filter((d: any) => d.classs && (d.classs.indexOf("hidden") < 0));
+                k.items = k.submenus.filter((d: any) => d.class && (d.class.indexOf("hidden") < 0));
             }
             if (k.routerLink) {
                 // active menu con
                 if(k.isExternalLink) {
                     if (k.routerLink && pathname.includes(k.routerLink)) {
-                        k.styleClass = 'parent_active' + ' ' + k.classs
+                        k.styleClass = 'parent_active' + ' ' + k.class
                     } else {
-                        k.styleClass = 'parent_no_active' + ' ' + k.classs
+                        k.styleClass = 'parent_no_active' + ' ' + k.class
                     }
                 }else {
                     if (k.routerLink && pathname.includes(k.routerLink)) {
-                        k.styleClass = k.classs + ' active' + ' ' + k.classs
+                        k.styleClass = k.class + ' active' + ' ' + k.class
                         k.icon = ''
                     } else {
-                        k.styleClass = k.classs + ' no-active'; + ' ' + k.classs
+                        k.styleClass = k.class + ' no-active'; + ' ' + k.class
                         k.icon = ''
                     }
                 }
                
             } else {
                 //active cha
-                if (k.path && pathname && pathname.split('/').indexOf(k.path) > -1 && k.classs === 'navigation-header') {
-                    k.styleClass = k.classs + " parent_active" + ' ' + k.classs
+                if (k.path && pathname && pathname.split('/').indexOf(k.path) > -1 && k.class === 'navigation-header') {
+                    k.styleClass = k.class + " parent_active" + ' ' + k.class
                 } else {
-                    k.styleClass = k.classs + " parent_no_active" + ' ' + k.classs
+                    k.styleClass = k.class + " parent_no_active" + ' ' + k.class
                 }
             }
 

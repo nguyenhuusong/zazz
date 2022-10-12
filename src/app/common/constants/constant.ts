@@ -764,8 +764,13 @@ export const API_PROFILE  = {
         'menu': '',
         'url': '/cai-dat/thiet-lap-wifi'
     },
-    
-    
+
+    'GetTerminatePage2': {
+        'name': 'Danh sách hồ sơ nghỉ việc',
+        'api': '0eed6cc8-55f4-4285-9f8e-bfc0ba572253',
+        'menu': '',
+        'url': '/tuyen-dung/danh-sach-nghi-viec'
+    },
     
     
   }

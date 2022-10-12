@@ -9,7 +9,7 @@ import * as numeral from 'numeral';
 import * as moment from 'moment';
 import { ValidationNumberDayInMonth, ValidationNumberDayInMonthEmpty, ValidationNumber, ValidationNumberEmpty } from './validation';
 import { checkIsObject } from '../function-common/objects.helper';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 @Component({
   selector: 'app-type-text',
   template: ` <div class="field-group text" [ngClass]=" element.columnValue ? 'valid' : 'invalid' ">
@@ -369,6 +369,7 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
     private apiService: ApiHrmService,
     private changeDetector: ChangeDetectorRef,
     private messageService: MessageService,
+    private confirmationService: ConfirmationService,
   ) { }
   async ngOnInit() {
     if (this.element.field_name === 'parentId') {
@@ -403,6 +404,7 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
   }
 
   onChangeValue(value, field_name, element) {
+    
     this.modelFields[field_name].error = this.modelFields[field_name].isRequire && !this.element.columnValue ? true : false;
     this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
     if (field_name === 'orgId') {
@@ -570,6 +572,18 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
       }
       console.log('emitType', emitType)
       this.callback.emit(emitType);
+    } else if( field_name === 'status'){
+      if(parseInt(value) === 0){
+          this.confirmationService.confirm({
+            message: 'Phòng họp đang trong cuộc họp, bạn thực sự muốn thay đổi trạng thái phòng họp?',
+            accept: () => {
+              this.element.columnValue = value;
+            },
+            reject: () => {
+              this.element.columnValue = "1";
+            }
+          });
+      }
     }
   }
 
