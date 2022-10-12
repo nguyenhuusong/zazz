@@ -220,11 +220,12 @@ export class ChiTietAnCaComponent implements OnInit, OnChanges, OnDestroy {
   cancelUpdate(data) {
     if(data === 'CauHinh') {
       this.getAnCaInfo();
+    }else if(data === "Back"){
+      this.router.navigate(['/chinh-sach/an-ca']);
     }else {
       this.manhinh = 'Edit';
       this.getAnCaInfo();
     }
-  
   }
 
 }

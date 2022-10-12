@@ -308,7 +308,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     })
   }
   checkHideNguoiDungMoTaiKhoan(params){
-    if(CheckHideAction(MENUACTIONROLEAPI.GetMeetingPage.url, ACTIONS.CHI_TIET_HO_SO_NGUOI_DUNG_MO_KHOA)) {
+    if(CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_NGUOI_DUNG_MO_KHOA)) {
       return true;
     }else {
       if(params.data.lock_st === false) {
@@ -320,7 +320,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   }
 
   checkHideNguoiDungKhoaTaiKhoan(params){
-    if(CheckHideAction(MENUACTIONROLEAPI.GetMeetingPage.url, ACTIONS.CHI_TIET_HO_SO_NGUOI_DUNG_KHOA)) {
+    if(CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_NGUOI_DUNG_KHOA)) {
       return true;
     }else {
       if(params.data.lock_st === true) {
@@ -332,7 +332,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   }
 
   checkHideNguoiDungXoaTaiKhoan(params){
-    if(CheckHideAction(MENUACTIONROLEAPI.GetMeetingPage.url, ACTIONS.CHI_TIET_HO_SO_NGUOI_DUNG_XOA)) {
+    if(CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_NGUOI_DUNG_XOA)) {
       return true;
     }else {
       if(!params.data.lock_st) {

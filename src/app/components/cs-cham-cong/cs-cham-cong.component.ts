@@ -65,7 +65,7 @@ export class CsChamCongComponent implements OnInit {
   cols: any[];
   colsDetail: any[];
   items = [];
-  columnDefs;
+  columnDefs: any = [];
   detailRowHeight;
   defaultColDef;
   frameworkComponents;
@@ -310,7 +310,6 @@ export class CsChamCongComponent implements OnInit {
         this.listOrgRoots = [{ label: 'Tất cả', value: null }, ...this.listOrgRoots];
         // this.query.organizeId = this.listOrgRoots[0].value
         this.load();
-        console.log('this.query.organizeId', this.query.organizeId)
       }
     })
   }
