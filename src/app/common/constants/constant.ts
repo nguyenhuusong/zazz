@@ -491,6 +491,7 @@ export const ACTIONS = {
     CHI_TIET_HO_SO_NGUOI_DUNG_MO_KHOA: 'chi_tiet_ho_so_nguoi_dung_mo_khoa',
     CHI_TIET_HO_SO_NGUOI_DUNG_XOA: 'chi_tiet_ho_so_nguoi_dung_xoa',
     MO_LAI_HO_SO: 'mo_lai_ho_so',
+    TAO_LICH: 'tao_lich',
 
     ADD_TINH_LUONG_BANG_LUONG: 'add_tinh_luong_bang_luong',
     ADD_TINH_LUONG_THIET_LAP_THAM_SO: 'add_tinh_luong_thiet_lap_tham_so',
