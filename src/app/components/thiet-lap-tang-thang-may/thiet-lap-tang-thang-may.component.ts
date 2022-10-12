@@ -1,6 +1,8 @@
 import { ChangeDetectorRef, Component, OnInit,ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import { CheckHideAction } from 'src/app/common/function-common/common';
 import { ElevatorFloor } from 'src/app/models/elevatorfloor.model';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 @Component({
@@ -24,6 +26,8 @@ export class ThietLapTangThangMayComponent implements OnInit {
       currentRecordStart: 0,
       currentRecordEnd: 0
     };
+    MENUACTIONROLEAPI = MENUACTIONROLEAPI;
+    ACTIONS = ACTIONS
     projects = [];
     builds = [];
     buidings = [];
@@ -50,8 +54,8 @@ export class ThietLapTangThangMayComponent implements OnInit {
   ngAfterViewChecked(): void {
     const a: any = document.querySelector(".header");
     const b: any = document.querySelector(".sidebarBody");
-    const c: any = document.querySelector(".breadcrumb");
-    const d: any = document.querySelector(".filterInput");
+    const c: any = document.querySelector(".bread-crumb");
+    const d: any = document.querySelector(".bread-filter");
     const e: any = document.querySelector(".paginator");
     this.loadjs ++ 
     if (this.loadjs === 5) {
@@ -114,6 +118,8 @@ export class ThietLapTangThangMayComponent implements OnInit {
           label: 'Xem chi tiết',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
+          hide: CheckHideAction(MENUACTIONROLEAPI.GetElevatorFloorPage.url, ACTIONS.VIEW)
+
         },
       ]
     };

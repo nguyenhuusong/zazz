@@ -13,7 +13,9 @@ import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 })
 export class ThamSoChungDetailComponent implements OnInit, OnChanges {
   manhinh = 'View';
-  optionsButtonsView = [{ label: 'Sửa', value: 'Edit',  class: CheckHideAction(MENUACTIONROLEAPI.GetParameterPage.url, ACTIONS.EDIT) ? 'hidden' : ''}, { label: 'Quay lại', value: 'Back' }];
+  optionsButtonsView = [
+    { label: 'Lưu', value: 'Update',  class: CheckHideAction(MENUACTIONROLEAPI.GetParameterPage.url, ACTIONS.EDIT) ? 'hidden' : ''},
+    { label: 'Quay lại', value: 'Back', class: 'p-button-secondary' }];
   constructor(
     private apiService: ApiHrmService,
     private activatedRoute: ActivatedRoute,

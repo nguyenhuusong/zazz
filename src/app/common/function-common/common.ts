@@ -425,7 +425,6 @@ export function getDaysOfEndWeek(year, month) {
     var arrDays = [];
     for (let i = 0; i < daysInMonth; i++) {
         const isdayWeek = isWeekend(new Date(year, month - 1, i + 1))
-        console.log(isdayWeek)
         if (isdayWeek) {
             arrDays.push({
                 label: moment(new Date(year, month - 1, i + 1)).day() === 6 ? 'Thứ 7' : 'Chủ nhật',
@@ -445,7 +444,6 @@ export function getDaysOfSaturDay(year, month) {
     var arrDays = [];
     for (let i = 0; i < daysInMonth; i++) {
         const isdayWeek = isSaturDay(new Date(year, month - 1, i + 1))
-        console.log(isdayWeek)
         if (isdayWeek) {
             arrDays.push({
                 label: 'Thứ 7',
@@ -465,7 +463,6 @@ export function getDaysOfSunday(year, month) {
     var arrDays = [];
     for (let i = 0; i < daysInMonth; i++) {
         const isdayWeek = isSunday(new Date(year, month - 1, i + 1))
-        console.log(isdayWeek)
         if (isdayWeek) {
             arrDays.push({
                 label: 'Chủ nhật',

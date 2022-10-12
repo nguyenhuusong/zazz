@@ -19,8 +19,8 @@ export class ChiTietThietLapWifiComponent implements OnInit, OnChanges, OnDestro
   private readonly unsubscribe$: Subject<void> = new Subject();
   manhinh = 'View';
   indexTab = 0;
-  optionsButtonsView = [{ label: 'Sửa', value: 'Edit', class: CheckHideAction(MENUACTIONROLEAPI.GetTimekeepingWifiPage.url, ACTIONS.EDIT) ? 'hidden' : ''
-}, { label: 'Quay lại', value: 'Back' }];
+  optionsButtonsView = [{ label: 'Lưu', value: 'Update', class: CheckHideAction(MENUACTIONROLEAPI.GetTimekeepingWifiPage.url, ACTIONS.EDIT) ? 'hidden' : ''
+}, { label: 'Quay lại', value: 'Back', class: 'p-button-secondary' }];
   constructor(
     private apiService: ApiHrmService,
     private activatedRoute: ActivatedRoute,

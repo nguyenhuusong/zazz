@@ -3,10 +3,11 @@
   import { ConfirmationService, MessageService, TreeNode } from 'primeng/api';
   import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
   import { NgxSpinnerService } from 'ngx-spinner';
-  import { AgGridFn } from 'src/app/common/function-common/common';
+  import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
   import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
   import { ExportFileService } from 'src/app/services/export-file.service';
   import { cloneDeep } from 'lodash';
+import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
   @Component({
     selector: 'app-tab-cap-bac-bang-luong',
     templateUrl: './tab-cap-bac-luong.component.html',
@@ -37,7 +38,8 @@
     first = 0;
     gridKey = ''
   displaySetting = false
-
+  MENUACTIONROLEAPI = MENUACTIONROLEAPI;
+  ACTIONS = ACTIONS
     countRecord: any = {
       totalRecord: 0,
       currentRecordStart: 0,
@@ -112,12 +114,14 @@
             label: 'Xem chi tiết',
             icon: 'pi pi-tablet',
             class: 'btn-primary mr5',
+            hide: CheckHideAction(MENUACTIONROLEAPI.GetPayrollAppInfoPage.url, ACTIONS.VIEW_TINH_LUONG_CAP_BAC_LUONG)
           },
           {
             onClick: this.deleteRow.bind(this),
             label: 'Xóa',
             icon: 'fa fa-trash',
             class: 'btn-primary mr5',
+            hide: CheckHideAction(MENUACTIONROLEAPI.GetPayrollAppInfoPage.url, ACTIONS.DELETE_TINH_LUONG_CAP_BAC_LUONG)
           },
         ]
       };

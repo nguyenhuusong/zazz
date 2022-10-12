@@ -491,6 +491,26 @@ export const ACTIONS = {
     CHI_TIET_HO_SO_NGUOI_DUNG_MO_KHOA: 'chi_tiet_ho_so_nguoi_dung_mo_khoa',
     CHI_TIET_HO_SO_NGUOI_DUNG_XOA: 'chi_tiet_ho_so_nguoi_dung_xoa',
     MO_LAI_HO_SO: 'mo_lai_ho_so',
+
+    ADD_TINH_LUONG_BANG_LUONG: 'add_tinh_luong_bang_luong',
+    ADD_TINH_LUONG_THIET_LAP_THAM_SO: 'add_tinh_luong_thiet_lap_tham_so',
+    ADD_TINH_LUONG_THANH_PHAN_LUONG: 'add_tinh_luong_thanh_phan_luong',
+    ADD_TINH_LUONG_CAP_BAC_LUONG: 'add_tinh_luong_cap_bac_luong',
+
+    VIEW_TINH_LUONG_BANG_LUONG: 'view_tinh_luong_bang_luong',
+    VIEW_TINH_LUONG_THIET_LAP_THAM_SO: 'view_tinh_luong_thiet_lap_tham_so',
+    VIEW_TINH_LUONG_THANH_PHAN_LUONG: 'view_tinh_luong_thanh_phan_luong',
+    VIEW_TINH_LUONG_CAP_BAC_LUONG: 'view_tinh_luong_cap_bac_luong',
+
+    DELETE_TINH_LUONG_BANG_LUONG: 'delete_tinh_luong_bang_luong',
+    DELETE_TINH_LUONG_THIET_LAP_THAM_SO: 'delete_tinh_luong_thiet_lap_tham_so',
+    DELETE_TINH_LUONG_THANH_PHAN_LUONG: 'delete_tinh_luong_thanh_phan_luong',
+    DELETE_TINH_LUONG_CAP_BAC_LUONG: 'delete_tinh_luong_cap_bac_luong',
+
+    EDIT_TINH_LUONG_BANG_LUONG: 'edit_tinh_luong_bang_luong',
+    EDIT_TINH_LUONG_THIET_LAP_THAM_SO: 'edit_tinh_luong_thiet_lap_tham_so',
+    EDIT_TINH_LUONG_THANH_PHAN_LUONG: 'edit_tinh_luong_thanh_phan_luong',
+    EDIT_TINH_LUONG_CAP_BAC_LUONG: 'edit_tinh_luong_cap_bac_luong',
 }
 
 export const MessageErrorAction = {
@@ -764,8 +784,25 @@ export const API_PROFILE  = {
         'menu': '',
         'url': '/cai-dat/thiet-lap-wifi'
     },
-    
-    
-    
+
+    'GetTerminatePage2': {
+        'name': 'Danh sách hồ sơ nghỉ việc',
+        'api': '0eed6cc8-55f4-4285-9f8e-bfc0ba572253',
+        'menu': '',
+        'url': '/tuyen-dung/danh-sach-nghi-viec'
+    },
+    'GetPayrollAppInfoPage': {
+        'name': 'Bảng lương',
+        'api': '0eed6cc8-55f4-4285-9f8e-bfc0ba572253',
+        'menu': '',
+        'url': '/luong-thue/tinh-luong'
+    },
+
+    'GetElevatorFloorPage': {
+        'name': 'Bảng lương',
+        'api': '0eed6cc8-55f4-4285-9f8e-bfc0ba572253',
+        'menu': '',
+        'url': '/phan-quyen/thiet-lap-tang-thang-may'
+    },
     
   }

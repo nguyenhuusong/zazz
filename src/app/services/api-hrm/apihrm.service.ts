@@ -1632,4 +1632,13 @@ export class ApiHrmService {
     return this.http.delete<any>(`${apiHrmServer}/api/v1/payrollLevelBase/DelPayrollLevelBase?${queryParams}`, this.options)
   }
 
+  employeeGetTerminatePage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/employee/GetTerminatePage?` + queryParams, this.options)
+  }
+  recruitAgain(query, data = null): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/employee/RecruitAgain?` + query, data , this.options)
+  }
+  
+  
+
 }

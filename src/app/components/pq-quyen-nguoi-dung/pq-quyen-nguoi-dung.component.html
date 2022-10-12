@@ -167,7 +167,7 @@
     <div class="col-md-12  mt-1">
         <div class="field-group select" [ngClass]="modelAdd.position ? 'valid' : 'invalid' ">
             <label for="">Chức vụ</label>
-            <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
+            <p-dropdown [filter]="true" appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
             [options]="dataPositionList" [(ngModel)]="modelAdd.position" name="position">
             <ng-template let-item pTemplate="selectedItem">
                 <span>{{item.label}}</span>
@@ -178,12 +178,18 @@
                 </div>
             </ng-template>
             </p-dropdown>
+            <div *ngIf="!modelAdd.position && saveAddUser" class="alert-validation alert-danger">
+                Vui Lòng chọn chức vụ
+            </div>
         </div>
     </div>
     <div class="col-md-12  mt-1">
-        <div class="field-group multi-select">
+        <div class="field-group multi-select" [ngClass]="modelAdd.roles ? 'valid' : 'invalid'">
             <label for="">Phân nhóm quyền</label>
             <p-multiSelect appendTo="body" [options]="roles" [(ngModel)]="modelAdd.roles"></p-multiSelect>
+            <div *ngIf="modelAdd.roles.length <= 0 && saveAddUser" class="alert-validation alert-danger">
+                    Vui Lòng chọn quyền
+                </div>
         </div>
     </div>
     <ng-template pTemplate="footer">

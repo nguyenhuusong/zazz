@@ -7,6 +7,7 @@ import { ChiTietViTriTuyenDungComponent } from 'src/app/components/ns-tuyen-dung
 import { ChiTietLinhVucTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/chi-tiet-linh-vuc-tuyen-dung/chi-tiet-linh-vuc-tuyen-dung.component';
 import { ChiTietTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/chi-tiet-tuyen-dung/chi-tiet-tuyen-dung.component';
 import { LinhVucTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/linh-vuc-tuyen-dung/linh-vuc-tuyen-dung.component';
+import { NghiViecComponent } from 'src/app/components/ns-tuyen-dung/nghi-viec/nghi-viec.component';
 
 const routes: Routes = [
   {
@@ -61,6 +62,14 @@ const routes: Routes = [
     data: {
       title: 'Chi tiết vị trí tuyển dụng',
       url: 'chi-tiet-vi-tri-tuyen-dung',
+    },
+  },
+  {
+    path: 'danh-sach-nghi-viec',
+    component: NghiViecComponent,
+    data: {
+      title: 'Danh sách nghỉ việc',
+      url: 'danh-sach-nghi-viec',
     },
   },
 //Chuyên môn
