@@ -20,7 +20,7 @@ export class ChiTietNgayNghiComponent implements OnInit, OnDestroy {
   detailInfo = null
   listViews = [];
   optionsButon = [
-    { label: 'Hủy', value: 'Cancel', class: CheckHideAction(MENUACTIONROLEAPI.HolidayPage.url, ACTIONS.EDIT) ? 'hidden' : 'p-button-secondary', icon: 'pi pi-times' },
+    { label: 'Hủy', value: 'Back', class: CheckHideAction(MENUACTIONROLEAPI.HolidayPage.url, ACTIONS.EDIT) ? 'hidden' : 'p-button-secondary', icon: 'pi pi-times' },
     { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check' }
   ]
   whatDay = [

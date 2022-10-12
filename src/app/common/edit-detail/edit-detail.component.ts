@@ -134,7 +134,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
             }
           } else if (element1.field_name === 'actionlist') {
             this.getActionlist(element1)
-          } else if (element1.field_name === 'work_cds' || element1.field_name === 'work_cd') {
+          } else if (element1.field_name === 'work_cds') {
             promissall.push(this.apiHrmV2Service.getWorkTimesV2(queryString.stringify({ empId: null }), element1.field_name));
           } else if (element1.field_name === 'empId') {
             const root_orgId = this.getValueByKey('organize_id');
@@ -144,7 +144,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
           } else if (element1.field_name === 'work_cd') {
             let root_orgIdOrigin = this.getValueByKey('organizeId');
             if (!root_orgIdOrigin) {
-              root_orgIdOrigin = this.detailInfo.organizeId;
+              root_orgIdOrigin = this.detailInfo?.organizeId;
             }
             promissall.push(this.apiHrmV2Service.getWorkTimesV2(queryString.stringify({ empId: this.detail.empId }), element1.field_name));
           } else if (element1.field_name === 'shift_cd') {
