@@ -37,9 +37,15 @@
     <div class="p-toolbar-group-right" [hidden]="hideAction">
       <div class="group-btns text-right">
         <!-- <label style="visibility: hidden;">Buttons</label> -->
-        <p-button label="Cài đặt danh sách gửi" (click)="storeNotify()" icon="fa fa-save" styleClass="p-button-sm mr-1"></p-button>
-        <p-button label="Gửi thông báo" (click)="sendNotify()" icon="fa fa-paper-plane" styleClass="p-button-sm mr-1"></p-button>
-        <p-button label="Xóa nhân viên" (click)="deleteMultipleApartment()" icon="pi pi-trash" styleClass="p-button-sm p-button-danger mr-1"></p-button>
+        <p-button label="Cài đặt danh sách gửi" 
+        [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetAppNotifyPage.url, action: ACTIONS.CAI_DAT_DANH_SACH_GUI}"
+        (click)="storeNotify()" icon="fa fa-save" styleClass="p-button-sm mr-1"></p-button>
+        <p-button label="Gửi thông báo" (click)="sendNotify()" icon="fa fa-paper-plane" styleClass="p-button-sm mr-1"
+        [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetAppNotifyPage.url, action: ACTIONS.GUI_THONG_BAO}"
+        ></p-button>
+        <p-button label="Xóa nhân viên" (click)="deleteMultipleApartment()" icon="pi pi-trash" 
+        [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetAppNotifyPage.url, action: ACTIONS.XOA_NHAN_VIEN}"
+        styleClass="p-button-sm p-button-danger mr-1"></p-button>
         <p-button label="Thoát" (click)="closePage()" icon="pi pi-times" styleClass="p-button-sm p-button-secondary"></p-button>
       </div>
     </div>

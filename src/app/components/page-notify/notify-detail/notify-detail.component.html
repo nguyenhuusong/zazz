@@ -11,7 +11,10 @@
     <div class="content">
       <p-tabView [(activeIndex)]="indexTab" (onChange)="handleChange($event.index)">
         <p-tabPanel header="Thông tin chung">
-          <app-edit-detail *ngIf="listViews.length> 0 && manhinh === 'Edit'"  [manhinh]="manhinh" [modelMarkdow]="modelMarkdow" [dataView]="listViews" (callback)="saveNotifyInfo($event)" (callbackcancel)="cancelUpload()"></app-edit-detail>
+          <app-edit-detail *ngIf="listViews.length> 0 && manhinh === 'Edit'"  
+            [manhinh]="manhinh" [modelMarkdow]="modelMarkdow" [dataView]="listViews" 
+            [optionsButtonsEdit]="optionsButon"
+            (callback)="saveNotifyInfo($event)" (callbackcancel)="cancelUpload()"></app-edit-detail>
           <app-notify-comments [notify]="dataInfo"></app-notify-comments>
         </p-tabPanel>
         <p-tabPanel header="Danh sách gửi thông báo" *ngIf="notiId" leftIcon="pi pi-calendar">

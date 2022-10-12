@@ -8,7 +8,11 @@
             <div class="textarea-default">
               <textarea class="form-control" placeholder="Nội dung bình luận" [(ngModel)]="comment" name="comment" rows="3"></textarea>
             </div>
-            <button type="button" class="btn btn-dropbox pull-right" (click)="handleAddComment()"><i class="fa fa-comments-o" aria-hidden="true"></i> Bình luận</button>
+            <button type="button" class="btn btn-dropbox pull-right"
+              [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetAppNotifyPage.url, action: ACTIONS.COMMENT}"
+              (click)="handleAddComment()">
+              <i class="fa fa-comments-o" aria-hidden="true"></i> Bình luận
+            </button>
           </form>
           <label><strong>Danh sách bình luận</strong></label>
           <ul class="media-list p-1 mt-3" *ngIf="comments.length > 0">

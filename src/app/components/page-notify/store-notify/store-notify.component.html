@@ -36,7 +36,9 @@
     <div class="col-md-6">
         <div class="group-btns text-right d-flex justify-content-end">
           <p-button label="Tìm kiếm" styleClass="p-button-sm mr-1 h-56 " (click)="getUserByPush()"></p-button>
-          <p-button styleClass="p-button-sm mr-1 btn-56" label="Lưu danh sách" *ngIf="listsData.length > 0"  icon="pi pi-check" (click)="saveUserByPush()"></p-button>
+          <p-button styleClass="p-button-sm mr-1 h-56" label="Lưu danh sách" 
+          [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetAppNotifyPage.url, action: ACTIONS.LUU_DANH_SACH}"
+          *ngIf="listsData.length > 0"  icon="pi pi-check" (click)="saveUserByPush()"></p-button>
           <!-- <p-button styleClass="p-button-sm p-button-secondary btn-56" label="Đóng lại" icon="pi pi-times" (click)="closeModal()"></p-button> -->
           <!-- <label for="" style="visibility: hidden;">Tìm kiếm</label> -->
         </div>
