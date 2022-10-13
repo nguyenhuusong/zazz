@@ -100,6 +100,24 @@ export function AgGridFn(lists: Array<any>) {
                     headerTooltip: value.columnCaption,
                     valueFormatter: value.customFormat ? formatMargin : formatNumber2
                 };
+            }else if (value.columnField === 'error') {
+                row = {
+                    headerName: value.columnCaption,
+                    field: value.columnField,
+                    cellClass: value.cellClass,
+                    filter: value.isFilter ? 'agTextColumnFilter' : '',
+                    sortable: false,
+                    width: 400,
+                    cellRenderer: (params: any) => {
+                        return `<span class="${ (params.value.toLowerCase() === 'ok') ? '' : 'bg-red' }">${params.value}
+                       </span>`;
+                    },
+                    hide: value.isHide ? true : false,
+                    pinned: value.pinned,
+                    headerTooltip: value.columnCaption,
+                    // tooltipField: value.columnField
+                    // valueFormatter: value.fieldType == 'decimal' ? "x.toLocaleString()" : ""
+                }
             } else {
                 row = {
                     // headerName: value.columnCaption,

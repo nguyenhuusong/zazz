@@ -148,6 +148,7 @@ export class PqXeNhanVienComponent implements OnInit {
         label: 'Import file',
         code: 'Import',
         icon: 'pi pi-upload',
+        disabled: CheckHideAction(MENUACTIONROLEAPI.GetEmployeeVehiclePage.url, ACTIONS.IMPORT),
         command: () => {
           this.importFileExel();
         }
@@ -156,6 +157,7 @@ export class PqXeNhanVienComponent implements OnInit {
         label: 'Export file',
         code: 'Import',
         icon: 'pi pi-download',
+        disabled: CheckHideAction(MENUACTIONROLEAPI.GetEmployeeVehiclePage.url, ACTIONS.EXPORT),
         command: () => {
           this.exportExel();
         }

@@ -241,20 +241,21 @@ export class ChiTietHoSoNghiViecComponent implements OnInit, OnChanges, OnDestro
   }
 
   setTerminateInfo(data) {
-    // const params = {
-    //   ...this.detailInfo, group_fields: data
-    // }
-    // this.apiService.setTerminateInfo(params).subscribe((results: any) => {
-    //   if (results.status === 'success') {
-    //     this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Cập nhật thông tin thành công' });
-    //     this.getTerminateInfo();
-    //   } else {
-    //     this.messageService.add({
-    //       severity: 'error', summary: 'Thông báo', detail: results.message
-    //     });
-    //   }
-    // }, error => {
-    // });
+    console.log('fjdsofjidoisf', data)
+    const params = {
+      ...this.detailInfo, group_fields: data
+    }
+    this.apiService.setTerminateInfo(params).subscribe((results: any) => {
+      if (results.status === 'success') {
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Cập nhật thông tin thành công' });
+        this.getTerminateInfo();
+      } else {
+        this.messageService.add({
+          severity: 'error', summary: 'Thông báo', detail: results.message
+        });
+      }
+    }, error => {
+    });
   }
 
 

@@ -20,8 +20,8 @@
             </div>
         </div>
     </section>
-
-        <div class="grid-default" #container *ngIf="listsData.length > 0">
+    <section>
+        <div class="grid-default" #container *ngIf="columnDefs.length > 0">
             <app-list-grid-angular  
                 [listsData]="listsData" *ngIf="columnDefs.length > 0 && heightGrid > 0"
                  [height]="heightGrid"
@@ -38,6 +38,7 @@
                 <p-paginator [rows]="query.pageSize" [totalRecords]="countRecord.totalRecord" [first]="first" (onPageChange)="paginate($event)" [rowsPerPageOptions]="[15,30,45,100,200]"></p-paginator>
             </div> -->
     </div>
+</section>
             
 
 

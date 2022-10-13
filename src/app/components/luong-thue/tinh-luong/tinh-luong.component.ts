@@ -80,6 +80,7 @@ export class TinhLuongComponent implements OnInit {
         label: 'Export file',
         code: 'Import',
         icon: 'pi pi-download',
+        disabled: CheckHideAction(MENUACTIONROLEAPI.GetPayrollAppInfoPage.url, ACTIONS.IMPORT),
         command: () => {
           // this.exportExel();
         }

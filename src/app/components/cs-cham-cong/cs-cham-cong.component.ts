@@ -283,6 +283,7 @@ export class CsChamCongComponent implements OnInit {
         label: 'Check in/out',
         code: 'Import',
         icon: 'pi pi-sign-in',
+        disabled: CheckHideAction(MENUACTIONROLEAPI.GetEmployeeSalaryMonthPage.url, ACTIONS.IMPORT),
         command: () => {
           this.ExportCheckInOut();
         }
@@ -291,6 +292,7 @@ export class CsChamCongComponent implements OnInit {
         label: 'Export chấm công',
         code: 'Import',
         icon: 'pi pi-download',
+        disabled: CheckHideAction(MENUACTIONROLEAPI.GetEmployeeSalaryMonthPage.url, ACTIONS.EXPORT),
         command: () => {
           this.Export();
         }

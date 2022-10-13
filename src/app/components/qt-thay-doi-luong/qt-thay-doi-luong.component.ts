@@ -411,6 +411,7 @@ export class QtThayDoiLuongComponent implements OnInit {
         label: 'Import file',
         code: 'Import',
         icon: 'pi pi-upload',
+        disabled: CheckHideAction(MENUACTIONROLEAPI.GetHrmPayrollRecordPage.url, ACTIONS.IMPORT),
         command: () => {
           this.importFileExel();
         }
@@ -419,6 +420,7 @@ export class QtThayDoiLuongComponent implements OnInit {
         label: 'Export file',
         code: 'Import',
         icon: 'pi pi-download',
+        disabled: CheckHideAction(MENUACTIONROLEAPI.GetHrmPayrollRecordPage.url, ACTIONS.IMPORT),
         command: () => {
           this.exportExel();
         }

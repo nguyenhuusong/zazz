@@ -577,7 +577,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
                 buttons: [
                   {
                     onClick: this.OnClick.bind(this),
-                    label: 'Xem chi tiết',
+                    label: 'Xem chi tiết fffff',
                     icon: 'fa fa-edit',
                     key: 'xem-chi-tiet-file-dinh-kem',
                     class: 'btn-primary mr5',

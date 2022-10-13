@@ -100,6 +100,7 @@ export class PqTheNhanVienComponent implements OnInit {
         label: 'Import file',
         code: 'Import',
         icon: 'pi pi-upload',
+        disabled: CheckHideAction(MENUACTIONROLEAPI.GetEmployeeCardPage.url, ACTIONS.IMPORT),
         command: () => {
           this.importFileExel();
         }
@@ -108,6 +109,7 @@ export class PqTheNhanVienComponent implements OnInit {
         label: 'Export file',
         code: 'Import',
         icon: 'pi pi-download',
+        disabled: CheckHideAction(MENUACTIONROLEAPI.GetEmployeeCardPage.url, ACTIONS.EXPORT),
         command: () => {
           this.exportexcel();
         }
