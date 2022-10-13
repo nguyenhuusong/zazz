@@ -159,6 +159,7 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
   selectNode(event) {
     if(this.element.field_name === "org_Id"){
       this.setValue('', 'User_Id')
+      console.log('fjsdoifjdosf')
     }
   }
 
@@ -484,6 +485,9 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
             this.getWorkTime(element1, value)
           }else if(element1.field_name === 'CompanyId') {
             this.getCompaniesByOrganize(element1, value)
+          }
+          if((element1.field_name === 'org_Id')){
+            this.setValue('', 'org_Id')
           }
           // else if(element1.field_name === 'EmployeeId') {
 

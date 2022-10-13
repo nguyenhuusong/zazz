@@ -159,6 +159,7 @@
                                             </div>
                                         </ng-template>
                                         <div class="grid-default border mt-2">
+                                            <!-- Thời gian làm việc -->
                                                 <app-list-grid-angular  [domLayout]="'autoHeight'" [title]="'Danh sách liên hệ'" *ngIf="listsData[0].length > 0"
                                                     [listsData]="listsData[0]"  (FnClick)="OnClick($event)"
                                                     [columnDefs]="columnDefs[0]"></app-list-grid-angular>
@@ -230,6 +231,7 @@
                                         </div>
                                     </ng-template>
                                 <div class="grid-default border mb-7">
+                                    <!-- Giấy tờ tùy thân -->
                                     <app-list-grid-angular  [domLayout]="'autoHeight'"  [title]="'Danh sách liên hệ'" *ngIf="listsData[0].length > 0"
                                         [listsData]="listsData[0]"  (FnClick)="OnClick($event)"
                                         [columnDefs]="columnDefs[0]"></app-list-grid-angular>
