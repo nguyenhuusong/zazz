@@ -92,7 +92,7 @@ export class ChonLichHopComponent implements OnInit, OnChanges {
       initialView: 'timeGridWeek',
       eventMinHeight: 120,
       slotEventOverlap: false,
-      height: 550,
+      height: 650,
       allDayText: '',
       dayHeaderContent: (args) => {
         let currentDay:any = moment().day();

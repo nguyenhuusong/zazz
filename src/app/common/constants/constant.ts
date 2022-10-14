@@ -441,6 +441,7 @@ export const ACTIONS = {
     EDIT : 'sua_thong_tin',
     VIEW : 'xem_chi_tiet',
     DELETE : 'xoa_thong_tin',
+    HUY_LICH_HOP: 'huy_lich_hop',
     TAI_KHOAN : 'tai_khoan',
     NGHI_VIEC : 'nghi_viec',
     CHUYEN_CONG_TAC: 'chuyen_cong_tac',
@@ -483,6 +484,9 @@ export const ACTIONS = {
     XEM_CHI_TIET_GIAY_TO_TUY_THAN: 'xem_chi_tiet_giay_to_tuy_than',
     TAI_LEN_HO_SO: 'tai_len_ho_so',
     HUY_HO_SO: 'huy_ho_so',
+    QUAN_LY_PHONG_HOP: 'quan_ly_phong_hop',
+    THIET_LAP_TAI_LIEU: 'thiet_lap_tai_lieu',
+    PHEP_BU: 'phep_bu',
     CHI_TIET_HO_SO_THEM_MOI_CONG_VIEC: 'chi_tiet_ho_so_them_moi_cong_viec',
     CHI_TIET_HO_SO_THEM_MOI_FILE_DINH_KEM: 'chi_tiet_ho_so_them_moi_file_dinh_kem',
     CHI_TIET_HO_SO_THEM_MOI_THOI_GIAN_LAM_VIEC: 'chi_tiet_ho_so_them_moi_thoi_gian_lam_viec',
@@ -687,6 +691,12 @@ export const API_PROFILE  = {
         'api': '0eed6cc8-55f4-4285-9f8e-bfc0ba572253',
         'menu': '',
         'url': '/chinh-sach/phep-bu'
+    },
+    'GetAnnualLeavePage' : {
+        'name': 'Phép năm',
+        'api': '0eed6cc8-55f4-4285-9f8e-bfc0ba572253',
+        'menu': '',
+        'url': '/chinh-sach/phep-nam'
     },
     'GetLeavePage': {
         'name': 'Giải trình công',
