@@ -234,7 +234,7 @@ export class CaiDatLichHopComponent implements OnInit {
   }
 
   CheckHideDele(event) {
-    if(CheckHideAction(MENUACTIONROLEAPI.GetMeetingPage.url, ACTIONS.DELETE)) {
+    if(CheckHideAction(MENUACTIONROLEAPI.GetMeetingPage.url, ACTIONS.HUY_LICH_HOP)) {
       return true;
     }else {
       if(event.data.is_edit !== 1) {

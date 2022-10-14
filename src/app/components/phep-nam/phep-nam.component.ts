@@ -8,6 +8,7 @@ import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.comp
 import { AgGridFn } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 const MAX_SIZE = 100000000;
 
 @Component({
@@ -18,7 +19,10 @@ const MAX_SIZE = 100000000;
 export class PhepNamComponent implements OnInit, AfterViewChecked {
 
   listsData: any[] = [];
-  items = []
+  items = [];
+  MENUACTIONROLEAPI = MENUACTIONROLEAPI;
+  ACTIONS = ACTIONS
+
   constructor(
     private apiService: ApiHrmService,
     private route: ActivatedRoute,
