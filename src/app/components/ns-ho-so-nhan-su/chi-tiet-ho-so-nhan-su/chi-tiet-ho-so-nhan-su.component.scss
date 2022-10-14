@@ -90,6 +90,11 @@
             }
         }
     }
+    .wrap-edit-detail{
+        .btn-group-edit-detail{
+            justify-content: end;
+        }
+    }
 }
 :host::ng-deep{
     .border-section{
