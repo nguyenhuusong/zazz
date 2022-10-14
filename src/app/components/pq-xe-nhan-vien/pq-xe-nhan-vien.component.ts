@@ -303,7 +303,7 @@ export class PqXeNhanVienComponent implements OnInit {
     };
   }
   CheckHideUnLock(event) {
-    let checkValue = CheckHideAction(MENUACTIONROLEAPI.GetEmployeeVehiclePage.url, ACTIONS.UNLOCK_CARD);
+    let checkValue = CheckHideAction(MENUACTIONROLEAPI.GetEmployeeVehiclePage.url, ACTIONS.KHOA_XE);
     if(checkValue) {
       return true;
     }else {
@@ -315,7 +315,7 @@ export class PqXeNhanVienComponent implements OnInit {
     }
   }
   CheckHideLock(event) {
-    let checkValue = CheckHideAction(MENUACTIONROLEAPI.GetEmployeeVehiclePage.url, ACTIONS.LOCK_CARD);
+    let checkValue = CheckHideAction(MENUACTIONROLEAPI.GetEmployeeVehiclePage.url, ACTIONS.MO_KHOA_XE);
     if(checkValue) {
       return true;
     }else {

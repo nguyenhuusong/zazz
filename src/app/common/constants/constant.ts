@@ -459,6 +459,8 @@ export const ACTIONS = {
     XEM_HO_SO: 'xem_ho_so',
     TAM_TINH: 'tam_tinh',
     EXPORT: 'export',
+    KHOA_XE: 'khoa_xe',
+    MO_KHOA_XE: 'mo_khoa_xe',
     TAI_FILE_MAU: 'tai_file_mau',
     IMPORT: 'import',
     CAP_NHAT_TT: 'cap_nhat_tt',

@@ -107,7 +107,7 @@ export function AgGridFn(lists: Array<any>) {
                     cellClass: value.cellClass,
                     filter: value.isFilter ? 'agTextColumnFilter' : '',
                     sortable: false,
-                    width: 400,
+                    width: value.columnWidth,
                     cellRenderer: (params: any) => {
                         return `<span class="${ (params.value.toLowerCase() === 'ok') ? '' : 'bg-red' }">${params.value}
                        </span>`;
