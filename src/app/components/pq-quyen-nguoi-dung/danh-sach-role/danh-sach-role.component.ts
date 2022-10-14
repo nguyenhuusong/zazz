@@ -280,13 +280,25 @@ export class DanhSachRoleComponent implements OnInit {
 
     this.menus[index].isCheck = !this.menus[index].isCheck;
     if (this.menus[index].isCheck) {
-      this.menus[index].submenus = this.menus[index].submenus.map(result => {
-        return { ...result, isCheck: true };
-      })
+      // this.menus[index].submenus = this.menus[index].submenus.map(result => {
+      //   return { ...result, isCheck: true };
+      // });
+      this.menus[index].submenus.forEach(submenu => {
+        submenu.isCheck = true;
+        submenu.actions = submenu.actions.map( action => {
+          return { ...action, isCheck: true }
+        })
+      });
     } else {
-      this.menus[index].submenus = this.menus[index].submenus.map(result => {
-        return { ...result, isCheck: false };
-      })
+      // this.menus[index].submenus = this.menus[index].submenus.map(result => {
+      //   return { ...result, isCheck: false };
+      // })
+      this.menus[index].submenus.forEach(submenu => {
+        submenu.isCheck = false;
+        submenu.actions = submenu.actions.map( action => {
+          return { ...action, isCheck: false }
+        })
+      });
     }
 
     this.menus = [...this.menus];

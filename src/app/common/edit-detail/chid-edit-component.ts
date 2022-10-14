@@ -260,11 +260,11 @@ export class AppTypeSelectTreesComponent implements OnInit, OnChanges {
   }
 
   selectNode(event) {
-    this.setValue([], 'User_Id')
+    this.setValue(null, 'User_Id')
   }
 
   changeValue(event){
-    this.setValue([], 'User_Id')
+    this.setValue(null, 'User_Id')
   }
 
   getCompanyList(orgId, element1) {
@@ -404,7 +404,7 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
     }
   }
 
-  onChangeValue(value, field_name, element) {
+  async onChangeValue(value, field_name, element) {
     
     this.modelFields[field_name].error = this.modelFields[field_name].isRequire && !this.element.columnValue ? true : false;
     this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
@@ -473,7 +473,7 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
         element.fields.forEach(async element1 => {
           if ((element1.columnType === 'selectTree') && ((element1.field_name === 'orgId') || (element1.field_name === 'departmentId') || (element1.field_name === 'org_Id'))) {
             this.getOrganizeTree(value, element1);
-            this.setValue([], 'User_Id')
+            this.setValue(null, 'User_Id')
           }else if (element1.columnType === 'selectTrees') {
             this.getOrganizeTree(value, element1);
           } else if (element1.field_name === 'jobId') {
@@ -569,10 +569,11 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
         })
       })
     } else if(field_name === 'roomId'){
+      let floorID:any = await this.getValueByKey('floor_No');
       const emitType = {
         name: 'roomId',
         id: value,
-        floorID: this.floorID
+        floorID: floorID
       }
       console.log('emitType', emitType)
       this.callback.emit(emitType);
@@ -1721,9 +1722,8 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
           }
         
         }
+        this.element.options = [...this.element.options]
       }
-      this.element.options = [...this.element.options]
-      
     }
 
     cancelAdd() {
