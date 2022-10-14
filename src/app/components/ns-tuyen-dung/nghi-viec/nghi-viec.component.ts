@@ -190,29 +190,30 @@ export class NghiViecComponent implements OnInit, AfterViewChecked {
   }
 
   tuyenDungLai() {
-    let userIds = String(this.listDataSelect)
-    const params = queryString.stringify({UserId: userIds})
-    console.log('tuyenDungLai', params)
-      this.confirmationService.confirm({
-        message: 'Bạn có chắc chắn muốn tuyển dụng lại?',
-        accept: () => {
-          this.apiService.recruitAgain(params).subscribe((results: any) => {
-            if (results.status === 'success') {
-              this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
+    if(this.listDataSelect.length > 0){
+      let userIds = String(this.listDataSelect)
+      const params = queryString.stringify({UserId: userIds})
+        this.confirmationService.confirm({
+          message: 'Bạn có chắc chắn muốn tuyển dụng lại?',
+          accept: () => {
+            this.apiService.recruitAgain(params).subscribe((results: any) => {
+              if (results.status === 'success') {
+                this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
+                this.spinner.hide();
+              } else {
+                this.messageService.add({
+                  severity: 'error', summary: 'Thông báo',
+                  detail: results.message
+                });
+                this.spinner.hide();
+              }
+            }), error => {
+              console.error('Error:', error);
               this.spinner.hide();
-            } else {
-              this.messageService.add({
-                severity: 'error', summary: 'Thông báo',
-                detail: results.message
-              });
-              this.spinner.hide();
-            }
-          }), error => {
-            console.error('Error:', error);
-            this.spinner.hide();
-          };
-        }
-      });    
+            };
+          }
+        });  
+      }  
   }
 
   initGrid() {

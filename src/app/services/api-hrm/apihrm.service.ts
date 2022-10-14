@@ -1638,7 +1638,10 @@ export class ApiHrmService {
   recruitAgain(query, data = null): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/employee/RecruitAgain?` + query, data , this.options)
   }
-  
+
+  getUserOrganizeRole(): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/user/GetUserOrganize`, this.options)
+  }
   
 
 }
