@@ -15,9 +15,10 @@
                 <p-steps [model]="stepsLine" [(activeIndex)]="activeIndex" [readonly]="true"></p-steps>
             </div>
         </section>
-
          <section class="pd-0" *ngIf="modelContractInfo">
-            <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButon" [thongtinnhanvienNew]="true" [dataView]="listViews"
+            <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" 
+                [manhinh]="'Edit'" 
+                [optionsButtonsEdit]="optionsButon" [thongtinnhanvienNew]="true" [dataView]="listViews"
                 (callback)="setContractInfo($event)" (callback1)="saveCallback1($event)" (callbackcancel)="huy($event)"></app-edit-detail>
          </section>
             

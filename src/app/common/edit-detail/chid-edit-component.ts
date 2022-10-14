@@ -159,6 +159,7 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
   selectNode(event) {
     if(this.element.field_name === "org_Id"){
       this.setValue('', 'User_Id')
+      console.log('fjsdoifjdosf')
     }
   }
 
@@ -485,6 +486,9 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
           }else if(element1.field_name === 'CompanyId') {
             this.getCompaniesByOrganize(element1, value)
           }
+          if((element1.field_name === 'org_Id')){
+            this.setValue('', 'org_Id')
+          }
           // else if(element1.field_name === 'EmployeeId') {
 
           // }
@@ -799,7 +803,9 @@ export class AppTypeNumberComponent implements OnInit {
     // }else{
     //     this.modelFields[field_name] = {...this.modelFields[field_name], ...ValidationNumberDayInMonthEmpty(event.value)}
     // }
-
+    if(this.element.columnValue < 0){
+      this.element.columnValue = 0;
+    }
     if (field_name === 'from_day' || field_name === 'to_day') {
       if (element.isRequire) {
         this.modelFields[field_name] = { ...this.modelFields[field_name], ...ValidationNumberDayInMonth(event.value) }
@@ -1429,8 +1435,10 @@ export class AppTypeLinkUrlRadioListComponent implements OnInit {
                     </div>
                     <div class="file-uploaded" *ngIf="element.columnValue && element.columnValue.length > 0">
                       <h3 class="uploaded-title">Đã upload xong {{ element.columnValue.length }} file</h3>
+                      
                       <ul *ngIf="uploadedFiles.length > 0">
-                          <li class="d-flex middle bet" *ngFor="let file of uploadedFiles; let i=index">{{file}} 
+                          <li class="d-flex middle bet" *ngFor="let file of uploadedFiles; let i=index">
+                          <a [href]="element.columnValue[i]" target="_blank">{{ file }} </a>
                             <span (click)="removeImage(i)">
                                 <svg width="12" height="14" viewBox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                   <path d="M9.33366 5.33341V12.0001H2.66699V5.33341H9.33366ZM8.33366 0.666748H3.66699L3.00033 1.33341H0.666992V2.66675H11.3337V1.33341H9.00033L8.33366 0.666748ZM10.667 4.00008H1.33366V12.0001C1.33366 12.7334 1.93366 13.3334 2.66699 13.3334H9.33366C10.067 13.3334 10.667 12.7334 10.667 12.0001V4.00008Z" fill="#FF3B49"/>
@@ -1442,14 +1450,17 @@ export class AppTypeLinkUrlRadioListComponent implements OnInit {
                       </ul>
                     </div>
                     <div class="file-uploaded" *ngIf="element.columnValue && (element.columnValue.length > 0) && (uploadedFiles.length === 0)">
+
                     <ul>
-                        <li class="d-flex middle bet" *ngFor="let file of element.columnValue; let i=index">{{file}} 
+                        <li class="d-flex middle bet" *ngFor="let file of element.columnValue; let i=index">
+                        <a [href]="file" target="_blank">{{ theFileName(file) }} </a>
                           <span (click)="removeImage1(i)">
                               <svg width="12" height="14" viewBox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M9.33366 5.33341V12.0001H2.66699V5.33341H9.33366ZM8.33366 0.666748H3.66699L3.00033 1.33341H0.666992V2.66675H11.3337V1.33341H9.00033L8.33366 0.666748ZM10.667 4.00008H1.33366V12.0001C1.33366 12.7334 1.93366 13.3334 2.66699 13.3334H9.33366C10.067 13.3334 10.667 12.7334 10.667 12.0001V4.00008Z" fill="#FF3B49"/>
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M4.00033 10.3334V6.66675H5.33366V10.3334H4.00033Z" fill="#FF3B49"/>
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M6.66699 10.3334V6.66675H8.00033V10.3334H6.66699Z" fill="#FF3B49"/>
                               </svg>
+
                           </span>
                         </li>
                     </ul>
@@ -1480,10 +1491,11 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
   ngOnInit(): void {
     this.element.columnValue = this.element.columnValue && (typeof this.element.columnValue === 'string') ? this.element.columnValue.split(',') : this.element.columnValue 
     this.element.columnValue = this.element.columnValue && this.element.columnValue.length > 0 ? this.element.columnValue : []
+    console.log('this.element.columnValue', this.element.columnValue)
     this.dataView.forEach(element => {
       element.fields.forEach(async element1 => {
         if (((element1.field_name === 'AttachName') || (element1.field_name === 'attached_name') || (element1.field_name === 'attachName')) && element1.columnValue ) {
-          this.uploadedFiles = element1.columnValue.split(',')
+          this.uploadedFiles = element1.columnValue.split(',');
         }
         // else if(element1.field_name === 'link_view'){
         //   console.log('link view', element1.columnValue)
@@ -1494,6 +1506,13 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
   }
   removeImage1(i) {
     this.element.columnValue.splice(i, 1);
+  }
+  
+  theFileName(file){
+    if(file){
+      let fileName = file.split('/').pop().split('?')[0].split('-').pop();
+      return fileName;
+    }
   }
 
   removeImage(index) {

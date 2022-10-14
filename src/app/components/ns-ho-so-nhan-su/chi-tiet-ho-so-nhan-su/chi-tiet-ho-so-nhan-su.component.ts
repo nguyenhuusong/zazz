@@ -308,7 +308,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     })
   }
   checkHideNguoiDungMoTaiKhoan(params){
-    if(CheckHideAction(MENUACTIONROLEAPI.GetMeetingPage.url, ACTIONS.CHI_TIET_HO_SO_NGUOI_DUNG_MO_KHOA)) {
+    if(CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_NGUOI_DUNG_MO_KHOA)) {
       return true;
     }else {
       if(params.data.lock_st === false) {
@@ -320,7 +320,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   }
 
   checkHideNguoiDungKhoaTaiKhoan(params){
-    if(CheckHideAction(MENUACTIONROLEAPI.GetMeetingPage.url, ACTIONS.CHI_TIET_HO_SO_NGUOI_DUNG_KHOA)) {
+    if(CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_NGUOI_DUNG_KHOA)) {
       return true;
     }else {
       if(params.data.lock_st === true) {
@@ -332,7 +332,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   }
 
   checkHideNguoiDungXoaTaiKhoan(params){
-    if(CheckHideAction(MENUACTIONROLEAPI.GetMeetingPage.url, ACTIONS.CHI_TIET_HO_SO_NGUOI_DUNG_XOA)) {
+    if(CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_NGUOI_DUNG_XOA)) {
       return true;
     }else {
       if(!params.data.lock_st) {
@@ -581,6 +581,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
                     icon: 'fa fa-edit',
                     key: 'xem-chi-tiet-file-dinh-kem',
                     class: 'btn-primary mr5',
+                    hide: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_TTCN_DS_DINH_KEM_XEM_CHI_TIET)
                   },
                   {
                     onClick: this.OnClick.bind(this),
@@ -588,6 +589,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
                     icon: 'pi pi-trash',
                     key: 'xoa-file-dinh-kem',
                     class: 'btn-danger',
+                    hide: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_TTCN_DS_DINH_KEM_XOA)
                   },
 
                 ]
@@ -614,6 +616,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
                     icon: 'fa fa-edit',
                     key: 'xemchitietlienhe',
                     class: 'btn-primary mr-1',
+                    hide: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_CHUYEN_MON_CHUNG_CHI_XEM_CHI_TIET)
                   },
                   {
                     onClick: this.OnClick.bind(this),
@@ -621,6 +624,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
                     icon: 'pi pi-trash',
                     key: 'xoa-nguoi-phu-thuoc',
                     class: 'btn-danger',
+                    hide: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_CHUYEN_MON_CHUNG_CHI_XOA)
                   },
                 ]
               };
@@ -628,6 +632,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
           }];
         // this.listsData[3] = data.trad_adds || [];
         // this.titles[3] = 'Liên hệ khẩn cấp';
+
         this.columnDefs[4] = [
           ...AgGridFn(data.gridflexdetails5 || []),
           {
@@ -638,7 +643,6 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
             width: 70,
             cellRenderer: 'buttonAgGridComponent',
             cellRendererParams: params => {
-              console.log('fjdosjfio', params)
               return {
                 buttons: [
                   {
@@ -647,7 +651,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
                     icon: 'pi pi-cloud-upload',
                     key: 'view-qua-trinh-hop-dong',
                     class: 'btn-primary mr5',
-                    hide: params.data.status_device !== 2
+                    hide: this.CheckHidePheDuyetWifi(params)
                   },
                   {
                     onClick: this.tuChoiWifi.bind(this),
@@ -655,7 +659,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
                     icon: 'pi pi-check',
                     key: 'duyet-hop-dong',
                     class: 'btn-danger',
-                    hide: params.data.status_device !== 2
+                    hide: this.CheckHideTuChoiWifi(params)
                   },
 
                 ]
@@ -663,6 +667,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
             },
           }
         ];
+
         this.listsData[4] = data.device_register;
         this.titles[4] = 'Lịch sử thiết bị chấm công';
         this.spinner.hide();
@@ -687,9 +692,10 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
                   {
                     onClick: this.OnClick.bind(this),
                     label: 'Xem chi tiết',
-                    icon: 'fa fa-edit',
+                    icon: 'fa fa-edit editing',
                     key: 'view-qua-trinh-hop-dong',
                     class: 'btn-primary mr5',
+                    hide: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_QHLD_QTHD_XEM_CHI_TIET)
                   },
                   {
                     onClick: this.OnClick.bind(this),
@@ -697,7 +703,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
                     icon: 'pi pi-check',
                     key: 'duyet-hop-dong',
                     class: 'btn-danger',
-                    hide: params.data.contract_value === 3
+                    hide: this.CheckHideDuyetHopDong(params)
                   },
                   {
                     onClick: this.OnClick.bind(this),
@@ -705,7 +711,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
                     icon: 'pi pi-trash',
                     key: 'delete-qua-trinh-hop-dong',
                     class: 'btn-danger',
-                    hide: params.data.contract_value === 3
+                    hide: this.CheckHideXoaHopDong(params)
                   },
 
                 ]
@@ -736,9 +742,10 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
                   {
                     onClick: this.OnClick.bind(this),
                     label: 'Xem chi tiêt',
-                    icon: 'fa fa-edit',
+                    icon: 'fa fa-edit edittingg',
                     key: 'xemchitietlienhe',
                     class: 'btn-primary mr-1',
+                    hide: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_TBH_NPT_XEM_CHI_TIET)
                   },
                   {
                     onClick: this.OnClick.bind(this),
@@ -746,6 +753,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
                     icon: 'pi pi-trash',
                     key: 'xoa-nguoi-phu-thuoc',
                     class: 'btn-danger',
+                    hide: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_TBH_NPT_XOA)
                   },
                 ]
               };
@@ -773,6 +781,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
                     icon: 'fa fa-edit',
                     key: 'xem-chi-tiet-file-dinh-kem',
                     class: 'btn-primary mr5',
+                    hide: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_TBH_DSDK_XEM_CHI_TIET)
                   },
                   {
                     onClick: this.OnClick.bind(this),
@@ -780,6 +789,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
                     icon: 'pi pi-trash',
                     key: 'xoa-file-dinh-kem',
                     class: 'btn-danger',
+                    hide: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_TBH_DSDK_XOA)
                   },
 
                 ]
@@ -808,6 +818,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
                     icon: 'fa fa-edit',
                     key: 'sua_cong_viec',
                     class: 'btn-primary mr-1',
+                    hide: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_VTCV_THOIGIAN_LAMVIEC_XEM_CHI_TIET)
                   },
                   {
                     onClick: this.OnClick.bind(this),
@@ -815,6 +826,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
                     icon: 'pi pi-trash',
                     key: 'xoa_cong_viec',
                     class: 'btn-primary',
+                    hide: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_VTCV_THOIGIAN_LAMVIEC_XOA)
                   },
                 ]
               };
@@ -946,6 +958,58 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
         this.initData();
         this.spinner.hide();
         break;
+    }
+  }
+
+  
+  CheckHidePheDuyetWifi(params) {
+    let checkValue = CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.PHE_DUYET_WIFI)
+    if(checkValue) {
+      return true;
+    }else {
+      if(params.data.status_device !== 2) {
+        return true;
+      }else {
+        return false;
+      }
+    }
+  }
+  CheckHideTuChoiWifi(params) {
+    let checkValue = CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.TU_CHOI_DUYET_WIFI)
+    if(checkValue) {
+      return true;
+    }else {
+      if(params.data.status_device !== 2) {
+        return true;
+      }else {
+        return false;
+      }
+    }
+  }
+  
+  CheckHideDuyetHopDong(params) {
+    let checkValue = CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_QHLD_QTHD_DUYET_HOP_DONG)
+    if(checkValue) {
+      return true;
+    }else {
+      if(params.data.contract_value === 3) {
+        return true;
+      }else {
+        return false;
+      }
+    }
+  }
+
+  CheckHideXoaHopDong(params) {
+    let checkValue = CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_QHLD_QTHD_XOA_HOP_DONG)
+    if(checkValue) {
+      return true;
+    }else {
+      if(params.data.contract_value === 3) {
+        return true;
+      }else {
+        return false;
+      }
     }
   }
 

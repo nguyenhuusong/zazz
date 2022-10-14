@@ -230,20 +230,20 @@ export class QtThayDoiLuongComponent implements OnInit {
     const queryParams = queryString.stringify(this.query);
     this.apiService.getHrmPayrollRecordPage(queryParams).subscribe(
       (results: any) => {
-        this.listsData = results.data.dataList.data;
-        this.gridKey= results.data.dataList.gridKey;
+        this.listsData = results?.data?.dataList?.data;
+        this.gridKey= results?.data?.dataList?.gridKey;
         if (this.query.offSet === 0) {
-          this.cols = results.data.gridflexs;
-          this.colsDetail = results.data.gridflexdetails ? results.data.gridflexdetails : [];
+          this.cols = results?.data?.gridflexs ? results?.data?.gridflexs : [];
+          this.colsDetail = results?.data?.gridflexdetails ? results?.data?.gridflexdetails : [];
         }
         this.initGrid();
-        this.countRecord.totalRecord = results.data.dataList.recordsTotal;
-        this.countRecord.totalRecord = results.data.dataList.recordsTotal;
-        this.countRecord.currentRecordStart = results.data.dataList.recordsTotal === 0 ? this.query.offSet = 0 : this.query.offSet + 1;
-        if ((results.data.dataList.recordsTotal - this.query.offSet) > this.query.pageSize) {
+        this.countRecord.totalRecord = results?.data?.dataList?.recordsTotal;
+        this.countRecord.totalRecord = results?.data?.dataList?.recordsTotal;
+        this.countRecord.currentRecordStart = results?.data?.dataList?.recordsTotal === 0 ? this.query.offSet = 0 : this.query.offSet + 1;
+        if ((results?.data?.dataList?.recordsTotal - this.query.offSet) > this.query.pageSize) {
           this.countRecord.currentRecordEnd = this.query.offSet + Number(this.query.pageSize);
         } else {
-          this.countRecord.currentRecordEnd = results.data.dataList.recordsTotal;
+          this.countRecord.currentRecordEnd = results?.data?.dataList?.recordsTotal;
           setTimeout(() => {
             const noData = document.querySelector('.ag-overlay-no-rows-center');
             if (noData) { noData.innerHTML = 'Không có kết quả phù hợp' }
@@ -411,6 +411,7 @@ export class QtThayDoiLuongComponent implements OnInit {
         label: 'Import file',
         code: 'Import',
         icon: 'pi pi-upload',
+        disabled: CheckHideAction(MENUACTIONROLEAPI.GetHrmPayrollRecordPage.url, ACTIONS.IMPORT),
         command: () => {
           this.importFileExel();
         }
@@ -419,6 +420,7 @@ export class QtThayDoiLuongComponent implements OnInit {
         label: 'Export file',
         code: 'Import',
         icon: 'pi pi-download',
+        disabled: CheckHideAction(MENUACTIONROLEAPI.GetHrmPayrollRecordPage.url, ACTIONS.IMPORT),
         command: () => {
           this.exportExel();
         }

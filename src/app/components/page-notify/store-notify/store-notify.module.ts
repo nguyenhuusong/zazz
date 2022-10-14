@@ -15,6 +15,7 @@ import { TreeSelectModule} from 'primeng/treeselect';
 import { AgGridModule } from '@ag-grid-community/angular';
 import { BadgeModule } from 'primeng/badge';
 import { ListGridAngularModule } from 'src/app/common/list-grid-angular/list-grid-angular.module';
+import { CheckHideActionsDirectiveModule } from 'src/app/directive/check-action.module';
 @NgModule({
   declarations: [
     StoreNotifyComponent
@@ -35,6 +36,7 @@ import { ListGridAngularModule } from 'src/app/common/list-grid-angular/list-gri
     PageMarkdownModule,
     ListGridAngularModule,
     DropdownModule,
+    CheckHideActionsDirectiveModule,
     TabViewModule,],
   exports: [StoreNotifyComponent],
   entryComponents: [],

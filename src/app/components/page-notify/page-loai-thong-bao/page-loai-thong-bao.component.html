@@ -1,34 +1,34 @@
-<div class="grid main-grid">
-    <div class="col-12 right max-w-full">
-        <div class="breadcrumb">
-            <h3>Danh sách loại thông báo</h3>
-            <p-breadcrumb [model]="items"></p-breadcrumb>
+<div class="main-grid">
+    <section class="bread-crumb">
+        <div class="d-flex bet bottom">
+            <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
+            <p-button styleClass="p-button-sm height-56" (click)="cauhinh()">
+                <svg width="20" height="17" viewBox="0 0 20 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M19.5 17V0H0.50855L0.5 17H19.5ZM6.675 15.3187H2.21V6.81868H6.675V15.3187ZM8.575 15.3187V6.81868H17.79V15.3187H8.575ZM2.21 1.68132V5.13736H17.79V1.68132H2.21Z" fill="#F3F8FF"/>
+                </svg>
+                &nbsp;
+                Cấu hình
+            </p-button>
         </div>
-        <div class="table-tool grid white-background black-box-shadow-005 filterInput">
-            <div class="header-filter-search col-4 ">
-                <div class="field-group text search" [ngClass]="query.filter? 'valid' : 'invalid'">
-                    <label>Mã số...</label>
-                    <input class="input-default" type="text" id="filter"
-                        (keydown.enter)="query.offSet = 0; first = 0;load()"
-                        [(ngModel)]="query.filter">
-                    <i id="icon-search" class="pi pi-angle-down"></i>
-                    <svg class="placeholder-icon" width="16" height="16" viewBox="0 0 16 16" fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" clip-rule="evenodd"
-                            d="M10.1305 11.2619C9.28558 11.8771 8.24518 12.24 7.12002 12.24C4.29231 12.24 2 9.94772 2 7.12002C2 4.29231 4.29231 2 7.12002 2C9.94772 2 12.24 4.29231 12.24 7.12002C12.24 8.24518 11.8771 9.28558 11.2619 10.1305L13.7657 12.6343C14.0781 12.9467 14.0781 13.4533 13.7657 13.7657C13.4533 14.0781 12.9467 14.0781 12.6343 13.7657L10.1305 11.2619ZM11.28 7.12002C11.28 9.41753 9.41753 11.28 7.12002 11.28C4.8225 11.28 2.96 9.41753 2.96 7.12002C2.96 4.8225 4.8225 2.96 7.12002 2.96C9.41753 2.96 11.28 4.8225 11.28 7.12002Z"
-                            fill="#808AA6" />
-                    </svg>
-                    <p-button class="search-button" icon="pi pi-search" (click)="query.offSet = 0; first = 0; load()">
-                    </p-button>
-
-                </div>
-                <div class="input-group-append dropdown">
+    </section>
+    <section class="bread-filter">
+        <div class="d-flex bet end bottom gap-16">
+            <div class="col-item">
+                <div class="filter filter-search">
+                    <div class="field-group text search mb-0" [ngClass]=" query.filter ? 'valid' : 'invalid' ">
+                        <input placeholder="Tìm kiếm" class="input-default" type="text" autocomplete="off" id="filter"
+                            (keydown.enter)="query.offSet = 0; first = 0;load()"
+                            [(ngModel)]="query.filter">
+                            <span class="placeholder-icon" (click)="query.offSet = 0; first = 0; load()">
+                                <svg _ngcontent-xmj-c197="" width="19" height="20" viewBox="0 0 19 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path _ngcontent-xmj-c197="" fill-rule="evenodd" clip-rule="evenodd" d="M9.02893 0.850098C4.51087 0.850098 0.849609 4.51552 0.849609 9.03539C0.849609 13.5553 4.51087 17.2207 9.02893 17.2207C10.8456 17.2207 12.5254 16.6271 13.8828 15.6241L17.1276 18.8716C17.4984 19.2427 18.0999 19.243 18.4711 18.8721C18.8422 18.5013 18.8425 17.8998 18.4716 17.5286L15.2709 14.3252C16.4787 12.8991 17.2083 11.0518 17.2083 9.03539C17.2083 4.51552 13.547 0.850098 9.02893 0.850098ZM2.74961 9.03539C2.74961 5.56338 5.56169 2.7501 9.02893 2.7501C12.4962 2.7501 15.3083 5.56338 15.3083 9.03539C15.3083 10.8568 14.5355 12.496 13.2976 13.645C12.1765 14.6858 10.6778 15.3207 9.02893 15.3207C5.56169 15.3207 2.74961 12.5074 2.74961 9.03539Z" fill="#2B2F33" fill-opacity="0.6"></path></svg>
+                            </span>
+                    </div>
                 </div>
             </div>
-            <div class="col-8 tools">
-                <p-button styleClass="p-button-sm mr-1" icon="pi pi-plus" label="Thêm mới" (click)="addNotifyRef()"></p-button>
-            </div>
         </div>
+    </section>
+</div>
+<section class="content pb-0">
         <div class="grid-default" #container>
             <app-list-grid-angular *ngIf="columnDefs.length > 0" [listsData]="listsData" [height]="heightGrid"
                 [columnDefs]="columnDefs"></app-list-grid-angular>
@@ -42,8 +42,7 @@
                 </p-paginator>
             </div>
         </div>
-    </div>
-</div>
+</section>
 
 
 

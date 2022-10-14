@@ -8,6 +8,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { AgGridFn } from 'src/app/common/function-common/common';
+import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 @Component({
   selector: 'app-store-notify',
   templateUrl: './store-notify.component.html',
@@ -62,6 +63,8 @@ export class StoreNotifyComponent implements OnInit, OnChanges {
   perent_id = null;
   sub_prod_cd: any = null;
   moduleList = [];
+  MENUACTIONROLEAPI = MENUACTIONROLEAPI;
+  ACTIONS = ACTIONS
 
   gridflexs = [
     {

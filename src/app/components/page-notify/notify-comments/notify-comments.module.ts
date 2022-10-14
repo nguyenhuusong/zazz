@@ -24,6 +24,7 @@ import { NotifyCommentsComponent } from './notify-comments.component';
 import { AgGridModule } from '@ag-grid-community/angular';
 import { ListGridAngularModule } from 'src/app/common/list-grid-angular/list-grid-angular.module';
 import { EditDetailModule } from 'src/app/common/edit-detail/edit-detail.module';
+import { CheckHideActionsDirectiveModule } from 'src/app/directive/check-action.module';
 @NgModule({
     declarations: [NotifyCommentsComponent],
     imports: [
@@ -51,6 +52,7 @@ import { EditDetailModule } from 'src/app/common/edit-detail/edit-detail.module'
         TooltipModule,
         EditDetailModule,
         SelectButtonModule,
+        CheckHideActionsDirectiveModule,
         // CommonSearchUserMasterModule,
         
       AgGridModule.withComponents([

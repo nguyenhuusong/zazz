@@ -8,7 +8,7 @@
                 <div class="filter filter-search">
                     <div class="field-group text search mb-0" [ngClass]=" query.filter ? 'valid' : 'invalid' ">
                         <input class="input-default" placeholder="Tìm kiếm" type="text" autocomplete="off" id="filter"
-                            (click)="op.toggle($event)" (keydown.enter)="query.offSet = 0; first = 0;load()"
+                            (keydown.enter)="query.offSet = 0; first = 0;load()"
                             [(ngModel)]="query.filter">
                             <span class="placeholder-icon" (click)="query.offSet = 0; first = 0; load()">
                                 <svg _ngcontent-gwb-c197="" width="19" height="20" viewBox="0 0 19 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path _ngcontent-gwb-c197="" fill-rule="evenodd" clip-rule="evenodd" d="M9.02893 0.850098C4.51087 0.850098 0.849609 4.51552 0.849609 9.03539C0.849609 13.5553 4.51087 17.2207 9.02893 17.2207C10.8456 17.2207 12.5254 16.6271 13.8828 15.6241L17.1276 18.8716C17.4984 19.2427 18.0999 19.243 18.4711 18.8721C18.8422 18.5013 18.8425 17.8998 18.4716 17.5286L15.2709 14.3252C16.4787 12.8991 17.2083 11.0518 17.2083 9.03539C17.2083 4.51552 13.547 0.850098 9.02893 0.850098ZM2.74961 9.03539C2.74961 5.56338 5.56169 2.7501 9.02893 2.7501C12.4962 2.7501 15.3083 5.56338 15.3083 9.03539C15.3083 10.8568 14.5355 12.496 13.2976 13.645C12.1765 14.6858 10.6778 15.3207 9.02893 15.3207C5.56169 15.3207 2.74961 12.5074 2.74961 9.03539Z" fill="#2B2F33" fill-opacity="0.6"></path></svg>

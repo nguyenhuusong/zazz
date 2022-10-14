@@ -56,8 +56,7 @@ export class ImportHoSoNhanSuComponent implements OnInit {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {
         if (results.status === 'success') {
-          if(results.data && results.data.data && results.data.data.length > 0) {
-            console.log(results, 'results')
+          if(results.data && results.data.dataList && results.data.dataList.data) {
             this.cols = results.data.gridflexs;
             this.initGrid();
             const a: any = document.querySelector(".header");
@@ -84,7 +83,6 @@ export class ImportHoSoNhanSuComponent implements OnInit {
     this.columnDefs = [
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide))
     ]
-   
   }
 
   back() {

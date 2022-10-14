@@ -8,6 +8,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 declare var ace:any;
 import showdown from 'showdown';
+import { CheckHideAction } from 'src/app/common/function-common/common';
+import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 @Component({
   selector: 'app-notify-detail',
   templateUrl: './notify-detail.component.html',
@@ -15,7 +17,16 @@ import showdown from 'showdown';
 })
 export class NotifyDetailComponent implements OnInit {
   manhinh = 'Edit';
+  MENUACTIONROLEAPI = MENUACTIONROLEAPI;
+  ACTIONS = ACTIONS
+
   @Output() save = new EventEmitter<any>();
+  optionsButon: any = [
+    { label: 'Bỏ qua', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times-circle' },
+    { label: 'Lưu lại', value: 'Update', 
+    class: CheckHideAction(MENUACTIONROLEAPI.GetAppNotifyPage.url, ACTIONS.EDIT) ? 'hidden' : ''
+    }
+  ];
   indexTab = 0;
   notiId = null;
   tempId = null;

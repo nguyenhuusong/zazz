@@ -7,9 +7,10 @@ import { ApiService } from 'src/app/services/api.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
 import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
-import { AgGridFn } from 'src/app/common/function-common/common';
+import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { CONSTANTS } from 'src/app/shared/constants';
+import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 @Component({
   selector: 'app-grid-push-list',
   templateUrl: './grid-push-list.component.html',
@@ -57,6 +58,9 @@ export class GridPushListComponent implements OnInit, OnChanges {
   pagingComponent = {
     total: 0
   }
+  MENUACTIONROLEAPI = MENUACTIONROLEAPI;
+  ACTIONS = ACTIONS
+
 
   columnDefs = [];
   detailRowHeight;
@@ -143,7 +147,7 @@ export class GridPushListComponent implements OnInit, OnChanges {
           label: 'Xóa',
           icon: 'fa fa-trash',
           class: 'btn-google text-white',
-          show: true
+          hide: CheckHideAction(MENUACTIONROLEAPI.GetAppNotifyPage.url, ACTIONS.DANH_SACH_GUI_THONG_BAO_XOA)
         }
       ]
     };

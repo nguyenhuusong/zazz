@@ -49,14 +49,17 @@
             </ul>
             <div>
                 <div class="buttons" *ngIf="detailInfo?.emp_st === 1 && selectedMenuCode === 'GetEmployeeByJob'" >
-                    <p-button (click)="cancelUpdate('ChuyenCongTac')">
+                    <p-button (click)="cancelUpdate('ChuyenCongTac')"
+                    [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetEmployeePage.url, action: ACTIONS.CHUYEN_CONG_TAC}"
+                    >
                         <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M8.42992 2.57992H12.4299V4.57992H8.82992L10.8299 6.57992H18.4299V14.1799L20.4299 16.1799V6.57992C20.4299 5.46992 19.5399 4.57992 18.4299 4.57992H14.4299V2.57992C14.4299 1.46992 13.5399 0.579922 12.4299 0.579922H8.42992C7.43992 0.579922 6.62992 1.27992 6.46992 2.21992L8.42992 4.17992V2.57992ZM1.82992 0.419922L0.419922 1.82992L3.16992 4.57992H2.42992C1.31992 4.57992 0.439922 5.46992 0.439922 6.57992L0.429922 17.5799C0.429922 18.6899 1.31992 19.5799 2.42992 19.5799H18.1699L20.1699 21.5799L21.5799 20.1699L1.82992 0.419922ZM2.42992 17.5799V6.57992H5.16992L16.1699 17.5799H2.42992Z" fill="white"/>
                             </svg>
                             
                         &nbsp;
                         Chuyển công tác</p-button>&nbsp;
-                    <p-button (click)="cancelUpdate('NghiViec')">
+                    <p-button (click)="cancelUpdate('NghiViec')"
+                    [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetEmployeePage.url, action: ACTIONS.NGHI_VIEC}">
                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M6.59 5.17L1.41 0L0 1.41L5.17 6.58L6.59 5.17ZM10.5 0L12.54 2.04L0 14.59L1.41 16L13.96 3.46L16 5.5V0H10.5ZM10.83 9.41L9.42 10.82L12.55 13.95L10.5 16H16V10.5L13.96 12.54L10.83 9.41Z" fill="white"/>
                         </svg>
@@ -65,7 +68,9 @@
 
                 </div>
                 <!-- detailInfo?.emp_st === 0 &&  -->
-                <p-button *ngIf="selectedMenuCode === 'GetEmployeeByContract'" (click)="cancelUpdate('TaoHopDong')">
+                <p-button *ngIf="selectedMenuCode === 'GetEmployeeByContract'" (click)="cancelUpdate('TaoHopDong')"
+                [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetEmployeePage.url, action: ACTIONS.TAO_HOP_DONG}"
+                >
                     <svg width="18" height="21" viewBox="0 0 18 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M7.97231 5.18824H3.94521V7.16471H8.68264C8.33591 6.56442 8.0912 5.89765 7.97231 5.18824Z" fill="#F3F8FF"/>
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M13.8082 10.1294V19.0235H6.90411V14.0824H1.9726V3.21176H7.97231C8.0912 2.50235 8.33591 1.83558 8.68264 1.23529H0V15.0706L5.91781 21H15.7808V9.79174C15.1638 10.0104 14.4998 10.1294 13.8082 10.1294ZM5.42466 18.0353L2.9589 15.5647H5.42466V18.0353Z" fill="#F3F8FF"/>
@@ -154,6 +159,7 @@
                                             </div>
                                         </ng-template>
                                         <div class="grid-default border mt-2">
+                                            <!-- Thời gian làm việc -->
                                                 <app-list-grid-angular  [domLayout]="'autoHeight'" [title]="'Danh sách liên hệ'" *ngIf="listsData[0].length > 0"
                                                     [listsData]="listsData[0]"  (FnClick)="OnClick($event)"
                                                     [columnDefs]="columnDefs[0]"></app-list-grid-angular>
@@ -213,7 +219,9 @@
                                             </div>
                                             <div class="col-md-6 justify-content-end text-right">
                                                 <p-button *ngIf="selectedMenuCode === API_PROFILE.THUE_BAO_HIEM
-                                                || selectedMenuCode === API_PROFILE.NGUOI_DUNG" styleClass="p-button-sm" (click)="addType0()">
+                                                || selectedMenuCode === API_PROFILE.NGUOI_DUNG" styleClass="p-button-sm" (click)="addType0()"
+                                                [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetEmployeePage.url, action: ACTIONS.CHI_TIET_HO_SO_THUE_BAO_HIEM_THEM_MOI_NGUOI_PHU_THUOC}"
+                                                >
                                                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                         <path d="M11 5H9V9H5V11H9V15H11V11H15V9H11V5ZM10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM10 18C5.59 18 2 14.41 2 10C2 5.59 5.59 2 10 2C14.41 2 18 5.59 18 10C18 14.41 14.41 18 10 18Z" fill="#F3F8FF"/>
                                                         </svg>
@@ -223,6 +231,7 @@
                                         </div>
                                     </ng-template>
                                 <div class="grid-default border mb-7">
+                                    <!-- Giấy tờ tùy thân -->
                                     <app-list-grid-angular  [domLayout]="'autoHeight'"  [title]="'Danh sách liên hệ'" *ngIf="listsData[0].length > 0"
                                         [listsData]="listsData[0]"  (FnClick)="OnClick($event)"
                                         [columnDefs]="columnDefs[0]"></app-list-grid-angular>
@@ -251,11 +260,12 @@
                                             </div>
                                         </div>
                                         <div class="col-md-6 justify-content-end text-right">
-                                            <p-button *ngIf="selectedMenuCode === API_PROFILE.THONG_TIN_CA_NHAN"
+                                            <!-- <p-button *ngIf="selectedMenuCode === API_PROFILE.THONG_TIN_CA_NHAN"
                                                 label="Thông tin hồ sơ" icon="pi pi-book"
-                                                styleClass="p-button-sm" (click)="createContract()"></p-button>
+                                                styleClass="p-button-sm" (click)="createContract()"></p-button> -->
                                             <p-button
                                                 *ngIf=" selectedMenuCode === API_PROFILE.THUE_BAO_HIEM" styleClass="p-button-sm"
+                                                [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetEmployeePage.url, action: ACTIONS.CHI_TIET_HO_SO_THUE_BAO_HIEM_THEM_MOI_FILE_DINH_KEM}"
                                                 (click)="createAttach()">
                                                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <path d="M11 5H9V9H5V11H9V15H11V11H15V9H11V5ZM10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM10 18C5.59 18 2 14.41 2 10C2 5.59 5.59 2 10 2C14.41 2 18 5.59 18 10C18 14.41 14.41 18 10 18Z" fill="#F3F8FF"/>
@@ -320,7 +330,6 @@
                                                     *ngIf="selectedMenuCode === API_PROFILE.THONG_TIN_CA_NHAN " styleClass="p-button-sm"
                                                     (click)="createAttach()"
                                                     [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetEmployeePage.url, action: ACTIONS.CHI_TIET_HO_SO_THEM_MOI_FILE_DINH_KEM}"
-  
                                                     >
                                                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                         <path d="M11 5H9V9H5V11H9V15H11V11H15V9H11V5ZM10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM10 18C5.59 18 2 14.41 2 10C2 5.59 5.59 2 10 2C14.41 2 18 5.59 18 10C18 14.41 14.41 18 10 18Z" fill="#F3F8FF"/>

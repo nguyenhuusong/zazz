@@ -3622,6 +3622,8 @@ div.p-organizationchart {
         right: 16px;
         top: 187px;
         z-index: 998;
+        display: flex;
+        align-items: center;
     }
 }
 p-dialog{
@@ -4398,6 +4400,10 @@ p-dialog{
         color: #465373;
         font-family: $fontRegular;
         margin-bottom: 10px;
+        a{
+            color: #465373;
+            text-decoration: none;
+        }
     }
 }
 .uni-load {
@@ -5372,6 +5378,13 @@ p-button{
                 color: #FFFFFF;
                 display: block;
             }
+        }
+    }
+}
+.wrap-edit-detail{
+    .main-grid{
+        button{
+            padding: 9px 10px;
         }
     }
 }

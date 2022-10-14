@@ -292,7 +292,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
           label: 'Thông tin chi tiết',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
-          hide: CheckHideAction(MENUACTIONROLEAPI.GetFormGeneral.url, ACTIONS.VIEW)
+          hide: this.indexTab === 0 || CheckHideAction(MENUACTIONROLEAPI.GetFormGeneral.url, ACTIONS.VIEW)
 
         },
         {
@@ -300,7 +300,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
           label: 'Xóa tài liệu',
           icon: 'fa fa-trash',
           class: 'btn-primary mr5',
-          hide: CheckHideAction(MENUACTIONROLEAPI.GetFormGeneral.url, ACTIONS.DELETE)
+          hide: this.indexTab === 0 || CheckHideAction(MENUACTIONROLEAPI.GetFormGeneral.url, ACTIONS.DELETE)
         },
       ]
     };
@@ -408,7 +408,6 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
   }
 
   onFirstDataRendered(params: any) {
-    console.log('params', params)
     params.api.forEachNode((node) =>
       node.setSelected(!!node.data && node.data.form_status === 2)
     );

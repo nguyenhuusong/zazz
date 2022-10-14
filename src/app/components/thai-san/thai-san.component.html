@@ -1,6 +1,15 @@
 <div class="main-grid">
     <section class="bread-crumb">
-        <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
+        <div class="d-flex bet bottom">
+            <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
+            <p-button styleClass="p-button-sm height-56" (click)="cauhinh()">
+                <svg width="20" height="17" viewBox="0 0 20 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M19.5 17V0H0.50855L0.5 17H19.5ZM6.675 15.3187H2.21V6.81868H6.675V15.3187ZM8.575 15.3187V6.81868H17.79V15.3187H8.575ZM2.21 1.68132V5.13736H17.79V1.68132H2.21Z" fill="#F3F8FF"/>
+                </svg>
+                &nbsp;
+                Cấu hình
+            </p-button>
+        </div>
     </section>
     <section class="bread-filter">
         <div class="d-flex bet end bottom gap-16">
@@ -9,7 +18,7 @@
                     <div class="filter filter-search">
                         <div class="field-group text search mb-0" [ngClass]=" query.filter ? 'valid' : 'invalid' ">
                             <input placeholder="Tìm kiếm" class="input-default" type="text" autocomplete="off" id="filter"
-                                (click)="op.toggle($event)" (keydown.enter)="query.offSet = 0; first = 0;load()"
+                                (keydown.enter)="query.offSet = 0; first = 0;load()"
                                 [(ngModel)]="query.filter">
                                 <span class="placeholder-icon" (click)="query.offSet = 0; first = 0; load()">
                                     <svg width="19" height="20" viewBox="0 0 19 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -33,13 +42,6 @@
                             </svg>
                             &nbsp;
                             Thêm mới
-                    </p-button>
-                    <p-button styleClass="p-button-sm height-56" (click)="cauhinh()">
-                        <svg width="20" height="17" viewBox="0 0 20 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M19.5 17V0H0.50855L0.5 17H19.5ZM6.675 15.3187H2.21V6.81868H6.675V15.3187ZM8.575 15.3187V6.81868H17.79V15.3187H8.575ZM2.21 1.68132V5.13736H17.79V1.68132H2.21Z" fill="#F3F8FF"/>
-                        </svg>
-                        &nbsp;
-                        Cấu hình
                     </p-button>
                 </div>
             </div>

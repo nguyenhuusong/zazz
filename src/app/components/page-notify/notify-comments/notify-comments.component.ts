@@ -4,7 +4,7 @@ import * as queryString from 'querystring';
 import { ApiService } from 'src/app/services/api.service';
 import { MessageService } from 'primeng/api';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
-import { CONSTANTS } from 'src/app/common/constants/constant';
+import { ACTIONS, CONSTANTS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 @Component({
   selector: 'app-notify-comments',
   templateUrl: './notify-comments.component.html',
@@ -20,6 +20,8 @@ export class NotifyCommentsComponent implements OnInit, OnChanges{
     currentRecordStart: 0,
     currentRecordEnd: 0
   };
+  MENUACTIONROLEAPI = MENUACTIONROLEAPI;
+  ACTIONS = ACTIONS
 
   query = {
     notiId: 0,
