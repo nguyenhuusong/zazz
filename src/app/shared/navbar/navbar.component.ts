@@ -5,6 +5,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { NgForm } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
+const queryString = require('query-string');
 
 @Component({
     selector: 'app-navbar',
@@ -29,6 +31,7 @@ export class NavbarComponent implements OnInit {
         private router: Router,
         private authService: AuthService,
         private apiService: ApiService,
+        private apiHrm: ApiHrmService,
         private messageService: MessageService
         // private themeService: ThemeService
     ) {
@@ -102,6 +105,7 @@ export class NavbarComponent implements OnInit {
 
     ngOnInit() {
         this.userName = this.authService.getUserName();
+        this.getOragin();
     }
 
     update() {
@@ -115,5 +119,27 @@ export class NavbarComponent implements OnInit {
     // changeTheme(theme: string) {
     //     this.themeService.switchTheme(theme);
     // }
-      
+
+    detailOrganizes = []
+    getOragin(){
+      this.apiHrm.getUserOrganizeRole().subscribe(
+        (results: any) => {
+          if(results.status === "success"){
+            if(results.data && results.data.result){
+              this.detailOrganizes = results.data.result
+                .map(d => {
+                  return {
+                    label: d.ord_name,
+                    value: d.ord_id
+                  };
+                });
+            }
+          }
+        }),
+        error => { };
+    }
+
+    changeOragi(e){
+
+    }
 }

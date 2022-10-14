@@ -219,13 +219,20 @@ export class PqQuyenNguoiDungComponent implements OnInit {
 
   titleForm = 'Thêm mới quyền người dùng'
   XemChiTiet({ rowData }) {
-    
     this.displayAdd = true;
     this.addUserQuery.fullName = rowData.fullName
     this.addUserQuery.phone = rowData.phone
     this.addUserQuery.email = rowData.email
-    this.addUserQuery.ord_ids = rowData.org_id
-    this.addUserQuery.roles = rowData.role_id
+
+    if(rowData.org_id){
+      this.addUserQuery.ord_ids = rowData.org_id.split(',');
+      this.addUserQuery.ord_ids = this.addUserQuery.ord_ids.map( (d: any) => { return d.toLowerCase(); })
+    }
+
+    if(rowData.role_id){
+      this.addUserQuery.roles = rowData.role_id.split(',');
+      // this.addUserQuery.roles = this.addUserQuery.roles.map( (d: any) => { return d.toUpperCase(); })
+    }
     this.addUserQuery.userId = rowData.userId
     this.addUserQuery.loginName = rowData.loginName
     this.addUserQuery.password = "true"
