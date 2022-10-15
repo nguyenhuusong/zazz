@@ -12,6 +12,7 @@ import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import { addUser } from 'src/app/types/addUser';
 @Component({
   selector: 'app-pq-quyen-nguoi-dung',
   templateUrl: './pq-quyen-nguoi-dung.component.html',
@@ -20,8 +21,9 @@ import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 export class PqQuyenNguoiDungComponent implements OnInit {
   MENUACTIONROLEAPI = MENUACTIONROLEAPI;
   ACTIONS = ACTIONS
-
+  addUserQuery = new addUser();
   dataQuyenNguoiDung: any;
+  userIdS = []
   constructor(
     private apiService: ApiHrmService,
     private api: ApiService,
@@ -178,7 +180,7 @@ export class PqQuyenNguoiDungComponent implements OnInit {
   }
   
   loadjs = 0;
-  heightGrid = 0
+  heightGrid = 300
   ngAfterViewChecked(): void {
     const a: any = document.querySelector(".header");
     const b: any = document.querySelector(".sidebarBody");
@@ -217,23 +219,41 @@ export class PqQuyenNguoiDungComponent implements OnInit {
 
   titleForm = 'Thêm mới quyền người dùng'
   XemChiTiet({ rowData }) {
-    this.titleForm = 'Chỉnh sửa quyền người dùng'
-    this.chiTietNguoiDUng.userLogin = rowData.loginName;
-    this.chiTietNguoiDUng.fullName = rowData.fullName;
-    this.chiTietNguoiDUng.loginName = rowData.loginName;
-    this.chiTietNguoiDUng.phone = rowData.phone;
-    this.chiTietNguoiDUng.email = rowData.email;
-    this.modelAdd.userId = rowData.userId;
-    // this.modelAdd.admin_st = rowData.admin_status;
-    this.modelAdd.position = rowData.position;
-    this.modelAdd.parent_id = rowData.parent_id;
-    this.modelAdd.ord_id = rowData.org_id;
-    this.modelAdd.loginName = rowData.loginName;
     this.displayAdd = true;
-    console.log('rowData', rowData)
+    this.addUserQuery.fullName = rowData.fullName
+    this.addUserQuery.phone = rowData.phone
+    this.addUserQuery.email = rowData.email
+
+    if(rowData.org_id){
+      this.addUserQuery.ord_ids = rowData.org_id.split(',');
+      this.addUserQuery.ord_ids = this.addUserQuery.ord_ids.map( (d: any) => { return d.toLowerCase(); })
+    }
+
+    if(rowData.role_id){
+      this.addUserQuery.roles = rowData.role_id.split(',');
+      // this.addUserQuery.roles = this.addUserQuery.roles.map( (d: any) => { return d.toUpperCase(); })
+    }
+    this.addUserQuery.userId = rowData.userId
+    this.addUserQuery.loginName = rowData.loginName
+    this.addUserQuery.password = "true"
+    this.titleForm = 'Chỉnh sửa quyền người dùng'
     this.getRoleActive(rowData.role_id)
     this.getOrganizes();
     this.getPositionList();
+  }
+
+
+  themmoi2() {
+    this.addUserQuery.fullName = "";
+    this.addUserQuery.phone = "";
+    this.addUserQuery.email = "";
+    this.addUserQuery.ord_ids = [];
+    this.addUserQuery.roles = [];
+    this.addUserQuery.userId = "";
+    this.addUserQuery.loginName = "";
+    this.addUserQuery.password = "";
+    this.displayAdd = true;
+    this.saveAddUser = false;
   }
 
   find() {
@@ -281,6 +301,9 @@ export class PqQuyenNguoiDungComponent implements OnInit {
 
   seachManager = false
   themmoi() {
+
+    this.addUserQuery = new addUser();
+
     this.seachManager = true;
     this.orgId = null;
     this.valueSearchUser = null;
@@ -308,7 +331,7 @@ export class PqQuyenNguoiDungComponent implements OnInit {
 
   dataPositionList = []
   getPositionList() {
-    let oriID = this.modelAdd.ord_id
+    let oriID = this.modelAdd.ord_ids
     if(!oriID) {
       oriID = this.orgId;
     }
@@ -366,7 +389,6 @@ export class PqQuyenNguoiDungComponent implements OnInit {
                 value: d.organizeId
               };
             });
-          this.organizes = [{ label: 'Chọn tổ chức', value: '' }, ...this.organizes];
         }),
         error => { };
   }
@@ -397,7 +419,6 @@ export class PqQuyenNguoiDungComponent implements OnInit {
   displayAdd = false;
 
   onSelectUser(event) {
-    console.log(event)
     this.detailUser = event;
     this.callApi(event.phone);
   }
@@ -412,7 +433,7 @@ export class PqQuyenNguoiDungComponent implements OnInit {
             .map(d => {
               return {
                 label: d.name,
-                code: d.id
+                code: d.id.toUpperCase()
               };
             });
       }),
@@ -435,17 +456,19 @@ export class PqQuyenNguoiDungComponent implements OnInit {
 
   detailOrganizes = []
   getOrganizes() {
-    this.apiService.getOrgRoots().subscribe(
+    this.apiService.getUserOrganizeRole().subscribe(
       (results: any) => {
-        if(results.status === "success")
-          this.detailOrganizes = results.data
-            .map(d => {
-              return {
-                label: d.org_name,
-                value: d.organizeId
-              };
-            });
-          this.detailOrganizes = [{ label: 'Chọn tổ chức', value: '' }, ...this.detailOrganizes];
+        if(results.status === "success"){
+          if(results.data && results.data.result){
+            this.detailOrganizes = results.data.result
+              .map(d => {
+                return {
+                  label: d.ord_name,
+                  value: d.ord_id
+                };
+              });
+          }
+        }
       }),
       error => { };
   }
@@ -504,13 +527,14 @@ export class PqQuyenNguoiDungComponent implements OnInit {
     email: '',
   };
   modelAdd = {
-    position: '',
-    userId: '',
-    // admin_st: false,
-    parent_id: '',
-    loginName: '',
-    ord_id: '',
+    fullName: '',
+    phone: '',
+    email: '',
+    ord_ids: [],
     roles: [],
+    userId: '',
+    loginName: '',
+    password: ''
   }
   roleids = []
   checkSquare(e) {
@@ -521,28 +545,41 @@ export class PqQuyenNguoiDungComponent implements OnInit {
     this.titleForm = 'Thêm mới quyền người dùng'
     
     this.chiTietNguoiDUng = {...items[0], loginName: e.rowData.loginName}
-    this.modelAdd.ord_id = this.chiTietNguoiDUng.organizeId;
+    this.modelAdd.ord_ids = this.chiTietNguoiDUng.organizeId;
     this.modelAdd.userId = e.rowData.userId
-    console.log('items', e)
-    console.log('items items', items)
     
   }
   saveAddUser = false;
   save() {
-    console.log('position', this.modelAdd.position)
     this.saveAddUser = true;
-    if(!this.modelAdd.position){
+    this.addUserQuery.password = 'true';
+    if(!this.addUserQuery.roles){
       return
     }
-    if(!this.modelAdd.roles){
+    if(!this.addUserQuery.ord_ids && this.addUserQuery.ord_ids.length <= 0){
       return
     }
-    this.modelAdd.loginName = this.chiTietNguoiDUng.loginName;
-    let roles = this.modelAdd.roles;
-    roles = roles.map( d => d.code)
-    const params = {
-      ...this.modelAdd, roles: roles
+    if(!this.addUserQuery.roles && this.addUserQuery.roles.length <= 0){
+      return
     }
+    if(!this.addUserQuery.phone){
+      return
+    }
+    if(!this.addUserQuery.email){
+      return
+    }
+    if(!this.addUserQuery.fullName){
+      return
+    }
+    
+    const params = this.addUserQuery;
+    if(this.addUserQuery.roles.length > 0){
+      params.roles = this.addUserQuery.roles.map( (d: any) => {
+        return d.code
+      })
+    }
+
+
     this.apiService.setUserAdd(params).subscribe(results => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Thêm mới thành công' });

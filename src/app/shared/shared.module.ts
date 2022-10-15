@@ -28,6 +28,7 @@ import { ButtonAgGridComponent } from '../common/ag-component/button-renderermut
 import { CustomTooltipComponent } from '../common/ag-component/customtooltip.component';
 import { CurrencyFormatPipeModule } from '../common/pipe/currency-pipe.module';
 import {DialogModule} from 'primeng/dialog';
+import { MultiSelectModule } from 'primeng/multiselect';
 @NgModule({
     exports: [
         CommonModule,
@@ -59,6 +60,7 @@ import {DialogModule} from 'primeng/dialog';
         CurrencyFormatPipeModule,
         MenuModule,
         DialogModule,
+        MultiSelectModule,
         AgGridModule.withComponents([
             ButtonRendererComponent,
             CustomTooltipComponent,

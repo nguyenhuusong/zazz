@@ -89,7 +89,7 @@ export class ChonLichHopComponent implements OnInit, OnChanges {
       allDaySlot: false,
       plugins: [ timeGridPlugin ],
       // dayGridMonth
-      initialView: 'timeGridWeek',
+      initialView: 'resourceTimeline',
       eventMinHeight: 120,
       slotEventOverlap: false,
       height: 650,
