@@ -456,17 +456,18 @@ export class PqQuyenNguoiDungComponent implements OnInit {
 
   detailOrganizes = []
   getOrganizes() {
-    this.apiService.getUserOrganizeRole().subscribe(
+    this.apiService.getOrgRoots().subscribe(
       (results: any) => {
         if(results.status === "success"){
-          if(results.data && results.data.result){
-            this.detailOrganizes = results.data.result
+          if(results.data){
+            this.detailOrganizes = results.data
               .map(d => {
                 return {
-                  label: d.ord_name,
-                  value: d.ord_id
-                };
+                  label: d.org_name,
+                  value: `${d.orgId}`
+                }
               });
+              console.log('this.detailOrganizes', this.detailOrganizes)
           }
         }
       }),

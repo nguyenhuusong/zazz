@@ -89,7 +89,7 @@ export class ChonLichHopComponent implements OnInit, OnChanges {
       allDaySlot: false,
       plugins: [ timeGridPlugin ],
       // dayGridMonth
-      initialView: 'resourceTimeline',
+      initialView: 'timeGridWeek',
       eventMinHeight: 120,
       slotEventOverlap: false,
       height: 650,
@@ -120,6 +120,10 @@ export class ChonLichHopComponent implements OnInit, OnChanges {
         // minute: '2-digit',
         // meridiem: 'short',
         // hour12: false
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        // meridiem: false
       },
       eventContent: function (arg) {
         var event = arg.event;
