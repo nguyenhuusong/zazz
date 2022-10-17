@@ -83,7 +83,9 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
     // request_status: '',
     filter: '',
     offSet: 0,
-    pageSize: 15
+    pageSize: 15,
+    fromdate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).add(-1,'months').format()),
+    todate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).format()),
   }
   totalRecord = 0;
   DriverId = 0;
@@ -105,7 +107,9 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
       // request_status: '',
       filter: '',
       offSet: 0,
-      pageSize: 15
+      pageSize: 15,
+      fromdate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).add(-1,'months').format()),
+      todate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).format()),
     }
     this.load();
   }
@@ -121,7 +125,13 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
   load() {
     this.columnDefs = []
     this.spinner.show();
-    const queryParams = queryString.stringify(this.query);
+    let params: any = {... this.query};
+    delete params.fromdate
+    delete params.todate
+    params.FromDate = moment(new Date(this.query.fromdate)).format('YYYY-MM-DD')
+    params.ToDate = moment(new Date(this.query.todate)).format('YYYY-MM-DD')
+
+    const queryParams = queryString.stringify(params);
     this.apiService.getEatingPage(queryParams).subscribe(
       (results: any) => {
         this.listsData = results.data.result.dataList.data;

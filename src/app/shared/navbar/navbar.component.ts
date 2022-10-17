@@ -27,7 +27,7 @@ export class NavbarComponent implements OnInit {
       }
     confimPassword = false;
     submitPass = false;
-    organizes = [];
+    organizeRole = null;
     constructor(
         private route: ActivatedRoute,
         private router: Router,
@@ -109,6 +109,11 @@ export class NavbarComponent implements OnInit {
     ngOnInit() {
         this.userName = this.authService.getUserName();
         this.getOragin();
+        if(localStorage.getItem("organizes") === null){
+          localStorage.setItem('organizes', this.organizeRole);
+        }else{
+          this.organizeRole = localStorage.getItem("organizes");
+        }
     }
 
     update() {
@@ -136,13 +141,8 @@ export class NavbarComponent implements OnInit {
                     value: d.ord_id
                   };
                 });
-                if(this.detailOrganizes.length > 0 && (localStorage.getItem("organizes") === null)){
-                  this.organizes = []
-                  this.organizes.push(this.detailOrganizes[0].value);
-                  // this.addUserQuery.ord_ids = this.organizes 
-                  localStorage.setItem('organizes', JSON.stringify(this.organizes.toString()));
-                }else{
-                  this.organizes = JSON.parse(localStorage.getItem("organizes")).split(',');
+                if(localStorage.getItem("organizes") === null){
+                  this.organizeRole = this.detailOrganizes[1].value;
                 }
             }
           }
@@ -151,8 +151,10 @@ export class NavbarComponent implements OnInit {
     }
 
     changeOragi(e){
-      this.organizes = e.value;
+      this.organizeRole = e.value;
       this.organizeInfoService.setStocks(e.value);
-      localStorage.setItem('organizes', JSON.stringify(e.value.toString()));
+      console.log('e.value', e.value)
+      localStorage.setItem('organizes', e.value);
+      // localStorage.setItem('organizes', JSON.stringify(e.value));
     }
 }

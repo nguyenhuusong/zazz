@@ -61,7 +61,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
   getRowHeight;
   listsData = null;
   selectedNode
-  organizes = '';
+  organizesRole = '';
   capaStatus = [
     { label: 'Tất cả', value: -1 },
     { label: 'Chưa duyệt', value: 0 },
@@ -120,14 +120,13 @@ export class NsHoSoNhanSuComponent implements OnInit {
       buttonAgGridComponent: ButtonAgGridComponent,
       avatarRendererFull: AvatarFullComponent,
     };
-    this.organizes = JSON.parse(localStorage.getItem("organizes"));
   }
   query = {
     filter: '',
     gridWidth: 0,
     offSet: 0,
     pageSize: 15,
-    orgId: this.organizes,
+    orgId: this.organizesRole,
     isLock: -1,
     isApprove: -1,
     emp_st: -1
@@ -155,7 +154,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
       gridWidth: 0,
       offSet: 0,
       pageSize: 15,
-      orgId: this.organizes,
+      orgId: this.organizesRole,
       isLock: -1,
       isApprove: -1,
       emp_st: -1
@@ -237,7 +236,6 @@ export class NsHoSoNhanSuComponent implements OnInit {
 
 
   load() {
-    this.query.orgId = this.organizes;
     this.columnDefs = []
     this.spinner.show();
     const queryParams = queryString.stringify(this.query);
@@ -492,13 +490,16 @@ export class NsHoSoNhanSuComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.organizeInfoService.organizeInfo$.subscribe(results => {
-        console.log(results)
+    this.organizesRole = localStorage.getItem("organizes");
+    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
+        if(results && results.length>0){
+          this.organizesRole = results;
+          this.load();
+          this.getOrganizeTree();
+        }
     });
-
-
-
     
+    this.getOrganizeTree();
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Quản lý nhân sự' },
@@ -728,7 +729,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
   }
 
   getOrganizeTree(): void {
-    const queryParams = queryString.stringify({ parentId: this.organizeId });
+    const queryParams = queryString.stringify({ parentId: this.organizesRole });
     this.apiService.getOrganizeTree(queryParams)
       .subscribe((results: any) => {
         if (results && results.status === 'success') {
