@@ -60,6 +60,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
   getRowHeight;
   listsData = null;
   selectedNode
+  organizes = '';
   capaStatus = [
     { label: 'Tất cả', value: -1 },
     { label: 'Chưa duyệt', value: 0 },
@@ -117,7 +118,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
       buttonAgGridComponent: ButtonAgGridComponent,
       avatarRendererFull: AvatarFullComponent,
     };
-
+    this.organizes = localStorage.getItem("organizes");
 
   }
   query = {
@@ -125,7 +126,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
     gridWidth: 0,
     offSet: 0,
     pageSize: 15,
-    orgId: 0,
+    orgId: this.organizes,
     isLock: -1,
     isApprove: -1,
     emp_st: -1
@@ -153,7 +154,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
       gridWidth: 0,
       offSet: 0,
       pageSize: 15,
-      orgId: 0,
+      orgId: this.organizes,
       isLock: -1,
       isApprove: -1,
       emp_st: -1
@@ -208,7 +209,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
     return datas
   }
 
-  selected(datas = [], orgId = 0) {
+  selected(datas = [], orgId: any = 0) {
     datas.forEach(d => {
       if (d.orgId === orgId) {
         this.selectedNode = d;
@@ -489,6 +490,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Quản lý nhân sự' },
