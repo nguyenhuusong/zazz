@@ -238,7 +238,9 @@ export class NsHoSoNhanSuComponent implements OnInit {
   load() {
     this.columnDefs = []
     this.spinner.show();
-    const queryParams = queryString.stringify(this.query);
+    const query: any = { ...this.query };
+    query.orgId = typeof query.orgId === 'string' ? query.orgId : query.orgId.orgId;
+    const queryParams = queryString.stringify(query);
     this.apiService.getEmployeePage(queryParams).subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;

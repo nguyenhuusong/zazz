@@ -153,7 +153,6 @@ export class NavbarComponent implements OnInit {
     changeOragi(e){
       this.organizeRole = e.value;
       this.organizeInfoService.setStocks(e.value);
-      console.log('e.value', e.value)
       localStorage.setItem('organizes', e.value);
       // localStorage.setItem('organizes', JSON.stringify(e.value));
     }
