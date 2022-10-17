@@ -118,8 +118,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
       buttonAgGridComponent: ButtonAgGridComponent,
       avatarRendererFull: AvatarFullComponent,
     };
-    this.organizes = localStorage.getItem("organizes");
-
+    this.organizes = JSON.parse(localStorage.getItem("organizes"));
   }
   query = {
     filter: '',
@@ -236,6 +235,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
 
 
   load() {
+    this.query.orgId = this.organizes;
     this.columnDefs = []
     this.spinner.show();
     const queryParams = queryString.stringify(this.query);
@@ -495,7 +495,8 @@ export class NsHoSoNhanSuComponent implements OnInit {
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Quản lý nhân sự' },
     ];
-    this.getAgencyOrganizeMap();
+    // this.getAgencyOrganizeMap();
+    this.load();
     this.getEmployeeStatus();
     this.getOrgan();
     this.itemsToolOfGrid = [

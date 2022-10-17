@@ -135,8 +135,12 @@ export class NavbarComponent implements OnInit {
                   };
                 });
                 if(this.detailOrganizes.length > 0 && (localStorage.getItem("organizes") === null)){
-                  this.organizes = this.detailOrganizes[0].value;
+                  this.organizes = []
+                  this.organizes.push(this.detailOrganizes[0].value);
+                  // this.addUserQuery.ord_ids = this.organizes 
                   localStorage.setItem('organizes', JSON.stringify(this.organizes.toString()));
+                }else{
+                  this.organizes = JSON.parse(localStorage.getItem("organizes")).split(',');
                 }
             }
           }
@@ -144,6 +148,7 @@ export class NavbarComponent implements OnInit {
         error => { };
     }
     changeOragi(e){
+      this.organizes = e.value;
       localStorage.setItem('organizes', JSON.stringify(e.value.toString()));
     }
 }

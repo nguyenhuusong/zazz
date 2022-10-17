@@ -61,8 +61,8 @@ export class ImportTheNhanVienComponent implements OnInit {
             const a: any = document.querySelector(".header");
             const b: any = document.querySelector(".sidebarBody");
             const c: any = document.querySelector(".bread-filter");
-            // const d: any = document.querySelector(".filterInput");
-            const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + 80;
+            const d: any = document.querySelector(".bread-crumb");
+            const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + d.clientHeight + 80;
             this.heightGrid = window.innerHeight - totalHeight
             this.changeDetector.detectChanges();
             // this.onInitAgGrid();

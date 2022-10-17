@@ -313,7 +313,7 @@ export class CreateContractInfoComponent implements OnInit {
         results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Upload hợp đồng thành công' });
-            this.displayuploadcontractall = false;
+            // this.displayuploadcontractall = false;
             this.getContractInfo();
             this.spinner.hide();
           }else {
