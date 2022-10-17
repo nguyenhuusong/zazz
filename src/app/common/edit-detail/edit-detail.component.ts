@@ -217,8 +217,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
           } else if (element1.field_name === 'sub_prod_cd' && element1.columnType === 'checkboxList') {
             promissall.push(this.apiHrmV2Service.getProductProjsV2(element1.field_name));
           } else if (element1.field_name === 'roomId') {
-            const floorId = this.getValueByKey('floor_No');
-            promissall.push(this.apiHrmV2Service.getMeetRoomsV2(queryString.stringify({ filter: '', floor_No: floorId }), element1.field_name));
+            // const floorId = this.getValueByKey('floor_No');
+            // promissall.push(this.apiHrmV2Service.getMeetRoomsV2(queryString.stringify({ filter: '', floor_No: floorId }), element1.field_name));
           } else if (element1.field_name === 'content_type' || element1.field_name === 'isPublish') {
             promissall.push(this.apiHrmV2Service.getObjectListV2(queryString.stringify({ objKey: element1.columnObject }), element1.field_name));
           } else if (element1.field_name === 'vehicleTypeId') {

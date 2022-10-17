@@ -575,7 +575,6 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
         id: value,
         floorID: floorID
       }
-      console.log('emitType', emitType)
       this.callback.emit(emitType);
     } else if( field_name === 'status'){
       if(parseInt(value) === 0){
