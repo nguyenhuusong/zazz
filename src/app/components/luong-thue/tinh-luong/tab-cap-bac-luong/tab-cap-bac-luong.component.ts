@@ -8,6 +8,7 @@
   import { ExportFileService } from 'src/app/services/export-file.service';
   import { cloneDeep } from 'lodash';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import { OrganizeInfoService } from 'src/app/services/organize-info.service';
   @Component({
     selector: 'app-tab-cap-bac-bang-luong',
     templateUrl: './tab-cap-bac-luong.component.html',
@@ -51,6 +52,7 @@ import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
       private confirmationService: ConfirmationService,
       private messageService: MessageService,
       private fileService: ExportFileService,
+      private organizeInfoService: OrganizeInfoService,
       private changeDetector: ChangeDetectorRef,) {
   
       }
@@ -59,6 +61,7 @@ import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
       gridWidth: 0,
       offSet: 0,
       pageSize: 15,
+      orgIds: '',
     }
   
     cancel() {
@@ -67,6 +70,7 @@ import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
         gridWidth: 0,
         offSet: 0,
         pageSize: 15,
+        orgIds: localStorage.getItem("organizes")
       }
       this.load();
     }
@@ -180,6 +184,13 @@ import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
     }
   
     ngOnInit() {
+      this.query.orgIds = localStorage.getItem("organizes");
+      this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
+        if(results && results.length>0){
+          this.query.orgIds = results;
+          this.load();
+        }
+    });
       this.items = [
         { label: 'Trang chủ', routerLink: '/home' },
         { label: 'Lương - thuế' },

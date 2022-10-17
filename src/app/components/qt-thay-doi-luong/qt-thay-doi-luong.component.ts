@@ -14,6 +14,7 @@ import { ExportFileService } from 'src/app/services/export-file.service';
 import { cloneDeep } from 'lodash';
 import { flatten } from '@angular/compiler';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 @Component({
   selector: 'app-qt-thay-doi-luong',
   templateUrl: './qt-thay-doi-luong.component.html',
@@ -102,6 +103,7 @@ export class QtThayDoiLuongComponent implements OnInit {
     private messageService: MessageService,
     private fileService: ExportFileService,
     private changeDetector: ChangeDetectorRef,
+    private organizeInfoService: OrganizeInfoService,
     private router: Router) {
     this.defaultColDef = {
       tooltipComponent: 'customTooltip',
@@ -127,6 +129,7 @@ export class QtThayDoiLuongComponent implements OnInit {
     offSet: 0,
     pageSize: 15,
     organizeId: '',
+    orgIds: '',
   }
 
   titleForm = {
@@ -152,6 +155,7 @@ export class QtThayDoiLuongComponent implements OnInit {
       offSet: 0,
       pageSize: 15,
       organizeId: '',
+      orgIds: localStorage.getItem("organizes"),
     }
     this.load();
   }
@@ -398,6 +402,13 @@ export class QtThayDoiLuongComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.query.orgIds = localStorage.getItem("organizes");
+    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
+        if(results && results.length>0){
+          this.query.orgIds = results;
+          this.load();
+        }
+    });
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Quản lý nhân sự' },

@@ -14,6 +14,7 @@ import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.comp
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { Tree } from 'primeng/tree';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 @Component({
   selector: 'app-ns-ho-so-nghi-viec',
   templateUrl: './ns-ho-so-nghi-viec.component.html',
@@ -62,6 +63,7 @@ export class NsHoSoNghiViecComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private changeDetector: ChangeDetectorRef,
+    private organizeInfoService: OrganizeInfoService,
     private router: Router) {
     this.defaultColDef = {
       tooltipComponent: 'customTooltip',
@@ -83,9 +85,10 @@ export class NsHoSoNghiViecComponent implements OnInit {
     org_level: 0,
     offSet: 0,
     pageSize: 15,
-    orgId: 0,
+    orgId: "",
     reason_id: 0,
-    status: -1
+    status: -1,
+    orgIds: ""
   }
 
   employeeStatus = [
@@ -101,7 +104,8 @@ export class NsHoSoNghiViecComponent implements OnInit {
       pageSize: 15,
       orgId: this.query.orgId,
       reason_id: 0,
-      status: -1
+      status: -1,
+      orgIds: localStorage.getItem("organizes")
     }
     this.load();
   }
@@ -138,7 +142,7 @@ export class NsHoSoNghiViecComponent implements OnInit {
     return datas
   }
 
-  selected(datas = [], orgId = 0) {
+  selected(datas = [], orgId = "") {
     datas.forEach(d => {
       if (d.orgId === orgId) {
         this.selectedNode = d;
@@ -405,6 +409,13 @@ export class NsHoSoNghiViecComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.query.orgIds = localStorage.getItem("organizes");
+    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
+        if(results && results.length>0){
+          this.query.orgIds = results;
+          this.load();
+        }
+    });
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Nhân sự' },

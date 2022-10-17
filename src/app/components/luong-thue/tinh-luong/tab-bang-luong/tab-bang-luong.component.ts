@@ -9,6 +9,7 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { ExportFileService } from 'src/app/services/export-file.service';
 import { cloneDeep } from 'lodash';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 @Component({
   selector: 'app-tab-bang-luong',
   templateUrl: './tab-bang-luong.component.html',
@@ -62,6 +63,7 @@ export class TabBangLuongComponent implements OnInit {
     private messageService: MessageService,
     private fileService: ExportFileService,
     private changeDetector: ChangeDetectorRef,
+    private organizeInfoService: OrganizeInfoService,
     private router: Router) {
 
     }
@@ -70,6 +72,7 @@ export class TabBangLuongComponent implements OnInit {
     gridWidth: 0,
     offSet: 0,
     pageSize: 15,
+    orgIds: '',
   }
 
   cancel() {
@@ -78,6 +81,7 @@ export class TabBangLuongComponent implements OnInit {
       gridWidth: 0,
       offSet: 0,
       pageSize: 15,
+      orgIds: localStorage.getItem("organizes")
     }
     this.load();
   }
@@ -195,6 +199,13 @@ export class TabBangLuongComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.query.orgIds = localStorage.getItem("organizes");
+      this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
+        if(results && results.length>0){
+          this.query.orgIds = results;
+          this.load();
+        }
+    });
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Lương - thuế' },

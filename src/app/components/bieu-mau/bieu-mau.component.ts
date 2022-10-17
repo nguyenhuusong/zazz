@@ -14,6 +14,7 @@ import {
   FirstDataRenderedEvent,
 } from '@ag-grid-community/core';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 @Component({
   selector: 'app-bieu-mau',
   templateUrl: './bieu-mau.component.html',
@@ -35,6 +36,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
     offSet: 0,
     pageSize: 15,
     form_status: null,
+    orgIds: '',
   };
   cols: any[];
   totalRecord = 0;
@@ -72,6 +74,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
     private messageService: MessageService,
     private fileService: ExportFileService,
     private changeDetector: ChangeDetectorRef,
+    private organizeInfoService: OrganizeInfoService,
     private router: Router,
     private route: ActivatedRoute
   ) {
@@ -85,6 +88,13 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit(): void {
+    this.query.orgIds = localStorage.getItem("organizes");
+    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
+        if(results && results.length>0){
+          this.query.orgIds = results;
+          this.load();
+        }
+    });
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Hoạt động' },
@@ -462,6 +472,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
       offSet: 0,
       pageSize: 10,
       form_status: null,
+      orgIds: localStorage.getItem("organizes")
     }
     this.load();
   }

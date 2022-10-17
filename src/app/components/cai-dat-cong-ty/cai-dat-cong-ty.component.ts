@@ -12,6 +12,7 @@ import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.comp
 import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 @Component({
   selector: 'app-cai-dat-cong-ty',
   templateUrl: './cai-dat-cong-ty.component.html',
@@ -29,6 +30,7 @@ export class CaiDatCongTyComponent implements OnInit, AfterViewChecked {
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private changeDetector: ChangeDetectorRef,
+    private organizeInfoService: OrganizeInfoService,
     private router: Router) {
 
     this.defaultColDef = {
@@ -76,7 +78,8 @@ export class CaiDatCongTyComponent implements OnInit, AfterViewChecked {
   query = {
     filter: '',
     offSet: 0,
-    pageSize: 15
+    pageSize: 15,
+    orgIds: '',
   }
   totalRecord = 0;
   DriverId = 0;
@@ -96,7 +99,8 @@ export class CaiDatCongTyComponent implements OnInit, AfterViewChecked {
     this.query = {
       filter: '',
       offSet: 0,
-      pageSize: 15
+      pageSize: 15,
+      orgIds: '',
     }
     this.load();
   }
@@ -245,6 +249,13 @@ export class CaiDatCongTyComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit() {
+    this.query.orgIds = localStorage.getItem("organizes");
+    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
+        if(results && results.length>0){
+          this.query.orgIds = results;
+          this.load();
+        }
+    });
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Cài đặt' },

@@ -13,6 +13,7 @@ import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common
 import { NgxSpinnerService } from 'ngx-spinner';
 import * as FileSaver from 'file-saver';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 
 @Component({
   selector: 'app-cs-thue-thu-nhap',
@@ -63,7 +64,8 @@ export class CsThueThuNhapComponent implements OnInit, AfterViewChecked {
     private router: Router,
     private notificationService: NotificationService,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private organizeInfoService: OrganizeInfoService,
   ) {
     this.defaultColDef = {
       tooltipComponent: 'customTooltip',
@@ -82,6 +84,13 @@ export class CsThueThuNhapComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit(): void {
+    this.query.orgIds = localStorage.getItem("organizes");
+    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
+        if(results && results.length>0){
+          this.query.orgIds = results;
+          this.load();
+        }
+    });
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Chính sách' },
@@ -96,7 +105,8 @@ export class CsThueThuNhapComponent implements OnInit, AfterViewChecked {
       companyId: '',
       filter: '',
       offSet: 0,
-      pageSize: 15
+      pageSize: 15,
+      orgIds: localStorage.getItem("organizes")
     };
   }
 

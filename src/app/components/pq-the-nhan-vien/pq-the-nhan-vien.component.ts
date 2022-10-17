@@ -13,6 +13,7 @@ import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-render
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 
 @Component({
   selector: 'app-pq-the-nhan-vien',
@@ -65,6 +66,7 @@ export class PqTheNhanVienComponent implements OnInit {
     private changeDetector: ChangeDetectorRef,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
+    private organizeInfoService: OrganizeInfoService,
     private router: Router,
     private notificationService: NotificationService,
   ) {
@@ -86,6 +88,13 @@ export class PqTheNhanVienComponent implements OnInit {
 
   items = []
   ngOnInit(): void {
+    this.model.orgIds = localStorage.getItem("organizes");
+    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
+        if(results && results.length>0){
+          this.model.orgIds = results;
+          this.load();
+        }
+    });
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Phân quyền' },
@@ -126,7 +135,8 @@ export class PqTheNhanVienComponent implements OnInit {
       workplaceId: '',
       status: -1,
       offSet: 0,
-      pageSize: 15
+      pageSize: 15,
+      orgIds: localStorage.getItem("organizes")
     };
   }
 

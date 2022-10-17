@@ -17,6 +17,7 @@ import { finalize } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import * as moment from 'moment';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 @Component({
   selector: 'app-xu-ly-hop-dong',
   templateUrl: './xu-ly-hop-dong.component.html',
@@ -34,6 +35,7 @@ export class XuLyHopDongComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private changeDetector: ChangeDetectorRef,
     private webSocketService: WebsocketService2,
+    private organizeInfoService: OrganizeInfoService,
     private router: Router) {
     this.webSocketService.connect(environment.socketServer);
     this.webSocketService.emit("action", 'PRINT_LIST_PRINTERS')
@@ -98,6 +100,7 @@ export class XuLyHopDongComponent implements OnInit {
     contractTypeId: null,
     fromDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).add(-1, 'months').format("YYYY-MM-DD")),
     toDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).format("YYYY-MM-DD")),
+    orgIds: '',
   }
   totalRecord = 0;
   DriverId = 0;
@@ -134,6 +137,7 @@ export class XuLyHopDongComponent implements OnInit {
       contractTypeId: null,
       fromDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).add(-1, 'months').format("YYYY-MM-DD")),
       toDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).format("YYYY-MM-DD")),
+      orgIds: localStorage.getItem("organizes"),
     }
     this.load();
   }
@@ -382,6 +386,13 @@ export class XuLyHopDongComponent implements OnInit {
 
   listPrints = []
   ngOnInit() {
+    this.query.orgIds = localStorage.getItem("organizes");
+    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
+        if(results && results.length>0){
+          this.query.orgIds = results;
+          this.load();
+        }
+    });
     this.webSocketService.myWebSocket
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(

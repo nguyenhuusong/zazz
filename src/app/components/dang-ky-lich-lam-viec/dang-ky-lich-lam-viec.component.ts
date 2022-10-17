@@ -12,6 +12,7 @@ import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common
 import * as moment from 'moment';
 import { cloneDeep } from 'lodash';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 @Component({
   selector: 'app-dang-ky-lich-lam-viec',
   templateUrl: './dang-ky-lich-lam-viec.component.html',
@@ -32,6 +33,7 @@ export class DangKyLichLamViecComponent implements OnInit {
     private changeDetector: ChangeDetectorRef,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
+    private organizeInfoService: OrganizeInfoService,
     private router: Router) {
 
     this.defaultColDef = {
@@ -88,7 +90,8 @@ export class DangKyLichLamViecComponent implements OnInit {
     orgId: null,
     work_cd: null,
     app_st: null,
-    is_flexible: null
+    is_flexible: null,
+    orgIds: '',
   }
   totalRecord = 0;
   DriverId = 0;
@@ -133,7 +136,8 @@ export class DangKyLichLamViecComponent implements OnInit {
       orgId: null,
       work_cd: null,
       app_st: null,
-      is_flexible: null
+      is_flexible: null,
+      orgIds: localStorage.getItem("organizes")
     }
     this.load();
   }
@@ -433,6 +437,13 @@ export class DangKyLichLamViecComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.query.orgIds = localStorage.getItem("organizes");
+    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
+        if(results && results.length>0){
+          this.query.orgIds = results;
+          this.load();
+        }
+    });
     this.getCustObjectListNew('empworking_app_st');
     this.getCustObjectListNew('worktimes_flexible');
     this.getModuleList();

@@ -8,6 +8,7 @@ import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { ExportFileService } from 'src/app/services/export-file.service';
+import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 @Component({
   selector: 'app-ngay-nghi-le',
   templateUrl: './ngay-nghi-le.component.html',
@@ -78,6 +79,7 @@ export class NgayNghiLeComponent implements OnInit {
     private messageService: MessageService,
     private fileService: ExportFileService,
     private changeDetector: ChangeDetectorRef,
+    private organizeInfoService: OrganizeInfoService,
     private router: Router) {
     this.defaultColDef = {
       tooltipComponent: 'customTooltip',
@@ -104,6 +106,7 @@ export class NgayNghiLeComponent implements OnInit {
     HoliType: null,
     HoliWorkType: null,
     Year: 2022,
+    orgIds: '',
   }
   displayOrganize = false;
   listAgencyMap: TreeNode[];
@@ -124,6 +127,7 @@ export class NgayNghiLeComponent implements OnInit {
       HoliType: null,
       HoliWorkType: null,
       Year: 2022,
+      orgIds: localStorage.getItem("organizes")
     }
     this.load();
   }
@@ -377,6 +381,13 @@ export class NgayNghiLeComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.query.orgIds = localStorage.getItem("organizes");
+    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
+        if(results && results.length>0){
+          this.query.orgIds = results;
+          this.load();
+        }
+    });
     this.getObjectList();
     this.getObjectListWorkType();
     this.items = [

@@ -5,6 +5,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
+import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 
 declare var jQuery: any;
 
@@ -19,6 +20,7 @@ export class ThietBiThangMayComponent implements OnInit, AfterViewChecked {
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
     private changeDetector: ChangeDetectorRef,
+    private organizeInfoService: OrganizeInfoService,
     private router: Router) {
       this.titleModal = 'Thêm thiết Lập';
      }
@@ -34,7 +36,8 @@ export class ThietBiThangMayComponent implements OnInit, AfterViewChecked {
       buildCd: '',
       floorNumber: null,
       pageSize: 15,
-      offset: 0
+      offset: 0,
+      orgIds: '',
     };
     modelElevator = {
       id: 0,
@@ -69,6 +72,13 @@ export class ThietBiThangMayComponent implements OnInit, AfterViewChecked {
     titleModal: string;
     searchFloors = []
   ngOnInit() {
+    this.model.orgIds = localStorage.getItem("organizes");
+    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
+        if(results && results.length>0){
+          this.model.orgIds = results;
+          this.load();
+        }
+    });
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Phân quyền' },

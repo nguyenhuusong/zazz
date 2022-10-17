@@ -14,6 +14,7 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { flatMap, Subject, takeUntil } from 'rxjs';
 import { cloneDeep } from 'lodash';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 @Component({
   selector: 'app-cs-nghi-phep',
   templateUrl: './cs-nghi-phep.component.html',
@@ -38,6 +39,7 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
     private confirmationService: ConfirmationService,
     private changeDetector: ChangeDetectorRef,
     private messageService: MessageService,
+    private organizeInfoService: OrganizeInfoService,
     private router: Router,
     private apiBaseService: ApiService) {
 
@@ -103,6 +105,7 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
     pageSize: 15,
     fromdate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).add(-1,'months').format()),
     todate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).format()),
+    orgIds: '',
   }
   totalRecord = 0;
   DriverId = 0;
@@ -151,6 +154,7 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
       pageSize: 15,
       fromdate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).add(-1,'months').format()),
       todate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).format()),
+      orgIds: localStorage.getItem("organizes")
     }
     this.load();
   }
@@ -384,6 +388,13 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit() {
+    this.query.orgIds = localStorage.getItem("organizes");
+    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
+        if(results && results.length>0){
+          this.query.orgIds = results;
+          this.load();
+        }
+    });
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Chính sách' },

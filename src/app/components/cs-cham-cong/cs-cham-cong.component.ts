@@ -13,6 +13,7 @@ import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common
 import * as moment from 'moment';
 import * as FileSaver from 'file-saver';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 @Component({
   selector: 'app-cs-cham-cong',
   templateUrl: './cs-cham-cong.component.html',
@@ -30,6 +31,7 @@ export class CsChamCongComponent implements OnInit {
     private changeDetector: ChangeDetectorRef,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
+    private organizeInfoService: OrganizeInfoService,
     private router: Router) {
 
     this.defaultColDef = {
@@ -87,6 +89,7 @@ export class CsChamCongComponent implements OnInit {
     pageSize: 15,
     month: new Date().getMonth() + 1,
     year: new Date().getFullYear(),
+    orgIds: '',
   }
 
   queryCheckInOut = {
@@ -143,6 +146,7 @@ export class CsChamCongComponent implements OnInit {
       pageSize: 15,
       month: new Date().getMonth() + 1,
       year: new Date().getFullYear(),
+      orgIds: localStorage.getItem("organizes"),
     }
     this.load();
   }
@@ -272,6 +276,13 @@ export class CsChamCongComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.query.orgIds = localStorage.getItem("organizes");
+    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
+        if(results && results.length>0){
+          this.query.orgIds = results;
+          this.load();
+        }
+    });
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Chính sách' },

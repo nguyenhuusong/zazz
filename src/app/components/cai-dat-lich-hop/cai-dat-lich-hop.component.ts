@@ -11,6 +11,7 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import * as moment from 'moment';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 
 @Component({
   selector: 'app-cai-dat-lich-hop',
@@ -52,6 +53,7 @@ export class CaiDatLichHopComponent implements OnInit {
       organization: '',
       fromDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).format("YYYY-MM-DD")),
       toDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).format("YYYY-MM-DD")),
+      orgIds: '',
   }
   statusRoom = [
     {
@@ -91,6 +93,7 @@ export class CaiDatLichHopComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private spinner: NgxSpinnerService,
     private changeDetector: ChangeDetectorRef,
+    private organizeInfoService: OrganizeInfoService,
   ) {
     this.defaultColDef = {
       tooltipComponent: 'customTooltip',
@@ -109,6 +112,13 @@ export class CaiDatLichHopComponent implements OnInit {
   }
   items = [];
   ngOnInit(): void {
+    this.model.orgIds = localStorage.getItem("organizes");
+    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
+        if(results && results.length>0){
+          this.model.orgIds = results;
+          this.load();
+        }
+    });
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Hoạt động' },
@@ -154,6 +164,7 @@ export class CaiDatLichHopComponent implements OnInit {
       organization: '',
       fromDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).format("YYYY-MM-DD")),
       toDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).format("YYYY-MM-DD")),
+      orgIds: localStorage.getItem("organizes"),
     };
   }
   			

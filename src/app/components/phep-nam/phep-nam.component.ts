@@ -9,6 +9,7 @@ import { AgGridFn } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 const MAX_SIZE = 100000000;
 
 @Component({
@@ -30,6 +31,7 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
     private messageService: MessageService,
     private spinner: NgxSpinnerService,
     private changeDetector: ChangeDetectorRef,
+    private organizeInfoService: OrganizeInfoService,
     private router: Router) {
 
     this.defaultColDef = {
@@ -59,7 +61,8 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
     pageSize: 15,
     year: new Date().getFullYear(),
     month: new Date().getMonth() + 1,
-    organizeId: ''
+    organizeId: '',
+    orgIds: '',
   }
   totalRecord = 0;
   first = 0;
@@ -97,7 +100,8 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
       pageSize: 15,
       year: 0,
       month: 0,
-      organizeId: ''
+      organizeId: '',
+      orgIds: localStorage.getItem("organizes")
     }
     this.load();
   }
@@ -185,6 +189,13 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit() {
+    this.query.orgIds = localStorage.getItem("organizes");
+    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
+        if(results && results.length>0){
+          this.query.orgIds = results;
+          this.load();
+        }
+    });
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Chính sách' },

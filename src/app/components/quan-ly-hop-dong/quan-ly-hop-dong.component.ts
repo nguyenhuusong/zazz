@@ -11,6 +11,7 @@ import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.comp
 import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 
 @Component({
   selector: 'app-quan-ly-hop-dong',
@@ -29,6 +30,7 @@ export class QuanLyHopDongComponent implements OnInit {
     private messageService: MessageService,
     private spinner: NgxSpinnerService,
     private changeDetector: ChangeDetectorRef,
+    private organizeInfoService: OrganizeInfoService,
     private router: Router) {
 
     this.defaultColDef = {
@@ -77,7 +79,8 @@ export class QuanLyHopDongComponent implements OnInit {
     filter: '',
     offSet: 0,
     pageSize: 15,
-    organizeId: null
+    organizeId: null,
+    orgIds: '',
   }
   totalRecord = 0;
   DriverId = 0;
@@ -100,7 +103,8 @@ export class QuanLyHopDongComponent implements OnInit {
       filter: '',
       offSet: 0,
       pageSize: 15,
-      organizeId: null
+      organizeId: null,
+      orgIds: localStorage.getItem("organizes")
     }
     this.load();
   }
@@ -268,6 +272,13 @@ export class QuanLyHopDongComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.query.orgIds = localStorage.getItem("organizes");
+    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
+        if(results && results.length>0){
+          this.query.orgIds = results;
+          this.load();
+        }
+    });
     this.getOrgRoots();
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },

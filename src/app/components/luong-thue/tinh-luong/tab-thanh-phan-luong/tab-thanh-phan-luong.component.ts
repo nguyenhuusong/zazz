@@ -8,6 +8,7 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { ExportFileService } from 'src/app/services/export-file.service';
 import { cloneDeep } from 'lodash';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 @Component({
   selector: 'app-tab-thanh-phan-luong',
   templateUrl: './tab-thanh-phan-luong.component.html',
@@ -51,6 +52,7 @@ export class TabThanhPhanLuongComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private fileService: ExportFileService,
+    private organizeInfoService: OrganizeInfoService,
     private changeDetector: ChangeDetectorRef,) {
 
     }
@@ -59,6 +61,7 @@ export class TabThanhPhanLuongComponent implements OnInit {
     gridWidth: 0,
     offSet: 0,
     pageSize: 15,
+    orgIds: '',
   }
 
   cancel() {
@@ -67,6 +70,7 @@ export class TabThanhPhanLuongComponent implements OnInit {
       gridWidth: 0,
       offSet: 0,
       pageSize: 15,
+      orgIds: localStorage.getItem("organizes")
     }
     this.load();
   }
@@ -180,6 +184,13 @@ export class TabThanhPhanLuongComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.query.orgIds = localStorage.getItem("organizes");
+    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
+        if(results && results.length>0){
+          this.query.orgIds = results;
+          this.load();
+        }
+    });
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Lương - thuế' },

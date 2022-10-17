@@ -11,6 +11,7 @@ import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 const MAX_SIZE = 100000000;
 @Component({
   selector: 'app-nghi-viec',
@@ -35,6 +36,7 @@ export class NghiViecComponent implements OnInit, AfterViewChecked {
     private messageService: MessageService,
     private spinner: NgxSpinnerService,
     private changeDetector: ChangeDetectorRef,
+    private organizeInfoService: OrganizeInfoService,
     private router: Router) {
 
     this.defaultColDef = {
@@ -75,10 +77,11 @@ export class NghiViecComponent implements OnInit, AfterViewChecked {
   query = {
     filter: '',
     reason_id: null,
-    orgId: '76e51b92-3a82-4628-8127-ac07cd647d81',
+    orgId: null,
     offSet: 0,
     pageSize: 15,
-    status: -1
+    status: -1,
+    orgIds: '',
   }
   totalRecord = 0;
   DriverId = 0;
@@ -119,10 +122,11 @@ export class NghiViecComponent implements OnInit, AfterViewChecked {
     this.query = {
       filter: '',
       reason_id: null,
-      orgId: '76e51b92-3a82-4628-8127-ac07cd647d81',
+      orgId: null,
       offSet: 0,
       pageSize: 15,
-      status: -1
+      status: -1,
+      orgIds: localStorage.getItem("organizes"),
     }
     this.load();
   }
@@ -252,6 +256,13 @@ export class NghiViecComponent implements OnInit, AfterViewChecked {
       { label: 'Tuyển dụng'},
       { label: 'Danh sách nghỉ việc' },
     ];
+    this.query.orgIds = localStorage.getItem("organizes");
+    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
+        if(results && results.length>0){
+          this.query.orgIds = results;
+          this.load();
+        }
+    });
     this.load();
     this.getOrgan();
   }

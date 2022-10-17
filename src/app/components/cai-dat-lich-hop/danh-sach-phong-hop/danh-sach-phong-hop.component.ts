@@ -10,6 +10,7 @@ import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-render
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 
 @Component({
   selector: 'app-danh-sach-phong-hop',
@@ -44,6 +45,7 @@ export class DanhSachPhongHopComponent implements OnInit {
     workplaceId: '',
     roomId: '',
     status_meet: '',
+    orgIds: '',
   };
   totalRecord = 0;
   countRecord: any = {
@@ -80,6 +82,7 @@ export class DanhSachPhongHopComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private confirmationService: ConfirmationService,
     private changeDetector: ChangeDetectorRef,
+    private organizeInfoService: OrganizeInfoService,
   ) {
     this.defaultColDef = {
       tooltipComponent: 'customTooltip',
@@ -98,6 +101,13 @@ export class DanhSachPhongHopComponent implements OnInit {
   }
   items = []
   ngOnInit(): void {
+    this.model.orgIds = localStorage.getItem("organizes");
+    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
+        if(results && results.length>0){
+          this.model.orgIds = results;
+          this.load();
+        }
+    });
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Hoạt động' },
@@ -118,6 +128,7 @@ export class DanhSachPhongHopComponent implements OnInit {
       workplaceId: '',
       roomId: '',
       status_meet: '',
+      orgIds: localStorage.getItem("organizes")
     };
   }
 

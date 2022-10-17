@@ -11,6 +11,7 @@ import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 @Component({
   selector: 'app-chuc-vu',
   templateUrl: './chuc-vu.component.html',
@@ -27,6 +28,7 @@ export class ChucVuComponent implements OnInit, AfterViewChecked {
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private changeDetector: ChangeDetectorRef,
+    private organizeInfoService: OrganizeInfoService,
     private router: Router) {
 
     this.defaultColDef = {
@@ -70,7 +72,8 @@ export class ChucVuComponent implements OnInit, AfterViewChecked {
     filter: '',
     offSet: 0,
     pageSize: 15,
-    organizeId: 0
+    organizeId: 0,
+    orgIds: '',
   }
   totalRecord = 0;
   DriverId = 0;
@@ -93,7 +96,8 @@ export class ChucVuComponent implements OnInit, AfterViewChecked {
       filter: '',
       offSet: 0,
       pageSize: 15,
-      organizeId: 0
+      organizeId: 0,
+      orgIds: localStorage.getItem("organizes")
     }
     this.load();
   }
@@ -259,6 +263,13 @@ export class ChucVuComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit() {
+    this.query.orgIds = localStorage.getItem("organizes");
+    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
+        if(results && results.length>0){
+          this.query.orgIds = results;
+          this.load();
+        }
+    });
     this.getOrrginiaztions();
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },

@@ -13,6 +13,7 @@ import { ExportFileService } from 'src/app/services/export-file.service';
 import { cloneDeep } from 'lodash';
 import * as firebase from 'firebase';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 declare var jQuery: any;
 
 @Component({
@@ -34,6 +35,7 @@ export class PqXeNhanVienComponent implements OnInit {
     private messageService: MessageService,
     private changeDetector: ChangeDetectorRef,
     private fileService: ExportFileService,
+    private organizeInfoService: OrganizeInfoService,
     private router: Router) {
     this.defaultColDef = {
       tooltipComponent: 'customTooltip',
@@ -105,7 +107,8 @@ export class PqXeNhanVienComponent implements OnInit {
     filter: '',
     status: -1,
     offSet: 0,
-    pageSize: 15
+    pageSize: 15,
+    orgIds: '',
   };
   totalRecord = 0;
   countRecord: any = {
@@ -125,6 +128,13 @@ export class PqXeNhanVienComponent implements OnInit {
   itemsBreadcrumb = [];
   itemsToolOfGrid: any[] = [];
   ngOnInit(): void {
+    this.model.orgIds = localStorage.getItem("organizes");
+    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
+        if(results && results.length>0){
+          this.model.orgIds = results;
+          this.load();
+        }
+    });
     this.itemsBreadcrumb = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Phân quyền' },
@@ -753,7 +763,8 @@ export class PqXeNhanVienComponent implements OnInit {
       filter: '',
       status: -1,
       offSet: 0,
-      pageSize: 15
+      pageSize: 15,
+      orgIds: localStorage.getItem("organizes")
     };
     this.model.filter = '';
     this.model.status = -1;

@@ -9,6 +9,7 @@ import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 const MAX_SIZE = 100000000;
 @Component({
   selector: 'app-linh-vuc-tuyen-dung',
@@ -27,6 +28,7 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
     private spinner: NgxSpinnerService,
     private changeDetector: ChangeDetectorRef,
     private messageService: MessageService,
+    private organizeInfoService: OrganizeInfoService,
     private router: Router) {
 
     this.defaultColDef = {
@@ -76,6 +78,7 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
     gridWidth: 1300,
     organizeId: null,
     positionTypeCd: null,
+    orgIds: '',
   }
   totalRecord = 0;
   DriverId = 0;
@@ -123,6 +126,7 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
       pageSize: 15,
       gridWidth: 1300,
       organizeId: null,
+      orgIds: localStorage.getItem("organizes"),
     }
     this.load();
   }
@@ -250,6 +254,13 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit() {
+    this.query.orgIds = localStorage.getItem("organizes");
+    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
+        if(results && results.length>0){
+          this.query.orgIds = results;
+          this.load();
+        }
+    });
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Tuyển dụng', },

@@ -12,6 +12,7 @@ import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 @Component({
   selector: 'app-lich-lam-viec',
   templateUrl: './lich-lam-viec.component.html',
@@ -29,6 +30,7 @@ export class LichLamViecComponent implements OnInit {
     private messageService: MessageService,
     private spinner: NgxSpinnerService,
     private changeDetector: ChangeDetectorRef,
+    private organizeInfoService: OrganizeInfoService,
     private router: Router) {
 
     this.defaultColDef = {
@@ -74,7 +76,8 @@ public agGridFn = AgGridFn;
     offSet: 0,
     pageSize: 15,
     status: null,
-    organizeId : null
+    organizeId : null,
+    orgIds: '',
   }
   totalRecord = 0;
   DriverId = 0;
@@ -98,7 +101,8 @@ public agGridFn = AgGridFn;
       offSet: 0,
       pageSize: 15,
       status: null,
-      organizeId : null
+      organizeId : null,
+      orgIds: localStorage.getItem("organizes")
     }
     this.load();
   }
@@ -261,6 +265,13 @@ public agGridFn = AgGridFn;
   }
 
   ngOnInit() {
+    this.query.orgIds = localStorage.getItem("organizes");
+    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
+        if(results && results.length>0){
+          this.query.orgIds = results;
+          this.load();
+        }
+    });
     this.getOrgRoots();
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },

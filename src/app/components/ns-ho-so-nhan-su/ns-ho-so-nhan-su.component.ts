@@ -129,7 +129,8 @@ export class NsHoSoNhanSuComponent implements OnInit {
     orgId: this.organizesRole,
     isLock: -1,
     isApprove: -1,
-    emp_st: -1
+    emp_st: -1,
+    orgIds: ''
   }
 
   titleForm = {
@@ -157,7 +158,8 @@ export class NsHoSoNhanSuComponent implements OnInit {
       orgId: this.organizesRole,
       isLock: -1,
       isApprove: -1,
-      emp_st: -1
+      emp_st: -1,
+      orgIds: localStorage.getItem("organizes")
     }
     this.load();
   }
@@ -492,9 +494,11 @@ export class NsHoSoNhanSuComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.query.orgIds = localStorage.getItem("organizes");
     this.organizesRole = localStorage.getItem("organizes");
     this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
         if(results && results.length>0){
+          this.query.orgIds = localStorage.getItem("organizes");
           this.organizesRole = results;
           this.load();
           this.getOrganizeTree();

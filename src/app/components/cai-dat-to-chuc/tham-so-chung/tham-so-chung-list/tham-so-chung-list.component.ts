@@ -11,6 +11,7 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as queryString from 'querystring';
 import { HttpParams } from '@angular/common/http';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 
 @Component({
   selector: 'app-tham-so-chung-list',
@@ -28,6 +29,7 @@ export class ThamSoChungListComponent implements OnInit {
     private messageService: MessageService,
     private spinner: NgxSpinnerService,
     private changeDetector: ChangeDetectorRef,
+    private organizeInfoService: OrganizeInfoService,
     private router: Router) {
 
     this.defaultColDef = {
@@ -78,7 +80,8 @@ export class ThamSoChungListComponent implements OnInit {
     pageSize: 15,
     gridWidth: 1550,
     mod_cd: null,
-    object_key: null
+    object_key: null,
+    orgIds: '',
   }
   totalRecord = 0;
   DriverId = 0;
@@ -101,7 +104,8 @@ export class ThamSoChungListComponent implements OnInit {
       pageSize: 15,
       gridWidth: 1550,
       mod_cd: null,
-      object_key: null
+      object_key: null,
+      orgIds: localStorage.getItem("organizes")
     }
     this.load();
   }
@@ -110,6 +114,13 @@ export class ThamSoChungListComponent implements OnInit {
   listsData = [];
 
   ngOnInit() {
+    this.query.orgIds = localStorage.getItem("organizes");
+    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
+        if(results && results.length>0){
+          this.query.orgIds = results;
+          this.load();
+        }
+    });
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Cài đặt' },
