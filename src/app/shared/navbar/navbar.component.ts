@@ -6,6 +6,7 @@ import { NgForm } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
+import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 const queryString = require('query-string');
 
 @Component({
@@ -33,7 +34,8 @@ export class NavbarComponent implements OnInit {
         private authService: AuthService,
         private apiService: ApiService,
         private apiHrm: ApiHrmService,
-        private messageService: MessageService
+        private messageService: MessageService,
+        private organizeInfoService: OrganizeInfoService
         // private themeService: ThemeService
     ) {
         this.items = [{
@@ -143,7 +145,11 @@ export class NavbarComponent implements OnInit {
         }),
         error => { };
     }
+
     changeOragi(e){
+      this.organizeInfoService.setStocks(e.value);
+
+      console.log(e.value)
       localStorage.setItem('organizes', JSON.stringify(e.value.toString()));
     }
 }

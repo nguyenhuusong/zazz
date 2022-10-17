@@ -13,6 +13,7 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { ExportFileService } from 'src/app/services/export-file.service';
 import { cloneDeep } from 'lodash';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 @Component({
   selector: 'app-ns-ho-so-nhan-su',
   templateUrl: './ns-ho-so-nhan-su.component.html',
@@ -102,6 +103,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
     private messageService: MessageService,
     private fileService: ExportFileService,
     private changeDetector: ChangeDetectorRef,
+    private organizeInfoService: OrganizeInfoService,
     private router: Router) {
     this.defaultColDef = {
       tooltipComponent: 'customTooltip',
@@ -490,7 +492,13 @@ export class NsHoSoNhanSuComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.organizeInfoService.organizeInfo$.subscribe(results => {
+        console.log(results)
+    });
 
+
+
+    
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Quản lý nhân sự' },
