@@ -60,6 +60,7 @@ import { OrganizationChartModule } from 'primeng/organizationchart';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { ApiHrmV2Service } from './services/api-hrm/apihrmv2.service';
+import { OrganizeInfoService } from './services/organize-info.service';
 const APP_CONTAINERS = [DefaultLayoutComponent];
 @NgModule({
     declarations: [
@@ -136,6 +137,7 @@ const APP_CONTAINERS = [DefaultLayoutComponent];
         NotificationService,
         ConfirmationService,
         MessageService,
+        OrganizeInfoService,
         ApiHrmV2Service,
         { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     ],
