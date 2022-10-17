@@ -498,7 +498,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
     this.organizesRole = localStorage.getItem("organizes");
     this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
         if(results && results.length>0){
-          this.query.orgIds = localStorage.getItem("organizes");
+          this.query.orgIds = results;
           this.organizesRole = results;
           this.load();
           this.getOrganizeTree();
