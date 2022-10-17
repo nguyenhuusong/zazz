@@ -26,6 +26,7 @@ export class NavbarComponent implements OnInit {
       }
     confimPassword = false;
     submitPass = false;
+    organizes = [];
     constructor(
         private route: ActivatedRoute,
         private router: Router,
@@ -133,13 +134,16 @@ export class NavbarComponent implements OnInit {
                     value: d.ord_id
                   };
                 });
+                if(this.detailOrganizes.length > 0 && (localStorage.getItem("organizes") === null)){
+                  this.organizes = this.detailOrganizes[0].value;
+                  localStorage.setItem('organizes', JSON.stringify(this.organizes.toString()));
+                }
             }
           }
         }),
         error => { };
     }
-
     changeOragi(e){
-
+      localStorage.setItem('organizes', JSON.stringify(e.value.toString()));
     }
 }

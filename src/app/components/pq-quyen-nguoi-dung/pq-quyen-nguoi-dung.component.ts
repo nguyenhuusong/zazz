@@ -254,6 +254,7 @@ export class PqQuyenNguoiDungComponent implements OnInit {
     this.addUserQuery.password = "";
     this.displayAdd = true;
     this.saveAddUser = false;
+    this.getOrganizes();
   }
 
   find() {
@@ -574,12 +575,13 @@ export class PqQuyenNguoiDungComponent implements OnInit {
     }
     
     const params = this.addUserQuery;
-    if(this.addUserQuery.roles.length > 0){
-      params.roles = this.addUserQuery.roles.map( (d: any) => {
-        return d.code
-      })
-    }
+    // console.log('this.addUserQuery.roles', this.addUserQuery.roles)
+    // if(this.addUserQuery.roles.length > 0){
+    //   params.roles = this.addUserQuery.roles.map( (d: any) => {
+    //     return d.code
+    //   })
 
+    // }
 
     this.apiService.setUserAdd(params).subscribe(results => {
       if (results.status === 'success') {

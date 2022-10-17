@@ -121,7 +121,7 @@ export class CreateContractInfoComponent implements OnInit {
         }else if(this.activeIndex === 5) {
           this.optionsButon = []
         }else if(this.activeIndex > 3) {
-          buttonsStep.push(  { label: 'Tải file', value: 'TaiFileHD', class: CheckHideAction(MENUACTIONROLEAPI.GetContractPage.url, ACTIONS.TAI_VE) ? 'hidden' : '', icon: 'pi pi-upload'  });
+          buttonsStep.push(  { label: 'Tải file', value: 'TaiFileHD', class: CheckHideAction(MENUACTIONROLEAPI.GetContractPage.url, ACTIONS.TAI_LEN) ? 'hidden' : '', icon: 'pi pi-upload'  });
           buttonsStep.push({ label: 'Hoàn thành', value: 'HoanThanhHD', class: CheckHideAction(MENUACTIONROLEAPI.GetContractPage.url, ACTIONS.HOAN_THANH) ? 'hidden' : '', icon: 'pi pi-check'  });
         }
         if(results.data.link_contract) {
