@@ -219,7 +219,7 @@
 
   <p-dialog [modal]="true" [(visible)]="isTheOrganToMove" header="Tạo lịch làm việc" [style]="{width: '60vw'}">
     <div class="grid ">
-        <div class="col-4">
+        <div class="col-3">
             <div class="field-group select mb-0 label-8">
                 <label>Lịch làm việc</label>
                 <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
@@ -247,25 +247,35 @@
             </div>
         </div>
         <div class="col-3">
-            <div class="field-group date mb-0">
+            <div class="field-group select mb-0">
                 <label>Chấm công đặc biệt</label>
-                <p-calendar
-                panelStyleClass="datepicker-default" 
-                placeholder="DD/MM/YYYY" [appendTo]="'body'" [baseZIndex]="101"
-                [(ngModel)]="modelChangeStatus.start_dt" [monthNavigator]="true" [yearNavigator]="true"
-                yearRange="2010:2030" inputId="navigators"
-                dateFormat="dd/mm/yy" name="start_dt"></p-calendar>
+                <p-dropdown appendTo="body" [baseZIndex]="100"
+                    [options]="timekeepingSpecials" [(ngModel)]="modelChangeStatus.timekeeping_special_is" name="timekeeping_special_is">
+                    <ng-template let-item pTemplate="selectedItem">
+                    <span style="vertical-align:middle;">{{item.name}}</span>
+                    </ng-template>
+                    <ng-template let-car pTemplate="item">
+                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                        <div style="font-size:14px;float:right;margin-top:4px">{{car.name}}</div>
+                    </div>
+                    </ng-template>
+                </p-dropdown>
             </div>
         </div>
         <div class="col-3">
-            <div class="field-group date mb-0">
+            <div class="field-group select mb-0">
                 <label>Loại chấm công đặc biệt</label>
-                <p-calendar
-                panelStyleClass="datepicker-default" 
-                placeholder="DD/MM/YYYY" [appendTo]="'body'" [baseZIndex]="101"
-                [(ngModel)]="modelChangeStatus.start_dt" [monthNavigator]="true" [yearNavigator]="true"
-                yearRange="2010:2030" inputId="navigators"
-                dateFormat="dd/mm/yy" name="start_dt"></p-calendar>
+                <p-dropdown appendTo="body" [baseZIndex]="100"
+                    [options]="timekeepingSpecialCode" [(ngModel)]="modelChangeStatus.timekeeping_special_code" name="timekeeping_special_code">
+                    <ng-template let-item pTemplate="selectedItem">
+                    <span style="vertical-align:middle;">{{item.name}}</span>
+                    </ng-template>
+                    <ng-template let-car pTemplate="item">
+                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                        <div style="font-size:14px;float:right;margin-top:4px">{{car.name}}</div>
+                    </div>
+                    </ng-template>
+                </p-dropdown>
             </div>
         </div>
         <div class="col-1">

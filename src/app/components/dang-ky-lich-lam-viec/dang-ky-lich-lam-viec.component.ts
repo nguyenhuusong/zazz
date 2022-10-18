@@ -13,6 +13,7 @@ import * as moment from 'moment';
 import { cloneDeep } from 'lodash';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
+import { ApiService } from 'src/app/services/api.service';
 @Component({
   selector: 'app-dang-ky-lich-lam-viec',
   templateUrl: './dang-ky-lich-lam-viec.component.html',
@@ -29,6 +30,7 @@ export class DangKyLichLamViecComponent implements OnInit {
   constructor(
     private spinner: NgxSpinnerService,
     private apiService: ApiHrmService,
+    private apiServiceCore: ApiService,
     private route: ActivatedRoute,
     private changeDetector: ChangeDetectorRef,
     private confirmationService: ConfirmationService,
@@ -142,7 +144,7 @@ export class DangKyLichLamViecComponent implements OnInit {
     this.load();
   }
 
-  modelChangeStatus = {
+  modelChangeStatus: any = {
     empIds: [
       {
         gd: null
@@ -151,7 +153,10 @@ export class DangKyLichLamViecComponent implements OnInit {
     organizeId: null,
     full_name: null,
     work_cd: null,
-    start_dt: moment(new Date()).format('DD/MM/YYYY')
+    start_dt: moment(new Date()).format('DD/MM/YYYY'),
+    timekeeping_special_is: true,
+    timekeeping_special_code: ""
+
   }
   displayChangeStatus = false;
   organizes = [];
@@ -279,10 +284,42 @@ export class DangKyLichLamViecComponent implements OnInit {
       organizeId: null,
       full_name: event.rowData.fullName,
       work_cd: event.rowData.work_cd,
-      start_dt: moment(new Date()).format('DD/MM/YYYY')
+      start_dt: moment(new Date()).format('DD/MM/YYYY'),
+      timekeeping_special_is: true,
+      timekeeping_special_code: ""
     }
     this.listUsers = [{empId : event.rowData.empId}]
     this.displayChangeStatus = true;
+  }
+
+  timekeepingSpecials = [];
+  getTimekeepingSpecials () {
+    this.apiServiceCore.getObjectList('object_refer_st')
+    .subscribe(response => {
+      if(response.status === 'success'){
+        this.timekeepingSpecials = response.data.map( d => {
+          return {
+            name: d.objName,
+            code: d.objCode
+          }
+        });
+      }
+    })
+  }
+
+  timekeepingSpecialCode = [];
+  getTimekeepingSpecialCode () {
+    this.apiServiceCore.getObjectList('timekeeping_special')
+    .subscribe(response => {
+      if(response.status === 'success'){
+        this.timekeepingSpecialCode = response.data.map( d => {
+          return {
+            name: d.objName,
+            code: d.objCode
+          }
+        });
+      }
+    })
   }
 
   getModuleList() {
@@ -344,6 +381,8 @@ export class DangKyLichLamViecComponent implements OnInit {
       return;
     }
     let params = { ...this.modelChangeStatus };
+    params.timekeeping_special_code  = this.modelChangeStatus.timekeeping_special_code.code
+    params.timekeeping_special_is  = this.modelChangeStatus.timekeeping_special_is.code ? true : false;
     delete params.organizeId;
     delete params.full_name;
     params.start_dt = typeof params.start_dt === 'object' ? moment(new Date(params.start_dt)).format('DD/MM/YYYY') : params.start_dt;
@@ -564,7 +603,9 @@ export class DangKyLichLamViecComponent implements OnInit {
       organizeId: null,
       work_cd: null,
       full_name: null,
-      start_dt: moment(new Date()).format('DD/MM/YYYY')
+      start_dt: moment(new Date()).format('DD/MM/YYYY'),
+      timekeeping_special_is: true,
+      timekeeping_special_code: ""
     }
     if (this.listDataSelect.length > 0) {
       this.listUsers = cloneDeep(this.listDataSelect);
@@ -572,6 +613,8 @@ export class DangKyLichLamViecComponent implements OnInit {
     } else {
       this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Vui lòng nhân sự' });
     }
+    this.getTimekeepingSpecials();
+    this.getTimekeepingSpecialCode();
   }
 
   rowSelected(data) {
