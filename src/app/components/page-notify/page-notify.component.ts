@@ -391,6 +391,11 @@ export class PageNotifyComponent implements OnInit, OnDestroy, AfterViewChecked 
       custId: '',
       tempId: null
     };
+    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
+      if(results){
+        this.modelAddNotifi.external_sub = this.query.organizeIds
+      }
+    });
   }
 
   addNotifytoProject() {

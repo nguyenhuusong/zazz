@@ -110,7 +110,7 @@
     <div class="col-md-12">
         <div class="field-group select" [ngClass]=" modelAddNotifi.external_sub ? 'valid' : 'invalid' ">
             <label for="">Chọn tổ chức</label>
-            <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
+            <p-dropdown appendTo="body" [disabled]="true" [baseZIndex]="100" [autoDisplayFirst]="false" 
                 [options]="moduleList" [required] [(ngModel)]="modelAddNotifi.external_sub"
                 name="external_sub" [filter]="true">
                 <ng-template let-item pTemplate="selectedItem">

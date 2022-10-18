@@ -14,6 +14,7 @@ import { delay, forkJoin, lastValueFrom, of, Subject, takeUntil, tap, timer } fr
 import { findNodeInTree } from '../function-common/objects.helper';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ApiHrmV2Service } from 'src/app/services/api-hrm/apihrmv2.service';
+import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 @Component({
   selector: 'app-edit-detail',
   templateUrl: './edit-detail.component.html',
@@ -26,6 +27,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
     private apiServiceCore: ApiService,
     private apiHrmV2Service: ApiHrmV2Service,
     private changeDetech: ChangeDetectorRef,
+    private organizeInfoService: OrganizeInfoService,
     private spinner: NgxSpinnerService,
   ) { }
   @Output() callback = new EventEmitter<any>();
@@ -189,6 +191,12 @@ export class EditDetailComponent implements OnInit, OnChanges {
             promissall.push(this.apiHrmV2Service.getHrmPayrollTypePageV2(queryString.stringify({ organizeId: org_cds }), element1.field_name));
           } else if (element1.field_name === 'organize_id' ||  (element1.field_name === 'org_cds')) {
             promissall.push(this.apiHrmV2Service.getOrganizationsV2(queryString.stringify({ filter: '' }), element1.field_name));
+            this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
+              if(results && results.length>0){
+                element1.columnValue = results;
+                element1.isDisable = true
+              }
+            });
           }else if (element1.field_name === 'full_name') {
             const org_cds = this.getValueByKey('org_cds');
             promissall.push(this.apiHrmV2Service.getEmployeeSearchV2(queryString.stringify({ org_cds: org_cds }), element1.field_name));
