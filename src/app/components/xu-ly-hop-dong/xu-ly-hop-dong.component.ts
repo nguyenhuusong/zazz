@@ -100,7 +100,7 @@ export class XuLyHopDongComponent implements OnInit {
     contractTypeId: null,
     fromDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).add(-1, 'months').format("YYYY-MM-DD")),
     toDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).format("YYYY-MM-DD")),
-    orgIds: '',
+    organizeIds: '',
   }
   totalRecord = 0;
   DriverId = 0;
@@ -137,7 +137,7 @@ export class XuLyHopDongComponent implements OnInit {
       contractTypeId: null,
       fromDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).add(-1, 'months').format("YYYY-MM-DD")),
       toDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).format("YYYY-MM-DD")),
-      orgIds: localStorage.getItem("organizes"),
+      organizeIds: this.query.organizeIds,
     }
     this.load();
   }
@@ -386,10 +386,9 @@ export class XuLyHopDongComponent implements OnInit {
 
   listPrints = []
   ngOnInit() {
-    this.query.orgIds = localStorage.getItem("organizes");
     this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
         if(results && results.length>0){
-          this.query.orgIds = results;
+          this.query.organizeIds = results;
           this.load();
         }
     });

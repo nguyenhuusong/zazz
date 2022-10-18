@@ -93,7 +93,7 @@ export class DangKyLichLamViecComponent implements OnInit {
     work_cd: null,
     app_st: null,
     is_flexible: null,
-    orgIds: '',
+    organizeIds: '',
   }
   totalRecord = 0;
   DriverId = 0;
@@ -139,7 +139,7 @@ export class DangKyLichLamViecComponent implements OnInit {
       work_cd: null,
       app_st: null,
       is_flexible: null,
-      orgIds: localStorage.getItem("organizes")
+      organizeIds: this.query.organizeIds
     }
     this.load();
   }
@@ -346,7 +346,7 @@ export class DangKyLichLamViecComponent implements OnInit {
   }
 
   getOrganizeTree(): void {
-    const queryParams = queryString.stringify({ parentId: this.query.organizeId });
+    const queryParams = queryString.stringify({ parentId: this.query.organizeIds });
     this.apiService.getOrganizeTree(queryParams)
       .subscribe((results: any) => {
         if (results && results.status === 'success') {
@@ -476,11 +476,11 @@ export class DangKyLichLamViecComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.query.orgIds = localStorage.getItem("organizes");
     this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
         if(results && results.length>0){
-          this.query.orgIds = results;
+          this.query.organizeIds = results;
           this.load();
+          this.getOrganizeTree();
         }
     });
     this.getCustObjectListNew('empworking_app_st');

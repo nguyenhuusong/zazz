@@ -53,7 +53,7 @@ export class CaiDatLichHopComponent implements OnInit {
       organization: '',
       fromDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).format("YYYY-MM-DD")),
       toDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).format("YYYY-MM-DD")),
-      orgIds: '',
+      organizeIds: '',
   }
   statusRoom = [
     {
@@ -112,10 +112,9 @@ export class CaiDatLichHopComponent implements OnInit {
   }
   items = [];
   ngOnInit(): void {
-    this.model.orgIds = localStorage.getItem("organizes");
     this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
         if(results && results.length>0){
-          this.model.orgIds = results;
+          this.model.organizeIds = results;
           this.load();
         }
     });
@@ -164,7 +163,7 @@ export class CaiDatLichHopComponent implements OnInit {
       organization: '',
       fromDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).format("YYYY-MM-DD")),
       toDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).format("YYYY-MM-DD")),
-      orgIds: localStorage.getItem("organizes"),
+      organizeIds: this.model.organizeIds,
     };
   }
   			

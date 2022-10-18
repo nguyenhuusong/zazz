@@ -78,7 +78,7 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
     gridWidth: 1300,
     organizeId: null,
     positionTypeCd: null,
-    orgIds: '',
+    organizeIds: '',
   }
   totalRecord = 0;
   DriverId = 0;
@@ -126,7 +126,7 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
       pageSize: 15,
       gridWidth: 1300,
       organizeId: null,
-      orgIds: localStorage.getItem("organizes"),
+      organizeIds: this.query.organizeIds,
     }
     this.load();
   }
@@ -254,10 +254,9 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit() {
-    this.query.orgIds = localStorage.getItem("organizes");
     this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
         if(results && results.length>0){
-          this.query.orgIds = results;
+          this.query.organizeIds = results;
           this.load();
         }
     });

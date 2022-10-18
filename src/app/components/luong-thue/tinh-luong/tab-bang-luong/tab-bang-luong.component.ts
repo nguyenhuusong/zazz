@@ -72,7 +72,7 @@ export class TabBangLuongComponent implements OnInit {
     gridWidth: 0,
     offSet: 0,
     pageSize: 15,
-    orgIds: '',
+    organizeIds: '',
   }
 
   cancel() {
@@ -81,7 +81,7 @@ export class TabBangLuongComponent implements OnInit {
       gridWidth: 0,
       offSet: 0,
       pageSize: 15,
-      orgIds: localStorage.getItem("organizes")
+      organizeIds: this.query.organizeIds
     }
     this.load();
   }
@@ -97,20 +97,20 @@ export class TabBangLuongComponent implements OnInit {
     const queryParams = queryString.stringify(this.query);
     this.apiService.getPayrollAppInfoPage(queryParams).subscribe(
       (results: any) => {
-        this.listsData = results.data.dataList.data;
-        this.gridKey= results.data.dataList.gridKey;
+        this.listsData = results?.data?.dataList?.data;
+        this.gridKey= results?.data?.dataList?.gridKey;
 
         if (this.query.offSet === 0) {
           this.cols = results.data.gridflexs;
         }
         this.initGrid();
-        this.countRecord.totalRecord = results.data.dataList.recordsTotal;
-        this.countRecord.totalRecord = results.data.dataList.recordsTotal;
-        this.countRecord.currentRecordStart = results.data.dataList.recordsTotal === 0 ? this.query.offSet = 0 : this.query.offSet + 1;
+        this.countRecord.totalRecord = results?.data?.dataList?.recordsTotal;
+        this.countRecord.totalRecord = results?.data?.dataList?.recordsTotal;
+        this.countRecord.currentRecordStart = results?.data?.dataList?.recordsTotal === 0 ? this.query.offSet = 0 : this.query.offSet + 1;
         if ((results.data.dataList.recordsTotal - this.query.offSet) > this.query.pageSize) {
           this.countRecord.currentRecordEnd = this.query.offSet + Number(this.query.pageSize);
         } else {
-          this.countRecord.currentRecordEnd = results.data.dataList.recordsTotal;
+          this.countRecord.currentRecordEnd = results?.data?.dataList?.recordsTotal;
           setTimeout(() => {
             const noData = document.querySelector('.ag-overlay-no-rows-center');
             if (noData) { noData.innerHTML = 'Không có kết quả phù hợp' }
@@ -199,10 +199,9 @@ export class TabBangLuongComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.query.orgIds = localStorage.getItem("organizes");
       this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
         if(results && results.length>0){
-          this.query.orgIds = results;
+          this.query.organizeIds = results;
           this.load();
         }
     });

@@ -106,7 +106,7 @@ export class NgayNghiLeComponent implements OnInit {
     HoliType: null,
     HoliWorkType: null,
     Year: 2022,
-    orgIds: '',
+    organizeIds: '',
   }
   displayOrganize = false;
   listAgencyMap: TreeNode[];
@@ -127,7 +127,7 @@ export class NgayNghiLeComponent implements OnInit {
       HoliType: null,
       HoliWorkType: null,
       Year: 2022,
-      orgIds: localStorage.getItem("organizes")
+      organizeIds: this.query.organizeIds
     }
     this.load();
   }
@@ -381,11 +381,12 @@ export class NgayNghiLeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.query.orgIds = localStorage.getItem("organizes");
     this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
         if(results && results.length>0){
-          this.query.orgIds = results;
+          this.query.organizeIds = results;
+          this.query.OrganizeId = results
           this.load();
+          this.getOrganizeTree();
         }
     });
     this.getObjectList();
@@ -487,7 +488,7 @@ export class NgayNghiLeComponent implements OnInit {
   }
 
   getOrganizeTree(): void {
-    const queryParams = queryString.stringify({ parentId: this.query.OrganizeId });
+    const queryParams = queryString.stringify({ parentId: this.query.organizeIds });
     this.apiService.getOrganizeTree(queryParams)
       .subscribe((results: any) => {
         if (results && results.status === 'success') {

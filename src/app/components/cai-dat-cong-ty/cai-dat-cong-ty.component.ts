@@ -79,7 +79,7 @@ export class CaiDatCongTyComponent implements OnInit, AfterViewChecked {
     filter: '',
     offSet: 0,
     pageSize: 15,
-    orgIds: '',
+    organizeIds: '',
   }
   totalRecord = 0;
   DriverId = 0;
@@ -100,7 +100,7 @@ export class CaiDatCongTyComponent implements OnInit, AfterViewChecked {
       filter: '',
       offSet: 0,
       pageSize: 15,
-      orgIds: '',
+      organizeIds: '',
     }
     this.load();
   }
@@ -249,10 +249,9 @@ export class CaiDatCongTyComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit() {
-    this.query.orgIds = localStorage.getItem("organizes");
     this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
         if(results && results.length>0){
-          this.query.orgIds = results;
+          this.query.organizeIds = results;
           this.load();
         }
     });

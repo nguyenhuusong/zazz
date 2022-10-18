@@ -62,7 +62,7 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
     year: new Date().getFullYear(),
     month: new Date().getMonth() + 1,
     organizeId: '',
-    orgIds: '',
+    organizeIds: '',
   }
   totalRecord = 0;
   first = 0;
@@ -101,7 +101,7 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
       year: 0,
       month: 0,
       organizeId: '',
-      orgIds: localStorage.getItem("organizes")
+      organizeIds: this.query.organizeIds
     }
     this.load();
   }
@@ -189,10 +189,10 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit() {
-    this.query.orgIds = localStorage.getItem("organizes");
     this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
         if(results && results.length>0){
-          this.query.orgIds = results;
+          this.query.organizeIds = results;
+          this.query.organizeId = results;
           this.load();
         }
     });

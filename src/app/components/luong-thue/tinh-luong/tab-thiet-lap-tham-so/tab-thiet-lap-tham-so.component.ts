@@ -61,7 +61,7 @@ export class TabThietLapThamSoComponent implements OnInit {
     gridWidth: 0,
     offSet: 0,
     pageSize: 15,
-    orgIds: '',
+    organizeIds: '',
   }
 
   gridKey = ''
@@ -72,7 +72,7 @@ export class TabThietLapThamSoComponent implements OnInit {
       gridWidth: 0,
       offSet: 0,
       pageSize: 15,
-      orgIds: localStorage.getItem("organizes")
+      organizeIds: this.query.organizeIds
     }
     this.load();
   }
@@ -186,10 +186,9 @@ export class TabThietLapThamSoComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.query.orgIds = localStorage.getItem("organizes");
     this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
         if(results && results.length>0){
-          this.query.orgIds = results;
+          this.query.organizeIds = results;
           this.load();
         }
     });

@@ -40,7 +40,13 @@ export class CsThueThuNhapComponent implements OnInit, AfterViewChecked {
   getRowHeight;
   cards = [];
   first = 0;
-  query;
+  query = {
+    companyId: '',
+    filter: '',
+    offSet: 0,
+    pageSize: 15,
+    organizeIds: ''
+  };
   totalRecord = 0;
   countRecord: any = {
     totalRecord: 0,
@@ -84,10 +90,10 @@ export class CsThueThuNhapComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit(): void {
-    this.query.orgIds = localStorage.getItem("organizes");
     this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
         if(results && results.length>0){
-          this.query.orgIds = results;
+          this.query.organizeIds = results;
+          this.query.companyId = results;
           this.load();
         }
     });
@@ -106,7 +112,7 @@ export class CsThueThuNhapComponent implements OnInit, AfterViewChecked {
       filter: '',
       offSet: 0,
       pageSize: 15,
-      orgIds: localStorage.getItem("organizes")
+      organizeIds: this.query.organizeIds
     };
   }
 

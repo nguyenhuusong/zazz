@@ -77,7 +77,7 @@ public agGridFn = AgGridFn;
     pageSize: 15,
     status: null,
     organizeId : null,
-    orgIds: '',
+    organizeIds: '',
   }
   totalRecord = 0;
   DriverId = 0;
@@ -102,7 +102,7 @@ public agGridFn = AgGridFn;
       pageSize: 15,
       status: null,
       organizeId : null,
-      orgIds: localStorage.getItem("organizes")
+      organizeIds: this.query.organizeIds
     }
     this.load();
   }
@@ -265,10 +265,10 @@ public agGridFn = AgGridFn;
   }
 
   ngOnInit() {
-    this.query.orgIds = localStorage.getItem("organizes");
     this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
         if(results && results.length>0){
-          this.query.orgIds = results;
+          this.query.organizeIds = results;
+          this.query.organizeId = results;
           this.load();
         }
     });

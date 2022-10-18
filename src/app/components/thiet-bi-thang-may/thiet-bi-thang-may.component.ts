@@ -37,7 +37,7 @@ export class ThietBiThangMayComponent implements OnInit, AfterViewChecked {
       floorNumber: null,
       pageSize: 15,
       offset: 0,
-      orgIds: '',
+      organizeIds: '',
     };
     modelElevator = {
       id: 0,
@@ -72,10 +72,9 @@ export class ThietBiThangMayComponent implements OnInit, AfterViewChecked {
     titleModal: string;
     searchFloors = []
   ngOnInit() {
-    this.model.orgIds = localStorage.getItem("organizes");
     this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
         if(results && results.length>0){
-          this.model.orgIds = results;
+          this.model.organizeIds = results;
           this.load();
         }
     });

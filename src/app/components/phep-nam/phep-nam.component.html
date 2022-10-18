@@ -67,24 +67,24 @@
                                     [(ngModel)]="query.year">
                             </div>
                         </div>
-                        <div class="col-6">
+                        <!-- <div class="col-6">
                             <div class="field-group select label-8 valid">
-                                <div class="field-group select mb-0 valid" [ngClass]="">
-                                    <label  for=""> Tổ chức: </label>
-                                    <p-dropdown placeholder="Chọn tổ chức" appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
-                                        [options]="orgRoots" [(ngModel)]="query.organizeId" name="organizeId" (onChange)="find()">
-                                        <ng-template let-item pTemplate="selectedItem">
-                                            <span style="vertical-align:middle;">{{item.label}}</span>
-                                        </ng-template>
-                                        <ng-template let-car pTemplate="item">
-                                            <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                                                <div style="">{{car.label}}</div>
-                                            </div>
-                                        </ng-template>
-                                    </p-dropdown>
+                                    <div class="field-group select mb-0 valid" [ngClass]="">
+                                        <label  for=""> Tổ chức: </label>
+                                        <p-dropdown placeholder="Chọn tổ chức" appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
+                                            [options]="orgRoots" [(ngModel)]="query.organizeId" name="organizeId" (onChange)="find()">
+                                            <ng-template let-item pTemplate="selectedItem">
+                                                <span style="vertical-align:middle;">{{item.label}}</span>
+                                            </ng-template>
+                                            <ng-template let-car pTemplate="item">
+                                                <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                                                    <div style="">{{car.label}}</div>
+                                                </div>
+                                            </ng-template>
+                                        </p-dropdown>
+                                </div>
                             </div>
-                        </div>
-                    </div>
+                        </div> -->
                     </div>
                     <div class="input-group icon col-12 select-default text-right">
                         <label for="" style="visibility: hidden;">Classid <span class="pi pi-info-circle"

@@ -11,6 +11,7 @@ import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-render
 import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.component';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 @Component({
   selector: 'app-cai-dat-to-chuc',
   templateUrl: './cai-dat-to-chuc.component.html',
@@ -68,6 +69,7 @@ export class CaiDatToChucComponent implements OnInit {
     private messageService: MessageService,
     private activatedRoute: ActivatedRoute,
     private changeDetector: ChangeDetectorRef,
+    private organizeInfoService: OrganizeInfoService,
     private router: Router) {
 
     this.defaultColDef = {
@@ -95,6 +97,7 @@ export class CaiDatToChucComponent implements OnInit {
     isLock: -1,
     isApprove: -1,
     org_level: 0,
+    organizeIds: '',
   }
 
   titleForm = {
@@ -126,7 +129,8 @@ export class CaiDatToChucComponent implements OnInit {
       orgId: 0,
       isLock: -1,
       isApprove: -1,
-      org_level: 0
+      org_level: 0,
+      organizeIds: this.query.organizeIds
     }
   }
 
@@ -134,6 +138,7 @@ export class CaiDatToChucComponent implements OnInit {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
   }
+  
 
   getAgencyOrganizeMap(type = false) {
     this.apiService.getAgencyOrganizeMap().subscribe(results => {
@@ -403,6 +408,14 @@ export class CaiDatToChucComponent implements OnInit {
   dataRouter = null;
   ngOnInit() {
     this.getOrrginiaztions();
+    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
+          if(results && results.length>0){
+            this.query.organizeIds = results;
+            this.getBoPhan();
+            this.load();
+          }
+    });
+    
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Cài đặt' },
@@ -559,6 +572,21 @@ export class CaiDatToChucComponent implements OnInit {
     })
   }
 
+  departmentFiltes = [];
+  getBoPhan () {
+    const queryParams = queryString.stringify({ parentId: this.query.organizeIds });
+   this.apiService.getOrganizeTree(queryParams)
+      .subscribe((results: any) => {
+        if (results && results.status === 'success') {
+          this.departmentFiltes = results.data;
+        }
+      },
+        error => { });
+  }
+  onChangeTreeDepart(event) {
+
+  }
+  
   onNodeSelectAdd(event) {
     console.log(event)
     this.getDepartments(event.node.parentId);

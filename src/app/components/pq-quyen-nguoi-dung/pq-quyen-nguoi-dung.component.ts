@@ -23,7 +23,13 @@ export class PqQuyenNguoiDungComponent implements OnInit {
   ACTIONS = ACTIONS
   addUserQuery = new addUser();
   dataQuyenNguoiDung: any;
-  userIdS = []
+  userIdS = [];
+  modelPass = {
+    userLogin: '',
+    userPassword: '',
+    userPassCf: ''
+  }
+  confimPassword = false;
   constructor(
     private apiService: ApiHrmService,
     private api: ApiService,
@@ -151,6 +157,13 @@ export class PqQuyenNguoiDungComponent implements OnInit {
 
         },
         {
+          onClick: this.changePassWord.bind(this),
+          label: 'Thay đổi mật khẩu',
+          icon: 'pi pi-user-edit',
+          class: 'btn-primary mr5',
+        },
+        
+        {
           onClick: this.xoaNguoiDung.bind(this),
           label: 'Xóa tài khoản',
           icon: 'pi pi-trash',
@@ -158,8 +171,50 @@ export class PqQuyenNguoiDungComponent implements OnInit {
           hide: CheckHideAction(MENUACTIONROLEAPI.GetUserPage.url, ACTIONS.DELETE)
         },
 
+
       ]
     };
+  }
+
+  isShowChangePassword = false
+  changePassWord(event) {
+    console.log('event', event)
+    this.isShowChangePassword = true;
+    this.modelPass = {
+      userLogin: '',
+      userPassword: '',
+      userPassCf: ''
+    }
+    this.modelPass.userLogin = event.rowData.loginName
+  }
+
+  checkPasswordcf() {
+    if (this.modelPass.userPassword === this.modelPass.userPassCf) {
+      this.confimPassword = false;
+    } else {
+      this.confimPassword = true;
+    }
+  }
+
+  submitPass = false
+
+  saveChangePass() {
+    this.submitPass = true;
+    if ((this.modelPass.userPassword && !this.modelPass.userPassCf) || this.confimPassword) {
+      return;
+    }
+    const params = { ... this.modelPass };
+    delete params.userPassCf
+    this.api.setResetPassword(params).subscribe(results => {
+      if (results.status === 'success') {
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Sửa thông tin tài khoản thành công !' });
+        this.isShowChangePassword = false;
+      }
+      if(results.status === 'error'){
+        this.messageService.add({ severity: 'error', summary: results.message, detail: results.data });
+      }
+    })
+
   }
 
   initGrid() {

@@ -47,7 +47,17 @@ export class PqTheNhanVienComponent implements OnInit {
     { label: 'Khóa thẻ', value: 3 },
   ];
   first = 0;
-  model;
+  model = {
+    organizeId: '',
+      orgId: '',
+      filter: '',
+      positionCd: '',
+      workplaceId: '',
+      status: -1,
+      offSet: 0,
+      pageSize: 15,
+      organizeIds: ""
+  };
   totalRecord = 0;
   countRecord: any = {
     totalRecord: 0,
@@ -88,10 +98,10 @@ export class PqTheNhanVienComponent implements OnInit {
 
   items = []
   ngOnInit(): void {
-    this.model.orgIds = localStorage.getItem("organizes");
     this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
         if(results && results.length>0){
-          this.model.orgIds = results;
+          this.model.organizeIds = results;
+          this.model.organizeId = results;
           this.load();
         }
     });
@@ -136,7 +146,7 @@ export class PqTheNhanVienComponent implements OnInit {
       status: -1,
       offSet: 0,
       pageSize: 15,
-      orgIds: localStorage.getItem("organizes")
+      organizeIds: this.model.organizeIds
     };
   }
 
@@ -191,9 +201,9 @@ export class PqTheNhanVienComponent implements OnInit {
   load() {
     this.columnDefs = []
     this.spinner.show();
-    const query = { ...this.model };
+    const query: any = { ...this.model };
     query.organizeId = query.organizeId;
-    query.orgId = typeof query.orgId === 'string' ? query.orgId : query.orgId.orgId;
+    query.orgId = query.orgId.orgId;
     const queryParams = queryString.stringify(query);
     this.apiService.getEmployeeCardPage(queryParams).subscribe(
       (results: any) => {

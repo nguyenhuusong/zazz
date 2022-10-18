@@ -36,7 +36,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
     offSet: 0,
     pageSize: 15,
     form_status: null,
-    orgIds: '',
+    organizeIds: '',
   };
   cols: any[];
   totalRecord = 0;
@@ -88,10 +88,9 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit(): void {
-    this.query.orgIds = localStorage.getItem("organizes");
     this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
         if(results && results.length>0){
-          this.query.orgIds = results;
+          this.query.organizeIds = results;
           this.load();
         }
     });
@@ -472,7 +471,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
       offSet: 0,
       pageSize: 10,
       form_status: null,
-      orgIds: localStorage.getItem("organizes")
+      organizeIds: this.query.organizeIds
     }
     this.load();
   }

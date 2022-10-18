@@ -108,7 +108,7 @@ export class PqXeNhanVienComponent implements OnInit {
     status: -1,
     offSet: 0,
     pageSize: 15,
-    orgIds: '',
+    organizeIds: '',
   };
   totalRecord = 0;
   countRecord: any = {
@@ -128,11 +128,12 @@ export class PqXeNhanVienComponent implements OnInit {
   itemsBreadcrumb = [];
   itemsToolOfGrid: any[] = [];
   ngOnInit(): void {
-    this.model.orgIds = localStorage.getItem("organizes");
     this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
         if(results && results.length>0){
-          this.model.orgIds = results;
+          this.model.organizeIds = results;
+          this.model.organizeId = results;
           this.load();
+          this.getOrganizeTree();
         }
     });
     this.itemsBreadcrumb = [
@@ -215,7 +216,7 @@ export class PqXeNhanVienComponent implements OnInit {
   }
 
   getOrganizeTree(): void {
-    const queryParams = queryString.stringify({ parentId: this.model.organizeId });
+    const queryParams = queryString.stringify({ parentId: this.model.organizeIds });
     this.apiService.getOrganizeTree(queryParams)
       .subscribe((results: any) => {
         if (results && results.status === 'success') {
@@ -764,7 +765,7 @@ export class PqXeNhanVienComponent implements OnInit {
       status: -1,
       offSet: 0,
       pageSize: 15,
-      orgIds: localStorage.getItem("organizes")
+      orgIds: this.model.organizeIds
     };
     this.model.filter = '';
     this.model.status = -1;

@@ -330,6 +330,8 @@ export class DanhSachRoleComponent implements OnInit {
     // this.menus[idxParent].listmenu[index] = [...this.menus[idxParent].listmenu[index]];
   }
 
+  roleType = null;
+
   clickRowRoleGetMenu(event) {
     this.detailDetailInfo = null;
     this.menus = cloneDeep(this.listMenuTree);
@@ -345,6 +347,7 @@ export class DanhSachRoleComponent implements OnInit {
     // this.detailRole = event.data
     this.getRoleInfoSidebar(event.data.roleId);
     this.displayMenuRole = true;
+    this.roleType = event.data.roleType
   }
 
   listMenuRoles = []
@@ -407,6 +410,9 @@ export class DanhSachRoleComponent implements OnInit {
                   d.intPos = g.intPos;
                 }
               })
+              if(this.roleType === 1 && d.path === "/phan-quyen/quyen-nguoi-dung"){
+                d.isCheck = false;
+              }
             });
             m.submenus.sort(this.compare_qty)
             this.listMenuRoles.forEach(g => {
@@ -417,12 +423,22 @@ export class DanhSachRoleComponent implements OnInit {
           }
         });
         this.menus = [...this.menus].sort(this.compare_qty);
-        console.log(this.menus )
       }
     })
 
   }
 
+
+  // this.menus.forEach(element => {
+  //   if(element.path === "phan-quyen") {
+  //     element.submenus.forEach(element2 => {
+  //       if(element2.path === "/phan-quyen/quyen-nguoi-dung") {
+  //         element2.isCheck = false;
+  //         console.log('fjdosjfodij 111')
+  //       }
+  //     });
+  //   }
+  // });
 
   compare_qty(a, b) {
     // a should come before b in the sorted order

@@ -239,6 +239,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
             this.getFormStatus(element1)
           }else if(element1.field_name === 'roleType') {
             promissall.push(this.apiHrmV2Service.getRoleTypesV2(element1.field_name));
+            element1.columnValue = parseInt(element1.columnValue)
           }else if(element1.field_name === 'menuParentId') {
             element1.columnValue = parseInt(element1.columnValue)
             element1.options = cloneDeep(this.menus.map(t => ({label: t.title, value: t.menuId})));

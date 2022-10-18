@@ -208,8 +208,7 @@ export class DanhSachMenuComponent implements OnInit {
       var personName = params.data.Name;
       return (
         '<div style="height: 100%; background-color: #EDF6FF; padding: 20px; box-sizing: border-box;">' +
-        `  <div style="height: 10%; padding: 2px; font-weight: bold;"> Danh sách (${params.data.submenus.length}) : [` +
-        personName + ']' +
+        `  <div style="height: 10%; padding: 2px; font-weight: bold;"> Danh sách (${params.data.submenus.length})`+
         '</div>' +
         '  <div ref="eDetailGrid" style="height: 90%;"></div>' +
         '</div>'

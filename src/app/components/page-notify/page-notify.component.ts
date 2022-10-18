@@ -60,7 +60,7 @@ export class PageNotifyComponent implements OnInit, OnDestroy, AfterViewChecked 
     gridWidth: 0,
     offSet: 0,
     pageSize: 15,
-    orgIds: '',
+    organizeIds: '',
   }
   cols
   colsDetail;
@@ -97,7 +97,7 @@ export class PageNotifyComponent implements OnInit, OnDestroy, AfterViewChecked 
       gridWidth: 0,
       offSet: 0,
       pageSize: 15,
-      orgIds: '',
+      organizeIds: this.query.organizeIds,
     }
   }
 
@@ -134,16 +134,15 @@ export class PageNotifyComponent implements OnInit, OnDestroy, AfterViewChecked 
       gridWidth: 0,
       offSet: 0,
       pageSize: 15,
-      orgIds: localStorage.getItem("organizes"),
+      organizeIds: this.query.organizeIds,
     }
     this.load();
   }
 
   ngOnInit() {
-    this.query.orgIds = localStorage.getItem("organizes");
     this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
         if(results && results.length>0){
-          this.query.orgIds = results;
+          this.query.organizeIds = results;
           this.load();
         }
     });

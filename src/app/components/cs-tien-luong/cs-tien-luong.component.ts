@@ -88,7 +88,7 @@ export class CsTienLuongComponent implements OnInit {
     filter: '',
     offSet: 0,
     pageSize: 15,
-    orgIds: '',
+    organizeIds: '',
   }
   totalRecord = 0;
   DriverId = 0;
@@ -111,7 +111,7 @@ export class CsTienLuongComponent implements OnInit {
       filter: '',
       offSet: 0,
       pageSize: 15,
-      orgIds: localStorage.getItem("organizes")
+      organizeIds: this.query.organizeIds
     }
     this.load();
   }
@@ -277,10 +277,10 @@ export class CsTienLuongComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.query.orgIds = localStorage.getItem("organizes");
     this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
         if(results && results.length>0){
-          this.query.orgIds = results;
+          this.query.organizeIds = results;
+          this.query.organizeId = results
           this.load();
         }
     });

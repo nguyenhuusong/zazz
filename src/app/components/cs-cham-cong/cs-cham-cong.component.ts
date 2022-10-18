@@ -89,7 +89,7 @@ export class CsChamCongComponent implements OnInit {
     pageSize: 15,
     month: new Date().getMonth() + 1,
     year: new Date().getFullYear(),
-    orgIds: '',
+    organizeIds: '',
   }
 
   queryCheckInOut = {
@@ -146,7 +146,7 @@ export class CsChamCongComponent implements OnInit {
       pageSize: 15,
       month: new Date().getMonth() + 1,
       year: new Date().getFullYear(),
-      orgIds: localStorage.getItem("organizes"),
+      organizeIds: this.query.organizeIds,
     }
     this.load();
   }
@@ -276,11 +276,13 @@ export class CsChamCongComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.query.orgIds = localStorage.getItem("organizes");
     this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
         if(results && results.length>0){
-          this.query.orgIds = results;
-          this.load();
+          this.query.organizeIds = results;
+          // this.load();
+          this.getOrgRoots();
+        }else{
+          this.getOrgRoots();
         }
     });
     this.items = [
@@ -288,7 +290,6 @@ export class CsChamCongComponent implements OnInit {
       { label: 'Chính sách' },
       { label: 'Danh sách chấm công' },
     ];
-    this.getOrgRoots();
     this.itemsToolOfGrid = [
       {
         label: 'Check in/out',

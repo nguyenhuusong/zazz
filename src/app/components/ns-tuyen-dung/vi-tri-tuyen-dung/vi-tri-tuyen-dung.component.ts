@@ -74,7 +74,7 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
     pageSize: 15,
     jobId: 0,
     hiring_man_id: 0,
-    orgIds: '',
+    organizeIds: '',
   }
   totalRecord = 0;
   DriverId = 0;
@@ -118,7 +118,7 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
       pageSize: 15,
       jobId: 0,
       hiring_man_id: 0,
-      orgIds: localStorage.getItem("organizes"),
+      organizeIds: this.query.organizeIds,
     }
     this.load();
   }
@@ -250,10 +250,9 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
 
 
   ngOnInit() {
-    this.query.orgIds = localStorage.getItem("organizes");
     this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
         if(results && results.length>0){
-          this.query.orgIds = results;
+          this.query.organizeIds = results;
           this.load();
         }
     });
