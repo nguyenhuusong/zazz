@@ -67,7 +67,7 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
   cols: any[];
   colsDetail: any[];
   items = [];
-  columnDefs;
+  columnDefs = [];
   detailRowHeight;
   defaultColDef;
   frameworkComponents;
@@ -80,8 +80,9 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
   objectActionDetail: any;
   gridflexs: any;
   getRowHeight;
-  query = {
-    organizeId: null,
+  selectedValue = null;
+  query: any = {
+    orgId: null,
     // request_status: '',
     filter: '',
     offSet: 0,
@@ -105,8 +106,9 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
   }
 
   cancel() {
+    this.selectedValue = null;
     this.query = {
-      organizeId: null,
+      orgId: null,
       // request_status: '',
       filter: '',
       offSet: 0,
@@ -133,7 +135,8 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
     delete params.fromdate
     delete params.todate
     params.FromDate = moment(new Date(this.query.fromdate)).format('YYYY-MM-DD')
-    params.ToDate = moment(new Date(this.query.todate)).format('YYYY-MM-DD')
+    params.ToDate = moment(new Date(this.query.todate)).format('YYYY-MM-DD');
+    params.orgId = this.selectedValue ? this.selectedValue.orgId : null
 
     const queryParams = queryString.stringify(params);
     this.apiService.getEatingPage(queryParams).subscribe(
@@ -269,8 +272,8 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
     this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
         if(results && results.length>0){
           this.query.organizeIds = results;
-          this.query.organizeId = results;
           this.load();
+          this.getOrganizeTree();
         }
     });
     this.items = [
@@ -296,7 +299,21 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
       }
     })
   }
+  departmentFiltes = []
+  getOrganizeTree(): void {
+    const queryParams = queryString.stringify({ parentId: this.query.organizeIds });
+    this.apiService.getOrganizeTree(queryParams)
+      .subscribe((results: any) => {
+        if (results && results.status === 'success') {
+          this.departmentFiltes = results.data;
+        }
+      },
+        error => { });
+  }
 
+  onNodeSelect (event) {
+
+  }
   sizeToFit() {
     if (this.gridApi) {
       let allColumnIds: any = [];

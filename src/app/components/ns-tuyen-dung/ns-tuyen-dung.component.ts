@@ -329,7 +329,6 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     this.getOrgRoots();
     this.getObjectList();
     this.getStatus();
-    this.load();
   }
 
   getOrgRoots() {

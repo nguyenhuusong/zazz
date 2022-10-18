@@ -37,23 +37,25 @@
                                                     name="todate"></p-calendar>
                                             </div>
                                         </div>
-                                        <!-- <div class="col-6">
-                                            <div class="field-group select valid">
-                                                <label>Công ty</label>
-                                                <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
-                                                [options]="listOrgRoots" [(ngModel)]="query.organizeId"  (onChange)="find()"
-                                                name="organizeId" [filter]="true">
-                                                <ng-template let-item pTemplate="selectedItem">
-                                                    <span>{{item.label}}</span>
-                                                </ng-template>
-                                                <ng-template let-car pTemplate="item">
-                                                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                                                        <div style="font-size:14px;float:left;margin-top:4px">{{car.label}}</div>
-                                                    </div>
-                                                </ng-template>
-                                                </p-dropdown>
-                                            </div>
-                                        </div> -->
+                                        <div class="col-6">
+                                            <!-- <div class="field-group select mb-0 label-8">
+                                                <label>phòng ban</label>
+                                                <p-treeSelect [(ngModel)]="query.orgId" [filterInputAutoFocus]="true"
+                                                [filter]="true" [metaKeySelection]="false" [options]="departmentFiltes"
+                                                selectionMode="single" name="DepartmentId"
+                                                placeholder="Chọn phòng ban"></p-treeSelect>
+                                            </div> -->
+                                            <div class="field-group select mb-0 label-8">
+                                                <label>Bộ phận</label>
+                                                  <p-treeSelect [(ngModel)]="selectedValue" 
+                                                  [filterInputAutoFocus]="true" 
+                                                  [metaKeySelection]="true" 
+                                                  [filter]="true" 
+                                                  [ngClass]="[ departmentFiltes.length <= 0 ? 'tree-empty' : '' ]" 
+                                                  [options]="departmentFiltes" selectionMode="single" name="selectedValue"
+                                                  placeholder="Chọn phòng ban"></p-treeSelect>
+                                              </div>
+                                        </div>
                                     </div>
                                     <div class="input-group icon col-12 select-default text-right">
                                         <label for="" style="visibility: hidden;">Classid <span class="pi pi-info-circle"

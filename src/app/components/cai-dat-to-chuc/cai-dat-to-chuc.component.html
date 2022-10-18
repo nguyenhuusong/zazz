@@ -55,21 +55,14 @@
                                         </div>
                                     </div> -->
                                     <div class="field-group select mb-0 label-8">
-                                      <label>Bộ phận</label>
-                                      <!-- <p-treeSelect  [filterInputAutoFocus]="true" [filter]="true" [metaKeySelection]="false"
-                                          [(ngModel)]="query.orgId" 
-                                          [ngClass]="[ departmentFiltes.length <= 0 ? 'tree-empty' : '' ]" 
-                                          [options]="departmentFiltes" 
-                                          selectionMode="single" 
-                                          name="aDepartment"
-                                          (onNodeSelect)="onChangeTreeDepart($event)"
-                                          placeholder="Chọn phòng ban">
-                                      </p-treeSelect> -->
-                                      <p-treeSelect [(ngModel)]="query.orgId" [filterInputAutoFocus]="true"
-                                        [filter]="true" [metaKeySelection]="false" [options]="departmentFiltes"
-                                        display="chip" (onNodeSelect)="onNodeSelect($event)"
-                                        selectionMode="single" appendTo="body" name="DepartmentId"
-                                        placeholder="Chọn phòng ban"></p-treeSelect>
+                                            <label>Bộ phận</label>
+                                              <p-treeSelect [(ngModel)]="selectedValue" 
+                                              [filterInputAutoFocus]="true" 
+                                              [metaKeySelection]="true" 
+                                              [filter]="true" 
+                                              [ngClass]="[ departmentFiltes.length <= 0 ? 'tree-empty' : '' ]" 
+                                              [options]="departmentFiltes" selectionMode="single" name="selectedValue"
+                                              placeholder="Chọn phòng ban"></p-treeSelect>
                                   </div>
                                 </div>
                                 <div class="input-group icon col-12 select-default text-right">

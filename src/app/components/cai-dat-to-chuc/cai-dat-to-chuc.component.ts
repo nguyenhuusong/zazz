@@ -23,7 +23,7 @@ export class CaiDatToChucComponent implements OnInit {
   };
   MENUACTIONROLEAPI = MENUACTIONROLEAPI;
   ACTIONS = ACTIONS
-
+  selectedValue = null
   projects = []
   public modules: Module[] = AllModules;
   public agGridFn = AgGridFn;
@@ -121,12 +121,13 @@ export class CaiDatToChucComponent implements OnInit {
   }
   departments = [];
   cancel() {
+    this.selectedValue = null
     this.query = {
       filter: '',
       gridWidth: 0,
       offSet: 0,
       pageSize: 15,
-      orgId: 0,
+      orgId: this.selectedValue,
       isLock: -1,
       isApprove: -1,
       org_level: 0,
@@ -240,7 +241,9 @@ export class CaiDatToChucComponent implements OnInit {
   load() {
     this.columnDefs = []
     this.spinner.show();
-    const queryParams = queryString.stringify(this.query);
+    let params: any = {... this.query};
+    params.orgId = this.selectedValue ? this.selectedValue.orgId : null
+    const queryParams = queryString.stringify(params);
     this.apiService.getOrganizePage(queryParams).subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
