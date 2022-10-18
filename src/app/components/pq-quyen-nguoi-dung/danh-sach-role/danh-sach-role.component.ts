@@ -410,8 +410,11 @@ export class DanhSachRoleComponent implements OnInit {
                   d.intPos = g.intPos;
                 }
               })
-              if(this.roleType === 1 && d.path === "/phan-quyen/quyen-nguoi-dung"){
+              if(this.roleType !== 1 && d.path === "/phan-quyen/quyen-nguoi-dung"){
                 d.isCheck = false;
+                d.actions.forEach( actionD => {
+                  actionD.isCheck = false;
+                })
               }
             });
             m.submenus.sort(this.compare_qty)

@@ -29,8 +29,9 @@
             <!-- <input id="administration" type="checkbox" [checked]="menu?.isCheckAll" name="{{menu?.title}}_{{i}}_{{menu?.isCheckAll}}" (change)="changeMenuParentAll(menu, i)"/> -->
             <input id="administration_{{menu.menuId}}_{{i}}" type="checkbox" [checked]="menu?.isCheck" name="{{menu?.title}}_{{i}}" (change)="changeMenuParent(menu, i)" style="margin-right: 5px"/><input type="number" [ngModel]="menu.intPos" name="intPos_{{menu.intPos}}_{{menu.menuId}}" (change)="changeModelintPosParent($event, i)" > <label  for="administration_{{menu.menuId}}_{{i}}" style="font-weight: 600; margin-left: 5px; font-size: 13px;"> {{menu?.title}}</label>
             <ul style="margin-left:5px">
+              <!-- [disabled]="roleType !== 1 && menuChirlden.path" -->
               <li *ngFor="let menuChirlden of  menu.submenus; let idx=index" title="Menu con">
-                <input id="president_{{menuChirlden.menuId}}_{{idx}}" type="checkbox" style="margin-right: 5px" name="{{menuChirlden?.title}}_{{idx}}" (change)="changeMenuChirlden(i, idx)" [checked]="menuChirlden?.isCheck" />
+                <input [disabled]="roleType !== 1 && menuChirlden.path === '/phan-quyen/quyen-nguoi-dung'" id="president_{{menuChirlden.menuId}}_{{idx}}" type="checkbox" style="margin-right: 5px" name="{{menuChirlden?.title}}_{{idx}}" (change)="changeMenuChirlden(i, idx)" [checked]="menuChirlden?.isCheck" />
                 <input type="number" [ngModel]="menuChirlden.intPos" name="intPos_{{menuChirlden.intPos}}_{{menu.menuId}}" (change)="changeModelintPosChilrden($event, i, idx)"> <label for="president_{{menuChirlden.menuId}}_{{idx}}" style="font-weight: 600; margin-left: 5px;font-size: 13px;"> {{menuChirlden?.title}}</label>
                 <ul style="margin-left:5px" *ngIf="menuChirlden?.isCheck">
                     <li *ngFor="let action of  menuChirlden.actions; let actionIdx=index" title="Action con">

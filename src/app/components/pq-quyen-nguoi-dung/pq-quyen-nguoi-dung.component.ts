@@ -179,7 +179,7 @@ export class PqQuyenNguoiDungComponent implements OnInit {
 
   isShowChangePassword = false
   changePassWord(event) {
-    console.log('event', event)
+    this.submitPass = false
     this.isShowChangePassword = true;
     this.modelPass = {
       userLogin: '',
