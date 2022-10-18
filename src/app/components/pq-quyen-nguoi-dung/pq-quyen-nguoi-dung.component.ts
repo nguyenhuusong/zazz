@@ -105,7 +105,8 @@ export class PqQuyenNguoiDungComponent implements OnInit {
   load() {
     this.columnDefs = []
     this.spinner.show();
-    const queryParams = queryString.stringify(this.query);
+    this.query.filter = this.query.filter.trim();
+    let queryParams = queryString.stringify(this.query);
     this.apiService.getUserPage(queryParams).subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
@@ -242,7 +243,7 @@ export class PqQuyenNguoiDungComponent implements OnInit {
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Phân quyền' },
-      { label: 'Danh sách quyền người dùng' },
+      { label: 'Danh sách người dùng' },
     ];
     this.getOrganize();
     this.getJobTitles();

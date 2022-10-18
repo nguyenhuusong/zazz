@@ -96,7 +96,7 @@ const routes: Routes = [
     path: 'quyen-nguoi-dung',
     component: PqQuyenNguoiDungComponent,
     data: {
-      title: 'Danh sách quyền người dùng',
+      title: 'Danh sách người dùng',
       url: 'quyen-nguoi-dung',
     },
   },
