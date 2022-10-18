@@ -246,6 +246,28 @@
                 dateFormat="dd/mm/yy" name="start_dt"></p-calendar>
             </div>
         </div>
+        <div class="col-3">
+            <div class="field-group date mb-0">
+                <label>Chấm công đặc biệt</label>
+                <p-calendar
+                panelStyleClass="datepicker-default" 
+                placeholder="DD/MM/YYYY" [appendTo]="'body'" [baseZIndex]="101"
+                [(ngModel)]="modelChangeStatus.start_dt" [monthNavigator]="true" [yearNavigator]="true"
+                yearRange="2010:2030" inputId="navigators"
+                dateFormat="dd/mm/yy" name="start_dt"></p-calendar>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="field-group date mb-0">
+                <label>Loại chấm công đặc biệt</label>
+                <p-calendar
+                panelStyleClass="datepicker-default" 
+                placeholder="DD/MM/YYYY" [appendTo]="'body'" [baseZIndex]="101"
+                [(ngModel)]="modelChangeStatus.start_dt" [monthNavigator]="true" [yearNavigator]="true"
+                yearRange="2010:2030" inputId="navigators"
+                dateFormat="dd/mm/yy" name="start_dt"></p-calendar>
+            </div>
+        </div>
         <div class="col-1">
             <p-button label="Gửi" styleClass="btn-h56" (click)="saveForm()"></p-button>
         </div>

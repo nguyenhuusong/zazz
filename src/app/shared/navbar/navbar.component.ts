@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { AuthService } from 'src/app/services/auth.service';
@@ -35,7 +35,8 @@ export class NavbarComponent implements OnInit {
         private apiService: ApiService,
         private apiHrm: ApiHrmService,
         private messageService: MessageService,
-        private organizeInfoService: OrganizeInfoService
+        private organizeInfoService: OrganizeInfoService,
+        private changeDetector: ChangeDetectorRef,
         // private themeService: ThemeService
     ) {
         this.items = [{
@@ -109,11 +110,7 @@ export class NavbarComponent implements OnInit {
     ngOnInit() {
         this.userName = this.authService.getUserName();
         this.getOragin();
-        if(localStorage.getItem("organizes") === null){
-          localStorage.setItem('organizes', this.organizeRole);
-        }else{
-          this.organizeRole = localStorage.getItem("organizes");
-        }
+        
     }
 
     update() {
@@ -130,6 +127,8 @@ export class NavbarComponent implements OnInit {
 
     detailOrganizes = []
     getOragin(){
+      this.detailOrganizes = [];
+      this.organizeRole = null;
       this.apiHrm.getUserOrganizeRole().subscribe(
         (results: any) => {
           if(results.status === "success"){
@@ -141,19 +140,30 @@ export class NavbarComponent implements OnInit {
                     value: d.ord_id
                   };
                 });
-                if(localStorage.getItem("organizes") === null){
-                  this.organizeRole = this.detailOrganizes[1].value;
+                let organizesStorage = localStorage.getItem("organizes")
+                if(organizesStorage === "null" || organizesStorage === null){
+                  this.organizeRole = this.detailOrganizes[0].value;
+                  localStorage.setItem('organizes', this.organizeRole);
+                  this.organizeInfoService.setStocks(this.organizeRole);
+                }else{
+                  this.organizeRole = organizesStorage;
+                  this.organizeInfoService.setStocks(this.organizeRole);
+                  this.changeDetector.detectChanges();
                 }
+
             }
           }
         }),
         error => { };
     }
 
+    ngAfterViewChecked(): void {
+   
+    }
+
     changeOragi(e){
       this.organizeRole = e.value;
       this.organizeInfoService.setStocks(e.value);
       localStorage.setItem('organizes', e.value);
-      // localStorage.setItem('organizes', JSON.stringify(e.value));
     }
 }

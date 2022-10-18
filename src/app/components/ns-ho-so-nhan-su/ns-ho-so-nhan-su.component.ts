@@ -61,7 +61,6 @@ export class NsHoSoNhanSuComponent implements OnInit {
   getRowHeight;
   listsData = null;
   selectedNode
-  organizesRole = '';
   capaStatus = [
     { label: 'Tất cả', value: -1 },
     { label: 'Chưa duyệt', value: 0 },
@@ -126,11 +125,11 @@ export class NsHoSoNhanSuComponent implements OnInit {
     gridWidth: 0,
     offSet: 0,
     pageSize: 15,
-    orgId: this.organizesRole,
+    orgId: '',
     isLock: -1,
     isApprove: -1,
     emp_st: -1,
-    orgIds: ''
+    organizeIds: ''
   }
 
   titleForm = {
@@ -155,11 +154,11 @@ export class NsHoSoNhanSuComponent implements OnInit {
       gridWidth: 0,
       offSet: 0,
       pageSize: 15,
-      orgId: this.organizesRole,
+      orgId: this.query.orgId,
       isLock: -1,
       isApprove: -1,
       emp_st: -1,
-      orgIds: localStorage.getItem("organizes")
+      organizeIds: this.query.organizeIds
     }
     this.load();
   }
@@ -168,30 +167,6 @@ export class NsHoSoNhanSuComponent implements OnInit {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
   }
-
-  getAgencyOrganizeMap(type = false) {
-    this.apiService.getAgencyOrganizeMap().subscribe(results => {
-      if (results.status === 'success') {
-        this.listAgencyMap = [...results.data.root];
-        if (localStorage.getItem("organize") === null) {
-          this.selectedNode = this.listAgencyMap[0];
-          localStorage.setItem('organize', JSON.stringify(this.listAgencyMap[0]));
-          this.query.orgId = this.selectedNode.orgId;
-          this.load();
-        } else {
-          this.selectedNode = JSON.parse(localStorage.getItem("organize"));
-          this.query.orgId = this.selectedNode?.orgId;
-          this.listAgencyMap = this.expanded(this.listAgencyMap, this.selectedNode.parentId)
-          this.selected(this.listAgencyMap, this.query.orgId);
-          if (type) {
-            this.isHrDiagram = true;
-          }
-          this.load();
-        }
-      }
-    })
-  }
-
 
   expanded(datas = [], orgId = 0) {
     datas.forEach(d => {
@@ -240,9 +215,10 @@ export class NsHoSoNhanSuComponent implements OnInit {
   load() {
     this.columnDefs = []
     this.spinner.show();
-    const query: any = { ...this.query };
-    query.orgId = typeof query.orgId === 'string' ? query.orgId : query.orgId.orgId;
-    const queryParams = queryString.stringify(query);
+    const params: any = { ...this.query };
+    params.organizeIds = this.query.organizeIds;
+    params.orgId = params.orgId.orgId;
+    const queryParams = queryString.stringify(params);
     this.apiService.getEmployeePage(queryParams).subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
@@ -494,18 +470,17 @@ export class NsHoSoNhanSuComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.query.orgIds = localStorage.getItem("organizes");
-    this.organizesRole = localStorage.getItem("organizes");
+    // this.query.orgIds = localStorage.getItem("organizes");
+    // this.organizesRole = localStorage.getItem("organizes");
     this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
         if(results && results.length>0){
-          this.query.orgIds = results;
-          this.organizesRole = results;
-          this.load();
+          this.query.organizeIds = results;
           this.getOrganizeTree();
+          this.load();
         }
     });
     
-    this.getOrganizeTree();
+    // this.getOrganizeTree();
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Quản lý nhân sự' },
@@ -562,12 +537,6 @@ export class NsHoSoNhanSuComponent implements OnInit {
     this.isHrDiagram = false;
 
     this.load()
-  }
-
-  hrDiagram() {
-    this.selectedNode = null;
-    this.listAgencyMap = []
-    this.getAgencyOrganizeMap(true);
   }
 
   Back() {
@@ -735,7 +704,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
   }
 
   getOrganizeTree(): void {
-    const queryParams = queryString.stringify({ parentId: this.organizesRole });
+    const queryParams = queryString.stringify({ parentId: this.query.organizeIds });
     this.apiService.getOrganizeTree(queryParams)
       .subscribe((results: any) => {
         if (results && results.status === 'success') {

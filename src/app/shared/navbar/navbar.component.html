@@ -16,12 +16,12 @@
       </svg>
     </a>
   </div>
-  <div class="d-flex gap12 end col-6 middle pd-0">
+  <div class="d-flex gap12 end col-6 middle pd-0" *ngIf="detailOrganizes.length > 0">
     <div class="col-4 pd-0">
-      <div class="field-group select mb-0" style="background: #fff;">
-        <p-dropdown appendTo="body" [baseZIndex]="100"
+      <div class="field-group select mb-0 " style="background: #fff;">
+        <p-dropdown panelStyleClass="nav-select-oragin" appendTo="body" [baseZIndex]="100"
         (onChange)="changeOragi($event)"
-          [options]="detailOrganizes" [required] [(ngModel)]="organizeRole" name="organizeRole" [filter]="true">
+          [options]="detailOrganizes" [(ngModel)]="organizeRole" name="organizeRole" [filter]="true">
         </p-dropdown>
     </div>
     </div>
