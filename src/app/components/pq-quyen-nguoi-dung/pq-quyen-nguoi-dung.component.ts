@@ -29,6 +29,7 @@ export class PqQuyenNguoiDungComponent implements OnInit {
     userPassword: '',
     userPassCf: ''
   }
+  saveAddUser = false;
   confimPassword = false;
   constructor(
     private apiService: ApiHrmService,
@@ -273,7 +274,9 @@ export class PqQuyenNguoiDungComponent implements OnInit {
 
 
   titleForm = 'Thêm mới quyền người dùng'
+  isEditUser = false;
   XemChiTiet({ rowData }) {
+    this.isEditUser = true;
     this.displayAdd = true;
     this.addUserQuery.fullName = rowData.fullName
     this.addUserQuery.phone = rowData.phone
@@ -309,6 +312,7 @@ export class PqQuyenNguoiDungComponent implements OnInit {
     this.addUserQuery.password = "";
     this.displayAdd = true;
     this.saveAddUser = false;
+    this.isEditUser = false;
     this.getOrganizes();
   }
 
@@ -606,10 +610,8 @@ export class PqQuyenNguoiDungComponent implements OnInit {
     this.modelAdd.userId = e.rowData.userId
     
   }
-  saveAddUser = false;
   save() {
     this.saveAddUser = true;
-    this.addUserQuery.password = 'true';
     if(!this.addUserQuery.roles){
       return
     }
@@ -628,14 +630,20 @@ export class PqQuyenNguoiDungComponent implements OnInit {
     if(!this.addUserQuery.fullName){
       return
     }
-    
+    if(!this.addUserQuery.password && !this.isEditUser){
+      return
+    }
+    if(this.isEditUser) {
+      this.addUserQuery.password = '';
+
+    }
+
     const params = this.addUserQuery;
     // console.log('this.addUserQuery.roles', this.addUserQuery.roles)
     // if(this.addUserQuery.roles.length > 0){
     //   params.roles = this.addUserQuery.roles.map( (d: any) => {
     //     return d.code
     //   })
-
     // }
 
     this.apiService.setUserAdd(params).subscribe(results => {
