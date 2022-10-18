@@ -6,5 +6,6 @@ export class addUser {
     roles:Array<[]>;
     userId: string;
     loginName: string;
-    password: string
+    password: string;
+    isAdd: boolean;
 }

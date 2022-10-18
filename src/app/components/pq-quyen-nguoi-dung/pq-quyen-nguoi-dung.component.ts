@@ -310,6 +310,7 @@ export class PqQuyenNguoiDungComponent implements OnInit {
     this.addUserQuery.userId = "";
     this.addUserQuery.loginName = "";
     this.addUserQuery.password = "";
+    this.addUserQuery.isAdd = true
     this.displayAdd = true;
     this.saveAddUser = false;
     this.isEditUser = false;
@@ -618,7 +619,7 @@ export class PqQuyenNguoiDungComponent implements OnInit {
     if(!this.addUserQuery.ord_ids && this.addUserQuery.ord_ids.length <= 0){
       return
     }
-    if(!this.addUserQuery.roles && this.addUserQuery.roles.length <= 0){
+    if(!this.addUserQuery.roles || this.addUserQuery.roles.length <= 0){
       return
     }
     if(!this.addUserQuery.phone){
@@ -635,7 +636,7 @@ export class PqQuyenNguoiDungComponent implements OnInit {
     }
     if(this.isEditUser) {
       this.addUserQuery.password = '';
-
+      this.addUserQuery.isAdd = false;
     }
 
     const params = this.addUserQuery;
