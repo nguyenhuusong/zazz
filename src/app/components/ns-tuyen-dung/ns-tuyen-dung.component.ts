@@ -309,12 +309,11 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     this.query.offSet = event.first;
     this.first = event.first;
     this.query.pageSize = event.rows === 4 ? 100000000 : event.rows;
-    this.load();
   }
 
   ngOnInit() {
     this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-        if(results && results.length>0){
+        if(results){
           this.query.organizeIds = results;
           this.load();
         }
