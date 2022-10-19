@@ -125,7 +125,7 @@ export function AgGridFn(lists: Array<any>) {
                     // cellClass: value.cellClass,
                     // filter: value.isFilter ? 'agTextColumnFilter' : '',
                     // sortable: false,
-                    // width: value.columnWidth,
+                    width: value.columnWidth,
                     // editable: value.editable ? value.editable : false,
                     // cellRenderer: value.isMasterDetail ? 'agGroupCellRenderer' : '',
                     // hide: value.isHide ? true : false,

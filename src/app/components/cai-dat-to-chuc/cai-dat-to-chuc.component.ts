@@ -278,14 +278,50 @@ export class CaiDatToChucComponent implements OnInit {
         {
           onClick: this.thongtinphongban.bind(this),
           label: 'Thông tin tổ chức',
-          icon: 'fa fa-edit',
+          icon: 'fa fa-eye',
           class: 'btn-primary mr5',
           hide: CheckHideAction(MENUACTIONROLEAPI.GetOrganizePage.url, ACTIONS.VIEW)
-
         },
-
+        {
+          onClick: this.editOrgin.bind(this),
+          label: 'Sửa tổ chức',
+          icon: 'fa fa-edit',
+          class: 'btn-primary mr5',
+          hide: CheckHideAction(MENUACTIONROLEAPI.GetOrganizePage.url, ACTIONS.EDIT)
+        },
+        {
+          onClick: this.delOrgin.bind(this),
+          label: 'Xóa tổ chức',
+          icon: 'fa fa-trash',
+          class: 'btn-primary mr5',
+          hide: CheckHideAction(MENUACTIONROLEAPI.GetOrganizePage.url, ACTIONS.DELETE)
+        },
       ]
     };
+  }
+
+  editOrgin(event) {
+    console.log('event', event)
+    this.modeAgencyOrganize.organizeId = this.query.organizeIds;
+    this.displayOrganize = true;
+  }
+  delOrgin(event) {
+    console.log('event', event)
+    this.confirmationService.confirm({
+      message: 'Bạn có chắc chắn muốn thực hiện hành động này?',
+      accept: () => {
+        // const queryParams = queryString.stringify({ orgId: event.rowData.orgId });
+        // this.apiService.delOrganize(queryParams).subscribe(results => {
+        //   if (results.status === 'success') {
+        //     this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
+        //     this.displayButton = false;
+        //     this.getAgencyOrganizeMap();
+        //   } else {
+        //     this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+        //   }
+        // });
+      }
+    });
   }
 
   initGrid() {
@@ -528,7 +564,7 @@ export class CaiDatToChucComponent implements OnInit {
       label: 'Thêm mới phòng ban',
       value: 'Add'
     }
-
+    
     if (this.detailOrganizeMap.parentId) {
       // this.getOrganizeTree(this.detailOrganizeMap.organizeId);
       this.getOrganizeLevelList(this.detailOrganizeMap.organizeId);

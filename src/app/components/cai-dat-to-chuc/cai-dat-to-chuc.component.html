@@ -96,14 +96,12 @@
                   </svg> &nbsp;&nbsp;
                   Bộ Lọc
             </p-button>
-
                 <p-button label="Thêm mới" 
-                [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetOrganizePage.url, action: ACTIONS.ADD}"
-                *ngIf="detailOrganizeMap?.organizeId" (click)="Add()" styleClass="p-button-sm height-56" icon="pi pi-plus"></p-button>
-                <p-button label="Chỉnh sửa"
-                [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetOrganizePage.url, action: ACTIONS.VIEW}" (click)="Edit()" *ngIf="detailOrganizeMap?.org_level >1" styleClass="p-button-sm height-56" icon="pi pi-pencil"></p-button>
-                <p-button label="Xóa"
-                [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetOrganizePage.url, action: ACTIONS.DELETE}" (click)="Delete()" *ngIf="detailOrganizeMap?.org_level >1" styleClass="p-button-sm p-button-danger height-56" icon="pi pi-trash"></p-button>
+                [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetOrganizePage.url, action: ACTIONS.ADD}"  (click)="Add()" styleClass="p-button-sm height-56" icon="pi pi-plus"></p-button>
+                <!-- <p-button label="Chỉnh sửa"
+                [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetOrganizePage.url, action: ACTIONS.VIEW}" (click)="Edit()" styleClass="p-button-sm height-56" icon="pi pi-pencil"></p-button> -->
+                <!-- <p-button label="Xóa"
+                [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetOrganizePage.url, action: ACTIONS.DELETE}" (click)="Delete()" styleClass="p-button-sm p-button-danger height-56" icon="pi pi-trash"></p-button> -->
                 <p-button (click)="caiDatThamSo()" styleClass="p-button-sm height-56">
                   <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M0.333008 0.333252H13.6663V13.6666H0.333008V0.333252Z" fill="#F6FBFF"/>
