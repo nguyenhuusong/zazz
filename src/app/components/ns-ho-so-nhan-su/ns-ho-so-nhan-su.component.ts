@@ -82,6 +82,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
 
   // for the move organ
   departmentFiltes = [];
+  departmentFiltes2 = [];
   organizeId = '';
   aDepartment: any;
   theOrganToMoveData = []
@@ -721,6 +722,25 @@ export class NsHoSoNhanSuComponent implements OnInit {
       this.isButtonmoveOrganNow = true;
     }
   }
+ 
+  getOrganizeTree2(): void {
+    const queryParams = queryString.stringify({ parentId: this.organizeId });
+    this.apiService.getOrganizeTree(queryParams)
+      .subscribe((results: any) => {
+        if (results && results.status === 'success') {
+          this.departmentFiltes2 = results.data;
+        }
+      },
+        error => { });
+    this.queryStaffToMove.orgId = '';
+    this.aDepartment = '';
+    if(this.organizeId && this.queryStaffToMove.orgId){
+      this.isButtonmoveOrganNow = false;
+    }
+    else {
+      this.isButtonmoveOrganNow = true;
+    }
+  }
 
   // handleChangeOrganize() {
   //   this.getOrganizeTree();
@@ -739,6 +759,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
   }
   moveOrganNow() {
     if (this.theOrganToMoveData.length > 0) {
+      this.getOrganizeTree2();
       this.queryStaffToMove.organizeId = this.organizeId;
       this.queryStaffToMove.members = this.theOrganToMoveData.map(o => {
         return {

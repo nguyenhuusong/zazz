@@ -524,18 +524,17 @@ export class CaiDatToChucComponent implements OnInit {
   }
 
   Add() {
-    this.getDepartments(this.detailOrganizeMap.organizeId);
     this.titleForm = {
       label: 'Thêm mới phòng ban',
       value: 'Add'
     }
 
     if (this.detailOrganizeMap.parentId) {
-      this.getOrganizeTree(this.detailOrganizeMap.organizeId);
+      // this.getOrganizeTree(this.detailOrganizeMap.organizeId);
       this.getOrganizeLevelList(this.detailOrganizeMap.organizeId);
       this.modeAgencyOrganize = {
         orgId: null,
-        organizeId:this.detailOrganizeMap.organizeId,
+        organizeId: this.query.organizeIds,
         org_name: '',
         org_level: this.detailOrganizeMap.org_level + 1,
         parentId: this.detailOrganizeMap.orgId,
@@ -557,6 +556,17 @@ export class CaiDatToChucComponent implements OnInit {
     }
     this.displayOrganize = true;
     this.displayButton = false;
+    this.getOrganizeTreeByOr();
+  }
+  listOrganizeTreeByOr = []
+  getOrganizeTreeByOr() {
+    this.selectedNodeTree =null
+    const queryParams = queryString.stringify({ parentId: this.query.organizeIds });
+    this.apiService.getOrganizeTree(queryParams).subscribe(results => {
+      if (results.status === 'success') {
+        this.listOrganizeTreeByOr = results.data;
+      }
+    })
   }
 
   getOrganizeTree(organizeId) {
@@ -591,7 +601,6 @@ export class CaiDatToChucComponent implements OnInit {
   }
   
   onNodeSelectAdd(event) {
-    console.log(event)
     this.getDepartments(event.node.parentId);
     this.getOrganizeLevelList(event.node.parentId);
   }

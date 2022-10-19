@@ -16,7 +16,8 @@
             <div class="row mt-2">
                 <div class="col-md-8">
                     <div class="field-checkbox col-md-4 justify-content-center" *ngFor="let item of listDates; let i = index">
-                        <p-checkbox name="group1" [value]="item" [disabled]="checkdisableddate(i + 1)" [(ngModel)]="selectedDates" [inputId]="item"></p-checkbox>
+                        <!-- checkdisableddate(i + 1) -->
+                        <p-checkbox name="group1" [value]="item" [disabled]="true" [(ngModel)]="selectedDates" [inputId]="item"></p-checkbox>
                         <label for="{{item}}">{{item}}</label>
                     </div>
                 </div>

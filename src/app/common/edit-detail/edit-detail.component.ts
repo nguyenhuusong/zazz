@@ -191,12 +191,14 @@ export class EditDetailComponent implements OnInit, OnChanges {
             promissall.push(this.apiHrmV2Service.getHrmPayrollTypePageV2(queryString.stringify({ organizeId: org_cds }), element1.field_name));
           } else if (element1.field_name === 'organize_id' ||  (element1.field_name === 'org_cds')) {
             promissall.push(this.apiHrmV2Service.getOrganizationsV2(queryString.stringify({ filter: '' }), element1.field_name));
-            this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-              if(results && results.length>0){
-                element1.columnValue = results;
-                element1.isDisable = true
-              }
-            });
+            if(element1.columnType === 'dropdown'){
+              this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
+                if(results){
+                  element1.columnValue = results;
+                  element1.isDisable = true
+                }
+              });
+            }
           }else if (element1.field_name === 'full_name') {
             const org_cds = this.getValueByKey('org_cds');
             promissall.push(this.apiHrmV2Service.getEmployeeSearchV2(queryString.stringify({ org_cds: org_cds }), element1.field_name));

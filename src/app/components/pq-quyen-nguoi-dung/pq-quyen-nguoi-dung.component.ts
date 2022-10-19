@@ -147,6 +147,7 @@ export class PqQuyenNguoiDungComponent implements OnInit {
   }
 
   showButtons(event: any) {
+    console.log('event', event)
     return {
       buttons: [
         {
@@ -163,7 +164,20 @@ export class PqQuyenNguoiDungComponent implements OnInit {
           icon: 'pi pi-user-edit',
           class: 'btn-primary mr5',
         },
-        
+        {
+          onClick: this.lockUser.bind(this),
+          label: 'Khóa người dùng',
+          icon: 'pi pi-lock',
+          class: 'btn-primary mr5',
+          hide: (event.data.lock_st === true || event.data.lock_st)
+        },
+        {
+          onClick: this.unLockUser.bind(this),
+          label: 'Mở khóa người dùng',
+          icon: 'pi pi-lock-open',
+          class: 'btn-primary mr5',
+          hide: (event.data.lock_st === false || !event.data.lock_st)
+        },
         {
           onClick: this.xoaNguoiDung.bind(this),
           label: 'Xóa tài khoản',
@@ -175,6 +189,39 @@ export class PqQuyenNguoiDungComponent implements OnInit {
 
       ]
     };
+  }
+
+  lockUser(event) {
+    console.log('event', )
+    this.confirmationService.confirm({
+      message: 'Bạn có chắc chắn muốn khóa người dùng?',
+      accept: () => {
+        this.apiService.lockUser(event.rowData.userId).subscribe((results: any) => {
+          if (results.status === 'success') {
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Đã khóa người dùng!' });
+            this.load();
+          } else {
+            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+          }
+        });
+      }
+    });
+  }
+
+  unLockUser(event)  {
+    this.confirmationService.confirm({
+      message: 'Bạn có chắc chắn muốn mở khóa khóa người dùng?',
+      accept: () => {
+        this.apiService.unLockUser(event.rowData.userId).subscribe((results: any) => {
+          if (results.status === 'success') {
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Mở khóa thành công!' });
+            this.load();
+          } else {
+            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+          }
+        });
+      }
+    });
   }
 
   isShowChangePassword = false
@@ -336,7 +383,7 @@ export class PqQuyenNguoiDungComponent implements OnInit {
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Phân quyền' },
-      { label: 'Danh sách quyền người dùng' },
+      { label: 'Danh sách người dùng' },
     ];
     this.getOrganize();
     this.getJobTitles();
