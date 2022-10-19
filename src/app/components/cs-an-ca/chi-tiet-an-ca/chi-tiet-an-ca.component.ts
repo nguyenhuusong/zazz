@@ -73,7 +73,6 @@ export class ChiTietAnCaComponent implements OnInit, OnChanges, OnDestroy {
         b.push(`${newDay < 10 ? 0 : ''}${newDay}/${new Date().getMonth() + 2 < 10 ? 0 : ''}${new Date().getMonth() + 2}/${new Date().getFullYear()}`)
       }
       this.listDates = [...a, ...b.sort()];
-      console.log(b.sort())
     }
    
     this.titlePage = this.activatedRoute.data['_value'].title;
