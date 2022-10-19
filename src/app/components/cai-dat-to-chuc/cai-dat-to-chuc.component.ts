@@ -301,12 +301,10 @@ export class CaiDatToChucComponent implements OnInit {
   }
 
   editOrgin(event) {
-    console.log('event', event)
     this.modeAgencyOrganize.organizeId = this.query.organizeIds;
     this.displayOrganize = true;
   }
   delOrgin(event) {
-    console.log('event', event)
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn thực hiện hành động này?',
       accept: () => {

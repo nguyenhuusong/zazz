@@ -479,6 +479,7 @@ export class DangKyLichLamViecComponent implements OnInit {
     this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
         if(results && results.length>0){
           this.query.organizeIds = results;
+          this.query.organizeId = results;
           this.load();
           this.getOrganizeTree();
         }

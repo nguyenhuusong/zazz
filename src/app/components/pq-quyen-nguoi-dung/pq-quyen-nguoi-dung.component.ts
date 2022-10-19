@@ -147,7 +147,6 @@ export class PqQuyenNguoiDungComponent implements OnInit {
   }
 
   showButtons(event: any) {
-    console.log('event', event)
     return {
       buttons: [
         {
@@ -708,6 +707,8 @@ export class PqQuyenNguoiDungComponent implements OnInit {
   goToSettingRole() {
     this.router.navigateByUrl('/phan-quyen/quyen-nguoi-dung/chi-tiet-quyen-nguoi-dung');
   }
+
+  
 
 }
 

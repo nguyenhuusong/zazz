@@ -8,12 +8,12 @@
         [listsData]="listsData" [height]="heightGrid" (rowDoubleClicked)="clickRowRoleGetMenu($event)"
         [columnDefs]="columnDefs"></app-list-grid-angular>
 </div>
-<p-dialog [(visible)]="displayInfo" [autoZIndex]="true" [modal]="true" [style]="{width: '700px', height: 'auto'}">
-<p-header>
-   Thông tin nhóm quyền
-</p-header>
-<app-edit-detail *ngIf="listViews.length> 0" [detail]="detailDetailInfo" [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButon"  [dataView]="listViews"
-    (callback)="setConfigMenu($event)" (callbackcancel)="cancelUpdate($event)"></app-edit-detail>
+<p-dialog [(visible)]="displayInfo" styleClass="popup-content-w" [autoZIndex]="true" [modal]="true" [style]="{width: '700px', height: 'auto'}">
+  <p-header>
+    Thông tin nhóm quyền
+  </p-header>
+  <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailDetailInfo" [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButon"  [dataView]="listViews"
+      (callback)="setConfigMenu($event)" (callbackcancel)="cancelUpdate($event)"></app-edit-detail>
 </p-dialog>
       
 <p-dialog header="Cài đặt cấu hình " [(visible)]="displaySetting" (onHide)="getClientRolePageByWebId()" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"

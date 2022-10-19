@@ -56,7 +56,7 @@ export class PqTheNhanVienComponent implements OnInit {
       status: -1,
       offSet: 0,
       pageSize: 15,
-      organizeIds: ""
+      // organizeIds: ""
   };
   totalRecord = 0;
   countRecord: any = {
@@ -100,7 +100,7 @@ export class PqTheNhanVienComponent implements OnInit {
   ngOnInit(): void {
     this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
         if(results && results.length>0){
-          this.model.organizeIds = results;
+          // this.model.organizeIds = results;
           this.model.organizeId = results;
           this.load();
         }
@@ -146,7 +146,7 @@ export class PqTheNhanVienComponent implements OnInit {
       status: -1,
       offSet: 0,
       pageSize: 15,
-      organizeIds: this.model.organizeIds
+      // organizeIds: this.model.organizeIds
     };
   }
 

@@ -57,6 +57,7 @@ import { ChiTietLoaiBieuMauComponent } from 'src/app/components/bieu-mau/loai-bi
 import { ConfigGridTableFormModule } from 'src/app/common/config-grid-table-form/config-grid-table-form.module';
 import { XemCongComponent } from 'src/app/components/cs-cham-cong/xem-cong/xem-cong.component';
 import { CheckHideActionsDirectiveModule } from 'src/app/directive/check-action.module';
+import { EatingListComponent } from 'src/app/components/cs-an-ca/eating-list/eating-list.component';
 
 @NgModule({
   imports: [
@@ -123,6 +124,7 @@ import { CheckHideActionsDirectiveModule } from 'src/app/directive/check-action.
     LoaiBieuMauComponent,
     ChiTietLoaiBieuMauComponent,
     XemCongComponent,
+    EatingListComponent,
   ],
   providers: [],
 })

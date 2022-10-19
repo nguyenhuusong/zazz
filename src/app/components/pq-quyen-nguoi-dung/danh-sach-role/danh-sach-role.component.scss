@@ -52,6 +52,13 @@
               right: 0px;
           }
       }
+      .popup-content-w{
+        app-edit-detail{
+            .border-section{
+                width: 100%;
+            }
+        }
+      }
   }
   
   :host ::ng-deep .p-button {

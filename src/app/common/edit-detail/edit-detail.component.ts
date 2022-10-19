@@ -180,6 +180,14 @@ export class EditDetailComponent implements OnInit, OnChanges {
             promissall.push(this.apiHrmV2Service.getJobsV2(queryString.stringify({ orgId: root_orgId, positionTypeCd: positionTypeCd }), element1.field_name));
           } else if (element1.field_name === 'organizeId') {
             promissall.push(this.apiHrmV2Service.getOrganizationsV2(queryString.stringify({ filter: '' }), element1.field_name));
+            if(element1.columnType === 'dropdown'){
+              this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
+                if(results){
+                  element1.columnValue = results;
+                  element1.isDisable = true
+                }
+              });
+            }
           } else if (element1.field_name === 'CompanyId') {
             const root_orgId = this.getValueByKey('organizeId');
             promissall.push(this.apiHrmV2Service.getCompaniesByOrganizeV2(queryString.stringify({ organizeId: root_orgId, filter: '' }), element1.field_name));
@@ -253,6 +261,9 @@ export class EditDetailComponent implements OnInit, OnChanges {
           }else if(element1.field_name === 'menuParentId') {
             element1.columnValue = parseInt(element1.columnValue)
             element1.options = cloneDeep(this.menus.map(t => ({label: t.title, value: t.menuId})));
+          }else if(element1.field_name === 'custId'){
+            const root_orgId = this.getValueByKey('organizeId');
+            promissall.push(this.apiHrmV2Service.getEmployeePageV2(queryString.stringify({ orgId: root_orgId, pageSize: 100000 }), element1.field_name));
           }else {
             if (element1.columnObject) {
               promissall.push(this.apiHrmV2Service.getObjectListV2(queryString.stringify({ objKey: element1.columnObject }), element1.field_name));

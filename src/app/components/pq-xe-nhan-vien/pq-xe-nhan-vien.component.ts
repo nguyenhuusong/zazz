@@ -13,7 +13,6 @@ import { ExportFileService } from 'src/app/services/export-file.service';
 import { cloneDeep } from 'lodash';
 import * as firebase from 'firebase';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
-import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 declare var jQuery: any;
 
 @Component({
@@ -35,7 +34,6 @@ export class PqXeNhanVienComponent implements OnInit {
     private messageService: MessageService,
     private changeDetector: ChangeDetectorRef,
     private fileService: ExportFileService,
-    private organizeInfoService: OrganizeInfoService,
     private router: Router) {
     this.defaultColDef = {
       tooltipComponent: 'customTooltip',
@@ -107,8 +105,7 @@ export class PqXeNhanVienComponent implements OnInit {
     filter: '',
     status: -1,
     offSet: 0,
-    pageSize: 15,
-    organizeIds: '',
+    pageSize: 15
   };
   totalRecord = 0;
   countRecord: any = {
@@ -128,14 +125,6 @@ export class PqXeNhanVienComponent implements OnInit {
   itemsBreadcrumb = [];
   itemsToolOfGrid: any[] = [];
   ngOnInit(): void {
-    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-        if(results && results.length>0){
-          this.model.organizeIds = results;
-          this.model.organizeId = results;
-          this.load();
-          this.getOrganizeTree();
-        }
-    });
     this.itemsBreadcrumb = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Phân quyền' },
@@ -147,7 +136,8 @@ export class PqXeNhanVienComponent implements OnInit {
       filter: '',
       status: -1,
       offSet: 0,
-      pageSize: 15
+      pageSize: 15,
+      organizeIds: '',
     };
     this.loadVehicelTypes();
     this.getOrganize();
@@ -216,7 +206,7 @@ export class PqXeNhanVienComponent implements OnInit {
   }
 
   getOrganizeTree(): void {
-    const queryParams = queryString.stringify({ parentId: this.model.organizeIds });
+    const queryParams = queryString.stringify({ parentId: this.model.organizeId });
     this.apiService.getOrganizeTree(queryParams)
       .subscribe((results: any) => {
         if (results && results.status === 'success') {
@@ -765,7 +755,7 @@ export class PqXeNhanVienComponent implements OnInit {
       status: -1,
       offSet: 0,
       pageSize: 15,
-      orgIds: this.model.organizeIds
+      organizeIds: '',
     };
     this.model.filter = '';
     this.model.status = -1;

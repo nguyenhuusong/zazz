@@ -24,7 +24,7 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
   dataAnCa: any;
   MENUACTIONROLEAPI = MENUACTIONROLEAPI;
   ACTIONS = ACTIONS
-
+  rowDataSelected:any = []
   constructor(
     private spinner: NgxSpinnerService,
     private apiService: ApiHrmService,
@@ -195,18 +195,22 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
 
   initGrid() {
     this.columnDefs = [
-      ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       {
-        headerName: 'Thao tác',
+        headerName: '',
         filter: '',
-        width: 100,
-        pinned: 'right',
-        cellRenderer: 'buttonAgGridComponent',
+        width: 60,
+        pinned: 'left',
         cellClass: ['border-right', 'no-auto'],
-        cellRendererParams: (params: any) => this.showButtons(params),
-        checkboxSelection: false,
-        field: 'checkbox'
-      }]
+        field: 'checkbox2',
+        headerCheckboxSelection: false,
+        suppressSizeToFit: true,
+        suppressRowClickSelection: true,
+        showDisabledCheckboxes: true,
+        checkboxSelection: true,
+        rowSelection: 'single'
+      },
+      ...AgGridFn(this.cols.filter((d: any) => !d.isHide))
+    ]
   }
 
   xoaTienLuong(event) {
@@ -345,6 +349,20 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
         this.gridColumnApi.autoSizeColumns(allColumnIds, false);
       }
     }
+  }
+
+  // list ăn ca
+  xemChiTiet() {
+    const params = {
+      cusId: this.rowDataSelected[0].custId
+    }
+    if(this.rowDataSelected.length){
+      this.router.navigate(['/chinh-sach/an-ca/chi-tiet-danh-sach-an-ca'], { queryParams: params });
+    }
+  }
+
+  rowSelected(event) {
+    this.rowDataSelected = event;
   }
 
 }

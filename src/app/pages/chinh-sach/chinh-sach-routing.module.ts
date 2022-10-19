@@ -20,6 +20,7 @@ import { PhepNamComponent } from 'src/app/components/phep-nam/phep-nam.component
 import { PhepBuComponent } from 'src/app/components/phep-bu/phep-bu.component';
 import { ChiTietPhepBuComponent } from 'src/app/components/phep-bu/chi-tiet-phep-bu/chi-tiet-phep-bu.component';
 import { XemCongComponent } from 'src/app/components/cs-cham-cong/xem-cong/xem-cong.component';
+import { EatingListComponent } from 'src/app/components/cs-an-ca/eating-list/eating-list.component';
 
 const routes: Routes = [
   {
@@ -120,6 +121,14 @@ const routes: Routes = [
   data: {
     title: 'Chi tiết ăn ca',
     url: 'chi-tiet-an-ca',
+  },
+},
+{
+  path: 'an-ca/chi-tiet-danh-sach-an-ca',
+  component: EatingListComponent,
+  data: {
+    title: 'Chi tiết ăn ca',
+    url: 'chi-tiet-danh-sach-an-ca',
   },
 },
 
