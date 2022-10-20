@@ -105,12 +105,12 @@ export class NavbarComponent implements OnInit {
 
     logout() {
         this.authService.signout();
+        localStorage.removeItem('organizes');
     }
 
     ngOnInit() {
         this.userName = this.authService.getUserName();
         this.getOragin();
-        
     }
 
     update() {
