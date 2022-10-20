@@ -198,8 +198,8 @@ export class ApiService {
 
 
   // WebMenu
-  getUserMenus(): Observable<any> {
-    return this.http.get(`${apiHrmBase}/api/v2/menu/GetUserMenus`, this.options);
+  getUserMenus(query): Observable<any> {
+    return this.http.get(`${apiHrmBase}/api/v2/menu/GetUserMenus?` + query, this.options);
   }
   getMenuConfigInfo(query = ''): Observable<any> {
     return this.http.get(`${apiHrmBase}/api/v2/menu/GetMenuConfigInfo?` + query, this.options);

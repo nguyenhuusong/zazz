@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 @Component({
   selector: 'app-danh-sach-role',
   templateUrl: './danh-sach-role.component.html',
@@ -24,6 +25,7 @@ export class DanhSachRoleComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
+    private organizeInfoService: OrganizeInfoService,
     private router: Router
   ) { }
   columnDefs = [];
@@ -43,28 +45,38 @@ export class DanhSachRoleComponent implements OnInit {
   listMenuTree = []
   getRoles() {
     this.columnDefs = []
-    const query = {  }
-    this.apiService.getMenuConfigInfo(queryString.stringify(query)).subscribe((results: any) => {
-      if (results.status === 'success') {
-        this.listsData = cloneDeep(results?.data?.roles);
-        this.dataMenuActionRole = results.data;
-        this.listMenuTree = cloneDeep(results?.data?.menutree)
-        this.menus = cloneDeep(this.listMenuTree);
-        if(results.data && results.data.view_grids_action){
-          this.initGrid(results.data.view_grids_roles);
-        }
+    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
+      if(results && results.length>0){
+        const query = {  organizeIds: results }
+        this.apiService.getMenuConfigInfo(queryString.stringify(query)).subscribe((results: any) => {
+          if (results.status === 'success') {
+            this.listsData = cloneDeep(results?.data?.roles);
+            this.dataMenuActionRole = results.data;
+            this.listMenuTree = cloneDeep(results?.data?.menutree)
+            this.menus = cloneDeep(this.listMenuTree);
+            if(results.data && results.data.view_grids_action){
+              this.initGrid(results.data.view_grids_roles);
+            }
+          }
+        })
       }
-    })
+    });
+
   }
 
   getClientRolePageByWebId() {
     this.columnDefs = []
-    this.apiService.getUserMenus().subscribe(results => {
-      if (results.status === 'success') {
-        this.listsData = cloneDeep(results.data.dataList.roles);
-        this.initGrid(results.data.gridflexs);
-      }
-    })
+    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
+      if(results && results.length>0){
+        const queryParams = queryString.stringify({ organizeIds: results });
+      this.apiService.getUserMenus(queryParams).subscribe(results => {
+        if (results.status === 'success') {
+          this.listsData = cloneDeep(results.data.dataList.roles);
+          this.initGrid(results.data.gridflexs);
+        }
+      })
+    }
+    });
   }
   listActions = [];
   sourceActions = [];

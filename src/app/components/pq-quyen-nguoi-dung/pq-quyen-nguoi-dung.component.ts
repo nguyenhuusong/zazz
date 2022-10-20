@@ -13,6 +13,7 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { addUser } from 'src/app/types/addUser';
+import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 @Component({
   selector: 'app-pq-quyen-nguoi-dung',
   templateUrl: './pq-quyen-nguoi-dung.component.html',
@@ -39,6 +40,7 @@ export class PqQuyenNguoiDungComponent implements OnInit {
     private messageService: MessageService,
     private changeDetector: ChangeDetectorRef,
     private spinner: NgxSpinnerService,
+    private organizeInfoService: OrganizeInfoService,
     private router: Router) {
 
     this.defaultColDef = {
@@ -82,6 +84,7 @@ export class PqQuyenNguoiDungComponent implements OnInit {
     filter: '',
     offSet: 0,
     pageSize: 15,
+    organizeIds: '',
   }
   totalRecord = 0;
   DriverId = 0;
@@ -103,6 +106,7 @@ export class PqQuyenNguoiDungComponent implements OnInit {
       filter: '',
       offSet: 0,
       pageSize: 15,
+      organizeIds: this.query.organizeIds,
     }
     this.load();
   }
@@ -282,7 +286,7 @@ export class PqQuyenNguoiDungComponent implements OnInit {
   }
   
   loadjs = 0;
-  heightGrid = 300
+  heightGrid = 0
   ngAfterViewChecked(): void {
     const a: any = document.querySelector(".header");
     const b: any = document.querySelector(".sidebarBody");
@@ -298,6 +302,11 @@ export class PqQuyenNguoiDungComponent implements OnInit {
       }else {
         this.loadjs = 0;
       }
+    }
+    if(this.heightGrid === 0){
+      this.spinner.show();
+    }else{
+      this.spinner.hide();
     }
   }
 
@@ -384,6 +393,13 @@ export class PqQuyenNguoiDungComponent implements OnInit {
       { label: 'Phân quyền' },
       { label: 'Danh sách người dùng' },
     ];
+
+    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
+        if(results && results.length>0){
+          this.query.organizeIds = results;
+          this.load();
+        }
+    });
     this.getOrganize();
     this.getJobTitles();
     this.getPositionList();
@@ -563,18 +579,17 @@ export class PqQuyenNguoiDungComponent implements OnInit {
 
   detailOrganizes = []
   getOrganizes() {
-    this.apiService.getOrgRoots().subscribe(
+    this.apiService.getUserOrganizeRole().subscribe(
       (results: any) => {
         if(results.status === "success"){
           if(results.data){
-            this.detailOrganizes = results.data
+            this.detailOrganizes = results.data.result
               .map(d => {
                 return {
-                  label: d.org_name,
-                  value: `${d.orgId}`
+                  label: d.ord_name,
+                  value: d.ord_id
                 }
               });
-              console.log('this.detailOrganizes', this.detailOrganizes)
           }
         }
       }),

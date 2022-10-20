@@ -6,6 +6,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { environment } from 'src/environments/environment';
 import {Event, RouterEvent, Router} from '@angular/router';
 import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
+import { OrganizeInfoService } from 'src/app/services/organize-info.service';
+import * as queryString from 'querystring';
 declare var $: any;
 @Component({
     // moduleId: module.id,
@@ -21,6 +23,7 @@ export class SidebarComponent implements OnInit {
         private authService: AuthService,
         private apiService: ApiService,
         private firebaseAuthService: FirebaseAuthService,
+        private organizeInfoService: OrganizeInfoService,
     ) {
         
         router.events.pipe(
@@ -43,14 +46,19 @@ export class SidebarComponent implements OnInit {
             this.firebaseAuthService.customLogin(customToken);
           }
         }
-       this.apiService.getUserMenus().subscribe(results => {
-                if (results.status === 'success') {
-                    this.menuItems = results.data;
-                    localStorage.setItem('menuItems',JSON.stringify(results.data));
-                    this.parseObjectProperties(this.menuItems, pathname);
-                    this.menuItems = [...this.menuItems];
-                }
-            });
+        this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
+            if(results && results.length>0){
+             const queryParams = queryString.stringify({ organizeIds: results });
+              this.apiService.getUserMenus(queryParams).subscribe(results => {
+                   if (results.status === 'success') {
+                       this.menuItems = results.data;
+                       localStorage.setItem('menuItems',JSON.stringify(results.data));
+                       this.parseObjectProperties(this.menuItems, pathname);
+                       this.menuItems = [...this.menuItems];
+                   }
+               });
+            }
+        });
         // this.menuItems = ROUTES.filter(menuItem => menuItem);
         //         this.parseObjectProperties(this.menuItems, pathname);
         //         this.menuItems = [...this.menuItems];

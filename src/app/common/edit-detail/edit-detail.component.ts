@@ -180,11 +180,11 @@ export class EditDetailComponent implements OnInit, OnChanges {
             promissall.push(this.apiHrmV2Service.getJobsV2(queryString.stringify({ orgId: root_orgId, positionTypeCd: positionTypeCd }), element1.field_name));
           } else if (element1.field_name === 'organizeId') {
             promissall.push(this.apiHrmV2Service.getOrganizationsV2(queryString.stringify({ filter: '' }), element1.field_name));
-            if(element1.columnType === 'dropdown'){
+            if(element1.columnType === 'dropdown' || element1.columnType === 'select'){
               this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
                 if(results && results.length>0){
                   element1.columnValue = results;
-                  element1.isDisable = true
+                  element1.isDisable = true;
                 }
               });
             }

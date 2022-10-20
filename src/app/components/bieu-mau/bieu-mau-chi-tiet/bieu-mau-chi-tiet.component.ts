@@ -44,6 +44,8 @@ export class BieuMauChiTietComponent implements OnInit, OnDestroy {
 
  
   getDetail() {
+    this.listViews = [];
+    this.detailInfo = [];
     this.spinner.show();
     const queryParams = queryString.stringify({formId: this.formId});
     this.apiService.getFormsInfo(queryParams)
