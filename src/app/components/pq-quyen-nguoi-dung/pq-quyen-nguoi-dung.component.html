@@ -170,7 +170,9 @@
             <p-multiSelect appendTo="body"
             optionValue="value"
             optionLabel="label"
-            [options]="detailOrganizes" [(ngModel)]="addUserQuery.ord_ids"></p-multiSelect>
+            [options]="detailOrganizes" [(ngModel)]="addUserQuery.ord_ids"
+            (onChange)="onChangeOrgan($event)"
+            ></p-multiSelect>
             <div *ngIf="(addUserQuery.ord_ids && addUserQuery.ord_ids.length <= 0) && saveAddUser" class="alert-validation alert-danger">
                 Vui lòng chọn tổ chức
             </div>
@@ -191,7 +193,8 @@
             <p-multiSelect appendTo="body"
             optionValue="code"
             optionLabel="label"
-            [options]="roles" [(ngModel)]="addUserQuery.roles"></p-multiSelect>
+            [options]="roles" 
+            [(ngModel)]="addUserQuery.roles"></p-multiSelect>
             <div *ngIf="(addUserQuery.roles && addUserQuery.roles.length <= 0) && saveAddUser" class="alert-validation alert-danger">
                     Vui Lòng chọn quyền
                 </div>

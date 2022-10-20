@@ -114,7 +114,7 @@ export class DanhSachRoleComponent implements OnInit {
         field: 'button',
         filter: '',
         pinned: 'right',
-        width: 90,
+        width: 80,
         cellRenderer: 'buttonAgGridComponent',
         cellClass: ['border-right'],
         cellRendererParams: params => {

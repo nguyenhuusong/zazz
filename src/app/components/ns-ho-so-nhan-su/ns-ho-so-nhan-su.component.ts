@@ -480,6 +480,8 @@ export class NsHoSoNhanSuComponent implements OnInit {
           this.load();
         }
     });
+
+    console.log('router', this.router.url)
     
     // this.getOrganizeTree();
     this.items = [

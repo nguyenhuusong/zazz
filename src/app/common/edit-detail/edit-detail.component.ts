@@ -199,10 +199,17 @@ export class EditDetailComponent implements OnInit, OnChanges {
             promissall.push(this.apiHrmV2Service.getHrmPayrollTypePageV2(queryString.stringify({ organizeId: org_cds }), element1.field_name));
           } else if (element1.field_name === 'organize_id' ||  (element1.field_name === 'org_cds')) {
             promissall.push(this.apiHrmV2Service.getOrganizationsV2(queryString.stringify({ filter: '' }), element1.field_name));
-            if(element1.columnType === 'dropdown'){
+            if(element1.columnType === 'dropdown' || element1.columnType === 'select'){
               this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
                 if(results && results.length>0){
                   element1.columnValue = results;
+                  element1.isDisable = true
+                }
+              });
+            }else if( element1.columnType === "multiSelect" ) {
+              this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
+                if(results && results.length>0){
+                  element1.columnValue = results
                   element1.isDisable = true
                 }
               });
@@ -264,6 +271,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
           }else if(element1.field_name === 'custId'){
             const root_orgId = this.getValueByKey('organizeId');
             promissall.push(this.apiHrmV2Service.getEmployeePageCustIdV2(queryString.stringify({ orgId: root_orgId, pageSize: 100000 }), element1.field_name));
+          }else if( element1.field_name === 'menu_date') {
+            promissall.push(this.apiHrmV2Service.getEatingInputV2(queryString.stringify({ }), element1.field_name));
           }else {
             if (element1.columnObject) {
               promissall.push(this.apiHrmV2Service.getObjectListV2(queryString.stringify({ objKey: element1.columnObject }), element1.field_name));

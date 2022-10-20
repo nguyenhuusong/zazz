@@ -61,6 +61,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { ApiHrmV2Service } from './services/api-hrm/apihrmv2.service';
 import { OrganizeInfoService } from './services/organize-info.service';
+import { UniNotFoundComponent } from './components/uni-not-found/uni-not-found.component';
 const APP_CONTAINERS = [DefaultLayoutComponent];
 @NgModule({
     declarations: [
@@ -76,6 +77,7 @@ const APP_CONTAINERS = [DefaultLayoutComponent];
         TooltipSuggestionComponent,
         DropdownRendererComponent,
         BaoCaoComponent,
+        UniNotFoundComponent,
     ],
     imports: [
         BrowserAnimationsModule,

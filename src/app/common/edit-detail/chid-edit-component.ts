@@ -1118,7 +1118,10 @@ export class AppTypeTimeonlyComponent implements OnInit {
   selector: 'app-type-multiSelect',
   template: `   <div class="field-group multi-select">
                   <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
-                  <p-multiSelect [options]="element.options" [(ngModel)]="element.columnValue" (onChange)="onChangeValue($event.value, element.field_name)"
+                  <p-multiSelect 
+                  [options]="element.options" 
+                  [appendTo]="'body'"
+                  [(ngModel)]="element.columnValue" (onChange)="onChangeValue($event.value, element.field_name)"
                   name={{element.field_name}} defaultLabel="Select a option" optionLabel="name" display="chip">
                 </p-multiSelect>
 
@@ -1145,6 +1148,7 @@ export class AppTypeMultiSelectComponent implements OnInit {
   }
 
   onChangeValue(value, field_name) {
+    console.log('value', value)
     this.modelFields[field_name].error = false;
     // if (field_name === 'work_cds') {
     //   console.log(value)

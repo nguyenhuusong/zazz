@@ -7,6 +7,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { BaoCaoComponent } from './components/bao-cao/bao-cao.component';
 import { ChiTietGopYComponent } from './components/gop-y-kien/chi-tiet-gop-y/chi-tiet-gop-y.component';
 import { GopYKienComponent } from './components/gop-y-kien/gop-y-kien.component';
+import { UniNotFoundComponent } from './components/uni-not-found/uni-not-found.component';
 // import { HomeComponent } from './home/home.component';
 // import { OrderSunshineComponent } from './order-sunshine/order-sunshine.component';
 // import { ReportendofdayComponent } from './reportendofday/reportendofday.component';
@@ -16,6 +17,11 @@ const appRoutes: Routes = [
     path: '',
     redirectTo: 'home',
     pathMatch: 'full',
+  },
+  {
+    path: '404',
+    pathMatch: 'full',
+    component: UniNotFoundComponent
   },
   { path: 'auth-callback', component: AuthCallbackComponent },
 

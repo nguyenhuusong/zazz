@@ -376,16 +376,14 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
     this.detailInfo = []
     this.listViews = []
     const params = { cusId: null }
-    if(this.rowDataSelected.length > 0) {
-      this.isDetail = true;
-      this.apiService.getEatingForCreateInfo(queryString.stringify(params)).subscribe( results => {
-        if (results.status === 'success') {
-          const listViews = cloneDeep(results.data.group_fields);
-          this.listViews = [...listViews];
-          this.detailInfo = results.data;
-        }
-      }) 
-    }
+    this.isDetail = true;
+    this.apiService.getEatingForCreateInfo(queryString.stringify(params)).subscribe( results => {
+      if (results.status === 'success') {
+        const listViews = cloneDeep(results.data.group_fields);
+        this.listViews = [...listViews];
+        this.detailInfo = results.data;
+      }
+    }) 
   }
 
   setChitiet(data) {

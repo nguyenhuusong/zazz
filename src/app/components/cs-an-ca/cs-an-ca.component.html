@@ -109,15 +109,9 @@
                         Xem chi tiết
                     </p-button>
                     <p-button
-                    [disabled]="rowDataSelected.length < 0"
-                    [ngClass]="{ 'active' : rowDataSelected.length > 0  }" 
-                    styleClass="height-56 btn-active-on-off" (click)="handAddNew()">
-                        <svg width="14" height="20" viewBox="0 0 14 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M0.333008 18.333C0.333008 18.7932 0.706104 19.1663 1.16634 19.1663H12.833C13.2932 19.1663 13.6663 18.7932 13.6663 18.333V1.66634C13.6663 1.2061 13.2932 0.833008 12.833 0.833008H1.16634C0.706104 0.833008 0.333008 1.2061 0.333008 1.66634V18.333ZM1.99967 2.49967H11.9997V17.4997H1.99967V2.49967Z" fill="#F6FBFF"/>
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M4.49982 15.3097C4.49982 14.9083 4.82181 14.583 5.219 14.583H8.78064C9.17783 14.583 9.49982 14.9083 9.49982 15.3097C9.49982 15.711 9.17783 16.0364 8.78064 16.0364H5.219C4.82181 16.0364 4.49982 15.711 4.49982 15.3097Z" fill="#F6FBFF"/>
-                        </svg>&nbsp;&nbsp;
-                        Thêm mới
-                    </p-button>
+                    styleClass="height-56" (click)="handAddNew()"
+                    [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetEatingPage.url, action: ACTIONS.ADD}"
+                    label="Thêm mới" styleClass="height-56" icon="pi pi-plus "></p-button>
                 </div>
             </div>
         </div>

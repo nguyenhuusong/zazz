@@ -57,6 +57,8 @@ export class XemCongComponent implements OnInit, OnDestroy {
   }
   first = 0;
 
+  displaySetting = false;
+  gridKey = ''
   ngOnDestroy() {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
@@ -96,6 +98,7 @@ export class XemCongComponent implements OnInit, OnDestroy {
     this.spinner.show();
     this.apiService.getTimekeepingDetail(queryParams).subscribe(results => {
       if (results.status === 'success') {
+        this.gridKey= results.data.dataList.gridKey;
         this.spinner.hide();
         this.columnDefs = results.data.gridflexs;
         this.listViews = cloneDeep(results.data.group_fields);
@@ -268,6 +271,9 @@ export class XemCongComponent implements OnInit, OnDestroy {
     })
   }
 
+  cauhinh() {
+    this.displaySetting = true;
+  }
 }
 
 

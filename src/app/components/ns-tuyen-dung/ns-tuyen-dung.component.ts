@@ -96,7 +96,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   }
 
   loadjs = 0;
-  heightGrid = 0
+  heightGrid = 450
   ngAfterViewChecked(): void {
     const a: any = document.querySelector(".header");
     const b: any = document.querySelector(".sidebarBody");
@@ -315,6 +315,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
         if(results && results.length>0){
           this.query.organizeIds = results;
+          this.listsData = []
           this.load();
         }
     });

@@ -356,6 +356,10 @@ export function CheckHideAction(path, action) {
     }
 }
 
+export function checkUrlRole() {
+    
+}
+
 export function SumArray(mang) {
     let sum = 0;
     let i = 0;

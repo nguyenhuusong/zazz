@@ -348,6 +348,7 @@ export class PqQuyenNguoiDungComponent implements OnInit {
     this.getRoleActive(rowData.role_id)
     this.getOrganizes();
     this.getPositionList();
+    this.getRoles();
   }
 
 
@@ -399,7 +400,6 @@ export class PqQuyenNguoiDungComponent implements OnInit {
     this.getJobTitles();
     this.getPositionList();
     this.getManagerList();
-    this.getRoles();
     this.load();
   }
   listJobTitles = []
@@ -543,7 +543,15 @@ export class PqQuyenNguoiDungComponent implements OnInit {
 
   roles = []
   getRoles() {
-    const query = queryString.stringify({ filter: ''})
+    let organizeIds = '';
+    if(this.addUserQuery.ord_ids.length > 0) {
+      organizeIds = this.addUserQuery.ord_ids.toString();
+    }
+    const query = queryString.stringify(
+      { 
+        filter: '',
+        organizeIds: organizeIds
+    })
     this.api.getRolePage(query).subscribe(
       (results: any) => {
         if(results.status === "success")
@@ -716,6 +724,10 @@ export class PqQuyenNguoiDungComponent implements OnInit {
 
   goToSettingRole() {
     this.router.navigateByUrl('/phan-quyen/quyen-nguoi-dung/chi-tiet-quyen-nguoi-dung');
+  }
+
+  onChangeOrgan(event) {
+    this.getRoles();
   }
 
   

@@ -551,5 +551,20 @@ export class ApiHrmV2Service {
     )
   }
 
+  getEatingInputV2(queryParams, field_name) {
+    return this.httpClient.get(`${apiHrmServer}/api/v1/eating/GetEatingInput?` + queryParams , this.options).pipe(
+      map((repon: any) => {
+        return { key: field_name, result: repon.data.eatingProperties.map(d => {
+          return {
+            name: d.food_name,
+            code: d.menu_date
+          }
+        }) };
+      }), catchError(error => {
+        return throwError('Capital not found!');
+      })
+    )
+  }
+
 }
 
