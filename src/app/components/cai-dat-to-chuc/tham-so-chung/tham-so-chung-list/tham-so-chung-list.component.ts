@@ -127,7 +127,6 @@ export class ThamSoChungListComponent implements OnInit {
     ];
     this.getObjectTypes();
     this.getModuleTypes();
-    this.load();
   }
 
   getObjectTypes(): void {

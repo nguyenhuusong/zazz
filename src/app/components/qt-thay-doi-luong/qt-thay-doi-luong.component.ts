@@ -405,7 +405,7 @@ export class QtThayDoiLuongComponent implements OnInit {
     this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
         if(results && results.length>0){
           this.query.organizeIds = results;
-          this.load();
+          this.getAgencyOrganizeMap();
         }
     });
     this.items = [
@@ -413,7 +413,6 @@ export class QtThayDoiLuongComponent implements OnInit {
       { label: 'Quản lý nhân sự' },
       { label: 'Quá trình thay đổi lương' },
     ];
-    this.getAgencyOrganizeMap();
     this.getEmployeeStatus();
     this.getOrgan();
     this.itemsToolOfGrid = [

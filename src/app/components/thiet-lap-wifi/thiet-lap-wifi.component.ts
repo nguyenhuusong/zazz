@@ -262,7 +262,6 @@ export class ThietLapWifiComponent implements OnInit, AfterViewChecked {
     ];
     this.getOrgan();
     this.getWorkplaces();
-    this.load();
   }
   organs = []
   workplaceOptions = []

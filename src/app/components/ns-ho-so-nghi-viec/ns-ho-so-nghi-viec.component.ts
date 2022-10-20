@@ -56,6 +56,8 @@ export class NsHoSoNghiViecComponent implements OnInit {
   }
   isShowAvatar = false;
   imgAvatar = '';
+  departmentFiltes = [];
+  department = null;
   constructor(
     private apiService: ApiHrmService,
     private spinner: NgxSpinnerService,
@@ -82,11 +84,10 @@ export class NsHoSoNghiViecComponent implements OnInit {
   }
   query = {
     filter: '',
-    org_level: 0,
+    reason_id: 0,
+    orgId: "",
     offSet: 0,
     pageSize: 15,
-    orgId: "",
-    reason_id: 0,
     status: -1,
     organizeIds: ""
   }
@@ -99,7 +100,6 @@ export class NsHoSoNghiViecComponent implements OnInit {
   cancel() {
     this.query = {
       filter: '',
-      org_level: 0,
       offSet: 0,
       pageSize: 15,
       orgId: this.query.orgId,
@@ -177,7 +177,10 @@ export class NsHoSoNghiViecComponent implements OnInit {
   load() {
     this.columnDefs = []
     this.spinner.show();
-    const queryParams = queryString.stringify(this.query);
+
+    let params: any = {... this.query};
+    params.orgId = this.department ? this.department.orgId : null
+    const queryParams = queryString.stringify(params);
     this.apiService.getTerminatePage(queryParams).subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
@@ -204,6 +207,17 @@ export class NsHoSoNghiViecComponent implements OnInit {
       error => {
         this.spinner.hide();
       });
+  }
+
+  getOrganizeTree(): void {
+    const queryParams = queryString.stringify({ parentId: this.query.organizeIds });
+    this.apiService.getOrganizeTree(queryParams)
+      .subscribe((results: any) => {
+        if (results && results.status === 'success') {
+          this.departmentFiltes = results.data;
+        }
+      },
+        error => { });
   }
 
   showButtons(event: any) {
@@ -410,9 +424,11 @@ export class NsHoSoNghiViecComponent implements OnInit {
 
   ngOnInit() {
     this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-        if(results && results.length>0){
+        if(results && results.length > 0){
+          console.log('fjsdoifj 1 2 3')
           this.query.organizeIds = results;
-          this.load();
+          this.getOrganizeTree();
+          this.getAgencyOrganizeMap();
         }
     });
     this.items = [
@@ -420,7 +436,6 @@ export class NsHoSoNghiViecComponent implements OnInit {
       { label: 'Nhân sự' },
       { label: 'Danh sách hồ sơ nghỉ việc' },
     ];
-    this.getAgencyOrganizeMap();
     this.getCustObjectListNew();
     this.getEmployeeStatus();
   }

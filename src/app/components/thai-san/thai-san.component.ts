@@ -301,7 +301,6 @@ export class ThaiSanComponent implements OnInit, AfterViewChecked {
       { label: 'Danh sách thai sản' },
     ];
 
-    this.load();
   }
 
 

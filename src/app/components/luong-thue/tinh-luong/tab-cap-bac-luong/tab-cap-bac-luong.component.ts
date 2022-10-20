@@ -194,7 +194,6 @@ import { OrganizeInfoService } from 'src/app/services/organize-info.service';
         { label: 'Trang chủ', routerLink: '/home' },
         { label: 'Lương - thuế' },
       ];
-      this.load();
     }
   
     replaceHtmlToText(string) {

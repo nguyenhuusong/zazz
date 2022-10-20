@@ -491,7 +491,6 @@ export class DangKyLichLamViecComponent implements OnInit {
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Danh sách đăng ký lịch làm việc' },
     ];
-    this.load();
     this.getFeedbackType();
   }
 

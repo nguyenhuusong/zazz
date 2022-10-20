@@ -232,7 +232,6 @@ export class GopYKienComponent implements OnInit {
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Góp ý' },
     ];
-    this.load();
     this.getFeedbackType();
   }
   typeFeedBacks = [];

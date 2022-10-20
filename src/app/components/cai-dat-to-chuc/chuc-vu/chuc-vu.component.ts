@@ -267,7 +267,11 @@ export class ChucVuComponent implements OnInit, AfterViewChecked {
         if(results && results.length>0){
           this.query.organizeIds = results;
           this.query.organizeId = results;
-          this.load();
+          this.route.queryParamMap.subscribe((params: any) => {
+            this.orgLevel = params.params.org_level;
+            // this.query.org_level = params.params.org_level;
+            this.load();
+          });
         }
     });
     this.getOrrginiaztions();
@@ -278,11 +282,6 @@ export class ChucVuComponent implements OnInit, AfterViewChecked {
       { label: 'Danh sách chức vụ'},
     ];
     this.getCustObjectListNew();
-    this.route.queryParamMap.subscribe((params: any) => {
-      this.orgLevel = params.params.org_level;
-      // this.query.org_level = params.params.org_level;
-      this.load();
-    });
   }
 
   listLevers = []

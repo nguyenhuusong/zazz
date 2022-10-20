@@ -262,7 +262,6 @@ export class NghiViecComponent implements OnInit, AfterViewChecked {
           this.load();
         }
     });
-    this.load();
     this.getOrgan();
   }
 

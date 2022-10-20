@@ -196,7 +196,6 @@ export class TabThietLapThamSoComponent implements OnInit {
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Lương - thuế' },
     ];
-    this.load();
   }
 
   replaceHtmlToText(string) {

@@ -260,7 +260,6 @@ export class CaiDatCongTyComponent implements OnInit, AfterViewChecked {
       { label: 'Cài đặt' },
       { label: 'Danh sách công ty' },
     ];
-    this.load();
   }
 
   quanlyloaihopdong() {

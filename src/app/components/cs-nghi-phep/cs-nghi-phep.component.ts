@@ -392,7 +392,7 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
         if(results && results.length>0){
           this.query.organizeIds = results;
           this.query.organizeId = results;
-          this.load();
+          this.getLeaveReasons();
         }
     });
     this.items = [
@@ -401,7 +401,6 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
       { label: 'Giải trình công' },
     ];
     this.getOrgRoots();
-    this.getLeaveReasons();
     this.getRequestStatus();
   }
 

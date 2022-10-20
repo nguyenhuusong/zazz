@@ -286,7 +286,6 @@ export class QuanLyHopDongComponent implements OnInit {
       { label: 'Danh sách loại hợp đồng' },
     ];
     this.handleParams();
-    this.load();
   }
 
 

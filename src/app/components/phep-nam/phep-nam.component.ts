@@ -202,7 +202,6 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
       { label: 'Phép năm' },
     ];
     this.getOrgRoots();
-    this.load();
   }
 
   goToPhepBu() {

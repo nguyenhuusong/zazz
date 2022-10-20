@@ -110,7 +110,6 @@ export class PqTheNhanVienComponent implements OnInit {
       { label: 'Phân quyền' },
       { label: 'Danh sách thẻ nhân viên' },
     ];
-    this.load();
     this.getOrganize();
     this.getPositionList();
     this.getWorkplaces();

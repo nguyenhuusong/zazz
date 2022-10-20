@@ -487,7 +487,6 @@ export class NsHoSoNhanSuComponent implements OnInit {
       { label: 'Quản lý nhân sự' },
     ];
     // this.getAgencyOrganizeMap();
-    this.load();
     this.getEmployeeStatus();
     this.getOrgan();
     this.itemsToolOfGrid = [

@@ -170,7 +170,6 @@ export class PageNotifyComponent implements OnInit, OnDestroy, AfterViewChecked 
     this.model.filter = '';
     this.getModuleList();
     this.getNotifyTempList();
-    this.load();
     // this.pagingComponent.pageSize = this.filter.pageSize;
   }
 

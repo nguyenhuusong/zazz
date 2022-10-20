@@ -268,7 +268,6 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
     this.getJobTitles();
     this.getObjectList();
     this.getOrgRoots();
-    this.load();
   }
 
   getOrgRoots() {

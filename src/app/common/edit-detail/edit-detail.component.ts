@@ -182,7 +182,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
             promissall.push(this.apiHrmV2Service.getOrganizationsV2(queryString.stringify({ filter: '' }), element1.field_name));
             if(element1.columnType === 'dropdown'){
               this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-                if(results){
+                if(results && results.length>0){
                   element1.columnValue = results;
                   element1.isDisable = true
                 }
@@ -201,7 +201,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
             promissall.push(this.apiHrmV2Service.getOrganizationsV2(queryString.stringify({ filter: '' }), element1.field_name));
             if(element1.columnType === 'dropdown'){
               this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-                if(results){
+                if(results && results.length>0){
                   element1.columnValue = results;
                   element1.isDisable = true
                 }

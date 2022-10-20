@@ -385,7 +385,7 @@ export class NgayNghiLeComponent implements OnInit {
         if(results && results.length>0){
           this.query.organizeIds = results;
           this.query.OrganizeId = results
-          this.load();
+          this.getAgencyOrganizeMap();
           this.getOrganizeTree();
         }
     });
@@ -396,7 +396,6 @@ export class NgayNghiLeComponent implements OnInit {
       { label: 'Cài đặt' },
       { label: 'Danh sách ngày nghỉ' },
     ];
-    this.getAgencyOrganizeMap();
     this.getOrgan();
   }
   holiTypes = []

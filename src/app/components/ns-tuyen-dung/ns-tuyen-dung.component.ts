@@ -313,7 +313,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
 
   ngOnInit() {
     this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-        if(results){
+        if(results && results.length>0){
           this.query.organizeIds = results;
           this.load();
         }

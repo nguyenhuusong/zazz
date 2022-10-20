@@ -263,7 +263,6 @@ export class NoiLamViecComponent implements OnInit {
       { label: 'Danh sách nơi làm việc'},
     ];
     this.getCustObjectListNew();
-    this.load();
   }
 
   listLevers = []

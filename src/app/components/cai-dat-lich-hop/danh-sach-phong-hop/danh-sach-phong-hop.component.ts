@@ -115,7 +115,6 @@ export class DanhSachPhongHopComponent implements OnInit {
       { label: 'Quản lý phòng họp'},
     ];
     this.getFloor();
-    this.load();
   }
 
   initFilter(): void {

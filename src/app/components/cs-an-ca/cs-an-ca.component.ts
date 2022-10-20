@@ -285,7 +285,6 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
       { label: 'Chính sách' },
       { label: 'Danh sách ăn ca' },
     ];
-    this.load();
     this.getOrgRoots();
   }
 

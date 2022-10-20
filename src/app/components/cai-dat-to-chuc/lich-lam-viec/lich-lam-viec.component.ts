@@ -280,7 +280,6 @@ public agGridFn = AgGridFn;
       { label: 'Lịch làm việc'},
     ];
     this.getCustObjectListNew();
-    this.load();
 
     // this.route.queryParamMap.subscribe((params: any) => {
     //   this.orgLevel = params.params.org_level;

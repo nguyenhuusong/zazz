@@ -289,7 +289,6 @@ export class CsTienLuongComponent implements OnInit {
       { label: 'Chính sách' },
       { label: 'Danh sách tiền lương' },
     ];
-    this.load();
     this.getOrgRoots();
   }
 

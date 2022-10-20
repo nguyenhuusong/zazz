@@ -418,8 +418,6 @@ export class XuLyHopDongComponent implements OnInit {
       { label: 'Xử lý hợp đồng' }
     ];
     this.getQueryLocalSotrage();
-    this.load();
-
 
     this.itemsToolOfGrid = [
       {

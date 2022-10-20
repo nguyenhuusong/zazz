@@ -229,7 +229,6 @@ export class TabBangLuongComponent implements OnInit {
     //   },
     // ]
     
-    this.load();
   }
   employeeStatus = []
   getEmployeeStatus() {

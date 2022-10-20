@@ -281,8 +281,6 @@ export class CsChamCongComponent implements OnInit {
           this.query.organizeIds = results;
           // this.load();
           this.getOrgRoots();
-        }else{
-          this.getOrgRoots();
         }
     });
     this.items = [

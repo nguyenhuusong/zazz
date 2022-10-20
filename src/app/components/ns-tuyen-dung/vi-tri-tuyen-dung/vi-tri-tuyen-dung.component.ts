@@ -262,7 +262,6 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
       { label: 'Danh sách vị trí tuyển dụng' },
     ];
     this.getJobTitles();
-    this.load();
   }
 
   listJobTitles = []

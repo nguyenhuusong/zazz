@@ -86,6 +86,17 @@
                         </p-dropdown>
                             </div>
                         </div>
+                        <div class="col-6">
+                            <div class="field-group select mb-0 label-8">
+                                <label>Bộ phận</label>
+                                <p-treeSelect placeholder="Chọn Phòng ban" 
+                                [filterInputAutoFocus]="true" [filter]="true" 
+                                [metaKeySelection]="false" appendTo="body" 
+                                [(ngModel)]="department" 
+                                [options]="departmentFiltes"
+                                selectionMode="single" placeholder="Select Item"></p-treeSelect>
+                            </div>
+                        </div>
                    
                     </div>
                     <div class="input-group icon col-12 select-default text-right">

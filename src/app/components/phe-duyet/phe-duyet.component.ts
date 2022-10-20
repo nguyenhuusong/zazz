@@ -300,7 +300,6 @@ export class PheDuyetComponent implements OnInit, AfterViewChecked {
       { label: 'Danh sách phê duyệt' },
     ];
 
-    this.load();
   }
 
 

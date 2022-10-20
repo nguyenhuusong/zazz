@@ -102,7 +102,6 @@ export class CsThueThuNhapComponent implements OnInit, AfterViewChecked {
       { label: 'Chính sách' },
       { label: 'Danh sách thuế thu nhập' },
     ];
-    this.load();
     this.getCompanies();
   }
 

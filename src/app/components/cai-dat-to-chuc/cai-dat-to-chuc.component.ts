@@ -449,7 +449,7 @@ export class CaiDatToChucComponent implements OnInit {
           if(results && results.length>0){
             this.query.organizeIds = results;
             this.getBoPhan();
-            this.load();
+            this.getAgencyOrganizeMap();
           }
     });
     
@@ -489,7 +489,6 @@ export class CaiDatToChucComponent implements OnInit {
         }
       },
     ]
-    this.getAgencyOrganizeMap();
   }
 
   caiDatThamSo() {

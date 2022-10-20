@@ -85,7 +85,6 @@ export class ThietBiThangMayComponent implements OnInit, AfterViewChecked {
       { label: 'Thiết bị thang máy' },
     ];
     this.getProjectCd();
-    this.load();
   }
 
   getBuidingsSearch() {

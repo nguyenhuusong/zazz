@@ -268,7 +268,6 @@ export class LyDoNghiViecComponent implements OnInit {
       { label: 'Cài đặt' },
       { label: 'Lý do nghỉ' },
     ];
-    this.load();
     this.getFeedbackType();
   }
   typeFeedBacks = [];

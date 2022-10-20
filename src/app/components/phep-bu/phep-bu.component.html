@@ -162,7 +162,10 @@
                 </p-dropdown>(onNodeSelect)="onNodeSelectAdd($event)
                 <label for="">Phòng ban</label> -->
           <label for="">Phòng ban</label>
-                <p-treeSelect placeholder="Chọn Phòng ban" [filterInputAutoFocus]="true" [filter]="true" [metaKeySelection]="false" appendTo="body" [(ngModel)]="querAddNewPhepBuDep.orgId" [options]="departments"
+                <p-treeSelect placeholder="Chọn Phòng ban" 
+                [filterInputAutoFocus]="true" [filter]="true" 
+                [metaKeySelection]="false" appendTo="body" 
+                [(ngModel)]="querAddNewPhepBuDep.orgId" [options]="departments"
           selectionMode="single" placeholder="Select Item"></p-treeSelect>
               </div>
           </div>

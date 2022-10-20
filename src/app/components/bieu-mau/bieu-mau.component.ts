@@ -103,7 +103,6 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
     this.getAgencyOrganizeMap();
     this.getOrgan();
     this.getFormTypes();
-    this.load();
   }
 
 
