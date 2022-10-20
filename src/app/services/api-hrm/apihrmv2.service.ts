@@ -80,6 +80,21 @@ export class ApiHrmV2Service {
     )
   }
 
+  getEmployeePageCustIdV2(queryParams: any, field_name): Observable<any> {
+    return this.httpClient.get(`${apiHrmServer}/api/v2/employee/GetEmployeePage?` + queryParams, this.options).pipe(
+      map((repon: any) => {
+        return { key: field_name , result: repon.data.dataList.data.map(item => {
+          return {
+            label: item.full_name + '-' + item.phone1,
+            value: item.CustId
+          }
+        })};
+      }), catchError(error => {
+        return throwError('Capital not found!');
+      })
+    )
+  }
+
   getWorkShiftsV2(queryParams: any, field_name): Observable<any> {
     return this.httpClient.get(`${apiHrmServer}/api/v2/category/GetWorShifts?` + queryParams, this.options).pipe(
       map((repon: any) => {

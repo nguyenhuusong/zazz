@@ -35,6 +35,7 @@ export class AuthService {
     }
 
     return this.manager.getUser().then(user => {
+      console.log('this.user', this.user)
       this.user = user;
       // this.getEmpDetail()
       return user != null && !user.expired;

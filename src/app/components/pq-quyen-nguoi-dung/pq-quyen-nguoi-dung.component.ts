@@ -286,7 +286,7 @@ export class PqQuyenNguoiDungComponent implements OnInit {
   }
   
   loadjs = 0;
-  heightGrid = 0
+  heightGrid = 450
   ngAfterViewChecked(): void {
     const a: any = document.querySelector(".header");
     const b: any = document.querySelector(".sidebarBody");
@@ -302,11 +302,6 @@ export class PqQuyenNguoiDungComponent implements OnInit {
       }else {
         this.loadjs = 0;
       }
-    }
-    if(this.heightGrid === 0){
-      this.spinner.show();
-    }else{
-      this.spinner.hide();
     }
   }
 

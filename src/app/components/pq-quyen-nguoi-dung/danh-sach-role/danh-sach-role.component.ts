@@ -33,21 +33,25 @@ export class DanhSachRoleComponent implements OnInit {
   heightGrid = 500;
   gridKey = 'view_sysconfig_roles'
   displaySetting = false;
-  dataMenuActionRole: any = []
+  dataMenuActionRole: any = [];
+  organizeIds = '';
   cauhinh() {
     this.displaySetting = true;
   }
   ngOnInit(): void {
     // this.getClientRolePageByWebId()
     // this.getWebMenuTree()
-    this.getRoles();
+    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
+      if(results && results.length>0){
+        this.organizeIds = results;
+        this.getRoles();
+      }
+    });
   }
   listMenuTree = []
   getRoles() {
     this.columnDefs = []
-    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-      if(results && results.length>0){
-        const query = {  organizeIds: results }
+        const query = {  organizeIds: this.organizeIds }
         this.apiService.getMenuConfigInfo(queryString.stringify(query)).subscribe((results: any) => {
           if (results.status === 'success') {
             this.listsData = cloneDeep(results?.data?.roles);
@@ -59,8 +63,6 @@ export class DanhSachRoleComponent implements OnInit {
             }
           }
         })
-      }
-    });
 
   }
 
@@ -156,7 +158,6 @@ export class DanhSachRoleComponent implements OnInit {
         this.listViews = cloneDeep(results.data.group_fields);
         this.detailDetailInfo = results.data;
         this.sourceActions = results.data.actions;
-        this.displayInfo = true;
       }
     })
   }
@@ -185,7 +186,9 @@ export class DanhSachRoleComponent implements OnInit {
     const params = {
       ...this.detailDetailInfo, group_fields: data
     };
-    this.apiService.SetRoleInfo(params).subscribe((results: any) => {
+    
+    const queryParams = queryString.stringify({ organizeIds: this.organizeIds });
+    this.apiService.SetRoleInfo(params, queryParams).subscribe((results: any) => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
         this.spinner.hide();

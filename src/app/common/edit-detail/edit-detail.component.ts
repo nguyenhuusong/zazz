@@ -263,7 +263,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
             element1.options = cloneDeep(this.menus.map(t => ({label: t.title, value: t.menuId})));
           }else if(element1.field_name === 'custId'){
             const root_orgId = this.getValueByKey('organizeId');
-            promissall.push(this.apiHrmV2Service.getEmployeePageV2(queryString.stringify({ orgId: root_orgId, pageSize: 100000 }), element1.field_name));
+            promissall.push(this.apiHrmV2Service.getEmployeePageCustIdV2(queryString.stringify({ orgId: root_orgId, pageSize: 100000 }), element1.field_name));
           }else {
             if (element1.columnObject) {
               promissall.push(this.apiHrmV2Service.getObjectListV2(queryString.stringify({ objKey: element1.columnObject }), element1.field_name));

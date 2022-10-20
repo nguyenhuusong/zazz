@@ -13,6 +13,7 @@ import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
+import { cloneDeep } from 'lodash';
 
 @Component({
   selector: 'app-cs-an-ca',
@@ -56,6 +57,9 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
   pagingComponent = {
     total: 0
   }
+  detailInfo = null
+  listViews = [];
+  isDetail = false;
 
   titleForm = {
     label: 'Thêm mới tài khoản',
@@ -256,7 +260,7 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
   heightGrid = 0
   ngAfterViewChecked(): void {
     const a: any = document.querySelector(".header");
-    const b: any = document.querySelector(".sidebarBody");
+    let b: any = document.querySelector(".sidebarBody");
     const c: any = document.querySelector(".bread-filter");
     const d: any = document.querySelector(".bread-crumb");
     const e: any = document.querySelector(".paginator");
@@ -267,6 +271,8 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       }else {
+        const totalHeight = a.clientHeight + c.clientHeight + d.clientHeight + e.clientHeight + 25;
+        this.heightGrid = window.innerHeight - totalHeight
         this.loadjs = 0;
       }
     }
@@ -276,6 +282,7 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
     this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
         if(results && results.length>0){
           this.query.organizeIds = results;
+          this.rowDataSelected = []
           this.load();
           this.getOrganizeTree();
         }
@@ -302,6 +309,7 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
       }
     })
   }
+
   departmentFiltes = []
   getOrganizeTree(): void {
     const queryParams = queryString.stringify({ parentId: this.query.organizeIds });
@@ -362,6 +370,40 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
 
   rowSelected(event) {
     this.rowDataSelected = event;
+  }
+
+  handAddNew () {
+    this.detailInfo = []
+    this.listViews = []
+    const params = { cusId: null }
+    if(this.rowDataSelected.length > 0) {
+      this.isDetail = true;
+      this.apiService.getEatingForCreateInfo(queryString.stringify(params)).subscribe( results => {
+        if (results.status === 'success') {
+          const listViews = cloneDeep(results.data.group_fields);
+          this.listViews = [...listViews];
+          this.detailInfo = results.data;
+        }
+      }) 
+    }
+  }
+
+  setChitiet(data) {
+    const params = {
+      ...this.detailInfo, group_fields: data
+    };
+    this.apiService.setEatingInfo(params).subscribe((results: any) => {
+      if (results.status === 'success') {
+        this.isDetail = false;
+        this.load();
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Cập nhật thông tin thành công' });
+      } else {
+        this.messageService.add({
+          severity: 'error', summary: 'Thông báo', detail: results.message
+        });
+      }
+    }, error => {
+    });
   }
 
 }

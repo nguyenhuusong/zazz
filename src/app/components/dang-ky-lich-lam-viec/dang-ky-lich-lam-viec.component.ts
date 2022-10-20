@@ -262,14 +262,15 @@ export class DangKyLichLamViecComponent implements OnInit {
       ...this.detailDependentInfo, group_fields: data
     }
     this.apiService.setEmpWorking(param).subscribe(results => {
+      console.log('fdsjofijdf', results)
       if (results.status === 'success') {
-        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.messages ? results.messages : 'Thêm mới thành công' });
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thêm mới thành công' });
         this.displayFormEditDetail = false;
         this.spinner.hide();
         this.load();
       } else {
         this.spinner.hide();
-        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.messages });
+        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
       }
     })
   }
@@ -361,7 +362,7 @@ export class DangKyLichLamViecComponent implements OnInit {
   }
 
   getWorkTime() {
-    const queryParams = queryString.stringify({ organizeId: this.query.organizeId });
+    const queryParams = queryString.stringify({ organizeId: this.query.organizeIds });
     this.apiService.getWorktimeList(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.listWorkCds = results.data.map(d => {
@@ -480,7 +481,9 @@ export class DangKyLichLamViecComponent implements OnInit {
         if(results && results.length>0){
           this.query.organizeIds = results;
           this.query.organizeId = results;
+          this.listDataSelect = [];
           this.load();
+          this.getWorkTime();
           this.getOrganizeTree();
         }
     });

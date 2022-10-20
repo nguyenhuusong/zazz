@@ -120,7 +120,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
       filter: '',
       offSet: 0,
       pageSize: 15,
-      organizeId: this.query.organizeIds,
+      organizeId: '',
       positionCd: '',
       jobId: null,
       vacancyId: 0,

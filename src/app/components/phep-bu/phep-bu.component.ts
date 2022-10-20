@@ -10,6 +10,7 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import * as moment from 'moment';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 const MAX_SIZE = 100000000;
 
 @Component({
@@ -30,6 +31,7 @@ export class PhepBuComponent implements OnInit, AfterViewChecked {
     private messageService: MessageService,
     private spinner: NgxSpinnerService,
     private changeDetector: ChangeDetectorRef,
+    private organizeInfoService: OrganizeInfoService,
     private router: Router) {
 
     this.defaultColDef = {
@@ -59,7 +61,8 @@ export class PhepBuComponent implements OnInit, AfterViewChecked {
     pageSize: 15,
     year: moment().year(),
     month: moment().month() + 1,
-    organizeId: ''
+    organizeId: '',
+    organizeIds: '',
   }
   totalRecord = 0;
   first = 0;
@@ -108,7 +111,8 @@ export class PhepBuComponent implements OnInit, AfterViewChecked {
       pageSize: 15,
       year: moment().year(),
       month: moment().month(),
-      organizeId: '',
+      organizeId: this.query.organizeIds,
+      organizeIds: this.query.organizeIds
     }
     this.load();
   }
@@ -225,12 +229,17 @@ export class PhepBuComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit() {
+    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
+      if(results && results.length>0){
+        this.query.organizeIds = results;
+        this.load();
+      }
+  });
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Chính sách' },
       { label: 'Phép bù' },
     ];
-    this.load();
     this.getOrgRoots();
     this.months = [
       { label: 'Tháng 1', value: 1 },

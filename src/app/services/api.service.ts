@@ -236,8 +236,8 @@ export class ApiService {
   getRoleInfo(query): Observable<any> {
     return this.http.get(`${apiHrmBase}/api/v2/userrole/GetRoleInfo?` + query, this.options);
   }
-  SetRoleInfo(data): Observable<any> {
-    return this.http.post(`${apiHrmBase}/api/v2/userrole/SetRoleInfo`, data, this.options);
+  SetRoleInfo(data, query): Observable<any> {
+    return this.http.post(`${apiHrmBase}/api/v2/userrole/SetRoleInfo?` + query, data, this.options);
   }
   deleteRole(queryParams): Observable<any> {
     return this.http.delete(`${apiHrmBase}/api/v2/userrole/DeleteRole?` + queryParams, this.options);
