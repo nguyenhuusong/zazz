@@ -425,7 +425,6 @@ export class NsHoSoNghiViecComponent implements OnInit {
   ngOnInit() {
     this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
         if(results && results.length > 0){
-          console.log('fjsdoifj 1 2 3')
           this.query.organizeIds = results;
           this.getOrganizeTree();
           this.getAgencyOrganizeMap();

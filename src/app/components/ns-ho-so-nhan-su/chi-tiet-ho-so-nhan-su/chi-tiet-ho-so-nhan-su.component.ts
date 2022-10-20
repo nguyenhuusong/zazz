@@ -1583,7 +1583,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       message: 'Bạn có chắc chắn muốn xóa thông tin này ?',
       accept: () => {
         const queryParams = queryString.stringify({ gd: gd });
-        this.apiService.delEmpWorking(queryParams).subscribe(results => {
+        this.apiService.hrmDelEmpWorking(queryParams).subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
             this.getEmployeeInfo();
