@@ -39,31 +39,32 @@ export class NavbarComponent implements OnInit {
         private changeDetector: ChangeDetectorRef,
         // private themeService: ThemeService
     ) {
-        this.items = [{
-            label: 'Logout',
-            icon: 'pi pi-refresh',
-            command: () => {
-                this.logout();
-            }
-            // items: [{
-            //     label: 'Logout',
-               
-            // },
-            // {
-            //     label: 'Delete',
-            //     icon: 'pi pi-times',
-            //     command: () => {
-            //         this.delete();
-            //     }
-            // }
-        },
+        this.items = [
         {
             label: 'Thay đổi mật khẩu',
             icon: 'pi pi-user-edit',
             command: () => {
                 this.changePassword();
             }
-        }
+        },
+        {
+          label: 'Logout',
+          icon: 'pi pi-refresh',
+          command: () => {
+              this.logout();
+          }
+          // items: [{
+          //     label: 'Logout',
+             
+          // },
+          // {
+          //     label: 'Delete',
+          //     icon: 'pi pi-times',
+          //     command: () => {
+          //         this.delete();
+          //     }
+          // }
+      },
     ];
     }
 

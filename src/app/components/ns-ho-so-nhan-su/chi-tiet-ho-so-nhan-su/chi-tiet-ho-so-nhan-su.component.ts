@@ -1956,7 +1956,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
           this.spinner.hide();
         } else {
           this.spinner.hide();
-          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
+          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
         }
       })
     } else {
@@ -1968,7 +1968,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
           this.spinner.hide();
         } else {
           this.spinner.hide();
-          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
+          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
         }
       })
     }
