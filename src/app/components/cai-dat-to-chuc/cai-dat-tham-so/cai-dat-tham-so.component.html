@@ -1,12 +1,9 @@
-
-<div class="main-grid product-detail">
-    <div class="breadcrumb">
-        <h3>{{titlePage}}</h3>
-        <p-breadcrumb [model]="items"></p-breadcrumb>
-    </div>
-   <div class="content">
-    <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'"  [dataView]="listViews"
-        (callback)="setOrganizeConfig($event)" (callbackcancel)="quaylai($event)"></app-edit-detail>
-   </div>
-   
+<div class="main-grid">
+    <section class="bread-crumb">
+        <div class="d-flex bet bottom">
+            <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
+        </div>
+        <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'"  [dataView]="listViews"
+            (callback)="setOrganizeConfig($event)" (callbackcancel)="quaylai($event)"></app-edit-detail>
+    </section>
 </div>

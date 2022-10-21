@@ -38,7 +38,7 @@ export class SidebarComponent implements OnInit {
 
             if(this.menuItems.length > 0) {
             if(this.listmenuChecks.map(d => d.path).indexOf(pathUrl1) < 0) {
-                this.router.navigate['/home'];
+                this.router.navigate['/404'];
             }
             const pathname  = window.location.pathname ;
             this.parseObjectProperties(this.menuItems, pathname);
@@ -70,7 +70,7 @@ export class SidebarComponent implements OnInit {
                        this.menuItems = results.data;
                        this.convetArry(this.menuItems);
                         if(this.listmenuChecks.map(d => d.path).indexOf(pathUrl1) < 0) {
-                            this.router.navigate(['/home']);
+                            this.router.navigate(['/404']);
                         }
                        localStorage.setItem('menuItems', JSON.stringify(results.data));
                        this.parseObjectProperties(this.menuItems, pathUrl1);

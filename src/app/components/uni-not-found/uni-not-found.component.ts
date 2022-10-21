@@ -9,7 +9,11 @@ export class UniNotFoundComponent implements OnInit {
 
   constructor() { }
 
+  items = [];
   ngOnInit(): void {
+    this.items = [
+      { label: '404'},
+    ];
   }
 
 }

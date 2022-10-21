@@ -121,6 +121,7 @@ export class CaiDatThamSoComponent implements OnInit, OnChanges {
     this.manhinh = 'View';
     this.router.navigate(['/cai-dat/cai-dat-to-chuc']);
   }
+  
 
 
 }

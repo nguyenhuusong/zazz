@@ -4,7 +4,6 @@ import { AuthGuardService } from './services/auth-guard.service';
 import { AuthCallbackComponent } from './auth-callback/auth-callback.component';
 import { DefaultLayoutComponent } from './containers';
 import { HomeComponent } from './pages/home/home.component';
-import { BaoCaoComponent } from './components/bao-cao/bao-cao.component';
 import { ChiTietGopYComponent } from './components/gop-y-kien/chi-tiet-gop-y/chi-tiet-gop-y.component';
 import { GopYKienComponent } from './components/gop-y-kien/gop-y-kien.component';
 import { UniNotFoundComponent } from './components/uni-not-found/uni-not-found.component';
@@ -18,11 +17,6 @@ const appRoutes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full',
   },
-  {
-    path: '404',
-    pathMatch: 'full',
-    component: UniNotFoundComponent
-  },
   { path: 'auth-callback', component: AuthCallbackComponent },
 
   {
@@ -32,6 +26,11 @@ const appRoutes: Routes = [
       {
         path: 'tuyen-dung',
         loadChildren: () => import('../app/pages/tuyen-dung/tuyen-dung.module').then(m => m.TuyenDungModule)
+      },
+      {
+        path: '404',
+        pathMatch: 'full',
+        component: UniNotFoundComponent
       },
       {
         path: 'nhan-su',
@@ -63,11 +62,7 @@ const appRoutes: Routes = [
       },
       {
         path: 'bao-cao',
-        component: BaoCaoComponent,
-        data: {
-          title: 'Báo cáo tổng hợp',
-          url: 'bao-cao',
-        },
+        loadChildren: () => import('../app/pages/bao-cao/bao-cao.module').then(m => m.BaoCaoModule)
       },
       
       

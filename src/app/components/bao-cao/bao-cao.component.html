@@ -1,15 +1,15 @@
 
-
+<div class="main-grid">
+  <section class="bread-crumb">
+      <div class="d-flex bet bottom">
+          <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
+      </div>
+  </section>
+</div>
 <div class="grid main-grid">
     <div class="col-12 right max-w-full">
-        <div class="breadcrumb">
-            <h3>Báo cáo tổng</h3>
-            <p-breadcrumb [model]="items"></p-breadcrumb>
-        </div>
-     
         <div class="grid-default" #container>
             <p-card styleClass="mb-3">
-
                 <div class="row d-flex justify-content-center">
                   <div class="col-md-6">
                     <div class="field-group select" [ngClass]="query.report_type ? 'valid' : 'invalid' ">

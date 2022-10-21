@@ -492,13 +492,13 @@ export class CaiDatToChucComponent implements OnInit {
   }
 
   caiDatThamSo() {
-    if (this.detailOrganizeMap.org_level === 1) {
+    if (this.query.organizeIds) {
       const params = {
         organizeId: this.detailOrganizeMap.orgId
       }
       this.router.navigate(['/cai-dat/cai-dat-tham-so'], { queryParams: params });
     } else {
-      this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Chọn tổ chức level 1' });
+      this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Không tìm thấy tổ chức' });
     }
   }
 

@@ -53,7 +53,6 @@ import { CardModule } from 'primeng/card';
 import {TimelineModule} from 'primeng/timeline';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { ApiHrmService } from './services/api-hrm/apihrm.service';
-import { BaoCaoComponent } from './components/bao-cao/bao-cao.component';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { ListGridAngularModule } from './common/list-grid-angular/list-grid-angular.module';
 import { OrganizationChartModule } from 'primeng/organizationchart';
@@ -76,7 +75,6 @@ const APP_CONTAINERS = [DefaultLayoutComponent];
         CustomTooltipComponent,
         TooltipSuggestionComponent,
         DropdownRendererComponent,
-        BaoCaoComponent,
         UniNotFoundComponent,
     ],
     imports: [
