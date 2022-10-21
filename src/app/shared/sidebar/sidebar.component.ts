@@ -29,16 +29,32 @@ export class SidebarComponent implements OnInit {
         router.events.pipe(
             filter((e: Event): e is RouterEvent => e instanceof RouterEvent)
          ).subscribe((e: RouterEvent) => {
-             if(this.menuItems.length > 0) {
-                const pathname  = window.location.pathname ;
-                this.parseObjectProperties(this.menuItems, pathname);
-                this.menuItems = [...this.menuItems];
-             }
+            let pathUrl =  e.url.split("/");
+            let pathUrl1 = '/';
+            pathUrl1 = pathUrl1.concat(pathUrl["1"])
+            if(pathUrl[2]){
+                pathUrl1 = pathUrl1.concat("/").concat(pathUrl["2"])
+            }
+
+            if(this.menuItems.length > 0) {
+            if(this.listmenuChecks.map(d => d.path).indexOf(pathUrl1) < 0) {
+                this.router.navigate['/home'];
+            }
+            const pathname  = window.location.pathname ;
+            this.parseObjectProperties(this.menuItems, pathname);
+            this.menuItems = [...this.menuItems];
+            }
          });
     }
-
+    listmenuChecks = []
    async ngOnInit() {
         const pathname = window.location.pathname;
+        let pathUrl = pathname.split("/");
+        let pathUrl1 = '/';
+        pathUrl1 = pathUrl1.concat(pathUrl["1"])
+        if(pathUrl[2]){
+            pathUrl1 = pathUrl1.concat("/").concat(pathUrl["2"])
+        }
         const token = this.authService.getAccessTokenValue();
         if (!this.firebaseAuthService.authenticated) {
           const customToken = await this.authService.getCustomToken(token);
@@ -52,8 +68,12 @@ export class SidebarComponent implements OnInit {
               this.apiService.getUserMenus(queryParams).subscribe(results => {
                    if (results.status === 'success') {
                        this.menuItems = results.data;
-                       localStorage.setItem('menuItems',JSON.stringify(results.data));
-                       this.parseObjectProperties(this.menuItems, pathname);
+                       this.convetArry(this.menuItems);
+                        if(this.listmenuChecks.map(d => d.path).indexOf(pathUrl1) < 0) {
+                            this.router.navigate(['/home']);
+                        }
+                       localStorage.setItem('menuItems', JSON.stringify(results.data));
+                       this.parseObjectProperties(this.menuItems, pathUrl1);
                        this.menuItems = [...this.menuItems];
                    }
                });
@@ -62,6 +82,15 @@ export class SidebarComponent implements OnInit {
         // this.menuItems = ROUTES.filter(menuItem => menuItem);
         //         this.parseObjectProperties(this.menuItems, pathname);
         //         this.menuItems = [...this.menuItems];
+    }
+
+    convetArry(datas) {
+        for(let item of datas) {
+            this.listmenuChecks.push(item);
+            if(item.submenus.length > 0) {
+                this.convetArry(item.submenus);
+            }
+        }
     }
 
     parseObjectProperties(obj: any[], pathname) {

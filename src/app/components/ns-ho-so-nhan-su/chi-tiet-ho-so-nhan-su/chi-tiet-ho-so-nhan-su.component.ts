@@ -1223,7 +1223,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       this.back.emit();
     }
   }
-
+  noDisableInput = false;
   cancelUpdate(button): void {
     this.modelDuyet.empId = this.detailInfo.empId;
     this.modelDuyet.full_name = this.detailInfo.fullName;
@@ -1236,18 +1236,21 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       this.titleForm.type = button;
       this.manhinh = 'Edit';
       this.displayDialog = true;
+      this.noDisableInput = false;
 
     } else if (button === 'MoLaiHoSo') {
       this.titleForm.title = 'Xác nhận mở lại hồ sơ';
       this.titleForm.type = button;
       this.manhinh = 'Edit';
       this.displayDialog = true;
+      this.noDisableInput = false;
 
     } else if (button === 'DuyetHoSo') {
       this.titleForm.title = 'Xác nhận duyệt hồ sơ';
       this.titleForm.type = button;
       this.manhinh = 'Edit';
       this.displayDialog = true;
+      this.noDisableInput = false;
 
     } else if (button === 'ChuyenCongTac') {
       this.titleForm.title = 'Chuyển công tác';
@@ -1257,17 +1260,20 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       this.titleForm.type = button;
       this.manhinh = 'Edit';
       this.displayDialog = true;
+      this.noDisableInput = true;
     } else if (button === 'NghiViec') {
       this.titleForm.title = 'Xác nhận nhân viên nghỉ việc';
       this.titleForm.type = button;
       this.manhinh = 'Edit';
       this.displayDialog = true;
+      this.noDisableInput = false;
       
     } else if (button === 'TuyenDungLai') {
       this.titleForm.title = 'Xác nhận nhân viên tuyển dụng lại';
       this.titleForm.type = button;
       this.manhinh = 'Edit';
       this.displayDialog = true;
+      this.noDisableInput = false;
     }else if (button === 'TaoHopDong') {
       this.taohopdong();
     } else {

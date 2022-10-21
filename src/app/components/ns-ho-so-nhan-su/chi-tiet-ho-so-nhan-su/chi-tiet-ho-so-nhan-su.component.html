@@ -418,7 +418,9 @@
                     <app-edit-detail
                         *ngIf="listViewsForm.length> 0 && displayDialog &&  (titleForm.type === 'DuyetHoSo' || titleForm.type === 'TuyenDungLai' || titleForm.type === 'ChuyenCongTac')"
                         [detail]="detailInfoForm" [manhinh]="manhinh" [thongtinnhanvienNew]="true" [dataView]="listViewsForm"
-                        (callback)="xacNhan($event)" (callbackcancel)="cancelViewsForm($event)"></app-edit-detail>
+                        (callback)="xacNhan($event)" (callbackcancel)="cancelViewsForm($event)"
+                        [noDisableInput]="noDisableInput"
+                        ></app-edit-detail>
                     <!-- <p-selectButton [options]="optionsButtonsSave"
                         *ngIf="titleForm.type === 'HuyHoSo' || titleForm.type === 'MoLaiHoSo' || titleForm.type === 'NghiViec'"
                         optionLabel="label" optionValue="value" (onChange)="onChangeButtonSave($event)"></p-selectButton> -->

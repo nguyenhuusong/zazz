@@ -46,6 +46,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
   @Input() isViewButtonTop = true;
   @Input() optionsEdit = null;
   @Input() menus = [];
+  @Input() noDisableInput: boolean = false;
+
   
   buttonSave = 'Update';
   @Input() formTypeId: string = '';
@@ -185,6 +187,10 @@ export class EditDetailComponent implements OnInit, OnChanges {
                 if(results && results.length>0){
                   element1.columnValue = results;
                   element1.isDisable = true;
+                }
+                if(this.noDisableInput) {
+                  element1.columnValue = element1.columnValue;
+                  element1.isDisable = false;
                 }
               });
             }

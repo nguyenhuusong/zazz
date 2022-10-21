@@ -1121,6 +1121,7 @@ export class AppTypeTimeonlyComponent implements OnInit {
                   <p-multiSelect 
                   [options]="element.options" 
                   [appendTo]="'body'"
+                  [disabled]="element.isDisable"
                   [(ngModel)]="element.columnValue" (onChange)="onChangeValue($event.value, element.field_name)"
                   name={{element.field_name}} defaultLabel="Select a option" optionLabel="name" display="chip">
                 </p-multiSelect>
