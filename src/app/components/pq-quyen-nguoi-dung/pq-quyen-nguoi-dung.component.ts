@@ -727,6 +727,7 @@ export class PqQuyenNguoiDungComponent implements OnInit {
   }
 
   onChangeOrgan(event) {
+    this.addUserQuery.roles = [];
     this.getRoles();
   }
 
