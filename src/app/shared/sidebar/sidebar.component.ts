@@ -77,6 +77,8 @@ export class SidebarComponent implements OnInit {
                        this.menuItems = [...this.menuItems];
                    }
                });
+            }else{
+                this.router.navigate(['/404']);
             }
         });
         // this.menuItems = ROUTES.filter(menuItem => menuItem);

@@ -10,6 +10,7 @@ import { AgGridFn } from 'src/app/common/function-common/common';
 import * as moment from 'moment';
 import * as FileSaver from 'file-saver';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 @Component({
   selector: 'app-xem-cong',
   templateUrl: './xem-cong.component.html',
@@ -31,6 +32,7 @@ export class XemCongComponent implements OnInit, OnDestroy {
     private spinner: NgxSpinnerService,
     private router: Router,
     private changeDetector: ChangeDetectorRef,
+    private organizeInfoService: OrganizeInfoService,
   ) { }
   listViews = []
   paramsObject = null
@@ -48,6 +50,7 @@ export class XemCongComponent implements OnInit, OnDestroy {
     fromdate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).add(-1,'months').format()),
     todate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).format()),
     offSet: 0,
+    organizeIds: '',
   }
   departmentFiltes = [];
   countRecord: any = {
@@ -66,6 +69,13 @@ export class XemCongComponent implements OnInit, OnDestroy {
   items = [];
   ngOnInit(): void {
     this.titlePage = this.activatedRoute.data['_value'].title;
+    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
+        if(results && results.length>0){
+          this.query.organizeIds = results;
+          this.getOrganizeTree()
+          this.getXemCongInfo();
+        }
+    });
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Chính sách' },
@@ -74,8 +84,8 @@ export class XemCongComponent implements OnInit, OnDestroy {
     ];
     this.url = this.activatedRoute.data['_value'].url;
     this.manhinh = 'Edit';
-    this.getOrgRoots();
-      this.handleParams()
+    // this.getOrgRoots();
+      // this.handleParams()
   }
 
   handleParams() {
@@ -160,7 +170,7 @@ export class XemCongComponent implements OnInit, OnDestroy {
     // this.getXemCongInfo();
   }
   getOrganizeTree(): void {
-    const queryParams = queryString.stringify({ parentId: this.query.organizeId});
+    const queryParams = queryString.stringify({ parentId: this.query.organizeIds});
     this.apiService.getOrganizeTree(queryParams)
       .subscribe((results: any) => {
         if (results && results.status === 'success') {
@@ -180,6 +190,7 @@ export class XemCongComponent implements OnInit, OnDestroy {
       fromdate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).add(-1,'months').format()),
       todate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).format()),
       offSet: 0,
+      organizeIds: this.query.organizeIds,
     }
     this.getXemCongInfo();
   }

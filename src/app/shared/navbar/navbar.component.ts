@@ -133,7 +133,7 @@ export class NavbarComponent implements OnInit {
       this.apiHrm.getUserOrganizeRole().subscribe(
         (results: any) => {
           if(results.status === "success"){
-            if(results.data && results.data.result){
+            if(results.data && results.data.result && results.data.result.length > 0){
               this.detailOrganizes = results.data.result
                 .map(d => {
                   return {
