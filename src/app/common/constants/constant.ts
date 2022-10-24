@@ -468,6 +468,7 @@ export const ACTIONS = {
     HOAN_THANH: 'hoan_thanh',
     TAI_LEN: 'tai_len',
     COMMENT: 'comment',
+    THAM_SO: 'tham_so',
     TUYEN_DUNG_LAI: 'tuyen_dung_lai',
     DOI_LICH_LAM_VIEC: 'doi_lich_lam_viec',
     THEM_KHAM_THAI: 'them_kham_thai',
