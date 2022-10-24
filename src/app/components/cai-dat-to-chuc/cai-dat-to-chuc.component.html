@@ -102,13 +102,14 @@
                 [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetOrganizePage.url, action: ACTIONS.VIEW}" (click)="Edit()" styleClass="p-button-sm height-56" icon="pi pi-pencil"></p-button> -->
                 <!-- <p-button label="Xóa"
                 [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetOrganizePage.url, action: ACTIONS.DELETE}" (click)="Delete()" styleClass="p-button-sm p-button-danger height-56" icon="pi pi-trash"></p-button> -->
-                <p-button (click)="caiDatThamSo()" styleClass="p-button-sm height-56">
+                <p-button (click)="caiDatThamSo()" [ngClass]="{ 'active' : organizeIdsParam  }" styleClass="height-56 btn-active-on-off">
                   <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M0.333008 0.333252H13.6663V13.6666H0.333008V0.333252Z" fill="#F6FBFF"/>
                     </svg>
                   &nbsp;
                   Tham số
                 </p-button>
+
                 <p-button styleClass="p-button-sm  ml-1 height-56" (click)="cauhinh()">
                   <svg width="20" height="17" viewBox="0 0 20 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path fill-rule="evenodd" clip-rule="evenodd" d="M19.5 17V0H0.50855L0.5 17H19.5ZM6.675 15.3187H2.21V6.81868H6.675V15.3187ZM8.575 15.3187V6.81868H17.79V15.3187H8.575ZM2.21 1.68132V5.13736H17.79V1.68132H2.21Z" fill="#F3F8FF"/>
@@ -122,7 +123,10 @@
   </section>
   <section class="content pb-0">
       <div class="grid-default" #container>
-          <app-list-grid-angular *ngIf="columnDefs.length > 0" [listsData]="listsData" [height]="heightGrid" [columnDefs]="columnDefs"></app-list-grid-angular>
+          <app-list-grid-angular *ngIf="columnDefs.length > 0" 
+            (callback)="rowSelected($event)"
+            [rowSelection]="'single'"
+            [listsData]="listsData" [height]="heightGrid" [columnDefs]="columnDefs"></app-list-grid-angular>
           <div class="paginator">
             <span>Từ {{ countRecord.currentRecordStart }} đến
                 {{ countRecord.currentRecordEnd }}

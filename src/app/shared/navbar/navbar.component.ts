@@ -28,6 +28,8 @@ export class NavbarComponent implements OnInit {
     confimPassword = false;
     submitPass = false;
     organizeRole = null;
+    listmenuChecks = []
+    menuItems: any[] = [];
     constructor(
         private route: ActivatedRoute,
         private router: Router,
@@ -161,6 +163,44 @@ export class NavbarComponent implements OnInit {
     ngAfterViewChecked(): void {
    
     }
+
+    goToHome() {
+      const pathname = window.location.pathname;
+        let pathUrl = pathname.split("/");
+        let pathUrl1 = '/';
+        pathUrl1 = pathUrl1.concat(pathUrl["1"])
+        if(pathUrl[2]){
+            pathUrl1 = pathUrl1.concat("/").concat(pathUrl["2"])
+        }
+        this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
+            if(results && results.length>0){
+             const queryParams = queryString.stringify({ organizeIds: results });
+              this.apiService.getUserMenus(queryParams).subscribe(results => {
+                   if (results.status === 'success') {
+                       this.menuItems = results.data;
+                       this.convetArry(this.menuItems);
+                        if(this.listmenuChecks.map(d => d.path).indexOf(pathUrl1) < 0) {
+                            this.router.navigate(['/404']);
+                        }else{
+                          this.router.navigateByUrl('/home');
+                        }
+                       this.menuItems = [...this.menuItems];
+                   }
+               });
+            }else{
+                this.router.navigate(['/404']);
+            }
+        });
+    }
+
+    convetArry(datas) {
+      for(let item of datas) {
+          this.listmenuChecks.push(item);
+          if(item.submenus.length > 0) {
+              this.convetArry(item.submenus);
+          }
+      }
+  }
 
     changeOragi(e){
       this.organizeRole = e.value;

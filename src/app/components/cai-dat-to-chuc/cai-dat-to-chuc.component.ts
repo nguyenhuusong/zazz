@@ -100,6 +100,8 @@ export class CaiDatToChucComponent implements OnInit {
     organizeIds: '',
   }
 
+  organizeIdsParam = '';
+
   titleForm = {
     label: 'Thêm mới phòng ban',
     value: 'Add'
@@ -324,6 +326,18 @@ export class CaiDatToChucComponent implements OnInit {
 
   initGrid() {
     this.columnDefs = [
+      {
+        headerName: '',
+        filter: '',
+        maxWidth: 60,
+        pinned: 'left',
+        cellClass: ['border-right', 'no-auto'],
+        checkboxSelection: true,
+        headerCheckboxSelection: true,
+        headerCheckboxSelectionFilteredOnly: true,
+        field: 'checkbox2',
+        suppressSizeToFit: true,
+      },
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       {
         headerName: 'Thao tác',
@@ -494,7 +508,7 @@ export class CaiDatToChucComponent implements OnInit {
   caiDatThamSo() {
     if (this.query.organizeIds) {
       const params = {
-        organizeId: this.detailOrganizeMap.orgId
+        organizeId: this.organizeIdsParam
       }
       this.router.navigate(['/cai-dat/cai-dat-tham-so'], { queryParams: params });
     } else {
@@ -539,6 +553,14 @@ export class CaiDatToChucComponent implements OnInit {
           this.organizes = [{label: 'UNION-SUNSHINE', value: null}, ...this.organizes];
       }
     })
+  }
+
+  rowSelected(event) {
+    if(event.length>0){
+      this.organizeIdsParam = event[0].orgId;
+    }else{
+      this.organizeIdsParam = ''
+    }
   }
 
   getOrganizeList(organizeId) {

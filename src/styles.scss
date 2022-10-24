@@ -5151,6 +5151,7 @@ app-chon-lich-hop{
             transform: rotate(90deg);
             padding-bottom: 0px;
             padding-right: 0px;
+            min-width: 0px;
         }
     }
 }
@@ -5336,6 +5337,7 @@ p-button{
                         color: #5D6985;
                         font-weight: 400;
                         font-size: 16px;
+                        vertical-align: top;
                     }
                 }
             }
@@ -5353,7 +5355,9 @@ p-button{
         }
         tr{
            .fc-timegrid-slot{
-            height: 2em;
+            min-height: 56px;
+            height: 56px;
+        
            } 
         }
     }

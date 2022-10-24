@@ -46,14 +46,13 @@ export class ChonLichHopComponent implements OnInit, OnChanges {
         // }
         // this.showChooseDate = true;
       },
-      locale: 'vi',
+      // locale: 'vi',
       titleFormat: function () {
         return 'Lịch làm việc';
       },
       customButtons: {
         myCustomButton: {
           text: moment().format('MMM DD, YYYY')
-          // text: ''+currentDate,
         }
       },
       headerToolbar: {
@@ -83,14 +82,19 @@ export class ChonLichHopComponent implements OnInit, OnChanges {
         },
       },
       displayEventTime: true,
+      // editable: false,
+      // selectable: true,
+      // selectMirror: true,
+      weekends: false,
       editable: false,
-      selectable: true,
+      selectable: false,
       selectMirror: false,
+      dayMaxEvents: false,
       allDaySlot: false,
       plugins: [ timeGridPlugin ],
       // dayGridMonth
       initialView: 'timeGridWeek',
-      eventMinHeight: 120,
+      // eventMinHeight: 120,
       slotEventOverlap: false,
       height: 650,
       allDayText: '',
@@ -109,9 +113,9 @@ export class ChonLichHopComponent implements OnInit, OnChanges {
           dayTitle
         ]};
       },
-      slotDuration: '00:30:00', // Bao nhiêu phút thì tách thành 1 khoảng thời gian
-      scrollTime: '10:00:00',
-      eventTimeFormat: { // like '14:30:00'
+      slotDuration: '00:60:00', // Bao nhiêu phút thì tách thành 1 khoảng thời gian  like '14:30:00'
+      scrollTime: '08:00:00',
+      eventTimeFormat: {
         // hour: '2-digit',
         // minute: '2-digit',
         // second: '2-digit',

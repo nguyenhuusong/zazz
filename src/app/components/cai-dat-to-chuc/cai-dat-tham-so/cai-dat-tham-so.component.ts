@@ -5,6 +5,7 @@ import { cloneDeep } from 'lodash';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiService } from 'src/app/services/api.service';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
+import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 @Component({
   selector: 'app-cai-dat-tham-so',
   templateUrl: './cai-dat-tham-so.component.html',
@@ -19,6 +20,7 @@ export class CaiDatThamSoComponent implements OnInit, OnChanges {
     private activatedRoute: ActivatedRoute,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
+    private organizeInfoService: OrganizeInfoService,
     private router: Router
   ) { }
   organizeId = null
@@ -57,6 +59,11 @@ export class CaiDatThamSoComponent implements OnInit, OnChanges {
     this.url = this.activatedRoute.data['_value'].url;
     this.manhinh = 'Edit'
     this.handleParams();
+    // this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
+    //   if(results && results.length>0){
+    //     this.organizeIds = results;
+    //   }
+    // });
   }
 
   handleParams() {
@@ -70,7 +77,7 @@ export class CaiDatThamSoComponent implements OnInit, OnChanges {
   detailInfo = null;
   getOrganizeConfig() {
     this.listViews = [];
-    const queryParams = queryString.stringify({organizeId: this.organizeId});
+    const queryParams = queryString.stringify({organizeIds: this.organizeId});
     this.apiService.getOrganizeConfig(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.detailInfo = results.data;
