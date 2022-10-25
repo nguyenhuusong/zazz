@@ -69,7 +69,7 @@ export class CsTienLuongComponent implements OnInit {
   cols: any[];
   colsDetail: any[];
   items = [];
-  columnDefs;
+  columnDefs: any = [];
   detailRowHeight;
   defaultColDef;
   frameworkComponents;

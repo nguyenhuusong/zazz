@@ -18,7 +18,9 @@ export class ChiTietTienLuongComponent implements OnInit, OnChanges, OnDestroy {
   private readonly unsubscribe$: Subject<void> = new Subject();
   manhinh = 'Edit';
   indexTab = 0;
-  optionsButtonsView = [{ label: 'Sửa', value: 'Edit', class: CheckHideAction(MENUACTIONROLEAPI.GetSalaryRecordPage.url, ACTIONS.EDIT) ? 'hidden' : ''}, { label: 'Quay lại', value: 'Back' }];
+  optionsButtonsView = [
+    { label: 'Lưu', value: 'Update', class: CheckHideAction(MENUACTIONROLEAPI.GetSalaryRecordPage.url, ACTIONS.EDIT) ? 'hidden' : ''}, 
+    { label: 'Quay lại', value: 'Back' }];
   constructor(
     private apiService: ApiHrmService,
     private activatedRoute: ActivatedRoute,
@@ -43,6 +45,9 @@ export class ChiTietTienLuongComponent implements OnInit, OnChanges, OnDestroy {
   titlePage : string = '';
   url: string = '';
   items = [];
+  detailInfo = null;
+  listsData = []
+  columnDefs = []
   @Input() dataRouter = null
   @Output() back = new EventEmitter<any>();
 
@@ -94,9 +99,6 @@ export class ChiTietTienLuongComponent implements OnInit, OnChanges, OnDestroy {
       }
     })
   }
-  detailInfo = null;
-  listsData = []
-  columnDefs
   getSalaryRecordInfo() {
     this.listViews = [];
     this.listsData = [];

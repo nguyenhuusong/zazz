@@ -18,6 +18,7 @@ declare var $: any;
 export class SidebarComponent implements OnInit {
     menuItems: any[] = [];
     private manager: UserManager = new UserManager(environment.authenSettings);
+    listmenuChecks = []
     constructor(
         private router: Router,
         private authService: AuthService,
@@ -25,7 +26,6 @@ export class SidebarComponent implements OnInit {
         private firebaseAuthService: FirebaseAuthService,
         private organizeInfoService: OrganizeInfoService,
     ) {
-        
         router.events.pipe(
             filter((e: Event): e is RouterEvent => e instanceof RouterEvent)
          ).subscribe((e: RouterEvent) => {
@@ -46,7 +46,6 @@ export class SidebarComponent implements OnInit {
             }
          });
     }
-    listmenuChecks = []
    async ngOnInit() {
         const pathname = window.location.pathname;
         let pathUrl = pathname.split("/");
@@ -81,6 +80,7 @@ export class SidebarComponent implements OnInit {
                 this.router.navigate(['/404']);
             }
         });
+        console.log('this.menuItems', this.menuItems)
         // this.menuItems = ROUTES.filter(menuItem => menuItem);
         //         this.parseObjectProperties(this.menuItems, pathname);
         //         this.menuItems = [...this.menuItems];
