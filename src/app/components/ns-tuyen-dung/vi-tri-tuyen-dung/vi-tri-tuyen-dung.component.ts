@@ -12,6 +12,7 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
+import * as moment from 'moment';
 const MAX_SIZE = 100000000;
 @Component({
   selector: 'app-vi-tri-tuyen-dung',
@@ -69,13 +70,18 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
   gridflexs: any;
   getRowHeight;
   query = {
+    jobId: 0,
+    active_st: 0,
     filter: '',
     offSet: 0,
     pageSize: 15,
-    jobId: 0,
-    hiring_man_id: 0,
     organizeIds: '',
+    orgId: '',
+    hiringManId: '',
+    fromDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).add(-1,'months').format()),
+    toDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).format()),
   }
+  hiringMans = []
   totalRecord = 0;
   DriverId = 0;
   first = 0;
@@ -85,7 +91,7 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
     currentRecordEnd: 0
   }
   loading = false;
-
+  selectedValue: any = '';
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
@@ -113,12 +119,16 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
 
   cancel() {
     this.query = {
+      jobId: 0,
+      active_st: 0,
       filter: '',
       offSet: 0,
       pageSize: 15,
-      jobId: 0,
-      hiring_man_id: 0,
-      organizeIds: this.query.organizeIds,
+      organizeIds: '',
+      orgId: '',
+      hiringManId: '',
+      fromDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).add(-1,'months').format()),
+      toDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).format()),
     }
     this.load();
   }
@@ -139,7 +149,14 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
   load() {
     this.columnDefs = []
     this.spinner.show();
-    const queryParams = queryString.stringify(this.query);
+
+    let params: any = {... this.query};
+    delete params.fromDate
+    delete params.toDate
+    params.FromDate = moment(new Date(this.query.fromDate)).format('YYYY-MM-DD')
+    params.ToDate = moment(new Date(this.query.toDate)).format('YYYY-MM-DD');
+
+    const queryParams = queryString.stringify(params);
     this.apiService.getVacancyPage(queryParams).subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
@@ -254,6 +271,8 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
         if(results && results.length>0){
           this.query.organizeIds = results;
           this.load();
+          this.selectedValue = results;
+          this.getBoPhan();
         }
     });
     this.items = [
@@ -262,6 +281,7 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
       { label: 'Danh sách vị trí tuyển dụng' },
     ];
     this.getJobTitles();
+    this.getHiringMans();
   }
 
   listJobTitles = []
@@ -278,6 +298,32 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
       }
     })
   }
- 
+  
+  getHiringMans() {
+    this.apiService.getUsersByAdmin(queryString.stringify({ admin_st: 0 })).subscribe(results => {
+      if (results.status === 'success') {
+        this.hiringMans = results.data.map(d => {
+          return {
+            label: `${d.fullName} [${d.loginName}]`,
+            value: d.userId
+          }
+        });
+        this.hiringMans = [{ label: 'Tất cả', value: '' }, ...this.hiringMans]
+      }
+    })
+    
+  }
+
+  departmentFiltes = [];
+  getBoPhan () {
+    const queryParams = queryString.stringify({ parentId: this.selectedValue });
+    this.apiService.getOrganizeTree(queryParams)
+      .subscribe((results: any) => {
+        if (results && results.status === 'success') {
+          this.departmentFiltes = results.data;
+        }
+      },
+        error => { });
+  }
 
 }

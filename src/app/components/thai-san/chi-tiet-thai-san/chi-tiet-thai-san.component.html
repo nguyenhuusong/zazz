@@ -15,7 +15,7 @@
                 <p-panel>
                     <ng-template pTemplate="header">
                         <div class="col-md-6">
-                            Khám thai
+                           <h4>Khám thai</h4>
                         </div>
                         <div class="col-md-6 text-right">
                             <p-button label="Thêm mới" [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetMaternityPage.url, action: ACTIONS.THEM_KHAM_THAI}" styleClass="p-button-sm" (click)="addKhamThai()"></p-button>
@@ -30,7 +30,7 @@
                 <p-panel header="">
                     <ng-template pTemplate="header">
                         <div class="col-md-6">
-                          Con nhỏ
+                          <h4>Con nhỏ</h4>
                         </div>
                         <div class="col-md-6 text-right">
                             <p-button label="Thêm mới" styleClass="p-button-sm"  [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetMaternityPage.url, action: ACTIONS.THEM_CON_NHO}" (click)="addConNho()"></p-button>
@@ -42,6 +42,12 @@
                 </p-panel>
             </div>
         </div>
+        <section>
+            <h4>Chi tiết lịch đăng ký thai sản</h4>
+            <app-list-grid-angular  *ngIf="columnDefDetail.length > 0"
+                [listsData]="dataDetail" [height]="heightGrid"
+                [columnDefs]="columnDefDetail"></app-list-grid-angular>
+        </section>
    </div>
 </div>
 

@@ -9,7 +9,11 @@
     <p-tabView [(activeIndex)]="indexTab" (onChange)="handleChange($event.index)">
         <p-tabPanel header="Thông tin chung">
               <div class="" *ngIf="detailInfo">
-                  <app-edit-detail *ngIf="listViews.length> 0 && manhinh === 'Edit'" [thongtinnhanvienNew]="true" [optionsButtonsEdit]="optionsButtonsView" [manhinh]="manhinh" [dataView]="listViews" (callback)="setSalaryRecordInfo($event)" (callbackcancel)="cancelUpdate($event)"></app-edit-detail>
+                  <app-edit-detail *ngIf="listViews.length> 0 && manhinh === 'Edit'" 
+                    [thongtinnhanvienNew]="true" [optionsButtonsEdit]="optionsButtonsView" 
+                    [manhinh]="manhinh" [dataView]="listViews" 
+                    (callback)="setSalaryRecordInfo($event)" 
+                    (callbackcancel)="cancelUpdate($event)"></app-edit-detail>
                   <p-card styleClass="fields-section border-section"  >
                   <ng-template pTemplate="header">
                         <div class="panel-heading" >

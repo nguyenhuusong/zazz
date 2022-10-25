@@ -51,6 +51,7 @@ import { HrmBreadCrumbModule } from 'src/app/common/hrm-breadcrumb/hrm-breadcrum
 import { ConfigGridTableFormModule } from 'src/app/common/config-grid-table-form/config-grid-table-form.module';
 import { CheckHideActionsDirectiveModule } from 'src/app/directive/check-action.module';
 import { NghiViecComponent } from 'src/app/components/ns-tuyen-dung/nghi-viec/nghi-viec.component';
+import { TreeSelectModule } from 'primeng/treeselect';
 @NgModule({
   imports: [
     MessagesModule,
@@ -96,6 +97,7 @@ import { NghiViecComponent } from 'src/app/components/ns-tuyen-dung/nghi-viec/ng
     EmpAttachFileModule,
     HrmBreadCrumbModule,
     CheckHideActionsDirectiveModule,
+    TreeSelectModule,
     AgGridModule.withComponents([
       ButtonRendererComponent,
       ButtonRendererComponent1

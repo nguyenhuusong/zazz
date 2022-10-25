@@ -416,6 +416,8 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
             this.getAgentLeaders(value, element1, adm_st);
           } else if (element1.field_name === 'CustId') {
             this.getUserByPush(value, element1)
+          } else if (element1.field_name === 'positionId') {
+            this.getPositionList(value, element1);
           }
         });
       });
@@ -589,6 +591,18 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
           });
       }
     }
+  }
+
+  getPositionList(orgId, element1) {
+    const queryParams = queryString.stringify({ orgId: orgId });
+    this.apiService.getPositionList(queryParams).subscribe(results => {
+      if (results.status === 'success') {
+        element1.options = cloneDeep(results.data).map(d => {
+          return { label: d.positionName, value: d.positionId }
+        });
+        element1.columnValue = element1.columnValue ? element1.columnValue : ''
+      }
+    })
   }
 
   getWorkTime(element1, root_orgId) {

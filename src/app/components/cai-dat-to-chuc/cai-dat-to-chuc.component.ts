@@ -61,6 +61,7 @@ export class CaiDatToChucComponent implements OnInit {
   menuItem = []
   organizeLevelList = []
   isHrDiagram: boolean = false
+  organizeIdSelected = ''
   constructor(
     private apiService: ApiHrmService,
     private spinner: NgxSpinnerService,
@@ -244,7 +245,8 @@ export class CaiDatToChucComponent implements OnInit {
     this.columnDefs = []
     this.spinner.show();
     let params: any = {... this.query};
-    params.orgId = this.selectedValue ? this.selectedValue.orgId : null
+    params.orgId = this.selectedValue ? this.selectedValue.orgId : null;
+    this.organizeIdsParam = '';
     const queryParams = queryString.stringify(params);
     this.apiService.getOrganizePage(queryParams).subscribe(
       (results: any) => {
@@ -462,6 +464,7 @@ export class CaiDatToChucComponent implements OnInit {
     this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
           if(results && results.length>0){
             this.query.organizeIds = results;
+            this.organizeIdSelected = results;
             this.getBoPhan();
             this.getAgencyOrganizeMap();
           }
@@ -656,7 +659,7 @@ export class CaiDatToChucComponent implements OnInit {
   }
   
   onNodeSelectAdd(event) {
-    this.getDepartments(event.node.parentId);
+    // this.getDepartments(event.node.parentId);
     this.getOrganizeLevelList(event.node.parentId);
   }
 
@@ -732,6 +735,8 @@ export class CaiDatToChucComponent implements OnInit {
       this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Nhập tên phòng ban' });
       return
     }
+    this.modeAgencyOrganize.organizeId = this.organizeIdSelected;
+    this.modeAgencyOrganize.parentId = this.organizeIdSelected;
     let params = { ...this.modeAgencyOrganize };
     // if(this.titleForm.value === 'Add') {
     //   params.parentId = this.modeAgencyOrganize.isChild ? this.detailOrganizeMap.orgId : this.detailOrganizeMap.parentId;

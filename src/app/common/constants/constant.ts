@@ -486,6 +486,7 @@ export const ACTIONS = {
     CHUYEN_TO_CHUC: 'chuyen_to_chuc',
     XEM_CHI_TIET_GIAY_TO_TUY_THAN: 'xem_chi_tiet_giay_to_tuy_than',
     TAI_LEN_HO_SO: 'tai_len_ho_so',
+    CHI_TIET_THAI_SAN_XOA: 'chi_tiet_thai_san_xoa',
     HUY_HO_SO: 'huy_ho_so',
     QUAN_LY_PHONG_HOP: 'quan_ly_phong_hop',
     THIET_LAP_TAI_LIEU: 'thiet_lap_tai_lieu',

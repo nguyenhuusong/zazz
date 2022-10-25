@@ -10,6 +10,7 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
+import { ExportFileService } from 'src/app/services/export-file.service';
 const MAX_SIZE = 100000000;
 
 @Component({
@@ -32,6 +33,7 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
     private spinner: NgxSpinnerService,
     private changeDetector: ChangeDetectorRef,
     private organizeInfoService: OrganizeInfoService,
+    private fileService: ExportFileService,
     private router: Router) {
 
     this.defaultColDef = {
@@ -202,6 +204,10 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
       { label: 'Phép năm' },
     ];
     this.getOrgRoots();
+    let currentDay = new Date().getDate();
+    if(currentDay >= 25 || currentDay <= 31){
+      this.query.month = this.query.month + 1;
+    }
   }
 
   goToPhepBu() {
@@ -225,6 +231,55 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
     })
   }
 
+  exportData() {
+    this.spinner.show();
+    this.query.pageSize = 1000000;
+    const query = { ...this.query };
+    const queryParams = queryString.stringify(query);
+    this.apiService.getAnnualLeavePage(queryParams).subscribe(
+      (results: any) => {
+        const dataExport = [];
+        let gridflexs = results.data.gridflexs;
+        let arrKey = gridflexs.map(elementName => elementName.columnField);
+
+        let dataList = results.data.dataList.data;
+        for (let elementValue of dataList) {
+          const data: any = {};
+          for (let elementName of gridflexs) {
+            if (arrKey.indexOf(elementName.columnField) > -1 && !elementName.isHide && elementName.columnField !== 'statusName') {
+              let valueColumn = elementValue[elementName.columnField];
+              if (elementName.columnField == 'status_name' || elementName.columnField == 'isContacted' || elementName.columnField == 'isProfileFull' || elementName.columnField == 'lockName') {
+                valueColumn = this.replaceHtmlToText(valueColumn);
+              }
+              data[elementName.columnCaption] = valueColumn || '';
+            }
+
+          }
+
+          dataExport.push(data);
+        }
+        this.fileService.exportAsExcelFile(dataExport, 'Danh sách phép năm ' + new Date());
+
+        this.spinner.hide();
+      },
+      error => {
+        this.spinner.hide();
+      });
+  }
+
+  replaceHtmlToText(string) {
+    return string.replace(/(<([^>]+)>)/gi, "");
+  }
+
+  changeMonth(event) {
+    console.log('event', event)
+    if(this.query.month > 12){
+      this.query.month = 12;
+    }else if(this.query.month < 1){
+      this.query.month = 1;
+    }
+
+  }
 
 }
 

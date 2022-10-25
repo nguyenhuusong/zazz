@@ -262,7 +262,6 @@ export class DangKyLichLamViecComponent implements OnInit {
       ...this.detailDependentInfo, group_fields: data
     }
     this.apiService.setEmpWorking(param).subscribe(results => {
-      console.log('fdsjofijdf', results)
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thêm mới thành công' });
         this.displayFormEditDetail = false;

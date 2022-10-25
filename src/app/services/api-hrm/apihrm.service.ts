@@ -704,6 +704,10 @@ export class ApiHrmService {
     return this.http.delete<any>(`${apiHrmServer}/api/v2/maternity/DelMaternityInfo?` + queryParams, this.options)
   }
 
+  delMaternityPolicyInfo(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/maternity/DelMaternityPolicyInfo?` + queryParams, this.options)
+  }
+
   delMaternityPregnancyInfo(queryParams): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v2/maternity/DelMaternityPregnancyInfo?` + queryParams, this.options)
   }

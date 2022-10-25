@@ -152,8 +152,8 @@
       <div class="field-group treeselect select label-8" > 
         <label for="">Tổ chức</label>
           <p-dropdown appendTo="body"  [baseZIndex]="100" 
-          [options]="organizes" [(ngModel)]="modeAgencyOrganize.organizeId" [disabled]="true" 
-          (onChange)="getOrganizeList($event.query)" name="organizeId" [filter]="true">
+          [options]="organizes" [(ngModel)]="organizeIdSelected" [disabled]="true" 
+          name="organizeId" [filter]="true">
           <ng-template let-item pTemplate="selectedItem">
             <span>{{item.label}}</span>
           </ng-template>
@@ -169,6 +169,7 @@
       <div class="field-group treeselect select label-8" >
         <label for="">Trực thuộc</label>
           <p-treeSelect [(ngModel)]="selectedNodeTree" 
+          [appendTo]="'body'"
           [filterInputAutoFocus]="true" [filter]="true" [metaKeySelection]="false" 
           [options]="listOrganizeTreeByOr" (onNodeSelect)="onNodeSelectAdd($event)"
           selectionMode="single" placeholder="Select Item"></p-treeSelect>
@@ -188,8 +189,10 @@
     <div class=" col-md-12 mt-1">
       <div class="field-group select" [ngClass]=" modeAgencyOrganize.org_level ? 'valid' : 'invalid' ">
         <label for="">Phân cấp</label>
-          <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" [required]
-          [options]="organizeLevelList"  [(ngModel)]="modeAgencyOrganize.org_level" name="org_level" [filter]="true">
+          <p-dropdown appendTo="body" 
+            [baseZIndex]="100" [autoDisplayFirst]="false" [required]
+            [options]="organizeLevelList"  
+            [(ngModel)]="modeAgencyOrganize.org_level" name="org_level" [filter]="true">
           <ng-template let-item pTemplate="selectedItem">
             <span>{{item.label}}</span>
           </ng-template>
@@ -201,7 +204,7 @@
         </p-dropdown>
       </div>
     </div>
-    <div class=" col-md-12 mt-1">
+    <!-- <div class=" col-md-12 mt-1">
       <div class="field-group select" [ngClass]=" modeAgencyOrganize.de_cd ? 'valid' : 'invalid' ">
         <label for="">Danh sách phòng ban</label>
         <p-dropdown appendTo="body" (onChange)="selectDepartment($event)" [baseZIndex]="100" [autoDisplayFirst]="false"
@@ -216,7 +219,7 @@
           </ng-template>
         </p-dropdown>
       </div>
-    </div>
+    </div> -->
     <!-- <div class=" col-md-12 mt-1">
       <div class="field-group text" [ngClass]=" modeAgencyOrganize.organizeId ? 'valid' : 'invalid' ">
           <input type="text" [(ngModel)]="modeAgencyOrganize.organizeId" name="organizeId" class="form-control">

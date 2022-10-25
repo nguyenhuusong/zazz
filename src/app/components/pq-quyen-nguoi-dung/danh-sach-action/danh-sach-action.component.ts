@@ -87,7 +87,7 @@ export class DanhSachActionComponent implements OnInit {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Thêm mới action thành công' });
         this.displayInfo = false;
-        this.getActions();
+        this.getClientActions();
       } else {
         this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Thêm action không thành công' });
         this.displayInfo = false;

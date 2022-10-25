@@ -98,6 +98,7 @@ export class CsTienLuongComponent implements OnInit {
     currentRecordStart: 0,
     currentRecordEnd: 0
   }
+  organizeIds = '';
 
   onGridReady(params) {
     this.gridApi = params.api;
@@ -242,7 +243,7 @@ export class CsTienLuongComponent implements OnInit {
     this.displayFrom = true;
     this.modelAdd = {
       date: new Date(),
-      organizeId: ''
+      organizeId: this.organizeIds
     }
 
 
@@ -280,7 +281,8 @@ export class CsTienLuongComponent implements OnInit {
     this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
         if(results && results.length>0){
           this.query.organizeIds = results;
-          this.query.organizeId = results
+          this.query.organizeId = results;
+          this.organizeIds = results;
           this.load();
         }
     });
@@ -317,7 +319,7 @@ export class CsTienLuongComponent implements OnInit {
       if (results.status === 'success') {
         this.listOrgRoots = results.data.map(d => {
           return {
-            label: d.org_name + '-' + d.org_cd,
+            label: d.org_name,
             value: `${d.orgId}`
           }
         });

@@ -130,6 +130,7 @@
             <label for="">Chọn tổ chức</label>
             <p-dropdown appendTo="body" [baseZIndex]="100" appendTo="body" [autoDisplayFirst]="false"
                 [options]="listOrgRoots" [(ngModel)]="modelAdd.organizeId" name="organizeId" 
+                [disabled]="true"
                 [filter]="true">
                 <ng-template let-item pTemplate="selectedItem">
                     <span>{{item.label}}</span>

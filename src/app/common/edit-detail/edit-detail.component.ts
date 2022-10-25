@@ -236,7 +236,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
           } else if (element1.field_name === 'base_id') {
             promissall.push(this.apiHrmV2Service.getSalaryBasesV2(element1.field_name));
           } else if (element1.field_name === 'hiring_man_id') {
-            promissall.push(this.apiHrmV2Service.getUsersByAdminV2(queryString.stringify({ admin_st: 1 }), element1.field_name));
+            promissall.push(this.apiHrmV2Service.getUsersByAdminV2(queryString.stringify({ admin_st: null }), element1.field_name));
           } else if (element1.field_name === 'hiring_user_id') {
             promissall.push(this.apiHrmV2Service.getUsersByAdminV2(queryString.stringify({ admin_st: 0 }), element1.field_name));
           } else if (element1.field_name === 'vacancyId') {

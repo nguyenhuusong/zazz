@@ -36,6 +36,10 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
   displayAddThaiSan = false;
   listViews_other = [];
   detailInfo_other = null;
+  columnDefDetail = []
+  colsDetail = []
+  dataDetail = []
+  heightGrid = 300
   constructor(
     private activatedRoute: ActivatedRoute,
     private apiService: ApiHrmService,
@@ -72,6 +76,8 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
   };
  
   getMaternityInfo() {
+    this.colsDetail = [];
+    this.dataDetail = [];
     const queryParams = queryString.stringify(this.modelEdit);
     this.apiService.getMaternityInfo(queryParams)
       .pipe(takeUntil(this.unsubscribe$))
@@ -83,7 +89,11 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
           this.listsDataMaternityPregnancy = [...this.detailInfo.maternityPregnancy || []]
           this.listsDataMaternityChild = [...this.detailInfo.maternityChild || []]
           this.aGridFnMaternityChild(this.detailInfo.gridflexdetails1 || [])
-          this.aGridFnMaternityPregnancy(this.detailInfo.gridflexdetails2 || [])
+          this.aGridFnMaternityPregnancy(this.detailInfo.gridflexdetails2 || []);
+          this.colsDetail = results.data.gridflexs;
+          this.dataDetail = results.data.data;
+
+          this.initGrid();
         }
       });
   }
@@ -92,6 +102,53 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
     this.columnDefMaternityChild = [
       ...AgGridFn(table),
     ];
+  }
+
+  initGrid() {
+    this.columnDefDetail = [
+      ...AgGridFn(this.colsDetail.filter((d: any) => !d.isHide)),
+      {
+        headerName: 'Thao tác',
+        filter: '',
+        width: 100,
+        pinned: 'right',
+        cellRenderer: 'buttonAgGridComponent',
+        cellClass: ['border-right', 'no-auto'],
+        cellRendererParams: (params: any) => this.showButtons(params),
+        checkboxSelection: false,
+        field: 'checkbox'
+      }]
+  }
+
+  showButtons(event: any) {
+    return {
+      buttons: [
+        {
+          onClick: this.deleteDetail.bind(this),
+          label: 'Xóa',
+          icon: 'fa fa-trash',
+          class: 'btn-primary mr5',
+          hide: CheckHideAction(MENUACTIONROLEAPI.GetMaternityPage.url, ACTIONS.CHI_TIET_THAI_SAN_XOA)
+        },
+      ]
+    }
+  }
+
+  deleteDetail(event) {
+    this.confirmationService.confirm({
+      message: 'Bạn có chắc chắn muốn xóa?',
+      accept: () => {
+        const queryParams = queryString.stringify({ matPolicyId: event.rowData.matPolicyId, maternityId: event.rowData.maternityId });
+        this.apiService.delMaternityPolicyInfo(queryParams).subscribe(results => {
+          if (results.status === 'success') {
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
+            this.getMaternityInfo();
+          } else {
+            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+          }
+        });
+      }
+    });
   }
 
   OnClick(e) {
