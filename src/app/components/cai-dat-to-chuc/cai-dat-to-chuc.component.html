@@ -124,6 +124,23 @@
           </div>
       </div>
   </section>
+  <section>
+    <p-organizationChart [value]="listAgencyMap"
+    #mydiv  [preserveSpace]="false" selectionMode="single" 
+    [(selection)]="selectedNode"
+    styleClass="company">
+    <ng-template let-node pTemplate="person">
+        <div class="node-header p-corner-top">{{node.data.position ? node.data.position : 'No position'}}</div>
+        <div class="node-content">
+            <img src="{{node.data.avatarUrl ? node.data.avatarUrl : '../../../../../assets/images/img_avatar.png'}}" width="32">
+            <div>{{node.data.full_name ? node.data.full_name : 'No name'}}</div>
+        </div>
+    </ng-template>
+    <ng-template let-node pTemplate="department" >
+        {{node.label}}
+    </ng-template>
+</p-organizationChart>
+  </section>
   <section class="content pb-0">
       <div class="grid-default" #container>
           <app-list-grid-angular *ngIf="columnDefs.length > 0" 
@@ -297,7 +314,7 @@
    </div>
 </p-dialog>
 
-<p-dialog styleClass="hr-diagram" [appendTo]="'body'" [autoZIndex]="true" [(visible)]="isHrDiagram" [modal]="true" [breakpoints]="{'1024': '95vw', '640px': '100vw'}" [style]="{width: '90vw'}">
+<!-- <p-dialog styleClass="hr-diagram" [appendTo]="'body'" [autoZIndex]="true" [(visible)]="isHrDiagram" [modal]="true" [breakpoints]="{'1024': '95vw', '640px': '100vw'}" [style]="{width: '90vw'}">
   <p-organizationChart [value]="listAgencyMap" #mydiv  [preserveSpace]="false" selectionMode="single" [(selection)]="selectedNode" (onNodeSelect)="onNodeSelect($event)"
             styleClass="company">
             <ng-template let-node pTemplate="person">
@@ -312,7 +329,7 @@
             </ng-template>
          
         </p-organizationChart>
-</p-dialog>
+</p-dialog> -->
 
 <p-dialog header="Cài đặt cấu hình" [(visible)]="displaySetting" (onHide)="find()" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
     [draggable]="false" [resizable]="false" [focusTrap]="false" styleClass="popup-setting">
