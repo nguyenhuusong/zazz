@@ -25,3 +25,7 @@
 .go-to-home{
   cursor: pointer;
 }
+:host::ng-deep{ p-toolbar .field-group.select .p-disabled{
+    background: #d9d9d9;
+  }
+}

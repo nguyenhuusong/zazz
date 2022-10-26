@@ -128,7 +128,7 @@ const routes: Routes = [
     path: 'cai-dat-cong-ty/them-moi-cong-ty',
     component: ChiTietCongTyComponent,
     data: {
-      title: 'Danh sách công ty',
+      title: 'Thêm mới công ty',
       url: 'them-moi-cong-ty',
     },
   },
@@ -136,7 +136,7 @@ const routes: Routes = [
     path: 'cai-dat-cong-ty/chi-tiet-cong-ty',
     component: ChiTietCongTyComponent,
     data: {
-      title: 'Danh sách công ty',
+      title: 'Chi tiết công ty',
       url: 'chi-tiet-cong-ty',
     },
   },

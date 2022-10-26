@@ -123,7 +123,12 @@ export class AppTypeSelectComponent implements OnInit {
   template: `  
      <div class="field-group select treeselect" [ngClass]="'valid'" > 
      <label class="text-nowrap label-tex" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
-      <p-treeSelect [appendTo]="'body'" [name]="element.field_name" [filterInputAutoFocus]="true" [filter]="true" [options]="element.options || []" [(ngModel)]="element.columnValue" [filterInputAutoFocus]="true"  selectionMode="single" [disabled]="element.isDisable" placeholder="Select Item" (onNodeSelect)="selectNode($event)" [required]="element && element.isRequire && element?.isVisiable && !element.isEmpty"></p-treeSelect>
+      <p-treeSelect [appendTo]="'body'" 
+      [name]="element.field_name" [filterInputAutoFocus]="true" 
+      [filter]="true" [options]="element.options || []" [(ngModel)]="element.columnValue" 
+      [filterInputAutoFocus]="true"  selectionMode="single" [disabled]="element.isDisable" 
+      placeholder="Select Item" (onNodeSelect)="selectNode($event, element.field_name, element)" 
+      [required]="element && element.isRequire && element?.isVisiable && !element.isEmpty"></p-treeSelect>
       <div *ngIf="element.isRequire && submit && !element.columnValue"
           class="alert-validation alert-danger">
           <div [hidden]="element.columnValue">
@@ -156,10 +161,23 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
     return checkIsObject(data);
   }
 
-  selectNode(event) {
+  selectNode(event,field_name, element) {
     if(this.element.field_name === "org_Id"){
       this.setValue('', 'User_Id')
-      console.log('fjsdoifjdosf')
+    }
+    this.modelFields[field_name].error = this.modelFields[field_name].isRequire && !this.element.columnValue ? true : false;
+    this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
+    if (field_name === 'orgId') {
+      this.dataView.forEach(element => {
+        element.fields.forEach(async element1 => {
+          if (element1.field_name === 'companyId') {
+            this.getCompanyList(event.node.orgId, element1);
+          } else if (element1.field_name === 'positionId') {
+            this.getPositionList(event.node.orgId, element1);
+            console.log('positionId', event.node.orgId)
+          }
+        });
+      });
     }
   }
 
@@ -197,6 +215,7 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
             this.getCompanyList(event.node.orgId, element1);
           } else if (element1.field_name === 'positionId') {
             this.getPositionList(event.node.orgId, element1);
+            console.log('positionId', event.node.orgId)
           }
         });
       });

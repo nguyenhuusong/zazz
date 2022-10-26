@@ -619,6 +619,7 @@ export class XuLyHopDongComponent implements OnInit {
         detailGridOptions: {
           frameworkComponents: {},
           getRowHeight: (params) => {
+            params.api.sizeColumnsToFit();
             return 40;
           },
           columnDefs: [

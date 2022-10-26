@@ -21,6 +21,7 @@
     <div class="col-4 pd-0" *ngIf="detailOrganizes.length > 0">
       <div class="field-group select mb-0 " style="background: #fff;">
           <p-dropdown panelStyleClass="nav-select-oragin" appendTo="body" [baseZIndex]="100"
+          [disabled]="chooseOrga"
           (onChange)="changeOragi($event)"
             [options]="detailOrganizes" [(ngModel)]="organizeRole" name="organizeRole" [filter]="true">
           </p-dropdown>

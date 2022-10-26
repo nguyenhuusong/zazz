@@ -136,6 +136,7 @@ export class CaiDatToChucComponent implements OnInit {
       org_level: 0,
       organizeIds: this.query.organizeIds
     }
+    this.load()
   }
 
   onGridReady(params) {
@@ -312,16 +313,16 @@ export class CaiDatToChucComponent implements OnInit {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn thực hiện hành động này?',
       accept: () => {
-        // const queryParams = queryString.stringify({ orgId: event.rowData.orgId });
-        // this.apiService.delOrganize(queryParams).subscribe(results => {
-        //   if (results.status === 'success') {
-        //     this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
-        //     this.displayButton = false;
-        //     this.getAgencyOrganizeMap();
-        //   } else {
-        //     this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
-        //   }
-        // });
+        const queryParams = queryString.stringify({ orgId: event.rowData.orgId });
+        this.apiService.delOrganize(queryParams).subscribe(results => {
+          if (results.status === 'success') {
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
+            this.displayButton = false;
+            this.getAgencyOrganizeMap();
+          } else {
+            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+          }
+        });
       }
     });
   }

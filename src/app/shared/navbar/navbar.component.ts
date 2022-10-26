@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationStart } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { AuthService } from 'src/app/services/auth.service';
 import { NgForm } from '@angular/forms';
@@ -25,11 +25,13 @@ export class NavbarComponent implements OnInit {
         userPassword: '',
         userPassCf: ''
       }
+    chooseOrga = false
     confimPassword = false;
     submitPass = false;
     organizeRole = null;
     listmenuChecks = []
     menuItems: any[] = [];
+    urlsForDisableOrgan = []
     constructor(
         private route: ActivatedRoute,
         private router: Router,
@@ -41,6 +43,12 @@ export class NavbarComponent implements OnInit {
         private changeDetector: ChangeDetectorRef,
         // private themeService: ThemeService
     ) {
+      this.router.events.subscribe((val) => {
+        if (val instanceof NavigationStart) {
+          this.checkDisableOrgan(val.url);
+      }
+      this.checkDisableOrgan(this.router.url);
+    });
         this.items = [
         {
             label: 'Thay đổi mật khẩu',
@@ -207,4 +215,54 @@ export class NavbarComponent implements OnInit {
       this.organizeInfoService.setStocks(e.value);
       localStorage.setItem('organizes', e.value);
     }
+
+    checkDisableOrgan(currentUrl) {
+      this.urlsForDisableOrgan = [
+        '/tuyen-dung/ds-tuyen-dung/them-moi-tuyen-dung',
+        '/tuyen-dung/ds-tuyen-dung/chi-tiet-tuyen-dung',
+        '/tuyen-dung/vi-tri-tuyen-dung/them-moi-vi-tri-tuyen-dung',
+        '/tuyen-dung/vi-tri-tuyen-dung/chi-tiet-vi-tri-tuyen-dung',
+        '/tuyen-dung/chuyen-mon/them-moi-linh-vuc-tuyen-dung',
+        '/tuyen-dung/chuyen-mon/chi-tiet-linh-vuc-tuyen-dung',
+        '/nhan-su/ho-so-nhan-su/chi-tiet-ho-so-nhan-su',
+        '/nhan-su/xu-ly-hop-dong/chi-tiet-xu-ly-hop-dong',
+        '/nhan-su/ho-so-nghi-viec/chi-tiet-ho-so-nghi-viec',
+        '/nhan-su/phe-duyet/chi-tiet-phe-duyet',
+        '/nhan-su/thai-san/them-moi-thai-san',
+        '/nhan-su/thai-san/chi-tiet-thai-san',
+        '/chinh-sach/an-ca/chi-tiet-danh-sach-an-ca',
+        '/chinh-sach/phep-bu/them-moi-phep-bu',
+        '/chinh-sach/phep-bu/chi-tiet-phep-bu',
+        '/chinh-sach/thue-thu-nhap/chi-tiet-thue-thu-nhap',
+        '/chinh-sach/cham-cong/chi-tiet-cham-cong',
+        '/chinh-sach/tien-luong/chi-tiet-tien-luong',
+        '/cai-dat/thong-bao/chi-tiet-thong-bao',
+        '/cai-dat/cai-dat-lich-hop/them-moi-lich-hop',
+        '/cai-dat/cai-dat-lich-hop/chi-tiet-lich-hop',
+        '/hoat-dong/lich-hop/danh-sach-phong-hop/them-moi-phong-hop',
+        '/hoat-dong/lich-hop/danh-sach-phong-hop/chi-tiet-phong-hop',
+        '/gop-y/chi-tiet-gop-y',
+        '/phan-quyen/the-nhan-vien/them-moi-the-nhan-vien',
+        '/cai-dat/lich-lam-viec/them-moi-lich-lam-viec',
+        '/cai-dat/lich-lam-viec/chi-tiet-lich-lam-viec',
+        '/cai-dat/tham-so-chung/',
+        '/cai-dat/cai-dat-to-chuc/chi-tiet-to-chuc',
+        '/cai-dat/cai-dat-ngay-nghi-le/them-moi-ngay-nghi',
+        '/cai-dat/cai-dat-ngay-nghi-le/chi-tiet-ngay-nghi',
+         '/cai-dat/chuc-vu/chi-tiet-chuc-vu',
+        '/cai-dat/chuc-vu/them-moi-chuc-vu',
+        '/cai-dat/noi-lam-viec/them-moi-noi-lam-viec',
+        '/cai-dat/noi-lam-viec/chi-tiet-noi-lam-viec',
+        '/cai-dat/ly-do-nghi/them-moi-ly-do-nghi',
+        '/cai-dat/ly-do-nghi/chi-tiet-ly-do-nghi',
+        '/cai-dat/cai-dat-cong-ty/them-moi-cong-ty',
+        '/cai-dat/cai-dat-cong-ty/chi-tiet-cong-ty',
+        '/cai-dat/quan-ly-hop-dong/them-moi-hop-dong',
+        '/cai-dat/quan-ly-hop-dong/chi-tiet-hop-dong',
+        '/cai-dat/thiet-lap-wifi/them-moi',
+        '/cai-dat/thiet-lap-wifi/chi-tiet'
+      ]
+    let url = currentUrl.split('?');
+    this.chooseOrga = this.urlsForDisableOrgan.some( d => d === url[0])
+  }
 }

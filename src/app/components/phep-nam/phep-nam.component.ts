@@ -272,13 +272,11 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
   }
 
   changeMonth(event) {
-    console.log('event', event)
     if(this.query.month > 12){
       this.query.month = 12;
     }else if(this.query.month < 1){
       this.query.month = 1;
     }
-
   }
 
 }

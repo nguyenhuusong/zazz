@@ -1,6 +1,15 @@
 <div class="main-grid">
     <section class="bread-crumb">
-        <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
+        <div class="d-flex bet bottom">
+            <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
+            <p-button styleClass="p-button-sm height-56" (click)="cauhinh()">
+                <svg width="20" height="17" viewBox="0 0 20 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M19.5 17V0H0.50855L0.5 17H19.5ZM6.675 15.3187H2.21V6.81868H6.675V15.3187ZM8.575 15.3187V6.81868H17.79V15.3187H8.575ZM2.21 1.68132V5.13736H17.79V1.68132H2.21Z" fill="#F3F8FF"/>
+                </svg>
+                &nbsp;
+                Cấu hình
+            </p-button>
+        </div>
     </section>
     <section class="bread-filter">
         <div class="d-flex bet end bottom gap-16">
@@ -24,20 +33,20 @@
                                 <div class="header-filter-search grid mt-1">
                                     <div class="icon col-12 pl-0" style="display: flex; flex-wrap: wrap;">
                                         <div class="col-6">
-                                            <div class="field-group text label-8 mb-0">
+                                            <div class="field-group text label-8">
                                                 <label>Tháng</label>
-                                                <input type="number" class="input-default" id="" placeholder="Tháng"
+                                                <input type="number" (change)="changeMonth($event)" class="input-default" id="" placeholder="Tháng"
                                                     [(ngModel)]="query.month">
                                             </div>
                                         </div>
                                         <div class="col-6">
-                                            <div class="field-group text label-8 mb-0">
+                                            <div class="field-group text label-8">
                                                 <label>Năm</label>
                                                 <input type="number" class="input-default" id="" placeholder="Năm"
                                                     [(ngModel)]="query.year">
                                             </div>
                                         </div>
-                                        <div class="col-6">
+                                        <!-- <div class="col-6">
                                             <div class="field-group select label-8 valid">
                                                 <label  for=""> Tổ chức: </label>
                                                     <p-dropdown placeholder="Chọn tổ chức" appendTo="body" [baseZIndex]="100" [filter]="true" [autoDisplayFirst]="false" 
@@ -52,7 +61,7 @@
                                                     </ng-template>
                                                 </p-dropdown>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                     <div class="input-group icon col-12 select-default text-right">
                                         <label for="" style="visibility: hidden;">Classid <span class="pi pi-info-circle"
@@ -97,13 +106,7 @@
                     <p-button styleClass="p-button-sm mr-1 height-56" icon="pi pi-plus" 
                     [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetAnnualAddPage.url, action: ACTIONS.ADD_PHEP_BU_PHONG_BAN}"
                     label="Thêm mới phép bù phòng ban" (click)="addNewPhepBuDep()"></p-button>
-                    <p-button styleClass="p-button-sm height-56" (click)="cauhinh()">
-                        <svg width="20" height="17" viewBox="0 0 20 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M19.5 17V0H0.50855L0.5 17H19.5ZM6.675 15.3187H2.21V6.81868H6.675V15.3187ZM8.575 15.3187V6.81868H17.79V15.3187H8.575ZM2.21 1.68132V5.13736H17.79V1.68132H2.21Z" fill="#F3F8FF"/>
-                        </svg>
-                        &nbsp;
-                        Cấu hình
-                    </p-button>
+                    
                 </div>
             </div>
         </div>
@@ -134,7 +137,9 @@
         <div class="col-6">
             <div class="field-group select mb-0 valid">
                 <label  for=""> Tổ chức: </label>
-                <p-dropdown panelStyleClass="mh-300" [style]="{maxHeight: '300px'}" placeholder="Chọn tổ chức" appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
+                <p-dropdown panelStyleClass="mh-300" 
+                    [disabled]="true"
+                    [style]="{maxHeight: '300px'}" placeholder="Chọn tổ chức" appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
                     [options]="orgRoots" [required] [(ngModel)]="organizeIdForDep" name="organizeIdForDep" (onChange)="chonToChuc()">
                     <ng-template let-item pTemplate="selectedItem">
                         <span style="vertical-align:middle;">{{item.label}}</span>

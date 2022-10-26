@@ -8,6 +8,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 
 @Component({
   selector: 'app-chi-tiet-thai-san',
@@ -46,6 +47,7 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
     private spinner: NgxSpinnerService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
+    private organizeInfoService: OrganizeInfoService,
     private router: Router
   ) { }
   private readonly unsubscribe$: Subject<void> = new Subject();
@@ -63,6 +65,7 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
       { label: `${this.titlePage}` },
     ];
     this.handleParams();
+    this.organizeInfoService.fetchAll();
   }
  
   handleParams() {
@@ -90,7 +93,9 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
           this.listsDataMaternityChild = [...this.detailInfo.maternityChild || []]
           this.aGridFnMaternityChild(this.detailInfo.gridflexdetails1 || [])
           this.aGridFnMaternityPregnancy(this.detailInfo.gridflexdetails2 || []);
-          this.colsDetail = results.data.gridflexs;
+          if(results.data.gridflexs){
+            this.colsDetail = results.data.gridflexs;
+          }
           this.dataDetail = results.data.data;
 
           this.initGrid();

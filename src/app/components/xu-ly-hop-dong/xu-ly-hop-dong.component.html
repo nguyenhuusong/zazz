@@ -161,7 +161,7 @@
     </section>
     <section class="content pb-0">
         <div class="grid-default" #container>
-            <app-list-grid-angular *ngIf="columnDefs.length > 0" [listsData]="listsData" [height]="heightGrid"
+            <app-list-grid-angular *ngIf="columnDefs && columnDefs.length > 0" [listsData]="listsData" [height]="heightGrid"
                 [rowSelection]="'multiple'" (callback)="rowSelected($event)" [columnDefs]="columnDefs">
             </app-list-grid-angular>
             <div class="paginator">
@@ -219,8 +219,8 @@
             <!-- </div> -->
         </div>
         <div class="col-md-2 mt-2">
+            <label for="" style="visibility: hidden;display: block;">Thực hiện</label>
             <p-button label="Thực hiện" styleClass="p-button-sm btn-h56 mb-2"
-            
                 [disabled]="filesPrints.length === 0 || !modelPrint.PrinterName || modelPrint.Copies === 0 || !modelPrint.Copies"
                 (onClick)="openPrint()"></p-button>
         </div>
@@ -228,8 +228,13 @@
 
 
     <div class="grid-default border">
-        <app-list-grid-angular *ngIf="columnDefsPrint.length > 0" [listsData]="filesPrints" [domLayout]="'autoHeight'"
-            [rowSelection]="'multiple'" [idGrid]="'prints'" (callback)="rowSelected($event)" [detailCellRendererParams]="detailCellRendererParams"
+        <app-list-grid-angular *ngIf="columnDefsPrint.length > 0" 
+            [listsData]="filesPrints" 
+            [domLayout]="'autoHeight'"
+            [rowSelection]="'multiple'" 
+            [idGrid]="'prints'" 
+            (callback)="rowSelected($event)" 
+            [detailCellRendererParams]="detailCellRendererParams"
             [columnDefs]="columnDefsPrint"></app-list-grid-angular>
     </div>
 

@@ -230,11 +230,16 @@ export class PhepBuComponent implements OnInit, AfterViewChecked {
 
   ngOnInit() {
     this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-      if(results && results.length>0){
-        this.query.organizeIds = results;
-        this.load();
-      }
-  });
+        if(results && results.length>0){
+          this.query.organizeIds = results;
+          this.organizeIdForDep = results
+          this.load();
+        }
+    });
+    let currentDay = new Date().getDate();
+    if(currentDay >= 25 || currentDay <= 31){
+      this.query.month = this.query.month + 1;
+    }
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Chính sách' },
@@ -311,6 +316,15 @@ export class PhepBuComponent implements OnInit, AfterViewChecked {
     })
 
   }
+
+  changeMonth(event) {
+    if(this.query.month > 12){
+      this.query.month = 12;
+    }else if(this.query.month < 1){
+      this.query.month = 1;
+    }
+  }
+
 
 }
 

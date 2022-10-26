@@ -5293,6 +5293,7 @@ p-button{
                 border-color: #EDF1FA !important;
                 border-left: 2px solid;
                 border-right: 2px solid;
+                background: none;
             }
         }
     }
@@ -5384,6 +5385,48 @@ p-button{
                 background: #4C97E4;
                 color: #FFFFFF;
                 display: block;
+            }
+        }
+    }
+}
+.fc-timegrid-col-frame{
+    .fc-timegrid-col-events{
+        .fc-timegrid-event{
+            &.fc-event-past{
+                background: #FAF0F1;
+                border-color: transparent;
+                .fc-event-main{
+                    color: #2F3E62;
+                }
+            }
+            &.fc-event-future{
+                background: #FFF6DE;
+                border-color: transparent;
+                color: #2F3E62;
+                .fc-event-main{
+                    color: #2F3E62;
+                }
+            }
+            &.fc-event-future{
+                background: #FFF6DE;
+                border-color: transparent;
+                .fc-event-main{
+                    color: #2F3E62;
+                }
+            }
+            .fc-event-main{
+                .custom-event-label{
+                    .grid{
+                        .col-6{
+                            &:first-child{
+                                padding-left: 0px;
+                            }
+                            &:last-child{
+                                color: #4C97E4;
+                            }
+                        }
+                    }
+                }
             }
         }
     }

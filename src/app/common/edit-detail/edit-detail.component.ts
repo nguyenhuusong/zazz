@@ -185,6 +185,13 @@ export class EditDetailComponent implements OnInit, OnChanges {
             if(element1.columnType === 'dropdown' || element1.columnType === 'select'){
               this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
                 if(results && results.length>0){
+                  const dataValidation = {
+                    key: element1.field_name,
+                    isRequire: false,
+                    error: false,
+                    message: ''
+                  }
+                  this.modelFields[element1.field_name] = dataValidation
                   element1.columnValue = results;
                   element1.isDisable = true;
                 }
