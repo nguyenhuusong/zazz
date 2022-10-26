@@ -2,3 +2,11 @@
     text-align: left;
     margin-top: 10px;
 }
+.p-radiobutton .p-radiobutton-box .p-radiobutton-icon{
+    background: #4C97E4 !important;
+}
+.p-radiobutton .p-radiobutton-box.p-highlight:not(.p-disabled):hover {
+    border-color: #4C97E4 !important;
+    background: #ffffff;
+    color: #4C97E4 !important;
+}

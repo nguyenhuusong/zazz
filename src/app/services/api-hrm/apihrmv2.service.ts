@@ -386,7 +386,7 @@ export class ApiHrmV2Service {
       map((repon: any) => {
         return { key: field_name, result: repon.data.dataList.data.map(d => {
           return {
-            label: `${d.vacancy_name}`,
+            label: `${d.job_name}`,
             value: `${d.vacancyId}`
           }
         }) };

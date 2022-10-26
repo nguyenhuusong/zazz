@@ -5406,12 +5406,12 @@ p-button{
                 .fc-event-main{
                     color: #2F3E62;
                 }
-            }
-            &.fc-event-future{
-                background: #FFF6DE;
-                border-color: transparent;
-                .fc-event-main{
-                    color: #2F3E62;
+                &.fc-event-today{
+                    background: #EBF4EF;
+                    border-color: transparent;
+                    .fc-event-main{
+                        color: #2F3E62;
+                    }
                 }
             }
             .fc-event-main{

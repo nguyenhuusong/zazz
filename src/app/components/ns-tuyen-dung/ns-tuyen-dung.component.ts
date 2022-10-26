@@ -88,7 +88,22 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     currentRecordEnd: 0
   }
   loading = false;
-  listVacancy = []
+  listVacancy = [];
+  recruitmentStatus = [
+    { label: 'Ứng tuyển', code: '1' },
+    { label: 'Đi làm', code: '10' },
+    { label: 'Tiềm năng', code: '11' },
+    { label: 'Sàng lọc', code: '2' },
+    { label: 'Fail CV', code: '3' },
+    { label: 'Pass CV', code: '4' },
+    { label: 'Phỏng vấn', code: '5' },
+    { label: 'Pass PV', code: '6' },
+    { label: 'Offer', code: '7' },
+    { label: 'Nhận Offer', code: '8' },
+    { label: 'Từ chối Offer', code: '9' },
+  ]
+  recruitmentStatusSelected = null;
+  dataRowSelected = []
 
   onGridReady(params) {
     this.gridApi = params.api;
@@ -191,6 +206,20 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
 
   initGrid() {
     this.columnDefs = [
+      {
+        headerName: '',
+        filter: '',
+        width: 60,
+        pinned: 'left',
+        cellClass: ['border-right', 'no-auto'],
+        field: 'checkbox2',
+        headerCheckboxSelection: false,
+        suppressSizeToFit: true,
+        suppressRowClickSelection: true,
+        showDisabledCheckboxes: true,
+        checkboxSelection: true,
+        rowSelection: 'single'
+      },
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       {
         headerName: 'Thao tác',
@@ -250,6 +279,10 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
         );
       },
     };
+  }
+
+  rowSelected(event) {
+    this.dataRowSelected = event;
   }
 
   xoatuyendung(event) {
@@ -314,7 +347,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   ngOnInit() {
     this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
         if(results && results.length>0){
-          this.query.organizeIds = results;
+          this.query.organizeIds = '';
           this.listsData = []
           this.load();
         }
@@ -413,6 +446,29 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
         })
       }
     })
+  }
+
+  changeRecruStatus() {
+    this.confirmationService.confirm({
+      message: 'Bạn có chắc chắn muốn chuyển vòng?',
+      accept: () => {
+        let dataUpdateStatus = this.dataRowSelected.map( d => d.canId).toString();
+        const query = {
+          canId: dataUpdateStatus,
+          can_st: this.recruitmentStatusSelected
+        }
+        this.apiService.recruiUpdateStatus(queryString.stringify(query)).subscribe((results: any) => {
+          if (results.status === 'success') {
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Chuyển thành công!' });
+            this.load();
+            this.dataRowSelected = [];
+            this.recruitmentStatusSelected = null;
+          } else {
+            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+          }
+        });
+      }
+    });
   }
 
   // vitrituyendung() {

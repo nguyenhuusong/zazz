@@ -52,6 +52,7 @@ import { ConfigGridTableFormModule } from 'src/app/common/config-grid-table-form
 import { CheckHideActionsDirectiveModule } from 'src/app/directive/check-action.module';
 import { NghiViecComponent } from 'src/app/components/ns-tuyen-dung/nghi-viec/nghi-viec.component';
 import { TreeSelectModule } from 'primeng/treeselect';
+import { RadioButtonModule } from 'primeng/radiobutton';
 @NgModule({
   imports: [
     MessagesModule,
@@ -98,6 +99,7 @@ import { TreeSelectModule } from 'primeng/treeselect';
     HrmBreadCrumbModule,
     CheckHideActionsDirectiveModule,
     TreeSelectModule,
+    RadioButtonModule,
     AgGridModule.withComponents([
       ButtonRendererComponent,
       ButtonRendererComponent1

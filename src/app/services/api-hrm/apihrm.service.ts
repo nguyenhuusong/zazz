@@ -781,6 +781,9 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v1/recruitment/SetCandidateInfo`, params, this.options)
   }
 
+  recruiUpdateStatus(queryParams, params = null): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/recruitment/UpdateStatus?`+ queryParams, params, this.options)
+  }
   
   getAgencyOrganizeMap(): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/organize/GetOrganizeMap`, this.options);
