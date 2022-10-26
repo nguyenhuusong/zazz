@@ -512,6 +512,7 @@ export class XuLyHopDongComponent implements OnInit {
   displayPrint = false;
   dataPrint = null;
   Prints() {
+    this.columnDefsPrint = []
     let letPrint = this.listRowSelects.some((value) => {
       return value.contract_value === 0;
     });
@@ -619,7 +620,6 @@ export class XuLyHopDongComponent implements OnInit {
         detailGridOptions: {
           frameworkComponents: {},
           getRowHeight: (params) => {
-            params.api.sizeColumnsToFit();
             return 40;
           },
           columnDefs: [
