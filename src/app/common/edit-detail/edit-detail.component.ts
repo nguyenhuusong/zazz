@@ -15,6 +15,7 @@ import { findNodeInTree } from '../function-common/objects.helper';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ApiHrmV2Service } from 'src/app/services/api-hrm/apihrmv2.service';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-edit-detail',
   templateUrl: './edit-detail.component.html',
@@ -29,6 +30,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
     private changeDetech: ChangeDetectorRef,
     private organizeInfoService: OrganizeInfoService,
     private spinner: NgxSpinnerService,
+    private router: Router
   ) { }
   @Output() callback = new EventEmitter<any>();
   @Output() callbackcancel = new EventEmitter<any>();
@@ -156,9 +158,19 @@ export class EditDetailComponent implements OnInit, OnChanges {
           } else if (element1.field_name === 'bank_code') {
             promissall.push(this.apiHrmV2Service.getBankListV2(element1.field_name));
           } else if (element1.field_name === 'parentId') {
-            const orgId = this.getValueByKey('orgId');
-            const adm_st = this.getValueByKey('adm_st');
-            promissall.push(this.apiHrmV2Service.getAgentLeadersV2(queryString.stringify({ orgId: orgId, admin_is: adm_st }), element1.field_name));
+              let url = this.router.url.split('?');
+              if(url[0] === '/cai-dat/cai-dat-to-chuc/chi-tiet-to-chuc'){
+                this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
+                  if(results && results.length>0){
+                    promissall.push(this.apiHrmV2Service.getOrganizeTreeV2(queryString.stringify({ parentId: results }), element1.field_name));
+                  }
+                });
+              }else{
+                const orgId = this.getValueByKey('orgId');
+                const adm_st = this.getValueByKey('adm_st');
+                promissall.push(this.apiHrmV2Service.getAgentLeadersV2(queryString.stringify({ orgId: orgId, admin_is: adm_st }), element1.field_name));
+              }
+            
           } else if (element1.field_name === 'posistionCd') {
             const root_orgId = this.detail.organizeId ? this.detail.organizeId : null;
             promissall.push(this.apiHrmV2Service.getOrgPositionsV2(queryString.stringify({ orgId: root_orgId }), element1.field_name));

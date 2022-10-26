@@ -15,8 +15,9 @@ import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 export class ChiTietToChucComponent implements OnInit, OnChanges {
   manhinh = 'View';
   indexTab = 0;
-  optionsButtonsView = [{ label: 'Sửa', value: 'Edit', class: CheckHideAction(MENUACTIONROLEAPI.GetOrganizePage.url, ACTIONS.EDIT) ? 'hidden' : ''
-}, { label: 'Quay lại', value: 'Back' }];
+  optionsButtonsView = [
+    { label: 'Sửa', value: 'Edit', class: CheckHideAction(MENUACTIONROLEAPI.GetOrganizePage.url, ACTIONS.EDIT) ? 'hidden' : ''}, 
+    { label: 'Quay lại', value: 'Back', class: 'p-button-secondary'  }];
   constructor(
     private apiService: ApiHrmService,
     private activatedRoute: ActivatedRoute,
