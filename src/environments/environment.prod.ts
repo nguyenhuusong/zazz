@@ -1,7 +1,7 @@
 const host = {
   socketServer: 'wss://localhost:6999',
   authServer: 'https://api.sunshinegroup.vn:5000',
-  apiServer: 'https://api.sunshinegroup.vn',
+  apiServer: 'https://api.sunshinetech.com.vn',
   apShomeServer: 'https://apiresident.sunshinetech.com.vn',
   apiCoreServer: 'https://apicore.sunshinetech.com.vn',
   apiHrmServer: 'https://apihrm.sunshinetech.com.vn',
