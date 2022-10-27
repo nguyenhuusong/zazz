@@ -5,7 +5,7 @@
   </section>
   
   <section class="bread-filter">
-    <div class="d-flex bet end bottom gap-16">
+    <div class="d-flex bottom gap-16">
         <div class="col-item">
           <div class="field-group text mb-0 " [ngClass]="key_car ? 'valid' : 'invalid' ">
               <p-autoComplete placeholder="Nhập mã thẻ để tìm kiếm" [(ngModel)]="key_car" name="key_car" [suggestions]="listCars" (onSelect)="selectedItem1($event)"
@@ -182,7 +182,6 @@
 <p-dialog [(visible)]="isDialog" header="{{titleModal}}" [autoZIndex]="true" [style]="{width: '800px', height: 'auto'}">
     <form #createSMSF="ngForm" class="form-horizontal ng-pristine ng-valid ng-scope">
         <div class="box-body" style="padding:10px;">
-
           <div class="form-row input-group" style="margin:10px 0px;">
             <label class=" control-label">Mã thẻ</label>
             <p-autoComplete [(ngModel)]="modelcar" name="modelcar" placeholder="Nhập mã thẻ để tìm kiếm" [suggestions]="listCars" (onSelect)="selectedItem($event)"
@@ -195,7 +194,7 @@
             [(ngModel)]="cardinfo.fullName" placeholder="Tên chủ thẻ">
           </div>
 
-          <div class="form-row select-default" *ngIf="modelCR" style="margin:10px 0px;">
+          <div class="form-row field-group select" *ngIf="modelCR" style="margin:10px 0px;">
             <label class=" control-label">Quyền của thẻ</label>
             <select class="form-control" name="cardRole" [(ngModel)]="cardinfo.cardRole">
               <option *ngFor="let objcardRole of modelCR" value={{objcardRole.id}}>
@@ -204,7 +203,7 @@
             </select>
           </div>
 
-          <div class="form-row select-default" *ngIf="modelCardType" style="margin:10px 0px;">
+          <div class="form-row field-group select" *ngIf="modelCardType" style="margin:10px 0px;">
             <label class=" control-label">Loại thẻ</label>
             <select class="form-control" name="cardType" [(ngModel)]="cardinfo.cardType">
               <option *ngFor="let objCardType of modelCardType" value={{objCardType.cardTypeId}}>
@@ -213,7 +212,7 @@
             </select>
           </div>
 
-          <div class="form-row select-default" *ngIf="modelProject" style="margin:10px 0px;">
+          <div class="form-row field-group select" *ngIf="modelProject" style="margin:10px 0px;">
             <label class=" control-label">Dự án</label>
             <select class="form-control" name="projectCd" [(ngModel)]="cardinfo.projectCd"
             (change)="loadGetBuildings()">
@@ -223,7 +222,7 @@
           </select>
           </div>
 
-          <div class="form-row select-default" *ngIf="modelBuilding" style="margin:10px 0px;">
+          <div class="form-row field-group select" *ngIf="modelBuilding" style="margin:10px 0px;">
             <label class="control-label">Tòa nhà</label>
             <select class="form-control" name="buildCd" [(ngModel)]="cardinfo.buildCd"
             (change)="loadGetFloors()">
@@ -234,7 +233,7 @@
           </select>
           </div>
 
-          <div class="form-row select-default" style="margin:10px 0px;">
+          <div class="form-row field-group select" style="margin:10px 0px;">
             <label class="control-label">Tầng</label>
             <select class="form-control" name="floorNumber" [(ngModel)]="cardinfo.floorNumber">
               <option value=null>---</option>

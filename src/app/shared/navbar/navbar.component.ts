@@ -143,8 +143,9 @@ export class NavbarComponent implements OnInit {
       this.apiHrm.getUserOrganizeRole().subscribe(
         (results: any) => {
           if(results.status === "success"){
-            if(results.data && results.data.result && results.data.result.length > 0){
-              this.detailOrganizes = results.data.result
+            if(results.data && results.data && results.data.length > 0){
+              console.log('this.detailOrganize', this.detailOrganizes)
+              this.detailOrganizes = results.data
                 .map(d => {
                   return {
                     label: d.ord_name,
@@ -260,7 +261,8 @@ export class NavbarComponent implements OnInit {
         '/cai-dat/quan-ly-hop-dong/them-moi-hop-dong',
         '/cai-dat/quan-ly-hop-dong/chi-tiet-hop-dong',
         '/cai-dat/thiet-lap-wifi/them-moi',
-        '/cai-dat/thiet-lap-wifi/chi-tiet'
+        '/cai-dat/thiet-lap-wifi/chi-tiet',
+        '/chinh-sach/an-ca/chi-tiet-an-ca'
       ]
     let url = currentUrl.split('?');
     this.chooseOrga = this.urlsForDisableOrgan.some( d => d === url[0])
