@@ -135,7 +135,7 @@ export function AgGridFn(lists: Array<any>) {
 
                     headerName: value.columnCaption,
                     field: value.columnField,
-                    cellClass: value.cellClass,
+                    cellClass: value.cellClass ? value.cellClass : ["border-right", "d-flex", "align-items-center"],
                     filter: value.isFilter ? 'agSetColumnFilter' : '',
                     sortable: false,
                     editable: value.editable ? value.editable : false,

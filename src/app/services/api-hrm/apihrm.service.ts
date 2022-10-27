@@ -1126,7 +1126,7 @@ export class ApiHrmService {
 
   getVehicleTypes(): Observable<any[]> {
     return this.http
-      .get<any[]>(`${apiBaseUrl}/api/v1/shome/GetVehicleTypes`, this.options);
+      .get<any[]>(`${apiShome}/api/v1/shome/GetVehicleTypes`, this.options);
   }
 
   unlockCardVehicle<T>(cardVehicleId) {

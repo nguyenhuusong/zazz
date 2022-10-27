@@ -472,7 +472,7 @@ export class ApiHrmV2Service {
   }
 
   getVehicleTypesV2(field_name): Observable<any> {
-    return this.httpClient.get(`${apiBaseUrl}/api/v1/shome/GetVehicleTypes` , this.options).pipe(
+    return this.httpClient.get(`${apiShome}/api/v1/shome/GetVehicleTypes` , this.options).pipe(
       map((repon: any) => {
         return { key: field_name, result: repon.data.map(d => {
           return {
