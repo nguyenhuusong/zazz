@@ -588,7 +588,7 @@ export class PqQuyenNguoiDungComponent implements OnInit {
       (results: any) => {
         if(results.status === "success"){
           if(results.data){
-            this.detailOrganizes = results.data.result
+            this.detailOrganizes = results.data
               .map(d => {
                 return {
                   label: d.ord_name,
