@@ -53,6 +53,8 @@ import { CheckHideActionsDirectiveModule } from 'src/app/directive/check-action.
 import { NghiViecComponent } from 'src/app/components/ns-tuyen-dung/nghi-viec/nghi-viec.component';
 import { TreeSelectModule } from 'primeng/treeselect';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { MailTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/mail-tuyen-dung/mail-tuyen-dung.component';
+import { ChiTietMailTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/mail-tuyen-dung/chi-tiet-mail-tuyen-dung/chi-tiet-mail-tuyen-dung.component';
 @NgModule({
   imports: [
     MessagesModule,
@@ -113,7 +115,9 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     ChiTietLinhVucTuyenDungComponent,
     ChiTietTuyenDungComponent,
     ChiTietViTriTuyenDungComponent,
-    NghiViecComponent
+    NghiViecComponent,
+    MailTuyenDungComponent,
+    ChiTietMailTuyenDungComponent
   ],
   providers: [ ]
 })

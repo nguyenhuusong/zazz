@@ -850,10 +850,16 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v2/leave/GetLeaveInfo?` + queryParams, this.options)
   }
 
-  // for dev-> /api/v2/leave/SetLeaveHrmInfo
-  // for prod -> /api/v2/leave/SetLeaveInfo
+  setLeaveHrmInfo(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/leave/SetLeaveHrmInfo`, queryParams, this.options)
+  }
+
   setLeaveInfo(queryParams): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/leave/SetLeaveInfo`, queryParams, this.options)
+  }
+
+  checkLeaveOverLap(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/leave/CheckLeaveOverLap`, queryParams, this.options)
   }
 
   setLeaveReason(queryParams): Observable<any> {
@@ -1660,6 +1666,21 @@ export class ApiHrmService {
   getUserOrganizeRole(): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/user/GetUserOrganize`, this.options)
   }
+
+  // tuye dung -> mail
+  getRecruitMailPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetRecruitMailPage?` + queryParams, this.options)
+  }
+  getRecruitMailInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetRecruitMailInfo?${queryParams}`, this.options)
+  }
+  setRecruitMailInfo(data): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/recruitment/SetRecruitMailInfo`, data , this.options)
+  }
+  delRecruitMailInfo(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v1/recruitment/DelRecruitMailInfo?${queryParams}`, this.options)
+  }
+  
   
 
 }

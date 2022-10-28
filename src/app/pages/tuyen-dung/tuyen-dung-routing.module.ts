@@ -8,6 +8,8 @@ import { ChiTietLinhVucTuyenDungComponent } from 'src/app/components/ns-tuyen-du
 import { ChiTietTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/chi-tiet-tuyen-dung/chi-tiet-tuyen-dung.component';
 import { LinhVucTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/linh-vuc-tuyen-dung/linh-vuc-tuyen-dung.component';
 import { NghiViecComponent } from 'src/app/components/ns-tuyen-dung/nghi-viec/nghi-viec.component';
+import { MailTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/mail-tuyen-dung/mail-tuyen-dung.component';
+import { ChiTietMailTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/mail-tuyen-dung/chi-tiet-mail-tuyen-dung/chi-tiet-mail-tuyen-dung.component';
 
 const routes: Routes = [
   {
@@ -97,7 +99,31 @@ const routes: Routes = [
       url: 'chi-tiet-linh-vuc-tuyen-dung',
     },
   },
-
+  // mail tuyen dung
+  {
+    path: 'mail-tuyen-dung',
+    component: MailTuyenDungComponent,
+    data: {
+      title: 'Danh sách mail tuyển dụng',
+      url: 'mail-tuyen-dung',
+    },
+  },
+  {
+    path: 'mail-tuyen-dung/them-moi-mail-tuyen-dung',
+    component: ChiTietMailTuyenDungComponent,
+    data: {
+      title: 'Thêm mới mail tuyển dụng',
+      url: 'them-moi-mail-tuyen-dung',
+    },
+  },
+  {
+    path: 'mail-tuyen-dung/chi-tiet-mail-tuyen-dung',
+    component: ChiTietMailTuyenDungComponent,
+    data: {
+      title: 'Chi tiết mail',
+      url: 'chi-tiet-mail-tuyen-dung',
+    },
+  },
 
  
 

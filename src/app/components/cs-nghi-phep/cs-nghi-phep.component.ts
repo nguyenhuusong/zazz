@@ -491,7 +491,36 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
       const params = {
         ...this.detailInfo, group_fields: data
       }
-      this.apiService.setLeaveInfo(params)
+    this.checkLeaveOverLap(params)
+  }
+
+  checkLeaveOverLap(params) {
+    this.apiService.checkLeaveOverLap(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
+      if (results.status === 'success') {
+        // this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data });
+
+        this.confirmationService.confirm({
+          message: results.message,
+          accept: () => {
+            this.setLeaveInfoOver(params);
+          }
+        });
+        this.spinner.hide();
+      } else {
+        // set immediately
+        this.spinner.hide();
+        this.setLeaveInfoWhenCheckNoOk(params)
+      }
+    }), error => {
+      this.spinner.hide();
+    };
+  }
+
+  // lưu khi check 'checkLeaveOverLap' status !== 'success'
+  setLeaveInfoWhenCheckNoOk(params) {
+    this.apiService.setLeaveInfo(params)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((results: any) => {
         if (results.status === 'success') {
@@ -509,6 +538,31 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
         this.spinner.hide();
       };
   }
+
+  setLeaveInfoOver(params) {
+    this.apiService.setLeaveHrmInfo(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
+      if (results.status === 'success') {
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
+        this.spinner.hide();
+        this.addEdit = false
+      } else {
+        this.messageService.add({
+          severity: 'error', summary: 'Thông báo',
+          detail: results.message
+        });
+        this.spinner.hide();
+      }
+    }), error => {
+      this.spinner.hide();
+    };
+  }
+
+
+
+
+
   quaylai(event){
     this.addEdit = false
   }

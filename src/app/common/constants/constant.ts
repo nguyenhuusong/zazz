@@ -846,5 +846,12 @@ export const API_PROFILE  = {
         'menu': '',
         'url': '/phan-quyen/thiet-lap-tang-thang-may'
     },
+
+    'GetRecruitMailPage': {
+        'name': 'Mail tuyển dụng',
+        'api': '0eed6cc8-55f4-4285-9f8e-bfc0ba572253',
+        'menu': '',
+        'url': '/tuyen-dung/mail-tuyen-dung'
+    },
     
   }
