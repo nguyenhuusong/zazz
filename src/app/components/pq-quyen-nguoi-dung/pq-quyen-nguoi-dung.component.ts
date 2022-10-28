@@ -33,6 +33,8 @@ export class PqQuyenNguoiDungComponent implements OnInit {
   }
   saveAddUser = false;
   confimPassword = false;
+  isShowPass = false;
+  isShowRepass = false
   constructor(
     private apiService: ApiHrmService,
     private api: ApiService,

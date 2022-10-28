@@ -73,9 +73,9 @@
         </label>
         <div class="col-sm-8">
           <div class="input-group">
-            <input type="password" class="form-control" name="userPassword" autocomplete="off" (change)="checkPasswordcf()" [(ngModel)]="modelPass.userPassword" required
+            <input type="{{isShowPass ? 'text' : 'password'}}" class="form-control" name="userPassword" autocomplete="off" (change)="checkPasswordcf()" [(ngModel)]="modelPass.userPassword" required
               value="" #userPassword="ngModel" placeholder="Password">
-            <div *ngIf="submitPass && !modelPass.userPassword " class="alert-validation alert-danger">
+              <span class="pi pi-eye-pass {{ isShowPass ? 'pi-eye-slash' : 'pi-eye' }} " (click)="isShowPass = !isShowPass"></span><div *ngIf="submitPass && !modelPass.userPassword " class="alert-validation alert-danger">
               <div *ngIf="!modelPass.userPassword">
                 Password bắt buộc nhập!
               </div>
@@ -89,8 +89,9 @@
         </label>
         <div class="col-sm-8">
           <div class="input-group">
-            <input type="password" class="form-control" name="userPassCf" autocomplete="off"  (change)="checkPasswordcf()" [(ngModel)]="modelPass.userPassCf" required
+            <input type="{{isShowRepass ? 'text' : 'password'}}" class="form-control" name="userPassCf" autocomplete="off"  (change)="checkPasswordcf()" [(ngModel)]="modelPass.userPassCf" required
               #userPassCf="ngModel" id="userPassCf" placeholder="Nhập lại Password">
+              <span class="pi pi-eye-pass {{ isShowRepass ? 'pi-eye-slash' : 'pi-eye' }}" (click)="isShowRepass = !isShowRepass"></span>
               <div *ngIf="submitPass && (confimPassword || !modelPass.userPassCf) " class="alert-validation alert-danger">
                 <div *ngIf="!modelPass.userPassCf || confimPassword">
                   Nhập lại mật khẩu không đúng

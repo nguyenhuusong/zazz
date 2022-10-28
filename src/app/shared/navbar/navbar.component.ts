@@ -32,6 +32,8 @@ export class NavbarComponent implements OnInit {
     listmenuChecks = []
     menuItems: any[] = [];
     urlsForDisableOrgan = []
+    isShowPass = false;
+    isShowRepass = false
     constructor(
         private route: ActivatedRoute,
         private router: Router,
