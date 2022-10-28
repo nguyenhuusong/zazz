@@ -127,5 +127,9 @@ export class ImportHoSoNhanSuComponent implements OnInit {
     anchor.click();
   }
 
+  onFirstDataRendered(params) {
+    params.api.sizeColumnsToFit()
+  }
+
 
 }

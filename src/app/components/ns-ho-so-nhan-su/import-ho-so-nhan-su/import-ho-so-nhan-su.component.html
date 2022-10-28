@@ -26,6 +26,7 @@
                 [listsData]="listsData" *ngIf="columnDefs.length > 0 && heightGrid > 0"
                  [height]="heightGrid"
                  [getContextMenuItems]="getContextMenuItems"
+                 (firstDataRendered)="onFirstDataRendered($event)"
                 [columnDefs]="columnDefs"></app-list-grid-angular >
                 <div class="paginator" style="margin-top: 10px; text-align: right; margin-right: 25px; font-weight: 600;">
                     Tổng số {{ listsData.length }}
