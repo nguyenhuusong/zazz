@@ -851,7 +851,7 @@ export class ApiHrmService {
   }
 
   setLeaveInfo(queryParams): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v2/leave/SetLeaveInfo`, queryParams, this.options)
+    return this.http.post<any>(`${apiHrmServer}/api/v2/leave/SetLeaveHrmInfo`, queryParams, this.options)
   }
 
   setLeaveReason(queryParams): Observable<any> {
@@ -1126,7 +1126,7 @@ export class ApiHrmService {
 
   getVehicleTypes(): Observable<any[]> {
     return this.http
-      .get<any[]>(`${apiShome}/api/v1/shome/GetVehicleTypes`, this.options);
+      .get<any[]>(`${apiBaseUrl}/api/v1/shome/GetVehicleTypes`, this.options);
   }
 
   unlockCardVehicle<T>(cardVehicleId) {
