@@ -8,6 +8,8 @@ import {Event, RouterEvent, Router} from '@angular/router';
 import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import * as queryString from 'querystring';
+import { MessageService } from 'primeng/api';
+import { NgxSpinnerService } from 'ngx-spinner';
 declare var $: any;
 @Component({
     // moduleId: module.id,
@@ -25,6 +27,8 @@ export class SidebarComponent implements OnInit {
         private apiService: ApiService,
         private firebaseAuthService: FirebaseAuthService,
         private organizeInfoService: OrganizeInfoService,
+        private messageService: MessageService,
+        private spinner: NgxSpinnerService,
     ) {
         router.events.pipe(
             filter((e: Event): e is RouterEvent => e instanceof RouterEvent)
@@ -37,8 +41,8 @@ export class SidebarComponent implements OnInit {
             }
             if(this.listmenuChecks.length > 0) {
                 if(this.listmenuChecks.map(d => d.path).indexOf(pathUrl1) < 0) {
-                    // this.router.navigate['/404'];
-                    this.router.navigate[this.listmenuChecks[0].routerLink];
+                    this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Không có quyền truy cập' });
+                    this.router.navigate([this.listmenuChecks[0].path]);
                 }
                 const pathname  = window.location.pathname ;
                 this.parseObjectProperties(this.menuItems, pathname);
@@ -72,8 +76,8 @@ export class SidebarComponent implements OnInit {
                        this.convetArry(this.menuItems);
                        if(this.listmenuChecks.length > 0) {
                             if(this.listmenuChecks.map(d => d.path).indexOf(pathUrl1) < 0) {
-                                // this.router.navigate(['/404']);
-                                this.router.navigate[this.listmenuChecks[0].routerLink];
+                                this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Không có quyền truy cập' });
+                                this.router.navigate([this.listmenuChecks[0].path]);
                             }
                         }else{
                             this.router.navigate(['/404']);

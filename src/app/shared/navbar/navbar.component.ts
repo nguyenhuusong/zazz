@@ -191,7 +191,8 @@ export class NavbarComponent implements OnInit {
                         if(this.listmenuChecks.map(d => d.path).indexOf(pathUrl1) < 0) {
                             this.router.navigate(['/404']);
                         }else{
-                          this.router.navigateByUrl('/home');
+                          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Không có quyền truy cập' });
+                          this.router.navigate(['/home']);
                         }
                        this.menuItems = [...this.menuItems];
                    }
