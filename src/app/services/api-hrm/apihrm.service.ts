@@ -850,8 +850,10 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v2/leave/GetLeaveInfo?` + queryParams, this.options)
   }
 
+  // for dev-> /api/v2/leave/SetLeaveHrmInfo
+  // for prod -> /api/v2/leave/SetLeaveInfo
   setLeaveInfo(queryParams): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v2/leave/SetLeaveHrmInfo`, queryParams, this.options)
+    return this.http.post<any>(`${apiHrmServer}/api/v2/leave/SetLeaveInfo`, queryParams, this.options)
   }
 
   setLeaveReason(queryParams): Observable<any> {
