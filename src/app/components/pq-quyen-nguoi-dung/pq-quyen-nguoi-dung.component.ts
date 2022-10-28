@@ -367,6 +367,7 @@ export class PqQuyenNguoiDungComponent implements OnInit {
     this.displayAdd = true;
     this.saveAddUser = false;
     this.isEditUser = false;
+    this.titleForm = 'Thêm mới quyền người dùng'
     this.getOrganizes();
   }
 

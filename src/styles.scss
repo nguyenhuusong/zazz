@@ -5394,6 +5394,11 @@ p-button{
         .fc-timegrid-event{
             &.fc-event-past{
                 background: #FAF0F1;
+                .custom-event-label{
+                    background: #FAF0F1;
+                    padding-top: 0px !important;
+                    padding-bottom: 0px !important;
+                }
                 border-color: transparent;
                 .fc-event-main{
                     color: #2F3E62;
@@ -5402,6 +5407,11 @@ p-button{
             &.fc-event-future{
                 background: #FFF6DE;
                 border-color: transparent;
+                .custom-event-label{
+                    background: #FFF6DE;
+                    padding-top: 0px !important;
+                    padding-bottom: 0px !important;
+                }
                 color: #2F3E62;
                 .fc-event-main{
                     color: #2F3E62;
@@ -5409,6 +5419,11 @@ p-button{
                 &.fc-event-today{
                     background: #EBF4EF;
                     border-color: transparent;
+                    .custom-event-label{
+                        background: #EBF4EF; 
+                        padding-top: 0px !important;
+                        padding-bottom: 0px !important;
+                    }
                     .fc-event-main{
                         color: #2F3E62;
                     }
@@ -5443,3 +5458,15 @@ p-button{
       white-space: unset !important;
     }
   }
+
+  .popup-setting{
+    .ag-body-horizontal-scroll{
+        position: fixed;
+        bottom: 0px;
+        left: 0px;
+        width: calc(100% - 40px);
+    }
+    .p-dialog-content{
+        padding-right: 0px;
+    }
+}

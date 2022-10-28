@@ -35,14 +35,16 @@ export class SidebarComponent implements OnInit {
             if(pathUrl[2]){
                 pathUrl1 = pathUrl1.concat("/").concat(pathUrl["2"])
             }
-
-            if(this.menuItems.length > 0) {
-            if(this.listmenuChecks.map(d => d.path).indexOf(pathUrl1) < 0) {
+            if(this.listmenuChecks.length > 0) {
+                if(this.listmenuChecks.map(d => d.path).indexOf(pathUrl1) < 0) {
+                    // this.router.navigate['/404'];
+                    this.router.navigate[this.listmenuChecks[0].routerLink];
+                }
+                const pathname  = window.location.pathname ;
+                this.parseObjectProperties(this.menuItems, pathname);
+                this.menuItems = [...this.menuItems];
+            }else{
                 this.router.navigate['/404'];
-            }
-            const pathname  = window.location.pathname ;
-            this.parseObjectProperties(this.menuItems, pathname);
-            this.menuItems = [...this.menuItems];
             }
          });
     }
@@ -68,7 +70,12 @@ export class SidebarComponent implements OnInit {
                    if (results.status === 'success') {
                        this.menuItems = results.data;
                        this.convetArry(this.menuItems);
-                        if(this.listmenuChecks.map(d => d.path).indexOf(pathUrl1) < 0) {
+                       if(this.listmenuChecks.length > 0) {
+                            if(this.listmenuChecks.map(d => d.path).indexOf(pathUrl1) < 0) {
+                                // this.router.navigate(['/404']);
+                                this.router.navigate[this.listmenuChecks[0].routerLink];
+                            }
+                        }else{
                             this.router.navigate(['/404']);
                         }
                        localStorage.setItem('menuItems', JSON.stringify(results.data));
@@ -80,7 +87,6 @@ export class SidebarComponent implements OnInit {
                 this.router.navigate(['/404']);
             }
         });
-        console.log('this.menuItems', this.menuItems)
         // this.menuItems = ROUTES.filter(menuItem => menuItem);
         //         this.parseObjectProperties(this.menuItems, pathname);
         //         this.menuItems = [...this.menuItems];

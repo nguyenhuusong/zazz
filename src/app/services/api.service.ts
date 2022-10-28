@@ -131,7 +131,7 @@ export class ApiService {
 
   setResetPassword(password): Observable<any> {
     return this.http
-    .put<any>(`${apiCoreBaseUrl}/api/v1/coresystem/SetResetPassword`, password , this.options);
+    .put<any>(`${apiHrmBase}/api/v1/user/ResetPassword`, password , this.options);
   }
 
   getCTThueThuNhapCN(id: string, typeBM: number): Observable<Blob> {

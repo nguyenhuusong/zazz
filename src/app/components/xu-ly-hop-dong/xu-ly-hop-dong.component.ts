@@ -257,7 +257,7 @@ export class XuLyHopDongComponent implements OnInit {
           hide: this.CheckHideUpdateStatus(event),
         },
         {
-          onClick: this.CheckHideXoaStatus.bind(this),
+          onClick: this.XoaQuaTrinhHopDong.bind(this),
           label: 'Xóa ',
           icon: 'pi pi-trash',
           class: 'btn-primary mr5',
@@ -329,7 +329,7 @@ export class XuLyHopDongComponent implements OnInit {
 
   XoaQuaTrinhHopDong(event) {
     this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn thực xóa hợp đồng?',
+      message: 'Bạn có chắc chắn muốn xóa hợp đồng?',
       accept: () => {
         const queryParams = queryString.stringify({ contractId: event.rowData.contractId });
         this.apiService.delContractInfo(queryParams).subscribe((results: any) => {
