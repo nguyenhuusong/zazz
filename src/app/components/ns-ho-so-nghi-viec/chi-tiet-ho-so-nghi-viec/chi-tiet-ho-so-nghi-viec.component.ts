@@ -241,7 +241,6 @@ export class ChiTietHoSoNghiViecComponent implements OnInit, OnChanges, OnDestro
   }
 
   setTerminateInfo(data) {
-    console.log('fjdsofjidoisf', data)
     const params = {
       ...this.detailInfo, group_fields: data
     }

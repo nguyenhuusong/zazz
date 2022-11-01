@@ -68,7 +68,6 @@ export class EmpAttachFileComponent implements OnInit {
             element.columnValue = this.files[0].name;
           }
         });
-        console.log('this.files', this.files)
       }
       const params = {
         ...this.detailInfo, group_fields: data

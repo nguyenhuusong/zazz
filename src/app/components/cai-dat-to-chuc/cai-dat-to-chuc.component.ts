@@ -12,6 +12,7 @@ import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.comp
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
+import { findNodeInTree } from 'src/app/common/function-common/objects.helper';
 @Component({
   selector: 'app-cai-dat-to-chuc',
   templateUrl: './cai-dat-to-chuc.component.html',
@@ -306,8 +307,16 @@ export class CaiDatToChucComponent implements OnInit {
   }
 
   editOrgin(event) {
+    this.getOrganizeLevelList(event.rowData.parentId);
     this.modeAgencyOrganize.organizeId = this.query.organizeIds;
+    this.modeAgencyOrganize.org_level = event.rowData.org_level;
+    this.modeAgencyOrganize.org_name = event.rowData.org_name;
+    // this.selectedNodeTree = event.rowData.orgId;
+    this.modeAgencyOrganize.parentId = event.rowData.parentId
+    this.getOrganizeTreeByOr();
     this.displayOrganize = true;
+   
+    
   }
   delOrgin(event) {
     this.confirmationService.confirm({
@@ -624,12 +633,23 @@ export class CaiDatToChucComponent implements OnInit {
     this.apiService.getOrganizeTree(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.listOrganizeTreeByOr = results.data;
+        this.findNodeInTree(this.listOrganizeTreeByOr, this.modeAgencyOrganize.parentId);
       }
     })
   }
 
+  findNodeInTree(list, nodeId): any {
+    for (let i = 0; i < list.length; i++) {
+      if (list[i].data === nodeId ) {
+        this.selectedNodeTree = list[i];
+        }else if (Array.isArray(list[i].children) && list[i].children.length) {
+          this.findNodeInTree(list[i].children, nodeId);
+        }
+    }
+  }
+
+
   getOrganizeTree(organizeId) {
-    console.log(this.detailOrganizeMap)
     const queryParams = queryString.stringify({ parentId: organizeId });
     this.apiService.getOrganizeTree(queryParams).subscribe(results => {
       if (results.status === 'success') {
@@ -637,7 +657,7 @@ export class CaiDatToChucComponent implements OnInit {
         const queryParams1 = queryString.stringify({ parentId: this.detailOrganizeMap.orgId });
         this.apiService.getOrganizeTree(queryParams1).subscribe(results => {
           if (results.status === 'success' && results.data.length > 0) {
-            this.selectedNodeTree = results.data[0];
+            // this.selectedNodeTree = results.data[0];
           }
         })
       }
@@ -665,7 +685,7 @@ export class CaiDatToChucComponent implements OnInit {
   }
 
   listOrganizeTree = []
-  selectedNodeTree: any = null;
+  selectedNodeTree: any = '';
   Edit() {
     this.displayButton = false;
     this.getOrganizeLevelList(this.detailOrganizeMap.parentId);
@@ -728,8 +748,9 @@ export class CaiDatToChucComponent implements OnInit {
   }
 
   Save() {
+    // typeof this.organizeIdSelected === 'string' ? this.organizeIdSelected : this.organizeIdSelected.data;
     if (this.titleForm.value === 'Edit') {
-      this.modeAgencyOrganize.parentId = this.selectedNodeTree.orgId
+      this.modeAgencyOrganize.parentId = this.organizeIdSelected
     }
 
     if (!this.modeAgencyOrganize.org_name) {
@@ -737,7 +758,7 @@ export class CaiDatToChucComponent implements OnInit {
       return
     }
     this.modeAgencyOrganize.organizeId = this.organizeIdSelected;
-    this.modeAgencyOrganize.parentId = this.organizeIdSelected;
+    this.modeAgencyOrganize.parentId = this.selectedNodeTree.data;
     let params = { ...this.modeAgencyOrganize };
     // if(this.titleForm.value === 'Add') {
     //   params.parentId = this.modeAgencyOrganize.isChild ? this.detailOrganizeMap.orgId : this.detailOrganizeMap.parentId;

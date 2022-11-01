@@ -588,7 +588,6 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
   }
 
   onCellClicked(event){ 
-    console.log('evennnnnn', event)
     if(event.colDef.field === "link_view"){
       if(event.data.link_view){
         var url = event.data.link_view;

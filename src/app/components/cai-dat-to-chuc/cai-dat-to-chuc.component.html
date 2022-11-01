@@ -169,7 +169,7 @@
       <div class="field-group treeselect select label-8" > 
         <label for="">Tổ chức</label>
           <p-dropdown appendTo="body"  [baseZIndex]="100" 
-          [options]="organizes" [(ngModel)]="organizeIdSelected" [disabled]="true" 
+          [options]="organizes" [(ngModel)]="organizeIdSelected" 
           name="organizeId" [filter]="true">
           <ng-template let-item pTemplate="selectedItem">
             <span>{{item.label}}</span>
@@ -187,8 +187,9 @@
         <label for="">Trực thuộc</label>
           <p-treeSelect [(ngModel)]="selectedNodeTree" 
           [appendTo]="'body'"
-          [filterInputAutoFocus]="true" [filter]="true" [metaKeySelection]="false" 
-          [options]="listOrganizeTreeByOr" (onNodeSelect)="onNodeSelectAdd($event)"
+          [name]="selectedNodeTree"
+          [options]="listOrganizeTreeByOr" 
+          (onNodeSelect)="onNodeSelectAdd($event)"
           selectionMode="single" placeholder="Select Item"></p-treeSelect>
           <!-- <p-dropdown appendTo="body" [disabled]="titleForm.value === 'Add'" *ngIf="titleForm.value === 'Add'"  [baseZIndex]="100" 
           [options]="organizeList" [required] [(ngModel)]="modeAgencyOrganize.parentId" name="parentId" [filter]="true">

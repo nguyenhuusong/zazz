@@ -22,7 +22,7 @@ import { AppLabel, AppTypeCheckboxComponent, AppTypeCheckboxListComponent, AppTy
    AppTypeChips,
    AppTypeCurrencyComponent, AppTypeDatefulltimeComponent, AppTypeDatetimeComponent, AppTypeDropdownComponent, AppTypeLinkUrlDragComponent, AppTypeLinkUrlRadioListComponent,
     AppTypelistMch,
-    AppTypeMarkdownComponent, AppTypeMembers, AppTypeMultiSelectComponent, AppTypeNumberComponent, AppTypeonOff, AppTyperoomImg, AppTypeSelectComponent, AppTypeSelectTreeComponent, AppTypeSelectTreesComponent, AppTypeTextareaComponent, AppTypeTextComponent, AppTypeTimeonlyComponent } from './chid-edit-component';
+    AppTypeMarkdownComponent, AppTypeMembers, AppTypeMultiSelectComponent, AppTypeNumberComponent, AppTypeonOff, AppTyperoomImg, AppTypeSelectAutocompleteComponent, AppTypeSelectComponent, AppTypeSelectTreeComponent, AppTypeSelectTreesComponent, AppTypeTextareaComponent, AppTypeTextComponent, AppTypeTimeonlyComponent } from './chid-edit-component';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { EditDetailComponent } from './edit-detail.component';
 import { SelectButtonModule } from 'primeng/selectbutton';
@@ -99,6 +99,7 @@ import {InputSwitchModule} from 'primeng/inputswitch';
     AppTypeChips,
     AppTypelistMch,
     AppTypeSelectTreeComponent,
+    AppTypeSelectAutocompleteComponent,
     AppTypeSelectTreesComponent,
     AppTyperoomImg,
     AppTypeonOff,

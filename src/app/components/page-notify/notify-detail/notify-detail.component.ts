@@ -255,7 +255,6 @@ export class NotifyDetailComponent implements OnInit {
         this.notiId = results.data.id;
         this.router.navigate(['/cai-dat/thong-bao/chi-tiet-thong-bao'], { queryParams: { notiId: results.data.id } });
         this.indexTab = 1;
-        console.log('fffffffffffffffffff')
         // this.getAppNotifyInfo();
       }
     })

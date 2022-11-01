@@ -336,7 +336,6 @@ chartBDNhanSu() {
     let value = this.dashboardData.nhansu_sex.map( tongnv => {
       return tongnv.tongnv
     })
-    console.log(value, 'value fvalue value value')
     let datas = {
       labels: labels,
         datasets: [{

@@ -14,7 +14,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import * as FileSaver from 'file-saver';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
-
+import { cloneDeep, uniqBy } from 'lodash';
 @Component({
   selector: 'app-cs-thue-thu-nhap',
   templateUrl: './cs-thue-thu-nhap.component.html',
@@ -93,16 +93,16 @@ export class CsThueThuNhapComponent implements OnInit, AfterViewChecked {
     this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
         if(results && results.length>0){
           this.query.organizeIds = results;
-          this.query.companyId = results;
           this.load();
+          this.getCompanies();
         }
     });
+
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Chính sách' },
       { label: 'Danh sách thuế thu nhập' },
     ];
-    this.getCompanies();
   }
 
   initFilter(): void {

@@ -44,11 +44,11 @@ export class SidebarComponent implements OnInit {
             if(pathUrl[3]){
                 pathUrl1 = pathUrl1.concat("/").concat(pathUrl["3"])
             }
+            console.log('url curent', e)
             if(this.listmenuChecks.length > 0) {
                 let itemsEx = this.listmenuChecks.filter( d => {
                     return d.path === pathUrl1 || d.path === pathDepth2
                 });
-                console.log('itemsEx', itemsEx)
                 if(itemsEx.length <= 0){
                     this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Không có quyền truy cập' });
                     this.router.navigate([this.listmenuChecks[0].path]);
@@ -97,7 +97,6 @@ export class SidebarComponent implements OnInit {
                            let itemsEx = this.listmenuChecks.filter( d => {
                                 return d.path === pathUrl1 || d.path === pathDepth2
                             });
-                            console.log('itemsEx', itemsEx)
                             if(itemsEx.length <= 0){
                                 this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Không có quyền truy cập' });
                                 this.router.navigate([this.listmenuChecks[0].path]);

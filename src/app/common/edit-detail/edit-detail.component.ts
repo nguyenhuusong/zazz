@@ -129,7 +129,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
         }
         if (element1.columnType === 'select' || element1.columnType === 'dropdown' || element1.columnType === 'selectTree' || element1.columnType === 'selectTrees'
           || element1.columnType === 'checkboxList' || element1.columnType === 'checkboxradiolist'
-          || element1.columnType === 'multiSelect') {
+          || element1.columnType === 'multiSelect' || element1.columnType === 'autocomplete' ) {
           if (element1.field_name === 'project_cd') {
           } else if ((element1.field_name === 'orgId') || (element1.field_name === 'departmentId') || (element1.field_name === 'org_Id')) {
             if ((element1.columnType === 'selectTree') || (element1.columnType === 'selectTrees')) {
@@ -197,15 +197,15 @@ export class EditDetailComponent implements OnInit, OnChanges {
             if(element1.columnType === 'dropdown' || element1.columnType === 'select'){
               this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
                 if(results && results.length>0){
-                  const dataValidation = {
-                    key: element1.field_name,
-                    isRequire: false,
-                    error: false,
-                    message: ''
-                  }
-                  this.modelFields[element1.field_name] = dataValidation
+                  // const dataValidation = {
+                  //   key: element1.field_name,
+                  //   isRequire: false,
+                  //   error: false,
+                  //   message: ''
+                  // }
+                  // this.modelFields[element1.field_name] = dataValidation
                   element1.columnValue = results;
-                  element1.isDisable = true;
+                  // element1.isDisable = true;
                 }
                 if(this.noDisableInput) {
                   element1.columnValue = element1.columnValue;
@@ -241,7 +241,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
             }
           }else if (element1.field_name === 'full_name') {
             const org_cds = this.getValueByKey('org_cds');
-            promissall.push(this.apiHrmV2Service.getEmployeeSearchV2(queryString.stringify({ org_cds: org_cds }), element1.field_name));
+            promissall.push(this.apiHrmV2Service.getEmployeeSearchV2(queryString.stringify({ orgId: org_cds }), element1.field_name));
           } else if (element1.field_name === 'requester_custId') {
             const root_orgId = this.getValueByKey('organize_id');
             promissall.push(this.apiHrmV2Service.getEmployeePageV2(queryString.stringify({ orgId: root_orgId, pageSize: 100000 }), element1.field_name));

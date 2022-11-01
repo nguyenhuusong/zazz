@@ -430,24 +430,37 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
         this.optionsButtonsView =
           [
             { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-save' },
-            { label: 'Duyệt hồ sơ', value: 'DuyetHoSo', 
-            class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_DUYET_HO_SO) ? 'hidden' : ''
-            , icon: 'uni-icon icon-dhs' },
-            { label: 'Hủy hồ sơ', value: 'HuyHoSo', 
-            class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_HUY_HO_SO) ? 'hidden' : 'p-button-danger', 
-            icon: 'pi pi-times-circle' },
+            // { label: 'Duyệt hồ sơ', value: 'DuyetHoSo', 
+            // class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_DUYET_HO_SO) ? 'hidden' : ''
+            // , icon: 'uni-icon icon-dhs' },
+            // { label: 'Hủy hồ sơ', value: 'HuyHoSo', 
+            // class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_HUY_HO_SO) ? 'hidden' : 'p-button-danger', 
+            // icon: 'pi pi-times-circle' },
             // { label: 'Quay lại', value: 'Back', class: 'p-button-secondary', icon: 'pi pi-times' }
           ];
+          if (this.selectedMenuCode === API_PROFILE.CONG_VIEC) {
+            this.optionsButtonsView =
+              [
+                { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-save' },
+                { label: 'Duyệt hồ sơ', value: 'DuyetHoSo', 
+                class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_DUYET_HO_SO) ? 'hidden' : ''
+                , icon: 'uni-icon icon-dhs' },
+                { label: 'Hủy hồ sơ', value: 'HuyHoSo', 
+                class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_HUY_HO_SO) ? 'hidden' : 'p-button-danger', 
+                icon: 'pi pi-times-circle' },
+                // { label: 'Quay lại', value: 'Back', class: 'p-button-secondary', icon: 'pi pi-times' }
+              ];
+          }
           if (this.selectedMenuCode === API_PROFILE.QUAN_HE_LAO_DONG) {
             this.optionsButtonsView = [
               { label: 'Lưu lại', value: 'Update', 
                 class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.EDIT) ? 'hidden' : ''
               , icon: 'pi pi-save' },
-              { label: 'Duyệt hồ sơ', value: 'DuyetHoSo', 
-                class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_DUYET_HO_SO) ? 'hidden' : '', icon: 'uni-icon icon-dhs' },
-              { label: 'Hủy hồ sơ', value: 'HuyHoSo', 
-                class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_HUY_HO_SO) ? 'hidden' : 'p-button-danger',
-                icon: 'pi pi-times-circle' },
+              // { label: 'Duyệt hồ sơ', value: 'DuyetHoSo', 
+              //   class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_DUYET_HO_SO) ? 'hidden' : '', icon: 'uni-icon icon-dhs' },
+              // { label: 'Hủy hồ sơ', value: 'HuyHoSo', 
+              //   class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_HUY_HO_SO) ? 'hidden' : 'p-button-danger',
+              //   icon: 'pi pi-times-circle' },
               // { label: 'Tạo hợp đồng', value: 'TaoHopDong', class: '', icon: 'pi pi-check' },
             ];
           }

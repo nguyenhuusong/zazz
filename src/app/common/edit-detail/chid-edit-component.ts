@@ -2183,6 +2183,65 @@ export class AppTypeonOff implements OnInit {
   
 }
 
+// autocomplete
+
+@Component({
+  selector: 'app-type-autocomplete',
+  template: ` 
+  <div class="input-group">  
+  <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
+  <div> 
+
+  <p-autoComplete [(ngModel)]="element.columnValue" [disabled]="element.isDisable" name="cusId" [baseZIndex]="100" [appendTo]="'body'" [style]="{width: '100%'}"
+  [suggestions]="element.options" placeholder="Nhập Tìm kiếm theo tên" (onSelect)="onSelectCus($event, element.field_name)"
+  (completeMethod)="search($event)" field="name" [required]="element.isRequire && element.isVisiable && !element.isEmpty"></p-autoComplete>
+          <div *ngIf="modelFields[element.field_name].isRequire && submit && modelFields[element.field_name].error"
+                class="alert-validation alert-danger">
+                <div [hidden]="!modelFields[element.field_name].error">
+                {{modelFields[element.field_name].message}}
+                </div>
+             </div>
+</div></div>
+                `,
+})
+export class AppTypeSelectAutocompleteComponent implements OnInit, OnChanges {
+  @Input() element;
+  @Input() dataView;
+  @Input() modelFields;
+  @Input() submit = false;
+  constructor(
+  ) { }
+  ngOnInit(): void { }
+
+  ngOnChanges(event) {
+    if (event && event.element) {
+      this.element = event.element.currentValue
+    }
+  }
+
+  search(event) {
+    this.getObjectList(this.element, event.query)
+  }
+
+  onSelectCus(e, field_name) {
+    this.modelFields[field_name].error = false;
+  }
+
+  getObjectList(element1, filter) {
+    // const queryParams = queryString.stringify({ ListName: element1.columnObject , filter: filter});
+    // this.apiService.getSelectionList(queryParams).subscribe(results => {
+    //   if (results.status === 'success') {
+    //     element1.options = cloneDeep(results.data).map(d => {
+    //       return {
+    //         name: d.text,
+    //         code: `${d.value}`
+    //       }
+    //     });
+    //   }
+    // })
+  }
+}
+
 @Component({
   selector: 'app-type-label',
   template: `

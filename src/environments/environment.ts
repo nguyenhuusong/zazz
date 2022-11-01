@@ -4,11 +4,11 @@
 
 const host = {
   socketServer: 'wss://localhost:6999',
-  authServer: 'https://dev-auth.unicloudgroup.com.vn', 
-  apiServer: 'https://dev.api.unicloudgroup.com.vn', 
-  apShomeServer: 'https://dev.api.apiresident.unicloudgroup.com.vn',
-  apiCoreServer: 'https://dev.api.core.unicloudgroup.com.vn',
-  apiHrmServer: 'https://dev.api.hrm.unicloudgroup.com.vn',
+  authServer: 'https://api.sunshinegroup.vn:5000',
+  apiServer: 'https://api.sunshinetech.com.vn',
+  apShomeServer: 'https://apiresident.sunshinetech.com.vn',
+  apiCoreServer: 'https://apicore.sunshinetech.com.vn',
+  apiHrmServer: 'https://apihrm.sunshinetech.com.vn',
   uploadServer: 'https://data.sunshinegroup.vn/api/v1/FileHandler',
   // cloudFunction: 'https://us-central1-sunshine-super-app.cloudfunctions.net' //dev
   cloudFunction: 'https://asia-northeast1-sunshine-app-production.cloudfunctions.net' //product

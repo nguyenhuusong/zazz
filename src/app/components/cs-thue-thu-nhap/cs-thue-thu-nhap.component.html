@@ -61,11 +61,11 @@
                 </div>
                 <div class="header-filter-search grid mt-1">
                     <div class="icon col-12 pl-0" style="display: flex; flex-wrap: wrap;">
-                        <!-- <div class="col-6">
+                        <div class="col-6">
                             <div class="field-group select valid">
                                 <label>Công ty</label>
                                 <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
-                                (onChange)="load()" [options]="companies" [(ngModel)]="query.companyId"
+                                 [options]="companies" [(ngModel)]="query.companyId"
                                 name="companyId" [filter]="true">
                                 <ng-template let-item pTemplate="selectedItem">
                                     <span>{{item?.label}}</span>
@@ -77,7 +77,7 @@
                                 </ng-template>
                             </p-dropdown>
                             </div>
-                        </div> -->
+                        </div>
                         
                     </div>
                     <div class="input-group icon col-12 select-default text-right">

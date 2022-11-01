@@ -692,6 +692,10 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v2/maternity/SetMaternityInfo`, params, this.options)
   }
 
+  setMaternityPolicyInfo(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/maternity/SetMaternityPolicyInfo`, params, this.options)
+  }
+
   setMaternityChildInfo(params): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/maternity/SetMaternityChildInfo`, params, this.options)
   }
@@ -715,6 +719,9 @@ export class ApiHrmService {
   delMaternityChildInfo(queryParams): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v2/maternity/DelMaternityChildInfo?` + queryParams, this.options)
   }
+  
+
+
   // Tuyển dụng
 
   getWorkflowPage(queryParams): Observable<any> {

@@ -82,7 +82,6 @@ export class CardDetailComponent implements OnInit {
         this.results = res.data.map(item => ({
           name: item.fullName + '-' + item.phone || item.employeeName + '-' + item.phone, code: item.code,empId: item.empId, custId: item.custId, phone: item.phone, email: item.email , departmentName:item.departmentName 
         }));
-        console.log('result:', this.results);
       });
   }
 

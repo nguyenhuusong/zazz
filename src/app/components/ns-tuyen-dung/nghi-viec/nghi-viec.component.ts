@@ -345,7 +345,6 @@ export class NghiViecComponent implements OnInit, AfterViewChecked {
           this.listDataSelect.push(element.CustId)
       });
 
-      console.log('this.listDataSelect', this.listDataSelect)
     }
 
 }

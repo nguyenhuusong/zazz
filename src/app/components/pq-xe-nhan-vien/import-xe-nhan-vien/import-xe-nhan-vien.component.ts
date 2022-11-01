@@ -56,7 +56,6 @@ export class ImportXeNhanVienComponent implements OnInit {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {
         if (results.status === 'success') {
-            console.log(results, 'results')
             this.cols = results?.data?.gridflexs;
             this.initGrid();
             const a: any = document.querySelector(".header");

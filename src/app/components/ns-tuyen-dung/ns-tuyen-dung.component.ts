@@ -187,9 +187,9 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     return {
       buttons: [
         {
-          onClick: this.XemChiTiet.bind(this),
-          label: 'Xem chi tiết',
-          icon: 'fa fa-eye',
+          onClick: this.editRow.bind(this),
+          label: 'Chỉnh sửa',
+          icon: 'fa fa-edit',
           class: 'btn-primary mr5',
           hide: CheckHideAction(MENUACTIONROLEAPI.GetCandidatePage.url, ACTIONS.VIEW)
         },
@@ -302,12 +302,14 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  XemChiTiet(event) {
+  editRow(event) {
     const params = {
       canId: event.rowData.canId
     }
     this.router.navigate(['/tuyen-dung/ds-tuyen-dung/chi-tiet-tuyen-dung'], { queryParams: params });
   }
+
+
 
   addTuyenDung() {
     const params = {

@@ -185,7 +185,6 @@ export class ChiTietLichHopComponent implements OnInit, OnDestroy {
       this.manhinh = 'Edit';
       this.onBack();
     }
-    console.log('eveljfoidsjfo', event)
   }
 
   handleAddMember(): void {

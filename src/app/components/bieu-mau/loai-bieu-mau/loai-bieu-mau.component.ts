@@ -491,6 +491,5 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
   handleCallbackForm() {
     this.load();
     this.addNewPopup = false;
-    console.log('fdjosfjidso')
   }
 }

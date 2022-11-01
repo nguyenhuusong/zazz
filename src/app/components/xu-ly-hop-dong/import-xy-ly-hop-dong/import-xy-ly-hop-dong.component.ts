@@ -59,7 +59,6 @@ export class ImportXyLyHopDongComponent implements OnInit {
         if (results.status === 'success') {
           debugger
           if(results.data && results.data.dataList.data && results.data.dataList.data.length > 0) {
-            console.log(results, 'results')
             this.cols = results.data.gridflexs;
             this.initGrid();
             const a: any = document.querySelector(".header");

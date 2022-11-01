@@ -211,6 +211,15 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
         this.spinner.hide();
        });
   }
+
+  defauDateFilter() {
+    let currentDay = new Date().getDate();
+    if(currentDay >= 25 || currentDay <= 31){
+      this.query.month = this.query.month + 1;
+      this.query.fromdate = new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).format())
+      this.query.todate = new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).add( +1 ,'months').format())
+    }
+  }
   
   showButtons(event: any) {
     return {
@@ -388,6 +397,7 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit() {
+    this.defauDateFilter();
     this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
         if(results && results.length>0){
           this.query.organizeIds = results;
@@ -431,8 +441,6 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
       //   this.query.request_status = this.listStatus[0];
       //   this.load();
       // }
-
-
       if(response.status === 'success'){
         this.listStatus = response.data.map( d => {
           return {
