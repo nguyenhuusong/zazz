@@ -1455,9 +1455,9 @@ export class AppTypeLinkUrlRadioListComponent implements OnInit {
             <div class="linkurl-drag">
             <div class="wrap-upload">
                       <p-fileUpload accept="image/jpeg,image/png,image/jpg,image/gif,.mp4,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/pdf,application/msword,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.wordprocessingml.document" 
-                       [chooseLabel]="''" [chooseIcon]="''"  
+                      *ngIf="!isUpload" [chooseLabel]="''" [chooseIcon]="''"  
                       [multiple]="isUploadMultiple ? true : null" [showUploadButton]="false" [showCancelButton]="false" [customUpload]="true" name="demo[]" 
-                       (onSelect)="uploadHandler($event)" [maxFileSize]="100000000">
+                       (onSelect)="uploadHandler($event)" [maxFileSize]="20000000">
                           <ng-template pTemplate="toolbar">
                           </ng-template>
                           <ng-template pTemplate="content">
@@ -1530,7 +1530,6 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
   ngOnInit(): void {
     this.element.columnValue = this.element.columnValue && (typeof this.element.columnValue === 'string') ? this.element.columnValue.split(',') : this.element.columnValue 
     this.element.columnValue = this.element.columnValue && this.element.columnValue.length > 0 ? this.element.columnValue : []
-    console.log('this.element.columnValue', this.element.columnValue)
     this.dataView.forEach(element => {
       element.fields.forEach(async element1 => {
         if (((element1.field_name === 'AttachName') || (element1.field_name === 'attached_name') || (element1.field_name === 'attachName')) && element1.columnValue ) {
@@ -1580,7 +1579,7 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
           const uploadTask = storageRef.child(`s-hrm/images/${getTime}-${event.currentFiles[index].name}`).put(event.currentFiles[index]);
           uploadTask.on('state_changed', (snapshot) => {
           }, (error) => {
-            console.log('error error error 1', error)
+            console.log('1', error)
           }, () => {
             uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
               if(!this.isUploadMultiple){
@@ -1600,11 +1599,9 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
                 });
               });
             }).catch(error => {
-              console.log('error error error', error)
               this.spinner.hide();
             });
           });
-          console.log('testest sejosdijfoijs')
           if (this.element.field_name === 'file_attach') {
             this.spinner.show();
             let fomrData = new FormData();
@@ -1639,7 +1636,15 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
         }
       }else{
         this.spinner.hide();
-        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Không hỗ trợ định dạng file' });
+        if(event.files.length > 0){
+          for( let i = 0; i < event.files.length; i ++){
+            if(event.files[i].size > 10000000) {
+              this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Kích thước file lớn hơn 20 MB' });
+            }
+          }
+        }else{
+          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Không hỗ trợ định dạng file' });
+        }
       }
       setTimeout(() => {
         this.isUpload = false;
