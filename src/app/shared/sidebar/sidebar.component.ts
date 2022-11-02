@@ -83,9 +83,6 @@ export class SidebarComponent implements OnInit {
                        this.convetArry(this.menuItems);
                        if(this.listmenuChecks.length > 0) {
                             if(this.listmenuChecks.map(d => d.path).indexOf(pathUrl1) < 0) {
-                                if(!this.isWarning) {
-                                    this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Không có quyền truy cập' });
-                                }
                                 // neu khong có quyền thì quay về trang đầu tiên
                                 if(this.menuItems[0].submenus && this.menuItems[0].submenus[0].path) {
                                     this.router.navigate([this.menuItems[0].submenus[0].path]);
