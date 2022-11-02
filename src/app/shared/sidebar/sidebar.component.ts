@@ -34,7 +34,8 @@ export class SidebarComponent implements OnInit {
         router.events.pipe(
             filter((e: Event): e is RouterEvent => e instanceof RouterEvent)
          ).subscribe((e: RouterEvent) => {
-            let pathUrl =  e.url.split("/");
+            let fullUrl =  e.url.split("?");
+            let pathUrl =  fullUrl[0].split("/");
             let pathUrl1 = '/';
             let pathDepth2 = '/';
             pathUrl1 = pathUrl1.concat(pathUrl["1"])
@@ -68,7 +69,8 @@ export class SidebarComponent implements OnInit {
     }
    async ngOnInit() {
         const pathname = window.location.pathname;
-        let pathUrl = pathname.split("/");
+        let fullUrl =  pathname.split("?");
+        let pathUrl =  fullUrl[0].split("/");
         let pathUrl1 = '/';
         pathUrl1 = pathUrl1.concat(pathUrl["1"])
         let pathDepth2 = '/';

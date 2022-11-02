@@ -1455,7 +1455,7 @@ export class AppTypeLinkUrlRadioListComponent implements OnInit {
             <div class="linkurl-drag">
             <div class="wrap-upload">
                       <p-fileUpload accept="image/jpeg,image/png,image/jpg,image/gif,.mp4,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/pdf,application/msword,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.wordprocessingml.document" 
-                      *ngIf="!isUpload" [chooseLabel]="''" [chooseIcon]="''"  
+                       [chooseLabel]="''" [chooseIcon]="''"  
                       [multiple]="isUploadMultiple ? true : null" [showUploadButton]="false" [showCancelButton]="false" [customUpload]="true" name="demo[]" 
                        (onSelect)="uploadHandler($event)" [maxFileSize]="100000000">
                           <ng-template pTemplate="toolbar">
