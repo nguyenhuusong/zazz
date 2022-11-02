@@ -30,7 +30,7 @@ export class SidebarComponent implements OnInit {
         private messageService: MessageService,
         private spinner: NgxSpinnerService,
     ) {
-        console.log('this.router.url', this.router.url)
+        // console.log('this.router.url', this.router.url)
         router.events.pipe(
             filter((e: Event): e is RouterEvent => e instanceof RouterEvent)
          ).subscribe((e: RouterEvent) => {
@@ -86,7 +86,6 @@ export class SidebarComponent implements OnInit {
             this.firebaseAuthService.customLogin(customToken);
           }
         }
-        console.log('me'); 
         this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
             if(results && results.length>0){
              const queryParams = queryString.stringify({ organizeIds: results });
