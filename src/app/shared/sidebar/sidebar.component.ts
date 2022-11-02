@@ -33,7 +33,7 @@ export class SidebarComponent implements OnInit {
     ) {
         router.events.pipe(
             filter((e: Event): e is RouterEvent => e instanceof RouterEvent)
-         ).subscribe((e: RouterEvent) => {
+         ).subscribe((e) => {
                 let fullUrl =  e.url.split("?");
                 let pathUrl =  fullUrl[0].split("/");
                 let pathUrl1 = '/';
@@ -43,7 +43,6 @@ export class SidebarComponent implements OnInit {
                 }
                 if(this.listmenuChecks.length > 0) {
                     if(this.listmenuChecks.map(d => d.path).indexOf(pathUrl1) < 0) {
-                        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Không có quyền truy cập' });
                         // neu khong có quyền thì quay về trang đầu tiên
                         if(this.menuItems[0].submenus && this.menuItems[0].submenus[0].path) {
                             this.router.navigate([this.menuItems[0].submenus[0].path]);
