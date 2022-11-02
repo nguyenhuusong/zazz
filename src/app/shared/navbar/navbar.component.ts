@@ -176,33 +176,35 @@ export class NavbarComponent implements OnInit {
     }
 
     goToHome() {
-      const pathname = window.location.pathname;
-        let pathUrl = pathname.split("/");
-        let pathUrl1 = '/';
-        pathUrl1 = pathUrl1.concat(pathUrl["1"])
-        if(pathUrl[2]){
-            pathUrl1 = pathUrl1.concat("/").concat(pathUrl["2"])
-        }
-        this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-            if(results && results.length>0){
-             const queryParams = queryString.stringify({ organizeIds: results });
-              this.apiService.getUserMenus(queryParams).subscribe(results => {
-                   if (results.status === 'success') {
-                       this.menuItems = results.data;
-                       this.convetArry(this.menuItems);
-                        if(this.listmenuChecks.map(d => d.path).indexOf(pathUrl1) < 0) {
-                            this.router.navigate(['/404']);
-                        }else{
-                          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Không có quyền truy cập' });
-                          this.router.navigate(['/home']);
-                        }
-                       this.menuItems = [...this.menuItems];
-                   }
-               });
-            }else{
-                this.router.navigate(['/404']);
-            }
-        });
+      this.router.navigate(['/home']);
+      // const pathname = window.location.pathname;
+      //   let pathUrl = pathname.split("/");
+      //   let pathUrl1 = '/';
+      //   pathUrl1 = pathUrl1.concat(pathUrl["1"])
+      //   if(pathUrl[2]){
+      //       pathUrl1 = pathUrl1.concat("/").concat(pathUrl["2"])
+      //   }
+      //   this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
+      //       if(results && results.length>0){
+      //        const queryParams = queryString.stringify({ organizeIds: results });
+      //         this.apiService.getUserMenus(queryParams).subscribe(results => {
+      //              if (results.status === 'success') {
+      //                  this.menuItems = results.data;
+      //                  this.convetArry(this.menuItems);
+      //                   if(this.listmenuChecks.map(d => d.path).indexOf(pathUrl1) < 0) {
+      //                       this.router.navigate(['/404']);
+      //                   }else{
+      //                     // this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Không có quyền truy cập' });
+      //                     this.router.navigate(['/home']);
+      //                   }
+      //                  this.menuItems = [...this.menuItems];
+      //              }
+      //          });
+      //       }else{
+      //           this.router.navigate(['/404']);
+      //       }
+      //   });
+        
     }
 
     convetArry(datas) {

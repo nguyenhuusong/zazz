@@ -21,6 +21,7 @@ export class SidebarComponent implements OnInit {
     menuItems: any[] = [];
     private manager: UserManager = new UserManager(environment.authenSettings);
     listmenuChecks = []
+    isWarning = 0;
     constructor(
         private router: Router,
         private authService: AuthService,
@@ -30,41 +31,31 @@ export class SidebarComponent implements OnInit {
         private messageService: MessageService,
         private spinner: NgxSpinnerService,
     ) {
-        // console.log('this.router.url', this.router.url)
         router.events.pipe(
             filter((e: Event): e is RouterEvent => e instanceof RouterEvent)
          ).subscribe((e: RouterEvent) => {
-            let fullUrl =  e.url.split("?");
-            let pathUrl =  fullUrl[0].split("/");
-            let pathUrl1 = '/';
-            let pathDepth2 = '/';
-            pathUrl1 = pathUrl1.concat(pathUrl["1"])
-            if(pathUrl[2]){
-                pathUrl1 = pathUrl1.concat("/").concat(pathUrl["2"]);
-                // pathDepth2 = pathDepth2.concat(pathUrl["1"]).concat("/").concat(pathUrl["2"]);
-            }
-            // if(pathUrl[3]){
-            //     pathUrl1 = pathUrl1.concat("/").concat(pathUrl["3"])
-            // }
-            if(this.listmenuChecks.length > 0) {
-                // let itemsEx = this.listmenuChecks.filter( d => {
-                //     return d.path === pathUrl1 || d.path === pathDepth2
-                // });
-                // console.log('url curent', e)
-                // if(itemsEx.length <= 0){
-                //     this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Không có quyền truy cập' });
-                //     this.router.navigate([this.listmenuChecks[0].path]);
-                // }
-                if(this.listmenuChecks.map(d => d.path).indexOf(pathUrl1) < 0) {
-                    this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Không có quyền truy cập' });
-                    this.router.navigate([this.listmenuChecks[0].path]);
+                let fullUrl =  e.url.split("?");
+                let pathUrl =  fullUrl[0].split("/");
+                let pathUrl1 = '/';
+                pathUrl1 = pathUrl1.concat(pathUrl["1"])
+                if(pathUrl[2]){
+                    pathUrl1 = pathUrl1.concat("/").concat(pathUrl["2"]);
                 }
-                const pathname  = window.location.pathname ;
-                this.parseObjectProperties(this.menuItems, pathname);
-                this.menuItems = [...this.menuItems];
-            }else{
-                this.router.navigate['/404'];
-            }
+                if(this.listmenuChecks.length > 0) {
+                    if(this.listmenuChecks.map(d => d.path).indexOf(pathUrl1) < 0) {
+                        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Không có quyền truy cập' });
+                        if(this.menuItems[0].submenus && this.menuItems[0].submenus[0].path) {
+                            this.router.navigate([this.menuItems[0].submenus[0].path]);
+                        }else{
+                            this.router.navigate(['/404']);
+                        }
+                    }
+                    const pathname  = window.location.pathname ;
+                    this.parseObjectProperties(this.menuItems, pathname);
+                    this.menuItems = [...this.menuItems];
+                }else{
+                    this.router.navigate['/404'];
+                }
          });
     }
    async ngOnInit() {
@@ -73,14 +64,9 @@ export class SidebarComponent implements OnInit {
         let pathUrl =  fullUrl[0].split("/");
         let pathUrl1 = '/';
         pathUrl1 = pathUrl1.concat(pathUrl["1"])
-        let pathDepth2 = '/';
         if(pathUrl[2]){
             pathUrl1 = pathUrl1.concat("/").concat(pathUrl["2"]);
-            // pathDepth2 = pathUrl1.concat("/").concat(pathUrl["2"])
         }
-        // if(pathUrl[3]){
-        //     pathUrl1 = pathUrl1.concat("/").concat(pathUrl["3"])
-        // }
         const token = this.authService.getAccessTokenValue();
         if (!this.firebaseAuthService.authenticated) {
           const customToken = await this.authService.getCustomToken(token);
@@ -96,18 +82,15 @@ export class SidebarComponent implements OnInit {
                        this.menuItems = results.data;
                        this.convetArry(this.menuItems);
                        if(this.listmenuChecks.length > 0) {
-
-                        //    let itemsEx = this.listmenuChecks.filter( d => {
-                        //         return d.path === pathUrl1 || d.path === pathDepth2
-                        //     });
-                        //     if(itemsEx.length <= 0){
-                        //         this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Không có quyền truy cập' });
-                        //         this.router.navigate([this.listmenuChecks[0].path]);
-                        //     }
-
                             if(this.listmenuChecks.map(d => d.path).indexOf(pathUrl1) < 0) {
-                                this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Không có quyền truy cập' });
-                                this.router.navigate([this.listmenuChecks[0].path]);
+                                if(!this.isWarning) {
+                                    this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Không có quyền truy cập' });
+                                }
+                                if(this.menuItems[0].submenus && this.menuItems[0].submenus[0].path) {
+                                    this.router.navigate([this.menuItems[0].submenus[0].path]);
+                                }else{
+                                    this.router.navigate(['/404']);
+                                }
                             }
                         }else{
                             this.router.navigate(['/404']);
