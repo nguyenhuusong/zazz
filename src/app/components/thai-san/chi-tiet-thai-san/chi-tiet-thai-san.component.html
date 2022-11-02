@@ -37,7 +37,15 @@
                         </div>
                     </ng-template>
                     <div class="grid-default border">
-                        <app-list-grid-angular  [title]="'Danh mục hồ sơ khách hàng ký'" [idGrid]="'listsDataMaternityChild'"  [domLayout]="'autoHeight'" [listsData]="listsDataMaternityChild" (FnClick)="OnClick($event)" *ngIf="columnDefMaternityPregnancy.length > 0" [columnDefs]="columnDefMaternityPregnancy"></app-list-grid-angular>
+                        <app-list-grid-angular  
+                            [title]="'Danh mục hồ sơ khách hàng ký'" 
+                            [idGrid]="'listsDataMaternityChild'"  
+                            [domLayout]="'autoHeight'" 
+                            [listsData]="listsDataMaternityChild" 
+                            (FnClick)="OnClick($event)" 
+                            *ngIf="columnDefMaternityPregnancy.length > 0" 
+                            [columnDefs]="columnDefMaternityPregnancy">
+                        </app-list-grid-angular>
                     </div>
                 </p-panel>
             </div>
