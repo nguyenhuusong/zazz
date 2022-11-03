@@ -5501,15 +5501,28 @@ p-button{
                 font-size: 14px;
             }
         }
+        tbody{
+            tr:first-child{
+                td{
+                    padding-top: 10px;
+                }
+            }
+        }
     }
 }
 .p-timepicker{
     &>div{
         &.p-minute-picker{
             flex-direction: row-reverse;
+            button{
+                height: auto;
+            }
         }
         &.p-hour-picker{
             flex-direction: row-reverse;
+            button{
+                height: auto;
+            }
         }
         .pi-chevron-down{
             font-size: 14px;

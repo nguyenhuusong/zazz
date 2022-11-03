@@ -76,7 +76,7 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
         this.paramsObject = { ...params.keys, ...params };
         this.modelEdit.maternityId = this.paramsObject.params.maternityId || null
         this.getMaternityInfo();
-        this.getChiTietForDsThaiSan();
+        // this.getChiTietForDsThaiSan();
       });
   };
 
@@ -86,6 +86,10 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
     this.dataDetail = []
     this.colsDetail = [];
     this.modelEdit.keyObj = '';
+    this.listsDataMaternityPregnancy = [];
+    this.columnDefMaternityPregnancy = [];
+    this.columnDefKhamThai = []
+    this.columnDefConnho = []
     const queryParams = queryString.stringify(this.modelEdit);
     this.apiService.getMaternityInfo(queryParams)
       .pipe(takeUntil(this.unsubscribe$))
@@ -95,6 +99,10 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
             this.colsDetail = results.data.gridflexs;
           }
           this.dataDetail = results.data.data;
+          this.columnDefMaternityChild = results.data.gridflexdetails1 || []
+          this.columnDefMaternityPregnancy = results.data.gridflexdetails2 || []
+          this.listsDataMaternityPregnancy = results.data.maternityPregnancy
+          this.listsDataMaternityChild = results.data.maternityChild
           this.initGrid();
         }
       });
@@ -114,19 +122,27 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
           const listViews = cloneDeep(results.data.group_fields);
           this.listViews = [...listViews];
           this.detailInfo = results.data;
-          this.listsDataMaternityPregnancy = [...this.detailInfo.maternityPregnancy || []]
-          this.listsDataMaternityChild = [...this.detailInfo.maternityChild || []]
-          this.aGridFnMaternityChild(this.detailInfo.gridflexdetails1 || [])
-          this.aGridFnMaternityPregnancy(this.detailInfo.gridflexdetails2 || []);
+          // this.listsDataMaternityPregnancy = [...this.detailInfo.maternityPregnancy || []]
+          // this.listsDataMaternityChild = [...this.detailInfo.maternityChild || []]
+          // this.aGridFnMaternityChild(this.detailInfo.gridflexdetails1 || [])
+          // this.aGridFnMaternityPregnancy(this.detailInfo.gridflexdetails2 || []);
           // if(results.data.gridflexs){
           //   this.colsDetail = results.data.gridflexs;
           // }
+          this.columnDefMaternityChild = results.data.gridflexdetails1 || []
+          this.columnDefMaternityPregnancy = results.data.gridflexdetails2 || []
+          this.listsDataMaternityPregnancy = results.data.maternityPregnancy
+          this.listsDataMaternityChild = results.data.maternityChild
+          this.initGrid();
           this.dataDetail = results.data.data;
 
           // this.initGrid();
         }
       });
   }
+
+  columnDefKhamThai = []
+  columnDefConnho = []
 
   aGridFnMaternityChild(table) {
     this.columnDefMaternityChild = [
@@ -147,7 +163,38 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
         cellRendererParams: (params: any) => this.showButtons(params),
         checkboxSelection: false,
         field: 'checkbox'
-      }]
+      }
+    ]
+      
+    this.columnDefKhamThai = [
+      ...AgGridFn(this.columnDefMaternityChild.filter((d: any) => !d.isHide)),
+      {
+        headerName: 'Thao tác',
+        filter: '',
+        maxWidth: 100,
+        pinned: 'right',
+        cellRenderer: 'buttonAgGridComponent',
+        cellClass: ['border-right', 'no-auto'],
+        cellRendererParams: (params: any) => this.showButtonsKhamThai(params),
+        checkboxSelection: false,
+        field: 'checkbox'
+      }
+    ]
+
+    this.columnDefConnho = [
+      ...AgGridFn(this.columnDefMaternityPregnancy.filter((d: any) => !d.isHide)),
+      {
+        headerName: 'Thao tác',
+        filter: '',
+        maxWidth: 100,
+        pinned: 'right',
+        cellRenderer: 'buttonAgGridComponent',
+        cellClass: ['border-right', 'no-auto'],
+        cellRendererParams: (params: any) => this.showButtonsConnho(params),
+        checkboxSelection: false,
+        field: 'checkbox'
+      }
+    ]
   }
 
   showButtons(event: any) {
@@ -164,12 +211,74 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
     }
   }
 
+  showButtonsKhamThai(event) {
+    return {
+      buttons: [
+        {
+          onClick: this.deleteKhamThai.bind(this),
+          label: 'Xóa',
+          icon: 'fa fa-trash',
+          class: 'btn-primary mr5',
+          // hide: CheckHideAction(MENUACTIONROLEAPI.GetMaternityPage.url, ACTIONS.CHI_TIET_THAI_SAN_KHAM_THAI_XOA)
+        },
+      ]
+    }
+  }
+
+  showButtonsConnho(event) {
+    return {
+      buttons: [
+        {
+          onClick: this.deleteConNho.bind(this),
+          label: 'Xóa',
+          icon: 'fa fa-trash',
+          class: 'btn-primary mr5',
+          // hide: CheckHideAction(MENUACTIONROLEAPI.GetMaternityPage.url, ACTIONS.CHI_TIET_THAI_SAN_CON_NHO_XOA)
+        },
+      ]
+    }
+  }
+
   deleteDetail(event) {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa?',
       accept: () => {
         const queryParams = queryString.stringify({ matPolicyId: event.rowData.matPolicyId, maternityId: event.rowData.maternityId });
         this.apiService.delMaternityPolicyInfo(queryParams).subscribe(results => {
+          if (results.status === 'success') {
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
+            this.getChiTietForDsThaiSan();
+          } else {
+            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+          }
+        });
+      }
+    });
+  }
+
+  deleteConNho(event) {
+    this.confirmationService.confirm({
+      message: 'Bạn có chắc chắn muốn xóa?',
+      accept: () => {
+        const queryParams = queryString.stringify({ childId: event.rowData.childId });
+        this.apiService.delMaternityChildInfo(queryParams).subscribe(results => {
+          if (results.status === 'success') {
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
+            this.getChiTietForDsThaiSan();
+          } else {
+            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+          }
+        });
+      }
+    });
+  }
+
+  deleteKhamThai(event) {
+    this.confirmationService.confirm({
+      message: 'Bạn có chắc chắn muốn xóa?',
+      accept: () => {
+        const queryParams = queryString.stringify({ pregnancyId: event.rowData.pregnancyId });
+        this.apiService.delMaternityPregnancyInfo(queryParams).subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
             this.getChiTietForDsThaiSan();
@@ -277,8 +386,20 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
 
   saveCallApi(event) {
     this.spinner.show();
+    let groupFieldNew = event;
+    groupFieldNew[0].fields.forEach(element => {
+      if(element.field_name === "meta_file_name") {
+        element.columnValue = this.fileThaiSan.name;
+      }else if(element.field_name === "meta_file_type") {
+        element.columnValue = this.fileThaiSan.type;
+      }else if(element.field_name === "meta_title") {
+        element.columnValue = "File dữ liệu khám thai";
+      }else if(element.field_name === "meta_file_size") {
+        element.columnValue = this.fileThaiSan.size;
+      }
+    });
     const params = {
-      ...this.detailInfo_other, group_fields: event
+      ...this.detailInfo_other, group_fields: groupFieldNew
     }
     this.apiService.setMaternityPregnancyInfo(this.modelAdd.set,params)
       .pipe(takeUntil(this.unsubscribe$))
@@ -287,6 +408,7 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
           this.spinner.hide();
           this.displayAddThaiSan = false;
+          this.getChiTietForDsThaiSan();
         } else {
           this.messageService.add({
             severity: 'error', summary: 'Thông báo',
@@ -298,6 +420,7 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
         this.spinner.hide();
       };
   }
+
   isDetailLichThaiSan = false
   listViewsDetail = []
   detailInfoDetail = []
@@ -355,6 +478,10 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
   }
   onFirstDataRendered(params) {
     params.api.sizeColumnsToFit()
+  }
+  fileThaiSan: any = []
+  getFileInfo(data) {
+    this.fileThaiSan = data[0]
   }
 
 }

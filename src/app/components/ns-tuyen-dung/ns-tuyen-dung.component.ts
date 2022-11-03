@@ -104,7 +104,9 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   ]
   recruitmentStatusSelected = null;
   dataRowSelected = []
-
+  isSendMail = false;
+  mailsInput = [];
+  mailInputValue: any = []
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
@@ -450,6 +452,19 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     })
   }
 
+  getRecruitMailInput() {
+    this.apiService.getRecruitMailInput(queryString.stringify({})).subscribe(results => {
+      if (results.status === 'success') {
+        this.listVacancy = results.data.recruitMail.map(d => {
+          return {
+            label: d.mail_name,
+            value: d.mail_id
+          }
+        })
+      }
+    })
+  }
+
   changeRecruStatus() {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn chuyển vòng?',
@@ -462,9 +477,11 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
         this.apiService.recruiUpdateStatus(queryString.stringify(query)).subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Chuyển thành công!' });
-            this.load();
+            // this.load();
             this.dataRowSelected = [];
             this.recruitmentStatusSelected = null;
+            this.isSendMail = true;
+            this.getRecruitMailInput();
           } else {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
           }

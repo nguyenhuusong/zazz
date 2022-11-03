@@ -205,7 +205,7 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
     ];
     this.getOrgRoots();
     let currentDay = new Date().getDate();
-    if(currentDay >= 25 || currentDay <= 31){
+    if(currentDay >= 25 && currentDay <= 31){
       this.query.month = this.query.month + 1;
     }
   }

@@ -41,6 +41,9 @@ export class SidebarComponent implements OnInit {
                 if(pathUrl[2]){
                     pathUrl1 = pathUrl1.concat("/").concat(pathUrl["2"]);
                 }
+                if(pathUrl[3]){
+                    pathUrl1 = pathUrl1.concat("/").concat(pathUrl["3"])
+                }
                 if(this.listmenuChecks.length > 0) {
                     if(this.listmenuChecks.map(d => d.path).indexOf(pathUrl1) < 0) {
                         // neu khong có quyền thì quay về trang đầu tiên
@@ -66,6 +69,9 @@ export class SidebarComponent implements OnInit {
         pathUrl1 = pathUrl1.concat(pathUrl["1"])
         if(pathUrl[2]){
             pathUrl1 = pathUrl1.concat("/").concat(pathUrl["2"]);
+        }
+        if(pathUrl[3]){
+            pathUrl1 = pathUrl1.concat("/").concat(pathUrl["3"])
         }
         const token = this.authService.getAccessTokenValue();
         if (!this.firebaseAuthService.authenticated) {

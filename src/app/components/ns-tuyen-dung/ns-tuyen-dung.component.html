@@ -229,3 +229,12 @@
         </div>
     </ng-template>
 </p-overlayPanel>
+
+<p-dialog styleClass="hideHeaderForm" header="Gửi mail" 
+    [(visible)]="isSendMail" 
+    [modal]="true" [style]="{width: '400px'}"
+    [draggable]="false" [resizable]="false" [focusTrap]="false" >
+    <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
+        [options]="mailsInput" placeholder="Chọn trạng thái" [(ngModel)]="mailInputValue" name="mailInputValue">
+        </p-dropdown>
+</p-dialog>

@@ -212,9 +212,10 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
        });
   }
 
+  // set kỳ công
   defauDateFilter() {
     let currentDay = new Date().getDate();
-    if(currentDay >= 25 || currentDay <= 31){
+    if(currentDay >= 25 && currentDay <= 31){
       this.query.month = this.query.month + 1;
       this.query.fromdate = new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).format())
       this.query.todate = new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).add( +1 ,'months').format())

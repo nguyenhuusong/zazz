@@ -7,7 +7,9 @@
         </div>
     </section>
    <div class="content">
-    <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButon"  [dataView]="listViews"
+    <app-edit-detail *ngIf="listViews.length> 0" 
+        [detail]="detailInfo" [manhinh]="'Edit'" 
+        [optionsButtonsEdit]="optionsButon"  [dataView]="listViews"
         (callback)="setMaternityInfo($event)" (callbackcancel)="quaylai($event)"></app-edit-detail>
         <hr>
         <section class="row mt-1" *ngIf="modelEdit.maternityId">
@@ -18,11 +20,20 @@
                            <h4>Khám thai</h4>
                         </div>
                         <div class="col-md-6 text-right">
-                            <p-button label="Thêm mới" [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetMaternityPage.url, action: ACTIONS.THEM_KHAM_THAI}" styleClass="p-button-sm" (click)="addKhamThai()"></p-button>
+                            <p-button label="Thêm mới" 
+                            [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetMaternityPage.url, action: ACTIONS.THEM_KHAM_THAI}" 
+                            styleClass="p-button-sm" (click)="addKhamThai()"></p-button>
                         </div>
                     </ng-template>
                     <div class="grid-default border">
-                        <app-list-grid-angular [title]="'Danh mục hồ sơ khách hàng ký'"  [domLayout]="'autoHeight'" [idGrid]="'listsDataMaternityPregnancy'" [listsData]="listsDataMaternityPregnancy"  (FnClick)="OnClick($event)" *ngIf="columnDefMaternityChild.length > 0" [columnDefs]="columnDefMaternityChild"></app-list-grid-angular>
+                        <app-list-grid-angular [title]="'Danh mục hồ sơ khách hàng ký'"  
+                        [domLayout]="'autoHeight'" 
+                        [idGrid]="'listsDataMaternityPregnancy'" 
+                        [listsData]="listsDataMaternityPregnancy"  
+                        (FnClick)="OnClick($event)" 
+                        *ngIf="columnDefKhamThai.length > 0" 
+                        [columnDefs]="columnDefKhamThai">
+                    </app-list-grid-angular>
                     </div>
                 </p-panel>
             </div>
@@ -33,7 +44,10 @@
                           <h4>Con nhỏ</h4>
                         </div>
                         <div class="col-md-6 text-right">
-                            <p-button label="Thêm mới" styleClass="p-button-sm"  [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetMaternityPage.url, action: ACTIONS.THEM_CON_NHO}" (click)="addConNho()"></p-button>
+                            <p-button label="Thêm mới" 
+                            styleClass="p-button-sm"  
+                            [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetMaternityPage.url, action: ACTIONS.THEM_CON_NHO}" 
+                            (click)="addConNho()"></p-button>
                         </div>
                     </ng-template>
                     <div class="grid-default border">
@@ -43,8 +57,8 @@
                             [domLayout]="'autoHeight'" 
                             [listsData]="listsDataMaternityChild" 
                             (FnClick)="OnClick($event)" 
-                            *ngIf="columnDefMaternityPregnancy.length > 0" 
-                            [columnDefs]="columnDefMaternityPregnancy">
+                            *ngIf="columnDefConnho.length > 0" 
+                            [columnDefs]="columnDefConnho">
                         </app-list-grid-angular>
                     </div>
                 </p-panel>
@@ -75,6 +89,7 @@
 <p-dialog styleClass="popup-chi-tiet-thai-san" header="{{modelAdd.title}}" [(visible)]="displayAddThaiSan" [modal]="true" [style]="{width: '1000px'}"
     [draggable]="false" [resizable]="false">
     <app-edit-detail *ngIf="listViews_other.length> 0" 
+        (callback1)="getFileInfo($event)"
         [detail]="detailInfo_other" [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButon"  [dataView]="listViews_other"
         (callback)="saveCallApi($event)" (callbackcancel)="displayAddThaiSan = !displayAddThaiSan"></app-edit-detail>
 </p-dialog>
@@ -92,3 +107,4 @@
         (callbackcancel)="closeLichTS($event)"
     ></app-edit-detail>
 </p-dialog>
+

@@ -720,6 +720,7 @@ export class ApiHrmService {
     return this.http.delete<any>(`${apiHrmServer}/api/v2/maternity/DelMaternityChildInfo?` + queryParams, this.options)
   }
   
+  
 
 
   // Tuyển dụng
@@ -790,6 +791,10 @@ export class ApiHrmService {
 
   recruiUpdateStatus(queryParams, params = null): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v1/recruitment/UpdateStatus?`+ queryParams, params, this.options)
+  }
+
+  getRecruitMailInput(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetRecruitMailInput`, this.options)
   }
   
   getAgencyOrganizeMap(): Observable<any> {

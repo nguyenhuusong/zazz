@@ -94,6 +94,7 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
     fromdate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).add(-1,'months').format()),
     todate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).format()),
     organizeIds: '',
+    position: '',
   }
   totalRecord = 0;
   DriverId = 0;
@@ -395,6 +396,21 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
         this.detailInfo = results.data;
       }
     }) 
+  }
+  
+  positions = [];
+  getOrgPositions() {
+    console.log('fdsjofdjif',)
+    this.positions = [];
+    const queryParams = queryString.stringify({ orgId: this.selectedValue.data });
+    this.apiService.getOrgPositions(queryParams).subscribe(results => {
+      if (results.status === 'success') {
+        this.positions = results.data.map(d => {
+          return { label: d.positionName, value: d.positionCd }
+        });
+        this.positions = [{ label: 'Tất cả', value: null }, ...this.positions]
+      }
+    })
   }
 
   setChitiet(data) {

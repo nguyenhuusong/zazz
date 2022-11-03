@@ -146,7 +146,6 @@ export class NavbarComponent implements OnInit {
         (results: any) => {
           if(results.status === "success"){
             if(results.data && results.data && results.data.length > 0){
-              console.log('this.detailOrganize', this.detailOrganizes)
               this.detailOrganizes = results.data
                 .map(d => {
                   return {

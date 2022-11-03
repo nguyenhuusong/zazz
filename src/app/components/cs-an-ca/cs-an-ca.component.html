@@ -62,8 +62,18 @@
                                                   [filter]="true" 
                                                   [ngClass]="[ departmentFiltes.length <= 0 ? 'tree-empty' : '' ]" 
                                                   [options]="departmentFiltes" selectionMode="single" name="selectedValue"
+                                                  (onNodeSelect)="getOrgPositions()"
                                                   placeholder="Chọn phòng ban"></p-treeSelect>
                                               </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="field-group select label-8" [ngClass]=" query.position ? 'valid' : 'invalid' ">
+                                                <label for="">Chức vụ</label>
+                                                <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
+                                                    [options]="positions" [(ngModel)]="query.position" name="position"
+                                                    >
+                                                </p-dropdown>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="input-group icon col-12 select-default text-right">
