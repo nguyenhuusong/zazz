@@ -37,15 +37,20 @@ export class SidebarComponent implements OnInit {
                 let fullUrl =  e.url.split("?");
                 let pathUrl =  fullUrl[0].split("/");
                 let pathUrl1 = '/';
+                let pathDepth2 = '/';
                 pathUrl1 = pathUrl1.concat(pathUrl["1"])
                 if(pathUrl[2]){
                     pathUrl1 = pathUrl1.concat("/").concat(pathUrl["2"]);
                 }
-                if(pathUrl[3]){
-                    pathUrl1 = pathUrl1.concat("/").concat(pathUrl["3"])
+                if(pathUrl[2]){
+                    pathUrl1 = pathUrl1.concat("/").concat(pathUrl["2"]);
+                    pathDepth2 = pathDepth2.concat(pathUrl["1"]).concat("/").concat(pathUrl["2"]);
                 }
                 if(this.listmenuChecks.length > 0) {
-                    if(this.listmenuChecks.map(d => d.path).indexOf(pathUrl1) < 0) {
+                    let itemsEx = this.listmenuChecks.filter( d => {
+                        return d.path === pathUrl1 || d.path === pathDepth2
+                    });
+                    if(itemsEx.length <= 0){
                         // neu khong có quyền thì quay về trang đầu tiên
                         if(this.menuItems[0].submenus && this.menuItems[0].submenus[0].path) {
                             this.router.navigate([this.menuItems[0].submenus[0].path]);
@@ -66,12 +71,11 @@ export class SidebarComponent implements OnInit {
         let fullUrl =  pathname.split("?");
         let pathUrl =  fullUrl[0].split("/");
         let pathUrl1 = '/';
+        let pathDepth2 = '/';
         pathUrl1 = pathUrl1.concat(pathUrl["1"])
         if(pathUrl[2]){
             pathUrl1 = pathUrl1.concat("/").concat(pathUrl["2"]);
-        }
-        if(pathUrl[3]){
-            pathUrl1 = pathUrl1.concat("/").concat(pathUrl["3"])
+            pathDepth2 = pathDepth2.concat(pathUrl["1"]).concat("/").concat(pathUrl["2"]);
         }
         const token = this.authService.getAccessTokenValue();
         if (!this.firebaseAuthService.authenticated) {
@@ -88,7 +92,10 @@ export class SidebarComponent implements OnInit {
                        this.menuItems = results.data;
                        this.convetArry(this.menuItems);
                        if(this.listmenuChecks.length > 0) {
-                            if(this.listmenuChecks.map(d => d.path).indexOf(pathUrl1) < 0) {
+                            let itemsEx = this.listmenuChecks.filter( d => {
+                                return d.path === pathUrl1 || d.path === pathDepth2
+                            });
+                            if(itemsEx.length <= 0){
                                 // neu khong có quyền thì quay về trang đầu tiên
                                 if(this.menuItems[0].submenus && this.menuItems[0].submenus[0].path) {
                                     this.router.navigate([this.menuItems[0].submenus[0].path]);
