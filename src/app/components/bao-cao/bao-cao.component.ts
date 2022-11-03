@@ -17,6 +17,7 @@ export class BaoCaoComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private apiService: ApiHrmService,
     private changeDetector: ChangeDetectorRef,
+    private router: Router,
     private messageService: MessageService) {
   }
   
@@ -191,7 +192,7 @@ export class BaoCaoComponent implements OnInit {
     const api = this.listReports.filter(t => t.value === this.query.report_type)[0].api;
     if (api) {
       const queryParams = queryString.stringify(params);
-      this.apiService.get(api, queryParams)
+      this.apiService.get(window.location.host + api, queryParams)
       .subscribe(response => {
         if (response.type === 'application/json') {
           this.spinner.hide();
@@ -213,7 +214,7 @@ export class BaoCaoComponent implements OnInit {
     const api = this.listReports.filter(t => t.value === this.query.report_type)[0].api;
     if (api) {
       const queryParams = queryString.stringify(params);
-      this.apiService.get(api, queryParams)
+      this.apiService.get(window.location.host + api, queryParams)
       .subscribe(response => {
         if (response.type === 'application/json') {
           this.spinner.hide();
@@ -235,7 +236,7 @@ export class BaoCaoComponent implements OnInit {
     const api = this.listReports.filter(t => t.value === this.query.report_type)[0].api;
     if (api) {
       const queryParams = queryString.stringify(params);
-      this.apiService.get(api, queryParams)
+      this.apiService.get(window.location.host + api, queryParams)
       .subscribe(response => {
         if (response.type === 'application/json') {
           this.spinner.hide();

@@ -102,7 +102,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     { label: 'Nhận Offer', code: '8' },
     { label: 'Từ chối Offer', code: '9' },
   ]
-  recruitmentStatusSelected = null;
+  recruitmentStatusSelected = '1';
   dataRowSelected = []
   isSendMail = false;
   mailsInput = [];
@@ -455,10 +455,10 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   getRecruitMailInput() {
     this.apiService.getRecruitMailInput(queryString.stringify({})).subscribe(results => {
       if (results.status === 'success') {
-        this.listVacancy = results.data.recruitMail.map(d => {
+        this.mailsInput = results.data.recruitmentMail.map(d => {
           return {
             label: d.mail_name,
-            value: d.mail_id
+            value: d.mail_Id
           }
         })
       }
@@ -476,12 +476,12 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
         }
         this.apiService.recruiUpdateStatus(queryString.stringify(query)).subscribe((results: any) => {
           if (results.status === 'success') {
+            this.getRecruitMailInput();
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Chuyển thành công!' });
             // this.load();
-            this.dataRowSelected = [];
+            // this.dataRowSelected = [];
             this.recruitmentStatusSelected = null;
             this.isSendMail = true;
-            this.getRecruitMailInput();
           } else {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
           }
@@ -489,6 +489,37 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
       }
     });
   }
+
+  cancelSendEmail() {
+    this.isSendMail = false;
+  }
+
+  sendEmail() {
+    if(!this.mailInputValue) {
+      this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Chưa chọn nội dung gửi' });
+    }
+    const data = {
+      mail_Id: this.mailInputValue,
+      can_Id: this.dataRowSelected[0].canId
+    }
+    this.spinner.show();
+    this.apiService.sendRecruitMail(data).subscribe(results => {
+      if (results.status === 'success') {
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Gửi thành công' });
+        this.mailInputValue = '';
+        // this.isSendMail = false;
+        // this.load();
+        // this.spinner.hide();
+        const params = {
+          meet_ud: null
+        }
+        return this.router.navigate(['/cai-dat/cai-dat-lich-hop/them-moi-lich-hop'], { queryParams: params });
+      } else {
+        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.data : null });
+      }
+    })
+  }
+
 
   // vitrituyendung() {
   //   this.router.navigate(['/tuyen-dung/danh-sach-tuyen-dung/vi-tri-tuyen-dung']);

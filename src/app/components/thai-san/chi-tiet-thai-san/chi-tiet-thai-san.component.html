@@ -32,6 +32,7 @@
                         [listsData]="listsDataMaternityPregnancy"  
                         (FnClick)="OnClick($event)" 
                         *ngIf="columnDefKhamThai.length > 0" 
+                        (onCellClicked)="cellClicked($event)"
                         [columnDefs]="columnDefKhamThai">
                     </app-list-grid-angular>
                     </div>

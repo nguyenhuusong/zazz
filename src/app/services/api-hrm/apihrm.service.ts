@@ -796,6 +796,19 @@ export class ApiHrmService {
   getRecruitMailInput(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetRecruitMailInput`, this.options)
   }
+
+  sendRecruitMail(data = null): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/recruitment/SendRecruitMail`, data, this.options)
+  }
+
+  exportVacancy(queryParams): Observable<any> {
+    return this.http.get(`${apiHrmServer}/api/v1/recruitment/ExportVacancy/?${queryParams}`, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
+  }
   
   getAgencyOrganizeMap(): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/organize/GetOrganizeMap`, this.options);

@@ -13,6 +13,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import * as moment from 'moment';
+import * as FileSaver from 'file-saver';
 const MAX_SIZE = 100000000;
 @Component({
   selector: 'app-vi-tri-tuyen-dung',
@@ -324,6 +325,26 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
         }
       },
         error => { });
+  }
+
+  
+  export() {
+    let params: any = {... this.query};
+    delete params.fromDate
+    delete params.toDate
+    params.FromDate = moment(new Date(this.query.fromDate)).format('YYYY-MM-DD')
+    params.ToDate = moment(new Date(this.query.toDate)).format('YYYY-MM-DD');
+    const queryParams = queryString.stringify(params);
+    this.apiService.exportVacancy(queryParams).subscribe(results => {
+      if (results.type === 'application/json') {
+        this.spinner.hide();
+      } else {
+        var blob = new Blob([results], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        FileSaver.saveAs(blob, `Danh sách vị trí tuyển dụng ${params.FromDate} - ${params.ToDate}` +".xlsx");
+        this.spinner.hide();
+      }
+    })
+    
   }
 
 }

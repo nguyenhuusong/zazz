@@ -54,6 +54,11 @@
                             &nbsp;
                             Thêm mới
                     </p-button>
+                    
+                    <p-button styleClass="p-button-sm height-56" label="Export" 
+                        (click)="export()"  icon="fa fa-download"  
+                        [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetVacancyPage.url, action: ACTIONS.EXPORT}">
+                    </p-button>
                 </div>
             </div>
         </div>

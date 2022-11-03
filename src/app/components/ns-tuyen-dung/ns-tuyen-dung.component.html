@@ -232,9 +232,18 @@
 
 <p-dialog styleClass="hideHeaderForm" header="Gửi mail" 
     [(visible)]="isSendMail" 
-    [modal]="true" [style]="{width: '400px'}"
+    [modal]="true" [style]="{width: '600px'}"
     [draggable]="false" [resizable]="false" [focusTrap]="false" >
-    <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
-        [options]="mailsInput" placeholder="Chọn trạng thái" [(ngModel)]="mailInputValue" name="mailInputValue">
-        </p-dropdown>
+    <div class="field-group select">
+        <label>Nội dung gửi <span style="color: red">*</span></label>
+        <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
+            [options]="mailsInput" placeholder="Chọn nội dung gửi" [(ngModel)]="mailInputValue" name="mailInputValue">
+            </p-dropdown>
+        </div>
+        <ng-template pTemplate="footer">
+            <div class="d-flex end">
+              <p-button (click)="cancelSendEmail()" styleClass="p-button-sm p-button-secondary" label="Bỏ qua" icon="pi pi-times-circle"></p-button>&nbsp;
+              <p-button (click)="sendEmail()">Gửi email</p-button>
+            </div>
+        </ng-template>
 </p-dialog>

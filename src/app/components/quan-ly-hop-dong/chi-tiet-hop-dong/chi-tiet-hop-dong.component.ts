@@ -117,7 +117,7 @@ export class ChiTietHopDongComponent implements OnInit, OnChanges {
   }
 
   ViewContract(event) {
-    this.downloadButtonClicked(event.rowData.temp_view_url);
+    this.downloadButtonClicked(event.rowData.meta_file_tpl);
   }
 
   DowloadFileDemo(event) {

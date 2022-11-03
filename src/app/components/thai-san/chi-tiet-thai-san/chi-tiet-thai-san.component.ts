@@ -484,5 +484,15 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
     this.fileThaiSan = data[0]
   }
 
+  cellClicked(data) {
+    if(data.colDef.field === "meta_file_name") {
+      var url = data.data.link_view;
+      var elem = document.createElement('a');
+      elem.href = data.data.meta_file_url;
+      elem.target = 'hiddenIframe';
+      elem.click();
+    }
+  }
+
 }
 
