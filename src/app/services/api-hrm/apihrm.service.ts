@@ -785,6 +785,10 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetCandidateInfo?` + queryParams, this.options)
   }
 
+  getCandidatesViewInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetCandidatesViewInfo?` + queryParams, this.options)
+  }
+
   setCandidateInfo(params): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v1/recruitment/SetCandidateInfo`, params, this.options)
   }

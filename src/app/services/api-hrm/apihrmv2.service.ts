@@ -396,6 +396,21 @@ export class ApiHrmV2Service {
     )
   }
 
+  getPositionTitles( queryParams , field_name): Observable<any> {
+    return this.httpClient.get(`${apiHrmServer}/api/v1/recruitment/GetPositionTitles?` + queryParams, this.options).pipe(
+      map((repon: any) => {
+        return { key: field_name, result: repon.data.map(d => {
+          return {
+            label: `${d.vacancy_name}`,
+            value: `${d.vacancyId}`
+          }
+        }) };
+      }), catchError(error => {
+        return throwError('getPositionTitles not found!', error);
+      })
+    )
+  }
+
   getEducationsV2(field_name): Observable<any> {
     return this.httpClient.get(`${apiHrmServer}/api/v2/category/GetEducations`, this.options).pipe(
       map((repon: any) => {

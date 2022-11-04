@@ -10,5 +10,17 @@
     <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'" [isNested]="true" [optionsButtonsEdit]="optionsButon"  [dataView]="listViews"
         (callback)="setCandidateInfo($event)" (callbackcancel)="quaylai($event)"></app-edit-detail>
    </div>
-   
+   <section>
+        <div class="d-flex bet middle">
+            <h4>Lịch sử</h4>
+        </div>
+        <div class="grid-default">
+            <app-list-grid-angular 
+                *ngIf="columnDefs.length > 0" 
+                [listsData]="listData" 
+                [height]="heightGrid"
+                [columnDefs]="columnDefs">
+            </app-list-grid-angular>
+        </div>
+   </section>
 </div>

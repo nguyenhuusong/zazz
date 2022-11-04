@@ -1324,8 +1324,9 @@ export class AppTypeCheckboxRadioListComponent implements OnInit {
                         <p-image  src="{{imagesUpload}}" alt="Image" width="250" height="250" ></p-image>
                       </div>
                     </div>
-                    <div *ngIf="!this.element.columnValue" class="upload_file"><input class="" type="file"  accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/pdf, application/msword, image/*, application/vnd.ms-powerpoint,
-                    text/plain, application/vnd.ms-excel" (change)="onUploadOutputImage($event)" ></div>
+                    <div *ngIf="!this.element.columnValue" class="upload_file">
+                    <input class="" type="file"  
+                    accept="{{ fileAccept }}" (change)="onUploadOutputImage($event)" ></div>
                     <input type="file" style="display: none" id="sign_second" name="sign_second"  accept="image/jpeg,image/png,image/jpg,image/gif" (change)="onUploadOutputImage($event)">
                     <div *ngIf="element.isRequire && submit && !element.columnValue"
                         class="alert-validation alert-danger">
@@ -1352,13 +1353,18 @@ export class AppTypeLinkUrlRadioListComponent implements OnInit {
   @Input() dataView;
   @Input() submit = false;
   imagesUpload = '';
-  fileType: any = ''
+  fileType: any = '';
+  fileAccept = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/pdf, application/msword, image/*, application/vnd.ms-powerpoint, application/vnd.ms-excel";
   constructor(
     private apiService: ApiHrmService,
     private spinner: NgxSpinnerService,
+    private messageService: MessageService,
   ) { }
   ngOnInit(): void {
-    this.imagesUpload = this.element.columnValue ? this.element.columnValue : ''
+    this.imagesUpload = this.element.columnValue ? this.element.columnValue : '';
+    if(this.element.field_name ==="image_url") {
+      this.fileAccept = 'image/jpeg,image/png,image/jpg,image/gif'
+    }
     this.getFile();
   }
 
@@ -1384,6 +1390,27 @@ export class AppTypeLinkUrlRadioListComponent implements OnInit {
   }
 
   onUploadOutputImage(event) {
+    if (event.target.files[0] && event.target.files[0].size > 0) {
+      this.fileType = event.target.files[0].type;
+    }
+    if(this.element.field_name ==="image_url") { 
+      if(this.fileType !=='image/jpeg' && this.fileType !=='image/png' && this.fileType !=='image/jpg' && this.fileType !=='image/gif') {
+        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Lỗi định dạng file, Vui lòng upload ảnh.' });
+        this.element.columnValue = '';
+        return
+      }
+    }else{
+      if(this.fileType !=='image/jpeg' && this.fileType !=='image/png' 
+        && this.fileType !=='image/jpg' && this.fileType !=='image/gif' 
+        && this.fileType !=='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        && this.fileType !=='application/pdf' && this.fileType !=='application/msword'
+        && this.fileType !=='application/vnd.ms-powerpoint'
+        && this.fileType !=='application/vnd.ms-excel') {
+        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Lỗi định dạng file' });
+        this.element.columnValue = '';
+        return
+      }
+    }
     this.spinner.show();
     if (event.target.files[0] && event.target.files[0].size > 0) {
       const getDAte = new Date();

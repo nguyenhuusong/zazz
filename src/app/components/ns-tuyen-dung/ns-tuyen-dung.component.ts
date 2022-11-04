@@ -193,6 +193,13 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
           label: 'Chỉnh sửa',
           icon: 'fa fa-edit',
           class: 'btn-primary mr5',
+          hide: CheckHideAction(MENUACTIONROLEAPI.GetCandidatePage.url, ACTIONS.EDIT)
+        },
+        {
+          onClick: this.viewRow.bind(this),
+          label: 'Xem chi tiết',
+          icon: 'fa fa-eye',
+          class: 'btn-primary mr5',
           hide: CheckHideAction(MENUACTIONROLEAPI.GetCandidatePage.url, ACTIONS.VIEW)
         },
         {
@@ -311,7 +318,13 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     this.router.navigate(['/tuyen-dung/ds-tuyen-dung/chi-tiet-tuyen-dung'], { queryParams: params });
   }
 
-
+  viewRow(event) {
+    const params = {
+      canId: event.rowData.canId,
+      view: true
+    }
+    this.router.navigate(['/tuyen-dung/ds-tuyen-dung/chi-tiet-tuyen-dung'], { queryParams: params });
+  }
 
   addTuyenDung() {
     const params = {
@@ -478,7 +491,6 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
           if (results.status === 'success') {
             this.getRecruitMailInput();
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Chuyển thành công!' });
-            // this.load();
             // this.dataRowSelected = [];
             this.recruitmentStatusSelected = null;
             this.isSendMail = true;
@@ -486,12 +498,13 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
           }
         });
-      }
+      },
     });
   }
 
   cancelSendEmail() {
     this.isSendMail = false;
+    this.load();
   }
 
   sendEmail() {
