@@ -64,7 +64,12 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
         this.paramsObject = { ...params.keys, ...params };
         this.modelEdit.canId = this.paramsObject.params.canId || null;
         this.isView = this.paramsObject.params.view
-        this.getCandidateInfo();
+        
+        if(!this.isView) {
+          this.getCandidateInfo();
+        }else{
+          this.getCandidatesViewInfo();
+        }
       });
   };
 
@@ -79,9 +84,6 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
           this.detailInfo = results.data;
         }
       });
-      if(this.isView) {
-        this.getCandidatesViewInfo();
-      }
   }
 
   getCandidatesViewInfo() {
@@ -94,6 +96,9 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
       if (results.status === 'success') {
         this.cols = results.data.gridflexdetails1;
         this.listData = results.data.recruitCandidates;
+        const listViews = cloneDeep(results.data.group_fields);
+        this.listViews = [...listViews];
+        this.detailInfo = results.data;
         this.initGrid();
       }
     });
