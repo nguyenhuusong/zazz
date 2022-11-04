@@ -10,7 +10,7 @@
     <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'" [isNested]="true" [optionsButtonsEdit]="optionsButon"  [dataView]="listViews"
         (callback)="setCandidateInfo($event)" (callbackcancel)="quaylai($event)"></app-edit-detail>
    </div>
-   <section>
+   <section *ngIf="isView">
         <div class="d-flex bet middle">
             <h4>Lịch sử</h4>
         </div>
