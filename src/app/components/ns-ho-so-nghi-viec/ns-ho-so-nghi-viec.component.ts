@@ -90,7 +90,7 @@ export class NsHoSoNghiViecComponent implements OnInit {
     pageSize: 15,
     status: -1,
     organizeIds: "",
-    companyIds: '',
+    companyIds: [],
   }
 
   employeeStatus = [
@@ -182,6 +182,9 @@ export class NsHoSoNghiViecComponent implements OnInit {
 
     let params: any = {... this.query};
     params.orgId = this.department ? this.department.orgId : null
+    let companyIds = this.query.companyIds.toString();
+    params.companyIds = companyIds;
+
     const queryParams = queryString.stringify(params);
     this.apiService.getTerminatePage(queryParams).subscribe(
       (results: any) => {
@@ -429,7 +432,6 @@ export class NsHoSoNghiViecComponent implements OnInit {
         if(results && results.length > 0){
           this.query.organizeIds = results;
           this.getOrganizeTree();
-          // this.getAgencyOrganizeMap();
           this.getCompany();
         }
     });
@@ -471,28 +473,22 @@ export class NsHoSoNghiViecComponent implements OnInit {
   companies = []
 
   getCompany() {
-    const query = queryString.stringify(
-      { 
-        filter: '',
-        organizeIds: this.query.organizeIds
-    })
-    this.apiService.getCompanyPage(query).subscribe(
+    this.apiService.getUserCompanies().subscribe(
       (results: any) => {
         if(results.status === "success"){
-          this.companies = results.data.dataList.data
+          this.companies = results.data
             .map(d => {
               return {
                 label: d.companyName,
-                value: d.companyId
+                code: d.companyId
               };
             });
-            this.query.companyIds = this.companies[0].value
+            this.query.companyIds.push(this.companies[0].code);
             this.load();
         }
       }),
       error => { };
   }
-
 
   hrDiagram() {
     this.isHrDiagram = true;

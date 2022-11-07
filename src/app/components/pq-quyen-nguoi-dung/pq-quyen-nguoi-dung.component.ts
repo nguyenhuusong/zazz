@@ -356,6 +356,7 @@ export class PqQuyenNguoiDungComponent implements OnInit {
     this.getOrganizes();
     this.getPositionList();
     this.getRoles();
+    this.getCompany();
   }
 
 

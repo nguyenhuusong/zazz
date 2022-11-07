@@ -132,7 +132,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
     isApprove: -1,
     emp_st: -1,
     organizeIds: '',
-    companyIds: '',
+    companyIds: [],
   }
 
   titleForm = {
@@ -220,6 +220,9 @@ export class NsHoSoNhanSuComponent implements OnInit {
     this.columnDefs = []
     this.spinner.show();
     const params: any = { ...this.query };
+
+    let companyIds = this.query.companyIds.toString();
+    params.companyIds = companyIds;
     params.organizeIds = this.query.organizeIds;
     params.orgId = params.orgId.orgId;
     const queryParams = queryString.stringify(params);
@@ -474,8 +477,6 @@ export class NsHoSoNhanSuComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.query.orgIds = localStorage.getItem("organizes");
-    // this.organizesRole = localStorage.getItem("organizes");
     this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
         if(results && results.length>0){
           this.query.organizeIds = results;
@@ -483,13 +484,10 @@ export class NsHoSoNhanSuComponent implements OnInit {
           this.getCompany();
         }
     });
-    
-    // this.getOrganizeTree();
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Quản lý nhân sự' },
     ];
-    // this.getAgencyOrganizeMap();
     this.getEmployeeStatus();
     this.getOrgan();
     this.itemsToolOfGrid = [
@@ -791,24 +789,18 @@ export class NsHoSoNhanSuComponent implements OnInit {
   }
 
   getCompany() {
-    const query = queryString.stringify(
-      { 
-        filter: '',
-        organizeIds: this.query.organizeIds
-    })
-    this.apiService.getCompanyPage(query).subscribe(
+    this.apiService.getUserCompanies().subscribe(
       (results: any) => {
         if(results.status === "success"){
-          this.companies = results.data.dataList.data
+          this.companies = results.data
             .map(d => {
               return {
                 label: d.companyName,
-                value: d.companyId
+                code: d.companyId
               };
             });
-            this.query.companyIds = this.companies[0].value
+            this.query.companyIds.push(this.companies[0].code);
             this.load();
-            this.changeDetector.detectChanges();
         }
       }),
       error => { };

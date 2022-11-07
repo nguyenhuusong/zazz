@@ -48,15 +48,16 @@ export class ChiTietMailTuyenDungComponent implements OnInit, OnDestroy {
     this.handleParams();
   }
   modelEdit = {
-    vacancyId: null,
+    mail_Id: null,
   }
-  titlePage = ''
+  titlePage = '';
+  
   handleParams() {
     this.activatedRoute.queryParamMap
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((params) => {
         this.paramsObject = { ...params.keys, ...params };
-        this.modelEdit.vacancyId = this.paramsObject.params.vacancyId || null
+        this.modelEdit.mail_Id = this.paramsObject.params.mail_Id || null
         this.getRecruitMailInfo();
       });
   };

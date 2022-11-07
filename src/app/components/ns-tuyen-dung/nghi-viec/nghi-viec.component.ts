@@ -249,12 +249,11 @@ export class NghiViecComponent implements OnInit, AfterViewChecked {
     this.load();
   }
 
-
   ngOnInit() {
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Tuyển dụng'},
-      { label: 'Danh sách nghỉ việc' },
+      { label: 'Tuyển dụng lại' },
     ];
     this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
         if(results && results.length>0){

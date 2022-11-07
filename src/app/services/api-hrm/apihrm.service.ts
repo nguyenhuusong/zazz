@@ -440,6 +440,10 @@ export class ApiHrmService {
     return this.http.post<T>(`${apiHrmServer}/api/v1/user/UnLockUser`, { userId }, this.options);
   }
 
+  getUserCompanies() {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/user/GetUserCompanies?`, this.options)
+  }
+  
   setEmployeeCancel(params): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/employee/SetEmployeeCancel`, params, this.options)
   }

@@ -73,7 +73,7 @@ export class PheDuyetComponent implements OnInit, AfterViewChecked {
     offSet: 0,
     pageSize: 100000000,
     organizeIds: '',
-    companyIds: '',
+    companyIds: [],
   }
   totalRecord = 0;
   DriverId = 0;
@@ -132,7 +132,10 @@ export class PheDuyetComponent implements OnInit, AfterViewChecked {
   load() {
     this.columnDefs = []
     this.spinner.show();
-    const queryParams = queryString.stringify(this.query);
+    let params: any = {... this.query};
+    let companyIds = this.query.companyIds.toString();
+    params.companyIds = companyIds;
+    const queryParams = queryString.stringify(params);
     this.apiService.getWorkflowPage(queryParams).subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
@@ -306,28 +309,23 @@ export class PheDuyetComponent implements OnInit, AfterViewChecked {
   }
 
   getCompany() {
-    const query = queryString.stringify(
-      { 
-        filter: '',
-        organizeIds: this.query.organizeIds
-    })
-    this.apiService.getCompanyPage(query).subscribe(
+    this.apiService.getUserCompanies().subscribe(
       (results: any) => {
         if(results.status === "success"){
-          this.companies = results.data.dataList.data
+          this.companies = results.data
             .map(d => {
               return {
                 label: d.companyName,
-                value: d.companyId
+                code: d.companyId
               };
             });
-            this.query.companyIds = this.companies[0].value
+            this.query.companyIds.push(this.companies[0].code);
             this.load();
-
         }
       }),
       error => { };
   }
+
 
 
 

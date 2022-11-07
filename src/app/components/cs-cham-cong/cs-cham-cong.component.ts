@@ -90,7 +90,7 @@ export class CsChamCongComponent implements OnInit {
     month: new Date().getMonth() + 1,
     year: new Date().getFullYear(),
     organizeIds: '',
-    companyIds: '',
+    companyIds: [],
   }
 
   queryCheckInOut = {
@@ -190,6 +190,8 @@ export class CsChamCongComponent implements OnInit {
     this.columnDefs = []
     this.spinner.show();
     let params: any = {... this.query};
+    let companyIds = this.query.companyIds.toString();
+    params.companyIds = companyIds;
     // params.fromDate = moment(new Date(this.query.fromDate)).format('YYYY-MM-DD')
     // params.toDate = moment(new Date(this.query.toDate)).format('YYYY-MM-DD')
     const queryParams = queryString.stringify(params);
@@ -316,28 +318,23 @@ export class CsChamCongComponent implements OnInit {
 
 
   getCompany() {
-    const query = queryString.stringify(
-      { 
-        filter: '',
-        organizeIds: this.query.organizeIds
-    })
-    this.apiService.getCompanyPage(query).subscribe(
+    this.apiService.getUserCompanies().subscribe(
       (results: any) => {
         if(results.status === "success"){
-          this.companies = results.data.dataList.data
+          this.companies = results.data
             .map(d => {
               return {
                 label: d.companyName,
-                value: d.companyId
+                code: d.companyId
               };
             });
-            this.query.companyIds = this.companies[0].value
+            this.query.companyIds.push(this.companies[0].code);
             this.load();
-
         }
       }),
       error => { };
   }
+
 
 
   getOrgRoots() {

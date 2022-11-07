@@ -18,22 +18,18 @@
                     </div>
                 </div>
             </div>
-            <div class="col-item">
-                <div class="d-flex bottom gap-16">
-                    <div class="field-group select mb-0">
-                        <label>Công ty</label>
-                        <p-dropdown appendTo="body" [baseZIndex]="100"
-                        [options]="companies" [(ngModel)]="query.companyIds" name="companyIds"
-                        (onChange)="find()" [filter]="true">
-                            <ng-template let-item pTemplate="selectedItem">
-                                <span>{{item.label}}</span>
-                            </ng-template>
-                            <ng-template let-car pTemplate="item">
-                                <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                                    <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
-                                </div>
-                            </ng-template>
-                        </p-dropdown>
+            <div class="col-item col-8">
+                <div class="d-flex bottom end gap-16">
+                    <div class="col-3 col-item pd-0">
+                        <div class="field-group multi-select mb-0">
+                            <label>Công ty</label>
+                            <p-multiSelect appendTo="body"
+                                (onChange)="find()"
+                                optionValue="code"
+                                optionLabel="label"
+                                [options]="companies" [(ngModel)]="query.companyIds"
+                                ></p-multiSelect>
+                        </div>
                     </div>
                     <p-button styleClass="reloadBtn" (click)="cancel()">
                         <svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">

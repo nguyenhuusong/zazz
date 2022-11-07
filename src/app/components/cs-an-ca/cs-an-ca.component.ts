@@ -95,6 +95,7 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
     todate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).format()),
     organizeIds: '',
     position: '',
+    companyIds: []
   }
   totalRecord = 0;
   DriverId = 0;
@@ -121,7 +122,8 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
       pageSize: 15,
       fromdate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).add(-1,'months').format()),
       todate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).format()),
-      organizeIds: this.query.organizeIds
+      organizeIds: this.query.organizeIds,
+      companyIds: this.query.companyIds
     }
     this.load();
   }
@@ -138,6 +140,8 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
     this.columnDefs = []
     this.spinner.show();
     let params: any = {... this.query};
+    let companyIds = this.query.companyIds.toString();
+    params.companyIds = companyIds;
     delete params.fromdate
     delete params.todate
     params.FromDate = moment(new Date(this.query.fromdate)).format('YYYY-MM-DD')
@@ -416,29 +420,22 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
 
 
   getCompany() {
-    const query = queryString.stringify(
-      { 
-        filter: '',
-        organizeIds: this.query.organizeIds
-    })
-    this.apiService.getCompanyPage(query).subscribe(
+    this.apiService.getUserCompanies().subscribe(
       (results: any) => {
         if(results.status === "success"){
-          this.companies = results.data.dataList.data
+          this.companies = results.data
             .map(d => {
               return {
                 label: d.companyName,
-                value: d.companyId
+                code: d.companyId
               };
             });
-            this.query.companyIds = this.companies[0].value
+            this.query.companyIds.push(this.companies[0].code);
             this.load();
-
         }
       }),
       error => { };
   }
-
 
   setChitiet(data) {
     const params = {
