@@ -89,7 +89,8 @@ export class NsHoSoNghiViecComponent implements OnInit {
     offSet: 0,
     pageSize: 15,
     status: -1,
-    organizeIds: ""
+    organizeIds: "",
+    companyIds: '',
   }
 
   employeeStatus = [
@@ -105,7 +106,8 @@ export class NsHoSoNghiViecComponent implements OnInit {
       orgId: this.query.orgId,
       reason_id: 0,
       status: -1,
-      organizeIds: this.query.organizeIds
+      organizeIds: this.query.organizeIds,
+      companyIds: this.query.companyIds,
     }
     this.load();
   }
@@ -427,7 +429,8 @@ export class NsHoSoNghiViecComponent implements OnInit {
         if(results && results.length > 0){
           this.query.organizeIds = results;
           this.getOrganizeTree();
-          this.getAgencyOrganizeMap();
+          // this.getAgencyOrganizeMap();
+          this.getCompany();
         }
     });
     this.items = [
@@ -464,6 +467,32 @@ export class NsHoSoNghiViecComponent implements OnInit {
       }
     })
   }
+
+  companies = []
+
+  getCompany() {
+    const query = queryString.stringify(
+      { 
+        filter: '',
+        organizeIds: this.query.organizeIds
+    })
+    this.apiService.getCompanyPage(query).subscribe(
+      (results: any) => {
+        if(results.status === "success"){
+          this.companies = results.data.dataList.data
+            .map(d => {
+              return {
+                label: d.companyName,
+                value: d.companyId
+              };
+            });
+            this.query.companyIds = this.companies[0].value
+            this.load();
+        }
+      }),
+      error => { };
+  }
+
 
   hrDiagram() {
     this.isHrDiagram = true;

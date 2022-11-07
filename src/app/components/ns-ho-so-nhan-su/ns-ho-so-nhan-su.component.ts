@@ -95,6 +95,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
   organs = []
   isButtonmoveOrganNow = true;
   itemsToolOfGrid: any[] = [];
+  companies = []
   constructor(
     private apiService: ApiHrmService,
     private spinner: NgxSpinnerService,
@@ -130,7 +131,8 @@ export class NsHoSoNhanSuComponent implements OnInit {
     isLock: -1,
     isApprove: -1,
     emp_st: -1,
-    organizeIds: ''
+    organizeIds: '',
+    companyIds: '',
   }
 
   titleForm = {
@@ -159,7 +161,8 @@ export class NsHoSoNhanSuComponent implements OnInit {
       isLock: -1,
       isApprove: -1,
       emp_st: -1,
-      organizeIds: this.query.organizeIds
+      organizeIds: this.query.organizeIds,
+      companyIds: this.query.companyIds,
     }
     this.load();
   }
@@ -477,11 +480,9 @@ export class NsHoSoNhanSuComponent implements OnInit {
         if(results && results.length>0){
           this.query.organizeIds = results;
           this.getOrganizeTree();
-          this.load();
+          this.getCompany();
         }
     });
-
-    console.log('router', this.router.url)
     
     // this.getOrganizeTree();
     this.items = [
@@ -789,6 +790,30 @@ export class NsHoSoNhanSuComponent implements OnInit {
     }
   }
 
+  getCompany() {
+    const query = queryString.stringify(
+      { 
+        filter: '',
+        organizeIds: this.query.organizeIds
+    })
+    this.apiService.getCompanyPage(query).subscribe(
+      (results: any) => {
+        if(results.status === "success"){
+          this.companies = results.data.dataList.data
+            .map(d => {
+              return {
+                label: d.companyName,
+                value: d.companyId
+              };
+            });
+            this.query.companyIds = this.companies[0].value
+            this.load();
+            this.changeDetector.detectChanges();
+        }
+      }),
+      error => { };
+  }
+
   loadjs = 0;
   heightGrid = 0
   ngAfterViewChecked(): void {
@@ -807,10 +832,20 @@ export class NsHoSoNhanSuComponent implements OnInit {
         this.loadjs = 0;
       }
     }
+    this.changeDetector.detectChanges();
+  }
+
+  ngAfterViewInit() {
+    this.changeDetector.detectChanges();
   }
 
   importFileExel() {
     this.router.navigate(['/nhan-su/ho-so-nhan-su/import']);
+  }
+
+  ngAfterContentChecked(): void {
+
+    this.changeDetector.detectChanges();
   }
 
 }

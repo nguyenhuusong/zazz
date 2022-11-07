@@ -104,6 +104,7 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
     currentRecordStart: 0,
     currentRecordEnd: 0
   }
+  companies = []
 
   onGridReady(params) {
     this.gridApi = params.api;
@@ -295,7 +296,7 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
         if(results && results.length>0){
           this.query.organizeIds = results;
           this.rowDataSelected = []
-          this.load();
+          this.getCompany();
           this.getOrganizeTree();
         }
     });
@@ -412,6 +413,32 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
       }
     })
   }
+
+
+  getCompany() {
+    const query = queryString.stringify(
+      { 
+        filter: '',
+        organizeIds: this.query.organizeIds
+    })
+    this.apiService.getCompanyPage(query).subscribe(
+      (results: any) => {
+        if(results.status === "success"){
+          this.companies = results.data.dataList.data
+            .map(d => {
+              return {
+                label: d.companyName,
+                value: d.companyId
+              };
+            });
+            this.query.companyIds = this.companies[0].value
+            this.load();
+
+        }
+      }),
+      error => { };
+  }
+
 
   setChitiet(data) {
     const params = {

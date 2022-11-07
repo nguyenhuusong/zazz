@@ -65,6 +65,7 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
     month: new Date().getMonth() + 1,
     organizeId: '',
     organizeIds: '',
+    companyIds: '',
   }
   totalRecord = 0;
   first = 0;
@@ -76,7 +77,8 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
   loading = false;
 
   loadjs = 0;
-  heightGrid = 0
+  heightGrid = 0;
+  companies = [];
   ngAfterViewChecked(): void {
     const a: any = document.querySelector(".header");
     const b: any = document.querySelector(".sidebarBody");
@@ -103,7 +105,8 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
       year: 0,
       month: 0,
       organizeId: '',
-      organizeIds: this.query.organizeIds
+      organizeIds: this.query.organizeIds,
+      companyIds: this.query.companyIds,
     }
     this.load();
   }
@@ -195,7 +198,7 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
         if(results && results.length>0){
           this.query.organizeIds = results;
           this.query.organizeId = results;
-          this.load();
+          this.getCompany();
         }
     });
     this.items = [
@@ -230,6 +233,32 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
       }
     })
   }
+
+
+  getCompany() {
+    const query = queryString.stringify(
+      { 
+        filter: '',
+        organizeIds: this.query.organizeIds
+    })
+    this.apiService.getCompanyPage(query).subscribe(
+      (results: any) => {
+        if(results.status === "success"){
+          this.companies = results.data.dataList.data
+            .map(d => {
+              return {
+                label: d.companyName,
+                value: d.companyId
+              };
+            });
+            this.query.companyIds = this.companies[0].value
+            this.load();
+
+        }
+      }),
+      error => { };
+  }
+
 
   exportData() {
     this.spinner.show();

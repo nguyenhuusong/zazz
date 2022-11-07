@@ -73,6 +73,7 @@ export class ThaiSanComponent implements OnInit, AfterViewChecked {
     offSet: 0,
     pageSize: 15,
     organizeIds: '',
+    companyIds: '',
   }
   totalRecord = 0;
   DriverId = 0;
@@ -84,6 +85,7 @@ export class ThaiSanComponent implements OnInit, AfterViewChecked {
   }
   loading = false;
   listVacancy = []
+  companies = []
 
   onGridReady(params) {
     this.gridApi = params.api;
@@ -116,6 +118,7 @@ export class ThaiSanComponent implements OnInit, AfterViewChecked {
       offSet: 0,
       pageSize: 15,
       organizeIds: this.query.organizeIds,
+      companyIds: this.query.companyIds,
     }
     this.load();
   }
@@ -292,7 +295,7 @@ export class ThaiSanComponent implements OnInit, AfterViewChecked {
     this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
         if(results && results.length>0){
           this.query.organizeIds = results;
-          this.load();
+          this.getCompany();
         }
     });
     this.items = [
@@ -301,6 +304,31 @@ export class ThaiSanComponent implements OnInit, AfterViewChecked {
       { label: 'Danh sách thai sản' },
     ];
 
+  }
+
+
+  getCompany() {
+    const query = queryString.stringify(
+      { 
+        filter: '',
+        organizeIds: this.query.organizeIds
+    })
+    this.apiService.getCompanyPage(query).subscribe(
+      (results: any) => {
+        if(results.status === "success"){
+          this.companies = results.data.dataList.data
+            .map(d => {
+              return {
+                label: d.companyName,
+                value: d.companyId
+              };
+            });
+            this.query.companyIds = this.companies[0].value
+            this.load();
+
+        }
+      }),
+      error => { };
   }
 
 

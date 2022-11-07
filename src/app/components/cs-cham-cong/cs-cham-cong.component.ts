@@ -90,6 +90,7 @@ export class CsChamCongComponent implements OnInit {
     month: new Date().getMonth() + 1,
     year: new Date().getFullYear(),
     organizeIds: '',
+    companyIds: '',
   }
 
   queryCheckInOut = {
@@ -113,6 +114,7 @@ export class CsChamCongComponent implements OnInit {
   loadjs = 0;
   heightGrid = 0
   itemsToolOfGrid: any[] = [];
+  companies = []
   ngAfterViewChecked(): void {
     const a: any = document.querySelector(".header");
     const b: any = document.querySelector(".sidebarBody");
@@ -147,6 +149,7 @@ export class CsChamCongComponent implements OnInit {
       month: new Date().getMonth() + 1,
       year: new Date().getFullYear(),
       organizeIds: this.query.organizeIds,
+      companyIds: this.query.companyIds,
     }
     this.load();
   }
@@ -280,7 +283,8 @@ export class CsChamCongComponent implements OnInit {
         if(results && results.length>0){
           this.query.organizeIds = results;
           // this.load();
-          this.getOrgRoots();
+          // this.getOrgRoots();
+          this.getCompany();
         }
     });
     this.items = [
@@ -309,6 +313,32 @@ export class CsChamCongComponent implements OnInit {
       },
     ]
   }
+
+
+  getCompany() {
+    const query = queryString.stringify(
+      { 
+        filter: '',
+        organizeIds: this.query.organizeIds
+    })
+    this.apiService.getCompanyPage(query).subscribe(
+      (results: any) => {
+        if(results.status === "success"){
+          this.companies = results.data.dataList.data
+            .map(d => {
+              return {
+                label: d.companyName,
+                value: d.companyId
+              };
+            });
+            this.query.companyIds = this.companies[0].value
+            this.load();
+
+        }
+      }),
+      error => { };
+  }
+
 
   getOrgRoots() {
     this.apiService.getOrgRoots().subscribe(results => {

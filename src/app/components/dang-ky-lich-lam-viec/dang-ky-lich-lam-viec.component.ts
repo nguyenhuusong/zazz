@@ -94,6 +94,7 @@ export class DangKyLichLamViecComponent implements OnInit {
     app_st: null,
     is_flexible: null,
     organizeIds: '',
+    companyIds: '',
   }
   totalRecord = 0;
   DriverId = 0;
@@ -139,7 +140,8 @@ export class DangKyLichLamViecComponent implements OnInit {
       work_cd: null,
       app_st: null,
       is_flexible: null,
-      organizeIds: this.query.organizeIds
+      organizeIds: this.query.organizeIds,
+      companyIds: this.query.companyIds,
     }
     this.load();
   }
@@ -481,7 +483,7 @@ export class DangKyLichLamViecComponent implements OnInit {
           this.query.organizeIds = results;
           this.query.organizeId = results;
           this.listDataSelect = [];
-          this.load();
+          this.getCompany();
           this.getWorkTime();
           this.getOrganizeTree();
         }
@@ -622,6 +624,34 @@ export class DangKyLichLamViecComponent implements OnInit {
   rowSelected(data) {
     this.listDataSelect = data
   }
+
+  
+  companies = []
+
+  getCompany() {
+    const query = queryString.stringify(
+      { 
+        filter: '',
+        organizeIds: this.query.organizeIds
+    })
+    this.apiService.getCompanyPage(query).subscribe(
+      (results: any) => {
+        if(results.status === "success"){
+          this.companies = results.data.dataList.data
+            .map(d => {
+              return {
+                label: d.companyName,
+                value: d.companyId
+              };
+            });
+            this.query.companyIds = this.companies[0].value
+            this.load();
+
+        }
+      }),
+      error => { };
+  }
+
 
 }
 

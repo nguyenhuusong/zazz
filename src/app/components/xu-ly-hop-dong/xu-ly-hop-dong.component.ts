@@ -101,6 +101,7 @@ export class XuLyHopDongComponent implements OnInit {
     fromDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).add(-1, 'months').format("YYYY-MM-DD")),
     toDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).format("YYYY-MM-DD")),
     organizeIds: '',
+    companyIds: '',
   }
   totalRecord = 0;
   DriverId = 0;
@@ -110,6 +111,7 @@ export class XuLyHopDongComponent implements OnInit {
     currentRecordStart: 0,
     currentRecordEnd: 0
   }
+  companies = []
 
   // import 
   showImportExcel = false
@@ -138,6 +140,7 @@ export class XuLyHopDongComponent implements OnInit {
       fromDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).add(-1, 'months').format("YYYY-MM-DD")),
       toDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).format("YYYY-MM-DD")),
       organizeIds: this.query.organizeIds,
+      companyIds: this.query.companyIds,
     }
     this.load();
   }
@@ -389,7 +392,7 @@ export class XuLyHopDongComponent implements OnInit {
     this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
         if(results && results.length>0){
           this.query.organizeIds = results;
-          this.load();
+          this.getCompany();
         }
     });
     this.webSocketService.myWebSocket
@@ -703,6 +706,31 @@ export class XuLyHopDongComponent implements OnInit {
       }
     })
   }
+
+
+  getCompany() {
+    const query = queryString.stringify(
+      { 
+        filter: '',
+        organizeIds: this.query.organizeIds
+    })
+    this.apiService.getCompanyPage(query).subscribe(
+      (results: any) => {
+        if(results.status === "success"){
+          this.companies = results.data.dataList.data
+            .map(d => {
+              return {
+                label: d.companyName,
+                value: d.companyId
+              };
+            });
+            this.query.companyIds = this.companies[0].value
+            this.load();
+        }
+      }),
+      error => { };
+  }
+
 
   getQueryLocalSotrage() {
     let queryLocal: any = JSON.parse(localStorage.getItem('queryXLHD'));
