@@ -409,7 +409,6 @@ export class PqQuyenNguoiDungComponent implements OnInit {
     this.getJobTitles();
     this.getPositionList();
     this.getManagerList();
-    this.getCompany();
   }
   listJobTitles = []
   getJobTitles() {
@@ -571,18 +570,25 @@ export class PqQuyenNguoiDungComponent implements OnInit {
                 code: d.id.toUpperCase()
               };
             });
+            let rolesActive = this.roles.filter( roles => this.addUserQuery.roles.some( roleActive => roles.code === roleActive ))
+            this.addUserQuery.roles = rolesActive.map( role => role.code);
       }),
       error => { };
   }
 
   getCompany() {
+    let organizeIds = '';
+    if(this.addUserQuery.ord_ids.length > 0) {
+      organizeIds = this.addUserQuery.ord_ids.toString();
+    }
     const query = queryString.stringify(
       { 
         filter: '',
+        organizeIds: organizeIds
     })
     this.apiService.getCompanyPage(query).subscribe(
       (results: any) => {
-        if(results.status === "success")
+        if(results.status === "success"){
           this.companies = results.data.dataList.data
             .map(d => {
               return {
@@ -590,6 +596,9 @@ export class PqQuyenNguoiDungComponent implements OnInit {
                 code: d.companyId.toUpperCase()
               };
             });
+            let companyActive = this.companies.filter( compan => this.addUserQuery.companyIds.some( companActive => compan.code === companActive ))
+            this.addUserQuery.companyIds = companyActive.map( compan => compan.code);
+          }
       }),
       error => { };
   }
@@ -754,8 +763,10 @@ export class PqQuyenNguoiDungComponent implements OnInit {
   }
 
   onChangeOrgan(event) {
-    this.addUserQuery.roles = [];
+    // this.addUserQuery.roles = [];
+    // this.addUserQuery.companyIds = [];
     this.getRoles();
+    this.getCompany();
   }
 
   exportData() {
