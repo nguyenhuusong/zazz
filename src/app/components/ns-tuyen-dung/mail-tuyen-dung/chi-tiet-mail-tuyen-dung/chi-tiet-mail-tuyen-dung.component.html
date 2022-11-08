@@ -7,7 +7,30 @@
         </div>
     </section>
    <div class="content">
-        <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButon"  [dataView]="listViews"
-            (callback)="setRecruitMailInfo($event)" (callbackcancel)="quaylai($event)"></app-edit-detail>
+        <div class="grid">
+            <div class="col-9">
+                <app-edit-detail *ngIf="listViews.length> 0" 
+                    [detail]="detailInfo" [manhinh]="'Edit'" 
+                    [optionsButtonsEdit]="optionsButon"  
+                    [dataView]="listViews"
+                    (callback)="setRecruitMailInfo($event)" 
+                    (callback1)="getChipsValue($event)"
+                    (callbackcancel)="quaylai($event)"></app-edit-detail>
+            </div>
+            <div class="col-3">
+                <div class="sidebar-config">
+                    <h2>Trường trộn</h2>
+                    <ul *ngIf="configData" class="d-flex wrap configs gap-16">
+                        <li *ngFor="let config of configData">
+                            <span pTooltip="Copy" tooltipPosition="top" (click)="getTextConfig(config)">
+                                <span style="color: #4C97E4">[</span>{{ config }}
+                                <span style="color: #4C97E4">]</span>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+        </div>
     </div>
 </div>

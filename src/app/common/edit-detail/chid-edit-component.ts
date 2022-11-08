@@ -1987,7 +1987,7 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
   template: `   <div class="fileds field-group">
                   <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
                   <div class="">
-                    <p-chips [(ngModel)]="element.columnValue" name="{{element.field_name}}"></p-chips>
+                    <p-chips (onRemove)="onRemove($event)" (onAdd)="onAddAchip($event)" (onChipClick)="onChipClick($event)" [(ngModel)]="element.columnValue" name="{{element.field_name}}"></p-chips>
                   </div>
                   <div *ngIf="element.isRequire && submit && !element.columnValue"
                       class="alert-validation alert-danger">
@@ -2004,8 +2004,10 @@ export class AppTypeChips implements OnInit {
   @Input() modelFields;
   @Input() submit = false;
   @Input() dataView;
+  @Output() emitChipsValue = new EventEmitter<any>();
   constructor(
-    private apiService: ApiHrmService
+    private apiService: ApiHrmService,
+    private messageService: MessageService,
   ) { }
   ngOnInit(): void {
     this.modelFields[this.element.field_name].error = false;
@@ -2014,7 +2016,22 @@ export class AppTypeChips implements OnInit {
   luau() {
     console.log(this.element.columnValue)
   }
+  onAddAchip(event) {
+    this.emitChipsValue.emit(this.element.columnValue)
+  }
 
+  onChipClick(event) {
+    if(this.element.field_name === 'info_field'){
+      navigator.clipboard.writeText('[' + event.value +']').then( d => {
+        this.messageService.add({ key: 'bc', severity: 'success', summary: 'Thông báo', detail: 'Đã copy' });
+      }, function(err) {
+        console.error('Async: Could not copy text: ', err);
+      });
+    }
+  }
+  onRemove(event) {
+    this.emitChipsValue.emit(this.element.columnValue)
+  }
 }
 
 

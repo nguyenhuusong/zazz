@@ -761,4 +761,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
     this.dataView = cloneDeep(event)
   }
 
+  emitChipsValue(event) {
+    this.callback1.emit(event);
+  }
+
 }

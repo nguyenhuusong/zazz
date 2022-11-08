@@ -51,6 +51,7 @@ export class ChiTietMailTuyenDungComponent implements OnInit, OnDestroy {
     mail_Id: null,
   }
   titlePage = '';
+  configData = []
   
   handleParams() {
     this.activatedRoute.queryParamMap
@@ -71,8 +72,27 @@ export class ChiTietMailTuyenDungComponent implements OnInit, OnDestroy {
           const listViews = cloneDeep(results.data.group_fields);
           this.listViews = [...listViews];
           this.detailInfo = results.data;
+          this.getConfigData();
         }
       });
+  }
+
+  getConfigData() {
+    if(this.listViews && this.listViews.length > 0){
+      this.listViews.forEach( field => {
+        field.fields.forEach(element => {
+          if(element.field_name === 'info_field') {
+            if(element.columnValue) {
+              this.configData = element.columnValue.split(',')
+            }
+          }
+        });
+      })
+    }
+  }
+
+  getChipsValue(event) {
+    this.configData = event
   }
 
   setRecruitMailInfo(data) {
@@ -105,6 +125,14 @@ export class ChiTietMailTuyenDungComponent implements OnInit, OnDestroy {
     }else {
       this.router.navigate(['/tuyen-dung/mail-tuyen-dung']);
     }
+  }
+
+  getTextConfig(text){
+    navigator.clipboard.writeText('[' + text +']').then( d => {
+      this.messageService.add({ key: 'bc', severity: 'success', summary: 'Thông báo', detail: 'Đã copy' });
+    }, function(err) {
+      console.error('Async: Could not copy text: ', err);
+    });
   }
 
 }

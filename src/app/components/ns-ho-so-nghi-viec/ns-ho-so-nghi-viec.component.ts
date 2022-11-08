@@ -484,6 +484,7 @@ export class NsHoSoNghiViecComponent implements OnInit {
               };
             });
             this.query.companyIds.push(this.companies[0].code);
+            // this.query.companyIds = this.companies.map( d => d.code)
             this.load();
         }
       }),
