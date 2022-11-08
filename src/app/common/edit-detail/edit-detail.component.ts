@@ -271,9 +271,11 @@ export class EditDetailComponent implements OnInit, OnChanges {
             // promissall.push(this.apiHrmV2Service.getMeetRoomsV2(queryString.stringify({ filter: '', floor_No: floorId }), element1.field_name));
           } else if (element1.field_name === 'content_type' || element1.field_name === 'isPublish') {
             promissall.push(this.apiHrmV2Service.getObjectListV2(queryString.stringify({ objKey: element1.columnObject }), element1.field_name));
-          } else if (element1.field_name === 'vehicleTypeId') {
-            promissall.push(this.apiHrmV2Service.getVehicleTypesV2(element1.field_name));
-          } else if (element1.field_name === 'year_of_birth') {
+          }
+          //  else if (element1.field_name === 'vehicleTypeId') {
+          //   promissall.push(this.apiHrmV2Service.getVehicleTypesV2(element1.field_name));
+          // }
+           else if (element1.field_name === 'year_of_birth') {
             this.GetYearPicker(element1);
           } else if (element1.field_name === 'annualMonth') {
             this.GetAnnualMonth(element1);
