@@ -260,6 +260,8 @@ export class BaoCaoComponent implements OnInit {
         params[element.param_cd] = element[element.param_cd] ? moment(new Date(element[element.param_cd])).format('DD/MM/YYYY') : null;
       } else if (element.param_type === 'object') {
         params[element.param_cd] = element[element.param_cd];
+      }else if (element.param_type === 'input') {
+        params[element.param_cd] = element[element.param_cd];
       }else if (element.param_type === 'multiSelect') {
         console.log(element[element.param_cd] && (element[element.param_cd] != 1) && (element[element.param_cd].length > 0))
         if( element[element.param_cd] && (element[element.param_cd] != 1) && (element[element.param_cd].length > 0)) {

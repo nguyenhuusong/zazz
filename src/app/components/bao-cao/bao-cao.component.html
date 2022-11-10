@@ -84,7 +84,7 @@
                         </div>
                     </div>
                     <div *ngIf="paramater?.param_type === 'input'" class="col-md-12">
-                      <div class="field-group multi-select" [ngClass]="paramater[paramater?.param_cd] ? 'valid' : 'invalid' ">
+                      <div class="field-group text" [ngClass]="paramater[paramater?.param_cd] ? 'valid' : 'invalid' ">
                         <label for="">{{paramater?.param_name}}: </label>
                         <input type="text" class="form-control" [(ngModel)]="paramater[paramater?.param_cd]"
                         name="{{paramater.param_cd}}">
