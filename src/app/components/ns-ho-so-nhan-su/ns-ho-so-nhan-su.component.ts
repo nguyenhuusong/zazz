@@ -95,6 +95,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
   organs = []
   isButtonmoveOrganNow = true;
   itemsToolOfGrid: any[] = [];
+  companies = []
   constructor(
     private apiService: ApiHrmService,
     private spinner: NgxSpinnerService,
@@ -130,7 +131,8 @@ export class NsHoSoNhanSuComponent implements OnInit {
     isLock: -1,
     isApprove: -1,
     emp_st: -1,
-    organizeIds: ''
+    organizeIds: '',
+    companyIds: [],
   }
 
   titleForm = {
@@ -159,7 +161,8 @@ export class NsHoSoNhanSuComponent implements OnInit {
       isLock: -1,
       isApprove: -1,
       emp_st: -1,
-      organizeIds: this.query.organizeIds
+      organizeIds: this.query.organizeIds,
+      companyIds: this.query.companyIds,
     }
     this.load();
   }
@@ -217,6 +220,9 @@ export class NsHoSoNhanSuComponent implements OnInit {
     this.columnDefs = []
     this.spinner.show();
     const params: any = { ...this.query };
+
+    let companyIds = this.query.companyIds.toString();
+    params.companyIds = companyIds;
     params.organizeIds = this.query.organizeIds;
     params.orgId = params.orgId.orgId;
     const queryParams = queryString.stringify(params);
@@ -471,24 +477,17 @@ export class NsHoSoNhanSuComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.query.orgIds = localStorage.getItem("organizes");
-    // this.organizesRole = localStorage.getItem("organizes");
     this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
         if(results && results.length>0){
           this.query.organizeIds = results;
           this.getOrganizeTree();
-          this.load();
+          this.getCompany();
         }
     });
-
-    console.log('router', this.router.url)
-    
-    // this.getOrganizeTree();
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Quản lý nhân sự' },
     ];
-    // this.getAgencyOrganizeMap();
     this.getEmployeeStatus();
     this.getOrgan();
     this.itemsToolOfGrid = [
@@ -789,6 +788,24 @@ export class NsHoSoNhanSuComponent implements OnInit {
     }
   }
 
+  getCompany() {
+    this.apiService.getUserCompanies().subscribe(
+      (results: any) => {
+        if(results.status === "success"){
+          this.companies = results.data
+            .map(d => {
+              return {
+                label: d.companyName,
+                code: d.companyId
+              };
+            });
+            this.query.companyIds.push(this.companies[0].code);
+            this.load();
+        }
+      }),
+      error => { };
+  }
+
   loadjs = 0;
   heightGrid = 0
   ngAfterViewChecked(): void {
@@ -807,10 +824,20 @@ export class NsHoSoNhanSuComponent implements OnInit {
         this.loadjs = 0;
       }
     }
+    this.changeDetector.detectChanges();
+  }
+
+  ngAfterViewInit() {
+    this.changeDetector.detectChanges();
   }
 
   importFileExel() {
     this.router.navigate(['/nhan-su/ho-so-nhan-su/import']);
+  }
+
+  ngAfterContentChecked(): void {
+
+    this.changeDetector.detectChanges();
   }
 
 }

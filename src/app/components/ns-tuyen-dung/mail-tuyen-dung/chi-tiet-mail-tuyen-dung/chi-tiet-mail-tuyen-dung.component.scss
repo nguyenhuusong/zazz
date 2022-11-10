@@ -1,0 +1,23 @@
+:host::ng-deep{
+    .p-chips-token{
+        cursor: pointer;
+    }
+}
+.sidebar-config{
+    background: #fbfbfb;
+    padding: 15px;
+    border: 1px solid #ebebeb;
+    border-radius: 2px;
+    height: 100%;
+    h3{
+        margin-top: 0px;
+    }
+    ul{
+        li{
+            span{
+                cursor: pointer;
+                font-size: 16px;
+            }
+        }
+    }
+}

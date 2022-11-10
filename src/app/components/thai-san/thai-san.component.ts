@@ -73,6 +73,7 @@ export class ThaiSanComponent implements OnInit, AfterViewChecked {
     offSet: 0,
     pageSize: 15,
     organizeIds: '',
+    companyIds: [],
   }
   totalRecord = 0;
   DriverId = 0;
@@ -84,6 +85,7 @@ export class ThaiSanComponent implements OnInit, AfterViewChecked {
   }
   loading = false;
   listVacancy = []
+  companies = []
 
   onGridReady(params) {
     this.gridApi = params.api;
@@ -116,6 +118,7 @@ export class ThaiSanComponent implements OnInit, AfterViewChecked {
       offSet: 0,
       pageSize: 15,
       organizeIds: this.query.organizeIds,
+      companyIds: this.query.companyIds,
     }
     this.load();
   }
@@ -129,7 +132,10 @@ export class ThaiSanComponent implements OnInit, AfterViewChecked {
   load() {
     this.columnDefs = []
     this.spinner.show();
-    const queryParams = queryString.stringify(this.query);
+    const params: any = { ...this.query };
+    let companyIds = this.query.companyIds.toString();
+    params.companyIds = companyIds;
+    const queryParams = queryString.stringify(params);
     this.apiService.getMaternityPage(queryParams).subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
@@ -292,7 +298,7 @@ export class ThaiSanComponent implements OnInit, AfterViewChecked {
     this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
         if(results && results.length>0){
           this.query.organizeIds = results;
-          this.load();
+          this.getCompany();
         }
     });
     this.items = [
@@ -302,6 +308,26 @@ export class ThaiSanComponent implements OnInit, AfterViewChecked {
     ];
 
   }
+
+
+  getCompany() {
+    this.apiService.getUserCompanies().subscribe(
+      (results: any) => {
+        if(results.status === "success"){
+          this.companies = results.data
+            .map(d => {
+              return {
+                label: d.companyName,
+                code: d.companyId
+              };
+            });
+            this.query.companyIds.push(this.companies[0].code);
+            this.load();
+        }
+      }),
+      error => { };
+  }
+
 
 
 

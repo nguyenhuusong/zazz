@@ -94,6 +94,7 @@ export class DangKyLichLamViecComponent implements OnInit {
     app_st: null,
     is_flexible: null,
     organizeIds: '',
+    companyIds: [],
   }
   totalRecord = 0;
   DriverId = 0;
@@ -139,7 +140,8 @@ export class DangKyLichLamViecComponent implements OnInit {
       work_cd: null,
       app_st: null,
       is_flexible: null,
-      organizeIds: this.query.organizeIds
+      organizeIds: this.query.organizeIds,
+      companyIds: this.query.companyIds,
     }
     this.load();
   }
@@ -181,6 +183,9 @@ export class DangKyLichLamViecComponent implements OnInit {
     this.columnDefs = []
     this.spinner.show();
     let params: any = { ... this.query };
+    let companyIds = this.query.companyIds.toString();
+    params.companyIds = companyIds;
+
     if (params.orgId) {
       params.orgId = typeof params.orgId === 'string' ? params.orgId : params.orgId.orgId;
     }
@@ -481,7 +486,7 @@ export class DangKyLichLamViecComponent implements OnInit {
           this.query.organizeIds = results;
           this.query.organizeId = results;
           this.listDataSelect = [];
-          this.load();
+          this.getCompany();
           this.getWorkTime();
           this.getOrganizeTree();
         }
@@ -622,6 +627,29 @@ export class DangKyLichLamViecComponent implements OnInit {
   rowSelected(data) {
     this.listDataSelect = data
   }
+
+  
+  companies = []
+
+  getCompany() {
+    this.apiService.getUserCompanies().subscribe(
+      (results: any) => {
+        if(results.status === "success"){
+          this.companies = results.data
+            .map(d => {
+              return {
+                label: d.companyName,
+                code: d.companyId
+              };
+            });
+            this.query.companyIds.push(this.companies[0].code);
+            this.load();
+        }
+      }),
+      error => { };
+  }
+
+
 
 }
 

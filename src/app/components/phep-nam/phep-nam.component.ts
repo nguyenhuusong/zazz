@@ -65,6 +65,7 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
     month: new Date().getMonth() + 1,
     organizeId: '',
     organizeIds: '',
+    companyIds: [],
   }
   totalRecord = 0;
   first = 0;
@@ -76,7 +77,8 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
   loading = false;
 
   loadjs = 0;
-  heightGrid = 0
+  heightGrid = 0;
+  companies = [];
   ngAfterViewChecked(): void {
     const a: any = document.querySelector(".header");
     const b: any = document.querySelector(".sidebarBody");
@@ -103,7 +105,8 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
       year: 0,
       month: 0,
       organizeId: '',
-      organizeIds: this.query.organizeIds
+      organizeIds: this.query.organizeIds,
+      companyIds: this.query.companyIds,
     }
     this.load();
   }
@@ -117,7 +120,10 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
   load() {
     this.columnDefs = []
     this.spinner.show();
-    const queryParams = queryString.stringify(this.query);
+    const params: any = { ...this.query };
+    let companyIds = this.query.companyIds.toString();
+    params.companyIds = companyIds;
+    const queryParams = queryString.stringify(params);
     this.apiService.getAnnualLeavePage(queryParams).subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
@@ -195,7 +201,7 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
         if(results && results.length>0){
           this.query.organizeIds = results;
           this.query.organizeId = results;
-          this.load();
+          this.getCompany();
         }
     });
     this.items = [
@@ -230,6 +236,28 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
       }
     })
   }
+
+
+  getCompany() {
+    this.apiService.getUserCompanies().subscribe(
+      (results: any) => {
+        if(results.status === "success"){
+          this.companies = results.data
+            .map(d => {
+              return {
+                label: d.companyName,
+                code: d.companyId
+              };
+            });
+            this.query.companyIds.push(this.companies[0].code)
+            this.load();
+        }
+      }),
+      error => { };
+  }
+
+
+
 
   exportData() {
     this.spinner.show();

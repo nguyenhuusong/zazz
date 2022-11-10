@@ -681,7 +681,7 @@ export class CaiDatToChucComponent implements OnInit {
   
   onNodeSelectAdd(event) {
     // this.getDepartments(event.node.parentId);
-    this.getOrganizeLevelList(event.node.parentId);
+    this.getOrganizeLevelList(event.node.data);
   }
 
   listOrganizeTree = []

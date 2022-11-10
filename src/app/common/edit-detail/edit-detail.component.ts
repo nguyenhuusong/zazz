@@ -259,7 +259,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
           } else if (element1.field_name === 'hiring_user_id') {
             promissall.push(this.apiHrmV2Service.getUsersByAdminV2(queryString.stringify({ admin_st: 0 }), element1.field_name));
           } else if (element1.field_name === 'vacancyId') {
-            promissall.push(this.apiHrmV2Service.getVacancyPageV2(queryString.stringify({ active_st: 1 }), element1.field_name));
+            promissall.push(this.apiHrmV2Service.getPositionTitles(queryString.stringify({ organizeIds: '' }), element1.field_name));
+            // promissall.push(this.apiHrmV2Service.getVacancyPageV2(queryString.stringify({ active_st: 1 }), element1.field_name));
           } else if (element1.field_name === 'educationId') {
             promissall.push(this.apiHrmV2Service.getEducationsV2(element1.field_name));
           } else if (element1.field_name === 'workplaceId') {
@@ -758,6 +759,10 @@ export class EditDetailComponent implements OnInit, OnChanges {
 
   getValueTree(event) {
     this.dataView = cloneDeep(event)
+  }
+
+  emitChipsValue(event) {
+    this.callback1.emit(event);
   }
 
 }

@@ -99,6 +99,7 @@ export class PqQuyenNguoiDungComponent implements OnInit {
     currentRecordEnd: 0
   }
   loading = false;
+  companies = []
 
   onGridReady(params) {
     this.gridApi = params.api;
@@ -343,16 +344,19 @@ export class PqQuyenNguoiDungComponent implements OnInit {
 
     if(rowData.role_id){
       this.addUserQuery.roles = rowData.role_id.split(',');
-      // this.addUserQuery.roles = this.addUserQuery.roles.map( (d: any) => { return d.toUpperCase(); })
+    }
+    if(rowData.companyId){
+      this.addUserQuery.companyIds = rowData.companyId.split(',');
     }
     this.addUserQuery.userId = rowData.userId
     this.addUserQuery.loginName = rowData.loginName
     this.addUserQuery.password = "true"
     this.titleForm = 'Chỉnh sửa quyền người dùng'
-    this.getRoleActive(rowData.role_id)
+    this.getRoleActive(rowData.role_id);
     this.getOrganizes();
     this.getPositionList();
     this.getRoles();
+    this.getCompany();
   }
 
 
@@ -362,6 +366,7 @@ export class PqQuyenNguoiDungComponent implements OnInit {
     this.addUserQuery.email = "";
     this.addUserQuery.ord_ids = [];
     this.addUserQuery.roles = [];
+    this.addUserQuery.companyIds = [];
     this.addUserQuery.userId = "";
     this.addUserQuery.loginName = "";
     this.addUserQuery.password = "";
@@ -405,7 +410,6 @@ export class PqQuyenNguoiDungComponent implements OnInit {
     this.getJobTitles();
     this.getPositionList();
     this.getManagerList();
-    this.load();
   }
   listJobTitles = []
   getJobTitles() {
@@ -567,6 +571,35 @@ export class PqQuyenNguoiDungComponent implements OnInit {
                 code: d.id.toUpperCase()
               };
             });
+            let rolesActive = this.roles.filter( roles => this.addUserQuery.roles.some( roleActive => roles.code === roleActive ))
+            this.addUserQuery.roles = rolesActive.map( role => role.code);
+      }),
+      error => { };
+  }
+
+  getCompany() {
+    let organizeIds = '';
+    if(this.addUserQuery.ord_ids.length > 0) {
+      organizeIds = this.addUserQuery.ord_ids.toString();
+    }
+    const query = queryString.stringify(
+      { 
+        filter: '',
+        organizeIds: organizeIds
+    })
+    this.apiService.getCompanyPage(query).subscribe(
+      (results: any) => {
+        if(results.status === "success"){
+          this.companies = results.data.dataList.data
+            .map(d => {
+              return {
+                label: d.companyName,
+                code: d.companyId.toUpperCase()
+              };
+            });
+            let companyActive = this.companies.filter( compan => this.addUserQuery.companyIds.some( companActive => compan.code === companActive ))
+            this.addUserQuery.companyIds = companyActive.map( compan => compan.code);
+          }
       }),
       error => { };
   }
@@ -682,13 +715,13 @@ export class PqQuyenNguoiDungComponent implements OnInit {
   }
   save() {
     this.saveAddUser = true;
-    if(!this.addUserQuery.roles){
-      return
-    }
     if(!this.addUserQuery.ord_ids && this.addUserQuery.ord_ids.length <= 0){
       return
     }
     if(!this.addUserQuery.roles || this.addUserQuery.roles.length <= 0){
+      return
+    }
+    if(!this.addUserQuery.companyIds || this.addUserQuery.companyIds.length <= 0){
       return
     }
     if(!this.addUserQuery.phone){
@@ -715,7 +748,6 @@ export class PqQuyenNguoiDungComponent implements OnInit {
     //     return d.code
     //   })
     // }
-
     this.apiService.setUserAdd(params).subscribe(results => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Thêm mới thành công' });
@@ -732,8 +764,10 @@ export class PqQuyenNguoiDungComponent implements OnInit {
   }
 
   onChangeOrgan(event) {
-    this.addUserQuery.roles = [];
+    // this.addUserQuery.roles = [];
+    // this.addUserQuery.companyIds = [];
     this.getRoles();
+    this.getCompany();
   }
 
   exportData() {

@@ -6,8 +6,9 @@ import { cloneDeep } from 'lodash';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
-import { CheckHideAction } from 'src/app/common/function-common/common';
+import { CheckHideAction, AgGridFn } from 'src/app/common/function-common/common';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import { stringify } from 'querystring';
 @Component({
   selector: 'app-chi-tiet-tuyen-dung',
   templateUrl: './chi-tiet-tuyen-dung.component.html',
@@ -49,14 +50,26 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
   modelEdit = {
     canId: null,
   }
-  titlePage = ''
+  titlePage = '';
+  isView = false;
+  columnDefs = [];
+  listData = [];
+  heightGrid = 300;
+  gridKey = '';
+  cols = [];
   handleParams() {
     this.activatedRoute.queryParamMap
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((params) => {
         this.paramsObject = { ...params.keys, ...params };
-        this.modelEdit.canId = this.paramsObject.params.canId || null
-        this.getCandidateInfo();
+        this.modelEdit.canId = this.paramsObject.params.canId || null;
+        this.isView = this.paramsObject.params.view
+        
+        if(!this.isView) {
+          this.getCandidateInfo();
+        }else{
+          this.getCandidatesViewInfo();
+        }
       });
   };
 
@@ -73,6 +86,29 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
       });
   }
 
+  getCandidatesViewInfo() {
+    this.columnDefs = [];
+    this.listData = []
+    const query = { canId: this.modelEdit.canId }
+    this.apiService.getCandidatesViewInfo(stringify(query))
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
+      if (results.status === 'success') {
+        this.cols = results.data.gridflexdetails1;
+        this.listData = results.data.recruitCandidates;
+        const listViews = cloneDeep(results.data.group_fields);
+        this.listViews = [...listViews];
+        this.detailInfo = results.data;
+        this.initGrid();
+      }
+    });
+  }
+
+  initGrid() {
+    this.columnDefs = [
+      ...AgGridFn(this.cols.filter((d: any) => !d.isHide))
+    ]
+  }
   setCandidateInfo(data) {
     this.spinner.show();
     const params = {
@@ -104,6 +140,7 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
        this.router.navigate(['/tuyen-dung/ds-tuyen-dung']);
     }
   }
+
 
 }
 

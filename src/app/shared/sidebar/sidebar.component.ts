@@ -52,7 +52,7 @@ export class SidebarComponent implements OnInit {
                     });
                     if(itemsEx.length <= 0){
                         // neu khong có quyền thì quay về trang đầu tiên
-                        if(this.menuItems[0].submenus && this.menuItems[0].submenus[0].path) {
+                        if(this.menuItems[0].submenus && this.menuItems[0].submenus[0]?.path) {
                             this.router.navigate([this.menuItems[0].submenus[0].path]);
                         }else{
                             this.router.navigate(['/404']);
@@ -97,7 +97,7 @@ export class SidebarComponent implements OnInit {
                             });
                             if(itemsEx.length <= 0){
                                 // neu khong có quyền thì quay về trang đầu tiên
-                                if(this.menuItems[0].submenus && this.menuItems[0].submenus[0].path) {
+                                if(this.menuItems[0].submenus && this.menuItems[0].submenus[0]?.path) {
                                     this.router.navigate([this.menuItems[0].submenus[0].path]);
                                 }else{
                                     this.router.navigate(['/404']);

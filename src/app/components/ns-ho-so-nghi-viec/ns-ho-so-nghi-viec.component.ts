@@ -89,7 +89,8 @@ export class NsHoSoNghiViecComponent implements OnInit {
     offSet: 0,
     pageSize: 15,
     status: -1,
-    organizeIds: ""
+    organizeIds: "",
+    companyIds: [],
   }
 
   employeeStatus = [
@@ -105,7 +106,8 @@ export class NsHoSoNghiViecComponent implements OnInit {
       orgId: this.query.orgId,
       reason_id: 0,
       status: -1,
-      organizeIds: this.query.organizeIds
+      organizeIds: this.query.organizeIds,
+      companyIds: this.query.companyIds,
     }
     this.load();
   }
@@ -180,6 +182,9 @@ export class NsHoSoNghiViecComponent implements OnInit {
 
     let params: any = {... this.query};
     params.orgId = this.department ? this.department.orgId : null
+    let companyIds = this.query.companyIds.toString();
+    params.companyIds = companyIds;
+
     const queryParams = queryString.stringify(params);
     this.apiService.getTerminatePage(queryParams).subscribe(
       (results: any) => {
@@ -427,7 +432,7 @@ export class NsHoSoNghiViecComponent implements OnInit {
         if(results && results.length > 0){
           this.query.organizeIds = results;
           this.getOrganizeTree();
-          this.getAgencyOrganizeMap();
+          this.getCompany();
         }
     });
     this.items = [
@@ -463,6 +468,27 @@ export class NsHoSoNghiViecComponent implements OnInit {
         this.employeeStatus = [{ label: 'Tất cả', value: -1 }, ...this.employeeStatus];
       }
     })
+  }
+
+  companies = []
+
+  getCompany() {
+    this.apiService.getUserCompanies().subscribe(
+      (results: any) => {
+        if(results.status === "success"){
+          this.companies = results.data
+            .map(d => {
+              return {
+                label: d.companyName,
+                code: d.companyId
+              };
+            });
+            this.query.companyIds.push(this.companies[0].code);
+            // this.query.companyIds = this.companies.map( d => d.code)
+            this.load();
+        }
+      }),
+      error => { };
   }
 
   hrDiagram() {

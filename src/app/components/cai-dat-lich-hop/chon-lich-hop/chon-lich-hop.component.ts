@@ -108,6 +108,9 @@ export class ChonLichHopComponent implements OnInit, OnChanges {
         let dayTitle: any = document.createElement('span');
         dayTitle.innerHTML = dayMonth;
         dayTitle.className = day.day() === currentDay ? 'to-day-day' : '';
+        console.log('currentDay', moment(new Date(), 'YYYY/MM/DD').date())
+        console.log('currentDay2', day.date())
+        
         return { domNodes: [
           placeTitle,
           dayTitle
@@ -116,18 +119,15 @@ export class ChonLichHopComponent implements OnInit, OnChanges {
       slotDuration: '00:60:00', // Bao nhiêu phút thì tách thành 1 khoảng thời gian  like '14:30:00'
       scrollTime: '08:00:00',
       eventTimeFormat: {
-        // hour: '2-digit',
-        // minute: '2-digit',
-        // second: '2-digit',
-        // hour12: false
-        // hour: 'numeric',
-        // minute: '2-digit',
-        // meridiem: 'short',
-        // hour12: false
-        hour: 'numeric',
+        hour: '2-digit',
         minute: '2-digit',
         second: '2-digit',
-        // meridiem: false
+        meridiem: true 
+      },
+      slotLabelFormat: {
+        hour: '2-digit',
+        minute: '2-digit',
+        meridiem: true 
       },
       eventContent: function (arg) {
         var event = arg.event;

@@ -3,7 +3,8 @@ export class addUser {
     phone: string;
     email: string;
     ord_ids: Array<[]>;
-    roles:Array<[]>;
+    roles: Array<[]>;
+    companyIds: Array<[]>;
     userId: string;
     loginName: string;
     password: string;

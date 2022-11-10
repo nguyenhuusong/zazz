@@ -90,6 +90,7 @@ export class CsChamCongComponent implements OnInit {
     month: new Date().getMonth() + 1,
     year: new Date().getFullYear(),
     organizeIds: '',
+    companyIds: [],
   }
 
   queryCheckInOut = {
@@ -113,6 +114,7 @@ export class CsChamCongComponent implements OnInit {
   loadjs = 0;
   heightGrid = 0
   itemsToolOfGrid: any[] = [];
+  companies = []
   ngAfterViewChecked(): void {
     const a: any = document.querySelector(".header");
     const b: any = document.querySelector(".sidebarBody");
@@ -147,6 +149,7 @@ export class CsChamCongComponent implements OnInit {
       month: new Date().getMonth() + 1,
       year: new Date().getFullYear(),
       organizeIds: this.query.organizeIds,
+      companyIds: this.query.companyIds,
     }
     this.load();
   }
@@ -187,6 +190,8 @@ export class CsChamCongComponent implements OnInit {
     this.columnDefs = []
     this.spinner.show();
     let params: any = {... this.query};
+    let companyIds = this.query.companyIds.toString();
+    params.companyIds = companyIds;
     // params.fromDate = moment(new Date(this.query.fromDate)).format('YYYY-MM-DD')
     // params.toDate = moment(new Date(this.query.toDate)).format('YYYY-MM-DD')
     const queryParams = queryString.stringify(params);
@@ -280,7 +285,8 @@ export class CsChamCongComponent implements OnInit {
         if(results && results.length>0){
           this.query.organizeIds = results;
           // this.load();
-          this.getOrgRoots();
+          // this.getOrgRoots();
+          this.getCompany();
         }
     });
     this.items = [
@@ -309,6 +315,27 @@ export class CsChamCongComponent implements OnInit {
       },
     ]
   }
+
+
+  getCompany() {
+    this.apiService.getUserCompanies().subscribe(
+      (results: any) => {
+        if(results.status === "success"){
+          this.companies = results.data
+            .map(d => {
+              return {
+                label: d.companyName,
+                code: d.companyId
+              };
+            });
+            this.query.companyIds.push(this.companies[0].code);
+            this.load();
+        }
+      }),
+      error => { };
+  }
+
+
 
   getOrgRoots() {
     this.apiService.getOrgRoots().subscribe(results => {
