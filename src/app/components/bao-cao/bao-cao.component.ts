@@ -192,7 +192,7 @@ export class BaoCaoComponent implements OnInit {
     const api = this.listReports.filter(t => t.value === this.query.report_type)[0].api;
     if (api) {
       const queryParams = queryString.stringify(params);
-      this.apiService.get(window.location.host + api, queryParams)
+      this.apiService.getReport(api, queryParams)
       .subscribe(response => {
         if (response.type === 'application/json') {
           this.spinner.hide();
@@ -214,7 +214,7 @@ export class BaoCaoComponent implements OnInit {
     const api = this.listReports.filter(t => t.value === this.query.report_type)[0].api;
     if (api) {
       const queryParams = queryString.stringify(params);
-      this.apiService.get(window.location.host + api, queryParams)
+      this.apiService.getReport(api, queryParams)
       .subscribe(response => {
         if (response.type === 'application/json') {
           this.spinner.hide();
@@ -236,7 +236,7 @@ export class BaoCaoComponent implements OnInit {
     const api = this.listReports.filter(t => t.value === this.query.report_type)[0].api;
     if (api) {
       const queryParams = queryString.stringify(params);
-      this.apiService.get(window.location.host + api, queryParams)
+      this.apiService.getReport(api, queryParams)
       .subscribe(response => {
         if (response.type === 'application/json') {
           this.spinner.hide();

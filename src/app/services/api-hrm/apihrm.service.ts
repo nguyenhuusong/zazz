@@ -83,8 +83,8 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v2/employee/GetEmployeeSearch?` + queryParams, this.options);
   }
 
-  get(url, params): Observable<Blob> {
-    return this.http.get(`${url}?${params}`, {
+  getReport(api, params): Observable<Blob> {
+    return this.http.get(`${apiHrmServer}${api}?${params}`, {
       headers: new HttpHeaders({
         Authorization: this.authService.getAuthorizationHeaderValue(),
       }),
