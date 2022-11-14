@@ -221,8 +221,10 @@
         <div class="header-filter-search  mt-1">
             <div class="icon col-12 pl-0">
                 <div class="radios grid" *ngIf="recruitmentStatus.length > 0">
-                    <div class="p-field-radiobutton col-6" style="margin-bottom: 5px;" *ngFor="let recrui of recruitmentStatus">
+                    
+                    <div [ngClass]="canSttValue.can_st > recrui.code ? 'op6' : ''" class="p-field-radiobutton col-6" style="margin-bottom: 5px;" *ngFor="let recrui of recruitmentStatus">
                         <p-radioButton
+                            [disabled]="canSttValue.can_st > recrui.code"
                             name="recrui" value="{{ recrui.code }}" 
                             [(ngModel)]="recruitmentStatusSelected" 
                             inputId="recrui{{ recrui.code }}"></p-radioButton>

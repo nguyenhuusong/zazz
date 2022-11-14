@@ -103,7 +103,10 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   }
 
   loadjs = 0;
-  heightGrid = 450
+  heightGrid = 450;
+
+  // the value for check disabled 'Chuyển vòng radio'
+  canSttValue = null
   ngAfterViewChecked(): void {
     const a: any = document.querySelector(".header");
     const b: any = document.querySelector(".sidebarBody");
@@ -296,9 +299,8 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
       { label: 'Từ chối Offer', code: '9' },
     ]
     this.dataRowSelected = event;
-    // this.dataRowSelected[0].can_st
     this.recruitmentStatusSelected = this.dataRowSelected.map( d => d.can_st).toString();
-    console.log('this.dataRowSelected', this.recruitmentStatusSelected)
+    this.canSttValue = this.dataRowSelected.sort((a,b)=>a.can_st-b.can_st)[this.dataRowSelected.length - 1];
   }
 
   xoatuyendung(event) {
@@ -349,7 +351,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
         this.positions = results.data.map(d => {
           return { label: d.positionName, value: d.positionCd }
         });
-        this.positions = [{ label: 'Tất cả', value: null }, ...this.positions]
+        this.positions = [{ label: 'Tất cả', value: -1 }, ...this.positions]
       }
     })
   }
@@ -441,19 +443,19 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
 
   listStatus = []
   getStatus() {
-    this.apiService.getCandidateStatus().subscribe(results => {
+    const queryParams = queryString.stringify({ objKey: 'recruitment_round' });
+    this.apiService.getCustObjectListNew(false, queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.listStatus = results.data.map(d => {
           return {
-            label: d.name,
-            value: d.value
+            label: d.objName,
+            value: d.objCode
           }
         });
-        this.listStatus = [{ label: 'Tất cả', value: -1 }, ...this.listStatus]
+        this.listStatus = [{ label: 'Tất cả', value: null }, ...this.listStatus]
       }
     })
   }
-
     
   getVacancyPage() {
     const queryParams = queryString.stringify({
