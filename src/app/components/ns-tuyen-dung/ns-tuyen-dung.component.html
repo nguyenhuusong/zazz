@@ -2,13 +2,22 @@
     <section class="bread-crumb">
         <div class="d-flex bet bottom">
             <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
-            <p-button styleClass="p-button-sm height-56" (click)="cauhinh()">
-                <svg width="20" height="17" viewBox="0 0 20 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M19.5 17V0H0.50855L0.5 17H19.5ZM6.675 15.3187H2.21V6.81868H6.675V15.3187ZM8.575 15.3187V6.81868H17.79V15.3187H8.575ZM2.21 1.68132V5.13736H17.79V1.68132H2.21Z" fill="#F3F8FF"/>
-                </svg>
-                &nbsp;
-                Cấu hình
-            </p-button>
+           <div class="d-flex gap-16">
+                <p-button styleClass="p-button-sm height-56" (click)="getRecruitMailInput(); isSendMail = true"
+                label="Gửi mail"
+                [disabled]="dataRowSelected.length > 0 ? false : true"
+                [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetCandidatePage.url, action: ACTIONS.SEND_EMAIL}"
+                icon="pi pi-envelope"
+                >
+                </p-button>
+                <p-button styleClass="p-button-sm height-56" (click)="cauhinh()">
+                    <svg width="20" height="17" viewBox="0 0 20 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M19.5 17V0H0.50855L0.5 17H19.5ZM6.675 15.3187H2.21V6.81868H6.675V15.3187ZM8.575 15.3187V6.81868H17.79V15.3187H8.575ZM2.21 1.68132V5.13736H17.79V1.68132H2.21Z" fill="#F3F8FF"/>
+                    </svg>
+                    &nbsp;
+                    Cấu hình
+                </p-button>
+           </div>
         </div>
     </section>
     <section class="bread-filter">
@@ -210,9 +219,9 @@
         </div>
         <div class="header-filter-search  mt-1">
             <div class="icon col-12 pl-0">
-                <div class="radios grid">
-                    <div class="p-field-radiobutton col-6" style="margin-bottom: 5px;" *ngFor="let recrui of recruitmentStatus">
-                        <p-radioButton name="recrui" value="{{ recrui.code }}" [(ngModel)]="recruitmentStatusSelected" inputId="recrui{{ recrui.code }}"></p-radioButton>
+                <div class="radios grid" *ngIf="recruitmentStatus.length > 0">
+                    <div [ngClass]="this.dataRowSelected[0].can_st > recrui.code ? 'op6' : ''" class="p-field-radiobutton col-6" style="margin-bottom: 5px;" *ngFor="let recrui of recruitmentStatus">
+                        <p-radioButton [disabled]="this.dataRowSelected[0].can_st > recrui.code" name="recrui" value="{{ recrui.code }}" [(ngModel)]="recruitmentStatusSelected" inputId="recrui{{ recrui.code }}"></p-radioButton>
 	                    <label style="margin-left: 5px;" for="recrui{{ recrui.code }}">{{ recrui.label }}</label>
                     </div>
                 </div>
@@ -230,7 +239,7 @@
     </ng-template>
 </p-overlayPanel>
 
-<p-dialog styleClass="hideHeaderForm" header="Gửi mail" 
+<p-dialog styleClass="hideHeaderForm" header="Gửi mail" (onHide)="onHideSendEmail($event)"
     [(visible)]="isSendMail" 
     [modal]="true" [style]="{width: '600px'}"
     [draggable]="false" [resizable]="false" [focusTrap]="false" >
@@ -243,7 +252,7 @@
         <ng-template pTemplate="footer">
             <div class="d-flex end">
               <p-button (click)="cancelSendEmail()" styleClass="p-button-sm p-button-secondary" label="Bỏ qua" icon="pi pi-times-circle"></p-button>&nbsp;
-              <p-button (click)="sendEmail()">Gửi email</p-button>
+              <p-button (click)="sendEmail()" [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetCandidatePage.url, action: ACTIONS.SEND_EMAIL}">Gửi email</p-button>
             </div>
         </ng-template>
 </p-dialog>

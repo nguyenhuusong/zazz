@@ -99,7 +99,8 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
   }
 
   loadjs = 0;
-  heightGrid = 0
+  heightGrid = 0;
+  dataRowSelected: any = [];
   ngAfterViewChecked(): void {
     const a: any = document.querySelector(".header");
     const b: any = document.querySelector(".sidebarBody");
@@ -295,7 +296,7 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
             value: d.jobId
           }
         });
-        this.listJobTitles = [{ label: 'Tất cả', value: '' }, ...this.listJobTitles]
+        this.listJobTitles = [{ label: 'Tất cả', value: 0 }, ...this.listJobTitles]
       }
     })
   }
@@ -345,6 +346,22 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
       }
     })
     
+  }
+
+  rowSelected(data) {
+    this.dataRowSelected = data;
+  }
+
+
+  copyRequi() {
+    const params = {
+      vacancyId: this.dataRowSelected[0].vacancyId,
+      copy: true,
+    }
+    this.router.navigate(['/tuyen-dung/vi-tri-tuyen-dung/chi-tiet-vi-tri-tuyen-dung'], { queryParams: params });
+    
+
+
   }
 
 }

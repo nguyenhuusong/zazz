@@ -309,17 +309,18 @@ export class PheDuyetComponent implements OnInit, AfterViewChecked {
   }
 
   getCompany() {
-    this.apiService.getUserCompanies().subscribe(
+    const query = { organizeIds: this.query.organizeIds}
+    this.apiService.getUserCompanies(queryString.stringify(query)).subscribe(
       (results: any) => {
         if(results.status === "success"){
           this.companies = results.data
             .map(d => {
               return {
                 label: d.companyName,
-                code: d.companyId
+                value: d.companyId
               };
             });
-            this.query.companyIds.push(this.companies[0].code);
+            this.companies = [ { label: 'Tất cả', value: ''}, ...this.companies]
             this.load();
         }
       }),

@@ -2761,7 +2761,7 @@ div.p-organizationchart {
             color: #2B2F33;
             outline: none;
             line-height: 1;
-            padding: 12px 12px 11px 11px;
+            padding: 12px 27px 11px 11px;
             min-height: 30px;
             height: 36px;
         }
@@ -5559,5 +5559,10 @@ p-button{
                 padding-bottom: 0px !important;
             }
         }
+    }
+}
+.p-dropdown-items-wrapper{
+    .p-dropdown-item{
+        white-space: unset;
     }
 }

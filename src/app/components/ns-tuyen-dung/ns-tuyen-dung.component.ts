@@ -90,20 +90,10 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   loading = false;
   listVacancy = [];
   recruitmentStatus = [
-    { label: 'Ứng tuyển', code: '1' },
-    { label: 'Đi làm', code: '10' },
-    { label: 'Tiềm năng', code: '11' },
-    { label: 'Sàng lọc', code: '2' },
-    { label: 'Fail CV', code: '3' },
-    { label: 'Pass CV', code: '4' },
-    { label: 'Phỏng vấn', code: '5' },
-    { label: 'Pass PV', code: '6' },
-    { label: 'Offer', code: '7' },
-    { label: 'Nhận Offer', code: '8' },
-    { label: 'Từ chối Offer', code: '9' },
+    
   ]
   recruitmentStatusSelected = '1';
-  dataRowSelected = []
+  dataRowSelected: any = []
   isSendMail = false;
   mailsInput = [];
   mailInputValue: any = []
@@ -291,7 +281,22 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   }
 
   rowSelected(event) {
+    this.recruitmentStatus = [];
+    this.recruitmentStatus = [
+      { label: 'Ứng tuyển', code: '1' },
+      { label: 'Đi làm', code: '10' },
+      { label: 'Tiềm năng', code: '11' },
+      { label: 'Sàng lọc', code: '2' },
+      { label: 'Fail CV', code: '3' },
+      { label: 'Pass CV', code: '4' },
+      { label: 'Phỏng vấn', code: '5' },
+      { label: 'Pass PV', code: '6' },
+      { label: 'Offer', code: '7' },
+      { label: 'Nhận Offer', code: '8' },
+      { label: 'Từ chối Offer', code: '9' },
+    ]
     this.dataRowSelected = event;
+    this.recruitmentStatusSelected = this.dataRowSelected[0].can_st
   }
 
   xoatuyendung(event) {
@@ -359,6 +364,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     this.query.offSet = event.first;
     this.first = event.first;
     this.query.pageSize = event.rows === 4 ? 100000000 : event.rows;
+    this.load();
   }
 
   ngOnInit() {
@@ -510,6 +516,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   sendEmail() {
     if(!this.mailInputValue) {
       this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Chưa chọn nội dung gửi' });
+      return
     }
     const data = {
       mail_Id: this.mailInputValue,
@@ -522,17 +529,16 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
         this.mailInputValue = '';
         // this.isSendMail = false;
         // this.load();
-        // this.spinner.hide();
         const params = {
           meet_ud: null
         }
+        this.spinner.hide();
         return this.router.navigate(['/cai-dat/cai-dat-lich-hop/them-moi-lich-hop'], { queryParams: params });
       } else {
         this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.data : null });
       }
     })
   }
-
 
   // vitrituyendung() {
   //   this.router.navigate(['/tuyen-dung/danh-sach-tuyen-dung/vi-tri-tuyen-dung']);
@@ -542,6 +548,10 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   //   this.router.navigate(['/tuyen-dung/danh-sach-tuyen-dung/linh-vuc-tuyen-dung']);
   // }
 
+  onHideSendEmail(event) {
+    this.isSendMail = false;
+    this.load();
+  }
 
 }
 

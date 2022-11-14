@@ -50,16 +50,35 @@ export class ChiTietViTriTuyenDungComponent implements OnInit, OnDestroy {
   modelEdit = {
     vacancyId: null,
   }
-  titlePage = ''
+  titlePage = '';
+  isCopy = false;
   handleParams() {
     this.activatedRoute.queryParamMap
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((params) => {
         this.paramsObject = { ...params.keys, ...params };
-        this.modelEdit.vacancyId = this.paramsObject.params.vacancyId || null
-        this.getVacancyInfo();
+        this.modelEdit.vacancyId = this.paramsObject.params.vacancyId || null;
+        this.isCopy = this.paramsObject.params.copy;
+        if(this.isCopy) {
+          this.getVacancyReplicationInfo();
+        }else{
+          this.getVacancyInfo();
+        }
       });
   };
+
+  getVacancyReplicationInfo() {
+    const queryParams = queryString.stringify(this.modelEdit);
+    this.apiService.getVacancyReplicationInfo(queryParams)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(results => {
+        if (results.status === 'success') {
+          const listViews = cloneDeep(results.data.group_fields);
+          this.listViews = [...listViews];
+          this.detailInfo = results.data;
+        }
+      });
+  }
 
   getVacancyInfo() {
     const queryParams = queryString.stringify(this.modelEdit);

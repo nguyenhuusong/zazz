@@ -14,10 +14,12 @@
     <section class="bread-filter">
         <div class="d-flex bet bottom gap-16">
             <div class="col-item">
-                <div class="d-flex align-items-center">
+            </div>
+            <div class="col-item col-8">
+                <div class="d-flex bottom gap-16 end">
                     <div class="filter filter-search">
                         <div class="field-group text search mb-0" [ngClass]=" query.filter ? 'valid' : 'invalid' ">
-                            <input placeholder="Vị trí, chuyển môn ..." class="input-default" type="text" autocomplete="off" id="filter"
+                            <input placeholder="Tìm kiếm ..." class="input-default" type="text" autocomplete="off" id="filter"
                                 (keydown.enter)="query.offSet = 0; first = 0;load()"
                                 [(ngModel)]="query.filter">
                                 <span class="placeholder-icon" (click)="query.offSet = 0; first = 0; load()">
@@ -25,21 +27,6 @@
                                         <path fill-rule="evenodd" clip-rule="evenodd" d="M9.02893 0.850098C4.51087 0.850098 0.849609 4.51552 0.849609 9.03539C0.849609 13.5553 4.51087 17.2207 9.02893 17.2207C10.8456 17.2207 12.5254 16.6271 13.8828 15.6241L17.1276 18.8716C17.4984 19.2427 18.0999 19.243 18.4711 18.8721C18.8422 18.5013 18.8425 17.8998 18.4716 17.5286L15.2709 14.3252C16.4787 12.8991 17.2083 11.0518 17.2083 9.03539C17.2083 4.51552 13.547 0.850098 9.02893 0.850098ZM2.74961 9.03539C2.74961 5.56338 5.56169 2.7501 9.02893 2.7501C12.4962 2.7501 15.3083 5.56338 15.3083 9.03539C15.3083 10.8568 14.5355 12.496 13.2976 13.645C12.1765 14.6858 10.6778 15.3207 9.02893 15.3207C5.56169 15.3207 2.74961 12.5074 2.74961 9.03539Z" fill="#2B2F33" fill-opacity="0.6"/>
                                         </svg>
                                 </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-item col-8">
-                <div class="d-flex bottom gap-16 end">
-                    <div class="col-3 col-item pd-0">
-                        <div class="field-group multi-select mb-0">
-                            <label>Công ty</label>
-                            <p-multiSelect appendTo="body"
-                                (onChange)="find()"
-                                optionValue="code"
-                                optionLabel="label"
-                                [options]="companies" [(ngModel)]="query.companyIds"
-                                ></p-multiSelect>
                         </div>
                     </div>
                     <p-button styleClass="reloadBtn" (click)="cancel()">
@@ -69,6 +56,15 @@
                 </div>
                 <div class="header-filter-search grid mt-1">
                     <div class="icon col-12 pl-0" style="display: flex; flex-wrap: wrap;">
+                        <div class="col-6 col-item">
+                            <div class="field-group select">
+                                <label>Công ty trả lương</label>
+                                <p-dropdown appendTo="body" [baseZIndex]="100"
+                                    [options]="companies" [(ngModel)]="query.companyIds" name="companyIds"
+                                    [filter]="true">
+                                    </p-dropdown>
+                            </div>
+                        </div>
                         <!-- <div class="col-6">
                             <div class="field-group select valid">
                                 <label>Tổ chức</label>

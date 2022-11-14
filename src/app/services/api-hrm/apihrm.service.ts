@@ -440,8 +440,8 @@ export class ApiHrmService {
     return this.http.post<T>(`${apiHrmServer}/api/v1/user/UnLockUser`, { userId }, this.options);
   }
 
-  getUserCompanies() {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/user/GetUserCompanies?`, this.options)
+  getUserCompanies(queryParams) {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/user/GetUserCompanies?` + queryParams, this.options)
   }
   
   setEmployeeCancel(params): Observable<any> {
@@ -771,6 +771,10 @@ export class ApiHrmService {
 
   getVacancyInfo(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetVacancyInfo?` + queryParams, this.options)
+  }
+
+  getVacancyReplicationInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetVacancyReplicationInfo?` + queryParams, this.options)
   }
 
   setVacancyInfo(params): Observable<any> {

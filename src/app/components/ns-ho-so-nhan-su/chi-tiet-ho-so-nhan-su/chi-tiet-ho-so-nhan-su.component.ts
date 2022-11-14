@@ -1053,7 +1053,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
           this.manhinh = 'Edit';
           this.getEmployeeInfo();
         }
-        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Cập nhật thông tin thành công' });
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Cập nhật thông tin thành công' });
       } else {
         this.messageService.add({
           severity: 'error', summary: 'Thông báo', detail: results.message
@@ -1087,6 +1087,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     });
   }
 
+  isSubmitSave = false;
   onChangeButtonSave(event) {
     if (event === 'Save') {
       let parmas: any = { ...this.modelDuyet };
@@ -1102,7 +1103,12 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
         delete parmas.exprire_date;
         this.setEmployeeOpen(parmas);
       } else if (this.titleForm.type === 'NghiViec') {
+        this.isSubmitSave = true;
+        if(!this.modelDuyet.exprire_date){
+          return
+        }
         this.setEmployeeTermilate(parmas);
+
       }
     } else {
       this.displayDialog = false;

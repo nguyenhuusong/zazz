@@ -721,9 +721,6 @@ export class PqQuyenNguoiDungComponent implements OnInit {
     if(!this.addUserQuery.roles || this.addUserQuery.roles.length <= 0){
       return
     }
-    if(!this.addUserQuery.companyIds || this.addUserQuery.companyIds.length <= 0){
-      return
-    }
     if(!this.addUserQuery.phone){
       return
     }
@@ -748,11 +745,13 @@ export class PqQuyenNguoiDungComponent implements OnInit {
     //     return d.code
     //   })
     // }
+    this.spinner.show();
     this.apiService.setUserAdd(params).subscribe(results => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Thêm mới thành công' });
         this.load();
         this.displayAdd = false;
+        this.spinner.hide();
       } else {
         this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
       }

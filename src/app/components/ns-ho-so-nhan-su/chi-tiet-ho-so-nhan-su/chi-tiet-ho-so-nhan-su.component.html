@@ -457,10 +457,13 @@
                             </div>
                             <div class="col-md-6 mt-1" *ngIf="titleForm.type === 'NghiViec'">
                                 <div class="field-group date">
-                                    <label for="">Ngày chốt nghỉ</label>
-                                    <p-calendar placeholder="DD/MM/YYYY" appendTo="body" [baseZIndex]="101" [(ngModel)]="modelDuyet.exprire_date"
+                                    <label for="">Ngày chốt nghỉ <span style="color: red">*</span></label>
+                                    <p-calendar [required]="true" placeholder="DD/MM/YYYY" appendTo="body" [baseZIndex]="101" [(ngModel)]="modelDuyet.exprire_date"
                                         [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" inputId="navigators"
                                         dateFormat="dd/mm/yy" name="exprire_date"></p-calendar>
+                                    <div class="alert-validation alert-danger" *ngIf="isSubmitSave && !modelDuyet.exprire_date"> 
+                                        Vui lòng chọn ngày chốt nghỉ 
+                                    </div>
                                 </div>
                             </div>
                                 <div class="col-md-12 mt-1">

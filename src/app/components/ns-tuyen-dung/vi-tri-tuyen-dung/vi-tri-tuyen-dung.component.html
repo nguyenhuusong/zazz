@@ -3,13 +3,22 @@
     <section class="bread-crumb">
         <div class="d-flex bet bottom">
             <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
-            <p-button styleClass="p-button-sm height-56" (click)="cauhinh()">
-                <svg width="20" height="17" viewBox="0 0 20 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M19.5 17V0H0.50855L0.5 17H19.5ZM6.675 15.3187H2.21V6.81868H6.675V15.3187ZM8.575 15.3187V6.81868H17.79V15.3187H8.575ZM2.21 1.68132V5.13736H17.79V1.68132H2.21Z" fill="#F3F8FF"/>
-                </svg>
-                &nbsp;
-                Cấu hình
-            </p-button>
+            <div class="d-flex gap-16">
+                <p-button styleClass="p-button-sm height-56" (click)="copyRequi()"
+                    label="Nhân bản"
+                    [disabled]="dataRowSelected.length > 0 ? false : true"
+                    [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetVacancyPage.url, action: ACTIONS.COPY_ROW}"
+                    icon="pi pi-copy"
+                    >
+                </p-button>
+                    <p-button styleClass="p-button-sm height-56" (click)="cauhinh()">
+                        <svg width="20" height="17" viewBox="0 0 20 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M19.5 17V0H0.50855L0.5 17H19.5ZM6.675 15.3187H2.21V6.81868H6.675V15.3187ZM8.575 15.3187V6.81868H17.79V15.3187H8.575ZM2.21 1.68132V5.13736H17.79V1.68132H2.21Z" fill="#F3F8FF"/>
+                        </svg>
+                        &nbsp;
+                        Cấu hình
+                    </p-button>
+            </div>
         </div>
     </section>
     <section class="bread-filter">
@@ -71,7 +80,7 @@
                     <div class="icon col-12 pl-0" style="display: flex; flex-wrap: wrap;">
                         <div class="col-6">
                             <div class="field-group select valid">
-                                <label  for=""> Chuyên môn: </label>
+                                <label  for="">Vị trí tuyển dụng: </label>
                                 <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" [filter]="true"
                                 [options]="listJobTitles" [(ngModel)]="query.jobId" name="jobId" (onChange)="find()">
                                 <ng-template let-item pTemplate="selectedItem">
@@ -120,7 +129,7 @@
                         </div>
                         <div class="col-6">
                             <div class="field-group select label-8">
-                                <label>Bộ phận</label>
+                                <label>Phòng ban</label>
                                 <p-treeSelect [(ngModel)]="query.orgId" 
                                 [filterInputAutoFocus]="true" 
                                 [metaKeySelection]="true" 
@@ -147,7 +156,9 @@
     </section>
     <section class="content pb-0">
         <div class="grid-default" #container>
-            <app-list-grid-angular  *ngIf="columnDefs.length > 0"
+            <app-list-grid-angular  
+                *ngIf="columnDefs.length > 0"
+                (callback)="rowSelected($event)"
                 [listsData]="listsData" [height]="heightGrid"
                 [columnDefs]="columnDefs"></app-list-grid-angular>
             <div class="paginator">

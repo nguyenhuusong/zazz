@@ -207,15 +207,12 @@
     <div class="col-md-12  mt-1">
         <div class="field-group multi-select" >
             <!-- [ngClass]="modelAdd.ord_ids ? 'valid' : 'invalid'" -->
-            <label for="">Công ty <span style="color:red">*</span></label>
+            <label for="">Công ty trả lương</label>
             <p-multiSelect appendTo="body"
             optionValue="code"
             optionLabel="label"
             [options]="companies" [(ngModel)]="addUserQuery.companyIds"
             ></p-multiSelect>
-            <div *ngIf="(addUserQuery.companyIds && addUserQuery.companyIds.length <= 0) && saveAddUser" class="alert-validation alert-danger">
-                Vui lòng chọn công ty
-            </div>
         </div>
     </div>
     

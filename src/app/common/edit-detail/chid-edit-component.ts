@@ -1156,7 +1156,7 @@ export class AppTypeTimeonlyComponent implements OnInit {
                   [appendTo]="'body'"
                   [disabled]="element.isDisable"
                   [(ngModel)]="element.columnValue" (onChange)="onChangeValue($event.value, element.field_name)"
-                  name={{element.field_name}} defaultLabel="Select a option" optionLabel="name" display="chip">
+                  name={{element.field_name}} defaultLabel="Select a option" display="chip">
                 </p-multiSelect>
 
                 <div *ngIf="modelFields[element.field_name].isRequire && submit && modelFields[element.field_name].error"
