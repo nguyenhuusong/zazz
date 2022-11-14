@@ -505,6 +505,15 @@ export class ApiHrmService {
     return this.http.delete<any>(`${apiHrmServer}/api/v2/employee/DelEmpContact?` + queryParams, this.options)
   }
 
+  exportResume(queryParams: any): Observable<Blob> {
+    return this.http.get(`${apiHrmServer}/api/v2/employee/ExportResume?${queryParams}`, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
+  }
+
   setRecordInfo(params): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/contract/SetRecordInfo`, params, this.options)
   }
@@ -1011,6 +1020,22 @@ export class ApiHrmService {
 
   setOrganizeConfig(queryParams): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v1/organize/SetOrganizeConfig`,queryParams, this.options)
+  }
+
+  getBanByOrganize(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/organize/GetBanByOrganize?` + queryParams, this.options)
+  }
+
+  getDepartmentByOrganize(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/organize/GetDepartmentByOrganize?` + queryParams, this.options)
+  }
+
+  getGroupByOrganize(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/organize/GetGroupByOrganize?` + queryParams, this.options)
+  }
+
+  getTeamByOrganize(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/organize/GetTeamByOrganize?` + queryParams, this.options)
   }
 
   getPositionInfo(queryParams): Observable<any> {

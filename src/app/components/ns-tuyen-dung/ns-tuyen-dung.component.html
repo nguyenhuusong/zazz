@@ -26,7 +26,7 @@
                 <div class="d-flex align-items-center">
                     <div class="filter filter-search">
                         <div class="field-group text search mb-0" [ngClass]=" query.filter ? 'valid' : 'invalid' ">
-                            <input placeholder="Vị trí, chuyển môn ..." class="input-default" type="text" autocomplete="off" id="filter"
+                            <input placeholder="Vị trí, chuyên môn ..." class="input-default" type="text" autocomplete="off" id="filter"
                                (keydown.enter)="query.offSet = 0; first = 0;load()"
                                 [(ngModel)]="query.filter">
                                 <span class="placeholder-icon" (click)="query.offSet = 0; first = 0; load()">
@@ -76,7 +76,7 @@
                     <div class="icon col-12 pl-0" style="display: flex; flex-wrap: wrap;">
                         <div class="col-6">
                             <div class="field-group select" [ngClass]=" query.can_st ? 'valid' : 'invalid' ">
-                                <label for="">Trạng thái </label>
+                                <label for="">Vòng tuyển dụng</label>
                                 <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
                                     [options]="listStatus" [(ngModel)]="query.can_st" name="can_st" [filter]="true">
                                     <ng-template let-item pTemplate="selectedItem">
@@ -91,7 +91,7 @@
                                 </p-dropdown>
                             </div>
                         </div>
-                        <div class="col-6">
+                        <!-- <div class="col-6">
                             <div class="field-group select label-8" [ngClass]=" query.jobId ? 'valid' : 'invalid' ">
                                 <label for="">Chuyên môn </label>
                                 <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
@@ -107,7 +107,7 @@
                                     </ng-template>
                                 </p-dropdown>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="col-6">
                             <div class="field-group select" [ngClass]=" query.vacancyId ? 'valid' : 'invalid' ">
                                 <label for="">Vị trí tuyển dụng </label>
@@ -157,7 +157,7 @@
                             </ng-template>
                             </p-dropdown>
                             </div>   -->
-                            <div class="col-6">
+                            <!-- <div class="col-6">
                                 <div class="field-group select label-8" [ngClass]=" query.positionCd ? 'valid' : 'invalid' ">
                                     <label for="">Cấp bậc</label>
                                     <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
@@ -173,7 +173,7 @@
                                         </ng-template>
                                     </p-dropdown>
                                 </div>
-                            </div>
+                            </div> -->
                     
                     </div>
                     <div class="input-group icon col-12 select-default text-right">
@@ -193,6 +193,7 @@
         <div class="grid-default" #container>
             <app-list-grid-angular *ngIf="columnDefs.length > 0" [listsData]="listsData" [height]="heightGrid"
                 (callback)="rowSelected($event)"
+                [rowSelection]="'multiple'"
                 [columnDefs]="columnDefs"></app-list-grid-angular>
             <div class="paginator">
                 <span>Từ {{ countRecord.currentRecordStart }} đến
@@ -220,8 +221,11 @@
         <div class="header-filter-search  mt-1">
             <div class="icon col-12 pl-0">
                 <div class="radios grid" *ngIf="recruitmentStatus.length > 0">
-                    <div [ngClass]="this.dataRowSelected[0].can_st > recrui.code ? 'op6' : ''" class="p-field-radiobutton col-6" style="margin-bottom: 5px;" *ngFor="let recrui of recruitmentStatus">
-                        <p-radioButton [disabled]="this.dataRowSelected[0].can_st > recrui.code" name="recrui" value="{{ recrui.code }}" [(ngModel)]="recruitmentStatusSelected" inputId="recrui{{ recrui.code }}"></p-radioButton>
+                    <div class="p-field-radiobutton col-6" style="margin-bottom: 5px;" *ngFor="let recrui of recruitmentStatus">
+                        <p-radioButton
+                            name="recrui" value="{{ recrui.code }}" 
+                            [(ngModel)]="recruitmentStatusSelected" 
+                            inputId="recrui{{ recrui.code }}"></p-radioButton>
 	                    <label style="margin-left: 5px;" for="recrui{{ recrui.code }}">{{ recrui.label }}</label>
                     </div>
                 </div>
@@ -232,7 +236,8 @@
                 styleClass="p-button-secondary">
             </p-button>
             &nbsp;
-            <p-button label="Chuyển" [disabled]="recruitmentStatusSelected ? false : true" icon="pi pi-times" (click)="changeRecruStatus()"
+            <p-button label="Chuyển" [disabled]="recruitmentStatusSelected ? false : true" 
+            icon="pi pi-times" (click)="changeRecruStatus()"
                 styleClass="">
             </p-button>
         </div>

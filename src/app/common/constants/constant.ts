@@ -519,7 +519,7 @@ export const ACTIONS = {
     CHI_TIET_HO_SO_TBH_DSDK_XOA: 'chi_tiet_ho_so_tbh_dsdk_xoa',
     CHI_TIET_HO_SO_VTCV_THOIGIAN_LAMVIEC_XEM_CHI_TIET: 'chi_tiet_ho_so_vtcv_thoigian_lamviec_xem_chi_tiet',
     CHI_TIET_HO_SO_VTCV_THOIGIAN_LAMVIEC_XOA: 'chi_tiet_ho_so_vtcv_thoigian_lamviec_xoa',
-
+    CT_HSNS_XUAT_HSNS: 'chi_tiet_hsns_thong_tin_hscn_xuat_hsns',
     PHE_DUYET_WIFI: 'phe_duyet_wifi',
     TU_CHOI_DUYET_WIFI: 'tu_choi_duyet_wifi',
     MO_LAI_HO_SO: 'mo_lai_ho_so',

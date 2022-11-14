@@ -10,6 +10,7 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { ApiCoreService } from 'src/app/services/api-core/apicore.service';
 import { getFieldValueAggrid } from 'src/app/utils/common/function-common';
+import * as FileSaver from 'file-saver';
 @Component({
   selector: 'app-chi-tiet-ho-so-nhan-su',
   templateUrl: './chi-tiet-ho-so-nhan-su.component.html',
@@ -1351,7 +1352,6 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
                     class: 'btn-primary mr5',
                     key: 'tailenhoso',
                     hide: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.TAI_LEN_HO_SO)
-
                   },
                   {
                     onClick: this.OnClick.bind(this),
@@ -1466,6 +1466,19 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
         this.XoaQuaTrinhHopDong(event)
       }
     }
+  }
+
+  exportResume() {
+    this.spinner.show();
+    this.apiService.exportResume(queryString.stringify({ empId: this.detailInfo.empId })).subscribe(results => {
+      if (results.type === 'application/json') {
+        this.spinner.hide();
+      }else if( results.type === 'application/octet-stream'){
+        var blob = new Blob([results], { type: 'application/msword' });
+        FileSaver.saveAs(blob, `Thông tin hồ sơ cá nhân` + ".docx");
+        this.spinner.hide();
+      }
+    })
   }
 
   pheDuyetWifi(e) {

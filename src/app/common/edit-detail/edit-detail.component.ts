@@ -301,6 +301,25 @@ export class EditDetailComponent implements OnInit, OnChanges {
             promissall.push(this.apiHrmV2Service.getEmployeePageCustIdV2(queryString.stringify({ orgId: root_orgId, pageSize: 100000 }), element1.field_name));
           }else if( element1.field_name === 'menu_date') {
             promissall.push(this.apiHrmV2Service.getEatingInputV2(queryString.stringify({ }), element1.field_name));
+          }else if( element1.field_name === 'blockId') {
+            const root_orgId = this.getValueByKey('organizeId');
+            promissall.push(this.apiHrmV2Service.getBlockByOrganize(queryString.stringify({ organizeId: root_orgId}), element1.field_name));
+          }else if( element1.field_name === 'banId') {
+            const root_orgId = this.getValueByKey('organizeId');
+            const parentId = this.getValueByKey('blockId');
+            promissall.push(this.apiHrmV2Service.getBanByOrganize(queryString.stringify({ organizeId: root_orgId, parentId: parentId}), element1.field_name));
+          }else if( element1.field_name === 'orgId3') {
+            const root_orgId = this.getValueByKey('organizeId');
+            const parentId = this.getValueByKey('banId');
+            promissall.push(this.apiHrmV2Service.getDepartmentByOrganize(queryString.stringify({ organizeId: root_orgId, parentId: parentId}), element1.field_name));
+          }else if( element1.field_name === 'groupId') {
+            const root_orgId = this.getValueByKey('organizeId');
+            const parentId = this.getValueByKey('orgId');
+            promissall.push(this.apiHrmV2Service.getGroupByOrganize(queryString.stringify({ organizeId: root_orgId, parentId: parentId}), element1.field_name));
+          }else if( element1.field_name === 'teamId') {
+            const root_orgId = this.getValueByKey('organizeId');
+            const parentId = this.getValueByKey('groupId');
+            promissall.push(this.apiHrmV2Service.getTeamByOrganize(queryString.stringify({ organizeId: root_orgId, parentId: parentId}), element1.field_name));
           }else {
             if (element1.columnObject) {
               promissall.push(this.apiHrmV2Service.getObjectListV2(queryString.stringify({ objKey: element1.columnObject }), element1.field_name));

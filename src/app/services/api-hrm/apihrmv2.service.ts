@@ -167,7 +167,7 @@ export class ApiHrmV2Service {
     return this.httpClient.get(`${apiHrmServer}/api/v2/position/GetPositionList?` + queryParams, this.options).pipe(
       map((repon: any) => {
         return { key: field_name, result: repon.data.map(d => {
-          return { label: d.positionName, value: d.positionId };
+          return { label: d.positionName, value: d.positionId.toUpperCase() };
         }) };
       }), catchError(error => {
         return throwError('Capital not found!');
@@ -235,7 +235,7 @@ export class ApiHrmV2Service {
         return { key: field_name, result: repon.data.map(d => {
           return {
             label: d.job_name,
-            value: `${d.jobId}`
+            value: `${d.jobId.toUpperCase()}`
           }
         }) };
       }), catchError(error => {
@@ -581,5 +581,79 @@ export class ApiHrmV2Service {
     )
   }
 
+  getBlockByOrganize(queryParams, field_name) {
+    return this.httpClient.get(`${apiHrmServer}/api/v1/organize/GetBlockByOrganize?` + queryParams , this.options).pipe(
+      map((repon: any) => {
+        return { key: field_name, result: repon.data.map(d => {
+          return {
+            label: d.org_name,
+            value: d.orgId
+          }
+        }) };
+      }), catchError(error => {
+        return throwError('Capital not found!');
+      })
+    )
+  }
+
+  getBanByOrganize(queryParams, field_name) {
+    return this.httpClient.get(`${apiHrmServer}/api/v1/organize/GetBanByOrganize?` + queryParams , this.options).pipe(
+      map((repon: any) => {
+        return { key: field_name, result: repon.data.map(d => {
+          return {
+            label: d.org_name,
+            value: d.orgId
+          }
+        }) };
+      }), catchError(error => {
+        return throwError('Capital not found!');
+      })
+    )
+  }
+
+  getDepartmentByOrganize(queryParams, field_name) {
+    return this.httpClient.get(`${apiHrmServer}/api/v1/organize/GetDepartmentByOrganize?` + queryParams , this.options).pipe(
+      map((repon: any) => {
+        return { key: field_name, result: repon.data.map(d => {
+          return {
+            label: d.org_name,
+            value: d.orgId
+          }
+        }) };
+      }), catchError(error => {
+        return throwError('Capital not found!');
+      })
+    )
+  }
+
+  getGroupByOrganize(queryParams, field_name) {
+    return this.httpClient.get(`${apiHrmServer}/api/v1/organize/GetGroupByOrganize?` + queryParams , this.options).pipe(
+      map((repon: any) => {
+        return { key: field_name, result: repon.data.map(d => {
+          return {
+            label: d.org_name,
+            value: d.orgId
+          }
+        }) };
+      }), catchError(error => {
+        return throwError('Capital not found!');
+      })
+    )
+  }
+
+  getTeamByOrganize(queryParams, field_name) {
+    return this.httpClient.get(`${apiHrmServer}/api/v1/organize/GetTeamByOrganize?` + queryParams , this.options).pipe(
+      map((repon: any) => {
+        return { key: field_name, result: repon.data.map(d => {
+          return {
+            label: d.org_name,
+            value: d.orgId
+          }
+        }) };
+      }), catchError(error => {
+        return throwError('Capital not found!');
+      })
+    )
+  }
 }
 

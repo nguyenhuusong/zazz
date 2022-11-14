@@ -609,7 +609,123 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
             }
           });
       }
+    }else if( field_name === 'blockId' ) {
+      this.dataView.forEach(element => {
+        element.fields.forEach(async element1 => {
+          if (element1.field_name === 'banId') {
+            const root_orgId = await this.getValueByKey('organizeId');
+            this.getBanByOrganize(value, element1, root_orgId);
+            element1.columnValue = '';
+          }else if (element1.field_name === 'banId') {
+            element1.columnValue = '';
+            element1.options = []
+          }else if(element1.field_name === 'orgId3') {
+            element1.columnValue = '';
+            element1.options = []
+          }else if(element1.field_name === 'groupId') {
+            element1.columnValue = '';
+            element1.options = []
+          }else if(element1.field_name === 'teamId') {
+            element1.columnValue = '';
+            element1.options = []
+          }
+        });
+      });
+    }else if( field_name === 'banId' ) {
+      this.dataView.forEach(element => {
+        element.fields.forEach(async element1 => {
+          if (element1.field_name === 'orgId3') {
+            const root_orgId = await this.getValueByKey('organizeId');
+            this.getDepartmentByOrganize(value, element1, root_orgId)
+          }else if(element1.field_name === 'orgId3') {
+            element1.columnValue = '';
+            element1.options = []
+          }else if(element1.field_name === 'groupId') {
+            element1.columnValue = '';
+            element1.options = []
+          }else if(element1.field_name === 'teamId') {
+            element1.columnValue = '';
+            element1.options = []
+          }
+        });
+      });
+    }else if( field_name === 'orgId3' ) {
+      this.dataView.forEach(element => {
+        element.fields.forEach(async element1 => {
+          if (element1.field_name === 'groupId') {
+            const root_orgId = await this.getValueByKey('organizeId');
+            this.getGroupByOrganize(value, element1, root_orgId)
+          }else if(element1.field_name === 'groupId') {
+            element1.columnValue = '';
+            element1.options = []
+          }else if(element1.field_name === 'teamId') {
+            element1.columnValue = '';
+            element1.options = []
+          }
+        });
+      });
+    }else if( field_name === 'groupId' ) {
+      this.dataView.forEach(element => {
+        element.fields.forEach(async element1 => {
+          if (element1.field_name === 'teamId') {
+            const root_orgId = await this.getValueByKey('organizeId');
+            this.getTeamByOrganize(value, element1, root_orgId);
+            element1.columnValue = '';
+          }
+        });
+      });
     }
+  }
+
+  // Trung tâm - Ban 
+  getBanByOrganize(blockId, element1, root_orgId) {
+    const queryParams = queryString.stringify({ organizeId: root_orgId, parentId: blockId});
+    this.apiService.getBanByOrganize(queryParams).subscribe(results => {
+      if (results.status === 'success') {
+        element1.options = cloneDeep(results.data).map(d => {
+          return { label: d.org_name, value: d.orgId }
+        });
+        element1.columnValue = element1.columnValue ? element1.columnValue : ''
+      }
+    })
+  }
+  // Phòng ban
+  getDepartmentByOrganize(blockId, element1, root_orgId) {
+    const queryParams = queryString.stringify({ organizeId: root_orgId, parentId: blockId});
+    this.apiService.getDepartmentByOrganize(queryParams).subscribe(results => {
+      if (results.status === 'success') {
+        element1.options = cloneDeep(results.data).map(d => {
+          return { label: d.org_name, value: d.orgId }
+        });
+        element1.columnValue = element1.columnValue ? element1.columnValue : ''
+      }
+    })
+  }
+
+  // Nhóm 
+  getGroupByOrganize(parentId, element1, root_orgId) {
+    const queryParams = queryString.stringify({ organizeId: root_orgId, parentId: parentId});
+    this.apiService.getGroupByOrganize(queryParams).subscribe(results => {
+      if (results.status === 'success') {
+        element1.options = cloneDeep(results.data).map(d => {
+          return { label: d.org_name, value: d.orgId }
+        });
+        element1.columnValue = element1.columnValue ? element1.columnValue : ''
+      }
+    })
+  }
+
+  // tổ 
+  getTeamByOrganize(parentId, element1, root_orgId) {
+    const queryParams = queryString.stringify({ organizeId: root_orgId, parentId: parentId});
+    this.apiService.getTeamByOrganize(queryParams).subscribe(results => {
+      if (results.status === 'success') {
+        element1.options = cloneDeep(results.data).map(d => {
+          return { label: d.org_name, value: d.orgId }
+        });
+        element1.columnValue = element1.columnValue ? element1.columnValue : ''
+      }
+    })
   }
 
   getPositionList(orgId, element1) {

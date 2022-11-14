@@ -217,7 +217,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
         suppressRowClickSelection: true,
         showDisabledCheckboxes: true,
         checkboxSelection: true,
-        rowSelection: 'single'
+        // rowSelection: 'single'
       },
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       {
@@ -296,7 +296,9 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
       { label: 'Từ chối Offer', code: '9' },
     ]
     this.dataRowSelected = event;
-    this.recruitmentStatusSelected = this.dataRowSelected[0].can_st
+    // this.dataRowSelected[0].can_st
+    this.recruitmentStatusSelected = this.dataRowSelected.map( d => d.can_st).toString();
+    console.log('this.dataRowSelected', this.recruitmentStatusSelected)
   }
 
   xoatuyendung(event) {
@@ -385,6 +387,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     this.getOrgRoots();
     this.getObjectList();
     this.getStatus();
+    this.getVacancyPage();
   }
 
   getOrgRoots() {
@@ -451,9 +454,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     })
   }
 
-  findVacancy() {
-    this.getVacancyPage();
-  }
+    
   getVacancyPage() {
     const queryParams = queryString.stringify({
       jobId: this.query.jobId,
@@ -463,7 +464,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
       if (results.status === 'success') {
         this.listVacancy = results.data.dataList.data.map(d => {
           return {
-            label: d.vacancy_name,
+            label: d.job_name,
             value: d.vacancyId
           }
         })
@@ -489,15 +490,17 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
       message: 'Bạn có chắc chắn muốn chuyển vòng?',
       accept: () => {
         let dataUpdateStatus = this.dataRowSelected.map( d => d.canId).toString();
+        let vacancyId = this.dataRowSelected.map( d => d.vacancyId).toString();
         const query = {
           canId: dataUpdateStatus,
-          can_st: this.recruitmentStatusSelected
+          can_st: this.recruitmentStatusSelected,
+          vacancyId: vacancyId
         }
         this.apiService.recruiUpdateStatus(queryString.stringify(query)).subscribe((results: any) => {
           if (results.status === 'success') {
             this.getRecruitMailInput();
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Chuyển thành công!' });
-            // this.dataRowSelected = [];
+            this.dataRowSelected = [];
             this.recruitmentStatusSelected = null;
             this.isSendMail = true;
           } else {
@@ -518,9 +521,10 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
       this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Chưa chọn nội dung gửi' });
       return
     }
+    let canId = this.dataRowSelected.map( d => d.canId).toString()
     const data = {
       mail_Id: this.mailInputValue,
-      can_Id: this.dataRowSelected[0].canId
+      can_Id: canId
     }
     this.spinner.show();
     this.apiService.sendRecruitMail(data).subscribe(results => {
