@@ -192,7 +192,7 @@ export class BaoCaoComponent implements OnInit {
     const api = this.listReports.filter(t => t.value === this.query.report_type)[0].api;
     if (api) {
       const queryParams = queryString.stringify(params);
-      this.apiService.get(window.location.host + api, queryParams)
+      this.apiService.getReport(api, queryParams)
       .subscribe(response => {
         if (response.type === 'application/json') {
           this.spinner.hide();
@@ -214,7 +214,7 @@ export class BaoCaoComponent implements OnInit {
     const api = this.listReports.filter(t => t.value === this.query.report_type)[0].api;
     if (api) {
       const queryParams = queryString.stringify(params);
-      this.apiService.get(window.location.host + api, queryParams)
+      this.apiService.getReport(api, queryParams)
       .subscribe(response => {
         if (response.type === 'application/json') {
           this.spinner.hide();
@@ -236,7 +236,7 @@ export class BaoCaoComponent implements OnInit {
     const api = this.listReports.filter(t => t.value === this.query.report_type)[0].api;
     if (api) {
       const queryParams = queryString.stringify(params);
-      this.apiService.get(window.location.host + api, queryParams)
+      this.apiService.getReport(api, queryParams)
       .subscribe(response => {
         if (response.type === 'application/json') {
           this.spinner.hide();
@@ -259,6 +259,8 @@ export class BaoCaoComponent implements OnInit {
       if (element.param_type === 'datetime') {
         params[element.param_cd] = element[element.param_cd] ? moment(new Date(element[element.param_cd])).format('DD/MM/YYYY') : null;
       } else if (element.param_type === 'object') {
+        params[element.param_cd] = element[element.param_cd];
+      }else if (element.param_type === 'input') {
         params[element.param_cd] = element[element.param_cd];
       }else if (element.param_type === 'multiSelect') {
         console.log(element[element.param_cd] && (element[element.param_cd] != 1) && (element[element.param_cd].length > 0))
