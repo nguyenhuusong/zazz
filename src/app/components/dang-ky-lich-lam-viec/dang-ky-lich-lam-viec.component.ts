@@ -141,7 +141,10 @@ export class DangKyLichLamViecComponent implements OnInit {
       app_st: null,
       is_flexible: null,
       organizeIds: this.query.organizeIds,
-      companyIds: [],
+      companyIds: this.query.companyIds,
+    }
+    if(this.companies.length > 0) {
+      this.query.companyIds = this.companies[0].value;
     }
     this.load();
   }
@@ -184,7 +187,7 @@ export class DangKyLichLamViecComponent implements OnInit {
     this.spinner.show();
     let params: any = { ... this.query };
     let companyIds = this.query.companyIds.toString();
-    params.companyIds = companyIds === '00000000-0000-0000-0000-000000000000' ? '' : companyIds;
+    params.companyIds = companyIds;
 
     if (params.orgId) {
       params.orgId = typeof params.orgId === 'string' ? params.orgId : params.orgId.orgId;
@@ -643,6 +646,9 @@ export class DangKyLichLamViecComponent implements OnInit {
                 value: d.companyId
               };
             });
+            if(this.companies.length > 0) {
+              this.query.companyIds = this.companies[0].value;
+            }
             this.load();
         }
       }),

@@ -162,7 +162,10 @@ export class NsHoSoNhanSuComponent implements OnInit {
       isApprove: -1,
       emp_st: -1,
       organizeIds: this.query.organizeIds,
-      companyIds: '',
+      companyIds: this.query.companyIds,
+    }
+    if(this.companies.length > 0) {
+      this.query.companyIds = this.companies[0].value;
     }
     this.load();
   }
@@ -220,9 +223,8 @@ export class NsHoSoNhanSuComponent implements OnInit {
     this.columnDefs = []
     this.spinner.show();
     const params: any = { ...this.query };
-
     let companyIds = this.query.companyIds.toString();
-    params.companyIds = companyIds === '00000000-0000-0000-0000-000000000000' ? '' : companyIds;
+    params.companyIds = companyIds;
     params.organizeIds = this.query.organizeIds;
     params.orgId = params.orgId.orgId;
     const queryParams = queryString.stringify(params);
@@ -800,6 +802,9 @@ export class NsHoSoNhanSuComponent implements OnInit {
                 value: d.companyId
               };
             });
+            if(this.companies.length > 0) {
+              this.query.companyIds = this.companies[0].value
+            }
             this.load();
         }
       }),

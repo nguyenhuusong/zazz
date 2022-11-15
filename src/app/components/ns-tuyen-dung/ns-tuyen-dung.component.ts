@@ -503,7 +503,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
           if (results.status === 'success') {
             this.getRecruitMailInput();
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Chuyển thành công!' });
-            this.dataRowSelected = [];
+            // this.dataRowSelected = [];
             this.recruitmentStatusSelected = null;
             this.isSendMail = true;
           } else {
@@ -534,6 +534,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Gửi thành công' });
         this.mailInputValue = '';
+        this.dataRowSelected = [];
         // this.isSendMail = false;
         // this.load();
         const params = {
@@ -557,6 +558,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
 
   onHideSendEmail(event) {
     this.isSendMail = false;
+    this.dataRowSelected = [];
     this.load();
   }
 

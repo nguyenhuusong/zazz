@@ -120,6 +120,9 @@ export class PheDuyetComponent implements OnInit, AfterViewChecked {
       organizeIds: this.query.organizeIds,
       companyIds: this.query.companyIds,
     }
+    if(this.companies.length > 0) {
+      this.query.companyIds = this.companies[0].value;
+    }
     this.load();
   }
 
@@ -134,7 +137,7 @@ export class PheDuyetComponent implements OnInit, AfterViewChecked {
     this.spinner.show();
     let params: any = {... this.query};
     let companyIds = this.query.companyIds.toString();
-    params.companyIds = companyIds === '00000000-0000-0000-0000-000000000000' ? '' : companyIds;
+    params.companyIds =  companyIds;
     const queryParams = queryString.stringify(params);
     this.apiService.getWorkflowPage(queryParams).subscribe(
       (results: any) => {
@@ -320,6 +323,9 @@ export class PheDuyetComponent implements OnInit, AfterViewChecked {
                 value: d.companyId
               };
             });
+            if(this.companies.length > 0) {
+              this.query.companyIds = this.companies[0].value;
+            }
             this.load();
         }
       }),

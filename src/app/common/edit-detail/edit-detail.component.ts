@@ -175,13 +175,15 @@ export class EditDetailComponent implements OnInit, OnChanges {
             const root_orgId = this.detail.organizeId ? this.detail.organizeId : null;
             promissall.push(this.apiHrmV2Service.getOrgPositionsV2(queryString.stringify({ orgId: root_orgId }), element1.field_name));
           } else if (element1.field_name === 'positionId') {
-            const orgId = this.getValueByKey('orgId');
+            const orgId = this.getValueByKey('organizeId');
             promissall.push(this.apiHrmV2Service.getPositionListV2(queryString.stringify({ orgId: orgId }), element1.field_name));
           } else if (element1.field_name === 'positionTitleId') {
             const positionId = this.getValueByKey('positionId');
             promissall.push(this.apiHrmV2Service.getPositionTitlesV2(queryString.stringify({ PositionId: positionId }), element1.field_name));
           }else if (element1.field_name === 'companyId' || element1.field_name === 'company_id') {
             promissall.push(this.apiHrmV2Service.getCompanyListV2(queryString.stringify({ orgId: this.detail.organizeId ? this.detail.organizeId : null }), element1.field_name));
+          }else if (element1.field_name === 'companyId3') {
+            promissall.push(this.apiHrmV2Service.getCompaniesByOrganize(queryString.stringify({ organizeId: this.detail.organizeId ? this.detail.organizeId : null }), element1.field_name));
           } else if (element1.field_name === 'reportTo' || element1.field_name === 'reportTo1') {
             const root_orgId = this.detail ? this.detail.organizeId : null
             promissall.push(this.apiHrmV2Service.getEmpLeadersV2(queryString.stringify({ root_orgId: root_orgId }), element1.field_name));

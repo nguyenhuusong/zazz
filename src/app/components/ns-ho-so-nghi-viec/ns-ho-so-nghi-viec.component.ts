@@ -107,7 +107,7 @@ export class NsHoSoNghiViecComponent implements OnInit {
       reason_id: 0,
       status: -1,
       organizeIds: this.query.organizeIds,
-      companyIds: [],
+      companyIds: this.query.companyIds,
     }
     this.load();
   }
@@ -183,7 +183,7 @@ export class NsHoSoNghiViecComponent implements OnInit {
     let params: any = {... this.query};
     params.orgId = this.department ? this.department.orgId : null
     let companyIds = this.query.companyIds.toString();
-    params.companyIds = companyIds === '00000000-0000-0000-0000-000000000000' ? '' : companyIds;
+    params.companyIds = companyIds;
 
     const queryParams = queryString.stringify(params);
     this.apiService.getTerminatePage(queryParams).subscribe(
@@ -484,6 +484,9 @@ export class NsHoSoNghiViecComponent implements OnInit {
                 value: d.companyId
               };
             });
+            if(this.companies.length > 0) {
+              this.query.companyIds = this.companies[0].value;
+            }
             this.load();
         }
       }),

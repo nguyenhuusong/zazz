@@ -199,6 +199,18 @@ export class ApiHrmV2Service {
     )
   }
 
+  getCompaniesByOrganize(queryParams, field_name): Observable<any> {
+    return this.httpClient.get(`${apiHrmServer}/api/v2/compay/GetCompaniesByOrganize?` + queryParams, this.options).pipe(
+      map((repon: any) => {
+        return { key: field_name, result: repon.data.map(d => {
+          return { label: d.companyName, value: d.companyId }
+        }) };
+      }), catchError(error => {
+        return throwError('Capital not found!');
+      })
+    )
+  }
+
   getEmpLeadersV2(queryParams, field_name): Observable<any> {
     return this.httpClient.get(`${apiHrmServer}/api/v2/employee/GetEmpLeaders?` + queryParams, this.options).pipe(
       map((repon: any) => {
