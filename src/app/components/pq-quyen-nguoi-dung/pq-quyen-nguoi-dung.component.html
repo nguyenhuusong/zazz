@@ -192,6 +192,17 @@
         </div>
     </div> -->
     <div class="col-md-12  mt-1">
+        <div class="field-group multi-select" >
+            <!-- [ngClass]="modelAdd.ord_ids ? 'valid' : 'invalid'" -->
+            <label for="">Công ty trả lương</label>
+            <p-multiSelect appendTo="body"
+            optionValue="code"
+            optionLabel="label"
+            [options]="companies" [(ngModel)]="addUserQuery.companyIds"
+            ></p-multiSelect>
+        </div>
+    </div>
+    <div class="col-md-12  mt-1">
         <div class="field-group multi-select" [ngClass]="addUserQuery.roles ? 'valid' : 'invalid'">
             <label for="">Phân nhóm quyền <span style="color:red">*</span></label>
             <p-multiSelect appendTo="body"
@@ -202,17 +213,6 @@
             <div *ngIf="(addUserQuery.roles && addUserQuery.roles.length <= 0) && saveAddUser" class="alert-validation alert-danger">
                     Vui Lòng chọn quyền
                 </div>
-        </div>
-    </div>
-    <div class="col-md-12  mt-1">
-        <div class="field-group multi-select" >
-            <!-- [ngClass]="modelAdd.ord_ids ? 'valid' : 'invalid'" -->
-            <label for="">Công ty trả lương</label>
-            <p-multiSelect appendTo="body"
-            optionValue="code"
-            optionLabel="label"
-            [options]="companies" [(ngModel)]="addUserQuery.companyIds"
-            ></p-multiSelect>
         </div>
     </div>
     

@@ -24,6 +24,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   optionsButtonsView = [
     // { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
     { label: 'Lưu lại', value: 'Update', class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.EDIT) ? 'hidden' : '', icon: 'pi pi-save' },
+    { label: 'Xuất hồ sơ', value: 'xuatHoSo', class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CT_HSNS_XUAT_HSNS) ? 'hidden' : '', icon: 'pi file-excel' },
     // { label: 'Duyệt hồ sơ', value: 'DuyetHoSo', class: '', icon: 'pi pi-check' },
   ]
   API_PROFILE = API_PROFILE
@@ -1296,6 +1297,8 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       this.noDisableInput = false;
     }else if (button === 'TaoHopDong') {
       this.taohopdong();
+    }else if(button === 'xuatHoSo') {
+      this.exportResume();
     } else {
       this.getEmployeeInfo();
     }
