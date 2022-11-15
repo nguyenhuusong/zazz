@@ -162,7 +162,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
       isApprove: -1,
       emp_st: -1,
       organizeIds: this.query.organizeIds,
-      companyIds: this.query.companyIds,
+      companyIds: '',
     }
     this.load();
   }
@@ -222,7 +222,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
     const params: any = { ...this.query };
 
     let companyIds = this.query.companyIds.toString();
-    params.companyIds = companyIds;
+    params.companyIds = companyIds === '00000000-0000-0000-0000-000000000000' ? '' : companyIds;
     params.organizeIds = this.query.organizeIds;
     params.orgId = params.orgId.orgId;
     const queryParams = queryString.stringify(params);
@@ -800,7 +800,6 @@ export class NsHoSoNhanSuComponent implements OnInit {
                 value: d.companyId
               };
             });
-            this.companies = [ { label: 'Tất cả', value: ''}, ...this.companies]
             this.load();
         }
       }),

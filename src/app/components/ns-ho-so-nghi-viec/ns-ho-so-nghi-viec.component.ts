@@ -107,7 +107,7 @@ export class NsHoSoNghiViecComponent implements OnInit {
       reason_id: 0,
       status: -1,
       organizeIds: this.query.organizeIds,
-      companyIds: this.query.companyIds,
+      companyIds: [],
     }
     this.load();
   }
@@ -183,7 +183,7 @@ export class NsHoSoNghiViecComponent implements OnInit {
     let params: any = {... this.query};
     params.orgId = this.department ? this.department.orgId : null
     let companyIds = this.query.companyIds.toString();
-    params.companyIds = companyIds;
+    params.companyIds = companyIds === '00000000-0000-0000-0000-000000000000' ? '' : companyIds;
 
     const queryParams = queryString.stringify(params);
     this.apiService.getTerminatePage(queryParams).subscribe(
@@ -484,7 +484,6 @@ export class NsHoSoNghiViecComponent implements OnInit {
                 value: d.companyId
               };
             });
-            this.companies = [ { label: 'Tất cả', value: ''}, ...this.companies]
             this.load();
         }
       }),

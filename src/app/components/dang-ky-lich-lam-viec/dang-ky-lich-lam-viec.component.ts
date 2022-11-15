@@ -141,7 +141,7 @@ export class DangKyLichLamViecComponent implements OnInit {
       app_st: null,
       is_flexible: null,
       organizeIds: this.query.organizeIds,
-      companyIds: this.query.companyIds,
+      companyIds: [],
     }
     this.load();
   }
@@ -184,7 +184,7 @@ export class DangKyLichLamViecComponent implements OnInit {
     this.spinner.show();
     let params: any = { ... this.query };
     let companyIds = this.query.companyIds.toString();
-    params.companyIds = companyIds;
+    params.companyIds = companyIds === '00000000-0000-0000-0000-000000000000' ? '' : companyIds;
 
     if (params.orgId) {
       params.orgId = typeof params.orgId === 'string' ? params.orgId : params.orgId.orgId;
@@ -643,7 +643,6 @@ export class DangKyLichLamViecComponent implements OnInit {
                 value: d.companyId
               };
             });
-            this.companies = [ { label: 'Tất cả', value: ''}, ...this.companies]
             this.load();
         }
       }),

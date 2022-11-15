@@ -76,7 +76,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     organizeId: null,
     positionCd: null,
     vacancyId: 0,
-    can_st: -1,
+    can_st: null,
     organizeIds: '',
   }
   totalRecord = 0;
@@ -134,7 +134,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
       positionCd: '',
       jobId: null,
       vacancyId: 0,
-      can_st: -1,
+      can_st: null,
       organizeIds: this.query.organizeIds,
     }
     this.load();
@@ -352,7 +352,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
         this.positions = results.data.map(d => {
           return { label: d.positionName, value: d.positionCd }
         });
-        this.positions = [{ label: 'Tất cả', value: -1 }, ...this.positions]
+        this.positions = [{ label: 'Tất cả', value: '' }, ...this.positions]
       }
     })
   }

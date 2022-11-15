@@ -106,7 +106,7 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
       month: 0,
       organizeId: '',
       organizeIds: this.query.organizeIds,
-      companyIds: this.query.companyIds,
+      companyIds: [],
     }
     this.load();
   }
@@ -122,7 +122,7 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
     this.spinner.show();
     const params: any = { ...this.query };
     let companyIds = this.query.companyIds.toString();
-    params.companyIds = companyIds;
+    params.companyIds = companyIds === '00000000-0000-0000-0000-000000000000' ? '' : companyIds;
     const queryParams = queryString.stringify(params);
     this.apiService.getAnnualLeavePage(queryParams).subscribe(
       (results: any) => {
@@ -250,7 +250,6 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
                 value: d.companyId
               };
             });
-            this.companies = [ { label: 'Tất cả', value: ''}, ...this.companies]
             this.load();
         }
       }),

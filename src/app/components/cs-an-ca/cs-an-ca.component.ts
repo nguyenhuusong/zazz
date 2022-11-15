@@ -123,7 +123,7 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
       fromdate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).add(-1,'months').format()),
       todate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).format()),
       organizeIds: this.query.organizeIds,
-      companyIds: this.query.companyIds
+      companyIds: []
     }
     this.load();
   }
@@ -141,7 +141,7 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
     this.spinner.show();
     let params: any = {... this.query};
     let companyIds = this.query.companyIds.toString();
-    params.companyIds = companyIds;
+    params.companyIds = companyIds === '00000000-0000-0000-0000-000000000000' ? '' : companyIds;
     delete params.fromdate
     delete params.todate
     params.FromDate = moment(new Date(this.query.fromdate)).format('YYYY-MM-DD')
@@ -431,7 +431,6 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
                 value: d.companyId
               };
             });
-            this.companies = [ { label: 'Tất cả', value: ''}, ...this.companies]
             this.load();
         }
       }),

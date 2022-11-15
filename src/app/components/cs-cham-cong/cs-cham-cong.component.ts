@@ -149,7 +149,7 @@ export class CsChamCongComponent implements OnInit {
       month: new Date().getMonth() + 1,
       year: new Date().getFullYear(),
       organizeIds: this.query.organizeIds,
-      companyIds: this.query.companyIds,
+      companyIds: [],
     }
     this.load();
   }
@@ -190,8 +190,8 @@ export class CsChamCongComponent implements OnInit {
     this.columnDefs = []
     this.spinner.show();
     let params: any = {... this.query};
-    let companyIds = this.query.companyIds.toString();
-    params.companyIds = companyIds;
+    let companyIds =  this.query.companyIds.toString();
+    params.companyIds = companyIds === '00000000-0000-0000-0000-000000000000' ? '' : companyIds;
     // params.fromDate = moment(new Date(this.query.fromDate)).format('YYYY-MM-DD')
     // params.toDate = moment(new Date(this.query.toDate)).format('YYYY-MM-DD')
     const queryParams = queryString.stringify(params);
@@ -329,7 +329,6 @@ export class CsChamCongComponent implements OnInit {
                 value: d.companyId
               };
             });
-            this.companies = [ { label: 'Tất cả', value: ''}, ...this.companies]
             this.load();
         }
       }),

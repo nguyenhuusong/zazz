@@ -584,13 +584,13 @@ export class PqQuyenNguoiDungComponent implements OnInit {
     }
     const query = queryString.stringify(
       { 
-        filter: '',
         organizeIds: organizeIds
     })
-    this.apiService.getCompanyPage(query).subscribe(
+
+    this.apiService.getCompaniesByUserOrganize(query).subscribe(
       (results: any) => {
         if(results.status === "success"){
-          this.companies = results.data.dataList.data
+          this.companies = results.data
             .map(d => {
               return {
                 label: d.companyName,

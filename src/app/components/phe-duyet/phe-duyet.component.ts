@@ -134,7 +134,7 @@ export class PheDuyetComponent implements OnInit, AfterViewChecked {
     this.spinner.show();
     let params: any = {... this.query};
     let companyIds = this.query.companyIds.toString();
-    params.companyIds = companyIds;
+    params.companyIds = companyIds === '00000000-0000-0000-0000-000000000000' ? '' : companyIds;
     const queryParams = queryString.stringify(params);
     this.apiService.getWorkflowPage(queryParams).subscribe(
       (results: any) => {
@@ -320,7 +320,6 @@ export class PheDuyetComponent implements OnInit, AfterViewChecked {
                 value: d.companyId
               };
             });
-            this.companies = [ { label: 'Tất cả', value: ''}, ...this.companies]
             this.load();
         }
       }),

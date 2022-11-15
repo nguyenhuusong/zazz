@@ -1058,6 +1058,10 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v2/compay/GetCompanyPage?` + queryParams, this.options)
   }
 
+  getCompaniesByUserOrganize(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/compay/GetCompaniesByUserOrganize?` + queryParams, this.options)
+  }
+
   setCompanyInfo(params): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/compay/SetCompanyInfo`, params, this.options)
   }
