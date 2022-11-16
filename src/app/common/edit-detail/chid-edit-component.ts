@@ -1298,7 +1298,6 @@ export class AppTypeMultiSelectComponent implements OnInit {
   }
 
   onChangeValue(value, field_name) {
-    console.log('value', value)
     this.modelFields[field_name].error = false;
     // if (field_name === 'work_cds') {
     //   console.log(value)

@@ -155,8 +155,8 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
     let params: any = {... this.query};
     delete params.fromDate
     delete params.toDate
-    // params.FromDate = moment(new Date(this.query.fromDate)).format('YYYY-MM-DD')
-    // params.ToDate = moment(new Date(this.query.toDate)).format('YYYY-MM-DD');
+    params.FromDate = moment(new Date(this.query.fromDate)).format('YYYY-MM-DD')
+    params.ToDate = moment(new Date(this.query.toDate)).format('YYYY-MM-DD');
 
     const queryParams = queryString.stringify(params);
     this.apiService.getVacancyPage(queryParams).subscribe(

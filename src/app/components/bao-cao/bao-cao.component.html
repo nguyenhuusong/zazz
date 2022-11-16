@@ -38,8 +38,8 @@
                           label="Xem file Excel" class="mr-2" icon="pi pi-eye" (click)="ViewExcel('view')"></button>
                           <button pButton pRipple type="button" [disabled]="query.report_type===null ? true : false" 
                           label="Xuất file Excel" class="mr-2"  icon="pi pi-file-excel" (click)="exportExcel('xlsx')"></button>
-                          <button pButton pRipple type="button" [disabled]="query.report_type===null ? true : false" 
-                          label="Xuất file PDf"  class="mr-2"  icon="pi pi-file-pdf"(click)="exportPdf('pdf')"></button>
+                          <!-- <button pButton pRipple type="button" [disabled]="query.report_type===null ? true : false" 
+                          label="Xuất file PDf"  class="mr-2"  icon="pi pi-file-pdf"(click)="exportPdf('pdf')"></button> -->
                         </div>
                       </div>
                       <div *ngIf="paramater?.param_type === 'datetime'" class="col-md-6">

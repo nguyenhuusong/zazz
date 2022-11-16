@@ -431,10 +431,11 @@ export class EditDetailComponent implements OnInit, OnChanges {
     if (element1.columnValue) {
       let newarray = [];
       element1.options.forEach(element => {
-        if (element1.columnValue.split(",").indexOf(element.code) > -1) {
-          newarray.push(element);
+        if (element1.columnValue.split(",").indexOf(element.value) > -1) {
+          newarray.push(element.value.toString());
         }
       });
+      
       element1.columnValue = newarray;
     }
   }
@@ -667,7 +668,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
         } else if ((data.columnType === 'select' || data.columnType === 'multiSelect' || data.columnType === 'dropdown' || data.columnType === 'checkboxList') && data.options) {
           if (data.columnType === 'multiSelect') {
             if (data.columnValue && data.columnValue.length > 0) {
-              data.columnValue = data.columnValue.map(d => d.code);
+              // data.columnValue = data.columnValue.map(d => d.code);
               data.columnValue = data.columnValue.toString()
             } else {
               data.columnValue = null;

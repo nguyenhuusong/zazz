@@ -197,6 +197,13 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
           hide: CheckHideAction(MENUACTIONROLEAPI.GetCandidatePage.url, ACTIONS.VIEW)
         },
         {
+          onClick: this.rateRecui.bind(this),
+          label: 'Đánh giá kết quả',
+          icon: 'pi pi-star-fill',
+          class: 'btn-primary mr5',
+          hide: CheckHideAction(MENUACTIONROLEAPI.GetCandidatePage.url, ACTIONS.DANH_GIA_KET_QUA)
+        },
+        {
           onClick: this.xoatuyendung.bind(this),
           label: 'Xóa ',
           icon: 'pi pi-trash',
@@ -512,6 +519,39 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
         });
       },
     });
+  }
+  isRateRecui = false;
+  rateStatus = null;
+  queryRate = {
+    canId: '',
+    InterviewResult: '',
+  }
+  isSubmitRate = false;
+  rateRecui(event) {
+    this.isRateRecui = true;
+    this.queryRate.canId = event.rowData.canId
+  }
+
+  cancelRate() {
+    this.isRateRecui = false
+  }
+
+  sendRate() {
+    this.isSubmitRate = true;
+    if(this.queryRate.canId && this.queryRate.InterviewResult) { 
+        this.apiService.updateInterviewResult(queryString.stringify(this.queryRate), null).subscribe(results => {
+          if (results.status === 'success') {
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Gửi thành công' });
+            this.isRateRecui = false;
+            this.isSubmitRate = false;
+            this.spinner.hide();
+          } else {
+            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.data : null });
+          }
+      })
+    }else if(!this.queryRate.InterviewResult) {
+      return;
+    }
   }
 
   cancelSendEmail() {

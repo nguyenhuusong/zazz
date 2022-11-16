@@ -263,3 +263,35 @@
             </div>
         </ng-template>
 </p-dialog>
+<p-dialog styleClass="hideHeaderForm" header="Đánh giá"
+    [(visible)]="isRateRecui" 
+    [modal]="true" [style]="{width: '400px'}"
+    [draggable]="false" [resizable]="false" [focusTrap]="false" >
+       <div class="d-flex gap16 mb-3">
+            <div class="fields radio">
+                <p-radioButton
+                    name="recrui" value="1" 
+                    [(ngModel)]="queryRate.InterviewResult" 
+                    inputId="rate-good"></p-radioButton>
+                <label for="rate-good"> &nbsp;Tốt</label>
+            </div>
+            <div class="fields radio">
+                <p-radioButton
+                    name="recrui" value="2" 
+                    [(ngModel)]="queryRate.InterviewResult" 
+                    inputId="rate-bad"></p-radioButton>
+                    <label for="rate-bad"> &nbsp;Không tốt</label>
+            </div>
+       </div>
+       <div class="field-group">
+            <div class="alert-validation alert-danger" *ngIf="!rateStatus && isSubmitRate"> 
+                Vui lòng chọn đánh giá
+            </div>
+        </div>
+        <ng-template pTemplate="footer">
+            <div class="d-flex end">
+              <p-button (click)="cancelRate()" styleClass="p-button-sm p-button-secondary" label="Bỏ qua" icon="pi pi-times-circle"></p-button>&nbsp;
+              <p-button (click)="sendRate()">Gửi Đánh giá</p-button>
+            </div>
+        </ng-template>
+</p-dialog>

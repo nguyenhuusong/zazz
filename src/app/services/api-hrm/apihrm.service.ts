@@ -822,6 +822,10 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v1/recruitment/SendRecruitMail`, data, this.options)
   }
 
+  updateInterviewResult(query, data = null): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/recruitment/UpdateInterviewResult?` + query, data, this.options)
+  }
+
   exportVacancy(queryParams): Observable<any> {
     return this.http.get(`${apiHrmServer}/api/v1/recruitment/ExportVacancy/?${queryParams}`, {
       headers: new HttpHeaders({

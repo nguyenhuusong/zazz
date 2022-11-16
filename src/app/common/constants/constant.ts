@@ -478,6 +478,7 @@ export const ACTIONS = {
     LUU_THONG_BAO: 'luu_thong_bao',
     CONG_BO: 'cong_bo',
     DAY_LEN_APP: 'day_len_app',
+    DANH_GIA_KET_QUA: 'danh_gia_ket_qua',
     ADD_PHEP_BU_PHONG_BAN: 'them_phep_bu_phong_ban',
     HUY_DUYET: 'huy_duyet',
     XUAT_CHUNG_TU_THUE_1: 'xuat_chung_tu_thue_1',
