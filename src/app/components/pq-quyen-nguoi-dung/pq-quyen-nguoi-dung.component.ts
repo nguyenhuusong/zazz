@@ -753,6 +753,7 @@ export class PqQuyenNguoiDungComponent implements OnInit {
         this.displayAdd = false;
         this.spinner.hide();
       } else {
+        this.spinner.hide();
         this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
       }
     })

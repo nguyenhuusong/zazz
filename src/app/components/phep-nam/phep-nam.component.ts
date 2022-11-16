@@ -79,6 +79,8 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
   loadjs = 0;
   heightGrid = 0;
   companies = [];
+  months = [];
+  years = []
   ngAfterViewChecked(): void {
     const a: any = document.querySelector(".header");
     const b: any = document.querySelector(".sidebarBody");
@@ -102,8 +104,8 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
       filter: '',
       offSet: 0,
       pageSize: 15,
-      year: 0,
-      month: 0,
+      year: new Date().getFullYear(),
+      month: new Date().getMonth() + 1,
       organizeId: '',
       organizeIds: this.query.organizeIds,
       companyIds: this.query.companyIds,
@@ -158,14 +160,33 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
   showButtons(event: any) {
     return {
       buttons: [
-        // {
-        //   onClick: this.XemChiTiet.bind(this),
-        //   label: 'Xem chi tiết',
-        //   icon: 'fa fa-eye',
-        //   class: 'btn-primary mr5',
-        // },
+        {
+          onClick: this.XemChiTiet.bind(this),
+          label: 'Xem chi tiết',
+          icon: 'fa fa-eye',
+          class: 'btn-primary mr5',
+        },
       ]
     };
+  }
+
+  dataInfo: any = []
+  isShowInfo = false
+  XemChiTiet(event) {
+    this.isShowInfo = true;
+    const query = {
+      empId: event.rownData.empId,
+      year: this.query.year,
+      month: this.query.month,
+    }
+    this.apiService.getLeaveRequestMonthInfo(queryString.stringify(query)).subscribe(
+      (results: any) => {
+        if(results.status === "success"){
+          
+            
+        }
+      }),
+      error => { };
   }
 
   initGrid() {
@@ -217,6 +238,8 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
     if(currentDay >= 25 && currentDay <= 31){
       this.query.month = this.query.month + 1;
     }
+
+    this.getMonthYear();
   }
 
   goToPhepBu() {
@@ -307,6 +330,29 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
       this.query.month = 12;
     }else if(this.query.month < 1){
       this.query.month = 1;
+    }
+  }
+
+  getMonthYear() {
+    this.months = [
+      { label: 'Tháng 1', value: 1 },
+      { label: 'Tháng 2', value: 2 },
+      { label: 'Tháng 3', value: 3 },
+      { label: 'Tháng 4', value: 4 },
+      { label: 'Tháng 5', value: 5 },
+      { label: 'Tháng 6', value: 6 },
+      { label: 'Tháng 7', value: 7 },
+      { label: 'Tháng 8', value: 8 },
+      { label: 'Tháng 9', value: 9 },
+      { label: 'Tháng 10', value: 10 },
+      { label: 'Tháng 11', value: 11 },
+      { label: 'Tháng 12', value: 12 },
+    ]
+
+    let minYear = 2000;
+    let maxYear = 2040;
+    for (let i = minYear; i <= maxYear; i++) {
+      this.years.push({ label: 'Năm ' + i, value: i })
     }
   }
 

@@ -602,6 +602,10 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     this.load();
   }
 
+  importFileExel() {
+    this.router.navigate(['/tuyen-dung/ds-tuyen-dung/import']);
+  }
+
 }
 
 

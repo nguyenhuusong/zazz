@@ -68,18 +68,27 @@
                             </div>
                         </div>
                         <div class="col-6">
-                            <div class="field-group text label-8">
+                            <div class="field-group select">
                                 <label>Tháng</label>
-                                <input min="1" max="12" type="number" class="input-default" id="" 
+                                <!-- <input min="1" max="12" type="number" class="input-default" id="" 
                                     (change)="changeMonth($event)" placeholder="Tháng"
-                                    [(ngModel)]="query.month">
+                                    [(ngModel)]="query.month"> -->
+                                <p-dropdown appendTo="body" [baseZIndex]="100"
+                                [options]="months" [(ngModel)]="query.month" name="month"
+                                [filter]="true">
+                                </p-dropdown>
                             </div>
                         </div>
                         <div class="col-6">
-                            <div class="field-group text label-8">
+                            <div class="field-group select">
                                 <label>Năm</label>
-                                <input type="number" class="input-default" id="" placeholder="Năm"
-                                    [(ngModel)]="query.year">
+                                <!-- <input type="number" class="input-default" id="" placeholder="Năm"
+                                    [(ngModel)]="query.year"> -->
+
+                                    <p-dropdown appendTo="body" [baseZIndex]="100"
+                                [options]="years" [(ngModel)]="query.year" name="year"
+                                [filter]="true">
+                                </p-dropdown>
                             </div>
                         </div>
                         <!-- <div class="col-6">
@@ -135,3 +144,31 @@
     [draggable]="false" [resizable]="false" [focusTrap]="false" styleClass="popup-setting">
     <app-config-grid-table-form *ngIf="displaySetting && gridKey" [typeConfig]="'TableInfo'"   [gridKey]="gridKey"></app-config-grid-table-form>
 </p-dialog>
+<p-dialog header="Cài đặt cấu hình" [(visible)]="isShowInfo" 
+    [modal]="true" [style]="{width: '800px'}" [maximizable]="true">
+    <div class="label-value d-flex gap-16 mb-4">
+        <div class="item d-flex gap-16">
+            <label><b>Công ty:</b></label>
+            <div></div>
+        </div>
+        <div class="item d-flex gap-16">
+            <label><b>Mã NV:</b></label>
+            <div></div>
+        </div>
+        <div class="item d-flex gap-16">
+            <label><b>Bộ phận:</b></label>
+            <div></div>
+        </div>
+        <div class="item d-flex gap-16">
+            <label><b>Chức danh:</b></label>
+            <div></div>
+        </div>
+    </div>
+    <div class="d-flex">
+        <div class="label-value table">
+            <label><b>T1</b></label>
+            <div>4.0</div>
+        </div>
+    </div>
+</p-dialog>
+

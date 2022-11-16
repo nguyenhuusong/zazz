@@ -254,7 +254,7 @@ export class BaoCaoComponent implements OnInit {
 
   getParams(type): any {
     const params: any = {};
-    params.FileType = type;
+    params.type = type;
     this.chiTietThamSoBaoCao.paramaters.forEach(element => {
       if (element.param_type === 'datetime') {
         params[element.param_cd] = element[element.param_cd] ? moment(new Date(element[element.param_cd])).format('DD/MM/YYYY') : null;

@@ -55,6 +55,7 @@ import { TreeSelectModule } from 'primeng/treeselect';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { MailTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/mail-tuyen-dung/mail-tuyen-dung.component';
 import { ChiTietMailTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/mail-tuyen-dung/chi-tiet-mail-tuyen-dung/chi-tiet-mail-tuyen-dung.component';
+import { ImportTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/import-tuyen-dung/import-tuyen-dung.component';
 @NgModule({
   imports: [
     MessagesModule,
@@ -117,7 +118,8 @@ import { ChiTietMailTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/
     ChiTietViTriTuyenDungComponent,
     NghiViecComponent,
     MailTuyenDungComponent,
-    ChiTietMailTuyenDungComponent
+    ChiTietMailTuyenDungComponent,
+    ImportTuyenDungComponent
   ],
   providers: [ ]
 })

@@ -10,6 +10,7 @@ import { LinhVucTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/linh
 import { NghiViecComponent } from 'src/app/components/ns-tuyen-dung/nghi-viec/nghi-viec.component';
 import { MailTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/mail-tuyen-dung/mail-tuyen-dung.component';
 import { ChiTietMailTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/mail-tuyen-dung/chi-tiet-mail-tuyen-dung/chi-tiet-mail-tuyen-dung.component';
+import { ImportTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/import-tuyen-dung/import-tuyen-dung.component';
 
 const routes: Routes = [
   {
@@ -24,6 +25,14 @@ const routes: Routes = [
     data: {
       title: 'Danh sách tuyển dụng',
       url: 'ds-tuyen-dung',
+    },
+  },
+  {
+    path: 'ds-tuyen-dung/import',
+    component: ImportTuyenDungComponent,
+    data: {
+      title: 'Import tuyển dụng',
+      url: 'import-tuyen-dung',
     },
   },
   {
