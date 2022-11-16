@@ -14,7 +14,7 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { cloneDeep } from 'lodash';
-
+import * as FileSaver from 'file-saver';
 @Component({
   selector: 'app-cs-an-ca',
   templateUrl: './cs-an-ca.component.html',
@@ -184,7 +184,7 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
     return {
       buttons: [
         {
-          onClick: this.XemChiTiet.bind(this),
+          onClick: this.listDetail.bind(this),
           label: 'Xem chi tiết',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
@@ -379,13 +379,15 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
   }
 
   // list ăn ca
-  xemChiTiet() {
+  listDetail(event = null) {
+    
     const params = {
-      cusId: this.rowDataSelected[0].custId
+      cusId: ''
     }
-    if(this.rowDataSelected.length){
-      this.router.navigate(['/chinh-sach/an-ca/chi-tiet-danh-sach-an-ca'], { queryParams: params });
+    if(event){
+      params.cusId = event.rowData.custId
     }
+    this.router.navigate(['/chinh-sach/an-ca/chi-tiet-danh-sach-an-ca'], { queryParams: params });
   }
 
   rowSelected(event) {
@@ -459,6 +461,29 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
       }
     }, error => {
     });
+  }
+
+  exportData() {
+    this.spinner.show();
+    let params: any = {... this.query};
+    let companyIds = this.query.companyIds.toString();
+    params.companyIds = companyIds;
+    delete params.fromdate
+    delete params.todate
+    params.FromDate = moment(new Date(this.query.fromdate)).format('YYYY-MM-DD')
+    params.ToDate = moment(new Date(this.query.todate)).format('YYYY-MM-DD');
+    params.orgId = this.selectedValue ? this.selectedValue.orgId : null
+
+    const queryParams = queryString.stringify(params);
+      this.apiService.gxportEatingPage(queryParams).subscribe(results => {
+        if (results.type === 'application/json') {
+          this.spinner.hide();
+        } else {
+          var blob = new Blob([results], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+          FileSaver.saveAs(blob, `Danh sách ăn ca` +".xlsx");
+          this.spinner.hide();
+        }
+      })
   }
 
 }

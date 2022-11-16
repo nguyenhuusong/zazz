@@ -1083,6 +1083,33 @@ export class ApiHrmService {
     return this.http.put<any>(`${apiHrmServer}/api/v1/eating/SetEatingInfo`, params, this.options)
   }
 
+  getEatingExport(queryParams: any): Observable<Blob> {
+    return this.http.get(`${apiHrmServer}/api/v1/eating/GetEatingExport?${queryParams}`, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
+  }
+
+  gxportEatingPage(queryParams: any): Observable<Blob> {
+    return this.http.get(`${apiHrmServer}/api/v1/eating/ExportEatingPage?${queryParams}`, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
+  }
+  
+  exportEatingInfo(queryParams: any): Observable<Blob> {
+    return this.http.get(`${apiHrmServer}/api/v1/eating/ExportEatingInfo?${queryParams}`, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
+  }
+
   delCompanyInfo(queryParams): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v2/compay/DelCompanyInfo?` + queryParams, this.options)
   }
@@ -1392,12 +1419,19 @@ export class ApiHrmService {
   delAnnualAddInfo(queryParams): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v2/annualleave/DelAnnualAddInfo?` + queryParams, this.options)
   }
-  
+
+  exportAnnualleave(queryParams: any): Observable<Blob> {
+    return this.http.get(`${apiHrmServer}/api/v2/annualleave/ExportAnnualleave?${queryParams}`, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
+  }
+
   getLeaveRequestMonthInfo(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/annualleave/GetLeaveRequestMonthInfo?` + queryParams, this.options)
   }
-  
-
 
   // TimeLine
   getStatusTimelineEmployee(): Observable<any> {
@@ -1552,7 +1586,7 @@ export class ApiHrmService {
     return this.http.delete<any>(`${apiHrmServer}/api/v1/timekeeping/DelTimekeepingWifiInfo?${queryParams}`, this.options)
   }
 
-
+  // quá trình thay đổi lương
   getHrmPayrollRecordPage(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/payrollRecord/GetHrmPayrollRecordPage?` + queryParams, this.options)
   }
@@ -1571,6 +1605,23 @@ export class ApiHrmService {
 
   timekeepingDeviceStatus(data): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v1/timekeeping/TimekeepingDeviceStatus`, data , this.options)
+  }
+
+  // new qt thay doi luong
+  getSalaryInfoPageDevM(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/salaryInfo/GetSalaryInfoPage?` + queryParams, this.options)
+  }
+
+  getSalaryInfoDevM(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/salaryInfo/GetSalaryInfo?` + queryParams, this.options)
+  }
+
+  setSalaryInfoDevM(data): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/salaryInfo/SetSalaryInfo`, data , this.options)
+  }
+
+  delSalaryInfoDevM(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v1/salaryInfo/DelSalaryInfo?${queryParams}`, this.options)
   }
 
   // loai bang luong

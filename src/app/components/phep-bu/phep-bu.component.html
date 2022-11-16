@@ -140,7 +140,7 @@
                 <p-dropdown panelStyleClass="mh-300" 
                     [disabled]="true"
                     [style]="{maxHeight: '300px'}" placeholder="Chọn tổ chức" appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
-                    [options]="orgRoots" [required] [(ngModel)]="organizeIdForDep" name="organizeIdForDep" (onChange)="chonToChuc()">
+                    [options]="orgRoots" [required] [(ngModel)]="organizeIdForDep" name="organizeIdForDep">
                     <ng-template let-item pTemplate="selectedItem">
                         <span style="vertical-align:middle;">{{item.label}}</span>
                     </ng-template>

@@ -232,7 +232,8 @@ export class PhepBuComponent implements OnInit, AfterViewChecked {
     this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
         if(results && results.length>0){
           this.query.organizeIds = results;
-          this.organizeIdForDep = results
+          this.organizeIdForDep = results;
+          this.getDepartments(this.query.organizeIds);
           this.load();
         }
     });
@@ -302,10 +303,10 @@ export class PhepBuComponent implements OnInit, AfterViewChecked {
     })
   }
   chonToChuc() {
-    this.querAddNewPhepBuDep.orgId = '';
-    if (this.organizeIdForDep) {
-      this.getDepartments(this.organizeIdForDep);
-    }
+    // this.querAddNewPhepBuDep.orgId = '';
+    // if (this.organizeIdForDep) {
+    //   this.getDepartments(this.organizeIdForDep);
+    // }
   }
   getDepartments(parentId) {
     const queryParams = queryString.stringify({ parentId: parentId })

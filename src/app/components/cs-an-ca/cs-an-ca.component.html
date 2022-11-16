@@ -2,13 +2,25 @@
     <section class="bread-crumb">
         <div class="d-flex bet bottom">
             <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
-            <p-button styleClass="p-button-sm height-56" (click)="cauhinh()">
-                <svg width="20" height="17" viewBox="0 0 20 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M19.5 17V0H0.50855L0.5 17H19.5ZM6.675 15.3187H2.21V6.81868H6.675V15.3187ZM8.575 15.3187V6.81868H17.79V15.3187H8.575ZM2.21 1.68132V5.13736H17.79V1.68132H2.21Z" fill="#F3F8FF"/>
-                </svg>
-                &nbsp;
-                Cấu hình
-            </p-button>
+            <div class="d-flex gap-16">
+                <p-button styleClass="p-button-sm height-56" (click)="listDetail()">
+                    <svg width="14" height="20" viewBox="0 0 14 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0.333008 18.333C0.333008 18.7932 0.706104 19.1663 1.16634 19.1663H12.833C13.2932 19.1663 13.6663 18.7932 13.6663 18.333V1.66634C13.6663 1.2061 13.2932 0.833008 12.833 0.833008H1.16634C0.706104 0.833008 0.333008 1.2061 0.333008 1.66634V18.333ZM1.99967 2.49967H11.9997V17.4997H1.99967V2.49967Z" fill="#F6FBFF"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M4.49982 15.3097C4.49982 14.9083 4.82181 14.583 5.219 14.583H8.78064C9.17783 14.583 9.49982 14.9083 9.49982 15.3097C9.49982 15.711 9.17783 16.0364 8.78064 16.0364H5.219C4.82181 16.0364 4.49982 15.711 4.49982 15.3097Z" fill="#F6FBFF"/>
+                    </svg>&nbsp;&nbsp;
+                    Xem chi tiết
+                </p-button>
+                <p-button styleClass="p-button-sm height-56" icon="pi pi-file-excel" label="Export" (click)="exportData()"
+                [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetEatingPage.url, action: ACTIONS.EXPORT}"
+                ></p-button>
+                <p-button styleClass="p-button-sm height-56" (click)="cauhinh()">
+                    <svg width="20" height="17" viewBox="0 0 20 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M19.5 17V0H0.50855L0.5 17H19.5ZM6.675 15.3187H2.21V6.81868H6.675V15.3187ZM8.575 15.3187V6.81868H17.79V15.3187H8.575ZM2.21 1.68132V5.13736H17.79V1.68132H2.21Z" fill="#F3F8FF"/>
+                    </svg>
+                    &nbsp;
+                    Cấu hình
+                </p-button>
+            </div>
         </div>
     </section>
     <section class="bread-filter">
@@ -40,17 +52,6 @@
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M9.44645 18.0227H0.769231C0.344396 18.0227 0 17.6869 0 17.2727C0 16.8585 0.344396 16.5227 0.769231 16.5227H9.29127C9.51724 15.2314 10.644 14.25 12 14.25C13.356 14.25 14.4827 15.2314 14.7087 16.5227H19.2308C19.6557 16.5227 20.0001 16.8585 20.0001 17.2727C20.0001 17.6869 19.6557 18.0227 19.2308 18.0227H14.5536C14.1477 19.035 13.1574 19.75 12 19.75C10.8426 19.75 9.85227 19.035 9.44645 18.0227ZM10.75 17C10.75 16.3096 11.3096 15.75 12 15.75C12.6904 15.75 13.25 16.3096 13.25 17C13.25 17.6904 12.6904 18.25 12 18.25C11.3096 18.25 10.75 17.6904 10.75 17Z" fill="#F3F8FF"/>
                         </svg> &nbsp;&nbsp;
                         Bộ Lọc
-                    </p-button>
-                    <!-- [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetFormGeneral.url, action: ACTIONS.DAY_LEN_APP}" -->
-                    <p-button
-                    [disabled]="rowDataSelected.length < 0"
-                    [ngClass]="{ 'active' : rowDataSelected.length > 0  }" 
-                    styleClass="height-56 btn-active-on-off" (click)="xemChiTiet()">
-                        <svg width="14" height="20" viewBox="0 0 14 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M0.333008 18.333C0.333008 18.7932 0.706104 19.1663 1.16634 19.1663H12.833C13.2932 19.1663 13.6663 18.7932 13.6663 18.333V1.66634C13.6663 1.2061 13.2932 0.833008 12.833 0.833008H1.16634C0.706104 0.833008 0.333008 1.2061 0.333008 1.66634V18.333ZM1.99967 2.49967H11.9997V17.4997H1.99967V2.49967Z" fill="#F6FBFF"/>
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M4.49982 15.3097C4.49982 14.9083 4.82181 14.583 5.219 14.583H8.78064C9.17783 14.583 9.49982 14.9083 9.49982 15.3097C9.49982 15.711 9.17783 16.0364 8.78064 16.0364H5.219C4.82181 16.0364 4.49982 15.711 4.49982 15.3097Z" fill="#F6FBFF"/>
-                        </svg>&nbsp;&nbsp;
-                        Xem chi tiết
                     </p-button>
                     <p-button
                     styleClass="height-56" (click)="handAddNew()"

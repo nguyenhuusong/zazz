@@ -47,46 +47,35 @@
         <div class="col-item">
             <div class="d-flex align-items-center">
                 <div class="filter filter-search">                    
-                                <!-- 
-                                    (click)="op.toggle($event)"
-                                    <p-overlayPanel #op [style]="{width: '700px'}" styleClass="advance-seach">
-                                    <ng-template pTemplate>
-                                        <div class="header-filter-search  grid">
-                                            <h3>Tìm kiếm nâng cao</h3>
+                        <p-overlayPanel #op [style]="{width: '700px'}" styleClass="advance-seach">
+                        <ng-template pTemplate>
+                            <div class="header-filter-search  grid">
+                                <h3>Tìm kiếm nâng cao</h3>
+                            </div>
+                            <div class="header-filter-search grid mt-1">
+                                <div class="icon col-12 pl-0" style="display: flex; flex-wrap: wrap;">
+                                    <div class="col-6">
+                                        <div class="field-group select">
+                                            <label>Công ty trả lương</label>
+                                            <p-dropdown appendTo="body" [baseZIndex]="100"
+                                                [options]="companies" [(ngModel)]="query.companyIds" name="companyIds"
+                                                [filter]="true">
+                                                </p-dropdown>
                                         </div>
-                                        <div class="header-filter-search grid mt-1">
-                                            <div class="icon col-12 pl-0" style="display: flex; flex-wrap: wrap;">
-                                                <div class="col-12">
-                                                    <div class="field-group select valid">
-                                                        <label>Trạng thái</label>
-                                                        <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
-                                                        [options]="employeeStatus" [(ngModel)]="query.emp_st" name="emp_st"
-                                                        (onChange)="find()" [filter]="true">
-                                                        <ng-template let-item pTemplate="selectedItem">
-                                                            <span>{{item.label}}</span>
-                                                        </ng-template>
-                                                        <ng-template let-car pTemplate="item">
-                                                            <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                                                                <div>{{car.label}}</div>
-                                                            </div>
-                                                        </ng-template>
-                                                        </p-dropdown>
-                                                    </div>
-                                                </div>
-                                            
-                                            </div>
-                                            <div class="input-group icon col-12 select-default text-right">
-                                                <label for="" style="visibility: hidden;">Classid <span class="pi pi-info-circle"
-                                                        style="font-size: 13px;color: orange;"></span></label>
-                                                <p-button label="Tìm kiếm" styleClass="mr-1" icon="pi pi-search" (click)="load()">
-                                                </p-button>
-                                                <p-button label="Làm mới" icon="pi pi-times" (click)="cancel()"
-                                                    styleClass="p-button-secondary">
-                                                </p-button>
-                                            </div>
-                                        </div>
-                                    </ng-template>
-                                </p-overlayPanel> -->
+                                    </div>
+                                </div>
+                                <div class="input-group icon col-12 select-default text-right">
+                                    <label for="" style="visibility: hidden;">Classid <span class="pi pi-info-circle"
+                                            style="font-size: 13px;color: orange;"></span></label>
+                                    <p-button label="Tìm kiếm" styleClass="mr-1" icon="pi pi-search" (click)="load()">
+                                    </p-button>
+                                    <p-button label="Làm mới" icon="pi pi-times" (click)="cancel()"
+                                        styleClass="p-button-secondary">
+                                    </p-button>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </p-overlayPanel>
                 </div>
                 
             </div>
@@ -129,6 +118,7 @@
                         </svg>
                     </p-button>
                     <p-button
+                        (click)="op.toggle($event)"
                         styleClass="p-button-sm height-56 ">
                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M11.2913 3.47726H0.769231C0.344396 3.47726 0 3.14148 0 2.72726C0 2.31305 0.344396 1.97726 0.769231 1.97726H11.4465C11.8523 0.96494 12.8427 0.25 14 0.25C15.1573 0.25 16.1477 0.96494 16.5535 1.97726H19.2309C19.6557 1.97726 20.0001 2.31305 20.0001 2.72726C20.0001 3.14148 19.6557 3.47726 19.2309 3.47726H16.7087C16.4828 4.76856 15.356 5.75 14 5.75C12.644 5.75 11.5172 4.76856 11.2913 3.47726ZM12.7587 2.85147C12.753 2.90017 12.75 2.94974 12.75 3C12.75 3.69036 13.3096 4.25 14 4.25C14.6904 4.25 15.25 3.69036 15.25 3C15.25 2.30964 14.6904 1.75 14 1.75C13.3762 1.75 12.8591 2.20697 12.7652 2.80443C12.7636 2.82026 12.7614 2.83594 12.7587 2.85147Z" fill="#F3F8FF"/>
@@ -188,26 +178,6 @@
 <p-dialog  [modal]="true" [(visible)]="isShowAvatar" header="Ảnh Avartar">
 <p-image class="img-popup" [src]="imgAvatar" alt="Image" [preview]="false"></p-image>
 </p-dialog>
-<p-dialog styleClass="hr-diagram" [appendTo]="'body'" [autoZIndex]="true" [(visible)]="isHrDiagram" [modal]="true" [breakpoints]="{'1024': '95vw', '640px': '100vw'}" [style]="{width: '90vw'}">
-<ng-template pTemplate="header">
-    Lọc nhân sự theo sơ đồ tổ chức
-</ng-template>
-<p-organizationChart  [value]="listAgencyMap" *ngIf="isHrDiagram" styleClass="diagram-zindex" [preserveSpace]="false" selectionMode="single"
-    [(selection)]="selectedNode" (onNodeSelect)="onNodeSelect($event)" styleClass="company">
-    <ng-template let-node pTemplate="person">
-        <div class="node-header p-corner-top">{{node.data.position ? node.data.position : 'No position'}}
-        </div>
-        <div class="node-content">
-            <img src="{{node.data.avatarUrl ? node.data.avatarUrl : '../../../../../assets/images/img_avatar.png'}}"
-                width="32">
-            <div>{{node.data.full_name ? node.data.full_name : 'No name'}}</div>
-        </div>
-    </ng-template>
-    <ng-template let-node pTemplate="department">
-        {{node.label}}
-    </ng-template>
-</p-organizationChart>
-</p-dialog>
 
 <p-dialog header="Cài đặt cấu hình" [(visible)]="displaySetting" (onHide)="find()" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
 [draggable]="false" [resizable]="false" [focusTrap]="false" styleClass="popup-setting">
@@ -216,13 +186,13 @@
 
 <p-dialog header="Thêm mới quyết định tăng/giảm lương" 
     [(visible)]="addNewPopup" 
-    [modal]="true" [style]="{width: '600px'}"
+    [modal]="true" [style]="{width: '1000px'}"
     [draggable]="false" [resizable]="false" [focusTrap]="false" >
     <app-edit-detail 
     *ngIf="listViews.length> 0"
         [manhinh]="'Edit'"
         [dataView]="listViews"
-        (callback)="setHrmPayrollRecordInfo($event)"
+        (callback)="setSalaryInfoDevM($event)"
         [detail]="detailPayrollRecordInfo"
         (callbackcancel)="cancelHrmPayrollRecordInfo($event)"
         ></app-edit-detail>

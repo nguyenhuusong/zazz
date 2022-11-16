@@ -10,7 +10,7 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { cloneDeep } from 'lodash';
-
+import * as FileSaver from 'file-saver';
 @Component({
   selector: 'app-eating-list',
   templateUrl: './eating-list.component.html',
@@ -274,6 +274,26 @@ export class EatingListComponent implements OnInit, AfterViewChecked {
       }
     }, error => {
     });
+  }
+
+  exportData() {
+    this.spinner.show();
+    let params: any = {... this.query};
+    delete params.fromdate
+    delete params.todate
+    params.FromDate = moment(new Date(this.query.fromdate)).format('YYYY-MM-DD')
+    params.ToDate = moment(new Date(this.query.todate)).format('YYYY-MM-DD');
+    const queryParams = queryString.stringify(params);
+
+      this.apiService.exportEatingInfo(queryParams).subscribe(results => {
+        if (results.type === 'application/json') {
+          this.spinner.hide();
+        } else {
+          var blob = new Blob([results], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+          FileSaver.saveAs(blob, `Chi tiết danh sách ăn ca` +".xlsx");
+          this.spinner.hide();
+        }
+      })
   }
 
   goBack() {

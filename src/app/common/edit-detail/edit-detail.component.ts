@@ -143,8 +143,15 @@ export class EditDetailComponent implements OnInit, OnChanges {
           } else if (element1.field_name === 'work_cds') {
             promissall.push(this.apiHrmV2Service.getWorkTimesV2(queryString.stringify({ empId: null }), element1.field_name));
           } else if (element1.field_name === 'empId') {
-            const root_orgId = this.getValueByKey('organize_id');
-            promissall.push(this.apiHrmV2Service.getEmployeePageV2(queryString.stringify({ orgId: root_orgId, pageSize: 100000 }), element1.field_name));
+            let root_orgId = this.getValueByKey('organize_id');
+            let organizeIds = ''
+            this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
+              if(results && results.length>0){
+                organizeIds = results
+              }
+            });
+            promissall.push(this.apiHrmV2Service.getEmployeePageV2(queryString.stringify(
+              { orgId: root_orgId, pageSize: 100000, organizeIds: organizeIds, companyIds: '00000000-0000-0000-0000-000000000000' }), element1.field_name));
           } else if (element1.field_name === 'shift_cds') {
             promissall.push(this.apiHrmV2Service.getWorkShiftsV2(queryString.stringify({ empId: null }), element1.field_name));
           } else if (element1.field_name === 'work_cd') {
@@ -322,6 +329,12 @@ export class EditDetailComponent implements OnInit, OnChanges {
             const root_orgId = this.getValueByKey('organizeId');
             const parentId = this.getValueByKey('groupId');
             promissall.push(this.apiHrmV2Service.getTeamByOrganize(queryString.stringify({ organizeId: root_orgId, parentId: parentId}), element1.field_name));
+          }else if( element1.field_name === 'baseId') {
+            this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
+              if(results && results.length>0){
+                promissall.push(this.apiHrmV2Service.getTeamByOrganize(queryString.stringify({ organizeIds: results}), element1.field_name));
+              } 
+            });
           }else {
             if (element1.columnObject) {
               promissall.push(this.apiHrmV2Service.getObjectListV2(queryString.stringify({ objKey: element1.columnObject }), element1.field_name));
@@ -363,7 +376,6 @@ export class EditDetailComponent implements OnInit, OnChanges {
     this.spinner.show();
       forkJoin(promissall).subscribe((results: any) => {
         this.spinner.hide();
-        console.log('character', results);
         this.dataViewNew.forEach(element => {
           element.fields.forEach(element1 => {
             if (results.map(d => d.key).indexOf(element1.field_name) > -1) {

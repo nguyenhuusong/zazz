@@ -17,6 +17,7 @@ import { QuyetDinhLuongComponent } from 'src/app/components/quyet-dinh-luong/quy
 import { ImportXyLyHopDongComponent } from 'src/app/components/xu-ly-hop-dong/import-xy-ly-hop-dong/import-xy-ly-hop-dong.component';
 import { ImportHoSoNhanSuComponent } from 'src/app/components/ns-ho-so-nhan-su/import-ho-so-nhan-su/import-ho-so-nhan-su.component';
 import { QtThayDoiLuongComponent } from 'src/app/components/qt-thay-doi-luong/qt-thay-doi-luong.component';
+import { ChiTietQTThayDoiLuongComponent } from 'src/app/components/qt-thay-doi-luong/chi-tiet-qt-thay-doi-luong/chi-tiet-qt-thay-doi-luong.component';
 
 const routes: Routes = [
   {
@@ -202,15 +203,14 @@ const routes: Routes = [
      url: 'qua-trinh-thay-doi-luong',
    },
  },
-
  {
-   path: 'qua-trinh-thay-doi-luong/chi-tiet-qt-thay-doi-luong',
-  //  component: ChiTietHoSoNghiViecComponent,
-  //  data: {
-  //    title: 'Chi tiết hồ sơ nghỉ việc',
-  //    url: 'ho-so-nghi-viec/chi-tiet-ho-so-nghi-viec',
-  //  },
- },
+  path: 'qua-trinh-thay-doi-luong/chi-tiet-qua-trinh-thay-doi-luong',
+  component: ChiTietQTThayDoiLuongComponent,
+  data: {
+    title: 'Chi tiết quá trình thay đổi lương',
+    url: 'chi-tiet-qua-trinh-thay-doi-luong',
+  },
+},
 
   
 ];

@@ -95,6 +95,7 @@ export class QtThayDoiLuongComponent implements OnInit {
   organs = []
   isButtonmoveOrganNow = true;
   itemsToolOfGrid: any[] = [];
+  companies = []
   constructor(
     private apiService: ApiHrmService,
     private spinner: NgxSpinnerService,
@@ -124,11 +125,12 @@ export class QtThayDoiLuongComponent implements OnInit {
 
   }
   query = {
+    organizeId: '',
     filter: '',
     gridWidth: 0,
     offSet: 0,
     pageSize: 15,
-    organizeId: '',
+    companyIds: [],
     organizeIds: '',
   }
 
@@ -156,6 +158,10 @@ export class QtThayDoiLuongComponent implements OnInit {
       pageSize: 15,
       organizeId: '',
       organizeIds: this.query.organizeIds,
+      companyIds: this.query.companyIds
+    }
+    if(this.companies.length > 0) {
+      this.query.companyIds = this.companies[0].value;
     }
     this.load();
   }
@@ -164,31 +170,6 @@ export class QtThayDoiLuongComponent implements OnInit {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
   }
-
-  getAgencyOrganizeMap(type = false) {
-    this.apiService.getAgencyOrganizeMap().subscribe(results => {
-      if (results.status === 'success') {
-        this.listAgencyMap = [...results.data.root];
-        if (localStorage.getItem("organize") === null) {
-          this.selectedNode = this.listAgencyMap[0];
-          localStorage.setItem('organize', JSON.stringify(this.listAgencyMap[0]));
-          this.query.organizeId = this.selectedNode.orgId;
-          this.load();
-        } else {
-          this.selectedNode = JSON.parse(localStorage.getItem("organize"));
-          this.query.organizeId = this.selectedNode?.orgId;
-          this.listAgencyMap = this.expanded(this.listAgencyMap, this.selectedNode.parentId)
-          this.selected(this.listAgencyMap, parseInt(this.query.organizeId));
-          if (type) {
-            this.isHrDiagram = true;
-          }
-          this.load();
-        }
-      }
-    })
-    this.load();
-  }
-
 
   expanded(datas = [], orgId = 0) {
     datas.forEach(d => {
@@ -227,12 +208,11 @@ export class QtThayDoiLuongComponent implements OnInit {
     this.displaySetting = true;
   }
 
-
   load() {
     this.columnDefs = []
     this.spinner.show();
     const queryParams = queryString.stringify(this.query);
-    this.apiService.getHrmPayrollRecordPage(queryParams).subscribe(
+    this.apiService.getSalaryInfoPageDevM(queryParams).subscribe(
       (results: any) => {
         this.listsData = results?.data?.dataList?.data;
         this.gridKey= results?.data?.dataList?.gridKey;
@@ -272,7 +252,7 @@ export class QtThayDoiLuongComponent implements OnInit {
         },
         {
           onClick: this.deleteRow.bind(this),
-          label: 'Xóa nhân viên này',
+          label: 'Xóa',
           icon: 'fa fa-trash',
           class: 'btn-primary mr5',
           hide: CheckHideAction(MENUACTIONROLEAPI.GetHrmPayrollRecordPage.url, ACTIONS.DELETE)
@@ -292,7 +272,7 @@ export class QtThayDoiLuongComponent implements OnInit {
       message: 'Bạn có chắc chắn muốn xóa?',
       accept: () => {
         const queryParams = queryString.stringify({Id: event.rowData.id});
-        this.apiService.delHrmPayrollRecord(queryParams).subscribe((results: any) => {
+        this.apiService.delSalaryInfoDevM(queryParams).subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa nhân viên thành công' });
             this.load();
@@ -405,7 +385,8 @@ export class QtThayDoiLuongComponent implements OnInit {
     this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
         if(results && results.length>0){
           this.query.organizeIds = results;
-          this.getAgencyOrganizeMap();
+          this.getCompany();
+          this.load();
         }
     });
     this.items = [
@@ -453,22 +434,6 @@ export class QtThayDoiLuongComponent implements OnInit {
         this.employeeStatus = [{ label: 'Chọn trạng thái', value: -1 }, ...this.employeeStatus];
       }
     })
-  }
-  organizeList = []
-  onNodeSelect(event) {
-    this.detailOrganizeMap = event.node;
-    localStorage.setItem('organize', JSON.stringify(event.node));
-    // this.query.orgId = this.selectedNode?.orgId;
-    this.query.organizeId = this.detailOrganizeMap?.orgId;
-    this.isHrDiagram = false;
-
-    this.load()
-  }
-
-  hrDiagram() {
-    this.selectedNode = null;
-    this.listAgencyMap = []
-    this.getAgencyOrganizeMap(true);
   }
 
   Back() {
@@ -637,7 +602,7 @@ export class QtThayDoiLuongComponent implements OnInit {
   getInfo() {
     this.listViews = [];
     const queryParams = queryString.stringify({ Id: this.idEdit });
-    this.apiService.getHrmPayrollRecordInfo(queryParams).subscribe({
+    this.apiService.getSalaryInfoDevM(queryParams).subscribe({
       next: (value) => {
         this.listViews = cloneDeep(value.data.group_fields || []);
         this.detailPayrollRecordInfo = value.data;
@@ -646,17 +611,23 @@ export class QtThayDoiLuongComponent implements OnInit {
   }
   addNewPopup = false
   addNew() {
-    this.idEdit = null;
-    this.addNewPopup = true;
-    this.getInfo();
+    console.log('addNew' )
+    const params = {
+      Id: null
+    }
+    this.router.navigate(['/nhan-su/qua-trinh-thay-doi-luong/chi-tiet-qua-trinh-thay-doi-luong'], { queryParams: params });
+
+    // this.idEdit = null;
+    // this.addNewPopup = true;
+    // this.getInfo();
   }
 
-  setHrmPayrollRecordInfo(data) {
+  setSalaryInfoDevM(data) {
     const params = {
       ...this.detailPayrollRecordInfo, group_fields: data
     };
     this.spinner.show();
-    this.apiService.setHrmPayrollRecordInfo(params).subscribe((results: any) => {
+    this.apiService.setSalaryInfoDevM(params).subscribe((results: any) => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Cập nhật thông tin thành công' });
         this.addNewPopup = false;
@@ -677,6 +648,27 @@ export class QtThayDoiLuongComponent implements OnInit {
     if(event === 'CauHinh') {
       this.getInfo();
     }
+  }
+
+  getCompany() {
+    const query = { organizeIds: this.query.organizeIds}
+    this.apiService.getUserCompanies(queryString.stringify(query)).subscribe(
+      (results: any) => {
+        if(results.status === "success"){
+          this.companies = results.data
+            .map(d => {
+              return {
+                label: d.companyName,
+                value: d.companyId
+              };
+            });
+            if(this.companies.length > 0) {
+              this.query.companyIds = this.companies[0].value
+            }
+            this.load();
+        }
+      }),
+      error => { };
   }
 
 }

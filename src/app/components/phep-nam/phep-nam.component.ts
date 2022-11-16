@@ -11,6 +11,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { ExportFileService } from 'src/app/services/export-file.service';
+import * as FileSaver from 'file-saver';
 const MAX_SIZE = 100000000;
 
 @Component({
@@ -173,16 +174,18 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
   dataInfo: any = []
   isShowInfo = false
   XemChiTiet(event) {
+    this.spinner.show();
     this.isShowInfo = true;
     const query = {
-      empId: event.rownData.empId,
+      empId: event.rowData.empId,
       year: this.query.year,
       month: this.query.month,
     }
     this.apiService.getLeaveRequestMonthInfo(queryString.stringify(query)).subscribe(
       (results: any) => {
         if(results.status === "success"){
-          
+          this.spinner.hide();
+          this.dataInfo = results.data
             
         }
       }),
@@ -290,35 +293,15 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
     this.query.pageSize = 1000000;
     const query = { ...this.query };
     const queryParams = queryString.stringify(query);
-    this.apiService.getAnnualLeavePage(queryParams).subscribe(
-      (results: any) => {
-        const dataExport = [];
-        let gridflexs = results.data.gridflexs;
-        let arrKey = gridflexs.map(elementName => elementName.columnField);
-
-        let dataList = results.data.dataList.data;
-        for (let elementValue of dataList) {
-          const data: any = {};
-          for (let elementName of gridflexs) {
-            if (arrKey.indexOf(elementName.columnField) > -1 && !elementName.isHide && elementName.columnField !== 'statusName') {
-              let valueColumn = elementValue[elementName.columnField];
-              if (elementName.columnField == 'status_name' || elementName.columnField == 'isContacted' || elementName.columnField == 'isProfileFull' || elementName.columnField == 'lockName') {
-                valueColumn = this.replaceHtmlToText(valueColumn);
-              }
-              data[elementName.columnCaption] = valueColumn || '';
-            }
-
-          }
-
-          dataExport.push(data);
+      this.apiService.exportAnnualleave(queryParams).subscribe(results => {
+        if (results.type === 'application/json') {
+          this.spinner.hide();
+        } else {
+          var blob = new Blob([results], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+          FileSaver.saveAs(blob, `Danh sách phép năm` +".xlsx");
+          this.spinner.hide();
         }
-        this.fileService.exportAsExcelFile(dataExport, 'Danh sách phép năm ' + new Date());
-
-        this.spinner.hide();
-      },
-      error => {
-        this.spinner.hide();
-      });
+      })
   }
 
   replaceHtmlToText(string) {
