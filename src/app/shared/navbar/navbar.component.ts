@@ -266,7 +266,8 @@ export class NavbarComponent implements OnInit {
         '/cai-dat/quan-ly-hop-dong/chi-tiet-hop-dong',
         '/cai-dat/thiet-lap-wifi/them-moi',
         '/cai-dat/thiet-lap-wifi/chi-tiet',
-        '/chinh-sach/an-ca/chi-tiet-an-ca'
+        '/chinh-sach/an-ca/chi-tiet-an-ca',
+        '/nhan-su/qua-trinh-thay-doi-luong/chi-tiet-qua-trinh-thay-doi-luong'
       ]
     let url = currentUrl.split('?');
     this.chooseOrga = this.urlsForDisableOrgan.some( d => d === url[0])

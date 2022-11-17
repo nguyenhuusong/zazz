@@ -410,7 +410,6 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
   
   positions = [];
   getOrgPositions() {
-    console.log('fdsjofdjif',)
     this.positions = [];
     const queryParams = queryString.stringify({ orgId: this.selectedValue.data });
     this.apiService.getOrgPositions(queryParams).subscribe(results => {

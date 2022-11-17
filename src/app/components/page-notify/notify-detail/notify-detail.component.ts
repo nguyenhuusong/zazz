@@ -67,7 +67,7 @@ export class NotifyDetailComponent implements OnInit {
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Cài đặt' },
-      { label: 'Danh sách thông báo', routerLink: '/cai-dat/thong-bao' },
+      { label: 'Danh sách thông báo', routerLink: '/cai-dat/thong-bao/danh-sach-thong-bao' },
       { label: `${this.titlePage}` },
     ];
     this.handleParams();
@@ -125,7 +125,7 @@ export class NotifyDetailComponent implements OnInit {
   }
 
   cancelUpload() {
-    this.router.navigate(['/cai-dat/thong-bao'])
+    this.router.navigate(['/cai-dat/thong-bao/danh-sach-thong-bao'])
   }
 
   displayDsThongBao(data) {

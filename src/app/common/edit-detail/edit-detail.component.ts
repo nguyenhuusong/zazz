@@ -332,7 +332,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
           }else if( element1.field_name === 'baseId') {
             this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
               if(results && results.length>0){
-                promissall.push(this.apiHrmV2Service.getTeamByOrganize(queryString.stringify({ organizeIds: results}), element1.field_name));
+                promissall.push(this.apiHrmV2Service.getPayrollAppInfoPage(queryString.stringify({ organizeIds: results}), element1.field_name));
               } 
             });
           }else {
@@ -528,10 +528,11 @@ export class EditDetailComponent implements OnInit, OnChanges {
   
 
   getActionlist(element1) {
+    console.log('this.dropdownList', this.dropdownList)
     element1.options = cloneDeep(this.dropdownList).map(d => {
       return {
-        name: d.itemName,
-        code: d.id
+        label: d.itemName,
+        value: d.id
       }
     });
     if (element1.columnValue) {

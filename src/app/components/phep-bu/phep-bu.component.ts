@@ -297,6 +297,7 @@ export class PhepBuComponent implements OnInit, AfterViewChecked {
     this.apiService.setAnnualAddOrgInfo(params).subscribe((results: any) => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Thêm mới thành công' });
+        this.isShowAddPhepBuDep = false
       } else {
         this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
       }

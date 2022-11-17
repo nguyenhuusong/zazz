@@ -667,5 +667,20 @@ export class ApiHrmV2Service {
       })
     )
   }
+
+  getPayrollAppInfoPage(queryParams, field_name) {
+    return this.httpClient.get(`${apiHrmServer}/api/v1/payrollAppInfo/GetPayrollAppInfoPage?` + queryParams , this.options).pipe(
+      map((repon: any) => {
+        return { key: field_name, result: repon.data.dataList.data.map(d => {
+          return {
+            label: d.app_info_name,
+            value: d.appInfoId
+          }
+        }) };
+      }), catchError(error => {
+        return throwError('Capital not found!');
+      })
+    )
+  }
 }
 

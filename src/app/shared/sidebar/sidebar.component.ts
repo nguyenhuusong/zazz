@@ -36,21 +36,40 @@ export class SidebarComponent implements OnInit {
          ).subscribe((e) => {
                 let fullUrl =  e.url.split("?");
                 let pathUrl =  fullUrl[0].split("/");
-                let pathUrl1 = '/';
-                let pathDepth2 = '/';
-                pathUrl1 = pathUrl1.concat(pathUrl["1"])
-                if(pathUrl[2]){
-                    pathUrl1 = pathUrl1.concat("/").concat(pathUrl["2"]);
+                let pathDepth1 = '';
+                let pathDepth2 = '';
+                let pathDepth3 = '';
+                if(pathUrl[1]){
+                    pathDepth1 = '/' + pathUrl["1"]
                 }
                 if(pathUrl[2]){
-                    pathUrl1 = pathUrl1.concat("/").concat(pathUrl["2"]);
-                    pathDepth2 = pathDepth2.concat(pathUrl["1"]).concat("/").concat(pathUrl["2"]);
+                    pathDepth2 = '/' + pathUrl["1"] + '/' + pathUrl["2"]
+                }
+                if(pathUrl[3]){
+                    pathDepth3 = '/' + pathUrl["1"] + '/' + pathUrl["2"] + '/' + pathUrl["3"]
                 }
                 if(this.listmenuChecks.length > 0) {
-                    let itemsEx = this.listmenuChecks.filter( d => {
-                        return d.path === pathUrl1 || d.path === pathDepth2
-                    });
-                    if(itemsEx.length <= 0){
+                    let canActive = false;
+                    for (let i = 0; i < this.listmenuChecks.length; i++) {
+                        let currentPath = this.listmenuChecks[i].path || '';
+                        currentPath =  currentPath.split("/");
+                        let baseCurrentPath = ''
+                        if(currentPath[0]) {
+                            baseCurrentPath = '/' + currentPath[0];
+                        }
+                        if(currentPath[1]) {
+                            baseCurrentPath = '/' + currentPath[1];
+                        }
+                        if(currentPath[2]) {
+                            baseCurrentPath = '/' + currentPath[2];
+                        }
+                        if(baseCurrentPath === pathDepth1 || baseCurrentPath === pathDepth2 || baseCurrentPath === pathDepth3){
+                            canActive = true;
+                            break;
+                        }
+
+                    }
+                    if(!canActive){
                         // neu khong có quyền thì quay về trang đầu tiên
                         if(this.menuItems[0].submenus && this.menuItems[0].submenus[0]?.path) {
                             this.router.navigate([this.menuItems[0].submenus[0].path]);
@@ -66,17 +85,36 @@ export class SidebarComponent implements OnInit {
                 }
          });
     }
+
+    // checkMenuActive(listmenuChecks) {
+    //     listmenuChecks.forEach(menu => {
+    //         let fullUrl =  menu.path.split("/");
+            
+    //         if(pathUrl[1]){
+    //             pathDepth1 = '/' + pathUrl["1"]
+    //         }
+    //         if(pathUrl[2]){
+    //             pathDepth2 = '/' + pathUrl["1"] + '/' + pathUrl["2"]
+    //         }
+    //     });
+    // }
    async ngOnInit() {
         const pathname = window.location.pathname;
         let fullUrl =  pathname.split("?");
         let pathUrl =  fullUrl[0].split("/");
-        let pathUrl1 = '/';
-        let pathDepth2 = '/';
-        pathUrl1 = pathUrl1.concat(pathUrl["1"])
-        if(pathUrl[2]){
-            pathUrl1 = pathUrl1.concat("/").concat(pathUrl["2"]);
-            pathDepth2 = pathDepth2.concat(pathUrl["1"]).concat("/").concat(pathUrl["2"]);
+        let pathDepth1 = '';
+        let pathDepth2 = '';
+        let pathDepth3 = '';
+        if(pathUrl[1]){
+            pathDepth1 = '/' + pathUrl["1"]
         }
+        if(pathUrl[2]){
+            pathDepth2 = '/' + pathUrl["1"] + '/' + pathUrl["2"]
+        }
+        if(pathUrl[3]){
+            pathDepth3 = '/' + pathUrl["1"] + '/' + pathUrl["2"] + '/' + pathUrl["3"]
+        }
+
         const token = this.authService.getAccessTokenValue();
         if (!this.firebaseAuthService.authenticated) {
           const customToken = await this.authService.getCustomToken(token);
@@ -92,10 +130,27 @@ export class SidebarComponent implements OnInit {
                        this.menuItems = results.data;
                        this.convetArry(this.menuItems);
                        if(this.listmenuChecks.length > 0) {
-                            let itemsEx = this.listmenuChecks.filter( d => {
-                                return d.path === pathUrl1 || d.path === pathDepth2
-                            });
-                            if(itemsEx.length <= 0){
+                            let canActive = false;
+                            for (let i = 0; i < this.listmenuChecks.length; i++) {
+                                let currentPath = this.listmenuChecks[i].path || '';
+                                currentPath =  currentPath.split("/");
+                                let baseCurrentPath = ''
+                                if(currentPath[0]) {
+                                    baseCurrentPath = '/' + currentPath[0];
+                                }
+                                if(currentPath[1]) {
+                                    baseCurrentPath = '/' + currentPath[1];
+                                }
+                                if(currentPath[2]) {
+                                    baseCurrentPath = '/' + currentPath[2];
+                                }
+                                if(baseCurrentPath === pathDepth1 || baseCurrentPath === pathDepth2 || baseCurrentPath === pathDepth3){
+                                    canActive = true;
+                                    break;
+                                }
+        
+                            }
+                            if(!canActive){
                                 // neu khong có quyền thì quay về trang đầu tiên
                                 if(this.menuItems[0].submenus && this.menuItems[0].submenus[0]?.path) {
                                     this.router.navigate([this.menuItems[0].submenus[0].path]);
@@ -103,11 +158,14 @@ export class SidebarComponent implements OnInit {
                                     this.router.navigate(['/404']);
                                 }
                             }
+                            const pathname  = window.location.pathname ;
+                            this.parseObjectProperties(this.menuItems, pathname);
+                            this.menuItems = [...this.menuItems];
                         }else{
-                            this.router.navigate(['/404']);
+                            this.router.navigate['/404'];
                         }
                        localStorage.setItem('menuItems', JSON.stringify(results.data));
-                       this.parseObjectProperties(this.menuItems, pathUrl1);
+                       this.parseObjectProperties(this.menuItems, pathDepth1);
                        this.menuItems = [...this.menuItems];
                    }
                });

@@ -262,9 +262,13 @@ export class QtThayDoiLuongComponent implements OnInit {
   }
   idEdit = null;
   EditRow(event) {
-    this.addNewPopup = true;
-    this.idEdit = event.rowData.id;
-    this.getInfo();
+    // this.addNewPopup = true;
+    // this.idEdit = event.rowData.id;
+    // this.getInfo();
+    const params = {
+      Id: event.rowData.id
+    }
+    this.router.navigate(['/nhan-su/qua-trinh-thay-doi-luong/chi-tiet-qua-trinh-thay-doi-luong'], { queryParams: params });
   }
 
   deleteRow(event) {
@@ -357,14 +361,6 @@ export class QtThayDoiLuongComponent implements OnInit {
       },
     };
   }
-
-
-  // EditEmployee(event) {
-  //   const params = {
-  //     empId: event.rowData.empId
-  //   }
-  //   this.router.navigate(['/nhan-su/ho-so-nhan-su/chi-tiet-ho-so-nhan-su'], { queryParams: params });
-  // }
 
   find() {
     this.load();
@@ -611,7 +607,6 @@ export class QtThayDoiLuongComponent implements OnInit {
   }
   addNewPopup = false
   addNew() {
-    console.log('addNew' )
     const params = {
       Id: null
     }
