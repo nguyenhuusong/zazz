@@ -682,5 +682,20 @@ export class ApiHrmV2Service {
       })
     )
   }
+
+  getCompaniesByUserOrganize(queryParams, field_name) {
+    return this.httpClient.get(`${apiHrmServer}/api/v2/compay/GetCompaniesByUserOrganize?` + queryParams , this.options).pipe(
+      map((repon: any) => {
+        return { key: field_name, result: repon.data.map(d => {
+          return {
+            label: d.companyName,
+            value: d.companyId.toUpperCase()
+          }
+        }) };
+      }), catchError(error => {
+        return throwError('Capital not found!');
+      })
+    )
+  }
 }
 

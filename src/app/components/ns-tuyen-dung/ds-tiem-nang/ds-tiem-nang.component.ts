@@ -1,4 +1,3 @@
-
 import { AfterViewChecked, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import * as queryString from 'querystring';
@@ -14,11 +13,11 @@ import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 const MAX_SIZE = 100000000;
 
 @Component({
-  selector: 'app-ns-tuyen-dung',
-  templateUrl: './ns-tuyen-dung.component.html',
-  styleUrls: ['./ns-tuyen-dung.component.scss']
+  selector: 'app-ds-tiem-nang',
+  templateUrl: './ds-tiem-nang.component.html',
+  styleUrls: ['./ds-tiem-nang.component.scss']
 })
-export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
+export class DsTiemNangComponent implements OnInit {
 
   listsData: any[] = [];
   items = []
@@ -59,25 +58,22 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   detailRowHeight;
   defaultColDef;
   frameworkComponents;
-  groupDefaultExpanded;
-  detailCellRendererParams;
   gridApi: any;
   clientWidth: any;
   gridColumnApi: any;
-  objectAction: any;
-  objectActionDetail: any;
   gridflexs: any;
   getRowHeight;
   query = {
+    vacancyId: 0,
+    can_st: null,
+    organizeId: null,
+    positionCd: null,
     filter: '',
     offSet: 0,
     pageSize: 15,
-    jobId: null,
-    organizeId: null,
-    positionCd: null,
-    vacancyId: 0,
-    can_st: null,
     organizeIds: '',
+    fromDate: '',
+    toDate: '',
   }
   totalRecord = 0;
   DriverId = 0;
@@ -95,7 +91,6 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   recruitmentStatusSelected = '1';
   dataRowSelected: any = []
   isSendMail = false;
-  mailsInput = [];
   mailInputValue: any = [];
   buttonTiemNang = []
   onGridReady(params) {
@@ -128,14 +123,15 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
 
   cancel() {
     this.query = {
+      vacancyId: 0,
+      can_st: null,
+      organizeId: null,
+      positionCd: null,
       filter: '',
       offSet: 0,
       pageSize: 15,
-      organizeId: '',
-      positionCd: '',
-      jobId: null,
-      vacancyId: 0,
-      can_st: null,
+      fromDate: '',
+      toDate: '',
       organizeIds: this.query.organizeIds,
     }
     this.load();
@@ -152,7 +148,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     this.columnDefs = []
     this.spinner.show();
     const queryParams = queryString.stringify(this.query);
-    this.apiService.getCandidatePage(queryParams).subscribe(
+    this.apiService.getCandidatePotentialPage(queryParams).subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         this.gridKey= results.data.dataList.gridKey;
@@ -183,34 +179,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   showButtons(event: any) {
     return {
       buttons: [
-        {
-          onClick: this.editRow.bind(this),
-          label: 'Chỉnh sửa',
-          icon: 'fa fa-edit',
-          class: 'btn-primary mr5',
-          hide: CheckHideAction(MENUACTIONROLEAPI.GetCandidatePage.url, ACTIONS.EDIT)
-        },
-        {
-          onClick: this.viewRow.bind(this),
-          label: 'Xem chi tiết',
-          icon: 'fa fa-eye',
-          class: 'btn-primary mr5',
-          hide: CheckHideAction(MENUACTIONROLEAPI.GetCandidatePage.url, ACTIONS.VIEW)
-        },
-        {
-          onClick: this.rateRecui.bind(this),
-          label: 'Đánh giá kết quả',
-          icon: 'pi pi-star-fill',
-          class: 'btn-primary mr5',
-          hide: CheckHideAction(MENUACTIONROLEAPI.GetCandidatePage.url, ACTIONS.DANH_GIA_KET_QUA)
-        },
-        {
-          onClick: this.xoatuyendung.bind(this),
-          label: 'Xóa ',
-          icon: 'pi pi-trash',
-          class: 'btn-primary mr5',
-          hide: CheckHideAction(MENUACTIONROLEAPI.GetCandidatePage.url, ACTIONS.DELETE)
-        },
+        
       ]
     };
   }
@@ -231,65 +200,18 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
         checkboxSelection: true,
         // rowSelection: 'single'
       },
-      ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
-      {
-        headerName: 'Thao tác',
-        filter: '',
-        width: 100,
-        pinned: 'right',
-        cellRenderer: 'buttonAgGridComponent',
-        cellClass: ['border-right', 'no-auto'],
-        cellRendererParams: (params: any) => this.showButtons(params),
-        checkboxSelection: false,
-        field: 'checkbox'
-      }]
-
-    this.detailCellRendererParams = {
-      detailGridOptions: {
-        frameworkComponents: {},
-        getRowHeight: (params) => {
-          return 40;
-        },
-        columnDefs: [
-          ...AgGridFn(this.colsDetail),
-        ],
-
-        enableCellTextSelection: true,
-        onFirstDataRendered(params) {
-          let allColumnIds: any = [];
-          params.columnApi.getAllColumns()
-            .forEach((column: any) => {
-              if (column.colDef.cellClass.indexOf('auto') < 0) {
-                allColumnIds.push(column)
-              } else {
-                column.colDef.suppressSizeToFit = true;
-                allColumnIds.push(column)
-              }
-            });
-          params.api.sizeColumnsToFit(allColumnIds);
-        },
-      },
-      getDetailRowData(params) {
-        params.successCallback(params.data.Owns);
-      },
-      excelStyles: [
-        {
-          id: 'stringType',
-          dataType: 'string'
-        }
-      ],
-      template: function (params) {
-        var personName = params.data.theme;
-        return (
-          '<div style="height: 100%; background-color: #EDF6FF; padding: 20px; box-sizing: border-box;">' +
-          `  <div style="height: 10%; padding: 2px; font-weight: bold;">###### Danh sách (${params.data.Owns.length}) : [` +
-          personName + ']' +
-          '</div>' +
-          '  <div ref="eDetailGrid" style="height: 90%;"></div>' +
-          '</div>'
-        );
-      },
-    };
+      ...AgGridFn(this.cols.filter((d: any) => !d.isHide))]
+      // {
+      //   headerName: 'Thao tác',
+      //   filter: '',
+      //   width: 100,
+      //   pinned: 'right',
+      //   cellRenderer: 'buttonAgGridComponent',
+      //   cellClass: ['border-right', 'no-auto'],
+      //   cellRendererParams: (params: any) => this.showButtons(params),
+      //   checkboxSelection: false,
+      //   field: 'checkbox'
+      // }
   }
 
   rowSelected(event) {
@@ -298,46 +220,6 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     this.recruitmentStatusSelected = this.dataRowSelected.map( d => d.can_st).toString();
     this.canSttValue = this.dataRowSelected.sort((a,b)=>a.can_st-b.can_st)[this.dataRowSelected.length - 1];
     // check role for set tiem nang
-    this.buttonTiemNang[1].disabled = CheckHideAction(MENUACTIONROLEAPI.GetCandidatePage.url, ACTIONS.TIEM_NANG) && this.dataRowSelected.length > 0
-  }
-
-  xoatuyendung(event) {
-    this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn xóa tuyển dụng?',
-      accept: () => {
-        const queryParams = queryString.stringify({ canId: event.rowData.canId });
-        this.apiService.delCandidateInfo(queryParams).subscribe(results => {
-          if (results.status === 'success') {
-            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa tuyển dụng thành công' });
-            this.load();
-          } else {
-            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
-          }
-        });
-      }
-    });
-  }
-
-  editRow(event) {
-    const params = {
-      canId: event.rowData.canId
-    }
-    this.router.navigate(['/tuyen-dung/ds-tuyen-dung/chi-tiet-tuyen-dung'], { queryParams: params });
-  }
-
-  viewRow(event) {
-    const params = {
-      canId: event.rowData.canId,
-      view: true
-    }
-    this.router.navigate(['/tuyen-dung/ds-tuyen-dung/chi-tiet-tuyen-dung'], { queryParams: params });
-  }
-
-  addTuyenDung() {
-    const params = {
-      canId: null
-    }
-    this.router.navigate(['/tuyen-dung/ds-tuyen-dung/them-moi-tuyen-dung'], { queryParams: params });
   }
 
   getOrgPositions() {
@@ -381,33 +263,14 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Nhân sự' },
-      { label: 'Danh sách tuyển dụng' },
+      { label: 'Danh sách tuyển dụng', routerLink: '/tuyen-dung/ds-tuyen-dung' },
+      { label: 'Danh sách tiềm năng' },
     ];
     this.getJobTitles();
     this.getOrgRoots();
     this.getObjectList();
     this.getStatus();
     this.getVacancyPage();
-    this.buttonTiemNang = [
-      {
-        label: 'Danh sách tiềm năng',
-        code: 'Import',
-        icon: 'pi pi-list',
-        // disabled: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.IMPORT),
-        command: () => {
-          this.dsTiemNang();
-        }
-      },
-      {
-        label: 'Tiềm năng',
-        code: 'tiemnang',
-        icon: 'pi pi-send',
-        disabled: true,
-        command: () => {
-          this.tiemNang();
-        }
-      },
-    ]
   }
 
   getOrgRoots() {
@@ -498,7 +361,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     
   getVacancyPage() {
     const queryParams = queryString.stringify({
-      jobId: this.query.jobId,
+      // jobId: this.query.jobId,
       active_st: 1
     });
     this.apiService.getVacancyPage(queryParams).subscribe(results => {
@@ -507,19 +370,6 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
           return {
             label: d.job_name,
             value: d.vacancyId
-          }
-        })
-      }
-    })
-  }
-
-  getRecruitMailInput() {
-    this.apiService.getRecruitMailInput(queryString.stringify({})).subscribe(results => {
-      if (results.status === 'success') {
-        this.mailsInput = results.data.recruitmentMail.map(d => {
-          return {
-            label: d.mail_name,
-            value: d.mail_Id
           }
         })
       }
@@ -539,9 +389,9 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
         }
         this.apiService.recruiUpdateStatus(queryString.stringify(query)).subscribe((results: any) => {
           if (results.status === 'success') {
-            this.getRecruitMailInput();
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Chuyển thành công!' });
-            // this.dataRowSelected = [];
+            this.dataRowSelected = [];
+            this.load();
             this.recruitmentStatusSelected = null;
             this.isSendMail = true;
           } else {
@@ -550,129 +400,6 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
         });
       },
     });
-  }
-  isRateRecui = false;
-  rateStatus = null;
-  queryRate = {
-    canId: '',
-    InterviewResult: '',
-  }
-  isSubmitRate = false;
-  rateRecui(event) {
-    this.isRateRecui = true;
-    this.queryRate.canId = event.rowData.canId
-  }
-
-  cancelRate() {
-    this.isRateRecui = false
-  }
-
-  sendRate() {
-    this.isSubmitRate = true;
-    if(this.queryRate.canId && this.queryRate.InterviewResult) { 
-        this.apiService.updateInterviewResult(queryString.stringify(this.queryRate), null).subscribe(results => {
-          if (results.status === 'success') {
-            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Gửi thành công' });
-            this.isRateRecui = false;
-            this.isSubmitRate = false;
-            this.spinner.hide();
-          } else {
-            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.data : null });
-          }
-      })
-    }else if(!this.queryRate.InterviewResult) {
-      return;
-    }
-  }
-
-  cancelSendEmail() {
-    this.isSendMail = false;
-    this.load();
-  }
-
-  sendEmail() {
-    if(!this.mailInputValue) {
-      this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Chưa chọn nội dung gửi' });
-      return
-    }
-    let canId = this.dataRowSelected.map( d => d.canId).toString()
-    const data = {
-      mail_Id: this.mailInputValue,
-      can_Id: canId
-    }
-    this.spinner.show();
-    this.apiService.sendRecruitMail(data).subscribe(results => {
-      if (results.status === 'success') {
-        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Gửi thành công' });
-        this.mailInputValue = '';
-        this.dataRowSelected = [];
-        // this.isSendMail = false;
-        // this.load();
-        const params = {
-          meet_ud: null
-        }
-        this.spinner.hide();
-        return this.router.navigate(['/cai-dat/cai-dat-lich-hop/them-moi-lich-hop'], { queryParams: params });
-      } else {
-        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.data : null });
-      }
-    })
-  }
-
-  isSubmitTiemNang = false;
-  isTiemNang = false;
-  queryTiemNang = {
-    canId: '',
-    reason_rejiect: '',
-  }
-
-  tiemNang() {
-    this.isTiemNang = true;
-    this.queryTiemNang.canId = this.dataRowSelected.map( d => d.canId).toString();
-  }
-
-  setTiemNang() {
-    this.isSubmitTiemNang = true;
-    if(!this.queryTiemNang.reason_rejiect){
-      return;
-    }
-    this.apiService.updateCandidatesPotential(queryString.stringify(this.queryTiemNang), null).subscribe(results => {
-      if (results.status === 'success') {
-          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Cập nhật thành công' });
-          this.load();
-          this.isTiemNang = false;
-          this.spinner.hide();
-        } else {
-          this.spinner.hide();
-          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.data : null });
-        }
-    })
-  }
-
-  canSetTiemNang() {
-    this.isTiemNang = false;
-  }
-
-  dsTiemNang() {
-    this.router.navigate(['/tuyen-dung/ds-tuyen-dung//ds-tiem-nang']);
-  }
-
-  // vitrituyendung() {
-  //   this.router.navigate(['/tuyen-dung/danh-sach-tuyen-dung/vi-tri-tuyen-dung']);
-  // }
-
-  // linhvuctuyendung() {
-  //   this.router.navigate(['/tuyen-dung/danh-sach-tuyen-dung/linh-vuc-tuyen-dung']);
-  // }
-
-  onHideSendEmail(event) {
-    this.isSendMail = false;
-    this.dataRowSelected = [];
-    this.load();
-  }
-
-  importFileExel() {
-    this.router.navigate(['/tuyen-dung/ds-tuyen-dung/import']);
   }
 
 }

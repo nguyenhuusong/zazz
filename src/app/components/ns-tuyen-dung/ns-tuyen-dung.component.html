@@ -3,6 +3,16 @@
         <div class="d-flex bet bottom">
             <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
            <div class="d-flex gap-16">
+                <p-button (click)="tiemnangButton.toggle($event)" 
+                    styleClass="p-button-sm height-56 ">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10.2002 13.2H13.2002V10.2H14.8002V13.2H17.8002V14.8H14.8002V17.7999H13.2002V14.8H10.2002V13.2Z" fill="#F3F8FF"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M0.200195 0.199951H7.8002V7.79995H0.200195V0.199951ZM6.2002 1.79995H1.8002V6.19995H6.2002V1.79995Z" fill="#F3F8FF"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M17.8002 7.79995H10.2002V0.199951H17.8002V7.79995ZM11.8002 6.19995H16.2002V1.79995H11.8002V6.19995Z" fill="#F3F8FF"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M0.200195 10.2H7.8002V17.7999H0.200195V10.2ZM6.2002 11.8H1.8002V16.2H6.2002V11.8Z" fill="#F3F8FF"/>
+                        </svg>
+                        &nbsp; Tùy chọn tiềm năng
+                </p-button>
                 <p-button styleClass="p-button-sm height-56" (click)="getRecruitMailInput(); isSendMail = true"
                 label="Gửi mail"
                 [disabled]="dataRowSelected.length > 0 ? false : true"
@@ -13,7 +23,7 @@
                 <p-button styleClass="p-button-sm height-56" (click)="importFileExel();"
                 label="Import"
                 [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetCandidatePage.url, action: ACTIONS.IMPORT}"
-                icon="pi pi-file-import"
+                icon="pi pi-file-excel"
                 >
                 </p-button>
                 <p-button styleClass="p-button-sm height-56" (click)="cauhinh()">
@@ -301,3 +311,25 @@
             </div>
         </ng-template>
 </p-dialog>
+<p-dialog styleClass="hideHeaderForm" header="Tiềm năng"
+    [(visible)]="isTiemNang" 
+    [modal]="true" [style]="{width: '600px'}"
+    [draggable]="false" [resizable]="false" [focusTrap]="false" >
+    <div class="field-group textarea">
+        <textarea placeholder="Nhập lý do" [(ngModel)]="queryTiemNang.reason_rejiect" required></textarea>
+    </div>
+       <div class="field-group">
+            <div class="alert-validation alert-danger" *ngIf="!queryTiemNang.reason_rejiect && isSubmitTiemNang"> 
+                Vui lòng nhập lý do
+            </div>
+        </div>
+        <ng-template pTemplate="footer">
+            <div class="d-flex end">
+              <p-button (click)="canSetTiemNang()" styleClass="p-button-sm p-button-secondary" label="Bỏ qua" icon="pi pi-times-circle"></p-button>&nbsp;
+              <p-button (click)="setTiemNang()">Gửi</p-button>
+            </div>
+        </ng-template>
+</p-dialog>
+
+<p-menu [model]="buttonTiemNang" [appendTo]="'body'" [popup]="true"
+        styleClass="menu-option-right" #tiemnangButton></p-menu>

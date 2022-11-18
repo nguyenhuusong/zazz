@@ -327,6 +327,10 @@ export class PhepBuComponent implements OnInit, AfterViewChecked {
     }
   }
 
+  importFileExel() {
+    this.router.navigate(['/chinh-sach/phep-bu/import']);
+  }
+
 
 }
 

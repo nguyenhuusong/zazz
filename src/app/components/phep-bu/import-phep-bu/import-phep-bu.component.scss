@@ -1,0 +1,19 @@
+:host::ng-deep{
+    .bg-red{
+        background: red;
+        color: #fff;
+        padding: 4px;
+        overflow: auto;
+        display: block;
+    }
+
+    p-fileupload{
+        .p-messages{
+            position: fixed;
+            top: auto;
+            margin-top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    }
+}

@@ -494,6 +494,7 @@ export const ACTIONS = {
     QUAN_LY_PHONG_HOP: 'quan_ly_phong_hop',
     THIET_LAP_TAI_LIEU: 'thiet_lap_tai_lieu',
     PHEP_BU: 'phep_bu',
+    TIEM_NANG: 'tiem_nang',
     THEM_MOI_CHI_TIET_DANG_KY_THAI_SAN: 'them_moi_chi_tiet_dang_ky_thai_san',
     CHI_TIET_HO_SO_THEM_MOI_CONG_VIEC: 'chi_tiet_ho_so_them_moi_cong_viec',
     CHI_TIET_HO_SO_THEM_MOI_FILE_DINH_KEM: 'chi_tiet_ho_so_them_moi_file_dinh_kem',

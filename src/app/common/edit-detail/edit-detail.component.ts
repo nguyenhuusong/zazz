@@ -91,7 +91,9 @@ export class EditDetailComponent implements OnInit, OnChanges {
     gridWidth: 0
   };
   modelFields = {};
+  organizeInfoServiceId = ''
   async ngOnInit(): Promise<void> {
+    await this.getOrganizeInfoService();
     await this.callApiDrop();
   }
 
@@ -102,7 +104,15 @@ export class EditDetailComponent implements OnInit, OnChanges {
     this.callbackcancel.emit(value);
   }
   submit = false
-  dataViewNew = []
+  dataViewNew = [];
+  
+  getOrganizeInfoService() {
+    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
+      if(results && results.length>0){
+        this.organizeInfoServiceId = results
+      }
+    });
+  }
   callApiDrop() {
     const promissall = [];
     const source = timer(50);
@@ -335,6 +345,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
                 promissall.push(this.apiHrmV2Service.getPayrollAppInfoPage(queryString.stringify({ organizeIds: results}), element1.field_name));
               } 
             });
+          }else if( element1.field_name === 'companies') {
+            promissall.push(this.apiHrmV2Service.getCompaniesByUserOrganize(queryString.stringify({ organizeIds: this.organizeInfoServiceId}), element1.field_name));
           }else {
             if (element1.columnObject) {
               promissall.push(this.apiHrmV2Service.getObjectListV2(queryString.stringify({ objKey: element1.columnObject }), element1.field_name));

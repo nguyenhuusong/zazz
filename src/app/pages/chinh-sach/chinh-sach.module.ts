@@ -58,6 +58,7 @@ import { ConfigGridTableFormModule } from 'src/app/common/config-grid-table-form
 import { XemCongComponent } from 'src/app/components/cs-cham-cong/xem-cong/xem-cong.component';
 import { CheckHideActionsDirectiveModule } from 'src/app/directive/check-action.module';
 import { EatingListComponent } from 'src/app/components/cs-an-ca/eating-list/eating-list.component';
+import { ImportPhepBuComponent } from 'src/app/components/phep-bu/import-phep-bu/import-phep-bu.component';
 
 @NgModule({
   imports: [
@@ -125,6 +126,7 @@ import { EatingListComponent } from 'src/app/components/cs-an-ca/eating-list/eat
     ChiTietLoaiBieuMauComponent,
     XemCongComponent,
     EatingListComponent,
+    ImportPhepBuComponent
   ],
   providers: [],
 })

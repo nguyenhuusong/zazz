@@ -411,6 +411,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     }, error => {
       this.spinner.hide();
     });
+    this.gridApi.sizeColumnsToFit();
   }
 
   stepActivated(): void {
@@ -1331,6 +1332,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   listsDataRecord = []
   columnDefsRecord = []
   getRecordInfo() {
+    this.columnDefsRecord = []
     const queryParams = queryString.stringify({ empId: this.detailInfo.empId });
     this.apiService.getRecordInfo(queryParams).subscribe(results => {
       if (results.status === 'success') {
@@ -2029,6 +2031,11 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
         elem.click();
       }
     }
+  }
+  gridApi: any = []
+  onGridReady(params): void {
+    this.gridApi = params.api;
+    this.gridApi.sizeColumnsToFit();
   }
 
 }

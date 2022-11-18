@@ -56,6 +56,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { MailTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/mail-tuyen-dung/mail-tuyen-dung.component';
 import { ChiTietMailTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/mail-tuyen-dung/chi-tiet-mail-tuyen-dung/chi-tiet-mail-tuyen-dung.component';
 import { ImportTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/import-tuyen-dung/import-tuyen-dung.component';
+import { DsTiemNangComponent } from 'src/app/components/ns-tuyen-dung/ds-tiem-nang/ds-tiem-nang.component';
 @NgModule({
   imports: [
     MessagesModule,
@@ -119,7 +120,8 @@ import { ImportTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/impor
     NghiViecComponent,
     MailTuyenDungComponent,
     ChiTietMailTuyenDungComponent,
-    ImportTuyenDungComponent
+    ImportTuyenDungComponent,
+    DsTiemNangComponent
   ],
   providers: [ ]
 })

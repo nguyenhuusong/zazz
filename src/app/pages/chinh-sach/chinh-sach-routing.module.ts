@@ -5,7 +5,6 @@ import { BieuMauComponent } from './../../components/bieu-mau/bieu-mau.component
 import { Routes } from '@angular/router';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { NsTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/ns-tuyen-dung.component';
 import { CsNghiPhepComponent } from 'src/app/components/cs-nghi-phep/cs-nghi-phep.component';
 import { CsChamCongComponent } from 'src/app/components/cs-cham-cong/cs-cham-cong.component';
 import { CsAnCaComponent } from 'src/app/components/cs-an-ca/cs-an-ca.component';
@@ -21,6 +20,7 @@ import { PhepBuComponent } from 'src/app/components/phep-bu/phep-bu.component';
 import { ChiTietPhepBuComponent } from 'src/app/components/phep-bu/chi-tiet-phep-bu/chi-tiet-phep-bu.component';
 import { XemCongComponent } from 'src/app/components/cs-cham-cong/xem-cong/xem-cong.component';
 import { EatingListComponent } from 'src/app/components/cs-an-ca/eating-list/eating-list.component';
+import { ImportPhepBuComponent } from 'src/app/components/phep-bu/import-phep-bu/import-phep-bu.component';
 
 const routes: Routes = [
   {
@@ -44,6 +44,14 @@ const routes: Routes = [
     data: {
       title: 'Phép bù',
       url: 'phep-bu',
+    },
+  },
+  {
+    path: 'phep-bu/import',
+    component: ImportPhepBuComponent,
+    data: {
+      title: 'Import phép bù',
+      url: 'import-phep-bu',
     },
   },
   {

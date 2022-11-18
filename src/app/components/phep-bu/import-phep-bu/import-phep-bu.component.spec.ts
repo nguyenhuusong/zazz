@@ -1,19 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ImportTuyenDungComponent } from './import-tuyen-dung.component';
 
-describe('ImportTuyenDungComponent', () => {
-  let component: ImportTuyenDungComponent;
-  let fixture: ComponentFixture<ImportTuyenDungComponent>;
+import { ImportPhepBuComponent } from './import-phep-bu.component';
+
+describe('ImportPhepBuComponent', () => {
+  let component: ImportPhepBuComponent;
+  let fixture: ComponentFixture<ImportPhepBuComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ImportTuyenDungComponent ]
+      declarations: [ ImportPhepBuComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ImportTuyenDungComponent);
+    fixture = TestBed.createComponent(ImportPhepBuComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

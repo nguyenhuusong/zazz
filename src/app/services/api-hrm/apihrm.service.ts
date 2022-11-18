@@ -753,6 +753,10 @@ export class ApiHrmService {
   getCandidatePage(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetCandidatePage?` + queryParams, this.options)
   }
+  
+  getCandidatePotentialPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetCandidatePotentialPage?` + queryParams, this.options)
+  }
 
   delCandidateInfo(queryParams): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v1/recruitment/DelCandidateInfo?` + queryParams, this.options)
@@ -1433,6 +1437,15 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v2/annualleave/GetLeaveRequestMonthInfo?` + queryParams, this.options)
   }
 
+  annualleaveImport(data): Observable<any> {
+    const customOptions = {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue()
+      })
+    };
+    return this.http.post<any>(`${apiHrmServer}/api/v2/annualleave/Import`, data, customOptions);
+  }
+
   // TimeLine
   getStatusTimelineEmployee(): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/employee/GetStatusTimelineEmployee`, this.options)
@@ -1817,6 +1830,11 @@ export class ApiHrmService {
   delRecruitMailInfo(queryParams): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v1/recruitment/DelRecruitMailInfo?${queryParams}`, this.options)
   }
+
+  updateCandidatesPotential(queryParams, data = null): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/recruitment/UpdateCandidatesPotential?${queryParams}`, data , this.options)
+  }
+  
   
   
 

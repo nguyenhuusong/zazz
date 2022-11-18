@@ -11,6 +11,7 @@ import { NghiViecComponent } from 'src/app/components/ns-tuyen-dung/nghi-viec/ng
 import { MailTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/mail-tuyen-dung/mail-tuyen-dung.component';
 import { ChiTietMailTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/mail-tuyen-dung/chi-tiet-mail-tuyen-dung/chi-tiet-mail-tuyen-dung.component';
 import { ImportTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/import-tuyen-dung/import-tuyen-dung.component';
+import { DsTiemNangComponent } from 'src/app/components/ns-tuyen-dung/ds-tiem-nang/ds-tiem-nang.component';
 
 const routes: Routes = [
   {
@@ -25,6 +26,14 @@ const routes: Routes = [
     data: {
       title: 'Danh sách tuyển dụng',
       url: 'ds-tuyen-dung',
+    },
+  },
+  {
+    path: 'ds-tuyen-dung/ds-tiem-nang',
+    component: DsTiemNangComponent,
+    data: {
+      title: 'Danh sách tiềm năng',
+      url: 'ds-tiem-nang',
     },
   },
   {
