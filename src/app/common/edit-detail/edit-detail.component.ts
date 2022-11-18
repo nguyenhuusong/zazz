@@ -313,8 +313,12 @@ export class EditDetailComponent implements OnInit, OnChanges {
             promissall.push(this.apiHrmV2Service.getRoleTypesV2(element1.field_name));
             element1.columnValue = parseInt(element1.columnValue)
           }else if(element1.field_name === 'menuParentId') {
-            element1.columnValue = parseInt(element1.columnValue)
-            element1.options = cloneDeep(this.menus.map(t => ( {label: t.title, value: parseInt(t.menuId)} )));
+            element1.options = this.menus.map(t => {
+              return {
+                label: t.title,
+                value: `${t.menuId}`
+              }
+            });
           }else if(element1.field_name === 'custId'){
             const root_orgId = this.getValueByKey('organizeId');
             promissall.push(this.apiHrmV2Service.getEmployeePageCustIdV2(queryString.stringify({ orgId: root_orgId, pageSize: 100000 }), element1.field_name));
