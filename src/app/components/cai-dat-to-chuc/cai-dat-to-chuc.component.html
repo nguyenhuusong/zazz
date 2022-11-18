@@ -169,7 +169,7 @@
       <div class="field-group treeselect select label-8" > 
         <label for="">Tổ chức</label>
           <p-dropdown appendTo="body"  [baseZIndex]="100" 
-          [options]="organizes" [(ngModel)]="organizeIdSelected" 
+          [options]="organizes" [(ngModel)]="organizeIdSelected" (onChange)="onSelectOrgan()"
           name="organizeId" [filter]="true">
           <ng-template let-item pTemplate="selectedItem">
             <span>{{item.label}}</span>
