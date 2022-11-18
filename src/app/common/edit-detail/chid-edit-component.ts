@@ -344,17 +344,14 @@ export class AppTypeSelectTreesComponent implements OnInit, OnChanges {
   }
 }
 
-
 // dropdown
-
-
 @Component({
   selector: 'app-type-dropdown',
   template: `   
           <div class="field-group select " [ngClass]=" element.columnValue ? 'valid' : 'invalid' " >
           <div class="uni-load " [ngClass]="loading ? 'loading' : ''"></div>
           <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
-                <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
+                <p-dropdown appendTo="body" [baseZIndex]="100" 
                   [disabled]="element.isDisable" [options]="element.options" (onChange)="onChangeValue($event.value, element.field_name, element)" [filterBy]="'label'"
                   [required]="element.isRequire && element.isVisiable && !element.isEmpty" [(ngModel)]="element.columnValue"
                   [name]="element.field_name" [filter]="true">
@@ -396,6 +393,7 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
       const orgId = await this.getValueByKey('orgId');
       const adm_st = await this.getValueByKey('adm_st');
       this.getAgentLeaders(orgId, this.element, adm_st);
+    }else if(this.element.field_name === "menuParentId") {
     }
   }
 
@@ -424,7 +422,6 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
   }
 
   async onChangeValue(value, field_name, element) {
-    
     this.modelFields[field_name].error = this.modelFields[field_name].isRequire && !this.element.columnValue ? true : false;
     this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
     if (field_name === 'orgId') {

@@ -106,6 +106,7 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
     fromdate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).add(-1,'months').format()),
     todate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).format()),
     organizeIds: '',
+    companyIds: '',
   }
   totalRecord = 0;
   DriverId = 0;
@@ -115,6 +116,7 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
     currentRecordStart: 0,
     currentRecordEnd: 0
   }
+  companies = []
 
   onGridReady(params) {
     this.gridApi = params.api;
@@ -154,7 +156,11 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
       pageSize: 15,
       fromdate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).add(-1,'months').format()),
       todate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).format()),
-      organizeIds: this.query.organizeIds
+      organizeIds: this.query.organizeIds,
+      companyIds: this.query.companyIds,
+    }
+    if(this.companies.length > 0) {
+      this.query.companyIds = this.companies[0].value;
     }
     this.load();
   }
@@ -404,6 +410,7 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
           this.query.organizeIds = results;
           this.query.organizeId = results;
           this.getLeaveReasons();
+          this.getCompany();
         }
     });
     this.items = [
@@ -568,6 +575,26 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
     };
   }
 
+  getCompany() {
+    const query = { organizeIds: this.query.organizeIds}
+    this.apiService.getUserCompanies(queryString.stringify(query)).subscribe(
+      (results: any) => {
+        if(results.status === "success"){
+          this.companies = results.data
+            .map(d => {
+              return {
+                label: d.companyName,
+                value: d.companyId
+              };
+            });
+            if(this.companies.length > 0) {
+              this.query.companyIds = this.companies[0].value
+            }
+            this.load();
+        }
+      }),
+      error => { };
+  }
 
 
 

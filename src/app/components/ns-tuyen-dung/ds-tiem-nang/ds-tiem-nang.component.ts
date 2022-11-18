@@ -179,9 +179,47 @@ export class DsTiemNangComponent implements OnInit {
   showButtons(event: any) {
     return {
       buttons: [
-        
+        {
+          onClick: this.viewRow.bind(this),
+          label: 'Xem chi tiết',
+          icon: 'fa fa-eye',
+          class: 'btn-primary mr5',
+          hide: CheckHideAction(MENUACTIONROLEAPI.GetCandidatePage.url, ACTIONS.VIEW)
+        },
+        {
+          onClick: this.xoatuyendung.bind(this),
+          label: 'Xóa ',
+          icon: 'pi pi-trash',
+          class: 'btn-primary mr5',
+          hide: CheckHideAction(MENUACTIONROLEAPI.GetCandidatePage.url, ACTIONS.DELETE)
+        },
       ]
     };
+  }
+
+  viewRow(event) {
+    const params = {
+      canId: event.rowData.canId,
+      view: true
+    }
+    this.router.navigate(['/tuyen-dung/ds-tuyen-dung/chi-tiet-tuyen-dung'], { queryParams: params });
+  }
+
+  xoatuyendung(event) {
+    this.confirmationService.confirm({
+      message: 'Bạn có chắc chắn muốn xóa tuyển dụng?',
+      accept: () => {
+        const queryParams = queryString.stringify({ canId: event.rowData.canId });
+        this.apiService.delCandidateInfo(queryParams).subscribe(results => {
+          if (results.status === 'success') {
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa tuyển dụng thành công' });
+            this.load();
+          } else {
+            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+          }
+        });
+      }
+    });
   }
 
   initGrid() {
@@ -200,18 +238,18 @@ export class DsTiemNangComponent implements OnInit {
         checkboxSelection: true,
         // rowSelection: 'single'
       },
-      ...AgGridFn(this.cols.filter((d: any) => !d.isHide))]
-      // {
-      //   headerName: 'Thao tác',
-      //   filter: '',
-      //   width: 100,
-      //   pinned: 'right',
-      //   cellRenderer: 'buttonAgGridComponent',
-      //   cellClass: ['border-right', 'no-auto'],
-      //   cellRendererParams: (params: any) => this.showButtons(params),
-      //   checkboxSelection: false,
-      //   field: 'checkbox'
-      // }
+      ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),{
+        headerName: 'Thao tác',
+        filter: '',
+        width: 100,
+        pinned: 'right',
+        cellRenderer: 'buttonAgGridComponent',
+        cellClass: ['border-right', 'no-auto'],
+        cellRendererParams: (params: any) => this.showButtons(params),
+        checkboxSelection: false,
+        field: 'checkbox'
+      }]
+      
   }
 
   rowSelected(event) {

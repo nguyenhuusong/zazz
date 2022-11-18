@@ -411,7 +411,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     }, error => {
       this.spinner.hide();
     });
-    this.gridApi.sizeColumnsToFit();
+    // this.gridApi.sizeColumnsToFit();
   }
 
   stepActivated(): void {
