@@ -177,16 +177,16 @@ export class PageMauThongBaoComponent implements OnInit, OnDestroy, AfterViewChe
   ngAfterViewChecked(): void {
     const a: any = document.querySelector(".header");
     const b: any = document.querySelector(".sidebarBody");
-    const c: any = document.querySelector(".breadcrumb");
-    const d: any = document.querySelector(".filterInput");
+    const c: any = document.querySelector(".bread-filter");
+    const d: any = document.querySelector(".bread-crumb");
     const e: any = document.querySelector(".paginator");
-    this.loadjs ++ 
+    this.loadjs++
     if (this.loadjs === 5) {
-      if(b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + d.clientHeight + e.clientHeight + 45;
+      if (b && b.clientHeight) {
+        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + d.clientHeight + e.clientHeight + 25;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
-      }else {
+      } else {
         this.loadjs = 0;
       }
     }
@@ -255,4 +255,5 @@ export class PageMauThongBaoComponent implements OnInit, OnDestroy, AfterViewChe
   handleFilter() {
     this.load();
   }
+
 }
