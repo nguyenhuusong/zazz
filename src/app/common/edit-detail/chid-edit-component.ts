@@ -2122,7 +2122,7 @@ export class AppTypeChips implements OnInit {
     private messageService: MessageService,
   ) { }
   ngOnInit(): void {
-    this.modelFields[this.element.field_name].error = false;
+    // this.modelFields[this.element?.field_name].error = false;
   }
 
   luau() {

@@ -4,7 +4,7 @@ import { filter } from 'rxjs/operators';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { environment } from 'src/environments/environment';
-import {Event, RouterEvent, Router} from '@angular/router';
+import {Event, RouterEvent, Router, NavigationEnd} from '@angular/router';
 import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import * as queryString from 'querystring';
@@ -32,9 +32,9 @@ export class SidebarComponent implements OnInit {
         private spinner: NgxSpinnerService,
     ) {
         router.events.pipe(
-            filter((e: Event): e is RouterEvent => e instanceof RouterEvent)
+            filter(event => event instanceof NavigationEnd)
          ).subscribe((e) => {
-                let fullUrl =  e.url.split("?");
+                let fullUrl =  window.location.pathname.split("?");
                 let pathUrl =  fullUrl[0].split("/");
                 let pathDepth1 = '';
                 let pathDepth2 = '';

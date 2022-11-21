@@ -8,13 +8,14 @@ import { Subject, takeUntil } from 'rxjs';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { CheckHideAction } from 'src/app/common/function-common/common';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
-
+import showdown from 'showdown';
 @Component({
   selector: 'app-chi-tiet-mail-tuyen-dung',
   templateUrl: './chi-tiet-mail-tuyen-dung.component.html',
   styleUrls: ['./chi-tiet-mail-tuyen-dung.component.scss']
 })
 export class ChiTietMailTuyenDungComponent implements OnInit, OnDestroy {
+  converter = new showdown.Converter();
   items: MenuItem[] = [];
   paramsObject = null;
   detailInfo = null
@@ -97,6 +98,14 @@ export class ChiTietMailTuyenDungComponent implements OnInit, OnDestroy {
 
   setRecruitMailInfo(data) {
     this.spinner.show();
+
+    data.forEach(elm => {
+      elm.fields.forEach(elm1 => {
+        if(elm1.field_name === 'content_name') {
+          elm1.columnValue = elm1.columnValue ? this.converter.makeHtml(elm1.columnValue) : ''
+        }
+      })
+    })
     const params = {
       ...this.detailInfo, group_fields: data
     }

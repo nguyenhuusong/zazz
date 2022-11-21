@@ -120,7 +120,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
     this.dataView = [];
     this.dataViewNew.forEach(element => {
       element.fields.forEach(async element1 => {
-        if ((element1.columnType === 'markdown') || (element1.columnType === 'linkUrl') || (element1.columnType === 'linkUrlDrag')) {
+        if ((element1.columnType === 'markdown') || (element1.columnType === 'chips') || (element1.columnType === 'linkUrl') || (element1.columnType === 'linkUrlDrag')) {
+          console.log(element1.columnType === 'chips')
           const dataValidation = {
             key: element1.field_name,
             isRequire: false,
