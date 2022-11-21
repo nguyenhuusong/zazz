@@ -147,6 +147,7 @@ export class CaiDatToChucComponent implements OnInit {
   
 
   getAgencyOrganizeMap(type = false) {
+    this.spinner.show();
     this.apiService.getAgencyOrganizeMap().subscribe(results => {
       if (results.status === 'success') {
         this.listAgencyMap = [...results.data.root];
@@ -169,6 +170,7 @@ export class CaiDatToChucComponent implements OnInit {
           }
           this.load();
         }
+        this.spinner.hide();
       }
     })
   }
@@ -311,6 +313,7 @@ export class CaiDatToChucComponent implements OnInit {
     this.modeAgencyOrganize.organizeId = this.query.organizeIds;
     this.modeAgencyOrganize.org_level = event.rowData.org_level;
     this.modeAgencyOrganize.org_name = event.rowData.org_name;
+    this.modeAgencyOrganize.orgId = event.rowData.orgId;
     // this.selectedNodeTree = event.rowData.orgId;
     this.modeAgencyOrganize.parentId = event.rowData.parentId
     this.getOrganizeTreeByOr();
@@ -319,6 +322,7 @@ export class CaiDatToChucComponent implements OnInit {
     
   }
   delOrgin(event) {
+    this.spinner.show();
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn thực hiện hành động này?',
       accept: () => {
@@ -328,6 +332,7 @@ export class CaiDatToChucComponent implements OnInit {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
             this.displayButton = false;
             this.getAgencyOrganizeMap();
+            this.spinner.hide();
           } else {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
           }
@@ -629,7 +634,7 @@ export class CaiDatToChucComponent implements OnInit {
   listOrganizeTreeByOr = []
   getOrganizeTreeByOr() {
     this.selectedNodeTree =null
-    const queryParams = queryString.stringify({ parentId: this.query.organizeIds });
+    const queryParams = queryString.stringify({ parentId: this.organizeIdSelected });
     this.apiService.getOrganizeTree(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.listOrganizeTreeByOr = results.data;
@@ -682,6 +687,10 @@ export class CaiDatToChucComponent implements OnInit {
   onNodeSelectAdd(event) {
     // this.getDepartments(event.node.parentId);
     this.getOrganizeLevelList(event.node.data);
+  }
+
+  onSelectOrgan() {
+    this.getOrganizeTreeByOr();
   }
 
   listOrganizeTree = []
