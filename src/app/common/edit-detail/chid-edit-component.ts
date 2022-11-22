@@ -351,7 +351,7 @@ export class AppTypeSelectTreesComponent implements OnInit, OnChanges {
           <div class="field-group select " [ngClass]=" element.columnValue ? 'valid' : 'invalid' " >
           <div class="uni-load " [ngClass]="loading ? 'loading' : ''"></div>
           <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
-                <p-dropdown appendTo="body" [baseZIndex]="100" 
+                <p-dropdown appendTo="body" [baseZIndex]="100"
                   [disabled]="element.isDisable" [options]="element.options" (onChange)="onChangeValue($event.value, element.field_name, element)" [filterBy]="'label'"
                   [required]="element.isRequire && element.isVisiable && !element.isEmpty" [(ngModel)]="element.columnValue"
                   [name]="element.field_name" [filter]="true">
@@ -364,6 +364,14 @@ export class AppTypeSelectTreesComponent implements OnInit, OnChanges {
                     </div>
                   </ng-template>
                 </p-dropdown>
+                <div class="chon-lich-hop" style="
+                      position: absolute;
+                      right: 0px;
+                      top: 26px;
+                      z-index: 9;
+                  ">
+                  <p-button *ngIf="element.field_name==='roomId'" (click)="chonLichHop()" styleClass="p-button-sm " label="Chọn lịch họp" icon="pi pi-clock"></p-button>&nbsp;
+                </div>
                 <div *ngIf="modelFields[element.field_name] && modelFields[element.field_name].isRequire && submit && modelFields[element.field_name].error"
                   class="alert-validation alert-danger">
                   <div [hidden]="!modelFields[element.field_name].error">
@@ -419,6 +427,16 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
       }
       return value
     }
+  }
+
+ async chonLichHop() {
+    let floorID:any = await this.getValueByKey('floor_No');
+    const emitType = {
+      name: 'roomId',
+      id: this.element.columnValue,
+      floorID: floorID
+    }
+    this.callback.emit(emitType);
   }
 
   async onChangeValue(value, field_name, element) {
@@ -586,15 +604,17 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
           }
         })
       })
-    } else if(field_name === 'roomId'){
-      let floorID:any = await this.getValueByKey('floor_No');
-      const emitType = {
-        name: 'roomId',
-        id: value,
-        floorID: floorID
-      }
-      this.callback.emit(emitType);
-    } else if( field_name === 'status'){
+    } 
+    // else if(field_name === 'roomId'){
+    //   let floorID:any = await this.getValueByKey('floor_No');
+    //   const emitType = {
+    //     name: 'roomId',
+    //     id: value,
+    //     floorID: floorID
+    //   }
+    //   this.callback.emit(emitType);
+    // } 
+    else if( field_name === 'status'){
       if(parseInt(value) === 0){
           this.confirmationService.confirm({
             message: 'Phòng họp đang trong cuộc họp, bạn thực sự muốn thay đổi trạng thái phòng họp?',

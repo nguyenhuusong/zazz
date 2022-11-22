@@ -767,7 +767,7 @@ export class CaiDatToChucComponent implements OnInit {
       return
     }
     this.modeAgencyOrganize.organizeId = this.organizeIdSelected;
-    this.modeAgencyOrganize.parentId = this.selectedNodeTree.data;
+    this.modeAgencyOrganize.parentId = this.selectedNodeTree?.data;
     let params = { ...this.modeAgencyOrganize };
     // if(this.titleForm.value === 'Add') {
     //   params.parentId = this.modeAgencyOrganize.isChild ? this.detailOrganizeMap.orgId : this.detailOrganizeMap.parentId;

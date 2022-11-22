@@ -1,9 +1,13 @@
-<div class="main-grid product-detail p-4">
+<div class="main-grid product-detail p-4" style="position:relative">
     <div class="grid">
         <div class="col-6 ">
             <!-- <span (click) ="back()" class="pointer"><i class="pi pi-chevron-left"></i> Lịch họp phòng IT</span> -->
         </div>
-        <div class="col-6 text-right">
+        <div class="col-6 text-right" style="
+        position: absolute;
+        right: 20px;
+        top: -70px;
+    ">
             <button pButton pRipple type="button" label="Quay lại" 
             (click)="goBack()" icon = "pi pi-times-circle" class="p-button-secondary mr-2"></button>
             <p-button (click) ="handleAdd()" 
