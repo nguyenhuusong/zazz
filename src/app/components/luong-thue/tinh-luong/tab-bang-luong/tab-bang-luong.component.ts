@@ -95,7 +95,7 @@ export class TabBangLuongComponent implements OnInit {
     
     this.spinner.show();
     const queryParams = queryString.stringify(this.query);
-    this.apiService.getPayrollAppInfoPage(queryParams).subscribe(
+    this.apiService.getPayrollInfoPage(queryParams).subscribe(
       (results: any) => {
         this.listsData = results?.data?.dataList?.data;
         this.gridKey= results?.data?.dataList?.gridKey;
@@ -171,7 +171,7 @@ export class TabBangLuongComponent implements OnInit {
       message: 'Bạn có chắc chắn muốn xóa',
       accept: () => {
         const query = queryString.stringify({Id: event.rowData.appInfoId})
-        this.apiService.delPayrollAppInfo(query).subscribe((results: any) => {
+        this.apiService.delPayrollInfo(query).subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa công' });
             this.load();

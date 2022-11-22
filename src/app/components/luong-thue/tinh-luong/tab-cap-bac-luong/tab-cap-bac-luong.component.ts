@@ -83,7 +83,7 @@ import { OrganizeInfoService } from 'src/app/services/organize-info.service';
     load() {
       this.spinner.show();
       const queryParams = queryString.stringify(this.query);
-      this.apiService.getPayrollLevelBasePage(queryParams).subscribe(
+      this.apiService.getPayrollBasePage(queryParams).subscribe(
         (results: any) => {
           this.listsData = results.data.dataList.data;
           this.gridKey= results.data.dataList.gridKey;
@@ -156,7 +156,7 @@ import { OrganizeInfoService } from 'src/app/services/organize-info.service';
         message: 'Bạn có chắc chắn muốn xóa?',
         accept: () => {
           const query = queryString.stringify({Id: event.rowData.baseId})
-          this.apiService.delPayrollLevelBase(query).subscribe((results: any) => {
+          this.apiService.delPayrollBase(query).subscribe((results: any) => {
             if (results.status === 'success') {
               this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
               this.load();

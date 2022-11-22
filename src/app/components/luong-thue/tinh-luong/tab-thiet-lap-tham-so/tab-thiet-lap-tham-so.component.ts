@@ -85,7 +85,7 @@ export class TabThietLapThamSoComponent implements OnInit {
   load() {
     this.spinner.show();
     const queryParams = queryString.stringify(this.query);
-    this.apiService.getPayrollAppParamPage(queryParams).subscribe(
+    this.apiService.getPayrollParamPage(queryParams).subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         this.gridKey= results.data.dataList.gridKey;
@@ -158,7 +158,7 @@ export class TabThietLapThamSoComponent implements OnInit {
       message: 'Bạn có chắc chắn muốn xóa?',
       accept: () => {
         const query = queryString.stringify({Id: event.rowData.id})
-        this.apiService.delPayrollAppParam(query).subscribe((results: any) => {
+        this.apiService.delPayrollParam(query).subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
             this.load();

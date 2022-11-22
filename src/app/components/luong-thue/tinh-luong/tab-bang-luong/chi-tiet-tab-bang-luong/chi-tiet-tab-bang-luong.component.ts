@@ -45,7 +45,7 @@ export class ChiTietTabBangLuongComponent implements OnInit, OnDestroy {
   getDetail() {
     console.log('fdsjofijdoi', this.idForm)
     const queryParams = queryString.stringify({Id: this.idForm });
-    this.apiService.getPayrollAppInfo(queryParams)
+    this.apiService.getPayrollInfo(queryParams)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {
         if (results.status === 'success') {
@@ -69,7 +69,7 @@ export class ChiTietTabBangLuongComponent implements OnInit, OnDestroy {
     const params = {
       ...this.detailInfo, group_fields: event
     };
-    this.apiService.setPayrollAppInfo(params)
+    this.apiService.setPayrollInfo(params)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((results: any) => {
         if (results.status === 'success') {

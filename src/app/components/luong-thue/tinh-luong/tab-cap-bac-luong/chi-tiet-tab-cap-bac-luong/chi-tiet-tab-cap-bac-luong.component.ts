@@ -45,7 +45,7 @@ export class ChiTietTabCapBacLuongComponent implements OnInit, OnDestroy {
 
   getDetail() {
     const queryParams = queryString.stringify({Id: this.idForm});
-    this.apiService.getPayrollLevelBaseInfo(queryParams)
+    this.apiService.getPayrollBaseInfo(queryParams)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {
         if (results.status === 'success') {
@@ -69,7 +69,7 @@ export class ChiTietTabCapBacLuongComponent implements OnInit, OnDestroy {
     const params = {
       ...this.detailInfo, group_fields: event
     };
-    this.apiService.setPayrollLevelBaseInfo(params)
+    this.apiService.setPayrollBaseInfo(params)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((results: any) => {
         if (results.status === 'success') {

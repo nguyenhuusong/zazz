@@ -1751,59 +1751,59 @@ export class ApiHrmService {
 
   // tính lương
   // bang luong
-  getPayrollAppInfoPage(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/payrollAppInfo/GetPayrollAppInfoPage?` + queryParams, this.options)
+  getPayrollInfoPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/payroll/GetPayrollInfoPage?` + queryParams, this.options)
   }
-  getPayrollAppInfo(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/payrollAppInfo/GetPayrollAppInfo?${queryParams}`, this.options)
+  getPayrollInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/payroll/GetPayrollInfo?${queryParams}`, this.options)
   }
-  setPayrollAppInfo(data): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v1/payrollAppInfo/SetPayrollAppInfo`, data , this.options)
+  setPayrollInfo(data): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/payroll/SetPayrollInfo`, data , this.options)
   }
-  delPayrollAppInfo(queryParams): Observable<any> {
-    return this.http.delete<any>(`${apiHrmServer}/api/v1/payrollAppInfo/DelPayrollAppInfo?${queryParams}`, this.options)
+  delPayrollInfo(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v1/payroll/DelPayrollInfo?${queryParams}`, this.options)
   }
 
   // tham số
-  getPayrollAppParamPage(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/payrollAppParam/GetPayrollAppParamPage?` + queryParams, this.options)
+  getPayrollParamPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/payrollparam/GetPayrollParamPage?` + queryParams, this.options)
   }
-  getPayrollAppParamInfo(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/payrollAppParam/GetPayrollAppParamInfo?${queryParams}`, this.options)
+  getPayrollParam(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/payrollparam/GetPayrollParam?${queryParams}`, this.options)
   }
-  setPayrollAppParamInfo(data): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v1/payrollAppParam/SetPayrollAppParamInfo`, data , this.options)
+  setPayrollParam(data): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/payrollparam/SetPayrollParam`, data , this.options)
   }
-  delPayrollAppParam(queryParams): Observable<any> {
-    return this.http.delete<any>(`${apiHrmServer}/api/v1/payrollAppParam/DelPayrollAppParam?${queryParams}`, this.options)
+  delPayrollParam(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v1/payrollparam/DelPayrollParam?${queryParams}`, this.options)
   }
 
   // thành phần lương
-  getPayrollComponentPage(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/payrollComponent/GetPayrollComponentPage?` + queryParams, this.options)
+  getComponentPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/payrollComponent/GetComponentPage?` + queryParams, this.options)
   }
-  getPayrollComponentInfo(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/payrollComponent/GetPayrollComponentInfo?${queryParams}`, this.options)
+  getComponentInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/payrollComponent/GetComponentInfo?${queryParams}`, this.options)
   }
-  setPayrollComponentInfo(data): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v1/payrollComponent/SetPayrollComponentInfo`, data , this.options)
+  setComponentInfo(data): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/payrollComponent/SetComponentInfo`, data , this.options)
   }
-  delPayrollComponent(queryParams): Observable<any> {
-    return this.http.delete<any>(`${apiHrmServer}/api/v1/payrollComponent/DelPayrollComponent?${queryParams}`, this.options)
+  delComponent(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v1/payrollComponent/DelComponent?${queryParams}`, this.options)
   }
 
   // cap bac luong
-  getPayrollLevelBasePage(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/payrollLevelBase/GetPayrollLevelBasePage?` + queryParams, this.options)
+  getPayrollBasePage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/payrollbase/GetPayrollBasePage?` + queryParams, this.options)
   }
-  getPayrollLevelBaseInfo(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/payrollLevelBase/GetPayrollLevelBaseInfo?${queryParams}`, this.options)
+  getPayrollBaseInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/payrollbase/GetPayrollBaseInfo?${queryParams}`, this.options)
   }
-  setPayrollLevelBaseInfo(data): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v1/payrollLevelBase/SetPayrollLevelBaseInfo`, data , this.options)
+  setPayrollBaseInfo(data): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/payrollbase/SetPayrollBaseInfo`, data , this.options)
   }
-  delPayrollLevelBase(queryParams): Observable<any> {
-    return this.http.delete<any>(`${apiHrmServer}/api/v1/payrollLevelBase/DelPayrollLevelBase?${queryParams}`, this.options)
+  delPayrollBase(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v1/payrollbase/DelPayrollBase?${queryParams}`, this.options)
   }
 
   employeeGetTerminatePage(queryParams): Observable<any> {
