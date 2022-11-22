@@ -8,13 +8,14 @@ import { Subject, takeUntil } from 'rxjs';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { CheckHideAction } from 'src/app/common/function-common/common';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
-
+import showdown from 'showdown';
 @Component({
   selector: 'app-chi-tiet-mail-tuyen-dung',
   templateUrl: './chi-tiet-mail-tuyen-dung.component.html',
   styleUrls: ['./chi-tiet-mail-tuyen-dung.component.scss']
 })
 export class ChiTietMailTuyenDungComponent implements OnInit, OnDestroy {
+  converter = new showdown.Converter();
   items: MenuItem[] = [];
   paramsObject = null;
   detailInfo = null

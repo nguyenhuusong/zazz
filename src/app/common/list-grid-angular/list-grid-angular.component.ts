@@ -421,8 +421,14 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
       this.gridColumnApi.autoSizeColumns(allColumnIds, false);
       const grid = document.getElementById(`${this.idGrid}`);
       if (grid) {
-        const gridBody = grid.querySelector('.ag-body-viewport') as any;
-        this.autoSizeAll();
+        if ((event.left === 0) ||(event.left > 200 && event.left < 220)
+          || (event.left > 400 && event.left < 420)
+          || (event.left > 600 && event.left < 620)
+          || (event.left > 800 && event.left < 820)
+          || (event.left > 1200)) {
+          const gridBody = grid.querySelector('.ag-body-viewport') as any;
+          this.autoSizeAll();
+        }
       }
     }
 

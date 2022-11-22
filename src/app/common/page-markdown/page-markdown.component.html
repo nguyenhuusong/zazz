@@ -19,8 +19,38 @@
           <div class="col-sm-6">{{modelMarkdow?.type == 0 || modelMarkdow?.type == 1 ? 'Nội dung Markdown' : 'Nội dung HTML'}} </div>
           <div class="col-sm-6">Hiển thị</div>
           <div class="col-12 mt-2"> 
-            <md-editor class="md-editor-binh-luan"  name="{{element.field_name}}" [height]="'400px'" [(ngModel)]="element.columnValue"
-               maxlength="2500"></md-editor>
+                          <md-editor
+                    #md="ngModel"
+                    name="Content"
+                    (onPreviewDomChanged)="onPreviewDomChanged($event)"
+                    (onEditorLoaded)="onEditorLoaded($event)"
+                    [preRender]="preRender"
+                    [postRender]="postRender"
+                    [upload]="doUpload"
+                    [(ngModel)]="content"
+                    [mode]="mode"
+                    [options]="options"
+                    required
+                    maxlength="600"
+                    height="800px"
+                    class="md-editor-binh-luan"
+                  >
+                    <div custom-btns>
+                      <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
+                      [options]="contentTypes" [(ngModel)]="modelMarkdow.type" 
+                      name="type" [filter]="true">
+                      <ng-template let-item pTemplate="selectedItem">
+                          <span>{{item.label}}</span>
+                      </ng-template>
+                      <ng-template let-car pTemplate="item">
+                          <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                              <div style="font-size:14px;margin-top:4px">{{car.label}}</div>
+                          </div>
+                      </ng-template>
+                  </p-dropdown>
+                     
+                    </div>
+                  </md-editor>
           </div>
         </div>
       </div>
