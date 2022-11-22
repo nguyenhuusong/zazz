@@ -98,14 +98,6 @@ export class ChiTietMailTuyenDungComponent implements OnInit, OnDestroy {
 
   setRecruitMailInfo(data) {
     this.spinner.show();
-
-    data.forEach(elm => {
-      elm.fields.forEach(elm1 => {
-        if(elm1.field_name === 'content_name') {
-          elm1.columnValue = elm1.columnValue ? this.converter.makeHtml(elm1.columnValue) : ''
-        }
-      })
-    })
     const params = {
       ...this.detailInfo, group_fields: data
     }
