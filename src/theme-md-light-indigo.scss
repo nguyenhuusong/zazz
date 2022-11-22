@@ -343,17 +343,17 @@ body{
             background: var(--main-color); 
         }
     }
-    .ag-body-horizontal-scroll-viewport{
-        &::-webkit-scrollbar-track {
-            box-shadow: inset 0 0 2px var(--main-color); 
-        }
-        &::-webkit-scrollbar-thumb {
-            background: var(--main-color); 
-        }
-        &::-webkit-scrollbar-thumb:hover {
-            background: var(--main-color); 
-        }
-    }
+    // .ag-body-horizontal-scroll-viewport{
+    //     &::-webkit-scrollbar-track {
+    //         box-shadow: inset 0 0 2px var(--main-color); 
+    //     }
+    //     &::-webkit-scrollbar-thumb {
+    //         background: var(--main-color); 
+    //     }
+    //     &::-webkit-scrollbar-thumb:hover {
+    //         background: var(--main-color); 
+    //     }
+    // }
 
 
 
