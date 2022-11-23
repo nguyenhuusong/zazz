@@ -201,7 +201,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
           }else if (element1.field_name === 'companyId' || element1.field_name === 'company_id') {
             promissall.push(this.apiHrmV2Service.getCompanyListV2(queryString.stringify({ orgId: this.detail.organizeId ? this.detail.organizeId : null }), element1.field_name));
           }else if (element1.field_name === 'companyId3') {
-            promissall.push(this.apiHrmV2Service.getCompaniesByOrganize(queryString.stringify({ organizeId: this.detail.organizeId ? this.detail.organizeId : null }), element1.field_name));
+            promissall.push(this.apiHrmV2Service.getUserCompanies(queryString.stringify({ organizeIds: this.organizeInfoServiceId }), element1.field_name));
+            element1.columnValue = element1.columnValue.toUpperCase();
           } else if (element1.field_name === 'reportTo' || element1.field_name === 'reportTo1') {
             const root_orgId = this.detail ? this.detail.organizeId : null
             promissall.push(this.apiHrmV2Service.getEmpLeadersV2(queryString.stringify({ root_orgId: root_orgId }), element1.field_name));
