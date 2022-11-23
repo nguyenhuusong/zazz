@@ -91,6 +91,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
     gridWidth: 0
   };
   modelFields = {};
+
+  // tổ chức hiện tại được chọn
   organizeInfoServiceId = ''
   async ngOnInit(): Promise<void> {
     await this.getOrganizeInfoService();
@@ -201,7 +203,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
           }else if (element1.field_name === 'companyId' || element1.field_name === 'company_id') {
             promissall.push(this.apiHrmV2Service.getCompanyListV2(queryString.stringify({ orgId: this.detail.organizeId ? this.detail.organizeId : null }), element1.field_name));
           }else if (element1.field_name === 'companyId3') {
-            promissall.push(this.apiHrmV2Service.getCompaniesByOrganize(queryString.stringify({ organizeId: this.detail.organizeId ? this.detail.organizeId : null }), element1.field_name));
+            promissall.push(this.apiHrmV2Service.getUserCompanies(queryString.stringify({ organizeIds: this.organizeInfoServiceId }), element1.field_name));
+            element1.columnValue = element1.columnValue.toUpperCase();
           } else if (element1.field_name === 'reportTo' || element1.field_name === 'reportTo1') {
             const root_orgId = this.detail ? this.detail.organizeId : null
             promissall.push(this.apiHrmV2Service.getEmpLeadersV2(queryString.stringify({ root_orgId: root_orgId }), element1.field_name));
@@ -322,7 +325,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
             });
           }else if(element1.field_name === 'custId'){
             const root_orgId = this.getValueByKey('organizeId');
-            promissall.push(this.apiHrmV2Service.getEmployeePageCustIdV2(queryString.stringify({ orgId: root_orgId, pageSize: 100000 }), element1.field_name));
+            promissall.push(this.apiHrmV2Service.getEmployeePageCustIdV2(queryString.stringify({ organizeIds: this.organizeInfoServiceId, pageSize: 100000, companyIds: "00000000-0000-0000-0000-000000000000" }), element1.field_name));
           }else if( element1.field_name === 'menu_date') {
             promissall.push(this.apiHrmV2Service.getEatingInputV2(queryString.stringify({ }), element1.field_name));
           }else if( element1.field_name === 'blockId') {

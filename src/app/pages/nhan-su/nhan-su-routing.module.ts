@@ -204,6 +204,14 @@ const routes: Routes = [
    },
  },
  {
+  path: 'qua-trinh-thay-doi-luong/them-moi-qua-trinh-thay-doi-luong',
+  component: ChiTietQTThayDoiLuongComponent,
+  data: {
+    title: 'Thêm mới quá trình thay đổi lương',
+    url: 'them-moi-qua-trinh-thay-doi-luong',
+  },
+ },
+ {
   path: 'qua-trinh-thay-doi-luong/chi-tiet-qua-trinh-thay-doi-luong',
   component: ChiTietQTThayDoiLuongComponent,
   data: {
@@ -211,7 +219,6 @@ const routes: Routes = [
     url: 'chi-tiet-qua-trinh-thay-doi-luong',
   },
 },
-
   
 ];
 

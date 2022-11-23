@@ -382,7 +382,6 @@ export class QtThayDoiLuongComponent implements OnInit {
         if(results && results.length>0){
           this.query.organizeIds = results;
           this.getCompany();
-          this.load();
         }
     });
     this.items = [
@@ -610,7 +609,7 @@ export class QtThayDoiLuongComponent implements OnInit {
     const params = {
       Id: null
     }
-    this.router.navigate(['/nhan-su/qua-trinh-thay-doi-luong/chi-tiet-qua-trinh-thay-doi-luong'], { queryParams: params });
+    this.router.navigate(['/nhan-su/qua-trinh-thay-doi-luong/them-moi-qua-trinh-thay-doi-luong'], { queryParams: params });
 
     // this.idEdit = null;
     // this.addNewPopup = true;

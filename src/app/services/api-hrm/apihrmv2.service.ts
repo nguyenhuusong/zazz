@@ -721,5 +721,24 @@ export class ApiHrmV2Service {
       })
     )
   }
+
+
+  // danh sách cty trả lương
+  getUserCompanies(queryParams, field_name) {
+    return this.httpClient.get(`${apiHrmServer}/api/v1/user/GetUserCompanies?` + queryParams , this.options).pipe(
+      map((repon: any) => {
+          let data = repon.data.filter( d => d.companyId != "00000000-0000-0000-0000-000000000000")
+          return { key: field_name, result: data.map(d => {
+            return {
+              label: d.companyName,
+              value: d.companyId.toUpperCase()
+            }
+          }) 
+        };
+      }), catchError(error => {
+        return throwError('Capital not found!');
+      })
+    )
+  }
 }
 

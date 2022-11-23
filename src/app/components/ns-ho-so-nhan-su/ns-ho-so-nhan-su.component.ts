@@ -783,7 +783,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
   }
   listDataSelect = [];
   rowSelected(data) {
-    if(data[0] && data[0].emp_st !== 1){
+    if(data[0] && data[0].emp_st !== 1 && data[0].emp_st !== 2 ){
       this.listDataSelect = data
     }else{
       this.listDataSelect = [];
