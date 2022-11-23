@@ -91,6 +91,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
     gridWidth: 0
   };
   modelFields = {};
+
+  // tổ chức hiện tại được chọn
   organizeInfoServiceId = ''
   async ngOnInit(): Promise<void> {
     await this.getOrganizeInfoService();
@@ -323,7 +325,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
             });
           }else if(element1.field_name === 'custId'){
             const root_orgId = this.getValueByKey('organizeId');
-            promissall.push(this.apiHrmV2Service.getEmployeePageCustIdV2(queryString.stringify({ orgId: root_orgId, pageSize: 100000 }), element1.field_name));
+            promissall.push(this.apiHrmV2Service.getEmployeePageCustIdV2(queryString.stringify({ organizeIds: this.organizeInfoServiceId, pageSize: 100000, companyIds: "00000000-0000-0000-0000-000000000000" }), element1.field_name));
           }else if( element1.field_name === 'menu_date') {
             promissall.push(this.apiHrmV2Service.getEatingInputV2(queryString.stringify({ }), element1.field_name));
           }else if( element1.field_name === 'blockId') {
