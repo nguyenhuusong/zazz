@@ -211,7 +211,7 @@ export class ChiTietTabBangLuongComponent implements OnInit, OnDestroy {
     const params = {
       ...this.detailInfoDetail, group_fields: event
     };
-    this.apiService.setPayrollInfo(params)
+    this.apiService.setPayrollComponentInfo(params)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((results: any) => {
         if (results.status === 'success') {
