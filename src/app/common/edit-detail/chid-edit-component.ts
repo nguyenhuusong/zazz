@@ -370,7 +370,7 @@ export class AppTypeSelectTreesComponent implements OnInit, OnChanges {
                       top: 26px;
                       z-index: 9;
                   ">
-                  <p-button *ngIf="element.field_name==='roomId'" (click)="chonLichHop()" styleClass="p-button-sm " label="Chọn lịch họp" icon="pi pi-clock"></p-button>&nbsp;
+                  <p-button [disabled]="element.columnValue ? false : true " *ngIf="element.field_name==='roomId'" (click)="chonLichHop()" styleClass="p-button-sm " label="Chọn lịch họp" icon="pi pi-clock"></p-button>&nbsp;
                 </div>
                 <div *ngIf="modelFields[element.field_name] && modelFields[element.field_name].isRequire && submit && modelFields[element.field_name].error"
                   class="alert-validation alert-danger">
