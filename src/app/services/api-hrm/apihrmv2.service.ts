@@ -697,5 +697,29 @@ export class ApiHrmV2Service {
       })
     )
   }
+
+  getCustObjectListV2(url, field_name): Observable<any> {
+    return this.httpClient.get(`${apiHrmServer}` + url, this.options).pipe(
+      map((repon: any) => {
+        if (repon.status === 'success' && repon.data && repon.data.length > 0) {
+          return {
+            key: field_name, result: repon.data.map(item => {
+              return {
+                label: item.name,
+                name: item.name,
+                code: item.value,
+                ...item
+              }
+            })
+          };
+        } else {
+          return { key: field_name, result: [] }
+        }
+
+      }), catchError(error => {
+        return throwError('Capital not found!');
+      })
+    )
+  }
 }
 
