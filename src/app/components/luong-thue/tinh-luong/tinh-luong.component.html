@@ -81,7 +81,7 @@ styleClass="menu-option-right" #menuButton></p-menu> -->
 
 <p-dialog header="{{ titleAddnew }}" 
         [(visible)]="isFormDetail" 
-        [modal]="true" [style]="{width: '600px'}"
+        [modal]="true" [style]="{width: '1000px'}"
         [draggable]="false" [resizable]="false" [focusTrap]="false" >
     <app-chi-tiet-tab-bang-luong (detailOut)="theEventDetail($event)" *ngIf="isFormDetail && tabIndex ===0" [idForm]="idForm"></app-chi-tiet-tab-bang-luong>
     <app-chi-tiet-tab-thiet-lap-tham-so (detailOut)="theEventDetail($event)" *ngIf="isFormDetail && tabIndex ===1" [idForm]="idForm"></app-chi-tiet-tab-thiet-lap-tham-so>

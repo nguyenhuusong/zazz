@@ -1763,6 +1763,18 @@ export class ApiHrmService {
   delPayrollInfo(queryParams): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v1/payroll/DelPayrollInfo?${queryParams}`, this.options)
   }
+  getPayrollComponentPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/payroll/GetPayrollComponentPage?${queryParams}`, this.options)
+  }
+  getPayrollComponentInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/payroll/GetPayrollComponentInfo?${queryParams}`, this.options)
+  }
+  setPayrollComponentInfo(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/payroll/SetPayrollComponentInfo`,queryParams, this.options)
+  }
+  delPayrollComponent(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v1/payroll/DelPayrollComponent?${queryParams}`, this.options)
+  }
 
   // tham số
   getPayrollParamPage(queryParams): Observable<any> {

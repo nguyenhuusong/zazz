@@ -1292,7 +1292,7 @@ export class AppTypeTimeonlyComponent implements OnInit {
                   name={{element.field_name}} defaultLabel="Select a option" display="chip">
                 </p-multiSelect>
 
-                <div *ngIf="modelFields[element.field_name].isRequire && submit && modelFields[element.field_name].error"
+                <div *ngIf="modelFields[element.field_name]?.isRequire && submit && modelFields[element.field_name]?.error"
                     class="alert-validation alert-danger">
                       <div [hidden]="!modelFields[element.field_name].error">
                         {{modelFields[element.field_name].message}}
@@ -1310,8 +1310,10 @@ export class AppTypeMultiSelectComponent implements OnInit {
 
   constructor(
     private apiService: ApiHrmService
+  
   ) { }
   ngOnInit(): void {
+    console.log( this.modelFields[this.element.field_name])
   }
 
   onChangeValue(value, field_name) {
