@@ -732,6 +732,16 @@ export class ApiHrmV2Service {
     )
   }
 
+  getAutocompleteLinkApiV2(url, field_name): Observable<any> {
+    return this.httpClient.get(`${apiHrmServer}` + url, this.options).pipe(
+      map((repon: any) => {
+        return { key: field_name, result: repon.data };
+      }), catchError(error => {
+        return throwError('Capital not found!');
+      })
+    )
+  }
+
 
   // danh sách cty trả lương
   getUserCompanies(queryParams, field_name) {

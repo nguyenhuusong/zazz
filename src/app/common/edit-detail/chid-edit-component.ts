@@ -2290,9 +2290,9 @@ export class AppTypeonOff implements OnInit {
   <p-autoComplete [(ngModel)]="element.columnValue" [disabled]="element.isDisable" name="cusId" [baseZIndex]="100" [appendTo]="'body'" [style]="{width: '100%'}"
   [suggestions]="element.options" placeholder="Nhập Tìm kiếm theo tên" (onSelect)="onSelectCus($event, element.field_name)"
   (completeMethod)="search($event)" field="name" [required]="element.isRequire && element.isVisiable && !element.isEmpty"></p-autoComplete>
-          <div *ngIf="modelFields[element.field_name].isRequire && submit && modelFields[element.field_name].error"
+          <div *ngIf="modelFields[element.field_name]?.isRequire && submit && modelFields[element.field_name]?.error"
                 class="alert-validation alert-danger">
-                <div [hidden]="!modelFields[element.field_name].error">
+                <div [hidden]="!modelFields[element.field_name]?.error">
                 {{modelFields[element.field_name].message}}
                 </div>
              </div>
@@ -2305,6 +2305,8 @@ export class AppTypeSelectAutocompleteComponent implements OnInit, OnChanges {
   @Input() modelFields;
   @Input() submit = false;
   constructor(
+    private apiHrmV2Service: ApiHrmV2Service,
+    private spinner: NgxSpinnerService
   ) { }
   ngOnInit(): void { }
 
@@ -2322,18 +2324,40 @@ export class AppTypeSelectAutocompleteComponent implements OnInit, OnChanges {
     this.modelFields[field_name].error = false;
   }
 
-  getObjectList(element1, filter) {
-    // const queryParams = queryString.stringify({ ListName: element1.columnObject , filter: filter});
-    // this.apiService.getSelectionList(queryParams).subscribe(results => {
-    //   if (results.status === 'success') {
-    //     element1.options = cloneDeep(results.data).map(d => {
-    //       return {
-    //         name: d.text,
-    //         code: `${d.value}`
-    //       }
-    //     });
-    //   }
-    // })
+  
+  getValueByKey(key) {
+    if (this.dataView && this.dataView.length > 0) {
+      let value = ''
+      for (let i = 0; i < this.dataView.length; i++) {
+        for (let j = 0; j < this.dataView[i].fields.length; j++) {
+          if (this.dataView[i].fields[j].field_name === key) {
+            value = this.dataView[i].fields[j].columnValue;
+            break;
+          }
+        }
+      }
+      return value
+    }
+  }
+
+   getObjectList(element1, filter) {
+    const organizeId =  this.getValueByKey('org_cds');
+    if(element1.columnObject) {
+      const apis = element1.columnObject.split("?");
+      element1.columnObject = apis[0].toString() + `?filter=${filter}&organizeId=${organizeId}`;
+      this.apiHrmV2Service.getAutocompleteLinkApiV2(element1.columnObject, element1.field_name).subscribe(results => {
+        if (results.status === 'success') {
+          console.log(results)
+          // element1.options = cloneDeep(results.data).map(d => {
+          //   return {
+          //     name: d.text,
+          //     code: `${d.value}`
+          //   }
+          // });
+        }
+      })
+    }
+   
   }
 }
 
