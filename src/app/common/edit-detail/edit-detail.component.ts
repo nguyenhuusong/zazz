@@ -144,7 +144,11 @@ export class EditDetailComponent implements OnInit, OnChanges {
           || element1.columnType === 'checkboxList' || element1.columnType === 'checkboxradiolist'
           || element1.columnType === 'multiSelect' || element1.columnType === 'autocomplete' ) {
             if(element1.columnObject) {
-              promissall.push(this.apiHrmV2Service.getCustObjectListV2(element1.columnObject, element1.field_name));
+              if(element1.columnType === 'selectTree' || element1.columnType === 'selectTrees') {
+                promissall.push(this.apiHrmV2Service.getCustObjectListTreeV2(element1.columnObject, element1.field_name));
+              }else {
+                promissall.push(this.apiHrmV2Service.getCustObjectListV2(element1.columnObject, element1.field_name));
+              }
             }
           }
         //   if (element1.field_name === 'project_cd') {
