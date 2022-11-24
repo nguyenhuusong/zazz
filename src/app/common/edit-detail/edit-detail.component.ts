@@ -146,6 +146,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
             if(element1.columnObject) {
               if(element1.columnType === 'selectTree' || element1.columnType === 'selectTrees') {
                 promissall.push(this.apiHrmV2Service.getCustObjectListTreeV2(element1.columnObject, element1.field_name));
+              }else if(element1.columnType === 'autocomplete'){
+                promissall.push(this.apiHrmV2Service.getAutocompleteLinkApiV2(element1.columnObject, element1.field_name));
               }else {
                 promissall.push(this.apiHrmV2Service.getCustObjectListV2(element1.columnObject, element1.field_name));
               }

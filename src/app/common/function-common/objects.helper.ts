@@ -245,12 +245,6 @@ export function setMembers(element1, datas) {
   }
 
   export function setValueAndOptionsAutocomplete(element1, results) {
-    element1.options = cloneDeep(results).map(d => {
-      return {
-        name: d.name,
-        code: `${d.id}`,
-        ...d
-      }
-    });
+    element1.options = results
     element1.columnValue = element1.columnValue ? element1.options[0] : ''
   }

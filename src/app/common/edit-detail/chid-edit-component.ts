@@ -2346,14 +2346,8 @@ export class AppTypeSelectAutocompleteComponent implements OnInit, OnChanges {
       const apis = element1.columnObject.split("?");
       element1.columnObject = apis[0].toString() + `?filter=${filter}&organizeId=${organizeId}`;
       this.apiHrmV2Service.getAutocompleteLinkApiV2(element1.columnObject, element1.field_name).subscribe(results => {
-        if (results.status === 'success') {
-          console.log(results)
-          // element1.options = cloneDeep(results.data).map(d => {
-          //   return {
-          //     name: d.text,
-          //     code: `${d.value}`
-          //   }
-          // });
+        if (results.result.length > 0) {
+          element1.options = results.result;
         }
       })
     }

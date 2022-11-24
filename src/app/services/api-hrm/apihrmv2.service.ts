@@ -735,7 +735,12 @@ export class ApiHrmV2Service {
   getAutocompleteLinkApiV2(url, field_name): Observable<any> {
     return this.httpClient.get(`${apiHrmServer}` + url, this.options).pipe(
       map((repon: any) => {
-        return { key: field_name, result: repon.data };
+        return { key: field_name, result: repon.data.map(d => {
+          return {
+            name: d.fullName + '-' +d.code + '-' + d.phone,
+            code: d.empId
+          }
+        }) };
       }), catchError(error => {
         return throwError('Capital not found!');
       })
