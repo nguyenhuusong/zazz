@@ -591,7 +591,7 @@ body {
 }
 
 .ag-body-viewport{
-    padding-right: 7px;
+    padding-right: 17px;
     &::-webkit-scrollbar {
         width: 17px;
         scrollbar-width: 30px;
@@ -5477,12 +5477,12 @@ p-button{
   }
 
   .popup-setting{
-    // .ag-body-horizontal-scroll{
-    //     position: fixed;
-    //     bottom: 0px;
-    //     left: 0px;
-    //     width: calc(100% - 40px);
-    // }
+    .ag-body-horizontal-scroll{
+        position: fixed;
+        bottom: 0px;
+        left: 0px;
+        width: calc(100% - 40px);
+    }
     .p-dialog-content{
         padding-right: 0px;
     }
