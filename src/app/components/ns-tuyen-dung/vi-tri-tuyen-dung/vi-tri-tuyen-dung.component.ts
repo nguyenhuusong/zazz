@@ -155,6 +155,7 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
     let params: any = {... this.query};
     delete params.fromDate
     delete params.toDate
+    params.orgId = typeof params.orgId === 'string' ? params.orgId : params.orgId.orgId;
     params.FromDate = moment(new Date(this.query.fromDate)).format('YYYY-MM-DD')
     params.ToDate = moment(new Date(this.query.toDate)).format('YYYY-MM-DD');
 
@@ -292,8 +293,8 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
       if (results.status === 'success') {
         this.listJobTitles = results.data.map(d => {
           return {
-            label: d.job_name,
-            value: d.jobId
+            label: d.name,
+            value: d.value
           }
         });
         this.listJobTitles = [{ label: 'Tất cả', value: 0 }, ...this.listJobTitles]

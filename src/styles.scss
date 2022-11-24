@@ -5474,15 +5474,19 @@ p-button{
     .p-dropdown-item{
       white-space: unset !important;
     }
-  }
+}
 
   .popup-setting{
-    // .ag-body-horizontal-scroll{
-    //     position: fixed;
-    //     bottom: 0px;
-    //     left: 0px;
-    //     width: calc(100% - 40px);
-    // }
+    
+    .ag-body-viewport{
+        padding-right: 17px;
+    }
+    .ag-body-horizontal-scroll{
+        position: fixed;
+        bottom: 0px;
+        left: 0px;
+        width: calc(100% - 40px);
+    }
     .p-dialog-content{
         padding-right: 0px;
     }
