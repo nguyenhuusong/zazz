@@ -2283,7 +2283,7 @@ export class AppTypeonOff implements OnInit {
 @Component({
   selector: 'app-type-autocomplete',
   template: ` 
-  <div class="input-group">  
+  <div class="field-group">  
   <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
   <div> 
 
