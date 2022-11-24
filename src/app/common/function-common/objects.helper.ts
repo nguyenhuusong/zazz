@@ -1,5 +1,5 @@
 import {FormArray, FormControl, FormGroup} from '@angular/forms';
-
+import { cloneDeep } from 'lodash';
 
 
 
@@ -161,3 +161,96 @@ export function findNodeInTree(list, nodeId): any {
 export function checkIsObject(data): boolean {
     return typeof data === 'object' && data !== null
 }
+
+
+
+export function setMembers(element1, datas) {
+    element1.options = [...datas];
+    element1.options.forEach(member => {
+      member.isCheck = false;
+      member.child.forEach(user => {
+        user.isCheck = false;
+      })
+    })
+  }
+
+  export function setSelectTreeValue(element1, datas) {
+    element1.options = datas;
+    if ((element1.columnType === 'selectTrees') && (element1.field_name === 'org_Id')) {
+      const ids = element1.columnValue ? element1.columnValue.split(',') : []
+      const results = [];
+      findNodeInTree1(element1.options, ids, element1, results);
+      element1.columnValue = results;
+    } else {
+      if (element1.columnValue) {
+        findNodeInTree2(element1.options, element1.columnValue, element1);
+      } else {
+        element1.columnValue = null;
+      }
+    }
+  }
+
+  export function findNodeInTree2(list, nodeId, element1): any {
+    for (let i = 0; i < list.length; i++) {
+      if (list[i].orgId === nodeId ) {
+         element1.columnValue = list[i];
+         console.log(element1.columnValue)
+        }else if (Array.isArray(list[i].children) && list[i].children.length) {
+          findNodeInTree2(list[i].children, nodeId, element1);
+        }
+    }
+  }
+
+  export function findNodeInTree1(list, ids, element1, results): any {
+    for (let i = 0; i < list.length; i++) {
+      if (list[i].children && list[i].children.length) {
+        findNodeInTree1(list[i].children, ids, element1, results);
+      }
+      if (ids.includes(list[i].data)) {
+        results.push(list[i]);
+      }
+    }
+  }
+
+  export function setMultiSelectValue(element1, datas) {
+    element1.options = []
+    element1.options = cloneDeep(datas);
+    if (element1.columnValue) {
+      let newarray = [];
+      element1.options.forEach(element => {
+        if (element1.columnValue.split(",").indexOf(element.value) > -1) {
+          newarray.push(element.value.toString());
+        }
+      });
+      
+      element1.columnValue = newarray;
+    }
+  }
+
+  export function setCheckboxradiolistValue(element1, results) {
+    element1.options = cloneDeep(results);
+    element1.columnValue = element1.columnValue ? element1.columnValue : '';
+    let newarray = []
+    element1.options.forEach(element => {
+      if (typeof element1.columnValue === 'string' && element1.columnValue.split(",").indexOf(element.value) > -1) {
+        newarray.push(element);
+      }
+    });
+    element1.columnValue = newarray.map(d => d.value);
+  }
+
+  export function setValueAndOptions(element1, results) {
+    element1.options = cloneDeep(results);
+    element1.columnValue = element1.columnValue ? element1.columnValue : ''
+  }
+
+  export function setValueAndOptionsAutocomplete(element1, results) {
+    element1.options = cloneDeep(results).map(d => {
+      return {
+        name: d.name,
+        code: `${d.id}`,
+        ...d
+      }
+    });
+    element1.columnValue = element1.columnValue ? element1.options[0] : ''
+  }

@@ -11,7 +11,7 @@ import { AgGridFn } from 'src/app/utils/common/function-common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as numeral from 'numeral';
 import { delay, forkJoin, lastValueFrom, of, Subject, takeUntil, tap, timer } from 'rxjs';
-import { findNodeInTree } from '../function-common/objects.helper';
+import { findNodeInTree, setCheckboxradiolistValue, setMembers, setMultiSelectValue, setSelectTreeValue, setValueAndOptions, setValueAndOptionsAutocomplete } from '../function-common/objects.helper';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ApiHrmV2Service } from 'src/app/services/api-hrm/apihrmv2.service';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
@@ -118,10 +118,10 @@ export class EditDetailComponent implements OnInit, OnChanges {
   callApiDrop() {
     const promissall = [];
     const source = timer(50);
-    this.dataViewNew = [...this.dataView];
+    this.dataViewNew = cloneDeep(this.dataView);
     this.dataView = [];
     this.dataViewNew.forEach(element => {
-      element.fields.forEach(async element1 => {
+      element.fields.forEach( element1 => {
         if ((element1.columnType === 'markdown') || (element1.columnType === 'chips') || (element1.columnType === 'linkUrl') || (element1.columnType === 'linkUrlDrag')) {
           console.log(element1.columnType === 'chips')
           const dataValidation = {
@@ -400,6 +400,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
         // }
       });
     });
+    console.log(promissall)
     if (promissall.length > 0) {
     this.spinner.show();
       forkJoin(promissall.filter(d => d !== undefined)).subscribe((results: any) => {
@@ -410,22 +411,22 @@ export class EditDetailComponent implements OnInit, OnChanges {
             if (results.map(d => d.key).indexOf(element1.field_name) > -1) {
               if (element1.columnType === 'autocomplete') {
                 const datas = results.filter(d => d.key === element1.field_name);
-                this.setValueAndOptionsAutocomplete(element1, datas[0].result);
+                setValueAndOptionsAutocomplete(element1, datas[0].result);
               } else if (element1.columnType === 'checkboxradiolist') {
                 const datas = results.filter(d => d.key === element1.field_name);
-                this.setCheckboxradiolistValue(element1, datas[0].result)
+                setCheckboxradiolistValue(element1, datas[0].result)
               } else if ((element1.columnType === 'selectTree') || (element1.columnType === 'selectTrees')) {
                 const datas = results.filter(d => d.key === element1.field_name);
-                this.setSelectTreeValue(element1, datas[0].result)
+                setSelectTreeValue(element1, datas[0].result)
               } else if (element1.columnType === 'multiSelect') {
                 const datas = results.filter(d => d.key === element1.field_name);
-                this.setMultiSelectValue(element1, datas[0].result)
+                setMultiSelectValue(element1, datas[0].result)
               } else if (element1.columnType === 'members') {
                 const datas = results.filter(d => d.key === element1.field_name);
-                this.setMembers(element1, datas[0].result)
+                setMembers(element1, datas[0].result)
               } else {
                 const datas = results.filter(d => d.key === element1.field_name);
-                this.setValueAndOptions(element1, datas[0].result);
+                setValueAndOptions(element1, datas[0].result);
               }
 
             }
@@ -438,77 +439,6 @@ export class EditDetailComponent implements OnInit, OnChanges {
       this.dataView = [...this.dataViewNew];
     }
   }
-
-  setMembers(element1, datas) {
-    element1.options = [...datas];
-    element1.options.forEach(member => {
-      member.isCheck = false;
-      member.child.forEach(user => {
-        user.isCheck = false;
-      })
-    })
-  }
-
-  setSelectTreeValue(element1, datas) {
-    element1.options = datas;
-    if ((element1.columnType === 'selectTrees') && (element1.field_name === 'org_Id')) {
-      const ids = element1.columnValue ? element1.columnValue.split(',') : []
-      const results = [];
-      this.findNodeInTree1(element1.options, ids, element1, results);
-      element1.columnValue = results;
-
-    } else {
-      if (element1.columnValue) {
-        this.findNodeInTree(element1.options, element1.columnValue.toUpperCase(), element1);
-      } else {
-        element1.columnValue = null;
-      }
-    }
-  }
-
-  setMultiSelectValue(element1, datas) {
-    element1.options = []
-    element1.options = cloneDeep(datas);
-    if (element1.columnValue) {
-      let newarray = [];
-      element1.options.forEach(element => {
-        if (element1.columnValue.split(",").indexOf(element.value) > -1) {
-          newarray.push(element.value.toString());
-        }
-      });
-      
-      element1.columnValue = newarray;
-    }
-  }
-
-  setCheckboxradiolistValue(element1, results) {
-    element1.options = cloneDeep(results);
-    element1.columnValue = element1.columnValue ? element1.columnValue : '';
-    let newarray = []
-    element1.options.forEach(element => {
-      if (typeof element1.columnValue === 'string' && element1.columnValue.split(",").indexOf(element.value) > -1) {
-        newarray.push(element);
-      }
-    });
-    element1.columnValue = newarray.map(d => d.value);
-  }
-
-  setValueAndOptions(element1, results) {
-    element1.options = cloneDeep(results);
-    element1.columnValue = element1.columnValue ? element1.columnValue : ''
-  }
-
-  setValueAndOptionsAutocomplete(element1, results) {
-    element1.options = cloneDeep(results).map(d => {
-      return {
-        name: d.name,
-        code: `${d.id}`,
-        ...d
-      }
-    });
-    element1.columnValue = element1.columnValue ? element1.options[0] : ''
-  }
-
 
   getNode(item) {
     return {
@@ -547,8 +477,9 @@ export class EditDetailComponent implements OnInit, OnChanges {
 
   findNodeInTree(list, nodeId, element1): any {
     for (let i = 0; i < list.length; i++) {
-      if (list[i].data === nodeId ) {
+      if (list[i].orgId === nodeId ) {
          element1.columnValue = list[i];
+         console.log(element1.columnValue)
         }else if (Array.isArray(list[i].children) && list[i].children.length) {
           this.findNodeInTree(list[i].children, nodeId, element1);
         }

@@ -81,12 +81,14 @@ export class ChiTietViTriTuyenDungComponent implements OnInit, OnDestroy {
   }
 
   getVacancyInfo() {
+    this.listViews = [];
     const queryParams = queryString.stringify(this.modelEdit);
     this.apiService.getVacancyInfo(queryParams)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {
         if (results.status === 'success') {
           const listViews = cloneDeep(results.data.group_fields);
+          console.log(listViews)
           this.listViews = [...listViews];
           this.detailInfo = results.data;
         }

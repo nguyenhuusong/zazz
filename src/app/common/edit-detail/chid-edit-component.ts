@@ -8,8 +8,10 @@ import { stringtodate } from '../function-common/common';
 import * as numeral from 'numeral';
 import * as moment from 'moment';
 import { ValidationNumberDayInMonth, ValidationNumberDayInMonthEmpty, ValidationNumber, ValidationNumberEmpty } from './validation';
-import { checkIsObject } from '../function-common/objects.helper';
+import { checkIsObject, setCheckboxradiolistValue, setMembers, setMultiSelectValue, setSelectTreeValue, setValueAndOptions, setValueAndOptionsAutocomplete } from '../function-common/objects.helper';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { ApiHrmV2Service } from 'src/app/services/api-hrm/apihrmv2.service';
+import { forkJoin } from 'rxjs';
 @Component({
   selector: 'app-type-text',
   template: ` <div class="field-group text" [ngClass]=" element.columnValue ? 'valid' : 'invalid' ">
@@ -144,17 +146,11 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
   @Input() modelFields;
   @Input() submit = false;
   constructor(
-    private apiService: ApiHrmService
+    private apiService: ApiHrmService,
+    private apiHrmV2Service: ApiHrmV2Service,
+    private spinner: NgxSpinnerService
   ) { }
   ngOnInit(): void {
-    // if (this.element.options && this.element.options.length > 0) {
-    //   this.element.options = this.element.options.forEach(element => {
-    //     element.value = parseInt(element.value);
-    //   })
-    // }
-
-    this.element.columnValue  = typeof this.element.columnValue === 'object' ? this.element.columnValue : null
-    checkIsObject
   }
 
   checkIsObject(data: any): boolean {
@@ -166,19 +162,63 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
       this.setValue('', 'User_Id')
     }
     this.modelFields[field_name].error = this.modelFields[field_name].isRequire && !this.element.columnValue ? true : false;
-    this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
-    if (field_name === 'orgId') {
-      this.dataView.forEach(element => {
-        element.fields.forEach(async element1 => {
-          if (element1.field_name === 'companyId') {
-            this.getCompanyList(event.node.orgId, element1);
-          } else if (element1.field_name === 'positionId') {
-            this.getPositionList(event.node.orgId, element1);
-            console.log('positionId', event.node.orgId)
+    this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : '';
+    if(element.columnDisplay) {
+      const fields = element.columnDisplay.split(",");
+      const promissall = [];
+        this.dataView.forEach(element => {
+        element.fields.forEach(element1 => {
+          if(fields.indexOf(element1.field_name) > -1) {
+            if(element1.columnObject) {
+              const params = element1.columnObject.split("?")
+              element1.columnObject = params[0]  + `?${field_name}=${event.node.data}`
+              if(element1.columnType === 'selectTree' || element1.columnType === 'selectTrees') {
+                promissall.push(this.apiHrmV2Service.getCustObjectListTreeV2(element1.columnObject, element1.field_name));
+              }else {
+                promissall.push(this.apiHrmV2Service.getCustObjectListV2(element1.columnObject, element1.field_name));
+              }
+            }
           }
         });
       });
+      if (promissall.filter(d => d !== undefined).length > 0) {
+        this.FnCallApi(promissall);
+      }
     }
+  }
+
+  FnCallApi(promissall) {
+    this.spinner.show();
+    forkJoin(promissall).subscribe((results: any) => {
+      this.spinner.hide();
+      this.dataView.forEach(element => {
+        element.fields.forEach(element1 => {
+          if (results.map(d => d.key).indexOf(element1.field_name) > -1) {
+            if (element1.columnType === 'autocomplete') {
+              const datas = results.filter(d => d.key === element1.field_name);
+              setValueAndOptionsAutocomplete(element1, datas[0].result);
+            } else if (element1.columnType === 'checkboxradiolist') {
+              const datas = results.filter(d => d.key === element1.field_name);
+              setCheckboxradiolistValue(element1, datas[0].result)
+            } else if ((element1.columnType === 'selectTree') || (element1.columnType === 'selectTrees')) {
+              const datas = results.filter(d => d.key === element1.field_name);
+              setSelectTreeValue(element1, datas[0].result)
+            } else if (element1.columnType === 'multiSelect') {
+              const datas = results.filter(d => d.key === element1.field_name);
+              setMultiSelectValue(element1, datas[0].result)
+            } else if (element1.columnType === 'members') {
+              const datas = results.filter(d => d.key === element1.field_name);
+              setMembers(element1, datas[0].result)
+            } else {
+              const datas = results.filter(d => d.key === element1.field_name);
+              setValueAndOptions(element1, datas[0].result);
+            }
+
+          }
+        })
+      })
+      this.dataView = [...this.dataView];
+    });
   }
 
   getCompanyList(orgId, element1) {
@@ -395,6 +435,8 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
     private changeDetector: ChangeDetectorRef,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
+    private apiHrmV2Service: ApiHrmV2Service,
+    private spinner: NgxSpinnerService
   ) { }
   async ngOnInit() {
     if (this.element.field_name === 'parentId') {
@@ -442,40 +484,8 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
   async onChangeValue(value, field_name, element) {
     this.modelFields[field_name].error = this.modelFields[field_name].isRequire && !this.element.columnValue ? true : false;
     this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
-    if (field_name === 'orgId') {
-      this.dataView.forEach(element => {
-        element.fields.forEach(async element1 => {
-          if (element1.field_name === 'parentId') {
-            const adm_st = await this.getValueByKey('adm_st');
-            this.getAgentLeaders(value, element1, adm_st);
-          } else if (element1.field_name === 'CustId') {
-            this.getUserByPush(value, element1)
-          } else if (element1.field_name === 'positionId') {
-            this.getPositionList(value, element1);
-          }
-        });
-      });
-    } else if (field_name === 'org_cds') {
-      this.dataView.forEach(element => {
-        element.fields.forEach(element1 => {
-          if (element1.field_name === 'full_name' || element1.field_name === 'empId') {
-            this.getUserByPush(value, element1)
-          }
-        });
-      });
-    }else if (field_name === 'CompanyId') {
-      this.dataView.forEach(element => {
-        element.fields.forEach(element1 => {
-          if (element1.field_name === 'PayrollTypeId') {
-            this.getPayrollTypeList(value, element1)
-          }
-          // if (element1.field_name === 'EmployeeId') {
-          //   this.loading = true;
-          //   this.getUserByPushByEmpId(value, element1)
-          // }else 
-        });
-      });
-    } else if (field_name === 'type_salary') {
+
+   if (field_name === 'type_salary') {
       this.dataView.forEach(element => {
         element.fields.forEach(element1 => {
           if (element1.field_name === 'from_day') {
@@ -504,93 +514,23 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
           }
         });
       });
-    } else if (field_name === 'organizeId') {
-      this.dataView.forEach(element => {
-        element.fields.forEach(async element1 => {
-          if ((element1.columnType === 'selectTree') && ((element1.field_name === 'orgId') || (element1.field_name === 'departmentId') || (element1.field_name === 'org_Id'))) {
-            this.getOrganizeTree(value, element1);
-            this.setValue(null, 'User_Id')
-          }else if (element1.columnType === 'selectTrees') {
-            this.getOrganizeTree(value, element1);
-          } else if (element1.field_name === 'jobId') {
-            const positionTypeCd = await this.getValueByKey('positionCd');
-            this.getJobTitles(value, element1, positionTypeCd)
-          } else if (element1.field_name === 'full_name' || element1.field_name === 'empId' || element1.field_name === 'EmployeeId') {
-            this.getUserByPush(value, element1)
-          } else if (element1.field_name === 'work_cd') {
-            this.getWorkTime(element1, value)
-          }else if(element1.field_name === 'CompanyId') {
-            this.getCompaniesByOrganize(element1, value)
-          }
-          if((element1.field_name === 'org_Id')){
-            this.setValue('', 'org_Id')
-          }
-          // else if(element1.field_name === 'EmployeeId') {
-
-          // }
-        });
-      });
-    } else if (field_name === 'organize_id') {
-      this.dataView.forEach(element => {
-        element.fields.forEach(async element1 => {
-          if (element1.field_name === 'requester_custId' || element1.field_name === 'empId') {
-            this.getUserByPush(value, element1)
-          }
-        });
-      });
-    } else if (field_name === 'CustId') {
-      let items = element.options.filter(d => d.custId === value);
-      this.dataView.forEach(element => {
-        element.fields.forEach(async element1 => {
-          if (element1.field_name === 'Phone') {
-            this.setValue(items[0].phone, element1.field_name)
-          } else if (element1.field_name === 'email') {
-            this.setValue(items[0].email, element1.field_name)
-          } else if (element1.field_name === 'departmentName') {
-            this.setValue(items[0].departmentName, element1.field_name)
-          }
-        });
-      });
-    } else if (field_name === 'positionId') {
-      this.dataView.forEach(element => {
-        element.fields.forEach(async element1 => {
-          if (element1.field_name === 'positionTitleId') {
-            this.getPositionTitles(value, element1)
-          }
-        });
-      });
-    } else if (field_name === 'positionCd') {
-      this.dataView.forEach(element => {
-        element.fields.forEach(async element1 => {
-          if (element1.field_name === 'jobId') {
-            const root_orgId = await this.getValueByKey('organizeId');
-            this.getJobTitles(root_orgId, element1, value)
-          }
-        });
-      });
-    } else if (field_name === 'adm_st') {
-      this.dataView.forEach(element => {
-        element.fields.forEach(async element1 => {
-          if (element1.field_name === 'parentId') {
-            const orgId = await this.getValueByKey('orgId');
-            this.getAgentLeaders(orgId, element1, value);
-          }
-        });
-      });
-    } else if (field_name === 'base_id') {
-      this.dataView.forEach(element => {
-        element.fields.forEach(async element1 => {
-          if (element1.field_name === 'base_amt') {
-            const items = this.element.options.filter(s => s.value === value);
-            if (items.length > 0) element1.columnValue = items[0].label.split('[')[1].replace(']', '');
-          }
-        });
-      });
+    } else if( field_name === 'status'){
+      if(parseInt(value) === 0){
+          this.confirmationService.confirm({
+            message: 'Phòng họp đang trong cuộc họp, bạn thực sự muốn thay đổi trạng thái phòng họp?',
+            accept: () => {
+              this.element.columnValue = value;
+            },
+            reject: () => {
+              this.element.columnValue = "1";
+            }
+          });
+      }
     } else if (field_name === 'contractTypeId') {
       this.callback.emit(value);
     } else if (field_name === 'holi_type') {
       this.callback.emit(value);
-    } else if(field_name === 'floor_No') {
+    }else if(field_name === 'floor_No') {
       this.floorID = value
       this.dataView.forEach(element => {
         element.fields.forEach(async element1 => {
@@ -604,94 +544,65 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
           }
         })
       })
-    } 
-    // else if(field_name === 'roomId'){
-    //   let floorID:any = await this.getValueByKey('floor_No');
-    //   const emitType = {
-    //     name: 'roomId',
-    //     id: value,
-    //     floorID: floorID
-    //   }
-    //   this.callback.emit(emitType);
-    // } 
-    else if( field_name === 'status'){
-      if(parseInt(value) === 0){
-          this.confirmationService.confirm({
-            message: 'Phòng họp đang trong cuộc họp, bạn thực sự muốn thay đổi trạng thái phòng họp?',
-            accept: () => {
-              this.element.columnValue = value;
-            },
-            reject: () => {
-              this.element.columnValue = "1";
+    } else {
+      if(element.columnDisplay) {
+        const fields = element.columnDisplay.split(",");
+        const promissall = [];
+          this.dataView.forEach(element => {
+          element.fields.forEach(element1 => {
+            if(fields.indexOf(element1.field_name) > -1) {
+              if(element1.columnObject) {
+                const params = element1.columnObject.split("?")
+                element1.columnObject = params[0]  + `?${field_name}=${value}`
+                if(element1.columnType === 'selectTree' || element1.columnType === 'selectTrees') {
+                  promissall.push(this.apiHrmV2Service.getCustObjectListTreeV2(element1.columnObject, element1.field_name));
+                }else {
+                  promissall.push(this.apiHrmV2Service.getCustObjectListV2(element1.columnObject, element1.field_name));
+                }
+              }
             }
           });
+        });
+        if (promissall.filter(d => d !== undefined).length > 0) {
+          this.FnCallApi(promissall);
+        }
       }
-    }else if( field_name === 'blockId' ) {
-      this.dataView.forEach(element => {
-        element.fields.forEach(async element1 => {
-          if (element1.field_name === 'banId') {
-            const root_orgId = await this.getValueByKey('organizeId');
-            this.getBanByOrganize(value, element1, root_orgId);
-            element1.columnValue = '';
-          }else if (element1.field_name === 'banId') {
-            element1.columnValue = '';
-            element1.options = []
-          }else if(element1.field_name === 'orgId3') {
-            element1.columnValue = '';
-            element1.options = []
-          }else if(element1.field_name === 'groupId') {
-            element1.columnValue = '';
-            element1.options = []
-          }else if(element1.field_name === 'teamId') {
-            element1.columnValue = '';
-            element1.options = []
-          }
-        });
-      });
-    }else if( field_name === 'banId' ) {
-      this.dataView.forEach(element => {
-        element.fields.forEach(async element1 => {
-          if (element1.field_name === 'orgId3') {
-            const root_orgId = await this.getValueByKey('organizeId');
-            this.getDepartmentByOrganize(value, element1, root_orgId)
-          }else if(element1.field_name === 'orgId3') {
-            element1.columnValue = '';
-            element1.options = []
-          }else if(element1.field_name === 'groupId') {
-            element1.columnValue = '';
-            element1.options = []
-          }else if(element1.field_name === 'teamId') {
-            element1.columnValue = '';
-            element1.options = []
-          }
-        });
-      });
-    }else if( field_name === 'orgId3' ) {
-      this.dataView.forEach(element => {
-        element.fields.forEach(async element1 => {
-          if (element1.field_name === 'groupId') {
-            const root_orgId = await this.getValueByKey('organizeId');
-            this.getGroupByOrganize(value, element1, root_orgId)
-          }else if(element1.field_name === 'groupId') {
-            element1.columnValue = '';
-            element1.options = []
-          }else if(element1.field_name === 'teamId') {
-            element1.columnValue = '';
-            element1.options = []
-          }
-        });
-      });
-    }else if( field_name === 'groupId' ) {
-      this.dataView.forEach(element => {
-        element.fields.forEach(async element1 => {
-          if (element1.field_name === 'teamId') {
-            const root_orgId = await this.getValueByKey('organizeId');
-            this.getTeamByOrganize(value, element1, root_orgId);
-            element1.columnValue = '';
-          }
-        });
-      });
     }
+
+  }
+
+  FnCallApi(promissall) {
+    this.spinner.show();
+    forkJoin(promissall).subscribe((results: any) => {
+      this.spinner.hide();
+      this.dataView.forEach(element => {
+        element.fields.forEach(element1 => {
+          if (results.map(d => d.key).indexOf(element1.field_name) > -1) {
+            if (element1.columnType === 'autocomplete') {
+              const datas = results.filter(d => d.key === element1.field_name);
+              setValueAndOptionsAutocomplete(element1, datas[0].result);
+            } else if (element1.columnType === 'checkboxradiolist') {
+              const datas = results.filter(d => d.key === element1.field_name);
+              setCheckboxradiolistValue(element1, datas[0].result)
+            } else if ((element1.columnType === 'selectTree') || (element1.columnType === 'selectTrees')) {
+              const datas = results.filter(d => d.key === element1.field_name);
+              setSelectTreeValue(element1, datas[0].result)
+            } else if (element1.columnType === 'multiSelect') {
+              const datas = results.filter(d => d.key === element1.field_name);
+              setMultiSelectValue(element1, datas[0].result)
+            } else if (element1.columnType === 'members') {
+              const datas = results.filter(d => d.key === element1.field_name);
+              setMembers(element1, datas[0].result)
+            } else {
+              const datas = results.filter(d => d.key === element1.field_name);
+              setValueAndOptions(element1, datas[0].result);
+            }
+
+          }
+        })
+      })
+      this.dataView = [...this.dataView];
+    });
   }
 
   // Trung tâm - Ban 
@@ -705,7 +616,7 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
         element1.columnValue = element1.columnValue ? element1.columnValue : ''
       }
     })
-  }
+  } 
   // Phòng ban
   getDepartmentByOrganize(blockId, element1, root_orgId) {
     const queryParams = queryString.stringify({ organizeId: root_orgId, parentId: blockId});
