@@ -221,17 +221,6 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
     });
   }
 
-  getCompanyList(orgId, element1) {
-    const queryParams = queryString.stringify({ orgId: orgId });
-    this.apiService.getCompanyList(queryParams).subscribe(results => {
-      if (results.status === 'success') {
-        element1.options = cloneDeep(results.data).map(d => {
-          return { label: d.companyName, value: d.companyId }
-        });
-        element1.columnValue = element1.columnValue ? parseInt(element1.columnValue) : ''
-      }
-    })
-  }
 
   setValue(value, field_name) {
     this.dataView.forEach(element => {
@@ -245,39 +234,13 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
     });
   }
 
-  onChangeTree(event, field_name, element) {
-    this.modelFields[field_name].error = this.modelFields[field_name].isRequire && !this.element.columnValue ? true : false;
-    this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
-    if (field_name === 'orgId') {
-      this.dataView.forEach(element => {
-        element.fields.forEach(async element1 => {
-          if (element1.field_name === 'companyId') {
-            this.getCompanyList(event.node.orgId, element1);
-          } else if (element1.field_name === 'positionId') {
-            this.getPositionList(event.node.orgId, element1);
-            console.log('positionId', event.node.orgId)
-          }
-        });
-      });
-    }
-  }
+
   ngOnChanges(event) {
     console.log('a:', cloneDeep(this.element));
     if (event && event.element) {
     }
   }
 
-  getPositionList(orgId, element1) {
-    const queryParams = queryString.stringify({ orgId: orgId });
-    this.apiService.getPositionList(queryParams).subscribe(results => {
-      if (results.status === 'success') {
-        element1.options = cloneDeep(results.data).map(d => {
-          return { label: d.positionName, value: d.positionId }
-        });
-        element1.columnValue = element1.columnValue ? element1.columnValue : ''
-      }
-    })
-  }
 }
 
 
@@ -326,50 +289,13 @@ export class AppTypeSelectTreesComponent implements OnInit, OnChanges {
     this.setValue(null, 'User_Id')
   }
 
-  getCompanyList(orgId, element1) {
-    const queryParams = queryString.stringify({ orgId: orgId });
-    this.apiService.getCompanyList(queryParams).subscribe(results => {
-      if (results.status === 'success') {
-        element1.options = cloneDeep(results.data).map(d => {
-          return { label: d.companyName, value: d.companyId }
-        });
-        element1.columnValue = element1.columnValue ? parseInt(element1.columnValue) : ''
-      }
-    })
-  }
 
-  onChangeTree(event, field_name, element) {
-    this.modelFields[field_name].error = this.modelFields[field_name].isRequire && !this.element.columnValue ? true : false;
-    this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
-    if (field_name === 'orgId') {
-      this.dataView.forEach(element => {
-        element.fields.forEach(async element1 => {
-          if (element1.field_name === 'companyId') {
-            this.getCompanyList(event.node.orgId, element1);
-          } else if (element1.field_name === 'positionId') {
-            this.getPositionList(event.node.orgId, element1);
-          }
-        });
-      });
-    }
-  }
   ngOnChanges(event) {
     if (event && event.element) {
     }
   }
 
-  getPositionList(orgId, element1) {
-    const queryParams = queryString.stringify({ orgId: orgId });
-    this.apiService.getPositionList(queryParams).subscribe(results => {
-      if (results.status === 'success') {
-        element1.options = cloneDeep(results.data).map(d => {
-          return { label: d.positionName, value: d.positionId }
-        });
-        element1.columnValue = element1.columnValue ? element1.columnValue : ''
-      }
-    })
-  }
-
+  
   setValue(value, field_name) {
     this.dataView.forEach(element => {
       element.fields.forEach(element1 => {
@@ -656,30 +582,6 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
     })
   }
 
-  getPositionList(orgId, element1) {
-    const queryParams = queryString.stringify({ orgId: orgId });
-    this.apiService.getPositionList(queryParams).subscribe(results => {
-      if (results.status === 'success') {
-        element1.options = cloneDeep(results.data).map(d => {
-          return { label: d.positionName, value: d.positionId }
-        });
-        element1.columnValue = element1.columnValue ? element1.columnValue : ''
-      }
-    })
-  }
-
-  getWorkTime(element1, root_orgId) {
-    const queryParams = queryString.stringify({ organizeId: root_orgId });
-    this.apiService.getWorktimeList(queryParams).subscribe(results => {
-      if (results.status === 'success') {
-        element1.options = cloneDeep(results.data).map(d => {
-          return { label: d.work_times + '-' + d.work_name, value: d.work_cd }
-        });
-        element1.columnValue = element1.columnValue ? element1.columnValue : '';
-      }
-    })
-  }
-
   getRooms(element1, value) {
     const queryParams = queryString.stringify( { filter: '', floor_No: value })
     this.apiService.getMeetRooms(queryParams)
@@ -700,33 +602,7 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
       });
   }
 
-  getCompaniesByOrganize(element1, root_orgId) {
-    const queryParams = queryString.stringify({ organizeId: root_orgId, filter: '' });
-    this.apiService.getCompaniesByOrganize(queryParams).subscribe(results => {
-      if (results.status === 'success') {
-        element1.options = results.data.map(d => {
-          return {
-            label: d.companyName,
-            value: `${d.companyId}`
-          }
-        });
-        element1.columnValue = element1.columnValue ? element1.columnValue : '';
-      }
-    })
-  }
-
-  getPositionTitles(positionId, element1) {
-    const queryParams = queryString.stringify({ PositionId: positionId });
-    this.apiService.getPositionTitles(queryParams).subscribe(results => {
-      if (results.status === 'success') {
-        element1.options = cloneDeep(results.data).map(d => {
-          return { label: d.positionName, value: d.positionId }
-        });
-        element1.columnValue = element1.columnValue ? element1.columnValue : ''
-      }
-    })
-  }
-
+ 
   setValue(value, field_name) {
     this.dataView.forEach(element => {
       element.fields.forEach(element1 => {
@@ -740,76 +616,6 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
     if(field_name === 'User_Id') {
       this.emitDropdownValue.emit(this.dataView)
     }
-    
-  }
-
-
-  getUserByPush(orgId, element1) {
-    const queryParams = queryString.stringify({ orgId: orgId });
-    this.apiService.getEmployeeSearch(queryParams).subscribe(results => {
-      if (results.status === 'success') {
-        this.loading = false;
-        element1.options = results.data.map(d => {
-          return {
-            label: d.fullName + '-' + d.phone,
-            value: element1.field_name === 'CustId' ? d.custId :  element1.field_name === 'empId' ? d.empId : d.userId,
-            ...d
-          }
-        });
-        // element1.columnValue = element1.columnValue ? element1.columnValue : ''
-      }
-    })
-  }
-
-  
-  getUserByPushByEmpId(orgId, element1) {
-    const queryParams = queryString.stringify({ orgId: orgId });
-    this.apiService.getEmployeeSearch(queryParams).subscribe(results => {
-      if (results.status === 'success') {
-        this.loading = false
-        element1.options = cloneDeep(results.data).map(d => {
-          return {
-            label: d.fullName + '-' + d.phone,
-            value: `${d.empId}`
-          }
-        });
-        element1.columnValue = element1.columnValue ? element1.columnValue.toLowerCase() : ''
-      }
-    })
-  }
-
-  getPayrollTypeList(orgId, element1) {
-    const queryParams = queryString.stringify({organizeId: orgId});
-    this.apiService.getHrmPayrollTypePage(queryParams).subscribe(results => {
-      if (results.status === 'success') {
-        if(results.data && results.data.dataList.data.length > 0){
-          element1.options = cloneDeep(results.data.dataList.data).map(d => {
-            return {
-              label: `${d.name}`,
-              value: `${d.id}`
-            }
-          });
-        }else {
-          element1.options = []
-        }
-      }
-    })
-  }
-
-
-  getJobTitles(orgId, element1, positionTypeCd) {
-    const queryParams = queryString.stringify({ orgId: orgId, positionTypeCd: positionTypeCd });
-    this.apiService.getJobs(queryParams).subscribe(results => {
-      if (results.status === 'success') {
-        element1.options = results.data.map(d => {
-          return {
-            label: d.job_name,
-            value: `${d.jobId}`
-          }
-        });
-        element1.columnValue = element1.columnValue ? element1.columnValue : ''
-      }
-    })
   }
 
   getAgentLeaders(orgId, element1, isAdmin) {
@@ -820,18 +626,6 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
           return { label: d.fullName, value: d.saler_id }
         });
         element1.columnValue = element1.columnValue ? parseInt(element1.columnValue) : '';
-      }
-    })
-  }
-
-  getOrganizeTree(orgId, element1) {
-    const queryParams = queryString.stringify({ parentId: orgId });
-    this.apiService.getOrganizeTree(queryParams).subscribe(results => {
-      if (results.status === 'success') {
-        element1.options = results.data;
-        // element1.columnValue = results.data[0];
-        this.modelFields[element1.field_name].error = this.modelFields[element1.field_name].isRequire && !element1.columnValue ? true : false;
-        this.modelFields[element1.field_name].message = this.modelFields[element1.field_name].error ? 'Trường bắt buộc nhập !' : ''
       }
     })
   }
