@@ -547,6 +547,13 @@ body {
                     }
                     padding-left: 0px;
                 }
+                &:last-child{
+                    a{
+                        span{
+                            color: #4C97E4 !important;
+                        }
+                    }
+                }
                 &.pi-chevron-right:before{
                     width: 6px;
                     height: 8px;
@@ -4121,6 +4128,10 @@ section{
     padding: 16px;
     margin-bottom: 3px;
     background: #fff;
+    &.bread-crumb{
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
 }
 .cell-action{
     .p-button{
@@ -5581,5 +5592,12 @@ p-button{
 .p-dropdown-items-wrapper{
     .p-dropdown-item{
         white-space: unset;
+    }
+}
+.bread-crumb{
+    p-button{
+        button{
+            white-space: nowrap;
+        }
     }
 }

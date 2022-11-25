@@ -5,5 +5,5 @@
     font-weight: 500;
 }
 :host::ng-deep .breadcrumb .p-breadcrumb{
-        margin-bottom: 30px;
+        margin-bottom: 0;
     }
