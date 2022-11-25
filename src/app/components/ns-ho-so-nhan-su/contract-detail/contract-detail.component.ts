@@ -29,7 +29,6 @@ export class ContractDetailComponent implements OnInit {
   steps = [];
   activeIndex = 0
   ngOnInit(): void {
-    console.log(this.modelContractInfo.contractId)
     if (this.modelContractInfo.contractId) {
       this.getContractInfo();
     } else {
@@ -90,7 +89,18 @@ export class ContractDetailComponent implements OnInit {
     this.apiService.setContractInfo(params).subscribe(results => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
-        this.getContractInfo()
+        this.activeIndex = results.data.flow_st;
+        this.steps = results.data.flowStatuses.map(d => {
+          return {
+            label: d.flow_name,
+            value: d.flow_st
+          }
+        });
+        this.listViews = cloneDeep(results.data.group_fields);
+        setTimeout(() => {
+          this.stepActivated();
+        }, 100);
+        this.detailInfo = results.data;
         this.spinner.hide();
       } else {
         this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
