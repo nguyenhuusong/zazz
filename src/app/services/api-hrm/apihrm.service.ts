@@ -680,7 +680,7 @@ export class ApiHrmService {
   }
 
   getContractTypes(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v2/contract/GetContractTypes?${queryParams}`, this.options)
+    return this.http.get<any>(`${apiHrmServer}/api/v2/contracttype/GetContractTypes?${queryParams}`, this.options)
   }
 
   getPrintFiles(queryParams): Observable<any> {
