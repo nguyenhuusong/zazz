@@ -82,6 +82,7 @@ export class ContractDetailComponent implements OnInit {
   }
 
   setContractInfo(data) {
+    this.listViews = [];
     const params = {
       ...this.detailInfo, group_fields: data, flow_st: this.activeIndex + 1
     }
