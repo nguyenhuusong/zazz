@@ -5,6 +5,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as queryString from 'querystring';
 import { cloneDeep } from 'lodash';
+import { AgGridFn } from 'src/app/common/function-common/common';
 @Component({
   selector: 'app-contract-detail',
   templateUrl: './contract-detail.component.html',
@@ -119,6 +120,7 @@ export class ContractDetailComponent implements OnInit {
             { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
             { label: 'Tiếp tục', value: 'Update', class: '', icon: 'pi pi-save' },
           ];
+          this.getContractMetaPage();
         }
        
         this.listViews = cloneDeep(results.data.group_fields);
@@ -161,36 +163,154 @@ export class ContractDetailComponent implements OnInit {
     })
   }
 
-  initStep() {
-    this.steps = [{
-      label: 'Personal',
-      command: (event: any) => {
-        this.activeIndex = 0;
-        this.messageService.add({ severity: 'info', summary: 'First Step', detail: event.item.label });
+  columnDefs = [];
+  listsData = [];
+  gridflexs= [];
+  gridKey = '';
+  displayuploadcontract = false;
+  metafile = null;
+  getContractMetaPage() {
+    this.spinner.show();
+    this.columnDefs = [];
+    const queryParams = queryString.stringify({ scheme_id: this.detailInfo.scheme_id, offSet: 0, pageSize: 10000 });
+    this.apiService.getContractMetaPage(queryParams).subscribe(repo => {
+      if (repo.status === 'success') {
+        this.listsData = repo.data.dataList.data;
+        this.gridflexs = repo.data.gridflexs;
+        if (repo.data.dataList.gridKey) {
+          this.gridKey = repo.data.dataList.gridKey
+        }
+        this.spinner.hide();
+        this.initGrid();
+      } else {
+        this.spinner.hide();
       }
-    },
-    {
-      label: 'Seat',
-      command: (event: any) => {
-        this.activeIndex = 1;
-        this.messageService.add({ severity: 'info', summary: 'Seat Selection', detail: event.item.label });
+    })
+  }
+
+  initGrid() {
+    this.columnDefs = [
+      ...AgGridFn(this.gridflexs || []),
+      {
+        headerName: 'Hồ sơ mẫu',
+        field: 'temp_download_url',
+        cellClass: ['border-right'],
+        width: 100,
+        pinned: 'right',
+        cellRenderer: 'buttonAgGridComponent',
+        cellRendererParams: params => {
+          return {
+            buttons: [
+              {
+                onClick: this.DowloadFileDemo.bind(this),
+                label: 'Tải về hồ sơ mẫu',
+                icon: 'pi pi-cloud-upload',
+                key: 'taivehosomau',
+                class: 'btn-primary mr5',
+                hide: !params.data.temp_download_url
+              },
+              {
+                onClick: this.ViewHoSomau.bind(this),
+                label: 'Xem file mẫu',
+                icon: 'pi pi-cloud-upload',
+                key: 'xemhosomau',
+                class: 'btn-primary mr5',
+                hide: !params.data.temp_view_url
+              }
+            ]
+          };
+        },
+      },
+      {
+        headerName: 'Tải lên hồ sơ',
+        field: 'meta_upload_url',
+        cellClass: ['border-right'],
+        width: 100,
+        cellRenderer: 'buttonAgGridComponent',
+        cellRendererParams: params => {
+          return {
+            buttons: [
+              {
+                onClick: this.uploadContract.bind(this),
+                label: 'Tải lên hồ sơ',
+                icon: 'pi pi-cloud-download',
+                class: 'btn-primary mr5',
+                key: 'tailenhoso',
+                hide: params.data.meta_upload_url
+              },
+              {
+                onClick: this.ViewContract.bind(this),
+                label: 'Xem hồ sơ tải lên',
+                icon: 'pi pi-cloud-upload',
+                key: 'xemhoso',
+                class: 'btn-primary mr5',
+                hide: !params.data.meta_upload_url
+              },
+              // {
+              //   onClick: this.OnClick.bind(this),
+              //   label: 'Hủy hồ sơ',
+              //   icon: 'pi pi-trash',
+              //   key: 'huyhosoky',
+              //   class: 'btn-danger',
+              // },
+
+            ]
+          };
+        },
       }
-    },
-    {
-      label: 'Payment',
-      command: (event: any) => {
-        this.activeIndex = 2;
-        this.messageService.add({ severity: 'info', summary: 'Pay with CC', detail: event.item.label });
-      }
-    },
-    {
-      label: 'Confirmation',
-      command: (event: any) => {
-        this.activeIndex = 3;
-        this.messageService.add({ severity: 'info', summary: 'Last Step', detail: event.item.label });
-      }
-    }
     ];
   }
+
+  ViewContract(event) {
+    this.downloadButtonClicked(event.rowData.meta_upload_url);
+  }
+
+  uploadContract(event) {
+    if(event.rowData.metaId) {
+      this.displayuploadcontract = true;
+      this.metafile = event.rowData;
+    }else {
+      this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Chưa lưu hợp đồng' });
+    }
+  }
+
+  handleUpload(datas) {
+    if (datas.length > 0) {
+      this.apiService.setContractUpload({ metaId: this.metafile.metaId, meta_upload_url: datas[0].url }).subscribe(
+        results => {
+          if (results.status === 'success') {
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Upload hợp đồng ký thành công' });
+            this.displayuploadcontract = false;
+            this.getContractInfo();
+          }else {
+            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+          }
+        }
+      );
+    }
+  }
+
+  DowloadFileDemo(event) {
+    this.downloadButtonClicked(event.rowData.temp_download_url);
+  }
+
+  ViewHoSomau(event) {
+    this.downloadButtonClicked(event.rowData.temp_view_url);
+  }
+
+  downloadButtonClicked(urlLink) {
+    var url = urlLink;
+    var elem = document.createElement('a');
+    elem.href = url;
+    elem.target = 'hiddenIframe';
+    elem.click();
+  }
+
+  displaySetting= false;
+  CauHinh() {
+    this.displaySetting = true;
+  }
+
+
 
 }

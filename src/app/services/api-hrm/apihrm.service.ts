@@ -368,6 +368,10 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v2/contract/GetContractInfo?` + queryParams, this.options)
   }
 
+  getContractMetaPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/contract/GetContractMetaPage?` + queryParams, this.options)
+  }
+
   setContractCreate(queryParams): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/contract/SetContractCreate` , queryParams, this.options)
   }

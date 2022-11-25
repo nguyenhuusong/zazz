@@ -4,9 +4,40 @@
     </div>
 </p-card>
 <p-divider></p-divider>
-<p-card >
-    <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" 
-        [manhinh]="'Edit'" 
-        [optionsButtonsEdit]="optionsButon"  [dataView]="listViews"
-        (callback)="setContractInfo($event)" (callbackcancel)="cancel($event)"></app-edit-detail>
+<p-card>
+    <div class="grid wrap-edit-detail">
+        <div class="col-12 border-section " *ngIf="this.detailInfo?.flow_st > 0">
+            <p-panel header="Danh sách hồ sơ hợp đồng">
+                <div class="row" style="flex-wrap: wrap">
+                    <div class="grid-default border mt-2">
+                        <app-list-grid-angular [domLayout]="'autoHeight'" *ngIf="columnDefs.length > 0" [title]="'Chứng chỉ'"
+                            [listsData]="listsData" [columnDefs]="columnDefs"></app-list-grid-angular>
+                        </div>
+                </div>
+                <ng-template pTemplate="footer">
+                    <p-button label="Cấu hình" (click)="CauHinh()" styleClass="p-button-sm"></p-button>
+                </ng-template>
+            </p-panel>
+        </div>
+    </div>
+    <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'"
+        [optionsButtonsEdit]="optionsButon" [dataView]="listViews" (callback)="setContractInfo($event)"
+        (callbackcancel)="cancel($event)"></app-edit-detail>
+    
+   
 </p-card>
+
+
+<p-dialog [(visible)]="displayuploadcontract" [autoZIndex]="true" [modal]="true"  appendTo="body"
+    [style]="{width: '800px', height: 'auto'}">
+    <p-header>
+        Tải lên hợp đồng [{{metafile?.meta_title}}]
+    </p-header>
+    <app-upload-file [maxFileSize]="8000000" [multiple]="" (callback)="handleUpload($event)" *ngIf="displayuploadcontract"></app-upload-file>
+</p-dialog>
+
+
+<p-dialog header="Cài đặt cấu hình" [(visible)]="displaySetting" (onHide)="getContractMetaPage()" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
+    [draggable]="false" [resizable]="false" [focusTrap]="false" styleClass="popup-setting">
+    <app-config-grid-table-form *ngIf="displaySetting && gridKey" [typeConfig]="'TableInfo'"   [gridKey]="gridKey"></app-config-grid-table-form>
+</p-dialog>
