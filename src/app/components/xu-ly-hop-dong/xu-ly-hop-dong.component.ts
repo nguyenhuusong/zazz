@@ -165,13 +165,12 @@ export class XuLyHopDongComponent implements OnInit {
   ngAfterViewChecked(): void {
     const a: any = document.querySelector(".header");
     const b: any = document.querySelector(".sidebarBody");
-    const c: any = document.querySelector(".bread-filter");
     const d: any = document.querySelector(".bread-crumb");
     const e: any = document.querySelector(".paginator");
     this.loadjs++
     if (this.loadjs === 5) {
       if (b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + d.clientHeight + e.clientHeight + 26;
+        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight + 26;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       } else {
@@ -397,6 +396,8 @@ export class XuLyHopDongComponent implements OnInit {
     this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
         if(results && results.length>0){
           this.query.organizeIds = results;
+          this.query.organizeId = results;
+          this.getContractTypes();
           this.getCompany();
         }
     });
@@ -435,6 +436,15 @@ export class XuLyHopDongComponent implements OnInit {
         disabled: CheckHideAction(MENUACTIONROLEAPI.GetContractPage.url, ACTIONS.IMPORT),
         command: () => {
           this.importFileExel();
+        }
+      },
+      {
+        label: 'Cài plugin',
+        code: 'plugin',
+        icon: 'pi pi-cog',
+        disabled: this.listPrints.length !== 0,
+        command: () => {
+          this.DowloadPlugin();
         }
       },
     ]
@@ -488,20 +498,18 @@ export class XuLyHopDongComponent implements OnInit {
   }
 
   getContractTypes() {
-    if (this.query.organizeId) {
       const queryParams = queryString.stringify({ organizeId: this.query.organizeId });
       this.apiService.getContractTypes(queryParams).subscribe(results => {
         if (results.status === 'success') {
           this.typeContracts = results.data.map(d => {
             return {
-              label: d.contractTypeName,
-              value: `${d.contractTypeId}`
+              label: d.name,
+              value: `${d.value}`
             }
           });
           this.typeContracts = [{ label: 'Tất cả', value: null }, ...this.typeContracts];
         }
       })
-    }
   }
   modelPrint = {
     PrinterName: null,
