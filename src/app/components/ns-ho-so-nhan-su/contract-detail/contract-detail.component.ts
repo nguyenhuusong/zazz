@@ -76,6 +76,12 @@ export class ContractDetailComponent implements OnInit {
   cancel(data) {
     if (data === 'CauHinh') {
       this.modelContractInfo.contractId ? this.getContractInfo() : this.setContractCreate();
+    } else if (data === 'BackPage') {
+      this.listViews = [];
+      const params = {
+        ...this.detailInfo, flow_st: this.activeIndex - 1
+      }
+      this.callApiInfo(params)
     } else {
       this.back.emit();
     }
@@ -86,17 +92,35 @@ export class ContractDetailComponent implements OnInit {
     const params = {
       ...this.detailInfo, group_fields: data, flow_st: this.activeIndex + 1
     }
+    this.callApiInfo(params)
+
+  }
+
+
+  callApiInfo(params) {
     this.spinner.show();
     this.apiService.setContractInfo(params).subscribe(results => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
         this.activeIndex = results.data.flow_st;
-        this.steps = results.data.flowStatuses.map(d => {
-          return {
-            label: d.flow_name,
-            value: d.flow_st
-          }
-        });
+        // this.steps = results.data.flowStatuses.map(d => {
+        //   return {
+        //     label: d.flow_name,
+        //     value: d.flow_st
+        //   }
+        // });
+        if(results.data.flow_st === 0) {
+          this.optionsButon = [
+            { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
+            { label: 'Tiếp tục', value: 'Update', class: '', icon: 'pi pi-save' },
+          ];
+        }else {
+          this.optionsButon = [
+            { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
+            { label: 'Tiếp tục', value: 'Update', class: '', icon: 'pi pi-save' },
+          ];
+        }
+       
         this.listViews = cloneDeep(results.data.group_fields);
         setTimeout(() => {
           this.stepActivated();

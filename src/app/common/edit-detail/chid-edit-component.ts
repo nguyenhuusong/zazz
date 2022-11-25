@@ -452,9 +452,7 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
             }
           });
       }
-    } else if (field_name === 'contractTypeId') {
-      this.callback.emit(value);
-    } else if (field_name === 'holi_type') {
+    }  else if (field_name === 'holi_type') {
       this.callback.emit(value);
     }else if(field_name === 'floor_No') {
       this.floorID = value

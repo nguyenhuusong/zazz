@@ -201,6 +201,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   }
 
   onChangeMenu(e): void {
+    console.log(e)
     this.listViewsReportTo =  [];
     this.detailInfoReportTo = null;
     this.manhinh = 'Edit';
@@ -237,9 +238,39 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       this.paramsObject = { ...params.keys, ...params };
       this.dataRouter = this.paramsObject.params;
       this.empId = this.paramsObject.params.empId;
-      this.getEmployeeInfo();
+      this.getMenuInfo();
     });
   }
+
+  getMenuInfo() {
+    this.spinner.show();
+      this.listViews = [];
+      const queryParams = queryString.stringify({ empId: this.empId });
+      // this.detailMenu.code = this.selectedMenuCode
+      this.apiService.getEmployeeData(this.selectedMenuCode !== 'quanLyTaiKhoan' ? this.selectedMenuCode : 'GetEmployeeByReportTo', queryParams).subscribe(results => {
+        if(results.status === 'success') {
+          if(results.data.flow_st === 0) {
+            this.selectedMenuCode = this.menuItems[0].code;
+            this.onChangeMenu(this.menuItems[0].code);
+          }else if(results.data.flow_st === 1) {
+            this.selectedMenuCode = this.menuItems[1].code;
+            this.onChangeMenu(this.menuItems[1].code);
+          }else if(results.data.flow_st === 2) {
+            this.selectedMenuCode = this.menuItems[2].code;
+            this.onChangeMenu(this.menuItems[2].code);
+          }else if(results.data.flow_st === 3) {
+            this.selectedMenuCode = this.menuItems[5].code;
+            this.onChangeMenu(this.menuItems[5].code);
+          }else {
+            this.selectedMenuCode = this.menuItems[0].code;
+            this.onChangeMenu(this.menuItems[0].code);
+          }
+  
+        }
+      })
+     
+  }
+  
   listViewsReportTo = [];
   detailInfoReportTo = null;
   getEmployeeByReportTo() {
@@ -390,9 +421,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
         setTimeout(() => {
           this.stepActivated();
         }, 100)
-        
+
+        this.activeIndex = this.detailInfo.flow_st;
         if(this.selectedMenuCode === API_PROFILE.THONG_TIN_CA_NHAN) {
-          this.activeIndex = this.detailInfo.flow_st;
           this.getRecordInfo();
         }
         this.bindingData(results.data);
