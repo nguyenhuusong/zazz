@@ -81,6 +81,7 @@ export class TabThanhPhanLuongComponent implements OnInit {
   }
 
   load() {
+    this.columnDefs = [];
     this.spinner.show();
     const queryParams = queryString.stringify(this.query);
     this.apiService.getComponentPage(queryParams).subscribe(

@@ -81,6 +81,7 @@ import { OrganizeInfoService } from 'src/app/services/organize-info.service';
     }
   
     load() {
+      this.columnDefs = [];
       this.spinner.show();
       const queryParams = queryString.stringify(this.query);
       this.apiService.getPayrollBasePage(queryParams).subscribe(
