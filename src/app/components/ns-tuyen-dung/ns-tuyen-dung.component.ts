@@ -98,7 +98,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   mailsInput = [];
   mailInputValue: any = [];
   buttonTiemNang = [];
-  optionsButton = [];
+  optionsButtonDB: any = [];
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
@@ -108,7 +108,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   heightGrid = 450;
 
   // the value for check disabled 'Chuyển vòng radio'
-  canSttValue = null
+  canSttValue: any = null
   ngAfterViewChecked(): void {
     const a: any = document.querySelector(".header");
     const b: any = document.querySelector(".sidebarBody");
@@ -297,8 +297,12 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     this.dataRowSelected = event;
     this.recruitmentStatusSelected = this.dataRowSelected.map( d => d.can_st).toString();
     this.canSttValue = this.dataRowSelected.sort((a,b)=>a.can_st-b.can_st)[this.dataRowSelected.length - 1];
-    // check role for set tiem nang
-    this.buttonTiemNang[1].disabled = CheckHideAction(MENUACTIONROLEAPI.GetCandidatePage.url, ACTIONS.TIEM_NANG) && this.dataRowSelected.length > 0
+    // check role for set tiem nang && check for tuy chon
+    this.buttonTiemNang[1].disabled = CheckHideAction(MENUACTIONROLEAPI.GetCandidatePage.url, ACTIONS.TIEM_NANG) && this.dataRowSelected.length > 0;
+    // chuyen vong
+    this.optionsButtonDB[0].disabled = CheckHideAction(MENUACTIONROLEAPI.GetCandidatePage.url, ACTIONS.CHUYEN_VONG) && this.dataRowSelected.length > 0;
+    this.optionsButtonDB[1].disabled = CheckHideAction(MENUACTIONROLEAPI.GetCandidatePage.url, ACTIONS.SEND_EMAIL);
+    
   }
 
   xoatuyendung(event) {
@@ -408,7 +412,40 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
         }
       },
     ];
+    this.optionsButtonDB = [
+      {
+        label: 'Chuyển vòng',
+        code: 'chuyenVong',
+        icon: 'pi pi-reply',
+        disabled: true,
+        command: () => {
+          this.chuyenVong();
+        }
+      },
+      {
+        label: 'Gửi email',
+        code: 'guiemail',
+        icon: 'pi pi-envelope',
+        disabled: true,
+        command: () => {
+          this.getRecruitMailInput();
+        }
+      },
+      {
+        label: 'Import',
+        code: 'import',
+        icon: 'pi pi-file-excel',
+        disabled: CheckHideAction(MENUACTIONROLEAPI.GetCandidatePage.url, ACTIONS.IMPORT),
+        command: () => {
+          this.importFileExel();
+        }
+      },
+    ]
 
+  }
+  isChuyenVong = false;
+  chuyenVong() {
+    this.isChuyenVong = true;
   }
 
   getOrgRoots() {
@@ -515,6 +552,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   }
 
   getRecruitMailInput() {
+    this.isSendMail = true;
     this.apiService.getRecruitMailInput(queryString.stringify({})).subscribe(results => {
       if (results.status === 'success') {
         this.mailsInput = results.data.recruitmentMail.map(d => {

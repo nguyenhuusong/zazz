@@ -1,89 +1,24 @@
 <section class="bread-crumb">
-  <app-hrm-breadcrumb [items]="items"></app-hrm-breadcrumb>
-
-</section>
-<section class="bread-filter">
-  <div class="d-flex bet end bottom gap-16">
-    <div class="col-item">
-        <div class="filter filter-search">
+  <div class="d-flex bet middle">
+      <div class="col-4 pd-0">
+        <app-hrm-breadcrumb [items]="items"></app-hrm-breadcrumb>
+      </div>
+      <div class="d-flex end bottom gap-12 col-8 pd-0">
+        <div class="filter filter-search col-3 pd-0">
             <div class="field-group text search mb-0" [ngClass]=" model.filter ? 'valid' : 'invalid' ">
               <input class="input-default" type="text" id="filter"
                   [(ngModel)]="model.filter">
                   <span class="placeholder-icon" (click)="model.offSet = 0; first = 0; load()">
                     <svg _ngcontent-xmj-c197="" width="19" height="20" viewBox="0 0 19 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path _ngcontent-xmj-c197="" fill-rule="evenodd" clip-rule="evenodd" d="M9.02893 0.850098C4.51087 0.850098 0.849609 4.51552 0.849609 9.03539C0.849609 13.5553 4.51087 17.2207 9.02893 17.2207C10.8456 17.2207 12.5254 16.6271 13.8828 15.6241L17.1276 18.8716C17.4984 19.2427 18.0999 19.243 18.4711 18.8721C18.8422 18.5013 18.8425 17.8998 18.4716 17.5286L15.2709 14.3252C16.4787 12.8991 17.2083 11.0518 17.2083 9.03539C17.2083 4.51552 13.547 0.850098 9.02893 0.850098ZM2.74961 9.03539C2.74961 5.56338 5.56169 2.7501 9.02893 2.7501C12.4962 2.7501 15.3083 5.56338 15.3083 9.03539C15.3083 10.8568 14.5355 12.496 13.2976 13.645C12.1765 14.6858 10.6778 15.3207 9.02893 15.3207C5.56169 15.3207 2.74961 12.5074 2.74961 9.03539Z" fill="#2B2F33" fill-opacity="0.6"></path></svg>
                 </span>
-              <!-- <p-overlayPanel #op [style]="{width: '700px'}" styleClass="advance-seach">
-                  <ng-template pTemplate>
-                      <div class="header-filter-search  grid">
-                          <h3>Tìm kiếm nâng cao</h3>
-                      </div>
-                      <div class="header-filter-search grid mt-1">
-                          <div class="input-group icon col-12 select-default pl-0 text-right">
-                              <label for="">Trạng thái </label>
-                              <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
-                                  [options]="listStatus" [(ngModel)]="model.can_st" name="can_st"
-                                  (onChange)="find()" [filter]="true">
-                                  <ng-template let-item pTemplate="selectedItem">
-                                      <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
-                                  </ng-template>
-                                  <ng-template let-car pTemplate="item">
-                                      <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                                          <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}
-                                          </div>
-                                      </div>
-                                  </ng-template>
-                              </p-dropdown>
-                              <label for="">Chuyên môn </label>
-                              <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
-                                  [options]="listJobTitles" [(ngModel)]="model.jobId" name="jobId"
-                                  (onChange)="findVacancy()" [filter]="true">
-                                  <ng-template let-item pTemplate="selectedItem">
-                                      <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
-                                  </ng-template>
-                                  <ng-template let-car pTemplate="item">
-                                      <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                                          <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}
-                                          </div>
-                                      </div>
-                                  </ng-template>
-                              </p-dropdown>
-                              <label for="">Vị trí tuyển dụng </label>
-                              <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
-                                  [options]="listVacancy" [(ngModel)]="model.vacancy_id" name="vacancy_id"
-                                  (onChange)="find()" [filter]="true">
-                                  <ng-template let-item pTemplate="selectedItem">
-                                      <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
-                                  </ng-template>
-                                  <ng-template let-car pTemplate="item">
-                                      <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                                          <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}
-                                          </div>
-                                      </div>
-                                  </ng-template>
-                              </p-dropdown>
-                          </div>
-                          <div class="input-group icon col-12 select-default text-right">
-                              <label for="" style="visibility: hidden;">Classid <span class="pi pi-info-circle"
-                                      style="font-size: 13px;color: orange;"></span></label>
-                              <p-button label="Tìm kiếm" styleClass="mr-1" icon="pi pi-search" (click)="load()">
-                              </p-button>
-                              <p-button label="Làm mới" icon="pi pi-times" (click)="cancel()"
-                                  styleClass="p-button-secondary">
-                              </p-button>
-                          </div>
-                      </div>
-                  </ng-template>
-              </p-overlayPanel> -->
-          </div>
-          <div class="input-group-append dropdown">
           </div>
         </div>
+        <p-button styleClass="p-button-sm height-56" icon="pi pi-plus" label="Thêm mới" (click)="addThietBi()"
+          [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetElevatorDevicePage.url, action: ACTIONS.ADD}"
+        >
+        </p-button>
       </div>
-      <p-button styleClass="p-button-sm height-56" icon="pi pi-plus" label="Thêm mới" (click)="addThietBi()"
-        [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetElevatorDevicePage.url, action: ACTIONS.ADD}"
-      >
-      </p-button>
-    </div>
+  </div>
 </section>
 <section>
         <div class="grid-default" #container>

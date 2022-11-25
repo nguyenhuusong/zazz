@@ -101,16 +101,16 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
   loadjs = 0;
   heightGrid = 0;
   dataRowSelected: any = [];
+  optionsButtonDB: any = [];
   ngAfterViewChecked(): void {
     const a: any = document.querySelector(".header");
     const b: any = document.querySelector(".sidebarBody");
-    const c: any = document.querySelector(".bread-filter");
     const d: any = document.querySelector(".bread-crumb");
     const e: any = document.querySelector(".paginator");
     this.loadjs ++ 
     if (this.loadjs === 5) {
       if(b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + d.clientHeight + e.clientHeight + 25;
+        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight + 25;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       }else {
@@ -283,6 +283,26 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
       { label: 'Tuyển dụng'},
       { label: 'Danh sách vị trí tuyển dụng' },
     ];
+    this.optionsButtonDB = [
+      {
+        label: 'Export',
+        code: 'export',
+        icon: 'fa fa-download',
+        disabled: CheckHideAction(MENUACTIONROLEAPI.GetVacancyPage.url, ACTIONS.EXPORT),
+        command: () => {
+          this.export();
+        }
+      },
+      {
+        label: 'Nhân bản',
+        code: 'export',
+        icon: 'pi pi-copy',
+        disabled: true,
+        command: () => {
+          this.copyRequi();
+        }
+      },
+    ]
     this.getJobTitles();
     this.getHiringMans();
   }
@@ -351,8 +371,8 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
 
   rowSelected(data) {
     this.dataRowSelected = data;
+    this.optionsButtonDB[1].disabled = CheckHideAction(MENUACTIONROLEAPI.GetVacancyPage.url, ACTIONS.COPY_ROW);
   }
-
 
   copyRequi() {
     const params = {
@@ -360,9 +380,6 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
       copy: true,
     }
     this.router.navigate(['/tuyen-dung/vi-tri-tuyen-dung/chi-tiet-vi-tri-tuyen-dung'], { queryParams: params });
-    
-
-
   }
 
 }

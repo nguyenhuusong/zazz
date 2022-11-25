@@ -17,7 +17,7 @@
                             </span>
                     </div>
                 </div>
-                <p-button styleClass="reloadBtn" (click)="cancel()">
+                <p-button styleClass="reloadBtn height-56" (click)="cancel()">
                     <svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M8.89128 1.80952C5.00096 1.80952 1.81817 5.01267 1.81817 9C1.81817 12.9873 5.00096 16.1905 8.89128 16.1905C11.1061 16.1905 13.087 15.1561 14.3877 13.526C14.7 13.1346 15.2718 13.0693 15.665 13.3801C16.0582 13.6908 16.1238 14.2599 15.8116 14.6513C14.1855 16.6891 11.6915 18 8.89128 18C3.9647 18 0 13.9544 0 9C0 4.04557 3.9647 0 8.89128 0C12.8587 0 16.2024 2.62369 17.3539 6.23284L18.2926 4.51929C18.5329 4.08057 19.0851 3.91882 19.5259 4.15801C19.9667 4.39719 20.1292 4.94675 19.8889 5.38547L17.6716 9.43309C17.5446 9.66497 17.3221 9.83003 17.0626 9.88497C16.803 9.93991 16.5323 9.87923 16.3215 9.71886L12.7738 7.02045C12.3749 6.71703 12.2987 6.14921 12.6035 5.75219C12.9084 5.35518 13.4789 5.2793 13.8778 5.58273L15.6726 6.94784C14.8021 3.96847 12.0851 1.80952 8.89128 1.80952Z" fill="#BDC4D8"/>
                     </svg>
@@ -31,6 +31,10 @@
                     </svg> &nbsp;&nbsp;
                     Bộ Lọc
                 </p-button>
+                <p-button styleClass="p-button-sm height-56" label="Thêm mới" 
+                    (click)="addTuyenDung()"  icon="pi pi-plus"  
+                    [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetCandidatePage.url, action: ACTIONS.ADD}">
+                </p-button>
                 <p-button (click)="tiemnangButton.toggle($event)" 
                     styleClass="p-button-sm height-56 ">
                     <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -41,17 +45,7 @@
                         </svg>
                         &nbsp; Tùy chọn tiềm năng
                 </p-button>
-                <p-button styleClass="p-button-sm height-56" label="Thêm mới" 
-                    (click)="addTuyenDung()"  icon="pi pi-plus"  
-                    [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetCandidatePage.url, action: ACTIONS.ADD}">
-                </p-button>
-                <p-button 
-                    [disabled]="dataRowSelected.length > 0 ? false : true"
-                    styleClass="p-button-sm height-56" label="Chuyển vòng" 
-                    (click)="recru.toggle($event)" 
-                    [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetCandidatePage.url, action: ACTIONS.ADD}">
-                </p-button>
-                <!-- <p-button (click)="optionsButton.toggle($event)" 
+                <p-button (click)="optionsButton.toggle($event)" 
                     styleClass="p-button-sm height-56 ">
                     <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M10.2002 13.2H13.2002V10.2H14.8002V13.2H17.8002V14.8H14.8002V17.7999H13.2002V14.8H10.2002V13.2Z" fill="#F3F8FF"/>
@@ -60,20 +54,28 @@
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M0.200195 10.2H7.8002V17.7999H0.200195V10.2ZM6.2002 11.8H1.8002V16.2H6.2002V11.8Z" fill="#F3F8FF"/>
                         </svg>
                         &nbsp; Tiện ích
-                </p-button> -->
+                </p-button>
+
+                <!-- <p-button 
+                    [disabled]="dataRowSelected.length > 0 ? false : true"
+                    styleClass="p-button-sm height-56" label="Chuyển vòng" 
+                    (click)="recru.toggle($event)" 
+                    [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetCandidatePage.url, action: ACTIONS.ADD}">
+                </p-button>
+               
                 <p-button styleClass="p-button-sm height-56" (click)="getRecruitMailInput(); isSendMail = true"
-                label="Gửi mail"
-                [disabled]="dataRowSelected.length > 0 ? false : true"
-                [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetCandidatePage.url, action: ACTIONS.SEND_EMAIL}"
-                icon="pi pi-envelope"
-                >
-                </p-button>
-                <p-button styleClass="p-button-sm height-56" (click)="importFileExel();"
-                label="Import"
-                [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetCandidatePage.url, action: ACTIONS.IMPORT}"
-                icon="pi pi-file-excel"
-                >
-                </p-button>
+                    label="Gửi mail"
+                    [disabled]="dataRowSelected.length > 0 ? false : true"
+                    [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetCandidatePage.url, action: ACTIONS.SEND_EMAIL}"
+                    icon="pi pi-envelope"
+                    >
+                </p-button> -->
+                <!-- <p-button styleClass="p-button-sm height-56" (click)="importFileExel();"
+                    label="Import"
+                    [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetCandidatePage.url, action: ACTIONS.IMPORT}"
+                    icon="pi pi-file-excel"
+                    >
+                </p-button> -->
                 <p-button styleClass="p-button-sm height-56" (click)="cauhinh()">
                     <svg width="20" height="17" viewBox="0 0 20 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M19.5 17V0H0.50855L0.5 17H19.5ZM6.675 15.3187H2.21V6.81868H6.675V15.3187ZM8.575 15.3187V6.81868H17.79V15.3187H8.575ZM2.21 1.68132V5.13736H17.79V1.68132H2.21Z" fill="#F3F8FF"/>
@@ -115,7 +117,8 @@
         </div>
         <div class="header-filter-search  mt-1">
             <div class="icon col-12 pl-0">
-                <div class="radios grid" *ngIf="recruitmentStatus.length > 0">
+                canSttValue {{ canSttValue }}
+                <div class="radios grid" *ngIf="recruitmentStatus.length > 0 && canSttValue">
                     
                     <div [ngClass]="canSttValue.can_st > recrui.code ? 'op6' : ''" class="p-field-radiobutton col-6" style="margin-bottom: 5px;" *ngFor="let recrui of recruitmentStatus">
                         <p-radioButton
@@ -210,11 +213,41 @@
         </ng-template>
 </p-dialog>
 
+<p-dialog styleClass="hideHeaderForm" header="Chuyển vòng tuyển"
+    [(visible)]="isChuyenVong" 
+    [modal]="true" [style]="{width: '600px'}"
+    [draggable]="false" [resizable]="false" [focusTrap]="false" >
+    <div class="header-filter-search  mt-1">
+        <div class="icon col-12 pl-0">
+            <div class="radios grid" *ngIf="recruitmentStatus.length > 0 && canSttValue">
+                <div [ngClass]="canSttValue.can_st > recrui.code ? 'op6' : ''" class="p-field-radiobutton col-6" style="margin-bottom: 5px;" *ngFor="let recrui of recruitmentStatus">
+                    <p-radioButton
+                        [disabled]="canSttValue.can_st > recrui.code"
+                        name="recrui" value="{{ recrui.code }}" 
+                        [(ngModel)]="recruitmentStatusSelected" 
+                        inputId="recrui{{ recrui.code }}"></p-radioButton>
+                    <label style="margin-left: 5px;" for="recrui{{ recrui.code }}">{{ recrui.label }}</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="input-group icon col-12 select-default text-right">
+        <p-button label="Hủy" icon="pi pi-times" (click)="recru.hide()" 
+            styleClass="p-button-secondary">
+        </p-button>
+        &nbsp;
+        <p-button label="Chuyển" [disabled]="recruitmentStatusSelected ? false : true" 
+        icon="pi pi-times" (click)="changeRecruStatus()"
+            styleClass="">
+        </p-button>
+    </div>
+</p-dialog>
+
 <p-menu [model]="buttonTiemNang" [appendTo]="'body'" [popup]="true"
         styleClass="menu-option-right" #tiemnangButton></p-menu>
 
-<!-- <p-menu [model]="optionsButton" [appendTo]="'body'" [popup]="true"
-styleClass="menu-option-right" #optionsButton></p-menu> -->
+<p-menu [model]="optionsButtonDB" [appendTo]="'body'" [popup]="true"
+styleClass="menu-option-right" #optionsButton></p-menu>
 
 <p-overlayPanel #op [style]="{width: '700px'}" styleClass="advance-seach">
     <ng-template pTemplate>

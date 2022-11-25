@@ -470,6 +470,7 @@ export const ACTIONS = {
     TAI_LEN: 'tai_len',
     COMMENT: 'comment',
     SEND_EMAIL: 'send_email',
+    CHUYEN_VONG: 'chuyen_vong',
     THAM_SO: 'tham_so',
     TUYEN_DUNG_LAI: 'tuyen_dung_lai',
     DOI_LICH_LAM_VIEC: 'doi_lich_lam_viec',
