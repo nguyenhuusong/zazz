@@ -98,8 +98,8 @@ export class ChiTietHoSoNghiViecComponent implements OnInit, OnChanges, OnDestro
     });
   };
   detailInfo = null;
-  listsData = []
-  columnDefs
+  listsData = [];
+  columnDefs = [];
   getTerminateInfo() {
     this.listViews = [];
     this.listsData = [];

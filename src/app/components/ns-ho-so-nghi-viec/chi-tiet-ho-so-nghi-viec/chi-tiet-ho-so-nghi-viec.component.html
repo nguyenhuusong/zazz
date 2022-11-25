@@ -20,7 +20,7 @@
                 <div class="mt-1" *ngIf="detailInfo">
                     <app-edit-detail [optionsButtonsEdit]="optionsButtonsView"
                         *ngIf="listViews.length> 0 && manhinh === 'Edit'" [thongtinnhanvienNew]="true"
-                        [manhinh]="'Edit'" [dataView]="listViews" (callback)="setTerminateInfo($event)"
+                        [manhinh]="'Edit'" [detail]="detailInfo" [dataView]="listViews" (callback)="setTerminateInfo($event)"
                         (callbackcancel)="cancelUpdate($event)" (callbackButton)="callbackButton($event)"></app-edit-detail>
                 </div>
             </p-tabPanel>
