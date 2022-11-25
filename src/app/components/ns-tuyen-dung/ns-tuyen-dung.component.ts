@@ -97,7 +97,8 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   isSendMail = false;
   mailsInput = [];
   mailInputValue: any = [];
-  buttonTiemNang = []
+  buttonTiemNang = [];
+  optionsButton = [];
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
@@ -407,7 +408,8 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
           this.tiemNang();
         }
       },
-    ]
+    ];
+
   }
 
   getOrgRoots() {
