@@ -84,140 +84,6 @@
            </div>
         </div>
     </section>
-    <section class="bread-filter">
-        <div class="d-flex bet end bottom gap-16">
-            <div class="col-item">
-                <div class="d-flex align-items-center">
-                    
-                </div>
-            </div>
-            <div class="col-item">
-                <div class="d-flex align-items-center gap-16">
-                </div>
-            </div>
-        </div>
-        <p-overlayPanel #op [style]="{width: '700px'}" styleClass="advance-seach">
-            <ng-template pTemplate>
-                <div class="header-filter-search  grid">
-                    <h3>Tìm kiếm nâng cao</h3>
-                </div>
-                <div class="header-filter-search grid mt-1">
-                    <div class="icon col-12 pl-0" style="display: flex; flex-wrap: wrap;">
-                        <div class="col-6">
-                            <div class="field-group select" [ngClass]=" query.can_st ? 'valid' : 'invalid' ">
-                                <label for="">Vòng tuyển dụng</label>
-                                <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
-                                    [options]="listStatus" [(ngModel)]="query.can_st" name="can_st" [filter]="true">
-                                    <ng-template let-item pTemplate="selectedItem">
-                                        <span>{{item.label}}</span>
-                                    </ng-template>
-                                    <ng-template let-car pTemplate="item">
-                                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                                            <div>{{car.label}}
-                                            </div>
-                                        </div>
-                                    </ng-template>
-                                </p-dropdown>
-                            </div>
-                        </div>
-                        <!-- <div class="col-6">
-                            <div class="field-group select label-8" [ngClass]=" query.jobId ? 'valid' : 'invalid' ">
-                                <label for="">Chuyên môn </label>
-                                <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
-                                    [options]="listJobTitles" [(ngModel)]="query.jobId" name="jobId" [filter]="true">
-                                    <ng-template let-item pTemplate="selectedItem">
-                                        <span>{{item.label}}</span>
-                                    </ng-template>
-                                    <ng-template let-car pTemplate="item">
-                                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                                            <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}
-                                            </div>
-                                        </div>
-                                    </ng-template>
-                                </p-dropdown>
-                            </div>
-                        </div> -->
-                        <div class="col-6">
-                            <div class="field-group select" [ngClass]=" query.vacancyId ? 'valid' : 'invalid' ">
-                                <label for="">Vị trí tuyển dụng </label>
-                                <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
-                                    [options]="listVacancy" [(ngModel)]="query.vacancyId" name="vacancyId" [filter]="true">
-                                    <ng-template let-item pTemplate="selectedItem">
-                                        <span>{{item.label}}</span>
-                                    </ng-template>
-                                    <ng-template let-car pTemplate="item">
-                                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                                            <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}
-                                            </div>
-                                        </div>
-                                    </ng-template>
-                                </p-dropdown>
-                            </div>
-                        </div>
-                        <!-- <div class="col-6">
-                            <div class="field-group select label-8" [ngClass]=" query.organizeId ? 'valid' : 'invalid' ">
-                                <label for="">Tổ chức </label>
-                                <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
-                                    [options]="listOrgRoots" [(ngModel)]="query.organizeId"  (onChange)="getOrgPositions()"
-                                    name="organizeId" [filter]="true">
-                                    <ng-template let-item pTemplate="selectedItem">
-                                        <span>{{item.label}}</span>
-                                    </ng-template>
-                                    <ng-template let-car pTemplate="item">
-                                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                                            <div style="font-size:14px;float:left;margin-top:4px">{{car.label}}</div>
-                                        </div>
-                                    </ng-template>
-                                    </p-dropdown>
-                            </div>
-                        </div> -->
-                            <!-- <div class="col-6">
-                                <label for="">Phòng ban </label>
-                        <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
-                            [options]="listOrgRoots" [(ngModel)]="query.org_cd"  (onChange)="find()"
-                            name="org_cd" [filter]="true">
-                            <ng-template let-item pTemplate="selectedItem">
-                                <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
-                            </ng-template>
-                            <ng-template let-car pTemplate="item">
-                                <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                                    <div style="font-size:14px;float:left;margin-top:4px">{{car.label}}</div>
-                                </div>
-                            </ng-template>
-                            </p-dropdown>
-                            </div>   -->
-                            <!-- <div class="col-6">
-                                <div class="field-group select label-8" [ngClass]=" query.positionCd ? 'valid' : 'invalid' ">
-                                    <label for="">Cấp bậc</label>
-                                    <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
-                                        [options]="positions" [(ngModel)]="query.positionCd" name="positionCd"
-                                        >
-                                        <ng-template let-item pTemplate="selectedItem">
-                                            <span>{{item.label}}</span>
-                                        </ng-template>
-                                        <ng-template let-car pTemplate="item">
-                                            <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                                                <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
-                                            </div>
-                                        </ng-template>
-                                    </p-dropdown>
-                                </div>
-                            </div> -->
-                    
-                    </div>
-                    <div class="input-group icon col-12 select-default text-right">
-                        <label for="" style="visibility: hidden;">Classid <span class="pi pi-info-circle"
-                                style="font-size: 13px;color: orange;"></span></label>
-                        <p-button label="Tìm kiếm" styleClass="mr-1" icon="pi pi-search" (click)="load()">
-                        </p-button>
-                        <p-button label="Làm mới" icon="pi pi-times" (click)="cancel()"
-                            styleClass="p-button-secondary">
-                        </p-button>
-                    </div>
-                </div>
-            </ng-template>
-        </p-overlayPanel>
-    </section>
     <section class="content pb-0">
         <div class="grid-default" #container>
             <app-list-grid-angular *ngIf="columnDefs.length > 0" [listsData]="listsData" [height]="heightGrid"
@@ -349,3 +215,125 @@
 
 <!-- <p-menu [model]="optionsButton" [appendTo]="'body'" [popup]="true"
 styleClass="menu-option-right" #optionsButton></p-menu> -->
+
+<p-overlayPanel #op [style]="{width: '700px'}" styleClass="advance-seach">
+    <ng-template pTemplate>
+        <div class="header-filter-search  grid">
+            <h3>Tìm kiếm nâng cao</h3>
+        </div>
+        <div class="header-filter-search grid mt-1">
+            <div class="icon col-12 pl-0" style="display: flex; flex-wrap: wrap;">
+                <div class="col-6">
+                    <div class="field-group select" [ngClass]=" query.can_st ? 'valid' : 'invalid' ">
+                        <label for="">Vòng tuyển dụng</label>
+                        <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
+                            [options]="listStatus" [(ngModel)]="query.can_st" name="can_st" [filter]="true">
+                            <ng-template let-item pTemplate="selectedItem">
+                                <span>{{item.label}}</span>
+                            </ng-template>
+                            <ng-template let-car pTemplate="item">
+                                <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                                    <div>{{car.label}}
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </p-dropdown>
+                    </div>
+                </div>
+                <!-- <div class="col-6">
+                    <div class="field-group select label-8" [ngClass]=" query.jobId ? 'valid' : 'invalid' ">
+                        <label for="">Chuyên môn </label>
+                        <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
+                            [options]="listJobTitles" [(ngModel)]="query.jobId" name="jobId" [filter]="true">
+                            <ng-template let-item pTemplate="selectedItem">
+                                <span>{{item.label}}</span>
+                            </ng-template>
+                            <ng-template let-car pTemplate="item">
+                                <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                                    <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </p-dropdown>
+                    </div>
+                </div> -->
+                <div class="col-6">
+                    <div class="field-group select" [ngClass]=" query.vacancyId ? 'valid' : 'invalid' ">
+                        <label for="">Vị trí tuyển dụng </label>
+                        <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
+                            [options]="listVacancy" [(ngModel)]="query.vacancyId" name="vacancyId" [filter]="true">
+                            <ng-template let-item pTemplate="selectedItem">
+                                <span>{{item.label}}</span>
+                            </ng-template>
+                            <ng-template let-car pTemplate="item">
+                                <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                                    <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </p-dropdown>
+                    </div>
+                </div>
+                <!-- <div class="col-6">
+                    <div class="field-group select label-8" [ngClass]=" query.organizeId ? 'valid' : 'invalid' ">
+                        <label for="">Tổ chức </label>
+                        <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
+                            [options]="listOrgRoots" [(ngModel)]="query.organizeId"  (onChange)="getOrgPositions()"
+                            name="organizeId" [filter]="true">
+                            <ng-template let-item pTemplate="selectedItem">
+                                <span>{{item.label}}</span>
+                            </ng-template>
+                            <ng-template let-car pTemplate="item">
+                                <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                                    <div style="font-size:14px;float:left;margin-top:4px">{{car.label}}</div>
+                                </div>
+                            </ng-template>
+                            </p-dropdown>
+                    </div>
+                </div> -->
+                    <!-- <div class="col-6">
+                        <label for="">Phòng ban </label>
+                <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
+                    [options]="listOrgRoots" [(ngModel)]="query.org_cd"  (onChange)="find()"
+                    name="org_cd" [filter]="true">
+                    <ng-template let-item pTemplate="selectedItem">
+                        <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
+                    </ng-template>
+                    <ng-template let-car pTemplate="item">
+                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                            <div style="font-size:14px;float:left;margin-top:4px">{{car.label}}</div>
+                        </div>
+                    </ng-template>
+                    </p-dropdown>
+                    </div>   -->
+                    <!-- <div class="col-6">
+                        <div class="field-group select label-8" [ngClass]=" query.positionCd ? 'valid' : 'invalid' ">
+                            <label for="">Cấp bậc</label>
+                            <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
+                                [options]="positions" [(ngModel)]="query.positionCd" name="positionCd"
+                                >
+                                <ng-template let-item pTemplate="selectedItem">
+                                    <span>{{item.label}}</span>
+                                </ng-template>
+                                <ng-template let-car pTemplate="item">
+                                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                                        <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                                    </div>
+                                </ng-template>
+                            </p-dropdown>
+                        </div>
+                    </div> -->
+            
+            </div>
+            <div class="input-group icon col-12 select-default text-right">
+                <label for="" style="visibility: hidden;">Classid <span class="pi pi-info-circle"
+                        style="font-size: 13px;color: orange;"></span></label>
+                <p-button label="Tìm kiếm" styleClass="mr-1" icon="pi pi-search" (click)="load()">
+                </p-button>
+                <p-button label="Làm mới" icon="pi pi-times" (click)="cancel()"
+                    styleClass="p-button-secondary">
+                </p-button>
+            </div>
+        </div>
+    </ng-template>
+</p-overlayPanel>
