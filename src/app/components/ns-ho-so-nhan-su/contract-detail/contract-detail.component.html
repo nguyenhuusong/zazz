@@ -1,0 +1,12 @@
+<p-card>
+    <div class="status-line col-12 m-auto">
+        <p-steps [model]="steps" [(activeIndex)]="activeIndex" [readonly]="false"></p-steps>
+    </div>
+</p-card>
+<p-divider></p-divider>
+<p-card >
+    <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" 
+        [manhinh]="'Edit'" 
+        [optionsButtonsEdit]="optionsButon"  [dataView]="listViews"
+        (callback)="setContractInfo($event)" (callbackcancel)="cancel($event)"></app-edit-detail>
+</p-card>

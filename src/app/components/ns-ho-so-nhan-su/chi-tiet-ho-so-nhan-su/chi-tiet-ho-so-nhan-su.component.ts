@@ -70,10 +70,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
 
   modelContractInfo = {
     contractId: null,
-    contractTypeId: null,
     empId: null,
     detailInfo: null,
-    organizeId: null
+    contractTypeId: null,
   }
   hienthihopdong = false;
   displayAttach = false;
@@ -143,7 +142,6 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       { name: 'Thông tin cá nhân', code: API_PROFILE.THONG_TIN_CA_NHAN },
       { name: 'Vị trí công việc', code: API_PROFILE.CONG_VIEC },
       { name: 'Quan hệ lao động C&B', code: API_PROFILE.QUAN_HE_LAO_DONG },
-      // { name: 'Người quản lý', code: API_PROFILE.NGUOI_QUAN_LY },
       { name: 'Thuế bảo hiểm', code: API_PROFILE.THUE_BAO_HIEM },
       { name: 'Chuyên môn', code: API_PROFILE.CHUYEN_MON },
       { name: 'Tiện ích', code: API_PROFILE.TIEN_ICH },
@@ -1676,10 +1674,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   XemQuaTrinhHopDong(event) {
     this.modelContractInfo = {
       contractId: event.rowData.contractId,
-      contractTypeId: null,
+      contractTypeId: event.rowData.contractTypeId,
       empId: this.detailInfo.empId,
       detailInfo: this.detailInfo,
-      organizeId: this.detailInfo.organizeId
     }
     this.hienthihopdong = true;
   }
@@ -1806,9 +1803,8 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     this.modelContractInfo = {
       detailInfo: this.detailInfo,
       contractId: this.detailInfo.contractId || null,
-      contractTypeId: this.listContractTypes[0]?.value,
       empId: this.detailInfo.empId,
-      organizeId: this.detailInfo.organizeId
+      contractTypeId: null,
     }
     this.hienthihopdong = true;
   }

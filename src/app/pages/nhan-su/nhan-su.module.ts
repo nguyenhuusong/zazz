@@ -68,6 +68,9 @@ import { ImportHoSoNhanSuComponent } from 'src/app/components/ns-ho-so-nhan-su/i
 import { QtThayDoiLuongComponent } from 'src/app/components/qt-thay-doi-luong/qt-thay-doi-luong.component';
 import { CheckHideActionsDirectiveModule } from 'src/app/directive/check-action.module';
 import { ChiTietQTThayDoiLuongComponent } from 'src/app/components/qt-thay-doi-luong/chi-tiet-qt-thay-doi-luong/chi-tiet-qt-thay-doi-luong.component';
+import { ContractDetailComponent } from 'src/app/components/ns-ho-so-nhan-su/contract-detail/contract-detail.component';
+import {DividerModule} from 'primeng/divider';
+
 @NgModule({
   imports: [
     MessagesModule,
@@ -81,6 +84,7 @@ import { ChiTietQTThayDoiLuongComponent } from 'src/app/components/qt-thay-doi-l
     TimelineModule,
     TableModule,
     OverlayPanelModule,
+    DividerModule,
     BreadcrumbModule,
     DetailAccountModule,
     ListboxModule,
@@ -143,7 +147,9 @@ import { ChiTietQTThayDoiLuongComponent } from 'src/app/components/qt-thay-doi-l
     ImportXyLyHopDongComponent,
     ImportHoSoNhanSuComponent,
     QtThayDoiLuongComponent,
-    ChiTietQTThayDoiLuongComponent
+    ChiTietQTThayDoiLuongComponent,
+    ContractDetailComponent,
+
   ],
   providers: [ ]
 })

@@ -302,22 +302,6 @@
                             
                         </div>
 
-                    
-                        <!-- <div class="page-detail-edit-detail" *ngIf="listViewsReportTo.length> 0">
-                            <div class="d-flex justify-content-end" style="margin-bottom: 0;position: absolute; z-index: 9;right: 20px;">
-                                    <p-button label="Lưu lại" icon="pi pi-check" (click)="saveReportTo()" styleClass="p-button-sm"></p-button>
-                            </div>dsfdsf
-                            <app-edit-detail *ngIf="listViewsReportTo.length> 0"
-                                [detail]="detailInfoReportTo" 
-                                [thongtinnhanvienNew]="true" 
-                                [manhinh]="'Edit'" 
-                                [optionsButtonsEdit]="[]"  
-                                [dataView]="listViewsReportTo"
-                                (callback)="setEmployeeInfo($event)" 
-                                (callbackcancel)="cancelUpdateViewsReportTo($event)">
-                            </app-edit-detail>
-                        </div> -->
-
                         <div class="border-section mt-5" *ngIf="selectedMenuCode === API_PROFILE.CHUYEN_MON || selectedMenuCode === API_PROFILE.THONG_TIN_CA_NHAN
                         || selectedMenuCode === API_PROFILE.QUAN_LY_TAI_KHOAN">
                                 <p-card styleClass="mt-1 mb-4 p-card-header-custom plr-16" >
@@ -413,215 +397,201 @@
                         </p-card>
                     </div>
             </p-panel>
-
-            <!-- <div class="col-md-2" style="padding: 0">
-                <p-image
-                    src="{{detailInfo?.avatarUrl ? detailInfo?.avatarUrl : 'https://www.leviateair.com/wp-content/uploads/2017/01/No-Images.jpeg'}}"
-                    [preview]="true" alt="Image" width="200"></p-image> -->
-                <!-- <p-listbox [options]="menuItems" [(ngModel)]="selectedMenuCode" optionLabel="name" (onChange)="onChangeMenu($event.value)" optionValue="code"></p-listbox> -->
-            <!-- </div> -->
-            <p-dialog styleClass="popup-btngroup-edit-detail" header="{{titleForm.title}}" [(visible)]="displayDialog" [modal]="true" [draggable]="false"
-            [resizable]="false" [style]="{width: '1200px'}" [autoZIndex]=true [draggable]="false" [resizable]="false">
-                    <app-edit-detail
-                        *ngIf="listViewsForm.length> 0 && displayDialog &&  (titleForm.type === 'DuyetHoSo' || titleForm.type === 'TuyenDungLai' || titleForm.type === 'ChuyenCongTac')"
-                        [detail]="detailInfoForm" [manhinh]="manhinh" [thongtinnhanvienNew]="true" [dataView]="listViewsForm"
-                        (callback)="xacNhan($event)" (callbackcancel)="cancelViewsForm($event)"
-                        [noDisableInput]="noDisableInput"
-                        ></app-edit-detail>
-                    <!-- <p-selectButton [options]="optionsButtonsSave"
-                        *ngIf="titleForm.type === 'HuyHoSo' || titleForm.type === 'MoLaiHoSo' || titleForm.type === 'NghiViec'"
-                        optionLabel="label" optionValue="value" (onChange)="onChangeButtonSave($event)"></p-selectButton> -->
-                    <div *ngIf="titleForm.type !== 'ChuyenCongTac'">
-                            <div class="col-md-6 mt-1">
-                                <div class="field-group text" [ngClass]=" modelDuyet.full_name ? 'valid' : 'invalid' ">
-                                    <label for="">Nhân viên</label>
-                                    <input type="text" [value]="modelDuyet.full_name || 'No name'" disabled name="full_name" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-6 mt-1"  *ngIf="titleForm.type === 'NghiViec'">
-                                <div class="field-group select" [ngClass]=" modelDuyet.reason_id? 'valid' : 'invalid' ">
-                                    <label for="">Lý do</label>
-                                    <p-dropdown [autoZIndex]="true" [autoDisplayFirst]="false" [style]="{'width': '100%'}" [options]="terminateReasons"
-                                    [(ngModel)]="modelDuyet.reason_id" name="reason_id">
-                                    <ng-template let-item pTemplate="selectedItem">
-                                        <span style="vertical-align:middle; margin-left: .5em">{{item.name}}</span>
-                                    </ng-template>
-                                    <ng-template let-car pTemplate="item">
-                                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                                            <div style="font-size:14px;float:right;margin-top:4px">{{car.name}}</div>
-                                        </div>
-                                    </ng-template>
-                                    </p-dropdown>
-                                </div>
-                            </div>
-                            <div class="col-md-6 mt-1 ">
-                                <div class="field-group date">
-                                    <label for="">Ngày xác nhận</label>
-                                    <p-calendar placeholder="DD/MM/YYYY" appendTo="body" [baseZIndex]="101" [(ngModel)]="modelDuyet.workDt"
-                                        [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" inputId="navigators"
-                                        dateFormat="dd/mm/yy" name="workDt"></p-calendar>
-                                </div>
-                            </div>
-                            <div class="col-md-6 mt-1" *ngIf="titleForm.type === 'NghiViec'">
-                                <div class="field-group date">
-                                    <label for="">Ngày chốt nghỉ <span style="color: red">*</span></label>
-                                    <p-calendar [required]="true" placeholder="DD/MM/YYYY" appendTo="body" [baseZIndex]="101" [(ngModel)]="modelDuyet.exprire_date"
-                                        [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" inputId="navigators"
-                                        dateFormat="dd/mm/yy" name="exprire_date"></p-calendar>
-                                    <div class="alert-validation alert-danger" *ngIf="isSubmitSave && !modelDuyet.exprire_date"> 
-                                        Vui lòng chọn ngày chốt nghỉ 
-                                    </div>
-                                </div>
-                            </div>
-                                <div class="col-md-12 mt-1">
-                                    <div class="field-group textarea">
-                                        <label for="">Ghi chú</label>
-                                        <textarea [(ngModel)]="modelDuyet.comments" name="comments" cols="30" rows="10" class="form-control"></textarea>
-                                    </div>
-                                </div>
-                    <div class="col-md-12 mt-1 text-right"  *ngIf="titleForm.type === 'HuyHoSo' || titleForm.type === 'MoLaiHoSo' || titleForm.type === 'NghiViec'">
-                        <p-button label="Hủy" (click)="onChangeButtonSave('Back')" icon="pi pi-times" styleClass="p-button-sm p-button-secondary mr-1"></p-button>
-                        <p-button label="Lưu lại" (click)="onChangeButtonSave('Save')" icon="pi pi-check" styleClass="p-button-sm "></p-button>
-                    </div>
-                </div>
-        </p-dialog>
-
-        <p-dialog header="Duyệt hợp đồng" [(visible)]="displayApproveContract" [modal]="true" [draggable]="false"
-            [resizable]="false" [style]="{width: '40vw'}" [autoZIndex]=true [draggable]="false" [resizable]="false">
-            <!-- <div class="row col-md-12 mt-1 select-default" >
-                <div class="field-group select label-8">
-                    <p-dropdown [autoZIndex]="true" [autoDisplayFirst]="false" [style]="{'width': '100%'}" [options]="statusApprover"
-                    [(ngModel)]="modelDuyetHopDong.status" name="status">
-                    <ng-template let-item pTemplate="selectedItem">
-                        <span>{{item.label}}</span>
-                    </ng-template>
-                    <ng-template let-car pTemplate="item">
-                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                            <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
-                        </div>
-                    </ng-template>
-                    </p-dropdown>
-                    <label for="">Trạng thái duyệt</label>
-                </div>
-            </div> -->
-            <div class="row col-md-12 mt-1" style="margin-top: 5px;">
-                <div class="field-group textarea ">
-                    <label for="">Ghi chú</label>
-                    <textarea [(ngModel)]="modelDuyetHopDong.comment" name="comment" cols="30" rows="10" class="form-control"></textarea>
-                </div>
-            </div>
-
-            <ng-template pTemplate="footer">
-                <p-button icon="pi pi-check" (click)="duyetHoSo()" label="Xác nhận" styleClass=" p-button-sm mr-1">
-                </p-button>
-                <p-button icon="pi pi-trash" (click)="cancelContract()" label="Hủy duyệt" styleClass=" p-button-sm mr-1">
-                </p-button>
-                <p-button icon="pi pi-times" (click)="displayApproveContract= !displayApproveContract" label="Hủy"
-                    styleClass="p-button-secondary p-button-sm"></p-button>
-            </ng-template>
-        </p-dialog>
-
-        <!-- <p-dialog header="Thông tin hồ sơ cá nhân" [(visible)]="displayCreateContract" [modal]="true" [draggable]="false"
-            [resizable]="false" [style]="{width: '70vw'}" [autoZIndex]=true [draggable]="false" [resizable]="false">
-            <div class="grid-default border" *ngIf="displayCreateContract">
-                <app-list-grid-angular [domLayout]="'autoHeight'" [title]="'Chứng chỉ'"
-                    [listsData]="listsDataRecord" (FnClick)="OnClick($event)" [columnDefs]="columnDefsRecord"></app-list-grid-angular>
-            </div>
-            <ng-template pTemplate="footer">
-                <p-button icon="pi pi-check" (click)="saveCreateContract()" label="Xác nhận" styleClass=" p-button-sm mr-1">
-                </p-button>
-                <p-button icon="pi pi-times" (click)="displayCreateContract= !displayCreateContract" label="Hủy"
-                    styleClass="p-button-secondary p-button-sm"></p-button>
-            </ng-template>
-        </p-dialog> -->
-
-        <p-dialog styleClass="popup-btngroup-edit-detail" header="{{modelContractInfo.contractId === null ? ' Tạo hợp đồng': 'Thông tin chi tiết hợp đồng'}}" [(visible)]="hienthihopdong" [modal]="true"  [draggable]="false" [resizable]="false"
-            [style]="{width: '80vw'}" [autoZIndex]=true [draggable]="false" [resizable]="false">
-            <app-create-contract-info *ngIf="hienthihopdong" [modelContractInfo]="modelContractInfo"
-                (callback)="emitContract($event)" (back)="hienthihopdong = !hienthihopdong"></app-create-contract-info>
-        </p-dialog>
-
-        <p-dialog styleClass="popup-btngroup-edit-detail" header="{{modelAttach.metaId > 0 ? 'Xem chi tiết file đính kèm' : 'Thêm file đính kèm'}}" [(visible)]="displayAttach" [modal]="true" [draggable]="false" [resizable]="false"
-            [style]="{width: '600px'}" [autoZIndex]=true [draggable]="false" [resizable]="false">
-            <app-emp-attach-file *ngIf="displayAttach" 
-                [modelAttach]="modelAttach" 
-                (callback)="emitAttach($event)"
-                (back)="displayAttach = !displayAttach"></app-emp-attach-file>
-        </p-dialog>
-
-        <p-dialog [(visible)]="displayuploadcontract" [autoZIndex]="true" [modal]="true"  appendTo="body"
-            [style]="{width: '800px', height: 'auto'}">
-            <p-header>
-                Tải lên hợp đồng [{{record?.meta_title}}]
-            </p-header>
-            <app-upload-file [multiple]="" (callback)="handleUpload($event)" *ngIf="displayuploadcontract"></app-upload-file>
-        </p-dialog>
-
-        <p-dialog styleClass="xemthongtin-giayto-for-btn" [(visible)]="isShowCustIndiCreate" (onHide)="onHideCreate()" [draggable]="false"  [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '1000px', height: 'auto'}">
-            <p-header>
-            Xem thông tin giấy tờ
-            </p-header>
-            <app-detect-card *ngIf="isShowCustIndiCreate" [isShowRegister]="isShowRegister" (reset)="isShowRegister =!isShowRegister"  (callback)="confirmCheckCard($event)" [thongtinchitietthe]="thongtinchitietthe"></app-detect-card>
-            <app-card-info *ngIf="isShowRegister" [thongtinchitietthe]="thongtinchitietthe"  (back)="onReloadCard()"></app-card-info>
-        </p-dialog>
-
-        <p-dialog [(visible)]="isShowAddress" [draggable]="false" [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '1200px', height: 'auto'}">
-            <p-header>
-                {{thongtinlienhe.cont_id ? 'Xem chi tiết liên hệ' :  'Thêm mới người liên hệ'}}
-            </p-header>
-            <app-add-address-contact *ngIf="isShowAddress" [thongtinlienhe]="thongtinlienhe" (back)="reloaddanhsachlienhe()"></app-add-address-contact>
-        </p-dialog>
-
-        <p-dialog styleClass="popup-btngroup-edit-detail" [ngClass]="hideTitlePopup ? 'hide-title-popup' : ''" [(visible)]="displayFormEditDetail" [draggable]="false"  [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '600px', height: 'auto'}">
-            <p-header>
-                {{titleType0}}
-            </p-header>
-            <app-edit-detail [optionsButtonsEdit]="optionsButtonsPopup" *ngIf="listViewsDependent.length> 0 && detailDependentInfo" [detailInfo]="detailInfo"
-                [detail]="detailDependentInfo" [manhinh]="'Edit'" [thongtinnhanvienNew]="true"
-                [dataView]="listViewsDependent" (callback)="setEmpDependen($event)"
-                (callbackcancel)="cancelDependentInfo($event)"></app-edit-detail>
-        </p-dialog>
-
-
-        <p-dialog [(visible)]="isShowEditUserLogin" styleClass="xemthongtin-giayto-for-btn" [draggable]="false" [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '1200px', height: 'auto'}">
-            <p-header>
-                Chi tiết tài khoản
-            </p-header>
-            <app-user-detail [keyName]="keyName" *ngIf="isShowEditUserLogin" [isDialog]="true" (back)="saveUserLoginEdit()"></app-user-detail>
-        </p-dialog>
-
-        <p-dialog [(visible)]="displayNguoiDung" [draggable]="false"  [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '1200px', height: 'auto'}">
-            <p-header>
-            {{detailInfo?.account_no ? 'Chỉnh sửa' : 'Thêm'}} tài khoản người dùng [{{detailInfo?.fullName}}]
-            </p-header>
-        <app-detail-account *ngIf="displayNguoiDung" [detailAccount]="detailAccount" [isModal]="false" (back)="displayNguoiDung = !displayNguoiDung"></app-detail-account>
-        </p-dialog>
-
-        <p-dialog [(visible)]="isShowAddUserLogin" [draggable]="false" [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '600px', height: 'auto'}">
-            <p-header>
-            {{keyName === '' ? 'Thêm mới' : 'Chỉnh sửa'}}  tài khoản login
-            </p-header>
-            <div class="field-group text label-8" [ngClass]=" keyName ? 'valid' : 'invalid' ">
-                <label for="">Tên tài khoản</label>
-                <input class="form-control" type="text"
-                placeholder="Nhập tên user" id="filter" name="filter" [(ngModel)]="keyName" />
-            </div>
-            <div class="row mt-1">
-            <div class="col-md-6"></div>
-            <div class="col-md-6 text-right">
-                <p-button styleClass="p-button-sm" icon="pi pi-check" label="Lưu lại" (click)="saveUserLogin()"></p-button>
-            </div>
-            </div>
-        </p-dialog>   
-
-        <p-dialog [(visible)]="hienThifileDinhKem" [modal]="true" [style]="{width: '800px', height: 'auto'}">
-            <p-header>
-            File đính kèm
-            </p-header>
-            <div class="view-file text-center">
-                <img style="max-width: 100%; max-height: 600px;" *ngIf="dataFileDinhKem.meta_file_type === 'image/jpeg'" src="{{dataFileDinhKem.meta_file_url}}">
-            </div>
-        </p-dialog>   
     </div>
 </section>
 </div>
+
+
+
+
+<!-- ------------------------------ -->
+<!-- Dialog -->
+
+
+<p-dialog styleClass="popup-btngroup-edit-detail" header="{{titleForm.title}}" [(visible)]="displayDialog" [modal]="true" [draggable]="false"
+    [resizable]="false" [style]="{width: '1200px'}" [autoZIndex]=true [draggable]="false" [resizable]="false">
+            <app-edit-detail
+                *ngIf="listViewsForm.length> 0 && displayDialog &&  (titleForm.type === 'DuyetHoSo' || titleForm.type === 'TuyenDungLai' || titleForm.type === 'ChuyenCongTac')"
+                [detail]="detailInfoForm" [manhinh]="manhinh" [thongtinnhanvienNew]="true" [dataView]="listViewsForm"
+                (callback)="xacNhan($event)" (callbackcancel)="cancelViewsForm($event)"
+                [noDisableInput]="noDisableInput"
+                ></app-edit-detail>
+            <div *ngIf="titleForm.type !== 'ChuyenCongTac'">
+                    <div class="col-md-6 mt-1">
+                        <div class="field-group text" [ngClass]=" modelDuyet.full_name ? 'valid' : 'invalid' ">
+                            <label for="">Nhân viên</label>
+                            <input type="text" [value]="modelDuyet.full_name || 'No name'" disabled name="full_name" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-1"  *ngIf="titleForm.type === 'NghiViec'">
+                        <div class="field-group select" [ngClass]=" modelDuyet.reason_id? 'valid' : 'invalid' ">
+                            <label for="">Lý do</label>
+                            <p-dropdown [autoZIndex]="true" [autoDisplayFirst]="false" [style]="{'width': '100%'}" [options]="terminateReasons"
+                            [(ngModel)]="modelDuyet.reason_id" name="reason_id">
+                            <ng-template let-item pTemplate="selectedItem">
+                                <span style="vertical-align:middle; margin-left: .5em">{{item.name}}</span>
+                            </ng-template>
+                            <ng-template let-car pTemplate="item">
+                                <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                                    <div style="font-size:14px;float:right;margin-top:4px">{{car.name}}</div>
+                                </div>
+                            </ng-template>
+                            </p-dropdown>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-1 ">
+                        <div class="field-group date">
+                            <label for="">Ngày xác nhận</label>
+                            <p-calendar placeholder="DD/MM/YYYY" appendTo="body" [baseZIndex]="101" [(ngModel)]="modelDuyet.workDt"
+                                [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" inputId="navigators"
+                                dateFormat="dd/mm/yy" name="workDt"></p-calendar>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-1" *ngIf="titleForm.type === 'NghiViec'">
+                        <div class="field-group date">
+                            <label for="">Ngày chốt nghỉ <span style="color: red">*</span></label>
+                            <p-calendar [required]="true" placeholder="DD/MM/YYYY" appendTo="body" [baseZIndex]="101" [(ngModel)]="modelDuyet.exprire_date"
+                                [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" inputId="navigators"
+                                dateFormat="dd/mm/yy" name="exprire_date"></p-calendar>
+                            <div class="alert-validation alert-danger" *ngIf="isSubmitSave && !modelDuyet.exprire_date"> 
+                                Vui lòng chọn ngày chốt nghỉ 
+                            </div>
+                        </div>
+                    </div>
+                        <div class="col-md-12 mt-1">
+                            <div class="field-group textarea">
+                                <label for="">Ghi chú</label>
+                                <textarea [(ngModel)]="modelDuyet.comments" name="comments" cols="30" rows="10" class="form-control"></textarea>
+                            </div>
+                        </div>
+            <div class="col-md-12 mt-1 text-right"  *ngIf="titleForm.type === 'HuyHoSo' || titleForm.type === 'MoLaiHoSo' || titleForm.type === 'NghiViec'">
+                <p-button label="Hủy" (click)="onChangeButtonSave('Back')" icon="pi pi-times" styleClass="p-button-sm p-button-secondary mr-1"></p-button>
+                <p-button label="Lưu lại" (click)="onChangeButtonSave('Save')" icon="pi pi-check" styleClass="p-button-sm "></p-button>
+            </div>
+        </div>
+</p-dialog>
+
+
+<!-- <----------Duyệt hợp đồng ------->
+
+<p-dialog header="Duyệt hợp đồng" [(visible)]="displayApproveContract" [modal]="true" [draggable]="false"
+    [resizable]="false" [style]="{width: '40vw'}" [autoZIndex]=true [draggable]="false" [resizable]="false">
+    <div class="row col-md-12 mt-1" style="margin-top: 5px;">
+        <div class="field-group textarea ">
+            <label for="">Ghi chú</label>
+            <textarea [(ngModel)]="modelDuyetHopDong.comment" name="comment" cols="30" rows="10" class="form-control"></textarea>
+        </div>
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="duyetHoSo()" label="Xác nhận" styleClass=" p-button-sm mr-1">
+        </p-button>
+        <p-button icon="pi pi-trash" (click)="cancelContract()" label="Hủy duyệt" styleClass=" p-button-sm mr-1">
+        </p-button>
+        <p-button icon="pi pi-times" (click)="displayApproveContract= !displayApproveContract" label="Hủy"
+            styleClass="p-button-secondary p-button-sm"></p-button>
+    </ng-template>
+</p-dialog>
+
+<!-- <------------ Hợp đồng ----------->
+<p-dialog styleClass="popup-btngroup-edit-detail" header="{{modelContractInfo.contractId === null ? ' Tạo hợp đồng': 'Thông tin chi tiết hợp đồng'}}" [(visible)]="hienthihopdong" [modal]="true"  [draggable]="false" [resizable]="false"
+    [style]="{width: '80vw'}" [autoZIndex]=true [draggable]="false" [resizable]="false">
+    <app-contract-detail *ngIf="hienthihopdong" [modelContractInfo]="modelContractInfo"
+        (callback)="emitContract($event)" (back)="hienthihopdong = !hienthihopdong"></app-contract-detail>
+</p-dialog>
+
+
+
+<!-- <-------------------Xem chi tiết file đính kèm----------------->
+
+<p-dialog styleClass="popup-btngroup-edit-detail" header="{{modelAttach.metaId > 0 ? 'Xem chi tiết file đính kèm' : 'Thêm file đính kèm'}}" [(visible)]="displayAttach" [modal]="true" [draggable]="false" [resizable]="false"
+    [style]="{width: '600px'}" [autoZIndex]=true [draggable]="false" [resizable]="false">
+    <app-emp-attach-file *ngIf="displayAttach" 
+        [modelAttach]="modelAttach" 
+        (callback)="emitAttach($event)"
+        (back)="displayAttach = !displayAttach"></app-emp-attach-file>
+</p-dialog>
+
+
+
+<!-- <---------------Tải lên hợp đồng------------>
+
+<p-dialog [(visible)]="displayuploadcontract" [autoZIndex]="true" [modal]="true"  appendTo="body"
+    [style]="{width: '800px', height: 'auto'}">
+    <p-header>
+        Tải lên hợp đồng [{{record?.meta_title}}]
+    </p-header>
+    <app-upload-file [multiple]="" (callback)="handleUpload($event)" *ngIf="displayuploadcontract"></app-upload-file>
+</p-dialog>
+
+
+<!-- <--------------- Xem thông tin giấy tờ--------------->
+<p-dialog styleClass="xemthongtin-giayto-for-btn" [(visible)]="isShowCustIndiCreate" (onHide)="onHideCreate()" [draggable]="false"  [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '1000px', height: 'auto'}">
+    <p-header>
+    Xem thông tin giấy tờ
+    </p-header>
+    <app-detect-card *ngIf="isShowCustIndiCreate" [isShowRegister]="isShowRegister" (reset)="isShowRegister =!isShowRegister"  (callback)="confirmCheckCard($event)" [thongtinchitietthe]="thongtinchitietthe"></app-detect-card>
+    <app-card-info *ngIf="isShowRegister" [thongtinchitietthe]="thongtinchitietthe"  (back)="onReloadCard()"></app-card-info>
+</p-dialog>
+
+
+<!-- <------------liên hệ-------------->
+
+<p-dialog [(visible)]="isShowAddress" [draggable]="false" [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '1200px', height: 'auto'}">
+    <p-header>
+        {{thongtinlienhe.cont_id ? 'Xem chi tiết liên hệ' :  'Thêm mới người liên hệ'}}
+    </p-header>
+    <app-add-address-contact *ngIf="isShowAddress" [thongtinlienhe]="thongtinlienhe" (back)="reloaddanhsachlienhe()"></app-add-address-contact>
+</p-dialog>
+
+<!-- <------------- sad ----------->
+
+<p-dialog styleClass="popup-btngroup-edit-detail" [ngClass]="hideTitlePopup ? 'hide-title-popup' : ''" [(visible)]="displayFormEditDetail" [draggable]="false"  [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '600px', height: 'auto'}">
+    <p-header>
+        {{titleType0}}
+    </p-header>
+    <app-edit-detail [optionsButtonsEdit]="optionsButtonsPopup" *ngIf="listViewsDependent.length> 0 && detailDependentInfo" [detailInfo]="detailInfo"
+        [detail]="detailDependentInfo" [manhinh]="'Edit'" [thongtinnhanvienNew]="true"
+        [dataView]="listViewsDependent" (callback)="setEmpDependen($event)"
+        (callbackcancel)="cancelDependentInfo($event)"></app-edit-detail>
+</p-dialog>
+
+
+<p-dialog [(visible)]="isShowEditUserLogin" styleClass="xemthongtin-giayto-for-btn" [draggable]="false" [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '1200px', height: 'auto'}">
+    <p-header>
+        Chi tiết tài khoản
+    </p-header>
+    <app-user-detail [keyName]="keyName" *ngIf="isShowEditUserLogin" [isDialog]="true" (back)="saveUserLoginEdit()"></app-user-detail>
+</p-dialog>
+
+<p-dialog [(visible)]="displayNguoiDung" [draggable]="false"  [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '1200px', height: 'auto'}">
+    <p-header>
+    {{detailInfo?.account_no ? 'Chỉnh sửa' : 'Thêm'}} tài khoản người dùng [{{detailInfo?.fullName}}]
+    </p-header>
+<app-detail-account *ngIf="displayNguoiDung" [detailAccount]="detailAccount" [isModal]="false" (back)="displayNguoiDung = !displayNguoiDung"></app-detail-account>
+</p-dialog>
+
+<p-dialog [(visible)]="isShowAddUserLogin" [draggable]="false" [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '600px', height: 'auto'}">
+    <p-header>
+    {{keyName === '' ? 'Thêm mới' : 'Chỉnh sửa'}}  tài khoản login
+    </p-header>
+    <div class="field-group text label-8" [ngClass]=" keyName ? 'valid' : 'invalid' ">
+        <label for="">Tên tài khoản</label>
+        <input class="form-control" type="text"
+        placeholder="Nhập tên user" id="filter" name="filter" [(ngModel)]="keyName" />
+    </div>
+    <div class="row mt-1">
+    <div class="col-md-6"></div>
+    <div class="col-md-6 text-right">
+        <p-button styleClass="p-button-sm" icon="pi pi-check" label="Lưu lại" (click)="saveUserLogin()"></p-button>
+    </div>
+    </div>
+</p-dialog>   
+
+<p-dialog [(visible)]="hienThifileDinhKem" [modal]="true" [style]="{width: '800px', height: 'auto'}">
+    <p-header>
+    File đính kèm
+    </p-header>
+    <div class="view-file text-center">
+        <img style="max-width: 100%; max-height: 600px;" *ngIf="dataFileDinhKem.meta_file_type === 'image/jpeg'" src="{{dataFileDinhKem.meta_file_url}}">
+    </div>
+</p-dialog>   
