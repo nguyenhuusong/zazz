@@ -161,7 +161,17 @@ export class ContractDetailComponent implements OnInit {
     this.apiService.getContractInfo(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.activeIndex = results.data.flow_st;
-        
+        if(results.data.flow_st === 0) {
+          this.optionsButon = [
+            { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
+            { label: 'Tiếp tục', value: 'Update', class: '', icon: 'pi pi-save' },
+          ];
+        }else {
+          this.optionsButon = [
+            { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
+            { label: 'Tiếp tục', value: 'Update', class: '', icon: 'pi pi-save' },
+          ];
+        }
         this.steps = results.data.flowStatuses.map(d => {
           return {
             label: d.flow_name,
