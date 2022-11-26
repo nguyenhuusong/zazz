@@ -5,5 +5,13 @@
             padding: 0;
         }
     }
+    .p-panel{
+        box-shadow: unset;
+        .p-panel-footer {
+            display: flex;
+            justify-content: flex-end;
+            padding: unset;
+        }
+    }
    
 }

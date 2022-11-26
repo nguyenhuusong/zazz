@@ -27,6 +27,20 @@ export class ContractDetailComponent implements OnInit {
     { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
     { label: 'Tiếp tục', value: 'Update', class: '', icon: 'pi pi-save' },
   ];
+  columnDefs = [];
+  listsData = [];
+  gridflexs= [];
+  columnDefs_1 = [];
+  listsData_1 = [];
+  gridflexs_1= [];
+  gridKey = '';
+  gridKey_1 = '';
+  displayuploadcontract = false;
+  metafile = null;
+  displaySetting= false;
+  gridKeyForm= '';
+  detailInfo = null;
+  listViews = [];
   steps = [];
   activeIndex = 0
   ngOnInit(): void {
@@ -36,8 +50,7 @@ export class ContractDetailComponent implements OnInit {
       this.setContractCreate();
     }
   }
-  detailInfo = null;
-  listViews = [];
+ 
   setContractCreate() {
     this.detailInfo = null;
     this.listViews = [];
@@ -62,7 +75,7 @@ export class ContractDetailComponent implements OnInit {
   }
 
   stepActivated(): void {
-    const stepS = document.querySelectorAll('.status-line .p-steps-item');
+    const stepS = document.querySelectorAll('.steps-contract .p-steps-item');
     if (stepS.length > 0) {
       for (let i = 0; i < this.steps.length; i++) {
         if (i <= this.activeIndex) {
@@ -120,7 +133,8 @@ export class ContractDetailComponent implements OnInit {
             { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
             { label: 'Tiếp tục', value: 'Update', class: '', icon: 'pi pi-save' },
           ];
-          this.getContractMetaPage();
+         if(results.data.flow_st > 1) this.getContractMetaPage();
+         if(results.data.flow_st > 0) this.getSalaryComponentPage();
         }
        
         this.listViews = cloneDeep(results.data.group_fields);
@@ -147,6 +161,7 @@ export class ContractDetailComponent implements OnInit {
     this.apiService.getContractInfo(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.activeIndex = results.data.flow_st;
+        
         this.steps = results.data.flowStatuses.map(d => {
           return {
             label: d.flow_name,
@@ -158,27 +173,24 @@ export class ContractDetailComponent implements OnInit {
           this.stepActivated();
         }, 100);
         this.detailInfo = results.data;
+        if(results.data.flow_st > 1) this.getContractMetaPage();
+        if(results.data.flow_st > 0) this.getSalaryComponentPage();
         this.spinner.hide();
       }
     })
   }
 
-  columnDefs = [];
-  listsData = [];
-  gridflexs= [];
-  gridKey = '';
-  displayuploadcontract = false;
-  metafile = null;
+ 
   getContractMetaPage() {
     this.spinner.show();
     this.columnDefs = [];
-    const queryParams = queryString.stringify({ scheme_id: this.detailInfo.scheme_id, offSet: 0, pageSize: 10000 });
+    const queryParams = queryString.stringify({ contractId: this.detailInfo.contractId, offSet: 0, pageSize: 10000 });
     this.apiService.getContractMetaPage(queryParams).subscribe(repo => {
       if (repo.status === 'success') {
         this.listsData = repo.data.dataList.data;
         this.gridflexs = repo.data.gridflexs;
         if (repo.data.dataList.gridKey) {
-          this.gridKey = repo.data.dataList.gridKey
+          this.gridKey_1 = repo.data.dataList.gridKey
         }
         this.spinner.hide();
         this.initGrid();
@@ -186,6 +198,31 @@ export class ContractDetailComponent implements OnInit {
         this.spinner.hide();
       }
     })
+  }
+
+  getSalaryComponentPage() {
+    this.spinner.show();
+    this.columnDefs_1 = [];
+    const queryParams = queryString.stringify({ contractId: this.detailInfo.contractId, offSet: 0, pageSize: 10000 });
+    this.apiService.getSalaryComponentPage(queryParams).subscribe(repo => {
+      if (repo.status === 'success') {
+        this.listsData_1 = repo.data.dataList.data;
+        this.gridflexs_1 = repo.data.gridflexs;
+        if (repo.data.dataList.gridKey) {
+          this.gridKey = repo.data.dataList.gridKey
+        }
+        this.spinner.hide();
+        this.initGrid_1();
+      } else {
+        this.spinner.hide();
+      }
+    })
+  }
+
+  initGrid_1() {
+    this.columnDefs_1 = [
+      ...AgGridFn(this.gridflexs_1.filter((d: any) => !d.isHide)),
+     ]
   }
 
   initGrid() {
@@ -306,11 +343,9 @@ export class ContractDetailComponent implements OnInit {
     elem.click();
   }
 
-  displaySetting= false;
-  CauHinh() {
+ 
+  CauHinh(type) {
+    this.gridKeyForm = type === 0 ? this.gridKey : this.gridKey_1
     this.displaySetting = true;
   }
-
-
-
 }

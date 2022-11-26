@@ -372,6 +372,10 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v2/contract/GetContractMetaPage?` + queryParams, this.options)
   }
 
+  getSalaryComponentPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/contract/GetSalaryComponentPage?` + queryParams, this.options)
+  }
+
   setContractCreate(queryParams): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/contract/SetContractCreate` , queryParams, this.options)
   }
@@ -1143,7 +1147,7 @@ export class ApiHrmService {
   }
 
   getContractTypePage(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v2/contract/GetContractTypePage?` + queryParams, this.options)
+    return this.http.get<any>(`${apiHrmServer}/api/v2/contracttype/GetContractTypePage?` + queryParams, this.options)
   }
 
   getContractPage(queryParams): Observable<any> {
@@ -1152,15 +1156,19 @@ export class ApiHrmService {
 
   
   getContractTypeInfo(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v2/contract/GetContractTypeInfo?` + queryParams, this.options)
+    return this.http.get<any>(`${apiHrmServer}/api/v2/contracttype/GetContractTypeInfo?` + queryParams, this.options)
   }
   
   setContractTypeInfo(params): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v2/contract/SetContractTypeInfo`, params, this.options)
+    return this.http.post<any>(`${apiHrmServer}/api/v2/contracttype/SetContractTypeInfo`, params, this.options)
+  }
+
+  uploadFileContract(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/contracttype/UploadFileContract`, params, this.options)
   }
 
   delContractTypeInfo(queryParams): Observable<any> {
-    return this.http.delete<any>(`${apiHrmServer}/api/v2/contract/DelContractTypeInfo?` + queryParams, this.options)
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/contracttype/DelContractTypeInfo?` + queryParams, this.options)
   }
 
   // api cũ

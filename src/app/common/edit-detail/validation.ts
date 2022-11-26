@@ -177,13 +177,14 @@ export function ValidationNumberDayInMonthEmpty(value) {
 
 
 export function ValidationNumber(value) {
+    console.log("value", value)
     if(value === "" || value === undefined) {
         return {
             error : true,
             message: Error.ERROR_REQUIRE
         }
     };
-    if (value < 1) {
+    if (value <= 0) {
         return {
             error : true,
             message: Error.ERROR_NUMBER
@@ -203,7 +204,7 @@ export function ValidationNumberEmpty(value) {
             message: ''
         }
     };
-    if (value < 1) {
+    if (value <= 0) {
         return {
             error : true,
             message: Error.ERROR_NUMBER

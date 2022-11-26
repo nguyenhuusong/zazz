@@ -1,12 +1,12 @@
 <p-card>
-    <div class="status-line col-12 m-auto">
+    <div class="status-line steps-contract col-12 m-auto">
         <p-steps [model]="steps" [(activeIndex)]="activeIndex" [readonly]="false"></p-steps>
     </div>
 </p-card>
 <p-divider></p-divider>
 <p-card>
     <div class="grid wrap-edit-detail">
-        <div class="col-12 border-section " *ngIf="this.detailInfo?.flow_st > 0">
+        <div class="col-12 border-section " *ngIf="this.detailInfo?.flow_st > 1">
             <p-panel header="Danh sách hồ sơ hợp đồng">
                 <div class="row" style="flex-wrap: wrap">
                     <div class="grid-default border">
@@ -15,16 +15,31 @@
                         </div>
                 </div>
                 <ng-template pTemplate="footer">
-                    <p-button label="Cấu hình" (click)="CauHinh()" styleClass="p-button-sm"></p-button>
+                    <p-button label="Cấu hình" icon="pi pi-cog" (click)="CauHinh(0)" styleClass="p-button-sm"></p-button>
                 </ng-template>
             </p-panel>
         </div>
     </div>
+    <p-divider *ngIf="this.detailInfo?.flow_st > 1"></p-divider>
     <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'"
         [optionsButtonsEdit]="optionsButon" [dataView]="listViews" (callback)="setContractInfo($event)"
         (callbackcancel)="cancel($event)"></app-edit-detail>
-    
-   
+        <p-divider></p-divider>
+        <div class="grid wrap-edit-detail">
+            <div class="col-12 border-section " *ngIf="this.detailInfo?.flow_st > 0">
+                <p-panel header="Thành phần lương">
+                    <div class="row" style="flex-wrap: wrap">
+                        <div class="grid-default border">
+                            <app-list-grid-angular [domLayout]="'autoHeight'" *ngIf="columnDefs_1.length > 0" [title]="'Chứng chỉ'"
+                                [listsData]="listsData_1" [columnDefs]="columnDefs_1"></app-list-grid-angular>
+                            </div>
+                    </div>
+                    <ng-template pTemplate="footer">
+                        <p-button label="Cấu hình" icon="pi pi-cog" (click)="CauHinh(1)" styleClass="p-button-sm"></p-button>
+                    </ng-template>
+                </p-panel>
+            </div>
+        </div>  
 </p-card>
 
 
@@ -37,7 +52,7 @@
 </p-dialog>
 
 
-<p-dialog header="Cài đặt cấu hình" [(visible)]="displaySetting" (onHide)="getContractMetaPage()" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
+<p-dialog header="Cài đặt cấu hình" [(visible)]="displaySetting" (onHide)="gridKeyForm === 'view_hrm_contract_files' ? getContractMetaPage() : getSalaryComponentPage()" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
     [draggable]="false" [resizable]="false" [focusTrap]="false" styleClass="popup-setting">
-    <app-config-grid-table-form *ngIf="displaySetting && gridKey" [typeConfig]="'TableInfo'"   [gridKey]="gridKey"></app-config-grid-table-form>
+    <app-config-grid-table-form *ngIf="displaySetting && gridKeyForm" [typeConfig]="'TableInfo'"   [gridKey]="gridKeyForm"></app-config-grid-table-form>
 </p-dialog>

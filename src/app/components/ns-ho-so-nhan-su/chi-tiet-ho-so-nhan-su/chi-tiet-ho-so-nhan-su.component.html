@@ -493,7 +493,7 @@
 </p-dialog>
 
 <!-- <------------ Hợp đồng ----------->
-<p-dialog styleClass="popup-btngroup-edit-detail" header="{{modelContractInfo.contractId === null ? ' Tạo hợp đồng': 'Thông tin chi tiết hợp đồng'}}" [(visible)]="hienthihopdong" [modal]="true"  [draggable]="false" [resizable]="false"
+<p-dialog styleClass="popup-btngroup-edit-detail" [maximizable]="true" header="{{modelContractInfo.contractId === null ? ' Tạo hợp đồng': 'Thông tin chi tiết hợp đồng'}}" [(visible)]="hienthihopdong" [modal]="true"  [draggable]="false" [resizable]="false"
     [style]="{width: '80vw'}" [autoZIndex]=true [draggable]="false" [resizable]="false">
     <app-contract-detail *ngIf="hienthihopdong" [modelContractInfo]="modelContractInfo"
         (callback)="emitContract($event)" (back)="hienthihopdong = !hienthihopdong"></app-contract-detail>
