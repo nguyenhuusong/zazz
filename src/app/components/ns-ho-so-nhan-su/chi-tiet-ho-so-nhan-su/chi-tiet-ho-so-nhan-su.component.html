@@ -168,34 +168,7 @@
                                     </p-card>
                                 </div>
                             </div>
-                            <!-- <div class="col-md-4">
-                                <div class="box">
-                                    <p-card styleClass="mt-1" >
-                                        <ng-template pTemplate="header">
-                                            <div class="panel-heading">
-                                                <h6 class="panel-title mb-0" style="color: black; ">Dòng
-                                                    thời gian<p-badge *ngIf="listsData[0].length > 0"
-                                                        value="{{listsData[0].length}}" styleClass="p-mr-2"></p-badge>
-                                                </h6>
-                                            </div>
-                                        </ng-template>
-                                    
-                                        <p-timeline [value]="detailInfo?.timelines" styleClass="customized-timeline mt-4 nhan-vien-timeline"
-                                        >
-                                            <ng-template pTemplate="marker" let-event>
-                                                <span class="custom-marker p-shadow-2" >
-                                                    <i class="pi pi-{{event.icon}}"></i>
-                                                </span>
-                                            </ng-template>
-                                            <ng-template pTemplate="content" let-event>
-                                                <p-card [header]="event.status" [subheader]="event.date">
-                                                    <p class="mt-1">{{event.note}}</p>
-                                                </p-card>
-                                            </ng-template>
-                                        </p-timeline>
-                                    </p-card>
-                                </div>
-                            </div> -->
+                           
                         </div>
                     
 
@@ -383,7 +356,7 @@
                                         </div>
                                 </p-card>
                         </div>
-                    <div class="border-section mt-5 mb-4"  *ngIf="selectedMenuCode === API_PROFILE.THONG_TIN_CA_NHAN">
+                    <div class="border-section mt-5 mb-4"  *ngIf="selectedMenuCode === API_PROFILE.THONG_TIN_CA_NHAN || selectedMenuCode === API_PROFILE.CHUYEN_MON">
                         <p-card styleClass="mt-1 plr-16" >
                             <ng-template pTemplate="header">
                                 <div class="panel-heading p-panel-header">
@@ -596,3 +569,16 @@
         <img style="max-width: 100%; max-height: 600px;" *ngIf="dataFileDinhKem.meta_file_type === 'image/jpeg'" src="{{dataFileDinhKem.meta_file_url}}">
     </div>
 </p-dialog>   
+
+
+
+
+<p-dialog styleClass="popup-btngroup-edit-detail" [(visible)]="displayFormEmpTrain" [draggable]="false"  [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '600px', height: 'auto'}">
+    <p-header>
+        {{titleEmpTrain}}
+    </p-header>
+    <app-edit-detail [optionsButtonsEdit]="optionsButtonsPopup" *ngIf="listViewsEmpTrain.length> 0 && detailEmpTrainInfo" [detailInfo]="detailInfo"
+        [detail]="detailEmpTrainInfo" [manhinh]="'Edit'" [thongtinnhanvienNew]="true"
+        [dataView]="listViewsEmpTrain" (callback)="setEmpDependen($event)"
+        (callbackcancel)="cancelEmpTrainInfo($event)"></app-edit-detail>
+</p-dialog>

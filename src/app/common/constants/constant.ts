@@ -590,7 +590,7 @@ export const API_PROFILE  = {
     LIEN_HE: "GetEmployeeByContact",
     THUE_BAO_HIEM: "GetEmployeeByInsurance",
     TIEN_LUONG: "GetEmployeeBySalary",
-    CHUYEN_MON: "GetEmployeeByQualification",
+    CHUYEN_MON: "GetEmpQualification",
     TIEN_ICH: "GetEmployeeByUtility",
     NGUOI_DUNG: "GetEmployeeByUser",
     CHUYEN_CONG_TAC: "GetEmployeeChangeInfo",

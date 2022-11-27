@@ -424,10 +424,6 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v2/working/GetEmpWorking?` + queryParams, this.options)
   }
 
-  getEmpDependent(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v2/employee/GetEmpDependent?` + queryParams, this.options)
-  }
-
   getEmpContact(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/employee/GetEmpContact?` + queryParams, this.options)
   }
@@ -437,7 +433,11 @@ export class ApiHrmService {
   }
 
   getEmployeeData(linkurl, queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v2/employee/${linkurl}?` + queryParams, this.options)
+    if(linkurl === 'GetEmpQualification') {
+      return this.http.get<any>(`${apiHrmServer}/api/v2/employeetrain/${linkurl}?` + queryParams, this.options)
+    }else {
+      return this.http.get<any>(`${apiHrmServer}/api/v2/employee/${linkurl}?` + queryParams, this.options)
+    }
   }
 
   setEmployeeInfo(params): Observable<any> {
@@ -511,6 +511,14 @@ export class ApiHrmService {
   
   delEmpAttach(queryParams): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v2/employee/DelEmpAttach?` + queryParams, this.options)
+  }
+  
+  getEmpDependentPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/employee/GetEmpDependentPage?` + queryParams, this.options)
+  }
+  
+  getEmpDependent(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/employee/GetEmpDependent?` + queryParams, this.options)
   }
 
   delEmpDependent(queryParams): Observable<any> {
@@ -1886,6 +1894,66 @@ export class ApiHrmService {
   updateCandidatesPotential(queryParams, data = null): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v1/recruitment/UpdateCandidatesPotential?${queryParams}`, data , this.options)
   }
+
+  //EmpTrain
+
+  getEmpQualification(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/employeetrain/GetEmpQualification?` + queryParams, this.options)
+  }
+  getEmpWorkedPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/employeetrain/GetEmpWorkedPage?` + queryParams, this.options)
+  }
+  getEmpWorked(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/employeetrain/GetEmpWorked?` + queryParams, this.options)
+  }
+  setEmpQualification(data): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/employeetrain/SetEmpQualification`, data , this.options)
+  }
+  setEmpWorked(data): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/employeetrain/SetEmpWorked`, data , this.options)
+  }
+  delEmpWorked(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/employeetrain/DelEmpWorked?${queryParams}`, this.options)
+  }
+  getEducationPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/employeetrain/GetEducationPage?` + queryParams, this.options)
+  }
+  addEducation(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/employeetrain/AddEducation?` + queryParams, this.options)
+  }
+  getTrainningPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/employeetrain/GetTrainningPage?` + queryParams, this.options)
+  }
+  addTraining(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/employeetrain/AddTraining?` + queryParams, this.options)
+  }
+  getSkillPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/employeetrain/GetSkillPage?` + queryParams, this.options)
+  }
+  addSkill(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/employeetrain/AddSkill?` + queryParams, this.options)
+  }
+  getCertificatePage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/employeetrain/GetCertificatePage?` + queryParams, this.options)
+  }
+  addCertificate(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/employeetrain/AddCertificate?` + queryParams, this.options)
+  }
+  getTrainFile(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/employeetrain/GetTrainFile?` + queryParams, this.options)
+  }
+  setTrainFile(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/employeetrain/SetTrainFile`, queryParams, this.options)
+  }
+  delTrainFile(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/employeetrain/DelTrainFile?` + queryParams, this.options)
+  }
+
+  getEmpTrainPage(queryParams, linkurl): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/employeetrain/${linkurl}?` + queryParams, this.options)
+  }
+
+
   
   
   

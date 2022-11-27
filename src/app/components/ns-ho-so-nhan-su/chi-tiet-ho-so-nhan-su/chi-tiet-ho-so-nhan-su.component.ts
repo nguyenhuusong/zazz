@@ -282,9 +282,6 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       if (results.status === 'success') {
         this.listViewsReportTo = cloneDeep(results.data.group_fields || []);
         this.detailInfoReportTo = results.data;
-        // this.columnDefs[0] = [...AgGridFn(this.detailInfoReportTo.gridflexdetails1 || [])];
-        // this.listsData[0] = data.reportTos || [];
-        // this.titles[0] = 'Báo cáo cho';
         this.columnDefs[2] = [...AgGridFn(this.detailInfoReportTo.gridflexdetails2 || []),
         {
           headerName: '',
@@ -761,42 +758,10 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
         this.getSalaryInfoPageByEmpId();
         break;
       case API_PROFILE.THUE_BAO_HIEM:
-        this.columnDefs[0] = [
-          ...AgGridFn(data.gridflexdetails1 || []),
-          {
-            headerName: '',
-            field: 'gridflexdetails1',
-            cellClass: ['border-right', 'no-auto'],
-            pinned: 'right',
-            width: 70,
-            cellRenderer: 'buttonAgGridComponent',
-            cellRendererParams: params => {
-              return {
-                buttons: [
-                  {
-                    onClick: this.OnClick.bind(this),
-                    label: 'Xem chi tiêt',
-                    icon: 'fa fa-edit edittingg',
-                    key: 'xemchitietlienhe',
-                    class: 'btn-primary mr-1',
-                    hide: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_TBH_NPT_XEM_CHI_TIET)
-                  },
-                  {
-                    onClick: this.OnClick.bind(this),
-                    label: 'Xóa',
-                    icon: 'pi pi-trash',
-                    key: 'xoa-nguoi-phu-thuoc',
-                    class: 'btn-danger',
-                    hide: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_TBH_NPT_XOA)
-                  },
-                ]
-              };
-            },
-          }];
-        this.listsData[0] = data.dependents || [];
+        this.getEmpDependentPage();
         this.listsData[1] = data.attachs || [];
+
         this.titles[1] = 'Danh sách đính kèm';
-        this.titles[0] = 'Người phụ thuộc';
         this.columnDefs[1] = [
           ...AgGridFn(data.gridflexdetails2 || []),
           {
@@ -922,25 +887,203 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
         this.spinner.hide();
         break;
       case API_PROFILE.CHUYEN_MON:
-        this.columnDefs[0] = [...AgGridFn(data.gridflexdetails1 || [])];
-        this.listsData[0] = data.works || [];
-        this.titles[0] = 'Quá trình đào tạo học vấn';
-        this.columnDefs[1] = [...AgGridFn(data.gridflexdetails2 || [])];
-        this.listsData[1] = data.education || [];
-        this.titles[1] = 'Đào tạo';
-        this.columnDefs[2] = [...AgGridFn(data.gridflexdetails3 || [])];
-        this.listsData[2] = data.skills || [];
-        this.titles[2] = 'Kỹ năng';
-        this.columnDefs[3] = [...AgGridFn(data.gridflexdetails4 || [])];
-        this.listsData[3] = data.licenses || [];
-        this.titles[3] = 'Chứng chỉ';
-        this.spinner.hide();
+        this.columnDefs = [];
+        this.apiEmpTrainPage(queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 }), 'GetEmpWorkedPage', 0, 'Quá trình làm việc')
+        this.apiEmpTrainPage(queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 }), 'GetEducationPage', 1, 'Học vấn')
+        this.apiEmpTrainPage(queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 }), 'GetTrainningPage', 2, 'Đào tạo')
+        this.apiEmpTrainPage(queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 }), 'GetSkillPage', 3, 'Kỹ năng')
+        this.apiEmpTrainPage(queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 }), 'GetCertificatePage', 4, 'Chứng chỉ')
         break;
       default:
         this.initData();
         this.spinner.hide();
         break;
     }
+  }
+
+  cancelEmpTrainInfo(event) {
+
+  }
+  
+  apiEmpTrainPage(param, link, index, title) {
+    this.titleEmpTrain = link;
+    this.spinner.show();
+    this.apiService.getEmpTrainPage(param, link).subscribe(repo => {
+        if(repo.status ==='success') {
+          if (repo.data.dataList.gridKey) {
+            this.gridKey[index] = repo.data.dataList.gridKey;
+          }
+          this.spinner.hide();
+          this.columnDefs[index] = [
+            ...AgGridFn(repo.data.gridflexs || []),
+            {
+              headerName: '',
+              field: 'gridflexdetails1',
+              cellClass: ['border-right', 'no-auto'],
+              pinned: 'right',
+              width: 70,
+              cellRenderer: 'buttonAgGridComponent',
+              cellRendererParams: params => {
+                if(link === 'GetEmpWorkedPage') {
+                  return {
+                    buttons: [
+                      {
+                        onClick: this.GetEmpWorked.bind(this, link),
+                        label: 'Xem chi tiết',
+                        icon: 'fa fa-edit editing',
+                        key: 'view-qua-trinh-hop-dong',
+                        class: 'btn-primary mr5',
+                      },
+                     
+                      {
+                        onClick: this.DelEmpWorked.bind(this, link),
+                        label: 'Xóa',
+                        icon: 'pi pi-trash',
+                        key: 'delete-qua-trinh-hop-dong',
+                        class: 'btn-danger',
+                      },
+    
+                    ]
+                  };
+                }else if(link === 'GetEducationPage'){
+                  return {
+                    buttons: [
+                      {
+                        onClick: this.AddEducation.bind(this, link),
+                        label: 'Xem chi tiết',
+                        icon: 'fa fa-edit editing',
+                        key: 'view-qua-trinh-hop-dong',
+                        class: 'btn-primary mr5',
+                      },
+                    ]
+                  };
+                }else if(link === 'GetTrainningPage'){
+                  return {
+                    buttons: [
+                      {
+                        onClick: this.AddTraining.bind(this, link),
+                        label: 'Xem chi tiết',
+                        icon: 'fa fa-edit editing',
+                        key: 'view-qua-trinh-hop-dong',
+                        class: 'btn-primary mr5',
+                      },
+                    ]
+                  };
+                }else if(link === 'GetSkillPage'){
+                  return {
+                    buttons: [
+                      {
+                        onClick: this.AddSkill.bind(this, link),
+                        label: 'Xem chi tiết',
+                        icon: 'fa fa-edit editing',
+                        key: 'view-qua-trinh-hop-dong',
+                        class: 'btn-primary mr5',
+                      },
+                    ]
+                  };
+                }else if(link === 'GetCertificatePage'){
+                  return {
+                    buttons: [
+                      {
+                        onClick: this.AddCertificate.bind(this, link),
+                        label: 'Xem chi tiết',
+                        icon: 'fa fa-edit editing',
+                        key: 'view-qua-trinh-hop-dong',
+                        class: 'btn-primary mr5',
+                      },
+                    ]
+                  };
+                }
+                
+              },
+            }
+          ];
+          this.listsData[index] = repo.data.dataList.data || [];
+          this.titles[index] = title;
+        }
+    })
+  }
+  displayFormEmpTrain = false;
+  detailEmpTrainInfo = null;
+  listViewsEmpTrain = [];
+  titleEmpTrain = '';
+  GetEmpWorked(event) {
+    this.spinner.show();
+    const queryParams = queryString.stringify({ empId: this.empId, dependentId: null});
+    this.apiService.getEmpWorked(queryParams).subscribe(result => {
+      if(result.status === 'success') {
+        this.listViewsEmpTrain = result.data.group_fields;
+        this.detailEmpTrainInfo = result.data;
+        this.titleEmpTrain = 'Thông tin quá trình làm việc';
+        this.displayFormEmpTrain = true;
+        this.spinner.hide();
+      }
+    })
+  }
+
+  AddEducation(event) {
+    this.spinner.show();
+    const queryParams = queryString.stringify({ empId: this.empId});
+    this.apiService.addEducation(queryParams).subscribe(result => {
+      if(result.status === 'success') {
+        this.listViewsEmpTrain = result.data.group_fields;
+        this.detailEmpTrainInfo = result.data;
+        this.titleEmpTrain = 'Thông tin học vấn';
+        this.displayFormEmpTrain = true;
+        this.spinner.hide();
+      }
+    })
+  }
+
+  AddTraining(event) {
+    this.spinner.show();
+    const queryParams = queryString.stringify({ empId: this.empId});
+    this.apiService.addTraining(queryParams).subscribe(result => {
+      if(result.status === 'success') {
+        this.listViewsEmpTrain = result.data.group_fields;
+        this.detailEmpTrainInfo = result.data;
+        this.titleEmpTrain = 'Thông tin đào tạo';
+        this.displayFormEmpTrain = true;
+        this.spinner.hide();
+      }
+    })
+  }
+
+  AddSkill(event) {
+    this.spinner.show();
+    const queryParams = queryString.stringify({ empId: this.empId});
+    this.apiService.addTraining(queryParams).subscribe(result => {
+      if(result.status === 'success') {
+        this.listViewsEmpTrain = result.data.group_fields;
+        this.detailEmpTrainInfo = result.data;
+        this.titleEmpTrain = 'Thông tin ký năng';
+        this.displayFormEmpTrain = true;
+        this.spinner.hide();
+      }
+    })
+  }
+
+  AddCertificate(event) {
+    this.spinner.show();
+    const queryParams = queryString.stringify({ empId: this.empId});
+    this.apiService.addTraining(queryParams).subscribe(result => {
+      if(result.status === 'success') {
+        this.listViewsEmpTrain = result.data.group_fields;
+        this.detailEmpTrainInfo = result.data;
+        this.titleEmpTrain = 'Thông tin chứng chỉ';
+        this.displayFormEmpTrain = true;
+        this.spinner.hide();
+      }
+    })
+  }
+
+  DelEmpWorked(event) {
+    const queryParams = queryString.stringify({ empId: this.empId});
+    this.apiService.delEmpWorked(queryParams).subscribe(result => {
+      if(result.status === 'success') {
+        this.apiEmpTrainPage(queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 }), 'GetEmpWorkedPage', 0, 'Quá trình làm việc')
+      }
+    })
   }
 
   getContractPageByEmpId() {
@@ -1004,6 +1147,55 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     })
   }
 
+  getEmpDependentPage() {
+    this.spinner.show();
+    this.columnDefs = [];
+    const queryParams = queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 });
+    this.apiService.getEmpDependentPage(queryParams).subscribe(repo => {
+      if (repo.status === 'success') {
+        if (repo.data.dataList.gridKey) {
+          this.gridKey[0] = repo.data.dataList.gridKey;
+        }    this.columnDefs[0] = [
+          ...AgGridFn(repo.data.gridflexs || []),
+          {
+            headerName: '',
+            field: 'gridflexdetails1',
+            cellClass: ['border-right', 'no-auto'],
+            pinned: 'right',
+            width: 70,
+            cellRenderer: 'buttonAgGridComponent',
+            cellRendererParams: params => {
+              return {
+                buttons: [
+                  {
+                    onClick: this.OnClick.bind(this),
+                    label: 'Xem chi tiêt',
+                    icon: 'fa fa-edit edittingg',
+                    key: 'xemchitietlienhe',
+                    class: 'btn-primary mr-1',
+                    hide: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_TBH_NPT_XEM_CHI_TIET)
+                  },
+                  {
+                    onClick: this.OnClick.bind(this),
+                    label: 'Xóa',
+                    icon: 'pi pi-trash',
+                    key: 'xoa-nguoi-phu-thuoc',
+                    class: 'btn-danger',
+                    hide: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_TBH_NPT_XOA)
+                  },
+                ]
+              };
+            },
+          }];
+          this.listsData[0] = repo.data.dataList.data || [];
+        this.titles[0] = 'Người phụ thuộc';
+
+      } else {
+        this.spinner.hide();
+      }
+    })
+  }
+
   getSalaryInfoPageByEmpId() {
     this.spinner.show();
     this.columnDefs = [];
@@ -1024,7 +1216,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   }
 
   CauHinh() {
-    
+
   }
 
 
@@ -1097,23 +1289,45 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       };
     }
 
-    this.apiService.setEmployeeInfo(params).subscribe((results: any) => {
-      if (results.status === 'success') {
-        this.displayUserInfo = false;
-        if (this.url === 'them-moi-cong-ty') {
-          this.goBack();
+    if(this.selectedMenuCode === 'GetEmpQualification') {
+      this.apiService.setEmpQualification(params).subscribe((results: any) => {
+        if (results.status === 'success') {
+          this.displayUserInfo = false;
+          if (this.url === 'them-moi-cong-ty') {
+            this.goBack();
+          } else {
+            this.manhinh = 'Edit';
+            this.getEmployeeInfo();
+          }
+          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Cập nhật thông tin thành công' });
         } else {
-          this.manhinh = 'Edit';
-          this.getEmployeeInfo();
+          this.messageService.add({
+            severity: 'error', summary: 'Thông báo', detail: results.message
+          });
         }
-        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Cập nhật thông tin thành công' });
-      } else {
-        this.messageService.add({
-          severity: 'error', summary: 'Thông báo', detail: results.message
-        });
-      }
-    }, error => {
-    });
+      }, error => {
+      });
+    }else {
+      this.apiService.setEmployeeInfo(params).subscribe((results: any) => {
+        if (results.status === 'success') {
+          this.displayUserInfo = false;
+          if (this.url === 'them-moi-cong-ty') {
+            this.goBack();
+          } else {
+            this.manhinh = 'Edit';
+            this.getEmployeeInfo();
+          }
+          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Cập nhật thông tin thành công' });
+        } else {
+          this.messageService.add({
+            severity: 'error', summary: 'Thông báo', detail: results.message
+          });
+        }
+      }, error => {
+      });
+    }
+
+   
   }
 
   lockCard(e) {
