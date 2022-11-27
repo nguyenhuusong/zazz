@@ -156,7 +156,7 @@ import { OrganizeInfoService } from 'src/app/services/organize-info.service';
       this.confirmationService.confirm({
         message: 'Bạn có chắc chắn muốn xóa?',
         accept: () => {
-          const query = queryString.stringify({Id: event.rowData.baseId})
+          const query = queryString.stringify({baseId: event.rowData.baseId})
           this.apiService.delPayrollBase(query).subscribe((results: any) => {
             if (results.status === 'success') {
               this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });

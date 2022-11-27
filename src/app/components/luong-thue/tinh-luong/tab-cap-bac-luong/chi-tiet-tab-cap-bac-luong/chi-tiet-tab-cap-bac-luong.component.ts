@@ -44,7 +44,7 @@ export class ChiTietTabCapBacLuongComponent implements OnInit, OnDestroy {
   }
 
   getDetail() {
-    const queryParams = queryString.stringify({Id: this.idForm});
+    const queryParams = queryString.stringify({baseId: this.idForm});
     this.apiService.getPayrollBaseInfo(queryParams)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {
@@ -87,6 +87,10 @@ export class ChiTietTabCapBacLuongComponent implements OnInit, OnDestroy {
         console.error('Error:', error);
         this.spinner.hide();
       };
+  }
+  tabIndex = 0
+  handleChange(e){
+    this.tabIndex = e;
   }
 }
 

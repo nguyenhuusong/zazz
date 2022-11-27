@@ -54,6 +54,7 @@ import { ChiTietTabBangLuongComponent } from 'src/app/components/luong-thue/tinh
 import { ChiTietTabThietLapThamSoComponent } from 'src/app/components/luong-thue/tinh-luong/tab-thiet-lap-tham-so/chi-tiet-tab-thiet-lap-tham-so/chi-tiet-tab-thiet-lap-tham-so.component';
 import { TabCapBacLuongComponent } from 'src/app/components/luong-thue/tinh-luong/tab-cap-bac-luong/tab-cap-bac-luong.component';
 import { ChiTietTabCapBacLuongComponent } from 'src/app/components/luong-thue/tinh-luong/tab-cap-bac-luong/chi-tiet-tab-cap-bac-luong/chi-tiet-tab-cap-bac-luong.component';
+import { MucLuongComponent } from 'src/app/components/luong-thue/tinh-luong/tab-bang-luong/muc-luong/muc-luong.component';
 
 @NgModule({
   imports: [
@@ -117,7 +118,9 @@ import { ChiTietTabCapBacLuongComponent } from 'src/app/components/luong-thue/ti
     ChiTietThanhPhanLuongComponent,
     ChiTietTabBangLuongComponent,
     ChiTietTabThietLapThamSoComponent,
-    ChiTietTabCapBacLuongComponent
+    ChiTietTabCapBacLuongComponent,
+    MucLuongComponent,
+
   ],
   exports: [
     TabBangLuongComponent,

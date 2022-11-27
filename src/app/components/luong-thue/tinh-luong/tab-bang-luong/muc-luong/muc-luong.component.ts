@@ -1,30 +1,21 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { cloneDeep } from 'lodash';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as queryString from 'querystring';
-import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
-import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import { cloneDeep } from 'lodash';
+import { AgGridFn } from 'src/app/common/function-common/common';
 @Component({
-  selector: 'app-chi-tiet-tab-bang-luong',
-  templateUrl: './chi-tiet-tab-bang-luong.component.html',
-  styleUrls: ['./chi-tiet-tab-bang-luong.component.scss']
+  selector: 'app-muc-luong',
+  templateUrl: './muc-luong.component.html',
+  styleUrls: ['./muc-luong.component.scss']
 })
-export class ChiTietTabBangLuongComponent implements OnInit, OnDestroy {
-  items: MenuItem[] = [];
-  paramsObject = null;
+export class MucLuongComponent implements OnInit {
   detailInfo = null
   listViews = [];
-  optionsButon = [
-    { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
-    { label: 'Lưu lại', value: 'Update', class: CheckHideAction(MENUACTIONROLEAPI.GetPayrollAppInfoPage.url, ACTIONS.EDIT_TINH_LUONG_BANG_LUONG) ? 'hidden' : '', icon: 'pi pi-check' }
-  ];
-  titlePage = '';
-  @Input() idForm: any = null;
-  @Output() detailOut = new EventEmitter<any>();
+  @Input() baseId = null;
   constructor(
     private activatedRoute: ActivatedRoute,
     private apiService: ApiHrmService,
@@ -33,83 +24,33 @@ export class ChiTietTabBangLuongComponent implements OnInit, OnDestroy {
     private router: Router,
     private confirmationService: ConfirmationService
   ) { }
+
+  optionsButon = [
+    { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
+    { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check' }
+  ];
+  displaySetting =false;
   private readonly unsubscribe$: Subject<void> = new Subject();
   ngOnDestroy() {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
+  cauhinh() {
+    this.displaySetting = true;
+  }
 
   ngOnInit(): void {
-    this.getDetail();
+    this.getPayrollRankPage()
   }
-
-  getDetail() {
-    const queryParams = queryString.stringify({Id: this.idForm });
-    this.apiService.getPayrollInfo(queryParams)
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(results => {
-        if (results.status === 'success') {
-          const listViews = cloneDeep(results.data.group_fields);
-          this.listViews = cloneDeep(listViews);
-          this.detailInfo = results.data;
-        }
-      });
-  }
-
-  quaylai(data) {
-    if(data === 'CauHinh') {
-      this.getDetail();
-    }else {
-      this.detailOut.emit();
-    }
-  }
-
-  handleSave(event) {
-    this.spinner.show();
-    const params = {
-      ...this.detailInfo, group_fields: event
-    };
-    this.apiService.setPayrollInfo(params)
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((results: any) => {
-        if (results.status === 'success') {
-          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
-          this.spinner.hide();
-          this.detailOut.emit();
-        } else {
-          this.messageService.add({
-            severity: 'error', summary: 'Thông báo',
-            detail: results.message
-          });
-          this.spinner.hide();
-        }
-      }), error => {
-        console.error('Error:', error);
-        this.spinner.hide();
-      };
-  }
-
-  tabIndex = 0;
   columnDefs = [];
-  listsData = []
-  handleChange(e){
-    this.tabIndex = e;
-    if(e=== 1) {
-      this.getPayrollComponentPage()
-    }
-  }
+  listsData = [];
+  gridKey="";
   gridflexs = [];
-  gridKey = '';
-  displaySetting = false;
-  cauhinh() {
-      this.displaySetting = true;
-  }
-
-  getPayrollComponentPage() {
+  getPayrollRankPage() {
     this.spinner.show();
     this.columnDefs = [];
-    const queryParams = queryString.stringify({ appInfoId: this.idForm, offSet: 0, pageSize: 10000 });
-    this.apiService.getPayrollComponentPage(queryParams).subscribe(repo => {
+    const queryParams = queryString.stringify({ baseId: this.baseId, offSet: 0, pageSize: 10000 });
+    this.apiService.getPayrollRankPage(queryParams).subscribe(repo => {
       if (repo.status === 'success') {
         this.listsData = repo.data.dataList.data;
         this.gridflexs = repo.data.gridflexs;
@@ -123,6 +64,7 @@ export class ChiTietTabBangLuongComponent implements OnInit, OnDestroy {
       }
     })
   }
+
   
   initGrid() {
     this.columnDefs = [
@@ -160,22 +102,23 @@ export class ChiTietTabBangLuongComponent implements OnInit, OnDestroy {
       ]
     };
   }
+
   isFormDetail = false;
   IdDetail = null
   editRow(event) {
     this.IdDetail = event.rowData.id;
-    this.getPayrollComponentInfo()
+    this.getPayrollRankInfo()
   }
-
+  
   addPayroll() {
     this.IdDetail = null;
-    this.getPayrollComponentInfo()
+    this.getPayrollRankInfo()
   }
 
-  getPayrollComponentInfo() {
+  getPayrollRankInfo() {
     this.listViewsDetail = [];
-    const queryParams = queryString.stringify({Id: this.IdDetail, appInfoId: this.idForm });
-    this.apiService.getPayrollComponentInfo(queryParams)
+    const queryParams = queryString.stringify({id: this.IdDetail, baseId: this.baseId });
+    this.apiService.getPayrollRankInfo(queryParams)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {
         if (results.status === 'success') {
@@ -191,11 +134,11 @@ export class ChiTietTabBangLuongComponent implements OnInit, OnDestroy {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa',
       accept: () => {
-        const query = queryString.stringify({Id: event.rowData.id})
-        this.apiService.delPayrollComponent(query).subscribe((results: any) => {
+        const query = queryString.stringify({id	: event.rowData.id	})
+        this.apiService.delPayrollRank(query).subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa công' });
-            this.getPayrollComponentPage();
+            this.getPayrollRankPage();
           } else {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
           }
@@ -211,14 +154,14 @@ export class ChiTietTabBangLuongComponent implements OnInit, OnDestroy {
     const params = {
       ...this.detailInfoDetail, group_fields: event
     };
-    this.apiService.setPayrollComponentInfo(params)
+    this.apiService.setPayrollRankInfo(params)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((results: any) => {
         if (results.status === 'success') {
           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
           this.spinner.hide();
           this.isFormDetail = false;
-          this.getPayrollComponentPage();
+          this.getPayrollRankPage();
         } else {
           this.messageService.add({
             severity: 'error', summary: 'Thông báo',
@@ -234,7 +177,7 @@ export class ChiTietTabBangLuongComponent implements OnInit, OnDestroy {
 
   quaylaiDetail(data) {
     if(data === 'CauHinh') {
-      this.getPayrollComponentInfo();
+      this.getPayrollRankInfo();
     }else {
       this.isFormDetail = false;
     }
@@ -242,4 +185,3 @@ export class ChiTietTabBangLuongComponent implements OnInit, OnDestroy {
 
 
 }
-

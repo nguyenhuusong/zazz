@@ -476,6 +476,10 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v2/contract/GetRecordInfo?` + queryParams, this.options)
   }
 
+  getContractPageByEmpId(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/contract/GetContractPageByEmpId?` + queryParams, this.options)
+  }
+
   setContractStatus(params): Observable<any> {
     return this.http.put<any>(`${apiHrmServer}/api/v2/contract/SetContractStatus`, params, this.options)
   }
@@ -1645,6 +1649,10 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v1/salaryInfo/GetSalaryInfo?` + queryParams, this.options)
   }
 
+  getSalaryInfoPageByEmpId(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/salaryInfo/GetSalaryInfoPageByEmpId?` + queryParams, this.options)
+  }
+
   setSalaryInfoDevM(data): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v1/salaryInfo/SetSalaryInfo`, data , this.options)
   }
@@ -1832,6 +1840,22 @@ export class ApiHrmService {
   }
   delPayrollBase(queryParams): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v1/payrollbase/DelPayrollBase?${queryParams}`, this.options)
+  }
+
+  getPayrollRankPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/payrollbase/GetPayrollRankPage?${queryParams}`, this.options)
+  }
+
+  getPayrollRankInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/payrollbase/GetPayrollRankInfo?${queryParams}`, this.options)
+  }
+
+  delPayrollRank(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v1/payrollbase/DelPayrollRank?${queryParams}`, this.options)
+  }
+
+  setPayrollRankInfo(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/payrollbase/SetPayrollRankInfo`, queryParams, this.options)
   }
 
   employeeGetTerminatePage(queryParams): Observable<any> {

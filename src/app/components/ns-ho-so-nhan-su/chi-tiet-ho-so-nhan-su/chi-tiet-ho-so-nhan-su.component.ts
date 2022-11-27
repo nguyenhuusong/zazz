@@ -49,6 +49,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   columnDefs = [[], [], [], []];
   listsData = [[], [], [], []];
   titles = ['', '', '', ''];
+  gridKey = ['', '', '', ''];
   paramsObject = null;
   displayUserInfo = false;
   detailInfo = null;
@@ -131,7 +132,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.titlePage = this.activatedRoute.data['_value'].title;
     this.items = [
-      { label: 'Trang chủ' , routerLink: '/home' },
+      { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Quản lý nhân sự', routerLink: '/nhan-su/ho-so-nhan-su' },
       // { label: 'Hồ sơ nhân sự', routerLink: '/nhan-su/ho-so-nhan-su' },
       // { label: `${this.titlePage}` },
@@ -202,7 +203,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
 
   onChangeMenu(e): void {
     console.log(e)
-    this.listViewsReportTo =  [];
+    this.listViewsReportTo = [];
     this.detailInfoReportTo = null;
     this.manhinh = 'Edit';
     this.keyParamGetInfo = '';
@@ -244,33 +245,33 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
 
   getMenuInfo() {
     this.spinner.show();
-      this.listViews = [];
-      const queryParams = queryString.stringify({ empId: this.empId });
-      // this.detailMenu.code = this.selectedMenuCode
-      this.apiService.getEmployeeData(this.selectedMenuCode !== 'quanLyTaiKhoan' ? this.selectedMenuCode : 'GetEmployeeByReportTo', queryParams).subscribe(results => {
-        if(results.status === 'success') {
-          if(results.data.flow_st === 0) {
-            this.selectedMenuCode = this.menuItems[0].code;
-            this.onChangeMenu(this.menuItems[0].code);
-          }else if(results.data.flow_st === 1) {
-            this.selectedMenuCode = this.menuItems[1].code;
-            this.onChangeMenu(this.menuItems[1].code);
-          }else if(results.data.flow_st === 2) {
-            this.selectedMenuCode = this.menuItems[2].code;
-            this.onChangeMenu(this.menuItems[2].code);
-          }else if(results.data.flow_st === 3) {
-            this.selectedMenuCode = this.menuItems[5].code;
-            this.onChangeMenu(this.menuItems[5].code);
-          }else {
-            this.selectedMenuCode = this.menuItems[0].code;
-            this.onChangeMenu(this.menuItems[0].code);
-          }
-  
+    this.listViews = [];
+    const queryParams = queryString.stringify({ empId: this.empId });
+    // this.detailMenu.code = this.selectedMenuCode
+    this.apiService.getEmployeeData(this.selectedMenuCode !== 'quanLyTaiKhoan' ? this.selectedMenuCode : 'GetEmployeeByReportTo', queryParams).subscribe(results => {
+      if (results.status === 'success') {
+        if (results.data.flow_st === 0) {
+          this.selectedMenuCode = this.menuItems[0].code;
+          this.onChangeMenu(this.menuItems[0].code);
+        } else if (results.data.flow_st === 1) {
+          this.selectedMenuCode = this.menuItems[1].code;
+          this.onChangeMenu(this.menuItems[1].code);
+        } else if (results.data.flow_st === 2) {
+          this.selectedMenuCode = this.menuItems[2].code;
+          this.onChangeMenu(this.menuItems[2].code);
+        } else if (results.data.flow_st === 3) {
+          this.selectedMenuCode = this.menuItems[5].code;
+          this.onChangeMenu(this.menuItems[5].code);
+        } else {
+          this.selectedMenuCode = this.menuItems[0].code;
+          this.onChangeMenu(this.menuItems[0].code);
         }
-      })
-     
+
+      }
+    })
+
   }
-  
+
   listViewsReportTo = [];
   detailInfoReportTo = null;
   getEmployeeByReportTo() {
@@ -338,37 +339,37 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       }
     })
   }
-  checkHideNguoiDungMoTaiKhoan(params){
-    if(CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_NGUOI_DUNG_MO_KHOA)) {
+  checkHideNguoiDungMoTaiKhoan(params) {
+    if (CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_NGUOI_DUNG_MO_KHOA)) {
       return true;
-    }else {
-      if(params.data.lock_st === false) {
+    } else {
+      if (params.data.lock_st === false) {
         return true;
-      }else {
+      } else {
         return false;
       }
     }
   }
 
-  checkHideNguoiDungKhoaTaiKhoan(params){
-    if(CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_NGUOI_DUNG_KHOA)) {
+  checkHideNguoiDungKhoaTaiKhoan(params) {
+    if (CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_NGUOI_DUNG_KHOA)) {
       return true;
-    }else {
-      if(params.data.lock_st === true) {
+    } else {
+      if (params.data.lock_st === true) {
         return true;
-      }else {
+      } else {
         return false;
       }
     }
   }
 
-  checkHideNguoiDungXoaTaiKhoan(params){
-    if(CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_NGUOI_DUNG_XOA)) {
+  checkHideNguoiDungXoaTaiKhoan(params) {
+    if (CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_NGUOI_DUNG_XOA)) {
       return true;
-    }else {
-      if(!params.data.lock_st) {
+    } else {
+      if (!params.data.lock_st) {
         return true;
-      }else {
+      } else {
         return false;
       }
     }
@@ -379,17 +380,17 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   }
 
   cancelViewsForm(data) {
-    if(data === 'CauHinh') {
+    if (data === 'CauHinh') {
       this.getEmployeeInfo();
-    }else {
+    } else {
       this.displayDialog = false;
     }
   }
 
   cancelDependentInfo(data) {
-    if(data === 'CauHinh') {
+    if (data === 'CauHinh') {
       this.displayFormEditDetail = false;
-    }else {
+    } else {
       this.displayFormEditDetail = false;
     }
   }
@@ -404,7 +405,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     // this.detailMenu.code = this.selectedMenuCode
     this.apiService.getEmployeeData(this.selectedMenuCode !== 'quanLyTaiKhoan' ? this.selectedMenuCode : 'GetEmployeeByReportTo', queryParams).subscribe(results => {
       if (results.status === 'success') {
-        if(!this.codeStaff){
+        if (!this.codeStaff) {
           this.codeStaff = getFieldValueAggrid(results.data, 'code');
         }
         this.listViews = cloneDeep(results.data.group_fields || []);
@@ -412,7 +413,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
         this.detailInfo = results.data;
         this.menuItems[0].name = 'Thông tin cá nhân';
         this.menuItems[0].name = this.menuItems[0].name
-        this.stepsLine = results.data.flowStatuses.map( d => {
+        this.stepsLine = results.data.flowStatuses.map(d => {
           return {
             label: d.flow_name,
             value: d.flow_st
@@ -423,15 +424,15 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
         }, 100)
 
         this.activeIndex = this.detailInfo.flow_st;
-        if(this.selectedMenuCode === API_PROFILE.THONG_TIN_CA_NHAN) {
+        if (this.selectedMenuCode === API_PROFILE.THONG_TIN_CA_NHAN) {
           this.getRecordInfo();
         }
         this.bindingData(results.data);
-         this.getContractTypes();
+        this.getContractTypes();
         if (this.selectedMenuCode === API_PROFILE.CONG_VIEC) {
           // this.bindingDataButton(results.data);
           this.getEmployeeByReportTo();
-        }else if(this.selectedMenuCode === API_PROFILE.QUAN_LY_TAI_KHOAN){
+        } else if (this.selectedMenuCode === API_PROFILE.QUAN_LY_TAI_KHOAN) {
           this.getEmployeeByReportTo();
           this.titles[0] = 'Người Dùng'
         }
@@ -445,7 +446,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
 
   stepActivated(): void {
     const stepS = document.querySelectorAll('.status-line .p-steps-item');
-    if(stepS.length > 0){
+    if (stepS.length > 0) {
       for (let i = 0; i < this.stepsLine.length; i++) {
         if (i <= this.activeIndex) {
           stepS[i].className += ' active';
@@ -470,105 +471,139 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
             // icon: 'pi pi-times-circle' },
             // { label: 'Quay lại', value: 'Back', class: 'p-button-secondary', icon: 'pi pi-times' }
           ];
-          if (this.selectedMenuCode === API_PROFILE.CONG_VIEC) {
-            this.optionsButtonsView =
-              [
-                { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-save' },
-                { label: 'Duyệt hồ sơ', value: 'DuyetHoSo', 
+        if (this.selectedMenuCode === API_PROFILE.CONG_VIEC) {
+          this.optionsButtonsView =
+            [
+              { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-save' },
+              {
+                label: 'Duyệt hồ sơ', value: 'DuyetHoSo',
                 class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_DUYET_HO_SO) ? 'hidden' : ''
-                , icon: 'uni-icon icon-dhs' },
-                { label: 'Hủy hồ sơ', value: 'HuyHoSo', 
-                class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_HUY_HO_SO) ? 'hidden' : 'p-button-danger', 
-                icon: 'pi pi-times-circle' },
-                // { label: 'Quay lại', value: 'Back', class: 'p-button-secondary', icon: 'pi pi-times' }
-              ];
-          }
-          if (this.selectedMenuCode === API_PROFILE.QUAN_HE_LAO_DONG) {
-            this.optionsButtonsView = [
-              { label: 'Lưu lại', value: 'Update', 
-                class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.EDIT) ? 'hidden' : ''
-              , icon: 'pi pi-save' },
-              // { label: 'Duyệt hồ sơ', value: 'DuyetHoSo', 
-              //   class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_DUYET_HO_SO) ? 'hidden' : '', icon: 'uni-icon icon-dhs' },
-              // { label: 'Hủy hồ sơ', value: 'HuyHoSo', 
-              //   class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_HUY_HO_SO) ? 'hidden' : 'p-button-danger',
-              //   icon: 'pi pi-times-circle' },
-              // { label: 'Tạo hợp đồng', value: 'TaoHopDong', class: '', icon: 'pi pi-check' },
+                , icon: 'uni-icon icon-dhs'
+              },
+              {
+                label: 'Hủy hồ sơ', value: 'HuyHoSo',
+                class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_HUY_HO_SO) ? 'hidden' : 'p-button-danger',
+                icon: 'pi pi-times-circle'
+              },
+              // { label: 'Quay lại', value: 'Back', class: 'p-button-secondary', icon: 'pi pi-times' }
             ];
-          }
+        }
+        if (this.selectedMenuCode === API_PROFILE.QUAN_HE_LAO_DONG) {
+          this.optionsButtonsView = [
+            {
+              label: 'Lưu lại', value: 'Update',
+              class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.EDIT) ? 'hidden' : ''
+              , icon: 'pi pi-save'
+            },
+            // { label: 'Duyệt hồ sơ', value: 'DuyetHoSo', 
+            //   class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_DUYET_HO_SO) ? 'hidden' : '', icon: 'uni-icon icon-dhs' },
+            // { label: 'Hủy hồ sơ', value: 'HuyHoSo', 
+            //   class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_HUY_HO_SO) ? 'hidden' : 'p-button-danger',
+            //   icon: 'pi pi-times-circle' },
+            // { label: 'Tạo hợp đồng', value: 'TaoHopDong', class: '', icon: 'pi pi-check' },
+          ];
+        }
         break;
       case 1:
         // this.optionsButtonsView =
         //   [
-            // { label: 'Sửa', value: 'Edit' },
-            // { label: 'Chuyển công tác', value: 'ChuyenCongTac', class: '', icon: 'pi pi-check' }, tạm ẩn
-            // { label: 'Duyệt hồ sơ', value: 'DuyetHoSo', class: '', icon: 'pi pi-check' },
-            // { label: 'Nghỉ việc', value: 'NghiViec', class: 'p-button-secondary', icon: 'pi pi-check' }, tạm ẩn
-            // { label: 'Quay lại', value: 'Back', class: 'p-button-secondary', icon: 'pi pi-times' }
-          // ];
+        // { label: 'Sửa', value: 'Edit' },
+        // { label: 'Chuyển công tác', value: 'ChuyenCongTac', class: '', icon: 'pi pi-check' }, tạm ẩn
+        // { label: 'Duyệt hồ sơ', value: 'DuyetHoSo', class: '', icon: 'pi pi-check' },
+        // { label: 'Nghỉ việc', value: 'NghiViec', class: 'p-button-secondary', icon: 'pi pi-check' }, tạm ẩn
+        // { label: 'Quay lại', value: 'Back', class: 'p-button-secondary', icon: 'pi pi-times' }
+        // ];
         break;
       case 2:
         this.optionsButtonsView =
           [
-            { label: 'Lưu lại', value: 'Update', 
-            class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.EDIT) ? 'hidden' : '', icon: 'pi pi-save' },
-            { label: 'Mở Lại hồ sơ', value: 'MoLaiHoSo', 
-            class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.MO_LAI_HO_SO) ? 'hidden' : '', icon: 'pi pi-check' },
+            {
+              label: 'Lưu lại', value: 'Update',
+              class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.EDIT) ? 'hidden' : '', icon: 'pi pi-save'
+            },
+            {
+              label: 'Mở Lại hồ sơ', value: 'MoLaiHoSo',
+              class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.MO_LAI_HO_SO) ? 'hidden' : '', icon: 'pi pi-check'
+            },
             // { label: 'Quay lại', value: 'Back', class: 'p-button-secondary', icon: 'pi pi-times' }
           ];
-          if (this.selectedMenuCode === API_PROFILE.QUAN_HE_LAO_DONG) {
-            this.optionsButtonsView =
-              [
-                { label: 'Lưu lại', value: 'Update', 
-                class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.EDIT) ? 'hidden' : '', icon: 'pi pi-save' },
-                { label: 'Mở Lại hồ sơ', value: 'MoLaiHoSo', 
-                class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.MO_LAI_HO_SO) ? 'hidden' : '', icon: 'pi pi-check' },
-                // { label: 'Tạo hợp đồng', value: 'TaoHopDong', class: '', icon: 'pi pi-check' },
-              ];
-          }
+        if (this.selectedMenuCode === API_PROFILE.QUAN_HE_LAO_DONG) {
+          this.optionsButtonsView =
+            [
+              {
+                label: 'Lưu lại', value: 'Update',
+                class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.EDIT) ? 'hidden' : '', icon: 'pi pi-save'
+              },
+              {
+                label: 'Mở Lại hồ sơ', value: 'MoLaiHoSo',
+                class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.MO_LAI_HO_SO) ? 'hidden' : '', icon: 'pi pi-check'
+              },
+              // { label: 'Tạo hợp đồng', value: 'TaoHopDong', class: '', icon: 'pi pi-check' },
+            ];
+        }
         break;
       case 3:
         this.optionsButtonsView =
           [
-            { label: 'Lưu lại', value: 'Update', 
-            class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.EDIT) ? 'hidden' : '', icon: 'pi pi-save' },
-            { label: 'Tuyển dụng lại', value: 'TuyenDungLai', 
-              class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.TUYEN_DUNG_LAI) ? 'hidden' : '', icon: 'pi pi-check' },
+            {
+              label: 'Lưu lại', value: 'Update',
+              class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.EDIT) ? 'hidden' : '', icon: 'pi pi-save'
+            },
+            {
+              label: 'Tuyển dụng lại', value: 'TuyenDungLai',
+              class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.TUYEN_DUNG_LAI) ? 'hidden' : '', icon: 'pi pi-check'
+            },
             // { label: 'Quay lại', value: 'Back', class: 'p-button-secondary', icon: 'pi pi-times' }
           ];
-          if (this.selectedMenuCode === API_PROFILE.QUAN_HE_LAO_DONG) {
-            this.optionsButtonsView =
-              [
-                { label: 'Lưu lại', value: 'Update', 
-                class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.EDIT) ? 'hidden' : '', icon: 'pi pi-save' },
-                { label: 'Tuyển dụng lại', value: 'TuyenDungLai', 
-                class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.TUYEN_DUNG_LAI) ? 'hidden' : '', icon: 'pi pi-check' },
-                // { label: 'Tạo hợp đồng', value: 'TaoHopDong', class: '', icon: 'pi pi-check' },
-              ];
-          }
+        if (this.selectedMenuCode === API_PROFILE.QUAN_HE_LAO_DONG) {
+          this.optionsButtonsView =
+            [
+              {
+                label: 'Lưu lại', value: 'Update',
+                class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.EDIT) ? 'hidden' : '', icon: 'pi pi-save'
+              },
+              {
+                label: 'Tuyển dụng lại', value: 'TuyenDungLai',
+                class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.TUYEN_DUNG_LAI) ? 'hidden' : '', icon: 'pi pi-check'
+              },
+              // { label: 'Tạo hợp đồng', value: 'TaoHopDong', class: '', icon: 'pi pi-check' },
+            ];
+        }
         break;
       case 4:
         // this.optionsButtonsView =
         //   [
-            // { label: 'Quay lại', value: 'Back', class: 'p-button-secondary', icon: 'pi pi-times' }
-          // ];
+        // { label: 'Quay lại', value: 'Back', class: 'p-button-secondary', icon: 'pi pi-times' }
+        // ];
         break;
       default:
         this.optionsButtonsView =
           [
-            { label: 'Lưu lại', value: 'Update', 
-            class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.EDIT) ? 'hidden' : '', icon: 'pi pi-save' },
-            { label: 'Duyệt hồ sơ', value: 'DuyetHoSo', 
-            class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_DUYET_HO_SO) ? 'hidden' : '', icon: 'uni-icon icon-dhs' },
-            { label: 'Hủy hồ sơ', value: 'HuyHoSo', 
+            {
+              label: 'Lưu lại', value: 'Update',
+              class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.EDIT) ? 'hidden' : '', icon: 'pi pi-save'
+            },
+            {
+              label: 'Duyệt hồ sơ', value: 'DuyetHoSo',
+              class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_DUYET_HO_SO) ? 'hidden' : '', icon: 'uni-icon icon-dhs'
+            },
+            {
+              label: 'Hủy hồ sơ', value: 'HuyHoSo',
               class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_HUY_HO_SO) ? 'hidden' : 'p-button-danger',
-             icon: 'pi pi-check' },
-            { label: 'Mở Lại hồ sơ', value: 'MoLaiHoSo', 
-              class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.MO_LAI_HO_SO) ? 'hidden' : '', icon: 'pi pi-check' },
-            { label: 'Tuyển dụng lại', value: 'TuyenDungLai', 
-              class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.TUYEN_DUNG_LAI) ? 'hidden' : '', icon: 'pi pi-check' },
-            { label: 'Nghỉ việc', value: 'NghiViec', 
-              class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.NGHI_VIEC) ? 'hidden' : 'p-button-secondary', icon: 'pi pi-check' },
+              icon: 'pi pi-check'
+            },
+            {
+              label: 'Mở Lại hồ sơ', value: 'MoLaiHoSo',
+              class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.MO_LAI_HO_SO) ? 'hidden' : '', icon: 'pi pi-check'
+            },
+            {
+              label: 'Tuyển dụng lại', value: 'TuyenDungLai',
+              class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.TUYEN_DUNG_LAI) ? 'hidden' : '', icon: 'pi pi-check'
+            },
+            {
+              label: 'Nghỉ việc', value: 'NghiViec',
+              class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.NGHI_VIEC) ? 'hidden' : 'p-button-secondary', icon: 'pi pi-check'
+            },
             // { label: 'Quay lại', value: 'Back', class: 'p-button-secondary', icon: 'pi pi-times' }
           ];
         break;
@@ -722,54 +757,8 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
         this.spinner.hide();
         break;
       case API_PROFILE.QUAN_HE_LAO_DONG:
-        this.columnDefs[0] = [
-          ...AgGridFn(data.gridflexdetails1 || []),
-          {
-            headerName: '',
-            field: 'gridflexdetails1',
-            cellClass: ['border-right', 'no-auto'],
-            pinned: 'right',
-            width: 70,
-            cellRenderer: 'buttonAgGridComponent',
-            cellRendererParams: params => {
-              return {
-                buttons: [
-                  {
-                    onClick: this.OnClick.bind(this),
-                    label: 'Xem chi tiết',
-                    icon: 'fa fa-edit editing',
-                    key: 'view-qua-trinh-hop-dong',
-                    class: 'btn-primary mr5',
-                    hide: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_QHLD_QTHD_XEM_CHI_TIET)
-                  },
-                  {
-                    onClick: this.OnClick.bind(this),
-                    label: 'Duyệt hợp đồng',
-                    icon: 'pi pi-check',
-                    key: 'duyet-hop-dong',
-                    class: 'btn-danger',
-                    hide: this.CheckHideDuyetHopDong(params)
-                  },
-                  {
-                    onClick: this.OnClick.bind(this),
-                    label: 'Xóa',
-                    icon: 'pi pi-trash',
-                    key: 'delete-qua-trinh-hop-dong',
-                    class: 'btn-danger',
-                    hide: this.CheckHideXoaHopDong(params)
-                  },
-
-                ]
-              };
-            },
-          }
-        ];
-        this.listsData[0] = data.contracts || [];
-        this.titles[0] = 'Quá trình hợp đồng';
-        this.columnDefs[1] = [...AgGridFn(data.gridflexdetails2 || [])];
-        this.listsData[1] = data.salaries || [];
-        this.titles[1] = 'Tiền lương';
-        this.spinner.hide();
+        this.getContractPageByEmpId();
+        this.getSalaryInfoPageByEmpId();
         break;
       case API_PROFILE.THUE_BAO_HIEM:
         this.columnDefs[0] = [
@@ -888,59 +877,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
         this.spinner.hide();
         break;
       case API_PROFILE.NGUOI_QUAN_LY:
-        // this.columnDefs[0] = [...AgGridFn(data.gridflexdetails1 || [])];
-        // this.listsData[0] = data.reportTos || [];
-        // this.titles[0] = 'Báo cáo cho';
-        // this.columnDefs[1] = [...AgGridFn(this.detailInfo.gridflexdetails2 || []),
-        // {
-        //   headerName: '',
-        //   field: 'gridflexdetails1',
-        //   cellClass: ['border-right', 'no-auto'],
-        //   pinned: 'right',
-        //   width: 70,
-        //   cellRenderer: 'buttonAgGridComponent',
-        //   cellRendererParams: params => {
-        //     return {
-        //       buttons: [
-        //         {
-        //           onClick: this.OnClick.bind(this),
-        //           label: 'Xem chi tiêt',
-        //           icon: 'fa fa-edit',
-        //           key: 'taikhoanlogin',
-        //           class: 'btn-primary mr-1',
-        //         },
-        //         {
-        //           onClick: this.OnClick.bind(this),
-        //           label: 'Xóa tài khoản đăng nhập',
-        //           icon: 'pi pi-trash',
-        //           key: 'xoataikhoandangnhap',
-        //           class: 'btn-primary',
-        //           hide: !params.data.lock_st
-        //         },
-        //         {
-        //           onClick: this.OnClick.bind(this),
-        //           label: 'Khóa',
-        //           icon: 'fa fa-edit',
-        //           key: 'dong-mo-tai-khoan',
-        //           class: 'btn-primary mr-1',
-        //           hide: params.data.lock_st === true
-        //         },
-        //         {
-        //           onClick: this.OnClick.bind(this),
-        //           label: 'Mở khóa',
-        //           icon: 'pi pi-trash',
-        //           key: 'dong-mo-tai-khoan',
-        //           class: 'btn-danger',
-        //           hide: params.data.lock_st === false
-        //         },
-        //       ]
-        //     };
-        //   },
-        // }];
-        // this.listsData[1] = data.users || [];
-        // this.titles[1] = 'Người dùng';
-        // this.spinner.hide();
-        // break;
+
       case API_PROFILE.TIEN_ICH:
         this.columnDefs[0] = [...AgGridFn(data.gridflexdetails1 || [])];
         this.listsData[0] = data.utiliies || [];
@@ -1006,40 +943,124 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     }
   }
 
-  
+  getContractPageByEmpId() {
+    this.spinner.show();
+    this.columnDefs = [];
+    const queryParams = queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 });
+    this.apiService.getContractPageByEmpId(queryParams).subscribe(repo => {
+      if (repo.status === 'success') {
+        if (repo.data.dataList.gridKey) {
+          this.gridKey[0] = repo.data.dataList.gridKey;
+        }
+        this.spinner.hide();
+        this.columnDefs[0] = [
+          ...AgGridFn(repo.data.gridflexs || []),
+          {
+            headerName: '',
+            field: 'gridflexdetails1',
+            cellClass: ['border-right', 'no-auto'],
+            pinned: 'right',
+            width: 70,
+            cellRenderer: 'buttonAgGridComponent',
+            cellRendererParams: params => {
+              return {
+                buttons: [
+                  {
+                    onClick: this.OnClick.bind(this),
+                    label: 'Xem chi tiết',
+                    icon: 'fa fa-edit editing',
+                    key: 'view-qua-trinh-hop-dong',
+                    class: 'btn-primary mr5',
+                    hide: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_QHLD_QTHD_XEM_CHI_TIET)
+                  },
+                  {
+                    onClick: this.OnClick.bind(this),
+                    label: 'Duyệt hợp đồng',
+                    icon: 'pi pi-check',
+                    key: 'duyet-hop-dong',
+                    class: 'btn-danger',
+                    hide: this.CheckHideDuyetHopDong(params)
+                  },
+                  {
+                    onClick: this.OnClick.bind(this),
+                    label: 'Xóa',
+                    icon: 'pi pi-trash',
+                    key: 'delete-qua-trinh-hop-dong',
+                    class: 'btn-danger',
+                    hide: this.CheckHideXoaHopDong(params)
+                  },
+
+                ]
+              };
+            },
+          }
+        ];
+        this.listsData[0] = repo.data.dataList.data || [];
+        this.titles[0] = 'Quá trình hợp đồng';
+
+      } else {
+        this.spinner.hide();
+      }
+    })
+  }
+
+  getSalaryInfoPageByEmpId() {
+    this.spinner.show();
+    this.columnDefs = [];
+    const queryParams = queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 });
+    this.apiService.getSalaryInfoPageByEmpId(queryParams).subscribe(repo => {
+      if (repo.status === 'success') {
+        this.columnDefs[1] = [...AgGridFn(repo.data.gridflexs || [])];
+        this.listsData[1] = repo.data.dataList.data || [];
+        this.titles[1] = 'Tiền lương';
+        if (repo.data.dataList.gridKey) {
+          this.gridKey[1] = repo.data.dataList.gridKey;
+        }
+        this.spinner.hide();
+      } else {
+        this.spinner.hide();
+      }
+    })
+  }
+
+  CauHinh() {
+    
+  }
+
+
   CheckHidePheDuyetWifi(params) {
     let checkValue = CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.PHE_DUYET_WIFI)
-    if(checkValue) {
+    if (checkValue) {
       return true;
-    }else {
-      if(params.data.status_device !== 2) {
+    } else {
+      if (params.data.status_device !== 2) {
         return true;
-      }else {
+      } else {
         return false;
       }
     }
   }
   CheckHideTuChoiWifi(params) {
     let checkValue = CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.TU_CHOI_DUYET_WIFI)
-    if(checkValue) {
+    if (checkValue) {
       return true;
-    }else {
-      if(params.data.status_device !== 2) {
+    } else {
+      if (params.data.status_device !== 2) {
         return true;
-      }else {
+      } else {
         return false;
       }
     }
   }
-  
+
   CheckHideDuyetHopDong(params) {
     let checkValue = CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_QHLD_QTHD_DUYET_HOP_DONG)
-    if(checkValue) {
+    if (checkValue) {
       return true;
-    }else {
-      if(params.data.contract_value === 3) {
+    } else {
+      if (params.data.contract_value === 3) {
         return true;
-      }else {
+      } else {
         return false;
       }
     }
@@ -1047,12 +1068,12 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
 
   CheckHideXoaHopDong(params) {
     let checkValue = CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_QHLD_QTHD_XOA_HOP_DONG)
-    if(checkValue) {
+    if (checkValue) {
       return true;
-    }else {
-      if(params.data.contract_value === 3) {
+    } else {
+      if (params.data.contract_value === 3) {
         return true;
-      }else {
+      } else {
         return false;
       }
     }
@@ -1070,7 +1091,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     let params = {
       ...this.detailInfo, group_fields: data
     };
-    if(isReportTo) {
+    if (isReportTo) {
       params = {
         ...this.detailInfoReportTo, group_fields: data
       };
@@ -1098,7 +1119,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   lockCard(e) {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn thực hiện hành động này không?',
-      accept: ()  => {
+      accept: () => {
         this.apiService.lockUser(e.rowData.userId).subscribe(results => {
           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Khóa tài khoản thành công' });
           this.getEmployeeInfo();
@@ -1136,7 +1157,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
         this.setEmployeeOpen(parmas);
       } else if (this.titleForm.type === 'NghiViec') {
         this.isSubmitSave = true;
-        if(!this.modelDuyet.exprire_date){
+        if (!this.modelDuyet.exprire_date) {
           return
         }
         this.setEmployeeTermilate(parmas);
@@ -1280,7 +1301,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     this.modelDuyet.full_name = this.detailInfo.fullName;
     if (button === 'Back') {
       this.goBack();
-    }else if(button === 'CauHinh') {
+    } else if (button === 'CauHinh') {
       this.getEmployeeInfo();
     } else if (button === 'HuyHoSo') {
       this.titleForm.title = 'Xác nhận hủy hồ sơ';
@@ -1318,16 +1339,16 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       this.manhinh = 'Edit';
       this.displayDialog = true;
       this.noDisableInput = false;
-      
+
     } else if (button === 'TuyenDungLai') {
       this.titleForm.title = 'Xác nhận nhân viên tuyển dụng lại';
       this.titleForm.type = button;
       this.manhinh = 'Edit';
       this.displayDialog = true;
       this.noDisableInput = false;
-    }else if (button === 'TaoHopDong') {
+    } else if (button === 'TaoHopDong') {
       this.taohopdong();
-    }else if(button === 'xuatHoSo') {
+    } else if (button === 'xuatHoSo') {
       this.exportResume();
     } else {
       this.getEmployeeInfo();
@@ -1337,7 +1358,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   getEmployeeChangeInfo() {
     this.listViewsForm = []
     const queryParams = queryString.stringify({ empId: this.empId });
-    this.apiService.getEmployeeData(this.keyParamGetInfo === 'GetEmployeeChangeInfo' ? 'GetEmployeeChangeInfo': this.selectedMenuCode, queryParams).subscribe(results => {
+    this.apiService.getEmployeeData(this.keyParamGetInfo === 'GetEmployeeChangeInfo' ? 'GetEmployeeChangeInfo' : this.selectedMenuCode, queryParams).subscribe(results => {
       if (results.status === 'success') {
         // this.listViews = cloneDeep(results.data.group_fields || []);
         this.listViewsForm = cloneDeep(results.data.group_fields || []);
@@ -1416,12 +1437,12 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
 
   CheckHideXemHoSo(params) {
     let checkValue = CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.XEM_HO_SO);
-    if(checkValue) {
+    if (checkValue) {
       return true;
-    }else {
-      if(!params.data.meta_file_url) {
+    } else {
+      if (!params.data.meta_file_url) {
         return true;
-      }else {
+      } else {
         return false;
       }
     }
@@ -1432,7 +1453,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       this.uploadContract(event)
     } else if (event.event.item.key === 'xemhoso') {
       this.ViewContract(event)
-    }else if (event.event.item.key === 'huyhosocanhan') {
+    } else if (event.event.item.key === 'huyhosocanhan') {
       this.HuyHoSo(event)
     } else if (event.event.item.key === 'sua_cong_viec') {
       this.titleType0 = 'Sửa thời gian làm việc';
@@ -1478,7 +1499,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
         this.getEmpDependent(queryParams);
       }
     } else if (event.event.item.key === 'xemchitietCard') {
-      
+
       if (this.selectedMenuCode === API_PROFILE.THONG_TIN_CA_NHAN) {
         this.getCustIndiIdentity(event)
       } else {
@@ -1507,7 +1528,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     this.apiService.exportResume(queryString.stringify({ empId: this.detailInfo.empId })).subscribe(results => {
       if (results.type === 'application/json') {
         this.spinner.hide();
-      }else if( results.type === 'application/octet-stream'){
+      } else if (results.type === 'application/octet-stream') {
         var blob = new Blob([results], { type: 'application/msword' });
         FileSaver.saveAs(blob, `Thông tin hồ sơ cá nhân` + ".docx");
         this.spinner.hide();
@@ -1558,17 +1579,17 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   duyetHoSo() {
     this.spinner.show();
     this.apiService.setContractStatus(this.modelDuyetHopDong)
-    .subscribe(results => {
-      if (results.status === 'success') {
-        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
-        this.displayApproveContract = false;
-        this.getEmployeeInfo();
-        this.spinner.hide();
-      } else {
-        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
-        this.spinner.hide();
-      }
-    })
+      .subscribe(results => {
+        if (results.status === 'success') {
+          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
+          this.displayApproveContract = false;
+          this.getEmployeeInfo();
+          this.spinner.hide();
+        } else {
+          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+          this.spinner.hide();
+        }
+      })
   }
 
   cancelContract() {
@@ -2047,11 +2068,11 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   hienThifileDinhKem = false
   dataFileDinhKem: any = {}
   cellClick(event) {
-    if(event.colDef.field === "meta_file_name"){
-      if(event.data.meta_file_type === "image/jpeg"){
+    if (event.colDef.field === "meta_file_name") {
+      if (event.data.meta_file_type === "image/jpeg") {
         this.hienThifileDinhKem = true;
         this.dataFileDinhKem = event.data;
-      }else{
+      } else {
         var elem = document.createElement('a');
         elem.href = event.data.meta_file_url;
         elem.target = 'hiddenIframe';

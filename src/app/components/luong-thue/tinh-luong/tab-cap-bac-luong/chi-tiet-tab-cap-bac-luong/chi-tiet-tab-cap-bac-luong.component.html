@@ -1,11 +1,18 @@
-<div class="content">
-    <app-edit-detail
-        *ngIf="listViews.length> 0"
-        [detail]="detailInfo"
-        [manhinh]="'Edit'"
-        [optionsButtonsEdit]="optionsButon"
-        [dataView]="listViews"
-        (callback)="handleSave($event)"
-        (callbackcancel)="quaylai($event)"
-    ></app-edit-detail>
-</div>
+<p-tabView (onChange)="handleChange($event.index)" [(activeIndex)]="tabIndex">
+    <p-tabPanel header="Thông tin chi tiết bậc lương" >
+        <div class="content">
+            <app-edit-detail
+            *ngIf="listViews.length> 0"
+            [detail]="detailInfo"
+            [manhinh]="'Edit'"
+            [optionsButtonsEdit]="optionsButon"
+            [dataView]="listViews"
+            (callback)="handleSave($event)"
+            (callbackcancel)="quaylai($event)"
+        ></app-edit-detail>
+        </div>
+    </p-tabPanel>
+    <p-tabPanel header="Mức lương">
+        <app-muc-luong [baseId]="idForm" *ngIf="tabIndex ===1"></app-muc-luong>
+    </p-tabPanel>
+</p-tabView>
