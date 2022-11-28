@@ -17,6 +17,23 @@
             </li>
         </ul>
         <div>
+            <div class="buttons" *ngIf="detailInfo?.emp_st === 1" >
+                <p-button (click)="chuyenCongTac()"
+                >
+                    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M8.42992 2.57992H12.4299V4.57992H8.82992L10.8299 6.57992H18.4299V14.1799L20.4299 16.1799V6.57992C20.4299 5.46992 19.5399 4.57992 18.4299 4.57992H14.4299V2.57992C14.4299 1.46992 13.5399 0.579922 12.4299 0.579922H8.42992C7.43992 0.579922 6.62992 1.27992 6.46992 2.21992L8.42992 4.17992V2.57992ZM1.82992 0.419922L0.419922 1.82992L3.16992 4.57992H2.42992C1.31992 4.57992 0.439922 5.46992 0.439922 6.57992L0.429922 17.5799C0.429922 18.6899 1.31992 19.5799 2.42992 19.5799H18.1699L20.1699 21.5799L21.5799 20.1699L1.82992 0.419922ZM2.42992 17.5799V6.57992H5.16992L16.1699 17.5799H2.42992Z" fill="white"/>
+                        </svg>
+                        
+                    &nbsp;
+                    Chuyển công tác</p-button>&nbsp;
+                <p-button (click)="fnNghiViec()">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6.59 5.17L1.41 0L0 1.41L5.17 6.58L6.59 5.17ZM10.5 0L12.54 2.04L0 14.59L1.41 16L13.96 3.46L16 5.5V0H10.5ZM10.83 9.41L9.42 10.82L12.55 13.95L10.5 16H16V10.5L13.96 12.54L10.83 9.41Z" fill="white"/>
+                    </svg>
+                    &nbsp;
+                    Nghỉ việc</p-button>
+
+            </div>
         </div>
     </div>
     <div class="content page-detail" style="padding: 0;">
@@ -29,6 +46,24 @@
                             [dataView]="listViews" (callback)="setEmployeeInfo($event)"
                             (callbackcancel)="cancelUpdate($event)">
                         </app-edit-detail>
+                        <p-divider></p-divider>
+                        <div class="grid wrap-edit-detail">
+                            <div class="col-12 border-section " *ngIf="this.detailInfo?.flow_st > 0">
+                                <p-panel header="Thời gian làm việc">
+                                    <div class="row" style="flex-wrap: wrap">
+                                        <div class="grid-default border">
+                                            <app-list-grid-angular [domLayout]="'autoHeight'" *ngIf="columnDefs.length > 0" [title]="'Chứng chỉ'"
+                                                [listsData]="listsData" [columnDefs]="columnDefs"></app-list-grid-angular>
+                                            </div>
+                                    </div>
+                                    <ng-template pTemplate="footer">
+                                        <p-button label="Thêm mới" icon="pi pi-plus" (click)="addTimeWork()" styleClass="p-button-sm mr-1"></p-button>
+                                        <p-button label="Cấu hình" icon="pi pi-cog" (click)="CauHinh(0)" styleClass="p-button-sm"></p-button>
+                                    </ng-template>
+                                </p-panel>
+                            </div>
+                        </div>  
+                      
                     </div>
 
                 </div>
@@ -37,3 +72,77 @@
     </div>
 
 </section>
+
+<p-dialog styleClass="popup-btngroup-edit-detail"  [(visible)]="displayFormEditDetail" [draggable]="false"  [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '600px', height: 'auto'}">
+    <p-header>
+        Thông tin thời gian làm việc
+    </p-header>
+    <app-edit-detail [optionsButtonsEdit]="optionsButtonsPopup" *ngIf="listViewsDetail.length> 0 && displayFormEditDetail" [detailInfo]="detailInfo"
+        [detail]="displayFormEditDetail" [manhinh]="'Edit'" [thongtinnhanvienNew]="true"
+        [dataView]="listViewsDetail" (callback)="setDetailInfo($event)"
+        (callbackcancel)="cancelDetailInfo($event)"></app-edit-detail>
+</p-dialog>
+
+
+<p-dialog styleClass="popup-btngroup-edit-detail" header="{{titleForm.title}}" [(visible)]="displayDialog" [modal]="true" [draggable]="false"
+    [resizable]="false" [style]="{width: '1300px'}" [autoZIndex]=true [draggable]="false" [resizable]="false">
+            <app-edit-detail
+                *ngIf="listViewsForm.length> 0 && displayDialog &&  (titleForm.type === 'DuyetHoSo' || titleForm.type === 'TuyenDungLai' || titleForm.type === 'ChuyenCongTac')"
+                [detail]="detailInfoForm"  [thongtinnhanvienNew]="true" [dataView]="listViewsForm"
+                (callback)="xacNhan($event)" (callbackcancel)="cancelViewsForm($event)"
+                [noDisableInput]="noDisableInput"
+                ></app-edit-detail>
+            <div *ngIf="titleForm.type !== 'ChuyenCongTac'">
+                    <div class="col-md-6 mt-1">
+                        <div class="field-group text" [ngClass]=" modelDuyet.full_name ? 'valid' : 'invalid' ">
+                            <label for="">Nhân viên</label>
+                            <input type="text" [value]="modelDuyet.full_name || 'No name'" disabled name="full_name" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-1"  *ngIf="titleForm.type === 'NghiViec'">
+                        <div class="field-group select" [ngClass]=" modelDuyet.reason_id? 'valid' : 'invalid' ">
+                            <label for="">Lý do</label>
+                            <p-dropdown [autoZIndex]="true" [autoDisplayFirst]="false" [style]="{'width': '100%'}" [options]="terminateReasons"
+                            [(ngModel)]="modelDuyet.reason_id" name="reason_id">
+                            <ng-template let-item pTemplate="selectedItem">
+                                <span style="vertical-align:middle; margin-left: .5em">{{item.name}}</span>
+                            </ng-template>
+                            <ng-template let-car pTemplate="item">
+                                <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                                    <div style="font-size:14px;float:right;margin-top:4px">{{car.name}}</div>
+                                </div>
+                            </ng-template>
+                            </p-dropdown>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-1 ">
+                        <div class="field-group date">
+                            <label for="">Ngày xác nhận</label>
+                            <p-calendar placeholder="DD/MM/YYYY" appendTo="body" [baseZIndex]="101" [(ngModel)]="modelDuyet.workDt"
+                                [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" inputId="navigators"
+                                dateFormat="dd/mm/yy" name="workDt"></p-calendar>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-1" *ngIf="titleForm.type === 'NghiViec'">
+                        <div class="field-group date">
+                            <label for="">Ngày chốt nghỉ <span style="color: red">*</span></label>
+                            <p-calendar [required]="true" placeholder="DD/MM/YYYY" appendTo="body" [baseZIndex]="101" [(ngModel)]="modelDuyet.exprire_date"
+                                [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" inputId="navigators"
+                                dateFormat="dd/mm/yy" name="exprire_date"></p-calendar>
+                            <div class="alert-validation alert-danger" *ngIf="isSubmitSave && !modelDuyet.exprire_date"> 
+                                Vui lòng chọn ngày chốt nghỉ 
+                            </div>
+                        </div>
+                    </div>
+                        <div class="col-md-12 mt-1">
+                            <div class="field-group textarea">
+                                <label for="">Ghi chú</label>
+                                <textarea [(ngModel)]="modelDuyet.comments" name="comments" cols="30" rows="10" class="form-control"></textarea>
+                            </div>
+                        </div>
+            <div class="col-md-12 mt-1 text-right"  *ngIf="titleForm.type === 'HuyHoSo' || titleForm.type === 'MoLaiHoSo' || titleForm.type === 'NghiViec'">
+                <p-button label="Hủy" (click)="onChangeButtonSave('Back')" icon="pi pi-times" styleClass="p-button-sm p-button-secondary mr-1"></p-button>
+                <p-button label="Lưu lại" (click)="onChangeButtonSave('Save')" icon="pi pi-check" styleClass="p-button-sm "></p-button>
+            </div>
+        </div>
+</p-dialog>
