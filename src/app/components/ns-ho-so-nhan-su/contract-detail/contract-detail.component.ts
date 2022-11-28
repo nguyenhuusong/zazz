@@ -123,6 +123,11 @@ export class ContractDetailComponent implements OnInit {
         //     value: d.flow_st
         //   }
         // });
+        this.listViews = cloneDeep(results.data.group_fields);
+        setTimeout(() => {
+          this.stepActivated();
+        }, 100);
+        this.detailInfo = results.data;
         if(results.data.flow_st === 0) {
           this.optionsButon = [
             { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
@@ -133,16 +138,10 @@ export class ContractDetailComponent implements OnInit {
             { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
             { label: 'Tiếp tục', value: 'Update', class: '', icon: 'pi pi-save' },
           ];
-         if(results.data.flow_st > 1) this.getContractMetaPage();
+         if(results.data.flow_st > 1 && results.data.contractId) this.getContractMetaPage();
          if(results.data.flow_st > 0 && results.data.contractId) this.getSalaryComponentPage();
          if(results.data.flow_st > 0 && !results.data.contractId) this.getSalaryComponentPageNotContractId(results.data);
         }
-       
-        this.listViews = cloneDeep(results.data.group_fields);
-        setTimeout(() => {
-          this.stepActivated();
-        }, 100);
-        this.detailInfo = results.data;
         this.spinner.hide();
       } else {
         this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
