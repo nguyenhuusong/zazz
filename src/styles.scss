@@ -5612,3 +5612,29 @@ p-button{
         }
     }
 }
+section:after {
+    content: '';
+    display: table;
+    clear: both;
+}
+.title-section{
+    font-size: 20px!important;
+    font-weight: 500;
+    color: #2f3e62;
+    font-family: "SFProTextMedium";
+    position: relative;
+    padding-left: 16px;
+    line-height: 28px;
+    display: block;
+    margin-top: 0px;
+    &:after {
+        content: "";
+        width: 4px;
+        height: 24px;
+        background: #4C97E4;
+        display: block!important;
+        position: absolute;
+        left: 0px;
+        top: 2px;
+    }
+}
