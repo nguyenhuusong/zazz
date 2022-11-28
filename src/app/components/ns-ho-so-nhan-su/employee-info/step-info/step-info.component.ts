@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-step-info',
@@ -7,9 +7,18 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class StepInfoComponent implements OnInit {
   @Input() detailInfo = null;
-  constructor() { }
+  constructor(
+    private changeDetech: ChangeDetectorRef,
+  ) { }
   stepsLine = [];
+
+  ngAfterViewChecked() {
+    this.changeDetech.detectChanges();
+  }
+
   ngOnInit(): void {
+    console.log(this.detailInfo)
+    this.activeIndex = this.detailInfo.flow_st || 0
     this.stepsLine = this.detailInfo.flowStatuses.map(d => {
       return {
         label: d.flow_name,

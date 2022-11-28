@@ -134,7 +134,8 @@ export class ContractDetailComponent implements OnInit {
             { label: 'Tiếp tục', value: 'Update', class: '', icon: 'pi pi-save' },
           ];
          if(results.data.flow_st > 1) this.getContractMetaPage();
-         if(results.data.flow_st > 0) this.getSalaryComponentPage();
+         if(results.data.flow_st > 0 && results.data.contractId) this.getSalaryComponentPage();
+         if(results.data.flow_st > 0 && !results.data.contractId) this.getSalaryComponentPageNotContractId(results.data);
         }
        
         this.listViews = cloneDeep(results.data.group_fields);
@@ -227,6 +228,13 @@ export class ContractDetailComponent implements OnInit {
         this.spinner.hide();
       }
     })
+  }
+
+  getSalaryComponentPageNotContractId(datainfo) {
+    this.columnDefs_1 = [];
+    this.listsData_1 = datainfo.salary_components;
+    this.gridflexs_1 = datainfo.gridflexdetails2 ? datainfo.gridflexdetails2 : [];
+    this.initGrid_1();
   }
 
   initGrid_1() {
