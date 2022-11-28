@@ -3353,6 +3353,9 @@ div.p-organizationchart {
         .p-menuitem-link{
             padding-top: 0px;
             padding-bottom: 0px;
+            &:focus{
+                background: none !important;
+            }
         }
         ul{
             justify-content: center;
