@@ -1,4 +1,11 @@
 :host::ng-deep{
+    .wrap-edit-detail{
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+    section{
+        padding-top: 0px;
+    }
     .chi-tiet-ho-so-nhan-su{
         .p-dialog-header,
         .p-dialog-content{
