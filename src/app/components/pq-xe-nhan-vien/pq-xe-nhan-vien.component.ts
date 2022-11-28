@@ -841,7 +841,7 @@ export class PqXeNhanVienComponent implements OnInit {
       if (results.status === 'success') {
         this.listUsers = results.data.map(d => {
           return {
-            label: d.fullName + '-' + d.phone  + '-' + d.phone ,
+            label: d.fullName + '-' + d.phone  + '-' + d.code ,
             value: d.custId,
             roleName: 'user',
             ...d
