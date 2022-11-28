@@ -149,8 +149,8 @@ export class NavbarComponent implements OnInit {
               this.detailOrganizes = results.data
                 .map(d => {
                   return {
-                    label: d.ord_name,
-                    value: d.ord_id
+                    label: d.name,
+                    value: d.value
                   };
                 });
                 let organizesStorage = localStorage.getItem("organizes")

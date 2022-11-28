@@ -1878,6 +1878,10 @@ export class ApiHrmService {
   }
 
   // tuye dung -> mail
+  
+  getRecruitSendMailPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetRecruitSendMailPage?` + queryParams, this.options)
+  }
   getRecruitMailPage(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetRecruitMailPage?` + queryParams, this.options)
   }

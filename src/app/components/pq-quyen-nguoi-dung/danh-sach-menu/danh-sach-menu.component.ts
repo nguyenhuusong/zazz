@@ -285,6 +285,7 @@ export class DanhSachMenuComponent implements OnInit {
   detailDetailInfo = null;
   displayInfo = false;
   getConfigMenu(menuId) {
+    console.log('listsData', this.listsData)
     const query: any = { }
     if(menuId){
       query.menuId = menuId;

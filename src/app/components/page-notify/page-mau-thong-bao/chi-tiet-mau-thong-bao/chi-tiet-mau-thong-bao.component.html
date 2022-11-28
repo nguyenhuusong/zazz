@@ -1,8 +1,10 @@
 <div class="main-grid product-detail">
-  <div class="breadcrumb">
-    <h3>{{titlePage}}</h3>
-    <p-breadcrumb [model]="items"></p-breadcrumb>
-  </div>
+  <section class="bread-crumb">
+    <div class="breadcrumb">
+      <h3>{{titlePage}}</h3>
+      <p-breadcrumb [model]="items"></p-breadcrumb>
+    </div>
+  </section>
   <div class="content">
     <app-edit-detail *ngIf="listViews.length> 0 && manhinh === 'Edit'" [thongtinnhanvienNew]="true"
       [modelMarkdow]="modelMarkdow" [manhinh]="'Edit'" [dataView]="listViews" (callback)="setNotifyTemp($event)"

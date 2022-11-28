@@ -69,22 +69,22 @@
 </p-dialog>
 <p-dialog header="Chi tiết lịch sử dùng phép các kỳ" [(visible)]="isShowInfo" 
     [modal]="true" [style]="{width: '800px'}" [maximizable]="true">
-    <div class="label-value d-flex wrap mb-4">
+    <div class="label-value d-flex wrap mb-2">
         <div class="col-6 d-flex gap-16">
-            <label><b>Bộ phận:</b></label>
+            <label><b style="color: rgb(116 116 116 / 87%);">Bộ phận:</b></label>
             <div>{{ dataInfo?.orgName }}</div>
         </div>
         <div class="col-6 d-flex gap-16">
-            <label><b>Mã NV:</b></label>
+            <label><b style="color: rgb(116 116 116 / 87%);">Mã NV:</b></label>
             <div>{{ dataInfo?.code }}</div>
         </div>
         <div class="col-6 d-flex gap-16">
-            <label><b>Chức danh:</b></label>
+            <label><b style="color: rgb(116 116 116 / 87%);">Chức danh:</b></label>
             <div>{{ dataInfo?.orgName }}</div>
         </div>
     </div>
-    <div>
-        <h2>Phép năm đã dùng của năm {{ query.year }}</h2>
+    <div class="col-12">
+        <h2 style="color: #a1a1a1;">Phép năm đã dùng của năm {{ query.year }}</h2>
         <div class="d-flex table-info gap-16 wrap" *ngIf="dataInfo && dataInfo.lstMonth">
             <div class="label-value" *ngFor="let info of dataInfo.lstMonth">
                 <label class="mb-2">{{ info.month }}</label>

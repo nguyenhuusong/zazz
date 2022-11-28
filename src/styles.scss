@@ -2740,6 +2740,7 @@ div.p-organizationchart {
         display: block;
         background: none;
         position: relative;
+        line-height: 1;
         // z-index: 2;
         border-radius: 4px;
         transition: all 0.3s;
@@ -2790,6 +2791,7 @@ div.p-organizationchart {
         .p-treeselect{
             border-radius: 3px;
             width: 100%;
+            min-height: 40px;
             .p-treeselect-label{
                 padding: 9px 16px 9px 16px;
             }
@@ -3075,6 +3077,13 @@ div.p-organizationchart {
         }
     }
 }
+    div{
+        p-dropdown{
+            .p-dropdown-label.p-placeholder{
+                color: #747E96 !important;
+            }
+        }
+    }
 .p-dropdown-panel{
     .p-dropdown-items-wrapper{
         .p-dropdown-items{

@@ -318,6 +318,7 @@ export class AppTypeSelectTreesComponent implements OnInit, OnChanges {
           <div class="uni-load " [ngClass]="loading ? 'loading' : ''"></div>
           <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
                 <p-dropdown appendTo="body" [baseZIndex]="100"
+                  placeholder="{{element.columnLabel}}" 
                   [disabled]="element.isDisable" [options]="element.options" (onChange)="onChangeValue($event.value, element.field_name, element)" [filterBy]="'label'"
                   [required]="element.isRequire && element.isVisiable && !element.isEmpty" [(ngModel)]="element.columnValue"
                   [name]="element.field_name" [filter]="true">
