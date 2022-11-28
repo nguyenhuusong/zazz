@@ -1,0 +1,206 @@
+:host::ng-deep{
+    .chi-tiet-ho-so-nhan-su{
+        .p-dialog-header,
+        .p-dialog-content{
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+        .p-panel-header{
+            background: #ffffff;
+            padding-left: 0px;
+            padding-right: 0px;
+        }
+
+        .p-card-footer{
+            display: flex;
+            justify-content: flex-end;
+        }
+        // .btn-group-edit-detail{
+        //     right: 16px !important;
+        //     top: 187px !important;
+        //     z-index: 999 !important;
+        // }
+        .popup-btngroup-edit-detail{
+            .btn-group-edit-detail{
+                // right: 52px !important;
+                // top: 22px !important;
+                // right: 40px !important;
+                // top: 45px !important;
+            }
+        }
+        // .page-detail{
+        //     p-dialog{
+        //         .p-dialog{
+        //             .wrap-edit-detail{
+        //                 .main-grid{
+        //                     // right: 50px !important;
+        //                     // top: 21px !important;
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
+        .khachHangWrapper{
+            .col-md-12{
+                position: static;
+            }
+        }
+        .p-panel{
+            box-shadow: none;
+            border-radius: 0;
+        }
+        .p-panel-header{
+            padding: 0px;
+            margin-bottom: 32px;
+            .p-panel-title {
+                font-size: 20px !important;
+                font-weight: 500;
+                color: #2F3E62;
+                font-family: "SFProTextMedium";
+                position: relative;
+                padding-left: 16px;
+                line-height: 28px;
+                display: block;
+                &::after{
+                    content: '';
+                    width: 4px;
+                    height: 24px;
+                    background: #4C97E4;
+                    display: block !important;
+                    position: absolute;
+                    left: 0px;
+                    top: 2px;
+                }
+            }
+        }
+    }
+    .p-panel-content{
+        padding-left: 0px;
+        padding-right: 0px;
+        padding-bottom: 0px;
+        .border-section{
+            padding: 0px;
+            .p-panel-header{
+                display: block;
+            }
+            .p-panel{
+                // padding-left: 16px;
+                // padding-right: 16px;
+                // margin-bottom: 16px;
+            }
+        }
+        .avatar-c{
+            .p-image{
+                max-width: 260px;
+            }
+        }
+    }
+    .wrap-edit-detail{
+        .btn-group-edit-detail{
+            justify-content: end;
+        }
+    }
+}
+:host::ng-deep{
+    .border-section{
+        &::after{
+            bottom: 0px;
+            display: none;
+        }
+    }
+    .chi-tiet-ho-so-nhan-su{
+        .p-dialog {
+            .p-dialog-content{
+            }
+        }
+    }
+    .head-detail{
+        .breadcrumb{
+            margin-bottom: 16px;
+        }
+        .p-listbox{
+            border: none;
+            .p-listbox-list{
+                display: flex;
+                .p-listbox-item{
+                    position: relative;
+                    &::after{
+                        content: '';
+                        height: 2px;
+                        position: absolute;
+                        display: block;
+                        bottom: 0px;
+                        width: 100%;
+                        left: 0px;
+                    }
+                    .country-item{
+                        span{
+                            font-size: 14px;
+                            font-family: 'SFProTextRegular';
+                            line-height: 20px;
+                            font-weight: 400;
+                            color: #5D6985;
+                        }
+                    }
+                    &:hover,
+                    &.p-highlight{
+                        background: none;
+                        .country-item{
+                            span{
+                                color: #4C97E4
+                            }
+                        }
+                        &::after{
+                            background: #4C97E4;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .plr-16{
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+}
+.base-info-em{
+    background: #F3F4F6;
+    ul{
+        display: flex;
+        border-radius: 4px 4px 0px 0px;
+        padding: 17px;
+        align-items: center;
+    }
+    li{
+        font-size: 14px;
+        color: #2F3E62;
+        display: inline-block;
+        font-family: 'SFProTextRegular';
+        line-height: 1;
+        &.spre{
+            margin: 0px 16px;
+        }
+        .value{
+            font-family: 'SFProTextMedium';
+            font-weight: 500;
+            color: #4C97E4
+        }
+    }
+}
+:host::ng-deep{
+    .base-info-em{
+        .buttons{
+            button{
+                line-height: 20px;
+                font-size: 14px;
+            }
+            svg{
+                height: 16px;
+            }
+        }
+    }
+}
+
+.chi-tiet-ho-so-nhan-su .page-detail{
+    position: static;
+}
