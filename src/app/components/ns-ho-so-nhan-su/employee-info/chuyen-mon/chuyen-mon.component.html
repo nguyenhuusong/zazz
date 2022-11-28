@@ -56,14 +56,14 @@
                                     <div class="row" style="flex-wrap: wrap">
                                         <div class="grid-default border">
                                             <app-list-grid-angular [domLayout]="'autoHeight'"
-                                                *ngIf="columnDefs.length > 0" [title]="'Chứng chỉ'"
-                                                [listsData]="listsData" [columnDefs]="columnDefs">
+                                                *ngIf="columnDefs1.length > 0" [title]="'Chứng chỉ'"
+                                                [listsData]="listsData1" [columnDefs]="columnDefs1">
                                             </app-list-grid-angular>
                                         </div>
                                     </div>
                                     <ng-template pTemplate="footer">
                                         <p-button label="Thêm mới" icon="pi pi-plus" (click)="addEducation()" styleClass="p-button-sm mr-1"></p-button>
-                                        <p-button label="Cấu hình" icon="pi pi-cog" (click)="CauHinh(0)"
+                                        <p-button label="Cấu hình" icon="pi pi-cog" (click)="CauHinh(1)"
                                             styleClass="p-button-sm"></p-button>
                                     </ng-template>
                                 </p-panel>
@@ -76,14 +76,14 @@
                                     <div class="row" style="flex-wrap: wrap">
                                         <div class="grid-default border">
                                             <app-list-grid-angular [domLayout]="'autoHeight'"
-                                                *ngIf="columnDefs.length > 0" [title]="'Chứng chỉ'"
-                                                [listsData]="listsData" [columnDefs]="columnDefs">
+                                                *ngIf="columnDefs2.length > 0" [title]="'Chứng chỉ'"
+                                                [listsData]="listsData2" [columnDefs]="columnDefs2">
                                             </app-list-grid-angular>
                                         </div>
                                     </div>
                                     <ng-template pTemplate="footer">
                                         <p-button label="Thêm mới" icon="pi pi-plus" (click)="addTraining()" styleClass="p-button-sm mr-1"></p-button>
-                                        <p-button label="Cấu hình" icon="pi pi-cog" (click)="CauHinh(0)"
+                                        <p-button label="Cấu hình" icon="pi pi-cog" (click)="CauHinh(2)"
                                             styleClass="p-button-sm"></p-button>
                                     </ng-template>
                                 </p-panel>
@@ -96,14 +96,14 @@
                                     <div class="row" style="flex-wrap: wrap">
                                         <div class="grid-default border">
                                             <app-list-grid-angular [domLayout]="'autoHeight'"
-                                                *ngIf="columnDefs.length > 0" [title]="'Chứng chỉ'"
-                                                [listsData]="listsData" [columnDefs]="columnDefs">
+                                                *ngIf="columnDefs3.length > 0" [title]="'Chứng chỉ'"
+                                                [listsData]="listsData3" [columnDefs]="columnDefs3">
                                             </app-list-grid-angular>
                                         </div>
                                     </div>
                                     <ng-template pTemplate="footer">
                                         <p-button label="Thêm mới" icon="pi pi-plus" (click)="addSkill()" styleClass="p-button-sm mr-1"></p-button>
-                                        <p-button label="Cấu hình" icon="pi pi-cog" (click)="CauHinh(0)"
+                                        <p-button label="Cấu hình" icon="pi pi-cog" (click)="CauHinh(3)"
                                             styleClass="p-button-sm"></p-button>
                                     </ng-template>
                                 </p-panel>
@@ -116,14 +116,14 @@
                                     <div class="row" style="flex-wrap: wrap">
                                         <div class="grid-default border">
                                             <app-list-grid-angular [domLayout]="'autoHeight'"
-                                                *ngIf="columnDefs.length > 0" [title]="'Chứng chỉ'"
-                                                [listsData]="listsData" [columnDefs]="columnDefs">
+                                                *ngIf="columnDefs4.length > 0" [title]="'Chứng chỉ'"
+                                                [listsData]="listsData4" [columnDefs]="columnDefs4">
                                             </app-list-grid-angular>
                                         </div>
                                     </div>
                                     <ng-template pTemplate="footer">
                                         <p-button label="Thêm mới" icon="pi pi-plus" (click)="addCertificate()" styleClass="p-button-sm mr-1"></p-button>
-                                        <p-button label="Cấu hình" icon="pi pi-cog" (click)="CauHinh(0)"
+                                        <p-button label="Cấu hình" icon="pi pi-cog" (click)="CauHinh(4)"
                                             styleClass="p-button-sm"></p-button>
                                     </ng-template>
                                 </p-panel>

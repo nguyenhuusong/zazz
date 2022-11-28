@@ -1,4 +1,11 @@
 :host::ng-deep{
+    .wrap-edit-detail{
+        padding-left: 0px;
+        padding-right: 0px;
+        .p-panel{
+            box-shadow: none;
+        }
+    }
     .chi-tiet-ho-so-nhan-su{
         .p-dialog-header,
         .p-dialog-content{
@@ -10,6 +17,7 @@
             padding-left: 0px;
             padding-right: 0px;
         }
+
         .p-panel-footer {
             display: flex;
             justify-content: flex-end;

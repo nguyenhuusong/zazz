@@ -101,7 +101,7 @@ export class ThueBaoHiemComponent implements OnInit {
       if (repo.status === 'success') {
         if (repo.data.dataList.gridKey) {
           this.gridKey = repo.data.dataList.gridKey;
-        }    this.columnDefs[0] = [
+        }    this.columnDefs = [
           ...AgGridFn(repo.data.gridflexs || []),
           {
             headerName: '',
