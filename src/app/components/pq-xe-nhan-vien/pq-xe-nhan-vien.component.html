@@ -107,7 +107,8 @@
           <div class="field-group select" [ngClass]="modelTM?.cusId ? 'valid' : 'invalid'">
             <label for="">Nhân viên</label>
               <p-dropdown appendTo="body"  [baseZIndex]="100" 
-                  [options]="listUsers" [(ngModel)]="modelTM.cusId" (onChange)="onChangeUser($event)" [autoDisplayFirst]="false" name="cusId" [filter]="true">
+                  [options]="listUsers" [(ngModel)]="modelTM.cusId" 
+                  (onChange)="onChangeUser($event)" [autoDisplayFirst]="false" name="cusId" [filter]="true">
                   <ng-template let-item pTemplate="selectedItem">
                       <span>{{item.label}}</span>
                   </ng-template>

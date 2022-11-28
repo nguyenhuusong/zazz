@@ -117,6 +117,16 @@ const routes: Routes = [
       url: 'chi-tiet-linh-vuc-tuyen-dung',
     },
   },
+  // mail da gui
+  // {
+  //   path: 'mail-da-gui',
+  //   component: MailTuyenDungComponent,
+  //   data: {
+  //     title: 'Danh sách mail đã gửi',
+  //     url: 'mail-da-gui',
+  //   },
+  // },
+
   // mail tuyen dung
   {
     path: 'mail-tuyen-dung',

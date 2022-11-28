@@ -836,11 +836,12 @@ export class PqXeNhanVienComponent implements OnInit {
   listUsers = [];
   getUserByPush() {
     this.spinner.show();
-    this.apiService.getUserByPush({ organizeId: this.modelTM.organizeId, orgIds: [this.modelTM.organizeId] }).subscribe(results => {
+    this.listUsers = []
+    this.apiService.getEmployeeSearch(queryString.stringify({ organizeId: this.modelTM.organizeId })).subscribe(results => {
       if (results.status === 'success') {
         this.listUsers = results.data.map(d => {
           return {
-            label: d.fullName + '-' + d.phone,
+            label: d.fullName + '-' + d.phone  + '-' + d.phone ,
             value: d.custId,
             roleName: 'user',
             ...d
