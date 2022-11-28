@@ -70,6 +70,15 @@ import { CheckHideActionsDirectiveModule } from 'src/app/directive/check-action.
 import { ChiTietQTThayDoiLuongComponent } from 'src/app/components/qt-thay-doi-luong/chi-tiet-qt-thay-doi-luong/chi-tiet-qt-thay-doi-luong.component';
 import { ContractDetailComponent } from 'src/app/components/ns-ho-so-nhan-su/contract-detail/contract-detail.component';
 import {DividerModule} from 'primeng/divider';
+import { EmployeeInfoComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/employee-info.component';
+import { ThongTinCaNhanComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/thong-tin-ca-nhan/thong-tin-ca-nhan.component';
+import { ViTriCongViecComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/vi-tri-cong-viec/vi-tri-cong-viec.component';
+import { QuanHeLaoDongCComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/quan-he-lao-dong-c/quan-he-lao-dong-c.component';
+import { ThueBaoHiemComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/thue-bao-hiem/thue-bao-hiem.component';
+import { ChuyenMonComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/chuyen-mon/chuyen-mon.component';
+import { TienIchComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/tien-ich/tien-ich.component';
+import { QuanLyTaiKhoanComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/quan-ly-tai-khoan/quan-ly-tai-khoan.component';
+import { StepInfoComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/step-info/step-info.component';
 
 @NgModule({
   imports: [
@@ -149,6 +158,17 @@ import {DividerModule} from 'primeng/divider';
     QtThayDoiLuongComponent,
     ChiTietQTThayDoiLuongComponent,
     ContractDetailComponent,
+
+    
+    EmployeeInfoComponent,
+    ThongTinCaNhanComponent,
+    ViTriCongViecComponent,
+    QuanHeLaoDongCComponent,
+    ThueBaoHiemComponent,
+    ChuyenMonComponent,
+    TienIchComponent,
+    QuanLyTaiKhoanComponent,
+    StepInfoComponent
 
   ],
   providers: [ ]

@@ -107,14 +107,6 @@
                         </ng-template>
                     </p-overlayPanel>
                     </div>
-                    <!-- <app-view-detail *ngIf="listViews.length> 0 && manhinh === 'View'"
-                        [detail]="detailInfo" [manhinh]="manhinh" [thongtinnhanvienNew]="true"
-                        [dataView]="listViews" (callback)="setEmployeeInfo($event)">
-                    </app-view-detail>
-                    <app-edit-detail *ngIf="listViews.length> 0 && manhinh === 'Edit'"
-                        [detail]="detailInfo" [manhinh]="manhinh" [thongtinnhanvienNew]="true"
-                        [dataView]="listViews" (callback)="setEmployeeInfo($event)"
-                        (callbackcancel)="cancelUpdate()"></app-edit-detail> -->
                     <div class="page-detail-edit-detail" *ngIf="selectedMenuCode !== API_PROFILE.QUAN_LY_TAI_KHOAN">
                         <app-edit-detail *ngIf="listViews.length> 0" 
                             [detail]="detailInfo" 
@@ -130,6 +122,9 @@
                     </div>
                             
                     </div>
+
+                    <!-- titles[0] -->
+
                         <div class="row d-flex timelines" *ngIf="selectedMenuCode === API_PROFILE.CONG_VIEC ">
                             <div class="col-md-12">
                                 <div class="border-section">
@@ -155,12 +150,10 @@
                                                             </svg>
                                                             &nbsp;Thêm mới
                                                     </p-button>
-                                                    <p-button label="Cấu hình" (onClick)="CauHinh()" styleClass="p-button-sm ml-1" icon="pi pi-cog"></p-button>
                                                 </div>
                                             </div>
                                         </ng-template>
                                         <div class="grid-default border mt-2">
-                                            <!-- Thời gian làm việc -->
                                                 <app-list-grid-angular  [domLayout]="'autoHeight'" [title]="'Danh sách liên hệ'" *ngIf="listsData[0].length > 0"
                                                     [listsData]="listsData[0]"  (FnClick)="OnClick($event)"
                                                     [columnDefs]="columnDefs[0]"></app-list-grid-angular>
@@ -171,7 +164,6 @@
                            
                         </div>
                     
-
                         <div class="border-section mt-5" 
                                         *ngIf="selectedMenuCode === API_PROFILE.TIEN_ICH || selectedMenuCode === API_PROFILE.THONG_TIN_CA_NHAN
                                 || selectedMenuCode === API_PROFILE.NGUOI_QUAN_LY
@@ -192,28 +184,35 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-6 justify-content-end text-right">
-                                                <p-button *ngIf="selectedMenuCode === API_PROFILE.THUE_BAO_HIEM
-                                                || selectedMenuCode === API_PROFILE.NGUOI_DUNG" styleClass="p-button-sm" (click)="addType0()"
-                                                [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetEmployeePage.url, action: ACTIONS.CHI_TIET_HO_SO_THUE_BAO_HIEM_THEM_MOI_NGUOI_PHU_THUOC}"
-                                                >
-                                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M11 5H9V9H5V11H9V15H11V11H15V9H11V5ZM10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM10 18C5.59 18 2 14.41 2 10C2 5.59 5.59 2 10 2C14.41 2 18 5.59 18 10C18 14.41 14.41 18 10 18Z" fill="#F3F8FF"/>
-                                                        </svg>
-                                                        &nbsp;Thêm mới
-                                                </p-button>
+                                               
                                             </div>
                                         </div>
                                     </ng-template>
                                 <div class="grid-default border mb-7">
-                                    <!-- Giấy tờ tùy thân -->
                                     <app-list-grid-angular  [domLayout]="'autoHeight'"  [title]="'Danh sách liên hệ'" *ngIf="listsData[0].length > 0"
                                         [listsData]="listsData[0]"  (FnClick)="OnClick($event)"
                                         [columnDefs]="columnDefs[0]"></app-list-grid-angular>
                                 </div>
+                            <ng-template pTemplate="footer">
+                                <!-- <p-button *ngIf="selectedMenuCode === API_PROFILE.THUE_BAO_HIEM || selectedMenuCode === API_PROFILE.CHUYEN_MON
+                                || selectedMenuCode === API_PROFILE.NGUOI_DUNG" styleClass="p-button-sm mr-1" (click)="addType0()"
+                                [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetEmployeePage.url, action: ACTIONS.CHI_TIET_HO_SO_THUE_BAO_HIEM_THEM_MOI_NGUOI_PHU_THUOC}"
+                                >
+                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M11 5H9V9H5V11H9V15H11V11H15V9H11V5ZM10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM10 18C5.59 18 2 14.41 2 10C2 5.59 5.59 2 10 2C14.41 2 18 5.59 18 10C18 14.41 14.41 18 10 18Z" fill="#F3F8FF"/>
+                                        </svg>
+                                        &nbsp;Thêm mới
+                                </p-button> -->
+                                <p-button *ngIf="selectedMenuCode === API_PROFILE.THUE_BAO_HIEM || selectedMenuCode === API_PROFILE.CHUYEN_MON
+                                || selectedMenuCode === API_PROFILE.NGUOI_DUNG" styleClass="p-button-sm mr-1" label="Thêm mới" icon="pi pi-plus" (click)="addType0()"
+                                >
+                                </p-button>
+                                <p-button label="Cấu hình" icon="pi pi-cog" styleClass="p-button-sm" (onClick)="CauHinh(0)"></p-button>
+                                </ng-template>
                             </p-card>
                         </div>
 
-
+                        <!-- titles[1] -->
                         <div class="border-section mt-5"
                                     *ngIf="selectedMenuCode === API_PROFILE.CHUYEN_MON 
                                 || selectedMenuCode === API_PROFILE.THUE_BAO_HIEM
@@ -234,30 +233,11 @@
                                             </div>
                                         </div>
                                         <div class="col-md-6 justify-content-end text-right">
-                                            <!-- <p-button *ngIf="selectedMenuCode === API_PROFILE.THONG_TIN_CA_NHAN"
-                                                label="Thông tin hồ sơ" icon="pi pi-book"
-                                                styleClass="p-button-sm" (click)="createContract()"></p-button> -->
-                                            <p-button
-                                                *ngIf=" selectedMenuCode === API_PROFILE.THUE_BAO_HIEM" styleClass="p-button-sm"
-                                                [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetEmployeePage.url, action: ACTIONS.CHI_TIET_HO_SO_THUE_BAO_HIEM_THEM_MOI_FILE_DINH_KEM}"
-                                                (click)="createAttach()">
-                                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M11 5H9V9H5V11H9V15H11V11H15V9H11V5ZM10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM10 18C5.59 18 2 14.41 2 10C2 5.59 5.59 2 10 2C14.41 2 18 5.59 18 10C18 14.41 14.41 18 10 18Z" fill="#F3F8FF"/>
-                                                    </svg>
-                                                    &nbsp;Thêm mới
-                                            </p-button>
-                                                <p-button
-                                                *ngIf=" selectedMenuCode === API_PROFILE.NGUOI_QUAN_LY" styleClass="p-button-sm"
-                                                (click)="onAddUserLogin()">
-                                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M11 5H9V9H5V11H9V15H11V11H15V9H11V5ZM10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM10 18C5.59 18 2 14.41 2 10C2 5.59 5.59 2 10 2C14.41 2 18 5.59 18 10C18 14.41 14.41 18 10 18Z" fill="#F3F8FF"/>
-                                                    </svg>
-                                                    &nbsp;Thêm mới
-                                            </p-button>   
+                                         
+                                            
                                         </div>
                                     </div>
                                 </ng-template>
-                                <!-- Thông tin hồ sơ cá nhân -->
                                 
                                 <app-list-grid-angular *ngIf="selectedMenuCode === API_PROFILE.THONG_TIN_CA_NHAN" 
                                     [domLayout]="'autoHeight'" 
@@ -272,10 +252,34 @@
                                         [listsData]="listsData[1]" (FnClick)="OnClick($event)"
                                         [columnDefs]="columnDefs[1]"></app-list-grid-angular>
                                     </div>
+
+                            <ng-template pTemplate="footer">
+                                <p-button
+                                *ngIf=" selectedMenuCode === API_PROFILE.THUE_BAO_HIEM" styleClass="p-button-sm mr-1"
+                                [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetEmployeePage.url, action: ACTIONS.CHI_TIET_HO_SO_THUE_BAO_HIEM_THEM_MOI_FILE_DINH_KEM}"
+                                (click)="createAttach()">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M11 5H9V9H5V11H9V15H11V11H15V9H11V5ZM10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM10 18C5.59 18 2 14.41 2 10C2 5.59 5.59 2 10 2C14.41 2 18 5.59 18 10C18 14.41 14.41 18 10 18Z" fill="#F3F8FF"/>
+                                    </svg>
+                                    &nbsp;Thêm mới
+                            </p-button>
+                                <p-button
+                                *ngIf=" selectedMenuCode === API_PROFILE.NGUOI_QUAN_LY" styleClass="p-button-sm mr-1"
+                                (click)="onAddUserLogin()">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M11 5H9V9H5V11H9V15H11V11H15V9H11V5ZM10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM10 18C5.59 18 2 14.41 2 10C2 5.59 5.59 2 10 2C14.41 2 18 5.59 18 10C18 14.41 14.41 18 10 18Z" fill="#F3F8FF"/>
+                                    </svg>
+                                    &nbsp;Thêm mới
+                            </p-button>  
+                            <p-button *ngIf=" selectedMenuCode === API_PROFILE.CHUYEN_MON" 
+                            label="Thêm mới" styleClass="p-button-sm mr-1"
+                            icon="pi pi-plus" (click)="addType1()"></p-button>
+                                <p-button label="Cấu hình" icon="pi pi-cog" styleClass="p-button-sm" (onClick)="CauHinh(1)"></p-button>
+                                </ng-template>
                             </p-card>
                             
                         </div>
-
+                        <!-- titles[2] -->
                         <div class="border-section mt-5" *ngIf="selectedMenuCode === API_PROFILE.CHUYEN_MON || selectedMenuCode === API_PROFILE.THONG_TIN_CA_NHAN
                         || selectedMenuCode === API_PROFILE.QUAN_LY_TAI_KHOAN">
                                 <p-card styleClass="mt-1 mb-4 p-card-header-custom plr-16" >
@@ -291,25 +295,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-6 justify-content-end text-right">
-                                                <p-button
-                                                    *ngIf="selectedMenuCode === API_PROFILE.THONG_TIN_CA_NHAN " styleClass="p-button-sm"
-                                                    (click)="createAttach()"
-                                                    [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetEmployeePage.url, action: ACTIONS.CHI_TIET_HO_SO_THEM_MOI_FILE_DINH_KEM}"
-                                                    >
-                                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M11 5H9V9H5V11H9V15H11V11H15V9H11V5ZM10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM10 18C5.59 18 2 14.41 2 10C2 5.59 5.59 2 10 2C14.41 2 18 5.59 18 10C18 14.41 14.41 18 10 18Z" fill="#F3F8FF"/>
-                                                        </svg>
-                                                        &nbsp;Thêm mới
-                                                </p-button>
-                                                    <p-button
-                                                    *ngIf=" selectedMenuCode === API_PROFILE.CONG_VIEC" styleClass="p-button-sm"
-                                                    
-                                                    (click)="onAddUserLogin()">
-                                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M11 5H9V9H5V11H9V15H11V11H15V9H11V5ZM10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM10 18C5.59 18 2 14.41 2 10C2 5.59 5.59 2 10 2C14.41 2 18 5.59 18 10C18 14.41 14.41 18 10 18Z" fill="#F3F8FF"/>
-                                                        </svg>
-                                                        &nbsp;Thêm mới
-                                                </p-button>  
+                                               
                                             </div>
                                         </div>
                                     </ng-template>
@@ -321,11 +307,35 @@
                                                 (onCellClicked)="cellClick($event)"
                                                 [columnDefs]="columnDefs[2]"></app-list-grid-angular>
                                             </div>
+
+                                    <ng-template pTemplate="footer">
+                                        <p-button
+                                        *ngIf="selectedMenuCode === API_PROFILE.THONG_TIN_CA_NHAN " styleClass="p-button-sm mr-1"
+                                        (click)="createAttach()"
+                                        [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetEmployeePage.url, action: ACTIONS.CHI_TIET_HO_SO_THEM_MOI_FILE_DINH_KEM}"
+                                        >
+                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M11 5H9V9H5V11H9V15H11V11H15V9H11V5ZM10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM10 18C5.59 18 2 14.41 2 10C2 5.59 5.59 2 10 2C14.41 2 18 5.59 18 10C18 14.41 14.41 18 10 18Z" fill="#F3F8FF"/>
+                                            </svg>
+                                            &nbsp;Thêm mới
+                                    </p-button>
+                                        <p-button
+                                        *ngIf=" selectedMenuCode === API_PROFILE.CONG_VIEC" styleClass="p-button-sm mr-1"
+                                        
+                                        (click)="onAddUserLogin()">
+                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M11 5H9V9H5V11H9V15H11V11H15V9H11V5ZM10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM10 18C5.59 18 2 14.41 2 10C2 5.59 5.59 2 10 2C14.41 2 18 5.59 18 10C18 14.41 14.41 18 10 18Z" fill="#F3F8FF"/>
+                                            </svg>
+                                            &nbsp;Thêm mới
+                                    </p-button>  
+                                    <p-button *ngIf=" selectedMenuCode === API_PROFILE.CHUYEN_MON" 
+                                    label="Thêm mới" styleClass="p-button-sm mr-1"
+                                    icon="pi pi-plus" (click)="addType2()"></p-button>
+                                        <p-button label="Cấu hình" icon="pi pi-cog" styleClass="p-button-sm" (onClick)="CauHinh(2)"></p-button>
+                                        </ng-template>
                                 </p-card>
                         </div>
-                        <!-- // chứng chỉ 
-                         || selectedMenuCode === API_PROFILE.THONG_TIN_CA_NHAN
-                        -->
+                         <!-- titles[3] -->
                         <div class="border-section mt-5"  *ngIf="selectedMenuCode === API_PROFILE.CHUYEN_MON">
                                 <p-card styleClass="mt-1 mb-4 plr-16">
                                     <ng-template pTemplate="header">
@@ -339,12 +349,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-6 justify-content-end text-right">
-                                                <p-button *ngIf="selectedMenuCode === API_PROFILE.THONG_TIN_CA_NHAN" 
-                                                    label="Thêm mới" styleClass="p-button-sm"
-                                                    icon="pi pi-plus" (click)="addType3()"></p-button>
-                                                    <p-button label="Thêm mới CMND/CCCD/HC" *ngIf="selectedMenuCode === API_PROFILE.THONG_TIN_CA_NHAN" icon="pi pi-plus" styleClass="p-button-sm p-button-info"
-                                                    (click)="showPopupUploadCard()"></p-button>
-                                                    <!-- cũ - ẩn -->
+                                               
                                             </div>
                                         </div>
 
@@ -354,8 +359,19 @@
                                             [listsData]="listsData[3]" (FnClick)="OnClick($event)"
                                             [columnDefs]="columnDefs[3]"></app-list-grid-angular>
                                         </div>
+
+                                <ng-template pTemplate="footer">
+                                    <p-button *ngIf="selectedMenuCode === API_PROFILE.THONG_TIN_CA_NHAN || selectedMenuCode === API_PROFILE.CHUYEN_MON" 
+                                    label="Thêm mới" styleClass="p-button-sm mr-1"
+                                    icon="pi pi-plus" (click)="addType3()"></p-button>
+                                    <p-button label="Thêm mới CMND/CCCD/HC" *ngIf="selectedMenuCode === API_PROFILE.THONG_TIN_CA_NHAN" icon="pi pi-plus" styleClass="p-button-sm p-button-info mr-1"
+                                    (click)="showPopupUploadCard()"></p-button>
+                                    <p-button label="Cấu hình" icon="pi pi-cog" styleClass="p-button-sm" (onClick)="CauHinh(3)"></p-button>
+                                    </ng-template>
                                 </p-card>
                         </div>
+
+                         <!-- titles[3] -->
                     <div class="border-section mt-5 mb-4"  *ngIf="selectedMenuCode === API_PROFILE.THONG_TIN_CA_NHAN || selectedMenuCode === API_PROFILE.CHUYEN_MON">
                         <p-card styleClass="mt-1 plr-16" >
                             <ng-template pTemplate="header">
@@ -368,14 +384,19 @@
                                 <app-list-grid-angular  [height]=300 [title]="'Chứng chỉ'" *ngIf="listsData[4]?.length > 0"
                                     [listsData]="listsData[4]" (FnClick)="OnClick($event)"
                                     [columnDefs]="columnDefs[4]"></app-list-grid-angular>
+
+                            <ng-template pTemplate="footer">
+                                <p-button *ngIf="selectedMenuCode === API_PROFILE.CHUYEN_MON" 
+                                label="Thêm mới" styleClass="p-button-sm mr-1"
+                                icon="pi pi-plus" (click)="addType4()"></p-button>
+                               <p-button label="Cấu hình" icon="pi pi-cog" styleClass="p-button-sm" (onClick)="CauHinh(4)"></p-button>
+                            </ng-template>
                         </p-card>
                     </div>
             </p-panel>
     </div>
 </section>
 </div>
-
-
 
 
 <!-- ------------------------------ -->
@@ -579,6 +600,12 @@
     </p-header>
     <app-edit-detail [optionsButtonsEdit]="optionsButtonsPopup" *ngIf="listViewsEmpTrain.length> 0 && detailEmpTrainInfo" [detailInfo]="detailInfo"
         [detail]="detailEmpTrainInfo" [manhinh]="'Edit'" [thongtinnhanvienNew]="true"
-        [dataView]="listViewsEmpTrain" (callback)="setEmpDependen($event)"
+        [dataView]="listViewsEmpTrain" (callback)="setEmpTrain($event)"
         (callbackcancel)="cancelEmpTrainInfo($event)"></app-edit-detail>
+</p-dialog>
+
+
+<p-dialog header="Cài đặt cấu hình " [appendTo]="'body'" [focusTrap]="false" styleClass="popup-setting" (onHide)="reloadGetEmpTrainPage()" [(visible)]="displaySetting" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
+[draggable]="false" [resizable]="false">
+<app-config-grid-table-form *ngIf="displaySetting && gridKey[indexGridKey]" [typeConfig]="'TableInfo'"   [gridKey]="gridKey[indexGridKey]"></app-config-grid-table-form>
 </p-dialog>

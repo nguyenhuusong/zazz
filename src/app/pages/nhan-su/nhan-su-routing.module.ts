@@ -18,6 +18,7 @@ import { ImportXyLyHopDongComponent } from 'src/app/components/xu-ly-hop-dong/im
 import { ImportHoSoNhanSuComponent } from 'src/app/components/ns-ho-so-nhan-su/import-ho-so-nhan-su/import-ho-so-nhan-su.component';
 import { QtThayDoiLuongComponent } from 'src/app/components/qt-thay-doi-luong/qt-thay-doi-luong.component';
 import { ChiTietQTThayDoiLuongComponent } from 'src/app/components/qt-thay-doi-luong/chi-tiet-qt-thay-doi-luong/chi-tiet-qt-thay-doi-luong.component';
+import { EmployeeInfoComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/employee-info.component';
 
 const routes: Routes = [
   {
@@ -71,7 +72,7 @@ const routes: Routes = [
   },
   {
     path: 'ho-so-nhan-su/chi-tiet-ho-so-nhan-su',
-    component: ChiTietHoSoNhanSuComponent,
+    component: EmployeeInfoComponent,
     data: {
       title: 'Chi tiết hồ sơ nhân sự',
       url: 'chi-tiet-ho-so-nhan-su',

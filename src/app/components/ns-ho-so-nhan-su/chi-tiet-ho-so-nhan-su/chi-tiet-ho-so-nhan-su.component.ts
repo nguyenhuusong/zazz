@@ -888,17 +888,31 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
         break;
       case API_PROFILE.CHUYEN_MON:
         this.columnDefs = [];
-        this.apiEmpTrainPage(queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 }), 'GetEmpWorkedPage', 0, 'Quá trình làm việc')
-        this.apiEmpTrainPage(queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 }), 'GetEducationPage', 1, 'Học vấn')
-        this.apiEmpTrainPage(queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 }), 'GetTrainningPage', 2, 'Đào tạo')
-        this.apiEmpTrainPage(queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 }), 'GetSkillPage', 3, 'Kỹ năng')
-        this.apiEmpTrainPage(queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 }), 'GetCertificatePage', 4, 'Chứng chỉ')
+        this.apiEmpTrainPage(queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 }), 'GetEmpWorkedPage', 0, 'Quá trình làm việc');
+        this.apiEmpTrainPage(queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 }), 'GetEducationPage', 1, 'Học vấn');
+        this.apiEmpTrainPage(queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 }), 'GetTrainningPage', 2, 'Đào tạo');
+        this.apiEmpTrainPage(queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 }), 'GetSkillPage', 3, 'Kỹ năng');
+        this.apiEmpTrainPage(queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 }), 'GetCertificatePage', 4, 'Chứng chỉ');
         break;
       default:
         this.initData();
         this.spinner.hide();
         break;
     }
+  }
+  displaySetting = false;
+  indexGridKey = 0;
+  reloadGetEmpTrainPage() {
+    this.apiEmpTrainPage(queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 }), 'GetEmpWorkedPage', 0, 'Quá trình làm việc');
+    this.apiEmpTrainPage(queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 }), 'GetEducationPage', 1, 'Học vấn');
+    this.apiEmpTrainPage(queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 }), 'GetTrainningPage', 2, 'Đào tạo');
+    this.apiEmpTrainPage(queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 }), 'GetSkillPage', 3, 'Kỹ năng');
+    this.apiEmpTrainPage(queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 }), 'GetCertificatePage', 4, 'Chứng chỉ');
+  }
+
+  CauHinh(index) {
+    this.indexGridKey = index;
+    this.displaySetting = true;
   }
 
   cancelEmpTrainInfo(event) {
@@ -928,7 +942,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
                   return {
                     buttons: [
                       {
-                        onClick: this.GetEmpWorked.bind(this, link),
+                        onClick: this.GetEmpWorkedButton.bind(this, link),
                         label: 'Xem chi tiết',
                         icon: 'fa fa-edit editing',
                         key: 'view-qua-trinh-hop-dong',
@@ -1007,9 +1021,17 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   detailEmpTrainInfo = null;
   listViewsEmpTrain = [];
   titleEmpTrain = '';
-  GetEmpWorked(event) {
+  apiEmpTrainInfo = '';
+  idEmpTrain = null;
+  GetEmpWorkedButton(event) {
+    this.idEmpTrain = event.rowData.id;
+    this.GetEmpWorked()
+  }
+
+  GetEmpWorked() {
     this.spinner.show();
-    const queryParams = queryString.stringify({ empId: this.empId, dependentId: null});
+    this.apiEmpTrainInfo = 'GetEmpWorked';
+    const queryParams = queryString.stringify({ empId: this.empId, id: this.idEmpTrain});
     this.apiService.getEmpWorked(queryParams).subscribe(result => {
       if(result.status === 'success') {
         this.listViewsEmpTrain = result.data.group_fields;
@@ -1021,8 +1043,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     })
   }
 
-  AddEducation(event) {
+  AddEducation() {
     this.spinner.show();
+    this.apiEmpTrainInfo = 'AddEducation';
     const queryParams = queryString.stringify({ empId: this.empId});
     this.apiService.addEducation(queryParams).subscribe(result => {
       if(result.status === 'success') {
@@ -1035,8 +1058,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     })
   }
 
-  AddTraining(event) {
+  AddTraining() {
     this.spinner.show();
+    this.apiEmpTrainInfo = 'AddTraining';
     const queryParams = queryString.stringify({ empId: this.empId});
     this.apiService.addTraining(queryParams).subscribe(result => {
       if(result.status === 'success') {
@@ -1049,10 +1073,11 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     })
   }
 
-  AddSkill(event) {
+  AddSkill() {
     this.spinner.show();
+    this.apiEmpTrainInfo = 'AddSkill';
     const queryParams = queryString.stringify({ empId: this.empId});
-    this.apiService.addTraining(queryParams).subscribe(result => {
+    this.apiService.addSkill(queryParams).subscribe(result => {
       if(result.status === 'success') {
         this.listViewsEmpTrain = result.data.group_fields;
         this.detailEmpTrainInfo = result.data;
@@ -1063,14 +1088,36 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     })
   }
 
-  AddCertificate(event) {
+  AddCertificateInfo(event) {
+    this.apiEmpTrainInfo = 'AddCertificate';
+    this.idEmpTrain = event.rowData.id;
+    this.titleEmpTrain = 'Thông tin chứng chỉ';
+    this.GetTrainFile();
+  }
+
+  AddCertificate() {
     this.spinner.show();
+    this.apiEmpTrainInfo = 'AddCertificate';
     const queryParams = queryString.stringify({ empId: this.empId});
-    this.apiService.addTraining(queryParams).subscribe(result => {
+    this.apiService.addCertificate(queryParams).subscribe(result => {
       if(result.status === 'success') {
         this.listViewsEmpTrain = result.data.group_fields;
         this.detailEmpTrainInfo = result.data;
         this.titleEmpTrain = 'Thông tin chứng chỉ';
+        this.displayFormEmpTrain = true;
+        this.spinner.hide();
+      }
+    })
+  }
+
+  GetTrainFile() {
+    this.spinner.show();
+    const queryParams = queryString.stringify({ trainId: this.idEmpTrain});
+    this.apiService.getTrainFile(queryParams).subscribe(result => {
+      if(result.status === 'success') {
+        this.listViewsEmpTrain = result.data.group_fields;
+        this.detailEmpTrainInfo = result.data;
+       
         this.displayFormEmpTrain = true;
         this.spinner.hide();
       }
@@ -1213,10 +1260,6 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
         this.spinner.hide();
       }
     })
-  }
-
-  CauHinh() {
-
   }
 
 
@@ -2173,6 +2216,25 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     account_no: ''
   }
 
+  addType2() {
+    if (this.selectedMenuCode === API_PROFILE.CHUYEN_MON) {
+      this.idEmpTrain = null;
+      this.AddTraining();
+    }
+  }
+  addType1() {
+    if (this.selectedMenuCode === API_PROFILE.CHUYEN_MON) {
+      this.idEmpTrain = null;
+      this.AddEducation();
+    }
+  }
+  addType4() {
+    if (this.selectedMenuCode === API_PROFILE.CHUYEN_MON) {
+      this.idEmpTrain = null;
+      this.AddCertificate();
+    }
+  }
+
   addType0() {
     this.listViewsDependent = [];
     if (this.selectedMenuCode === API_PROFILE.THUE_BAO_HIEM) {
@@ -2186,14 +2248,22 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       this.hideTitlePopup = true;
       const queryParams = queryString.stringify({ empId: this.detailInfo.empId, gd: null });
       this.getEmpWorking(queryParams);
+    }else if (this.selectedMenuCode === API_PROFILE.CHUYEN_MON) {
+      this.idEmpTrain = null;
+      this.GetEmpWorked();
     }
   }
 
   addType3() {
-    this.listViewsDependent = [];
-    this.titleType0 = 'Thêm mới người liên hệ';
-    const queryParams = queryString.stringify({ empId: this.detailInfo.empId, cont_id: null });
-    this.getEmpContact(queryParams);
+    if (this.selectedMenuCode === API_PROFILE.CHUYEN_MON) {
+      this.AddSkill();
+    }else {
+      this.listViewsDependent = [];
+      this.titleType0 = 'Thêm mới người liên hệ';
+      const queryParams = queryString.stringify({ empId: this.detailInfo.empId, cont_id: null });
+      this.getEmpContact(queryParams);
+    }
+ 
   }
 
   getEmpContact(query) {
@@ -2298,6 +2368,25 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   onGridReady(params): void {
     this.gridApi = params.api;
     this.gridApi.sizeColumnsToFit();
+  }
+
+  setEmpTrain(data) {
+    if(this.apiEmpTrainInfo === 'GetEmpWorked') {
+      const params = {
+        ...this.detailInfo, group_fields: data
+      }
+      this.apiService.setEmpWorked(params).subscribe((results: any) => {
+        if (results.status === 'success') {
+          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Cập nhật thông tin thành công' });
+          this.apiEmpTrainPage(queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 }), 'GetEmpWorkedPage', 0, 'Quá trình làm việc');
+        } else {
+          this.messageService.add({
+            severity: 'error', summary: 'Thông báo', detail: results.message
+          });
+        }
+      }, error => {
+      });
+    }
   }
 
 }
