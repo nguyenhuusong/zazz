@@ -9,13 +9,13 @@
                 {{titlePage}}</h3>
         </div>
         <p-tabView (onChange)="handleChange($event.index)" [(activeIndex)]="tabIndex">
-            <p-tabPanel header="Thông tin cá nhân" *ngIf="tabIndex ===0">
-                <app-thong-tin-ca-nhan [empId]="empId"></app-thong-tin-ca-nhan>
+            <p-tabPanel header="Thông tin cá nhân" >
+                <app-thong-tin-ca-nhan [empId]="empId" *ngIf="tabIndex ===0"></app-thong-tin-ca-nhan>
             </p-tabPanel>
-            <!-- <p-tabPanel header="Vị trí công việc">
+             <p-tabPanel header="Vị trí công việc">
                 <app-vi-tri-cong-viec [empId]="empId" *ngIf="tabIndex ===1"></app-vi-tri-cong-viec>
             </p-tabPanel>
-            <p-tabPanel header="Quan hệ lao động C&B">
+          <!--  <p-tabPanel header="Quan hệ lao động C&B">
                 <app-quan-he-lao-dong-c [empId]="empId" *ngIf="tabIndex ===2"></app-quan-he-lao-dong-c>
             </p-tabPanel>
             <p-tabPanel header="Thuế bảo hiểm">
