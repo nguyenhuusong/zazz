@@ -5,7 +5,7 @@
             <div class="{{group.group_column}} border-section">
                 <p-panel header="{{group.group_name}}">
                     <div class="row" style="flex-wrap: wrap">
-                        <div class="col-md-2 avatar-c" *ngIf="optionsEdit?.code === 'GetEmployeeByPersonal' && detailInfo?.avatarUrl && idx === 0">
+                        <div class="col-md-2 avatar-c" *ngIf="isShowAvatar && detailInfo?.avatarUrl && idx === 0">
                             <p-image
                                 src="{{ detailInfo?.avatarUrl ? detailInfo?.avatarUrl : 'https://www.leviateair.com/wp-content/uploads/2017/01/No-Images.jpeg'}}"
                                 [preview]="true" alt="Image" width="200">

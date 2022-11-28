@@ -49,7 +49,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
   @Input() optionsEdit = null;
   @Input() menus = [];
   @Input() noDisableInput: boolean = false;
-
+  @Input() isShowAvatar = false;
   
   buttonSave = 'Update';
   @Input() formTypeId: string = '';
