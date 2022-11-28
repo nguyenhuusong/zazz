@@ -1,1 +1,45 @@
-<p>quan-he-lao-dong-c works!</p>
+<app-step-info [detailInfo]="detailInfo" *ngIf="detailInfo"></app-step-info>
+<section>
+    <div class="bg-grey base-info-em d-flex middle bet">
+        <ul>
+            <li>
+                <span class="label">Nhân viên:</span>
+                <span class="value"> {{ detailInfo?.fullName }}</span>
+            </li>
+            <li class="spre"><svg width="1" height="20" viewBox="0 0 1 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <line x1="0.5" x2="0.5" y2="20" stroke="#A3A9B9"/>
+                </svg>
+                </li>
+            <li>
+                <span class="label">MNV:</span>
+                <span class="value"> {{codeStaff}}</span>
+            </li>
+        </ul>
+        <div>
+            </div>
+    </div>
+    <div class="content page-detail" style="padding: 0;">
+        <p-panel styleClass="no-header">
+            <div class="">
+                <div class="row col-md-12">
+                    <div class="page-detail-edit-detail" >
+                        <app-edit-detail *ngIf="listViews.length> 0" 
+                            [detail]="detailInfo" 
+                            [detailInfo]="detailInfo" 
+                            [thongtinnhanvienNew]="true" 
+                            [manhinh]="'Edit'" 
+                            [optionsButtonsEdit]="optionsButtonsView"  
+                            [dataView]="listViews"
+                            (callback)="setEmployeeInfo($event)" 
+                            (callbackcancel)="cancelUpdate($event)">
+                        </app-edit-detail>
+                    </div>
+
+                    </div>
+                    </div>
+        </p-panel>
+        </div>
+
+    </section>
+
+    
