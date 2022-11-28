@@ -62,7 +62,7 @@ export class EmployeeInfoComponent implements OnInit {
     const queryParams = queryString.stringify({ empId: this.empId });
     this.apiService.getEmployeeData('GetEmployeeByPersonal', queryParams).subscribe(results => {
       if (results.status === 'success') {
-        // this.handleChange(results.data.flow_st);
+        this.handleChange(results.data.flow_st);
       }
     })
   }
