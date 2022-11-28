@@ -918,6 +918,9 @@ body {
                 font-weight: 400;
                 font-size: 14px;
                 white-space: nowrap;
+                &.p-menuitem-icon{
+                    color: #747E96 !important;
+                }
             }
         }
     }
@@ -955,7 +958,9 @@ body {
                     color:  #747E96;
                 }
                 .p-menuitem-icon{
-                    font-size: 20px;
+                    font-size: 18px;
+                    width: 18px;
+                    margin-right: 12px !important;
                 }
             }
         }

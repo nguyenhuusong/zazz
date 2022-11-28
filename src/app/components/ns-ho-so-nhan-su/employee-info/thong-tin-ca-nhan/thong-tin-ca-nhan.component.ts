@@ -203,9 +203,22 @@ export class ThongTinCaNhanComponent implements OnInit {
   cancelUpdate(button) {
      if (button === 'CauHinh') {
       this.getEmployeeInfo();
-    } else {
-
+    } else if (button === 'xuatHoSo') {
+      this.exportResume();
     }
+  }
+
+  exportResume() {
+    this.spinner.show();
+    this.apiService.exportResume(queryString.stringify({ empId: this.detailInfo.empId })).subscribe(results => {
+      if (results.type === 'application/json') {
+        this.spinner.hide();
+      } else if (results.type === 'application/octet-stream') {
+        var blob = new Blob([results], { type: 'application/msword' });
+        FileSaver.saveAs(blob, `Thông tin hồ sơ cá nhân` + ".docx");
+        this.spinner.hide();
+      }
+    })
   }
 
 
