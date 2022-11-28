@@ -1,0 +1,11 @@
+:host::ng-deep{
+    .p-panel-footer {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .p-card-footer{
+        display: flex;
+        justify-content: flex-end;
+    }
+}

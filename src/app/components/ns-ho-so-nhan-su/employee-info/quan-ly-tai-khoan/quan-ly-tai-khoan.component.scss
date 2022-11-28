@@ -11,6 +11,12 @@
             padding-right: 0px;
         }
 
+        .p-panel-footer {
+            display: flex;
+            justify-content: flex-end;
+            padding: unset;
+        }
+        
         .p-card-footer{
             display: flex;
             justify-content: flex-end;
