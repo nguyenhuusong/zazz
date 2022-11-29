@@ -493,7 +493,6 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
         }
       }
     }
-
   }
 
   FnCallApi(promissall) {
