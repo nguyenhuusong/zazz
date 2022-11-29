@@ -60,7 +60,7 @@ export class EmployeeInfoComponent implements OnInit {
   getMenuInfo() {
     this.spinner.show();
     const queryParams = queryString.stringify({ empId: this.empId });
-    this.apiService.getEmployeeData('GetEmployeeByPersonal', queryParams).subscribe(results => {
+    this.apiService.getEmpProfile(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.handleChange(results.data.flow_st);
       }

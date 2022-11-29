@@ -44,7 +44,7 @@ export class ThongTinCaNhanComponent implements OnInit {
     this.listViewsForm = [];
     this.detailInfo = null;
     const queryParams = queryString.stringify({ empId: this.empId });
-    this.apiService.getEmployeeData('GetEmployeeByPersonal', queryParams).subscribe(results => {
+    this.apiService.getEmpProfile(queryParams).subscribe(results => {
       if (results.status === 'success') {
         if (!this.codeStaff) {
           this.codeStaff = getFieldValueAggrid(results.data, 'code');
@@ -165,8 +165,6 @@ export class ThongTinCaNhanComponent implements OnInit {
       this.displayuploadcontract = false;
       this.saveCreateContract();
     }
-
-   
   }
 
   saveCreateContract() {
@@ -187,7 +185,7 @@ export class ThongTinCaNhanComponent implements OnInit {
     const  params = {
       ...this.detailInfo, group_fields: data
     };
-    this.apiService.setEmployeeInfo(params).subscribe((results: any) => {
+    this.apiService.setEmpProfile(params).subscribe((results: any) => {
       if (results.status === 'success') {
       
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Cập nhật thông tin thành công' });
