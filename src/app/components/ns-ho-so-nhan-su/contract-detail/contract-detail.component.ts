@@ -102,7 +102,6 @@ export class ContractDetailComponent implements OnInit {
   }
 
   setContractInfo(data) {
-    this.listViews = [];
     const params = {
       ...this.detailInfo, group_fields: data, flow_st: this.activeIndex + 1
     }
@@ -115,6 +114,7 @@ export class ContractDetailComponent implements OnInit {
     this.spinner.show();
     this.apiService.setContractInfo(params).subscribe(results => {
       if (results.status === 'success') {
+        this.listViews = [];
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
         this.activeIndex = results.data.flow_st;
         // this.steps = results.data.flowStatuses.map(d => {

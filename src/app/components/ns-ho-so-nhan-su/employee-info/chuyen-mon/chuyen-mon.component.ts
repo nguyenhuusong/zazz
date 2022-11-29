@@ -38,9 +38,10 @@ export class ChuyenMonComponent implements OnInit {
   }
 
   cancelEmpTrainInfo(data) {
+    console.log(this.vitri)
     if (data === 'CauHinh') {
       if (this.vitri === 0) {
-        this.getEmpWorkedPage()
+        this.GetEmpWorked()
       } else if (this.vitri === 1) {
         this.getEducationPage()
       } else if (this.vitri === 2) {

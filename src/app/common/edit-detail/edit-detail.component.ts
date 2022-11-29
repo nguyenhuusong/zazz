@@ -135,11 +135,12 @@ export class EditDetailComponent implements OnInit, OnChanges {
           const dataValidation = {
             key: element1.field_name,
             isRequire: element1.isVisiable && !element1.isEmpty && element1.isRequire ? true : false,
-            error: element1.isVisiable && !element1.isDisable && !element1.isEmpty && element1.isRequire && (element1.columnValue === null) ? true : false,
-            message: element1.isVisiable && !element1.isDisable && !element1.isEmpty && element1.isRequire && (element1.columnValue === null) ? 'Trường bắt buộc nhập !' : ''
+            error: element1.isVisiable && !element1.isDisable && !element1.isEmpty && element1.isRequire && (element1.columnValue === null || element1.columnValue === "") ? true : false,
+            message: element1.isVisiable && !element1.isDisable && !element1.isEmpty && element1.isRequire && (element1.columnValue === null || element1.columnValue === "") ? 'Trường bắt buộc nhập !' : ''
           }
           this.modelFields[element1.field_name] = dataValidation
         }
+        console.log(this.modelFields)
         if (element1.columnType === 'select' || element1.columnType === 'dropdown' || element1.columnType === 'selectTree' || element1.columnType === 'selectTrees'
           || element1.columnType === 'checkboxList' || element1.columnType === 'checkboxradiolist'
           || element1.columnType === 'multiSelect' || element1.columnType === 'autocomplete' ) {
@@ -155,7 +156,6 @@ export class EditDetailComponent implements OnInit, OnChanges {
           }
       });
     });
-    console.log(promissall)
     if (promissall.length > 0) {
     this.spinner.show();
       forkJoin(promissall.filter(d => d !== undefined)).subscribe((results: any) => {
