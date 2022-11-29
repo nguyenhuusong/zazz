@@ -201,6 +201,8 @@ export class ThongTinCaNhanComponent implements OnInit {
     })
   }
 
+  
+
   getEmpIdcardPage() {
     this.spinner.show();
     this.columnDefs1 = [];

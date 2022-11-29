@@ -35,6 +35,78 @@ export class ViTriCongViecComponent implements OnInit {
   ngOnInit(): void {
     this.getTerminateReasons();
     this.getEmployeeInfo();
+    this.getEmpWorkingPageByEmpId();
+  }
+  columnDefs1 = [];
+  listsData1 = [];
+  gridKey1 = '';
+  gridKeyForm = {
+    index: 0,
+    gridKey: ''
+  }
+
+  displaySetting = false;
+  CauHinh(type) {
+    this.gridKeyForm = {
+      index: type,
+      gridKey: this.gridKey1
+    }
+    this.displaySetting = true;
+  }
+
+  reloadGetEmpProfilePage() {
+    this.getEmpWorkingPageByEmpId();
+  }
+
+  getEmpWorkingPageByEmpId() {
+    this.spinner.show();
+    this.columnDefs1 = [];
+    const queryParams = queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 });
+    this.apiService.getEmpWorkingPageByEmpId(queryParams).subscribe(repo => {
+      if (repo.status === 'success') {
+        if (repo.data.dataList.gridKey) {
+          this.gridKey1 = repo.data.dataList.gridKey;
+        }
+        this.spinner.hide();
+        this.columnDefs1 = [
+          ...AgGridFn(repo.data.gridflexs || []),
+          {
+            headerName: '',
+            field: 'gridflexdetails1',
+            cellClass: ['border-right', 'no-auto'],
+            pinned: 'right',
+            width: 70,
+            cellRenderer: 'buttonAgGridComponent',
+            cellRendererParams: params => {
+              return {
+                buttons: [
+                  // {
+                  //   onClick: this.EducationView.bind(this),
+                  //   label: 'Xem chi tiết',
+                  //   icon: 'fa fa-edit editing',
+                  //   key: 'view-qua-trinh-hop-dong',
+                  //   class: 'btn-primary mr5',
+                  // },
+
+                  // {
+                  //   onClick: this.EducationDelete.bind(this),
+                  //   label: 'Xóa',
+                  //   icon: 'pi pi-trash',
+                  //   key: 'delete-qua-trinh-hop-dong',
+                  //   class: 'btn-danger',
+                  // },
+
+                ]
+              };
+            },
+          }
+        ];
+        this.listsData1 = repo.data.dataList.data || [];
+
+      } else {
+        this.spinner.hide();
+      }
+    })
   }
 
   getTerminateReasons() {
@@ -58,7 +130,7 @@ export class ViTriCongViecComponent implements OnInit {
     this.listViewsForm = [];
     this.detailInfo = null;
     const queryParams = queryString.stringify({ empId: this.empId });
-    this.apiService.getEmployeeData('GetEmployeeByJob', queryParams).subscribe(results => {
+    this.apiService.getEmpWorkJob(queryParams).subscribe(results => {
       if (results.status === 'success') {
         if (!this.codeStaff) {
           this.codeStaff = getFieldValueAggrid(results.data, 'code');
@@ -155,6 +227,7 @@ export class ViTriCongViecComponent implements OnInit {
     full_name: "",
     reason_id: 0
   }
+
   xacNhan(event) {
     let parmas: any = { ...this.modelDuyet };
     parmas.workDt = moment(new Date(parmas.workDt)).format('DD/MM/YYYY');
@@ -197,6 +270,7 @@ export class ViTriCongViecComponent implements OnInit {
       this.displayDialog = false;
     }
   }
+
   terminateReasons = [];
   setEmployeeTermilate(parmas) {
     this.apiService.setEmployeeTermilate(parmas).subscribe((results: any) => {
@@ -219,12 +293,6 @@ export class ViTriCongViecComponent implements OnInit {
     } else {
       this.displayDialog = false;
     }
-  }
-
-  columnDefs= [];
-  listsData= [];
-  CauHinh(type) {
-    
   }
 
   addTimeWork() {

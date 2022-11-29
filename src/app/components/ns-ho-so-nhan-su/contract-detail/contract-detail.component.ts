@@ -139,8 +139,8 @@ export class ContractDetailComponent implements OnInit {
             { label: 'Tiếp tục', value: 'Update', class: '', icon: 'pi pi-save' },
           ];
          if(results.data.flow_st > 1 && results.data.contractId) this.getContractMetaPage();
-         if(results.data.flow_st > 0 && results.data.contractId) this.getSalaryComponentPage();
-         if(results.data.flow_st > 0 && !results.data.contractId) this.getSalaryComponentPageNotContractId(results.data);
+         if((results.data.flow_st > 0 && results.data.flow_st < 4) && results.data.contractId) this.getSalaryComponentPage();
+         if((results.data.flow_st > 0 && results.data.flow_st < 4)  && !results.data.contractId) this.getSalaryComponentPageNotContractId(results.data);
         }
         this.spinner.hide();
       } else {

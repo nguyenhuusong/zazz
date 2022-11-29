@@ -60,15 +60,6 @@ export class ApiHrmService {
   setWorktimeInfo(queryParams): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/worktime/SetWorktimeInfo`, queryParams, this.options)
   }
-  
-  getEmpWorkingPage(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v2/working/GetEmpWorkingPage?` + queryParams, this.options)
-  }
-
-  setEmpWorkingChanges(queryParams): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v2/working/SetEmpWorkingChanges`, queryParams, this.options)
-  }
-
   //góp ý
   getFeedbackInfo(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/feedback/GetFeedbackInfo?` + queryParams, this.options)
@@ -408,10 +399,6 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiCore}/api/v1/coreaccount/SetAccountInfo`, params, this.options)
   }
 
-  setEmpWorking(params): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v2/working/SetEmpWorking`, params, this.options)
-  }
-
   setEmpDependent(params): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/employee/SetEmpDependent`, params, this.options)
   }
@@ -420,10 +407,6 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v2/employee/SetEmpContact`, params, this.options)
   }
   
-  getEmpWorking(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v2/working/GetEmpWorking?` + queryParams, this.options)
-  }
-
   getEmpContact(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/employee/GetEmpContact?` + queryParams, this.options)
   }
@@ -495,11 +478,6 @@ export class ApiHrmService {
   deleteUser(queryParams): Observable<any> {
     return this.http.delete<any>(`${apiCore}/api/v1/coreuser/DeleteUser?` + queryParams, this.options)
   }
-
-  delEmpWorking(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiCore}/api/v2/working/DelEmpWorking?` + queryParams, this.options);
-  }
-  
 
   hrmDelEmpWorking(queryParams): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v2/working/DelEmpWorking?` + queryParams, this.options);
@@ -1998,7 +1976,30 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v2/employeeprofile/DelEmpContact?` +  queryParams, this.options)
   }
 
+  // EmpWorking
+  
+  getEmpWorkingPageByEmpId(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/working/GetEmpWorkingPageByEmpId?` +  queryParams, this.options)
+  }
 
+  getEmpWorkJob(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/working/GetEmpWorkJob?` +  queryParams, this.options)
+  }
+  getEmpWorking(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/working/GetEmpWorking?` +  queryParams, this.options)
+  }
+  setEmpWorking(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/working/SetEmpWorking` ,  queryParams, this.options)
+  }
+  delEmpWorking(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/working/DelEmpWorking?` +  queryParams, this.options)
+  }
+  getEmpWorkingPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/working/GetEmpWorkingPage?` +  queryParams, this.options)
+  }
+  setEmpWorkingChanges(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/working/SetEmpWorkingChanges` ,  queryParams, this.options)
+  }
  
 
   

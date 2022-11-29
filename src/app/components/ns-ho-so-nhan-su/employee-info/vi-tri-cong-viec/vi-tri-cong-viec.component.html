@@ -52,13 +52,13 @@
                                 <p-panel header="Thời gian làm việc">
                                     <div class="row" style="flex-wrap: wrap">
                                         <div class="grid-default border">
-                                            <app-list-grid-angular [domLayout]="'autoHeight'" *ngIf="columnDefs.length > 0" [title]="'Chứng chỉ'"
-                                                [listsData]="listsData" [columnDefs]="columnDefs"></app-list-grid-angular>
+                                            <app-list-grid-angular [domLayout]="'autoHeight'" *ngIf="columnDefs1.length > 0" [title]="'Chứng chỉ'"
+                                                [listsData]="listsData1" [columnDefs]="columnDefs1"></app-list-grid-angular>
                                             </div>
                                     </div>
                                     <ng-template pTemplate="footer">
                                         <p-button label="Thêm mới" icon="pi pi-plus" (click)="addTimeWork()" styleClass="p-button-sm mr-1"></p-button>
-                                        <p-button label="Cấu hình" icon="pi pi-cog" (click)="CauHinh(0)" styleClass="p-button-sm"></p-button>
+                                        <p-button label="Cấu hình" icon="pi pi-cog" (click)="CauHinh(1)" styleClass="p-button-sm"></p-button>
                                     </ng-template>
                                 </p-panel>
                             </div>
@@ -147,4 +147,12 @@
                 <p-button label="Lưu lại" (click)="onChangeButtonSave('Save')" icon="pi pi-check" styleClass="p-button-sm "></p-button>
             </div>
         </div>
+</p-dialog>
+
+
+<p-dialog header="Cài đặt cấu hình " [appendTo]="'body'" [focusTrap]="false" styleClass="popup-setting"
+    (onHide)="reloadGetEmpProfilePage()" [(visible)]="displaySetting" [modal]="true" [style]="{width: '50vw'}"
+    [maximizable]="true" [draggable]="false" [resizable]="false">
+    <app-config-grid-table-form *ngIf="displaySetting && gridKeyForm.gridKey" [typeConfig]="'TableInfo'"
+        [gridKey]="gridKeyForm.gridKey"></app-config-grid-table-form>
 </p-dialog>
