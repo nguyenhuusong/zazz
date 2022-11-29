@@ -54,7 +54,6 @@ export class ChuyenMonComponent implements OnInit {
     } else {
       this.displayFormEmpTrain = false;
     }
-
   }
   columnDefs1 = [];
   listsData1 = [];

@@ -29,8 +29,229 @@ export class ThongTinCaNhanComponent implements OnInit {
 
   ngOnInit(): void {
     this.getEmployeeInfo();
+    this.getEmpIdcardPage();
+    this.getEmpRecordPage();
+    this.getEmpPersonalPage();
+    this.getEmpContactPage();
 
   }
+
+  reloadGetEmpProfilePage() {
+    if (this.gridKeyForm.index === 1) {
+      this.getEmpIdcardPage()
+    } else if (this.gridKeyForm.index === 2) {
+      this.getEmpRecordPage();
+    } else if (this.gridKeyForm.index === 3) {
+      this.getEmpRecordPage();
+    } else {
+      this.getEmpContactPage();
+    }
+  }
+
+  getEmpContactPage() {
+    this.spinner.show();
+    this.columnDefs1 = [];
+    const queryParams = queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 });
+    this.apiService.getEmpContactPage(queryParams).subscribe(repo => {
+      if (repo.status === 'success') {
+        if (repo.data.dataList.gridKey) {
+          this.gridKey4 = repo.data.dataList.gridKey;
+        }
+        this.spinner.hide();
+        this.columnDefs4 = [
+          ...AgGridFn(repo.data.gridflexs || []),
+          {
+            headerName: '',
+            field: 'gridflexdetails1',
+            cellClass: ['border-right', 'no-auto'],
+            pinned: 'right',
+            width: 70,
+            cellRenderer: 'buttonAgGridComponent',
+            cellRendererParams: params => {
+              return {
+                buttons: [
+                  // {
+                  //   onClick: this.CertificateView.bind(this),
+                  //   label: 'Xem chi tiết',
+                  //   icon: 'fa fa-edit editing',
+                  //   key: 'view-qua-trinh-hop-dong',
+                  //   class: 'btn-primary mr5',
+                  // },
+
+                  // {
+                  //   onClick: this.CertificateDelete.bind(this),
+                  //   label: 'Xóa',
+                  //   icon: 'pi pi-trash',
+                  //   key: 'delete-qua-trinh-hop-dong',
+                  //   class: 'btn-danger',
+                  // },
+
+                ]
+              };
+            },
+          }
+        ];
+        this.listsData4 = repo.data.dataList.data || [];
+
+      } else {
+        this.spinner.hide();
+      }
+    })
+  }
+
+  getEmpPersonalPage() {
+    this.spinner.show();
+    this.columnDefs1 = [];
+    const queryParams = queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 });
+    this.apiService.getEmpPersonalPage(queryParams).subscribe(repo => {
+      if (repo.status === 'success') {
+        if (repo.data.dataList.gridKey) {
+          this.gridKey3 = repo.data.dataList.gridKey;
+        }
+        this.spinner.hide();
+        this.columnDefs3 = [
+          ...AgGridFn(repo.data.gridflexs || []),
+          {
+            headerName: '',
+            field: 'gridflexdetails1',
+            cellClass: ['border-right', 'no-auto'],
+            pinned: 'right',
+            width: 70,
+            cellRenderer: 'buttonAgGridComponent',
+            cellRendererParams: params => {
+              return {
+                buttons: [
+                  // {
+                  //   onClick: this.SkillView.bind(this),
+                  //   label: 'Xem chi tiết',
+                  //   icon: 'fa fa-edit editing',
+                  //   key: 'view-qua-trinh-hop-dong',
+                  //   class: 'btn-primary mr5',
+                  // },
+
+                  // {
+                  //   onClick: this.SkillDelete.bind(this),
+                  //   label: 'Xóa',
+                  //   icon: 'pi pi-trash',
+                  //   key: 'delete-qua-trinh-hop-dong',
+                  //   class: 'btn-danger',
+                  // },
+
+                ]
+              };
+            },
+          }
+        ];
+        this.listsData3 = repo.data.dataList.data || [];
+
+      } else {
+        this.spinner.hide();
+      }
+    })
+  }
+
+  getEmpRecordPage() {
+    this.spinner.show();
+    this.columnDefs1 = [];
+    const queryParams = queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 });
+    this.apiService.getEmpRecordPage(queryParams).subscribe(repo => {
+      if (repo.status === 'success') {
+        if (repo.data.dataList.gridKey) {
+          this.gridKey2 = repo.data.dataList.gridKey;
+        }
+        this.spinner.hide();
+        this.columnDefs2 = [
+          ...AgGridFn(repo.data.gridflexs || []),
+          {
+            headerName: '',
+            field: 'gridflexdetails1',
+            cellClass: ['border-right', 'no-auto'],
+            pinned: 'right',
+            width: 70,
+            cellRenderer: 'buttonAgGridComponent',
+            cellRendererParams: params => {
+              return {
+                buttons: [
+                  // {
+                  //   onClick: this.TrainningView.bind(this),
+                  //   label: 'Xem chi tiết',
+                  //   icon: 'fa fa-edit editing',
+                  //   key: 'view-qua-trinh-hop-dong',
+                  //   class: 'btn-primary mr5',
+                  // },
+
+                  // {
+                  //   onClick: this.TrainningDelete.bind(this),
+                  //   label: 'Xóa',
+                  //   icon: 'pi pi-trash',
+                  //   key: 'delete-qua-trinh-hop-dong',
+                  //   class: 'btn-danger',
+                  // },
+
+                ]
+              };
+            },
+          }
+        ];
+        this.listsData2 = repo.data.dataList.data || [];
+
+      } else {
+        this.spinner.hide();
+      }
+    })
+  }
+
+  getEmpIdcardPage() {
+    this.spinner.show();
+    this.columnDefs1 = [];
+    const queryParams = queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 });
+    this.apiService.getEmpIdcardPage(queryParams).subscribe(repo => {
+      if (repo.status === 'success') {
+        if (repo.data.dataList.gridKey) {
+          this.gridKey1 = repo.data.dataList.gridKey;
+        }
+        this.spinner.hide();
+        this.columnDefs1 = [
+          ...AgGridFn(repo.data.gridflexs || []),
+          {
+            headerName: '',
+            field: 'gridflexdetails1',
+            cellClass: ['border-right', 'no-auto'],
+            pinned: 'right',
+            width: 70,
+            cellRenderer: 'buttonAgGridComponent',
+            cellRendererParams: params => {
+              return {
+                buttons: [
+                  // {
+                  //   onClick: this.EducationView.bind(this),
+                  //   label: 'Xem chi tiết',
+                  //   icon: 'fa fa-edit editing',
+                  //   key: 'view-qua-trinh-hop-dong',
+                  //   class: 'btn-primary mr5',
+                  // },
+
+                  // {
+                  //   onClick: this.EducationDelete.bind(this),
+                  //   label: 'Xóa',
+                  //   icon: 'pi pi-trash',
+                  //   key: 'delete-qua-trinh-hop-dong',
+                  //   class: 'btn-danger',
+                  // },
+
+                ]
+              };
+            },
+          }
+        ];
+        this.listsData1 = repo.data.dataList.data || [];
+
+      } else {
+        this.spinner.hide();
+      }
+    })
+  }
+
   optionsButtonsView = [
     { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-save' },
     { label: 'Xuất hồ sơ', value: 'xuatHoSo', class: '', icon: 'pi file-excel' },
@@ -218,7 +439,30 @@ export class ThongTinCaNhanComponent implements OnInit {
       }
     })
   }
+  columnDefs1 = [];
+  listsData1 = [];
+  columnDefs2 = [];
+  listsData2 = [];
+  gridKey2 = '';
+  gridKey1 = '';
+  columnDefs3 = [];
+  listsData3 = [];
+  gridKey3 = '';
+  columnDefs4 = [];
+  listsData4 = [];
+  gridKey4 = '';
+  gridKeyForm = {
+    index: 0,
+    gridKey: ''
+  }
 
-
+  displaySetting = false;
+  CauHinh(type) {
+    this.gridKeyForm = {
+      index: type,
+      gridKey: type === 1 ? this.gridKey1 : type === 2 ? this.gridKey2 : type === 3 ? this.gridKey3 : type === 4 ? this.gridKey4 : this.gridKey4
+    }
+    this.displaySetting = true;
+  }
 }
 
