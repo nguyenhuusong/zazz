@@ -85,7 +85,7 @@ export class ChonLichHopComponent implements OnInit, OnChanges {
       // editable: false,
       // selectable: true,
       // selectMirror: true,
-      weekends: false,
+      weekends: true,
       editable: false,
       selectable: false,
       selectMirror: false,

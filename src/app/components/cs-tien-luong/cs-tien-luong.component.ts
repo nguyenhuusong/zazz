@@ -318,8 +318,8 @@ export class CsTienLuongComponent implements OnInit {
       if (results.status === 'success') {
         this.listOrgRoots = results.data.map(d => {
           return {
-            label: d.org_name,
-            value: `${d.orgId}`
+            label: d.name,
+            value: `${d.value}`
           }
         });
         this.listOrgRoots = [{ label: 'Chọn tổ chức', value: null }, ...this.listOrgRoots];
