@@ -593,8 +593,8 @@ export class PqQuyenNguoiDungComponent implements OnInit {
           this.companies = results.data
             .map(d => {
               return {
-                label: d.companyName,
-                code: d.companyId.toUpperCase()
+                label: d.name,
+                code: d.value.toUpperCase()
               };
             });
             let companyActive = this.companies.filter( compan => this.addUserQuery.companyIds.some( companActive => compan.code === companActive ))
