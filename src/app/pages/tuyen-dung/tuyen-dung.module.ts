@@ -57,6 +57,7 @@ import { MailTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/mail-tu
 import { ChiTietMailTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/mail-tuyen-dung/chi-tiet-mail-tuyen-dung/chi-tiet-mail-tuyen-dung.component';
 import { ImportTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/import-tuyen-dung/import-tuyen-dung.component';
 import { DsTiemNangComponent } from 'src/app/components/ns-tuyen-dung/ds-tiem-nang/ds-tiem-nang.component';
+import { MailDaGuiComponent } from 'src/app/components/ns-tuyen-dung/mail-da-gui/mail-da-gui.component';
 @NgModule({
   imports: [
     MessagesModule,
@@ -121,7 +122,8 @@ import { DsTiemNangComponent } from 'src/app/components/ns-tuyen-dung/ds-tiem-na
     MailTuyenDungComponent,
     ChiTietMailTuyenDungComponent,
     ImportTuyenDungComponent,
-    DsTiemNangComponent
+    DsTiemNangComponent,
+    MailDaGuiComponent
   ],
   providers: [ ]
 })

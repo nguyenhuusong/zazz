@@ -347,6 +347,7 @@ export class PqQuyenNguoiDungComponent implements OnInit {
     if(rowData.companyId){
       this.addUserQuery.companyIds = rowData.companyId.split(',');
     }
+    console.log('rowData', rowData)
     this.addUserQuery.userId = rowData.userId
     this.addUserQuery.loginName = rowData.loginName
     this.addUserQuery.password = "true"

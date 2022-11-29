@@ -480,8 +480,8 @@ export class NsHoSoNghiViecComponent implements OnInit {
           this.companies = results.data
             .map(d => {
               return {
-                label: d.companyName,
-                value: d.companyId
+                label: d.name,
+                value: d.value
               };
             });
             if(this.companies.length > 0) {
