@@ -26,7 +26,7 @@
         (callbackcancel)="cancel($event)"></app-edit-detail>
         <p-divider></p-divider>
         <div class="grid wrap-edit-detail">
-            <div class="col-12 border-section " *ngIf="this.detailInfo?.flow_st > 0">
+            <div class="col-12 border-section " *ngIf="this.detailInfo?.flow_st > 0 && detailInfo?.flow_st < 4">
                 <p-panel header="Thành phần lương">
                     <div class="row" style="flex-wrap: wrap">
                         <div class="grid-default border">

@@ -455,21 +455,23 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
       }
     }  else if (field_name === 'holi_type') {
       this.callback.emit(value);
-    }else if(field_name === 'floor_No') {
-      this.floorID = value
-      this.dataView.forEach(element => {
-        element.fields.forEach(async element1 => {
-          if(element1.field_name === 'roomId'){
-            this.getRooms(element1, value);
-            const emitType = {
-              name: 'floor_no',
-              id: value
-            }
-            this.callback.emit(emitType);
-          }
-        })
-      })
-    } else {
+    }
+    // else if(field_name === 'floor_No') {
+    //   this.floorID = value
+    //   this.dataView.forEach(element => {
+    //     element.fields.forEach(async element1 => {
+    //       if(element1.field_name === 'roomId'){
+    //         this.getRooms(element1, value);
+    //         const emitType = {
+    //           name: 'floor_no',
+    //           id: value
+    //         }
+    //         this.callback.emit(emitType);
+    //       }
+    //     })
+    //   })
+    // } 
+    else {
       if(element.columnDisplay) {
         const fields = element.columnDisplay.split(",");
         const promissall = [];

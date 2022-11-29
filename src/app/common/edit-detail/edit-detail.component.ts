@@ -123,7 +123,6 @@ export class EditDetailComponent implements OnInit, OnChanges {
     this.dataViewNew.forEach(element => {
       element.fields.forEach( element1 => {
         if ((element1.columnType === 'markdown') || (element1.columnType === 'chips') || (element1.columnType === 'linkUrl') || (element1.columnType === 'linkUrlDrag')) {
-          console.log(element1.columnType === 'chips')
           const dataValidation = {
             key: element1.field_name,
             isRequire: false,
@@ -140,7 +139,6 @@ export class EditDetailComponent implements OnInit, OnChanges {
           }
           this.modelFields[element1.field_name] = dataValidation
         }
-        console.log(this.modelFields)
         if (element1.columnType === 'select' || element1.columnType === 'dropdown' || element1.columnType === 'selectTree' || element1.columnType === 'selectTrees'
           || element1.columnType === 'checkboxList' || element1.columnType === 'checkboxradiolist'
           || element1.columnType === 'multiSelect' || element1.columnType === 'autocomplete' ) {
@@ -159,7 +157,6 @@ export class EditDetailComponent implements OnInit, OnChanges {
     if (promissall.length > 0) {
     this.spinner.show();
       forkJoin(promissall.filter(d => d !== undefined)).subscribe((results: any) => {
-        console.log(results)
         this.spinner.hide();
         this.dataViewNew.forEach(element => {
           element.fields.forEach(element1 => {

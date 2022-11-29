@@ -584,7 +584,7 @@ export class PqQuyenNguoiDungComponent implements OnInit {
     }
     const query = queryString.stringify(
       { 
-        organizeIds: organizeIds
+        organizeId: organizeIds
     })
 
     this.apiService.getCompaniesByUserOrganize(query).subscribe(
