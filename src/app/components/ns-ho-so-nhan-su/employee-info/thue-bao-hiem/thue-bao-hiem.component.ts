@@ -153,7 +153,7 @@ export class ThueBaoHiemComponent implements OnInit {
 
   DeleteDependent(event) {
     this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn thực xóa người phụ thuộc này?',
+      message: 'Bạn có chắc chắn muốn xóa người phụ thuộc này?',
       accept: () => {
         const queryParams = queryString.stringify({ dependentId: event.rowData.dependentId });
         this.apiService.delEmpDependent(queryParams).subscribe((results: any) => {
@@ -220,6 +220,7 @@ export class ThueBaoHiemComponent implements OnInit {
           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thêm mới thành công' });
           this.displayFormEditDetail = false;
           this.getEmployeeInfo();
+          this.getEmpDependentPage();
           this.spinner.hide();
         } else {
           this.spinner.hide();
