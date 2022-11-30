@@ -37,12 +37,13 @@ export class ThongTinCaNhanComponent implements OnInit {
   }
 
   reloadGetEmpProfilePage() {
+    console.log(this.gridKeyForm)
     if (this.gridKeyForm.index === 1) {
       this.getEmpIdcardPage()
     } else if (this.gridKeyForm.index === 2) {
       this.getEmpRecordPage();
     } else if (this.gridKeyForm.index === 3) {
-      this.getEmpRecordPage();
+      this.getEmpPersonalPage();
     } else {
       this.getEmpContactPage();
     }
