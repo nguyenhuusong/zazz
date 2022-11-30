@@ -597,8 +597,10 @@ export class PqQuyenNguoiDungComponent implements OnInit {
                 code: d.value.toUpperCase()
               };
             });
-            let companyActive = this.companies.filter( compan => this.addUserQuery.companyIds.some( companActive => compan.code === companActive ))
-            this.addUserQuery.companyIds = companyActive.map( compan => compan.code);
+            if(this.addUserQuery.companyIds) {
+              let companyActive = this.companies.filter( compan => this.addUserQuery.companyIds.some( companActive => compan.code === companActive ))
+              this.addUserQuery.companyIds = companyActive.map( compan => compan.code);
+            }
           }
       }),
       error => { };

@@ -3659,6 +3659,29 @@ div.p-organizationchart {
         justify-content: end;
     }
 }
+.p-dialog{
+    .p-dialog-content{
+        padding: 16px;
+        .wrap-edit-detail{
+            padding-left: 0;
+            padding-right: 0px;
+            padding-top: 0px;
+            .btn-group-edit-detail{
+                // position: static;
+                // right: 32px;
+                // z-index: 998;
+                // top: auto;
+                // bottom: 16px;
+
+                position: sticky;
+                right: 32px;
+                z-index: 998;
+                top: auto;
+                bottom: 0;
+            }
+        }
+    }
+}
 p-dialog{
     .p-dialog{
         .p-dialog-content{

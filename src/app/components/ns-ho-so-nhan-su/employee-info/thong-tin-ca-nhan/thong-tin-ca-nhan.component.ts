@@ -70,21 +70,21 @@ export class ThongTinCaNhanComponent implements OnInit {
             cellRendererParams: params => {
               return {
                 buttons: [
-                  // {
-                  //   onClick: this.CertificateView.bind(this),
-                  //   label: 'Xem chi tiết',
-                  //   icon: 'fa fa-edit editing',
-                  //   key: 'view-qua-trinh-hop-dong',
-                  //   class: 'btn-primary mr5',
-                  // },
+                  {
+                    onClick: this.xemLienHe.bind(this),
+                    label: 'Xem chi tiết',
+                    icon: 'fa fa-edit editing',
+                    key: 'view-qua-trinh-hop-dong',
+                    class: 'btn-primary mr5',
+                  },
 
-                  // {
-                  //   onClick: this.CertificateDelete.bind(this),
-                  //   label: 'Xóa',
-                  //   icon: 'pi pi-trash',
-                  //   key: 'delete-qua-trinh-hop-dong',
-                  //   class: 'btn-danger',
-                  // },
+                  {
+                    onClick: this.xoaLienHe.bind(this),
+                    label: 'Xóa',
+                    icon: 'pi pi-trash',
+                    key: 'delete-qua-trinh-hop-dong',
+                    class: 'btn-danger',
+                  },
 
                 ]
               };
@@ -102,6 +102,7 @@ export class ThongTinCaNhanComponent implements OnInit {
   getEmpPersonalPage() {
     this.spinner.show();
     this.columnDefs1 = [];
+    this.columnDefs3  = [];
     const queryParams = queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 });
     this.apiService.getEmpPersonalPage(queryParams).subscribe(repo => {
       if (repo.status === 'success') {
@@ -122,20 +123,19 @@ export class ThongTinCaNhanComponent implements OnInit {
               return {
                 buttons: [
                   // {
-                  //   onClick: this.SkillView.bind(this),
+                  //   onClick: this.xemDinhKem.bind(this),
                   //   label: 'Xem chi tiết',
                   //   icon: 'fa fa-edit editing',
                   //   key: 'view-qua-trinh-hop-dong',
                   //   class: 'btn-primary mr5',
                   // },
-
-                  // {
-                  //   onClick: this.SkillDelete.bind(this),
-                  //   label: 'Xóa',
-                  //   icon: 'pi pi-trash',
-                  //   key: 'delete-qua-trinh-hop-dong',
-                  //   class: 'btn-danger',
-                  // },
+                  {
+                    onClick: this.xoaDinhKem.bind(this),
+                    label: 'Xóa',
+                    icon: 'pi pi-trash',
+                    key: 'delete-qua-trinh-hop-dong',
+                    class: 'btn-danger',
+                  },
 
                 ]
               };
@@ -153,6 +153,7 @@ export class ThongTinCaNhanComponent implements OnInit {
   getEmpRecordPage() {
     this.spinner.show();
     this.columnDefs1 = [];
+    this.columnDefs2 = []
     const queryParams = queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 });
     this.apiService.getEmpRecordPage(queryParams).subscribe(repo => {
       if (repo.status === 'success') {
@@ -173,20 +174,20 @@ export class ThongTinCaNhanComponent implements OnInit {
               return {
                 buttons: [
                   // {
-                  //   onClick: this.TrainningView.bind(this),
+                  //   onClick: this.xemHSCN.bind(this),
                   //   label: 'Xem chi tiết',
                   //   icon: 'fa fa-edit editing',
                   //   key: 'view-qua-trinh-hop-dong',
                   //   class: 'btn-primary mr5',
                   // },
 
-                  // {
-                  //   onClick: this.TrainningDelete.bind(this),
-                  //   label: 'Xóa',
-                  //   icon: 'pi pi-trash',
-                  //   key: 'delete-qua-trinh-hop-dong',
-                  //   class: 'btn-danger',
-                  // },
+                  {
+                    onClick: this.xoaHSCN.bind(this),
+                    label: 'Xóa',
+                    icon: 'pi pi-trash',
+                    key: 'delete-qua-trinh-hop-dong',
+                    class: 'btn-danger',
+                  },
 
                 ]
               };
@@ -441,6 +442,212 @@ export class ThongTinCaNhanComponent implements OnInit {
       }
     })
   }
+
+  // dùng cho các phần Giấy tờ tùy thân, Thông tin hồ sơ cá nhân, Danh sách đính kèm, Danh sách thông tin người liên hệ
+  // @listViewsPart
+  // @detailInfoPart
+  listViewsPart = [];
+  detailInfoPart = null;
+  isShowFileHSCN = false;
+  themMoiThongTinHSCN() {
+    this.spinner.show();
+    this.listViewsPart = [];
+    this.detailInfoPart = null;
+    const queryParams = queryString.stringify({ empId: this.empId });
+    this.apiService.addEmpRecord(queryParams).subscribe(results => {
+      if (results.status === 'success') {
+        this.isShowFileHSCN = true;
+        this.listViewsPart = cloneDeep(results.data.group_fields || []);
+        this.detailInfoPart = results.data;
+        this.spinner.hide();
+      }else{
+        this.spinner.hide();
+      }
+    }, error => {
+      this.spinner.hide();
+    });
+  }
+
+  xemHSCN() {
+    
+  }
+
+  setFileHSCN(data) {
+    this.spinner.show();
+    const  params = {
+      ...this.detailInfoPart, group_fields: data
+    };
+    this.apiService.empproFileSetEmpAttach(params).subscribe((results: any) => {
+      if (results.status === 'success') {
+        this.getEmpRecordPage();
+        this.isShowFileHSCN = false;
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Cập nhật thông tin thành công' });
+        this.spinner.hide();
+      } else {
+        this.spinner.hide();
+        this.messageService.add({
+          severity: 'error', summary: 'Thông báo', detail: results.message
+        });
+      }
+    }, error => {
+    });
+  }
+
+  xoaHSCN(event) {
+    this.confirmationService.confirm({
+      message: 'Bạn có chắc chắn muốn xóa đính kèm này?',
+      accept: () => {
+        const queryParams = queryString.stringify({ metaId: event.rowData.metaId });
+        this.apiService.empproFileDelEmpAttach(queryParams).subscribe((results: any) => {
+          if (results.status === 'success') {
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
+            this.getEmpRecordPage();
+          } else {
+            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+          }
+        });
+      }
+    });
+  }
+
+  canceFileHSCN(event) {
+    this.isShowFileHSCN = false;
+  }
+
+  
+  // listViewsDinhKem = [];
+  // detailInfoDinhKem = null;
+  isShowDinhKem = false;
+  themMoiDinhKem(empId = this.empId) {
+    this.spinner.show();
+    this.listViewsPart = [];
+    this.detailInfoPart = null;
+    const queryParams = queryString.stringify({ empId: empId });
+    this.apiService.addEmpPersonal(queryParams).subscribe(results => {
+      if (results.status === 'success') {
+        this.isShowDinhKem = true;
+        this.listViewsPart = cloneDeep(results.data.group_fields || []);
+        this.detailInfoPart = results.data;
+        this.spinner.hide();
+      }
+    }, error => {
+      this.spinner.hide();
+    });
+  }
+
+  xemDinhKem(event){
+    this.themMoiDinhKem(event.rowData.empId);
+  }
+
+  setDinhKem(data) {
+    this.spinner.show();
+    const  params = {
+      ...this.detailInfoPart, group_fields: data
+    };
+    this.apiService.empproFileSetEmpAttach(params).subscribe((results: any) => {
+      if (results.status === 'success') {
+        this.getEmpPersonalPage();
+        this.isShowDinhKem = false;
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Cập nhật thông tin thành công' });
+        this.spinner.hide();
+      } else {
+        this.spinner.hide();
+        this.messageService.add({
+          severity: 'error', summary: 'Thông báo', detail: results.message
+        });
+      }
+    }, error => {
+    });
+  }
+
+  xoaDinhKem(event) {
+    this.confirmationService.confirm({
+      message: 'Bạn có chắc chắn muốn xóa đính kèm này?',
+      accept: () => {
+        const queryParams = queryString.stringify({ metaId: event.rowData.metaId });
+        this.apiService.empproFileDelEmpAttach(queryParams).subscribe((results: any) => {
+          if (results.status === 'success') {
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
+            this.getEmpPersonalPage();
+          } else {
+            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+          }
+        });
+      }
+    });
+  }
+
+  canceDinhKem(event) {
+    this.isShowDinhKem = false;
+  }
+
+  // listViewsLienHe = [];
+  // detailInfoLienHe = null;
+  isShowLienHe = false;
+  themLienHe(empId = this.empId, cont_id = null) {
+    this.spinner.show();
+    this.listViewsPart = [];
+    this.detailInfoPart = null;
+    const queryParams = queryString.stringify({ empId: empId, cont_id: cont_id });
+    this.apiService.empProfileGetEmpContact(queryParams).subscribe(results => {
+      if (results.status === 'success') {
+        this.isShowLienHe = true;
+        this.listViewsPart = cloneDeep(results.data.group_fields || []);
+        this.detailInfoPart = results.data;
+        this.spinner.hide();
+      }
+    }, error => {
+      this.spinner.hide();
+    });
+  }
+
+  xemLienHe(event) {
+    this.themLienHe(this.empId, event.rowData.cont_id);
+  }
+
+  setLienHe(data) {
+    this.spinner.show();
+    const  params = {
+      ...this.detailInfoPart, group_fields: data
+    };
+    this.apiService.empProfileSetEmpContact(params).subscribe((results: any) => {
+      if (results.status === 'success') {
+        this.getEmpContactPage();
+        this.isShowLienHe = false;
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Cập nhật thông tin thành công' });
+        this.spinner.hide();
+      } else {
+        this.spinner.hide();
+        this.messageService.add({
+          severity: 'error', summary: 'Thông báo', detail: results.message
+        });
+      }
+    }, error => {
+    });
+  }
+
+  xoaLienHe(event) {
+    this.confirmationService.confirm({
+      message: 'Bạn có chắc chắn muốn xóa liên hệ này?',
+      accept: () => {
+        const queryParams = queryString.stringify({ cont_id: event.rowData.cont_id });
+        this.apiService.delEmpContact(queryParams).subscribe((results: any) => {
+          if (results.status === 'success') {
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
+            this.getEmpContactPage();
+          } else {
+            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+          }
+        });
+      }
+    });
+  }
+
+  canceLienHe(event) {
+    this.isShowLienHe = false;
+  }
+
+
   columnDefs1 = [];
   listsData1 = [];
   columnDefs2 = [];
