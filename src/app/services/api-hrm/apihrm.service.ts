@@ -1963,6 +1963,15 @@ export class ApiHrmService {
   addEmpRecord(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/employeeprofile/AddEmpRecord?` +  queryParams, this.options)
   }
+  empproFileGetEmpAttach(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/employeeprofile/GetEmpAttach?` +  queryParams, this.options)
+  }
+  empproFileSetEmpAttach(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/employeeprofile/SetEmpAttach` ,  queryParams, this.options)
+  }
+  empproFileDelEmpAttach(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/employeeprofile/DelEmpAttach?` + queryParams, this.options)
+  }
   getEmpPersonalPage(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/employeeprofile/GetEmpPersonalPage?` +  queryParams, this.options)
   }
@@ -1972,8 +1981,15 @@ export class ApiHrmService {
   getEmpContactPage(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/employeeprofile/GetEmpContactPage?` +  queryParams, this.options)
   }
+  // ct hồ sơ ns - thông tin cá nhân - lien hệ
+  empProfileGetEmpContact(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/employeeprofile/GetEmpContact?` +  queryParams, this.options)
+  }
+  empProfileSetEmpContact(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/employeeprofile/SetEmpContact` ,  queryParams, this.options)
+  }
   delEmpContact(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v2/employeeprofile/DelEmpContact?` +  queryParams, this.options)
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/employeeprofile/DelEmpContact?` +  queryParams, this.options)
   }
 
   // EmpWorking
