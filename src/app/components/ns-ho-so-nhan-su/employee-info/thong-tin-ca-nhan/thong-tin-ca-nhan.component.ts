@@ -51,7 +51,7 @@ export class ThongTinCaNhanComponent implements OnInit {
 
   getEmpContactPage() {
     this.spinner.show();
-    this.columnDefs1 = [];
+    this.columnDefs4 = [];
     const queryParams = queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 });
     this.apiService.getEmpContactPage(queryParams).subscribe(repo => {
       if (repo.status === 'success') {
@@ -102,7 +102,6 @@ export class ThongTinCaNhanComponent implements OnInit {
 
   getEmpPersonalPage() {
     this.spinner.show();
-    this.columnDefs1 = [];
     this.columnDefs3  = [];
     const queryParams = queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 });
     this.apiService.getEmpPersonalPage(queryParams).subscribe(repo => {
@@ -153,7 +152,6 @@ export class ThongTinCaNhanComponent implements OnInit {
 
   getEmpRecordPage() {
     this.spinner.show();
-    this.columnDefs1 = [];
     this.columnDefs2 = []
     const queryParams = queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 });
     this.apiService.getEmpRecordPage(queryParams).subscribe(repo => {

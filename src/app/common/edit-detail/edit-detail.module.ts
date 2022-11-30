@@ -20,7 +20,7 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { TooltipModule } from 'primeng/tooltip';
 import { AppLabel, AppTypeCheckboxComponent, AppTypeCheckboxListComponent, AppTypeCheckboxRadioListComponent,
    AppTypeChips,
-   AppTypeCurrencyComponent, AppTypeDatefulltimeComponent, AppTypeDatetimeComponent, AppTypeDropdownComponent, AppTypeLinkUrlDragComponent, AppTypeLinkUrlRadioListComponent,
+   AppTypeCurrencyComponent, AppTypeDatefulltimeComponent, AppTypeDatetimeComponent, AppTypeDropdownComponent, AppTypeImageComponent, AppTypeLinkUrlDragComponent, AppTypeLinkUrlRadioListComponent,
     AppTypelistMch,
     AppTypeMarkdownComponent, AppTypeMembers, AppTypeMultiSelectComponent, AppTypeNumberComponent, AppTypeonOff, AppTyperoomImg, AppTypeSelectAutocompleteComponent, AppTypeSelectComponent, AppTypeSelectTreeComponent, AppTypeSelectTreesComponent, AppTypeTextareaComponent, AppTypeTextComponent, AppTypeTimeonlyComponent } from './chid-edit-component';
 import { MultiSelectModule } from 'primeng/multiselect';
@@ -103,7 +103,8 @@ import {InputSwitchModule} from 'primeng/inputswitch';
     AppTypeSelectTreesComponent,
     AppTyperoomImg,
     AppTypeonOff,
-    AppLabel
+    AppLabel,
+    AppTypeImageComponent
     // AppTypeTextComponent
   ],
   exports: [
