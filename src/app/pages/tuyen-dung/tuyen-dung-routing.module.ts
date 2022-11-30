@@ -13,6 +13,7 @@ import { ChiTietMailTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/
 import { ImportTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/import-tuyen-dung/import-tuyen-dung.component';
 import { DsTiemNangComponent } from 'src/app/components/ns-tuyen-dung/ds-tiem-nang/ds-tiem-nang.component';
 import { MailDaGuiComponent } from 'src/app/components/ns-tuyen-dung/mail-da-gui/mail-da-gui.component';
+import { NsCauHinhComponent } from 'src/app/components/ns-tuyen-dung/ns-cau-hinh/ns-cau-hinh.component';
 
 const routes: Routes = [
   {
@@ -93,6 +94,7 @@ const routes: Routes = [
       url: 'danh-sach-nghi-viec',
     },
   },
+  
 //Chuyên môn
   {
     path: 'chuyen-mon',
@@ -154,7 +156,16 @@ const routes: Routes = [
     },
   },
 
- 
+  // cau hinh
+  {
+    path: 'cau-hinh',
+    component: NsCauHinhComponent,
+    data: {
+      title: 'Cấu hình',
+      url: 'cau-hinh',
+    },
+  },
+  
 
 
 ];

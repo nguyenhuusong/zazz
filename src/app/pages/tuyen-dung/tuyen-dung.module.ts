@@ -58,6 +58,13 @@ import { ChiTietMailTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/
 import { ImportTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/import-tuyen-dung/import-tuyen-dung.component';
 import { DsTiemNangComponent } from 'src/app/components/ns-tuyen-dung/ds-tiem-nang/ds-tiem-nang.component';
 import { MailDaGuiComponent } from 'src/app/components/ns-tuyen-dung/mail-da-gui/mail-da-gui.component';
+import { NsCauHinhComponent } from 'src/app/components/ns-tuyen-dung/ns-cau-hinh/ns-cau-hinh.component';
+import { VongTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/ns-cau-hinh/vong-tuyen-dung/vong-tuyen-dung.component';
+import { ChiTietVongTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/ns-cau-hinh/vong-tuyen-dung/chi-tiet-vong-tuyen-dung/chi-tiet-vong-tuyen-dung.component';
+import { NsCauHinhMailComponent } from 'src/app/components/ns-tuyen-dung/ns-cau-hinh/ns-cau-hinh-mail/ns-cau-hinh-mail.component';
+import { NguonTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/ns-cau-hinh/nguon-tuyen-dung/nguon-tuyen-dung.component';
+import { ChiTietNguonTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/ns-cau-hinh/nguon-tuyen-dung/chi-tiet-nguon-tuyen-dung/chi-tiet-nguon-tuyen-dung.component';
+import { NsChiTietCauHinhMailComponent } from 'src/app/components/ns-tuyen-dung/ns-cau-hinh/ns-cau-hinh-mail/chi-tiet-cau-hinh-mail/chi-tiet-ns-cau-hinh-mail.component';
 @NgModule({
   imports: [
     MessagesModule,
@@ -123,7 +130,14 @@ import { MailDaGuiComponent } from 'src/app/components/ns-tuyen-dung/mail-da-gui
     ChiTietMailTuyenDungComponent,
     ImportTuyenDungComponent,
     DsTiemNangComponent,
-    MailDaGuiComponent
+    MailDaGuiComponent,
+    NsCauHinhComponent,
+    VongTuyenDungComponent,
+    ChiTietVongTuyenDungComponent,
+    NsCauHinhMailComponent,
+    NguonTuyenDungComponent,
+    ChiTietNguonTuyenDungComponent,
+    NsChiTietCauHinhMailComponent
   ],
   providers: [ ]
 })

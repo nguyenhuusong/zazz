@@ -56,7 +56,11 @@
                                 <p-panel header="Quá trình hợp đồng">
                                     <div class="row" style="flex-wrap: wrap">
                                         <div class="grid-default border">
-                                            <app-list-grid-angular [domLayout]="'autoHeight'" *ngIf="columnDefs.length > 0" [title]="'Chứng chỉ'"
+                                            <app-list-grid-angular 
+                                                idGrid="qthd"
+                                                [domLayout]="'autoHeight'" 
+                                                *ngIf="columnDefs.length > 0" 
+                                                [title]="'Chứng chỉ'"
                                                 [listsData]="listsData" [columnDefs]="columnDefs"></app-list-grid-angular>
                                             </div>
                                     </div>
@@ -73,7 +77,10 @@
                                 <p-panel header="Tiền lương">
                                     <div class="row" style="flex-wrap: wrap">
                                         <div class="grid-default border">
-                                            <app-list-grid-angular [domLayout]="'autoHeight'" *ngIf="columnDefs1.length > 0" [title]="'Chứng chỉ'"
+                                            <app-list-grid-angular 
+                                                [domLayout]="'autoHeight'" 
+                                                idGrid="tienluong"
+                                                *ngIf="columnDefs1.length > 0" [title]="'Chứng chỉ'"
                                                 [listsData]="listsData1" [columnDefs]="columnDefs1"></app-list-grid-angular>
                                             </div>
                                     </div>

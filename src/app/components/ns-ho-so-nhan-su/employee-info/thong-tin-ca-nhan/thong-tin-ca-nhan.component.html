@@ -38,7 +38,11 @@
                                 <p-panel header="Giấy tờ tùy thân">
                                     <div class="row" style="flex-wrap: wrap">
                                         <div class="grid-default border">
-                                            <app-list-grid-angular [domLayout]="'autoHeight'" *ngIf="columnDefs1.length > 0" [title]="'Chứng chỉ'"
+                                            <app-list-grid-angular 
+                                                idGrid="giaytotuythan"
+                                                [domLayout]="'autoHeight'" 
+                                                *ngIf="columnDefs1.length > 0" 
+                                                [title]="'Chứng chỉ'"
                                                 [listsData]="listsData1" [columnDefs]="columnDefs1"></app-list-grid-angular>
                                             </div>
                                     </div>
@@ -55,7 +59,11 @@
                                 <p-panel header="Thông tin hồ sơ cá nhân">
                                     <div class="row" style="flex-wrap: wrap">
                                         <div class="grid-default border">
-                                            <app-list-grid-angular [domLayout]="'autoHeight'" *ngIf="columnDefs2.length > 0" [title]="'Chứng chỉ'"
+                                            <app-list-grid-angular 
+                                                [domLayout]="'autoHeight'" 
+                                                idGrid="tthscn"
+                                                *ngIf="columnDefs2.length > 0" 
+                                                [title]="'Chứng chỉ'"
                                                 [listsData]="listsData2" [columnDefs]="columnDefs2"></app-list-grid-angular>
                                             </div>
                                     </div>
@@ -72,7 +80,11 @@
                                 <p-panel header="Danh sách đính kèm">
                                     <div class="row" style="flex-wrap: wrap">
                                         <div class="grid-default border">
-                                            <app-list-grid-angular [domLayout]="'autoHeight'" *ngIf="columnDefs3.length > 0" [title]="'Chứng chỉ'"
+                                            <app-list-grid-angular 
+                                                idGrid="dsdinhkem"
+                                                [domLayout]="'autoHeight'" 
+                                                *ngIf="columnDefs3.length > 0" 
+                                                [title]="'Chứng chỉ'"
                                                 [listsData]="listsData3" [columnDefs]="columnDefs3"></app-list-grid-angular>
                                             </div>
                                     </div>
@@ -89,7 +101,11 @@
                                 <p-panel header="Danh sách thông tin người liên hệ">
                                     <div class="row" style="flex-wrap: wrap">
                                         <div class="grid-default border">
-                                            <app-list-grid-angular [domLayout]="'autoHeight'" *ngIf="columnDefs4.length > 0" [title]="'Chứng chỉ'"
+                                            <app-list-grid-angular 
+                                                idGrid="dslienhe"
+                                                [domLayout]="'autoHeight'" 
+                                                *ngIf="columnDefs4.length > 0" 
+                                                [title]="'Chứng chỉ'"
                                                 [listsData]="listsData4" [columnDefs]="columnDefs4"></app-list-grid-angular>
                                             </div>
                                     </div>

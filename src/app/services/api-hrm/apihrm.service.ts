@@ -1877,6 +1877,38 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v1/recruitment/UpdateCandidatesPotential?${queryParams}`, data , this.options)
   }
 
+  // vong tuyen dung
+  
+  getRecruitRoundPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetRecruitRoundPage?` + queryParams, this.options)
+  }
+  getRecruitRoundInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetRecruitRoundInfo?${queryParams}`, this.options)
+  }
+  setRecruitRoundInfo(data): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/recruitment/SetRecruitRoundInfo`, data , this.options)
+  }
+  delRecruitRoundInfo(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v1/recruitment/DelRecruitRoundInfo?${queryParams}`, this.options)
+  }
+  getRecruitRoundTitles(): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetRecruitRoundTitles`, this.options)
+  }
+
+  // nguon tuyen dung
+  getRecruitSourcePage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetRecruitSourcePage?` + queryParams, this.options)
+  }
+  getRecruitSourceInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetRecruitSourceInfo?${queryParams}`, this.options)
+  }
+  setRecruitSourceInfo(data): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/recruitment/SetRecruitSourceInfo`, data , this.options)
+  }
+  delRecruitSourceInfo(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v1/recruitment/DelRecruitSourceInfo?${queryParams}`, this.options)
+  }
+
   //EmpTrain
 
   getEmpQualification(queryParams): Observable<any> {
