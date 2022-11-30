@@ -253,7 +253,6 @@ export class DsTiemNangComponent implements OnInit {
   }
 
   rowSelected(event) {
-    this.getReRound();
     this.dataRowSelected = event;
     this.recruitmentStatusSelected = this.dataRowSelected.map( d => d.can_st).toString();
     this.canSttValue = this.dataRowSelected.sort((a,b)=>a.can_st-b.can_st)[this.dataRowSelected.length - 1];
@@ -297,6 +296,7 @@ export class DsTiemNangComponent implements OnInit {
           this.load();
         }
     });
+    this.getReRound();
 
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
@@ -362,20 +362,19 @@ export class DsTiemNangComponent implements OnInit {
 
   listStatus = []
   getStatus() {
-    const queryParams = queryString.stringify({ objKey: 'recruitment_round' });
-    this.apiService.getCustObjectListNew(false, queryParams).subscribe(results => {
+    this.apiService.getRecruitRoundTitles().subscribe(results => {
       if (results.status === 'success') {
         this.listStatus = results.data.map(d => {
           return {
-            label: d.objName,
-            value: d.objCode
+            label: d.name,
+            value: d.value
           }
         });
         this.listStatus = [{ label: 'Tất cả', value: null }, ...this.listStatus];
         this.recruitmentStatus = results.data.map(d => {
           return {
-            label: d.objName,
-            code: d.objCode
+            label: d.name,
+            code: d.value
           }
         });
       }
@@ -384,13 +383,12 @@ export class DsTiemNangComponent implements OnInit {
 
   getReRound() {
     this.recruitmentStatus = []
-    const queryParams = queryString.stringify({ objKey: 'recruitment_round' });
-    this.apiService.getCustObjectListNew(false, queryParams).subscribe(results => {
+    this.apiService.getRecruitRoundTitles().subscribe(results => {
       if (results.status === 'success') {
         this.recruitmentStatus = results.data.map(d => {
           return {
-            label: d.objName,
-            code: parseInt(d.objCode)
+            label: d.name,
+            code: d.value
           }
         });
       }

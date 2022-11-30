@@ -359,10 +359,11 @@ export class PageNotifyComponent implements OnInit, OnDestroy, AfterViewChecked 
   }
 
   handleEdit(data) {
+    console.log('data', data)
     this.modelAddNotifi.notiId = data.rowData.notiId
     this.Actions.value = 'Info';
     this.Actions.label = 'Sửa thông báo';
-    this.router.navigate(['/cai-dat/thong-bao/chi-tiet-thong-bao'], { queryParams: { notiId: data.rowData.n_id, external_sub: data.rowData.external_sub } });
+    this.router.navigate(['/cai-dat/thong-bao/chi-tiet-thong-bao'], { queryParams: { notiId: data.rowData.notiId, external_sub: data.rowData.external_sub } });
   }
 
   createNotify() {

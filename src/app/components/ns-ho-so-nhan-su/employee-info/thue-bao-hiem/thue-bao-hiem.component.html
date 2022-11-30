@@ -39,7 +39,11 @@
                                 <p-panel header="Thông tin người thân">
                                     <div class="row" style="flex-wrap: wrap">
                                         <div class="grid-default border">
-                                            <app-list-grid-angular [domLayout]="'autoHeight'" *ngIf="columnDefs.length > 0" [title]="'Chứng chỉ'"
+                                            <app-list-grid-angular 
+                                                [domLayout]="'autoHeight'" 
+                                                idGrid="ttnguoithan"
+                                                *ngIf="columnDefs.length > 0" 
+                                                [title]="'Chứng chỉ'"
                                                 [listsData]="listsData" [columnDefs]="columnDefs"></app-list-grid-angular>
                                             </div>
                                     </div>
@@ -74,7 +78,6 @@
         </p-panel>
         </div>
     </section>
- 
 
     <p-dialog styleClass="popup-btngroup-edit-detail" [(visible)]="displayFormEditDetail" [draggable]="false"  [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '800px', height: 'auto'}">
         <p-header>
@@ -85,7 +88,6 @@
             [dataView]="listViewsForm" (callback)="setFormInfo($event)"
             (callbackcancel)="cancelFormInfo($event)"></app-edit-detail>
     </p-dialog>
-
 
     <p-dialog header="Cài đặt cấu hình " [appendTo]="'body'" [focusTrap]="false" styleClass="popup-setting"
     (onHide)="reloadGetEmpTrainPage()" [(visible)]="displaySetting" [modal]="true" [style]="{width: '50vw'}"
