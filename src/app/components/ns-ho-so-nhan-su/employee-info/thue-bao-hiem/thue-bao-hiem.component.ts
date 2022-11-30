@@ -99,6 +99,7 @@ export class ThueBaoHiemComponent implements OnInit {
     const queryParams = queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 });
     this.apiService.getEmpDependentPage(queryParams).subscribe(repo => {
       if (repo.status === 'success') {
+        this.spinner.hide();
         if (repo.data.dataList.gridKey) {
           this.gridKey = repo.data.dataList.gridKey;
         }    this.columnDefs = [
@@ -231,7 +232,9 @@ export class ThueBaoHiemComponent implements OnInit {
   }
 
   cancelFormInfo(event) {
-
+    if(event === 'Cancel') {
+      this.displayFormEditDetail = false
+    }
   }
 
 }
