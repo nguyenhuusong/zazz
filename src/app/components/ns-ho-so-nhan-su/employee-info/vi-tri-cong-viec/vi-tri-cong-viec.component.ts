@@ -80,21 +80,21 @@ export class ViTriCongViecComponent implements OnInit {
             cellRendererParams: params => {
               return {
                 buttons: [
-                  // {
-                  //   onClick: this.EducationView.bind(this),
-                  //   label: 'Xem chi tiết',
-                  //   icon: 'fa fa-edit editing',
-                  //   key: 'view-qua-trinh-hop-dong',
-                  //   class: 'btn-primary mr5',
-                  // },
+                  {
+                    onClick: this.editRow.bind(this),
+                    label: 'Xem chi tiết',
+                    icon: 'fa fa-edit editing',
+                    key: 'view-job-detail',
+                    class: 'btn-primary mr5',
+                  },
 
-                  // {
-                  //   onClick: this.EducationDelete.bind(this),
-                  //   label: 'Xóa',
-                  //   icon: 'pi pi-trash',
-                  //   key: 'delete-qua-trinh-hop-dong',
-                  //   class: 'btn-danger',
-                  // },
+                  {
+                    onClick: this.deleteRow.bind(this),
+                    label: 'Xóa',
+                    icon: 'pi pi-trash',
+                    key: 'delete-qua-trinh-hop-dong',
+                    class: 'btn-danger',
+                  },
 
                 ]
               };
@@ -107,6 +107,27 @@ export class ViTriCongViecComponent implements OnInit {
         this.spinner.hide();
       }
     })
+  }
+
+  editRow(event) {
+    this.addTimeWork(event.rowData.empId, event.rowData.gd);
+  }
+
+  deleteRow(event) {
+    this.confirmationService.confirm({
+      message: 'Bạn có chắc chắn muốn xóa thời gian làm việc này?',
+      accept: () => {
+        const queryParams = queryString.stringify({gd: event.rowData.gd});
+        this.apiService.delEmpWorking(queryParams).subscribe((results: any) => {
+          if (results.status === 'success') {
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
+            this.getEmpWorkingPageByEmpId();
+          } else {
+            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+          }
+        });
+      }
+    });
   }
 
   getTerminateReasons() {
@@ -295,8 +316,8 @@ export class ViTriCongViecComponent implements OnInit {
     }
   }
 
-  addTimeWork() {
-    const queryParams = queryString.stringify({ empId: this.detailInfo.empId, gd: null });
+  addTimeWork(empId = this.detailInfo.empId, gd = null) {
+    const queryParams = queryString.stringify({ empId: empId, gd: gd });
     this.getEmpWorking(queryParams);
   }
   listViewsDetail = [];
@@ -330,7 +351,7 @@ export class ViTriCongViecComponent implements OnInit {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thêm mới thành công' });
         this.displayFormEditDetail = false;
-        this.getEmployeeInfo();
+        this.getEmpWorkingPageByEmpId();
         this.spinner.hide();
       } else {
         this.spinner.hide();

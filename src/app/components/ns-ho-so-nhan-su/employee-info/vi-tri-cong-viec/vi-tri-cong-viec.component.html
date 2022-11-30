@@ -52,9 +52,14 @@
                                 <p-panel header="Thời gian làm việc">
                                     <div class="row" style="flex-wrap: wrap">
                                         <div class="grid-default border">
-                                            <app-list-grid-angular [domLayout]="'autoHeight'" *ngIf="columnDefs1.length > 0" [title]="'Chứng chỉ'"
-                                                [listsData]="listsData1" [columnDefs]="columnDefs1"></app-list-grid-angular>
-                                            </div>
+                                            <app-list-grid-angular 
+                                                [domLayout]="'autoHeight'" 
+                                                *ngIf="columnDefs1.length > 0" 
+                                                [title]="'Chứng chỉ'"
+                                                [listsData]="listsData1" 
+                                                [columnDefs]="columnDefs1">
+                                            </app-list-grid-angular>
+                                        </div>
                                     </div>
                                     <ng-template pTemplate="footer">
                                         <p-button label="Thêm mới" icon="pi pi-plus" (click)="addTimeWork()" styleClass="p-button-sm mr-1"></p-button>

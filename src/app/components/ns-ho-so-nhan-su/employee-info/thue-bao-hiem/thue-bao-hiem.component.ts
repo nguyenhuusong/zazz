@@ -192,7 +192,7 @@ export class ThueBaoHiemComponent implements OnInit {
   }
 
   addEmpDependent() {
-    this.titleEmpTrain = 'Thêm mới người phụ thuộc';
+    this.titleEmpTrain = 'Thêm người thân';
     this.vitri = 0;
     this.idFrom = null;;
     this.getEmpDependent()
