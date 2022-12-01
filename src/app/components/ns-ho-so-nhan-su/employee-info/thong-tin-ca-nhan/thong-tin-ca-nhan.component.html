@@ -39,7 +39,7 @@
                                     <div class="row" style="flex-wrap: wrap">
                                         <div class="grid-default border">
                                             <app-list-grid-angular 
-                                                idGrid="giaytotuythan"
+                                                [idGrid]="'giaytotuythan'"
                                                 [domLayout]="'autoHeight'" 
                                                 *ngIf="columnDefs1.length > 0" 
                                                 [title]="'Chứng chỉ'"
@@ -61,7 +61,7 @@
                                         <div class="grid-default border">
                                             <app-list-grid-angular 
                                                 [domLayout]="'autoHeight'" 
-                                                idGrid="tthscn"
+                                                [idGrid]="'tthscn'"
                                                 *ngIf="columnDefs2.length > 0" 
                                                 [title]="'Chứng chỉ'"
                                                 [listsData]="listsData2" [columnDefs]="columnDefs2"></app-list-grid-angular>
@@ -81,7 +81,7 @@
                                     <div class="row" style="flex-wrap: wrap">
                                         <div class="grid-default border">
                                             <app-list-grid-angular 
-                                                idGrid="dsdinhkem"
+                                                [idGrid]="'dsdinhkem'"
                                                 [domLayout]="'autoHeight'" 
                                                 *ngIf="columnDefs3.length > 0" 
                                                 [title]="'Chứng chỉ'"
@@ -102,7 +102,7 @@
                                     <div class="row" style="flex-wrap: wrap">
                                         <div class="grid-default border">
                                             <app-list-grid-angular 
-                                                idGrid="dslienhe"
+                                                [idGrid]="'dslienhe'"
                                                 [domLayout]="'autoHeight'" 
                                                 *ngIf="columnDefs4.length > 0" 
                                                 [title]="'Chứng chỉ'"

@@ -27,6 +27,7 @@
                     </ng-template>
                     <div class="grid-default border">
                         <app-list-grid-angular [title]="'Danh mục hồ sơ khách hàng ký'"  
+
                         [domLayout]="'autoHeight'" 
                         [idGrid]="'listsDataMaternityPregnancy'" 
                         [listsData]="listsDataMaternityPregnancy"  
@@ -79,6 +80,7 @@
                 </p-button>
             </div>
             <app-list-grid-angular  *ngIf="columnDefDetail.length > 0"
+                [idGrid]="'lichdangky'"
                 [listsData]="dataDetail" [height]="heightGrid"
                 (firstDataRendered)="onFirstDataRendered($event)"
                 [columnDefs]="columnDefDetail"></app-list-grid-angular>

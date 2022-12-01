@@ -8,6 +8,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { CheckHideAction } from 'src/app/common/function-common/common';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 
 @Component({
   selector: 'app-chi-tiet-vi-tri-tuyen-dung',
@@ -29,6 +30,7 @@ export class ChiTietViTriTuyenDungComponent implements OnInit, OnDestroy {
     private spinner: NgxSpinnerService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
+    private organizeInfoService: OrganizeInfoService,
     private router: Router
   ) { }
   private readonly unsubscribe$: Subject<void> = new Subject();
@@ -46,6 +48,7 @@ export class ChiTietViTriTuyenDungComponent implements OnInit, OnDestroy {
       { label: `${this.titlePage}` },
     ];
     this.handleParams();
+   
   }
   modelEdit = {
     vacancyId: null,
@@ -62,7 +65,11 @@ export class ChiTietViTriTuyenDungComponent implements OnInit, OnDestroy {
         if(this.isCopy) {
           this.getVacancyReplicationInfo();
         }else{
-          this.getVacancyInfo();
+          this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
+            if(results && results.length>0){
+              this.getVacancyInfo(results);
+            } 
+          });
         }
       });
   };
@@ -80,7 +87,7 @@ export class ChiTietViTriTuyenDungComponent implements OnInit, OnDestroy {
       });
   }
 
-  getVacancyInfo() {
+  getVacancyInfo(organId = null) {
     this.listViews = [];
     const queryParams = queryString.stringify(this.modelEdit);
     this.apiService.getVacancyInfo(queryParams)
@@ -88,9 +95,16 @@ export class ChiTietViTriTuyenDungComponent implements OnInit, OnDestroy {
       .subscribe(results => {
         if (results.status === 'success') {
           const listViews = cloneDeep(results.data.group_fields);
-          console.log(listViews)
           this.listViews = [...listViews];
           this.detailInfo = results.data;
+
+          this.listViews.forEach( group => {
+            group.fields.forEach(field => {
+                if(field.field_name === "organizeId") {
+                  field.columnValue = organId
+                }
+            });
+          })
         }
       });
   }
