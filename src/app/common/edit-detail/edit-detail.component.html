@@ -15,6 +15,7 @@
                         [hidden]="!element.isVisiable"
                         [ngClass]="{'isEmpty': element.isEmpty, 'has-image': includeImage && element?.columnType === 'image', 'image-iam': element?.columnType === 'image'}" 
                         class="{{element.columnClass}} ">
+                        <app-type-image [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element?.columnType === 'image'" (avatarUrlCallback)="avatarUrlCallback($event)"></app-type-image>
                         <app-type-text [modelFields]="modelFields" [element]="element" [submit]="submit" *ngIf="element?.columnType === 'input'"></app-type-text>
                         <app-type-select [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'khongDung'"></app-type-select> 
                         <app-type-selectTree [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'selectTree' && element.isVisiable" [dataView]="dataView"></app-type-selectTree>

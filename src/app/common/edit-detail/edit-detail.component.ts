@@ -30,8 +30,10 @@ export class EditDetailComponent implements OnInit, OnChanges {
     private changeDetech: ChangeDetectorRef,
     private organizeInfoService: OrganizeInfoService,
     private spinner: NgxSpinnerService,
-    private router: Router
+    private router: Router,
+    
   ) { }
+  @Output() avatarUrl = new EventEmitter<any>();
   @Output() callback = new EventEmitter<any>();
   @Output() callbackcancel = new EventEmitter<any>();
   @Output() callback1 = new EventEmitter<any>();
@@ -380,6 +382,10 @@ export class EditDetailComponent implements OnInit, OnChanges {
       }), error => {
         this.spinner.hide();
       };
+  }
+
+  avatarUrlCallback(url) {
+    this.avatarUrl.emit(url);
   }
 
   memberGetQuery(event) {

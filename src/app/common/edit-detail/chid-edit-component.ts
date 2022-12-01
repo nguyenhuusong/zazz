@@ -12,6 +12,94 @@ import { checkIsObject, setCheckboxradiolistValue, setMembers, setMultiSelectVal
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiHrmV2Service } from 'src/app/services/api-hrm/apihrmv2.service';
 import { forkJoin } from 'rxjs';
+import { ApiService } from 'src/app/services/api.service';
+@Component({
+  selector: 'app-type-image',
+  template: ` <div class="wrap-image">
+               <p-image *ngIf="element.columnValue" src="{{element.columnValue}}" alt="Image" width="200" [preview]="true"></p-image>
+               <p-image *ngIf="!element.columnValue" src="/assets/images/no-image2.jpg" alt="Image" width="200" [preview]="true"></p-image>
+               <label class="upload" for="myfiless1" *ngIf="!element.columnValue">
+                  <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 4C0 1.79086 1.79086 0 4 0H36C38.2091 0 40 1.79086 40 4V36C40 38.2091 38.2091 40 36 40H4C1.79086 40 0 38.2091 0 36V4Z" fill="#201d50"/>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M16.8582 11.8325C16.993 11.6252 17.2242 11.5 17.4723 11.5H22.5277C22.7758 11.5 23.007 11.6252 23.1418 11.8325L24.6107 14.0905H27.5831C28.2311 14.0905 28.848 14.3544 29.2995 14.8172C29.7503 15.2792 30 15.9014 30 16.546V26.0444C30 26.689 29.7503 27.3113 29.2995 27.7733C28.848 28.236 28.2311 28.5 27.5831 28.5H12.4169C11.7689 28.5 11.152 28.236 10.7005 27.7733C10.2497 27.3113 10 26.689 10 26.0444V16.546C10 15.9014 10.2497 15.2792 10.7005 14.8172C11.152 14.3544 11.7689 14.0905 12.4169 14.0905H15.3893L16.8582 11.8325ZM17.6587 20.862C17.6587 19.5087 18.7243 18.4442 19.9992 18.4442C21.2741 18.4442 22.3397 19.5087 22.3397 20.862C22.3397 22.2153 21.2741 23.2798 19.9992 23.2798C18.7243 23.2798 17.6587 22.2153 17.6587 20.862ZM19.9992 16.3718C17.5514 16.3718 15.5991 18.4001 15.5991 20.862C15.5991 23.3238 17.5514 25.3521 19.9992 25.3521C22.4471 25.3521 24.3993 23.3238 24.3993 20.862C24.3993 18.4001 22.4471 16.3718 19.9992 16.3718Z" fill="white"/>
+                  </svg>
+                </label>
+                
+               <input (change)="onUploadOutput($event, element.field_name)"
+                accept="image/jpeg,image/png,image/jpg,image/gif" type="file" style="display: none" id="myfiless1" name="myfiless1" class="myfile1">
+              </div>
+              <div *ngIf="modelFields[element.field_name].isRequire && submit && modelFields[element.field_name].error"
+                class="alert-validation alert-danger">
+                <div [hidden]="!modelFields[element.field_name].error">
+                  {{modelFields[element.field_name].message}}
+                  </div>
+                  </div>
+                `,
+})
+export class AppTypeImageComponent implements OnInit {
+  @Input() element;
+  @Input() submit = false;
+  @Input() modelFields;
+  @Output() avatarUrlCallback = new EventEmitter<any>();
+  isUploadAvatar = true;
+  avatarUrl = '';
+  constructor(
+    private spinner: NgxSpinnerService,
+    private messageService: MessageService,
+    private apiService: ApiService
+  ) { }
+  ngOnInit(): void {
+
+    // debugger
+  }
+  deleteAvatar() {
+    this.element.columnValue = '';
+    this.isUploadAvatar = true
+  }
+  onUploadOutput(event, field_name) {
+    this.spinner.show();
+    if (event.target.files[0] && event.target.files[0].size > 0) {
+      const getDAte = new Date();
+      const getTime = getDAte.getTime();
+      const storageRef = firebase.storage().ref();
+      const uploadTask = storageRef.child(`ksbond/images/${getTime}-${event.target.files[0].name}`).put(event.target.files[0]);
+      uploadTask.on('state_changed', (snapshot) => {
+      }, (error) => {
+      }, () => {
+        uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+          if (downloadURL) {
+            this.element.columnValue = downloadURL;
+            this.avatarUrl = downloadURL;
+            this.isUploadAvatar = false;
+            this.spinner.hide();
+            this.avatarUrlCallback.emit(this.avatarUrl)
+            // this.dataView.forEach(element => {
+            //   element.fields.forEach(async element1 => {
+            //     if (element1.field_name === 'meta_file_type') {
+            //       element1.columnValue = event.target.files[0].type
+            //     } else if (element1.field_name === 'meta_file_size') {
+            //       element1.columnValue = event.target.files[0].size
+            //     } else if (element1.field_name === 'meta_file_name') {
+            //       element1.columnValue = event.target.files[0].name
+            //     } else if (element1.field_name === 'meta_file_url') {
+            //       element1.columnValue = downloadURL
+            //     }
+            //   });
+            // });
+            this.spinner.hide();
+          }
+
+        }).catch(error => {
+          this.spinner.show();
+        });
+      });
+    }
+
+
+  }
+}
+
+
 @Component({
   selector: 'app-type-text',
   template: ` <div class="field-group text" [ngClass]=" element.columnValue ? 'valid' : 'invalid' ">
