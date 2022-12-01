@@ -1,5 +1,5 @@
 import { Router } from '@angular/router';
-import { Component, OnInit, Input, ViewChild, Output, EventEmitter, AfterViewInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Output, EventEmitter, AfterViewInit, ChangeDetectorRef, OnDestroy, SimpleChanges } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiService } from 'src/app/services/api.service';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -7,6 +7,7 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { chunk } from 'lodash'
 import { takeUntil } from 'rxjs/operators';
 import { forkJoin, Subject } from 'rxjs';
+import * as queryString from 'querystring';
 @Component({
   selector: 'app-send-notify',
   templateUrl: './send-notify.component.html',
@@ -38,7 +39,7 @@ export class SendNotifyComponent implements OnInit, AfterViewInit,OnDestroy {
   action;
   run_act = 0
   ngAfterViewInit(): void {
-    this.initTypeNotify();
+    // this.initTypeNotify();
   }
 
   ngOnDestroy() {
@@ -47,7 +48,16 @@ export class SendNotifyComponent implements OnInit, AfterViewInit,OnDestroy {
   }
 
   ngOnInit(): void {
+    this.getObjectsNotifyTemplate();
   }
+
+  ngOnChanges(changes: SimpleChanges): void {
+
+    // if (this.notify) { 
+    //   this.initTypeNotify();
+    // }
+  }
+
   tempActions = []
   initTypeNotify() {
     this.actions = []
@@ -119,5 +129,20 @@ export class SendNotifyComponent implements OnInit, AfterViewInit,OnDestroy {
       }
     });
   }
+
+  getObjectsNotifyTemplate(){
+    const queryParams = queryString.stringify({ objKey: 'notify_template' });
+    this.apiService.getObjects(queryParams).subscribe(results => {
+      if (results.status === 'success') {
+        this.actions = results.data.map( d => {
+          return {
+            label: d.name, 
+            value: d.value 
+          }
+        })
+      }
+    })
+  }
+
 
 }

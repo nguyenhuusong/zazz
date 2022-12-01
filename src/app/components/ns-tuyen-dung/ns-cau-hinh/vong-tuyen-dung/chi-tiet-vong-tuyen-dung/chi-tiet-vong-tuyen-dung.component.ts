@@ -8,6 +8,8 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as queryString from 'querystring';
 import { CheckHideAction } from 'src/app/common/function-common/common';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import { OrganizeInfoService } from 'src/app/services/organize-info.service';
+import { setOrganizeId } from 'src/app/utils/common/function-common';
 @Component({
   selector: 'app-chi-tiet-vong-tuyen-dung',
   templateUrl: './chi-tiet-vong-tuyen-dung.component.html',
@@ -23,6 +25,7 @@ export class ChiTietVongTuyenDungComponent implements OnInit, OnDestroy {
     { label: 'Lưu lại', value: 'Update', class: CheckHideAction(MENUACTIONROLEAPI.GetPayrollAppInfoPage.url, ACTIONS.EDIT_TINH_LUONG_CAP_BAC_LUONG) ? 'hidden' : '', icon: 'pi pi-check' }
   ];
   titlePage = '';
+  organIdSelected = '';
   @Input() idForm: string = null;
   @Output() detailOut = new EventEmitter<any>();
   constructor(
@@ -30,6 +33,7 @@ export class ChiTietVongTuyenDungComponent implements OnInit, OnDestroy {
     private apiService: ApiHrmService,
     private spinner: NgxSpinnerService,
     private messageService: MessageService,
+    private organizeInfoService: OrganizeInfoService,
     private router: Router
   ) { }
   private readonly unsubscribe$: Subject<void> = new Subject();
@@ -39,11 +43,18 @@ export class ChiTietVongTuyenDungComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.getDetail();
-   
+    
+    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
+      if(results && results.length>0){
+        this.organIdSelected = results;
+        this.getDetail();
+      }
+    });
+
   }
 
   getDetail() {
+    this.listViews = []
     const queryParams = queryString.stringify({roundId: this.idForm});
     this.apiService.getRecruitRoundInfo(queryParams)
       .pipe(takeUntil(this.unsubscribe$))
@@ -51,6 +62,7 @@ export class ChiTietVongTuyenDungComponent implements OnInit, OnDestroy {
         if (results.status === 'success') {
           const listViews = cloneDeep(results.data.group_fields);
           this.listViews = cloneDeep(listViews);
+          this.listViews = setOrganizeId(this.listViews, 'organizeId', this.organIdSelected );
           this.detailInfo = results.data;
         }
       });
