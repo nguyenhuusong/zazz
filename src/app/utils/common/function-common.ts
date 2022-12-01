@@ -628,14 +628,14 @@ export function getFieldValueAggrid(form, fieldName, fieldValue = ''): any {
   return result;
 }
 
-
+// gán tổ chức khi thêm mới từ tổ chức đang được chọn
 export function setOrganizeId(groupFields, field_name, organId) {
   let datas: any = groupFields
   if(datas && datas.length>0 ) {
     datas.forEach( group => {
       group.fields.forEach(field => {
           if(field.field_name === field_name) {
-            field.columnValue = organId
+            field.columnValue = field.columnValue ? field.columnValue : organId;
           }
       });
     });

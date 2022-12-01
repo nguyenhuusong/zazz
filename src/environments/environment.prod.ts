@@ -4,6 +4,7 @@ const host = {
   apiServer: 'https://api.sunshinetech.com.vn',
   apShomeServer: 'https://apiresident.sunshinetech.com.vn',
   apiCoreServer: 'https://apicore.sunshinetech.com.vn',
+  apiHrmConfig: 'https://dev.api.hrmconfig.unicloudgroup.com.vn',
   apiHrmServer: 'https://apihrm.sunshinetech.com.vn',
   uploadServer: 'https://data.sunshinegroup.vn/api/v1/FileHandler',
   // cloudFunction: 'https://us-central1-sunshine-super-app.cloudfunctions.net' //dev
@@ -44,6 +45,7 @@ export const environment = {
   production: true,
   apiBase: host.apiServer,
   apiHrmBase: host.apiHrmServer,
+  apiHrmConfig: host.apiHrmConfig,
   apiShomeBase: host.apShomeServer,
   apiCoreBase: host.apiCoreServer,
   socketServer: host.socketServer,

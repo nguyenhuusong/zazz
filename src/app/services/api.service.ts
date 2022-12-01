@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 const apiBaseUrl = environment.apiBase;
 const apiHrmBase = environment.apiHrmBase;
+const apiHrmConfig = environment.apiHrmConfig;
 const apiCoreBaseUrl = 'https://apicore.sunshinegroup.vn';
 @Injectable()
 export class ApiService {
@@ -223,6 +224,11 @@ export class ApiService {
     return this.http.delete(`${apiHrmBase}/api/v2/menu/DelConfigMenuAction?` + queryParams, this.options);
   }
 
+  // from hrm config
+  clientMenuGetListByUserId(queryParams): Observable<any> {
+    return this.http.get(`${apiHrmConfig}/api/v1/webmanager/ClientMenuGetListByUserId?` + queryParams, this.options);
+  }
+
   // UserRole
   setFunctionsToRole(data): Observable<any> {
     return this.http.post(`${apiHrmBase}/api/v2/userrole/SetFunctionsToRole`, data, this.options);
@@ -245,5 +251,7 @@ export class ApiService {
   getRoleTypes(): Observable<any> {
     return this.http.get(`${apiHrmBase}/api/v2/userrole/GetRoleTypes`, this.options);
   }
+
+  
 }
 

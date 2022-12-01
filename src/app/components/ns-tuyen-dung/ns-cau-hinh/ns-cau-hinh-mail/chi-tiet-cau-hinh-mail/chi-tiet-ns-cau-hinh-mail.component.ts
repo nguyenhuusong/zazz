@@ -8,6 +8,8 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as queryString from 'querystring';
 import { CheckHideAction } from 'src/app/common/function-common/common';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import { OrganizeInfoService } from 'src/app/services/organize-info.service';
+import { setOrganizeId } from 'src/app/utils/common/function-common';
 @Component({
   selector: 'app-chi-tiet-ns-cau-hinh-mail',
   templateUrl: './chi-tiet-ns-cau-hinh-mail.component.html',
@@ -23,7 +25,8 @@ export class NsChiTietCauHinhMailComponent implements OnInit, OnDestroy {
     { label: 'Lưu lại', value: 'Update', class: CheckHideAction(MENUACTIONROLEAPI.GetPayrollAppInfoPage.url, ACTIONS.EDIT_TINH_LUONG_THIET_LAP_THAM_SO) ? 'hidden' : '', icon: 'pi pi-check' }
   ];
   titlePage = '';
-  configData = []
+  configData = [];
+  organIdSelected = '';
   @Input() idForm: string = null;
   @Output() detailOut = new EventEmitter<any>();
   constructor(
@@ -31,6 +34,7 @@ export class NsChiTietCauHinhMailComponent implements OnInit, OnDestroy {
     private apiService: ApiHrmService,
     private spinner: NgxSpinnerService,
     private messageService: MessageService,
+    private organizeInfoService: OrganizeInfoService,
     private router: Router
   ) { }
   private readonly unsubscribe$: Subject<void> = new Subject();
@@ -40,11 +44,17 @@ export class NsChiTietCauHinhMailComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.getDetail();
+    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
+      if(results && results.length>0){
+        this.organIdSelected = results;
+        this.getDetail();
+      }
+    });
    
   }
 
   getDetail() {
+    this.listViews = []
     const queryParams = queryString.stringify({mail_Id: this.idForm});
     this.apiService.getRecruitMailInfo(queryParams)
       .pipe(takeUntil(this.unsubscribe$))
@@ -54,6 +64,7 @@ export class NsChiTietCauHinhMailComponent implements OnInit, OnDestroy {
           this.listViews = cloneDeep(listViews);
           this.detailInfo = results.data;
           this.getConfigData();
+          this.listViews = setOrganizeId(this.listViews, 'organizeId', this.organIdSelected );
         }
       });
   }

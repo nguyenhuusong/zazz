@@ -2056,7 +2056,13 @@ export class ApiHrmService {
   // }
 
   
+  // contract
+  getEmpByContract(query): Observable<any> {
+    return this.http.get(`${apiHrmServer}/api/v2/contract/GetEmpByContract?` + query, this.options);
+  }
   
-  
+  getObjects(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/category/GetObjects?` + queryParams, this.options);
+  }
 
 }

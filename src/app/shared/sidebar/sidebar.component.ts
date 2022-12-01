@@ -125,8 +125,14 @@ export class SidebarComponent implements OnInit {
         this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
             if(results && results.length>0){
              const queryParams = queryString.stringify({ organizeIds: results });
+             const queryMeny = queryString.stringify({ userId: this.authService.getClaims().sub, webId: '70e930b0-ffea-43d3-b3a9-0e6b03f2b433' });
+             this.apiService.getUserMenus(queryParams).subscribe(results => {
+                console.log('menu old', results)
+             })
+            //  this.apiService.clientMenuGetListByUserId(queryMeny).subscribe(results => {
               this.apiService.getUserMenus(queryParams).subscribe(results => {
                    if (results.status === 'success') {
+                    console.log('menu config', results)
                        this.menuItems = results.data;
                        this.convetArry(this.menuItems);
                        if(this.listmenuChecks.length > 0) {
@@ -181,7 +187,7 @@ export class SidebarComponent implements OnInit {
     convetArry(datas) {
         for(let item of datas) {
             this.listmenuChecks.push(item);
-            if(item.submenus.length > 0) {
+            if(item.submenus && item.submenus.length > 0) {
                 this.convetArry(item.submenus);
             }
         }

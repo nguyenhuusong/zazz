@@ -46,7 +46,7 @@ export class QuanHeLaoDongCComponent implements OnInit {
     this.listViewsForm = [];
     this.detailInfo = null;
     const queryParams = queryString.stringify({ empId: this.empId });
-    this.apiService.getEmployeeData('GetEmployeeByContract', queryParams).subscribe(results => {
+    this.apiService.getEmpByContract(queryParams).subscribe(results => {
       if (results.status === 'success') {
         if (!this.codeStaff) {
           this.codeStaff = getFieldValueAggrid(results.data, 'code');
