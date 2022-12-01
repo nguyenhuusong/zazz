@@ -9,6 +9,7 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { CheckHideAction } from 'src/app/common/function-common/common';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
+import { setOrganizeId } from 'src/app/utils/common/function-common';
 
 @Component({
   selector: 'app-chi-tiet-vi-tri-tuyen-dung',
@@ -55,6 +56,7 @@ export class ChiTietViTriTuyenDungComponent implements OnInit, OnDestroy {
   }
   titlePage = '';
   isCopy = false;
+  organIdSelected = '';
   handleParams() {
     this.activatedRoute.queryParamMap
       .pipe(takeUntil(this.unsubscribe$))
@@ -67,7 +69,8 @@ export class ChiTietViTriTuyenDungComponent implements OnInit, OnDestroy {
         }else{
           this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
             if(results && results.length>0){
-              this.getVacancyInfo(results);
+              this.getVacancyInfo();
+              this.organIdSelected = results;
             } 
           });
         }
@@ -87,7 +90,7 @@ export class ChiTietViTriTuyenDungComponent implements OnInit, OnDestroy {
       });
   }
 
-  getVacancyInfo(organId = null) {
+  getVacancyInfo() {
     this.listViews = [];
     const queryParams = queryString.stringify(this.modelEdit);
     this.apiService.getVacancyInfo(queryParams)
@@ -96,15 +99,8 @@ export class ChiTietViTriTuyenDungComponent implements OnInit, OnDestroy {
         if (results.status === 'success') {
           const listViews = cloneDeep(results.data.group_fields);
           this.listViews = [...listViews];
+          this.listViews = setOrganizeId(this.listViews, 'organizeId', this.organIdSelected);
           this.detailInfo = results.data;
-
-          this.listViews.forEach( group => {
-            group.fields.forEach(field => {
-                if(field.field_name === "organizeId") {
-                  field.columnValue = organId
-                }
-            });
-          })
         }
       });
   }

@@ -499,21 +499,16 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
 
   listStatus = []
   getStatus() {
-    this.apiService.getRecruitRoundTitles().subscribe(results => {
+    const queryParams = queryString.stringify({ objKey: 'recruitment_round' });
+    this.apiService.getCustObjectListNew(false, queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.listStatus = results.data.map(d => {
           return {
-            label: d.name,
-            value: d.value
+            label: d.objName,
+            value: d.objValue
           }
         });
         this.listStatus = [{ label: 'Tất cả', value: null }, ...this.listStatus];
-        this.recruitmentStatus = results.data.map(d => {
-          return {
-            label: d.name,
-            value: d.value
-          }
-        });
       }
     })
   }
