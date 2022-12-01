@@ -226,6 +226,8 @@ export function setMembers(element1, datas) {
       });
       
       element1.columnValue = newarray;
+    }else {
+      element1.columnValue = []
     }
   }
 
