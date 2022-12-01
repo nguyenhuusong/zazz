@@ -566,7 +566,7 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
           element.fields.forEach(element1 => {
             if(fields.indexOf(element1.field_name) > -1) {
               if(element1.columnObject) {
-                this.setValue('', element1.field_name)
+                this.setValue(element1.columnType === 'multiSelect' ? [] : '', element1.field_name)
                 const params = element1.columnObject.split("?");
                 let params1 = params[1].split("&");
                 const indexparams1 = params1.findIndex(d => d.includes(`${field_name}=`));
