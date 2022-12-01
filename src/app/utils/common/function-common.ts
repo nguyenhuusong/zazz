@@ -627,3 +627,18 @@ export function getFieldValueAggrid(form, fieldName, fieldValue = ''): any {
   });
   return result;
 }
+
+
+export function setOrganizeId(groupFields, field_name, organId) {
+  let datas: any = groupFields
+  if(datas && datas.length>0 ) {
+    datas.forEach( group => {
+      group.fields.forEach(field => {
+          if(field.field_name === field_name) {
+            field.columnValue = organId
+          }
+      });
+    });
+  }
+  return datas;
+}

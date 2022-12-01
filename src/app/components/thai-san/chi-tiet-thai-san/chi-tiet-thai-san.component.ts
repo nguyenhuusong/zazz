@@ -9,6 +9,7 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
+import { setOrganizeId } from 'src/app/utils/common/function-common';
 
 @Component({
   selector: 'app-chi-tiet-thai-san',
@@ -41,7 +42,8 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
   columnDefDetail = []
   colsDetail = []
   dataDetail = []
-  heightGrid = 300
+  heightGrid = 300;
+  organIdSelected = '';
   constructor(
     private activatedRoute: ActivatedRoute,
     private apiService: ApiHrmService,
@@ -74,8 +76,14 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((params) => {
         this.paramsObject = { ...params.keys, ...params };
-        this.modelEdit.maternityId = this.paramsObject.params.maternityId || null
-        this.getMaternityInfo();
+        this.modelEdit.maternityId = this.paramsObject.params.maternityId || null;
+        this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
+          if(results && results.length>0){
+            this.getMaternityInfo();
+            this.organIdSelected = results;
+          }
+        });
+        
         // this.getChiTietForDsThaiSan();
       });
   };
@@ -121,6 +129,7 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
         if (results.status === 'success') {
           const listViews = cloneDeep(results.data.group_fields);
           this.listViews = [...listViews];
+          this.listViews = setOrganizeId(this.listViews, 'org_cds', this.organIdSelected );
           this.detailInfo = results.data;
           // this.listsDataMaternityPregnancy = [...this.detailInfo.maternityPregnancy || []]
           // this.listsDataMaternityChild = [...this.detailInfo.maternityChild || []]

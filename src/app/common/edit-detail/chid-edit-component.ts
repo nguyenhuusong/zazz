@@ -324,7 +324,6 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
 
 
   ngOnChanges(event) {
-    console.log('a:', cloneDeep(this.element));
     if (event && event.element) {
     }
   }
@@ -1111,7 +1110,6 @@ export class AppTypeMultiSelectComponent implements OnInit {
   
   ) { }
   ngOnInit(): void {
-    console.log( this.modelFields[this.element.field_name])
   }
 
   onChangeValue(value, field_name) {

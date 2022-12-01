@@ -40,12 +40,14 @@ export class NotifyCommentsComponent implements OnInit, OnChanges{
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.notify && this.notify && this.notify.notiId) {
+      this.query.notiId = this.notify ? this.notify.notiId : 0;
       this.getNotificationCommentList();
     }
   }
 
   getNotificationCommentList() {
     let params = {...this.query}
+    console.log('params', params)
     const queryParams = queryString.stringify(params);
     this.apiService.getNotifyCommentList(queryParams).subscribe((res: any) => {
       this.comments = res.data;
