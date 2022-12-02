@@ -102,7 +102,8 @@ export class DsTiemNangComponent implements OnInit {
   heightGrid = 450;
 
   // the value for check disabled 'Chuyển vòng radio'
-  canSttValue = null
+  canSttValue = null;
+  organizeIdSelected = '';
   ngAfterViewChecked(): void {
     const a: any = document.querySelector(".header");
     const b: any = document.querySelector(".sidebarBody");
@@ -287,16 +288,16 @@ export class DsTiemNangComponent implements OnInit {
     this.query.pageSize = event.rows === 4 ? 100000000 : event.rows;
     this.load();
   }
-
   ngOnInit() {
     this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
         if(results && results.length>0){
           this.query.organizeIds = '';
+          this.organizeIdSelected = results;
+          this.getReRound();
           this.listsData = []
           this.load();
         }
     });
-    this.getReRound();
 
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
@@ -378,7 +379,7 @@ export class DsTiemNangComponent implements OnInit {
 
   getReRound() {
     this.recruitmentStatus = []
-    this.apiService.getRecruitRoundTitles().subscribe(results => {
+    this.apiService.getRecruitRoundTitles(queryString.stringify({ organizeIds: this.organizeIdSelected })).subscribe(results => {
       if (results.status === 'success') {
         this.recruitmentStatus = results.data.map(d => {
           return {

@@ -108,9 +108,6 @@ export class ChonLichHopComponent implements OnInit, OnChanges {
         let dayTitle: any = document.createElement('span');
         dayTitle.innerHTML = dayMonth;
         dayTitle.className = day.day() === currentDay ? 'to-day-day' : '';
-        console.log('currentDay', moment(new Date(), 'YYYY/MM/DD').date())
-        console.log('currentDay2', day.date())
-        
         return { domNodes: [
           placeTitle,
           dayTitle

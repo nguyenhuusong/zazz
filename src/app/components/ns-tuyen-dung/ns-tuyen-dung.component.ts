@@ -371,14 +371,16 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     this.query.pageSize = event.rows === 4 ? 100000000 : event.rows;
     this.load();
   }
+  organizeIdSelected = '';
 
   ngOnInit() {
-    this.getReRound();
     this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
         if(results && results.length>0){
           this.query.organizeIds = '';
+          this.organizeIdSelected = results;
           this.listsData = []
           this.load();
+          this.getReRound();
         }
     });
 
@@ -515,7 +517,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
 
   getReRound() {
     this.recruitmentStatus = []
-    this.apiService.getRecruitRoundTitles().subscribe(results => {
+    this.apiService.getRecruitRoundTitles(queryString.stringify({ organizeIds: this.organizeIdSelected })).subscribe(results => {
       if (results.status === 'success') {
         this.recruitmentStatus = results.data.map(d => {
           return {
@@ -546,7 +548,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
 
   getRecruitMailInput() {
     this.isSendMail = true;
-    this.apiService.getRecruitMailInput(queryString.stringify({})).subscribe(results => {
+    this.apiService.getRecruitMailInput(queryString.stringify({organizeIds: this.organizeIdSelected})).subscribe(results => {
       if (results.status === 'success') {
         this.mailsInput = results.data.recruitmentMail.map(d => {
           return {

@@ -473,8 +473,16 @@ export class ThongTinCaNhanComponent implements OnInit {
 
   setFileHSCN(data) {
     this.spinner.show();
+    let theData = data
+    theData.forEach(group => {
+      group.fields.forEach(field => {
+        if(field.field_name === "meta_file_name" && this.fileUpload && this.fileUpload.length > 0) {
+          field.columnValue = this.fileUpload[0].name
+        }
+      });
+    });
     const  params = {
-      ...this.detailInfoPart, group_fields: data
+      ...this.detailInfoPart, group_fields: theData
     };
     this.apiService.empproFileSetEmpAttach(params).subscribe((results: any) => {
       if (results.status === 'success') {
@@ -490,6 +498,10 @@ export class ThongTinCaNhanComponent implements OnInit {
       }
     }, error => {
     });
+  }
+  fileUpload: any = []
+  getFileHSCN(event) {
+    this.fileUpload = event
   }
 
   xoaHSCN(event) {

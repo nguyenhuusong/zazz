@@ -132,7 +132,6 @@ export class SidebarComponent implements OnInit {
             //  this.apiService.clientMenuGetListByUserId(queryMeny).subscribe(results => {
               this.apiService.getUserMenus(queryParams).subscribe(results => {
                    if (results.status === 'success') {
-                    console.log('menu config', results)
                        this.menuItems = results.data;
                        this.convetArry(this.menuItems);
                        if(this.listmenuChecks.length > 0) {

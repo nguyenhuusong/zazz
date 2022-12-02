@@ -588,6 +588,7 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
         }
       }
     }
+    console.log('this.dataView sfdsf dsf dsf dsf', this.dataView)
   }
 
   FnCallApi(promissall) {
@@ -1536,7 +1537,7 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
           const uploadTask = storageRef.child(`s-hrm/images/${getTime}-${event.currentFiles[index].name}`).put(event.currentFiles[index]);
           uploadTask.on('state_changed', (snapshot) => {
           }, (error) => {
-            console.log('1', error)
+            console.log('error', error)
           }, () => {
             uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
               if(!this.isUploadMultiple){
@@ -1700,7 +1701,9 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
       private messageService: MessageService,
     ) { }
     ngOnInit(): void {
-      this.modelFields[this.element.field_name].error = false;
+      if(this.modelFields[this.element.field_name] && this.modelFields[this.element.field_name].err) {
+        this.modelFields[this.element.field_name].error = false;
+      }
       this.getSelectMembers();
     }
 
@@ -2026,7 +2029,9 @@ export class AppTypelistMch implements OnInit {
     if(this.element.columnValue){
       this.element.columnValue = this.element.columnValue.split(",");
     }
-    this.modelFields[this.element.field_name].error = false;
+    if(this.modelFields[this.element.field_name] && this.modelFields[this.element.field_name].err) {
+      this.modelFields[this.element.field_name].error = false;
+    }
   }
 
   deleteTimeNoti(index) {

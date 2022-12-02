@@ -830,7 +830,7 @@ export class ApiHrmService {
   }
 
   getRecruitMailInput(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetRecruitMailInput`, this.options)
+    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetRecruitMailInput?` + queryParams, this.options)
   }
 
   sendRecruitMail(data = null): Observable<any> {
@@ -1891,8 +1891,8 @@ export class ApiHrmService {
   delRecruitRoundInfo(queryParams): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v1/recruitment/DelRecruitRoundInfo?${queryParams}`, this.options)
   }
-  getRecruitRoundTitles(): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetRecruitRoundTitles`, this.options)
+  getRecruitRoundTitles(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetRecruitRoundTitles?` + queryParams, this.options)
   }
 
   // nguon tuyen dung

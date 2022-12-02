@@ -217,8 +217,6 @@ export function setMembers(element1, datas) {
     element1.options = cloneDeep(datas);
     if (element1.columnValue) {
       let newarray = [];
-      console.log("element1.options",element1.options)
-      console.log("element1.columnValue",element1.columnValue)
       element1.options.forEach(element => {
         if (element1.columnValue && element1.columnValue.split(",").indexOf(element.value) > -1) {
           newarray.push(element.value.toString());

@@ -1,5 +1,5 @@
 
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { cloneDeep } from 'lodash';
 import { MessageService } from 'primeng/api';
@@ -7,6 +7,7 @@ import { flatMap, Subject, takeUntil } from 'rxjs';
 import { AgGridFn } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-chi-tiet-lich-hop',
@@ -24,6 +25,7 @@ export class ChiTietLichHopComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private messageService: MessageService,
     private router: Router,
+    private changeDetector: ChangeDetectorRef,
     private spinner: NgxSpinnerService,
   ) { }
   displayScreemForm = false;
@@ -199,7 +201,8 @@ export class ChiTietLichHopComponent implements OnInit, OnDestroy {
       this.listViews.forEach(element => {
         element.fields.forEach(async element1 => {
           if (element1.field_name === 'meet_at') {
-            element1.columnValue = new Date(event.meet_at)
+            // element1.columnValue = new Date(event.meet_at)
+            element1.columnValue = moment(event.meet_at).format('DD/MM/YYYY')
           } else if (element1.field_name === 'meet_start') {
             const newMeeStart = `${event.meet_at} ${event.meet_start}`
             element1.columnValue = event.meet_start
@@ -208,7 +211,10 @@ export class ChiTietLichHopComponent implements OnInit, OnDestroy {
           }
         });
       });
+      // this.listViews = [...this.listViews]
+      console.log('this.listViews', this.listViews)
     }
+    // this.changeDetector.detectChanges();
   }
 
   addMoreTime() {
