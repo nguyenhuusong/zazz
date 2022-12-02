@@ -269,8 +269,13 @@ export class ChuyenMonComponent implements OnInit {
 
   EducationDelete(event) {
     this.vitri = 1;
-    this.trainId = event.rowData.metaId
-    this.delTrainFile()
+    const queryParams = queryString.stringify({ qualId: event.rowData.qualId });
+    this.apiService.delEmpEducation(queryParams).subscribe(results => {
+      if (results.status === 'success') {
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
+        this.getEducationPage();
+      }
+    })
   }
 
   TrainningDelete(event) {
@@ -310,10 +315,10 @@ export class ChuyenMonComponent implements OnInit {
   trainId = null;
   vitri = 0
   EducationView(event) {
-    this.trainId = event.rowData.metaId;
+    this.trainId = event.rowData.qualId;
     this.vitri = 1;
     this.titleEmpTrain = 'Thông tin quá trình học vấn';
-    this.getTrainFile()
+    this.GetEmpEducation(this.trainId)
   }
 
   TrainningView(event) {
@@ -431,10 +436,10 @@ export class ChuyenMonComponent implements OnInit {
     })
   }
 
-  AddEducation() {
+  GetEmpEducation(qualId) {
     this.spinner.show();
-    const queryParams = queryString.stringify({ empId: this.empId });
-    this.apiService.addEducation(queryParams).subscribe(result => {
+    const queryParams = queryString.stringify({ empId: this.empId, qualId: this.detailEmpTrainInfo ? this.detailEmpTrainInfo.qualId : qualId });
+    this.apiService.getEmpEducation(queryParams).subscribe(result => {
       if (result.status === 'success') {
         this.listViewsEmpTrain = result.data.group_fields;
         this.detailEmpTrainInfo = result.data;
@@ -498,6 +503,24 @@ export class ChuyenMonComponent implements OnInit {
         ...this.detailEmpTrainInfo, group_fields: data
       }
       this.apiService.setEmpWorked(params).subscribe((results: any) => {
+        if (results.status === 'success') {
+          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
+          this.getEmpWorkedPage();
+          this.spinner.hide();
+        } else {
+          this.spinner.hide();
+          this.messageService.add({
+            severity: 'error', summary: 'Thông báo', detail: results.message
+          });
+        }
+      }, error => {
+      });
+    }else if(this.vitri === 1) {
+      this.spinner.show();
+      const params = {
+        ...this.detailEmpTrainInfo, group_fields: data
+      }
+      this.apiService.setEmpEducation(params).subscribe((results: any) => {
         if (results.status === 'success') {
           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
           this.getEmpWorkedPage();
@@ -658,10 +681,10 @@ export class ChuyenMonComponent implements OnInit {
     this.GetEmpWorked()
   }
 
-  addEducation() {
+  AddEducation() {
     this.vitri = 1;
     this.titleEmpTrain = 'Thêm mới thông tin quá trình học vấn';
-    this.AddEducation()
+    this.GetEmpEducation(null)
   }
 
   addTraining() {

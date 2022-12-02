@@ -1935,11 +1935,20 @@ export class ApiHrmService {
   addEducation(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/employeetrain/AddEducation?` + queryParams, this.options)
   }
+  getEmpEducation(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/employeetrain/GetEmpEducation?` + queryParams, this.options)
+  }
   getTrainningPage(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/employeetrain/GetTrainningPage?` + queryParams, this.options)
   }
   addTraining(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/employeetrain/AddTraining?` + queryParams, this.options)
+  }
+  delEmpEducation(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/employeetrain/DelEmpEducation?` + queryParams, this.options)
+  }
+  setEmpEducation(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/employeetrain/SetEmpEducation` ,queryParams, this.options)
   }
   getSkillPage(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/employeetrain/GetSkillPage?` + queryParams, this.options)

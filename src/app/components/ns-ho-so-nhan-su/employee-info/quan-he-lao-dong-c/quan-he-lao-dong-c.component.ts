@@ -31,7 +31,7 @@ export class QuanHeLaoDongCComponent implements OnInit {
     this.getEmployeeInfo();
     this.getContractPageByEmpId();
     this.getSalaryInfoPageByEmpId();
-
+    this.getEmpDependentPage();
   }
   optionsButtonsView = [
     { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-save' },
@@ -43,7 +43,7 @@ export class QuanHeLaoDongCComponent implements OnInit {
   getEmployeeInfo(): void {
     this.spinner.show();
     this.listViews = [];
-    this.listViewsForm = [];
+    // this.listViewsForm = [];
     this.detailInfo = null;
     const queryParams = queryString.stringify({ empId: this.empId });
     this.apiService.getEmpByContract(queryParams).subscribe(results => {
@@ -52,7 +52,7 @@ export class QuanHeLaoDongCComponent implements OnInit {
           this.codeStaff = getFieldValueAggrid(results.data, 'code');
         }
         this.listViews = cloneDeep(results.data.group_fields || []);
-        this.listViewsForm = cloneDeep(results.data.group_fields || []);
+        // this.listViewsForm = cloneDeep(results.data.group_fields || []);
         this.detailInfo = results.data;
         this.spinner.hide();
       }
@@ -90,6 +90,8 @@ export class QuanHeLaoDongCComponent implements OnInit {
   reloadGetEmpTrainPage() {
     if(this.gridKeyForm.index === 0) {
       this.getContractPageByEmpId();
+    }else  if(this.gridKeyForm.index === 2) {
+      this.getEmpDependentPage();
     }else {
       this.getSalaryInfoPageByEmpId();
     }
@@ -149,11 +151,12 @@ export class QuanHeLaoDongCComponent implements OnInit {
     index: 0,
     gridKey: ''
   }
+  gridKey2 = '';
   displaySetting = false;
   CauHinh(type) {
     this.gridKeyForm = {
       index : type,
-      gridKey: type === 0 ? this.gridKey : this.gridKey1
+      gridKey: type === 0 ? this.gridKey : type === 2 ? this.gridKey2 :this.gridKey1
     }
     this.displaySetting = true;
   }
@@ -284,6 +287,141 @@ export class QuanHeLaoDongCComponent implements OnInit {
       }
     })
   }
+
+  // thông tin người phụ thuộc
+  titleForm = '';
+  vitri = 0;
+  idFrom = null;
+  detailFormInfo = null;
+  displayFormEditDetail = false
+  addEmpDependent() {
+    this.titleForm = 'Thêm người thân';
+    this.vitri = 0;
+    this.idFrom = null;;
+    this.getEmpDependent()
+  }
+
+  getEmpDependent() {
+    const queryParams = queryString.stringify({ empId: this.detailInfo.empId, dependentId: this.idFrom });
+    this.listViewsForm = [];
+    this.apiService.getEmpDependent(queryParams).subscribe(results => {
+      if (results.status === 'success') {
+        this.listViewsForm = cloneDeep(results.data.group_fields);
+        this.detailFormInfo = results.data;
+        this.displayFormEditDetail = true;
+      }
+    })
+
+  }
+
+  ViewForm(event) {
+    this.titleForm = 'Chỉnh sửa thông tin người phụ thuộc';
+    this.vitri = 0;
+    this.idFrom = event.rowData.dependentId;
+    this.getEmpDependent()
+  }
+
+  DeleteDependent(event) {
+    this.confirmationService.confirm({
+      message: 'Bạn có chắc chắn muốn xóa người phụ thuộc này?',
+      accept: () => {
+        const queryParams = queryString.stringify({ dependentId: event.rowData.dependentId });
+        this.apiService.delEmpDependent(queryParams).subscribe((results: any) => {
+          if (results.status === 'success') {
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa người phụ thuộc thành công' });
+            this.getEmpDependentPage();
+          } else {
+            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+          }
+        });
+      }
+    });
+  }
+  columnDefs2 = [];
+  listsData2 = [];
+  getEmpDependentPage() {
+    this.spinner.show();
+    this.columnDefs = [];
+    const queryParams = queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 });
+    this.apiService.getEmpDependentPage(queryParams).subscribe(repo => {
+      if (repo.status === 'success') {
+        this.spinner.hide();
+        if (repo.data.dataList.gridKey) {
+          this.gridKey2 = repo.data.dataList.gridKey;
+        }    this.columnDefs2 = [
+          ...AgGridFn(repo.data.gridflexs || []),
+          {
+            headerName: '',
+            field: 'gridflexdetails1',
+            cellClass: ['border-right', 'no-auto'],
+            pinned: 'right',
+            width: 70,
+            cellRenderer: 'buttonAgGridComponent',
+            cellRendererParams: params => {
+              return {
+                buttons: [
+                  {
+                    onClick: this.ViewForm.bind(this),
+                    label: 'Xem chi tiêt',
+                    icon: 'fa fa-edit edittingg',
+                    key: 'xemchitietlienhe',
+                    class: 'btn-primary mr-1',
+                  },
+                  {
+                    onClick: this.DeleteDependent.bind(this),
+                    label: 'Xóa',
+                    icon: 'pi pi-trash',
+                    key: 'xoa-nguoi-phu-thuoc',
+                    class: 'btn-danger',
+                  },
+                ]
+              };
+            },
+          }];
+          this.listsData2 = repo.data.dataList.data || [];
+
+      } else {
+        this.spinner.hide();
+      }
+    })
+  }
+
+  setFormInfo(event) {
+    const param = {
+      ...this.detailFormInfo, group_fields: event
+    }
+    this.spinner.show();
+    if(this.vitri === 0) {
+      this.apiService.setEmpDependent(param).subscribe(results => {
+        if (results.status === 'success') {
+          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thêm mới thành công' });
+          this.displayFormEditDetail = false;
+          this.getEmployeeInfo();
+          this.getEmpDependentPage();
+          this.spinner.hide();
+        } else {
+          this.spinner.hide();
+          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
+        }
+      })
+    }
+  }
+
+  optionsButtonsPopup = [
+    { label: 'Bỏ qua', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
+    { label: 'Xác nhận', value: 'Update', class: 'btn-accept' }
+  ]
+ 
+  cancelFormInfo(event) {
+    if(event === 'Cancel') {
+      this.displayFormEditDetail = false
+    }else {
+      this.getEmpDependent();
+    }
+  }
+
+
+
 
 
 

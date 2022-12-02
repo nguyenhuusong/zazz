@@ -86,11 +86,33 @@
                                     </div>
                                     <ng-template pTemplate="footer">
                                         <!-- <p-button label="Thêm mới" icon="pi pi-plus" (click)="addTimeWork()" styleClass="p-button-sm mr-1"></p-button> -->
-                                        <p-button label="Cấu hình" icon="pi pi-cog" (click)="CauHinh(0)" styleClass="p-button-sm"></p-button>
+                                        <p-button label="Cấu hình" icon="pi pi-cog" (click)="CauHinh(1)" styleClass="p-button-sm"></p-button>
                                     </ng-template>
                                 </p-panel>
                             </div>
                         </div> 
+                        <p-divider></p-divider>
+                        <div class="grid wrap-edit-detail">
+                            <div class="col-12 border-section ">
+                                <p-panel header="Thông tin người phụ thuộc">
+                                    <div class="row" style="flex-wrap: wrap">
+                                        <div class="grid-default border">
+                                            <app-list-grid-angular 
+                                                [domLayout]="'autoHeight'" 
+                                                [idGrid]="'ttnguoithan'"
+                                                *ngIf="columnDefs2.length > 0" 
+                                                [title]="'Chứng chỉ'"
+                                                [listsData]="listsData2" [columnDefs]="columnDefs2"></app-list-grid-angular>
+                                            </div>
+                                    </div>
+                                    <ng-template pTemplate="footer">
+                                        <p-button label="Thêm mới" icon="pi pi-plus" (click)="addEmpDependent()" styleClass="p-button-sm mr-1"></p-button>
+                                        <p-button label="Cấu hình" icon="pi pi-cog" (click)="CauHinh(2)" styleClass="p-button-sm"></p-button>
+                                    </ng-template>
+                                </p-panel>
+                            </div>
+                        </div> 
+
                     </div>
 
                 </div>
@@ -130,6 +152,17 @@
         <p-button icon="pi pi-times" (click)="displayApproveContract= !displayApproveContract" label="Hủy"
             styleClass="p-button-secondary p-button-sm"></p-button>
     </ng-template>
+</p-dialog>
+
+
+<p-dialog styleClass="popup-btngroup-edit-detail" [(visible)]="displayFormEditDetail" [draggable]="false"  [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '800px', height: 'auto'}">
+    <p-header>
+        {{titleForm}}
+    </p-header>
+    <app-edit-detail [optionsButtonsEdit]="optionsButtonsPopup" *ngIf="listViewsForm.length> 0 && detailFormInfo" [detailInfo]="detailInfo"
+        [detail]="detailFormInfo" [manhinh]="'Edit'" [thongtinnhanvienNew]="true"
+        [dataView]="listViewsForm" (callback)="setFormInfo($event)"
+        (callbackcancel)="cancelFormInfo($event)"></app-edit-detail>
 </p-dialog>
 
 <p-dialog header="Cài đặt cấu hình " [appendTo]="'body'" [focusTrap]="false" styleClass="popup-setting" (onHide)="reloadGetEmpTrainPage()" [(visible)]="displaySetting" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
