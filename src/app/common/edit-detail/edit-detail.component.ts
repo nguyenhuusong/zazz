@@ -301,7 +301,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
 
           }
         }else if( data.columnType === 'chips') {
-          data.columnValue = data.columnValue.toString();
+          data.columnValue = data.columnValue ? data.columnValue.toString() : '' ;
         }else if(data.columnType === 'onOff'){
           data.columnValue = data.columnValue ? "1" : "0"
         } else {

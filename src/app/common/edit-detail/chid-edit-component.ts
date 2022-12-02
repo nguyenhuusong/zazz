@@ -588,7 +588,6 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
         }
       }
     }
-    console.log('this.dataView sfdsf dsf dsf dsf', this.dataView)
   }
 
   FnCallApi(promissall) {
