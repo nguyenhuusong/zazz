@@ -14,7 +14,10 @@
                 <span class="value"> {{codeStaff}}</span>
             </li>
         </ul>
-        <app-step-info [detailInfo]="detailInfo" *ngIf="detailInfo"></app-step-info>
+        <div>
+            <app-step-info [detailInfo]="detailInfo" *ngIf="detailInfo"></app-step-info>
+        </div>
+        <div></div>
     </div>
     <div class="content page-detail" style="padding: 0;">
         <p-panel styleClass="no-header">

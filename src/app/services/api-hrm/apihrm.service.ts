@@ -399,10 +399,7 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiCore}/api/v1/coreaccount/SetAccountInfo`, params, this.options)
   }
 
-  setEmpDependent(params): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v2/employee/SetEmpDependent`, params, this.options)
-  }
-  
+ 
   setEmpContact(params): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/employee/SetEmpContact`, params, this.options)
   }
@@ -463,6 +460,11 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v2/contract/GetContractPageByEmpId?` + queryParams, this.options)
   }
 
+  setEmpDependent(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/contract/SetEmpDependent`, params, this.options)
+  }
+  
+
   setContractStatus(params): Observable<any> {
     return this.http.put<any>(`${apiHrmServer}/api/v2/contract/SetContractStatus`, params, this.options)
   }
@@ -491,18 +493,6 @@ export class ApiHrmService {
     return this.http.delete<any>(`${apiHrmServer}/api/v2/employee/DelEmpAttach?` + queryParams, this.options)
   }
   
-  getEmpDependentPage(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v2/employee/GetEmpDependentPage?` + queryParams, this.options)
-  }
-  
-  getEmpDependent(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v2/employee/GetEmpDependent?` + queryParams, this.options)
-  }
-
-  delEmpDependent(queryParams): Observable<any> {
-    return this.http.delete<any>(`${apiHrmServer}/api/v2/employee/DelEmpDependent?` + queryParams, this.options)
-  }
-  
   // delEmpContact(queryParams): Observable<any> {
   //   return this.http.delete<any>(`${apiHrmServer}/api/v2/employee/DelEmpContact?` + queryParams, this.options)
   // }
@@ -518,6 +508,18 @@ export class ApiHrmService {
 
   setRecordInfo(params): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/contract/SetRecordInfo`, params, this.options)
+  }
+
+  getEmpDependentPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/contract/GetEmpDependentPage?` + queryParams, this.options)
+  }
+  
+  getEmpDependent(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/contract/GetEmpDependent?` + queryParams, this.options)
+  }
+
+  delEmpDependent(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/contract/DelEmpDependent?` + queryParams, this.options)
   }
 
   setIncomeTaxStatus(id): Observable<any> {
@@ -2037,6 +2039,10 @@ export class ApiHrmService {
   
   getEmpWorkingPageByEmpId(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/working/GetEmpWorkingPageByEmpId?` +  queryParams, this.options)
+  }
+
+  getEmpProcessPageByEmpId(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/working/GetEmpProcessPageByEmpId?` +  queryParams, this.options)
   }
 
   getEmpWorkJob(queryParams): Observable<any> {

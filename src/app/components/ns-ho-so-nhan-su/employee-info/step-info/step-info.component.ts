@@ -35,7 +35,7 @@ export class StepInfoComponent implements OnInit {
     if (stepS.length > 0) {
       for (let i = 0; i < this.stepsLine.length; i++) {
         if (i <= this.activeIndex) {
-          stepS[i].className += ' active';
+          stepS[i].className += ' p-highlight p-steps-current active';
         } else {
           stepS[i].classList.value = `p-steps-item icon-${i}`;
         }

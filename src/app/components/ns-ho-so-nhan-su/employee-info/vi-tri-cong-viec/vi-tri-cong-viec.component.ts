@@ -35,11 +35,15 @@ export class ViTriCongViecComponent implements OnInit {
   ngOnInit(): void {
     this.getTerminateReasons();
     this.getEmployeeInfo();
+    this.getEmpProcessPageByEmpId();
     this.getEmpWorkingPageByEmpId();
   }
   columnDefs1 = [];
   listsData1 = [];
   gridKey1 = '';
+  columnDefs = [];
+  listsData = [];
+  gridKey = '';
   gridKeyForm = {
     index: 0,
     gridKey: ''
@@ -49,15 +53,64 @@ export class ViTriCongViecComponent implements OnInit {
   CauHinh(type) {
     this.gridKeyForm = {
       index: type,
-      gridKey: this.gridKey1
+      gridKey: type === 0 ? this.gridKey1 : this.gridKey1
     }
     this.displaySetting = true;
   }
 
   reloadGetEmpProfilePage() {
-    this.getEmpWorkingPageByEmpId();
+    this.gridKeyForm.index === 0 ? this.getEmpProcessPageByEmpId() : this.getEmpWorkingPageByEmpId();
   }
 
+  getEmpProcessPageByEmpId() {
+    this.spinner.show();
+    this.columnDefs = [];
+    const queryParams = queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 });
+    this.apiService.getEmpProcessPageByEmpId(queryParams).subscribe(repo => {
+      if (repo.status === 'success') {
+        if (repo.data.dataList.gridKey) {
+          this.gridKey = repo.data.dataList.gridKey;
+        }
+        this.spinner.hide();
+        this.columnDefs = [
+          ...AgGridFn(repo.data.gridflexs || []),
+          {
+            headerName: '',
+            field: 'gridflexdetails1',
+            cellClass: ['border-right', 'no-auto'],
+            pinned: 'right',
+            width: 70,
+            cellRenderer: 'buttonAgGridComponent',
+            cellRendererParams: params => {
+              return {
+                buttons: [
+                  // {
+                  //   onClick: this.editRow.bind(this),
+                  //   label: 'Xem chi tiết',
+                  //   icon: 'fa fa-edit editing',
+                  //   key: 'view-job-detail',
+                  //   class: 'btn-primary mr5',
+                  // },
+
+                  // {
+                  //   onClick: this.deleteRow.bind(this),
+                  //   label: 'Xóa',
+                  //   icon: 'pi pi-trash',
+                  //   key: 'delete-qua-trinh-hop-dong',
+                  //   class: 'btn-danger',
+                  // },
+                ]
+              };
+            },
+          }
+        ];
+        this.listsData = repo.data.dataList.data || [];
+
+      } else {
+        this.spinner.hide();
+      }
+    })
+  }
   getEmpWorkingPageByEmpId() {
     this.spinner.show();
     this.columnDefs1 = [];
@@ -81,7 +134,7 @@ export class ViTriCongViecComponent implements OnInit {
               return {
                 buttons: [
                   {
-                    onClick: this.editRow.bind(this),
+                    onClick: this.editRowTimeWork.bind(this),
                     label: 'Xem chi tiết',
                     icon: 'fa fa-edit editing',
                     key: 'view-job-detail',
@@ -109,7 +162,8 @@ export class ViTriCongViecComponent implements OnInit {
     })
   }
 
-  editRow(event) {
+  editRowTimeWork(event) {
+    this.vitri = 1;
     this.addTimeWork(event.rowData.empId, event.rowData.gd);
   }
 
@@ -315,11 +369,19 @@ export class ViTriCongViecComponent implements OnInit {
       this.displayDialog = false;
     }
   }
-
+  vitri = 0;
   addTimeWork(empId = this.detailInfo.empId, gd = null) {
+    this.vitri = 1;
     const queryParams = queryString.stringify({ empId: empId, gd: gd });
     this.getEmpWorking(queryParams);
   }
+  addProcess(empId = this.detailInfo.empId, gd = null) {
+    this.vitri = 0;
+    const queryParams = queryString.stringify({ empId: empId, gd: gd });
+    // this.getEmpWorking(queryParams);
+  }
+
+
   listViewsDetail = [];
   dataDetailInfo = [];
   displayFormEditDetail = false;;
@@ -344,20 +406,23 @@ export class ViTriCongViecComponent implements OnInit {
   }
 
   setDetailInfo(data) {
-    const param = {
-      ...this.dataDetailInfo, group_fields: data
-    }
-    this.apiService.setEmpWorking(param).subscribe(results => {
-      if (results.status === 'success') {
-        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thêm mới thành công' });
-        this.displayFormEditDetail = false;
-        this.getEmpWorkingPageByEmpId();
-        this.spinner.hide();
-      } else {
-        this.spinner.hide();
-        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
+    if(this.vitri === 1) {
+      const param = {
+        ...this.dataDetailInfo, group_fields: data
       }
-    })
+      this.apiService.setEmpWorking(param).subscribe(results => {
+        if (results.status === 'success') {
+          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thêm mới thành công' });
+          this.displayFormEditDetail = false;
+          this.getEmpWorkingPageByEmpId();
+          this.spinner.hide();
+        } else {
+          this.spinner.hide();
+          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
+        }
+      })
+    }
+  
   }
 }
 
