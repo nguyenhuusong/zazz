@@ -1930,7 +1930,7 @@ export class ApiHrmService {
     return this.http.delete<any>(`${apiHrmServer}/api/v2/employeetrain/DelEmpWorked?${queryParams}`, this.options)
   }
   getEducationPage(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v2/employeetrain/GetEducationPage?` + queryParams, this.options)
+    return this.http.get<any>(`${apiHrmServer}/api/v2/employeetrain/GetEmpEducationPage?` + queryParams, this.options)
   }
   addEducation(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/employeetrain/AddEducation?` + queryParams, this.options)
