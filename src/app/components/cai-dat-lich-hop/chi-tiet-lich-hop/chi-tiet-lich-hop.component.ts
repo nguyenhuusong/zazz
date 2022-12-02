@@ -76,6 +76,7 @@ export class ChiTietLichHopComponent implements OnInit, OnDestroy {
   };
 
   getMeetingInfo(): void {
+    console.log('fjdosfjiodsfji')
     this.listViews = [];
     this.listsData = [];
     this.apiService.getMeetingInfo(`?meet_ud=${this.meet_ud || ''}`).subscribe(results => {
@@ -143,6 +144,7 @@ export class ChiTietLichHopComponent implements OnInit, OnDestroy {
   }
 
   setMeetRoomInfo(data): void {
+    
     this.spinner.show();
     const params = {
       ...this.detailInfo, group_fields: data, members: this.listsData
@@ -194,12 +196,14 @@ export class ChiTietLichHopComponent implements OnInit, OnDestroy {
   }
 
   theDateChoosed(event){
+    let dataTem = cloneDeep(this.listViews);
+    this.listViews = []
     this.showChooseCalander = false;
     if(!event){
       this.showChooseCalander = false;
     }else{
-      this.listViews.forEach(element => {
-        element.fields.forEach(async element1 => {
+      dataTem.forEach(element => {
+        element.fields.forEach(element1 => {
           if (element1.field_name === 'meet_at') {
             // element1.columnValue = new Date(event.meet_at)
             element1.columnValue = moment(event.meet_at).format('DD/MM/YYYY')
@@ -211,8 +215,7 @@ export class ChiTietLichHopComponent implements OnInit, OnDestroy {
           }
         });
       });
-      // this.listViews = [...this.listViews]
-      console.log('this.listViews', this.listViews)
+      this.listViews = [...dataTem]
     }
     // this.changeDetector.detectChanges();
   }

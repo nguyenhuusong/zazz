@@ -24,12 +24,12 @@
             <p-tabPanel header="Chuyên Môn">
                 <app-chuyen-mon [empId]="empId" *ngIf="tabIndex ===4"></app-chuyen-mon>
             </p-tabPanel>
-            <p-tabPanel header="Tiện ích">
+            <p-tabPanel header="Thông tin khác">
                 <app-tien-ich [empId]="empId" *ngIf="tabIndex ===5"></app-tien-ich>
             </p-tabPanel>
-          <p-tabPanel header="Quản lý tài khoản">
+          <!-- <p-tabPanel header="Quản lý tài khoản">
                 <app-quan-ly-tai-khoan [empId]="empId" *ngIf="tabIndex ===6"></app-quan-ly-tai-khoan>
-            </p-tabPanel>
+            </p-tabPanel> -->
         </p-tabView>
     </section>
    
