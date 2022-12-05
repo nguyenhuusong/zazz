@@ -107,7 +107,11 @@ export class ContractDetailComponent implements OnInit {
       ...this.detailInfo, group_fields: data, flow_st: data.type === 'Update' ?  this.activeIndex + 1 : this.activeIndex
     }
     this.callApiInfo(params)
-
+    if(data.type !== 'Submit') {
+      setTimeout(() => {
+        this.callback.emit();
+      }, 200);
+    }
   }
 
 
@@ -138,7 +142,7 @@ export class ContractDetailComponent implements OnInit {
           if(results.data.submit_st) {
             this.optionsButon = [
               { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
-              { label: 'Trình duyệt', value: 'SaveNhap', class: '', icon: 'pi pi-save' },
+              { label: 'Trình duyệt', value: 'Submit', class: '', icon: 'pi pi-save' },
             ];
           }else {
             this.optionsButon = [
@@ -176,12 +180,21 @@ export class ContractDetailComponent implements OnInit {
           this.optionsButon = [
             { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
             { label: 'Tiếp tục', value: 'Update', class: '', icon: 'pi pi-save' },
+            { label: 'Lưu tạm', value: 'SaveNhap', class: '', icon: 'pi pi-save' },
           ];
         }else {
-          this.optionsButon = [
-            { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
-            { label: 'Tiếp tục', value: 'Update', class: '', icon: 'pi pi-save' },
-          ];
+          if(results.data.submit_st) {
+            this.optionsButon = [
+              { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
+              { label: 'Trình duyệt', value: 'SaveNhap', class: '', icon: 'pi pi-save' },
+            ];
+          }else {
+            this.optionsButon = [
+              { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
+              { label: 'Tiếp tục', value: 'Update', class: '', icon: 'pi pi-save' },
+              { label: 'Lưu tạm', value: 'SaveNhap', class: '', icon: 'pi pi-save' },
+            ];
+          }
         }
         this.steps = results.data.flowStatuses.map(d => {
           return {

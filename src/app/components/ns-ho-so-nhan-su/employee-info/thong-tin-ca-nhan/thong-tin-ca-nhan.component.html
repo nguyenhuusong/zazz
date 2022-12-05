@@ -54,9 +54,9 @@
                                         <div class="grid-default border">
                                             <app-list-grid-angular 
                                                 [idGrid]="'giaytotuythan'"
-                                                [height]="260" 
+                                                [domLayout]="'autoHeight'" 
                                                 *ngIf="columnDefs1.length > 0" 
-                                                [heightRow]="200"
+                                                [heightRow]="100"
                                                 [title]="'Chứng chỉ'"
                                                 (showConfig)="CauHinh(1)"
                                                 [listsData]="listsData1" [columnDefs]="columnDefs1"></app-list-grid-angular>
@@ -205,7 +205,7 @@
 </p-dialog>
 
 <p-dialog [(visible)]="isEditDetail" [autoZIndex]="true" [modal]="true"  appendTo="body"
-    [style]="{width: '1600px', height: 'auto'}">
+    [style]="{width: '1300px', height: 'auto'}">
     <p-header>
         Sửa thông tin cá nhân
     </p-header>

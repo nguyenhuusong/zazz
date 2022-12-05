@@ -220,7 +220,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
 
 
   onChangeButtonEdit(event) {
-    if (event === 'Update' || event === 'SaveNhap') {
+    if (event === 'Update' || event === 'SaveNhap' ||  event === 'Submit') {
       this.submit = true;
       for (let item in this.modelFields) {
         if (this.modelFields[item].error) {
@@ -314,7 +314,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
 
       })
     });
-    if (type === 'Update' || type === 'SaveNhap') {
+    if (type === 'Update' || type === 'SaveNhap' ||  type === 'Submit' ) {
       this.callback.emit({...group_fields, type: type});
     } else {
       this.callback1.emit(group_fields);
