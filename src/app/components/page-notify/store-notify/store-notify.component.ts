@@ -179,13 +179,13 @@ export class StoreNotifyComponent implements OnInit, OnChanges {
   }
 
   getOrganizeTree(value): void {
-    console.log(this.perent_id)
     const queryParams = queryString.stringify({ parentId: this.perent_id });
     this.apiService.getOrganizeTree(queryParams)
       .subscribe((results: any) => {
         if (results && results.status === 'success') {
           this.departmentFiltes = results.data || [];
         }
+        this.sub_prod_cd = null
       },
         error => { });
   }
@@ -222,6 +222,7 @@ export class StoreNotifyComponent implements OnInit, OnChanges {
   }
 
   getUserByPush() {
+    this.columnDefs = []
     const params = {
       "organizeId": this.perent_id,
       "orgIds": this.danhsachphongban,
@@ -255,6 +256,7 @@ export class StoreNotifyComponent implements OnInit, OnChanges {
           appUsers: this.appUsers
         };
         this.storePushList(saveData)
+        console.log('saveData', saveData)
       }else {
         const saveData = {
           // notiId: this.notify.notiId,
@@ -262,7 +264,9 @@ export class StoreNotifyComponent implements OnInit, OnChanges {
           appUsers: this.appUsers
         };
         this.reload.emit(saveData)
+        console.log('saveData2', saveData)
       }
+      console.log('this.isNotifi', this.isNotifi)
     
     }else {
       this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Chưa chọn bản ghi nào !' });

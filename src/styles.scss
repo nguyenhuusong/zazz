@@ -3240,36 +3240,72 @@ div.p-organizationchart {
 }
 .status-line{
     .p-steps-item{
-        float: left;
-        &:after,
-        &::before{
-            display: none;
-        }
+        width: 20%;
+        min-width: 140px;
+        text-align: center;
+        flex-direction: unset !important;
+        flex: none !important;
+        display: block;
         .p-steps-title{
-                color: #465373;
-                line-height: 20px;
-                font-family: $fontRegular;
-                font-weight: 400;
-                font-size: 13px;
-                line-height: 20px;
+            color: #465373;
+            line-height: 20px;
+            font-family: $fontRegular;
+            font-weight: 400;
+            font-size: 13px;
+            line-height: 20px;
+            padding-left: 0px !important;
+            white-space: break-spaces;
         }
         .p-menuitem-link{
             display: block;
             .p-steps-number{
                 display: block;
-                width: auto;
-                height: auto;
+                width: 24px;
+                height: 24px;
+                text-align: center;
                 line-height: 23px;
+                margin: auto;
+                margin-bottom: 5px;
                 min-width: 0px;
-                background: none;
+                color: #9099AF;
+                font-family: $fontMmedium;
+                font-weight: 500;
+                font-size: 16px;
+                position: relative;
+                background: #E8E9ED;
+                border: 1px solid #BDC2CF;
+                margin-bottom: 5px;
             }
+            flex: none;
             // .p-steps-title{
             //     color: #76809B;
             //     font-size: 12px;
             // }
         }
+        &.p-steps-current{
+            .p-steps-number{
+                text-indent: 0;
+                background: #DDEEFF;
+                color: #4C97E4;
+                &::after{
+                    background: none;
+                }
+            }
+            &.active{
+                &::after{
+                    border-top: 2px solid rgba(0, 0, 0, 0.12);
+                }
+            }
+        }
         &.active{
             .p-steps-number {
+                color: #4C97E4;
+                background: #EBFAEF;
+                border: none;
+                background-image: url("data:image/svg+xml,%3Csvg width='15' height='12' viewBox='0 0 15 12' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5.23637 8.5311C5.25904 8.55462 5.29021 8.56789 5.32276 8.56789C5.35532 8.56789 5.38649 8.55462 5.40916 8.5311L13.3483 0.294028C13.7262 -0.0980094 14.3372 -0.0980095 14.7151 0.294028C15.095 0.688176 15.095 1.32873 14.7151 1.72288L6.00614 10.7586C5.62828 11.1506 5.01725 11.1506 4.63939 10.7586L0.284919 6.24074C-0.0949731 5.84659 -0.0949731 5.20604 0.284919 4.81189C0.662779 4.41985 1.27381 4.41985 1.65167 4.81189L5.23637 8.5311Z' fill='%231DA108'/%3E%3C/svg%3E%0A");
+                background-repeat: no-repeat;
+                background-position: center;
+                text-indent: -9999999px;
                 &::after{
                     background-repeat: no-repeat;
                     position: absolute;
@@ -3289,58 +3325,49 @@ div.p-organizationchart {
                 font-weight: 500;
                 font-size: 13px;
                 line-height: 20px;
+                padding-left: 0px;
             }
-        }
-        .p-menuitem-link{
+            &:before{
+                border-top: 2px solid #34C759;
+            }
             &::after{
-                content: " ";
-                display: block;
-                width: 0;
-                height: 0;
-                border-top: 50px solid transparent;
-                border-bottom: 50px solid transparent;
-                border-left: 30px solid #5cb85c;
-                position: absolute;
-                top: 50%;
-                margin-top: -50px;
-                left: 100%;
-                z-index: 2;
-            }
-            &::before{
-                content: " ";
-                display: block !important;
-                width: 0;
-                height: 0;
-                border-top: 50px solid transparent;
-                border-bottom: 50px solid transparent;
-                border-left: 30px solid white;
-                position: absolute;
-                top: 50%;
-                margin-top: -50px;
-                margin-left: 1px;
-                left: 100%;
-                z-index: 1;
+                border-top: 2px solid #34C759;
             }
         }
-        &.p-steps-current{
-            .p-menuitem-link{
-                border-color: #5bc0de!important;
-                color: #fff!important;
-                background: #5bc0de!important;
-                &::after{
-                    border-left: 30px solid #5bc0de!important;
-                }
-            }
-            .p-steps-number{
-                &::after{
-                    background: none;
-                }
-            }
+        &::after{
+            content: '';
+            width: 50%;
+            position: absolute;
+            top: 12px;
+            margin-top: 0;
+            right: 0;
+            width: 50%;
+            border-top: 2px solid rgba(0, 0, 0, 0.12);
+        }
+        &::before{
+            position: absolute;
+            top: 12px;
+            margin-top: 0;
+            left: 0;
+            width: 50%;
+            border-top: 2px solid rgba(0, 0, 0, 0.12);
         }
         text-align: center;
         &:first-child{
-            .p-menuitem-link{
-                padding-left: 15px;
+            &::before{
+                left: 50%;
+                width: 50%;
+                display: none;
+            }
+        }
+        &:last-child{
+            &::before{
+                right: 50%;
+                width: 50%;
+                display: block;
+            }
+            &::after{
+                display: none;
             }
         }
     }
@@ -3348,29 +3375,16 @@ div.p-organizationchart {
         padding-top: 0px;
         padding-bottom: 0px;
         .p-menuitem-link{
-            .p-steps-title{
-                padding-left: 0px;
-                color: #fff
-            }
-            padding: 0px 0 4px 38px;
-            border-color: #5cb85c!important;
-            color: #fff!important;
-            background: #5cb85c!important;
-            border-radius: 0;
-            text-align: left;
-            span{
-                color: #fff;
-            }
+            padding-top: 0px;
+            padding-bottom: 0px;
         }
         ul{
             justify-content: center;
-            border-radius: 5px;
-            overflow: hidden;
-            display: block;
-            padding-right: 30px;
         }
     }
+    // margin-bottom: 20px;
 }
+
 
 .paginator-bottom{
     position: relative;
