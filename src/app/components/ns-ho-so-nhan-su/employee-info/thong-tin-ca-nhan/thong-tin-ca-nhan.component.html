@@ -42,16 +42,18 @@
                                     <ng-template pTemplate="header">
                                         <div class="grid d-flex justify-content-between">
                                             <h3 class="title-section">Giấy tờ tùy thân</h3>
-                                            <p-button label="Cấu hình" styleClass="p-button-sm"></p-button>  
+                                            <p-button label="Thêm mới" icon="pi pi-plus" styleClass="p-button-sm"></p-button>  
                                         </div>
                                     </ng-template>
                                     <div class="row" style="flex-wrap: wrap">
                                         <div class="grid-default border">
                                             <app-list-grid-angular 
                                                 [idGrid]="'giaytotuythan'"
-                                                [domLayout]="'autoHeight'" 
+                                                [height]="260" 
                                                 *ngIf="columnDefs1.length > 0" 
+                                                [heightRow]="200"
                                                 [title]="'Chứng chỉ'"
+                                                (showConfig)="CauHinh(1)"
                                                 [listsData]="listsData1" [columnDefs]="columnDefs1"></app-list-grid-angular>
                                             </div>
                                     </div>
@@ -62,7 +64,13 @@
                         <p-divider></p-divider>
                         <div class="grid wrap-edit-detail">
                             <div class="col-12 border-section " >
-                                <p-panel header="Thông tin hồ sơ cá nhân">
+                                <p-panel>
+                                    <ng-template pTemplate="header">
+                                        <div class="grid d-flex justify-content-between">
+                                            <h3 class="title-section">Thông tin hồ sơ cá nhân</h3>
+                                            <p-button label="Thêm mới" icon="pi pi-plus" (click)="themMoiThongTinHSCN()" styleClass="p-button-sm mr-1"></p-button>
+                                        </div>
+                                    </ng-template>
                                     <div class="row" style="flex-wrap: wrap">
                                         <div class="grid-default border">
                                             <app-list-grid-angular 
@@ -70,19 +78,23 @@
                                                 [idGrid]="'tthscn'"
                                                 *ngIf="columnDefs2.length > 0" 
                                                 [title]="'Chứng chỉ'"
+                                                (showConfig)="CauHinh(2)"
                                                 [listsData]="listsData2" [columnDefs]="columnDefs2"></app-list-grid-angular>
                                             </div>
                                     </div>
-                                    <ng-template pTemplate="footer">
-                                        <p-button label="Thêm mới" icon="pi pi-plus" (click)="themMoiThongTinHSCN()" styleClass="p-button-sm mr-1"></p-button>
-                                    </ng-template>
                                 </p-panel>
                             </div>
                         </div> 
                         <p-divider></p-divider>
                         <div class="grid wrap-edit-detail">
                             <div class="col-12 border-section " >
-                                <p-panel header="Danh sách đính kèm">
+                                <p-panel>
+                                    <ng-template pTemplate="header">
+                                        <div class="grid d-flex justify-content-between">
+                                            <h3 class="title-section">Danh sách đính kèm</h3>
+                                            <p-button label="Thêm mới" icon="pi pi-plus" (click)="themMoiDinhKem()" styleClass="p-button-sm mr-1"></p-button>
+                                        </div>
+                                    </ng-template>
                                     <div class="row" style="flex-wrap: wrap">
                                         <div class="grid-default border">
                                             <app-list-grid-angular 
@@ -90,19 +102,23 @@
                                                 [domLayout]="'autoHeight'" 
                                                 *ngIf="columnDefs3.length > 0" 
                                                 [title]="'Chứng chỉ'"
+                                                (showConfig)="CauHinh(3)"
                                                 [listsData]="listsData3" [columnDefs]="columnDefs3"></app-list-grid-angular>
                                             </div>
                                     </div>
-                                    <ng-template pTemplate="footer">
-                                        <p-button label="Thêm mới" icon="pi pi-plus" (click)="themMoiDinhKem()" styleClass="p-button-sm mr-1"></p-button>
-                                    </ng-template>
                                 </p-panel>
                             </div>
                         </div> 
                         <p-divider></p-divider>
                         <div class="grid wrap-edit-detail">
                             <div class="col-12 border-section " >
-                                <p-panel header="Danh sách thông tin người liên hệ">
+                                <p-panel>
+                                    <ng-template pTemplate="header">
+                                        <div class="grid d-flex justify-content-between">
+                                            <h3 class="title-section">Danh sách thông tin người liên hệ</h3>
+                                            <p-button label="Thêm mới" icon="pi pi-plus" (click)="themLienHe()" styleClass="p-button-sm mr-1"></p-button>
+                                        </div>
+                                    </ng-template>
                                     <div class="row" style="flex-wrap: wrap">
                                         <div class="grid-default border">
                                             <app-list-grid-angular 
@@ -110,12 +126,10 @@
                                                 [domLayout]="'autoHeight'" 
                                                 *ngIf="columnDefs4.length > 0" 
                                                 [title]="'Chứng chỉ'"
+                                                (showConfig)="CauHinh(4)"
                                                 [listsData]="listsData4" [columnDefs]="columnDefs4"></app-list-grid-angular>
                                             </div>
                                     </div>
-                                    <ng-template pTemplate="footer">
-                                        <p-button label="Thêm mới" icon="pi pi-plus" (click)="themLienHe()" styleClass="p-button-sm mr-1"></p-button>
-                                    </ng-template>
                                 </p-panel>
                             </div>
                         </div>
