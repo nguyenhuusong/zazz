@@ -9,6 +9,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { cloneDeep } from 'lodash';
 import { MessageService } from 'primeng/api';
+import { spawn } from 'child_process';
 @Component({
   selector: 'app-list-grid-angular',
   templateUrl: './list-grid-angular.component.html',
@@ -23,6 +24,7 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
   @Output() cellDoubleClicked = new EventEmitter<any>();
   @Output() onCellClicked = new EventEmitter<any>();
   @Output() callback = new EventEmitter<any>();
+  @Output() showConfig = new EventEmitter<any>();
   @Input() columnDefs: Array<any> = [];
   @Input() rowSelection: string = 'single';
   @Input() frameworkComponents = {};
@@ -437,5 +439,16 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
   addRow() {
 
   }
-
+  displaySetting = false;
+  getMainMenuItems=(params)=> {
+    let athleteMenuItems = params.defaultItems.slice(0);
+    athleteMenuItems  = [{
+      name: 'Cấu hình',
+      icon: "<span class='pi pi-cog'></span>",
+      action:  (event) => {
+        this.showConfig.emit();
+      },
+    }, ...athleteMenuItems]
+    return athleteMenuItems;
+  }
 }

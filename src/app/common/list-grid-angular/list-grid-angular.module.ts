@@ -5,6 +5,8 @@ import { NgModule } from '@angular/core';
 import { ListGridAngularComponent } from './list-grid-angular.component';
 import { AgGridModule } from '@ag-grid-community/angular';
 import { ButtonModule } from 'primeng/button';
+import { ConfigGridTableFormModule } from '../config-grid-table-form/config-grid-table-form.module';
+import { DialogModule } from 'primeng/dialog';
 @NgModule({
     declarations: [ListGridAngularComponent],
     imports: [
@@ -13,7 +15,9 @@ import { ButtonModule } from 'primeng/button';
         CommonModule,
         RouterModule,
         AgGridModule,
-        ButtonModule
+        ButtonModule,
+        DialogModule,
+
     ],
     entryComponents: [],
     exports: [
