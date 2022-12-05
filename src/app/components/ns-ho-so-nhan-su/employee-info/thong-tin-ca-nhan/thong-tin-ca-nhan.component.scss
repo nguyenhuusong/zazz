@@ -182,6 +182,12 @@
         border-radius: 4px 4px 0px 0px;
         padding: 17px;
         align-items: center;
+        @media screen and (max-width: 1366px) {
+            padding: 10px;
+            li{
+                font-size: 12px;
+            }
+        }
     }
     li{
         font-size: 14px;
@@ -215,4 +221,19 @@
 
 .chi-tiet-ho-so-nhan-su .page-detail{
     position: static;
+}
+:host::ng-deep{
+    .ag-row{
+        .ag-cell{
+            .ag-cell-wrapper{
+                child-avatar{
+                    div{
+                        img{
+                            width: 100% !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

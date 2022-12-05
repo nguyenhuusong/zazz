@@ -1,25 +1,23 @@
 
 <section>
     <div class="bg-grey base-info-em d-flex middle bet">
-        <div class="d-flex middle">
-            <ul>
-                <li>
-                    <span class="label">Nhân viên:</span>
-                    <span class="value"> {{ detailInfo?.fullName }}</span>
-                </li>
-                <li class="spre"><svg width="1" height="20" viewBox="0 0 1 20" fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <line x1="0.5" x2="0.5" y2="20" stroke="#A3A9B9" />
-                    </svg>
-                </li>
-                <li>
-                    <span class="label">MNV:</span>
-                    <span class="value"> {{codeStaff}}</span>
-                </li>
-            </ul>
-            <div><app-step-info [detailInfo]="detailInfo" *ngIf="detailInfo"></app-step-info></div>
-        </div>
-        <div>
+        <ul class="col-3">
+            <li>
+                <span class="label">Nhân viên:</span>
+                <span class="value"> {{ detailInfo?.fullName }}</span>
+            </li>
+            <li class="spre"><svg width="1" height="20" viewBox="0 0 1 20" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <line x1="0.5" x2="0.5" y2="20" stroke="#A3A9B9" />
+                </svg>
+            </li>
+            <li>
+                <span class="label">MNV:</span>
+                <span class="value"> {{codeStaff}}</span>
+            </li>
+        </ul>
+        <div class="col-6"><app-step-info [detailInfo]="detailInfo" *ngIf="detailInfo"></app-step-info></div>
+        <div class="col-3 text-right">
             <p-button (click)="taohopdong('TaoHopDong')">
                 <svg width="18" height="21" viewBox="0 0 18 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M7.97231 5.18824H3.94521V7.16471H8.68264C8.33591 6.56442 8.0912 5.89765 7.97231 5.18824Z"

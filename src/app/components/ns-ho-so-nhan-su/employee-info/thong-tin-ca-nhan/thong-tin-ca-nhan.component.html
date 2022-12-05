@@ -1,6 +1,6 @@
 <section>
     <div class="bg-grey base-info-em d-flex middle">
-        <ul>
+        <ul class="col-3">
             <li>
                 <span class="label">Nhân viên:</span>
                 <span class="value"> {{ detailInfo?.fullName }}</span>
@@ -14,10 +14,10 @@
                 <span class="value"> {{codeStaff}}</span>
             </li>
         </ul>
-        <div>
+        <div class="col-6">
             <app-step-info [detailInfo]="detailInfo" *ngIf="detailInfo"></app-step-info>
         </div>
-        <div></div>
+        <div class="col-3"></div>
     </div>
     <div class="content page-detail" style="padding: 0;">
         <p-panel styleClass="no-header">

@@ -14,6 +14,7 @@ import { ExportFileService } from 'src/app/services/export-file.service';
 import { cloneDeep } from 'lodash';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
+import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-ns-ho-so-nhan-su',
   templateUrl: './ns-ho-so-nhan-su.component.html',
@@ -105,6 +106,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
     private fileService: ExportFileService,
     private changeDetector: ChangeDetectorRef,
     private organizeInfoService: OrganizeInfoService,
+    private authService: AuthService,
     private router: Router) {
     this.defaultColDef = {
       tooltipComponent: 'customTooltip',
@@ -516,18 +518,20 @@ export class NsHoSoNhanSuComponent implements OnInit {
   }
   employeeStatus = []
   getEmployeeStatus() {
+    // let empId = this
     this.apiService.getEmployeeStatus().subscribe(results => {
       if (results.status === 'success') {
         this.employeeStatus = []
-        results.data.forEach(s => {
-          if (s.value != "3") {
-            this.employeeStatus.push({
-              label: s.name,
-              value: s.value
-            })
-          }
+        if(results.data) {
+          results.data.forEach(s => {
+            if (s.value != "3") {
+              this.employeeStatus.push({
+                label: s.name,
+                value: s.value
+              })
+            }
+          })
         }
-        )
         this.employeeStatus = [{ label: 'Chọn trạng thái', value: -1 }, ...this.employeeStatus];
       }
     })

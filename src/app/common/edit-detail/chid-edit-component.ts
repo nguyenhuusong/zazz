@@ -28,7 +28,7 @@ import { ApiService } from 'src/app/services/api.service';
                <input (change)="onUploadOutput($event, element.field_name)"
                 accept="image/jpeg,image/png,image/jpg,image/gif" type="file" style="display: none" id="myfiless1" name="myfiless1" class="myfile1">
               </div>
-              <div *ngIf="modelFields[element.field_name].isRequire && submit && modelFields[element.field_name].error"
+              <div *ngIf="modelFields[element.field_name]?.isRequire && submit && modelFields[element.field_name].error"
                 class="alert-validation alert-danger">
                 <div [hidden]="!modelFields[element.field_name].error">
                   {{modelFields[element.field_name].message}}

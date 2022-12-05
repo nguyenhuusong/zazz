@@ -233,7 +233,6 @@ export class PqXeNhanVienComponent implements OnInit {
     const query = { ...this.model };
     // query.organizeId = typeof query.organizeId === 'string' ? query.organizeId : query.organizeId.org_cd;
     query.orgId = typeof query.orgId === 'string' ? query.orgId : query.orgId.orgId;
-    console.log('query.orgId', query.orgId)
     const queryParams = queryString.stringify(query);
     this.apiService.getEmployeeVehiclePage(queryParams).subscribe(
       (results: any) => {
