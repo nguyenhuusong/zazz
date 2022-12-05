@@ -40,7 +40,7 @@
                         <path d="M0 0H16V16H0V0Z" fill="#E2EEFF" />
                     </svg>
                 </p-button>
-                <p-button styleClass="p-button-sm height-56" icon="pi pi-plus" label="Cấu hình" (click)="cauhinh()"></p-button>
+                <!-- <p-button styleClass="p-button-sm height-56" icon="pi pi-plus" label="Cấu hình" (click)="cauhinh()"></p-button> -->
             </div>
         </div>
     </section>
@@ -48,6 +48,7 @@
         <div class="grid-default" #container>
             <app-list-grid-angular *ngIf="columnDefs.length > 0" [listsData]="listsData" [height]="heightGrid"
                 [columnDefs]="columnDefs" [rowSelection]="'multiple'" [floatingFilter]="true"
+                (showConfig)="cauhinh()"
                 (callback)="rowSelected($event)">
             </app-list-grid-angular>
             <div class="paginator">
