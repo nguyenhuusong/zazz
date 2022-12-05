@@ -107,13 +107,12 @@ export class DsTiemNangComponent implements OnInit {
   ngAfterViewChecked(): void {
     const a: any = document.querySelector(".header");
     const b: any = document.querySelector(".sidebarBody");
-    const c: any = document.querySelector(".bread-filter");
     const d: any = document.querySelector(".bread-crumb");
     const e: any = document.querySelector(".paginator");
     this.loadjs++
     if (this.loadjs === 5) {
       if (b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + d.clientHeight + e.clientHeight + 25;
+        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight + 25;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       } else {
@@ -291,7 +290,7 @@ export class DsTiemNangComponent implements OnInit {
   ngOnInit() {
     this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
         if(results && results.length>0){
-          this.query.organizeIds = '';
+          this.query.organizeIds = results;
           this.organizeIdSelected = results;
           this.getReRound();
           this.listsData = []

@@ -5685,3 +5685,12 @@ section:after {
         top: 2px;
     }
 }
+.icons-detail-config{
+    padding-right: 20px;
+    .pi{
+        cursor: pointer;
+        &:hover{
+            color: #4c97e4;
+        }
+    }
+}

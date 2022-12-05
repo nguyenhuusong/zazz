@@ -118,7 +118,7 @@ export class MailDaGuiComponent implements OnInit, AfterViewChecked {
       filter: '',
       offSet: 0,
       pageSize: 15,
-      organizeIds: '',
+      organizeIds: this.query.organizeIds,
     }
     this.load();
   }

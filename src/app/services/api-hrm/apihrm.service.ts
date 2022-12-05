@@ -2079,4 +2079,9 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v2/category/GetObjects?` + queryParams, this.options);
   }
 
+  //EmpInsurance
+  getEmployeeChangeInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/employeejob/GetEmployeeChangeInfo?` + queryParams, this.options);
+  }
+
 }

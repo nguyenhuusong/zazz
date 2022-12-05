@@ -275,7 +275,9 @@ export class ViTriCongViecComponent implements OnInit {
   getEmployeeChangeInfo() {
     this.listViewsForm = []
     const queryParams = queryString.stringify({ empId: this.empId });
-    this.apiService.getEmployeeData(this.keyParamGetInfo, queryParams).subscribe(results => {
+
+    // change old api this.apiService.getEmployeeData(this.keyParamGetInfo, queryParams).subscribe(results => {
+    this.apiService.getEmployeeChangeInfo(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.listViewsForm = cloneDeep(results.data.group_fields || []);
         this.detailInfoForm = results.data;

@@ -17,7 +17,12 @@
         <div class="col-6">
             <app-step-info [detailInfo]="detailInfo" *ngIf="detailInfo"></app-step-info>
         </div>
-        <div class="col-3"></div>
+        <div class="col-3">
+            <div class="d-flex end gap-16 icons-detail-config">
+                <span class="pi pi-pencil" pTooltip="Chỉnh sửa" tooltipPosition="left"></span>
+                <span class="pi pi-cog" pTooltip="Cấu hình" tooltipPosition="left"></span>
+            </div>
+        </div>
     </div>
     <div class="content page-detail" style="padding: 0;">
         <p-panel styleClass="no-header">
@@ -67,6 +72,30 @@
                                 <p-panel>
                                     <ng-template pTemplate="header">
                                         <div class="grid d-flex justify-content-between">
+                                            <h3 class="title-section">Danh sách thông tin người liên hệ</h3>
+                                            <p-button label="Thêm mới" icon="pi pi-plus" (click)="themLienHe()" styleClass="p-button-sm mr-1"></p-button>
+                                        </div>
+                                    </ng-template>
+                                    <div class="row" style="flex-wrap: wrap">
+                                        <div class="grid-default border">
+                                            <app-list-grid-angular 
+                                                [idGrid]="'dslienhe'"
+                                                [domLayout]="'autoHeight'" 
+                                                *ngIf="columnDefs4.length > 0" 
+                                                [title]="'Chứng chỉ'"
+                                                (showConfig)="CauHinh(4)"
+                                                [listsData]="listsData4" [columnDefs]="columnDefs4"></app-list-grid-angular>
+                                            </div>
+                                    </div>
+                                </p-panel>
+                            </div>
+                        </div>
+                        <p-divider></p-divider>
+                        <div class="grid wrap-edit-detail">
+                            <div class="col-12 border-section " >
+                                <p-panel>
+                                    <ng-template pTemplate="header">
+                                        <div class="grid d-flex justify-content-between">
                                             <h3 class="title-section">Thông tin hồ sơ cá nhân</h3>
                                             <p-button label="Thêm mới" icon="pi pi-plus" (click)="themMoiThongTinHSCN()" styleClass="p-button-sm mr-1"></p-button>
                                         </div>
@@ -109,30 +138,6 @@
                                 </p-panel>
                             </div>
                         </div> 
-                        <p-divider></p-divider>
-                        <div class="grid wrap-edit-detail">
-                            <div class="col-12 border-section " >
-                                <p-panel>
-                                    <ng-template pTemplate="header">
-                                        <div class="grid d-flex justify-content-between">
-                                            <h3 class="title-section">Danh sách thông tin người liên hệ</h3>
-                                            <p-button label="Thêm mới" icon="pi pi-plus" (click)="themLienHe()" styleClass="p-button-sm mr-1"></p-button>
-                                        </div>
-                                    </ng-template>
-                                    <div class="row" style="flex-wrap: wrap">
-                                        <div class="grid-default border">
-                                            <app-list-grid-angular 
-                                                [idGrid]="'dslienhe'"
-                                                [domLayout]="'autoHeight'" 
-                                                *ngIf="columnDefs4.length > 0" 
-                                                [title]="'Chứng chỉ'"
-                                                (showConfig)="CauHinh(4)"
-                                                [listsData]="listsData4" [columnDefs]="columnDefs4"></app-list-grid-angular>
-                                            </div>
-                                    </div>
-                                </p-panel>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
