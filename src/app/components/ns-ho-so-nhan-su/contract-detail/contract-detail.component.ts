@@ -104,7 +104,7 @@ export class ContractDetailComponent implements OnInit {
   setContractInfo(data) {
     this.listViews = [];
     const params = {
-      ...this.detailInfo, group_fields: data, flow_st: this.activeIndex + 1
+      ...this.detailInfo, group_fields: data, flow_st: data.type === 'Update' ?  this.activeIndex + 1 : this.activeIndex
     }
     this.callApiInfo(params)
 
@@ -132,12 +132,22 @@ export class ContractDetailComponent implements OnInit {
           this.optionsButon = [
             { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
             { label: 'Tiếp tục', value: 'Update', class: '', icon: 'pi pi-save' },
+            { label: 'Lưu tạm', value: 'SaveNhap', class: '', icon: 'pi pi-save' },
           ];
         }else {
-          this.optionsButon = [
-            { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
-            { label: 'Tiếp tục', value: 'Update', class: '', icon: 'pi pi-save' },
-          ];
+          if(results.data.submit_st) {
+            this.optionsButon = [
+              { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
+              { label: 'Trình duyệt', value: 'SaveNhap', class: '', icon: 'pi pi-save' },
+            ];
+          }else {
+            this.optionsButon = [
+              { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
+              { label: 'Tiếp tục', value: 'Update', class: '', icon: 'pi pi-save' },
+              { label: 'Lưu tạm', value: 'SaveNhap', class: '', icon: 'pi pi-save' },
+            ];
+          }
+        
          if(results.data.flow_st > 1 && results.data.contractId) this.getContractMetaPage();
          if((results.data.flow_st > 0 && results.data.flow_st < 4) && results.data.contractId) this.getSalaryComponentPage();
          if((results.data.flow_st > 0 && results.data.flow_st < 4)  && !results.data.contractId) this.getSalaryComponentPageNotContractId(results.data);

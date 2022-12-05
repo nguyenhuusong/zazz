@@ -220,7 +220,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
 
 
   onChangeButtonEdit(event) {
-    if (event === 'Update') {
+    if (event === 'Update' || event === 'SaveNhap') {
       this.submit = true;
       for (let item in this.modelFields) {
         if (this.modelFields[item].error) {
@@ -230,7 +230,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
       }
       // this.submit = false;
       let group_fields = cloneDeep(this.dataView)
-      this.callbackform(group_fields, 'Update')
+      this.callbackform(group_fields, event)
     } else if (event === 'TamTinh') {
       this.submit = true;
       for (let item in this.modelFields) {
@@ -314,8 +314,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
 
       })
     });
-    if (type === 'Update') {
-      this.callback.emit(group_fields);
+    if (type === 'Update' || type === 'SaveNhap') {
+      this.callback.emit({...group_fields, type: type});
     } else {
       this.callback1.emit(group_fields);
     }
