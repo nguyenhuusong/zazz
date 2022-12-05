@@ -4,7 +4,7 @@
         <ul class="col-3">
             <li>
                 <span class="label">Nhân viên:</span>
-                <span class="value"> {{ detailInfo?.fullName }}</span>
+                <span class="value"> {{ dataEmployeeStatus?.fullName }}</span>
             </li>
             <li class="spre"><svg width="1" height="20" viewBox="0 0 1 20" fill="none"
                     xmlns="http://www.w3.org/2000/svg">
@@ -13,33 +13,17 @@
             </li>
             <li>
                 <span class="label">MNV:</span>
-                <span class="value"> {{codeStaff}}</span>
+                <span class="value"> {{dataEmployeeStatus?.code}}</span>
             </li>
         </ul>
         <div class="col-6"><app-step-info [detailInfo]="detailInfo" *ngIf="detailInfo"></app-step-info></div>
-        <div class="col-3 text-right">
-            <p-button (click)="taohopdong('TaoHopDong')">
-                <svg width="18" height="21" viewBox="0 0 18 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M7.97231 5.18824H3.94521V7.16471H8.68264C8.33591 6.56442 8.0912 5.89765 7.97231 5.18824Z"
-                        fill="#F3F8FF" />
-                    <path fill-rule="evenodd" clip-rule="evenodd"
-                        d="M13.8082 10.1294V19.0235H6.90411V14.0824H1.9726V3.21176H7.97231C8.0912 2.50235 8.33591 1.83558 8.68264 1.23529H0V15.0706L5.91781 21H15.7808V9.79174C15.1638 10.0104 14.4998 10.1294 13.8082 10.1294ZM5.42466 18.0353L2.9589 15.5647H5.42466V18.0353Z"
-                        fill="#F3F8FF" />
-                    <path
-                        d="M10.5368 9.14118C10.9381 9.40848 11.3737 9.62804 11.8356 9.79174V11.1176H3.94521V9.14118H10.5368Z"
-                        fill="#F3F8FF" />
-                    <path
-                        d="M14.4493 3.55765V1.97647H13.1671V3.55765H11.589V4.84235H13.1671V6.42353H14.4493V4.84235H16.0274V3.55765H14.4493Z"
-                        fill="#F3F8FF" />
-                    <path fill-rule="evenodd" clip-rule="evenodd"
-                        d="M13.8082 0C11.4943 0 9.61644 1.88153 9.61644 4.2C9.61644 6.51847 11.4943 8.4 13.8082 8.4C16.1222 8.4 18 6.51847 18 4.2C18 1.88153 16.1222 0 13.8082 0ZM10.8986 4.2C10.8986 2.5932 12.2046 1.28471 13.8082 1.28471C15.4119 1.28471 16.7178 2.5932 16.7178 4.2C16.7178 5.8068 15.4119 7.11529 13.8082 7.11529C12.2046 7.11529 10.8986 5.8068 10.8986 4.2Z"
-                        fill="#F3F8FF" />
-                </svg>
-                &nbsp;
-                Tạo hợp đồng
-            </p-button>
-
+        <div class="col-3">
+            <div class="d-flex end gap-16 icons-detail-config">
+                <span class="pi pi-plus" pTooltip="Tạo hợp đồng" (click)="taohopdong('TaoHopDong')" tooltipPosition="left"></span>
+                <span class="pi pi-cog" pTooltip="Cấu hình" tooltipPosition="left"></span>
+            </div>
         </div>
+      
     </div>
     <div class="content page-detail" style="padding: 0;">
         <p-panel styleClass="no-header">
@@ -47,14 +31,19 @@
                 <div class="row col-md-12">
                     <div class="page-detail-edit-detail">
                         <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [detailInfo]="detailInfo"
-                            [thongtinnhanvienNew]="true" [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButtonsView"
+                            [thongtinnhanvienNew]="true" [manhinh]="'Edit'" [optionsButtonsEdit]="[]"
                             [dataView]="listViews" (callback)="setEmployeeInfo($event)"
                             (callbackcancel)="cancelUpdate($event)">
                         </app-edit-detail>
                         <p-divider></p-divider>
                         <div class="grid wrap-edit-detail">
                             <div class="col-12 border-section ">
-                                <p-panel header="Quá trình hợp đồng">
+                                <p-panel>
+                                    <ng-template pTemplate="header">
+                                        <div class="grid d-flex justify-content-between">
+                                            <h3 class="title-section">Quá trình hợp đồng</h3>
+                                        </div>
+                                    </ng-template>
                                     <div class="row" style="flex-wrap: wrap">
                                         <div class="grid-default border">
                                             <app-list-grid-angular 
@@ -67,17 +56,19 @@
                                             </app-list-grid-angular>
                                             </div>
                                     </div>
-                                    <ng-template pTemplate="footer">
-                                        <!-- <p-button label="Thêm mới" icon="pi pi-plus" (click)="addTimeWork()" styleClass="p-button-sm mr-1"></p-button> -->
-                                        <p-button label="Cấu hình" icon="pi pi-cog" (click)="CauHinh(0)" styleClass="p-button-sm"></p-button>
-                                    </ng-template>
                                 </p-panel>
                             </div>
                         </div> 
                         <p-divider></p-divider>
                         <div class="grid wrap-edit-detail">
                             <div class="col-12 border-section " >
-                                <p-panel header="Tiền lương">
+                                <p-panel>
+                                    <ng-template pTemplate="header">
+                                        <div class="grid d-flex justify-content-between">
+                                            <h3 class="title-section">Tiền lương</h3>
+                                            <!-- <p-button label="Thêm mới" icon="pi pi-plus" (click)="addProcess()" styleClass="p-button-sm mr-1"></p-button>  -->
+                                        </div>
+                                    </ng-template>
                                     <div class="row" style="flex-wrap: wrap">
                                         <div class="grid-default border">
                                             <app-list-grid-angular 
@@ -88,17 +79,19 @@
                                                 [listsData]="listsData1" [columnDefs]="columnDefs1"></app-list-grid-angular>
                                             </div>
                                     </div>
-                                    <ng-template pTemplate="footer">
-                                        <!-- <p-button label="Thêm mới" icon="pi pi-plus" (click)="addTimeWork()" styleClass="p-button-sm mr-1"></p-button> -->
-                                        <p-button label="Cấu hình" icon="pi pi-cog" (click)="CauHinh(1)" styleClass="p-button-sm"></p-button>
-                                    </ng-template>
                                 </p-panel>
                             </div>
                         </div> 
                         <p-divider></p-divider>
                         <div class="grid wrap-edit-detail">
                             <div class="col-12 border-section ">
-                                <p-panel header="Thông tin người phụ thuộc">
+                                <p-panel>
+                                    <ng-template pTemplate="header">
+                                        <div class="grid d-flex justify-content-between">
+                                            <h3 class="title-section">Thông tin người phụ thuộc</h3>
+                                            <p-button label="Thêm mới" icon="pi pi-plus" (click)="addEmpDependent()" styleClass="p-button-sm mr-1"></p-button>
+                                        </div>
+                                    </ng-template>
                                     <div class="row" style="flex-wrap: wrap">
                                         <div class="grid-default border">
                                             <app-list-grid-angular 
@@ -110,10 +103,6 @@
                                                 [listsData]="listsData2" [columnDefs]="columnDefs2"></app-list-grid-angular>
                                             </div>
                                     </div>
-                                    <ng-template pTemplate="footer">
-                                        <p-button label="Thêm mới" icon="pi pi-plus" (click)="addEmpDependent()" styleClass="p-button-sm mr-1"></p-button>
-                                        <p-button label="Cấu hình" icon="pi pi-cog" (click)="CauHinh(2)" styleClass="p-button-sm"></p-button>
-                                    </ng-template>
                                 </p-panel>
                             </div>
                         </div> 

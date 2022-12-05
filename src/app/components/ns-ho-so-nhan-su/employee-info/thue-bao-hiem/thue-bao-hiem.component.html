@@ -3,7 +3,7 @@
         <ul class="col-3">
             <li>
                 <span class="label">Nhân viên:</span>
-                <span class="value"> {{ detailInfo?.fullName }}</span>
+                <span class="value"> {{ dataEmployeeStatus?.fullName }}</span>
             </li>
             <li class="spre"><svg width="1" height="20" viewBox="0 0 1 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <line x1="0.5" x2="0.5" y2="20" stroke="#A3A9B9"/>
@@ -11,14 +11,19 @@
                 </li>
             <li>
                 <span class="label">MNV:</span>
-                <span class="value"> {{codeStaff}}</span>
+                <span class="value"> {{dataEmployeeStatus?.code}}</span>
             </li>
         </ul>
 
         <div class="col-6">
             <app-step-info [detailInfo]="detailInfo" *ngIf="detailInfo"></app-step-info>
         </div>
-        <div class="col-3"></div>
+        <div class="col-3">
+            <div class="d-flex end gap-16 icons-detail-config">
+                <span class="pi pi-pencil" pTooltip="Chỉnh sửa" tooltipPosition="left"></span>
+                <span class="pi pi-cog" pTooltip="Cấu hình" tooltipPosition="left"></span>
+            </div>
+        </div>
     </div>
     <div class="content page-detail" style="padding: 0;">
         <p-panel styleClass="no-header">
@@ -39,16 +44,19 @@
                         <div class="grid wrap-edit-detail">
                             <div class="col-12 border-section ">
                                 <p-panel header="Danh sách đính kèm">
+                                    <ng-template pTemplate="header">
+                                        <div class="grid d-flex justify-content-between">
+                                            <h3 class="title-section">Danh sách đính kèm</h3>
+                                            <!-- <p-button label="Thêm mới" icon="pi pi-plus" (click)="addWorked()" styleClass="p-button-sm mr-1"></p-button> -->
+                                        </div>
+                                    </ng-template>
                                     <div class="row" style="flex-wrap: wrap">
                                         <div class="grid-default border">
                                             <!-- <app-list-grid-angular [domLayout]="'autoHeight'" *ngIf="columnDefs.length > 0" [title]="'Chứng chỉ'"
                                                 [listsData]="listsData" [columnDefs]="columnDefs"></app-list-grid-angular> -->
                                             </div>
                                     </div>
-                                    <ng-template pTemplate="footer">
-                                        <!-- <p-button label="Thêm mới" icon="pi pi-plus" (click)="addEmpDependent()" styleClass="p-button-sm mr-1"></p-button> -->
-                                        <p-button label="Cấu hình" icon="pi pi-cog" (click)="CauHinh(0)" styleClass="p-button-sm"></p-button>
-                                    </ng-template>
+                                 
                                 </p-panel>
                             </div>
                         </div> 

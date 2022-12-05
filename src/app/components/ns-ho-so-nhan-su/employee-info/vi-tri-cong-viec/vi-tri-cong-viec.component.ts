@@ -18,6 +18,7 @@ import { API_PROFILE } from 'src/app/common/constants/constant';
 export class ViTriCongViecComponent implements OnInit {
   detailInfo = null;
   @Input() empId = null;
+  @Input() dataEmployeeStatus = null;
   optionsButtonsPopup = [
     { label: 'Bỏ qua', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
     { label: 'Xác nhận', value: 'Update', class: 'btn-accept' }

@@ -9,20 +9,20 @@
                 {{titlePage}}</h3>
         </div>
         <p-tabView (onChange)="handleChange($event.index)" [(activeIndex)]="tabIndex">
-            <p-tabPanel header="Thông tin cá nhân" leftIcon="pi pi-check-circle">
-                <app-thong-tin-ca-nhan [empId]="empId" *ngIf="tabIndex ===0"></app-thong-tin-ca-nhan>
+            <p-tabPanel header="Thông tin cá nhân" leftIcon="{{dataEmployeeStatus?.profile_st ? 'pi pi-check-circle' : ''}} ">
+                <app-thong-tin-ca-nhan [empId]="empId" *ngIf="tabIndex ===0" [dataEmployeeStatus]="dataEmployeeStatus"></app-thong-tin-ca-nhan>
             </p-tabPanel>
-             <p-tabPanel header="Vị trí công việc" leftIcon="pi pi-check-circle">
-                <app-vi-tri-cong-viec [empId]="empId" *ngIf="tabIndex ===1"></app-vi-tri-cong-viec>
+             <p-tabPanel header="Vị trí công việc" leftIcon="{{dataEmployeeStatus?.working_st ? 'pi pi-check-circle' : ''}} ">
+                <app-vi-tri-cong-viec [empId]="empId" *ngIf="tabIndex ===1" [dataEmployeeStatus]="dataEmployeeStatus"></app-vi-tri-cong-viec>
             </p-tabPanel>
-           <p-tabPanel header="Quan hệ lao động C&B" leftIcon="pi pi-check-circle">
-                <app-quan-he-lao-dong-c [empId]="empId" *ngIf="tabIndex ===2"></app-quan-he-lao-dong-c>
+           <p-tabPanel header="Quan hệ lao động C&B" leftIcon="{{dataEmployeeStatus?.contract_st ? 'pi pi-check-circle' : ''}} ">
+                <app-quan-he-lao-dong-c [empId]="empId" *ngIf="tabIndex ===2" [dataEmployeeStatus]="dataEmployeeStatus"></app-quan-he-lao-dong-c>
             </p-tabPanel>
-             <p-tabPanel header="Thuế bảo hiểm" leftIcon="pi pi-check-circle">
-                <app-thue-bao-hiem [empId]="empId" *ngIf="tabIndex ===3"></app-thue-bao-hiem>
+             <p-tabPanel header="Thuế bảo hiểm" leftIcon="{{dataEmployeeStatus?.insurance_st ? 'pi pi-check-circle' : ''}}" >
+                <app-thue-bao-hiem [empId]="empId" *ngIf="tabIndex ===3" [dataEmployeeStatus]="dataEmployeeStatus"></app-thue-bao-hiem>
             </p-tabPanel>
-            <p-tabPanel header="Chuyên Môn" leftIcon="pi pi-check-circle">
-                <app-chuyen-mon [empId]="empId" *ngIf="tabIndex ===4"></app-chuyen-mon>
+            <p-tabPanel header="Chuyên Môn" leftIcon="{{dataEmployeeStatus?.train_st ? 'pi pi-check-circle' : ''}}" >
+                <app-chuyen-mon [empId]="empId" *ngIf="tabIndex ===4" [dataEmployeeStatus]="dataEmployeeStatus"></app-chuyen-mon>
             </p-tabPanel>
             <p-tabPanel header="Thông tin khác" leftIcon="pi pi-check-circle">
                 <app-tien-ich [empId]="empId" *ngIf="tabIndex ===5"></app-tien-ich>

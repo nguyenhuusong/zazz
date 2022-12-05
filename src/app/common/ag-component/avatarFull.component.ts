@@ -4,16 +4,22 @@ import { Component, OnInit } from '@angular/core';
   selector: 'child-avatar',
   template: `
     <div >
-    <img  src="{{value ? value: ''}}" alt=""  style="width:50%">
+    <img  src="{{value ? value: ''}}" alt=""  style="width:{{isImage ? '50px' : '50%'}}">
     </div>
     `
 })
 export class AvatarFullComponent implements OnInit {
-  value: string
+  value: string;
+  isImage = true;
   constructor() { }
 
   agInit(params: any) {
     this.value = params.value;
+    if(params.data.hasOwnProperty('back_url') && params.data.hasOwnProperty('front_url')) {
+      this.isImage = false;
+    }else {
+      this.isImage = true;
+    }
   }
   ngOnInit() {
   }
