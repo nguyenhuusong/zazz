@@ -17,7 +17,6 @@ export class StepInfoComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.detailInfo)
     this.activeIndex = this.detailInfo.flow_st || 0
     this.stepsLine = this.detailInfo.flowStatuses.map(d => {
       return {

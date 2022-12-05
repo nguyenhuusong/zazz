@@ -4557,11 +4557,13 @@ p-tabview{
                         }
                     }
                     span{
-                        font-weight: 400;
-                        font-size: 14px;
-                        line-height: 20px;
-                        color: #747E96;
-                        font-family: $fontRegular;
+                        &.p-tabview-title{
+                            font-weight: 400;
+                            font-size: 14px;
+                            line-height: 20px;
+                            color: #747E96;
+                            font-family: $fontRegular;
+                        }
                     }
                     &.p-tabview-ink-bar{
                         background: #4C97E4;

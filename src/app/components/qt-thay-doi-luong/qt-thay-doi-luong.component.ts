@@ -414,21 +414,21 @@ export class QtThayDoiLuongComponent implements OnInit {
   }
   employeeStatus = []
   getEmployeeStatus() {
-    this.apiService.getEmployeeStatus().subscribe(results => {
-      if (results.status === 'success') {
-        this.employeeStatus = []
-        results.data.forEach(s => {
-          if (s.value != "3") {
-            this.employeeStatus.push({
-              label: s.name,
-              value: s.value
-            })
-          }
-        }
-        )
-        this.employeeStatus = [{ label: 'Chọn trạng thái', value: -1 }, ...this.employeeStatus];
-      }
-    })
+    // this.apiService.getEmployeeStatus().subscribe(results => {
+    //   if (results.status === 'success') {
+    //     this.employeeStatus = []
+    //     results.data.forEach(s => {
+    //       if (s.value != "3") {
+    //         this.employeeStatus.push({
+    //           label: s.name,
+    //           value: s.value
+    //         })
+    //       }
+    //     }
+    //     )
+    //     this.employeeStatus = [{ label: 'Chọn trạng thái', value: -1 }, ...this.employeeStatus];
+    //   }
+    // })
   }
 
   Back() {

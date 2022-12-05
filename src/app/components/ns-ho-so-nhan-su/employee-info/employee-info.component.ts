@@ -32,7 +32,6 @@ export class EmployeeInfoComponent implements OnInit {
       // { label: 'Hồ sơ nhân sự', routerLink: '/nhan-su/ho-so-nhan-su' },
       // { label: `${this.titlePage}` },
     ];
-
     this.linkUrl = this.activatedRoute.data['_value'].url;
     if (this.linkUrl === 'them-moi-nhan-vien') {
       this.handleParams();
@@ -50,11 +49,22 @@ export class EmployeeInfoComponent implements OnInit {
       this.dataRouter = this.paramsObject.params;
       this.empId = this.paramsObject.params.empId || null;
       this.getMenuInfo();
+      this.getEmployeeStatus();
+
     });
   }
   tabIndex = 0
   handleChange(index) {
     this.tabIndex = index
+  }
+  dataEmployeeStatus = null;
+  getEmployeeStatus() {
+    const queryParams = queryString.stringify({ empId: this.empId });
+    this.apiService.getEmployeeStatus(queryParams).subscribe(results => {
+      if (results.status === 'success') {
+        this.dataEmployeeStatus = results.data;
+      }
+    })
   }
 
   getMenuInfo() {

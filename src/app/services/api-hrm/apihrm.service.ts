@@ -877,8 +877,8 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v2/employee/SetEmployeeApprove`, params, this.options)
   }
 
-  getEmployeeStatus(): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v2/employee/GetEmployeeStatus`, this.options);
+  getEmployeeStatus(queryParams= null): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/employee/GetEmployeeStatus?` + queryParams, this.options);
   }
 
   getTerminatePage(queryParams): Observable<any> {
@@ -1851,8 +1851,7 @@ export class ApiHrmService {
   }
   recruitAgain(query, data = null): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/employee/RecruitAgain?` + query, data , this.options)
-  }
-
+  } 
   getUserOrganizeRole(): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/user/GetUserOrganize`, this.options)
   }
