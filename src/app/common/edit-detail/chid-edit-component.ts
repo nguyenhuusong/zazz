@@ -16,7 +16,7 @@ import { ApiService } from 'src/app/services/api.service';
 @Component({
   selector: 'app-type-image',
   template: ` <div class="wrap-image">
-               <p-image *ngIf="element.columnValue" src="{{element.columnValue}}" alt="Image" width="200" [preview]="true"></p-image>
+               <p-image *ngIf="element.columnValue" src="{{element.columnValue}}" alt="Image" height="100" [preview]="true"></p-image>
                <p-image *ngIf="!element.columnValue" src="/assets/images/no-image2.jpg" alt="Image" width="200" [preview]="true"></p-image>
                <label class="upload" for="myfiless1" *ngIf="!element.columnValue">
                   <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -3,7 +3,14 @@
         <ng-container *ngFor="let group of dataView; let idx = index">
             
             <div class="{{group.group_column}} border-section">
-                <p-panel header="{{group.group_name}}">
+                <p-panel>
+                    <ng-template pTemplate="header">
+                        <div class="grid d-flex justify-content-between" style="width: 100%">
+                            <h3 class="title-section">{{group.group_name}}</h3>
+                            <span *ngIf="group.group_name !== 'Giấy tờ'" class="pi pi-cog cursor-pointer" (click)="CauHinh()"></span>
+                            <!-- <p-button label="Thêm mới" icon="pi pi-plus" (click)="addEmpDependent()" styleClass="p-button-sm mr-1"></p-button> -->
+                        </div>
+                    </ng-template>
                     <div class="row" style="flex-wrap: wrap">
                         <!-- <div class="col-md-2 avatar-c" *ngIf="isShowAvatar && detailInfo?.avatarUrl && idx === 0">
                             <p-image

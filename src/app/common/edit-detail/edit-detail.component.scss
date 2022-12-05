@@ -54,4 +54,22 @@
             }
         }
     }
+
+    .vertical {
+        .p-image {
+            img {
+                width: 100%;
+            }
+        }
+    }
+    
+
+    .horizontal {
+        .p-image {
+            height: 150px;
+            img {
+                width: 100%;
+            }
+        }
+    }
 }

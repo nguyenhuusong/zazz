@@ -26,6 +26,7 @@ export class ContractDetailComponent implements OnInit {
   optionsButon = [
     { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
     { label: 'Tiếp tục', value: 'Update', class: '', icon: 'pi pi-save' },
+    { label: 'Lưu tạm', value: 'SaveNhap', class: '', icon: 'pi pi-save' },
   ];
   columnDefs = [];
   listsData = [];
@@ -107,7 +108,7 @@ export class ContractDetailComponent implements OnInit {
       ...this.detailInfo, group_fields: data, flow_st: data.type === 'Update' ?  this.activeIndex + 1 : this.activeIndex
     }
     this.callApiInfo(params)
-    if(data.type !== 'Submit') {
+    if(data.type === 'Submit') {
       setTimeout(() => {
         this.callback.emit();
       }, 200);
