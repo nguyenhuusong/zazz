@@ -79,6 +79,7 @@ import { ChuyenMonComponent } from 'src/app/components/ns-ho-so-nhan-su/employee
 import { TienIchComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/tien-ich/tien-ich.component';
 import { QuanLyTaiKhoanComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/quan-ly-tai-khoan/quan-ly-tai-khoan.component';
 import { StepInfoComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/step-info/step-info.component';
+import { ThongTinCaNhanEditDetailComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/thong-tin-ca-nhan/thong-tin-ca-nhan-edit-detail/thong-tin-ca-nhan-edit-detail.component';
 
 @NgModule({
   imports: [
@@ -158,10 +159,10 @@ import { StepInfoComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-
     QtThayDoiLuongComponent,
     ChiTietQTThayDoiLuongComponent,
     ContractDetailComponent,
-
     
     EmployeeInfoComponent,
     ThongTinCaNhanComponent,
+    ThongTinCaNhanEditDetailComponent,
     ViTriCongViecComponent,
     QuanHeLaoDongCComponent,
     ThueBaoHiemComponent,

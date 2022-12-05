@@ -19,7 +19,7 @@
         </div>
         <div class="col-3">
             <div class="d-flex end gap-16 icons-detail-config">
-                <span class="pi pi-pencil" pTooltip="Chỉnh sửa" tooltipPosition="left"></span>
+                <span class="pi pi-pencil" pTooltip="Chỉnh sửa" (click)="editDetail()" tooltipPosition="left"></span>
                 <span class="pi pi-cog" pTooltip="Cấu hình" tooltipPosition="left"></span>
             </div>
         </div>
@@ -202,4 +202,12 @@
             (callback)="setLienHe($event)" 
             (callbackcancel)="canceLienHe($event)">
         </app-edit-detail>
+</p-dialog>
+
+<p-dialog [(visible)]="isEditDetail" [autoZIndex]="true" [modal]="true"  appendTo="body"
+    [style]="{width: '1600px', height: 'auto'}">
+    <p-header>
+        Sửa thông tin cá nhân
+    </p-header>
+        <app-thong-tin-ca-nhan-edit-detail *ngIf="isEditDetail" [empId]="empId" (cancelSave)="cancelSetDetail($event)"></app-thong-tin-ca-nhan-edit-detail>
 </p-dialog>

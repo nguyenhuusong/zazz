@@ -659,6 +659,17 @@ export class ThongTinCaNhanComponent implements OnInit {
     this.isShowLienHe = false;
   }
 
+  isEditDetail = false;
+  editDetail() {
+    this.isEditDetail = true;
+  }
+
+  cancelSetDetail(event) {
+    if(event) {
+      this.isEditDetail = false
+    }
+  }
+
 
   columnDefs1 = [];
   listsData1 = [];
