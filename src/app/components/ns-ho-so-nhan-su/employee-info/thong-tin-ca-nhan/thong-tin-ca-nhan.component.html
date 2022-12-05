@@ -38,7 +38,13 @@
                         <p-divider></p-divider>
                         <div class="grid wrap-edit-detail">
                             <div class="col-12 border-section " >
-                                <p-panel header="Giấy tờ tùy thân">
+                                <p-panel >
+                                    <ng-template pTemplate="header">
+                                        <div class="grid d-flex justify-content-between">
+                                            <h3>Giấy tờ tùy thân</h3>
+                                            <p-button label="Cấu hình" styleClass="p-button-sm"></p-button>  
+                                        </div>
+                                    </ng-template>
                                     <div class="row" style="flex-wrap: wrap">
                                         <div class="grid-default border">
                                             <app-list-grid-angular 
@@ -49,10 +55,7 @@
                                                 [listsData]="listsData1" [columnDefs]="columnDefs1"></app-list-grid-angular>
                                             </div>
                                     </div>
-                                    <ng-template pTemplate="footer">
-                                        <!-- <p-button label="Thêm mới" icon="pi pi-plus" (click)="addTimeWork()" styleClass="p-button-sm mr-1"></p-button> -->
-                                        <p-button label="Cấu hình" icon="pi pi-cog" (click)="CauHinh(1)" styleClass="p-button-sm"></p-button>
-                                    </ng-template>
+                                   
                                 </p-panel>
                             </div>
                         </div> 
@@ -72,7 +75,6 @@
                                     </div>
                                     <ng-template pTemplate="footer">
                                         <p-button label="Thêm mới" icon="pi pi-plus" (click)="themMoiThongTinHSCN()" styleClass="p-button-sm mr-1"></p-button>
-                                        <p-button label="Cấu hình" icon="pi pi-cog" (click)="CauHinh(2)" styleClass="p-button-sm"></p-button>
                                     </ng-template>
                                 </p-panel>
                             </div>
@@ -93,7 +95,6 @@
                                     </div>
                                     <ng-template pTemplate="footer">
                                         <p-button label="Thêm mới" icon="pi pi-plus" (click)="themMoiDinhKem()" styleClass="p-button-sm mr-1"></p-button>
-                                        <p-button label="Cấu hình" icon="pi pi-cog" (click)="CauHinh(3)" styleClass="p-button-sm"></p-button>
                                     </ng-template>
                                 </p-panel>
                             </div>
@@ -114,7 +115,6 @@
                                     </div>
                                     <ng-template pTemplate="footer">
                                         <p-button label="Thêm mới" icon="pi pi-plus" (click)="themLienHe()" styleClass="p-button-sm mr-1"></p-button>
-                                        <p-button label="Cấu hình" icon="pi pi-cog" (click)="CauHinh(4)" styleClass="p-button-sm"></p-button>
                                     </ng-template>
                                 </p-panel>
                             </div>
