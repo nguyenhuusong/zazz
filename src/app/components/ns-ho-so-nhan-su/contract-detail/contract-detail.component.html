@@ -25,7 +25,7 @@
     </div>
     <p-divider *ngIf="this.detailInfo?.flow_st > 1"></p-divider>
     <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'"
-        [optionsButtonsEdit]="optionsButon" [dataView]="listViews" (callback)="setContractInfo($event)"
+        [optionsButtonsEdit]="optionsButon" [dataView]="listViews" (callback)="setContractInfo($event)" (callBackForm)="callBackForm($event)"
         (callbackcancel)="cancel($event)"></app-edit-detail>
         <p-divider></p-divider>
         <div class="grid wrap-edit-detail">

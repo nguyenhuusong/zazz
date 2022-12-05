@@ -105,10 +105,18 @@ export class ContractDetailComponent implements OnInit {
   setContractInfo(data) {
     this.listViews = [];
     const params = {
-      ...this.detailInfo, group_fields: data, flow_st: data.type === 'Update' ?  this.activeIndex + 1 : this.activeIndex
+      ...this.detailInfo, group_fields: data, flow_st: this.activeIndex + 1
     }
     this.callApiInfo(params)
-    if(data.type === 'Submit') {
+   
+  }
+
+  callBackForm(event) {
+    const params = {
+      ...this.detailInfo, group_fields: event.data, flow_st: this.activeIndex
+    }
+    this.callApiInfo(params)
+    if(event.type === 'Submit') {
       setTimeout(() => {
         this.callback.emit();
       }, 200);

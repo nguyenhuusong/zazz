@@ -37,6 +37,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
   @Output() callback = new EventEmitter<any>();
   @Output() callbackcancel = new EventEmitter<any>();
   @Output() callback1 = new EventEmitter<any>();
+  @Output() callBackForm = new EventEmitter<any>();
   @Output() callbackButton = new EventEmitter<any>();
   @Input() thongtinnhanvienNew: boolean = false;
   @Input() isUploadMultiple: boolean = true;
@@ -315,7 +316,9 @@ export class EditDetailComponent implements OnInit, OnChanges {
       })
     });
     if (type === 'Update' || type === 'SaveNhap' ||  type === 'Submit' ) {
-      this.callback.emit({...group_fields, type: type});
+      this.callback.emit(group_fields);
+    }else if( type === 'SaveNhap' ||  type === 'Submit') {
+      this.callBackForm.emit({data : group_fields, type: type})
     } else {
       this.callback1.emit(group_fields);
     }
