@@ -316,7 +316,8 @@ export class ViTriCongViecComponent implements OnInit {
   }
 
   setEmployeeChange(parmas) {
-    this.apiService.setEmployeeChange(parmas).subscribe((results: any) => {
+    // change old api this.apiService.setEmployeeChange(parmas).subscribe((results: any) => {
+    this.apiService.InsurSetEmployeeChange(parmas).subscribe((results: any) => {
       if (results.status === 'success') {
         this.displayDialog = false;
         // this.manhinh = 'Edit';
