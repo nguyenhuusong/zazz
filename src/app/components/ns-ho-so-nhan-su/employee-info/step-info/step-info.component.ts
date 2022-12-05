@@ -33,8 +33,10 @@ export class StepInfoComponent implements OnInit {
     const stepS = document.querySelectorAll('.status-line .p-steps-item');
     if (stepS.length > 0) {
       for (let i = 0; i < this.stepsLine.length; i++) {
-        if (i <= this.activeIndex) {
-          stepS[i].className += ' p-highlight p-steps-current active';
+        if (i < this.activeIndex) {
+          stepS[i].className += ' p-highlight active';
+        }else if(i === this.activeIndex){
+          stepS[i].className += ' p-highlight active p-steps-current';
         } else {
           stepS[i].classList.value = `p-steps-item icon-${i}`;
         }
