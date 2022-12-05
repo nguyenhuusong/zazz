@@ -17,6 +17,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class ThueBaoHiemComponent implements OnInit {
   detailInfo = null;
   @Input() empId = null
+  @Input() dataEmployeeStatus = null
   constructor(
     private apiService: ApiHrmService,
     private apiCoreService: ApiCoreService,
