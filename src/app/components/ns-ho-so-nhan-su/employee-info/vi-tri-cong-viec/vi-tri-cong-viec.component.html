@@ -56,7 +56,8 @@
                                                 [domLayout]="'autoHeight'" 
                                                 *ngIf="columnDefs.length > 0" 
                                                 [title]="'Chứng chỉ'"
-                                                [listsData]="listsData" 
+                                                [listsData]="listsData"
+                                                (showConfig)="CauHinh(0)" 
                                                 [columnDefs]="columnDefs">
                                             </app-list-grid-angular>
                                         </div>
@@ -79,6 +80,7 @@
                                                 *ngIf="columnDefs1.length > 0" 
                                                 [title]="'Chứng chỉ'"
                                                 [listsData]="listsData1" 
+                                                (showConfig)="CauHinh(1)"
                                                 [columnDefs]="columnDefs1">
                                             </app-list-grid-angular>
                                         </div>
