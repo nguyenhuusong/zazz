@@ -60,6 +60,11 @@ export class EditDetailComponent implements OnInit, OnChanges {
     { label: 'Bỏ qua', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times-circle' },
     { label: 'Lưu lại', value: 'Update', class: '' }
   ];
+
+  optionsButtonsEdit1: any = [
+    { label: 'Bỏ qua', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times-circle' },
+    { label: 'Lưu lại', value: 'Update', class: '' }
+  ];
   @Input() modelMarkdow = {
     type: 1,
     content: '',

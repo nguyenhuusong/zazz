@@ -239,7 +239,7 @@
 }
 :host::ng-deep .wrap-edit-detail{ 
     .btn-group-edit-detail{
-        display: none;
+        // display: none;
     }
 }
 :host::ng-deep{
@@ -247,7 +247,7 @@
         .wrap-image{
             .p-image{
                 margin-bottom: 10px;
-                height: auto;
+                // height: auto;
                 // img{
                 //     object-fit: contain;
                 // }
