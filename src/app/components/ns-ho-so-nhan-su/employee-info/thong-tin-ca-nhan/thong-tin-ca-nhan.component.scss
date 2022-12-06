@@ -242,3 +242,36 @@
         display: none;
     }
 }
+:host::ng-deep{
+    .wrap-edit-detail{
+        .border-section{
+            &.col-2{
+                .image-iam{
+                    .wrap-image{
+                        .p-image{
+                            margin-bottom: 10px;
+                            height: auto;
+                            // img{
+                            //     object-fit: contain;
+                            // }
+                            &::before{
+                                padding-top: 65%;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+:host::ng-deep{
+    .css-img [col-id="back_url"],
+    .css-img [col-id="front_url"]{
+        &.ag-cell{
+            .ag-cell-wrapper{
+                height: auto;
+                margin-top: 3px;
+            }
+        }
+    }
+}
