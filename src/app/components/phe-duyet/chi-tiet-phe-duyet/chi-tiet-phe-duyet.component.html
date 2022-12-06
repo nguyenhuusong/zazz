@@ -7,9 +7,9 @@
         </div>
     </section>
    <div class="content">
-    <div class="text-right">
+    <!-- <div class="text-right">
         <p-button label="Phê duyệt" (click)="pheDuyet()"></p-button>
-    </div>
+    </div> -->
     <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButon"  [dataView]="listViews"
     (callback)="setWorkApprove($event)" (callbackcancel)="quaylai($event)"></app-edit-detail>
    </div>
