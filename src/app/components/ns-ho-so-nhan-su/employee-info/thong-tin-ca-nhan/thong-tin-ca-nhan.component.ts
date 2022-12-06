@@ -663,9 +663,7 @@ export class ThongTinCaNhanComponent implements OnInit {
   }
 
   cancelSetDetail(event) {
-    if(event) {
-      this.isEditDetail = false
-    }
+    this.isEditDetail = false;
   }
 
 
