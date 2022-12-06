@@ -10,6 +10,7 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 import { ChiTietLoaiThongBaoComponent } from './chi-tiet-loai-thong-bao.component';
 import { EditDetailModule } from 'src/app/common/edit-detail/edit-detail.module';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { HrmBreadCrumbModule } from 'src/app/common/hrm-breadcrumb/hrm-breadcrumb.module';
 @NgModule({
     imports: [
       FormsModule,
@@ -23,6 +24,7 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
       EditDetailModule,
       SelectButtonModule,
       BreadcrumbModule,
+      HrmBreadCrumbModule,
     ],
     
     declarations: [

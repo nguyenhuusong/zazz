@@ -3668,7 +3668,7 @@ div.p-organizationchart {
     .btn-group-edit-detail{
         position: absolute;
         right: 16px;
-        top: 187px;
+        top: 150px;
         z-index: 9;
         display: flex;
         align-items: center;
@@ -5705,11 +5705,6 @@ section:after {
 
 .cursor-pointer {
     cursor: pointer;
- }
- .single-page{
-    .breadcrumb{
-        margin-bottom: 20px;
-    }
  }
  
 .vertical {

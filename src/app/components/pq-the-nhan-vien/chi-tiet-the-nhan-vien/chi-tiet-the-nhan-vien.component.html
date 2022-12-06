@@ -1,10 +1,7 @@
 
 <div class="main-grid product-detail">
     <section>
-        <div class="breadcrumb">
-            <p-breadcrumb [model]="items"></p-breadcrumb>
-            <h3>{{titlePage}}</h3>
-        </div>
+        <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
     </section>
         <div class="content">
             <app-edit-detail *ngIf="listViews.length> 0" 
