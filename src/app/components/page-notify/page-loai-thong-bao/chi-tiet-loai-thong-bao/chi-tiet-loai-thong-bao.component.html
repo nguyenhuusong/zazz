@@ -1,10 +1,17 @@
 
 <div class="main-grid product-detail">
-    <div class="breadcrumb">
-        <h3>{{titlePage}}</h3>
-        <p-breadcrumb [model]="items"></p-breadcrumb>
-    </div>
+    <section>
+        <div class="breadcrumb">
+            <h3>{{titlePage}}</h3>
+            <p-breadcrumb [model]="items"></p-breadcrumb>
+        </div>
+    </section>
    <div class="content">
-    <app-edit-detail *ngIf="listViews.length> 0 && manhinh === 'Edit'"  [thongtinnhanvienNew]="true" [manhinh]="'Edit'" [dataView]="listViews" (callback)="setNotifyRef($event)" (callbackcancel)="cancelUpdate($event)"></app-edit-detail>
+        <app-edit-detail *ngIf="listViews.length> 0 && manhinh === 'Edit'"
+            [thongtinnhanvienNew]="true"
+            [manhinh]="'Edit'" [dataView]="listViews"
+            (callback)="setNotifyRef($event)"
+            (callbackcancel)="cancelUpdate($event)">
+        </app-edit-detail>
    </div>
 </div>
