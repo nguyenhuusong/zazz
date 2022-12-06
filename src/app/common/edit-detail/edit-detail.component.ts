@@ -315,7 +315,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
 
       })
     });
-    if (type === 'Update' || type === 'SaveNhap' ||  type === 'Submit' ) {
+    if (type === 'Update') {
       this.callback.emit(group_fields);
     }else if( type === 'SaveNhap' ||  type === 'Submit') {
       this.callBackForm.emit({data : group_fields, type: type})
