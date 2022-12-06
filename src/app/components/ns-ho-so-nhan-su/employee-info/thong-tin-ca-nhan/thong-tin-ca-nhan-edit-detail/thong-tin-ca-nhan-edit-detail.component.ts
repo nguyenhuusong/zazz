@@ -19,7 +19,10 @@ export class ThongTinCaNhanEditDetailComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private messageService: MessageService,
     ) { }
-
+    optionsButtonsView = [
+      { label: 'Bỏ qua', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
+      { label: 'Xác nhận', value: 'Update', class: 'btn-accept' }
+    ]
   ngOnInit(): void {
     this.getDetail();
   }
@@ -33,6 +36,17 @@ export class ThongTinCaNhanEditDetailComponent implements OnInit {
         this.spinner.hide();
         this.listViews = cloneDeep(results.data.group_fields || []);
         this.detailInfo = results.data;
+        if(results.data.submit_st) {
+          this.optionsButtonsView = [
+            { label: 'Bỏ qua', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
+            { label: 'Trình duyệt', value: 'Update', class: 'btn-accept' }
+          ]
+        }else {
+          this.optionsButtonsView = [
+            { label: 'Bỏ qua', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
+            { label: 'Xác nhận', value: 'Update', class: 'btn-accept' }
+          ]
+        }
       };
     }, error => {
       this.spinner.hide();
