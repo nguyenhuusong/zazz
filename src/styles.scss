@@ -2948,6 +2948,13 @@ div.p-organizationchart {
 
     // #type
     &.attach-file{
+        .control-image{
+            border: 1px solid #D1D4DC;
+            border-radius: 3px;
+        }
+        button{
+            height: auto !important;
+        }
         .upload_file{
             border: none;
             box-shadow: none;
@@ -3158,6 +3165,7 @@ div.p-organizationchart {
     }
 }
 .border-section{
+    width: 100%;
     // .p-card{
         position: relative;
         padding-left: 10px;
@@ -5703,3 +5711,36 @@ section:after {
         margin-bottom: 20px;
     }
  }
+ 
+.vertical {
+    .wrap-image{
+        .p-image{
+            display: block;
+            &::before{
+                content: "";
+                padding-top: 120%;
+                display: block;
+            }
+            &>img{
+                width: 100%;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                transform: translate(-50%, -50%);
+                border-radius: 2px;
+            }
+        }
+    }
+}
+app-thong-tin-ca-nhan-edit-detail{
+    .horizontal {
+        .wrap-image{
+            .p-image{
+                height: auto;
+            }
+        }
+    }
+}

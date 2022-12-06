@@ -1268,7 +1268,7 @@ export class AppTypeCheckboxRadioListComponent implements OnInit {
                       <div *ngIf="imagesUpload">
                           <a style="display: block;
                           min-width: 60px;
-                          line-height: 47px;
+                          line-height: 40px;
                           text-align: center;
                           text-decoration: none;
                           padding-right: 4px;" target="_blank" href="{{ imagesUpload }}">Xem file</a>
