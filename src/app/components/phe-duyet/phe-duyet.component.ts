@@ -268,7 +268,7 @@ export class PheDuyetComponent implements OnInit, AfterViewChecked {
 
   XemChiTiet(event) {
     const params = {
-      iwf_id: event.rowData.iwf_id
+      wft_id: event.rowData.wft_id
     }
     this.router.navigate(['/nhan-su/phe-duyet/chi-tiet-phe-duyet'], { queryParams: params });
   }

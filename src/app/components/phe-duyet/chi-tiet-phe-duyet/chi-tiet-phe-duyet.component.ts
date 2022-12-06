@@ -20,11 +20,11 @@ export class ChiTietPheDuyetComponent implements OnInit, OnDestroy {
   listViews = [];
   optionsButon = [
     { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
-    { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check' }
+    { label: 'Phê duyệt', value: 'Update', class: '', icon: 'pi pi-check' }
   ];
-  iwf_id: any = ''
+  wft_id: any = ''
   setWorkQuery = {
-    iwf_id: "",
+    wft_id: "",
     work_type: "",
     approve_st: 0,
     reason:  ""
@@ -64,13 +64,13 @@ export class ChiTietPheDuyetComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((params) => {
         this.paramsObject = { ...params.keys, ...params };
-        this.iwf_id = this.paramsObject.params.iwf_id  || null
+        this.wft_id = this.paramsObject.params.wft_id  || null
         this.getWorkflowInfo();
       });
   };
  
   getWorkflowInfo() {
-    const queryParams = queryString.stringify(this.iwf_id);
+    const queryParams = queryString.stringify({wft_id: this.wft_id});
     this.apiService.getWorkflowInfo(queryParams)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {
@@ -87,7 +87,10 @@ export class ChiTietPheDuyetComponent implements OnInit, OnDestroy {
 
   setWorkApprove(data) {
     this.spinner.show();
-    this.apiService.setWorkApprove(this.setWorkQuery)
+    const params = {
+      ...this.detailInfo, group_fields: data
+    }
+    this.apiService.setWorkApprove(params)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((results: any) => {
         if (results.status === 'success') {
@@ -116,30 +119,5 @@ export class ChiTietPheDuyetComponent implements OnInit, OnDestroy {
   pheDuyet() {
     this.displayPheDuyet = true;
   }
-
-  saveCallApi(event) {
-    this.spinner.show();
-    const params = {
-      ...this.detailInfo_other, group_fields: event
-    }
-    this.apiService.setWorkApprove(this.setWorkQuery)
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((results: any) => {
-        if (results.status === 'success') {
-          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
-          this.spinner.hide();
-          this.displayPheDuyet = false;
-        } else {
-          this.messageService.add({
-            severity: 'error', summary: 'Thông báo',
-            detail: results.message
-          });
-          this.spinner.hide();
-        }
-      }), error => {
-        this.spinner.hide();
-      };
-  }
-
 }
 
