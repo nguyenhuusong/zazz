@@ -751,7 +751,7 @@ export class ApiHrmService {
   }
 
   setWorkApprove(params): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v2/work/SetWorkApprove`, params, this.options)
+    return this.http.put<any>(`${apiHrmServer}/api/v2/work/SetWorkApprove`, params, this.options)
   }
 
   getCandidatePage(queryParams): Observable<any> {
