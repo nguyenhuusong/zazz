@@ -1,0 +1,23 @@
+:host::ng-deep{
+    .image-iam{
+        margin-bottom: 16px;
+        .wrap-image{
+            .p-image{
+                display: block;
+                &::after{
+                    content: "";
+                    padding-top: 56%;
+                    display: block;
+                }
+                &>img{
+                    position: absolute;
+                    object-fit: cover;
+                    top: 0px;
+                    width: 100%;
+                    left: 0px;
+                    height: 100%;
+                }
+            }
+        }
+    }
+}
