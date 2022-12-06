@@ -116,7 +116,7 @@ export class ContractDetailComponent implements OnInit {
       ...this.detailInfo, group_fields: event.data, flow_st: this.activeIndex
     }
     this.callApiInfo(params)
-    if(event.type === 'Submit') {
+    if(event.type === 'Submit' || event.type === 'SaveNhap') {
       setTimeout(() => {
         this.callback.emit();
       }, 200);
@@ -145,7 +145,7 @@ export class ContractDetailComponent implements OnInit {
           this.optionsButon = [
             { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
             { label: 'Tiếp tục', value: 'Update', class: '', icon: 'pi pi-save' },
-            { label: 'Lưu tạm', value: 'SaveNhap', class: '', icon: 'pi pi-save' },
+            results.data.save_st ? { label: 'Lưu tạm', value: 'SaveNhap', class: '', icon: 'pi pi-save' }: null,
           ];
         }else {
           if(results.data.submit_st) {
@@ -157,7 +157,7 @@ export class ContractDetailComponent implements OnInit {
             this.optionsButon = [
               { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
               { label: 'Tiếp tục', value: 'Update', class: '', icon: 'pi pi-save' },
-              { label: 'Lưu tạm', value: 'SaveNhap', class: '', icon: 'pi pi-save' },
+              results.data.save_st ? { label: 'Lưu tạm', value: 'SaveNhap', class: '', icon: 'pi pi-save' }: null,
             ];
           }
         
@@ -189,7 +189,7 @@ export class ContractDetailComponent implements OnInit {
           this.optionsButon = [
             { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
             { label: 'Tiếp tục', value: 'Update', class: '', icon: 'pi pi-save' },
-            { label: 'Lưu tạm', value: 'SaveNhap', class: '', icon: 'pi pi-save' },
+            results.data.save_st ? { label: 'Lưu tạm', value: 'SaveNhap', class: '', icon: 'pi pi-save' }: null,
           ];
         }else {
           if(results.data.submit_st) {
@@ -201,7 +201,7 @@ export class ContractDetailComponent implements OnInit {
             this.optionsButon = [
               { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
               { label: 'Tiếp tục', value: 'Update', class: '', icon: 'pi pi-save' },
-              { label: 'Lưu tạm', value: 'SaveNhap', class: '', icon: 'pi pi-save' },
+              results.data.save_st ? { label: 'Lưu tạm', value: 'SaveNhap', class: '', icon: 'pi pi-save' }: null,
             ];
           }
         }

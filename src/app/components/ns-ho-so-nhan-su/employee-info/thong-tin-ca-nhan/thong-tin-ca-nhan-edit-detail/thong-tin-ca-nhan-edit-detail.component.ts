@@ -20,13 +20,15 @@ export class ThongTinCaNhanEditDetailComponent implements OnInit {
     private messageService: MessageService,
     ) { }
     optionsButtonsView = [
-      { label: 'Bỏ qua', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
-      { label: 'Xác nhận', value: 'Update', class: 'btn-accept' }
+      { label: 'Bỏ qua', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
+      { label: 'Lưu tạm', value: 'Update', class: 'btn-accept' },
+      { label: 'Tiếp tục', value: 'Update', class: 'btn-accept' }
     ]
   ngOnInit(): void {
     this.getDetail();
   }
-
+  activeIndex = 0;
+  steps = [];
   getDetail() {
     this.spinner.show();
     this.detailInfo = null;
@@ -36,16 +38,35 @@ export class ThongTinCaNhanEditDetailComponent implements OnInit {
         this.spinner.hide();
         this.listViews = cloneDeep(results.data.group_fields || []);
         this.detailInfo = results.data;
+        this.activeIndex = results.data.flow_st;
+        this.steps = results.data.flowStatuses.map(d => {
+          return {
+            label: d.flow_name,
+            value: d.flow_st
+          }
+        });
+        setTimeout(() => {
+          this.stepActivated();
+        }, 100);
         if(results.data.submit_st) {
           this.optionsButtonsView = [
-            { label: 'Bỏ qua', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
-            { label: 'Trình duyệt', value: 'Update', class: 'btn-accept' }
+            { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
+            { label: 'Trình duyệt', value: 'Submit', class: 'btn-accept' }
           ]
         }else {
-          this.optionsButtonsView = [
-            { label: 'Bỏ qua', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
-            { label: 'Xác nhận', value: 'Update', class: 'btn-accept' }
-          ]
+          if(results.data.save_st) {
+            this.optionsButtonsView = [
+              { label: results.data.flow_st === 0 ? 'Hủy' : 'Quay lại', value: results.data.flow_st === 0 ? 'Cancel': 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
+              { label: 'Lưu tạm', value: 'SaveNhap', class: 'btn-accept' },
+              { label: 'Tiếp tục', value: 'Update', class: 'btn-accept' }
+            ]
+          }else {
+            this.optionsButtonsView = [
+              { label: results.data.flow_st === 0 ? 'Hủy' : 'Quay lại', value: results.data.flow_st === 0 ? 'Cancel': 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
+              { label: 'Tiếp tục', value: 'Update', class: 'btn-accept' }
+            ]
+          }
+       
         }
       };
     }, error => {
@@ -54,13 +75,77 @@ export class ThongTinCaNhanEditDetailComponent implements OnInit {
     });
   }
 
+
+  callBackForm(event) {
+    const params = {
+      ...this.detailInfo, group_fields: event.data, flow_st: this.activeIndex
+    }
+    this.callApiInfo(params)
+    if(event.type === 'Submit' || event.type === 'SaveNhap') {
+      setTimeout(() => {
+        this.cancelSave.emit();
+      }, 200);
+    }
+  }
+
+  stepActivated(): void {
+    const stepS = document.querySelectorAll('.steps-contract .p-steps-item');
+    if (stepS.length > 0) {
+      for (let i = 0; i < this.steps.length; i++) {
+        if (i <= this.activeIndex) {
+          stepS[i].className += ' active';
+        } else {
+          stepS[i].classList.value = `p-steps-item icon-${i}`;
+        }
+      }
+    }
+  }
+
+  
+
   setDetail(data) {
     const  params = {
-      ...this.detailInfo, group_fields: data
+      ...this.detailInfo, group_fields: data, flow_st: this.activeIndex + 1
     };
+    this.callApiInfo(params)
+  
+  }
+
+  callApiInfo(params) {
     this.apiService.setEmpProfile(params).subscribe((results: any) => {
       if (results.status === 'success') {
-      
+        this.listViews = cloneDeep(results.data.group_fields || []);
+        this.detailInfo = results.data;
+        this.activeIndex = results.data.flow_st;
+        this.steps = results.data.flowStatuses.map(d => {
+          return {
+            label: d.flow_name,
+            value: d.flow_st
+          }
+        });
+        setTimeout(() => {
+          this.stepActivated();
+        }, 100);
+        if(results.data.submit_st) {
+          this.optionsButtonsView = [
+            { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
+            { label: 'Trình duyệt', value: 'Update', class: 'btn-accept' }
+          ]
+        }else {
+          if(results.data.save_st) {
+            this.optionsButtonsView = [
+              { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
+              { label: 'Lưu tạm', value: 'Update', class: 'btn-accept' },
+              { label: 'Tiếp tục', value: 'Update', class: 'btn-accept' }
+            ]
+          }else {
+            this.optionsButtonsView = [
+              { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
+              { label: 'Tiếp tục', value: 'Update', class: 'btn-accept' }
+            ]
+          }
+       
+        }
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Cập nhật thông tin thành công' });
       } else {
         this.messageService.add({
@@ -71,10 +156,17 @@ export class ThongTinCaNhanEditDetailComponent implements OnInit {
     });
   }
 
-  canceDetail(event) {
-    if(event === 'Cancel') {
-      this.cancelSave.emit(true)
+  canceDetail(data) {
+    if (data === 'CauHinh') {
+      this.getDetail()
+    } else if (data === 'BackPage') {
+      this.listViews = [];
+      const params = {
+        ...this.detailInfo, flow_st: this.activeIndex - 1
+      }
+      this.callApiInfo(params)
+    } else {
+      this.cancelSave.emit();
     }
   }
-
 }
