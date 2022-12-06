@@ -54,7 +54,7 @@ export class ViTriCongViecComponent implements OnInit {
   CauHinh(type) {
     this.gridKeyForm = {
       index: type,
-      gridKey: type === 0 ? this.gridKey1 : this.gridKey1
+      gridKey: type === 0 ? this.gridKey : this.gridKey1
     }
     this.displaySetting = true;
   }

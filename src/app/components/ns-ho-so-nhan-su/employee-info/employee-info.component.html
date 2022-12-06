@@ -1,13 +1,7 @@
 
-<div class="main-grid product-detail chi-tiet-ho-so-nhan-su">
+<div class="main-grid product-detail chi-tiet-ho-so-nhan-su single-page">
     <section class="head-detail">
-        <div class="breadcrumb">
-            <p-breadcrumb [model]="items"></p-breadcrumb>
-            <h3 class="d-flex middle"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M11.3337 5.33341H3.22033L6.94699 1.60675L6.00033 0.666748L0.666992 6.00008L6.00033 11.3334L6.94033 10.3934L3.22033 6.66675H11.3337V5.33341Z" fill="#2B2F33" fill-opacity="0.6"/>
-                </svg> &nbsp;
-                {{titlePage}}</h3>
-        </div>
+        <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
         <p-tabView (onChange)="handleChange($event.index)" [(activeIndex)]="tabIndex">
             <p-tabPanel header="Thông tin cá nhân" leftIcon="{{dataEmployeeStatus?.profile_st ? 'pi pi-check-circle' : ''}} ">
                 <app-thong-tin-ca-nhan [empId]="empId" *ngIf="tabIndex ===0" [dataEmployeeStatus]="dataEmployeeStatus"></app-thong-tin-ca-nhan>

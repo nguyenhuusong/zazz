@@ -29,6 +29,7 @@ export class EmployeeInfoComponent implements OnInit {
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Quản lý nhân sự', routerLink: '/nhan-su/ho-so-nhan-su' },
+      { label: 'Chi tiết hồ sơ nhân sự' },
       // { label: 'Hồ sơ nhân sự', routerLink: '/nhan-su/ho-so-nhan-su' },
       // { label: `${this.titlePage}` },
     ];
