@@ -189,7 +189,7 @@ export class GridPushListComponent implements OnInit, OnChanges {
     this.confirmationService.confirm({
       message: `${CONSTANTS.CONFIRM.DELETE}`,
       accept: () => {
-        const queryParams = queryString.stringify({ id: e.rowData.id });
+        const queryParams = queryString.stringify({ id: e.rowData.userId });
         this.apiService.delNotifyPush(queryParams).subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xoá chính sách lãi đầu tư thành công' });
