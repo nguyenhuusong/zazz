@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiCoreService } from 'src/app/services/api-core/apicore.service';
@@ -10,12 +10,13 @@ import * as FileSaver from 'file-saver';
 import { AgGridFn, getFieldValueAggrid } from 'src/app/utils/common/function-common';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { API_PROFILE } from 'src/app/common/constants/constant';
+import { fromEvent } from 'rxjs';
 @Component({
   selector: 'app-vi-tri-cong-viec',
   templateUrl: './vi-tri-cong-viec.component.html',
   styleUrls: ['./vi-tri-cong-viec.component.scss']
 })
-export class ViTriCongViecComponent implements OnInit {
+export class ViTriCongViecComponent implements OnInit, AfterViewInit {
   detailInfo = null;
   @Input() empId = null;
   @Input() dataEmployeeStatus = null;
@@ -32,13 +33,22 @@ export class ViTriCongViecComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private router: Router
   ) { }
+  ngAfterViewInit(): void {
+    // var dragTarget = document.getElementById('view_hrm_emp_process_page');
+    // const click$ = fromEvent(dragTarget, 'click');
+
+    // click$.subscribe( event => {
+    //   console.log(event)
+    // });
+  }
 
   ngOnInit(): void {
     this.getTerminateReasons();
     this.getEmployeeInfo();
     this.getEmpProcessPageByEmpId();
     this.getEmpWorkingPageByEmpId();
-    this.initMenuPopup()
+    this.initMenuPopup();
+ 
   }
 
   itemsMenuPopup = []
@@ -98,7 +108,10 @@ export class ViTriCongViecComponent implements OnInit {
         this.columnDefs = [
           ...AgGridFn(repo.data.gridflexs || []),
           {
-            headerName: '',
+            headerComponentParams: {
+              template:
+              ` <span class="pi pi-plus" id="${this.gridKey}"></span>`
+          },
             field: 'gridflexdetails1',
             cellClass: ['border-right', 'no-auto'],
             pinned: 'right',
@@ -133,6 +146,10 @@ export class ViTriCongViecComponent implements OnInit {
         this.spinner.hide();
       }
     })
+  }
+
+  onClick() {
+    console.log("sdsd")
   }
   getEmpWorkingPageByEmpId() {
     this.spinner.show();
