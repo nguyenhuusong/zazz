@@ -2081,10 +2081,10 @@ export class ApiHrmService {
 
   //EmpInsurance
   getEmployeeChangeInfo(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v2/employeejob/GetEmployeeChangeInfo?` + queryParams, this.options);
+    return this.http.get<any>(`${apiHrmServer}/api/v2/employee/GetEmployeeChangeInfo?` + queryParams, this.options);
   }
 
-  InsurSetEmployeeChange(params): Observable<any> {
+  insurSetEmployeeChange(params): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/employeejob/SetEmployeeChange`, params, this.options)
   }
   

@@ -38,6 +38,28 @@ export class ViTriCongViecComponent implements OnInit {
     this.getEmployeeInfo();
     this.getEmpProcessPageByEmpId();
     this.getEmpWorkingPageByEmpId();
+    this.initMenuPopup()
+  }
+
+  itemsMenuPopup = []
+  initMenuPopup() {
+    this.itemsMenuPopup = [
+      {
+        label: 'Chuyển công tác',
+        icon: 'pi pi-arrow-down-right',
+        command: () => {
+          this.chuyenCongTac();
+        }
+      },
+      {
+        label: 'Nghỉ việc',
+        icon: 'pi pi-directions',
+        command: () => {
+          this.fnNghiViec();
+        }
+      },
+   
+    ]
   }
   columnDefs1 = [];
   listsData1 = [];
@@ -318,7 +340,7 @@ export class ViTriCongViecComponent implements OnInit {
 
   setEmployeeChange(parmas) {
     // change old api this.apiService.setEmployeeChange(parmas).subscribe((results: any) => {
-    this.apiService.InsurSetEmployeeChange(parmas).subscribe((results: any) => {
+    this.apiService.insurSetEmployeeChange(parmas).subscribe((results: any) => {
       if (results.status === 'success') {
         this.displayDialog = false;
         // this.manhinh = 'Edit';
