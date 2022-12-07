@@ -129,7 +129,7 @@ export class ThongTinCaNhanEditDetailComponent implements OnInit {
         if(results.data.submit_st) {
           this.optionsButtonsView = [
             { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
-            { label: 'Trình duyệt', value: 'Update', class: 'btn-accept' }
+            { label: 'Trình duyệt', value: 'Submit', class: 'btn-accept' }
           ]
         }else {
           if(results.data.save_st) {
