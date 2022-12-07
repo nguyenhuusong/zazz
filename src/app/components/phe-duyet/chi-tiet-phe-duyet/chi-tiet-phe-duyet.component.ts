@@ -95,6 +95,7 @@ export class ChiTietPheDuyetComponent implements OnInit, OnDestroy {
       .subscribe((results: any) => {
         if (results.status === 'success') {
           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
+          this.router.navigate(['/nhan-su/phe-duyet']);
           this.spinner.hide();
         } else {
           this.messageService.add({
