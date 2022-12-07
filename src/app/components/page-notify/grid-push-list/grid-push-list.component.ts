@@ -45,7 +45,7 @@ export class GridPushListComponent implements OnInit, OnChanges {
   model: any = {};
   totalRecord = 0;
   filter = {
-    notiId: 0,
+    n_id: 0,
     filter: '',
     action: '',
     push_st: -1,
@@ -87,7 +87,7 @@ export class GridPushListComponent implements OnInit, OnChanges {
   agGridFn = AgGridFn;
 
   ngOnInit(): void {
-    this.filter.notiId = this.notify ? this.notify.n_id : 0;
+    this.filter.n_id = this.notify ? this.notify.n_id : 0;
     this.getFilterType();
     //test
     // this.load();
@@ -100,9 +100,8 @@ export class GridPushListComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('this.notify', changes)
     if (this.notify && this.notify.n_id) {
-      this.filter.notiId = this.notify.n_id
+      this.filter.n_id = this.notify.n_id
       this.load();
     }
   }

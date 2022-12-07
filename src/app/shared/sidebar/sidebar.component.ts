@@ -129,8 +129,8 @@ export class SidebarComponent implements OnInit {
             //  this.apiService.getUserMenus(queryParams).subscribe(results => {
             //     console.log('menu old', results)
             //  })
-            //  this.apiService.clientMenuGetListByUserId(queryMeny).subscribe(results => {
-              this.apiService.getUserMenus(queryParams).subscribe(results => {
+             this.apiService.clientMenuGetListByUserId(queryMeny).subscribe(results => {
+            //   this.apiService.getUserMenus(queryParams).subscribe(results => {
                    if (results.status === 'success') {
                        this.menuItems = results.data;
                        this.convetArry(this.menuItems);
@@ -195,13 +195,13 @@ export class SidebarComponent implements OnInit {
     parseObjectProperties(obj: any[], pathname) {
         for (let k of obj) {
             k.label = k.title;
-            if (k.path && k.class !== 'navigation-header') {
+            if (k.path && k.classs !== 'navigation-header') {
                 k.routerLink = k.path
                 k.styleClass = 'nav-item';
                 k.class = 'nav-item';
             }
             if (k.submenus && k.submenus.length > 0) {
-                k.items = k.submenus.filter((d: any) => d.class && (d.class.indexOf("hidden") < 0));
+                k.items = k.submenus.filter((d: any) => d.classs && (d.classs.indexOf("hidden") < 0));
             }
             if (k.routerLink) {
                 // active menu con
