@@ -6,6 +6,7 @@ import * as queryString from 'querystring';
 import { cloneDeep } from 'lodash';
 import * as moment from 'moment';
 import { AgGridFn } from 'src/app/common/function-common/common';
+import { fromEvent } from 'rxjs';
 @Component({
   selector: 'app-thoi-gian-lam-viec',
   templateUrl: './thoi-gian-lam-viec.component.html',
@@ -27,6 +28,16 @@ export class ThoiGianLamViecComponent implements OnInit {
   listsData = [];
   columnDefs = [];
   gridKey = ''
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      var dragTarget = document.getElementById(this.gridKey);
+      const click$ = fromEvent(dragTarget, 'click');
+      click$.subscribe(event => {
+        this.addTimeWork()
+      });
+    }, 500);
+  }
   ngOnInit(): void {
     this.getEmpWorkingPageByEmpId();
   }
@@ -105,8 +116,8 @@ export class ThoiGianLamViecComponent implements OnInit {
       {
         headerComponentParams: {
           template:
-          ` <span class="pi pi-plus" id="${this.gridKey}"></span>`
-      },
+          `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
+        },
         field: 'gridflexdetails1',
         cellClass: ['border-right', 'no-auto'],
         pinned: 'right',

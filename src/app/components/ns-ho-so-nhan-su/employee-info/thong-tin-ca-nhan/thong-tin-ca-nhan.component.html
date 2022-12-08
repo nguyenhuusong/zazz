@@ -47,7 +47,7 @@
                                     <ng-template pTemplate="header">
                                         <div class="grid d-flex justify-content-between">
                                             <h3 class="title-section">Giấy tờ tùy thân</h3>
-                                            <p-button label="Thêm mới" icon="pi pi-plus" styleClass="p-button-sm"></p-button>  
+                                            <!-- <p-button label="Thêm mới" icon="pi pi-plus" styleClass="p-button-sm"></p-button>   -->
                                         </div>
                                     </ng-template>
                                     <div class="row" style="flex-wrap: wrap">
@@ -73,7 +73,7 @@
                                     <ng-template pTemplate="header">
                                         <div class="grid d-flex justify-content-between">
                                             <h3 class="title-section">Danh sách thông tin người liên hệ</h3>
-                                            <p-button label="Thêm mới" icon="pi pi-plus" (click)="themLienHe()" styleClass="p-button-sm mr-1"></p-button>
+                                            <!-- <p-button label="Thêm mới" icon="pi pi-plus" (click)="themLienHe()" styleClass="p-button-sm mr-1"></p-button> -->
                                         </div>
                                     </ng-template>
                                     <div class="row" style="flex-wrap: wrap">
@@ -97,7 +97,7 @@
                                     <ng-template pTemplate="header">
                                         <div class="grid d-flex justify-content-between">
                                             <h3 class="title-section">Thông tin hồ sơ cá nhân</h3>
-                                            <p-button label="Thêm mới" icon="pi pi-plus" (click)="themMoiThongTinHSCN()" styleClass="p-button-sm mr-1"></p-button>
+                                            <!-- <p-button label="Thêm mới" icon="pi pi-plus" (click)="themMoiThongTinHSCN()" styleClass="p-button-sm mr-1"></p-button> -->
                                         </div>
                                     </ng-template>
                                     <div class="row" style="flex-wrap: wrap">
@@ -121,7 +121,7 @@
                                     <ng-template pTemplate="header">
                                         <div class="grid d-flex justify-content-between">
                                             <h3 class="title-section">Danh sách đính kèm</h3>
-                                            <p-button label="Thêm mới" icon="pi pi-plus" (click)="themMoiDinhKem()" styleClass="p-button-sm mr-1"></p-button>
+                                            <!-- <p-button label="Thêm mới" icon="pi pi-plus" (click)="themMoiDinhKem()" styleClass="p-button-sm mr-1"></p-button> -->
                                         </div>
                                     </ng-template>
                                     <div class="row" style="flex-wrap: wrap">
@@ -151,7 +151,7 @@
     <p-header>
         Tải lên hợp đồng [{{record?.meta_title}}]
     </p-header>
-    <app-upload-file [multiple]="" (callback)="handleUpload($event)" *ngIf="displayuploadcontract"></app-upload-file>
+    <!-- <app-upload-file [multiple]="" (callback)="handleUpload($event)" *ngIf="displayuploadcontract"></app-upload-file> -->
 </p-dialog>
 
 <p-dialog header="Cài đặt cấu hình " [appendTo]="'body'" [focusTrap]="false" styleClass="popup-setting"

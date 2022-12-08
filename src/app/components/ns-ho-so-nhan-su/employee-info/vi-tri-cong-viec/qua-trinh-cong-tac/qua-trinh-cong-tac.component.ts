@@ -1,18 +1,19 @@
 
 
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as queryString from 'querystring';
 import { cloneDeep } from 'lodash';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { AgGridFn } from 'src/app/common/function-common/common';
+import { fromEvent } from 'rxjs';
 @Component({
   selector: 'app-qua-trinh-cong-tac',
   templateUrl: './qua-trinh-cong-tac.component.html',
   styleUrls: ['./qua-trinh-cong-tac.component.scss']
 })
-export class QuaTrinhCongTacComponent implements OnInit {
+export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
   @Input() empId = null;
   @Output() cancelSave = new EventEmitter<any>();
   dataDetailInfo = null;
@@ -22,12 +23,22 @@ export class QuaTrinhCongTacComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
-    ) { }
-    optionsButtonsView = [
-      { label: 'Bỏ qua', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
-      { label: 'Lưu tạm', value: 'Update', class: 'btn-accept' },
-      { label: 'Tiếp tục', value: 'Update', class: 'btn-accept' }
-    ]
+  ) { }
+  optionsButtonsView = [
+    { label: 'Bỏ qua', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
+    { label: 'Lưu tạm', value: 'Update', class: 'btn-accept' },
+    { label: 'Tiếp tục', value: 'Update', class: 'btn-accept' }
+  ]
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      var dragTarget = document.getElementById(this.gridKey);
+      const click$ = fromEvent(dragTarget, 'click');
+      click$.subscribe(event => {
+        this.addProcess()
+      });
+    }, 500);
+  }
   ngOnInit(): void {
     this.getEmpProcessPageByEmpId();
     // this.getDetail();
@@ -59,8 +70,8 @@ export class QuaTrinhCongTacComponent implements OnInit {
       {
         headerComponentParams: {
           template:
-          ` <span class="pi pi-plus" id="${this.gridKey}"></span>`
-      },
+          `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
+        },
         field: 'gridflexdetails1',
         cellClass: ['border-right', 'no-auto'],
         pinned: 'right',
@@ -97,9 +108,9 @@ export class QuaTrinhCongTacComponent implements OnInit {
   }
   displayFormEditDetail = false;
   canceldataDetailInfo(event) {
-    if(event === 'CauHinh') {
+    if (event === 'CauHinh') {
       this.getDetail();
-    }else {
+    } else {
       this.displayFormEditDetail = false
     }
   }
@@ -137,25 +148,25 @@ export class QuaTrinhCongTacComponent implements OnInit {
         setTimeout(() => {
           this.stepActivated();
         }, 100);
-        if(results.data.submit_st) {
+        if (results.data.submit_st) {
           this.optionsButtonsView = [
             { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
             { label: 'Trình duyệt', value: 'Submit', class: 'btn-accept' }
           ]
-        }else {
-          if(results.data.save_st) {
+        } else {
+          if (results.data.save_st) {
             this.optionsButtonsView = [
-              { label: results.data.flow_st === 0 ? 'Hủy' : 'Quay lại', value: results.data.flow_st === 0 ? 'Cancel': 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
+              { label: results.data.flow_st === 0 ? 'Hủy' : 'Quay lại', value: results.data.flow_st === 0 ? 'Cancel' : 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
               { label: 'Lưu tạm', value: 'SaveNhap', class: 'btn-accept' },
               { label: 'Tiếp tục', value: 'Update', class: 'btn-accept' }
             ]
-          }else {
+          } else {
             this.optionsButtonsView = [
-              { label: results.data.flow_st === 0 ? 'Hủy' : 'Quay lại', value: results.data.flow_st === 0 ? 'Cancel': 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
+              { label: results.data.flow_st === 0 ? 'Hủy' : 'Quay lại', value: results.data.flow_st === 0 ? 'Cancel' : 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
               { label: 'Tiếp tục', value: 'Update', class: 'btn-accept' }
             ]
           }
-       
+
         }
       };
     }, error => {
@@ -170,7 +181,7 @@ export class QuaTrinhCongTacComponent implements OnInit {
       ...this.dataDetailInfo, group_fields: event.data, flow_st: this.activeIndex
     }
     this.callApiInfo(params)
-    if(event.type === 'Submit' || event.type === 'SaveNhap') {
+    if (event.type === 'Submit' || event.type === 'SaveNhap') {
       setTimeout(() => {
         this.cancelSave.emit();
       }, 200);
@@ -190,14 +201,14 @@ export class QuaTrinhCongTacComponent implements OnInit {
     }
   }
 
-  
+
 
   setDetail(data) {
-    const  params = {
+    const params = {
       ...this.dataDetailInfo, group_fields: data, flow_st: this.activeIndex + 1
     };
     this.callApiInfo(params)
-  
+
   }
 
   callApiInfo(params) {
@@ -215,25 +226,25 @@ export class QuaTrinhCongTacComponent implements OnInit {
         setTimeout(() => {
           this.stepActivated();
         }, 100);
-        if(results.data.submit_st) {
+        if (results.data.submit_st) {
           this.optionsButtonsView = [
             { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
             { label: 'Trình duyệt', value: 'Submit', class: 'btn-accept' }
           ]
-        }else {
-          if(results.data.save_st) {
+        } else {
+          if (results.data.save_st) {
             this.optionsButtonsView = [
               { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
               { label: 'Lưu tạm', value: 'Update', class: 'btn-accept' },
               { label: 'Tiếp tục', value: 'Update', class: 'btn-accept' }
             ]
-          }else {
+          } else {
             this.optionsButtonsView = [
               { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
               { label: 'Tiếp tục', value: 'Update', class: 'btn-accept' }
             ]
           }
-       
+
         }
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Cập nhật thông tin thành công' });
       } else {
@@ -255,14 +266,14 @@ export class QuaTrinhCongTacComponent implements OnInit {
       }
       this.callApiInfo(params)
     } else {
-     this.displayFormEditDetail= false;
+      this.displayFormEditDetail = false;
     }
   }
-   deleteRow(event) {
+  deleteRow(event) {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa quá trình làm việc này?',
       accept: () => {
-        const queryParams = queryString.stringify({processId: event.rowData.processId});
+        const queryParams = queryString.stringify({ processId: event.rowData.processId });
         this.apiService.delEmpProcessInfo(queryParams).subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
@@ -277,7 +288,7 @@ export class QuaTrinhCongTacComponent implements OnInit {
 }
 
 
-  
- 
+
+
 
 
