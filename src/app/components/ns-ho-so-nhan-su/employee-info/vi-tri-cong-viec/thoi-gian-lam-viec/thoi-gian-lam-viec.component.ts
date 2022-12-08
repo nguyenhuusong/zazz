@@ -44,7 +44,7 @@ export class ThoiGianLamViecComponent implements OnInit {
   dataDetailInfo = null;
   displayFormEditDetail = false
   getEmpWorking() {
-    const queryParams = queryString.stringify({ empId: this.empId, gd: this.workingId });
+    const queryParams = queryString.stringify({ empId: this.empId, id: this.workingId });
     this.listViewsDetail = [];
     this.apiService.getEmpWorking(queryParams).subscribe(results => {
       if (results.status === 'success') {
@@ -138,7 +138,7 @@ export class ThoiGianLamViecComponent implements OnInit {
   }
 
   editRow(event) {
-    this.workingId = event.rowData.gd;
+    this.workingId = event.rowData.id;
     this.getEmpWorking();
   }
 
@@ -146,7 +146,7 @@ export class ThoiGianLamViecComponent implements OnInit {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa thời gian làm việc này?',
       accept: () => {
-        const queryParams = queryString.stringify({gd: event.rowData.gd});
+        const queryParams = queryString.stringify({id: event.rowData.id});
         this.apiService.delEmpWorking(queryParams).subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
