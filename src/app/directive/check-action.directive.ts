@@ -41,9 +41,10 @@ export class CheckHideActionsDirective implements OnInit, AfterViewInit, AfterCo
       if(results && results.length>0){
         this.manager.getUser().then(user => {
             const query = {  }
-            const queryParams = queryString.stringify({ organizeIds: results });
-            this.apiService.getUserMenus(queryParams).subscribe((results: any) => {
-            // this.apiService.getListMenuByUserId(this.authService.getClaims().sub, '3133579B-4FD9-449E-9CEA-4B384884E7D3').subscribe(results => {
+            // const queryParams = queryString.stringify({ organizeIds: results });
+            const queryMeny = queryString.stringify({ userId: this.authService.getClaims().sub, webId: '70e930b0-ffea-43d3-b3a9-0e6b03f2b433' });
+            // this.apiService.getUserMenus(queryParams).subscribe((results: any) => {
+            this.apiService.clientMenuGetListByUserId(queryMeny).subscribe(results => {
                 if (results.status === 'success') {
                     let newArray = []
                     results.data.forEach(element => {
