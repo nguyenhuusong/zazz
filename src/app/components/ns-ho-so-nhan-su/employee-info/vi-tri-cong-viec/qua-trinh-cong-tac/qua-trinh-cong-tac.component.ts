@@ -39,7 +39,7 @@ export class QuaTrinhCongTacComponent implements OnInit {
     this.spinner.show();
     this.columnDefs = [];
     const queryParams = queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 });
-    this.apiService.getEmpWorkingPageByEmpId(queryParams).subscribe(repo => {
+    this.apiService.getEmpProcessPageByEmpId(queryParams).subscribe(repo => {
       if (repo.status === 'success') {
         if (repo.data.dataList.gridKey) {
           this.gridKey = repo.data.dataList.gridKey;
