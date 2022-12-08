@@ -19,8 +19,8 @@
             <app-step-info [detailInfo]="detailInfo" *ngIf="detailInfo"></app-step-info>
         </div>
         <div class="col-3 d-flex end" >
-            <div class=" gap-16 icons-detail-config" >
-                <span class="pi pi-pencil" pTooltip="Chỉnh sửa" tooltipPosition="left" *ngIf="detailInfo?.emp_st === 1"></span>
+            <div class=" gap-16 icons-detail-config d-flex align-items-center" >
+                <span class="pi pi-pencil" pTooltip="Chỉnh sửa" tooltipPosition="left" (click)="editDetail()"></span>
                 <button type="button" pButton icon="pi pi-angle-down" label="Thao Tác" class="height-56 ml-2 p-button-text"  (click)="menu.toggle($event)"></button>
                 <p-menu [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'" [appendTo]="'body'" #menu [popup]="true" [model]="itemsMenuPopup"></p-menu>
             </div>
@@ -197,4 +197,12 @@
     [maximizable]="true" [draggable]="false" [resizable]="false">
     <app-config-grid-table-form *ngIf="displaySetting && gridKeyForm.gridKey" [typeConfig]="'TableInfo'"
         [gridKey]="gridKeyForm.gridKey"></app-config-grid-table-form>
+</p-dialog>
+
+<p-dialog [(visible)]="isEditDetail" [autoZIndex]="true" [modal]="true"  appendTo="body"
+    [style]="{width: '1300px', height: 'auto'}">
+    <p-header>
+       Chỉnh sửa vị trí công việc
+    </p-header>
+        <app-edit-vi-tri-cong-viec *ngIf="isEditDetail" [empId]="empId" (cancelSave)="cancelSetDetail($event)"></app-edit-vi-tri-cong-viec>
 </p-dialog>

@@ -467,5 +467,15 @@ export class ViTriCongViecComponent implements OnInit, AfterViewInit {
     }
   
   }
+  isEditDetail = false;
+  cancelSetDetail(event) {
+    this.isEditDetail = false;
+  }
+
+  editDetail() {
+    this.isEditDetail = true;
+  }
+
+
 }
 
