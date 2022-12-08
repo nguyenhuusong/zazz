@@ -81,6 +81,8 @@ import { QuanLyTaiKhoanComponent } from 'src/app/components/ns-ho-so-nhan-su/emp
 import { StepInfoComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/step-info/step-info.component';
 import { ThongTinCaNhanEditDetailComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/thong-tin-ca-nhan/thong-tin-ca-nhan-edit-detail/thong-tin-ca-nhan-edit-detail.component';
 import { EditViTriCongViecComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/vi-tri-cong-viec/edit-vi-tri-cong-viec/edit-vi-tri-cong-viec.component';
+import { QuaTrinhCongTacComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/vi-tri-cong-viec/qua-trinh-cong-tac/qua-trinh-cong-tac.component';
+import { ThoiGianLamViecComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/vi-tri-cong-viec/thoi-gian-lam-viec/thoi-gian-lam-viec.component';
 
 @NgModule({
   imports: [
@@ -171,7 +173,9 @@ import { EditViTriCongViecComponent } from 'src/app/components/ns-ho-so-nhan-su/
     TienIchComponent,
     QuanLyTaiKhoanComponent,
     StepInfoComponent,
-    EditViTriCongViecComponent
+    EditViTriCongViecComponent,
+    QuaTrinhCongTacComponent,
+    ThoiGianLamViecComponent
 
 
   ],

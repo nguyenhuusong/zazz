@@ -45,8 +45,6 @@ export class ViTriCongViecComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.getTerminateReasons();
     this.getEmployeeInfo();
-    this.getEmpProcessPageByEmpId();
-    this.getEmpWorkingPageByEmpId();
     this.initMenuPopup();
  
   }
@@ -54,13 +52,13 @@ export class ViTriCongViecComponent implements OnInit, AfterViewInit {
   itemsMenuPopup = []
   initMenuPopup() {
     this.itemsMenuPopup = [
-      {
-        label: 'Chuyển công tác',
-        icon: 'pi pi-arrow-down-right',
-        command: () => {
-          this.chuyenCongTac();
-        }
-      },
+      // {
+      //   label: 'Chuyển công tác',
+      //   icon: 'pi pi-arrow-down-right',
+      //   command: () => {
+      //     this.chuyenCongTac();
+      //   }
+      // },
       {
         label: 'Nghỉ việc',
         icon: 'pi pi-directions',
@@ -77,151 +75,9 @@ export class ViTriCongViecComponent implements OnInit, AfterViewInit {
   columnDefs = [];
   listsData = [];
   gridKey = '';
-  gridKeyForm = {
-    index: 0,
-    gridKey: ''
-  }
-
-  displaySetting = false;
-  CauHinh(type) {
-    this.gridKeyForm = {
-      index: type,
-      gridKey: type === 0 ? this.gridKey : this.gridKey1
-    }
-    this.displaySetting = true;
-  }
-
-  reloadGetEmpProfilePage() {
-    this.gridKeyForm.index === 0 ? this.getEmpProcessPageByEmpId() : this.getEmpWorkingPageByEmpId();
-  }
-
-  getEmpProcessPageByEmpId() {
-    this.spinner.show();
-    this.columnDefs = [];
-    const queryParams = queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 });
-    this.apiService.getEmpProcessPageByEmpId(queryParams).subscribe(repo => {
-      if (repo.status === 'success') {
-        if (repo.data.dataList.gridKey) {
-          this.gridKey = repo.data.dataList.gridKey;
-        }
-        this.spinner.hide();
-        this.columnDefs = [
-          ...AgGridFn(repo.data.gridflexs || []),
-          {
-            headerComponentParams: {
-              template:
-              ` <span class="pi pi-plus" id="${this.gridKey}"></span>`
-          },
-            field: 'gridflexdetails1',
-            cellClass: ['border-right', 'no-auto'],
-            pinned: 'right',
-            width: 70,
-            cellRenderer: 'buttonAgGridComponent',
-            cellRendererParams: params => {
-              return {
-                buttons: [
-                  // {
-                  //   onClick: this.editRow.bind(this),
-                  //   label: 'Xem chi tiết',
-                  //   icon: 'fa fa-edit editing',
-                  //   key: 'view-job-detail',
-                  //   class: 'btn-primary mr5',
-                  // },
-
-                  // {
-                  //   onClick: this.deleteRow.bind(this),
-                  //   label: 'Xóa',
-                  //   icon: 'pi pi-trash',
-                  //   key: 'delete-qua-trinh-hop-dong',
-                  //   class: 'btn-danger',
-                  // },
-                ]
-              };
-            },
-          }
-        ];
-        this.listsData = repo.data.dataList.data || [];
-
-      } else {
-        this.spinner.hide();
-      }
-    })
-  }
 
   onClick() {
     console.log("sdsd")
-  }
-  getEmpWorkingPageByEmpId() {
-    this.spinner.show();
-    this.columnDefs1 = [];
-    const queryParams = queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 });
-    this.apiService.getEmpWorkingPageByEmpId(queryParams).subscribe(repo => {
-      if (repo.status === 'success') {
-        if (repo.data.dataList.gridKey) {
-          this.gridKey1 = repo.data.dataList.gridKey;
-        }
-        this.spinner.hide();
-        this.columnDefs1 = [
-          ...AgGridFn(repo.data.gridflexs || []),
-          {
-            headerName: '',
-            field: 'gridflexdetails1',
-            cellClass: ['border-right', 'no-auto'],
-            pinned: 'right',
-            width: 70,
-            cellRenderer: 'buttonAgGridComponent',
-            cellRendererParams: params => {
-              return {
-                buttons: [
-                  {
-                    onClick: this.editRowTimeWork.bind(this),
-                    label: 'Xem chi tiết',
-                    icon: 'fa fa-edit editing',
-                    key: 'view-job-detail',
-                    class: 'btn-primary mr5',
-                  },
-
-                  {
-                    onClick: this.deleteRow.bind(this),
-                    label: 'Xóa',
-                    icon: 'pi pi-trash',
-                    key: 'delete-qua-trinh-hop-dong',
-                    class: 'btn-danger',
-                  },
-
-                ]
-              };
-            },
-          }
-        ];
-        this.listsData1 = repo.data.dataList.data || [];
-
-      } else {
-        this.spinner.hide();
-      }
-    })
-  }
-
-  editRowTimeWork(event) {
-    this.vitri = 1;
-    this.addTimeWork(event.rowData.empId, event.rowData.gd);
-  }
-
-  deleteRow(event) {
-    this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn xóa thời gian làm việc này?',
-      accept: () => {
-        const queryParams = queryString.stringify({gd: event.rowData.gd});
-        this.apiService.delEmpWorking(queryParams).subscribe((results: any) => {
-          if (results.status === 'success') {
-            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
-            this.getEmpWorkingPageByEmpId();
-          } else {
-            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
-          }
-        });
-      }
-    });
   }
 
   getTerminateReasons() {
@@ -300,17 +156,6 @@ export class ViTriCongViecComponent implements OnInit, AfterViewInit {
   keyParamGetInfo ='';
   displayDialog= false;
   noDisableInput= true;
-  chuyenCongTac() {
-    this.modelDuyet.empId = this.detailInfo.empId;
-    this.modelDuyet.full_name = this.detailInfo.fullName;
-    this.titleForm.title = 'Chuyển công tác';
-    this.keyParamGetInfo = API_PROFILE.CHUYEN_CONG_TAC
-    this.getEmployeeChangeInfo();
-    this.titleForm.type = 'ChuyenCongTac';
-    this.displayDialog = true;
-    this.noDisableInput = true;
-  }
-
   detailInfoForm = null
   getEmployeeChangeInfo() {
     this.listViewsForm = []
@@ -412,61 +257,10 @@ export class ViTriCongViecComponent implements OnInit, AfterViewInit {
       this.displayDialog = false;
     }
   }
-  vitri = 0;
-  addTimeWork(empId = this.detailInfo.empId, gd = null) {
-    this.vitri = 1;
-    const queryParams = queryString.stringify({ empId: empId, gd: gd });
-    this.getEmpWorking(queryParams);
-  }
-  addProcess(empId = this.detailInfo.empId, gd = null) {
-    this.vitri = 0;
-    const queryParams = queryString.stringify({ empId: empId, gd: gd });
-    // this.getEmpWorking(queryParams);
-  }
 
 
-  listViewsDetail = [];
   dataDetailInfo = [];
-  displayFormEditDetail = false;;
-  getEmpWorking(query) {
-    this.listViewsDetail = [];
-    this.apiService.getEmpWorking(query).subscribe(results => {
-      if (results.status === 'success') {
-        this.listViewsDetail = cloneDeep(results.data.group_fields);
-        this.dataDetailInfo = results.data;
-        this.displayFormEditDetail = true;
-      }
-    })
-  }
-
-  cancelDetailInfo(data) {
-    if (data === 'CauHinh') {
-      const queryParams = queryString.stringify({ empId: this.detailInfo.empId, gd: null });
-      this.getEmpWorking(queryParams);
-    } else {
-      this.displayFormEditDetail = false;
-    }
-  }
-
-  setDetailInfo(data) {
-    if(this.vitri === 1) {
-      const param = {
-        ...this.dataDetailInfo, group_fields: data
-      }
-      this.apiService.setEmpWorking(param).subscribe(results => {
-        if (results.status === 'success') {
-          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thêm mới thành công' });
-          this.displayFormEditDetail = false;
-          this.getEmpWorkingPageByEmpId();
-          this.spinner.hide();
-        } else {
-          this.spinner.hide();
-          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
-        }
-      })
-    }
-  
-  }
+ 
   isEditDetail = false;
   cancelSetDetail(event) {
     this.isEditDetail = false;

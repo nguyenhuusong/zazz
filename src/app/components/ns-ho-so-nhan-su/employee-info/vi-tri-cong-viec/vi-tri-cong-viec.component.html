@@ -56,55 +56,10 @@
                             (callbackcancel)="cancelUpdate($event)">
                         </app-edit-detail>
                         <p-divider></p-divider>
-                        <div class="grid wrap-edit-detail">
-                            <div class="col-12 border-section ">
-                                <p-panel>
-                                    <ng-template pTemplate="header">
-                                        <div class="grid d-flex justify-content-between">
-                                            <h3 class="title-section">Quá trình công tác</h3>
-                                            <p-button label="Thêm mới" icon="pi pi-plus" (click)="addProcess()" styleClass="p-button-sm mr-1"></p-button> 
-                                        </div>
-                                    </ng-template>
-                                    <div class="row" style="flex-wrap: wrap">
-                                        <div class="grid-default border">
-                                            <app-list-grid-angular 
-                                                [domLayout]="'autoHeight'" 
-                                                *ngIf="columnDefs.length > 0" 
-                                                [title]="'Chứng chỉ'"
-                                                [listsData]="listsData"
-                                                (showConfig)="CauHinh(0)" 
-                                                [columnDefs]="columnDefs">
-                                            </app-list-grid-angular>
-                                        </div>
-                                    </div>
-                                </p-panel>
-                            </div>
-                        </div>  
+                        <app-qua-trinh-cong-tac [empId]="empId"></app-qua-trinh-cong-tac>
                         <p-divider></p-divider>
-                        <div class="grid wrap-edit-detail">
-                            <div class="col-12 border-section ">
-                                <p-panel >
-                                    <ng-template pTemplate="header">
-                                        <div class="grid d-flex justify-content-between">
-                                            <h3 class="title-section">Thời gian làm việc</h3>
-                                            <p-button label="Thêm mới" icon="pi pi-plus" (click)="addTimeWork()" styleClass="p-button-sm mr-1"></p-button>
-                                        </div>
-                                    </ng-template>
-                                    <div class="row" style="flex-wrap: wrap">
-                                        <div class="grid-default border">
-                                            <app-list-grid-angular 
-                                                [domLayout]="'autoHeight'" 
-                                                *ngIf="columnDefs1.length > 0" 
-                                                [title]="'Chứng chỉ'"
-                                                [listsData]="listsData1" 
-                                                (showConfig)="CauHinh(1)"
-                                                [columnDefs]="columnDefs1">
-                                            </app-list-grid-angular>
-                                        </div>
-                                    </div>
-                                </p-panel>
-                            </div>
-                        </div>  
+                        <app-thoi-gian-lam-viec [empId]="empId"></app-thoi-gian-lam-viec>
+                     
                       
                     </div>
 
@@ -114,18 +69,6 @@
     </div>
 
 </section>
-<!-- <section>
-    <h6 class="title-section">Quá trình làm việc</h6>
-</section> -->
-<p-dialog styleClass="popup-btngroup-edit-detail"  [(visible)]="displayFormEditDetail" [draggable]="false"  [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '600px', height: 'auto'}">
-    <p-header>
-        Thông tin thời gian làm việc
-    </p-header>
-    <app-edit-detail [optionsButtonsEdit]="optionsButtonsPopup" *ngIf="listViewsDetail.length> 0 && displayFormEditDetail" [detailInfo]="detailInfo"
-        [detail]="displayFormEditDetail" [manhinh]="'Edit'" [thongtinnhanvienNew]="true"
-        [dataView]="listViewsDetail" (callback)="setDetailInfo($event)"
-        (callbackcancel)="cancelDetailInfo($event)"></app-edit-detail>
-</p-dialog>
 
 
 <p-dialog styleClass="popup-btngroup-edit-detail" header="{{titleForm.title}}" [(visible)]="displayDialog" [modal]="true" [draggable]="false"
@@ -189,14 +132,6 @@
                 <p-button label="Lưu lại" (click)="onChangeButtonSave('Save')" icon="pi pi-check" styleClass="p-button-sm "></p-button>
             </div>
         </div>
-</p-dialog>
-
-
-<p-dialog header="Cài đặt cấu hình " [appendTo]="'body'" [focusTrap]="false" styleClass="popup-setting"
-    (onHide)="reloadGetEmpProfilePage()" [(visible)]="displaySetting" [modal]="true" [style]="{width: '50vw'}"
-    [maximizable]="true" [draggable]="false" [resizable]="false">
-    <app-config-grid-table-form *ngIf="displaySetting && gridKeyForm.gridKey" [typeConfig]="'TableInfo'"
-        [gridKey]="gridKeyForm.gridKey"></app-config-grid-table-form>
 </p-dialog>
 
 <p-dialog [(visible)]="isEditDetail" [autoZIndex]="true" [modal]="true"  appendTo="body"

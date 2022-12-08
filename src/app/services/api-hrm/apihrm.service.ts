@@ -2050,6 +2050,9 @@ export class ApiHrmService {
   getEmpWorking(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/working/GetEmpWorking?` +  queryParams, this.options)
   }
+  getEmpProcessInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/working/GetEmpProcessInfo?` +  queryParams, this.options)
+  }
   setEmpWorking(queryParams): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/working/SetEmpWorking` ,  queryParams, this.options)
   }
@@ -2061,6 +2064,12 @@ export class ApiHrmService {
   }
   setEmpWorkingChanges(queryParams): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/working/SetEmpWorkingChanges` ,  queryParams, this.options)
+  }
+  setEmpProcessInfo(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/working/SetEmpProcessInfo` ,  queryParams, this.options)
+  }
+  delEmpProcessInfo(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/working/DelEmpProcessInfo?` + queryParams  , this.options)
   }
  
 
