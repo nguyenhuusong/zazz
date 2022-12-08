@@ -346,17 +346,17 @@ export function CheckHideAction(path, action) {
                 if (arrAction.indexOf(action) > -1) {
                     return  false;
                 } else {
-                    return true;
+                    return false;
                 }
             }else {
-                return true;
+                return false;
             }
         }else {
-            return true;
+            return false;
         }
 
     }else {
-        return true;
+        return false;
     }
 }
 
