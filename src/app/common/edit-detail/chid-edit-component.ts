@@ -569,11 +569,9 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
                 this.setValue(element1.columnType === 'multiSelect' ? [] : '', element1.field_name)
                 const params = element1.columnObject.split("?");
                 let params1 = params[1].split("&");
-                const indexparams1 = params1.findIndex(d => d.includes(`${field_name}=`));
-                if(indexparams1> -1) {
-                  params1.splice(indexparams1, 0, `${field_name}=${value}`);
-                }
-                element1.columnObject = params[0]  + `?${params1.join("&")}`
+                const indexparams1 = params1.filter(d => !d.includes(`${field_name}=`));
+                indexparams1.push(`${field_name}=${value}`);
+                element1.columnObject = params[0]  + `?${indexparams1.join("&")}`
                 if(element1.columnType === 'selectTree' || element1.columnType === 'selectTrees') {
                   promissall.push(this.apiHrmV2Service.getCustObjectListTreeV2(element1.columnObject, element1.field_name));
                 }else {
