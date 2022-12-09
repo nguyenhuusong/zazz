@@ -30,14 +30,19 @@ export class ThoiGianLamViecComponent implements OnInit {
   gridKey = ''
 
   ngAfterViewInit(): void {
+    this.FnEvent();
+  }
+
+  FnEvent() {
     setTimeout(() => {
       var dragTarget = document.getElementById(this.gridKey);
       const click$ = fromEvent(dragTarget, 'click');
       click$.subscribe(event => {
         this.addTimeWork()
       });
-    }, 500);
+    }, 300);
   }
+
   ngOnInit(): void {
     this.getEmpWorkingPageByEmpId();
   }
@@ -75,6 +80,7 @@ export class ThoiGianLamViecComponent implements OnInit {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thêm mới thành công' });
         this.displayFormEditDetail = false;
         this.getEmpWorkingPageByEmpId();
+        this.FnEvent();
         this.spinner.hide();
       } else {
         this.spinner.hide();
@@ -162,6 +168,7 @@ export class ThoiGianLamViecComponent implements OnInit {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
             this.getEmpWorkingPageByEmpId();
+            this.FnEvent();
           } else {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
           }

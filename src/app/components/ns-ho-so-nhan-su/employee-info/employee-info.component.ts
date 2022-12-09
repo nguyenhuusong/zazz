@@ -49,7 +49,6 @@ export class EmployeeInfoComponent implements OnInit {
       this.paramsObject = { ...params.keys, ...params };
       this.dataRouter = this.paramsObject.params;
       this.empId = this.paramsObject.params.empId || null;
-      this.getMenuInfo();
       this.getEmployeeStatus();
 
     });
@@ -64,19 +63,10 @@ export class EmployeeInfoComponent implements OnInit {
     this.apiService.getEmployeeStatus(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.dataEmployeeStatus = results.data;
+        this.handleChange(results.data.emp_st);
+
       }
     })
   }
-
-  getMenuInfo() {
-    this.spinner.show();
-    const queryParams = queryString.stringify({ empId: this.empId });
-    this.apiService.getEmpProfile(queryParams).subscribe(results => {
-      if (results.status === 'success') {
-        this.handleChange(results.data.flow_st);
-      }
-    })
-  }
-
 
 }

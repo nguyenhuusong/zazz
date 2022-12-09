@@ -41,7 +41,7 @@
     </p-card>
     <p-divider></p-divider>
     <p-card>
-        <app-edit-detail [optionsButtonsEdit]="optionsButtonsView" *ngIf="listViewsDetail.length> 0 && displayFormEditDetail" [detailInfo]="dataDetailInfo"
+        <app-edit-detail [optionsButtonsEdit]="optionsButtonsView" *ngIf="listViewsDetail.length> 0" [detailInfo]="dataDetailInfo"
             [detail]="displayFormEditDetail" [manhinh]="'Edit'" [thongtinnhanvienNew]="true"
             [dataView]="listViewsDetail" (callback)="setDetail($event)" 
             (callBackForm)="callBackForm($event)"

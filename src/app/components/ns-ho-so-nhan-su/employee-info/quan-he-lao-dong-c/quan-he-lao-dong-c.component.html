@@ -35,7 +35,7 @@
                             (callbackcancel)="cancelUpdate($event)">
                         </app-edit-detail>
                         <p-divider></p-divider>
-                        <app-qua-trinh-hop-dong [empId]="empId" [detailInfo]="detailInfo"></app-qua-trinh-hop-dong>
+                        <app-qua-trinh-hop-dong [empId]="empId" [detailInfo]="detailInfo" (cancelSave)="cancelSave()"></app-qua-trinh-hop-dong>
                         <app-tien-luong [empId]="empId"></app-tien-luong> 
                         <app-thong-tin-nguoi-phu-thuoc [empId]="empId"></app-thong-tin-nguoi-phu-thuoc> 
 

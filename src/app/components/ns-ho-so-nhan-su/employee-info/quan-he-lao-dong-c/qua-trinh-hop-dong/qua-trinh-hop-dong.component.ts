@@ -37,11 +37,17 @@ export class QuaTrinhHopDongComponent implements OnInit {
       click$.subscribe(event => {
         this.taohopdong()
       });
-    }, 500);
+    }, 300);
   }
   ngOnInit(): void {
     this.getContractPageByEmpId();
   }
+
+  cancelPopupContract() {
+    this.hienthihopdong = false;
+    this.cancelSave.emit()
+  }
+
   displaySetting = false;
   CauHinh() {
     this.displaySetting = true;

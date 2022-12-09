@@ -37,8 +37,9 @@ export class GiayToTuyThanComponent implements OnInit {
       click$.subscribe(event => {
         // this.addTimeWork()
       });
-    }, 500);
+    }, 300);
   }
+
   ngOnInit(): void {
     this.getEmpIdcardPage();
   }

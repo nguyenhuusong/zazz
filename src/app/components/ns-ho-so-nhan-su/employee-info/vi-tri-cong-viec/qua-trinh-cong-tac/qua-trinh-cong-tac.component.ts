@@ -31,14 +31,19 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
   ]
 
   ngAfterViewInit(): void {
+    this.FnEvent();
+  }
+
+  FnEvent() {
     setTimeout(() => {
       var dragTarget = document.getElementById(this.gridKey);
       const click$ = fromEvent(dragTarget, 'click');
       click$.subscribe(event => {
         this.addProcess()
       });
-    }, 500);
+    }, 300);
   }
+  
   ngOnInit(): void {
     this.getEmpProcessPageByEmpId();
     // this.getDetail();
@@ -129,6 +134,7 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
   activeIndex = 0;
   steps = [];
   getDetail(flow_st = null) {
+    this.FnEvent();
     this.spinner.show();
     this.dataDetailInfo = null;
     this.listViewsDetail = [];
@@ -181,11 +187,13 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
     const params = {
       ...this.dataDetailInfo, group_fields: event.data, flow_st: this.activeIndex
     }
+    this.listViewsDetail = []
     this.callApiInfo(params)
     if (event.type === 'Submit' || event.type === 'SaveNhap') {
       setTimeout(() => {
        this.displayFormEditDetail = false;
        this.getEmpProcessPageByEmpId();
+       this.cancelSave.emit()
       }, 200);
     }
   }
@@ -209,6 +217,7 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
     const params = {
       ...this.dataDetailInfo, group_fields: data, flow_st: this.activeIndex + 1
     };
+    this.listViewsDetail = [];
     this.callApiInfo(params)
 
   }
@@ -264,7 +273,6 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
       this.getDetail()
     } else if (data === 'BackPage') {
       this.listViewsDetail = [];
-   
       this.getDetail(this.activeIndex - 1)
     } else {
       this.displayFormEditDetail = false;
@@ -279,6 +287,7 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
             this.getEmpProcessPageByEmpId();
+            this.FnEvent();
           } else {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
           }

@@ -69,7 +69,7 @@
     [(visible)]="hienthihopdong" [modal]="true" [draggable]="false" [resizable]="false" [style]="{width: '80vw'}"
     [autoZIndex]=true [draggable]="false" [resizable]="false">
     <app-contract-detail *ngIf="hienthihopdong" [modelContractInfo]="modelContractInfo"
-        (callback)="emitContract($event)" (back)="hienthihopdong = !hienthihopdong"></app-contract-detail>
+        (callback)="emitContract($event)" (back)="cancelPopupContract()"></app-contract-detail>
 </p-dialog>
 
 

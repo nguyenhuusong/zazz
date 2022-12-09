@@ -60,6 +60,10 @@ export class QuanHeLaoDongCComponent implements OnInit {
     // this.gridApi.sizeColumnsToFit();
   }
 
+  cancelSave() {
+    this.getEmployeeInfo();
+  }
+
 
   setEmployeeInfo(data) {
     const params = {

@@ -78,7 +78,7 @@ export class EditViTriCongViecComponent implements OnInit {
 
   callBackForm(event) {
     const params = {
-      ...this.detailInfo, group_fields: event.data, flow_st: this.activeIndex
+      ...this.detailInfo, group_fields: event.data, flow_st: event.type === 'Submit' ?  this.activeIndex + 1 : this.activeIndex
     }
     this.callApiInfo(params)
     if(event.type === 'Submit' || event.type === 'SaveNhap') {
