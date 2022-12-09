@@ -63,7 +63,7 @@ export class EmployeeInfoComponent implements OnInit {
     this.apiService.getEmployeeStatus(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.dataEmployeeStatus = results.data;
-        this.handleChange(results.data.emp_st);
+        this.handleChange(results.data.tab_st);
 
       }
     })
