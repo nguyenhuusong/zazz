@@ -90,6 +90,11 @@ import { DanhSachDinhKemComponent } from 'src/app/components/ns-ho-so-nhan-su/em
 import { TienLuongComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/quan-he-lao-dong-c/tien-luong/tien-luong.component';
 import { ThongTinNguoiPhuThuocComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/quan-he-lao-dong-c/thong-tin-nguoi-phu-thuoc/thong-tin-nguoi-phu-thuoc.component';
 import { QuaTrinhHopDongComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/quan-he-lao-dong-c/qua-trinh-hop-dong/qua-trinh-hop-dong.component';
+import { QuaTrinhLamViecComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/chuyen-mon/qua-trinh-lam-viec/qua-trinh-lam-viec.component';
+import { QuaTrinhHocVanComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/chuyen-mon/qua-trinh-hoc-van/qua-trinh-hoc-van.component';
+import { QuaTrinhDaoTaoComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/chuyen-mon/qua-trinh-dao-tao/qua-trinh-dao-tao.component';
+import { KyNangComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/chuyen-mon/ky-nang/ky-nang.component';
+import { ChungChiComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/chuyen-mon/chung-chi/chung-chi.component';
 
 @NgModule({
   imports: [
@@ -190,7 +195,11 @@ import { QuaTrinhHopDongComponent } from 'src/app/components/ns-ho-so-nhan-su/em
     TienLuongComponent,
     ThongTinNguoiPhuThuocComponent,
     QuaTrinhHopDongComponent,
-
+    QuaTrinhLamViecComponent,
+    QuaTrinhHocVanComponent,
+    QuaTrinhDaoTaoComponent,
+    KyNangComponent,
+    ChungChiComponent,
 
   ],
   providers: [ ]
