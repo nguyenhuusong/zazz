@@ -92,11 +92,7 @@ export class ContractDetailComponent implements OnInit {
     if (data === 'CauHinh') {
       this.modelContractInfo.contractId ? this.getContractInfo() : this.setContractCreate();
     } else if (data === 'BackPage') {
-      this.listViews = [];
-      const params = {
-        ...this.detailInfo, flow_st: this.activeIndex - 1
-      }
-      this.callApiInfo(params)
+      this.getContractInfo(this.activeIndex - 1)
     } else {
       this.back.emit();
     }
@@ -177,11 +173,11 @@ export class ContractDetailComponent implements OnInit {
     })
   }
 
-  getContractInfo() {
+  getContractInfo(flow_st = null) {
     this.detailInfo = null;
     this.listViews = [];
     this.spinner.show();
-    const queryParams = queryString.stringify({ contractId: this.modelContractInfo.contractId });
+    const queryParams = queryString.stringify({ contractId: this.modelContractInfo.contractId, flow_st: flow_st  });
     this.apiService.getContractInfo(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.activeIndex = results.data.flow_st;

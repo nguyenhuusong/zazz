@@ -128,10 +128,11 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
 
   activeIndex = 0;
   steps = [];
-  getDetail() {
+  getDetail(flow_st = null) {
     this.spinner.show();
     this.dataDetailInfo = null;
-    const query = { empId: this.empId, processId: this.processId }
+    this.listViewsDetail = [];
+    const query = { empId: this.empId, processId: this.processId, flow_st: flow_st }
     this.apiService.getEmpProcessInfo(queryString.stringify(query)).subscribe(results => {
       if (results.status === 'success') {
         this.spinner.hide();
@@ -263,10 +264,8 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
       this.getDetail()
     } else if (data === 'BackPage') {
       this.listViewsDetail = [];
-      const params = {
-        ...this.dataDetailInfo, flow_st: this.activeIndex - 1
-      }
-      this.callApiInfo(params)
+   
+      this.getDetail(this.activeIndex - 1)
     } else {
       this.displayFormEditDetail = false;
     }
