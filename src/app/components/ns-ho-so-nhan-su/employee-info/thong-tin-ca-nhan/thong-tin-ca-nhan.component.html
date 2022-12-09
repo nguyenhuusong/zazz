@@ -41,103 +41,10 @@
                             (callbackcancel)="cancelUpdate($event)">
                         </app-edit-detail>
                         <p-divider></p-divider>
-                        <div class="grid wrap-edit-detail">
-                            <div class="col-12 border-section " >
-                                <p-panel >
-                                    <ng-template pTemplate="header">
-                                        <div class="grid d-flex justify-content-between">
-                                            <h3 class="title-section">Giấy tờ tùy thân</h3>
-                                            <!-- <p-button label="Thêm mới" icon="pi pi-plus" styleClass="p-button-sm"></p-button>   -->
-                                        </div>
-                                    </ng-template>
-                                    <div class="row" style="flex-wrap: wrap">
-                                        <div class="grid-default border css-img">
-                                            <app-list-grid-angular 
-                                                [idGrid]="'giaytotuythan'"
-                                                [domLayout]="'autoHeight'" 
-                                                *ngIf="columnDefs1.length > 0" 
-                                                [heightRow]="100"
-                                                [title]="'Chứng chỉ'"
-                                                (showConfig)="CauHinh(1)"
-                                                [listsData]="listsData1" [columnDefs]="columnDefs1"></app-list-grid-angular>
-                                            </div>
-                                    </div>
-                                   
-                                </p-panel>
-                            </div>
-                        </div> 
-                        <p-divider></p-divider>
-                        <div class="grid wrap-edit-detail">
-                            <div class="col-12 border-section " >
-                                <p-panel>
-                                    <ng-template pTemplate="header">
-                                        <div class="grid d-flex justify-content-between">
-                                            <h3 class="title-section">Danh sách thông tin người liên hệ</h3>
-                                            <!-- <p-button label="Thêm mới" icon="pi pi-plus" (click)="themLienHe()" styleClass="p-button-sm mr-1"></p-button> -->
-                                        </div>
-                                    </ng-template>
-                                    <div class="row" style="flex-wrap: wrap">
-                                        <div class="grid-default border">
-                                            <app-list-grid-angular 
-                                                [idGrid]="'dslienhe'"
-                                                [domLayout]="'autoHeight'" 
-                                                *ngIf="columnDefs4.length > 0" 
-                                                [title]="'Chứng chỉ'"
-                                                (showConfig)="CauHinh(4)"
-                                                [listsData]="listsData4" [columnDefs]="columnDefs4"></app-list-grid-angular>
-                                            </div>
-                                    </div>
-                                </p-panel>
-                            </div>
-                        </div>
-                        <p-divider></p-divider>
-                        <div class="grid wrap-edit-detail">
-                            <div class="col-12 border-section " >
-                                <p-panel>
-                                    <ng-template pTemplate="header">
-                                        <div class="grid d-flex justify-content-between">
-                                            <h3 class="title-section">Thông tin hồ sơ cá nhân</h3>
-                                            <!-- <p-button label="Thêm mới" icon="pi pi-plus" (click)="themMoiThongTinHSCN()" styleClass="p-button-sm mr-1"></p-button> -->
-                                        </div>
-                                    </ng-template>
-                                    <div class="row" style="flex-wrap: wrap">
-                                        <div class="grid-default border">
-                                            <app-list-grid-angular 
-                                                [domLayout]="'autoHeight'" 
-                                                [idGrid]="'tthscn'"
-                                                *ngIf="columnDefs2.length > 0" 
-                                                [title]="'Chứng chỉ'"
-                                                (showConfig)="CauHinh(2)"
-                                                [listsData]="listsData2" [columnDefs]="columnDefs2"></app-list-grid-angular>
-                                            </div>
-                                    </div>
-                                </p-panel>
-                            </div>
-                        </div> 
-                        <p-divider></p-divider>
-                        <div class="grid wrap-edit-detail">
-                            <div class="col-12 border-section " >
-                                <p-panel>
-                                    <ng-template pTemplate="header">
-                                        <div class="grid d-flex justify-content-between">
-                                            <h3 class="title-section">Danh sách đính kèm</h3>
-                                            <!-- <p-button label="Thêm mới" icon="pi pi-plus" (click)="themMoiDinhKem()" styleClass="p-button-sm mr-1"></p-button> -->
-                                        </div>
-                                    </ng-template>
-                                    <div class="row" style="flex-wrap: wrap">
-                                        <div class="grid-default border">
-                                            <app-list-grid-angular 
-                                                [idGrid]="'dsdinhkem'"
-                                                [domLayout]="'autoHeight'" 
-                                                *ngIf="columnDefs3.length > 0" 
-                                                [title]="'Chứng chỉ'"
-                                                (showConfig)="CauHinh(3)"
-                                                [listsData]="listsData3" [columnDefs]="columnDefs3"></app-list-grid-angular>
-                                            </div>
-                                    </div>
-                                </p-panel>
-                            </div>
-                        </div> 
+                        <app-giay-to-tuy-than [empId]="empId"></app-giay-to-tuy-than>
+                        <app-thong-tin-nguoi-lien-he [empId]="empId"></app-thong-tin-nguoi-lien-he>
+                        <app-thong-tin-ho-so-ca-nhan [empId]="empId"></app-thong-tin-ho-so-ca-nhan>
+                        <app-danh-sach-dinh-kem [empId]="empId"></app-danh-sach-dinh-kem>
                     </div>
                 </div>
             </div>
@@ -154,55 +61,7 @@
     <!-- <app-upload-file [multiple]="" (callback)="handleUpload($event)" *ngIf="displayuploadcontract"></app-upload-file> -->
 </p-dialog>
 
-<p-dialog header="Cài đặt cấu hình " [appendTo]="'body'" [focusTrap]="false" styleClass="popup-setting"
-    (onHide)="reloadGetEmpProfilePage()" [(visible)]="displaySetting" [modal]="true" [style]="{width: '50vw'}"
-    [maximizable]="true" [draggable]="false" [resizable]="false">
-    <app-config-grid-table-form *ngIf="displaySetting && gridKeyForm.gridKey" [typeConfig]="'TableInfo'"
-        [gridKey]="gridKeyForm.gridKey"></app-config-grid-table-form>
-</p-dialog>
 
-<p-dialog [(visible)]="isShowFileHSCN" [autoZIndex]="true" [modal]="true"  appendTo="body"
-    [style]="{width: '800px', height: 'auto'}">
-    <p-header>
-        Hồ sơ cá nhân
-    </p-header>
-        <app-edit-detail *ngIf="listViewsPart.length> 0" 
-            [detail]="detailInfoPart" 
-            [manhinh]="'Edit'" 
-            [dataView]="listViewsPart"
-            (callback)="setFileHSCN($event)" 
-            (callback1)="getFileHSCN($event)"
-            (callbackcancel)="canceFileHSCN($event)">
-        </app-edit-detail>
-</p-dialog>
-
-<p-dialog [(visible)]="isShowDinhKem" [autoZIndex]="true" [modal]="true"  appendTo="body"
-    [style]="{width: '800px', height: 'auto'}">
-    <p-header>
-        File đính kèm
-    </p-header>
-        <app-edit-detail *ngIf="listViewsPart.length> 0" 
-            [detail]="detailInfoPart" 
-            [manhinh]="'Edit'" 
-            [dataView]="listViewsPart"
-            (callback)="setDinhKem($event)" 
-            (callbackcancel)="canceDinhKem($event)">
-        </app-edit-detail>
-</p-dialog>
-
-<p-dialog [(visible)]="isShowLienHe" [autoZIndex]="true" [modal]="true"  appendTo="body"
-    [style]="{width: '800px', height: 'auto'}">
-    <p-header>
-        Liên hệ
-    </p-header>
-        <app-edit-detail *ngIf="listViewsPart.length> 0" 
-            [detail]="detailInfoPart" 
-            [manhinh]="'Edit'" 
-            [dataView]="listViewsPart"
-            (callback)="setLienHe($event)" 
-            (callbackcancel)="canceLienHe($event)">
-        </app-edit-detail>
-</p-dialog>
 
 <p-dialog [(visible)]="isEditDetail" [autoZIndex]="true" [modal]="true"  appendTo="body"
     [style]="{width: '1300px', height: 'auto'}">
