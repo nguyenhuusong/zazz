@@ -65,6 +65,7 @@ import { NsCauHinhMailComponent } from 'src/app/components/ns-tuyen-dung/ns-cau-
 import { NguonTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/ns-cau-hinh/nguon-tuyen-dung/nguon-tuyen-dung.component';
 import { ChiTietNguonTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/ns-cau-hinh/nguon-tuyen-dung/chi-tiet-nguon-tuyen-dung/chi-tiet-nguon-tuyen-dung.component';
 import { NsChiTietCauHinhMailComponent } from 'src/app/components/ns-tuyen-dung/ns-cau-hinh/ns-cau-hinh-mail/chi-tiet-cau-hinh-mail/chi-tiet-ns-cau-hinh-mail.component';
+import { HrmStepModule } from 'src/app/common/hrm-steps/hrm-step.module';
 @NgModule({
   imports: [
     MessagesModule,
@@ -116,6 +117,7 @@ import { NsChiTietCauHinhMailComponent } from 'src/app/components/ns-tuyen-dung/
       ButtonRendererComponent,
       ButtonRendererComponent1
     ]),
+    HrmStepModule
   ],
 
   declarations: [

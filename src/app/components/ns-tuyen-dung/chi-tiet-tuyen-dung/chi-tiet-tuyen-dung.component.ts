@@ -57,6 +57,7 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
   heightGrid = 300;
   gridKey = '';
   cols = [];
+  detailEdit = null
   handleParams() {
     this.activatedRoute.queryParamMap
       .pipe(takeUntil(this.unsubscribe$))
@@ -82,6 +83,7 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
           const listViews = cloneDeep(results.data.group_fields);
           this.listViews = [...listViews];
           this.detailInfo = results.data;
+          this.detailEdit = results.data
         }
       });
   }
@@ -102,6 +104,15 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
         this.initGrid();
       }
     });
+
+    const queryParams = queryString.stringify(this.modelEdit);
+    this.apiService.getCandidateInfo(queryParams)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(results => {
+        if (results.status === 'success') {
+          this.detailEdit = results.data
+        }
+      });
   }
 
   initGrid() {

@@ -391,7 +391,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     ];
     this.getJobTitles();
     this.getOrgRoots();
-    this.getObjectList();
+    // this.getObjectList();
     this.getStatus();
     this.getVacancyPage();
     this.buttonTiemNang = [
@@ -466,23 +466,23 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     })
   }
 
-  getObjectList() {
-    const queryParams = queryString.stringify({ objKey: 'positiontype_group' });
-    this.apiService.getCustObjectListNew(false, queryParams).subscribe(results => {
-      if (results.status === 'success') {
-        this.positiontypes = results.data.map(d => {
-          return {
-            label: d.objName,
-            value: d.objCode
-          }
-        });
-        this.positiontypes = [{ label: 'Tất cả', value: null }, ...this.positiontypes]
-      }
-    })
-  }
+  // positiontypes = [];
+  // getObjectList() {
+  //   const queryParams = queryString.stringify({ objKey: 'positiontype_group' });
+  //   this.apiService.getCustObjectListNew(false, queryParams).subscribe(results => {
+  //     if (results.status === 'success') {
+  //       this.positiontypes = results.data.map(d => {
+  //         return {
+  //           label: d.objName,
+  //           value: d.objCode
+  //         }
+  //       });
+  //       this.positiontypes = [{ label: 'Tất cả', value: null }, ...this.positiontypes]
+  //     }
+  //   })
+  // }
 
   listOrgRoots = [];
-  positiontypes = [];
   listJobTitles = [];
   positions = [{ label: 'Tất cả', value: null }];
   getJobTitles() {

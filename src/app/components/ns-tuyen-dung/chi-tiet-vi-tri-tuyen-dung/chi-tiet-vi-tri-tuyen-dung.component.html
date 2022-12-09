@@ -4,6 +4,11 @@
         <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
     </section>
    <div class="content">
+    <div class="d-flex center">
+        <div class="col-8">
+            <app-hrm-step [steps]="detailInfo?.flowStatuses" [flowSt]="detailInfo?.flow_st" *ngIf="detailInfo"></app-hrm-step>
+        </div>
+    </div>
     <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButon"  [dataView]="listViews"
         (callback)="setVacancyInfo($event)" (callbackcancel)="quaylai($event)"></app-edit-detail>
    </div>
