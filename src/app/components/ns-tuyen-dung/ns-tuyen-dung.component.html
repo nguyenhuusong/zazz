@@ -259,7 +259,7 @@ styleClass="menu-option-right" #optionsButton></p-menu>
                     <div class="field-group select" [ngClass]=" query.can_st ? 'valid' : 'invalid' ">
                         <label for="">Vòng tuyển dụng</label>
                         <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
-                            [options]="listStatus" [(ngModel)]="query.can_st" name="can_st" [filter]="true">
+                            [options]="recruitmentStatus" [(ngModel)]="query.can_st" name="can_st" [filter]="true">
                             <ng-template let-item pTemplate="selectedItem">
                                 <span>{{item.label}}</span>
                             </ng-template>

@@ -392,7 +392,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     this.getJobTitles();
     this.getOrgRoots();
     // this.getObjectList();
-    this.getStatus();
+    // this.getStatus();
     this.getVacancyPage();
     this.buttonTiemNang = [
       {
