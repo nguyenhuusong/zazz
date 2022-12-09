@@ -66,6 +66,10 @@ export class ThongTinCaNhanComponent implements OnInit {
             headerName: '',
             field: 'gridflexdetails1',
             cellClass: ['border-right', 'no-auto'],
+            headerComponentParams: {
+              template:
+                `<button  class="btn-button" id="${this.gridKey4}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
+            },
             pinned: 'right',
             width: 70,
             cellRenderer: 'buttonAgGridComponent',
@@ -116,6 +120,10 @@ export class ThongTinCaNhanComponent implements OnInit {
           {
             headerName: '',
             field: 'gridflexdetails1',
+            headerComponentParams: {
+              template:
+                `<button  class="btn-button" id="${this.gridKey3}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
+            },
             cellClass: ['border-right', 'no-auto'],
             pinned: 'right',
             width: 70,
@@ -168,6 +176,10 @@ export class ThongTinCaNhanComponent implements OnInit {
             field: 'gridflexdetails1',
             cellClass: ['border-right', 'no-auto'],
             pinned: 'right',
+            headerComponentParams: {
+              template:
+              `<button  class="btn-button" id="${this.gridKey2}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
+            },
             width: 70,
             cellRenderer: 'buttonAgGridComponent',
             cellRendererParams: params => {
@@ -221,6 +233,10 @@ export class ThongTinCaNhanComponent implements OnInit {
             field: 'gridflexdetails1',
             cellClass: ['border-right', 'no-auto'],
             pinned: 'right',
+            headerComponentParams: {
+              template:
+              `<button  class="btn-button" id="${this.gridKey1}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
+            },
             width: 70,
             cellRenderer: 'buttonAgGridComponent',
             cellRendererParams: params => {
@@ -274,7 +290,6 @@ export class ThongTinCaNhanComponent implements OnInit {
         this.listViews = cloneDeep(results.data.group_fields || []);
         this.listViewsForm = cloneDeep(results.data.group_fields || []);
         this.detailInfo = results.data;
-        this.getRecordInfo();
         this.spinner.hide();
       }
     }, error => {
@@ -283,124 +298,11 @@ export class ThongTinCaNhanComponent implements OnInit {
     // this.gridApi.sizeColumnsToFit();
   }
 
-  listsDataRecord = []
-  columnDefsRecord = [];
-  listViewsRecordInfo = null;
-  getRecordInfo() {
-    this.columnDefsRecord = []
-    const queryParams = queryString.stringify({ empId: this.detailInfo.empId });
-    this.apiService.getRecordInfo(queryParams).subscribe(results => {
-      if (results.status === 'success') {
-        this.listsDataRecord = results.data.records || [];
-        this.listViewsRecordInfo = results.data;
-        this.columnDefsRecord = [
-          ...AgGridFn(this.listViewsRecordInfo.gridflexdetails1 || [])
-          , {
-            headerName: 'Tải lên hồ sơ',
-            field: 'button234',
-            cellClass: ['border-right'],
-            width: 100,
-            pinned: 'right',
-            cellRenderer: 'buttonAgGridComponent',
-            cellRendererParams: params => {
-              return {
-                buttons: [
-                  {
-                    onClick: this.uploadContract.bind(this),
-                    label: 'Tải lên hồ sơ',
-                    icon: 'pi pi-cloud-download',
-                    class: 'btn-primary mr5',
-                    key: 'tailenhoso',
-                  },
-                  {
-                    onClick: this.ViewContract.bind(this),
-                    label: 'Xem hồ sơ',
-                    icon: 'fa fa-edit',
-                    key: 'xemhoso',
-                    class: 'btn-primary mr5',
-                  },
-                  {
-                    onClick: this.HuyHoSo.bind(this),
-                    label: 'Hủy hồ sơ',
-                    icon: 'pi pi-trash',
-                    key: 'huyhosocanhan',
-                    class: 'btn-danger',
-                  },
-
-                ]
-              };
-            },
-          }];
-      }
-    });
-  }
-
   displayuploadcontract = false;
   record = null;
   uploadContract(event) {
     this.displayuploadcontract = true;
     this.record = event.rowData;
-  }
-
-  HuyHoSo(event) {
-    this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn thực hiện hủy hồ sơ này ?',
-      accept: () => {
-        const indexobj = this.listsDataRecord.findIndex(d => d.sourceId === event.rowData.sourceId);
-        let record = { ... this.listsDataRecord[indexobj] };
-        record.meta_file_url = "";
-        record.meta_file_size = "";
-        record.meta_file_name = "";
-        record.meta_file_size_name = "";
-        record.meta_file_type = "";
-        this.listsDataRecord[indexobj] = record;
-        this.listsDataRecord = [... this.listsDataRecord];
-        this.listViewsRecordInfo.records = this.listsDataRecord;
-        this.saveCreateContract();
-      }
-    });
-  }
-
-  ViewContract(event) {
-    this.downloadButtonClicked(event.rowData.meta_file_url);
-  }
-
-  downloadButtonClicked(urlLink) {
-    var url = urlLink;
-    var elem = document.createElement('a');
-    elem.href = url;
-    elem.target = 'hiddenIframe';
-    elem.click();
-  }
-
-  handleUpload(datas) {
-    if (datas.length > 0) {
-      const indexobj = this.listsDataRecord.findIndex(d => d.sourceId === this.record.sourceId);
-      let record = { ... this.listsDataRecord[indexobj] };
-      record.meta_file_url = datas[0].url;
-      record.meta_file_type = datas[0].type;
-      record.meta_file_size = datas[0].size;
-      record.meta_file_name = datas[0].name;
-      this.listsDataRecord[indexobj] = record;
-      this.listsDataRecord = [... this.listsDataRecord];
-      this.listViewsRecordInfo.records = this.listsDataRecord;
-      this.displayuploadcontract = false;
-      this.saveCreateContract();
-    }
-  }
-
-  saveCreateContract() {
-    this.spinner.show();
-    this.apiService.setRecordInfo(this.listViewsRecordInfo).subscribe(results => {
-      if (results.status === 'success') {
-        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data });
-        this.displayuploadcontract = false;
-        this.getEmployeeInfo();
-        this.spinner.hide();
-      } else {
-        this.spinner.hide();
-      }
-    })
   }
 
   setEmployeeInfo(data) {

@@ -34,12 +34,13 @@ export class ViTriCongViecComponent implements OnInit, AfterViewInit {
     private router: Router
   ) { }
   ngAfterViewInit(): void {
-    // var dragTarget = document.getElementById('view_hrm_emp_process_page');
-    // const click$ = fromEvent(dragTarget, 'click');
-
-    // click$.subscribe( event => {
-    //   console.log(event)
-    // });
+  //  setTimeout(() => {
+  //   var dragTarget = document.getElementById('view_hrm_emp_process_page');
+  //   const click$ = fromEvent(dragTarget, 'click');
+  //   click$.subscribe( event => {
+  //     console.log(event)
+  //   });
+  //  }, 500);
   }
 
   ngOnInit(): void {
