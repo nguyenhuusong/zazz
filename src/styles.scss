@@ -5780,3 +5780,18 @@ app-thong-tin-ca-nhan-edit-detail{
     font-size: 16px;
     cursor: pointer;
 }
+
+.ag-header-cell{
+    .btn-button{
+        background: #FFF;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 8px;
+        padding: 5px;
+        width: 30px;
+        height: 30px;
+        .pi{
+            color: #425ea3;
+        }
+    }
+}
