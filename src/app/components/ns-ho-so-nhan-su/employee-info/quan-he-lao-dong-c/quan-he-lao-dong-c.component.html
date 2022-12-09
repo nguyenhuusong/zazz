@@ -18,10 +18,9 @@
         </ul>
         <div class="col-6"><app-step-info [detailInfo]="detailInfo" *ngIf="detailInfo"></app-step-info></div>
         <div class="col-3">
-            <div class="d-flex end gap-16 icons-detail-config">
+            <!-- <div class="d-flex end gap-16 icons-detail-config">
                 <span class="pi pi-plus" pTooltip="Tạo hợp đồng" (click)="taohopdong('TaoHopDong')" tooltipPosition="left"></span>
-                <!-- <span class="pi pi-cog" pTooltip="Cấu hình" tooltipPosition="left"></span> -->
-            </div>
+            </div> -->
         </div>
       
     </div>
@@ -36,76 +35,9 @@
                             (callbackcancel)="cancelUpdate($event)">
                         </app-edit-detail>
                         <p-divider></p-divider>
-                        <div class="grid wrap-edit-detail">
-                            <div class="col-12 border-section ">
-                                <p-panel>
-                                    <ng-template pTemplate="header">
-                                        <div class="grid d-flex justify-content-between">
-                                            <h3 class="title-section">Quá trình hợp đồng</h3>
-                                        </div>
-                                    </ng-template>
-                                    <div class="row" style="flex-wrap: wrap">
-                                        <div class="grid-default border">
-                                            <app-list-grid-angular 
-                                                [idGrid]="'qthd'"
-                                                [domLayout]="'autoHeight'" 
-                                                *ngIf="columnDefs.length > 0" 
-                                                [title]="'Chứng chỉ'"
-                                                (showConfig)="CauHinh(0)"
-                                                [listsData]="listsData" [columnDefs]="columnDefs">
-                                            </app-list-grid-angular>
-                                            </div>
-                                    </div>
-                                </p-panel>
-                            </div>
-                        </div> 
-                        <p-divider></p-divider>
-                        <div class="grid wrap-edit-detail">
-                            <div class="col-12 border-section " >
-                                <p-panel>
-                                    <ng-template pTemplate="header">
-                                        <div class="grid d-flex justify-content-between">
-                                            <h3 class="title-section">Tiền lương</h3>
-                                            <!-- <p-button label="Thêm mới" icon="pi pi-plus" (click)="addProcess()" styleClass="p-button-sm mr-1"></p-button>  -->
-                                        </div>
-                                    </ng-template>
-                                    <div class="row" style="flex-wrap: wrap">
-                                        <div class="grid-default border">
-                                            <app-list-grid-angular 
-                                                [domLayout]="'autoHeight'" 
-                                                [idGrid]="'tienluong'"
-                                                (showConfig)="CauHinh(1)"
-                                                *ngIf="columnDefs1.length > 0" [title]="'Chứng chỉ'"
-                                                [listsData]="listsData1" [columnDefs]="columnDefs1"></app-list-grid-angular>
-                                            </div>
-                                    </div>
-                                </p-panel>
-                            </div>
-                        </div> 
-                        <p-divider></p-divider>
-                        <div class="grid wrap-edit-detail">
-                            <div class="col-12 border-section ">
-                                <p-panel>
-                                    <ng-template pTemplate="header">
-                                        <div class="grid d-flex justify-content-between">
-                                            <h3 class="title-section">Thông tin người phụ thuộc</h3>
-                                            <p-button label="Thêm mới" icon="pi pi-plus" (click)="addEmpDependent()" styleClass="p-button-sm mr-1"></p-button>
-                                        </div>
-                                    </ng-template>
-                                    <div class="row" style="flex-wrap: wrap">
-                                        <div class="grid-default border">
-                                            <app-list-grid-angular 
-                                                [domLayout]="'autoHeight'" 
-                                                [idGrid]="'ttnguoithan'"
-                                                *ngIf="columnDefs2.length > 0" 
-                                                [title]="'Chứng chỉ'"
-                                                (showConfig)="CauHinh(2)"
-                                                [listsData]="listsData2" [columnDefs]="columnDefs2"></app-list-grid-angular>
-                                            </div>
-                                    </div>
-                                </p-panel>
-                            </div>
-                        </div> 
+                        <app-qua-trinh-hop-dong [empId]="empId" [detailInfo]="detailInfo"></app-qua-trinh-hop-dong>
+                        <app-tien-luong [empId]="empId"></app-tien-luong> 
+                        <app-thong-tin-nguoi-phu-thuoc [empId]="empId"></app-thong-tin-nguoi-phu-thuoc> 
 
                     </div>
 
@@ -115,52 +47,4 @@
     </div>
 
 </section>
-
-
-<!-- <------------ Hợp đồng ----------->
-<p-dialog styleClass="popup-btngroup-edit-detail" [maximizable]="true"
-    header="{{modelContractInfo.contractId === null ? ' Tạo hợp đồng': 'Thông tin chi tiết hợp đồng'}}"
-    [(visible)]="hienthihopdong" [modal]="true" [draggable]="false" [resizable]="false" [style]="{width: '80vw'}"
-    [autoZIndex]=true [draggable]="false" [resizable]="false">
-    <app-contract-detail *ngIf="hienthihopdong" [modelContractInfo]="modelContractInfo"
-        (callback)="emitContract($event)" (back)="hienthihopdong = !hienthihopdong"></app-contract-detail>
-</p-dialog>
-
-
-
-<!-- <----------Duyệt hợp đồng ------->
-
-<p-dialog header="Duyệt hợp đồng" [(visible)]="displayApproveContract" [modal]="true" [draggable]="false"
-    [resizable]="false" [style]="{width: '40vw'}" [autoZIndex]=true [draggable]="false" [resizable]="false">
-    <div class="row col-md-12 mt-1" style="margin-top: 5px;">
-        <div class="field-group textarea ">
-            <label for="">Ghi chú</label>
-            <textarea [(ngModel)]="modelDuyetHopDong.comment" name="comment" cols="30" rows="10" class="form-control"></textarea>
-        </div>
-    </div>
-    <ng-template pTemplate="footer">
-        <p-button icon="pi pi-check" (click)="duyetHoSo()" label="Xác nhận" styleClass=" p-button-sm mr-1">
-        </p-button>
-        <p-button icon="pi pi-trash" (click)="cancelContract()" label="Hủy duyệt" styleClass=" p-button-sm mr-1">
-        </p-button>
-        <p-button icon="pi pi-times" (click)="displayApproveContract= !displayApproveContract" label="Hủy"
-            styleClass="p-button-secondary p-button-sm"></p-button>
-    </ng-template>
-</p-dialog>
-
-
-<p-dialog styleClass="popup-btngroup-edit-detail" [(visible)]="displayFormEditDetail" [draggable]="false"  [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '800px', height: 'auto'}">
-    <p-header>
-        {{titleForm}}
-    </p-header>
-    <app-edit-detail [optionsButtonsEdit]="optionsButtonsPopup" *ngIf="listViewsForm.length> 0 && detailFormInfo" [detailInfo]="detailInfo"
-        [detail]="detailFormInfo" [manhinh]="'Edit'" [thongtinnhanvienNew]="true"
-        [dataView]="listViewsForm" (callback)="setFormInfo($event)"
-        (callbackcancel)="cancelFormInfo($event)"></app-edit-detail>
-</p-dialog>
-
-<p-dialog header="Cài đặt cấu hình " [appendTo]="'body'" [focusTrap]="false" styleClass="popup-setting" (onHide)="reloadGetEmpTrainPage()" [(visible)]="displaySetting" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
-[draggable]="false" [resizable]="false">
-<app-config-grid-table-form *ngIf="displaySetting && gridKeyForm.gridKey" [typeConfig]="'TableInfo'"   [gridKey]="gridKeyForm.gridKey"></app-config-grid-table-form>
-</p-dialog>
 

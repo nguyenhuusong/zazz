@@ -87,6 +87,9 @@ import { GiayToTuyThanComponent } from 'src/app/components/ns-ho-so-nhan-su/empl
 import { ThongTinNguoiLienHeComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/thong-tin-ca-nhan/thong-tin-nguoi-lien-he/thong-tin-nguoi-lien-he.component';
 import { ThongTinHoSoCaNhanComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/thong-tin-ca-nhan/thong-tin-ho-so-ca-nhan/thong-tin-ho-so-ca-nhan.component';
 import { DanhSachDinhKemComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/thong-tin-ca-nhan/danh-sach-dinh-kem/danh-sach-dinh-kem.component';
+import { TienLuongComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/quan-he-lao-dong-c/tien-luong/tien-luong.component';
+import { ThongTinNguoiPhuThuocComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/quan-he-lao-dong-c/thong-tin-nguoi-phu-thuoc/thong-tin-nguoi-phu-thuoc.component';
+import { QuaTrinhHopDongComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/quan-he-lao-dong-c/qua-trinh-hop-dong/qua-trinh-hop-dong.component';
 
 @NgModule({
   imports: [
@@ -184,6 +187,10 @@ import { DanhSachDinhKemComponent } from 'src/app/components/ns-ho-so-nhan-su/em
     ThongTinNguoiLienHeComponent,
     ThongTinHoSoCaNhanComponent,
     DanhSachDinhKemComponent,
+    TienLuongComponent,
+    ThongTinNguoiPhuThuocComponent,
+    QuaTrinhHopDongComponent,
+
 
   ],
   providers: [ ]
