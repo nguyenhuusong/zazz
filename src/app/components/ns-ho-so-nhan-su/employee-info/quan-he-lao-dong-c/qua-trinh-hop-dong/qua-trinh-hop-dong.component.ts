@@ -31,14 +31,21 @@ export class QuaTrinhHopDongComponent implements OnInit {
   gridKey = '';
 
   ngAfterViewInit(): void {
+    this.FnEvent();
+  }
+
+  FnEvent() {
     setTimeout(() => {
       var dragTarget = document.getElementById(`${this.gridKey}`);
-      const click$ = fromEvent(dragTarget, 'click');
-      click$.subscribe(event => {
-        this.taohopdong()
-      });
+      if(dragTarget) {
+        const click$ = fromEvent(dragTarget, 'click');
+        click$.subscribe(event => {
+          this.taohopdong()
+        });
+      }
     }, 300);
   }
+
   ngOnInit(): void {
     this.getContractPageByEmpId();
   }
@@ -99,6 +106,7 @@ export class QuaTrinhHopDongComponent implements OnInit {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thêm mới thành công' });
         this.displayFormEditDetail = false;
         this.getContractPageByEmpId();
+        this.FnEvent();
         this.spinner.hide();
       } else {
         this.spinner.hide();
@@ -209,6 +217,7 @@ export class QuaTrinhHopDongComponent implements OnInit {
           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
           this.displayApproveContract = false;
           this.getContractPageByEmpId();
+          this.FnEvent();
           this.spinner.hide();
         } else {
           this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
@@ -225,6 +234,7 @@ export class QuaTrinhHopDongComponent implements OnInit {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
         this.getContractPageByEmpId();
+        this.FnEvent();
         this.spinner.hide();
       } else {
         this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
@@ -243,6 +253,7 @@ export class QuaTrinhHopDongComponent implements OnInit {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
             this.getContractPageByEmpId();
+            this.FnEvent();
           } else {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
           }

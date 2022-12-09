@@ -36,10 +36,13 @@ export class ThoiGianLamViecComponent implements OnInit {
   FnEvent() {
     setTimeout(() => {
       var dragTarget = document.getElementById(this.gridKey);
-      const click$ = fromEvent(dragTarget, 'click');
-      click$.subscribe(event => {
+      if(dragTarget) {
+        const click$ = fromEvent(dragTarget, 'click');
+          click$.subscribe(event => {
         this.addTimeWork()
-      });
+          });
+      }
+     
     }, 300);
   }
 

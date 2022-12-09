@@ -37,10 +37,12 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
   FnEvent() {
     setTimeout(() => {
       var dragTarget = document.getElementById(this.gridKey);
-      const click$ = fromEvent(dragTarget, 'click');
-      click$.subscribe(event => {
-        this.addProcess()
-      });
+      if(dragTarget) {
+        const click$ = fromEvent(dragTarget, 'click');
+        click$.subscribe(event => {
+          this.addProcess()
+        });
+      }
     }, 300);
   }
   
