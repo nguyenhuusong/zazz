@@ -172,7 +172,8 @@ export class QuaTrinhCongTacComponent implements OnInit {
     this.callApiInfo(params)
     if(event.type === 'Submit' || event.type === 'SaveNhap') {
       setTimeout(() => {
-        this.cancelSave.emit();
+       this.displayFormEditDetail = false;
+       this.getEmpProcessPageByEmpId();
       }, 200);
     }
   }
@@ -206,6 +207,7 @@ export class QuaTrinhCongTacComponent implements OnInit {
         this.listViewsDetail = cloneDeep(results.data.group_fields || []);
         this.dataDetailInfo = results.data;
         this.activeIndex = results.data.flow_st;
+        this.getEmpProcessPageByEmpId();
         this.steps = results.data.flowStatuses.map(d => {
           return {
             label: d.flow_name,
@@ -266,7 +268,7 @@ export class QuaTrinhCongTacComponent implements OnInit {
         this.apiService.delEmpProcessInfo(queryParams).subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
-            this.getDetail();
+            this.getEmpProcessPageByEmpId();
           } else {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
           }
