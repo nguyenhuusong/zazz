@@ -83,6 +83,7 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
           const listViews = cloneDeep(results.data.group_fields);
           this.listViews = [...listViews];
           this.detailInfo = results.data;
+          this.detailEdit = results.data
         }
       });
   }
