@@ -22,6 +22,19 @@ export class HrmStepComponent {
     setTimeout(() => {
       this.stepActivated();
     }, 100)
+    if(this.steps && this.steps.length > 0) {
+      this.getStep()
+    }
+  }
+
+  getStep() {
+    this.steps = this.steps.sort( ( a, b) => a.value - b.value );
+    this.steps = this.steps.map( (d, index) => {
+      return {
+        label: d.label,
+        value: index
+      } 
+    })
   }
 
   stepActivated(): void {

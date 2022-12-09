@@ -183,7 +183,7 @@ export class NotifyDetailComponent implements OnInit {
         message: 'Bạn chắc chắn muốn thực hiện hành động này',
         accept: () => {
           const params = {
-            ids: data.map(t => t.userId)
+            ids: data.map(t => t.id)
           };
           this.apiService.delNotifyPushs(params).subscribe(results => {
             if (results.status === 'success') {
