@@ -250,3 +250,17 @@ export function setMembers(element1, datas) {
     element1.options = results
     element1.columnValue = element1.columnValue ? element1.options[0] : ''
   }
+
+  export function searchTree(element, matchingTitle){
+    if(element.path == matchingTitle){
+         return element;
+    }else if (element.submenus != null){
+         var i;
+         var result = null;
+         for(i=0; result == null && i < element.submenus.length; i++){
+              result = searchTree(element.submenus[i], matchingTitle);
+         }
+         return result;
+    }
+    return null;
+}

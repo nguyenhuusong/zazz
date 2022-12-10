@@ -5,7 +5,7 @@ import { ConfirmationService, MessageService, TreeNode } from 'primeng/api';
 import { ApiService } from 'src/app/services/api.service';
 import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
+import { AgGridFn, CheckHideAction, getActionByPathMenu } from 'src/app/common/function-common/common';
 import { CustomTooltipComponent } from 'src/app/common/ag-component/customtooltip.component';
 import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
 import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.component';
@@ -15,6 +15,7 @@ import { cloneDeep } from 'lodash';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { searchTree } from 'src/app/common/function-common/objects.helper';
 @Component({
   selector: 'app-ns-ho-so-nhan-su',
   templateUrl: './ns-ho-so-nhan-su.component.html',
@@ -96,7 +97,8 @@ export class NsHoSoNhanSuComponent implements OnInit {
   organs = []
   isButtonmoveOrganNow = true;
   itemsToolOfGrid: any[] = [];
-  companies = []
+  companies = [];
+  listActions = [];
   constructor(
     private apiService: ApiHrmService,
     private spinner: NgxSpinnerService,
@@ -123,7 +125,24 @@ export class NsHoSoNhanSuComponent implements OnInit {
       buttonAgGridComponent: ButtonAgGridComponent,
       avatarRendererFull: AvatarFullComponent,
     };
+    this.initMenuActionPages(getActionByPathMenu('nhan-su', this.MENUACTIONROLEAPI.GetEmployeePage.url, ['import', 'export', 'changeOrganization']))
   }
+
+  initMenuActionPages(listMenus) {
+    this.itemsToolOfGrid = [];
+    for(let item of listMenus) {
+      this.itemsToolOfGrid.push({
+        label: item.actionName,
+        code: item.actionCd,
+        icon: 'pi pi-upload',
+        command: () => {
+          this[item.actionCd]();
+        }
+      })
+    }
+  }
+
+
   query = {
     filter: '',
     gridWidth: 0,
@@ -495,26 +514,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
     ];
     this.getEmployeeStatus();
     this.getOrgan();
-    this.itemsToolOfGrid = [
-      {
-        label: 'Import file',
-        code: 'Import',
-        icon: 'pi pi-upload',
-        disabled: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.IMPORT),
-        command: () => {
-          this.importFileExel();
-        }
-      },
-      {
-        label: 'Export file',
-        code: 'Import',
-        icon: 'pi pi-download',
-        disabled: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.EXPORT),
-        command: () => {
-          this.exportExel();
-        }
-      },
-    ]
+   
   }
   employeeStatus = []
   getEmployeeStatus() {
@@ -575,7 +575,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
     return result;
   }
 
-  exportExel() {
+  export() {
     this.spinner.show();
     this.query.pageSize = 1000000;
     const query = { ...this.query };
@@ -684,7 +684,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
       this.isButtonmoveOrganNow = true
     }
   }
-  theOrganToMove() {
+  changeOrganization() {
     // ColumnDefs for data move 
     this.getColumnDefsMoveOrgan();
     this.getOrgan();
@@ -841,7 +841,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
     this.changeDetector.detectChanges();
   }
 
-  importFileExel() {
+  import() {
     this.router.navigate(['/nhan-su/ho-so-nhan-su/import']);
   }
 
