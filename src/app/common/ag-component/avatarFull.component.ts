@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
     <p-avatar *ngIf="!value"  icon="pi pi-user" styleClass="mr-2" [style]="{'background-color': '#9c27b0', 'color': '#ffffff'}" styleClass="d-flex" shape="circle"></p-avatar>
     </div>
     <div *ngIf="!isImage">
-    <p-avatar *ngIf="value" image="value" [style]="{'display': 'flex'}" size="large" styleClass="d-flex"></p-avatar>
+    <p-avatar image="{{value}}" [style]="{'display': 'flex'}" size="large" styleClass="d-flex"></p-avatar>
     </div>
     `
 })
