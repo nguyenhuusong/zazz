@@ -11,6 +11,7 @@
                     <app-list-grid-angular 
                     [domLayout]="'autoHeight'" 
                     *ngIf="columnDefs.length > 0" 
+                    [idGrid]="gridKey"
                     [title]="'Chứng chỉ'"
                     [listsData]="listsData" 
                     (showConfig)="CauHinh()"
