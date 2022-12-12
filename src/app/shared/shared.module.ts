@@ -29,6 +29,7 @@ import { CustomTooltipComponent } from '../common/ag-component/customtooltip.com
 import { CurrencyFormatPipeModule } from '../common/pipe/currency-pipe.module';
 import {DialogModule} from 'primeng/dialog';
 import { MultiSelectModule } from 'primeng/multiselect';
+
 @NgModule({
     exports: [
         CommonModule,

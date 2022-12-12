@@ -13,6 +13,7 @@
                     *ngIf="columnDefs.length > 0" 
                     [title]="'Chứng chỉ'"
                     [listsData]="listsData" 
+                    [idGrid]="gridKey"
                     (showConfig)="CauHinh()"
                     [columnDefs]="columnDefs">
                 </app-list-grid-angular>

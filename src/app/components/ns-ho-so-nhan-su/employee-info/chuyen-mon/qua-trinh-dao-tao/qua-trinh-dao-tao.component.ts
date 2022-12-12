@@ -31,14 +31,21 @@ export class QuaTrinhDaoTaoComponent implements OnInit {
   gridKey = '';
 
   ngAfterViewInit(): void {
-    setTimeout(() => {
-      var dragTarget = document.getElementById(`${this.gridKey}_hocvan`);
-      const click$ = fromEvent(dragTarget, 'click');
-      click$.subscribe(event => {
-        this.addTraining()
-      });
-    }, 500);
+   this.FnEvent();
   }
+
+  FnEvent() {
+    setTimeout(() => {
+      var dragTarget = document.getElementById(`${this.gridKey}_daotao`);
+      if(dragTarget) {
+        const click$ = fromEvent(dragTarget, 'click');
+        click$.subscribe(event => {
+          this.addTraining()
+        });
+      }
+    }, 300);
+  }
+
   ngOnInit(): void {
     this.getTrainningPage();
   }
@@ -74,6 +81,7 @@ export class QuaTrinhDaoTaoComponent implements OnInit {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thêm mới thành công' });
         this.displayFormEditDetail = false;
         this.getTrainningPage();
+        this.FnEvent();
         this.spinner.hide();
       } else {
         this.spinner.hide();
@@ -115,7 +123,7 @@ export class QuaTrinhDaoTaoComponent implements OnInit {
       {
         headerComponentParams: {
           template:
-          `<button  class="btn-button" id="${this.gridKey}_hocvan"> <span class="pi pi-plus action-grid-add" ></span></button>`,
+          `<button  class="btn-button" id="${this.gridKey}_daotao"> <span class="pi pi-plus action-grid-add" ></span></button>`,
         },
         field: 'gridflexdetails1',
         cellClass: ['border-right', 'no-auto'],
@@ -177,6 +185,7 @@ export class QuaTrinhDaoTaoComponent implements OnInit {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
             this.getTrainningPage();
+            this.FnEvent();
           } else {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
           }

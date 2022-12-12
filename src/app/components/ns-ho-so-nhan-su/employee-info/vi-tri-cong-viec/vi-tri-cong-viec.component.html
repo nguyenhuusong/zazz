@@ -16,7 +16,7 @@
             </li>
         </ul>
         <div class="col-6">
-            <app-step-info [detailInfo]="detailInfo" *ngIf="detailInfo"></app-step-info>
+            <app-step-info [detailInfo]="detailInfo" *ngIf="listViews.length > 0"></app-step-info>
         </div>
         <div class="col-3 d-flex end" >
             <div class=" gap-16 icons-detail-config d-flex align-items-center" >
@@ -56,7 +56,7 @@
                             (callbackcancel)="cancelUpdate($event)">
                         </app-edit-detail>
                         <p-divider></p-divider>
-                        <app-qua-trinh-cong-tac [empId]="empId"></app-qua-trinh-cong-tac>
+                        <app-qua-trinh-cong-tac [empId]="empId" (cancelSave)="cancelSave()"></app-qua-trinh-cong-tac>
                         <app-thoi-gian-lam-viec [empId]="empId"></app-thoi-gian-lam-viec>
                     </div>
 

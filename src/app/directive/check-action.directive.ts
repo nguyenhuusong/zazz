@@ -35,44 +35,44 @@ export class CheckHideActionsDirective implements OnInit, AfterViewInit, AfterCo
 
   }
   ngOnInit() {
-    this.el.nativeElement.hidden = true;
+    this.el.nativeElement.hidden = false;
 
-    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-      if(results && results.length>0){
-        this.manager.getUser().then(user => {
-            const query = {  }
-            // const queryParams = queryString.stringify({ organizeIds: results });
-            const queryMeny = queryString.stringify({ userId: this.authService.getClaims().sub, webId: '70e930b0-ffea-43d3-b3a9-0e6b03f2b433' });
-            // this.apiService.getUserMenus(queryParams).subscribe((results: any) => {
-            this.apiService.clientMenuGetListByUserId(queryMeny).subscribe(results => {
-                if (results.status === 'success') {
-                    let newArray = []
-                    results.data.forEach(element => {
-                        newArray.push(element);
-                        if (element.submenus && element.submenus.length > 0) {
-                            element.submenus.forEach(element1 => {
-                                newArray.push(element1);
-                            });
-                        }
-                    });;
-                    if (newArray) {
-                        const menus = newArray.find(m => m.path === this.CheckHideActions.url);
-                        if (menus) {
-                            const arrAction = menus.actions.map(d => d.actionCd);
-                            if (arrAction.indexOf(this.CheckHideActions.action) > -1) {
-                                this.el.nativeElement.hidden = false;
-                            } else {
-                                this.el.nativeElement.hidden = true;
-                            }
-                        }
-                    }else {
-                        this.el.nativeElement.hidden = true;
-                    }
-                }
-            })
-        });
-      }
-    });
+    // this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
+    //   if(results && results.length>0){
+    //     this.manager.getUser().then(user => {
+    //         const query = {  }
+    //         // const queryParams = queryString.stringify({ organizeIds: results });
+    //         const queryMeny = queryString.stringify({ userId: this.authService.getClaims().sub, webId: '70e930b0-ffea-43d3-b3a9-0e6b03f2b433' });
+    //         // this.apiService.getUserMenus(queryParams).subscribe((results: any) => {
+    //         this.apiService.clientMenuGetListByUserId(queryMeny).subscribe(results => {
+    //             if (results.status === 'success') {
+    //                 let newArray = []
+    //                 results.data.forEach(element => {
+    //                     newArray.push(element);
+    //                     if (element.submenus && element.submenus.length > 0) {
+    //                         element.submenus.forEach(element1 => {
+    //                             newArray.push(element1);
+    //                         });
+    //                     }
+    //                 });;
+    //                 if (newArray) {
+    //                     const menus = newArray.find(m => m.path === this.CheckHideActions.url);
+    //                     if (menus) {
+    //                         const arrAction = menus.actions.map(d => d.actionCd);
+    //                         if (arrAction.indexOf(this.CheckHideActions.action) > -1) {
+    //                             this.el.nativeElement.hidden = false;
+    //                         } else {
+    //                             this.el.nativeElement.hidden = true;
+    //                         }
+    //                     }
+    //                 }else {
+    //                     this.el.nativeElement.hidden = true;
+    //                 }
+    //             }
+    //         })
+    //     });
+    //   }
+    // });
   }
 
   ngAfterContentChecked() {

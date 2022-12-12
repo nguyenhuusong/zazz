@@ -9,8 +9,10 @@
             <div class="row" style="flex-wrap: wrap">
                 <div class="grid-default border">
                     <app-list-grid-angular 
-                    [domLayout]="'autoHeight'" 
+                    [domLayout]="'autoHeight'"
+                    [idGrid]="gridKey" 
                     *ngIf="columnDefs.length > 0" 
+                    [heightRow]="50"
                     [title]="'Chứng chỉ'"
                     [listsData]="listsData" 
                     (showConfig)="CauHinh()"

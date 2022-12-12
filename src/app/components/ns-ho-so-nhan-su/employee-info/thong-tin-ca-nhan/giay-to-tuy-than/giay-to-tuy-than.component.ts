@@ -31,14 +31,21 @@ export class GiayToTuyThanComponent implements OnInit {
   gridKey = ''
 
   ngAfterViewInit(): void {
+    this.FnEvent();
+  }
+
+  FnEvent() {
     setTimeout(() => {
       var dragTarget = document.getElementById(this.gridKey);
-      const click$ = fromEvent(dragTarget, 'click');
-      click$.subscribe(event => {
-        // this.addTimeWork()
-      });
-    }, 500);
+      if(dragTarget) {
+        const click$ = fromEvent(dragTarget, 'click');
+        click$.subscribe(event => {
+          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Chức năng đang phát triển' });
+        });
+      }
+    }, 300);
   }
+
   ngOnInit(): void {
     this.getEmpIdcardPage();
   }
@@ -76,6 +83,7 @@ export class GiayToTuyThanComponent implements OnInit {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thêm mới thành công' });
         this.displayFormEditDetail = false;
         this.getEmpIdcardPage();
+        this.FnEvent();
         this.spinner.hide();
       } else {
         this.spinner.hide();
@@ -163,6 +171,7 @@ export class GiayToTuyThanComponent implements OnInit {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
             this.getEmpIdcardPage();
+            this.FnEvent();
           } else {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
           }

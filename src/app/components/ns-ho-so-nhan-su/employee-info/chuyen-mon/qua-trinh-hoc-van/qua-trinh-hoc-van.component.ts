@@ -31,14 +31,21 @@ export class QuaTrinhHocVanComponent implements OnInit {
   gridKey = '';
 
   ngAfterViewInit(): void {
-    setTimeout(() => {
-      var dragTarget = document.getElementById(`${this.gridKey}_worked`);
-      const click$ = fromEvent(dragTarget, 'click');
-      click$.subscribe(event => {
-        this.AddEducation()
-      });
-    }, 500);
+   this.FnEvent();
   }
+
+  FnEvent() {
+    setTimeout(() => {
+      var dragTarget = document.getElementById(`${this.gridKey}_hocvan`);
+      if(dragTarget) {
+        const click$ = fromEvent(dragTarget, 'click');
+        click$.subscribe(event => {
+          this.AddEducation()
+        });
+      }
+    }, 300);
+  }
+
   ngOnInit(): void {
     this.getEducationPage();
   }
@@ -76,6 +83,7 @@ export class QuaTrinhHocVanComponent implements OnInit {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thêm mới thành công' });
         this.displayFormEditDetail = false;
         this.getEducationPage();
+        this.FnEvent();
         this.spinner.hide();
       } else {
         this.spinner.hide();
@@ -117,7 +125,7 @@ export class QuaTrinhHocVanComponent implements OnInit {
       {
         headerComponentParams: {
           template:
-          `<button  class="btn-button" id="${this.gridKey}_worked"> <span class="pi pi-plus action-grid-add" ></span></button>`,
+          `<button  class="btn-button" id="${this.gridKey}_hocvan"> <span class="pi pi-plus action-grid-add" ></span></button>`,
         },
         field: 'gridflexdetails1',
         cellClass: ['border-right', 'no-auto'],
@@ -163,6 +171,7 @@ export class QuaTrinhHocVanComponent implements OnInit {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
             this.getEducationPage();
+            this.FnEvent();
           } else {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
           }

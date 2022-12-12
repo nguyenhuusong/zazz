@@ -1,5 +1,6 @@
 import * as moment from "moment";
 import * as numeral from "numeral";
+import { searchTree } from "./objects.helper";
 
 export function AgGridFn(lists: Array<any>) {
     let arrAgGrids = [];
@@ -93,7 +94,7 @@ export function AgGridFn(lists: Array<any>) {
                     sortable: false,
                     width: value.columnWidth,
                     cellRenderer: (params: any) => {
-                        return `<span class="status-cell text-center ${ params.value === 'Thành công' ? 'err-sus' : 'err-err'}">${params.value}</span>`
+                        return `<span class="status-cell text-center ${params.value === 'Thành công' ? 'err-sus' : 'err-err'}">${params.value}</span>`
                     },
                     hide: value.isHide ? true : false,
                     pinned: value.pinned,
@@ -103,7 +104,7 @@ export function AgGridFn(lists: Array<any>) {
                     headerTooltip: value.columnCaption,
                     valueFormatter: value.customFormat ? formatMargin : formatNumber2
                 };
-            }else if (value.columnField === 'error') {
+            } else if (value.columnField === 'error') {
                 row = {
                     headerClass: 'BGE8E9ED',
                     headerName: value.columnCaption,
@@ -113,7 +114,7 @@ export function AgGridFn(lists: Array<any>) {
                     sortable: false,
                     width: value.columnWidth,
                     cellRenderer: (params: any) => {
-                        return `<span class="${ (params.value.toLowerCase() === 'ok') ? '' : 'bg-red' }">${params.value}
+                        return `<span class="${(params.value.toLowerCase() === 'ok') ? '' : 'bg-red'}">${params.value}
                        </span>`;
                     },
                     hide: value.isHide ? true : false,
@@ -247,9 +248,9 @@ export function AgGridFnEdit(lists: Array<any>) {
                     sortable: false,
                     editable: true,
                     filterParams: {
-                      caseSensitive: true,
-                      textFormatter:  (r) => TextFormatter(r),
-                      cellRenderer:  cellRendererSanPham,
+                        caseSensitive: true,
+                        textFormatter: (r) => TextFormatter(r),
+                        cellRenderer: cellRendererSanPham,
                     },
                     cellRenderer: value.isMasterDetail ? 'agGroupCellRenderer' : '',
                     hide: value.isHide ? true : false,
@@ -327,41 +328,56 @@ export function HideFullScreen() {
     return window.innerHeight - totalHeight
 }
 
-export function CheckHideAction(path, action) {
-    const menuItems = localStorage.hasOwnProperty('menuItems') ? JSON.parse(localStorage.getItem('menuItems')) : null;
-    if (menuItems && menuItems.length > 0) {
-        let newArray = []
-        menuItems.forEach(element => {
-            newArray.push(element);
-            if (element.submenus && element.submenus.length > 0) {
-                element.submenus.forEach(element1 => {
-                    newArray.push(element1);
-                });
-            }
-        });
-        if (newArray.length > 0) {
-            const menus = newArray.find(m => m.path === path);
-            if (menus && menus.actions.length > 0) {
-                const arrAction = menus.actions.map(d => d.actionCd);
-                if (arrAction.indexOf(action) > -1) {
-                    return  false;
-                } else {
-                    return false;
-                }
-            }else {
-                return false;
-            }
-        }else {
-            return false;
-        }
 
-    }else {
-        return false;
+export function getActionByPathMenu(pathParent, path, listActions) {
+    const menusJson = localStorage.getItem('menuItems') ? localStorage.getItem('menuItems') : null;
+    const menus = menusJson ? JSON.parse(menusJson) : []
+    const menuItems = menus.filter(item => item.path === pathParent);
+    if (menuItems.length > 0) {
+        const a = searchTree(menuItems[0], path);
+        const listMenus = a.actions.filter(element => listActions.includes(element.actionCd));
+        return listMenus;
+    } else {
+        return [];
     }
 }
 
+export function CheckHideAction(path, action) {
+    return false;
+    // const menuItems = localStorage.hasOwnProperty('menuItems') ? JSON.parse(localStorage.getItem('menuItems')) : null;
+    // if (menuItems && menuItems.length > 0) {
+    //     let newArray = []
+    //     menuItems.forEach(element => {
+    //         newArray.push(element);
+    //         if (element.submenus && element.submenus.length > 0) {
+    //             element.submenus.forEach(element1 => {
+    //                 newArray.push(element1);
+    //             });
+    //         }
+    //     });
+    //     if (newArray.length > 0) {
+    //         const menus = newArray.find(m => m.path === path);
+    //         if (menus && menus.actions.length > 0) {
+    //             const arrAction = menus.actions.map(d => d.actionCd);
+    //             if (arrAction.indexOf(action) > -1) {
+    //                 return  false;
+    //             } else {
+    //                 return false;
+    //             }
+    //         }else {
+    //             return false;
+    //         }
+    //     }else {
+    //         return false;
+    //     }
+
+    // }else {
+    //     return false;
+    // }
+}
+
 export function checkUrlRole() {
-    
+
 }
 
 export function SumArray(mang) {

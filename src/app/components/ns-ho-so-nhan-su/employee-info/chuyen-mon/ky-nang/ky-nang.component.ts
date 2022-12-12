@@ -31,14 +31,22 @@ export class KyNangComponent implements OnInit {
   gridKey = '';
 
   ngAfterViewInit(): void {
+   this.FnEvent();
+  }
+
+
+  FnEvent() {
     setTimeout(() => {
       var dragTarget = document.getElementById(`${this.gridKey}_kynang`);
-      const click$ = fromEvent(dragTarget, 'click');
-      click$.subscribe(event => {
-        this.addSkill()
-      });
-    }, 500);
+      if(dragTarget) {
+        const click$ = fromEvent(dragTarget, 'click');
+        click$.subscribe(event => {
+          this.addSkill()
+        });
+      }
+    }, 300);
   }
+
   ngOnInit(): void {
     this.getSkillPage();
   }
@@ -74,6 +82,7 @@ export class KyNangComponent implements OnInit {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thêm mới thành công' });
         this.displayFormEditDetail = false;
         this.getSkillPage();
+        this.FnEvent();
         this.spinner.hide();
       } else {
         this.spinner.hide();
@@ -177,6 +186,7 @@ export class KyNangComponent implements OnInit {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
             this.getSkillPage();
+            this.FnEvent();
           } else {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
           }

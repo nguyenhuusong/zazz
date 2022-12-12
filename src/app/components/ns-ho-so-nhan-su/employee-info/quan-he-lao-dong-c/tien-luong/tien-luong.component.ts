@@ -30,14 +30,21 @@ export class TienLuongComponent implements OnInit {
   gridKey = '';
 
   ngAfterViewInit(): void {
+    this.FnEvent();
+  }
+
+  FnEvent() {
     setTimeout(() => {
       var dragTarget = document.getElementById(`${this.gridKey}`);
-      const click$ = fromEvent(dragTarget, 'click');
-      click$.subscribe(event => {
-        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Chờ phát triển' });
-      });
-    }, 500);
+      if(dragTarget) {
+        const click$ = fromEvent(dragTarget, 'click');
+        click$.subscribe(event => {
+          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Chờ phát triển' });
+        });
+      }
+    }, 300);
   }
+
   ngOnInit(): void {
     this.getSalaryInfoPageByEmpId();
   }
@@ -73,6 +80,7 @@ export class TienLuongComponent implements OnInit {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thêm mới thành công' });
         this.displayFormEditDetail = false;
         this.getSalaryInfoPageByEmpId();
+        this.FnEvent();
         this.spinner.hide();
       } else {
         this.spinner.hide();

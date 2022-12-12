@@ -12,6 +12,7 @@
                     [domLayout]="'autoHeight'" 
                     *ngIf="columnDefs.length > 0" 
                     [title]="'Chứng chỉ'"
+                    [idGrid]="gridKey"
                     [listsData]="listsData" 
                     (showConfig)="CauHinh()"
                     [columnDefs]="columnDefs">
