@@ -301,8 +301,9 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     // chuyen vong
     this.optionsButtonDB[0].disabled = CheckHideAction(MENUACTIONROLEAPI.GetCandidatePage.url, ACTIONS.CHUYEN_VONG) && this.dataRowSelected.length > 0;
     this.optionsButtonDB[1].disabled = CheckHideAction(MENUACTIONROLEAPI.GetCandidatePage.url, ACTIONS.SEND_EMAIL);
-    let checkCreateAccount = this.dataRowSelected.some( d => d.can_st === 10 && d.status_account === 1 );
+    let checkCreateAccount = this.dataRowSelected.some( d => d.can_st !== 10 || d.status_account === 1 );
     this.optionsButtonDB[2].disabled = checkCreateAccount ? true : this.dataRowSelected.length < 1 ? true : false;
+    
   }
 
   xoatuyendung(event) {

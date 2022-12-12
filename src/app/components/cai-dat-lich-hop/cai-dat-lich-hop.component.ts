@@ -288,8 +288,8 @@ export class CaiDatLichHopComponent implements OnInit {
       if (results.status === 'success') {
         this.floors = (results.data).map(d => {
           return { 
-            label: 'Tầng' + ' ' + d.floorNo, 
-            value: d.floorNo 
+            label: 'Tầng' + ' ' + d.name, 
+            value: d.value 
           }
         });
       }

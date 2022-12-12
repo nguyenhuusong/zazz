@@ -195,8 +195,8 @@ export class DanhSachPhongHopComponent implements OnInit {
       if (results.status === 'success') {
         this.floors = (results.data).map(d => {
           return { 
-            label: 'Tầng' + ' ' + d.floorNo, 
-            value: d.floorNo 
+            label: 'Tầng' + ' ' + d.name, 
+            value: d.value 
           }
         });
       }
@@ -216,8 +216,8 @@ export class DanhSachPhongHopComponent implements OnInit {
           if(this.model.floor_No){
             this.rooms = results.data.map(d => {
               return {
-                label: d.room_name,
-                value: d.roomId,
+                label: d.name,
+                value: d.value,
               }
             })  
           }else{

@@ -88,22 +88,8 @@ export class NsCauHinhComponent implements OnInit {
         }
       },
     ]
-    this.checkIsAddNew();
   }
 
-  checkIsAddNew() {
-    if(this.tabIndex === 0 && !CheckHideAction(MENUACTIONROLEAPI.GetPayrollAppInfoPage.url, ACTIONS.ADD_TINH_LUONG_BANG_LUONG)){
-      this.isAddNewButton = true;
-    }else if(this.tabIndex === 1 && !CheckHideAction(MENUACTIONROLEAPI.GetPayrollAppInfoPage.url, ACTIONS.ADD_TINH_LUONG_THIET_LAP_THAM_SO)){
-      this.isAddNewButton = true;
-    }else if(this.tabIndex === 2 && !CheckHideAction(MENUACTIONROLEAPI.GetPayrollAppInfoPage.url, ACTIONS.ADD_TINH_LUONG_THANH_PHAN_LUONG)){
-      this.isAddNewButton = true;
-    }else if(this.tabIndex === 3 && !CheckHideAction(MENUACTIONROLEAPI.GetPayrollAppInfoPage.url, ACTIONS.ADD_TINH_LUONG_CAP_BAC_LUONG)){
-      this.isAddNewButton = true;
-    }else{
-      this.isAddNewButton = false;
-    }
-  }
 
   editEvent(event) {
     let id = null;
@@ -191,7 +177,6 @@ export class NsCauHinhComponent implements OnInit {
   handleChange(e){
     this.tabIndex = e;
     this.checkTitleAddNew();
-    this.checkIsAddNew();
   }
   
 
