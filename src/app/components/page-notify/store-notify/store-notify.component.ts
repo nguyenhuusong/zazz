@@ -9,6 +9,7 @@ import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-render
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { AgGridFn } from 'src/app/common/function-common/common';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 @Component({
   selector: 'app-store-notify',
   templateUrl: './store-notify.component.html',
@@ -64,7 +65,8 @@ export class StoreNotifyComponent implements OnInit, OnChanges {
   sub_prod_cd: any = null;
   moduleList = [];
   MENUACTIONROLEAPI = MENUACTIONROLEAPI;
-  ACTIONS = ACTIONS
+  ACTIONS = ACTIONS;
+  organSeleted = null
 
   gridflexs = [
     {
@@ -136,6 +138,7 @@ export class StoreNotifyComponent implements OnInit, OnChanges {
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
     private spinner: NgxSpinnerService,
+    private organizeInfoService: OrganizeInfoService,
     private router: Router) {
     this.defaultColDef = {
       resizable: true,
@@ -149,19 +152,31 @@ export class StoreNotifyComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    if(this.isNotifi) {
-      this.perent_id = this.notify.external_sub || null;
-      const items = this.moduleLists.filter(d => d.value === this.perent_id)
-      if (items.length > 0) this.getOrganizeTree(items[0].code)
-    }
+    
+    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
+      if(results){
+        this.organSeleted = results;
+        this.perent_id = results;
+        this.getUserByPush();
+        if(this.isNotifi) {
+          // this.perent_id = this.notify.external_sub || null;
+          const items = this.moduleLists.filter(d => d.value === this.perent_id)
+          if (items.length > 0) this.getOrganizeTree(items[0].code)
+        }
+        }
+    })
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-   if(this.isNotifi) {
-    this.perent_id = this.notify.external_sub || null;
-    const items = this.moduleLists.filter(d => d.value === this.perent_id)
-    if (items.length > 0) this.getOrganizeTree(items[0].code)
-   }
+   this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
+      if(results){
+        if(this.isNotifi) {
+          // this.perent_id = this.notify.external_sub || null;
+          const items = this.moduleLists.filter(d => d.value === this.perent_id)
+          if (items.length > 0) this.getOrganizeTree(items[0].code)
+         }
+      }
+    })
   
   }
 
@@ -224,7 +239,7 @@ export class StoreNotifyComponent implements OnInit, OnChanges {
   getUserByPush() {
     this.columnDefs = []
     const params = {
-      "organizeId": this.perent_id,
+      "organizeId": this.organSeleted,
       "orgIds": this.danhsachphongban,
       "employees": [],
       "filter": this.query.filter

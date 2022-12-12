@@ -29,7 +29,7 @@ export class ThueBaoHiemComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getEmployeeInfo();
+    this.getEmpByInsurance();
 
   }
   optionsButtonsView = [
@@ -39,12 +39,12 @@ export class ThueBaoHiemComponent implements OnInit {
   codeStaff = ''
   listViews = [];
   listViewsForm = [];
-  getEmployeeInfo(): void {
+  getEmpByInsurance(): void {
     this.spinner.show();
     this.listViews = [];
     this.detailInfo = null;
     const queryParams = queryString.stringify({ empId: this.empId });
-    this.apiService.getEmployeeData('GetEmployeeByInsurance', queryParams).subscribe(results => {
+    this.apiService.getEmpByInsurance(queryParams).subscribe(results => {
       if (results.status === 'success') {
         if (!this.codeStaff) {
           this.codeStaff = getFieldValueAggrid(results.data, 'code');
@@ -66,11 +66,11 @@ export class ThueBaoHiemComponent implements OnInit {
     this.record = event.rowData;
   }
 
-  setEmployeeInfo(data) {
+  setEmpByInsuranceInfo(data) {
     const  params = {
       ...this.detailInfo, group_fields: data
     };
-    this.apiService.setEmployeeInfo(params).subscribe((results: any) => {
+    this.apiService.setEmpByInsuranceInfo(params).subscribe((results: any) => {
       if (results.status === 'success') {
       
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Cập nhật thông tin thành công' });
@@ -85,7 +85,7 @@ export class ThueBaoHiemComponent implements OnInit {
 
   cancelUpdate(button) {
      if (button === 'CauHinh') {
-      this.getEmployeeInfo();
+      this.getEmpByInsurance();
     } else {
 
     }

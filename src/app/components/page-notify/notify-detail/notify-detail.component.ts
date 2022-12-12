@@ -10,6 +10,7 @@ declare var ace:any;
 import showdown from 'showdown';
 import { CheckHideAction } from 'src/app/common/function-common/common';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 @Component({
   selector: 'app-notify-detail',
   templateUrl: './notify-detail.component.html',
@@ -52,16 +53,20 @@ export class NotifyDetailComponent implements OnInit {
   loadForm = false;
   displayStore = false;
   projects = [];
+  notifyTempList = [];
+  notifyTempId = null;
   constructor(
     private apiService: ApiHrmService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private organizeInfoService: OrganizeInfoService,
   ) { }
   items = [];
   titlePage = ''
+  organSeleted = '';
   ngOnInit(): void {
     this.titlePage = this.activatedRoute.data['_value'].title;
     this.items = [
@@ -71,6 +76,7 @@ export class NotifyDetailComponent implements OnInit {
       { label: `${this.titlePage}` },
     ];
     this.handleParams();
+    this.getNotifyTempList();
   }
 
   handleParams() {
@@ -82,8 +88,14 @@ export class NotifyDetailComponent implements OnInit {
       this.external_name = this.paramsObject.params.external_name;
       this.tempId = this.paramsObject.params.tempId;
     
-      this.modelMarkdow.id = this.notiId
-      this.getAppNotifyInfo();
+      this.modelMarkdow.id = this.notiId;
+
+      this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
+        if(results){
+          this.organSeleted = results
+          this.getAppNotifyInfo();
+        }
+      });
     });
   };
 
@@ -93,7 +105,12 @@ export class NotifyDetailComponent implements OnInit {
     if(this.notiId){
       this.indexTab = 1;
     }
-    const queryParams = queryString.stringify({ n_id: this.notiId, external_sub: this.external_sub, tempId: this.tempId, external_name: this.external_name });
+    const queryParams = queryString.stringify(
+      { n_id: this.notiId, 
+        external_sub: this.organSeleted, 
+        tempId: this.tempId, 
+        external_name: this.external_name 
+      });
     this.apiService.getNotifyInfo(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.listViews = cloneDeep(results.data.group_fields);
@@ -168,7 +185,7 @@ export class NotifyDetailComponent implements OnInit {
           return {
             label: `${d.organizationName}`,
             value: d.organizeId,
-            code: d.organizeId,
+            // code: d.organizeId,
           }
         });
         this.moduleLists = moduleLists
@@ -258,6 +275,24 @@ export class NotifyDetailComponent implements OnInit {
         // this.getAppNotifyInfo();
       }
     })
+  }
+
+  getNotifyTempList() {
+    this.apiService.getNotifyTempList().subscribe(results => {
+      if (results.status === 'success') {
+        this.notifyTempList = results.data.map(res => {
+          return {
+            label: `${res.tempName}`,
+            value: res.tempId
+          }
+        });
+      }
+    });
+  }
+
+  changeNotiTem() {
+    this.tempId = this.notifyTempId;
+    this.getAppNotifyInfo();
   }
 
 }

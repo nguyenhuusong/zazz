@@ -36,6 +36,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
   @Output() avatarUrl = new EventEmitter<any>();
   @Output() callback = new EventEmitter<any>();
   @Output() callbackcancel = new EventEmitter<any>();
+  @Output() callbackDataInfo = new EventEmitter<any>();
   @Output() callback1 = new EventEmitter<any>();
   @Output() callBackForm = new EventEmitter<any>();
   @Output() callbackButton = new EventEmitter<any>();
@@ -113,6 +114,11 @@ export class EditDetailComponent implements OnInit, OnChanges {
   resetData(value) {
     this.callbackcancel.emit(value);
   }
+
+  getDataInfo(data) {
+    this.callbackDataInfo.emit(data);
+  }
+
   submit = false
   dataViewNew = [];
   

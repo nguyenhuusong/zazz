@@ -38,6 +38,11 @@ export class ChiTietLichHopComponent implements OnInit, OnDestroy {
   listsData = [];
   columnDefs;
   showChooseMember = false;
+
+  // fieldsGroupTem: đồng bộ data 'chọn lịch họp'( hiển thị lịch họp đã chọn với data khác đã nhập khi thời gian chọn xong ko tự bind ), 
+  fieldsGroupTem = null;
+  // dateChoosed: data trả ra khi chọn lịch họp xong
+  dateChoosed = null;
   @Input() dataRouter = null;
   @Output() back = new EventEmitter<any>();
   ngOnDestroy(): void {
@@ -76,7 +81,6 @@ export class ChiTietLichHopComponent implements OnInit, OnDestroy {
   };
 
   getMeetingInfo(): void {
-    console.log('fjdosfjiodsfji')
     this.listViews = [];
     this.listsData = [];
     this.apiService.getMeetingInfo(`?meet_ud=${this.meet_ud || ''}`).subscribe(results => {
@@ -144,7 +148,7 @@ export class ChiTietLichHopComponent implements OnInit, OnDestroy {
   }
 
   setMeetRoomInfo(data): void {
-    
+    console.log('fjdsofijd', data)
     this.spinner.show();
     const params = {
       ...this.detailInfo, group_fields: data, members: this.listsData
@@ -175,15 +179,18 @@ export class ChiTietLichHopComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('/cai-dat/cai-dat-lich-hop');
   }
 
-  cancelUpdate(event): void {
+  getDataInfo(event): void {
+    if(event.data) {
+      this.fieldsGroupTem = event.data;
+    }
     if(event === 'CauHinh') {
       this.getMeetingInfo();
-    }else if( event.name === 'roomId'){
+    }else if( event.calenderInfo.name === 'roomId'){
       this.showChooseCalander = true;
-      this.meetingInfo.roomId = event.id;
-      this.meetingInfo.floorNo = event.floorID;
-    }else if( event.name === 'floor_no'){
-      this.meetingInfo.floorNo = event.id;
+      this.meetingInfo.roomId = event.calenderInfo.id;
+      this.meetingInfo.floorNo = event.calenderInfo.floorID;
+    }else if( event.calenderInfo.name === 'floor_no'){
+      this.meetingInfo.floorNo = event.calenderInfo.id;
     }
     else {
       this.manhinh = 'Edit';
@@ -196,13 +203,14 @@ export class ChiTietLichHopComponent implements OnInit, OnDestroy {
   }
 
   theDateChoosed(event){
-    let dataTem = cloneDeep(this.listViews);
+    // lưu 'dateChoosed' để gán vào group filed, khi thời gian chọn ko tự bind được
+    this.dateChoosed = event;
     this.listViews = []
     this.showChooseCalander = false;
     if(!event){
       this.showChooseCalander = false;
     }else{
-      dataTem.forEach(element => {
+      this.fieldsGroupTem.forEach(element => {
         element.fields.forEach(element1 => {
           if (element1.field_name === 'meet_at') {
             // element1.columnValue = new Date(event.meet_at)
@@ -215,7 +223,7 @@ export class ChiTietLichHopComponent implements OnInit, OnDestroy {
           }
         });
       });
-      this.listViews = [...dataTem]
+      this.listViews = [...this.fieldsGroupTem]
     }
     // this.changeDetector.detectChanges();
   }

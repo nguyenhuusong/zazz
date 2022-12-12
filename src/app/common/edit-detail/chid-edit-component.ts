@@ -439,6 +439,7 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
   @Input() dataView;
   @Input() paramsObject;
   @Output() callback = new EventEmitter<any>();
+  @Output() dataInfo = new EventEmitter<any>();
   @Input() modelFields;
   @Input() submit = false;
   @Output() emitDropdownValue = new EventEmitter<any>();
@@ -492,7 +493,7 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
       id: this.element.columnValue,
       floorID: floorID
     }
-    this.callback.emit(emitType);
+    this.dataInfo.emit({ data: this.dataView, calenderInfo: emitType});
   }
 
   async onChangeValue(value, field_name, element) {
@@ -833,8 +834,8 @@ export class AppTypeCurrencyComponent implements OnInit {
   selector: 'app-type-checkbox',
   template: `   
                 <div class="field-group checkbox">
-                <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
-                 <div class="checkbox-wrap"> <p-checkbox name={{element.field_name}} [binary]="true" 
+                <label for="{{ element.field_name }}" class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
+                 <div class="checkbox-wrap"> <p-checkbox inputId="{{ element.field_name }}" name={{element.field_name}} [binary]="true" 
                   [required]="element.isRequire && element.isVisiable && !element.isEmpty" [disabled]="element.isDisable"
                   [(ngModel)]="element.columnValue" (onChange)="onChangeValue($event, element.field_name, element)"></p-checkbox></div>
 
@@ -1068,7 +1069,9 @@ export class AppTypeTimeonlyComponent implements OnInit {
     private apiService: ApiHrmService
   ) { }
   ngOnInit(): void {
-    this.modelFields[this.element.field_name].error = false
+    if(this.modelFields[this.element.field_name] && this.modelFields[this.element.field_name].error) {
+      this.modelFields[this.element.field_name].error = false;
+    }
   }
 }
 
@@ -2090,7 +2093,9 @@ export class AppTyperoomImg implements OnInit {
     private spinner: NgxSpinnerService,
   ) { }
   ngOnInit(): void {
-    this.modelFields[this.element.field_name].error = false;
+    if(this.modelFields[this.element.field_name] && this.modelFields[this.element.field_name].error) {
+      this.modelFields[this.element.field_name].error = false;
+    }
   }
 
   onRemoveImage(e) {
@@ -2150,7 +2155,9 @@ export class AppTypeonOff implements OnInit {
     private spinner: NgxSpinnerService,
   ) { }
   ngOnInit(): void {
-    this.modelFields[this.element.field_name].error = false;
+    if(this.modelFields[this.element.field_name] && this.modelFields[this.element.field_name].error) {
+      this.modelFields[this.element.field_name].error = false;
+    }
   }
 
   ngOnChanges(event) {

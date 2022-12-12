@@ -359,11 +359,11 @@ export class PageNotifyComponent implements OnInit, OnDestroy, AfterViewChecked 
   }
 
   handleEdit(data) {
-    console.log('data', data)
     this.modelAddNotifi.notiId = data.rowData.n_id
     this.Actions.value = 'Info';
     this.Actions.label = 'Sửa thông báo';
-    this.router.navigate(['/cai-dat/thong-bao/chi-tiet-thong-bao'], { queryParams: { notiId: data.rowData.n_id, external_sub: data.rowData.external_sub } });
+    this.router.navigate(['/cai-dat/thong-bao/chi-tiet-thong-bao'], 
+    { queryParams: { notiId: data.rowData.n_id, external_sub: data.rowData.external_sub } });
   }
 
   createNotify() {
@@ -382,26 +382,39 @@ export class PageNotifyComponent implements OnInit, OnDestroy, AfterViewChecked 
 
   displayNotify = false;
   AddNotify() {
-    this.displayNotify = true;
-    this.modelAddNotifi = {
-      external_sub: this.moduleList.length > 0 ? this.moduleList[0].value : '',
-      notiId: 0,
-      ord_code: '',
-      custId: '',
-      tempId: null
-    };
-    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-      if(results){
-        this.modelAddNotifi.external_sub = this.query.organizeIds
-      }
+    this.router.navigate(['cai-dat/thong-bao/them-moi-thong-bao'], 
+    { queryParams: { 
+      notiId: null, 
+      external_sub: null, 
+      tempId: null, 
+      external_name: '' } 
     });
+    // this.displayNotify = true;
+    // this.modelAddNotifi = {
+    //   external_sub: this.moduleList.length > 0 ? this.moduleList[0].value : '',
+    //   notiId: 0,
+    //   ord_code: '',
+    //   custId: '',
+    //   tempId: null
+    // };
+    // this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
+    //   if(results){
+    //     this.modelAddNotifi.external_sub = this.query.organizeIds
+    //   }
+    // });
   }
 
   addNotifytoProject() {
     this.displayNotify = false;
     this.displaySelectRoom = false;
     let items = this.moduleList.filter(d => d.value === this.modelAddNotifi.external_sub);
-    this.router.navigate(['cai-dat/thong-bao/them-moi-thong-bao'], { queryParams: { notiId: null, external_sub: this.modelAddNotifi.external_sub, tempId: this.modelAddNotifi.tempId, external_name: items[0].label } });
+    this.router.navigate(['cai-dat/thong-bao/them-moi-thong-bao'], 
+    { queryParams: { 
+      notiId: null, 
+      external_sub: this.modelAddNotifi.external_sub, 
+      tempId: this.modelAddNotifi.tempId, 
+      external_name: items[0].label } 
+    });
   }
 
   modelAddNotifi = {

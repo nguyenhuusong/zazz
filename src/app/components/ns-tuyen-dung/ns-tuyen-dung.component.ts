@@ -301,7 +301,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     // chuyen vong
     this.optionsButtonDB[0].disabled = CheckHideAction(MENUACTIONROLEAPI.GetCandidatePage.url, ACTIONS.CHUYEN_VONG) && this.dataRowSelected.length > 0;
     this.optionsButtonDB[1].disabled = CheckHideAction(MENUACTIONROLEAPI.GetCandidatePage.url, ACTIONS.SEND_EMAIL);
-    
+    let checkCreateAccount = this.dataRowSelected.some( d => d.can_st !== 10 || d.can_st !== 10 )
   }
 
   xoatuyendung(event) {
@@ -434,6 +434,15 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
         }
       },
       {
+        label: 'Tạo tài khoản',
+        code: 'guiemail',
+        icon: 'pi pi-envelope',
+        disabled: true,
+        command: () => {
+          this.getRecruitMailInput();
+        }
+      },
+      {
         label: 'Import',
         code: 'import',
         icon: 'pi pi-file-excel',
@@ -448,6 +457,20 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   isChuyenVong = false;
   chuyenVong() {
     this.isChuyenVong = true;
+  }
+
+  setCandidateRegisters() {
+    const data = []
+    this.apiService.setCandidateRegisters(data).subscribe((results: any) => {
+      if (results.status === 'success') {
+          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Cập nhật thành công' });
+          this.isSendMail = true;
+          this.spinner.hide();
+        } else {
+          this.spinner.hide();
+          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.data : null });
+        }
+    })
   }
 
   getOrgRoots() {
