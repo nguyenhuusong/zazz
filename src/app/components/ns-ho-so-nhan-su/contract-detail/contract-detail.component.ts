@@ -122,7 +122,7 @@ export class ContractDetailComponent implements OnInit {
 
   callApiInfo(params) {
     this.spinner.show();
-    this.apiService.setContractInfo(params).subscribe(results => {
+    this.apiService.setEmpWorkJob(params).subscribe(results => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
         this.activeIndex = results.data.flow_st;

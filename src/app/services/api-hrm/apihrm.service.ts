@@ -489,6 +489,10 @@ export class ApiHrmService {
     return this.http.delete<any>(`${apiHrmServer}/api/v2/working/DelEmpWorking?` + queryParams, this.options);
   }
 
+  setEmpWorkJob(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/working/SetEmpWorkJob`, params, this.options)
+  }
+
   delContractInfo(queryParams): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v2/contract/DelContractInfo?` + queryParams, this.options)
   }
