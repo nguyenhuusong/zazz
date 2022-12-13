@@ -530,16 +530,18 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
         });
       });
     } else if( field_name === 'status'){
-      if(parseInt(value) === 0){
-          this.confirmationService.confirm({
-            message: 'Phòng họp đang trong cuộc họp, bạn thực sự muốn thay đổi trạng thái phòng họp?',
-            accept: () => {
-              this.element.columnValue = value;
-            },
-            reject: () => {
-              this.element.columnValue = "1";
-            }
-          });
+      if(this.paramsObject && this.paramsObject.params.roomId) {
+        if(parseInt(value) === 0){
+            this.confirmationService.confirm({
+              message: 'Phòng họp đang trong cuộc họp, bạn thực sự muốn thay đổi trạng thái phòng họp?',
+              accept: () => {
+                this.element.columnValue = value;
+              },
+              reject: () => {
+                this.element.columnValue = "1";
+              }
+            });
+        }
       }
     }  else if (field_name === 'holi_type') {
       this.callback.emit(value);
@@ -1115,6 +1117,40 @@ export class AppTypeMultiSelectComponent implements OnInit {
 
   onChangeValue(value, field_name) {
     this.modelFields[field_name].error = false;
+
+    // filed by list action
+    let actionlistValueKey: any = {}
+    if(value) {
+      let actionlistValueArr = value;
+      if(actionlistValueArr && actionlistValueArr.length > 0 ){
+        for(let i = 0; i < actionlistValueArr.length; i ++) {
+          actionlistValueKey[actionlistValueArr[i]] = actionlistValueArr[i]
+        }
+      }
+    }
+    this.dataView.forEach( group => {
+      group.fields.forEach(field => {
+        if(field.field_name === 'content_notify') {
+          if(actionlistValueKey["notification"]){
+            field.isVisiable = true;
+          }else{
+            field.isVisiable = false;
+          }
+        }else if(field.field_name === 'content_sms') { 
+          if(actionlistValueKey["sms"]){
+            field.isVisiable = true;
+          }else{
+            field.isVisiable = false;
+          }
+        }else if(field.field_name === 'content_email') { 
+          if(actionlistValueKey["email"]){
+            field.isVisiable = true;
+          }else{
+            field.isVisiable = false;
+          }
+        }
+      });
+    }); 
     // if (field_name === 'work_cds') {
     //   console.log(value)
     //   this.dataView.forEach(element => {

@@ -876,6 +876,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
         this.listViewsFilter = cloneDeep(event.listViewsFilter);
         if (event.type === 'Search') {
           this.query = { ...this.query, ...event.data };
+          console.log('this.query', this.query)
           this.load();
         } else if (event.type === 'CauHinh') {
           this.apiService.getEmpFilter().subscribe(results => {
