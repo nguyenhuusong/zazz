@@ -21,16 +21,14 @@
         height: 55px;
     }
 }
-
-.hrm-filter{
-
-}
 :host::ng-deep {
-    .filed-filter{
-        .p-treeselect,
-        input,
-        .p-dropdown{
-            width: 100%;
+    .hrm-filter{
+        .p-card-body{
+            padding: 0px;
+            padding-top: 10px;
+            .p-card-content{
+                padding: 0px;
+            }
         }
     }
 }

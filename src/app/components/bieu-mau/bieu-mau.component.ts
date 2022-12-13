@@ -15,6 +15,8 @@ import {
 } from '@ag-grid-community/core';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
+import { DialogService } from 'primeng/dynamicdialog';
+import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 @Component({
   selector: 'app-bieu-mau',
   templateUrl: './bieu-mau.component.html',
@@ -76,6 +78,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
     private changeDetector: ChangeDetectorRef,
     private organizeInfoService: OrganizeInfoService,
     private router: Router,
+    public dialogService: DialogService,
     private route: ActivatedRoute
   ) {
     this.dataRouter = this.route.data['_value'];
@@ -609,6 +612,62 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
         }
       });
     }
+  }
+
+  listViewsFilter = [];
+  detailInfoFilter = null;
+  optionsButonFilter = [
+    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm height-56 addNew', icon: 'pi pi-search' },
+    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger height-56 addNew', icon: 'pi pi-times' },
+  ];
+
+  //filter 
+  getFilter(value) {
+    value === 1 ? '' : ''
+    this.apiService.getFilter('/api/v1/eating/GetEatingFilter').subscribe(results => {
+      if(results.status === 'success') {
+        const listViews = cloneDeep(results.data.group_fields);
+        this.listViewsFilter = [...listViews];
+        this.detailInfoFilter = results.data;
+      }
+    });
+  }
+
+  showFilter() {
+    const ref = this.dialogService.open(FormFilterComponent, {
+      header: 'Tìm kiếm nâng cao',
+      width: '40%',
+      contentStyle: "",
+      data: {
+        listViews: this.listViewsFilter,
+        detailInfoFilter: this.detailInfoFilter,
+        buttons: this.optionsButonFilter
+      }
+    });
+
+    ref.onClose.subscribe((event: any) => {
+      if (event) {
+        this.listViewsFilter = cloneDeep(event.listViewsFilter);
+        if (event.type === 'Search') {
+          this.query = { ...this.query, ...event.data };
+          this.load();
+        } else if (event.type === 'CauHinh') {
+        this.apiService.getEmpFilter().subscribe(results => {
+            if (results.status === 'success') {
+              const listViews = cloneDeep(results.data.group_fields);
+              this.listViewsFilter = [...listViews];
+              this.detailInfoFilter = results.data;
+              this.showFilter()
+            }
+          });
+
+        } else if (event.type === 'Reset') {
+          const listViews = cloneDeep(this.detailInfoFilter.group_fields);
+          this.listViewsFilter = cloneDeep(listViews);
+          this.cancel();
+        }
+      }
+    });
   }
 
 }

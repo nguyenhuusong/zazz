@@ -13,7 +13,9 @@ import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { ExportFileService } from 'src/app/services/export-file.service';
 import * as FileSaver from 'file-saver';
 const MAX_SIZE = 100000000;
-
+import { cloneDeep } from 'lodash';
+import { DialogService } from 'primeng/dynamicdialog';
+import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 @Component({
   selector: 'app-phep-nam',
   templateUrl: './phep-nam.component.html',
@@ -35,6 +37,7 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
     private changeDetector: ChangeDetectorRef,
     private organizeInfoService: OrganizeInfoService,
     private fileService: ExportFileService,
+    public dialogService: DialogService,
     private router: Router) {
 
     this.defaultColDef = {
@@ -242,6 +245,7 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
     }
 
     this.getMonthYear();
+    this.getFilter();
   }
 
   goToPhepBu() {
@@ -336,6 +340,60 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
     for (let i = minYear; i <= maxYear; i++) {
       this.years.push({ label: 'Năm ' + i, value: i })
     }
+  }
+
+  listViewsFilter = [];
+  detailInfoFilter = null;
+  optionsButonFilter = [
+    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm height-56 addNew', icon: 'pi pi-search' },
+    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger height-56 addNew', icon: 'pi pi-times' },
+  ];
+  //filter 
+  getFilter() {
+    this.apiService.getFilter('/api/v2/annualleave/GetAnnualLeaveFilter').subscribe(results => {
+      if(results.status === 'success') {
+        const listViews = cloneDeep(results.data.group_fields);
+        this.listViewsFilter = [...listViews];
+        this.detailInfoFilter = results.data;
+      }
+    });
+  }
+
+  showFilter() {
+    const ref = this.dialogService.open(FormFilterComponent, {
+      header: 'Tìm kiếm nâng cao',
+      width: '40%',
+      contentStyle: "",
+      data: {
+        listViews: this.listViewsFilter,
+        detailInfoFilter: this.detailInfoFilter,
+        buttons: this.optionsButonFilter
+      }
+    });
+
+    ref.onClose.subscribe((event: any) => {
+      if (event) {
+        this.listViewsFilter = cloneDeep(event.listViewsFilter);
+        if (event.type === 'Search') {
+          this.query = { ...this.query, ...event.data };
+          this.load();
+        } else if (event.type === 'CauHinh') {
+        this.apiService.getEmpFilter().subscribe(results => {
+            if (results.status === 'success') {
+              const listViews = cloneDeep(results.data.group_fields);
+              this.listViewsFilter = [...listViews];
+              this.detailInfoFilter = results.data;
+              this.showFilter()
+            }
+          });
+
+        } else if (event.type === 'Reset') {
+          const listViews = cloneDeep(this.detailInfoFilter.group_fields);
+          this.listViewsFilter = cloneDeep(listViews);
+          this.cancel();
+        }
+      }
+    });
   }
 
 }

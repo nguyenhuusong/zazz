@@ -869,7 +869,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
   listViewsFilter = [];
   detailInfoFilter = null;
   optionsButonFilter = [
-    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm height-56 addNew', icon: 'pi pi-plus' },
+    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm height-56 addNew', icon: 'pi pi-search' },
     { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger height-56 addNew', icon: 'pi pi-times' },
   ];
 
