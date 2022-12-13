@@ -633,7 +633,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  showFilter() {
+  showFilter(value) {
     const ref = this.dialogService.open(FormFilterComponent, {
       header: 'Tìm kiếm nâng cao',
       width: '40%',
@@ -657,7 +657,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
               const listViews = cloneDeep(results.data.group_fields);
               this.listViewsFilter = [...listViews];
               this.detailInfoFilter = results.data;
-              this.showFilter()
+              this.showFilter(1)
             }
           });
 
