@@ -6,6 +6,7 @@ import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { HttpParams } from '@angular/common/http';
 import { cloneDeep } from 'lodash';
+
 import * as moment from 'moment';
 import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { CustomTooltipComponent } from 'src/app/common/ag-component/customtooltip.component';
@@ -15,6 +16,8 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { Tree } from 'primeng/tree';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
+import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
+import { DialogService } from 'primeng/dynamicdialog';
 @Component({
   selector: 'app-ns-ho-so-nghi-viec',
   templateUrl: './ns-ho-so-nghi-viec.component.html',
@@ -62,6 +65,7 @@ export class NsHoSoNghiViecComponent implements OnInit {
     private apiService: ApiHrmService,
     private spinner: NgxSpinnerService,
     private route: ActivatedRoute,
+    private dialogService: DialogService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private changeDetector: ChangeDetectorRef,
@@ -81,6 +85,7 @@ export class NsHoSoNghiViecComponent implements OnInit {
       buttonAgGridComponent: ButtonAgGridComponent,
       avatarRendererFull: AvatarFullComponent,
     };
+    this.getTerminateFilter();
   }
   query = {
     filter: '',
@@ -514,6 +519,60 @@ export class NsHoSoNghiViecComponent implements OnInit {
         this.loadjs = 0;
       }
     }
+  }
+
+  listViewsFilter = [];
+  detailInfoFilter = null;
+  optionsButonFilter = [
+    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm ml-2 height-56 addNew', icon: 'pi pi-plus' },
+    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger ml-2 height-56 addNew', icon: 'pi pi-times' },
+  ];
+
+  getTerminateFilter() {
+    this.apiService.getTerminateFilter().subscribe(results => {
+      if(results.status === 'success') {
+        const listViews = cloneDeep(results.data.group_fields);
+        this.listViewsFilter = [...listViews];
+        this.detailInfoFilter = results.data;
+      }
+    });
+  }
+
+  showFilter() {
+    const ref = this.dialogService.open(FormFilterComponent, {
+      header: 'Tìm kiếm nâng cao',
+      width: '40%',
+      contentStyle: "",
+      data: {
+        listViews: this.listViewsFilter,
+        detailInfoFilter: this.detailInfoFilter,
+        buttons: this.optionsButonFilter
+      }
+    });
+
+    ref.onClose.subscribe((event: any) => {
+      if (event) {
+        this.listViewsFilter = cloneDeep(event.listViewsFilter);
+        if (event.type === 'Search') {
+          this.query = { ...this.query, ...event.data };
+          this.load();
+        } else if (event.type === 'CauHinh') {
+        this.apiService.getTerminateFilter().subscribe(results => {
+            if (results.status === 'success') {
+              const listViews = cloneDeep(results.data.group_fields);
+              this.listViewsFilter = [...listViews];
+              this.detailInfoFilter = results.data;
+              this.showFilter()
+            }
+          });
+
+        } else if (event.type === 'Reset') {
+          const listViews = cloneDeep(this.detailInfoFilter.group_fields);
+          this.listViewsFilter = cloneDeep(listViews);
+          this.cancel();
+        }
+      }
+    });
   }
 
 }

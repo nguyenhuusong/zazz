@@ -15,6 +15,8 @@ import { cloneDeep } from 'lodash';
 import { flatten } from '@angular/compiler';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
+import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
+import { DialogService } from 'primeng/dynamicdialog';
 @Component({
   selector: 'app-qt-thay-doi-luong',
   templateUrl: './qt-thay-doi-luong.component.html',
@@ -100,6 +102,7 @@ export class QtThayDoiLuongComponent implements OnInit {
     private apiService: ApiHrmService,
     private spinner: NgxSpinnerService,
     private route: ActivatedRoute,
+    private dialogService: DialogService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private fileService: ExportFileService,
@@ -121,7 +124,7 @@ export class QtThayDoiLuongComponent implements OnInit {
       buttonAgGridComponent: ButtonAgGridComponent,
       avatarRendererFull: AvatarFullComponent,
     };
-
+    this.getSalaryInfoFilter();
 
   }
   query = {
@@ -663,5 +666,60 @@ export class QtThayDoiLuongComponent implements OnInit {
       }),
       error => { };
   }
+
+
+  listViewsFilter = [];
+  detailInfoFilter = null;
+  optionsButonFilter = [
+    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm ml-2 height-56 addNew', icon: 'pi pi-plus' },
+    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger ml-2 height-56 addNew', icon: 'pi pi-times' },
+  ];
+
+  getSalaryInfoFilter() {
+    this.apiService.getSalaryInfoFilter().subscribe(results => {
+      if(results.status === 'success') {
+        const listViews = cloneDeep(results.data.group_fields);
+        this.listViewsFilter = [...listViews];
+        this.detailInfoFilter = results.data;
+      }
+    });
+  }
+  showFilter() {
+    const ref = this.dialogService.open(FormFilterComponent, {
+      header: 'Tìm kiếm nâng cao',
+      width: '40%',
+      contentStyle: "",
+      data: {
+        listViews: this.listViewsFilter,
+        detailInfoFilter: this.detailInfoFilter,
+        buttons: this.optionsButonFilter
+      }
+    });
+
+    ref.onClose.subscribe((event: any) => {
+      if (event) {
+        this.listViewsFilter = cloneDeep(event.listViewsFilter);
+        if (event.type === 'Search') {
+          this.query = { ...this.query, ...event.data };
+          this.load();
+        } else if (event.type === 'CauHinh') {
+        this.apiService.getSalaryInfoFilter().subscribe(results => {
+            if (results.status === 'success') {
+              const listViews = cloneDeep(results.data.group_fields);
+              this.listViewsFilter = [...listViews];
+              this.detailInfoFilter = results.data;
+              this.showFilter()
+            }
+          });
+
+        } else if (event.type === 'Reset') {
+          const listViews = cloneDeep(this.detailInfoFilter.group_fields);
+          this.listViewsFilter = cloneDeep(listViews);
+          this.cancel();
+        }
+      }
+    });
+  }
+
 
 }
