@@ -2828,9 +2828,9 @@ div.p-organizationchart {
         }
         .p-multiselect-label{
             padding-left: 0px !important;
-            padding-top: 10px !important;
+            padding-top: 8px !important;
             padding-bottom: 9px !important;
-            min-height: 40px;
+            min-height: 38px;
             .p-multiselect-token{
                 padding: 0px 6px;
                 font-size: 10px;
@@ -2977,6 +2977,8 @@ div.p-organizationchart {
         input{
             border: none;
             padding-left: 12px;
+            padding-top: 8px;
+            padding-bottom: 8px;
         }
         .control-image{
             width: 100%;
