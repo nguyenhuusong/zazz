@@ -281,6 +281,19 @@ export class NsHoSoNhanSuComponent implements OnInit {
   }
 
   showButtons(event: any) {
+    // const buttons = []
+    // const actions = getActionByPathMenu('nhan-su', this.MENUACTIONROLEAPI.GetEmployeePage.url, ['EditEmployee'])
+    // for(let item of actions) {
+    //   buttons.push({
+    //     onClick: this[item].bind(this),
+    //     label: item.actionName,
+    //     icon: 'fa fa-eye',
+    //     class: 'btn-primary mr5',
+    //   })
+    // }
+    // return {
+    //   buttons: buttons
+    // };
     return {
       buttons: [
         {

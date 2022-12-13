@@ -97,6 +97,8 @@ import { KyNangComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-in
 import { ChungChiComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/chuyen-mon/chung-chi/chung-chi.component';
 import { FormFilterModule } from 'src/app/common/form-filter/form-filter.module';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { TbhDsDinhKemComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/thue-bao-hiem/tbh-ds-dinh-kem/tbh-ds-dinh-kem.component';
+import { TbhQtDongBtComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/thue-bao-hiem/tbh-qt-dong-bt/tbh-qt-dong-bt.component';
 
 @NgModule({
   imports: [
@@ -185,6 +187,8 @@ import { DynamicDialogModule } from 'primeng/dynamicdialog';
     ViTriCongViecComponent,
     QuanHeLaoDongCComponent,
     ThueBaoHiemComponent,
+    TbhDsDinhKemComponent,
+    TbhQtDongBtComponent,
     ChuyenMonComponent,
     TienIchComponent,
     QuanLyTaiKhoanComponent,

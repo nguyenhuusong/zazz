@@ -1,7 +1,7 @@
 
-  <div class="row">
-    <div class="col-md-6">
-      <div class="field-group select" [ngClass]=" perent_id? 'valid' : 'invalid' ">
+  <div class="row d-flex bottom">
+    <div class="col-md-3">
+      <div class="field-group select mb-0" [ngClass]=" perent_id? 'valid' : 'invalid' ">
         <label for="">Tổ chức</label>
         <p-dropdown appendTo="body" [autoZIndex]="true" [autoDisplayFirst]="false" 
             [options]="moduleLists" [(ngModel)]="perent_id"  [required] (onChange)="getOrganizeTree($event.code)"
@@ -11,44 +11,46 @@
             </ng-template>
             <ng-template let-car pTemplate="item">
                 <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                    <div style="font-size:14px;float:left;margin-top:4px">{{car.label}}</div>
+                    <div style="font-size:14px;margin-top:4px">{{car.label}}</div>
                 </div>
             </ng-template>
         </p-dropdown>
       </div>
     </div>
-    <div class="col-md-6 ">
-      <div class="field-group  select treeselect label-8" [ngClass]=" sub_prod_cd? 'valid' : 'invalid' ">
+    <div class="col-md-3">
+      <div class="field-group mb-0 select treeselect label-8" [ngClass]=" sub_prod_cd? 'valid' : 'invalid' ">
         <label for="">Bộ phận</label>
         <p-treeSelect [(ngModel)]="sub_prod_cd" [filterInputAutoFocus]="true" [filter]="true" [metaKeySelection]="false" [options]="departmentFiltes" display="chip" (onNodeSelect)="onNodeSelect($event)" (onNodeUnselect)="onNodeUnselect($event)" [metaKeySelection]="false" selectionMode="multiple"  appendTo="body" name="sub_prod_cd" placeholder="Chọn phòng ban"></p-treeSelect>
       </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-md-6">
-      <div class="field-group label-8" [ngClass]=" query.filter? 'valid' : 'invalid' ">
+    <div class="col-md-3">
+      <div class="field-group mb-0 label-8" [ngClass]=" query.filter? 'valid' : 'invalid' ">
         <label for="">Tìm kiếm</label>
         <input class="form-control" type="text" 
         placeholder="Tìm kiếm Tên, SĐT" id="filter" name="filter"
         [(ngModel)]="query.filter" />
       </div>
     </div>
-    <div class="col-md-6">
-        <div class="group-btns text-right d-flex justify-content-end">
+    <div class="col-md-3">
+        <div class="group-btns">
           <p-button label="Tìm kiếm" styleClass="p-button-sm mr-1 h-56 " (click)="getUserByPush()"></p-button>
-          <p-button styleClass="p-button-sm mr-1 h-56" label="Lưu danh sách" 
-          [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetAppNotifyPage.url, action: ACTIONS.LUU_DANH_SACH}"
-          *ngIf="listsData.length > 0"  icon="pi pi-check" (click)="saveUserByPush()"></p-button>
           <!-- <p-button styleClass="p-button-sm p-button-secondary btn-56" label="Đóng lại" icon="pi pi-times" (click)="closeModal()"></p-button> -->
           <!-- <label for="" style="visibility: hidden;">Tìm kiếm</label> -->
         </div>
   </div>
+  </div>
+  <div class="row">
  
   </div>
   <div class="row">
   <div class="col-sm-12 mt-3">
-    <label for="" class="mb-3 ds-block" *ngIf="columnDefs.length > 0"><b>Danh sách nhân viên </b><p-badge *ngIf="listsData.length > 0"
-      value="{{listsData.length}}" styleClass="p-mr-2"></p-badge></label>
+    <div class="d-flex bet middle mb-3">
+      <label for="" class="ds-block" *ngIf="columnDefs.length > 0"><b>Danh sách nhân viên </b><p-badge *ngIf="listsData.length > 0"
+        value="{{listsData.length}}" styleClass="p-mr-2"></p-badge></label>
+      <p-button styleClass="p-button-sm mr-1 h-56" label="Lưu danh sách" 
+      [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetAppNotifyPage.url, action: ACTIONS.LUU_DANH_SACH}"
+      *ngIf="listsData.length > 0"  icon="pi pi-check" (click)="saveUserByPush()"></p-button>
+    </div>
       <div class="grid-default border mh-560">
       <app-list-grid-angular [domLayout]="'autoHeight'"  [title]="'Danh sách liên hệ'"
       *ngIf="columnDefs.length > 0" [rowSelection]="'multiple'" [heightRow]="60" 
