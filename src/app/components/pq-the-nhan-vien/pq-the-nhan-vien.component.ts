@@ -522,9 +522,11 @@ detailInfoFilter = null;
           });
 
         } else if (event.type === 'Reset') {
-          const listViews = cloneDeep(this.detailInfoFilter.group_fields);
+          const listViews = cloneDeep(this.cloneListViewsFilter);
           this.listViewsFilter = cloneDeep(listViews);
-          this.cancel();
+         const params =  getParamString(listViews)
+        this.model = { ...this.model, ...params};
+        this.load();
         }
       }
     });

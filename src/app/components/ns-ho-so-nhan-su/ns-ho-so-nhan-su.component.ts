@@ -893,9 +893,11 @@ export class NsHoSoNhanSuComponent implements OnInit {
           });
 
         } else if (event.type === 'Reset') {
-          const listViews = cloneDeep(this.detailInfoFilter.group_fields);
+          const listViews = cloneDeep(this.cloneListViewsFilter);
           this.listViewsFilter = cloneDeep(listViews);
-          this.cancel();
+         const params =  getParamString(listViews)
+        this.query = { ...this.query, ...params};
+        this.load();
         }
       }
     });
