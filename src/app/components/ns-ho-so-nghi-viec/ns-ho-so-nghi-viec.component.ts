@@ -186,9 +186,11 @@ export class NsHoSoNghiViecComponent implements OnInit {
     this.spinner.show();
 
     let params: any = {... this.query};
-    params.orgId = this.department ? this.department.orgId : null
-    let companyIds = this.query.companyIds.toString();
-    params.companyIds = companyIds;
+
+
+    // params.orgId = this.department ? this.department.orgId : null
+    // let companyIds = this.query.companyIds.toString();
+    // params.companyIds = companyIds;
 
     const queryParams = queryString.stringify(params);
     this.apiService.getTerminatePage(queryParams).subscribe(
@@ -522,7 +524,8 @@ export class NsHoSoNghiViecComponent implements OnInit {
   }
 
   listViewsFilter = [];
-  detailInfoFilter = null;
+  cloneListViewsFilter = [];
+detailInfoFilter = null;
   optionsButonFilter = [
     { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm ml-2 height-56 addNew', icon: 'pi pi-plus' },
     { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger ml-2 height-56 addNew', icon: 'pi pi-times' },
@@ -532,7 +535,11 @@ export class NsHoSoNghiViecComponent implements OnInit {
     this.apiService.getTerminateFilter().subscribe(results => {
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
-        this.listViewsFilter = [...listViews];
+        this.cloneListViewsFilter = cloneDeep(listViews);
+this.listViewsFilter = [...listViews];
+const params =  getParamString(listViews)
+this.query = { ...this.query, ...params};
+this.load();
         this.detailInfoFilter = results.data;
       }
     });
@@ -560,7 +567,11 @@ export class NsHoSoNghiViecComponent implements OnInit {
         this.apiService.getTerminateFilter().subscribe(results => {
             if (results.status === 'success') {
               const listViews = cloneDeep(results.data.group_fields);
-              this.listViewsFilter = [...listViews];
+              this.cloneListViewsFilter = cloneDeep(listViews);
+this.listViewsFilter = [...listViews];
+const params =  getParamString(listViews)
+this.query = { ...this.query, ...params};
+this.load();
               this.detailInfoFilter = results.data;
               this.showFilter()
             }

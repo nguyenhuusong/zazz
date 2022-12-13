@@ -15,6 +15,7 @@ const MAX_SIZE = 100000000;
 import { cloneDeep } from 'lodash';
 import { DialogService } from 'primeng/dynamicdialog';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
+import { getParamString } from 'src/app/common/function-common/objects.helper';
 
 @Component({
   selector: 'app-ns-tuyen-dung',
@@ -77,12 +78,6 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     filter: '',
     offSet: 0,
     pageSize: 15,
-    jobId: null,
-    organizeId: null,
-    positionCd: null,
-    vacancyId: 0,
-    can_st: null,
-    organizeIds: '',
   }
   totalRecord = 0;
   DriverId = 0;
@@ -136,12 +131,6 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
       filter: '',
       offSet: 0,
       pageSize: 15,
-      organizeId: '',
-      positionCd: '',
-      jobId: null,
-      vacancyId: 0,
-      can_st: null,
-      organizeIds: this.query.organizeIds,
     }
     this.load();
   }
@@ -351,17 +340,17 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   }
 
   getOrgPositions() {
-    this.positions = [];
-    let items = this.listOrgRoots.filter(d => d.value === this.query.organizeId)
-    const queryParams = queryString.stringify({ orgId: items[0].code });
-    this.apiService.getOrgPositions(queryParams).subscribe(results => {
-      if (results.status === 'success') {
-        this.positions = results.data.map(d => {
-          return { label: d.positionName, value: d.positionCd }
-        });
-        this.positions = [{ label: 'Tất cả', value: '' }, ...this.positions]
-      }
-    })
+    // this.positions = [];
+    // let items = this.listOrgRoots.filter(d => d.value === this.query.organizeId)
+    // const queryParams = queryString.stringify({ orgId: items[0].code });
+    // this.apiService.getOrgPositions(queryParams).subscribe(results => {
+    //   if (results.status === 'success') {
+    //     this.positions = results.data.map(d => {
+    //       return { label: d.positionName, value: d.positionCd }
+    //     });
+    //     this.positions = [{ label: 'Tất cả', value: '' }, ...this.positions]
+    //   }
+    // })
   }
 
   find() {
@@ -381,16 +370,6 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   organizeIdSelected = '';
 
   ngOnInit() {
-    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-        if(results && results.length>0){
-          this.query.organizeIds = results;
-          this.organizeIdSelected = results;
-          this.listsData = []
-          this.load();
-          this.getReRound();
-        }
-    });
-
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Nhân sự' },
@@ -576,20 +555,20 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   }
     
   getVacancyPage() {
-    const queryParams = queryString.stringify({
-      jobId: this.query.jobId,
-      active_st: 1
-    });
-    this.apiService.getVacancyPage(queryParams).subscribe(results => {
-      if (results.status === 'success') {
-        this.listVacancy = results.data.dataList.data.map(d => {
-          return {
-            label: d.job_name,
-            value: d.vacancyId
-          }
-        })
-      }
-    })
+    // const queryParams = queryString.stringify({
+    //   jobId: this.query.jobId,
+    //   active_st: 1
+    // });
+    // this.apiService.getVacancyPage(queryParams).subscribe(results => {
+    //   if (results.status === 'success') {
+    //     this.listVacancy = results.data.dataList.data.map(d => {
+    //       return {
+    //         label: d.job_name,
+    //         value: d.vacancyId
+    //       }
+    //     })
+    //   }
+    // })
   }
 
   getRecruitMailInput() {
@@ -756,7 +735,8 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   }
 
   listViewsFilter = [];
-  detailInfoFilter = null;
+  cloneListViewsFilter = [];
+detailInfoFilter = null;
   optionsButonFilter = [
     { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm ml-2 height-56 addNew', icon: 'pi pi-plus' },
     { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger ml-2 height-56 addNew', icon: 'pi pi-times' },
@@ -766,7 +746,11 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     this.apiService.getCandidateFilter().subscribe(results => {
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
+        this.cloneListViewsFilter = cloneDeep(listViews);
         this.listViewsFilter = [...listViews];
+        const params =  getParamString(listViews)
+        this.query = { ...this.query, ...params};
+        this.load();
         this.detailInfoFilter = results.data;
       }
     });
@@ -795,6 +779,9 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
             if (results.status === 'success') {
               const listViews = cloneDeep(results.data.group_fields);
               this.listViewsFilter = [...listViews];
+              const params =  getParamString(listViews)
+              this.query = { ...this.query, ...params};
+              this.load();
               this.detailInfoFilter = results.data;
               this.showFilter()
             }
