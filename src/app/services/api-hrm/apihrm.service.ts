@@ -647,6 +647,10 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetVacancyPage?` + queryParams, this.options)
   }
 
+  getVacancyFilter(): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetVacancyFilter`, this.options)
+  }
+
   getOrgRoots(): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/organize/GetOrgRoots`, this.options)
   }
@@ -760,6 +764,10 @@ export class ApiHrmService {
 
   getCandidatePage(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetCandidatePage?` + queryParams, this.options)
+  }
+
+  getCandidateFilter(): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetCandidateFilter`, this.options)
   }
   
   getCandidatePotentialPage(queryParams): Observable<any> {
@@ -887,6 +895,10 @@ export class ApiHrmService {
 
   getTerminatePage(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/terminate/GetTerminatePage?` + queryParams, this.options);
+  }
+
+  getTerminateFilter(): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/terminate/GetTerminateFilter`, this.options);
   }
 
   setTerminateStatus(params): Observable<any> {
@@ -1641,6 +1653,10 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v1/salaryInfo/GetSalaryInfoPage?` + queryParams, this.options)
   }
 
+  getSalaryInfoFilter(): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/salaryInfo/GetSalaryInfoFilter`, this.options)
+  }
+
   getSalaryInfoDevM(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/salaryInfo/GetSalaryInfo?` + queryParams, this.options)
   }
@@ -2055,29 +2071,41 @@ export class ApiHrmService {
   getEmpWorkJob(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/working/GetEmpWorkJob?` +  queryParams, this.options)
   }
+
   getEmpWorking(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/working/GetEmpWorking?` +  queryParams, this.options)
   }
+  
   getEmpProcessInfo(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/working/GetEmpProcessInfo?` +  queryParams, this.options)
   }
+
   setEmpWorking(queryParams): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/working/SetEmpWorking` ,  queryParams, this.options)
   }
+
   delEmpWorking(queryParams): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v2/working/DelEmpWorking?` +  queryParams, this.options)
   }
+
   getEmpWorkingPage(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/working/GetEmpWorkingPage?` +  queryParams, this.options)
   }
+
   setEmpWorkingChanges(queryParams): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/working/SetEmpWorkingChanges` ,  queryParams, this.options)
   }
+
   setEmpProcessInfo(queryParams): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/working/SetEmpProcessInfo` ,  queryParams, this.options)
   }
+
   delEmpProcessInfo(queryParams): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v2/working/DelEmpProcessInfo?` + queryParams  , this.options)
+  }
+ 
+  getEmpWorkingFilter(): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/working/GetEmpWorkingFilter`  , this.options)
   }
  
 

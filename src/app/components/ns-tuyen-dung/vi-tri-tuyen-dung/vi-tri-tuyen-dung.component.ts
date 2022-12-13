@@ -14,7 +14,11 @@ import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import * as moment from 'moment';
 import * as FileSaver from 'file-saver';
+import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 const MAX_SIZE = 100000000;
+import { cloneDeep } from 'lodash';
+import { DialogService } from 'primeng/dynamicdialog';
+
 @Component({
   selector: 'app-vi-tri-tuyen-dung',
   templateUrl: './vi-tri-tuyen-dung.component.html',
@@ -33,6 +37,7 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
     private messageService: MessageService,
     private spinner: NgxSpinnerService,
     private changeDetector: ChangeDetectorRef,
+    private dialogService: DialogService,
     private organizeInfoService: OrganizeInfoService,
     private router: Router) {
 
@@ -50,6 +55,8 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
       buttonAgGridComponent: ButtonAgGridComponent,
       avatarRendererFull: AvatarFullComponent,
     };
+
+    this.getVacancyFilter();
   }
 
   public modules: Module[] = AllModules;
@@ -381,5 +388,60 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
     }
     this.router.navigate(['/tuyen-dung/vi-tri-tuyen-dung/chi-tiet-vi-tri-tuyen-dung'], { queryParams: params });
   }
+
+  listViewsFilter = [];
+  detailInfoFilter = null;
+  optionsButonFilter = [
+    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm ml-2 height-56 addNew', icon: 'pi pi-plus' },
+    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger ml-2 height-56 addNew', icon: 'pi pi-times' },
+  ];
+
+  getVacancyFilter() {
+    this.apiService.getVacancyFilter().subscribe(results => {
+      if(results.status === 'success') {
+        const listViews = cloneDeep(results.data.group_fields);
+        this.listViewsFilter = [...listViews];
+        this.detailInfoFilter = results.data;
+      }
+    });
+  }
+  
+  showFilter() {
+    const ref = this.dialogService.open(FormFilterComponent, {
+      header: 'Tìm kiếm nâng cao',
+      width: '40%',
+      contentStyle: "",
+      data: {
+        listViews: this.listViewsFilter,
+        detailInfoFilter: this.detailInfoFilter,
+        buttons: this.optionsButonFilter
+      }
+    });
+
+    ref.onClose.subscribe((event: any) => {
+      if (event) {
+        this.listViewsFilter = cloneDeep(event.listViewsFilter);
+        if (event.type === 'Search') {
+          this.query = { ...this.query, ...event.data };
+          this.load();
+        } else if (event.type === 'CauHinh') {
+        this.apiService.getVacancyFilter().subscribe(results => {
+            if (results.status === 'success') {
+              const listViews = cloneDeep(results.data.group_fields);
+              this.listViewsFilter = [...listViews];
+              this.detailInfoFilter = results.data;
+              this.showFilter()
+            }
+          });
+
+        } else if (event.type === 'Reset') {
+          const listViews = cloneDeep(this.detailInfoFilter.group_fields);
+          this.listViewsFilter = cloneDeep(listViews);
+          this.cancel();
+        }
+      }
+    });
+  }
+
 
 }
