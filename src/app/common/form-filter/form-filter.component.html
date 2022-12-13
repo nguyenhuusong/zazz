@@ -1,0 +1,65 @@
+
+    
+    
+    <form  #myForm="ngForm"> 
+        <div class="main-grid text-right wrap-btn" [style.position]="position" [style]="styleButton">
+            <ng-container *ngFor="let button of config.data.buttons">
+                <p-button label="{{button.label}}" (onClick)="onChangeButtonEdit(button.value)" [disabled]="button?.disabled" icon="{{button?.icon ? button?.icon : 'pi pi-plus'}}" styleClass="p-button-sm {{button?.class ? button?.class : ''}} mr-1"></p-button>
+            </ng-container>
+            <p-button label="Cấu hình" styleClass="p-button-sm height-56 addNew" icon="pi pi-cog" (click)="CauHinh()"></p-button>
+        </div>
+
+        <div class="grid" style="justify-content: start;" *ngIf="dataView.length > 0">
+            <ng-container *ngFor="let group of dataView; let idx = index">
+                <div class="{{group.group_column ? group.group_column : 'col-12'}} border-section">
+                    <p-card [style]="{'margin-bottom': '15px'}">
+                        <div class="grid justify-content-start">
+                            <div *ngFor="let element of group.fields;let i=index" 
+                                [hidden]="!element.isVisiable"
+                                [ngClass]="{'isEmpty': element.isEmpty, 'has-image': includeImage && element?.columnType === 'image', 'image-iam': element?.columnType === 'image'}" 
+                                class="{{element.columnClass}}  col-item">
+                                 <lib-text-control [detail]="detail" [dataView]="dataView" [modelFields]="modelFields" [element]="element" *ngIf="element?.columnType === 'input'" (callbackText)="callbackSearch()" [submit]="submit"></lib-text-control>
+                                <lib-number-control [detail]="detail" [dataView]="dataView" [modelFields]="modelFields" [element]="element" *ngIf="element?.columnType === 'number'" (callbackNumber)="callbackSearch()" [submit]="submit"></lib-number-control>
+                                <lib-dropdown-control [detail]="detail" [dataView]="dataView" [modelFields]="modelFields" [element]="element" *ngIf="(element?.columnType === 'dropdown') || (element?.columnType === 'select')" (callbackText)="callbackSearch()" [submit]="submit"></lib-dropdown-control>
+                                 <lib-currency-control [detail]="detail" [dataView]="dataView" [modelFields]="modelFields" [element]="element" *ngIf="element?.columnType === 'currency'" (callbackCurrency)="callbackSearch()" [submit]="submit"></lib-currency-control>
+                                <lib-textarea-control [detail]="detail" [dataView]="dataView" [modelFields]="modelFields" [element]="element" *ngIf="element?.columnType === 'textarea'" (callbackTextarea)="callbackSearch()" [submit]="submit"></lib-textarea-control>
+                                 <lib-datetime-control [detail]="detail" [dataView]="dataView" [modelFields]="modelFields" [element]="element" *ngIf="element?.columnType === 'datetime'" (callbackDatetime)="callbackSearch()" [submit]="submit"></lib-datetime-control>
+                                 <lib-datetimes-control [detail]="detail" [dataView]="dataView" [modelFields]="modelFields" [element]="element" *ngIf="element?.columnType === 'datetimes'" (callbackDatetimes)="callbackSearch()" [submit]="submit"></lib-datetimes-control>
+                                <lib-autocomplete-control [detail]="detail" [dataView]="dataView" [modelFields]="modelFields" [element]="element" *ngIf="element?.columnType === 'autocomplete'" (callbackAutocomplete)="callbackSearch()" [submit]="submit"></lib-autocomplete-control>
+                                <lib-multi-select-control [detail]="detail" [dataView]="dataView" [modelFields]="modelFields" [element]="element" *ngIf="element?.columnType === 'multiSelect'" (callbackMultiSelect)="callbackSearch()" [submit]="submit"></lib-multi-select-control>
+                                <lib-datefulltime-control [detail]="detail" [dataView]="dataView" [modelFields]="modelFields" [element]="element" *ngIf="element?.columnType === 'datefulltime'" (callbackDatefulltime)="callbackSearch()" [submit]="submit"></lib-datefulltime-control>
+                                <lib-timeonly-control [detail]="detail" [dataView]="dataView" [modelFields]="modelFields" [element]="element" *ngIf="element?.columnType === 'timeonly'" (callbackTimeonly)="callbackSearch()" [submit]="submit"></lib-timeonly-control>
+                                <lib-checkbox-control [detail]="detail" [dataView]="dataView" [modelFields]="modelFields" [element]="element" *ngIf="element?.columnType === 'checkbox'" (callbackCheckbox)="callbackSearch()" [submit]="submit"></lib-checkbox-control>
+                                <lib-checkbox-list-control [detail]="detail" [dataView]="dataView" [modelFields]="modelFields" [element]="element" *ngIf="element?.columnType === 'checkboxList'" (callbackCheckboxList)="callbackSearch()" [submit]="submit"></lib-checkbox-list-control>
+                                <lib-select-tree-control [detail]="detail" [dataView]="dataView" [modelFields]="modelFields" [element]="element" *ngIf="element?.columnType === 'selectTree'" (callbackSelectTree)="callbackSearch()" [submit]="submit"></lib-select-tree-control>
+                            </div>
+                        </div>
+                
+                    </p-card>
+                </div>
+
+                </ng-container>
+
+
+
+        </div>
+    </form>
+
+<p-dialog header="Cài đặt cấu hình" [appendTo]="'body'" [closable]="false" [autoZIndex]="true" [focusTrap]="false" styleClass="popup-setting" [(visible)]="displaySetting"  [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
+    [draggable]="false" [resizable]="false">
+    <app-config-grid-table-form *ngIf="displaySetting && gridKey" [typeConfig]="'FormInfo'" (callbackF)="callbackConfigGridTanle($event)"  [gridKey]="gridKey"></app-config-grid-table-form>
+    <ng-template pTemplate="footer">
+        <p-button label="Đóng tab" (onClick)="cancel('CauHinh')" styleClass="p-button-sm p-button-secondary bg-secondary" icon="pi pi-times"></p-button>
+    </ng-template>
+</p-dialog>
+
+<p-dialog [(visible)]="displaySetting1" [appendTo]="'body'" [closable]="false" [autoZIndex]="true"  styleClass="popup-setting1"  [modal]="true" [style]="{width: '50vw', height: 'auto'}">
+   <p-header>
+    Cấu hình form group
+</p-header>
+    <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo"  [manhinh]="'Edit'"  [optionsButtonsEdit]="optionsButtonsEdit"  [dataView]="listViews"
+        (callback)="setGroupInfo($event)" (callbackcancel)="quaylai($event)"></app-edit-detail>
+        <ng-template pTemplate="footer">
+            <p-button label="Đóng tab" (onClick)="reload()" styleClass="p-button-sm p-button-secondary bg-secondary" icon="pi pi-times"></p-button>
+        </ng-template>
+</p-dialog>

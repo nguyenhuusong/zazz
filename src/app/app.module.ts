@@ -61,6 +61,7 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 import { ApiHrmV2Service } from './services/api-hrm/apihrmv2.service';
 import { OrganizeInfoService } from './services/organize-info.service';
 import { UniNotFoundComponent } from './components/uni-not-found/uni-not-found.component';
+import { DialogService } from 'primeng/dynamicdialog';
 const APP_CONTAINERS = [DefaultLayoutComponent];
 @NgModule({
     declarations: [
@@ -138,6 +139,7 @@ const APP_CONTAINERS = [DefaultLayoutComponent];
         ConfirmationService,
         MessageService,
         OrganizeInfoService,
+        DialogService,
         ApiHrmV2Service,
         { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     ],

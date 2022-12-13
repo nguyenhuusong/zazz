@@ -1,0 +1,31 @@
+{
+  "name": "uni-control",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^13.0.0",
+    "@angular/core": "^13.0.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "module": "fesm2015/uni-control.mjs",
+  "es2020": "fesm2020/uni-control.mjs",
+  "esm2020": "esm2020/uni-control.mjs",
+  "fesm2020": "fesm2020/uni-control.mjs",
+  "fesm2015": "fesm2015/uni-control.mjs",
+  "typings": "uni-control.d.ts",
+  "exports": {
+    "./package.json": {
+      "default": "./package.json"
+    },
+    ".": {
+      "types": "./uni-control.d.ts",
+      "esm2020": "./esm2020/uni-control.mjs",
+      "es2020": "./fesm2020/uni-control.mjs",
+      "es2015": "./fesm2015/uni-control.mjs",
+      "node": "./fesm2015/uni-control.mjs",
+      "default": "./fesm2020/uni-control.mjs"
+    }
+  },
+  "sideEffects": false
+}

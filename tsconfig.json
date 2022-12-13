@@ -18,7 +18,13 @@
     "lib": [
       "es2020",
       "dom"
-    ]
+    ],
+    "paths": {
+      "uni-control": [
+        "dist/uni-control/uni-control",
+        "dist/uni-control"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
