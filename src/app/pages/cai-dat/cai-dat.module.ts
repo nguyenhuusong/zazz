@@ -77,6 +77,7 @@ import interactionPlugin from '@fullcalendar/interaction'; // a plugin!
 import timeGridPlugin from '@fullcalendar/timegrid';
 import { ChonThoiGianComponent } from 'src/app/components/cai-dat-lich-hop/chon-thoi-gian/chon-thoi-gian.component';
 import { CheckHideActionsDirectiveModule } from 'src/app/directive/check-action.module';
+import { FormFilterModule } from 'src/app/common/form-filter/form-filter.module';
 FullCalendarModule.registerPlugins([
   // register FullCalendar plugins
   dayGridPlugin,
@@ -98,6 +99,7 @@ FullCalendarModule.registerPlugins([
     ButtonModule,
     SplitButtonModule,
     CalendarModule,
+    FormFilterModule,
     AutoCompleteModule,
     EditDetailModule,
     FileUploadModule,

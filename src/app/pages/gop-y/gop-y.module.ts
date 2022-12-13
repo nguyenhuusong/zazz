@@ -41,6 +41,7 @@ import { GopYRoutingModule } from './gop-y-routing.module';
 import { HrmBreadCrumbModule } from 'src/app/common/hrm-breadcrumb/hrm-breadcrumb.module';
 import { ConfigGridTableFormModule } from 'src/app/common/config-grid-table-form/config-grid-table-form.module';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { FormFilterModule } from 'src/app/common/form-filter/form-filter.module';
 
 @NgModule({
   imports: [
@@ -71,6 +72,7 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
     SidebarModule,
     GopYRoutingModule,
     CurrencyFormatPipeModule,
+    FormFilterModule,
     DialogModule,
     DropdownModule,
     PageNotifyModule,

@@ -55,6 +55,7 @@ import { DanhSachRoleComponent } from 'src/app/components/pq-quyen-nguoi-dung/da
 import { PickListModule } from 'primeng/picklist';
 import { CheckboxModule } from 'primeng/checkbox';
 import { CheckHideActionsDirectiveModule } from 'src/app/directive/check-action.module';
+import { FormFilterModule } from 'src/app/common/form-filter/form-filter.module';
 @NgModule({
   imports: [
     MessagesModule,
@@ -96,6 +97,7 @@ import { CheckHideActionsDirectiveModule } from 'src/app/directive/check-action.
     ImageModule,
     PickListModule,
     CheckboxModule,
+    FormFilterModule,
     CheckHideActionsDirectiveModule,
     AgGridModule.withComponents([
       ButtonRendererComponent,

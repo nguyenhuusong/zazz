@@ -34,8 +34,8 @@ export class FormFilterComponent implements OnInit, OnChanges {
     private apiService: ApiService,
     private messageService: MessageService,
     private spinner: NgxSpinnerService,
-    public ref: DynamicDialogRef,
-    public config: DynamicDialogConfig
+    // public ref: DynamicDialogRef,
+    // public config: DynamicDialogConfig
   ) { }
   @Output() callback = new EventEmitter<any>();
   @Output() callbackcancel = new EventEmitter<any>();
@@ -43,6 +43,7 @@ export class FormFilterComponent implements OnInit, OnChanges {
   @Output() callbackDropdown = new EventEmitter<any>();
   @Output() callbackclickgrid = new EventEmitter<any>();
   @Output() callback1 = new EventEmitter<any>();
+  @Output() close = new EventEmitter<any>();
   @Input() manhinh;
   @Input() optionsButtonsEdit: any[] = [
     { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-plus', disabled: false }
@@ -95,10 +96,12 @@ export class FormFilterComponent implements OnInit, OnChanges {
   showPopupUploadCard() {
     this.callbackupload.emit();
   }
-
+  @Input() listFields = [];
+  @Input() detailInfoFilter = null;
+  @Input() buttonsFilters = [];
   callApiDrop() {
-    this.detail = {...this.config.data.detailInfoFilter};
-    const dataView = cloneDeep(this.config.data.listViews);
+    this.detail = {...this.detailInfoFilter};
+    const dataView = cloneDeep(this.listFields);
     const promissall = []
     dataView.forEach(element => {
       element.fields.forEach(element1 => {
@@ -239,7 +242,8 @@ export class FormFilterComponent implements OnInit, OnChanges {
       })
     });
     this.submit = false;
-    this.ref.close({data: params, type: type, listViewsFilter: this.dataView});
+    this.callback.emit({data: params, type: type, listViewsFilter: this.dataView})
+    // this.ref.close({data: params, type: type, listViewsFilter: this.dataView});
   }
   formatNumber(value) {
     return numeral(value).format('0,0[.][00]');
@@ -247,7 +251,7 @@ export class FormFilterComponent implements OnInit, OnChanges {
 
   cancel(event) {
     this.displaySetting = false;
-    this.ref.close({data: null, type: event, listViewsFilter: this.dataView});
+    this.close.emit();
   }
 
   changeDropdown(event) {
