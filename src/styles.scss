@@ -2979,6 +2979,7 @@ div.p-organizationchart {
             padding-left: 12px;
             padding-top: 8px;
             padding-bottom: 8px;
+            height: 40px;
         }
         .control-image{
             width: 100%;
@@ -2993,9 +2994,11 @@ div.p-organizationchart {
             img{
                 position: static;
                 transform: none;
-                max-height: 50px;
+                max-height: 33px;
                 width: auto;
                 object-fit: unset;
+                margin-top: 2px;
+                line-height: 1;
             }
         }
     }
@@ -5582,9 +5585,9 @@ p-button{
 
   .popup-setting{
     
-    .ag-body-viewport{
-        padding-right: 22px;
-    }
+    // .ag-body-viewport{
+    //     padding-right: 22px;
+    // }
     .ag-body-horizontal-scroll{
         position: fixed;
         bottom: 0px;

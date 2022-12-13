@@ -530,16 +530,18 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
         });
       });
     } else if( field_name === 'status'){
-      if(parseInt(value) === 0){
-          this.confirmationService.confirm({
-            message: 'Phòng họp đang trong cuộc họp, bạn thực sự muốn thay đổi trạng thái phòng họp?',
-            accept: () => {
-              this.element.columnValue = value;
-            },
-            reject: () => {
-              this.element.columnValue = "1";
-            }
-          });
+      if(this.paramsObject && this.paramsObject.params.roomId) {
+        if(parseInt(value) === 0){
+            this.confirmationService.confirm({
+              message: 'Phòng họp đang trong cuộc họp, bạn thực sự muốn thay đổi trạng thái phòng họp?',
+              accept: () => {
+                this.element.columnValue = value;
+              },
+              reject: () => {
+                this.element.columnValue = "1";
+              }
+            });
+        }
       }
     }  else if (field_name === 'holi_type') {
       this.callback.emit(value);
