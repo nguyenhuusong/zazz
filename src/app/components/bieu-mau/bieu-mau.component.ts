@@ -17,6 +17,7 @@ import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { DialogService } from 'primeng/dynamicdialog';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
+import { getParamString } from 'src/app/common/function-common/objects.helper';
 @Component({
   selector: 'app-bieu-mau',
   templateUrl: './bieu-mau.component.html',
@@ -32,13 +33,8 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
   heightGrid = 300;
   query = {
     filter: '',
-    organizeId: '',
-    typeForm: null,
-    createDate: '',
     offSet: 0,
     pageSize: 15,
-    form_status: null,
-    organizeIds: '',
   };
   cols: any[];
   totalRecord = 0;
@@ -91,21 +87,16 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit(): void {
-    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-        if(results && results.length>0){
-          this.query.organizeIds = results;
-          this.load();
-        }
-    });
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Hoạt động' },
       { label: 'Tài liệu' },
       { label: this.dataRouter.title },
     ];
-    this.getAgencyOrganizeMap();
-    this.getOrgan();
-    this.getFormTypes();
+    this.getFilter()
+    // this.getAgencyOrganizeMap();
+    // this.getOrgan();
+    // this.getFormTypes();
   }
 
 
@@ -155,36 +146,36 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
   }
 
   getAgencyOrganizeMap(type = false) {
-    this.apiService.getAgencyOrganizeMap().subscribe(results => {
-      if (results.status === 'success') {
-        this.listAgencyMap = [...results.data.root];
-        if (localStorage.getItem("organize") === null || localStorage.getItem("organize") === 'undefined') {
-          this.selectedNode = this.listAgencyMap[0];
-          localStorage.setItem('organize', JSON.stringify(this.listAgencyMap[0]));
-          // this.query.organizeId = this.selectedNode.orgId;
-          this.load();
-        } else {
-          this.selectedNode = JSON.parse(localStorage.getItem("organize"));
-          // this.query.organizeId = this.selectedNode?.orgId;
-          this.listAgencyMap = this.expanded(this.listAgencyMap, this.selectedNode.parentId)
-          this.selected(this.listAgencyMap, this.query.organizeId);
-          if (type) {
-            this.isHrDiagram = true;
-          }
-          this.load();
-        }
-      }
-    })
+    // this.apiService.getAgencyOrganizeMap().subscribe(results => {
+    //   if (results.status === 'success') {
+    //     this.listAgencyMap = [...results.data.root];
+    //     if (localStorage.getItem("organize") === null || localStorage.getItem("organize") === 'undefined') {
+    //       this.selectedNode = this.listAgencyMap[0];
+    //       localStorage.setItem('organize', JSON.stringify(this.listAgencyMap[0]));
+    //       // this.query.organizeId = this.selectedNode.orgId;
+    //       this.load();
+    //     } else {
+    //       this.selectedNode = JSON.parse(localStorage.getItem("organize"));
+    //       // this.query.organizeId = this.selectedNode?.orgId;
+    //       this.listAgencyMap = this.expanded(this.listAgencyMap, this.selectedNode.parentId)
+    //       this.selected(this.listAgencyMap, this.query.organizeId);
+    //       if (type) {
+    //         this.isHrDiagram = true;
+    //       }
+    //       this.load();
+    //     }
+    //   }
+    // })
   }
 
   onNodeSelect(event) {
-    this.detailOrganizeMap = event.node;
-    localStorage.setItem('organize', JSON.stringify(event.node));
-    // this.query.orgId = this.selectedNode?.orgId;
-    this.query.organizeId = this.detailOrganizeMap?.orgId;
-    this.isHrDiagram = false;
+    // this.detailOrganizeMap = event.node;
+    // localStorage.setItem('organize', JSON.stringify(event.node));
+    // // this.query.orgId = this.selectedNode?.orgId;
+    // this.query.organizeId = this.detailOrganizeMap?.orgId;
+    // this.isHrDiagram = false;
 
-    this.load()
+    // this.load()
   }
 
   selected(datas = [], orgId = '') {
@@ -260,12 +251,6 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
     this.columnDefs = []
     this.spinner.show();
     const query = {...this.query};
-    if (query.createDate && typeof query.createDate !== 'string') {
-      query.createDate = moment(query.createDate).format('YYYY-MM-DD');
-    }
-    if (typeof this.query.typeForm === 'object' && this.query && this.query.typeForm) {
-      query.typeForm = this.query.typeForm.data;
-    } 
     const queryParams = queryString.stringify(query);
     this.apiService.getFormGeneral(queryParams, this.indexTab === 0 ? 'GetFormGeneral' : 'GetFormPersonal').subscribe(
       (results: any) => {
@@ -466,14 +451,9 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
 
   cancel() {
     this.query = {
-      organizeId: '',
       filter: '',
-      typeForm: '',
-      createDate: '',
       offSet: 0,
       pageSize: 10,
-      form_status: null,
-      organizeIds: this.query.organizeIds
     }
     this.load();
   }
@@ -623,22 +603,22 @@ detailInfoFilter = null;
   ];
 
   //filter 
-  getFilter(value) {
-    value === 1 ? '' : ''
+  getFilter() {
+    // value === 1 ? '' : ''
     this.apiService.getFilter('/api/v1/eating/GetEatingFilter').subscribe(results => {
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
-this.listViewsFilter = [...listViews];
-const params =  getParamString(listViews)
-this.query = { ...this.query, ...params};
-this.load();
+        this.listViewsFilter = [...listViews];
+        const params =  getParamString(listViews)
+        this.query = { ...this.query, ...params};
+        this.load();
         this.detailInfoFilter = results.data;
       }
     });
   }
 
-  showFilter(value) {
+  showFilter() {
     const ref = this.dialogService.open(FormFilterComponent, {
       header: 'Tìm kiếm nâng cao',
       width: '40%',
@@ -660,13 +640,12 @@ this.load();
         this.apiService.getEmpFilter().subscribe(results => {
             if (results.status === 'success') {
               const listViews = cloneDeep(results.data.group_fields);
-              this.cloneListViewsFilter = cloneDeep(listViews);
-this.listViewsFilter = [...listViews];
-const params =  getParamString(listViews)
-this.query = { ...this.query, ...params};
-this.load();
+              this.listViewsFilter = [...listViews];
+              const params =  getParamString(listViews)
+              this.query = { ...this.query, ...params};
+              this.load();
               this.detailInfoFilter = results.data;
-              this.showFilter(value)
+              this.showFilter()
             }
           });
 

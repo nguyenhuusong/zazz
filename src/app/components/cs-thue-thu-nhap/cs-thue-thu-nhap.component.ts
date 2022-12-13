@@ -17,6 +17,7 @@ import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { cloneDeep, uniqBy } from 'lodash';
 import { DialogService } from 'primeng/dynamicdialog';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
+import { getParamString } from 'src/app/common/function-common/objects.helper';
 @Component({
   selector: 'app-cs-thue-thu-nhap',
   templateUrl: './cs-thue-thu-nhap.component.html',
@@ -43,11 +44,9 @@ export class CsThueThuNhapComponent implements OnInit, AfterViewChecked {
   cards = [];
   first = 0;
   query = {
-    companyId: '',
     filter: '',
     offSet: 0,
     pageSize: 15,
-    organizeIds: ''
   };
   totalRecord = 0;
   countRecord: any = {
@@ -100,14 +99,7 @@ detailInfoFilter = null;
   }
 
   ngOnInit(): void {
-    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-        if(results && results.length>0){
-          this.query.organizeIds = results;
-          this.load();
-          this.getCompanies();
-        }
-    });
-
+  
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Chính sách' },
@@ -118,11 +110,9 @@ detailInfoFilter = null;
 
   initFilter(): void {
     this.query = {
-      companyId: '',
       filter: '',
       offSet: 0,
       pageSize: 15,
-      organizeIds: this.query.organizeIds
     };
   }
 
@@ -394,10 +384,10 @@ detailInfoFilter = null;
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
-this.listViewsFilter = [...listViews];
-const params =  getParamString(listViews)
-this.query = { ...this.query, ...params};
-this.load();
+        this.listViewsFilter = [...listViews];
+        const params =  getParamString(listViews)
+        this.query = { ...this.query, ...params};
+        this.load();
         this.detailInfoFilter = results.data;
       }
     });
@@ -425,11 +415,10 @@ this.load();
           this.apiService.getFilter('/api/v2/incometax/GetIncomeTaxFilter').subscribe(results => {
             if (results.status === 'success') {
               const listViews = cloneDeep(results.data.group_fields);
-              this.cloneListViewsFilter = cloneDeep(listViews);
-this.listViewsFilter = [...listViews];
-const params =  getParamString(listViews)
-this.query = { ...this.query, ...params};
-this.load();
+              this.listViewsFilter = [...listViews];
+              const params =  getParamString(listViews)
+              this.query = { ...this.query, ...params};
+              this.load();
               this.detailInfoFilter = results.data;
               this.showFilter()
             }

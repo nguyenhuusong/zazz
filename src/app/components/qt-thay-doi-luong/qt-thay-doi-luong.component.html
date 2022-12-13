@@ -115,33 +115,3 @@
         (callbackcancel)="cancelHrmPayrollRecordInfo($event)"
         ></app-edit-detail>
 </p-dialog>
-               
-<p-overlayPanel #op [style]="{width: '700px'}" styleClass="advance-seach">
-    <ng-template pTemplate>
-        <div class="header-filter-search  grid">
-            <h3>Tìm kiếm nâng cao</h3>
-        </div>
-        <div class="header-filter-search grid mt-1">
-            <div class="icon col-12 pl-0" style="display: flex; flex-wrap: wrap;">
-                <div class="col-6">
-                    <div class="field-group select">
-                        <label>Công ty trả lương</label>
-                        <p-dropdown appendTo="body" [baseZIndex]="100"
-                            [options]="companies" [(ngModel)]="query.companyIds" name="companyIds"
-                            [filter]="true">
-                            </p-dropdown>
-                    </div>
-                </div>
-            </div>
-            <div class="input-group icon col-12 select-default text-right">
-                <label for="" style="visibility: hidden;">Classid <span class="pi pi-info-circle"
-                        style="font-size: 13px;color: orange;"></span></label>
-                <p-button label="Tìm kiếm" styleClass="mr-1" icon="pi pi-search" (click)="load()">
-                </p-button>
-                <p-button label="Làm mới" icon="pi pi-times" (click)="cancel()"
-                    styleClass="p-button-secondary">
-                </p-button>
-            </div>
-        </div>
-    </ng-template>
-</p-overlayPanel>

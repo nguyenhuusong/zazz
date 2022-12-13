@@ -17,6 +17,7 @@ import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { DialogService } from 'primeng/dynamicdialog';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
+import { getParamString } from 'src/app/common/function-common/objects.helper';
 @Component({
   selector: 'app-cs-nghi-phep',
   templateUrl: './cs-nghi-phep.component.html',
@@ -98,18 +99,9 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
   getRowHeight;
   // time = null;
   query = {
-    organizeId: null,
-    request_status: '',
-    reason_code: '',
     filter: '',
-    year: '',
-    month: '',
     offSet: 0,
     pageSize: 15,
-    fromdate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).add(-1,'months').format()),
-    todate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).format()),
-    organizeIds: '',
-    companyIds: '',
   }
   totalRecord = 0;
   DriverId = 0;
@@ -148,21 +140,9 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
   cancel() {
     // this.time = null;
     this.query = {
-      organizeId: null,
-      request_status: '',
-      reason_code: '',
       filter: '',
-      year: '',
-      month: '',
       offSet: 0,
       pageSize: 15,
-      fromdate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).add(-1,'months').format()),
-      todate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).format()),
-      organizeIds: this.query.organizeIds,
-      companyIds: this.query.companyIds,
-    }
-    if(this.companies.length > 0) {
-      this.query.companyIds = this.companies[0].value;
     }
     this.load();
   }
@@ -178,18 +158,6 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
     this.columnDefs = []
     this.spinner.show();
     const queryParams: any = {...this.query};
-    queryParams.fromdate = typeof this.query.fromdate === 'object' ? moment(new Date(this.query.fromdate)).format('YYYY-MM-DD') : this.query.fromdate;
-    queryParams.todate = typeof this.query.todate === 'object' ? moment(new Date(this.query.todate)).format('YYYY-MM-DD') : this.query.todate;
-    // if (this.time) {
-    //   queryParams.year = this.time.getFullYear();
-    //   queryParams.month = this.time.getMonth() + 1;
-    // }
-    if (typeof queryParams.request_status !== 'string') {
-      queryParams.request_status = queryParams.request_status.code;
-    }
-    if (typeof queryParams.reason_code !== 'string') {
-      queryParams.reason_code = queryParams.reason_code.code;
-    }
     const queryStrings = queryString.stringify(queryParams);
     this.apiService.getLeavePage(queryStrings).subscribe(
       (results: any) => {
@@ -222,12 +190,12 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
 
   // set kỳ công
   defauDateFilter() {
-    let currentDay = new Date().getDate();
-    if(currentDay >= 25 && currentDay <= 31){
-      this.query.month = this.query.month + 1;
-      this.query.fromdate = new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).format())
-      this.query.todate = new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).add( +1 ,'months').format())
-    }
+    // let currentDay = new Date().getDate();
+    // if(currentDay >= 25 && currentDay <= 31){
+    //   this.query.month = this.query.month + 1;
+    //   this.query.fromdate = new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).format())
+    //   this.query.todate = new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).add( +1 ,'months').format())
+    // }
   }
   
   showButtons(event: any) {
@@ -406,64 +374,56 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit() {
-    this.defauDateFilter();
-    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-        if(results && results.length>0){
-          this.query.organizeIds = results;
-          this.query.organizeId = results;
-          this.getLeaveReasons();
-          this.getCompany();
-        }
-    });
+  
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Chính sách' },
       { label: 'Giải trình công' },
     ];
-    this.getOrgRoots();
-    this.getRequestStatus();
+    // this.getOrgRoots();
+    // this.getRequestStatus();
     this.getFilter();
   }
 
   getLeaveReasons() {
-    this.apiBaseService.getLeaveReasons()
-    .subscribe(response => {
-      if(response.status === 'success'){
-        this.leaveReasons = response.data.map( d => {
-          return {
-            name: d.name,
-            code: d.code
-          }
-        });
-        this.leaveReasons = [{ name: 'Tất cả', code: ''}, ...this.leaveReasons]
-        if (this.leaveReasons.length) {
-          this.query.reason_code = this.leaveReasons[0];
-          this.load();
-        }
-      }
-    })
+    // this.apiBaseService.getLeaveReasons()
+    // .subscribe(response => {
+    //   if(response.status === 'success'){
+    //     this.leaveReasons = response.data.map( d => {
+    //       return {
+    //         name: d.name,
+    //         code: d.code
+    //       }
+    //     });
+    //     this.leaveReasons = [{ name: 'Tất cả', code: ''}, ...this.leaveReasons]
+    //     if (this.leaveReasons.length) {
+    //       this.query.reason_code = this.leaveReasons[0];
+    //       this.load();
+    //     }
+    //   }
+    // })
   }
   
   getRequestStatus() {
-    this.apiBaseService.getObjectList('hrm_leave_status')
-    .subscribe(response => {
-      this.listStatus = response.data;
-      // if (this.listStatus.length) {
-      //   this.query.request_status = this.listStatus[0];
-      //   this.load();
-      // }
-      if(response.status === 'success'){
-        this.listStatus = response.data.map( d => {
-          return {
-            name: d.objName,
-            code: d.objCode
-          }
-        });
-        this.listStatus = [{ name: 'Tất cả', code: ''}, ...this.listStatus]
-        this.query.request_status = this.listStatus[0];
-        this.load();
-      }
-    })
+    // this.apiBaseService.getObjectList('hrm_leave_status')
+    // .subscribe(response => {
+    //   this.listStatus = response.data;
+    //   // if (this.listStatus.length) {
+    //   //   this.query.request_status = this.listStatus[0];
+    //   //   this.load();
+    //   // }
+    //   if(response.status === 'success'){
+    //     this.listStatus = response.data.map( d => {
+    //       return {
+    //         name: d.objName,
+    //         code: d.objCode
+    //       }
+    //     });
+    //     this.listStatus = [{ name: 'Tất cả', code: ''}, ...this.listStatus]
+    //     this.query.request_status = this.listStatus[0];
+    //     this.load();
+    //   }
+    // })
   }
 
   getOrgRoots() {
@@ -579,24 +539,24 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
   }
 
   getCompany() {
-    const query = { organizeIds: this.query.organizeIds}
-    this.apiService.getUserCompanies(queryString.stringify(query)).subscribe(
-      (results: any) => {
-        if(results.status === "success"){
-          this.companies = results.data
-            .map(d => {
-              return {
-                label: d.name,
-                value: d.value
-              };
-            });
-            if(this.companies.length > 0) {
-              this.query.companyIds = this.companies[0].value
-            }
-            this.load();
-        }
-      }),
-      error => { };
+    // const query = { organizeIds: this.query.organizeIds}
+    // this.apiService.getUserCompanies(queryString.stringify(query)).subscribe(
+    //   (results: any) => {
+    //     if(results.status === "success"){
+    //       this.companies = results.data
+    //         .map(d => {
+    //           return {
+    //             label: d.name,
+    //             value: d.value
+    //           };
+    //         });
+    //         if(this.companies.length > 0) {
+    //           this.query.companyIds = this.companies[0].value
+    //         }
+    //         this.load();
+    //     }
+    //   }),
+    //   error => { };
   }
 
   listViewsFilter = [];
@@ -612,10 +572,10 @@ detailInfoFilter = null;
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
-this.listViewsFilter = [...listViews];
-const params =  getParamString(listViews)
-this.query = { ...this.query, ...params};
-this.load();
+        this.listViewsFilter = [...listViews];
+        const params =  getParamString(listViews)
+        this.query = { ...this.query, ...params};
+        this.load();
         this.detailInfoFilter = results.data;
       }
     });
@@ -643,11 +603,10 @@ this.load();
           this.apiService.getFilter('/api/v2/leave/GetLeaveFilter').subscribe(results => {
             if (results.status === 'success') {
               const listViews = cloneDeep(results.data.group_fields);
-              this.cloneListViewsFilter = cloneDeep(listViews);
-this.listViewsFilter = [...listViews];
-const params =  getParamString(listViews)
-this.query = { ...this.query, ...params};
-this.load();
+              this.listViewsFilter = [...listViews];
+              const params =  getParamString(listViews)
+              this.query = { ...this.query, ...params};
+              this.load();
               this.detailInfoFilter = results.data;
               this.showFilter()
             }

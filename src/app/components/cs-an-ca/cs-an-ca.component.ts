@@ -17,6 +17,7 @@ import { cloneDeep } from 'lodash';
 import * as FileSaver from 'file-saver';
 import { DialogService } from 'primeng/dynamicdialog';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
+import { getParamString } from 'src/app/common/function-common/objects.helper';
 @Component({
   selector: 'app-cs-an-ca',
   templateUrl: './cs-an-ca.component.html',
@@ -97,16 +98,9 @@ detailInfoFilter = null;
   getRowHeight;
   selectedValue = null;
   query: any = {
-    orgId: null,
-    // request_status: '',
     filter: '',
     offSet: 0,
     pageSize: 15,
-    fromdate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).add(-1,'months').format()),
-    todate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).format()),
-    organizeIds: '',
-    position: '',
-    companyIds: []
   }
   totalRecord = 0;
   DriverId = 0;
@@ -126,15 +120,9 @@ detailInfoFilter = null;
   cancel() {
     this.selectedValue = null;
     this.query = {
-      orgId: null,
-      // request_status: '',
       filter: '',
       offSet: 0,
       pageSize: 15,
-      fromdate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).add(-1,'months').format()),
-      todate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).format()),
-      organizeIds: this.query.organizeIds,
-      companyIds: this.query.companyIds
     }
     if(this.companies.length > 0) {
       this.query.companyIds = this.companies[0].value;
@@ -154,14 +142,6 @@ detailInfoFilter = null;
     this.columnDefs = []
     this.spinner.show();
     let params: any = {... this.query};
-    let companyIds = this.query.companyIds.toString();
-    params.companyIds = companyIds;
-    delete params.fromdate
-    delete params.todate
-    params.FromDate = moment(new Date(this.query.fromdate)).format('YYYY-MM-DD')
-    params.ToDate = moment(new Date(this.query.todate)).format('YYYY-MM-DD');
-    params.orgId = this.selectedValue ? this.selectedValue.orgId : null
-
     const queryParams = queryString.stringify(params);
     this.apiService.getEatingPage(queryParams).subscribe(
       (results: any) => {
@@ -309,20 +289,12 @@ detailInfoFilter = null;
   }
 
   ngOnInit() {
-    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-        if(results && results.length>0){
-          this.query.organizeIds = results;
-          this.rowDataSelected = []
-          this.getCompany();
-          this.getOrganizeTree();
-        }
-    });
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Chính sách' },
       { label: 'Danh sách ăn ca' },
     ];
-    this.getOrgRoots();
+    // this.getOrgRoots();
     this.getFilter();
   }
 
@@ -501,11 +473,11 @@ detailInfoFilter = null;
     this.apiService.getFilter('/api/v1/eating/GetEatingFilter').subscribe(results => {
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
-        this.cloneListViewsFilter = cloneDeep(listViews);
-this.listViewsFilter = [...listViews];
-const params =  getParamString(listViews)
-this.query = { ...this.query, ...params};
-this.load();
+          this.cloneListViewsFilter = cloneDeep(listViews);
+          this.listViewsFilter = [...listViews];
+          const params =  getParamString(listViews)
+          this.query = { ...this.query, ...params};
+          this.load();
         this.detailInfoFilter = results.data;
       }
     });
@@ -533,11 +505,10 @@ this.load();
           this.apiService.getFilter('/api/v1/eating/GetEatingFilter').subscribe(results => {
             if (results.status === 'success') {
               const listViews = cloneDeep(results.data.group_fields);
-              this.cloneListViewsFilter = cloneDeep(listViews);
-this.listViewsFilter = [...listViews];
-const params =  getParamString(listViews)
-this.query = { ...this.query, ...params};
-this.load();
+              this.listViewsFilter = [...listViews];
+              const params =  getParamString(listViews)
+              this.query = { ...this.query, ...params};
+              this.load();
               this.detailInfoFilter = results.data;
               this.showFilter()
             }

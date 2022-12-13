@@ -14,6 +14,7 @@ import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { cloneDeep } from 'lodash';
 import { DialogService } from 'primeng/dynamicdialog';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
+import { getParamString } from 'src/app/common/function-common/objects.helper';
 @Component({
   selector: 'app-gop-y-kien',
   templateUrl: './gop-y-kien.component.html',
@@ -84,9 +85,7 @@ export class GopYKienComponent implements OnInit {
   query = {
     filter: '',
     offSet: 0,
-    pageSize: 100000000,
-    feedbackTypeId: null,
-    organizeIds: '',
+    pageSize: 10000,
   }
   totalRecord = 0;
   DriverId = 0;
@@ -132,9 +131,7 @@ detailInfoFilter = null;
     this.query = {
       filter: '',
       offSet: 0,
-      pageSize: 100000000,
-      feedbackTypeId: null,
-      organizeIds: this.query.organizeIds
+      pageSize: 10000,
     }
     this.load();
   }
@@ -232,12 +229,6 @@ detailInfoFilter = null;
   }
 
   ngOnInit() {
-    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-        if(results && results.length>0){
-          this.query.organizeIds = results;
-          this.load();
-        }
-    });
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Góp ý' },
@@ -247,17 +238,17 @@ detailInfoFilter = null;
   }
   typeFeedBacks = [];
   getFeedbackType() {
-    this.apiService.getFeedbackType().subscribe(results => {
-      if(results.status === 'success') {
-        this.typeFeedBacks = results.data.map(d => {
-          return {
-            label: d.feedbackTypeName,
-            value: d.feedbackTypeId
-          }
-        });
-        this.typeFeedBacks = [{label: 'Tất cả', value: null}, ...this.typeFeedBacks]
-      }
-    })
+    // this.apiService.getFeedbackType().subscribe(results => {
+    //   if(results.status === 'success') {
+    //     this.typeFeedBacks = results.data.map(d => {
+    //       return {
+    //         label: d.feedbackTypeName,
+    //         value: d.feedbackTypeId
+    //       }
+    //     });
+    //     this.typeFeedBacks = [{label: 'Tất cả', value: null}, ...this.typeFeedBacks]
+    //   }
+    // })
   }
 
   //filter 
@@ -266,10 +257,10 @@ detailInfoFilter = null;
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
-this.listViewsFilter = [...listViews];
-const params =  getParamString(listViews)
-this.query = { ...this.query, ...params};
-this.load();
+        this.listViewsFilter = [...listViews];
+        const params =  getParamString(listViews)
+        this.query = { ...this.query, ...params};
+        this.load();
         this.detailInfoFilter = results.data;
       }
     });
@@ -297,11 +288,10 @@ this.load();
           this.apiService.getFilter('/api/v1/feedback/GetFeedbackFilter').subscribe(results => {
             if (results.status === 'success') {
               const listViews = cloneDeep(results.data.group_fields);
-              this.cloneListViewsFilter = cloneDeep(listViews);
-this.listViewsFilter = [...listViews];
-const params =  getParamString(listViews)
-this.query = { ...this.query, ...params};
-this.load();
+              this.listViewsFilter = [...listViews];
+              const params =  getParamString(listViews)
+              this.query = { ...this.query, ...params};
+              this.load();
               this.detailInfoFilter = results.data;
               this.showFilter()
             }

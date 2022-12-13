@@ -14,6 +14,7 @@ const MAX_SIZE = 100000000;
 import { cloneDeep } from 'lodash';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { DialogService } from 'primeng/dynamicdialog';
+import { getParamString } from 'src/app/common/function-common/objects.helper';
 @Component({
   selector: 'app-thai-san',
   templateUrl: './thai-san.component.html',
@@ -76,8 +77,6 @@ export class ThaiSanComponent implements OnInit, AfterViewChecked {
     filter: '',
     offSet: 0,
     pageSize: 15,
-    organizeIds: '',
-    companyIds: [],
   }
   totalRecord = 0;
   DriverId = 0;
@@ -120,11 +119,6 @@ export class ThaiSanComponent implements OnInit, AfterViewChecked {
       filter: '',
       offSet: 0,
       pageSize: 15,
-      organizeIds: this.query.organizeIds,
-      companyIds: this.query.companyIds,
-    }
-    if(this.companies.length > 0) {
-      this.query.companyIds = this.companies[0].value;
     }
     this.load();
   }
@@ -139,8 +133,6 @@ export class ThaiSanComponent implements OnInit, AfterViewChecked {
     this.columnDefs = []
     this.spinner.show();
     const params: any = { ...this.query };
-    let companyIds = this.query.companyIds.toString();
-    params.companyIds = companyIds;
     const queryParams = queryString.stringify(params);
     this.apiService.getMaternityPage(queryParams).subscribe(
       (results: any) => {
@@ -301,12 +293,6 @@ export class ThaiSanComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit() {
-    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-        if(results && results.length>0){
-          this.query.organizeIds = results;
-          this.getCompany();
-        }
-    });
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Nhân sự' },
@@ -317,30 +303,30 @@ export class ThaiSanComponent implements OnInit, AfterViewChecked {
 
 
   getCompany() {
-    const query = { organizeIds: this.query.organizeIds}
-    this.apiService.getUserCompanies(queryString.stringify(query)).subscribe(
-      (results: any) => {
-        if(results.status === "success"){
-          this.companies = results.data
-            .map(d => {
-              return {
-                label: d.name,
-                value: d.value
-              };
-            });
-            if(this.companies.length > 0) {
-              this.query.companyIds = this.companies[0].value;
-            }
-            this.load();
-        }
-      }),
-      error => { };
+    // const query = { organizeIds: this.query.organizeIds}
+    // this.apiService.getUserCompanies(queryString.stringify(query)).subscribe(
+    //   (results: any) => {
+    //     if(results.status === "success"){
+    //       this.companies = results.data
+    //         .map(d => {
+    //           return {
+    //             label: d.name,
+    //             value: d.value
+    //           };
+    //         });
+    //         if(this.companies.length > 0) {
+    //           this.query.companyIds = this.companies[0].value;
+    //         }
+    //         this.load();
+    //     }
+    //   }),
+    //   error => { };
   }
 
 
   listViewsFilter = [];
   cloneListViewsFilter = [];
-detailInfoFilter = null;
+  detailInfoFilter = null;
   optionsButonFilter = [
     { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm ml-2 height-56 addNew', icon: 'pi pi-plus' },
     { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger ml-2 height-56 addNew', icon: 'pi pi-times' },
@@ -351,10 +337,10 @@ detailInfoFilter = null;
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
-this.listViewsFilter = [...listViews];
-const params =  getParamString(listViews)
-this.query = { ...this.query, ...params};
-this.load();
+        this.listViewsFilter = [...listViews];
+        const params =  getParamString(listViews)
+        this.query = { ...this.query, ...params};
+        this.load();
         this.detailInfoFilter = results.data;
       }
     });
@@ -381,11 +367,10 @@ this.load();
         this.apiService.getEmpFilter().subscribe(results => {
             if (results.status === 'success') {
               const listViews = cloneDeep(results.data.group_fields);
-              this.cloneListViewsFilter = cloneDeep(listViews);
-this.listViewsFilter = [...listViews];
-const params =  getParamString(listViews)
-this.query = { ...this.query, ...params};
-this.load();
+              this.listViewsFilter = [...listViews];
+              const params =  getParamString(listViews)
+              this.query = { ...this.query, ...params};
+              this.load();
               this.detailInfoFilter = results.data;
               this.showFilter()
             }

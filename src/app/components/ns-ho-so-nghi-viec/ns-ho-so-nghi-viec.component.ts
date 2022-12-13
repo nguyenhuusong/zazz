@@ -18,6 +18,7 @@ import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { DialogService } from 'primeng/dynamicdialog';
+import { getParamString } from 'src/app/common/function-common/objects.helper';
 @Component({
   selector: 'app-ns-ho-so-nghi-viec',
   templateUrl: './ns-ho-so-nghi-viec.component.html',
@@ -89,13 +90,8 @@ export class NsHoSoNghiViecComponent implements OnInit {
   }
   query = {
     filter: '',
-    reason_id: 0,
-    orgId: "",
     offSet: 0,
     pageSize: 15,
-    status: -1,
-    organizeIds: "",
-    companyIds: [],
   }
 
   employeeStatus = [
@@ -108,33 +104,28 @@ export class NsHoSoNghiViecComponent implements OnInit {
       filter: '',
       offSet: 0,
       pageSize: 15,
-      orgId: this.query.orgId,
-      reason_id: 0,
-      status: -1,
-      organizeIds: this.query.organizeIds,
-      companyIds: this.query.companyIds,
     }
     this.load();
   }
 
   getAgencyOrganizeMap() {
-    this.apiService.getAgencyOrganizeMap().subscribe(results => {
-      if (results.status === 'success') {
-        this.listAgencyMap = [...results.data.root];
-        if (localStorage.getItem("organize") === null) {
-          this.selectedNode = this.listAgencyMap[0];
-          localStorage.setItem('organize', JSON.stringify(this.listAgencyMap[0]));
-          this.query.orgId = this.selectedNode.orgId;
-          this.load();
-        } else {
-          this.selectedNode = JSON.parse(localStorage.getItem("organize"));
-          this.query.orgId = this.selectedNode.orgId;
-          this.listAgencyMap = this.expanded(this.listAgencyMap, this.selectedNode.parentId)
-          this.selected(this.listAgencyMap, this.query.orgId)
-          this.load();
-        }
-      }
-    })
+    // this.apiService.getAgencyOrganizeMap().subscribe(results => {
+    //   if (results.status === 'success') {
+    //     this.listAgencyMap = [...results.data.root];
+    //     if (localStorage.getItem("organize") === null) {
+    //       this.selectedNode = this.listAgencyMap[0];
+    //       localStorage.setItem('organize', JSON.stringify(this.listAgencyMap[0]));
+    //       this.query.orgId = this.selectedNode.orgId;
+    //       this.load();
+    //     } else {
+    //       this.selectedNode = JSON.parse(localStorage.getItem("organize"));
+    //       this.query.orgId = this.selectedNode.orgId;
+    //       this.listAgencyMap = this.expanded(this.listAgencyMap, this.selectedNode.parentId)
+    //       this.selected(this.listAgencyMap, this.query.orgId)
+    //       this.load();
+    //     }
+    //   }
+    // })
   }
   listAgencyMap: TreeNode[];
   selectedNode
@@ -162,10 +153,10 @@ export class NsHoSoNghiViecComponent implements OnInit {
   detailOrganizeMap = null;
   organizeList = []
   onNodeSelect(event) {
-    this.detailOrganizeMap = event.node;
-    this.query.orgId = this.detailOrganizeMap.orgId;
-    this.isHrDiagram = false;
-    this.load()
+    // this.detailOrganizeMap = event.node;
+    // this.query.orgId = this.detailOrganizeMap.orgId;
+    // this.isHrDiagram = false;
+    // this.load()
   }
 
 
@@ -184,14 +175,7 @@ export class NsHoSoNghiViecComponent implements OnInit {
   load() {
     this.columnDefs = []
     this.spinner.show();
-
     let params: any = {... this.query};
-
-
-    // params.orgId = this.department ? this.department.orgId : null
-    // let companyIds = this.query.companyIds.toString();
-    // params.companyIds = companyIds;
-
     const queryParams = queryString.stringify(params);
     this.apiService.getTerminatePage(queryParams).subscribe(
       (results: any) => {
@@ -222,14 +206,14 @@ export class NsHoSoNghiViecComponent implements OnInit {
   }
 
   getOrganizeTree(): void {
-    const queryParams = queryString.stringify({ parentId: this.query.organizeIds });
-    this.apiService.getOrganizeTree(queryParams)
-      .subscribe((results: any) => {
-        if (results && results.status === 'success') {
-          this.departmentFiltes = results.data;
-        }
-      },
-        error => { });
+    // const queryParams = queryString.stringify({ parentId: this.query.organizeIds });
+    // this.apiService.getOrganizeTree(queryParams)
+    //   .subscribe((results: any) => {
+    //     if (results && results.status === 'success') {
+    //       this.departmentFiltes = results.data;
+    //     }
+    //   },
+    //     error => { });
   }
 
   showButtons(event: any) {
@@ -435,13 +419,6 @@ export class NsHoSoNghiViecComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-        if(results && results.length > 0){
-          this.query.organizeIds = results;
-          this.getOrganizeTree();
-          this.getCompany();
-        }
-    });
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Nhân sự' },
@@ -480,24 +457,24 @@ export class NsHoSoNghiViecComponent implements OnInit {
   companies = []
 
   getCompany() {
-    const query = { organizeIds: this.query.organizeIds}
-    this.apiService.getUserCompanies(queryString.stringify(query)).subscribe(
-      (results: any) => {
-        if(results.status === "success"){
-          this.companies = results.data
-            .map(d => {
-              return {
-                label: d.name,
-                value: d.value
-              };
-            });
-            if(this.companies.length > 0) {
-              this.query.companyIds = this.companies[0].value;
-            }
-            this.load();
-        }
-      }),
-      error => { };
+    // const query = { organizeIds: this.query.organizeIds}
+    // this.apiService.getUserCompanies(queryString.stringify(query)).subscribe(
+    //   (results: any) => {
+    //     if(results.status === "success"){
+    //       this.companies = results.data
+    //         .map(d => {
+    //           return {
+    //             label: d.name,
+    //             value: d.value
+    //           };
+    //         });
+    //         if(this.companies.length > 0) {
+    //           this.query.companyIds = this.companies[0].value;
+    //         }
+    //         this.load();
+    //     }
+    //   }),
+    //   error => { };
   }
 
   hrDiagram() {
@@ -536,10 +513,10 @@ detailInfoFilter = null;
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
-this.listViewsFilter = [...listViews];
-const params =  getParamString(listViews)
-this.query = { ...this.query, ...params};
-this.load();
+        this.listViewsFilter = [...listViews];
+        const params =  getParamString(listViews)
+        this.query = { ...this.query, ...params};
+        this.load();
         this.detailInfoFilter = results.data;
       }
     });
@@ -567,11 +544,10 @@ this.load();
         this.apiService.getTerminateFilter().subscribe(results => {
             if (results.status === 'success') {
               const listViews = cloneDeep(results.data.group_fields);
-              this.cloneListViewsFilter = cloneDeep(listViews);
-this.listViewsFilter = [...listViews];
-const params =  getParamString(listViews)
-this.query = { ...this.query, ...params};
-this.load();
+              this.listViewsFilter = [...listViews];
+              const params =  getParamString(listViews)
+              this.query = { ...this.query, ...params};
+              this.load();
               this.detailInfoFilter = results.data;
               this.showFilter()
             }

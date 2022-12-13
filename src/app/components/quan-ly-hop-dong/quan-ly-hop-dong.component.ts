@@ -15,6 +15,7 @@ import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { cloneDeep } from 'lodash';
 import { DialogService } from 'primeng/dynamicdialog';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
+import { getParamString } from 'src/app/common/function-common/objects.helper';
 
 @Component({
   selector: 'app-quan-ly-hop-dong',
@@ -83,8 +84,6 @@ export class QuanLyHopDongComponent implements OnInit {
     filter: '',
     offSet: 0,
     pageSize: 15,
-    organizeId: null,
-    organizeIds: '',
   }
   totalRecord = 0;
   DriverId = 0;
@@ -107,8 +106,6 @@ export class QuanLyHopDongComponent implements OnInit {
       filter: '',
       offSet: 0,
       pageSize: 15,
-      organizeId: null,
-      organizeIds: this.query.organizeIds
     }
     this.load();
   }
@@ -246,7 +243,6 @@ export class QuanLyHopDongComponent implements OnInit {
   XemChiTiet(event) {
     const params = {
       contractTypeId: event.rowData.contractTypeId,
-      organizeId: this.query.organizeId
     }
     this.router.navigate(['/cai-dat/quan-ly-hop-dong/chi-tiet-hop-dong'], { queryParams: params });
   }
@@ -275,13 +271,6 @@ export class QuanLyHopDongComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-        if(results && results.length>0){
-          this.query.organizeIds = results;
-          this.query.organizeId = results;
-          this.load();
-        }
-    });
     this.getOrgRoots();
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
@@ -329,7 +318,7 @@ export class QuanLyHopDongComponent implements OnInit {
   handleParams() {
     this.route.queryParamMap.subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
-      this.query.organizeId = this.paramsObject.params.organizeId || null;
+      // this.query.organizeId = this.paramsObject.params.organizeId || null;
     });
   };
 
@@ -346,10 +335,10 @@ detailInfoFilter = null;
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
-this.listViewsFilter = [...listViews];
-const params =  getParamString(listViews)
-this.query = { ...this.query, ...params};
-this.load();
+        this.listViewsFilter = [...listViews];
+        const params =  getParamString(listViews)
+        this.query = { ...this.query, ...params};
+        this.load();
         this.detailInfoFilter = results.data;
       }
     });
@@ -377,11 +366,10 @@ this.load();
           this.apiService.getFilter('/api/v2/contracttype/GetContractTypeFilter').subscribe(results => {
             if (results.status === 'success') {
               const listViews = cloneDeep(results.data.group_fields);
-              this.cloneListViewsFilter = cloneDeep(listViews);
-this.listViewsFilter = [...listViews];
-const params =  getParamString(listViews)
-this.query = { ...this.query, ...params};
-this.load();
+              this.listViewsFilter = [...listViews];
+              const params =  getParamString(listViews)
+              this.query = { ...this.query, ...params};
+              this.load();
               this.detailInfoFilter = results.data;
               this.showFilter()
             }

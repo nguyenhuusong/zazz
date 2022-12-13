@@ -16,6 +16,7 @@ import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { ApiService } from 'src/app/services/api.service';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { DialogService } from 'primeng/dynamicdialog';
+import { getParamString } from 'src/app/common/function-common/objects.helper';
 @Component({
   selector: 'app-dang-ky-lich-lam-viec',
   templateUrl: './dang-ky-lich-lam-viec.component.html',
@@ -91,13 +92,6 @@ export class DangKyLichLamViecComponent implements OnInit {
     filter: '',
     offSet: 0,
     pageSize: 15,
-    organizeId: null,
-    orgId: null,
-    work_cd: null,
-    app_st: null,
-    is_flexible: null,
-    organizeIds: '',
-    companyIds: [],
   }
   totalRecord = 0;
   DriverId = 0;
@@ -137,16 +131,6 @@ export class DangKyLichLamViecComponent implements OnInit {
       filter: '',
       offSet: 0,
       pageSize: 15,
-      organizeId: null,
-      orgId: null,
-      work_cd: null,
-      app_st: null,
-      is_flexible: null,
-      organizeIds: this.query.organizeIds,
-      companyIds: this.query.companyIds,
-    }
-    if(this.companies.length > 0) {
-      this.query.companyIds = this.companies[0].value;
     }
     this.load();
   }
@@ -188,12 +172,6 @@ export class DangKyLichLamViecComponent implements OnInit {
     this.columnDefs = []
     this.spinner.show();
     let params: any = { ... this.query };
-    let companyIds = this.query.companyIds.toString();
-    params.companyIds = companyIds;
-
-    if (params.orgId) {
-      params.orgId = typeof params.orgId === 'string' ? params.orgId : params.orgId.orgId;
-    }
     const queryParams = queryString.stringify(params);
     this.apiService.getEmpWorkingPage(queryParams).subscribe(
       (results: any) => {
@@ -203,11 +181,11 @@ export class DangKyLichLamViecComponent implements OnInit {
           this.cols = results.data.gridflexs;
           this.colsDetail = results.data.gridflexdetails ? results.data.gridflexdetails : [];
         }
-        if(!this.query.organizeId && results.data && results.data.dataList.data.length > 0) {
-          this.query.organizeId = results.data.dataList.data[0].organizeId;
-          this.getOrganizeTree();
-          this.getWorkTime();
-        }
+        // if(!this.query.organizeId && results.data && results.data.dataList.data.length > 0) {
+        //   this.query.organizeId = results.data.dataList.data[0].organizeId;
+        //   this.getOrganizeTree();
+        //   this.getWorkTime();
+        // }
         this.initGrid();
         this.countRecord.totalRecord = results.data.dataList.recordsTotal;
         this.countRecord.totalRecord = results.data.dataList.recordsTotal;
@@ -333,37 +311,37 @@ export class DangKyLichLamViecComponent implements OnInit {
   }
 
   getModuleList() {
-    const queryParams = queryString.stringify({ filter: '' });
-    this.apiService.getOrganizations(queryParams).subscribe(results => {
-      if (results.status === 'success') {
-        const moduleLists = results.data.map(d => {
-          return {
-            label: `${d.organizationName}`,
-            value: d.organizeId,
-            ...d
-          }
-        });
-        this.organizes = moduleLists
-      }
-    })
+    // const queryParams = queryString.stringify({ filter: '' });
+    // this.apiService.getOrganizations(queryParams).subscribe(results => {
+    //   if (results.status === 'success') {
+    //     const moduleLists = results.data.map(d => {
+    //       return {
+    //         label: `${d.organizationName}`,
+    //         value: d.organizeId,
+    //         ...d
+    //       }
+    //     });
+    //     this.organizes = moduleLists
+    //   }
+    // })
   }
 
   handleChangeOrganize(): void {
-    this.query.orgId = '';
-    this.getOrganizeTree();
-    this.getWorkTime();
-    this.find();
+    // this.query.orgId = '';
+    // this.getOrganizeTree();
+    // this.getWorkTime();
+    // this.find();
   }
 
   getOrganizeTree(): void {
-    const queryParams = queryString.stringify({ parentId: this.query.organizeIds });
-    this.apiService.getOrganizeTree(queryParams)
-      .subscribe((results: any) => {
-        if (results && results.status === 'success') {
-          this.departmentFiltes = results.data;
-        }
-      },
-        error => { });
+    // const queryParams = queryString.stringify({ parentId: this.query.organizeIds });
+    // this.apiService.getOrganizeTree(queryParams)
+    //   .subscribe((results: any) => {
+    //     if (results && results.status === 'success') {
+    //       this.departmentFiltes = results.data;
+    //     }
+    //   },
+    //     error => { });
   }
 
   onChangeTree(a): void {
@@ -371,14 +349,14 @@ export class DangKyLichLamViecComponent implements OnInit {
   }
 
   getWorkTime() {
-    const queryParams = queryString.stringify({ organizeId: this.query.organizeIds });
-    this.apiService.getWorktimeList(queryParams).subscribe(results => {
-      if (results.status === 'success') {
-        this.listWorkCds = results.data.map(d => {
-          return { label: d.work_times + '-' + d.work_cd, value: d.work_cd }
-        });
-      }
-    })
+    // const queryParams = queryString.stringify({ organizeId: this.query.organizeIds });
+    // this.apiService.getWorktimeList(queryParams).subscribe(results => {
+    //   if (results.status === 'success') {
+    //     this.listWorkCds = results.data.map(d => {
+    //       return { label: d.work_times + '-' + d.work_cd, value: d.work_cd }
+    //     });
+    //   }
+    // })
   }
 
   saveForm() {
@@ -486,24 +464,13 @@ export class DangKyLichLamViecComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-        if(results && results.length>0){
-          this.query.organizeIds = results;
-          this.query.organizeId = results;
-          this.listDataSelect = [];
-          this.getCompany();
-          this.getWorkTime();
-          this.getOrganizeTree();
-        }
-    });
-    this.getCustObjectListNew('empworking_app_st');
-    this.getCustObjectListNew('worktimes_flexible');
     this.getModuleList();
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Danh sách đăng ký lịch làm việc' },
     ];
     this.getFeedbackType();
+    this.getEmpWorkingFilter();
   }
 
   getFeedbackType() {
@@ -637,24 +604,24 @@ export class DangKyLichLamViecComponent implements OnInit {
   companies = []
 
   getCompany() {
-    const query = { organizeIds: this.query.organizeIds}
-    this.apiService.getUserCompanies(queryString.stringify(query)).subscribe(
-      (results: any) => {
-        if(results.status === "success"){
-          this.companies = results.data
-            .map(d => {
-              return {
-                label: d.name,
-                value: d.value
-              };
-            });
-            if(this.companies.length > 0) {
-              this.query.companyIds = this.companies[0].value;
-            }
-            this.load();
-        }
-      }),
-      error => { };
+    // const query = { organizeIds: this.query.organizeIds}
+    // this.apiService.getUserCompanies(queryString.stringify(query)).subscribe(
+    //   (results: any) => {
+    //     if(results.status === "success"){
+    //       this.companies = results.data
+    //         .map(d => {
+    //           return {
+    //             label: d.name,
+    //             value: d.value
+    //           };
+    //         });
+    //         if(this.companies.length > 0) {
+    //           this.query.companyIds = this.companies[0].value;
+    //         }
+    //         this.load();
+    //     }
+    //   }),
+    //   error => { };
   }
 
   listViewsFilter = [];
@@ -670,10 +637,10 @@ detailInfoFilter = null;
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
-this.listViewsFilter = [...listViews];
-const params =  getParamString(listViews)
-this.query = { ...this.query, ...params};
-this.load();
+        this.listViewsFilter = [...listViews];
+        const params =  getParamString(listViews)
+        this.query = { ...this.query, ...params};
+        this.load();
         this.detailInfoFilter = results.data;
       }
     });
@@ -700,11 +667,10 @@ this.load();
         this.apiService.getEmpWorkingFilter().subscribe(results => {
             if (results.status === 'success') {
               const listViews = cloneDeep(results.data.group_fields);
-              this.cloneListViewsFilter = cloneDeep(listViews);
-this.listViewsFilter = [...listViews];
-const params =  getParamString(listViews)
-this.query = { ...this.query, ...params};
-this.load();
+              this.listViewsFilter = [...listViews];
+                const params =  getParamString(listViews)
+                this.query = { ...this.query, ...params};
+                this.load();
               this.detailInfoFilter = results.data;
               this.showFilter()
             }

@@ -17,6 +17,7 @@ import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { cloneDeep } from 'lodash';
 import { DialogService } from 'primeng/dynamicdialog';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
+import { getParamString } from 'src/app/common/function-common/objects.helper';
 
 @Component({
   selector: 'app-pq-the-nhan-vien',
@@ -51,15 +52,9 @@ export class PqTheNhanVienComponent implements OnInit {
   ];
   first = 0;
   model = {
-    organizeId: '',
-      orgId: '',
       filter: '',
-      positionCd: '',
-      workplaceId: '',
-      status: -1,
       offSet: 0,
       pageSize: 15,
-      // organizeIds: ""
   };
   totalRecord = 0;
   countRecord: any = {
@@ -109,13 +104,7 @@ detailInfoFilter = null;
 
   items = []
   ngOnInit(): void {
-    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-        if(results && results.length>0){
-          // this.model.organizeIds = results;
-          this.model.organizeId = results;
-          this.load();
-        }
-    });
+   
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Phân quyền' },
@@ -149,22 +138,16 @@ detailInfoFilter = null;
 
   initFilter(): void {
     this.model = {
-      organizeId: '',
-      orgId: '',
       filter: '',
-      positionCd: '',
-      workplaceId: '',
-      status: -1,
       offSet: 0,
       pageSize: 15,
-      // organizeIds: this.model.organizeIds
     };
   }
 
   handleChangeOrganize(): void {
-    this.model.orgId = '';
-    this.getOrganizeTree();
-    // this.find();
+    // this.model.orgId = '';
+    // this.getOrganizeTree();
+    // // this.find();
   }
 
   exportexcel(): void {
@@ -213,8 +196,6 @@ detailInfoFilter = null;
     this.columnDefs = []
     this.spinner.show();
     const query: any = { ...this.model };
-    query.organizeId = query.organizeId;
-    query.orgId = query.orgId.orgId;
     const queryParams = queryString.stringify(query);
     this.apiService.getEmployeeCardPage(queryParams).subscribe(
       (results: any) => {
@@ -356,14 +337,14 @@ detailInfoFilter = null;
   }
 
   getOrganizeTree(): void {
-    const queryParams = queryString.stringify({ parentId: this.model.organizeId});
-    this.apiService.getOrganizeTree(queryParams)
-      .subscribe((results: any) => {
-        if (results && results.status === 'success') {
-          this.departmentFiltes = results.data;
-        }
-      },
-        error => { });
+    // const queryParams = queryString.stringify({ parentId: this.model.organizeId});
+    // this.apiService.getOrganizeTree(queryParams)
+    //   .subscribe((results: any) => {
+    //     if (results && results.status === 'success') {
+    //       this.departmentFiltes = results.data;
+    //     }
+    //   },
+    //     error => { });
   }
 
   dataPositionList = []
@@ -500,10 +481,10 @@ detailInfoFilter = null;
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
-this.listViewsFilter = [...listViews];
-const params =  getParamString(listViews)
-this.query = { ...this.query, ...params};
-this.load();
+        this.listViewsFilter = [...listViews];
+        const params =  getParamString(listViews)
+        this.model = { ...this.model, ...params};
+        this.load();
         this.detailInfoFilter = results.data;
       }
     });
@@ -531,11 +512,10 @@ this.load();
           this.apiService.getFilter('/api/v2/cardvehicle/GetEmpCardFilter').subscribe(results => {
             if (results.status === 'success') {
               const listViews = cloneDeep(results.data.group_fields);
-              this.cloneListViewsFilter = cloneDeep(listViews);
-this.listViewsFilter = [...listViews];
-const params =  getParamString(listViews)
-this.query = { ...this.query, ...params};
-this.load();
+              this.listViewsFilter = [...listViews];
+              const params =  getParamString(listViews)
+              this.model = { ...this.model, ...params};
+              this.load();
               this.detailInfoFilter = results.data;
               this.showFilter()
             }

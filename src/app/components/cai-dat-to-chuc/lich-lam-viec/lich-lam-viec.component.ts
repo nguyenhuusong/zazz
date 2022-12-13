@@ -16,6 +16,7 @@ import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { cloneDeep } from 'lodash';
 import { DialogService } from 'primeng/dynamicdialog';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
+import { getParamString } from 'src/app/common/function-common/objects.helper';
 @Component({
   selector: 'app-lich-lam-viec',
   templateUrl: './lich-lam-viec.component.html',
@@ -79,9 +80,6 @@ public agGridFn = AgGridFn;
     filter: '',
     offSet: 0,
     pageSize: 15,
-    status: null,
-    organizeId : null,
-    organizeIds: '',
   }
   totalRecord = 0;
   DriverId = 0;
@@ -104,9 +102,6 @@ public agGridFn = AgGridFn;
       filter: '',
       offSet: 0,
       pageSize: 15,
-      status: null,
-      organizeId : null,
-      organizeIds: this.query.organizeIds
     }
     this.load();
   }
@@ -268,28 +263,21 @@ public agGridFn = AgGridFn;
   }
 
   ngOnInit() {
-    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-        if(results && results.length>0){
-          this.query.organizeIds = results;
-          this.query.organizeId = results;
-          this.load();
-        }
-    });
-    this.getOrgRoots();
+    // this.getOrgRoots();
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Cài đặt' },
       { label: 'Danh sách tổ chức', routerLink: '/cai-dat/cai-dat-to-chuc' },
       { label: 'Lịch làm việc'},
     ];
-    this.getCustObjectListNew();
+    // this.getCustObjectListNew();
 
     // this.route.queryParamMap.subscribe((params: any) => {
     //   this.orgLevel = params.params.org_level;
     //   this.query.org_level = params.params.org_level;
     // });
 
-    this.getStatus();
+    this.getFilter();
   }
   listOrgRoots = [];
   getOrgRoots() {
@@ -334,10 +322,10 @@ detailInfoFilter = null;
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
-this.listViewsFilter = [...listViews];
-const params =  getParamString(listViews)
-this.query = { ...this.query, ...params};
-this.load();
+        this.listViewsFilter = [...listViews];
+        const params =  getParamString(listViews)
+        this.query = { ...this.query, ...params};
+        this.load();
         this.detailInfoFilter = results.data;
       }
     });
@@ -365,11 +353,10 @@ this.load();
           this.apiService.getFilter('/api/v2/worktime/GetWorktimeFilter').subscribe(results => {
             if (results.status === 'success') {
               const listViews = cloneDeep(results.data.group_fields);
-              this.cloneListViewsFilter = cloneDeep(listViews);
-this.listViewsFilter = [...listViews];
-const params =  getParamString(listViews)
-this.query = { ...this.query, ...params};
-this.load();
+              this.listViewsFilter = [...listViews];
+              const params =  getParamString(listViews)
+              this.query = { ...this.query, ...params};
+              this.load();
               this.detailInfoFilter = results.data;
               this.showFilter()
             }

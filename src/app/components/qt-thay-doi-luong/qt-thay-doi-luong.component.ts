@@ -17,6 +17,7 @@ import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { DialogService } from 'primeng/dynamicdialog';
+import { getParamString } from 'src/app/common/function-common/objects.helper';
 @Component({
   selector: 'app-qt-thay-doi-luong',
   templateUrl: './qt-thay-doi-luong.component.html',
@@ -128,13 +129,10 @@ export class QtThayDoiLuongComponent implements OnInit {
 
   }
   query = {
-    organizeId: '',
     filter: '',
     gridWidth: 0,
     offSet: 0,
     pageSize: 15,
-    companyIds: [],
-    organizeIds: '',
   }
 
   titleForm = {
@@ -159,12 +157,6 @@ export class QtThayDoiLuongComponent implements OnInit {
       gridWidth: 0,
       offSet: 0,
       pageSize: 15,
-      organizeId: '',
-      organizeIds: this.query.organizeIds,
-      companyIds: this.query.companyIds
-    }
-    if(this.companies.length > 0) {
-      this.query.companyIds = this.companies[0].value;
     }
     this.load();
   }
@@ -381,12 +373,6 @@ export class QtThayDoiLuongComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-        if(results && results.length>0){
-          this.query.organizeIds = results;
-          this.getCompany();
-        }
-    });
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Quản lý nhân sự' },
@@ -647,24 +633,24 @@ export class QtThayDoiLuongComponent implements OnInit {
   }
 
   getCompany() {
-    const query = { organizeIds: this.query.organizeIds}
-    this.apiService.getUserCompanies(queryString.stringify(query)).subscribe(
-      (results: any) => {
-        if(results.status === "success"){
-          this.companies = results.data
-            .map(d => {
-              return {
-                label: d.name,
-                value: d.value
-              };
-            });
-            if(this.companies.length > 0) {
-              this.query.companyIds = this.companies[0].value
-            }
-            this.load();
-        }
-      }),
-      error => { };
+    // const query = { organizeIds: this.query.organizeIds}
+    // this.apiService.getUserCompanies(queryString.stringify(query)).subscribe(
+    //   (results: any) => {
+    //     if(results.status === "success"){
+    //       this.companies = results.data
+    //         .map(d => {
+    //           return {
+    //             label: d.name,
+    //             value: d.value
+    //           };
+    //         });
+    //         if(this.companies.length > 0) {
+    //           this.query.companyIds = this.companies[0].value
+    //         }
+    //         this.load();
+    //     }
+    //   }),
+    //   error => { };
   }
 
 
@@ -681,10 +667,10 @@ detailInfoFilter = null;
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
-this.listViewsFilter = [...listViews];
-const params =  getParamString(listViews)
-this.query = { ...this.query, ...params};
-this.load();
+        this.listViewsFilter = [...listViews];
+        const params =  getParamString(listViews)
+        this.query = { ...this.query, ...params};
+        this.load();
         this.detailInfoFilter = results.data;
       }
     });
@@ -711,11 +697,10 @@ this.load();
         this.apiService.getSalaryInfoFilter().subscribe(results => {
             if (results.status === 'success') {
               const listViews = cloneDeep(results.data.group_fields);
-              this.cloneListViewsFilter = cloneDeep(listViews);
-this.listViewsFilter = [...listViews];
-const params =  getParamString(listViews)
-this.query = { ...this.query, ...params};
-this.load();
+              this.listViewsFilter = [...listViews];
+              const params =  getParamString(listViews)
+              this.query = { ...this.query, ...params};
+              this.load();
               this.detailInfoFilter = results.data;
               this.showFilter()
             }

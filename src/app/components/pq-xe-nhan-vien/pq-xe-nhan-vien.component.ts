@@ -15,6 +15,7 @@ import * as firebase from 'firebase';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { DialogService } from 'primeng/dynamicdialog';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
+import { getParamString } from 'src/app/common/function-common/objects.helper';
 declare var jQuery: any;
 
 @Component({
@@ -100,13 +101,8 @@ export class PqXeNhanVienComponent implements OnInit {
   ];
   cusId = null;
   first = 0;
-  model: any = {
-    organizeId: '',
-    workplaceId: '',
-    positionCd: '',
-    orgId: '',
+  query: any = {
     filter: '',
-    status: -1,
     offSet: 0,
     pageSize: 15
   };
@@ -141,20 +137,11 @@ detailInfoFilter = null;
       { label: 'Phân quyền' },
       { label: 'Danh sách xe nhân viên' },
     ];
-    this.model = {
-      organizeId: '',
-      orgId: '',
-      filter: '',
-      status: -1,
-      offSet: 0,
-      pageSize: 15,
-      organizeIds: '',
-    };
-    this.loadVehicelTypes();
-    this.getOrganize();
-    this.load();
-    this.getPositionList();
-    this.getWorkplaces();
+    
+    // this.loadVehicelTypes();
+    // this.getOrganize();
+    // this.getPositionList();
+    // this.getWorkplaces();
     this.itemsToolOfGrid = [
       {
         label: 'Import file',
@@ -183,9 +170,9 @@ detailInfoFilter = null;
   }
 
   handleChangeOrganize(): void {
-    this.model.orgId = '';
-    this.getOrganizeTree();
-    this.find();
+    // this.model.orgId = '';
+    // this.getOrganizeTree();
+    // this.find();
   }
   organizesAdds = [];
   getOrganize(): void {
@@ -218,14 +205,14 @@ detailInfoFilter = null;
   }
 
   getOrganizeTree(): void {
-    const queryParams = queryString.stringify({ parentId: this.model.organizeId });
-    this.apiService.getOrganizeTree(queryParams)
-      .subscribe((results: any) => {
-        if (results && results.status === 'success') {
-          this.departmentFiltes = results.data;
-        }
-      },
-        error => { });
+    // const queryParams = queryString.stringify({ parentId: this.model.organizeId });
+    // this.apiService.getOrganizeTree(queryParams)
+    //   .subscribe((results: any) => {
+    //     if (results && results.status === 'success') {
+    //       this.departmentFiltes = results.data;
+    //     }
+    //   },
+    //     error => { });
   }
 
   onChangeTree(a): void {
@@ -242,23 +229,21 @@ detailInfoFilter = null;
   load() {
     this.columnDefs = []
     this.spinner.show();
-    const query = { ...this.model };
-    // query.organizeId = typeof query.organizeId === 'string' ? query.organizeId : query.organizeId.org_cd;
-    query.orgId = typeof query.orgId === 'string' ? query.orgId : query.orgId.orgId;
+    const query = { ...this.query };
     const queryParams = queryString.stringify(query);
     this.apiService.getEmployeeVehiclePage(queryParams).subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         this.gridKey= results.data.dataList.gridKey;
-        if (this.model.offSet === 0) {
+        if (this.query.offSet === 0) {
           this.gridflexs = results.data.gridflexs;
         }
         this.initGrid();
         this.countRecord.totalRecord = results.data.dataList.recordsTotal;
         this.countRecord.totalRecord = results.data.dataList.recordsTotal;
-        this.countRecord.currentRecordStart = results.data.dataList.recordsTotal === 0 ? this.model.offSet = 0 : this.model.offSet + 1;
-        if ((results.data.dataList.recordsTotal - this.model.offSet) > this.model.pageSize) {
-          this.countRecord.currentRecordEnd = this.model.offSet + Number(this.model.pageSize);
+        this.countRecord.currentRecordStart = results.data.dataList.recordsTotal === 0 ? this.query.offSet = 0 : this.query.offSet + 1;
+        if ((results.data.dataList.recordsTotal - this.query.offSet) > this.query.pageSize) {
+          this.countRecord.currentRecordEnd = this.query.offSet + Number(this.query.pageSize);
         } else {
           this.countRecord.currentRecordEnd = results.data.dataList.recordsTotal;
           setTimeout(() => {
@@ -402,9 +387,9 @@ detailInfoFilter = null;
   }
 
   paginate(event): void {
-    this.model.offSet = event.first;
+    this.query.offSet = event.first;
     this.first = event.first;
-    this.model.pageSize = event.rows;
+    this.query.pageSize = event.rows;
     this.load();
   }
 
@@ -756,20 +741,11 @@ detailInfoFilter = null;
   }
 
   cancel(): void {
-    this.model = {
-      organizeId: '',
-      workplaceId: '',
-      positionCd: '',
-      orgId: '',
+    this.query = {
       filter: '',
-      status: -1,
       offSet: 0,
       pageSize: 15,
-      organizeIds: '',
     };
-    this.model.filter = '';
-    this.model.status = -1;
-    this.model.departmentCd = '';
     this.load();
   }
 
@@ -780,7 +756,7 @@ detailInfoFilter = null;
     this.modelTM.vehicleNoTM = '';
     this.modelTM.vehicleNameTM = '';
     this.modelTM.vehicleTypeIdTM = 1;
-    this.modelTM.vehiclecardCd = this.model.cardId;
+    this.modelTM.vehiclecardCd = this.query.cardId;
     this.modelTM.startTimeTM = new Date();
     this.modelTM.endTimeTM = new Date();
     this.modelTM.cusId = '';
@@ -810,10 +786,8 @@ detailInfoFilter = null;
   exportExel() {
 
     this.spinner.show();
-    this.model.pageSize = 1000000;
-    const query = { ...this.model };
-    query.organizeId = typeof query.organizeId === 'string' ? query.organizeId : query.organizeId.org_cd;
-    query.orgId = typeof query.orgId === 'string' ? query.orgId : query.orgId.orgId;
+    this.query.pageSize = 1000000;
+    const query = { ...this.query };
     const queryParams = queryString.stringify(query);
     this.apiService.getEmployeeVehiclePage(queryParams).subscribe((results: any) => {
       const dataExport = [];
@@ -873,10 +847,10 @@ detailInfoFilter = null;
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
-this.listViewsFilter = [...listViews];
-const params =  getParamString(listViews)
-this.query = { ...this.query, ...params};
-this.load();
+        this.listViewsFilter = [...listViews];
+        const params =  getParamString(listViews)
+        this.query = { ...this.query, ...params};
+        this.load();
         this.detailInfoFilter = results.data;
       }
     });
@@ -898,17 +872,16 @@ this.load();
       if (event) {
         this.listViewsFilter = cloneDeep(event.listViewsFilter);
         if (event.type === 'Search') {
-          this.model = { ...this.model, ...event.data };
+          this.query = { ...this.query, ...event.data };
           this.load();
         } else if (event.type === 'CauHinh') {
           this.apiService.getFilter('/api/v2/cardvehicle/GetEmpCardFilter').subscribe(results => {
             if (results.status === 'success') {
               const listViews = cloneDeep(results.data.group_fields);
-              this.cloneListViewsFilter = cloneDeep(listViews);
-this.listViewsFilter = [...listViews];
-const params =  getParamString(listViews)
-this.query = { ...this.query, ...params};
-this.load();
+              this.listViewsFilter = [...listViews];
+              const params =  getParamString(listViews)
+              this.query = { ...this.query, ...params};
+              this.load();
               this.detailInfoFilter = results.data;
               this.showFilter()
             }

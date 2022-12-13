@@ -16,6 +16,7 @@ const MAX_SIZE = 100000000;
 import { cloneDeep } from 'lodash';
 import { DialogService } from 'primeng/dynamicdialog';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
+import { getParamString } from 'src/app/common/function-common/objects.helper';
 @Component({
   selector: 'app-phep-nam',
   templateUrl: './phep-nam.component.html',
@@ -61,15 +62,10 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
   gridApi: any;
   clientWidth: any;
   gridflexs: any;
-  query = {
+  query: any = {
     filter: '',
     offSet: 0,
     pageSize: 15,
-    year: new Date().getFullYear(),
-    month: new Date().getMonth() + 1,
-    organizeId: '',
-    organizeIds: '',
-    companyIds: [],
   }
   totalRecord = 0;
   first = 0;
@@ -107,14 +103,6 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
       filter: '',
       offSet: 0,
       pageSize: 15,
-      year: new Date().getFullYear(),
-      month: new Date().getMonth() + 1,
-      organizeId: '',
-      organizeIds: this.query.organizeIds,
-      companyIds: this.query.companyIds,
-    }
-    if(this.companies.length > 0) {
-      this.query.companyIds = this.companies[0].value;
     }
     this.load();
   }
@@ -129,8 +117,6 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
     this.columnDefs = []
     this.spinner.show();
     const params: any = { ...this.query };
-    let companyIds = this.query.companyIds.toString();
-    params.companyIds = companyIds;
     const queryParams = queryString.stringify(params);
     this.apiService.getAnnualLeavePage(queryParams).subscribe(
       (results: any) => {
@@ -226,25 +212,18 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit() {
-    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-        if(results && results.length>0){
-          this.query.organizeIds = results;
-          this.query.organizeId = results;
-          this.getCompany();
-        }
-    });
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Chính sách' },
       { label: 'Phép năm' },
     ];
-    this.getOrgRoots();
-    let currentDay = new Date().getDate();
-    if(currentDay >= 25 && currentDay <= 31){
-      this.query.month = this.query.month + 1;
-    }
+    // this.getOrgRoots();
+    // let currentDay = new Date().getDate();
+    // if(currentDay >= 25 && currentDay <= 31){
+    //   this.query.month = this.query.month + 1;
+    // }
 
-    this.getMonthYear();
+    // this.getMonthYear();
     this.getFilter();
   }
 
@@ -355,10 +334,10 @@ detailInfoFilter = null;
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
-this.listViewsFilter = [...listViews];
-const params =  getParamString(listViews)
-this.query = { ...this.query, ...params};
-this.load();
+        this.listViewsFilter = [...listViews];
+        const params =  getParamString(listViews)
+        this.query = { ...this.query, ...params};
+        this.load();
         this.detailInfoFilter = results.data;
       }
     });
@@ -386,11 +365,10 @@ this.load();
           this.apiService.getFilter('/api/v2/annualleave/GetAnnualLeaveFilter').subscribe(results => {
             if (results.status === 'success') {
               const listViews = cloneDeep(results.data.group_fields);
-              this.cloneListViewsFilter = cloneDeep(listViews);
-this.listViewsFilter = [...listViews];
-const params =  getParamString(listViews)
-this.query = { ...this.query, ...params};
-this.load();
+              this.listViewsFilter = [...listViews];
+              const params =  getParamString(listViews)
+              this.query = { ...this.query, ...params};
+              this.load();
               this.detailInfoFilter = results.data;
               this.showFilter()
             }

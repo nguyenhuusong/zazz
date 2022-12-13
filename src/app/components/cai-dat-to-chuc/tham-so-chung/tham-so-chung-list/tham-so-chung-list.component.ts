@@ -15,6 +15,7 @@ import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { DialogService } from 'primeng/dynamicdialog';
 import { cloneDeep } from 'lodash';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
+import { getParamString } from 'src/app/common/function-common/objects.helper';
 
 @Component({
   selector: 'app-tham-so-chung-list',
@@ -83,9 +84,6 @@ export class ThamSoChungListComponent implements OnInit {
     offSet: 0,
     pageSize: 15,
     gridWidth: 1550,
-    mod_cd: null,
-    object_key: null,
-    organizeIds: '',
   }
   totalRecord = 0;
   DriverId = 0;
@@ -114,9 +112,6 @@ detailInfoFilter = null;
       offSet: 0,
       pageSize: 15,
       gridWidth: 1550,
-      mod_cd: null,
-      object_key: null,
-      organizeIds: this.query.organizeIds
     }
     this.load();
   }
@@ -125,19 +120,14 @@ detailInfoFilter = null;
   listsData = [];
 
   ngOnInit() {
-    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-        if(results && results.length>0){
-          this.query.organizeIds = results;
-          this.load();
-        }
-    });
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Cài đặt' },
       { label: 'Tham số chung' },
     ];
-    this.getObjectTypes();
-    this.getModuleTypes();
+    // this.getObjectTypes();
+    // this.getModuleTypes();
+    this.getFilter()
   }
 
   getObjectTypes(): void {
@@ -338,10 +328,10 @@ detailInfoFilter = null;
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
-this.listViewsFilter = [...listViews];
-const params =  getParamString(listViews)
-this.query = { ...this.query, ...params};
-this.load();
+        this.listViewsFilter = [...listViews];
+        const params =  getParamString(listViews)
+        this.query = { ...this.query, ...params};
+        this.load();
         this.detailInfoFilter = results.data;
       }
     });
@@ -369,11 +359,10 @@ this.load();
         this.apiService.getEmpFilter().subscribe(results => {
             if (results.status === 'success') {
               const listViews = cloneDeep(results.data.group_fields);
-              this.cloneListViewsFilter = cloneDeep(listViews);
-this.listViewsFilter = [...listViews];
-const params =  getParamString(listViews)
-this.query = { ...this.query, ...params};
-this.load();
+              this.listViewsFilter = [...listViews];
+              const params =  getParamString(listViews)
+              this.query = { ...this.query, ...params};
+              this.load();
               this.detailInfoFilter = results.data;
               this.showFilter()
             }

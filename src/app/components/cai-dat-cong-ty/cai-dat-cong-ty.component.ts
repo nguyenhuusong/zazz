@@ -16,6 +16,7 @@ import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { cloneDeep } from 'lodash';
 import { DialogService } from 'primeng/dynamicdialog';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
+import { getParamString } from 'src/app/common/function-common/objects.helper';
 @Component({
   selector: 'app-cai-dat-cong-ty',
   templateUrl: './cai-dat-cong-ty.component.html',
@@ -83,7 +84,6 @@ export class CaiDatCongTyComponent implements OnInit, AfterViewChecked {
     filter: '',
     offSet: 0,
     pageSize: 15,
-    organizeIds: '',
   }
   totalRecord = 0;
   DriverId = 0;
@@ -104,7 +104,6 @@ export class CaiDatCongTyComponent implements OnInit, AfterViewChecked {
       filter: '',
       offSet: 0,
       pageSize: 15,
-      organizeIds: '',
     }
     this.load();
   }
@@ -252,12 +251,6 @@ export class CaiDatCongTyComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit() {
-    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-        if(results && results.length>0){
-          this.query.organizeIds = results;
-          this.load();
-        }
-    });
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Cài đặt' },
@@ -284,10 +277,10 @@ detailInfoFilter = null;
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
-this.listViewsFilter = [...listViews];
-const params =  getParamString(listViews)
-this.query = { ...this.query, ...params};
-this.load();
+        this.listViewsFilter = [...listViews];
+        const params =  getParamString(listViews)
+        this.query = { ...this.query, ...params};
+        this.load();
         this.detailInfoFilter = results.data;
       }
     });
@@ -315,11 +308,10 @@ this.load();
           this.apiService.getFilter('/api/v2/compay/GetCompanyFilter').subscribe(results => {
             if (results.status === 'success') {
               const listViews = cloneDeep(results.data.group_fields);
-              this.cloneListViewsFilter = cloneDeep(listViews);
-this.listViewsFilter = [...listViews];
-const params =  getParamString(listViews)
-this.query = { ...this.query, ...params};
-this.load();
+              this.listViewsFilter = [...listViews];
+              const params =  getParamString(listViews)
+              this.query = { ...this.query, ...params};
+              this.load();
               this.detailInfoFilter = results.data;
               this.showFilter()
             }

@@ -74,66 +74,6 @@
     </section>
 </div>
 
-<p-overlayPanel #op [style]="{width: '700px'}" styleClass="advance-seach">
-    <ng-template pTemplate>
-        <div class="header-filter-search  grid">
-            <h3>Tìm kiếm nâng cao</h3>
-        </div>
-        <div class="header-filter-search grid mt-1">
-            <div class="icon col-12 pl-0" style="display: flex; flex-wrap: wrap;">
-                <div class="col-6">
-                    <div class="field-group select">
-                        <label>Công ty trả lương</label>
-                        <p-dropdown appendTo="body" [baseZIndex]="100"
-                            [options]="companies" [(ngModel)]="query.companyIds" name="companyIds"
-                            [filter]="true">
-                            </p-dropdown>
-                    </div>
-                </div>
-                <!-- <div class="col-6">
-                    <div class="field-group select valid">
-                        <label>Công ty</label>
-                        <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
-                            [options]="listOrgRoots" [(ngModel)]="query.organizeId"  (onChange)="find()"
-                            name="organizeId" [filter]="true">
-                            <ng-template let-item pTemplate="selectedItem">
-                                <span>{{item.label}}</span>
-                            </ng-template>
-                            <ng-template let-car pTemplate="item">
-                                <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                                    <div style="font-size:14px;margin-top:4px">{{car.label}}</div>
-                                </div>
-                            </ng-template>
-                        </p-dropdown>
-                    </div>
-                </div> -->
-                <div class="col-6">
-                    <div class="field-group text label-8 mb-0">
-                        <label>Tháng</label>
-                        <input type="number" class="input-default" id="" placeholder="Tháng"
-                            [(ngModel)]="query.month">
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="field-group text label-8 mb-0">
-                        <label>Năm</label>
-                        <input type="number" class="input-default" id="" placeholder="Năm"
-                            [(ngModel)]="query.year">
-                    </div>
-                </div>
-            </div>
-            <div class="input-group icon col-12 select-default text-right">
-                <label for="" style="visibility: hidden;">Classid <span class="pi pi-info-circle"
-                        style="font-size: 13px;color: orange;"></span></label>
-                <p-button label="Tìm kiếm" styleClass="mr-1" icon="pi pi-search" (click)="load()">
-                </p-button>
-                <p-button label="Làm mới" icon="pi pi-times" (click)="cancel()"
-                    styleClass="p-button-secondary">
-                </p-button>
-            </div>
-        </div>
-    </ng-template>
-</p-overlayPanel>
 
 <p-dialog header="Cài đặt cấu hình" [(visible)]="displaySetting" (onHide)="find()" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
     [draggable]="false" [resizable]="false" [focusTrap]="false" styleClass="popup-setting">

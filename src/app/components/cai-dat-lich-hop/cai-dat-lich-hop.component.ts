@@ -15,6 +15,7 @@ import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { cloneDeep } from 'lodash';
 import { DialogService } from 'primeng/dynamicdialog';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
+import { getParamString } from 'src/app/common/function-common/objects.helper';
 @Component({
   selector: 'app-cai-dat-lich-hop',
   templateUrl: './cai-dat-lich-hop.component.html',
@@ -49,13 +50,6 @@ export class CaiDatLichHopComponent implements OnInit {
       gridWidth: '',
       offSet: 0,
       pageSize: 15,
-      Floor_No: '',
-      Meet_status: '',
-      Time: null,
-      organization: '',
-      fromDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).format("YYYY-MM-DD")),
-      toDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).format("YYYY-MM-DD")),
-      organizeIds: '',
   }
   statusRoom = [
     {
@@ -115,19 +109,13 @@ export class CaiDatLichHopComponent implements OnInit {
   }
   items = [];
   ngOnInit(): void {
-    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-        if(results && results.length>0){
-          this.model.organizeIds = results;
-          this.load();
-        }
-    });
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Hoạt động' },
       { label: 'Lịch họp' },
     ];
-    this.getFloor();
-    this.getOrgan();
+    // this.getFloor();
+    // this.getOrgan();
   }
 
   loadjs = 0;
@@ -158,13 +146,6 @@ export class CaiDatLichHopComponent implements OnInit {
       gridWidth: '',
       offSet: 0,
       pageSize: 15,
-      Floor_No: '',
-      Meet_status: '',
-      Time: '',
-      organization: '',
-      fromDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).format("YYYY-MM-DD")),
-      toDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).format("YYYY-MM-DD")),
-      organizeIds: this.model.organizeIds,
     };
   }
   			
@@ -179,8 +160,6 @@ export class CaiDatLichHopComponent implements OnInit {
     this.spinner.show();
     // this.model.Time = moment(this.model.Time).format('HH:mm')
     let params: any = { ... this.model };
-    params.fromDate = typeof this.model.fromDate === 'object' ? moment(new Date(this.model.fromDate)).format('YYYY-MM-DD') : this.model.fromDate;
-    params.toDate = typeof this.model.toDate === 'object' ? moment(new Date(this.model.toDate)).format('YYYY-MM-DD') : this.model.toDate;
     const queryParams = queryString.stringify(params);
     this.apiService.getMeetingPage(queryParams).subscribe(
       (results: any) => {
@@ -386,26 +365,26 @@ export class CaiDatLichHopComponent implements OnInit {
   }
 
   getAgencyOrganizeMap(type = false) {
-    this.apiService.getAgencyOrganizeMap().subscribe(results => {
-      if (results.status === 'success') {
-        this.listAgencyMap = [...results.data.root];
-        if (localStorage.getItem("organize") === null || localStorage.getItem("organize") === 'undefined') {
-          this.selectedNode = this.listAgencyMap[0];
-          localStorage.setItem('organize', JSON.stringify(this.listAgencyMap[0]));
-          // this.query.organizeId = this.selectedNode.orgId;
-          this.load();
-        } else {
-          this.selectedNode = JSON.parse(localStorage.getItem("organize"));
-          // this.query.organizeId = this.selectedNode?.orgId;
-          this.listAgencyMap = this.expanded(this.listAgencyMap, this.selectedNode.parentId)
-          this.selected(this.listAgencyMap, this.model.organization);
-          if (type) {
-            this.isHrDiagram = true;
-          }
-          this.load();
-        }
-      }
-    })
+    // this.apiService.getAgencyOrganizeMap().subscribe(results => {
+    //   if (results.status === 'success') {
+    //     this.listAgencyMap = [...results.data.root];
+    //     if (localStorage.getItem("organize") === null || localStorage.getItem("organize") === 'undefined') {
+    //       this.selectedNode = this.listAgencyMap[0];
+    //       localStorage.setItem('organize', JSON.stringify(this.listAgencyMap[0]));
+    //       // this.query.organizeId = this.selectedNode.orgId;
+    //       this.load();
+    //     } else {
+    //       this.selectedNode = JSON.parse(localStorage.getItem("organize"));
+    //       // this.query.organizeId = this.selectedNode?.orgId;
+    //       this.listAgencyMap = this.expanded(this.listAgencyMap, this.selectedNode.parentId)
+    //       this.selected(this.listAgencyMap, this.model.organization);
+    //       if (type) {
+    //         this.isHrDiagram = true;
+    //       }
+    //       this.load();
+    //     }
+    //   }
+    // })
   }
 
   manageBuilding(): void {
@@ -479,10 +458,10 @@ detailInfoFilter = null;
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
-this.listViewsFilter = [...listViews];
-const params =  getParamString(listViews)
-this.query = { ...this.query, ...params};
-this.load();
+        this.listViewsFilter = [...listViews];
+        const params =  getParamString(listViews)
+        this.model = { ...this.model, ...params};
+        this.load();
         this.detailInfoFilter = results.data;
       }
     });
@@ -510,11 +489,10 @@ this.load();
           this.apiService.getFilter('/api/v2/meeting/GetLeaveFilter').subscribe(results => {
             if (results.status === 'success') {
               const listViews = cloneDeep(results.data.group_fields);
-              this.cloneListViewsFilter = cloneDeep(listViews);
-this.listViewsFilter = [...listViews];
-const params =  getParamString(listViews)
-this.query = { ...this.query, ...params};
-this.load();
+              this.listViewsFilter = [...listViews];
+              const params =  getParamString(listViews)
+              this.model = { ...this.model, ...params};
+              this.load();
               this.detailInfoFilter = results.data;
               this.showFilter()
             }

@@ -25,50 +25,7 @@
             </div>
         </div>
     </section>
-    <p-overlayPanel #op [style]="{width: '700px'}" styleClass="advance-seach">
-        <ng-template pTemplate>
-            <div class="header-filter-search  grid">
-                <h3>Tìm kiếm nâng cao</h3>
-            </div>
-            <div class="header-filter-search grid mt-1">
-                <div class="icon col-12 pl-0" style="display: flex; flex-wrap: wrap;">
-                    <div class="col-6">
-                        <div class="field-group select valid">
-                            <label>Loại tài liệu</label>
-                            <p-treeSelect [(ngModel)]="query.typeForm"  
-                            [options]="formTypes" 
-                            (onNodeSelect)="selectedNode11($event)"
-                           ></p-treeSelect>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="field-group date mb-0" [ngClass]="query.createDate ? 'valid' : 'invalid' ">
-                            <label>Ngày tạo</label>
-                            <p-calendar 
-                                [(ngModel)]="query.createDate" 
-                                inputId="icon" 
-                                (onSelect)="find()"></p-calendar>
-                            <span class="icon">
-                                <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M14.1143 1.89648C14.1143 1.3442 13.6665 0.896484 13.1143 0.896484C12.562 0.896484 12.1143 1.3442 12.1143 1.89648L12.1143 4.89648C12.1143 5.44877 12.562 5.89648 13.1143 5.89648C13.6665 5.89648 14.1143 5.44877 14.1143 4.89648L14.1143 1.89648Z" fill="#99A2BC"/>
-                                    <path d="M6.11426 1.89649C6.11426 1.3442 5.66654 0.896488 5.11426 0.896488C4.56197 0.896488 4.11426 1.3442 4.11426 1.89649L4.11426 4.89648C4.11426 5.44877 4.56197 5.89648 5.11426 5.89648C5.66654 5.89648 6.11426 5.44877 6.11426 4.89648L6.11426 1.89649Z" fill="#99A2BC"/>
-                                    <path d="M11.1143 2.83252H7.11426L7.11426 4.83252C7.11426 5.93709 6.21883 6.83252 5.11426 6.83252C4.00969 6.83252 3.11426 5.93709 3.11426 4.83252L3.11426 2.92088C2.27249 3.02253 1.72376 3.24112 1.25368 3.7112C0.463333 4.50155 0.38388 5.72516 0.375893 8.02148H17.6258C17.6257 5.26179 17.6172 4.58131 16.7471 3.7112C16.2978 3.26191 15.8362 3.04235 15.1143 2.93506L15.1143 4.83252C15.1143 5.93709 14.2188 6.83252 13.1143 6.83252C12.0097 6.83252 11.1143 5.93709 11.1143 4.83252L11.1143 2.83252Z" fill="#99A2BC"/>
-                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M17.6258 9.77148H0.375V13.1036C0.375 15.932 0.375 17.3462 1.25368 18.2249C2.13236 19.1036 3.28587 19.1036 6.1143 19.1036H12.1143C14.9427 19.1036 15.8684 19.1036 16.7471 18.2249C17.6258 17.3462 17.6258 15.932 17.6258 13.1036V9.77148ZM3.625 12.459C3.625 12.1483 3.87684 11.8965 4.1875 11.8965H5.3125C5.62316 11.8965 5.875 12.1483 5.875 12.459V13.584C5.875 13.8946 5.62316 14.1465 5.3125 14.1465H4.1875C3.87684 14.1465 3.625 13.8946 3.625 13.584V12.459ZM8.125 12.459C8.125 12.1483 8.37684 11.8965 8.6875 11.8965H9.8125C10.1232 11.8965 10.375 12.1483 10.375 12.459V13.584C10.375 13.8946 10.1232 14.1465 9.8125 14.1465H8.6875C8.37684 14.1465 8.125 13.8946 8.125 13.584V12.459ZM13.1875 11.8965C12.8768 11.8965 12.625 12.1483 12.625 12.459V13.584C12.625 13.8946 12.8768 14.1465 13.1875 14.1465H14.3125C14.6232 14.1465 14.875 13.8946 14.875 13.584V12.459C14.875 12.1483 14.6232 11.8965 14.3125 11.8965H13.1875Z" fill="#99A2BC"/>
-                                </svg>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="input-group icon col-12 select-default text-right">
-                    <p-button label="Tìm kiếm" styleClass="mr-1" icon="pi pi-search" (click)="load()">
-                    </p-button>
-                    <p-button label="Làm mới" icon="pi pi-times" (click)="cancel()"
-                        styleClass="p-button-secondary">
-                    </p-button>
-                </div>
-            </div>
-        </ng-template>
-    </p-overlayPanel>
+    
 </div>
 
 <section>
@@ -91,7 +48,7 @@
                     <div class="d-flex bet end bottom gap-16">
                         <div class="col-item">
                             <div class="field-group select mb-0">
-                                <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
+                                <!-- <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
                                 [options]="statusTaiLieu" placeholder="---Chọn trạng thái ---" [(ngModel)]="query.form_status" name="form_status"
                                 (onChange)="find()" >
                                 <ng-template let-item pTemplate="selectedItem">
@@ -102,7 +59,7 @@
                                         <div>{{car.label}}</div>
                                     </div>
                                 </ng-template>
-                                </p-dropdown>
+                                </p-dropdown> -->
                             </div>
                         </div>
                         <div class="col-item">
@@ -113,7 +70,7 @@
                             </p-button>
                         </div>
                         <div class="col-item d-flex gap12">
-                            <p-button (click)="op.toggle($event)" 
+                            <p-button (click)="showFilter()" 
                                     styleClass="p-button-sm height-56 ">
                                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" clip-rule="evenodd" d="M11.2913 3.47726H0.769231C0.344396 3.47726 0 3.14148 0 2.72726C0 2.31305 0.344396 1.97726 0.769231 1.97726H11.4465C11.8523 0.96494 12.8427 0.25 14 0.25C15.1573 0.25 16.1477 0.96494 16.5535 1.97726H19.2309C19.6557 1.97726 20.0001 2.31305 20.0001 2.72726C20.0001 3.14148 19.6557 3.47726 19.2309 3.47726H16.7087C16.4828 4.76856 15.356 5.75 14 5.75C12.644 5.75 11.5172 4.76856 11.2913 3.47726ZM12.7587 2.85147C12.753 2.90017 12.75 2.94974 12.75 3C12.75 3.69036 13.3096 4.25 14 4.25C14.6904 4.25 15.25 3.69036 15.25 3C15.25 2.30964 14.6904 1.75 14 1.75C13.3762 1.75 12.8591 2.20697 12.7652 2.80443C12.7636 2.82026 12.7614 2.83594 12.7587 2.85147Z" fill="#F3F8FF"/>
@@ -184,7 +141,7 @@
                     <div class="d-flex bet end bottom gap-16">
                         <div class="col-item">
                             <div class="field-group select mb-0">
-                                <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
+                                <!-- <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
                                 [options]="statusTaiLieu" placeholder="---Chọn trạng thái ---" [(ngModel)]="query.form_status" name="form_status"
                                 (onChange)="find()" >
                                 <ng-template let-item pTemplate="selectedItem">
@@ -195,7 +152,7 @@
                                         <div>{{car.label}}</div>
                                     </div>
                                 </ng-template>
-                                </p-dropdown>
+                                </p-dropdown> -->
                             </div>
                         </div>
                         <div class="col-item">
@@ -206,7 +163,7 @@
                             </p-button>
                         </div>
                         <div class="col-item d-flex gap12">
-                            <p-button (click)="op.toggle($event)" 
+                            <p-button (click)="showFilter()" 
                                     styleClass="p-button-sm height-56 ">
                                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" clip-rule="evenodd" d="M11.2913 3.47726H0.769231C0.344396 3.47726 0 3.14148 0 2.72726C0 2.31305 0.344396 1.97726 0.769231 1.97726H11.4465C11.8523 0.96494 12.8427 0.25 14 0.25C15.1573 0.25 16.1477 0.96494 16.5535 1.97726H19.2309C19.6557 1.97726 20.0001 2.31305 20.0001 2.72726C20.0001 3.14148 19.6557 3.47726 19.2309 3.47726H16.7087C16.4828 4.76856 15.356 5.75 14 5.75C12.644 5.75 11.5172 4.76856 11.2913 3.47726ZM12.7587 2.85147C12.753 2.90017 12.75 2.94974 12.75 3C12.75 3.69036 13.3096 4.25 14 4.25C14.6904 4.25 15.25 3.69036 15.25 3C15.25 2.30964 14.6904 1.75 14 1.75C13.3762 1.75 12.8591 2.20697 12.7652 2.80443C12.7636 2.82026 12.7614 2.83594 12.7587 2.85147Z" fill="#F3F8FF"/>
