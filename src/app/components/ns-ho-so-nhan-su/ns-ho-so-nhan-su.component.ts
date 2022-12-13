@@ -250,7 +250,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
     let companyIds = this.query.companyIds.toString();
     params.companyIds = companyIds;
     params.organizeIds = this.query.organizeIds;
-    params.orgId = params.orgId.orgId;
+    params.orgId =  typeof params.orgId === 'string' || params.orgId === null ? params.orgId : params.orgId.orgId;
     const queryParams = queryString.stringify(params);
     this.apiService.getEmployeePage(queryParams).subscribe(
       (results: any) => {
@@ -900,6 +900,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
         this.listViewsFilter = cloneDeep(event.listViewsFilter);
         if (event.type === 'Search') {
           this.query = { ...this.query, ...event.data };
+          console.log('this.query', this.query)
           this.load();
         } else if (event.type === 'CauHinh') {
         this.apiService.getEmpFilter().subscribe(results => {
