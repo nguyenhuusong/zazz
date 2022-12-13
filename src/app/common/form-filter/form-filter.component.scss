@@ -21,3 +21,14 @@
         height: 55px;
     }
 }
+:host::ng-deep {
+    .hrm-filter{
+        .p-card-body{
+            padding: 0px;
+            padding-top: 10px;
+            .p-card-content{
+                padding: 0px;
+            }
+        }
+    }
+}

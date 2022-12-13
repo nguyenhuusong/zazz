@@ -12,6 +12,9 @@ import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
+import { cloneDeep } from 'lodash';
+import { DialogService } from 'primeng/dynamicdialog';
+import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 @Component({
   selector: 'app-cs-tien-luong',
   templateUrl: './cs-tien-luong.component.html',
@@ -30,6 +33,7 @@ export class CsTienLuongComponent implements OnInit {
     private messageService: MessageService,
     private changeDetector: ChangeDetectorRef,
     private organizeInfoService: OrganizeInfoService,
+    public dialogService: DialogService,
     private router: Router) {
 
     this.defaultColDef = {
@@ -292,6 +296,7 @@ export class CsTienLuongComponent implements OnInit {
       { label: 'Danh sách tiền lương' },
     ];
     this.getOrgRoots();
+    this.getFilter();
   }
 
   loadjs = 0;
@@ -329,6 +334,61 @@ export class CsTienLuongComponent implements OnInit {
 
   quanlyloaihopdong() {
     this.router.navigate(['/company/danh-sach-quan-ly-hd']);
+  }
+
+  listViewsFilter = [];
+  detailInfoFilter = null;
+  optionsButonFilter = [
+    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm height-56 addNew', icon: 'pi pi-search' },
+    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger height-56 addNew', icon: 'pi pi-times' },
+  ];
+
+  //filter 
+  getFilter() {
+    this.apiService.getFilter('/api/v1/salary/GetSalaryFilter').subscribe(results => {
+      if(results.status === 'success') {
+        const listViews = cloneDeep(results.data.group_fields);
+        this.listViewsFilter = [...listViews];
+        this.detailInfoFilter = results.data;
+      }
+    });
+  }
+
+  showFilter() {
+    const ref = this.dialogService.open(FormFilterComponent, {
+      header: 'Tìm kiếm nâng cao',
+      width: '40%',
+      contentStyle: "",
+      data: {
+        listViews: this.listViewsFilter,
+        detailInfoFilter: this.detailInfoFilter,
+        buttons: this.optionsButonFilter
+      }
+    });
+
+    ref.onClose.subscribe((event: any) => {
+      if (event) {
+        this.listViewsFilter = cloneDeep(event.listViewsFilter);
+        if (event.type === 'Search') {
+          this.query = { ...this.query, ...event.data };
+          this.load();
+        } else if (event.type === 'CauHinh') {
+        this.apiService.getEmpFilter().subscribe(results => {
+            if (results.status === 'success') {
+              const listViews = cloneDeep(results.data.group_fields);
+              this.listViewsFilter = [...listViews];
+              this.detailInfoFilter = results.data;
+              this.showFilter()
+            }
+          });
+
+        } else if (event.type === 'Reset') {
+          const listViews = cloneDeep(this.detailInfoFilter.group_fields);
+          this.listViewsFilter = cloneDeep(listViews);
+          this.cancel();
+        }
+      }
+    });
   }
 
 }

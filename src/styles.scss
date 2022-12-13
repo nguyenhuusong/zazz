@@ -5795,3 +5795,44 @@ app-thong-tin-ca-nhan-edit-detail{
         }
     }
 }
+
+.filed-filter{
+        margin-bottom: 5px;
+        label{
+            margin-bottom: 5px;
+            display: block;
+            color: #465373;
+            font-size: 14px;
+            font-family: $fontMmedium;
+        }
+        .p-card-body{
+            padding: 0px;
+            .p-card-content{
+                padding-top: 0px;
+                padding-bottom: 0px;
+            }
+        }
+        .p-treeselect,
+        input,
+        .p-dropdown{
+            width: 100% !important;
+            .p-treeselect-label,
+            .p-dropdown-label{
+                padding: 10px;
+            }
+            &:focus,
+            &:hover{
+                border: 1px solid #0979FD;
+            }
+        }
+        .p-calendar{
+            display: block;
+        }
+        input{
+            padding: 10px;
+            &:focus,
+            &:hover{
+                border: 1px solid #0979FD !important;
+            }
+        }
+    }

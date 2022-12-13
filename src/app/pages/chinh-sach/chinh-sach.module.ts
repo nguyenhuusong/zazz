@@ -59,6 +59,8 @@ import { XemCongComponent } from 'src/app/components/cs-cham-cong/xem-cong/xem-c
 import { CheckHideActionsDirectiveModule } from 'src/app/directive/check-action.module';
 import { EatingListComponent } from 'src/app/components/cs-an-ca/eating-list/eating-list.component';
 import { ImportPhepBuComponent } from 'src/app/components/phep-bu/import-phep-bu/import-phep-bu.component';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { FormFilterModule } from 'src/app/common/form-filter/form-filter.module';
 
 @NgModule({
   imports: [
@@ -102,6 +104,8 @@ import { ImportPhepBuComponent } from 'src/app/components/phep-bu/import-phep-bu
       ButtonRendererComponent,
       ButtonRendererComponent1,
     ]),
+    FormFilterModule,
+    DynamicDialogModule,
   ],
 
   declarations: [

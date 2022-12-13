@@ -1,14 +1,7 @@
 
     
     
-    <form  #myForm="ngForm"> 
-        <div class="main-grid text-right wrap-btn" [style.position]="position" [style]="styleButton">
-            <ng-container *ngFor="let button of config.data.buttons">
-                <p-button label="{{button.label}}" (onClick)="onChangeButtonEdit(button.value)" [disabled]="button?.disabled" icon="{{button?.icon ? button?.icon : 'pi pi-plus'}}" styleClass="p-button-sm {{button?.class ? button?.class : ''}} mr-1"></p-button>
-            </ng-container>
-            <p-button label="Cấu hình" styleClass="p-button-sm height-56 addNew" icon="pi pi-cog" (click)="CauHinh()"></p-button>
-        </div>
-
+    <form  #myForm="ngForm" class="hrm-filter"> 
         <div class="grid" style="justify-content: start;" *ngIf="dataView.length > 0">
             <ng-container *ngFor="let group of dataView; let idx = index">
                 <div class="{{group.group_column ? group.group_column : 'col-12'}} border-section">
@@ -17,11 +10,11 @@
                             <div *ngFor="let element of group.fields;let i=index" 
                                 [hidden]="!element.isVisiable"
                                 [ngClass]="{'isEmpty': element.isEmpty, 'has-image': includeImage && element?.columnType === 'image', 'image-iam': element?.columnType === 'image'}" 
-                                class="{{element.columnClass}}  col-item">
+                                class="{{element.columnClass}}  col-item filed-filter">
                                  <lib-text-control [detail]="detail" [dataView]="dataView" [modelFields]="modelFields" [element]="element" *ngIf="element?.columnType === 'input'" (callbackText)="callbackSearch()" [submit]="submit"></lib-text-control>
                                 <lib-number-control [detail]="detail" [dataView]="dataView" [modelFields]="modelFields" [element]="element" *ngIf="element?.columnType === 'number'" (callbackNumber)="callbackSearch()" [submit]="submit"></lib-number-control>
                                 <lib-dropdown-control [detail]="detail" [dataView]="dataView" [modelFields]="modelFields" [element]="element" *ngIf="(element?.columnType === 'dropdown') || (element?.columnType === 'select')" (callbackText)="callbackSearch()" [submit]="submit"></lib-dropdown-control>
-                                 <lib-currency-control [detail]="detail" [dataView]="dataView" [modelFields]="modelFields" [element]="element" *ngIf="element?.columnType === 'currency'" (callbackCurrency)="callbackSearch()" [submit]="submit"></lib-currency-control>
+                                <lib-currency-control [detail]="detail" [dataView]="dataView" [modelFields]="modelFields" [element]="element" *ngIf="element?.columnType === 'currency'" (callbackCurrency)="callbackSearch()" [submit]="submit"></lib-currency-control>
                                 <lib-textarea-control [detail]="detail" [dataView]="dataView" [modelFields]="modelFields" [element]="element" *ngIf="element?.columnType === 'textarea'" (callbackTextarea)="callbackSearch()" [submit]="submit"></lib-textarea-control>
                                  <lib-datetime-control [detail]="detail" [dataView]="dataView" [modelFields]="modelFields" [element]="element" *ngIf="element?.columnType === 'datetime'" (callbackDatetime)="callbackSearch()" [submit]="submit"></lib-datetime-control>
                                  <lib-datetimes-control [detail]="detail" [dataView]="dataView" [modelFields]="modelFields" [element]="element" *ngIf="element?.columnType === 'datetimes'" (callbackDatetimes)="callbackSearch()" [submit]="submit"></lib-datetimes-control>
@@ -37,11 +30,13 @@
                 
                     </p-card>
                 </div>
-
-                </ng-container>
-
-
-
+            </ng-container>
+        </div>
+        <div class="button-filter text-right">
+            <ng-container *ngFor="let button of config.data.buttons">
+                <p-button label="{{button.label}}" (onClick)="onChangeButtonEdit(button.value)" [disabled]="button?.disabled" icon="{{button?.icon ? button?.icon : 'pi pi-plus'}}" styleClass="p-button-sm {{button?.class ? button?.class : ''}} mr-1"></p-button>
+            </ng-container>
+            <p-button label="Cấu hình" styleClass="p-button-sm height-56 addNew" icon="pi pi-cog" (click)="CauHinh()"></p-button>
         </div>
     </form>
 
