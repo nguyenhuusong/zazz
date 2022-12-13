@@ -95,6 +95,8 @@ import { QuaTrinhHocVanComponent } from 'src/app/components/ns-ho-so-nhan-su/emp
 import { QuaTrinhDaoTaoComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/chuyen-mon/qua-trinh-dao-tao/qua-trinh-dao-tao.component';
 import { KyNangComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/chuyen-mon/ky-nang/ky-nang.component';
 import { ChungChiComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/chuyen-mon/chung-chi/chung-chi.component';
+import { FormFilterModule } from 'src/app/common/form-filter/form-filter.module';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
 
 @NgModule({
   imports: [
@@ -145,6 +147,8 @@ import { ChungChiComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-
     StepsModule,
     HrmBreadCrumbModule,
     ExcelModule,
+    FormFilterModule,
+    DynamicDialogModule,
     CheckHideActionsDirectiveModule,
     AgGridModule.withComponents([
       ButtonRendererComponent,

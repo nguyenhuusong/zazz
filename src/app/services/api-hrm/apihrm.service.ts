@@ -493,9 +493,9 @@ export class ApiHrmService {
     return this.http.delete<any>(`${apiHrmServer}/api/v2/employee/DelEmpAttach?` + queryParams, this.options)
   }
   
-  // delEmpContact(queryParams): Observable<any> {
-  //   return this.http.delete<any>(`${apiHrmServer}/api/v2/employee/DelEmpContact?` + queryParams, this.options)
-  // }
+  getEmpFilter(): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/employee/GetEmpFilter`, this.options)
+  }
 
   exportResume(queryParams: any): Observable<Blob> {
     return this.http.get(`${apiHrmServer}/api/v2/employee/ExportResume?${queryParams}`, {
