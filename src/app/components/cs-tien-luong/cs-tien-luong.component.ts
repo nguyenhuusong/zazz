@@ -373,7 +373,7 @@ export class CsTienLuongComponent implements OnInit {
           this.query = { ...this.query, ...event.data };
           this.load();
         } else if (event.type === 'CauHinh') {
-        this.apiService.getEmpFilter().subscribe(results => {
+          this.apiService.getFilter('/api/v1/salary/GetSalaryFilter').subscribe(results => {
             if (results.status === 'success') {
               const listViews = cloneDeep(results.data.group_fields);
               this.listViewsFilter = [...listViews];

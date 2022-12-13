@@ -11,6 +11,9 @@ import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.comp
 import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
+import { cloneDeep } from 'lodash';
+import { DialogService } from 'primeng/dynamicdialog';
+import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 @Component({
   selector: 'app-gop-y-kien',
   templateUrl: './gop-y-kien.component.html',
@@ -29,6 +32,7 @@ export class GopYKienComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private organizeInfoService: OrganizeInfoService,
+    public dialogService: DialogService,
     private router: Router) {
 
     this.defaultColDef = {
@@ -94,7 +98,13 @@ export class GopYKienComponent implements OnInit {
   }
 
   loadjs = 0;
-  heightGrid = 0
+  heightGrid = 0;
+  listViewsFilter = [];
+  detailInfoFilter = null;
+  optionsButonFilter = [
+    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm height-56 addNew', icon: 'pi pi-search' },
+    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger height-56 addNew', icon: 'pi pi-times' },
+  ];
   ngAfterViewChecked(): void {
     const a: any = document.querySelector(".header");
     const b: any = document.querySelector(".sidebarBody");
@@ -232,6 +242,7 @@ export class GopYKienComponent implements OnInit {
       { label: 'Góp ý' },
     ];
     this.getFeedbackType();
+    this.getFilter();
   }
   typeFeedBacks = [];
   getFeedbackType() {
@@ -246,6 +257,54 @@ export class GopYKienComponent implements OnInit {
         this.typeFeedBacks = [{label: 'Tất cả', value: null}, ...this.typeFeedBacks]
       }
     })
+  }
+
+  //filter 
+  getFilter() {
+    this.apiService.getFilter('/api/v1/feedback/GetFeedbackFilter').subscribe(results => {
+      if(results.status === 'success') {
+        const listViews = cloneDeep(results.data.group_fields);
+        this.listViewsFilter = [...listViews];
+        this.detailInfoFilter = results.data;
+      }
+    });
+  }
+
+  showFilter() {
+    const ref = this.dialogService.open(FormFilterComponent, {
+      header: 'Tìm kiếm nâng cao',
+      width: '40%',
+      contentStyle: "",
+      data: {
+        listViews: this.listViewsFilter,
+        detailInfoFilter: this.detailInfoFilter,
+        buttons: this.optionsButonFilter
+      }
+    });
+
+    ref.onClose.subscribe((event: any) => {
+      if (event) {
+        this.listViewsFilter = cloneDeep(event.listViewsFilter);
+        if (event.type === 'Search') {
+          this.query = { ...this.query, ...event.data };
+          this.load();
+        } else if (event.type === 'CauHinh') {
+          this.apiService.getFilter('/api/v1/feedback/GetFeedbackFilter').subscribe(results => {
+            if (results.status === 'success') {
+              const listViews = cloneDeep(results.data.group_fields);
+              this.listViewsFilter = [...listViews];
+              this.detailInfoFilter = results.data;
+              this.showFilter()
+            }
+          });
+
+        } else if (event.type === 'Reset') {
+          const listViews = cloneDeep(this.detailInfoFilter.group_fields);
+          this.listViewsFilter = cloneDeep(listViews);
+          this.cancel();
+        }
+      }
+    });
   }
 }
 

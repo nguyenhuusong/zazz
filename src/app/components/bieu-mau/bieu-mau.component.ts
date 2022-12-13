@@ -657,7 +657,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
               const listViews = cloneDeep(results.data.group_fields);
               this.listViewsFilter = [...listViews];
               this.detailInfoFilter = results.data;
-              this.showFilter(1)
+              this.showFilter(value)
             }
           });
 

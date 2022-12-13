@@ -417,7 +417,7 @@ export class CsThueThuNhapComponent implements OnInit, AfterViewChecked {
           this.query = { ...this.query, ...event.data };
           this.load();
         } else if (event.type === 'CauHinh') {
-        this.apiService.getEmpFilter().subscribe(results => {
+          this.apiService.getFilter('/api/v2/incometax/GetIncomeTaxFilter').subscribe(results => {
             if (results.status === 'success') {
               const listViews = cloneDeep(results.data.group_fields);
               this.listViewsFilter = [...listViews];

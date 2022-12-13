@@ -13,6 +13,8 @@ import { ExportFileService } from 'src/app/services/export-file.service';
 import { cloneDeep } from 'lodash';
 import * as firebase from 'firebase';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import { DialogService } from 'primeng/dynamicdialog';
+import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 declare var jQuery: any;
 
 @Component({
@@ -34,6 +36,7 @@ export class PqXeNhanVienComponent implements OnInit {
     private messageService: MessageService,
     private changeDetector: ChangeDetectorRef,
     private fileService: ExportFileService,
+    public dialogService: DialogService,
     private router: Router) {
     this.defaultColDef = {
       tooltipComponent: 'customTooltip',
@@ -124,6 +127,13 @@ export class PqXeNhanVienComponent implements OnInit {
   organizes = [];
   itemsBreadcrumb = [];
   itemsToolOfGrid: any[] = [];
+  
+  listViewsFilter = [];
+  detailInfoFilter = null;
+  optionsButonFilter = [
+    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm height-56 addNew', icon: 'pi pi-search' },
+    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger height-56 addNew', icon: 'pi pi-times' },
+  ];
   ngOnInit(): void {
     this.itemsBreadcrumb = [
       { label: 'Trang chủ', routerLink: '/home' },
@@ -164,6 +174,7 @@ export class PqXeNhanVienComponent implements OnInit {
         }
       },
     ]
+    this.getFilter();
   }
   
   onChangeUser(event) {
@@ -853,6 +864,54 @@ export class PqXeNhanVienComponent implements OnInit {
         this.spinner.hide();
       }
     })
+  }
+
+  //filter 
+  getFilter() {
+    this.apiService.getFilter('/api/v2/cardvehicle/GetEmpCardFilter').subscribe(results => {
+      if(results.status === 'success') {
+        const listViews = cloneDeep(results.data.group_fields);
+        this.listViewsFilter = [...listViews];
+        this.detailInfoFilter = results.data;
+      }
+    });
+  }
+
+  showFilter() {
+    const ref = this.dialogService.open(FormFilterComponent, {
+      header: 'Tìm kiếm nâng cao',
+      width: '40%',
+      contentStyle: "",
+      data: {
+        listViews: this.listViewsFilter,
+        detailInfoFilter: this.detailInfoFilter,
+        buttons: this.optionsButonFilter
+      }
+    });
+
+    ref.onClose.subscribe((event: any) => {
+      if (event) {
+        this.listViewsFilter = cloneDeep(event.listViewsFilter);
+        if (event.type === 'Search') {
+          this.model = { ...this.model, ...event.data };
+          this.load();
+        } else if (event.type === 'CauHinh') {
+          this.apiService.getFilter('/api/v2/cardvehicle/GetEmpCardFilter').subscribe(results => {
+            if (results.status === 'success') {
+              const listViews = cloneDeep(results.data.group_fields);
+              this.listViewsFilter = [...listViews];
+              this.detailInfoFilter = results.data;
+              this.showFilter()
+            }
+          });
+
+        } else if (event.type === 'Reset') {
+          const listViews = cloneDeep(this.detailInfoFilter.group_fields);
+          this.listViewsFilter = cloneDeep(listViews);
+          this.cancel();
+        }
+      }
+    });
   }
 
 }
