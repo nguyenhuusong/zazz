@@ -528,7 +528,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
       { label: 'Nhân sự' },
       { label: 'Quản lý nhân sự' },
     ];
-    this.getOrderFilter();
+    this.getEmpFilter();
     // this.getEmployeeStatus();
     this.getOrgan();
    
@@ -873,7 +873,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
     { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger height-56 addNew', icon: 'pi pi-times' },
   ];
 
-  getOrderFilter() {
+  getEmpFilter() {
     this.apiService.getEmpFilter().subscribe(results => {
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);

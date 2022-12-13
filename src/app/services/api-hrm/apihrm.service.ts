@@ -1150,6 +1150,10 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v2/contract/GetContractPage?` + queryParams, this.options)
   }
 
+  getContractFilter(): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/contract/GetContractFilter`, this.options)
+  }
+
   
   getContractTypeInfo(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/contracttype/GetContractTypeInfo?` + queryParams, this.options)

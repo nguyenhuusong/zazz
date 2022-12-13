@@ -5,6 +5,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiService } from 'src/app/services/api.service';
 import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { cloneDeep } from 'lodash';
 import { CustomTooltipComponent } from 'src/app/common/ag-component/customtooltip.component';
 import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
 import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.component';
@@ -18,6 +19,8 @@ import { environment } from 'src/environments/environment';
 import * as moment from 'moment';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
+import { DialogService } from 'primeng/dynamicdialog';
+import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 @Component({
   selector: 'app-xu-ly-hop-dong',
   templateUrl: './xu-ly-hop-dong.component.html',
@@ -32,6 +35,7 @@ export class XuLyHopDongComponent implements OnInit {
     private route: ActivatedRoute,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
+    private dialogService: DialogService,
     private spinner: NgxSpinnerService,
     private changeDetector: ChangeDetectorRef,
     private webSocketService: WebsocketService2,
@@ -207,14 +211,14 @@ export class XuLyHopDongComponent implements OnInit {
     this.columnDefs = []
     this.spinner.show();
     let params: any = { ... this.query };
-    let companyIds = this.query.companyIds.toString();
-    params.companyIds = companyIds;
-    delete params.fromDate
-    delete params.toDate
+    // let companyIds = this.query.companyIds.toString();
+    // params.companyIds = companyIds;
+    // delete params.fromDate
+    // delete params.toDate
     // params.fromDate = moment(new Date(this.query.fromDate)).format('YYYY-MM-DD')
     // params.toDate = moment(new Date(this.query.toDate)).format('YYYY-MM-DD')
-    params.fromDate = typeof this.query.fromDate === 'object' ? moment(new Date(this.query.fromDate)).format('YYYY-MM-DD') : this.query.fromDate;
-    params.toDate = typeof this.query.toDate === 'object' ? moment(new Date(this.query.toDate)).format('YYYY-MM-DD') : this.query.toDate;
+    // params.fromDate = typeof this.query.fromDate === 'object' ? moment(new Date(this.query.fromDate)).format('YYYY-MM-DD') : this.query.fromDate;
+    // params.toDate = typeof this.query.toDate === 'object' ? moment(new Date(this.query.toDate)).format('YYYY-MM-DD') : this.query.toDate;
     const queryParams = queryString.stringify(params);
     this.apiService.getContractPage(queryParams).subscribe(
       (results: any) => {
@@ -393,6 +397,7 @@ export class XuLyHopDongComponent implements OnInit {
 
   listPrints = []
   ngOnInit() {
+    this.getContractFilter();
     this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
         if(results && results.length>0){
           this.query.organizeIds = results;
@@ -766,6 +771,60 @@ export class XuLyHopDongComponent implements OnInit {
     this.queryStorage.toDate = moment(new Date(this.query.toDate)).format('YYYY-MM-DD');
 
     localStorage.setItem('queryXLHD', JSON.stringify(this.queryStorage))
+  }
+
+  listViewsFilter = [];
+  detailInfoFilter = null;
+  optionsButonFilter = [
+    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm ml-2 height-56 addNew', icon: 'pi pi-plus' },
+    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger ml-2 height-56 addNew', icon: 'pi pi-times' },
+  ];
+
+  getContractFilter() {
+    this.apiService.getContractFilter().subscribe(results => {
+      if(results.status === 'success') {
+        const listViews = cloneDeep(results.data.group_fields);
+        this.listViewsFilter = [...listViews];
+        this.detailInfoFilter = results.data;
+      }
+    });
+  }
+ 
+  showFilter() {
+    const ref = this.dialogService.open(FormFilterComponent, {
+      header: 'Tìm kiếm nâng cao',
+      width: '40%',
+      contentStyle: "",
+      data: {
+        listViews: this.listViewsFilter,
+        detailInfoFilter: this.detailInfoFilter,
+        buttons: this.optionsButonFilter
+      }
+    });
+
+    ref.onClose.subscribe((event: any) => {
+      if (event) {
+        this.listViewsFilter = cloneDeep(event.listViewsFilter);
+        if (event.type === 'Search') {
+          this.query = { ...this.query, ...event.data };
+          this.load();
+        } else if (event.type === 'CauHinh') {
+        this.apiService.getContractFilter().subscribe(results => {
+            if (results.status === 'success') {
+              const listViews = cloneDeep(results.data.group_fields);
+              this.listViewsFilter = [...listViews];
+              this.detailInfoFilter = results.data;
+              this.showFilter()
+            }
+          });
+
+        } else if (event.type === 'Reset') {
+          const listViews = cloneDeep(this.detailInfoFilter.group_fields);
+          this.listViewsFilter = cloneDeep(listViews);
+          this.cancel();
+        }
+      }
+    });
   }
 
 }
