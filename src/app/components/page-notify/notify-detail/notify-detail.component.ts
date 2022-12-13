@@ -129,6 +129,17 @@ export class NotifyDetailComponent implements OnInit {
     })
   }
 
+  // type noti binding 
+  setItemByActionList() {
+    this.listViews.forEach( group => {
+      group.fields.forEach(field => {
+        if(field.field_name === 'actionlist') {
+          let actionlistValue = field.columnValue;
+        }
+      });
+    }); 
+  }
+
   handleChange(index) {
     if(this.indexTab === 0) {
       this.getAppNotifyInfo();

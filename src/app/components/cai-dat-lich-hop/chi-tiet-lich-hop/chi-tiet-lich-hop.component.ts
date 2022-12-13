@@ -234,5 +234,11 @@ export class ChiTietLichHopComponent implements OnInit, OnDestroy {
   getValueElemetn(event) {
     this.meetingInfo.floorNo = event.columnValue
   }
+
+  quaylai(event) {
+    if(event === 'Cancel') {
+      this.router.navigate(['/cai-dat/cai-dat-lich-hop'])
+    }
+  }
 }
 
