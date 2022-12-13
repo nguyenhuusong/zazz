@@ -1,5 +1,7 @@
 import {FormArray, FormControl, FormGroup} from '@angular/forms';
 import { cloneDeep } from 'lodash';
+import * as moment from 'moment';
+import * as numeral from 'numeral';
 
 
 
@@ -249,6 +251,48 @@ export function setMembers(element1, datas) {
   export function setValueAndOptionsAutocomplete(element1, results) {
     element1.options = results
     element1.columnValue = element1.columnValue ? element1.options[0] : ''
+  }
+
+  export function getParamString(lists) {
+    const params: any = {};
+    lists.forEach(results => {
+      results.fields.forEach(data => {
+        if (data.columnType === 'datetime' && data.isVisiable) {
+          params[data.field_name]= data.columnValue ? moment(new Date(data.columnValue)).format('DD/MM/YYYY') : null
+        } else if (data.columnType === 'datefulltime' && data.isVisiable) {
+          params[data.field_name]= data.columnValue ? moment(data.columnValue).format('DD/MM/YYYY HH:mm:ss') : null
+        } else if (data.columnType === 'timeonly') {
+          params[data.field_name]= data.columnValue ?  `${data.columnValue}:00` : null
+
+        } else if (data.columnType === 'selectTree') {
+          params[data.field_name]= data.columnValue ? data.columnValue.data : null;
+          delete data.options;
+        } else if (data.columnType === 'currency') {
+          params[data.field_name]= data.columnValue ? numeral(data.columnValue).value() : null
+        }else if ((data.columnType === 'select') || (data.columnType === 'dropdown')) {
+          params[data.field_name]= data.columnValue ? isNaN(data.columnValue) ? data.columnValue : parseInt(data.columnValue) : null;
+          delete data.options;
+        }else if ((data.columnType === 'multiSelect')) {
+          params[data.field_name]= data.columnValue ? data.columnValue.map(d => d.code).toString() : null;
+          delete data.options;
+        }else if ((data.columnType === 'checkboxList')) {
+          params[data.field_name]= data.columnValue ? data.columnValue.toString() : null;
+          delete data.options;
+        }else if ((data.columnType === 'autocomplete')) {
+          params[data.field_name]= data.columnValue ? data.columnValue.code : null;
+          delete data.options;
+        }else if ((data.columnType === 'number')) {
+          data.columnValue = data.columnValue ? formatNumber(+data.columnValue) : 0;
+          params[data.field_name]= numeral(data.columnValue).value();
+        }
+      })
+    });
+
+    return params;
+  }
+
+  function formatNumber(value) {
+    return numeral(value).format('0,0[.][00]');
   }
 
   export function searchTree(element, matchingTitle){

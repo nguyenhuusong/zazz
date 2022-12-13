@@ -15,7 +15,7 @@ import { cloneDeep } from 'lodash';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { searchTree } from 'src/app/common/function-common/objects.helper';
+import { getParamString, searchTree } from 'src/app/common/function-common/objects.helper';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { DialogService } from 'primeng/dynamicdialog';
 @Component({
@@ -133,7 +133,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
 
   initMenuActionPages(listMenus) {
     this.itemsToolOfGrid = [];
-    for(let item of listMenus) {
+    for (let item of listMenus) {
       this.itemsToolOfGrid.push({
         label: item.actionName,
         code: item.actionCd,
@@ -144,19 +144,11 @@ export class NsHoSoNhanSuComponent implements OnInit {
       })
     }
   }
-
-
   query = {
     filter: '',
     gridWidth: 0,
     offSet: 0,
     pageSize: 15,
-    orgId: '',
-    isLock: -1,
-    isApprove: -1,
-    emp_st: -1,
-    organizeIds: '',
-    companyIds: '',
   }
 
   titleForm = {
@@ -181,15 +173,6 @@ export class NsHoSoNhanSuComponent implements OnInit {
       gridWidth: 0,
       offSet: 0,
       pageSize: 15,
-      orgId: this.query.orgId,
-      isLock: -1,
-      isApprove: -1,
-      emp_st: -1,
-      organizeIds: this.query.organizeIds,
-      companyIds: this.query.companyIds,
-    }
-    if(this.companies.length > 0) {
-      this.query.companyIds = this.companies[0].value;
     }
     this.load();
   }
@@ -207,12 +190,12 @@ export class NsHoSoNhanSuComponent implements OnInit {
         if (d.children.length > 0) this.expanded(d.children, this.selectedNode.parentId)
       }
       d.children.forEach((elm: { children: { expanded: boolean; }[]; expanded: boolean; }) => {
-        elm.children.forEach((e: { expanded: boolean; }) =>{
+        elm.children.forEach((e: { expanded: boolean; }) => {
           if (e.expanded === true) {
             elm.expanded = true
           }
         })
-      });      
+      });
     })
     return datas
   }
@@ -247,15 +230,11 @@ export class NsHoSoNhanSuComponent implements OnInit {
     this.columnDefs = []
     this.spinner.show();
     const params: any = { ...this.query };
-    let companyIds = this.query.companyIds.toString();
-    params.companyIds = companyIds;
-    params.organizeIds = this.query.organizeIds;
-    params.orgId =  typeof params.orgId === 'string' || params.orgId === null ? params.orgId : params.orgId.orgId;
     const queryParams = queryString.stringify(params);
     this.apiService.getEmployeePage(queryParams).subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
-        this.gridKey= results.data.dataList.gridKey;
+        this.gridKey = results.data.dataList.gridKey;
         if (this.query.offSet === 0) {
           this.cols = results.data.gridflexs;
           this.colsDetail = results.data.gridflexdetails ? results.data.gridflexdetails : [];
@@ -516,22 +495,14 @@ export class NsHoSoNhanSuComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-        if(results && results.length>0){
-          this.query.organizeIds = results;
-          this.getOrganizeTree();
-          this.getCompany();
-        }
-    });
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Nhân sự' },
       { label: 'Quản lý nhân sự' },
     ];
     this.getEmpFilter();
-    // this.getEmployeeStatus();
     this.getOrgan();
-   
+
   }
   employeeStatus = []
   getEmployeeStatus() {
@@ -539,7 +510,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
     this.apiService.getEmployeeStatus().subscribe(results => {
       if (results.status === 'success') {
         this.employeeStatus = []
-        if(results.data) {
+        if (results.data) {
           results.data.forEach(s => {
             if (s.value != "3") {
               this.employeeStatus.push({
@@ -555,13 +526,13 @@ export class NsHoSoNhanSuComponent implements OnInit {
   }
   organizeList = []
   onNodeSelect(event) {
-    this.detailOrganizeMap = event.node;
-    localStorage.setItem('organize', JSON.stringify(event.node));
-    // this.query.orgId = this.selectedNode?.orgId;
-    this.query.orgId = this.detailOrganizeMap?.orgId;
-    this.isHrDiagram = false;
+    // this.detailOrganizeMap = event.node;
+    // localStorage.setItem('organize', JSON.stringify(event.node));
+    // // this.query.orgId = this.selectedNode?.orgId;
+    // this.query.orgId = this.detailOrganizeMap?.orgId;
+    // this.isHrDiagram = false;
 
-    this.load()
+    // this.load()
   }
 
   Back() {
@@ -729,24 +700,24 @@ export class NsHoSoNhanSuComponent implements OnInit {
   }
 
   getOrganizeTree(): void {
-    const queryParams = queryString.stringify({ parentId: this.query.organizeIds });
-    this.apiService.getOrganizeTree(queryParams)
-      .subscribe((results: any) => {
-        if (results && results.status === 'success') {
-          this.departmentFiltes = results.data;
-        }
-      },
-        error => { });
-    this.queryStaffToMove.orgId = '';
-    this.aDepartment = '';
-    if(this.organizeId && this.queryStaffToMove.orgId){
-      this.isButtonmoveOrganNow = false;
-    }
-    else {
-      this.isButtonmoveOrganNow = true;
-    }
+    // const queryParams = queryString.stringify({ parentId: this.query.organizeIds });
+    // this.apiService.getOrganizeTree(queryParams)
+    //   .subscribe((results: any) => {
+    //     if (results && results.status === 'success') {
+    //       this.departmentFiltes = results.data;
+    //     }
+    //   },
+    //     error => { });
+    // this.queryStaffToMove.orgId = '';
+    // this.aDepartment = '';
+    // if(this.organizeId && this.queryStaffToMove.orgId){
+    //   this.isButtonmoveOrganNow = false;
+    // }
+    // else {
+    //   this.isButtonmoveOrganNow = true;
+    // }
   }
- 
+
   getOrganizeTree2(): void {
     const queryParams = queryString.stringify({ parentId: this.organizeId });
     this.apiService.getOrganizeTree(queryParams)
@@ -758,7 +729,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
         error => { });
     this.queryStaffToMove.orgId = '';
     this.aDepartment = '';
-    if(this.organizeId && this.queryStaffToMove.orgId){
+    if (this.organizeId && this.queryStaffToMove.orgId) {
       this.isButtonmoveOrganNow = false;
     }
     else {
@@ -805,32 +776,32 @@ export class NsHoSoNhanSuComponent implements OnInit {
   }
   listDataSelect = [];
   rowSelected(data) {
-    if(data[0] && data[0].emp_st === 0 ){
+    if (data[0] && data[0].emp_st === 0) {
       this.listDataSelect = data
-    }else{
+    } else {
       this.listDataSelect = [];
     }
   }
 
   getCompany() {
-    const query = { organizeIds: this.query.organizeIds}
-    this.apiService.getUserCompanies(queryString.stringify(query)).subscribe(
-      (results: any) => {
-        if(results.status === "success"){
-          this.companies = results.data
-            .map(d => {
-              return {
-                label: d.name,
-                value: d.value
-              };
-            });
-            if(this.companies.length > 0) {
-              this.query.companyIds = this.companies[0].value
-            }
-            this.load();
-        }
-      }),
-      error => { };
+    // const query = { organizeIds: this.query.organizeIds}
+    // this.apiService.getUserCompanies(queryString.stringify(query)).subscribe(
+    //   (results: any) => {
+    //     if(results.status === "success"){
+    //       this.companies = results.data
+    //         .map(d => {
+    //           return {
+    //             label: d.name,
+    //             value: d.value
+    //           };
+    //         });
+    //         if(this.companies.length > 0) {
+    //           this.query.companyIds = this.companies[0].value
+    //         }
+    //         this.load();
+    //     }
+    //   }),
+    //   error => { };
   }
 
   loadjs = 0;
@@ -867,6 +838,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
     this.changeDetector.detectChanges();
   }
   listViewsFilter = [];
+  cloneListViewsFilter = [];
   detailInfoFilter = null;
   optionsButonFilter = [
     { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm height-56 addNew', icon: 'pi pi-search' },
@@ -875,14 +847,18 @@ export class NsHoSoNhanSuComponent implements OnInit {
 
   getEmpFilter() {
     this.apiService.getEmpFilter().subscribe(results => {
-      if(results.status === 'success') {
+      if (results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
+        this.cloneListViewsFilter = cloneDeep(listViews);
         this.listViewsFilter = [...listViews];
+        const params = getParamString(listViews)
+        this.query = { ...this.query, ...params };
+        this.load();
         this.detailInfoFilter = results.data;
       }
     });
   }
- 
+
   showFilter() {
     const ref = this.dialogService.open(FormFilterComponent, {
       header: 'Tìm kiếm nâng cao',
@@ -903,10 +879,14 @@ export class NsHoSoNhanSuComponent implements OnInit {
           console.log('this.query', this.query)
           this.load();
         } else if (event.type === 'CauHinh') {
-        this.apiService.getEmpFilter().subscribe(results => {
+          this.apiService.getEmpFilter().subscribe(results => {
             if (results.status === 'success') {
               const listViews = cloneDeep(results.data.group_fields);
+              this.cloneListViewsFilter = cloneDeep(listViews);
               this.listViewsFilter = [...listViews];
+              const params = getParamString(listViews)
+              this.query = { ...this.query, ...params };
+              this.load();
               this.detailInfoFilter = results.data;
               this.showFilter()
             }

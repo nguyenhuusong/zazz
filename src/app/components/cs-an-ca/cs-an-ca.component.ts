@@ -70,7 +70,8 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
   }
 
   listViewsFilter = [];
-  detailInfoFilter = null;
+  cloneListViewsFilter = [];
+detailInfoFilter = null;
   optionsButonFilter = [
     { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm height-56 addNew', icon: 'pi pi-search' },
     { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger height-56 addNew', icon: 'pi pi-times' },
@@ -500,7 +501,11 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
     this.apiService.getFilter('/api/v1/eating/GetEatingFilter').subscribe(results => {
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
-        this.listViewsFilter = [...listViews];
+        this.cloneListViewsFilter = cloneDeep(listViews);
+this.listViewsFilter = [...listViews];
+const params =  getParamString(listViews)
+this.query = { ...this.query, ...params};
+this.load();
         this.detailInfoFilter = results.data;
       }
     });
@@ -528,7 +533,11 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
           this.apiService.getFilter('/api/v1/eating/GetEatingFilter').subscribe(results => {
             if (results.status === 'success') {
               const listViews = cloneDeep(results.data.group_fields);
-              this.listViewsFilter = [...listViews];
+              this.cloneListViewsFilter = cloneDeep(listViews);
+this.listViewsFilter = [...listViews];
+const params =  getParamString(listViews)
+this.query = { ...this.query, ...params};
+this.load();
               this.detailInfoFilter = results.data;
               this.showFilter()
             }

@@ -18,6 +18,7 @@ import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.comp
 const MAX_SIZE = 100000000;
 import { cloneDeep } from 'lodash';
 import { DialogService } from 'primeng/dynamicdialog';
+import { getParamString } from 'src/app/common/function-common/objects.helper';
 
 @Component({
   selector: 'app-vi-tri-tuyen-dung',
@@ -78,16 +79,9 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
   gridflexs: any;
   getRowHeight;
   query = {
-    jobId: 0,
-    active_st: 0,
     filter: '',
     offSet: 0,
     pageSize: 15,
-    organizeIds: '',
-    orgId: '',
-    hiringManId: '',
-    fromDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).add(-1,'months').format()),
-    toDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).format()),
   }
   hiringMans = []
   totalRecord = 0;
@@ -128,16 +122,9 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
 
   cancel() {
     this.query = {
-      jobId: 0,
-      active_st: 0,
       filter: '',
       offSet: 0,
       pageSize: 15,
-      organizeIds: this.query.organizeIds,
-      orgId: '',
-      hiringManId: '',
-      fromDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).add(-1,'months').format()),
-      toDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).format()),
     }
     this.load();
   }
@@ -158,14 +145,7 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
   load() {
     this.columnDefs = []
     this.spinner.show();
-
     let params: any = {... this.query};
-    delete params.fromDate
-    delete params.toDate
-    params.orgId = typeof params.orgId === 'string' ? params.orgId : params.orgId.orgId;
-    params.FromDate = moment(new Date(this.query.fromDate)).format('YYYY-MM-DD')
-    params.ToDate = moment(new Date(this.query.toDate)).format('YYYY-MM-DD');
-
     const queryParams = queryString.stringify(params);
     this.apiService.getVacancyPage(queryParams).subscribe(
       (results: any) => {
@@ -277,14 +257,6 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
 
 
   ngOnInit() {
-    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-        if(results && results.length>0){
-          this.query.organizeIds = results;
-          this.load();
-          this.selectedValue = results;
-          this.getBoPhan();
-        }
-    });
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Tuyển dụng'},
@@ -359,10 +331,6 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
   
   export() {
     let params: any = {... this.query};
-    delete params.fromDate
-    delete params.toDate
-    params.FromDate = moment(new Date(this.query.fromDate)).format('YYYY-MM-DD')
-    params.ToDate = moment(new Date(this.query.toDate)).format('YYYY-MM-DD');
     const queryParams = queryString.stringify(params);
     this.apiService.exportVacancy(queryParams).subscribe(results => {
       if (results.type === 'application/json') {
@@ -390,7 +358,8 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
   }
 
   listViewsFilter = [];
-  detailInfoFilter = null;
+  cloneListViewsFilter = [];
+detailInfoFilter = null;
   optionsButonFilter = [
     { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm ml-2 height-56 addNew', icon: 'pi pi-plus' },
     { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger ml-2 height-56 addNew', icon: 'pi pi-times' },
@@ -400,7 +369,11 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
     this.apiService.getVacancyFilter().subscribe(results => {
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
+        this.cloneListViewsFilter = cloneDeep(listViews);
         this.listViewsFilter = [...listViews];
+        const params =  getParamString(listViews)
+        this.query = { ...this.query, ...params};
+        this.load();
         this.detailInfoFilter = results.data;
       }
     });
@@ -429,6 +402,9 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
             if (results.status === 'success') {
               const listViews = cloneDeep(results.data.group_fields);
               this.listViewsFilter = [...listViews];
+              const params =  getParamString(listViews)
+              this.query = { ...this.query, ...params};
+              this.load();
               this.detailInfoFilter = results.data;
               this.showFilter()
             }
