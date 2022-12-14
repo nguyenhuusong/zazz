@@ -37,7 +37,7 @@ export class SendNotifyComponent implements OnInit, AfterViewInit,OnDestroy {
   ];
   actions = [];
   apartmentSelected = [];
-  action;
+  action: any = [];
   run_act = 0
   ngAfterViewInit(): void {
     // this.initTypeNotify();
@@ -134,20 +134,18 @@ export class SendNotifyComponent implements OnInit, AfterViewInit,OnDestroy {
 
   getObjectsNotifyTemplate(){
     this.action = getFieldValueAggrid(this.notify, 'actionlist', '');
-
+    this.action = this.action.split(',')
     const queryParams = queryString.stringify({ objKey: 'notify_template' });
     this.apiService.getObjects(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.actions = results.data.map( d => {
           return {
             label: d.name, 
-            value: d.value 
+            name: d.name, 
+            code: d.value,
+            value: d.value,
           }
         });
-        // if(this.action) {
-        //   let actionValue = this.action;
-        //   this.action = this.actions.filter( d => d.value === actionValue)
-        // }
       }
     })
   }
