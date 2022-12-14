@@ -270,11 +270,14 @@ export class ThaiSanComponent implements OnInit, AfterViewChecked {
     this.router.navigate(['/nhan-su/thai-san/chi-tiet-thai-san'], { queryParams: params });
   }
 
+  isSearchEmp = false;
   addThaiSan() {
-    const params = {
-      maternityId: null
-    }
-    this.router.navigate(['/nhan-su/thai-san/them-moi-thai-san'], { queryParams: params });
+    this.isSearchEmp = true;
+
+    // const params = {
+    //   maternityId: null
+    // }
+    // this.router.navigate(['/nhan-su/thai-san/them-moi-thai-san'], { queryParams: params });
   }
 
   find() {
@@ -400,7 +403,13 @@ showFilter() {
     });
   }
 
-
+  seachEmValue(event) {
+    const params = {
+      maternityId: null,
+      emId: event.value
+    }
+    this.router.navigate(['/nhan-su/thai-san/them-moi-thai-san'], { queryParams: params });
+  }
 
 }
 

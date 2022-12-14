@@ -77,3 +77,4 @@
     <app-config-grid-table-form *ngIf="displaySetting && gridKey" [typeConfig]="'TableInfo'"   [gridKey]="gridKey"></app-config-grid-table-form>
 </p-dialog>
 
+<app-hrm-search-emp [isSearch]="isSearchEmp" (seachEmValue)="seachEmValue($event)"></app-hrm-search-emp>

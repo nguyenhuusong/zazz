@@ -90,6 +90,8 @@ export class ChiTietViTriTuyenDungComponent implements OnInit, OnDestroy {
       });
   }
 
+  
+
   getVacancyInfo() {
     this.listViews = [];
     const queryParams = queryString.stringify(this.modelEdit);

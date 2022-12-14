@@ -1,11 +1,86 @@
-<p-dialog [(visible)]="selectImage" 
+<p-dialog 
+styleClass="search-em-in"
+[(visible)]="isSearch" 
 [draggable]="false" 
 [resizable]="false" 
 [autoZIndex]="true" 
 [modal]="true" 
-[style]="{width: '1300px', height: 'auto'}">
-    <p-header>
-        Tìm nhân viên
-    </p-header>
-    
+[style]="{width: '800px', height: 'auto'}">
+<ng-template pTemplate="header">
+    Tìm kiếm nhân viên
+</ng-template>
+    <div class="search-in" [ngClass]="{'res': empId}">
+        <div class="search-group field-group select d-flex" style="display: flex">
+            <div class="col-3 pd-0">
+                <p-dropdown 
+                appendTo="body" 
+                [baseZIndex]="100" 
+                [(ngModel)]="searchBy"
+                [options]="searchBys" 
+                placeholder="Tìm kiếm theo" >
+                </p-dropdown>
+            </div>
+            <div class="col-9 pd-0">
+                <p-autoComplete 
+                    type="search" 
+                    appendTo="body" 
+                    (onClear)="clearEvent($event)" 
+                    placeholder="Nhập nhân viên" 
+                    [(ngModel)]="modelStaff" 
+                    [suggestions]="listStaff" 
+                    (onSelect)="onSelectStaff($event)"
+                    (completeMethod)="getStaffsAtStore($event)" emptyMessage="Không tìm thấy nhân viên" field="label">
+                </p-autoComplete>
+            </div>
+                <div class="uni-load " [ngClass]="isLoading ? 'loading' : ''"></div>
+              <p-button  styleClass="p-button-sm" icon=" pi pi-search" (click)="getStaffsAtStore()"></p-button>
+        </div>
+    </div>
+    <div class="d-flex search-res" *ngIf="dataSearcheSelect && dataSearcheSelect.length>0">
+        <div class="col-3 text-center">
+            <p-image src="{{ dataSearcheSelect[0].avatar_url ? dataSearcheSelect[0].avatar_url : '../../../../../assets/images/no-image2.png' }}" alt="Image" width="250"></p-image>
+            <span><b>Mã NV: </b>{{ dataSearcheSelect[0].code }}</span>
+        </div>
+        <div class="col-9">
+            <div class="grid">
+                <label class="col-3"><b>Họ tên</b></label>
+                <span class="col-9">{{ dataSearcheSelect[0].full_name }}</span>
+            </div>
+            <div class="grid">
+                <label class="col-3"><b>Email</b></label>
+                <span class="col-9">{{ dataSearcheSelect[0].email1 }}</span>
+            </div>
+            <div class="grid">
+                <label class="col-3"><b>Số điên thoại</b></label>
+                <span class="col-9">{{ dataSearcheSelect[0].phone1 }}</span>
+            </div>
+            <div class="grid">
+                <label class="col-3"><b>Vị trí</b></label>
+                <span class="col-9">{{ dataSearcheSelect[0].position }}</span>
+            </div>
+            <div class="grid">
+                <label class="col-3"><b>Địa chỉ</b></label>
+                <span class="col-9">{{ dataInfo.address }}</span>
+            </div>
+            <div class="grid">
+                <label class="col-3"><b>Đơn vị</b></label>
+                <span class="col-9">{{ dataSearcheSelect[0].organization }}</span>
+                
+            </div>
+        </div>
+    </div>
+    <ng-template pTemplate="footer">
+        <div  *ngIf="empId">
+            <button type="button" 
+                class="p-button-secondary btn-cancel height-56" 
+                pButton icon="pi pi-times" label="Hủy bỏ" 
+                (click)="cancelItem()">
+            </button>
+            <p-button 
+                styleClass="p-button-sm mr-1 height-56" 
+                (click)="getItem()">
+            Xác nhận
+            </p-button>
+        </div>
+    </ng-template>
 </p-dialog>

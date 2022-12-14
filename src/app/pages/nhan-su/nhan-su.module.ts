@@ -99,6 +99,7 @@ import { FormFilterModule } from 'src/app/common/form-filter/form-filter.module'
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { TbhDsDinhKemComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/thue-bao-hiem/tbh-ds-dinh-kem/tbh-ds-dinh-kem.component';
 import { TbhQtDongBtComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/thue-bao-hiem/tbh-qt-dong-bt/tbh-qt-dong-bt.component';
+import { HrmSearchEmpModule } from 'src/app/common/hrm-search-emp/hrm-search-emp.module';
 
 @NgModule({
   imports: [
@@ -151,6 +152,7 @@ import { TbhQtDongBtComponent } from 'src/app/components/ns-ho-so-nhan-su/employ
     ExcelModule,
     FormFilterModule,
     DynamicDialogModule,
+    HrmSearchEmpModule,
     CheckHideActionsDirectiveModule,
     AgGridModule.withComponents([
       ButtonRendererComponent,
