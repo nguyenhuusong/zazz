@@ -181,12 +181,13 @@ export class TienLuongComponent implements OnInit, AfterViewInit {
     });
   }
 
-
+  cloneListViewsDetail = [];
   callBackForm(event) {
     const params = {
       ...this.dataDetailInfo, group_fields: event.data, flow_st: this.activeIndex
     }
-    this.listViewsDetail = []
+    // this.cloneListViewsDetail = cloneDeep(this.listViewsDetail);
+    // this.listViewsDetail = []
     this.callApiInfo(params)
     if (event.type === 'Submit' || event.type === 'SaveNhap') {
       setTimeout(() => {
@@ -220,6 +221,7 @@ export class TienLuongComponent implements OnInit, AfterViewInit {
   }
 
   callApiInfo(params) {
+    this.spinner.show();
     this.apiService.setSalaryInfoNew(params).subscribe((results: any) => {
       if (results.status === 'success') {
         // this.listViewsDetail = cloneDeep(results.data.group_fields || []);
@@ -257,8 +259,10 @@ export class TienLuongComponent implements OnInit, AfterViewInit {
         // }
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thành công'});
         this.displayFormEditDetail = false;
+        this.spinner.hide();
         this.getSalaryInfoPageByEmpId();
       } else {
+        this.spinner.hide();
         this.messageService.add({
           severity: 'error', summary: 'Thông báo', detail: results.message
         });

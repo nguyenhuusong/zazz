@@ -29,10 +29,10 @@ export class ThongTinCaNhanEditDetailComponent implements OnInit {
   }
   activeIndex = 0;
   steps = [];
-  getDetail() {
+  getDetail(flow_st = null) {
     this.spinner.show();
     this.detailInfo = null;
-    const query = { empId: this.empId, edit_is: true }
+    const query = { empId: this.empId, edit_is: true, flow_st: flow_st }
     this.apiService.getEmpProfile(queryString.stringify(query)).subscribe(results => {
       if (results.status === 'success') {
         this.spinner.hide();
@@ -75,11 +75,13 @@ export class ThongTinCaNhanEditDetailComponent implements OnInit {
     });
   }
 
-
+  cloneListViews = [];
   callBackForm(event) {
     const params = {
       ...this.detailInfo, group_fields: event.data, flow_st: event.type === 'Submit' ?  this.activeIndex + 1 : this.activeIndex
     }
+     this.cloneListViews = cloneDeep(this.listViews);
+    this.listViews = [];
     this.callApiInfo(params)
     if(event.type === 'Submit' || event.type === 'SaveNhap') {
       setTimeout(() => {
@@ -101,17 +103,18 @@ export class ThongTinCaNhanEditDetailComponent implements OnInit {
     }
   }
 
-  
-
   setDetail(data) {
     const  params = {
       ...this.detailInfo, group_fields: data, flow_st: this.activeIndex + 1
     };
+    this.cloneListViews = cloneDeep(this.listViews);
+    this.listViews = [];
     this.callApiInfo(params)
   
   }
 
   callApiInfo(params) {
+    this.spinner.show();
     this.apiService.setEmpProfile(params).subscribe((results: any) => {
       if (results.status === 'success') {
         this.listViews = cloneDeep(results.data.group_fields || []);
@@ -146,8 +149,11 @@ export class ThongTinCaNhanEditDetailComponent implements OnInit {
           }
        
         }
-        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Cập nhật thông tin thành công' });
+        this.spinner.hide();
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Cập nhật thông tin thành công' });
       } else {
+        this.listViews = cloneDeep(this.cloneListViews);
+        this.spinner.hide();
         this.messageService.add({
           severity: 'error', summary: 'Thông báo', detail: results.message
         });
@@ -164,7 +170,7 @@ export class ThongTinCaNhanEditDetailComponent implements OnInit {
       const params = {
         ...this.detailInfo, flow_st: this.activeIndex - 1
       }
-      this.callApiInfo(params)
+      this.getDetail(this.activeIndex - 1)
     } else {
       this.cancelSave.emit();
     }
