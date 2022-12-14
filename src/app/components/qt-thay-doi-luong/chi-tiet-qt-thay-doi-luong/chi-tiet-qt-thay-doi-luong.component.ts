@@ -65,7 +65,7 @@ import { Subject, takeUntil } from 'rxjs';
   
     getSalaryInfoDevM() {
       const queryParams = queryString.stringify(this.modelEdit);
-      this.apiService.getSalaryInfoDevM(queryParams)
+      this.apiService.getSalaryInfoNew(queryParams)
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe(results => {
           if (results.status === 'success') {
@@ -81,7 +81,7 @@ import { Subject, takeUntil } from 'rxjs';
       const params = {
         ...this.detailInfo, group_fields: data
       }
-      this.apiService.setSalaryInfoDevM(params)
+      this.apiService.setSalaryInfoNew(params)
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe((results: any) => {
           if (results.status === 'success') {
