@@ -70,7 +70,7 @@
                             </p-button>
                         </div>
                         <div class="col-item d-flex gap12">
-                            <p-overlayPanel #op [dismissable]="false" [showCloseIcon]="true">
+                            <p-overlayPanel #op [dismissable]="false" appendTo="body" >
     <ng-template pTemplate>
         <app-form-filter *ngIf="listViewsFilter.length > 0" [listFields]="listViewsFilter" [detailInfoFilter]="detailInfoFilter" [buttonsFilters] ="optionsButonFilter" (callback)="filterLoad($event)" (close)="close($event);op.hide()"></app-form-filter>
     </ng-template>
@@ -168,7 +168,7 @@
                             </p-button>
                         </div>
                         <div class="col-item d-flex gap12">
-                            <p-overlayPanel #op [dismissable]="false" [showCloseIcon]="true">
+                            <p-overlayPanel #op [dismissable]="false" appendTo="body" >
     <ng-template pTemplate>
         <app-form-filter *ngIf="listViewsFilter.length > 0" [listFields]="listViewsFilter" [detailInfoFilter]="detailInfoFilter" [buttonsFilters] ="optionsButonFilter" (callback)="filterLoad($event)" (close)="close($event);op.hide()"></app-form-filter>
     </ng-template>
