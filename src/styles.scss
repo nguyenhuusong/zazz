@@ -5902,6 +5902,20 @@ app-thong-tin-ca-nhan-edit-detail{
             &.res{
                 min-height: 0px;
             }
+            .p-autocomplete{
+                input{
+                    padding-left: 31px;
+                }
+            }
+            .col-9{
+                position: relative;
+            }
+            .pi-search{
+                left: 8px;
+                position: absolute;
+                top: 10px;
+                color: #ccc;
+            }
         }
         .search-res{
             padding-left: 10px;
@@ -5927,5 +5941,11 @@ app-thong-tin-ca-nhan-edit-detail{
     }
     .search-group{
         background: #fff;
+    }
+    .number-res{
+        position: absolute;
+        right: 40px;
+        top: 12px;
+        color: #979797;
     }
 }

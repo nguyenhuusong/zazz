@@ -39,7 +39,8 @@ export class HrmSearchEmpComponent {
   dataSearched: any = [];
   dataSearcheSelect: any = [];
   dataInfo:any = {}
-  empId = ''
+  empId = '';
+  isSearching = false
   ngOnInit(): void {
 
   }
@@ -49,6 +50,7 @@ export class HrmSearchEmpComponent {
   }
 
   onSelectStaff(event) {
+    this.isSearching = false
     this.dataSearcheSelect = this.dataSearched.filter( d => event.value === d.empId);
     const queryParams = queryString.stringify({ empId: this.dataSearcheSelect[0].empId });
     this.empId = this.dataSearcheSelect[0].empId
@@ -61,6 +63,7 @@ export class HrmSearchEmpComponent {
 
   getStaffsAtStore(event = null) {
     this.isLoading = true;
+    this.isSearching = true;
     this.apiService.getEmployeePage(queryString.stringify({ filter: this.modelStaff})).subscribe(
       (results: any) => {
         this.isLoading = false;

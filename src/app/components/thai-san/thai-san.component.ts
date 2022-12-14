@@ -408,7 +408,9 @@ showFilter() {
       maternityId: null,
       emId: event.value
     }
-    this.router.navigate(['/nhan-su/thai-san/them-moi-thai-san'], { queryParams: params });
+    if(event.value) {
+      this.router.navigate(['/nhan-su/thai-san/them-moi-thai-san'], { queryParams: params });
+    }
   }
 
 }

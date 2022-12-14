@@ -11,7 +11,7 @@ styleClass="search-em-in"
 </ng-template>
     <div class="search-in" [ngClass]="{'res': empId}">
         <div class="search-group field-group select d-flex" style="display: flex">
-            <div class="col-3 pd-0">
+            <div class="col-3 pd-0" style="padding-right: 10px !important;border-right: 1px solid #ebe8e8;">
                 <p-dropdown 
                 appendTo="body" 
                 [baseZIndex]="100" 
@@ -21,6 +21,9 @@ styleClass="search-em-in"
                 </p-dropdown>
             </div>
             <div class="col-9 pd-0">
+                <!-- <p-button styleClass="p-button-sm " icon=" pi pi-search" (click)="getStaffsAtStore()"></p-button> -->
+                <span class="pi pi-search"></span>
+                <span class="number-res" *ngIf="dataSearched && dataSearched.length > 0 && isSearching">{{ dataSearched.length }} kế quả</span>
                 <p-autoComplete 
                     type="search" 
                     appendTo="body" 
@@ -32,8 +35,7 @@ styleClass="search-em-in"
                     (completeMethod)="getStaffsAtStore($event)" emptyMessage="Không tìm thấy nhân viên" field="label">
                 </p-autoComplete>
             </div>
-                <div class="uni-load " [ngClass]="isLoading ? 'loading' : ''"></div>
-              <p-button  styleClass="p-button-sm" icon=" pi pi-search" (click)="getStaffsAtStore()"></p-button>
+                <!-- <div class="uni-load " [ngClass]="isLoading ? 'loading' : ''"></div> -->
         </div>
     </div>
     <div class="d-flex search-res" *ngIf="dataSearcheSelect && dataSearcheSelect.length>0">
