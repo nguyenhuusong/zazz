@@ -545,6 +545,40 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
       }
     }  else if (field_name === 'holi_type') {
       this.callback.emit(value);
+    }else if (field_name === 'currency_type') {
+      this.dataView.forEach( group => {
+        group.fields.forEach(field => {
+          if(field.field_name === 'salary_from') {
+            field.isVisiable = true;
+            if(parseInt(value) === 2){
+              field.isVisiable = true;
+            }else if(parseInt(value) === 1){
+              field.isVisiable = true;
+            }
+            else{
+              field.isVisiable = false;
+            }
+          }else if(field.field_name === 'salary_to') { 
+            field.isVisiable = true;
+            if(parseInt(value) === 3){
+              field.isVisiable = true;
+            }else if(parseInt(value) === 1){
+              field.isVisiable = true;
+            }else{
+              field.isVisiable = false;
+            }
+          }else if(field.field_name === 'currency') { 
+            field.isVisiable = true;
+            if(parseInt(value) === 4){
+              field.isVisiable = false;
+            }else if(parseInt(value) === 1){
+              field.isVisiable = true;
+            }else{
+              field.isVisiable = true;
+            }
+          }
+        });
+      }); 
     }
     // else if(field_name === 'floor_No') {
     //   this.floorID = value

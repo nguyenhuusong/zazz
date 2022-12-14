@@ -86,12 +86,13 @@ export class ChiTietViTriTuyenDungComponent implements OnInit, OnDestroy {
           const listViews = cloneDeep(results.data.group_fields);
           this.listViews = [...listViews];
           this.detailInfo = results.data;
+          this.setValueByCurrencyType();
         }
       });
   }
 
   setValueByCurrencyType() {
-    let fieldValue = getValueOfField(this.listViews, 'actionlist');
+    let fieldValue = getValueOfField(this.listViews, 'currency_type');
     this.listViews.forEach( group => {
       group.fields.forEach(field => {
         if(field.field_name === 'salary_from') {
@@ -129,6 +130,7 @@ export class ChiTietViTriTuyenDungComponent implements OnInit, OnDestroy {
           this.listViews = [...listViews];
           this.listViews = setOrganizeId(this.listViews, 'organizeId', this.organIdSelected);
           this.detailInfo = results.data;
+          this.setValueByCurrencyType();
         }
       });
   }
