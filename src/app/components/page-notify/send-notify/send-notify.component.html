@@ -1,8 +1,8 @@
 <div class="row">
   <div class="col-sm-12 form-group">
-    <div class="field-group select label-8">
+    <!-- <div class="field-group select label-8">
       <label>Loại thông báo</label>
-        <!-- <p-dropdown appendTo="body" [autoZIndex]="true" [autoDisplayFirst]="false" 
+        <p-dropdown appendTo="body" [autoZIndex]="true" [autoDisplayFirst]="false" 
         [options]="actions" [required] [(ngModel)]="action"
         name="action" [filter]="true">
         <ng-template let-item pTemplate="selectedItem">
@@ -13,17 +13,17 @@
                 <div style="font-size:14px;float:left;margin-top:4px">{{car.label}}</div>
             </div>
         </ng-template>
-      </p-dropdown> -->
-      <div class="field-group multi-select">
-        <label class="text-nowrap label-text" >Loại thông báo</label>
-        <p-multiSelect 
-        [options]="actions" 
-        [appendTo]="'body'"
-        [(ngModel)]="action"
-        name="action" defaultLabel="Chọn loại thông báo" display="chip">
-      </p-multiSelect>
-    </div>
-  </div>
+      </p-dropdown>
+  </div> -->
+  <div class="field-group multi-select">
+    <label class="text-nowrap label-text" >Loại thông báo</label>
+    <p-multiSelect 
+    [options]="actions" 
+    [appendTo]="'body'"
+    [(ngModel)]="action"
+    name="action" defaultLabel="Chọn loại thông báo" display="chip">
+  </p-multiSelect>
+</div>
 <!-- 
   <div class="col-sm-8 text-right form-group">
     <label class="opacity0"></label>
