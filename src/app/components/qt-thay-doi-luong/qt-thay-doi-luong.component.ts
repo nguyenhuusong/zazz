@@ -207,7 +207,7 @@ export class QtThayDoiLuongComponent implements OnInit {
     this.columnDefs = []
     this.spinner.show();
     const queryParams = queryString.stringify(this.query);
-    this.apiService.getSalaryInfoPageDevM(queryParams).subscribe(
+    this.apiService.getSalaryInfoPageNew(queryParams).subscribe(
       (results: any) => {
         this.listsData = results?.data?.dataList?.data;
         this.gridKey= results?.data?.dataList?.gridKey;
@@ -271,7 +271,7 @@ export class QtThayDoiLuongComponent implements OnInit {
       message: 'Bạn có chắc chắn muốn xóa?',
       accept: () => {
         const queryParams = queryString.stringify({Id: event.rowData.id});
-        this.apiService.delSalaryInfoDevM(queryParams).subscribe((results: any) => {
+        this.apiService.delSalaryInfoNew(queryParams).subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa nhân viên thành công' });
             this.load();
@@ -585,7 +585,7 @@ export class QtThayDoiLuongComponent implements OnInit {
   getInfo() {
     this.listViews = [];
     const queryParams = queryString.stringify({ Id: this.idEdit });
-    this.apiService.getSalaryInfoDevM(queryParams).subscribe({
+    this.apiService.getSalaryInfoNew(queryParams).subscribe({
       next: (value) => {
         this.listViews = cloneDeep(value.data.group_fields || []);
         this.detailPayrollRecordInfo = value.data;
@@ -609,7 +609,7 @@ export class QtThayDoiLuongComponent implements OnInit {
       ...this.detailPayrollRecordInfo, group_fields: data
     };
     this.spinner.show();
-    this.apiService.setSalaryInfoDevM(params).subscribe((results: any) => {
+    this.apiService.setSalaryInfoNew(params).subscribe((results: any) => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Cập nhật thông tin thành công' });
         this.addNewPopup = false;
