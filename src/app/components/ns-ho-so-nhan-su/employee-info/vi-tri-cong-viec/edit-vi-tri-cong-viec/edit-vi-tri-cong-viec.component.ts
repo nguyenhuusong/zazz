@@ -112,7 +112,8 @@ export class EditViTriCongViecComponent implements OnInit {
   }
 
   callApiInfo(params) {
-    this.apiService.setEmpProfile(params).subscribe((results: any) => {
+    this.spinner.show();
+    this.apiService.setEmpWorkJob(params).subscribe((results: any) => {
       if (results.status === 'success') {
         // this.listViews = cloneDeep(results.data.group_fields || []);
         // this.detailInfo = results.data;
@@ -146,8 +147,10 @@ export class EditViTriCongViecComponent implements OnInit {
         //   }
        
         // }
-        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Cập nhật thông tin thành công' });
+        this.spinner.hide();
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Cập nhật thông tin thành công' });
       } else {
+        this.spinner.hide();
         this.messageService.add({
           severity: 'error', summary: 'Thông báo', detail: results.message
         });

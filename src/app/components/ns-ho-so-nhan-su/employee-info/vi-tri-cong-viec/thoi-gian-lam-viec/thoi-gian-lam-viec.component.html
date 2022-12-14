@@ -12,7 +12,7 @@
                     [domLayout]="'autoHeight'" 
                     *ngIf="columnDefs.length > 0" 
                     [title]="'Chứng chỉ'"
-                    [idGrid]="gridKey"
+                    [idGrid]="gridKey + '_45dfs'"
                     [listsData]="listsData" 
                     (showConfig)="CauHinh()"
                     [columnDefs]="columnDefs">
@@ -46,7 +46,7 @@
     <p-divider></p-divider>
     <p-card>
         <app-edit-detail [optionsButtonsEdit]="optionsButtonsView" *ngIf="listViewsDetail.length> 0" [detailInfo]="dataDetailInfo"
-            [detail]="displayFormEditDetail" [manhinh]="'Edit'" [thongtinnhanvienNew]="true"
+            [detail]="dataDetailInfo" [manhinh]="'Edit'" [thongtinnhanvienNew]="true"
             [dataView]="listViewsDetail" (callback)="setDetail($event)" 
             (callBackForm)="callBackForm($event)"
             (callbackcancel)="canceDetail($event)"></app-edit-detail>

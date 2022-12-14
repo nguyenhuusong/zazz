@@ -11,7 +11,7 @@
                     <app-list-grid-angular 
                     [domLayout]="'autoHeight'" 
                     *ngIf="columnDefs.length > 0" 
-                    [idGrid]="gridKey"
+                    [idGrid]="gridKey + '_45dfs'"
                     [title]="'Chứng chỉ'"
                     [listsData]="listsData" 
                     (showConfig)="CauHinh()"
@@ -37,7 +37,7 @@
         File đính kèm
     </p-header>
     <app-edit-detail [optionsButtonsEdit]="optionsButtonsPopup" *ngIf="listViewsDetail.length> 0 && displayFormEditDetail" [detailInfo]="dataDetailInfo"
-        [detail]="displayFormEditDetail" [manhinh]="'Edit'" [thongtinnhanvienNew]="true"
+        [detail]="dataDetailInfo" [manhinh]="'Edit'" [thongtinnhanvienNew]="true"
         [dataView]="listViewsDetail" (callback)="setDetailInfo($event)"
         (callbackcancel)="cancelDetailInfo($event)" (callback1)="getFilesDetail($event)"></app-edit-detail>
 </p-dialog>

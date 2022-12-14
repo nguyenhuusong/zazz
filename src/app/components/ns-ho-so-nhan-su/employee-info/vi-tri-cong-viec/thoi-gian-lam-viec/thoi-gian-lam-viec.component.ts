@@ -132,7 +132,6 @@ export class ThoiGianLamViecComponent implements OnInit, AfterViewInit {
     this.getDetail();
   }
 
-
   activeIndex = 0;
   steps = [];
   getDetail(flow_st = null) {
@@ -184,12 +183,13 @@ export class ThoiGianLamViecComponent implements OnInit, AfterViewInit {
     });
   }
 
-
+cloneListViewsDetail = [];
   callBackForm(event) {
     const params = {
       ...this.dataDetailInfo, group_fields: event.data, flow_st: this.activeIndex
     }
-    this.listViewsDetail = []
+    this.cloneListViewsDetail = cloneDeep(this.listViewsDetail)
+    this.listViewsDetail = [];
     this.callApiInfo(params)
     if (event.type === 'Submit' || event.type === 'SaveNhap') {
       setTimeout(() => {
@@ -219,12 +219,14 @@ export class ThoiGianLamViecComponent implements OnInit, AfterViewInit {
     const params = {
       ...this.dataDetailInfo, group_fields: data, flow_st: this.activeIndex + 1
     };
+    this.cloneListViewsDetail = cloneDeep(this.listViewsDetail)
     this.listViewsDetail = [];
     this.callApiInfo(params)
 
   }
 
   callApiInfo(params) {
+    this.spinner.show();
     this.apiService.setEmpWorking(params).subscribe((results: any) => {
       if (results.status === 'success') {
         this.listViewsDetail = cloneDeep(results.data.group_fields || []);
@@ -260,8 +262,11 @@ export class ThoiGianLamViecComponent implements OnInit, AfterViewInit {
           }
 
         }
-        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Cập nhật thông tin thành công' });
+        this.spinner.hide();
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.damessageta ? results.message : 'Cập nhật thông tin thành công' });
       } else {
+        this.listViewsDetail = cloneDeep(this.cloneListViewsDetail);
+        this.spinner.hide();
         this.messageService.add({
           severity: 'error', summary: 'Thông báo', detail: results.message
         });

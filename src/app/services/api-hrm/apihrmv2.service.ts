@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { from, Observable, throwError } from 'rxjs';
+import { from, Observable, of, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { AuthService } from '../auth.service';
@@ -603,7 +603,7 @@ export class ApiHrmV2Service {
           }
         }) };
       }), catchError(error => {
-        return throwError('Capital not found!');
+        return of(error.error);
       })
     )
   }
@@ -618,7 +618,7 @@ export class ApiHrmV2Service {
           }
         }) };
       }), catchError(error => {
-        return throwError('Capital not found!');
+        return of(error.error);
       })
     )
   }
@@ -633,7 +633,7 @@ export class ApiHrmV2Service {
           }
         }) };
       }), catchError(error => {
-        return throwError('Capital not found!');
+        return of(error.error);
       })
     )
   }
@@ -648,7 +648,7 @@ export class ApiHrmV2Service {
           }
         }) };
       }), catchError(error => {
-        return throwError('Capital not found!');
+        return of(error.error);
       })
     )
   }
@@ -663,7 +663,7 @@ export class ApiHrmV2Service {
           }
         }) };
       }), catchError(error => {
-        return throwError('Capital not found!');
+        return of(error.error);
       })
     )
   }
@@ -678,7 +678,7 @@ export class ApiHrmV2Service {
           }
         }) };
       }), catchError(error => {
-        return throwError('Capital not found!');
+        return of(error.error);
       })
     )
   }
@@ -693,7 +693,7 @@ export class ApiHrmV2Service {
           }
         }) };
       }), catchError(error => {
-        return throwError('Capital not found!');
+        return of(error.error);
       })
     )
   }
@@ -717,7 +717,7 @@ export class ApiHrmV2Service {
         }
 
       }), catchError(error => {
-        return throwError('Capital not found!');
+        return of(error.error);
       })
     )
   }
@@ -727,11 +727,11 @@ export class ApiHrmV2Service {
       map((repon: any) => {
         return { key: field_name, result: repon.data };
       }), catchError(error => {
-        return throwError('Capital not found!');
+        return of(error.error);
       })
     )
   }
-
+  
   getAutocompleteLinkApiV2(url, field_name): Observable<any> {
     return this.httpClient.get(`${apiHrmServer}` + url, this.options).pipe(
       map((repon: any) => {
@@ -742,7 +742,7 @@ export class ApiHrmV2Service {
           }
         }) };
       }), catchError(error => {
-        return throwError('Capital not found!');
+        return of(error.error);
       })
     )
   }
@@ -761,7 +761,7 @@ export class ApiHrmV2Service {
           }) 
         };
       }), catchError(error => {
-        return throwError('Capital not found!');
+        return of(error.error);
       })
     )
   }

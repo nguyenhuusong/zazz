@@ -40,6 +40,7 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
       if(dragTarget) {
         const click$ = fromEvent(dragTarget, 'click');
         click$.subscribe(event => {
+          console.log(event)
           this.addProcess()
         });
       }
@@ -189,6 +190,7 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
     const params = {
       ...this.dataDetailInfo, group_fields: event.data, flow_st: this.activeIndex
     }
+    this.closeListViewsDetail = cloneDeep(this.listViewsDetail);
     this.listViewsDetail = []
     this.callApiInfo(params)
     if (event.type === 'Submit' || event.type === 'SaveNhap') {
@@ -213,12 +215,12 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
     }
   }
 
-
-
+  closeListViewsDetail = []
   setDetail(data) {
     const params = {
       ...this.dataDetailInfo, group_fields: data, flow_st: this.activeIndex + 1
     };
+    this.closeListViewsDetail = cloneDeep(this.listViewsDetail);
     this.listViewsDetail = [];
     this.callApiInfo(params)
 
@@ -262,6 +264,7 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
         }
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Cập nhật thông tin thành công' });
       } else {
+        this.listViewsDetail = cloneDeep(this.closeListViewsDetail);
         this.messageService.add({
           severity: 'error', summary: 'Thông báo', detail: results.message
         });

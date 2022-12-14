@@ -12,7 +12,7 @@
                     [domLayout]="'autoHeight'" 
                     *ngIf="columnDefs.length > 0" 
                     [title]="'Chứng chỉ'"
-                    [idGrid]="gridKey"
+                    [idGrid]="gridKey + '_45dfs'"
                     [listsData]="listsData" 
                     (showConfig)="CauHinh()"
                     [columnDefs]="columnDefs">
@@ -37,7 +37,7 @@
        Thêm mới chứng chỉ
     </p-header>
     <app-edit-detail [optionsButtonsEdit]="optionsButtonsPopup" *ngIf="listViewsDetail.length> 0 && displayFormEditDetail" [detailInfo]="dataDetailInfo"
-        [detail]="displayFormEditDetail" [manhinh]="'Edit'" [thongtinnhanvienNew]="true"
+        [detail]="dataDetailInfo" [manhinh]="'Edit'" [thongtinnhanvienNew]="true"
         [dataView]="listViewsDetail" (callback)="setDetailInfo($event)"
         (callbackcancel)="cancelDetailInfo($event)"></app-edit-detail>
 </p-dialog>

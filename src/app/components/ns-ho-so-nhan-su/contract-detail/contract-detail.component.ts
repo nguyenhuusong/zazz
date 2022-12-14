@@ -103,14 +103,18 @@ export class ContractDetailComponent implements OnInit {
     const params = {
       ...this.detailInfo, group_fields: data, flow_st: this.activeIndex + 1
     }
+    this.cloneListViews = cloneDeep(this.listViews); 
+    this.listViews = [];
     this.callApiInfo(params)
    
   }
-
+  cloneListViews = []
   callBackForm(event) {
     const params = {
       ...this.detailInfo, group_fields: event.data, flow_st: event.type === 'Submit' ?  this.activeIndex + 1 : this.activeIndex
     }
+    this.cloneListViews = cloneDeep(this.listViews); 
+    this.listViews = [];
     this.callApiInfo(params)
     if(event.type === 'Submit' || event.type === 'SaveNhap') {
       setTimeout(() => {
@@ -124,7 +128,6 @@ export class ContractDetailComponent implements OnInit {
     this.spinner.show();
     this.apiService.setEmpWorkJob(params).subscribe(results => {
       if (results.status === 'success') {
-        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
         this.activeIndex = results.data.flow_st;
         // this.steps = results.data.flowStatuses.map(d => {
         //   return {
@@ -162,8 +165,9 @@ export class ContractDetailComponent implements OnInit {
          if((results.data.flow_st > 0 && results.data.flow_st < 4)  && !results.data.contractId) this.getSalaryComponentPageNotContractId(results.data);
         }
         this.spinner.hide();
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
       } else {
-        this.listViews = cloneDeep(this.detailInfo.group_fields);
+        this.listViews = cloneDeep(this.cloneListViews);
         this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
         this.spinner.hide();
       }
