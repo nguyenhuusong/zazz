@@ -2169,6 +2169,14 @@ export class ApiHrmService {
   getFilter(url): Observable<any> {
     return this.http.get<any>(`${apiHrmServer + url} `, this.options)
   }
-  
+
+  imgaetest(data): Observable<any> {
+    const customOptions = {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue()
+      })
+    };
+    return this.http.post<any>(`https://apiidentity.sunshinegroup.vn/Identify/idcard`, data, customOptions)
+  }
 
 }

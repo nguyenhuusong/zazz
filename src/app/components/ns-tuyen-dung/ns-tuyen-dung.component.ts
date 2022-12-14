@@ -730,6 +730,22 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     this.load();
   }
 
+  isUploadImage = false;
+  formData = new FormData();
+  onSelectFile(event, type) {
+    if(type === 1) {
+      this.formData.append('front_file', event.currentFiles[0]);
+    }else{
+      this.formData.append('back_file', event.currentFiles[0]);
+    }
+    
+  }
+  sendImages() {
+    this.apiService.imgaetest(this.formData)
+    .subscribe(results => {
+      console.log('results', results)
+    } )
+  }
   importFileExel() {
     this.router.navigate(['/tuyen-dung/ds-tuyen-dung/import']);
   }

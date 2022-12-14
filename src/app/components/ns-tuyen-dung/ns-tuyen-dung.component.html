@@ -248,3 +248,19 @@
 <p-menu [model]="optionsButtonDB" [appendTo]="'body'" [popup]="true"
 styleClass="menu-option-right" #optionsButton></p-menu>
 
+<p-dialog styleClass="isUploadImage" header="Upload ảnh" (onHide)="onHideSendEmail($event)"
+    [(visible)]="isUploadImage" 
+    [modal]="true" [style]="{width: '600px'}"
+    [draggable]="false" [resizable]="false" [focusTrap]="false" >
+    <div class="field-group select">
+        <p-fileUpload mode="basic" 
+        name="demo[]" 
+        chooseLabel="Tạo mới import" accept="image/*" (onSelect)="onSelectFile($event, 1)"></p-fileUpload>
+    </div>
+    <div class="field-group select">
+        <p-fileUpload mode="basic" 
+        name="demo[]" 
+        chooseLabel="Tạo mới import" accept="image/*" (onSelect)="onSelectFile($event, 2)"></p-fileUpload>
+    </div>
+    <p-button styleClass="p-button-sm p-button-secondary" (click)="sendImages()" icon="pi pi-times" label="Gửi ảnh"></p-button>
+</p-dialog>

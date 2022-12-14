@@ -8,6 +8,7 @@ import { chunk } from 'lodash'
 import { takeUntil } from 'rxjs/operators';
 import { forkJoin, Subject } from 'rxjs';
 import * as queryString from 'querystring';
+import { getFieldValueAggrid } from 'src/app/utils/common/function-common';
 @Component({
   selector: 'app-send-notify',
   templateUrl: './send-notify.component.html',
@@ -49,6 +50,7 @@ export class SendNotifyComponent implements OnInit, AfterViewInit,OnDestroy {
 
   ngOnInit(): void {
     this.getObjectsNotifyTemplate();
+    // this.action = [ 'email']
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -131,6 +133,8 @@ export class SendNotifyComponent implements OnInit, AfterViewInit,OnDestroy {
   }
 
   getObjectsNotifyTemplate(){
+    this.action = getFieldValueAggrid(this.notify, 'actionlist', '');
+
     const queryParams = queryString.stringify({ objKey: 'notify_template' });
     this.apiService.getObjects(queryParams).subscribe(results => {
       if (results.status === 'success') {
@@ -139,7 +143,11 @@ export class SendNotifyComponent implements OnInit, AfterViewInit,OnDestroy {
             label: d.name, 
             value: d.value 
           }
-        })
+        });
+        // if(this.action) {
+        //   let actionValue = this.action;
+        //   this.action = this.actions.filter( d => d.value === actionValue)
+        // }
       }
     })
   }

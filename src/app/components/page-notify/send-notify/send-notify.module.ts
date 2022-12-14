@@ -14,6 +14,7 @@ import { DialogModule } from 'primeng/dialog';
 import { AgGridModule } from '@ag-grid-community/angular';
 import { DialogImageModule } from 'src/app/common/dialogimage/dialogimage.module';
 import { ManageMediaModule } from 'src/app/common/manage-media-module/manage-media.module';
+import { MultiSelectModule } from 'primeng/multiselect';
 @NgModule({
   declarations: [
     SendNotifyComponent
@@ -33,6 +34,7 @@ import { ManageMediaModule } from 'src/app/common/manage-media-module/manage-med
     GridPushListModule,
     DialogModule,
     TabViewModule,
+    MultiSelectModule,
     ManageMediaModule],
   exports: [SendNotifyComponent],
   entryComponents: [],
