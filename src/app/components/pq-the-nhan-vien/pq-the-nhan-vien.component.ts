@@ -490,7 +490,20 @@ detailInfoFilter = null;
     });
   }
 
-  showFilter() {
+   filterLoad(event) {
+    this.model = { ...this.model, ...event.data };
+    this.load();
+  }
+
+  close(event) {
+    const listViews = cloneDeep(this.cloneListViewsFilter);
+    this.listViewsFilter = cloneDeep(listViews);
+    const params =  getParamString(listViews)
+    this.model = { ...this.model, ...params};
+    this.load();
+  }
+
+showFilter() {
     const ref = this.dialogService.open(FormFilterComponent, {
       header: 'Tìm kiếm nâng cao',
       width: '40%',

@@ -29,6 +29,7 @@ import { HrmBreadCrumbModule } from 'src/app/common/hrm-breadcrumb/hrm-breadcrum
 import { ConfigGridTableFormModule } from 'src/app/common/config-grid-table-form/config-grid-table-form.module';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { CheckHideActionsDirectiveModule } from 'src/app/directive/check-action.module';
+import { FormFilterModule } from 'src/app/common/form-filter/form-filter.module';
 @NgModule({
   declarations: [
     PageNotifyComponent,
@@ -61,6 +62,7 @@ import { CheckHideActionsDirectiveModule } from 'src/app/directive/check-action.
     HrmBreadCrumbModule,
     ConfigGridTableFormModule,
     OverlayPanelModule,
+    FormFilterModule,
     CheckHideActionsDirectiveModule
   ],
   exports: [PageNotifyComponent],

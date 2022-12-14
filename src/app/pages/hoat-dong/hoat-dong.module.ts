@@ -36,6 +36,7 @@ import { HrmBreadCrumbModule } from 'src/app/common/hrm-breadcrumb/hrm-breadcrum
 import { CheckboxModule } from 'primeng/checkbox';
 import { ConfigGridTableFormModule } from 'src/app/common/config-grid-table-form/config-grid-table-form.module';
 import { HoatDongRoutingModule } from './hoat-dong-routing.module';
+import { FormFilterModule } from 'src/app/common/form-filter/form-filter.module';
 
 @NgModule({
   imports: [
@@ -58,6 +59,7 @@ import { HoatDongRoutingModule } from './hoat-dong-routing.module';
     EditDetailModule,
     FileUploadModule,
     MenuModule,
+    FormFilterModule,
     CardModule,
     BadgeModule,
     TooltipModule,
