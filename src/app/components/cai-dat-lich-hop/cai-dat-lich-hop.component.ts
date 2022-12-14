@@ -114,6 +114,7 @@ export class CaiDatLichHopComponent implements OnInit {
       { label: 'Hoạt động' },
       { label: 'Lịch họp' },
     ];
+    this.load();
     // this.getFloor();
     // this.getOrgan();
   }
