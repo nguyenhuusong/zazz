@@ -86,7 +86,7 @@ export class ChonThoiGianComponent implements OnInit {
       meet_ud: this.meet_ud || null,
       roomId: this.forTime.roomId,
       meet_at: moment(value.startDate).format("YYYY-MM-DD"),
-      meet_start: `${value.startTime.getHours()}:${value.startTime.getMinutes()}`,
+      meet_start: `${value.startTime.getHours()}:${(value.startTime.getMinutes()< 10 ?'0' :'') + value.startTime.getMinutes()}`,
       meet_time:  value.meet_time
     }
     this.apiService.checkTimeHrm(queryParam).subscribe(results => {

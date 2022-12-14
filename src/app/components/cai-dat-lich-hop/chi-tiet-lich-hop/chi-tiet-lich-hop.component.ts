@@ -148,7 +148,6 @@ export class ChiTietLichHopComponent implements OnInit, OnDestroy {
   }
 
   setMeetRoomInfo(data): void {
-    console.log('fjdsofijd', data)
     this.spinner.show();
     const params = {
       ...this.detailInfo, group_fields: data, members: this.listsData
@@ -157,7 +156,7 @@ export class ChiTietLichHopComponent implements OnInit, OnDestroy {
       if (results.status === 'success') {
         this.spinner.hide();
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data });
-      this.onBack()
+        this.onBack()
       } else {
         this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
         this.spinner.hide();
@@ -205,11 +204,11 @@ export class ChiTietLichHopComponent implements OnInit, OnDestroy {
   theDateChoosed(event){
     // lưu 'dateChoosed' để gán vào group filed, khi thời gian chọn ko tự bind được
     this.dateChoosed = event;
-    this.listViews = []
     this.showChooseCalander = false;
     if(!event){
       this.showChooseCalander = false;
     }else{
+      this.listViews = []
       this.fieldsGroupTem.forEach(element => {
         element.fields.forEach(element1 => {
           if (element1.field_name === 'meet_at') {
