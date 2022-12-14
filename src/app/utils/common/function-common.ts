@@ -642,3 +642,15 @@ export function setOrganizeId(groupFields, field_name, organId) {
   }
   return datas;
 }
+
+export function getValueOfField(datas, field_name) {
+  let value = ''
+  datas.forEach( group => {
+    group.fields.forEach(field => {
+      if(field.field_name === field_name) {
+        value = field.columnValue;
+      }
+    });
+  }); 
+  return value;
+}

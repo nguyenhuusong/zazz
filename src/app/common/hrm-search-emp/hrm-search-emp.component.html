@@ -5,6 +5,7 @@ styleClass="search-em-in"
 [resizable]="false" 
 [autoZIndex]="true" 
 [modal]="true" 
+(onHide)="cancelItem()"
 [style]="{width: '800px', height: 'auto'}">
 <ng-template pTemplate="header">
     Tìm kiếm nhân viên

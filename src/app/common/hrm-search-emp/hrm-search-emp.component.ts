@@ -55,9 +55,11 @@ export class HrmSearchEmpComponent {
     const queryParams = queryString.stringify({ empId: this.dataSearcheSelect[0].empId });
     this.empId = this.dataSearcheSelect[0].empId
     this.apiService.getEmpProfile(queryParams).subscribe(results => {
+      if (results.status === 'success') {
         this.dataInfo = {
           address: getFieldValueAggrid(results.data, 'origin_add'),
         }
+      }
     } )
   }
 

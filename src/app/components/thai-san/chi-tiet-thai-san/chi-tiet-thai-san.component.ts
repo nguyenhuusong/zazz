@@ -9,7 +9,7 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
-import { setOrganizeId } from 'src/app/utils/common/function-common';
+import { getValueOfField, setOrganizeId } from 'src/app/utils/common/function-common';
 
 @Component({
   selector: 'app-chi-tiet-thai-san',
@@ -44,6 +44,8 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
   dataDetail = []
   heightGrid = 300;
   organIdSelected = '';
+  emId = '';
+  emDataInfo = []
   constructor(
     private activatedRoute: ActivatedRoute,
     private apiService: ApiHrmService,
@@ -77,6 +79,7 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
       .subscribe((params) => {
         this.paramsObject = { ...params.keys, ...params };
         this.modelEdit.maternityId = this.paramsObject.params.maternityId || null;
+        this.emId = this.paramsObject.params.emId || null;
         this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
           if(results && results.length>0){
             this.getMaternityInfo();
@@ -146,6 +149,31 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
           this.dataDetail = results.data.data;
 
           // this.initGrid();
+        }
+        // set by emid
+        if(this.emId) {
+          let listViews = cloneDeep(this.listViews);
+          this.listViews = []
+          const queryParams = queryString.stringify({ empId: this.emId });
+          this.apiService.getEmpWorkJob(queryParams).subscribe(results => {
+  
+            let companyValue = getValueOfField(results.data.group_fields, 'companyId');
+            let orgcdsValue = getValueOfField(listViews, 'org_cds');
+            if (results.status === 'success') {
+              this.emDataInfo = results.data;
+              listViews.forEach( group => {
+                group.fields.forEach(field => {
+                  if(field.field_name === 'companyName') { 
+                    field.columnValue = companyValue;
+                  }else if(field.field_name === 'empId') { 
+                    field.columnObject = field.columnObject + '&organizeId=' + orgcdsValue + '&ftUserId=' + this.emId
+                    field.columnValue = this.emId;
+                  }
+                });
+              })
+            }
+            this.listViews = [...listViews];
+          } )
         }
       });
   }

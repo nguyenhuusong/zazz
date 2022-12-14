@@ -410,6 +410,8 @@ showFilter() {
     }
     if(event.value) {
       this.router.navigate(['/nhan-su/thai-san/them-moi-thai-san'], { queryParams: params });
+    }else{
+      this.isSearchEmp = false;
     }
   }
 

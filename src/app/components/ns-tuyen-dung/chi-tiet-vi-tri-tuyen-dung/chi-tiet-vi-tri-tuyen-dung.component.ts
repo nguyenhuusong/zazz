@@ -9,7 +9,7 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { CheckHideAction } from 'src/app/common/function-common/common';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
-import { setOrganizeId } from 'src/app/utils/common/function-common';
+import { getValueOfField, setOrganizeId } from 'src/app/utils/common/function-common';
 
 @Component({
   selector: 'app-chi-tiet-vi-tri-tuyen-dung',
@@ -90,7 +90,33 @@ export class ChiTietViTriTuyenDungComponent implements OnInit, OnDestroy {
       });
   }
 
-  
+  setValueByCurrencyType() {
+    let fieldValue = getValueOfField(this.listViews, 'actionlist');
+    this.listViews.forEach( group => {
+      group.fields.forEach(field => {
+        if(field.field_name === 'salary_from') {
+          if(parseInt(fieldValue) === 2){
+            field.isVisiable = true;
+          }else{
+            field.isVisiable = false;
+          }
+        }else if(field.field_name === 'salary_to') { 
+          if(parseInt(fieldValue) === 3){
+            field.isVisiable = true;
+          }else{
+            field.isVisiable = false;
+          }
+        }else if(field.field_name === 'currency') { 
+          if(parseInt(fieldValue) === 4){
+            field.isVisiable = false;
+          }else{
+            field.isVisiable = true;
+          }
+        }
+      });
+    }); 
+  }
+
 
   getVacancyInfo() {
     this.listViews = [];
