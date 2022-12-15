@@ -49,6 +49,7 @@ import { Subject, takeUntil } from 'rxjs';
     }
     modelEdit = {
       Id: null,
+      empId: null
     }
     titlePage = '';
     configData = []
@@ -59,6 +60,7 @@ import { Subject, takeUntil } from 'rxjs';
         .subscribe((params) => {
           this.paramsObject = { ...params.keys, ...params };
           this.modelEdit.Id = this.paramsObject.params.Id || null
+          this.modelEdit.empId = this.paramsObject.params.empId || null
           this.getSalaryInfoDevM();
         });
     };

@@ -15,6 +15,7 @@ import { cloneDeep } from 'lodash';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { DialogService } from 'primeng/dynamicdialog';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
+import { fromEvent } from 'rxjs';
 @Component({
   selector: 'app-thai-san',
   templateUrl: './thai-san.component.html',
@@ -182,12 +183,31 @@ export class ThaiSanComponent implements OnInit, AfterViewChecked {
       ]
     };
   }
+  
+  ngAfterViewInit(): void {
+    this.FnEvent();
+  }
+
+  FnEvent() {
+    setTimeout(() => {
+      var dragTarget = document.getElementById(this.gridKey);
+      if(dragTarget) {
+        const click$ = fromEvent(dragTarget, 'click');
+        click$.subscribe(event => {
+          this.addThaiSan()
+        });
+      }
+    }, 300);
+  }
 
   initGrid() {
     this.columnDefs = [
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       {
-        headerName: 'Thao tác',
+        headerComponentParams: {
+          template:
+          `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
+        },
         filter: '',
         width: 100,
         pinned: 'right',
@@ -255,6 +275,7 @@ export class ThaiSanComponent implements OnInit, AfterViewChecked {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa tuyển dụng thành công' });
             this.load();
+            this.FnEvent();
           } else {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
           }
@@ -282,17 +303,19 @@ export class ThaiSanComponent implements OnInit, AfterViewChecked {
 
   find() {
     this.load();
+    this.FnEvent();
   }
 
   changePageSize() {
     this.load();
+    this.FnEvent();
   }
 
   paginate(event: any) {
     this.query.offSet = event.first;
     this.first = event.first;
     this.query.pageSize = event.rows === 4 ? 100000000 : event.rows;
-    this.load();
+    this.find();
   }
 
   ngOnInit() {
@@ -351,6 +374,7 @@ export class ThaiSanComponent implements OnInit, AfterViewChecked {
    filterLoad(event) {
     this.query = { ...this.query, ...event.data };
     this.load();
+    this.FnEvent();
   }
 
   close(event) {
@@ -359,6 +383,7 @@ export class ThaiSanComponent implements OnInit, AfterViewChecked {
     const params =  getParamString(listViews)
     this.query = { ...this.query, ...params};
     this.load();
+    this.FnEvent();
   }
 
 showFilter() {
