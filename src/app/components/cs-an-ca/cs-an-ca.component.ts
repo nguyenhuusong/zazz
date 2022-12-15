@@ -139,6 +139,22 @@ detailInfoFilter = null;
     this.displaySetting = true;
   }
 
+  ngAfterViewInit(): void {
+    this.FnEvent();
+  }
+
+  FnEvent() {
+    setTimeout(() => {
+      var dragTarget = document.getElementById(this.gridKey);
+      if(dragTarget) {
+        const click$ = fromEvent(dragTarget, 'click');
+        click$.subscribe(event => {
+          this.handAddNew()
+        });
+      }
+    }, 300);
+  }
+
   load() {
     this.columnDefs = []
     this.spinner.show();
@@ -166,6 +182,7 @@ detailInfoFilter = null;
           }, 100);
         }
         this.spinner.hide();
+        this.FnEvent();
       },
       error => {
         this.spinner.hide();
@@ -258,12 +275,10 @@ detailInfoFilter = null;
 
   find() {
     this.load();
-    this.FnEvent();
   }
 
   changePageSize() {
     this.load();
-    this.FnEvent();
   }
 
   paginate(event) {
@@ -492,7 +507,6 @@ detailInfoFilter = null;
    filterLoad(event) {
     this.query = { ...this.query, ...event.data };
     this.load();
-    this.FnEvent();
   }
 
   close(event) {
@@ -501,7 +515,6 @@ detailInfoFilter = null;
     const params =  getParamString(listViews)
     this.query = { ...this.query, ...params};
     this.load();
-    this.FnEvent();
   }
 
 showFilter() {
@@ -544,22 +557,6 @@ showFilter() {
         }
       }
     });
-  }
-
-  ngAfterViewInit(): void {
-    this.FnEvent();
-  }
-
-  FnEvent() {
-    setTimeout(() => {
-      var dragTarget = document.getElementById(this.gridKey);
-      if(dragTarget) {
-        const click$ = fromEvent(dragTarget, 'click');
-        click$.subscribe(event => {
-          this.handAddNew()
-        });
-      }
-    }, 300);
   }
 
 }
