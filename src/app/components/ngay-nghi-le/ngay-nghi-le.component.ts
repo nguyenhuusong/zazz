@@ -255,7 +255,11 @@ export class NgayNghiLeComponent implements OnInit {
       //   cellClass: ['action', 'border-right', 'no-auto'],
       // },
       {
-        headerName: 'Thao tác', field: 'button',
+        headerComponentParams: {
+          template:
+          `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
+        },
+        field: 'button',
         editable: false, width: 100,
         cellRenderer: 'buttonRendererComponent',
         cellRendererParams: (params: any) => this.showButtons(params),
@@ -479,14 +483,15 @@ export class NgayNghiLeComponent implements OnInit {
     { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger height-56 addNew', icon: 'pi pi-times' },
   ];
   getFilter() {
-    this.apiService.getFilter('/api/v2/meeting/GetMeetingFilter').subscribe(results => {
+    this.load();
+    this.apiService.getFilter('').subscribe(results => {
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
         this.listViewsFilter = [...listViews];
         const params =  getParamString(listViews)
         this.query = { ...this.query, ...params};
-        this.load();
+        
         this.detailInfoFilter = results.data;
       }
     });
@@ -498,12 +503,13 @@ export class NgayNghiLeComponent implements OnInit {
     this.FnEvent();
   }
 
-  close(event) {
+  closeFilter(event) {
     const listViews = cloneDeep(this.cloneListViewsFilter);
     this.listViewsFilter = cloneDeep(listViews);
     const params =  getParamString(listViews)
     this.query = { ...this.query, ...params};
     this.load();
+    this.FnEvent()
   }
 
 showFilter() {
