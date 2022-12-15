@@ -13,7 +13,7 @@ import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { HttpParams } from '@angular/common/http';
 import { WebsocketService2 } from 'src/app/services/websocket.service';
-import { Subject, takeUntil } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import * as moment from 'moment';
@@ -243,6 +243,7 @@ export class XuLyHopDongComponent implements OnInit {
           }, 100);
         }
         this.spinner.hide();
+        this.FnEvent();
       },
       error => {
         this.spinner.hide();
@@ -323,12 +324,27 @@ export class XuLyHopDongComponent implements OnInit {
   XemChiTiet(event) {
     const modelContractInfo = {
       contractId: event.rowData.contractId,
-      contractTypeId: event.rowData.contractTypeId,
       empId: event.rowData.empId,
-      organizeId: event.rowData.organizeId
     }
     this.router.navigate(['/nhan-su/xu-ly-hop-dong/chi-tiet-xu-ly-hop-dong'], { queryParams: modelContractInfo });
 
+  }
+  
+  isSearchEmp: boolean = false
+  addNew() {
+    this.isSearchEmp = true;
+  }
+
+  seachEmValue(event) {
+    const params = {
+      contractId: '',
+      empId: event.value
+    }
+    if(event.value) {
+      this.router.navigate(['/nhan-su/xu-ly-hop-dong/chi-tiet-xu-ly-hop-dong'], { queryParams: params });
+    }else{
+      this.isSearchEmp = false;
+    }
   }
 
   updateStatus(event) {
@@ -356,12 +372,31 @@ export class XuLyHopDongComponent implements OnInit {
     });
   }
 
+  ngAfterViewInit(): void {
+    this.FnEvent();
+  }
+
+  FnEvent() {
+    setTimeout(() => {
+      var dragTarget = document.getElementById(this.gridKey);
+      if(dragTarget) {
+        const click$ = fromEvent(dragTarget, 'click');
+        click$.subscribe(event => {
+          this.addNew()
+        });
+      }
+    }, 300);
+  }
+
   columnDefsPrint = []
   initGrid() {
     this.columnDefs = [
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       {
-        headerName: 'Thao tác',
+        headerComponentParams: {
+          template:
+          `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
+        },
         filter: '',
         width: 100,
         pinned: 'right',

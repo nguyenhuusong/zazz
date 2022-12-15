@@ -71,19 +71,6 @@ export class CreateContractInfoComponent implements OnInit {
     });
   }
 
-  getContractTypes() {
-    const queryParams = queryString.stringify({ organizeId: this.modelContractInfo.organizeId });
-    this.apiService.getContractTypes(queryParams).subscribe(results => {
-      if (results.status === 'success') {
-        this.listContractTypes = results.data.map(d => {
-          return {
-            label: d.contractTypeName,
-            value: d.contractType
-          }
-        });
-      }
-    })
-  }
   columnDefsMetafiles = [];
   stepsLine = [];
   columnDefsSalaryComponents = [];

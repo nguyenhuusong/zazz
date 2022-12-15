@@ -43,13 +43,41 @@ export class ContractDetailComponent implements OnInit {
   detailInfo = null;
   listViews = [];
   steps = [];
-  activeIndex = 0
+  activeIndex = 0;
+  titlePage = '';
+  url = '';
+  itemsMenu = [];
   ngOnInit(): void {
-    if (this.modelContractInfo.contractId) {
-      this.getContractInfo();
+
+    this.titlePage = this.activatedRoute.data['_value'].title;
+    this.url = this.activatedRoute.data['_value'].url;
+    if (this.url === 'chi-tiet-xu-ly-hop-dong') {
+      this.itemsMenu =  [
+        { label: 'Trang chủ' , routerLink: '/home' },
+        { label: 'Danh sách xử lý hợp đồng' , routerLink: '/nhan-su/xu-ly-hop-dong'},
+        { label: `${this.titlePage}` },
+      ]
+      this.handleParams();
     } else {
-      this.setContractCreate();
+      if (this.modelContractInfo.contractId) {
+        this.getContractInfo();
+      } else {
+        this.setContractCreate();
+      }
     }
+  }
+  paramsObject = null;
+
+  handleParams(): void {
+    this.activatedRoute.queryParamMap.subscribe((params) => {
+      this.paramsObject = { ...params.keys, ...params };
+      this.modelContractInfo = this.paramsObject.params;
+      if (this.modelContractInfo.contractId) {
+        this.getContractInfo();
+      } else {
+        this.setContractCreate();
+      }
+    });
   }
  
   setContractCreate() {

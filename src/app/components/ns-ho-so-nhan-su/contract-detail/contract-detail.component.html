@@ -1,3 +1,11 @@
+<div class="main-grid product-detail" *ngIf="url === 'chi-tiet-xu-ly-hop-dong'">
+    <section>
+        <div class="breadcrumb">
+            <p-breadcrumb [model]="itemsMenu"></p-breadcrumb>
+            <h3>{{titlePage}}</h3>
+        </div>
+    </section>
+</div>
 <p-card>
     <div class="status-line steps-contract col-12 m-auto">
         <p-steps [model]="steps" [(activeIndex)]="activeIndex" [readonly]="false"></p-steps>
@@ -5,24 +13,7 @@
 </p-card>
 <p-divider></p-divider>
 <p-card>
-    <div class="grid wrap-edit-detail">
-        <div class="col-12 border-section " *ngIf="this.detailInfo?.flow_st > 1">
-            <p-panel>
-                <ng-template pTemplate="header">
-                    <div class="grid d-flex justify-content-between">
-                        <h3 class="title-section">Danh sách hồ sơ hợp đồng</h3>
-                        <!-- <p-button label="Thêm mới" icon="pi pi-plus" (click)="addWorked()" styleClass="p-button-sm mr-1"></p-button> -->
-                    </div>
-                </ng-template>
-                <div class="row" style="flex-wrap: wrap">
-                    <div class="grid-default border">
-                        <app-list-grid-angular [domLayout]="'autoHeight'" *ngIf="columnDefs.length > 0" [title]="'Chứng chỉ'"
-                            [listsData]="listsData" [columnDefs]="columnDefs"  (showConfig)="CauHinh(0)"></app-list-grid-angular>
-                        </div>
-                </div>
-            </p-panel>
-        </div>
-    </div>
+   
     <p-divider *ngIf="this.detailInfo?.flow_st > 1"></p-divider>
     <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'"
         [optionsButtonsEdit]="optionsButon" [dataView]="listViews" (callback)="setContractInfo($event)" (callBackForm)="callBackForm($event)"
@@ -46,6 +37,24 @@
                 </p-panel>
             </div>
         </div>  
+        <div class="grid wrap-edit-detail">
+            <div class="col-12 border-section " *ngIf="this.detailInfo?.flow_st > 2">
+                <p-panel>
+                    <ng-template pTemplate="header">
+                        <div class="grid d-flex justify-content-between">
+                            <h3 class="title-section">Danh sách hồ sơ hợp đồng</h3>
+                            <!-- <p-button label="Thêm mới" icon="pi pi-plus" (click)="addWorked()" styleClass="p-button-sm mr-1"></p-button> -->
+                        </div>
+                    </ng-template>
+                    <div class="row" style="flex-wrap: wrap">
+                        <div class="grid-default border">
+                            <app-list-grid-angular [domLayout]="'autoHeight'" *ngIf="columnDefs.length > 0" [title]="'Chứng chỉ'"
+                                [listsData]="listsData" [columnDefs]="columnDefs"  (showConfig)="CauHinh(0)"></app-list-grid-angular>
+                            </div>
+                    </div>
+                </p-panel>
+            </div>
+        </div>
 </p-card>
 
 

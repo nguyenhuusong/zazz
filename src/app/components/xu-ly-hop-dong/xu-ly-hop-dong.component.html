@@ -231,3 +231,6 @@
 
 <p-menu [model]="itemsToolOfGrid" [appendTo]="'body'" [popup]="true"
 styleClass="menu-option-right" #menuButton></p-menu>
+
+
+<app-hrm-search-emp [isSearch]="isSearchEmp" *ngIf="isSearchEmp" (seachEmValue)="seachEmValue($event)"></app-hrm-search-emp>
