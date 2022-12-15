@@ -39,6 +39,7 @@ import {PanelModule} from 'primeng/panel';
 import { ConfigGridTableFormModule } from '../config-grid-table-form/config-grid-table-form.module';
 import {ChipsModule} from 'primeng/chips';
 import {InputSwitchModule} from 'primeng/inputswitch';
+import { HrmSearchEmpModule } from '../hrm-search-emp/hrm-search-emp.module';
 @NgModule({
   imports: [
     FormsModule,
@@ -70,6 +71,7 @@ import {InputSwitchModule} from 'primeng/inputswitch';
     TooltipModule,
     ChipsModule,
     InputSwitchModule,
+    HrmSearchEmpModule,
     ConfigGridTableFormModule,
     AgGridModule.withComponents([
       ButtonRendererMutiComponent,

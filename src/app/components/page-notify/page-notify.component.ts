@@ -262,13 +262,13 @@ detailInfoFilter = null;
           class: 'btn-dropbox text-white',
           hide: CheckHideAction(MENUACTIONROLEAPI.GetAppNotifyPage.url, ACTIONS.VIEW)
         },
-        {
-          onClick: this.handleAdd.bind(this),
-          label: 'Lưu thông báo',
-          icon: 'fa fa-check',
-          class: 'btn-dropbox text-white',
-          hide: CheckHideAction(MENUACTIONROLEAPI.GetAppNotifyPage.url, ACTIONS.LUU_THONG_BAO)
-        },
+        // {
+        //   onClick: this.handleAdd.bind(this),
+        //   label: 'Lưu thông báo',
+        //   icon: 'fa fa-check',
+        //   class: 'btn-dropbox text-white',
+        //   hide: CheckHideAction(MENUACTIONROLEAPI.GetAppNotifyPage.url, ACTIONS.LUU_THONG_BAO)
+        // },
         {
           onClick: this.handleChangeStatus.bind(this),
           label: event.data.isPublish ? 'Hủy công bố' : 'Công bố',
