@@ -18,6 +18,7 @@ import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { DialogService } from 'primeng/dynamicdialog';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
+import { fromEvent } from 'rxjs';
 @Component({
   selector: 'app-bieu-mau',
   templateUrl: './bieu-mau.component.html',
@@ -226,11 +227,12 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
 
   find() {
       this.load();
-    
+      this.FnEvent()
   }
   
   changePageSize() {
     this.load();
+    this.FnEvent()
   }
 
   paginate(event) {
@@ -238,6 +240,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
     this.first = event.first;
     this.query.pageSize = event.rows;
     this.load();
+    this.FnEvent()
   }
 
   displaySetting = false;
@@ -311,6 +314,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa tài liệu thành công!' });
             this.load();
+            this.FnEvent()
           } else {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
           }
@@ -392,7 +396,10 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
       },
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       {
-        headerName: '    ...',
+        headerComponentParams: {
+          template:
+          `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
+        },
         filter: '',
         maxWidth: 80,
         pinned: 'right',
@@ -401,6 +408,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
         cellRendererParams: (params: any) => this.showButtons(params),
         field: 'checkbox'
       }]
+      this.FnEvent();
   }
 
   onFirstDataRendered(params: any) {
@@ -491,11 +499,13 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
   handleCallbackForm() {
     this.load();
     this.addNewPopup = false;
+    this.FnEvent()
   }
 
   handleChange(event) {
     this.indexTab = event.index
     this.load();
+    this.FnEvent()
   }
 
   listViews = []
@@ -526,6 +536,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
           this.spinner.hide();
           this.addNewPopup2 = false;
           this.load();
+          this.FnEvent()
         } else {
           this.messageService.add({
             severity: 'error', summary: 'Thông báo',
@@ -540,6 +551,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
   }
   quaylai(r) {
     this.addNewPopup2 = false;
+    this.FnEvent()
   }
   
 
@@ -555,6 +567,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
             this.spinner.hide();
             this.load();
+            this.FnEvent()
           } else {
             this.messageService.add({
               severity: 'error', summary: 'Thông báo',
@@ -629,6 +642,7 @@ detailInfoFilter = null;
     const params =  getParamString(listViews)
     this.query = { ...this.query, ...params};
     this.load();
+    this.FnEvent()
   }
 
 showFilter() {
@@ -671,6 +685,24 @@ showFilter() {
         }
       }
     });
+  }
+
+  ngAfterViewInit(): void {
+    this.FnEvent();
+  }
+
+  FnEvent() {
+    console.log('this.FnEvent()')
+    setTimeout(() => {
+      var dragTarget = document.getElementById(this.gridKey);
+      if(dragTarget) {
+        console.log('this.gridKey', dragTarget)
+        const click$ = fromEvent(dragTarget, 'click');
+        click$.subscribe(event => {
+          this.handleAdd()
+        });
+      }
+    }, 3000);
   }
 
 }

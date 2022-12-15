@@ -296,7 +296,8 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
       }
     });
   }
-   filterLoad(event) {
+
+  filterLoad(event) {
     this.query = { ...this.query, ...event.data };
     this.load();
     this.FnEvent();

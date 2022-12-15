@@ -1068,7 +1068,9 @@ export class AppTypeDatefulltimeComponent implements OnInit {
     private apiService: ApiHrmService
   ) { }
   ngOnInit(): void {
-    this.modelFields[this.element.field_name].error = false
+    if(this.modelFields[this.element.field_name] && this.modelFields[this.element.field_name].error) {
+      this.modelFields[this.element.field_name].error = false
+    }
   }
 
 }

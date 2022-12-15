@@ -18,6 +18,7 @@ import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { DialogService } from 'primeng/dynamicdialog';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
+import { fromEvent } from 'rxjs';
 @Component({
   selector: 'app-cs-nghi-phep',
   templateUrl: './cs-nghi-phep.component.html',
@@ -61,6 +62,7 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
       buttonAgGridComponent: ButtonAgGridComponent,
       avatarRendererFull: AvatarFullComponent,
     };
+    this.getFilter();
   }
 
   ngOnDestroy(): void {
@@ -259,6 +261,7 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
             this.isReason = false;
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Hủy duyệt thành công' });
             this.load();
+            this.FnEvent();
           } else {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
           }
@@ -273,7 +276,10 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
     this.columnDefs = [
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       {
-        headerName: 'Thao tác',
+        headerComponentParams: {
+          template:
+          `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
+        },
         filter: '',
         width: 100,
         pinned: 'right',
@@ -360,10 +366,12 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
 
   find() {
     this.load();
+    this.FnEvent();
   }
 
   changePageSize() {
     this.load();
+    this.FnEvent();
   }
 
   paginate(event) {
@@ -371,6 +379,7 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
     this.first = event.first;
     this.query.pageSize = event.rows;
     this.load();
+    this.FnEvent();
   }
 
   ngOnInit() {
@@ -382,7 +391,6 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
     ];
     // this.getOrgRoots();
     // this.getRequestStatus();
-    this.getFilter();
   }
 
   getLeaveReasons() {
@@ -584,6 +592,7 @@ detailInfoFilter = null;
    filterLoad(event) {
     this.query = { ...this.query, ...event.data };
     this.load();
+    this.FnEvent();
   }
 
   close(event) {
@@ -636,9 +645,26 @@ showFilter() {
     });
   }
 
-
   quaylai(event){
-    this.addEdit = false
+    this.addEdit = false;
+    this.FnEvent();
+  }
+
+  ngAfterViewInit(): void {
+    this.FnEvent();
+  }
+
+  FnEvent() {
+    setTimeout(() => {
+      var dragTarget = document.getElementById(this.gridKey);
+      if(dragTarget) {
+        console.log('dragTarget', dragTarget)
+        const click$ = fromEvent(dragTarget, 'click');
+        click$.subscribe(event => {
+          this.addNewNghiPhep()
+        });
+      }
+    }, 3000);
   }
 }
 
