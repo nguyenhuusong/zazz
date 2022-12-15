@@ -18,6 +18,7 @@ import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { DialogService } from 'primeng/dynamicdialog';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
+import { fromEvent } from 'rxjs';
 @Component({
   selector: 'app-qt-thay-doi-luong',
   templateUrl: './qt-thay-doi-luong.component.html',
@@ -159,6 +160,7 @@ export class QtThayDoiLuongComponent implements OnInit {
       pageSize: 15,
     }
     this.load();
+    this.FnEvent();
   }
 
   onGridReady(params) {
@@ -257,9 +259,6 @@ export class QtThayDoiLuongComponent implements OnInit {
   }
   idEdit = null;
   EditRow(event) {
-    // this.addNewPopup = true;
-    // this.idEdit = event.rowData.id;
-    // this.getInfo();
     const params = {
       Id: event.rowData.id
     }
@@ -275,12 +274,29 @@ export class QtThayDoiLuongComponent implements OnInit {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa nhân viên thành công' });
             this.load();
+            this.FnEvent();
           } else {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
           }
         });
       }
     });
+  }
+
+  ngAfterViewInit(): void {
+    this.FnEvent();
+  }
+
+  FnEvent() {
+    setTimeout(() => {
+      var dragTarget = document.getElementById(this.gridKey);
+      if(dragTarget) {
+        const click$ = fromEvent(dragTarget, 'click');
+        click$.subscribe(event => {
+          this.addNew()
+        });
+      }
+    }, 300);
   }
 
   initGrid() {
@@ -299,7 +315,10 @@ export class QtThayDoiLuongComponent implements OnInit {
       },
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       {
-        headerName: '...',
+        headerComponentParams: {
+          template:
+          `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
+        },
         filter: '',
         maxWidth: 64,
         pinned: 'right',
@@ -359,10 +378,12 @@ export class QtThayDoiLuongComponent implements OnInit {
 
   find() {
     this.load();
+    this.FnEvent();
   }
 
   changePageSize() {
     this.load();
+    this.FnEvent();
   }
 
   paginate(event) {
@@ -370,6 +391,7 @@ export class QtThayDoiLuongComponent implements OnInit {
     this.first = event.first;
     this.query.pageSize = event.rows;
     this.load();
+    this.FnEvent();
   }
 
   ngOnInit() {
@@ -580,55 +602,23 @@ export class QtThayDoiLuongComponent implements OnInit {
   importFileExel() {
     this.router.navigate(['/nhan-su/ho-so-nhan-su/import']);
   }
-  listViews = []
-  detailPayrollRecordInfo = []
-  getInfo() {
-    this.listViews = [];
-    const queryParams = queryString.stringify({ Id: this.idEdit });
-    this.apiService.getSalaryInfoNew(queryParams).subscribe({
-      next: (value) => {
-        this.listViews = cloneDeep(value.data.group_fields || []);
-        this.detailPayrollRecordInfo = value.data;
-      }
-    })
-  }
-  addNewPopup = false
+  isSearchEmp: boolean = false
   addNew() {
+    
+
+    this.isSearchEmp = true;
+
+  }
+
+  seachEmValue(event) {
     const params = {
-      Id: null
+      Id: null,
+      empId: event.value
     }
-    this.router.navigate(['/nhan-su/qua-trinh-thay-doi-luong/them-moi-qua-trinh-thay-doi-luong'], { queryParams: params });
-
-    // this.idEdit = null;
-    // this.addNewPopup = true;
-    // this.getInfo();
-  }
-
-  setSalaryInfoDevM(data) {
-    const params = {
-      ...this.detailPayrollRecordInfo, group_fields: data
-    };
-    this.spinner.show();
-    this.apiService.setSalaryInfoNew(params).subscribe((results: any) => {
-      if (results.status === 'success') {
-        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Cập nhật thông tin thành công' });
-        this.addNewPopup = false;
-        this.load();
-        this.spinner.hide();
-      } else {
-        this.spinner.hide();
-        this.messageService.add({
-          severity: 'error', summary: 'Thông báo', detail: results.message
-        });
-      }
-    }, error => {
-    });
-  }
-
-  cancelHrmPayrollRecordInfo(event) {
-    this.addNewPopup = false;
-    if(event === 'CauHinh') {
-      this.getInfo();
+    if(event.value) {
+       this.router.navigate(['/nhan-su/qua-trinh-thay-doi-luong/them-moi-qua-trinh-thay-doi-luong'], { queryParams: params });
+    }else{
+      this.isSearchEmp = false;
     }
   }
 
@@ -729,6 +719,4 @@ showFilter() {
       }
     });
   }
-
-
 }
