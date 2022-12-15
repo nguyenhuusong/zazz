@@ -16,6 +16,7 @@ import { cloneDeep } from 'lodash';
 import { DialogService } from 'primeng/dynamicdialog';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
+import { fromEvent } from 'rxjs';
 
 @Component({
   selector: 'app-ns-tuyen-dung',
@@ -99,11 +100,6 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   mailInputValue: any = [];
   buttonTiemNang = [];
   optionsButtonDB: any = [];
-  onGridReady(params) {
-    this.gridApi = params.api;
-    this.gridColumnApi = params.columnApi;
-  }
-
   loadjs = 0;
   heightGrid = 450;
 
@@ -168,6 +164,10 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
           }, 100);
         }
         this.spinner.hide();
+        var dragTarget = document.getElementById(this.gridKey);
+        if(dragTarget) {
+          this.FnEvent();
+        }
       },
       error => {
         this.spinner.hide();
@@ -209,6 +209,22 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     };
   }
 
+  ngAfterViewInit(): void {
+    this.FnEvent();
+  }
+
+  FnEvent() {
+    setTimeout(() => {
+      var dragTarget = document.getElementById(this.gridKey);
+      if(dragTarget) {
+        const click$ = fromEvent(dragTarget, 'click');
+        click$.subscribe(event => {
+          this.addTuyenDung()
+        });
+      }
+    }, 300);
+  }
+
   initGrid() {
     this.columnDefs = [
       {
@@ -227,7 +243,10 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
       },
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       {
-        headerName: 'Thao tác',
+        headerComponentParams: {
+          template:
+          `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
+        },
         filter: '',
         width: 100,
         pinned: 'right',
@@ -309,6 +328,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa tuyển dụng thành công' });
             this.load();
+            this.FnEvent();
           } else {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
           }
@@ -377,15 +397,12 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     ];
     this.getJobTitles();
     this.getOrgRoots();
-    // this.getObjectList();
-    // this.getStatus();
     this.getVacancyPage();
     this.buttonTiemNang = [
       {
         label: 'Danh sách tiềm năng',
         code: 'Import',
         icon: 'pi pi-list',
-        // disabled: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.IMPORT),
         command: () => {
           this.dsTiemNang();
         }
@@ -446,7 +463,6 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   }
 
   setCandidateRegisters() {
-    
     const data = this.dataRowSelected.map( d => { 
       return {
         "fullName": d.fullName,
@@ -600,7 +616,6 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
           if (results.status === 'success') {
             this.getRecruitMailInput();
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Chuyển thành công!' });
-            // this.dataRowSelected = [];
             this.recruitmentStatusSelected = null;
             this.isSendMail = true;
           } else {
@@ -665,8 +680,6 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Gửi thành công' });
         this.mailInputValue = '';
         this.dataRowSelected = [];
-        // this.isSendMail = false;
-        // this.load();
         const params = {
           meet_ud: null
         }
@@ -699,6 +712,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
       if (results.status === 'success') {
           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Cập nhật thành công' });
           this.load();
+          this.FnEvent();
           this.isTiemNang = false;
           this.spinner.hide();
         } else {
@@ -728,6 +742,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     this.isSendMail = false;
     this.dataRowSelected = [];
     this.load();
+    this.FnEvent();
   }
 
   isUploadImage = false;
@@ -767,6 +782,7 @@ detailInfoFilter = null;
         const params =  getParamString(listViews)
         this.query = { ...this.query, ...params};
         this.load();
+        this.FnEvent();
         this.detailInfoFilter = results.data;
       }
     });
@@ -775,6 +791,7 @@ detailInfoFilter = null;
    filterLoad(event) {
     this.query = { ...this.query, ...event.data };
     this.load();
+    this.FnEvent();
   }
 
   close(event) {
@@ -783,6 +800,7 @@ detailInfoFilter = null;
     const params =  getParamString(listViews)
     this.query = { ...this.query, ...params};
     this.load();
+    this.FnEvent();
   }
 
 showFilter() {
