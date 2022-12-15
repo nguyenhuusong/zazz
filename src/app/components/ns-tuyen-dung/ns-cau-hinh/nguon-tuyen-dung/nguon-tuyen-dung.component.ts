@@ -9,6 +9,7 @@ import { ExportFileService } from 'src/app/services/export-file.service';
 import { cloneDeep } from 'lodash';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
+import { fromEvent } from 'rxjs';
 @Component({
   selector: 'app-nguon-tuyen-dung',
   templateUrl: './nguon-tuyen-dung.component.html',
@@ -16,6 +17,7 @@ import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 })
 export class NguonTuyenDungComponent implements OnInit {
   @Output() idOutPut = new EventEmitter<any>();
+  @Output() add = new EventEmitter<any>();
   pagingComponent = {
     total: 0
   };
@@ -107,6 +109,7 @@ export class NguonTuyenDungComponent implements OnInit {
           }, 100);
         }
         this.spinner.hide();
+        this.FnEvent();
       },
       error => {
         this.spinner.hide();
@@ -138,11 +141,34 @@ export class NguonTuyenDungComponent implements OnInit {
     this.idOutPut.emit(event)
   }
 
+  ngAfterViewInit(): void {
+    this.FnEvent();
+  }
+
+  FnEvent() {
+    setTimeout(() => {
+      var dragTarget = document.getElementById(this.gridKey);
+      if(dragTarget) {
+        const click$ = fromEvent(dragTarget, 'click');
+        click$.subscribe(event => {
+          this.create()
+        });
+      }
+    }, 300);
+  }
+
+  create() {
+    this.add.emit();
+  }
+
   initGrid() {
     this.columnDefs = [
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       {
-        headerName: 'Thao tác',
+        headerComponentParams: {
+          template:
+          `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
+        },
         filter: '',
         width: 100,
         pinned: 'right',
@@ -158,7 +184,7 @@ export class NguonTuyenDungComponent implements OnInit {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa?',
       accept: () => {
-        const query = queryString.stringify({sourceId: event.rowData.source_Id})
+        const query = queryString.stringify({Id: event.rowData.Id})
         this.apiService.delRecruitSourceInfo(query).subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });

@@ -9,6 +9,7 @@ import { ExportFileService } from 'src/app/services/export-file.service';
 import { cloneDeep } from 'lodash';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
+import { fromEvent } from 'rxjs';
 @Component({
   selector: 'app-tab-thanh-phan-luong',
   templateUrl: './tab-thanh-phan-luong.component.html',
@@ -16,6 +17,7 @@ import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 })
 export class TabThanhPhanLuongComponent implements OnInit {
   @Output() idOutPut = new EventEmitter<any>();
+  @Output() add = new EventEmitter<any>();
   pagingComponent = {
     total: 0
   };
@@ -80,6 +82,26 @@ export class TabThanhPhanLuongComponent implements OnInit {
     this.gridColumnApi = params.columnApi;
   }
 
+  ngAfterViewInit(): void {
+    this.FnEvent();
+  }
+
+  create() {
+    this.add.emit();
+  }
+
+  FnEvent() {
+    setTimeout(() => {
+      var dragTarget = document.getElementById(this.gridKey);
+      if(dragTarget) {
+        const click$ = fromEvent(dragTarget, 'click');
+        click$.subscribe(event => {
+          this.create()
+        });
+      }
+    }, 300);
+  }
+
   load() {
     this.columnDefs = [];
     this.spinner.show();
@@ -105,6 +127,7 @@ export class TabThanhPhanLuongComponent implements OnInit {
           }, 100);
         }
         this.spinner.hide();
+        this.FnEvent();
       },
       error => {
         this.spinner.hide();
@@ -140,7 +163,10 @@ export class TabThanhPhanLuongComponent implements OnInit {
     this.columnDefs = [
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       {
-        headerName: 'Thao tác',
+        headerComponentParams: {
+          template:
+          `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
+        },
         filter: '',
         width: 100,
         pinned: 'right',

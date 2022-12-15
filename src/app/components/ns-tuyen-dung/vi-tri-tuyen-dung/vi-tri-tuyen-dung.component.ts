@@ -19,6 +19,7 @@ const MAX_SIZE = 100000000;
 import { cloneDeep } from 'lodash';
 import { DialogService } from 'primeng/dynamicdialog';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
+import { fromEvent } from 'rxjs';
 
 @Component({
   selector: 'app-vi-tri-tuyen-dung',
@@ -108,13 +109,13 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
     const b: any = document.querySelector(".sidebarBody");
     const d: any = document.querySelector(".bread-crumb");
     const e: any = document.querySelector(".paginator");
-    this.loadjs ++ 
+    this.loadjs++
     if (this.loadjs === 5) {
-      if(b && b.clientHeight) {
+      if (b && b.clientHeight) {
         const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight + 25;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
-      }else {
+      } else {
         this.loadjs = 0;
       }
     }
@@ -145,12 +146,12 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
   load() {
     this.columnDefs = []
     this.spinner.show();
-    let params: any = {... this.query};
+    let params: any = { ... this.query };
     const queryParams = queryString.stringify(params);
     this.apiService.getVacancyPage(queryParams).subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
-        this.gridKey= results.data.dataList.gridKey;
+        this.gridKey = results.data.dataList.gridKey;
         if (this.query.offSet === 0) {
           this.cols = results.data.gridflexs;
           this.colsDetail = results.data.gridflexdetails ? results.data.gridflexdetails : [];
@@ -168,10 +169,11 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
           this.countRecord.currentRecordEnd = results.data.dataList.recordsTotal;
           setTimeout(() => {
             const noData = document.querySelector('.ag-overlay-no-rows-center');
-            if (noData) { noData.innerHTML = 'Không có kết quả phù hợp'}
+            if (noData) { noData.innerHTML = 'Không có kết quả phù hợp' }
           }, 100);
         }
         this.spinner.hide();
+        this.FnEvent();
       },
       error => {
         this.spinner.hide();
@@ -199,11 +201,30 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
     };
   }
 
+  ngAfterViewInit(): void {
+    this.FnEvent();
+  }
+
+  FnEvent() {
+    setTimeout(() => {
+      var dragTarget = document.getElementById(this.gridKey);
+      if (dragTarget) {
+        const click$ = fromEvent(dragTarget, 'click');
+        click$.subscribe(event => {
+          this.create()
+        });
+      }
+    }, 300);
+  }
+
   initGrid() {
     this.columnDefs = [
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       {
-        headerName: 'Thao tác',
+        headerComponentParams: {
+          template:
+            `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
+        },
         filter: '',
         width: 100,
         pinned: 'right',
@@ -258,8 +279,8 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
 
   ngOnInit() {
     this.items = [
-      { label: 'Trang chủ' , routerLink: '/home' },
-      { label: 'Tuyển dụng'},
+      { label: 'Trang chủ', routerLink: '/home' },
+      { label: 'Tuyển dụng' },
       { label: 'Danh sách vị trí tuyển dụng' },
     ];
     this.optionsButtonDB = [
@@ -300,7 +321,7 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
       }
     })
   }
-  
+
   getHiringMans() {
     this.apiService.getUsersByAdmin(queryString.stringify({ admin_st: 0 })).subscribe(results => {
       if (results.status === 'success') {
@@ -313,11 +334,11 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
         this.hiringMans = [{ label: 'Tất cả', value: '' }, ...this.hiringMans]
       }
     })
-    
+
   }
 
   departmentFiltes = [];
-  getBoPhan () {
+  getBoPhan() {
     const queryParams = queryString.stringify({ parentId: this.selectedValue });
     this.apiService.getOrganizeTree(queryParams)
       .subscribe((results: any) => {
@@ -328,20 +349,20 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
         error => { });
   }
 
-  
+
   export() {
-    let params: any = {... this.query};
+    let params: any = { ... this.query };
     const queryParams = queryString.stringify(params);
     this.apiService.exportVacancy(queryParams).subscribe(results => {
       if (results.type === 'application/json') {
         this.spinner.hide();
       } else {
         var blob = new Blob([results], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-        FileSaver.saveAs(blob, `Danh sách vị trí tuyển dụng ${params.FromDate} - ${params.ToDate}` +".xlsx");
+        FileSaver.saveAs(blob, `Danh sách vị trí tuyển dụng ${params.FromDate} - ${params.ToDate}` + ".xlsx");
         this.spinner.hide();
       }
     })
-    
+
   }
 
   rowSelected(data) {
@@ -359,7 +380,7 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
 
   listViewsFilter = [];
   cloneListViewsFilter = [];
-detailInfoFilter = null;
+  detailInfoFilter = null;
   optionsButonFilter = [
     { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm ml-2 height-56 addNew', icon: 'pi pi-plus' },
     { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger ml-2 height-56 addNew', icon: 'pi pi-times' },
@@ -367,19 +388,19 @@ detailInfoFilter = null;
 
   getVacancyFilter() {
     this.apiService.getVacancyFilter().subscribe(results => {
-      if(results.status === 'success') {
+      if (results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
         this.listViewsFilter = [...listViews];
-        const params =  getParamString(listViews)
-        this.query = { ...this.query, ...params};
+        const params = getParamString(listViews)
+        this.query = { ...this.query, ...params };
         this.load();
         this.detailInfoFilter = results.data;
       }
     });
   }
-  
-   filterLoad(event) {
+
+  filterLoad(event) {
     this.query = { ...this.query, ...event.data };
     this.load();
   }
@@ -387,12 +408,12 @@ detailInfoFilter = null;
   close(event) {
     const listViews = cloneDeep(this.cloneListViewsFilter);
     this.listViewsFilter = cloneDeep(listViews);
-    const params =  getParamString(listViews)
-    this.query = { ...this.query, ...params};
+    const params = getParamString(listViews)
+    this.query = { ...this.query, ...params };
     this.load();
   }
 
-showFilter() {
+  showFilter() {
     const ref = this.dialogService.open(FormFilterComponent, {
       header: 'Tìm kiếm nâng cao',
       width: '40%',
@@ -411,12 +432,12 @@ showFilter() {
           this.query = { ...this.query, ...event.data };
           this.load();
         } else if (event.type === 'CauHinh') {
-        this.apiService.getVacancyFilter().subscribe(results => {
+          this.apiService.getVacancyFilter().subscribe(results => {
             if (results.status === 'success') {
               const listViews = cloneDeep(results.data.group_fields);
               this.listViewsFilter = [...listViews];
-              const params =  getParamString(listViews)
-              this.query = { ...this.query, ...params};
+              const params = getParamString(listViews)
+              this.query = { ...this.query, ...params };
               this.load();
               this.detailInfoFilter = results.data;
               this.showFilter()
@@ -426,9 +447,9 @@ showFilter() {
         } else if (event.type === 'Reset') {
           const listViews = cloneDeep(this.cloneListViewsFilter);
           this.listViewsFilter = cloneDeep(listViews);
-         const params =  getParamString(listViews)
-        this.query = { ...this.query, ...params};
-        this.load();
+          const params = getParamString(listViews)
+          this.query = { ...this.query, ...params };
+          this.load();
         }
       }
     });

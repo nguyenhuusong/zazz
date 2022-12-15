@@ -18,13 +18,13 @@
                         &nbsp;
                         Gửi bảng lương
                     </p-button>
-                    <p-button (click)="addNew()" styleClass="p-button-sm height-56" *ngIf="isAddNewButton">
+                    <!-- <p-button (click)="addNew()" styleClass="p-button-sm height-56" *ngIf="isAddNewButton">
                         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M13.6668 8.08835H8.0886V13.6666H5.91173V8.08835H0.333496V5.91148H5.91173V0.333252H8.0886V5.91148H13.6668V8.08835Z" fill="#F6FBFF"/>
                         </svg>
                         &nbsp;
                         Thêm mới
-                    </p-button>
+                    </p-button> -->
                     <!-- <div class="select-ori">
                         <div class="name">
                             <div class="field-group select mb-0 valid height-56" [ngClass]="">
@@ -60,16 +60,16 @@
     <section class="pb-0">
         <p-tabView (onChange)="handleChange($event.index)" [(activeIndex)]="tabIndex">
             <p-tabPanel header="Bảng Lương" >
-               <app-tab-bang-luong #tabBangLuong (idOutPut)="editEvent($event)" *ngIf="tabIndex === 0"></app-tab-bang-luong>
+               <app-tab-bang-luong #tabBangLuong (idOutPut)="editEvent($event)" (add)="addNew()" *ngIf="tabIndex === 0"></app-tab-bang-luong>
             </p-tabPanel>
             <p-tabPanel header="Thiết lâp tham số">
-                <app-tab-thiet-lap-tham-so #tabThietLapThamSo (idOutPut)="editEvent($event)" *ngIf="tabIndex === 1"></app-tab-thiet-lap-tham-so>
+                <app-tab-thiet-lap-tham-so #tabThietLapThamSo (idOutPut)="editEvent($event)" (add)="addNew()" *ngIf="tabIndex === 1"></app-tab-thiet-lap-tham-so>
             </p-tabPanel>
             <p-tabPanel header="Thành phần lương">
-               <app-tab-thanh-phan-luong #tabThanhPhanLuong (idOutPut)="editEvent($event)" *ngIf="tabIndex === 2"></app-tab-thanh-phan-luong>
+               <app-tab-thanh-phan-luong #tabThanhPhanLuong (idOutPut)="editEvent($event)" (add)="addNew()" *ngIf="tabIndex === 2"></app-tab-thanh-phan-luong>
             </p-tabPanel>
             <p-tabPanel header="Cấp bậc lương">
-                <app-tab-cap-bac-bang-luong #TabCapBacLuongComponent (idOutPut)="editEvent($event)" *ngIf="tabIndex === 3"></app-tab-cap-bac-bang-luong>
+                <app-tab-cap-bac-bang-luong #TabCapBacLuongComponent (add)="addNew()" (idOutPut)="editEvent($event)" *ngIf="tabIndex === 3"></app-tab-cap-bac-bang-luong>
             </p-tabPanel>
         </p-tabView>
     </section>
