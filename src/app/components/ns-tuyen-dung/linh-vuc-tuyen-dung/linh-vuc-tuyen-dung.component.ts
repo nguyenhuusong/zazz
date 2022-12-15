@@ -10,7 +10,12 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
+import { cloneDeep } from 'lodash';
 const MAX_SIZE = 100000000;
+import { getParamString } from 'src/app/common/function-common/objects.helper';
+import { fromEvent } from 'rxjs';
+import { DialogService } from 'primeng/dynamicdialog';
+import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 @Component({
   selector: 'app-linh-vuc-tuyen-dung',
   templateUrl: './linh-vuc-tuyen-dung.component.html',
@@ -29,6 +34,7 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
     private changeDetector: ChangeDetectorRef,
     private messageService: MessageService,
     private organizeInfoService: OrganizeInfoService,
+    private dialogService: DialogService,
     private router: Router) {
 
     this.defaultColDef = {
@@ -45,6 +51,7 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
       buttonAgGridComponent: ButtonAgGridComponent,
       avatarRendererFull: AvatarFullComponent,
     };
+    this.getEmpFilter();
   }
   pagingComponent = {
     total: 0
@@ -66,8 +73,6 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
   objectAction: any;
   objectActionDetail: any;
   gridflexs: any;
-  orgRoots = [];
-  positiontypes = [];
   listJobTitles = [];
   getRowHeight;
   query = {
@@ -91,18 +96,25 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
   loading = false;
 
   loadjs = 0;
-  heightGrid = 0
+  heightGrid = 0;
+
+  listViewsFilter = [];
+  cloneListViewsFilter = [];
+  detailInfoFilter = null;
+  optionsButonFilter = [
+    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm ml-2 height-56 addNew', icon: 'pi pi-plus' },
+    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger ml-2 height-56 addNew', icon: 'pi pi-times' },
+  ];
   
   ngAfterViewChecked(): void {
     const a: any = document.querySelector(".header");
     const b: any = document.querySelector(".sidebarBody");
     const d: any = document.querySelector(".bread-crumb");
-    const c: any = document.querySelector(".bread-filter");
     const e: any = document.querySelector(".paginator");
     this.loadjs ++ 
     if (this.loadjs === 5) {
       if(b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + d.clientHeight + e.clientHeight + 25;
+        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight + 25;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       }else {
@@ -206,7 +218,11 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
     this.columnDefs = [
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       {
-        headerName: 'Thao tác',
+        headerComponentParams: {
+          template:
+          `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
+        },
+        // headerName: 'Thao tác',
         filter: '',
         width: 100,
         pinned: 'right',
@@ -265,55 +281,93 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
       { label: 'Tuyển dụng', },
       { label: 'Danh sách Chuyên môn tuyển dụng' },
     ];
-    this.getJobTitles();
-    this.getObjectList();
-    this.getOrgRoots();
   }
 
-  getOrgRoots() {
-    const queryParams = queryString.stringify({ filter: '' });
-    this.apiService.getOrganizations(queryParams).subscribe(results => {
-      if (results.status === 'success') {
-        this.orgRoots = results.data.map(d => {
-          return {
-            label: d.organizationName + '-' + d.organizationCd,
-            value: `${d.organizeId}`
-          }
-        });
-        this.orgRoots = [{label: 'Tất cả', value: null}, ...this.orgRoots]
+  getEmpFilter() {
+    this.apiService.getFilter('/api/v1/recruitment/GetJobFilter').subscribe(results => {
+      if(results.status === 'success') {
+        const listViews = cloneDeep(results.data.group_fields);
+        this.cloneListViewsFilter = cloneDeep(listViews);
+        this.listViewsFilter = [...listViews];
+        const params =  getParamString(listViews)
+        this.query = { ...this.query, ...params};
+        this.load();
+        this.detailInfoFilter = results.data;
       }
-    })
+    });
+  }
+   filterLoad(event) {
+    this.query = { ...this.query, ...event.data };
+    this.load();
+    this.FnEvent();
   }
 
-  getObjectList() {
-    const queryParams = queryString.stringify({ objKey: 'positiontype_group' });
-    this.apiService.getCustObjectListNew(false,queryParams).subscribe(results => {
-      if (results.status === 'success') {
-        this.positiontypes = results.data.map(d => {
-          return {
-            label: d.objName,
-            value: d.objCode
-          }
-        });
-        this.positiontypes = [{ label: 'Tất cả', value: null }, ...this.positiontypes]
+  close(event) {
+    const listViews = cloneDeep(this.cloneListViewsFilter);
+    this.listViewsFilter = cloneDeep(listViews);
+    const params =  getParamString(listViews)
+    this.query = { ...this.query, ...params};
+    this.load();
+    this.FnEvent();
+  }
+
+showFilter() {
+    const ref = this.dialogService.open(FormFilterComponent, {
+      header: 'Tìm kiếm nâng cao',
+      width: '40%',
+      contentStyle: "",
+      data: {
+        listViews: this.listViewsFilter,
+        detailInfoFilter: this.detailInfoFilter,
+        buttons: this.optionsButonFilter
       }
-    })
-  }
+    });
 
-  getJobTitles() {
-    this.apiService.getJobTitles().subscribe(results => {
-      if (results.status === 'success') {
-        this.listJobTitles = results.data.map(d => {
-          return {
-            label: d.job_name,
-            value: d.jobId
-          }
-        });
-        this.listJobTitles = [{ label: 'Tất cả', value: -1 }, ...this.listJobTitles]
+    ref.onClose.subscribe((event: any) => {
+      if (event) {
+        this.listViewsFilter = cloneDeep(event.listViewsFilter);
+        if (event.type === 'Search') {
+          this.query = { ...this.query, ...event.data };
+          this.load();
+        } else if (event.type === 'CauHinh') {
+          this.apiService.getFilter('/api/v1/recruitment/GetJobFilter').subscribe(results => {
+            if (results.status === 'success') {
+              const listViews = cloneDeep(results.data.group_fields);
+              this.listViewsFilter = [...listViews];
+              const params =  getParamString(listViews)
+              this.query = { ...this.query, ...params};
+              this.load();
+              this.detailInfoFilter = results.data;
+              this.showFilter()
+            }
+          });
+
+        } else if (event.type === 'Reset') {
+          const listViews = cloneDeep(this.cloneListViewsFilter);
+          this.listViewsFilter = cloneDeep(listViews);
+         const params =  getParamString(listViews)
+        this.query = { ...this.query, ...params};
+        this.load();
+        }
       }
-    })
+    });
   }
 
+  FnEvent() {
+    setTimeout(() => {
+      var dragTarget = document.getElementById(this.gridKey);
+      if(dragTarget) {
+        const click$ = fromEvent(dragTarget, 'click');
+        click$.subscribe(event => {
+          this.addJob()
+        });
+      }
+    }, 300);
+  }
+
+  ngAfterViewInit(): void {
+    this.FnEvent();
+  }
 
 }
 

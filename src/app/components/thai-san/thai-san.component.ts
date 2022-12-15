@@ -359,7 +359,7 @@ export class ThaiSanComponent implements OnInit, AfterViewChecked {
   ];
 
   getEmpFilter() {
-    this.apiService.getEmpFilter().subscribe(results => {
+    this.apiService.getFilter('/api/v2/maternity/GetMaternityFilter').subscribe(results => {
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
@@ -405,7 +405,7 @@ showFilter() {
           this.query = { ...this.query, ...event.data };
           this.load();
         } else if (event.type === 'CauHinh') {
-        this.apiService.getEmpFilter().subscribe(results => {
+          this.apiService.getFilter('/api/v2/maternity/GetMaternityFilter').subscribe(results => {
             if (results.status === 'success') {
               const listViews = cloneDeep(results.data.group_fields);
               this.listViewsFilter = [...listViews];

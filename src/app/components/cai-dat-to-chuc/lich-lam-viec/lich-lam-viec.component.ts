@@ -204,7 +204,7 @@ public agGridFn = AgGridFn;
 
   delWorktimeInfo(event) {
     this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn lịch làm việc?',
+      message: 'Bạn có chắc chắn muốn xóa lịch làm việc?',
       accept: () => {
         const queryParams = queryString.stringify({ work_cd: event.rowData.work_cd });
         this.apiService.DelWorktimeInfo(queryParams).subscribe(results => {
