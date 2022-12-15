@@ -34,7 +34,7 @@
                     <p-button label="Xuất file" 
                     [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetPositionPage.url, action: ACTIONS.EXPORT}"
                      styleClass="p-button-secondary p-button-sm btn-reload height-56" icon="fa fa-download" (click)="cancel()"></p-button>
-                    <p-button styleClass="p-button-sm height-56" (click)="addChucVu()"
+                    <!-- <p-button styleClass="p-button-sm height-56" (click)="addChucVu()"
                     [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetPositionPage.url, action: ACTIONS.ADD}"
                     >
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -42,7 +42,7 @@
                             </svg>
                             &nbsp;
                             Thêm mới
-                    </p-button>
+                    </p-button> -->
                     <!-- <p-button styleClass="p-button-sm height-56" (click)="cauhinh()">
                         <svg width="20" height="17" viewBox="0 0 20 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M19.5 17V0H0.50855L0.5 17H19.5ZM6.675 15.3187H2.21V6.81868H6.675V15.3187ZM8.575 15.3187V6.81868H17.79V15.3187H8.575ZM2.21 1.68132V5.13736H17.79V1.68132H2.21Z" fill="#F3F8FF"/>
@@ -57,7 +57,7 @@
         <div class="grid-default" #container>
             <app-list-grid-angular  *ngIf="columnDefs.length > 0"
                 [listsData]="listsData" [height]="heightGrid"
-                (showConfig)="cauhinh()"
+                (showConfig)="cauhinh()" [idGrid]="gridKey + '_45dfs'"
                 [columnDefs]="columnDefs"></app-list-grid-angular>
             <div class="paginator">
                 <span>Từ {{ countRecord.currentRecordStart }} đến
@@ -77,7 +77,7 @@
     <app-config-grid-table-form *ngIf="displaySetting && gridKey" [typeConfig]="'TableInfo'"   [gridKey]="gridKey"></app-config-grid-table-form>
 </p-dialog>
 
-<p-overlayPanel #op [style]="{width: '700px'}" styleClass="advance-seach">
+<!-- <p-overlayPanel #op [style]="{width: '700px'}" styleClass="advance-seach">
     <ng-template pTemplate>
         <div class="header-filter-search  grid">
             <h3>Tìm kiếm nâng cao</h3>
@@ -95,5 +95,11 @@
                 </p-button>
             </div>
         </div>
+    </ng-template>
+</p-overlayPanel> -->
+
+<p-overlayPanel #op [dismissable]="false" appendTo="body" >
+    <ng-template pTemplate>
+        <app-form-filter *ngIf="listViewsFilter.length > 0" [listFields]="listViewsFilter" [detailInfoFilter]="detailInfoFilter" [buttonsFilters] ="optionsButonFilter" (callback)="filterLoad($event)" (close)="close($event);op.hide()"></app-form-filter>
     </ng-template>
 </p-overlayPanel>

@@ -695,7 +695,6 @@ showFilter() {
   FnEvent() {
     setTimeout(() => {
       var dragTarget = document.getElementById(this.gridKey);
-      console.log('dragTarget', dragTarget)
       if(dragTarget) {
         const click$ = fromEvent(dragTarget, 'click');
         click$.subscribe(event => {

@@ -33,13 +33,13 @@
                     Bộ Lọc
                 </p-button>
 
-                <p-button label="Tạo ngày nghỉ" styleClass="height-56" icon="" (click)="themmoingaynghi()"
+                <!-- <p-button label="Tạo ngày nghỉ" styleClass="height-56" icon="" (click)="themmoingaynghi()"
                 [CheckHideActions]="{url:  MENUACTIONROLEAPI.HolidayPage.url, action: ACTIONS.ADD}">
                     <svg class="mr-2" width="16" height="16" viewBox="0 0 16 16" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
                         <path d="M0 0H16V16H0V0Z" fill="#E2EEFF" />
                     </svg>
-                </p-button>
+                </p-button> -->
                 <!-- <p-button styleClass="p-button-sm height-56" icon="pi pi-plus" label="Cấu hình" (click)="cauhinh()"></p-button> -->
             </div>
         </div>
@@ -48,7 +48,7 @@
         <div class="grid-default" #container>
             <app-list-grid-angular *ngIf="columnDefs.length > 0" [listsData]="listsData" [height]="heightGrid"
                 [columnDefs]="columnDefs" [rowSelection]="'multiple'" [floatingFilter]="true"
-                (showConfig)="cauhinh()"
+                (showConfig)="cauhinh()" [idGrid]="gridKey + '_45dfs'"
                 (callback)="rowSelected($event)">
             </app-list-grid-angular>
             <div class="paginator">
@@ -70,7 +70,7 @@
 </p-dialog>
 <p-overlayPanel #op [dismissable]="false" appendTo="body" >
     <ng-template pTemplate>
-        <app-form-filter *ngIf="listViewsFilter.length > 0" [listFields]="listViewsFilter" [detailInfoFilter]="detailInfoFilter" [buttonsFilters] ="optionsButonFilter" (callback)="filterLoad($event)" (close)="close($event);op.hide()"></app-form-filter>
+        <app-form-filter *ngIf="listViewsFilter.length > 0" [listFields]="listViewsFilter" [detailInfoFilter]="detailInfoFilter" [buttonsFilters] ="optionsButonFilter" (callback)="filterLoad($event)" (close)="closeFilter($event);op.hide()"></app-form-filter>
     </ng-template>
 </p-overlayPanel>
 <!-- <p-overlayPanel #op [style]="{width: '700px'}" styleClass="advance-seach">

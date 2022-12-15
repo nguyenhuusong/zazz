@@ -38,11 +38,7 @@
                     </ng-template>
                     </p-dropdown>
                 </div> -->
-                <p-overlayPanel #op [dismissable]="false" appendTo="body" >
-    <ng-template pTemplate>
-        <app-form-filter *ngIf="listViewsFilter.length > 0" [listFields]="listViewsFilter" [detailInfoFilter]="detailInfoFilter" [buttonsFilters] ="optionsButonFilter" (callback)="filterLoad($event)" (close)="close($event);op.hide()"></app-form-filter>
-    </ng-template>
-</p-overlayPanel>
+
  <p-button (click)="op.toggle($event)"
                     styleClass="p-button-sm height-56 ">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -120,3 +116,8 @@
     </ng-template>
 </p-dialog>
 
+<p-overlayPanel #op [dismissable]="false" appendTo="body" >
+    <ng-template pTemplate>
+        <app-form-filter *ngIf="listViewsFilter.length > 0" [listFields]="listViewsFilter" [detailInfoFilter]="detailInfoFilter" [buttonsFilters] ="optionsButonFilter" (callback)="filterLoad($event)" (close)="close($event);op.hide()"></app-form-filter>
+    </ng-template>
+</p-overlayPanel>
