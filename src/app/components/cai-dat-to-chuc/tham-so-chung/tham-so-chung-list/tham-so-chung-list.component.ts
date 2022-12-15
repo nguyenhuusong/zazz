@@ -16,6 +16,7 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { cloneDeep } from 'lodash';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
+import { fromEvent } from 'rxjs';
 
 @Component({
   selector: 'app-tham-so-chung-list',
@@ -235,9 +236,12 @@ detailInfoFilter = null;
     this.columnDefs = [
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       {
-        headerName: 'Thao tác',
+        headerComponentParams: {
+          template:
+          `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
+        },
         filter: '',
-        width: 100,
+        width: 60,
         pinned: 'right',
         cellRenderer: 'buttonAgGridComponent',
         cellClass: ['border-right', 'no-auto'],
@@ -390,5 +394,21 @@ showFilter() {
         }
       }
     });
+  }
+
+  ngAfterViewInit(): void {
+    this.FnEvent();
+  }
+
+  FnEvent() {
+    setTimeout(() => {
+      var dragTarget = document.getElementById(this.gridKey);
+      if(dragTarget) {
+        const click$ = fromEvent(dragTarget, 'click');
+        click$.subscribe(event => {
+          this.handleAdd()
+        });
+      }
+    }, 300);
   }
 }

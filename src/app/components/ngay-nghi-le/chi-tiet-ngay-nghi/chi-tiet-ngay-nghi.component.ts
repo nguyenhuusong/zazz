@@ -77,7 +77,6 @@ export class ChiTietNgayNghiComponent implements OnInit, OnDestroy {
   };
 
   selecteOptionDate(value) {
-    console.log(value)
     if (value === 5) {
       this.dates = this.dsNgayThuongs[new Date().getMonth()];
     } else if (value === 3) {
@@ -153,13 +152,16 @@ export class ChiTietNgayNghiComponent implements OnInit, OnDestroy {
     if(data === 'CauHinh') {
       this.getHolidayInfo();
     }else {
+      
       if(data) {
         this.whatDayName = parseInt(data);
-        console.log(this.whatDayName)
         this.selecteOptionDate(this.whatDayName)
       }else {
         this.router.navigate(['/cai-dat/cai-dat-ngay-nghi-le']);
       }
+    }
+    if(data === 'Back') {
+      this.router.navigate(['/cai-dat/cai-dat-ngay-nghi-le']);
     }
    
   }

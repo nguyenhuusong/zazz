@@ -11,6 +11,11 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
+import { cloneDeep } from 'lodash';
+import { getParamString } from 'src/app/common/function-common/objects.helper';
+import { fromEvent } from 'rxjs';
+import { DialogService } from 'primeng/dynamicdialog';
+import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 
 @Component({
   selector: 'app-danh-sach-phong-hop',
@@ -83,6 +88,7 @@ export class DanhSachPhongHopComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private changeDetector: ChangeDetectorRef,
     private organizeInfoService: OrganizeInfoService,
+    public dialogService: DialogService,
   ) {
     this.defaultColDef = {
       tooltipComponent: 'customTooltip',
@@ -101,13 +107,7 @@ export class DanhSachPhongHopComponent implements OnInit {
   }
   items = []
   ngOnInit(): void {
-    this.model.orgIds = localStorage.getItem("organizes");
-    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-        if(results && results.length>0){
-          this.model.orgIds = results;
-          this.load();
-        }
-    });
+    this.getFilter();
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Hoạt động' },
@@ -288,7 +288,10 @@ export class DanhSachPhongHopComponent implements OnInit {
       },
       ...AgGridFn(this.gridflexs.filter((d: any) => !d.isHide)),
       {
-        headerName: '   ...',
+        headerComponentParams: {
+          template:
+          `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
+        },
         filter: '',
         width: 70,
         pinned: 'right',
@@ -365,5 +368,102 @@ export class DanhSachPhongHopComponent implements OnInit {
     }
     this.router.navigate(['hoat-dong/lich-hop/danh-sach-phong-hop/them-moi-phong-hop'], { queryParams: params });
   }
+
+  //filter 
+  listViewsFilter = [];
+  cloneListViewsFilter = [];
+  detailInfoFilter = null;
+  optionsButonFilter = [
+    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm height-56 addNew', icon: 'pi pi-search' },
+    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger height-56 addNew', icon: 'pi pi-times' },
+  ];
+  getFilter() {
+    // value === 1 ? '' : ''
+    this.apiService.getFilter('/api/v1/eating/GetEatingFilter').subscribe(results => {
+      if(results.status === 'success') {
+        const listViews = cloneDeep(results.data.group_fields);
+        this.cloneListViewsFilter = cloneDeep(listViews);
+        this.listViewsFilter = [...listViews];
+        const params =  getParamString(listViews)
+        this.model = { ...this.model, ...params};
+        this.load();
+        this.detailInfoFilter = results.data;
+      }
+    });
+  }
+
+   filterLoad(event) {
+    this.model = { ...this.model, ...event.data };
+    this.load();
+  }
+
+  close(event) {
+    const listViews = cloneDeep(this.cloneListViewsFilter);
+    this.listViewsFilter = cloneDeep(listViews);
+    const params =  getParamString(listViews)
+    this.model = { ...this.model, ...params};
+    this.load();
+    this.FnEvent()
+  }
+
+showFilter() {
+    const ref = this.dialogService.open(FormFilterComponent, {
+      header: 'Tìm kiếm nâng cao',
+      width: '40%',
+      contentStyle: "",
+      data: {
+        listViews: this.listViewsFilter,
+        detailInfoFilter: this.detailInfoFilter,
+        buttons: this.optionsButonFilter
+      }
+    });
+
+    ref.onClose.subscribe((event: any) => {
+      if (event) {
+        this.listViewsFilter = cloneDeep(event.listViewsFilter);
+        if (event.type === 'Search') {
+          this.model = { ...this.model, ...event.data };
+          this.load();
+        } else if (event.type === 'CauHinh') {
+        this.apiService.getEmpFilter().subscribe(results => {
+            if (results.status === 'success') {
+              const listViews = cloneDeep(results.data.group_fields);
+              this.listViewsFilter = [...listViews];
+              const params =  getParamString(listViews)
+              this.model = { ...this.model, ...params};
+              this.load();
+              this.detailInfoFilter = results.data;
+              this.showFilter()
+            }
+          });
+
+        } else if (event.type === 'Reset') {
+          const listViews = cloneDeep(this.cloneListViewsFilter);
+          this.listViewsFilter = cloneDeep(listViews);
+         const params =  getParamString(listViews)
+        this.model = { ...this.model, ...params};
+        this.load();
+        }
+      }
+    });
+  }
+
+  ngAfterViewInit(): void {
+    this.FnEvent();
+  }
+
+  FnEvent() {
+    setTimeout(() => {
+      var dragTarget = document.getElementById(this.gridKey);
+      console.log('dragTarget', dragTarget)
+      if(dragTarget) {
+        const click$ = fromEvent(dragTarget, 'click');
+        click$.subscribe(event => {
+          this.handleAdd()
+        });
+      }
+    }, 300);
+  }
+
 }
 

@@ -16,6 +16,7 @@ import { cloneDeep } from 'lodash';
 import { DialogService } from 'primeng/dynamicdialog';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
+import { fromEvent } from 'rxjs';
 @Component({
   selector: 'app-cai-dat-lich-hop',
   templateUrl: './cai-dat-lich-hop.component.html',
@@ -114,7 +115,7 @@ export class CaiDatLichHopComponent implements OnInit {
       { label: 'Hoạt động' },
       { label: 'Lịch họp' },
     ];
-    this.load();
+    this.getFilter();
     // this.getFloor();
     // this.getOrgan();
   }
@@ -252,9 +253,12 @@ export class CaiDatLichHopComponent implements OnInit {
       },
       ...AgGridFn(this.gridflexs.filter((d: any) => !d.isHide)),
       {
-        headerName: '    ...',
+        headerComponentParams: {
+          template:
+          `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
+        },
         filter: '',
-        width: 80,
+        width: 60,
         pinned: 'right',
         cellRenderer: 'buttonAgGridComponent',
         cellClass: ['border-right', 'no-auto', 'text-center', 'cell-options'],
@@ -302,6 +306,7 @@ export class CaiDatLichHopComponent implements OnInit {
             if (response.status === 'success') {
               this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: `Hủy lịch họp thành công` });
               this.load();
+              this.FnEvent();
               this.isReasonDelete = false;
             } else {
               this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: `Hủy lịch họp thất bại` });
@@ -409,6 +414,7 @@ export class CaiDatLichHopComponent implements OnInit {
     this.first = event.first;
     this.model.pageSize = event.rows;
     this.load();
+    this.FnEvent();
   }
   handlerError(error): void {
     console.log(error);
@@ -419,15 +425,18 @@ export class CaiDatLichHopComponent implements OnInit {
 
   find(): void {
     this.load();
+    this.FnEvent();
   }
 
   cancel(): void {
     this.initFilter();
     this.load();
+    this.FnEvent();
   }
 
   changePageSize(): void {
     this.load();
+    this.FnEvent();
   }
 
   handleAdd(): void {
@@ -455,7 +464,7 @@ detailInfoFilter = null;
   ];
   //filter 
   getFilter() {
-    this.apiService.getFilter('/api/v2/meeting/GetLeaveFilter').subscribe(results => {
+    this.apiService.getFilter('/api/v2/meeting/GetMeetingFilter').subscribe(results => {
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
@@ -471,6 +480,7 @@ detailInfoFilter = null;
    filterLoad(event) {
     this.model = { ...this.model, ...event.data };
     this.load();
+    this.FnEvent();
   }
 
   close(event) {
@@ -521,6 +531,22 @@ showFilter() {
         }
       }
     });
+  }
+
+  ngAfterViewInit(): void {
+    this.FnEvent();
+  }
+
+  FnEvent() {
+    setTimeout(() => {
+      var dragTarget = document.getElementById(this.gridKey);
+      if(dragTarget) {
+        const click$ = fromEvent(dragTarget, 'click');
+        click$.subscribe(event => {
+          this.handleAdd()
+        });
+      }
+    }, 300);
   }
 }
 

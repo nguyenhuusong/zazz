@@ -17,12 +17,13 @@ import { cloneDeep } from 'lodash';
 import { DialogService } from 'primeng/dynamicdialog';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
+import { fromEvent } from 'rxjs';
 @Component({
   selector: 'app-page-notify',
   templateUrl: './page-notify.component.html',
   styleUrls: ['./page-notify.component.css']
 })
-export class PageNotifyComponent implements OnInit, OnDestroy, AfterViewChecked {
+export class PageNotifyComponent implements OnInit, OnDestroy {
   agGridFn = AgGridFn;
   public modules: Module[] = AllModules;
   loading = false;
@@ -111,6 +112,7 @@ detailInfoFilter = null;
 
   changePageSize() {
     this.load();
+    this.FnEvent()
   }
 
 
@@ -142,6 +144,7 @@ detailInfoFilter = null;
       pageSize: 15,
     }
     this.load();
+    this.FnEvent()
   }
 
   ngOnInit() {
@@ -210,6 +213,7 @@ detailInfoFilter = null;
     this.first = event.first;
     this.query.pageSize = event.rows;
     this.load();
+    this.FnEvent()
   }
 
   displaySetting = false;
@@ -291,9 +295,12 @@ detailInfoFilter = null;
     this.columnDefs = [
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       {
-        headerName: 'Thao tác',
+        headerComponentParams: {
+          template:
+          `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
+        },
         filter: '',
-        width: 100,
+        width: 60,
         pinned: 'right',
         cellRenderer: 'buttonAgGridComponent',
         cellClass: ['border-right', 'no-auto'],
@@ -343,6 +350,7 @@ detailInfoFilter = null;
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
             this.spinner.hide();
             this.load();
+            this.FnEvent()
           } else {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
             this.spinner.hide();
@@ -464,6 +472,7 @@ detailInfoFilter = null;
     const params =  getParamString(listViews)
     this.query = { ...this.query, ...params};
     this.load();
+    this.FnEvent();
   }
 
 showFilter() {
@@ -506,5 +515,21 @@ showFilter() {
         }
       }
     });
+  }
+
+  ngAfterViewInit(): void {
+    this.FnEvent();
+  }
+
+  FnEvent() {
+    setTimeout(() => {
+      var dragTarget = document.getElementById(this.gridKey);
+      if(dragTarget) {
+        const click$ = fromEvent(dragTarget, 'click');
+        click$.subscribe(event => {
+          this.AddNotify()
+        });
+      }
+    }, 3000);
   }
 }

@@ -16,6 +16,7 @@ import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { DialogService } from 'primeng/dynamicdialog';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
+import { fromEvent } from 'rxjs';
 declare var jQuery: any;
 
 @Component({
@@ -369,9 +370,12 @@ detailInfoFilter = null;
     this.columnDefs = [
       ...AgGridFn(this.gridflexs.filter((d: any) => !d.isHide)),
       {
-        headerName: 'Thao tác',
+        headerComponentParams: {
+          template:
+          `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
+        },
         filter: '',
-        width: 100,
+        width: 60,
         pinned: 'right',
         cellRenderer: 'buttonAgGridComponent',
         cellClass: ['border-right', 'no-auto'],
@@ -751,7 +755,7 @@ detailInfoFilter = null;
 
   addVehicleCard(): void {
     this.modelTM.type = 1;
-    this.modelTM.organizeId = this.organizesAdds[0].value;
+    // this.modelTM.organizeId =  '';
     this.modelTM.cardVehicleId = 0;
     this.modelTM.vehicleNoTM = '';
     this.modelTM.vehicleNameTM = '';
@@ -909,6 +913,22 @@ showFilter() {
         }
       }
     });
+  }
+
+  ngAfterViewInit(): void {
+    this.FnEvent();
+  }
+
+  FnEvent() {
+    setTimeout(() => {
+      var dragTarget = document.getElementById(this.gridKey);
+      if(dragTarget) {
+        const click$ = fromEvent(dragTarget, 'click');
+        click$.subscribe(event => {
+          this.addVehicleCard()
+        });
+      }
+    }, 2000);
   }
 
 }

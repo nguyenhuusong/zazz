@@ -19,9 +19,6 @@
                      <path fill-rule="evenodd" clip-rule="evenodd" d="M8.19928 4.08301L6.53262 1.99967H2.33366V11.9997H15.667V4.08301H8.19928ZM17.3337 2.41634V13.6663H0.666992V0.333008H7.33366L9.00033 2.41634H17.3337Z" fill="#F6FBFF"/>
                     </svg> &nbsp;&nbsp;
                 </p-button>
-                <p-button *ngIf="indexTab === 1" 
-                [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetFormGeneral.url, action: ACTIONS.ADD}"
-                label="Thêm mới" styleClass="height-56" icon="pi pi-plus " (click)="handleAdd()"></p-button>
             </div>
         </div>
     </section>
@@ -70,11 +67,7 @@
                             </p-button>
                         </div>
                         <div class="col-item d-flex gap12">
-                            <p-overlayPanel #op [dismissable]="false" appendTo="body" >
-    <ng-template pTemplate>
-        <app-form-filter *ngIf="listViewsFilter.length > 0" [listFields]="listViewsFilter" [detailInfoFilter]="detailInfoFilter" [buttonsFilters] ="optionsButonFilter" (callback)="filterLoad($event)" (close)="close($event);op.hide()"></app-form-filter>
-    </ng-template>
-</p-overlayPanel>
+
  <p-button (click)="op.toggle($event)" 
             styleClass="p-button-sm height-56 ">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -93,13 +86,13 @@
                                     </svg> &nbsp;&nbsp;
                                     Bộ Lọc
                                 </p-button> -->
-                               <p-button styleClass="p-button-sm height-56" (click)="cauhinh()">
+                               <!-- <p-button styleClass="p-button-sm height-56" (click)="cauhinh()">
                                 <svg width="20" height="17" viewBox="0 0 20 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" clip-rule="evenodd" d="M19.5 17V0H0.50855L0.5 17H19.5ZM6.675 15.3187H2.21V6.81868H6.675V15.3187ZM8.575 15.3187V6.81868H17.79V15.3187H8.575ZM2.21 1.68132V5.13736H17.79V1.68132H2.21Z" fill="#F3F8FF"/>
                                 </svg>
                                 &nbsp;
                                 Cấu hình
-                            </p-button>
+                            </p-button> -->
                         </div>
                     </div>
                 </div>
@@ -113,7 +106,7 @@
                         [rowSelection]="'multiple'"
                         (callback)="rowSelected($event)"
                         (onCellClicked)="onCellClicked($event)"
-                        (showConfig)="cauhinh()"
+                        (showConfig)="cauhinh()"  [idGrid]="gridKey + '_45dfs'"
                         >
                     </app-list-grid-angular>
                     <div class="paginator">
@@ -195,10 +188,10 @@
             </section>
             <section class="content pb-0">
                 <div class="grid-default" #container>
-                    <app-list-grid-angular *ngIf="columnDefs.length > 0"
+                    <app-list-grid-angular *ngIf="columnDefs2.length > 0"
                         [listsData]="listsData" 
                         [height]="heightGrid"
-                        [columnDefs]="columnDefs"
+                        [columnDefs]="columnDefs2"
                         [rowSelection]="'multiple'"
                         (callback)="rowSelected($event)"
                         (showConfig)="cauhinh()" [idGrid]="gridKey + '_45dfs'"
@@ -268,3 +261,8 @@
         (callbackcancel)="quaylai($event)"
     ></app-edit-detail>
 </p-dialog>
+<p-overlayPanel #op [dismissable]="false" appendTo="body" >
+    <ng-template pTemplate>
+        <app-form-filter *ngIf="listViewsFilter.length > 0" [listFields]="listViewsFilter" [detailInfoFilter]="detailInfoFilter" [buttonsFilters] ="optionsButonFilter" (callback)="filterLoad($event)" (close)="close($event);op.hide()"></app-form-filter>
+    </ng-template>
+</p-overlayPanel>

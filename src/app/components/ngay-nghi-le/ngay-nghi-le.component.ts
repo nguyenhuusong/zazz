@@ -9,6 +9,11 @@ import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { ExportFileService } from 'src/app/services/export-file.service';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
+import { cloneDeep } from 'lodash';
+import { getParamString } from 'src/app/common/function-common/objects.helper';
+import { DialogService } from 'primeng/dynamicdialog';
+import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
+import { fromEvent } from 'rxjs';
 @Component({
   selector: 'app-ngay-nghi-le',
   templateUrl: './ngay-nghi-le.component.html',
@@ -80,6 +85,7 @@ export class NgayNghiLeComponent implements OnInit {
     private fileService: ExportFileService,
     private changeDetector: ChangeDetectorRef,
     private organizeInfoService: OrganizeInfoService,
+    public dialogService: DialogService,
     private router: Router) {
     this.defaultColDef = {
       tooltipComponent: 'customTooltip',
@@ -111,7 +117,6 @@ export class NgayNghiLeComponent implements OnInit {
   displayOrganize = false;
   listAgencyMap: TreeNode[];
   detailOrganizeMap = null;
-  isHrDiagram: boolean = false
   employeeStatus = []
   onmouseenter(event) {
     console.log(event)
@@ -137,30 +142,6 @@ export class NgayNghiLeComponent implements OnInit {
     this.gridColumnApi = params.columnApi;
   }
 
-  getAgencyOrganizeMap(type = false) {
-    this.apiService.getAgencyOrganizeMap().subscribe(results => {
-      if (results.status === 'success') {
-        this.listAgencyMap = [...results.data.root];
-        if (localStorage.getItem("organize") === null) {
-          this.selectedNode = this.listAgencyMap[0];
-          localStorage.setItem('organize', JSON.stringify(this.listAgencyMap[0]));
-          this.query.OrganizeId = this.selectedNode.orgId;
-          this.load();
-        } else {
-          this.selectedNode = JSON.parse(localStorage.getItem("organize"));
-          this.query.OrganizeId = this.selectedNode?.orgId;
-          this.listAgencyMap = this.expanded(this.listAgencyMap, this.selectedNode.parentId)
-          this.selected(this.listAgencyMap, this.query.OrganizeId);
-          if (type) {
-            this.isHrDiagram = true;
-          }
-          this.load();
-        }
-      }
-    })
-  }
-
-
   expanded(datas = [], orgId = 0) {
     datas.forEach(d => {
       if (d.orgId === orgId) {
@@ -179,17 +160,6 @@ export class NgayNghiLeComponent implements OnInit {
     return datas
   }
 
-  selected(datas = [], orgId = 0) {
-    datas.forEach(d => {
-      if (d.orgId === orgId) {
-        this.selectedNode = d;
-        this.detailOrganizeMap = d;
-      } else {
-        if (d.children.length > 0) this.selected(d.children, this.selectedNode.orgId)
-      }
-    }
-    )
-  }
 
   themmoingaynghi() {
     const params = {
@@ -262,7 +232,7 @@ export class NgayNghiLeComponent implements OnInit {
       {
         headerName: 'Stt',
         filter: '',
-        maxWidth: 90,
+        maxWidth: 120,
         pinned: 'left',
         cellRenderer: params => {
           return params.rowIndex + 1
@@ -381,14 +351,7 @@ export class NgayNghiLeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-        if(results && results.length>0){
-          this.query.organizeIds = results;
-          this.query.OrganizeId = results
-          this.getAgencyOrganizeMap();
-          this.getOrganizeTree();
-        }
-    });
+    this.getFilter();
     this.getObjectList();
     this.getObjectListWorkType();
     this.items = [
@@ -435,14 +398,12 @@ export class NgayNghiLeComponent implements OnInit {
     this.detailOrganizeMap = event.node;
     localStorage.setItem('organize', JSON.stringify(event.node));
     this.query.OrganizeId = this.detailOrganizeMap?.orgId;
-    this.isHrDiagram = false;
     this.load()
   }
 
   hrDiagram() {
     this.selectedNode = null;
     this.listAgencyMap = []
-    this.getAgencyOrganizeMap(true);
   }
 
   Back() {
@@ -486,26 +447,6 @@ export class NgayNghiLeComponent implements OnInit {
     })
   }
 
-  getOrganizeTree(): void {
-    const queryParams = queryString.stringify({ parentId: this.query.organizeIds });
-    this.apiService.getOrganizeTree(queryParams)
-      .subscribe((results: any) => {
-        if (results && results.status === 'success') {
-          this.departmentFiltes = results.data;
-        }
-      },
-        error => { });
-  }
-
-  handleChangeOrganize() {
-    this.getOrganizeTree();
-  }
-
-  selectBoPhan() {
-    this.getOrganizeTree();
-    this.find();
-  }
-
   listDataSelect = [];
   rowSelected(data) {
     this.listDataSelect = data
@@ -529,5 +470,97 @@ export class NgayNghiLeComponent implements OnInit {
       }
     }
   }
+  //filter 
+  listViewsFilter = [];
+  cloneListViewsFilter = [];
+  detailInfoFilter = null;
+  optionsButonFilter = [
+    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm height-56 addNew', icon: 'pi pi-search' },
+    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger height-56 addNew', icon: 'pi pi-times' },
+  ];
+  getFilter() {
+    this.apiService.getFilter('/api/v2/meeting/GetMeetingFilter').subscribe(results => {
+      if(results.status === 'success') {
+        const listViews = cloneDeep(results.data.group_fields);
+        this.cloneListViewsFilter = cloneDeep(listViews);
+        this.listViewsFilter = [...listViews];
+        const params =  getParamString(listViews)
+        this.query = { ...this.query, ...params};
+        this.load();
+        this.detailInfoFilter = results.data;
+      }
+    });
+  }
 
+   filterLoad(event) {
+    this.query = { ...this.query, ...event.data };
+    this.load();
+    this.FnEvent();
+  }
+
+  close(event) {
+    const listViews = cloneDeep(this.cloneListViewsFilter);
+    this.listViewsFilter = cloneDeep(listViews);
+    const params =  getParamString(listViews)
+    this.query = { ...this.query, ...params};
+    this.load();
+  }
+
+showFilter() {
+    const ref = this.dialogService.open(FormFilterComponent, {
+      header: 'Tìm kiếm nâng cao',
+      width: '40%',
+      contentStyle: "",
+      data: {
+        listViews: this.listViewsFilter,
+        detailInfoFilter: this.detailInfoFilter,
+        buttons: this.optionsButonFilter
+      }
+    });
+
+    ref.onClose.subscribe((event: any) => {
+      if (event) {
+        this.listViewsFilter = cloneDeep(event.listViewsFilter);
+        if (event.type === 'Search') {
+          this.query = { ...this.query, ...event.data };
+          this.load();
+        } else if (event.type === 'CauHinh') {
+          this.apiService.getFilter('/api/v2/meeting/GetLeaveFilter').subscribe(results => {
+            if (results.status === 'success') {
+              const listViews = cloneDeep(results.data.group_fields);
+              this.listViewsFilter = [...listViews];
+              const params =  getParamString(listViews)
+              this.query = { ...this.query, ...params};
+              this.load();
+              this.detailInfoFilter = results.data;
+              this.showFilter()
+            }
+          });
+
+        } else if (event.type === 'Reset') {
+          const listViews = cloneDeep(this.cloneListViewsFilter);
+          this.listViewsFilter = cloneDeep(listViews);
+         const params =  getParamString(listViews)
+        this.query = { ...this.query, ...params};
+        this.load();
+        }
+      }
+    });
+  }
+
+  ngAfterViewInit(): void {
+    this.FnEvent();
+  }
+
+  FnEvent() {
+    setTimeout(() => {
+      var dragTarget = document.getElementById(this.gridKey);
+      if(dragTarget) {
+        const click$ = fromEvent(dragTarget, 'click');
+        click$.subscribe(event => {
+          this.themmoingaynghi()
+        });
+      }
+    }, 300);
+  }
 }

@@ -229,38 +229,40 @@ cloneListViewsDetail = [];
     this.spinner.show();
     this.apiService.setEmpWorking(params).subscribe((results: any) => {
       if (results.status === 'success') {
-        this.listViewsDetail = cloneDeep(results.data.group_fields || []);
-        this.dataDetailInfo = results.data;
-        this.activeIndex = results.data.flow_st;
-        this.getEmpWorkingPageByEmpId();
-        this.steps = results.data.flowStatuses.map(d => {
-          return {
-            label: d.flow_name,
-            value: d.flow_st
-          }
-        });
-        setTimeout(() => {
-          this.stepActivated();
-        }, 100);
-        if (results.data.submit_st) {
-          this.optionsButtonsView = [
-            { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
-            { label: 'Trình duyệt', value: 'Submit', class: 'btn-accept' }
-          ]
-        } else {
-          if (results.data.save_st) {
+        if(results.data) {
+          this.listViewsDetail = cloneDeep(results.data.group_fields || []);
+          this.dataDetailInfo = results.data;
+          this.activeIndex = results.data.flow_st;
+          this.getEmpWorkingPageByEmpId();
+          this.steps = results.data.flowStatuses.map(d => {
+            return {
+              label: d.flow_name,
+              value: d.flow_st
+            }
+          });
+          setTimeout(() => {
+            this.stepActivated();
+          }, 100);
+          if (results.data.submit_st) {
             this.optionsButtonsView = [
               { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
-              { label: 'Lưu tạm', value: 'Update', class: 'btn-accept' },
-              { label: 'Tiếp tục', value: 'Update', class: 'btn-accept' }
+              { label: 'Trình duyệt', value: 'Submit', class: 'btn-accept' }
             ]
           } else {
-            this.optionsButtonsView = [
-              { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
-              { label: 'Tiếp tục', value: 'Update', class: 'btn-accept' }
-            ]
-          }
+            if (results.data.save_st) {
+              this.optionsButtonsView = [
+                { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
+                { label: 'Lưu tạm', value: 'Update', class: 'btn-accept' },
+                { label: 'Tiếp tục', value: 'Update', class: 'btn-accept' }
+              ]
+            } else {
+              this.optionsButtonsView = [
+                { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
+                { label: 'Tiếp tục', value: 'Update', class: 'btn-accept' }
+              ]
+            }
 
+          }
         }
         this.spinner.hide();
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.damessageta ? results.message : 'Cập nhật thông tin thành công' });

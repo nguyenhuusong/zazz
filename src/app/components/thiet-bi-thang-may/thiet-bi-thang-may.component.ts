@@ -6,6 +6,7 @@ import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
+import { fromEvent } from 'rxjs';
 
 declare var jQuery: any;
 
@@ -14,7 +15,7 @@ declare var jQuery: any;
   templateUrl: './thiet-bi-thang-may.component.html',
   styleUrls: ['./thiet-bi-thang-may.component.scss']
 })
-export class ThietBiThangMayComponent implements OnInit, AfterViewChecked {
+export class ThietBiThangMayComponent implements OnInit {
 
   constructor(private apiService: ApiHrmService,
     private route: ActivatedRoute,
@@ -191,7 +192,10 @@ export class ThietBiThangMayComponent implements OnInit, AfterViewChecked {
         field: 'isActived',
       },
       {
-        headerName: 'Thao tác',
+        headerComponentParams: {
+          template:
+          `<button  class="btn-button" id="btn-thiet-bi-thang-may"> <span class="pi pi-plus action-grid-add" ></span></button>`,
+        },
         filter: '',
         width: 100,
         pinned: 'right',
@@ -368,6 +372,22 @@ export class ThietBiThangMayComponent implements OnInit, AfterViewChecked {
     this.modelBuilding = [];
     this.buildingZones = [];
     this.floorsCreate = [];
+  }
+
+  ngAfterViewInit(): void {
+    this.FnEvent();
+  }
+
+  FnEvent() {
+    setTimeout(() => {
+      var dragTarget = document.getElementById('btn-thiet-bi-thang-may');
+      if(dragTarget) {
+        const click$ = fromEvent(dragTarget, 'click');
+        click$.subscribe(event => {
+          this.addThietBi()
+        });
+      }
+    }, 300);
   }
 
 }

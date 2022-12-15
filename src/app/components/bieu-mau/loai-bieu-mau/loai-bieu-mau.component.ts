@@ -9,6 +9,11 @@ import * as queryString from 'querystring';
 import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import * as moment from 'moment';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import { cloneDeep } from 'lodash';
+import { fromEvent } from 'rxjs';
+import { getParamString } from 'src/app/common/function-common/objects.helper';
+import { DialogService } from 'primeng/dynamicdialog';
+import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 
 @Component({
   selector: 'app-loai-bieu-mau',
@@ -20,7 +25,6 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
   ACTIONS = ACTIONS
 
   items = [];
-  organs = [];
   loadjs = 0;
   heightGrid = 0;
   query = {
@@ -59,6 +63,7 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
     private messageService: MessageService,
     private fileService: ExportFileService,
     private changeDetector: ChangeDetectorRef,
+    public dialogService: DialogService,
     private router: Router
   ) { }
 
@@ -70,9 +75,8 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
       { label: 'Tài liệu', routerLink: '/chinh-sach/tai-lieu-chung' },
       { label: 'Thiết lập loại tài liệu' },
     ];
-    this.getAgencyOrganizeMap();
-    this.getOrgan();
     this.getFormTypes();
+    this.getFilter();
   }
 
   getNode(item) {
@@ -114,44 +118,6 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
     })
   }
 
-  hrDiagram() {
-    this.selectedNode = null;
-    this.listAgencyMap = []
-    this.getAgencyOrganizeMap(true);
-  }
-
-  getAgencyOrganizeMap(type = false) {
-    this.apiService.getAgencyOrganizeMap().subscribe(results => {
-      if (results.status === 'success') {
-        this.listAgencyMap = [...results.data.root];
-        if (localStorage.getItem("organize") === null) {
-          this.selectedNode = this.listAgencyMap[0];
-          localStorage.setItem('organize', JSON.stringify(this.listAgencyMap[0]));
-          // this.query.organizeId = this.selectedNode.orgId;
-          this.load();
-        } else {
-          this.selectedNode = JSON.parse(localStorage.getItem("organize"));
-          // this.query.organizeId = this.selectedNode?.orgId;
-          this.listAgencyMap = this.expanded(this.listAgencyMap, this.selectedNode.parentId)
-          this.selected(this.listAgencyMap, this.query.organizeId);
-          if (type) {
-            this.isHrDiagram = true;
-          }
-          this.load();
-        }
-      }
-    })
-  }
-
-  onNodeSelect(event) {
-    this.detailOrganizeMap = event.node;
-    localStorage.setItem('organize', JSON.stringify(event.node));
-    // this.query.orgId = this.selectedNode?.orgId;
-    this.query.organizeId = this.detailOrganizeMap?.orgId;
-    this.isHrDiagram = false;
-    this.load()
-  }
-
   selected(datas = [], orgId = '') {
     datas.forEach(d => {
       if (d.orgId == orgId) {
@@ -181,21 +147,6 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
       });      
     })
     return datas
-  }
-
-  getOrgan() {
-    const queryParams = queryString.stringify({ filter: '' });
-    this.apiService.getOrganizations(queryParams).subscribe(results => {
-      if (results.status === 'success') {
-        this.organs = results.data.map(d => {
-          return {
-            label: d.organizationName,
-            value: `${d.organizeId}`
-          }
-        });
-        this.organs = [...this.organs];
-      }
-    })
   }
 
   find() {
@@ -353,7 +304,10 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
       },
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       {
-        headerName: 'Thao tác',
+        headerComponentParams: {
+          template:
+          `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
+        },
         filter: '',
         maxWidth: 120,
         pinned: 'right',
@@ -466,13 +420,12 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
   ngAfterViewChecked(): void {
     const a: any = document.querySelector(".header");
     const b: any = document.querySelector(".sidebarBody");
-    const c: any = document.querySelector(".bread-filter");
     const d: any = document.querySelector(".bread-crumb");
     const e: any = document.querySelector(".paginator");
     this.loadjs++
     if (this.loadjs === 5) {
       if (b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + d.clientHeight + e.clientHeight + 25;
+        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight + 25;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       } else {
@@ -491,5 +444,101 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
   handleCallbackForm() {
     this.load();
     this.addNewPopup = false;
+  }
+
+  //filter 
+  listViewsFilter = [];
+  cloneListViewsFilter = [];
+  detailInfoFilter = null;
+  optionsButonFilter = [
+    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm height-56 addNew', icon: 'pi pi-search' },
+    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger height-56 addNew', icon: 'pi pi-times' },
+  ];
+  getFilter() {
+    // value === 1 ? '' : ''
+    this.apiService.getFilter('/api/v1/eating/GetEatingFilter').subscribe(results => {
+      if(results.status === 'success') {
+        const listViews = cloneDeep(results.data.group_fields);
+        this.cloneListViewsFilter = cloneDeep(listViews);
+        this.listViewsFilter = [...listViews];
+        const params =  getParamString(listViews)
+        this.query = { ...this.query, ...params};
+        this.load();
+        this.detailInfoFilter = results.data;
+      }
+    });
+  }
+
+   filterLoad(event) {
+    this.query = { ...this.query, ...event.data };
+    this.load();
+  }
+
+  close(event) {
+    const listViews = cloneDeep(this.cloneListViewsFilter);
+    this.listViewsFilter = cloneDeep(listViews);
+    const params =  getParamString(listViews)
+    this.query = { ...this.query, ...params};
+    this.load();
+    this.FnEvent()
+  }
+
+showFilter() {
+    const ref = this.dialogService.open(FormFilterComponent, {
+      header: 'Tìm kiếm nâng cao',
+      width: '40%',
+      contentStyle: "",
+      data: {
+        listViews: this.listViewsFilter,
+        detailInfoFilter: this.detailInfoFilter,
+        buttons: this.optionsButonFilter
+      }
+    });
+
+    ref.onClose.subscribe((event: any) => {
+      if (event) {
+        this.listViewsFilter = cloneDeep(event.listViewsFilter);
+        if (event.type === 'Search') {
+          this.query = { ...this.query, ...event.data };
+          this.load();
+        } else if (event.type === 'CauHinh') {
+        this.apiService.getEmpFilter().subscribe(results => {
+            if (results.status === 'success') {
+              const listViews = cloneDeep(results.data.group_fields);
+              this.listViewsFilter = [...listViews];
+              const params =  getParamString(listViews)
+              this.query = { ...this.query, ...params};
+              this.load();
+              this.detailInfoFilter = results.data;
+              this.showFilter()
+            }
+          });
+
+        } else if (event.type === 'Reset') {
+          const listViews = cloneDeep(this.cloneListViewsFilter);
+          this.listViewsFilter = cloneDeep(listViews);
+         const params =  getParamString(listViews)
+        this.query = { ...this.query, ...params};
+        this.load();
+        }
+      }
+    });
+  }
+
+  ngAfterViewInit(): void {
+    this.FnEvent();
+  }
+
+  FnEvent() {
+    setTimeout(() => {
+      var dragTarget = document.getElementById(this.gridKey);
+      console.log('dragTarget', dragTarget)
+      if(dragTarget) {
+        const click$ = fromEvent(dragTarget, 'click');
+        click$.subscribe(event => {
+          this.handleAdd()
+        });
+      }
+    }, 300);
   }
 }

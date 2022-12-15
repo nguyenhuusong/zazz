@@ -18,6 +18,7 @@ import { cloneDeep } from 'lodash';
 import { DialogService } from 'primeng/dynamicdialog';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
+import { fromEvent } from 'rxjs';
 
 @Component({
   selector: 'app-pq-the-nhan-vien',
@@ -294,9 +295,12 @@ detailInfoFilter = null;
     this.columnDefs = [
       ...AgGridFn(this.gridflexs.filter((d: any) => !d.isHide)),
       {
-        headerName: 'Thao tác',
+        headerComponentParams: {
+          template:
+          `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
+        },
         filter: '',
-        width: 100,
+        width: 6,
         pinned: 'right',
         cellRenderer: 'buttonAgGridComponent',
         cellClass: ['border-right', 'no-auto'],
@@ -384,6 +388,7 @@ detailInfoFilter = null;
         this.apiService.lockCardNV(event.rowData.cardCd)
           .subscribe(results => {
             this.load();
+            this.FnEvent();
             this.spinner.hide();
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Khóa thẻ thành công' });
           }, error => this.handlerError(error));
@@ -427,6 +432,7 @@ detailInfoFilter = null;
         this.apiService.unlockCardNV(event.rowData.cardCd)
           .subscribe(results => {
             this.load();
+            this.FnEvent();
             this.spinner.hide();
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Mở khóa thẻ thành công' });
           }, error => this.handlerError(error));
@@ -443,6 +449,7 @@ detailInfoFilter = null;
         this.apiService.deleteCard(queryParams)
           .subscribe(results => {
             this.load();
+            this.FnEvent();
             this.spinner.hide();
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Xóa thẻ xe thành công' });
           }, error => this.handlerError(error));
@@ -501,6 +508,7 @@ detailInfoFilter = null;
     const params =  getParamString(listViews)
     this.model = { ...this.model, ...params};
     this.load();
+    this.FnEvent();
   }
 
 showFilter() {
@@ -543,6 +551,22 @@ showFilter() {
         }
       }
     });
+  }
+
+  ngAfterViewInit(): void {
+    this.FnEvent();
+  }
+
+  FnEvent() {
+    setTimeout(() => {
+      var dragTarget = document.getElementById(this.gridKey);
+      if(dragTarget) {
+        const click$ = fromEvent(dragTarget, 'click');
+        click$.subscribe(event => {
+          this.handleAdd()
+        });
+      }
+    }, 3000);
   }
 }
 

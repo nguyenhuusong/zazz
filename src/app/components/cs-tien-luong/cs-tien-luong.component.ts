@@ -423,7 +423,7 @@ showFilter() {
           this.addTienLuong()
         });
       }
-    }, 3000);
+    }, 300);
   }
 
 }

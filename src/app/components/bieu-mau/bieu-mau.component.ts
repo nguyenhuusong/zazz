@@ -4,7 +4,7 @@ import { MessageService, ConfirmationService, TreeNode } from 'primeng/api';
 import { ExportFileService } from './../../services/export-file.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
-import { Component, OnInit, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, AfterViewChecked, OnDestroy } from '@angular/core';
 import * as queryString from 'querystring';
 import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import * as moment from 'moment';
@@ -24,7 +24,7 @@ import { fromEvent } from 'rxjs';
   templateUrl: './bieu-mau.component.html',
   styleUrls: ['./bieu-mau.component.scss']
 })
-export class BieuMauComponent implements OnInit, AfterViewChecked {
+export class BieuMauComponent implements OnInit, OnDestroy {
   MENUACTIONROLEAPI = MENUACTIONROLEAPI;
   ACTIONS = ACTIONS
 
@@ -47,6 +47,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
   }
   listsData = [];
   columnDefs = [];
+  columnDefs2 = []
   statusTaiLieu = [
     { label: 'Đang hoạt động', value: 1 },
     { label: 'Hết hạn', value: 2 },
@@ -251,7 +252,8 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
   
   load() {
     this.listDataSelect = []
-    this.columnDefs = []
+    this.columnDefs = [];
+    this.columnDefs2 = [];
     this.spinner.show();
     const query = {...this.query};
     const queryParams = queryString.stringify(query);
@@ -372,7 +374,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
   }
   //ca nhan
   columnDef2() {
-    this.columnDefs = [
+    this.columnDefs2 = [
       {
         headerName: 'STT',
         filter: '',
@@ -408,7 +410,6 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
         cellRendererParams: (params: any) => this.showButtons(params),
         field: 'checkbox'
       }]
-      this.FnEvent();
   }
 
   onFirstDataRendered(params: any) {
@@ -504,7 +505,7 @@ export class BieuMauComponent implements OnInit, AfterViewChecked {
 
   handleChange(event) {
     this.indexTab = event.index
-    this.load();
+    this.getFilter();
     this.FnEvent()
   }
 
@@ -692,17 +693,16 @@ showFilter() {
   }
 
   FnEvent() {
-    console.log('this.FnEvent()')
     setTimeout(() => {
       var dragTarget = document.getElementById(this.gridKey);
+      console.log('dragTarget', dragTarget)
       if(dragTarget) {
-        console.log('this.gridKey', dragTarget)
         const click$ = fromEvent(dragTarget, 'click');
         click$.subscribe(event => {
           this.handleAdd()
         });
       }
-    }, 3000);
+    }, 300);
   }
 
 }

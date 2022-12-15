@@ -13,6 +13,7 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { findNodeInTree } from 'src/app/common/function-common/objects.helper';
+import { fromEvent } from 'rxjs';
 @Component({
   selector: 'app-cai-dat-to-chuc',
   templateUrl: './cai-dat-to-chuc.component.html',
@@ -357,9 +358,12 @@ export class CaiDatToChucComponent implements OnInit {
       },
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       {
-        headerName: 'Thao tác',
+        headerComponentParams: {
+          template:
+          `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
+        },
         filter: '',
-        width: 100,
+        width: 60,
         pinned: 'right',
         cellRenderer: 'buttonAgGridComponent',
         cellClass: ['border-right', 'no-auto'],
@@ -817,6 +821,21 @@ export class CaiDatToChucComponent implements OnInit {
         this.loadjs = 0;
       }
     }
+  }
+  ngAfterViewInit(): void {
+    this.FnEvent();
+  }
+
+  FnEvent() {
+    setTimeout(() => {
+      var dragTarget = document.getElementById(this.gridKey);
+      if(dragTarget) {
+        const click$ = fromEvent(dragTarget, 'click');
+        click$.subscribe(event => {
+          this.Add()
+        });
+      }
+    }, 300);
   }
 
 }
