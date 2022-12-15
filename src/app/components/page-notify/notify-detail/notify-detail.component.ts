@@ -164,6 +164,13 @@ export class NotifyDetailComponent implements OnInit {
               field.isVisiable = false;
             }
           }
+          else if(field.field_name === 'isPublish' || field.field_name === 'content_type'  || field.field_name === 'content_markdown') { 
+            if(actionlistValueKey["email"]){
+              field.isVisiable = true;
+            }else{
+              field.isVisiable = false;
+            }
+          }
         });
       }); 
   }

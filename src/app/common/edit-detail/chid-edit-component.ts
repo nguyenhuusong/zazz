@@ -1182,6 +1182,12 @@ export class AppTypeMultiSelectComponent implements OnInit {
           }else{
             field.isVisiable = false;
           }
+        }else if(field.field_name === 'isPublish' || field.field_name === 'content_type'  || field.field_name === 'content_markdown') { 
+          if(actionlistValueKey["email"]){
+            field.isVisiable = true;
+          }else{
+            field.isVisiable = false;
+          }
         }
       });
     }); 
@@ -2250,10 +2256,11 @@ export class AppTypeonOff implements OnInit {
   <div class="field-group">  
   <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
   <div> 
-
   <p-autoComplete [(ngModel)]="element.columnValue" [disabled]="element.isDisable" name="cusId" [baseZIndex]="100" [appendTo]="'body'" [style]="{width: '100%'}"
   [suggestions]="element.options" placeholder="Nhập Tìm kiếm theo tên" (onSelect)="onSelectCus($event, element.field_name)"
   (completeMethod)="search($event)" field="name" [required]="element.isRequire && element.isVisiable && !element.isEmpty"></p-autoComplete>
+  <span class="pi pi-search child-search-emp" (click)="isSearchEmp = true" *ngIf="element.field_name==='empId'"></span>
+  <app-hrm-search-emp [isSearch]="isSearchEmp" (seachEmValue)="seachEmValue($event)"></app-hrm-search-emp>
           <div *ngIf="modelFields[element.field_name]?.isRequire && submit && modelFields[element.field_name]?.error"
                 class="alert-validation alert-danger">
                 <div [hidden]="!modelFields[element.field_name]?.error">
@@ -2268,12 +2275,24 @@ export class AppTypeSelectAutocompleteComponent implements OnInit, OnChanges {
   @Input() dataView;
   @Input() modelFields;
   @Input() submit = false;
+  isSearchEmp = false;
   constructor(
     private apiHrmV2Service: ApiHrmV2Service,
     private spinner: NgxSpinnerService
   ) { }
-  ngOnInit(): void { }
+  ngOnInit(): void {
+  }
 
+  seachEmValue(event) {
+    if(!event.value) {
+      this.isSearchEmp = false;
+    }else{
+      this.element.columnValue = {
+        name: event.dataInfo.full_name,
+        code: event.dataInfo.empId
+      }
+    }
+  }
   ngOnChanges(event) {
     if (event && event.element) {
       this.element = event.element.currentValue

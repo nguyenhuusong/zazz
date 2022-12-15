@@ -40,6 +40,7 @@ export class HrmSearchEmpComponent {
   dataSearcheSelect: any = [];
   dataInfo:any = {}
   empId = '';
+  dataInfoCallback: any = []
   isSearching = false
   ngOnInit(): void {
 
@@ -53,7 +54,8 @@ export class HrmSearchEmpComponent {
     this.isSearching = false
     this.dataSearcheSelect = this.dataSearched.filter( d => event.value === d.empId);
     const queryParams = queryString.stringify({ empId: this.dataSearcheSelect[0].empId });
-    this.empId = this.dataSearcheSelect[0].empId
+    this.empId = this.dataSearcheSelect[0].empId;
+    this.dataInfoCallback = this.dataSearcheSelect[0]
     this.apiService.getEmpProfile(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.dataInfo = {
@@ -91,7 +93,8 @@ export class HrmSearchEmpComponent {
   getItem() {
     let callbackValue = {
       status: 'ok',
-      value: this.empId
+      value: this.empId,
+      dataInfo: this.dataInfoCallback 
     }
     if(this.empId) {
       this.seachEmValue.emit(callbackValue);
