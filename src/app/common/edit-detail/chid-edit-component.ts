@@ -1068,7 +1068,9 @@ export class AppTypeDatefulltimeComponent implements OnInit {
     private apiService: ApiHrmService
   ) { }
   ngOnInit(): void {
-    this.modelFields[this.element.field_name].error = false
+    if(this.modelFields[this.element.field_name] && this.modelFields[this.element.field_name].error) {
+      this.modelFields[this.element.field_name].error = false
+    }
   }
 
 }
@@ -1183,7 +1185,7 @@ export class AppTypeMultiSelectComponent implements OnInit {
             field.isVisiable = false;
           }
         }else if(field.field_name === 'isPublish' || field.field_name === 'content_type'  || field.field_name === 'content_markdown') { 
-          if(actionlistValueKey["email"]){
+          if(actionlistValueKey["email"] || actionlistValueKey["notification"]){
             field.isVisiable = true;
           }else{
             field.isVisiable = false;

@@ -16,6 +16,7 @@ import { cloneDeep } from 'lodash';
 import { DialogService } from 'primeng/dynamicdialog';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
+import { fromEvent } from 'rxjs';
 @Component({
   selector: 'app-cs-tien-luong',
   templateUrl: './cs-tien-luong.component.html',
@@ -190,6 +191,7 @@ export class CsTienLuongComponent implements OnInit {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa công ty thành công' });
             this.load();
+            this.FnEvent();
           } else {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
           }
@@ -202,7 +204,10 @@ export class CsTienLuongComponent implements OnInit {
     this.columnDefs = [
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       {
-        headerName: 'Thao tác',
+        headerComponentParams: {
+          template:
+          `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
+        },
         filter: '',
         width: 100,
         pinned: 'right',
@@ -263,10 +268,12 @@ export class CsTienLuongComponent implements OnInit {
 
   find() {
     this.load();
+    this.FnEvent();
   }
 
   changePageSize() {
     this.load();
+    this.FnEvent();
   }
 
   paginate(event) {
@@ -274,6 +281,7 @@ export class CsTienLuongComponent implements OnInit {
     this.first = event.first;
     this.query.pageSize = event.rows;
     this.load();
+    this.FnEvent();
   }
 
   ngOnInit() {
@@ -357,6 +365,7 @@ detailInfoFilter = null;
     const params =  getParamString(listViews)
     this.query = { ...this.query, ...params};
     this.load();
+    this.FnEvent();
   }
 
 showFilter() {
@@ -399,6 +408,22 @@ showFilter() {
         }
       }
     });
+  }
+
+  ngAfterViewInit(): void {
+    this.FnEvent();
+  }
+
+  FnEvent() {
+    setTimeout(() => {
+      var dragTarget = document.getElementById(this.gridKey);
+      if(dragTarget) {
+        const click$ = fromEvent(dragTarget, 'click');
+        click$.subscribe(event => {
+          this.addTienLuong()
+        });
+      }
+    }, 3000);
   }
 
 }

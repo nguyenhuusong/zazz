@@ -289,7 +289,7 @@ cloneListViewsDetail = [];
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa quá trình làm việc này?',
       accept: () => {
-        const queryParams = queryString.stringify({ id: event.rowData.workingId });
+        const queryParams = queryString.stringify({ id: event.rowData.id });
         this.apiService.delEmpWorking(queryParams).subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
