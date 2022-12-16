@@ -5989,3 +5989,9 @@ app-thong-tin-ca-nhan-edit-detail{
 .ag-theme-material .ag-checkbox-input-wrapper.ag-checked::after{
     color: #3996f5;
 }
+
+.hidden_row {
+    .ag-row-no-animation {
+        height: 0;
+    }
+}

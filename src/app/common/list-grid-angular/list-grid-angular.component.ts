@@ -316,8 +316,6 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
 
   isChange = false
   onCellValueChanged(event) {
-    console.log(event)
-    console.log(event.value != event.oldValue)
     if (event.value != event.oldValue) {
       this.isChange = true;
     } else {
@@ -327,6 +325,7 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
 
 
   onGridReady(params: any) {
+    console.log( this.gridColumnApi)
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
     let allColumnIds: any = [];
@@ -425,6 +424,7 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
       this.gridColumnApi.autoSizeColumns(allColumnIds, false);
       const grid = document.getElementById(`${this.idGrid}`);
       if (grid) {
+        console.log(event)
         if ((event.left === 0) ||(event.left > 200 && event.left < 220)
           || (event.left > 400 && event.left < 420)
           || (event.left > 600 && event.left < 620)
