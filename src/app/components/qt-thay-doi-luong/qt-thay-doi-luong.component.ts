@@ -127,7 +127,6 @@ export class QtThayDoiLuongComponent implements OnInit {
       avatarRendererFull: AvatarFullComponent,
     };
     this.getSalaryInfoFilter();
-
   }
   query = {
     filter: '',
@@ -401,7 +400,6 @@ export class QtThayDoiLuongComponent implements OnInit {
       { label: 'Quá trình thay đổi lương' },
     ];
     
-    this.getOrgan();
     this.itemsToolOfGrid = [
       {
         label: 'Import file',

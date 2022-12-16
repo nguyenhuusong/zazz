@@ -184,6 +184,7 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
           }, 100);
         }
         this.spinner.hide();
+        this.FnEvent();
       },
       error => {
         this.spinner.hide();
@@ -383,7 +384,6 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit() {
-  
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Chính sách' },

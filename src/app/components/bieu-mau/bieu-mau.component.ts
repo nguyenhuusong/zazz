@@ -230,7 +230,6 @@ export class BieuMauComponent implements OnInit, OnDestroy {
   
   changePageSize() {
     this.load();
-    this.FnEvent()
   }
 
   paginate(event) {
@@ -238,7 +237,6 @@ export class BieuMauComponent implements OnInit, OnDestroy {
     this.first = event.first;
     this.query.pageSize = event.rows;
     this.load();
-    this.FnEvent()
   }
 
   displaySetting = false;
@@ -276,6 +274,8 @@ export class BieuMauComponent implements OnInit, OnDestroy {
           }, 100);
         }
         this.spinner.hide();
+        this.FnEvent()
+
       },
       error => {
         this.spinner.hide();

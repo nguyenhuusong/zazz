@@ -29,7 +29,7 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
   dataAnCa: any;
   MENUACTIONROLEAPI = MENUACTIONROLEAPI;
   ACTIONS = ACTIONS
-  rowDataSelected:any = []
+  rowDataSelected: any = []
   constructor(
     private spinner: NgxSpinnerService,
     private apiService: ApiHrmService,
@@ -73,7 +73,7 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
 
   listViewsFilter = [];
   cloneListViewsFilter = [];
-detailInfoFilter = null;
+  detailInfoFilter = null;
   optionsButonFilter = [
     { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm height-56 addNew', icon: 'pi pi-search' },
     { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger height-56 addNew', icon: 'pi pi-times' },
@@ -125,7 +125,7 @@ detailInfoFilter = null;
       offSet: 0,
       pageSize: 15,
     }
-    if(this.companies.length > 0) {
+    if (this.companies.length > 0) {
       this.query.companyIds = this.companies[0].value;
     }
     this.load();
@@ -146,7 +146,7 @@ detailInfoFilter = null;
   FnEvent() {
     setTimeout(() => {
       var dragTarget = document.getElementById(this.gridKey);
-      if(dragTarget) {
+      if (dragTarget) {
         const click$ = fromEvent(dragTarget, 'click');
         click$.subscribe(event => {
           this.handAddNew()
@@ -158,27 +158,27 @@ detailInfoFilter = null;
   load() {
     this.columnDefs = []
     this.spinner.show();
-    let params: any = {... this.query};
+    let params: any = { ... this.query };
     const queryParams = queryString.stringify(params);
     this.apiService.getEatingPage(queryParams).subscribe(
       (results: any) => {
         this.listsData = results.data.result.dataList.data;
-        this.gridKey= results.data.result.dataList.gridKey;
+        this.gridKey = results.data.result.dataList.gridKey;
         if (this.query.offSet === 0) {
-          this.cols =  results.data.result.gridflexs;
+          this.cols = results.data.result.gridflexs;
           // this.colsDetail =  results.data.result.gridflexdetails ?  results.data.result.gridflexdetails : [];
         }
         this.initGrid();
         this.countRecord.totalRecord = results.data.result.dataList.recordsTotal;
         this.countRecord.totalRecord = results.data.result.dataList.recordsTotal;
-        this.countRecord.currentRecordStart = results.data.result.dataList.recordsTotal === 0 ? this.query.offSet = 0 :  this.query.offSet + 1;
+        this.countRecord.currentRecordStart = results.data.result.dataList.recordsTotal === 0 ? this.query.offSet = 0 : this.query.offSet + 1;
         if ((results.data.result.dataList.recordsTotal - this.query.offSet) > this.query.pageSize) {
           this.countRecord.currentRecordEnd = this.query.offSet + Number(this.query.pageSize);
         } else {
           this.countRecord.currentRecordEnd = results.data.result.dataList.recordsTotal;
           setTimeout(() => {
             const noData = document.querySelector('.ag-overlay-no-rows-center');
-            if (noData) { noData.innerHTML = 'Không có kết quả phù hợp'}
+            if (noData) { noData.innerHTML = 'Không có kết quả phù hợp' }
           }, 100);
         }
         this.spinner.hide();
@@ -235,7 +235,7 @@ detailInfoFilter = null;
       {
         headerComponentParams: {
           template:
-          `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
+            `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
         },
         filter: '',
         width: 100,
@@ -295,13 +295,13 @@ detailInfoFilter = null;
     let b: any = document.querySelector(".sidebarBody");
     const d: any = document.querySelector(".bread-crumb");
     const e: any = document.querySelector(".paginator");
-    this.loadjs ++ 
+    this.loadjs++
     if (this.loadjs === 5) {
-      if(b && b.clientHeight) {
+      if (b && b.clientHeight) {
         const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight + 25;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
-      }else {
+      } else {
         const totalHeight = a.clientHeight + d.clientHeight + e.clientHeight + 25;
         this.heightGrid = window.innerHeight - totalHeight
         this.loadjs = 0;
@@ -311,11 +311,10 @@ detailInfoFilter = null;
 
   ngOnInit() {
     this.items = [
-      { label: 'Trang chủ' , routerLink: '/home' },
+      { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Chính sách' },
       { label: 'Danh sách ăn ca' },
     ];
-    // this.getOrgRoots();
     this.getFilter();
   }
 
@@ -346,7 +345,7 @@ detailInfoFilter = null;
         error => { });
   }
 
-  onNodeSelect (event) {
+  onNodeSelect(event) {
 
   }
   sizeToFit() {
@@ -384,11 +383,11 @@ detailInfoFilter = null;
 
   // list ăn ca
   listDetail(event = null) {
-    
+
     const params = {
       cusId: ''
     }
-    if(event){
+    if (event) {
       params.cusId = event.rowData.custId
     }
     this.router.navigate(['/chinh-sach/an-ca/chi-tiet-danh-sach-an-ca'], { queryParams: params });
@@ -398,20 +397,20 @@ detailInfoFilter = null;
     this.rowDataSelected = event;
   }
 
-  handAddNew () {
+  handAddNew() {
     this.detailInfo = []
     this.listViews = []
     const params = { cusId: null }
     this.isDetail = true;
-    this.apiService.getEatingForCreateInfo(queryString.stringify(params)).subscribe( results => {
+    this.apiService.getEatingForCreateInfo(queryString.stringify(params)).subscribe(results => {
       if (results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.listViews = [...listViews];
         this.detailInfo = results.data;
       }
-    }) 
+    })
   }
-  
+
   positions = [];
   getOrgPositions() {
     this.positions = [];
@@ -428,10 +427,10 @@ detailInfoFilter = null;
 
 
   getCompany() {
-    const query = { organizeIds: this.query.organizeIds}
+    const query = { organizeIds: this.query.organizeIds }
     this.apiService.getUserCompanies(queryString.stringify(query)).subscribe(
       (results: any) => {
-        if(results.status === "success"){
+        if (results.status === "success") {
           this.companies = results.data
             .map(d => {
               return {
@@ -439,10 +438,10 @@ detailInfoFilter = null;
                 value: d.value
               };
             });
-            if(this.companies.length > 0) {
-              this.query.companyIds = this.companies[0].value
-            }
-            this.load();
+          if (this.companies.length > 0) {
+            this.query.companyIds = this.companies[0].value
+          }
+          this.load();
         }
       }),
       error => { };
@@ -468,7 +467,7 @@ detailInfoFilter = null;
 
   exportData() {
     this.spinner.show();
-    let params: any = {... this.query};
+    let params: any = { ... this.query };
     let companyIds = this.query.companyIds.toString();
     params.companyIds = companyIds;
     delete params.fromdate
@@ -478,33 +477,33 @@ detailInfoFilter = null;
     params.orgId = this.selectedValue ? this.selectedValue.orgId : null
 
     const queryParams = queryString.stringify(params);
-      this.apiService.gxportEatingPage(queryParams).subscribe(results => {
-        if (results.type === 'application/json') {
-          this.spinner.hide();
-        } else {
-          var blob = new Blob([results], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-          FileSaver.saveAs(blob, `Danh sách ăn ca` +".xlsx");
-          this.spinner.hide();
-        }
-      })
+    this.apiService.gxportEatingPage(queryParams).subscribe(results => {
+      if (results.type === 'application/json') {
+        this.spinner.hide();
+      } else {
+        var blob = new Blob([results], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        FileSaver.saveAs(blob, `Danh sách ăn ca` + ".xlsx");
+        this.spinner.hide();
+      }
+    })
   }
 
   //filter 
   getFilter() {
     this.apiService.getFilter('/api/v1/eating/GetEatingFilter').subscribe(results => {
-      if(results.status === 'success') {
+      if (results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
-          this.cloneListViewsFilter = cloneDeep(listViews);
-          this.listViewsFilter = [...listViews];
-          const params =  getParamString(listViews)
-          this.query = { ...this.query, ...params};
-          this.load();
+        this.cloneListViewsFilter = cloneDeep(listViews);
+        this.listViewsFilter = [...listViews];
+        const params = getParamString(listViews)
+        this.query = { ...this.query, ...params };
+        this.load();
         this.detailInfoFilter = results.data;
       }
     });
   }
 
-   filterLoad(event) {
+  filterLoad(event) {
     this.query = { ...this.query, ...event.data };
     this.load();
   }
@@ -512,12 +511,12 @@ detailInfoFilter = null;
   close(event) {
     const listViews = cloneDeep(this.cloneListViewsFilter);
     this.listViewsFilter = cloneDeep(listViews);
-    const params =  getParamString(listViews)
-    this.query = { ...this.query, ...params};
+    const params = getParamString(listViews)
+    this.query = { ...this.query, ...params };
     this.load();
   }
 
-showFilter() {
+  showFilter() {
     const ref = this.dialogService.open(FormFilterComponent, {
       header: 'Tìm kiếm nâng cao',
       width: '40%',
@@ -540,8 +539,8 @@ showFilter() {
             if (results.status === 'success') {
               const listViews = cloneDeep(results.data.group_fields);
               this.listViewsFilter = [...listViews];
-              const params =  getParamString(listViews)
-              this.query = { ...this.query, ...params};
+              const params = getParamString(listViews)
+              this.query = { ...this.query, ...params };
               this.load();
               this.detailInfoFilter = results.data;
               this.showFilter()
@@ -551,9 +550,9 @@ showFilter() {
         } else if (event.type === 'Reset') {
           const listViews = cloneDeep(this.cloneListViewsFilter);
           this.listViewsFilter = cloneDeep(listViews);
-         const params =  getParamString(listViews)
-        this.query = { ...this.query, ...params};
-        this.load();
+          const params = getParamString(listViews)
+          this.query = { ...this.query, ...params };
+          this.load();
         }
       }
     });

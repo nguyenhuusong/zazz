@@ -24,7 +24,7 @@ export class TinhLuongComponent implements OnInit {
   @ViewChild('tabThietLapThamSo') tabThietLapThamSo: TabThietLapThamSoComponent;
   @ViewChild('tabThanhPhanLuong') tabThanhPhanLuong: TabThanhPhanLuongComponent;
   @ViewChild('TabCapBacLuongComponent') TabCapBacLuongComponent: TabCapBacLuongComponent;
-  
+
   tabsItem = []
   pagingComponent = {
     total: 0
@@ -51,8 +51,11 @@ export class TinhLuongComponent implements OnInit {
     private fileService: ExportFileService,
     private changeDetector: ChangeDetectorRef,
     private router: Router) {
-    }
-    private readonly unsubscribe$: Subject<void> = new Subject();
+  }
+  query = {
+    filter: ''
+  }
+  private readonly unsubscribe$: Subject<void> = new Subject();
   displayOrganize = false;
   listAgencyMap: TreeNode[];
   displayButton = false;
@@ -74,7 +77,6 @@ export class TinhLuongComponent implements OnInit {
       { label: 'Lương - thuế' },
       { label: 'Thiết lập tham Số' },
     ];
-    this.getOrgan();
     this.itemsToolOfGrid = [
       {
         label: 'Export file',
@@ -90,33 +92,33 @@ export class TinhLuongComponent implements OnInit {
   }
 
   checkIsAddNew() {
-    if(this.tabIndex === 0 && !CheckHideAction(MENUACTIONROLEAPI.GetPayrollAppInfoPage.url, ACTIONS.ADD_TINH_LUONG_BANG_LUONG)){
+    if (this.tabIndex === 0 && !CheckHideAction(MENUACTIONROLEAPI.GetPayrollAppInfoPage.url, ACTIONS.ADD_TINH_LUONG_BANG_LUONG)) {
       this.isAddNewButton = true;
-    }else if(this.tabIndex === 1 && !CheckHideAction(MENUACTIONROLEAPI.GetPayrollAppInfoPage.url, ACTIONS.ADD_TINH_LUONG_THIET_LAP_THAM_SO)){
+    } else if (this.tabIndex === 1 && !CheckHideAction(MENUACTIONROLEAPI.GetPayrollAppInfoPage.url, ACTIONS.ADD_TINH_LUONG_THIET_LAP_THAM_SO)) {
       this.isAddNewButton = true;
-    }else if(this.tabIndex === 2 && !CheckHideAction(MENUACTIONROLEAPI.GetPayrollAppInfoPage.url, ACTIONS.ADD_TINH_LUONG_THANH_PHAN_LUONG)){
+    } else if (this.tabIndex === 2 && !CheckHideAction(MENUACTIONROLEAPI.GetPayrollAppInfoPage.url, ACTIONS.ADD_TINH_LUONG_THANH_PHAN_LUONG)) {
       this.isAddNewButton = true;
-    }else if(this.tabIndex === 3 && !CheckHideAction(MENUACTIONROLEAPI.GetPayrollAppInfoPage.url, ACTIONS.ADD_TINH_LUONG_CAP_BAC_LUONG)){
+    } else if (this.tabIndex === 3 && !CheckHideAction(MENUACTIONROLEAPI.GetPayrollAppInfoPage.url, ACTIONS.ADD_TINH_LUONG_CAP_BAC_LUONG)) {
       this.isAddNewButton = true;
-    }else{
+    } else {
       this.isAddNewButton = false;
     }
   }
 
   editEvent(event) {
     let id = null;
-    if(this.tabIndex === 0){
+    if (this.tabIndex === 0) {
       this.idForm = event.rowData.appInfoId
-    }else if(this.tabIndex === 1){
+    } else if (this.tabIndex === 1) {
       this.idForm = event.rowData.id
-    }else if(this.tabIndex === 2){
+    } else if (this.tabIndex === 2) {
       this.idForm = event.rowData.componentId
-    }else if(this.tabIndex === 3){
+    } else if (this.tabIndex === 3) {
       this.idForm = event.rowData.baseId
     }
     this.isFormDetail = true;
-    
-    const queryParams = queryString.stringify({recordId: event.rowData.id});
+
+    const queryParams = queryString.stringify({ recordId: event.rowData.id });
     // this.apiService.getPayrollAppInfo(queryParams).subscribe(results => {
     //   if (results.status === 'success') {
     //     this.listViews = cloneDeep(results.data.group_fields);
@@ -127,34 +129,34 @@ export class TinhLuongComponent implements OnInit {
 
   isNew = false
   addNew() {
-    if(this.tabIndex === 0){
+    if (this.tabIndex === 0) {
       this.isFormDetail = true;
       this.idForm = null
-    }else if(this.tabIndex === 1){
+    } else if (this.tabIndex === 1) {
       this.isFormDetail = true;
       this.idForm = null
-    }else if(this.tabIndex === 2){
+    } else if (this.tabIndex === 2) {
       this.isFormDetail = true;
       this.idForm = null
-    }else if(this.tabIndex === 3){
+    } else if (this.tabIndex === 3) {
       this.isFormDetail = true;
       this.idForm = null
     }
   }
 
   checkTitleAddNew() {
-    if(this.tabIndex === 0){
+    if (this.tabIndex === 0) {
       this.titleAddnew = 'Bảng lương';
       this.items[this.items.length - 1] = 'Bảng lương';
-    }else if(this.tabIndex === 1){
+    } else if (this.tabIndex === 1) {
       this.titleAddnew = 'Thiết lâp tham số';
       this.items[this.items.length - 1] = 'Thiết lâp tham số';
-    }else if(this.tabIndex === 2){
+    } else if (this.tabIndex === 2) {
       this.titleAddnew = 'Thành phần lương';
-      this.items[this.items.length-1] = 'Thành phần lương';
-    }else if(this.tabIndex === 3){
+      this.items[this.items.length - 1] = 'Thành phần lương';
+    } else if (this.tabIndex === 3) {
       this.titleAddnew = 'Cấp bậc lương';
-      this.items[this.items.length-1] = 'Cấp bậc lương';
+      this.items[this.items.length - 1] = 'Cấp bậc lương';
     }
   }
 
@@ -220,7 +222,7 @@ export class TinhLuongComponent implements OnInit {
       }
     })
   }
-  
+
   loadjs = 0;
   heightGrid = 0
   ngAfterViewChecked(): void {
@@ -241,17 +243,17 @@ export class TinhLuongComponent implements OnInit {
     // }
   }
 
-  handleChange(e){
+  handleChange(e) {
     this.tabIndex = e;
     this.checkTitleAddNew();
     this.checkIsAddNew();
   }
-  
+
 
   // thanh phan luong
-  getHrmPayrollAttributeInfo(id = null){
+  getHrmPayrollAttributeInfo(id = null) {
     const queryParams = queryString.stringify({ Id: id })
-    this.apiService.getHrmPayrollAttributeInfo(queryParams).subscribe( results => {
+    this.apiService.getHrmPayrollAttributeInfo(queryParams).subscribe(results => {
       if (results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.listViews = cloneDeep(listViews);
@@ -259,7 +261,7 @@ export class TinhLuongComponent implements OnInit {
       }
     })
   }
-  
+
   // loai bang luong
   // getHrmPayrollTypeInfo(id = null) {
   //   const queryParams = queryString.stringify({ Id: id })
@@ -319,28 +321,28 @@ export class TinhLuongComponent implements OnInit {
   // quaylai(event){
   //   this.isNew = false
   // }
-  
+
   // getIsNewPopup(event){
   //   this.isNew = event
   // }
 
 
   // from detail
-  theEventDetail(event){
-     this.isFormDetail = false;
-     if(this.tabIndex === 0) {
+  theEventDetail(event) {
+    this.isFormDetail = false;
+    if (this.tabIndex === 0) {
       this.tabBangLuong.load();
-     }
-     if(this.tabIndex === 1) {
+    }
+    if (this.tabIndex === 1) {
       this.tabThietLapThamSo.load();
-     }
-     if(this.tabIndex === 2) {
+    }
+    if (this.tabIndex === 2) {
       this.tabThanhPhanLuong.load();
-     }
-     if(this.tabIndex === 3) {
+    }
+    if (this.tabIndex === 3) {
       this.TabCapBacLuongComponent.load();
-     }
-     
+    }
+
   }
 
 }
