@@ -6,7 +6,7 @@
                 <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
             </div>
             <div class="col-9 gap-16 end pd-0 wrap d-flex">
-                <div class="filter filter-search col-3 pd-0">
+                <div class="filter filter-search col-2 pd-0">
                     <div class="field-group text search mb-0" [ngClass]=" query.filter ? 'valid' : 'invalid' ">
                         <input placeholder="Vị trí, chuyển môn ..." class="input-default" type="text" autocomplete="off" id="filter"
                             (keydown.enter)="query.offSet = 0; first = 0;load()"
@@ -54,7 +54,7 @@
                     trên tổng số
                     {{ countRecord.totalRecord }} kết quả</span>
                 <p-paginator [rows]="query.pageSize" [totalRecords]="countRecord.totalRecord" [first]="first"
-                    (onPageChange)="paginate($event)" [rowsPerPageOptions]="[15,30,45,100,200,{ showAll: 'ALL' }]">
+                    (onPageChange)="paginate($event)" [rowsPerPageOptions]="[20,40,60,100,200,{ showAll: 'ALL' }]">
                 </p-paginator>
             </div>
         </div>

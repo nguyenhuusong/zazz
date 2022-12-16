@@ -1852,8 +1852,8 @@ button{
             }
         }
         svg{
-            width: 15px;
-            height: auto;
+            height: 14px;
+            width: auto;
         }
     }
 }
@@ -2554,17 +2554,17 @@ div.p-organizationchart {
     input-file: .attach-file 
 */
 .field-group{
-    margin-bottom: 16px;
+    margin-bottom: 10px;
     position: relative;
     label{
         color: #465373;
-        font-size: 14px;
+        font-size: 12px;
         left: 12px;
         transition: 300ms ease all;
         font-family: $fontMmedium;
         font-weight: 500;
         line-height: 20px;
-        margin-bottom: 4px;
+        margin-bottom: 2px;
         display: block;
     }
     .icon-date{
@@ -2786,9 +2786,9 @@ div.p-organizationchart {
             color: #2B2F33;
             outline: none;
             line-height: 1;
-            padding: 10px 27px 11px 7px;
+            padding: 8px 27px 11px 7px;
             min-height: 30px;
-            height: 32px;
+            height: 30px;
         }
         .p-dropdown-trigger{
             position: absolute;
@@ -4026,6 +4026,8 @@ p-button{
             background: #f7f7f7;
             border-right: 0.5px solid #d4d4d4;
             // border-bottom: 0.5px solid #d4d4d4 !important;
+            border-bottom: 0.5px solid #d4d4d4 !important;
+            border-top: none !important;
             padding-left: 12px;
             padding-right: 12px;
             .ag-header-cell-label {
@@ -4068,6 +4070,12 @@ p-button{
                     img{
                         width: 100% !important;
                         border-radius: 100%;
+                    }
+                }
+                p-avatar{
+                    .p-avatar{
+                        width: 28px;
+                        height: 28px;
                     }
                 }
             }
@@ -4234,7 +4242,7 @@ ul{
     }
 }
 section{
-    padding: 16px;
+    padding: 10px;
     margin-bottom: 3px;
     background: #fff;
     &.bread-crumb{
@@ -4364,6 +4372,7 @@ section{
     .content{
         background: #fff;
         background-color: #fbfbfb;
+        padding-top: 0px;
     }
 }
 
@@ -4494,7 +4503,8 @@ p-dialog{
             border-radius: 100%;
             padding: 3px 2px;
             width: 16px;
-            height: 16px;
+            height: 14px;
+            background-repeat: no-repeat;
             font-size: 7px;
             text-align: center;
             font-weight: 700;
@@ -4506,7 +4516,7 @@ p-dialog{
                 font-weight: 500;
             }
             button{
-                height: 36px;
+                height: 32px;
             }
         }
     }
@@ -5974,4 +5984,8 @@ app-thong-tin-ca-nhan-edit-detail{
 }
 .p-paginator{
     padding:5px 0px 0px;
+}
+
+.ag-theme-material .ag-checkbox-input-wrapper.ag-checked::after{
+    color: #3996f5;
 }

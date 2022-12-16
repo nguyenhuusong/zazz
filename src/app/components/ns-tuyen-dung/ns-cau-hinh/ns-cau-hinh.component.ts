@@ -126,16 +126,16 @@ export class NsCauHinhComponent implements OnInit {
   popupWidth = 1800;
   checkTitleAddNew() {
     if(this.tabIndex === 0){
-      this.titleAddnew = 'Cấu hình mail';
-      this.items[this.items.length - 1] = 'Cấu hình mail';
+      // this.titleAddnew = 'Cấu hình mail';
+      // this.items[this.items.length - 1] = 'Cấu hình mail';
       this.popupWidth = 1800
     }else if(this.tabIndex === 1){
-      this.titleAddnew = 'Vòng tuyển dụng';
-      this.items[this.items.length - 1] = 'Vòng tuyển dụng';
+      // this.titleAddnew = 'Vòng tuyển dụng';
+      // this.items[this.items.length - 1] = 'Vòng tuyển dụng';
       this.popupWidth = 1200
     }else if(this.tabIndex === 2){
-      this.titleAddnew = 'Nguồn tuyển dụng';
-      this.items[this.items.length-1] = 'Nguồn tuyển dụng';
+      // this.titleAddnew = 'Nguồn tuyển dụng';
+      // this.items[this.items.length-1] = 'Nguồn tuyển dụng';
       this.popupWidth = 1200
     }
   }
