@@ -32,7 +32,7 @@ export class HrmSearchEmpComponent {
   ];
   modelStaff = '';
   listStaff = [];
-  query: {
+  query = {
     filter: ''
   }
   isLoading = false;
@@ -88,6 +88,15 @@ export class HrmSearchEmpComponent {
     }
     this.isSearch = false
     this.seachEmValue.emit(callbackValue)
+  }
+
+  searchEmp() {
+    this.isLoading = true;
+    this.isSearching = true;
+    this.apiService.getEmployeePage(queryString.stringify({ filter: this.query.filter})).subscribe((results: any) => {
+      this.isLoading = false;
+      this.dataSearched = results.data.dataList.data;
+    })
   }
 
   getItem() {

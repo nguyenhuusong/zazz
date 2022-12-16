@@ -22,8 +22,8 @@
     font-display: swap;
   }
 
-$fontMmedium: 'SFProTextMedium';
-$fontRegular: 'SFProTextRegular';
+$fontMmedium: 'Arial','Apple SD Gothic Neo','Gulim';
+$fontRegular: 'Arial','Apple SD Gothic Neo','Gulim';
 
 :root {
     --font-size: 14px;
@@ -592,6 +592,7 @@ body {
              }
              &:last-child{
                 border-radius: 0px 4px 0px 0px;
+                border-bottom: 0.5px solid #d4d4d4 !important;
              }
          }   
         }
@@ -638,10 +639,6 @@ body {
 //         }
 //     }
 // }
-
-.height-56{
-    height: 40px;
-}
 
 // .ag-body-horizontal-scroll-viewport{
 //     &:hover{
@@ -1025,10 +1022,13 @@ div.p-menu-buttons{
         width: 40px;
         text-align: center;
         top: 0px;
-        line-height: 48px;
+        line-height: 37px;
         right: 0;
         position: absolute;
         z-index: 2;
+        svg{
+            height: 16px;
+        }
         &:hover{
             cursor: pointer;
         }
@@ -1839,12 +1839,11 @@ div.menu-agrid{
 }
 button{
     &.p-button{
-        // padding: 0px 10px;
         border-radius: 4px;
-        // height: 35px;
-        // line-height: 35px;
+        font-family: $fontRegular;
         line-height: 1;
-        padding: 11px 24px;
+        padding: 7px 7px !important;
+        font-size: 12px !important;
         &.p-button-danger {
             background: #FF3B49;
             border-radius: 4px;
@@ -1852,8 +1851,13 @@ button{
                 font-size: 16px;
             }
         }
+        svg{
+            width: 15px;
+            height: auto;
+        }
     }
 }
+
 p-dialog{
     button{
         &.p-button{
@@ -2567,6 +2571,8 @@ div.p-organizationchart {
         position: absolute;
         right: 10px;
         bottom: 10px;
+        height: 14px;
+        width: auto;
     }
     input{
         width: 100%;
@@ -2574,14 +2580,14 @@ div.p-organizationchart {
         -moz-border-radius: 3px;
         background: none;
         border: 1px solid #D1D4DC;
-        font-size: 14px;
+        font-size: 12px;
         color: #2B2F33;
         padding-left: 12px;
         padding-right: 12px;
         font-family: $fontRegular;
         outline: none;
         line-height: 20px;
-        padding: 9px 12px 9px 11px;
+        padding: 5px 12px 5px 7px;
         &:-internal-autofill-selected {
             background-color: transparent
         }
@@ -2601,25 +2607,25 @@ div.p-organizationchart {
         }
         &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
             color: rgba(43, 47, 51, 0.6);
-            font-size: 14px;
+            font-size: 13px;
             font-family: $fontRegular;
             font-weight: 400;
           }
           &::-moz-placeholder { /* Firefox 19+ */
             color: rgba(43, 47, 51, 0.6);
-            font-size: 14px;
+            font-size: 13px;
             font-family: $fontRegular;
             font-weight: 400;
           }
           &:-ms-input-placeholder { /* IE 10+ */
             color: rgba(43, 47, 51, 0.6);
-            font-size: 14px;
+            font-size: 13px;
             font-family: $fontRegular;
             font-weight: 400;
           }
           &:-moz-placeholder { /* Firefox 18- */
             color: rgba(43, 47, 51, 0.6);
-            font-size: 14px;
+            font-size: 13px;
             font-family: $fontRegular;
             font-weight: 400;
           }
@@ -2752,7 +2758,7 @@ div.p-organizationchart {
             z-index: 1;
             background: none;
             width: 100%;
-            min-height: 40px;
+            min-height: 32px;
             &.p-focus{
                 box-shadow: none;
                 border: 1px solid #0979FD;
@@ -2776,13 +2782,13 @@ div.p-organizationchart {
             border-radius: 3px;
             -webkit-border-radius: 3px;
             -moz-border-radius: 3px;
-            font-size: 14px;
+            font-size: 12px;
             color: #2B2F33;
             outline: none;
             line-height: 1;
-            padding: 12px 27px 11px 11px;
+            padding: 10px 27px 11px 7px;
             min-height: 30px;
-            height: 36px;
+            height: 32px;
         }
         .p-dropdown-trigger{
             position: absolute;
@@ -2828,14 +2834,15 @@ div.p-organizationchart {
         }
         .p-multiselect-label{
             padding-left: 0px !important;
-            padding-top: 8px !important;
-            padding-bottom: 9px !important;
-            min-height: 38px;
+            padding-top: 5px !important;
+            padding-bottom: 7px !important;
+            min-height: 32px;
+            font-family: $fontRegular;
             .p-multiselect-token{
                 padding: 0px 6px;
                 font-size: 10px;
                 .p-multiselect-token-icon{
-                    font-size: 13px;
+                    font-size: 12px;
                 }
             }
         }
@@ -2863,23 +2870,23 @@ div.p-organizationchart {
                 -moz-border-radius: 3px;
                 background: rgba(255, 255, 255, 0.3);
                 border: 1px solid rgba(51, 51, 51, 0.1);
-                font-size: 16px;
+                font-size: 13px;
                 color: rgba(0, 0, 0, 0.87);
                 padding-left: 12px;
                 padding-right: 12px;
                 outline: none;
                 line-height: 20px;
-                padding: 9px 12px 9px 11px;
+                padding: 5px 12px 5px 7px;
                 &::-webkit-input-placeholder { /* Edge */
-                    font-size: 14px;
+                    font-size: 12px;
                   }
                   
                   &:-ms-input-placeholder { /* Internet Explorer 10-11 */
-                    font-size: 14px;
+                    font-size: 12px;
                   }
                   
                   &::placeholder {
-                    font-size: 14px;
+                    font-size: 12px;
                   }
                 &:hover{
                     border: 1px solid #0979FD;
@@ -2977,9 +2984,9 @@ div.p-organizationchart {
         input{
             border: none;
             padding-left: 12px;
-            padding-top: 8px;
-            padding-bottom: 8px;
-            height: 38px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            height: 32px;
         }
         .control-image{
             width: 100%;
@@ -4007,7 +4014,7 @@ p-button{
 
 .ag-root-wrapper{
     border: 0.5px solid #D1D4DC !important;
-    border-top: 0.5px solid #dddddd !important;
+    border-top: 0.5px solid #9bb0be !important;
     border-bottom: 0.5px solid #dddddd !important;
     .ag-horizontal-right-spacer,
     .ag-horizontal-left-spacer{
@@ -4016,15 +4023,16 @@ p-button{
     .ag-header-row {
         .ag-header-cell {
             // background: #E8E9ED;
-            border-right: 0.5px solid #f3f4f7;
-            border-bottom: 0.5px solid #dddddd !important;
+            background: #f7f7f7;
+            border-right: 0.5px solid #d4d4d4;
+            // border-bottom: 0.5px solid #d4d4d4 !important;
             padding-left: 12px;
             padding-right: 12px;
             .ag-header-cell-label {
                 .ag-header-cell-text{
-                    font-size: 14px;
+                    font-size: 13px;
                     font-family: $fontMmedium;
-                    color: #000000;
+                    color: #606060;
                     font-weight: 500;
                 }
             }
@@ -4032,18 +4040,25 @@ p-button{
         &.ag-header-row-column-filter{
             .ag-header-cell {
                 background: none;
+                border-bottom: 0.5px solid #d4d4d4 !important;
+            }
+        }
+        .ag-pinned-right-header{
+            .ag-header-row-column-filter{
+                border-bottom: 0.5px solid #d4d4d4;
             }
         }
     }
     .ag-body-viewport{
         .ag-cell{
-            border-bottom: 0.5px solid #ececed;
-            border-right: 0.5px solid #f3f4f7 !important;
+            border-bottom: 0.5px solid #d4d4d4;
+            border-right: 0.5px solid #d4d4d4 !important;
             border-top: none !important;
             padding-left: 12px;
             padding-right: 12px;
-            color: #76809B;
+            color: #000000;
             font-family: $fontRegular;
+            font-size: 12px;
             font-weight: 400;
             child-avatar{
                 .avatar-wrap{
@@ -4085,7 +4100,7 @@ p-button{
             }
         }
         .ag-row-odd{
-            background: #F3F4F6;
+            // background: #F3F4F6;
         }
         .ag-center-cols-container{
             .ag-row{
@@ -4348,6 +4363,7 @@ section{
 .main{
     .content{
         background: #fff;
+        background-color: #fbfbfb;
     }
 }
 
@@ -5955,4 +5971,7 @@ app-thong-tin-ca-nhan-edit-detail{
     top: 35px;
     cursor: pointer;
     z-index: 6;
+}
+.p-paginator{
+    padding:5px 0px 0px;
 }

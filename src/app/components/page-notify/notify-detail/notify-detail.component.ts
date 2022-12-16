@@ -273,7 +273,7 @@ export class NotifyDetailComponent implements OnInit {
 
     } else {
       this.confirmationService.confirm({
-        message: 'Bạn chưa chọn căn hộ vui lòng chọn nhân viên',
+        message: 'Bạn chưa chọn nhân viên',
         rejectVisible: false,
         acceptLabel: 'Oke',
         accept: () => { }
