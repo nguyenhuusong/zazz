@@ -244,7 +244,11 @@ export class SidebarComponent implements OnInit {
                
             } else {
                 //active cha
-                if (k.path && pathname && pathname.split('/').indexOf(k.path) > -1 && k.classs === 'navigation-header') {
+                let element1: any = {
+                    columnValue: ''
+                };
+                this.findNodeInTree2(obj, pathname,element1);
+                if (k.path  && k.classs === 'navigation-header' && element1.columnValue && k.path === element1.columnValue) {
                     k.styleClass = k.classs + " parent_active" + ' ' + k.classs
                 } else {
                     k.styleClass = k.classs + " parent_no_active" + ' ' + k.classs
@@ -256,5 +260,16 @@ export class SidebarComponent implements OnInit {
             }
         }
     }
+
+    findNodeInTree2(list, nodeId, element1): any {
+        for (let i = 0; i < list.length; i++) {
+          if (list[i].path === nodeId ) {
+             element1.columnValue = list[i].badgeClass;
+             break;
+            }else if (Array.isArray(list[i].submenus) && list[i].submenus.length) {
+              this.findNodeInTree2(list[i].submenus, nodeId, element1);
+            }
+        }
+      }
 
 }
