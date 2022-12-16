@@ -1,4 +1,4 @@
-<div class="main-grid product-detail" *ngIf="url === 'chi-tiet-xu-ly-hop-dong'">
+<div class="main-grid product-detail" *ngIf="url === 'chi-tiet-xu-ly-hop-dong'" >
     <section>
         <div class="breadcrumb">
             <p-breadcrumb [model]="itemsMenu"></p-breadcrumb>
@@ -14,10 +14,11 @@
 <p-divider></p-divider>
 <p-card>
    
-    <p-divider *ngIf="this.detailInfo?.flow_st > 1"></p-divider>
-    <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'"
-        [optionsButtonsEdit]="optionsButon" [dataView]="listViews" (callback)="setContractInfo($event)" (callBackForm)="callBackForm($event)"
-        (callbackcancel)="cancel($event)"></app-edit-detail>
+    <div [ngClass]="{'hsns' : url !== 'chi-tiet-xu-ly-hop-dong'}">
+        <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'"
+            [optionsButtonsEdit]="optionsButon" [dataView]="listViews" (callback)="setContractInfo($event)" (callBackForm)="callBackForm($event)"
+            (callbackcancel)="cancel($event)"></app-edit-detail>
+    </div>
         <p-divider></p-divider>
         <div class="grid wrap-edit-detail">
             <div class="col-12 border-section " *ngIf="this.detailInfo?.flow_st > 0 && detailInfo?.flow_st < 4">
