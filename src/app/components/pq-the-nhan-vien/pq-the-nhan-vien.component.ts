@@ -105,15 +105,11 @@ detailInfoFilter = null;
 
   items = []
   ngOnInit(): void {
-   
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Phân quyền' },
       { label: 'Danh sách thẻ nhân viên' },
     ];
-    this.getOrganize();
-    this.getPositionList();
-    this.getWorkplaces();
     this.itemsToolOfGrid = [
       {
         label: 'Import file',
@@ -219,6 +215,7 @@ detailInfoFilter = null;
           }, 100);
         }
         this.spinner.hide();
+        this.FnEvent();
       },
       error => {
         this.spinner.hide();

@@ -86,7 +86,6 @@ export class NsHoSoNghiViecComponent implements OnInit {
       buttonAgGridComponent: ButtonAgGridComponent,
       avatarRendererFull: AvatarFullComponent,
     };
-    this.getTerminateFilter();
   }
   query = {
     filter: '',
@@ -424,8 +423,7 @@ export class NsHoSoNghiViecComponent implements OnInit {
       { label: 'Nhân sự' },
       { label: 'Danh sách hồ sơ nghỉ việc' },
     ];
-    this.getCustObjectListNew();
-    
+    this.getTerminateFilter();
   }
 
   onCellClicked(event) {

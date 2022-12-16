@@ -99,7 +99,6 @@ detailInfoFilter = null;
   }
 
   ngOnInit(): void {
-  
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Chính sách' },
@@ -267,7 +266,7 @@ detailInfoFilter = null;
     this.columnDefs = [
       ...AgGridFn(this.gridflexs.filter((d: any) => !d.isHide)),
       {
-        headerName: 'Thao tác',
+        headerName: '',
         filter: '',
         width: 100,
         pinned: 'right',

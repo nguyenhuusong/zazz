@@ -194,14 +194,6 @@ export class XuLyHopDongComponent implements OnInit {
     this.columnDefs = []
     this.spinner.show();
     let params: any = { ... this.query };
-    // let companyIds = this.query.companyIds.toString();
-    // params.companyIds = companyIds;
-    // delete params.fromDate
-    // delete params.toDate
-    // params.fromDate = moment(new Date(this.query.fromDate)).format('YYYY-MM-DD')
-    // params.toDate = moment(new Date(this.query.toDate)).format('YYYY-MM-DD')
-    // params.fromDate = typeof this.query.fromDate === 'object' ? moment(new Date(this.query.fromDate)).format('YYYY-MM-DD') : this.query.fromDate;
-    // params.toDate = typeof this.query.toDate === 'object' ? moment(new Date(this.query.toDate)).format('YYYY-MM-DD') : this.query.toDate;
     const queryParams = queryString.stringify(params);
     this.apiService.getContractPage(queryParams).subscribe(
       (results: any) => {

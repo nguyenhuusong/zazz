@@ -138,11 +138,6 @@ detailInfoFilter = null;
       { label: 'Phân quyền' },
       { label: 'Danh sách xe nhân viên' },
     ];
-    
-    // this.loadVehicelTypes();
-    // this.getOrganize();
-    // this.getPositionList();
-    // this.getWorkplaces();
     this.itemsToolOfGrid = [
       {
         label: 'Import file',
@@ -253,6 +248,7 @@ detailInfoFilter = null;
           }, 100);
         }
         this.spinner.hide();
+        this.FnEvent();
       },
       error => {
         this.spinner.hide();

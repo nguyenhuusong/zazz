@@ -148,7 +148,6 @@ detailInfoFilter = null;
   }
 
   ngOnInit() {
-  
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Cài đặt' },
@@ -171,30 +170,11 @@ detailInfoFilter = null;
       },
     ]
     this.model.filter = '';
-    this.getModuleList();
     this.getNotifyTempList();
     this.getFilter();
-    // this.pagingComponent.pageSize = this.filter.pageSize;
   }
 
-
-
-  moduleList = [];
   notifyTempList = [];
-  getModuleList() {
-    const queryParams = queryString.stringify({filter: ''});
-    this.apiService.getOrganizations(queryParams).subscribe(results => {
-      if (results.status === 'success') {
-        this.moduleList = results.data.map(res => {
-          return {
-            label: `${res.organizationName} (${res.organizationCd})`,
-            value: res.organizeId
-          }
-        });
-      }
-    });
-  }
-
   getNotifyTempList() {
     this.apiService.getNotifyTempList().subscribe(results => {
       if (results.status === 'success') {
@@ -249,6 +229,7 @@ detailInfoFilter = null;
           }, 100);
         }
         this.spinner.hide();
+        this.FnEvent();
       },
       error => {
         this.spinner.hide();
@@ -404,13 +385,15 @@ detailInfoFilter = null;
   addNotifytoProject() {
     this.displayNotify = false;
     this.displaySelectRoom = false;
-    let items = this.moduleList.filter(d => d.value === this.modelAddNotifi.external_sub);
+    // let items = this.moduleList.filter(d => d.value === this.modelAddNotifi.external_sub);
     this.router.navigate(['cai-dat/thong-bao/them-moi-thong-bao'], 
     { queryParams: { 
       notiId: null, 
       external_sub: this.modelAddNotifi.external_sub, 
       tempId: this.modelAddNotifi.tempId, 
-      external_name: items[0].label } 
+      external_name: ''
+      // external_name: items[0].label // bỏ tổ chức
+    } 
     });
   }
 
