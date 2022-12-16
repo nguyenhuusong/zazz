@@ -84,7 +84,6 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
     offSet: 0,
     pageSize: 20,
   }
-  hiringMans = []
   totalRecord = 0;
   DriverId = 0;
   first = 0;
@@ -303,38 +302,6 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
         }
       },
     ]
-    this.getJobTitles();
-    this.getHiringMans();
-  }
-
-  listJobTitles = []
-  getJobTitles() {
-    this.apiService.getJobTitles().subscribe(results => {
-      if (results.status === 'success') {
-        this.listJobTitles = results.data.map(d => {
-          return {
-            label: d.name,
-            value: d.value
-          }
-        });
-        this.listJobTitles = [{ label: 'Tất cả', value: 0 }, ...this.listJobTitles]
-      }
-    })
-  }
-
-  getHiringMans() {
-    this.apiService.getUsersByAdmin(queryString.stringify({ admin_st: 0 })).subscribe(results => {
-      if (results.status === 'success') {
-        this.hiringMans = results.data.map(d => {
-          return {
-            label: `${d.fullName} [${d.loginName}]`,
-            value: d.userId
-          }
-        });
-        this.hiringMans = [{ label: 'Tất cả', value: '' }, ...this.hiringMans]
-      }
-    })
-
   }
 
   departmentFiltes = [];
