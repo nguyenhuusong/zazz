@@ -82,9 +82,6 @@ export class LyDoNghiViecComponent implements OnInit {
     filter: '',
     offSet: 0,
     pageSize: 15,
-    organizeId: null,
-    reason_group: null,
-    organizeIds: '',
   }
   totalRecord = 0;
   DriverId = 0;
@@ -124,9 +121,6 @@ export class LyDoNghiViecComponent implements OnInit {
       filter: '',
       offSet: 0,
       pageSize: 15,
-      organizeId: null,
-      reason_group: null,
-      organizeIds: this.query.organizeIds
     }
     this.load();
   }
@@ -265,21 +259,6 @@ export class LyDoNghiViecComponent implements OnInit {
       { label: 'Cài đặt' },
       { label: 'Lý do nghỉ' },
     ];
-    this.getFeedbackType();
-  }
-  typeFeedBacks = [];
-  getFeedbackType() {
-    this.apiService.getFeedbackType().subscribe(results => {
-      if(results.status === 'success') {
-        this.typeFeedBacks = results.data.map(d => {
-          return {
-            label: d.feedbackTypeName,
-            value: d.feedbackTypeId
-          }
-        });
-        this.typeFeedBacks = [{label: 'Tất cả', value: null}, ...this.typeFeedBacks]
-      }
-    })
   }
 
   ngAfterViewInit(): void {

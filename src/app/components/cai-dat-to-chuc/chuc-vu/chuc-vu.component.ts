@@ -78,8 +78,6 @@ export class ChucVuComponent implements OnInit, AfterViewChecked {
     filter: '',
     offSet: 0,
     pageSize: 15,
-    organizeId: 0,
-    organizeIds: '',
   }
   totalRecord = 0;
   DriverId = 0;
@@ -102,8 +100,6 @@ export class ChucVuComponent implements OnInit, AfterViewChecked {
       filter: '',
       offSet: 0,
       pageSize: 15,
-      organizeId: 0,
-      organizeIds: this.query.organizeIds
     }
     this.load();
   }
@@ -115,13 +111,13 @@ export class ChucVuComponent implements OnInit, AfterViewChecked {
     const b: any = document.querySelector(".sidebarBody");
     const d: any = document.querySelector(".bread-crumb");
     const e: any = document.querySelector(".paginator");
-    this.loadjs ++ 
+    this.loadjs++
     if (this.loadjs === 5) {
-      if(b && b.clientHeight) {
+      if (b && b.clientHeight) {
         const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight + 25;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
-      }else {
+      } else {
         this.loadjs = 0;
       }
     }
@@ -129,20 +125,20 @@ export class ChucVuComponent implements OnInit, AfterViewChecked {
 
   organizes = []
   getOrrginiaztions() {
-    const queryParams = queryString.stringify({ filter: ''});
+    const queryParams = queryString.stringify({ filter: '' });
     this.apiService.getOrganizations(queryParams).subscribe(results => {
-      if(results.status === 'success') {
-          this.organizes = results.data.map(d => {
-            return {
-              label: d.organizationName,
-              value: `${d.organizeId}`
-            }
-          });
-          this.organizes = [...this.organizes];
+      if (results.status === 'success') {
+        this.organizes = results.data.map(d => {
+          return {
+            label: d.organizationName,
+            value: `${d.organizeId}`
+          }
+        });
+        this.organizes = [...this.organizes];
       }
     })
   }
-  
+
   displaySetting = false;
   gridKey = ''
   cauhinh() {
@@ -157,7 +153,7 @@ export class ChucVuComponent implements OnInit, AfterViewChecked {
     this.apiService.getPositionPage(queryParams).subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
-        this.gridKey= results.data.dataList.gridKey
+        this.gridKey = results.data.dataList.gridKey
         if (this.query.offSet === 0) {
           this.cols = results.data.gridflexs;
           this.colsDetail = results.data.gridflexdetails ? results.data.gridflexdetails : [];
@@ -165,23 +161,23 @@ export class ChucVuComponent implements OnInit, AfterViewChecked {
         this.initGrid();
         this.countRecord.totalRecord = results.data.dataList.recordsTotal;
         this.countRecord.totalRecord = results.data.dataList.recordsTotal;
-        this.countRecord.currentRecordStart = results.data.dataList.recordsTotal === 0 ? this.query.offSet = 0 :  this.query.offSet + 1;
+        this.countRecord.currentRecordStart = results.data.dataList.recordsTotal === 0 ? this.query.offSet = 0 : this.query.offSet + 1;
         if ((results.data.dataList.recordsTotal - this.query.offSet) > this.query.pageSize) {
           this.countRecord.currentRecordEnd = this.query.offSet + Number(this.query.pageSize);
         } else {
           this.countRecord.currentRecordEnd = results.data.dataList.recordsTotal;
           setTimeout(() => {
             const noData = document.querySelector('.ag-overlay-no-rows-center');
-            if (noData) { noData.innerHTML = 'Không có kết quả phù hợp'}
+            if (noData) { noData.innerHTML = 'Không có kết quả phù hợp' }
           }, 100);
         }
         this.spinner.hide();
       },
       error => {
         this.spinner.hide();
-       });
+      });
   }
-  
+
   showButtons(event: any) {
     return {
       buttons: [
@@ -208,7 +204,7 @@ export class ChucVuComponent implements OnInit, AfterViewChecked {
       {
         headerComponentParams: {
           template:
-          `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
+            `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
         },
         filter: '',
         width: 100,
@@ -219,7 +215,7 @@ export class ChucVuComponent implements OnInit, AfterViewChecked {
         checkboxSelection: false,
         field: 'checkbox'
       }]
- 
+
   }
 
   xoacongty(event) {
@@ -242,14 +238,12 @@ export class ChucVuComponent implements OnInit, AfterViewChecked {
   XemChiTiet(event) {
     const params = {
       positionId: event.rowData.positionId,
-      organizeId: this.query.organizeId,
     }
     this.router.navigate(['/cai-dat/chuc-vu/chi-tiet-chuc-vu'], { queryParams: params });
   }
 
   addChucVu() {
     const params = {
-      organizeId: this.query.organizeId,
       positionId: 0
     }
     this.router.navigate(['/cai-dat/chuc-vu/them-moi-chuc-vu'], { queryParams: params });
@@ -272,34 +266,17 @@ export class ChucVuComponent implements OnInit, AfterViewChecked {
 
   ngOnInit() {
     this.getFilter();
-    this.getOrrginiaztions();
     this.items = [
-      { label: 'Trang chủ' , routerLink: '/home' },
+      { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Cài đặt' },
       { label: 'Danh sách tổ chức', routerLink: '/cai-dat/cai-dat-to-chuc' },
-      { label: 'Danh sách chức vụ'},
+      { label: 'Danh sách chức vụ' },
     ];
-    this.getCustObjectListNew();
-  }
-
-  listLevers = []
-  getCustObjectListNew() {
-    const opts1 = { params: new HttpParams({ fromString: `objKey=hrm_org_level` }) };
-    this.apiService.getCustObjectListNew(true, opts1.params.toString()).subscribe(results => {
-      this.listLevers = results.data.map(d => {
-        return {
-          label: d.objName,
-          value: d.objValue
-        }
-      });
-
-      this.listLevers = [{ label: 'Tất cả', value: 0 }, ...this.listLevers]
-    });
   }
 
   listViewsFilter = [];
   cloneListViewsFilter = [];
-detailInfoFilter = null;
+  detailInfoFilter = null;
   optionsButonFilter = [
     { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm height-56 addNew', icon: 'pi pi-search' },
     { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger height-56 addNew', icon: 'pi pi-times' },
@@ -308,20 +285,20 @@ detailInfoFilter = null;
   //filter 
   getFilter() {
     // value === 1 ? '' : ''
-        this.load();
+    this.load();
     this.apiService.getFilter('/api/v1/eating/GetEatingFilter').subscribe(results => {
-      if(results.status === 'success') {
+      if (results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
         this.listViewsFilter = [...listViews];
-        const params =  getParamString(listViews)
-        this.query = { ...this.query, ...params};
+        const params = getParamString(listViews)
+        this.query = { ...this.query, ...params };
         this.detailInfoFilter = results.data;
       }
     });
   }
 
-   filterLoad(event) {
+  filterLoad(event) {
     this.query = { ...this.query, ...event.data };
     this.load();
   }
@@ -329,13 +306,13 @@ detailInfoFilter = null;
   close(event) {
     const listViews = cloneDeep(this.cloneListViewsFilter);
     this.listViewsFilter = cloneDeep(listViews);
-    const params =  getParamString(listViews)
-    this.query = { ...this.query, ...params};
+    const params = getParamString(listViews)
+    this.query = { ...this.query, ...params };
     this.load();
     this.FnEvent()
   }
 
-showFilter() {
+  showFilter() {
     const ref = this.dialogService.open(FormFilterComponent, {
       header: 'Tìm kiếm nâng cao',
       width: '40%',
@@ -354,12 +331,12 @@ showFilter() {
           this.query = { ...this.query, ...event.data };
           this.load();
         } else if (event.type === 'CauHinh') {
-        this.apiService.getEmpFilter().subscribe(results => {
+          this.apiService.getEmpFilter().subscribe(results => {
             if (results.status === 'success') {
               const listViews = cloneDeep(results.data.group_fields);
               this.listViewsFilter = [...listViews];
-              const params =  getParamString(listViews)
-              this.query = { ...this.query, ...params};
+              const params = getParamString(listViews)
+              this.query = { ...this.query, ...params };
               this.load();
               this.detailInfoFilter = results.data;
               this.showFilter()
@@ -369,9 +346,9 @@ showFilter() {
         } else if (event.type === 'Reset') {
           const listViews = cloneDeep(this.cloneListViewsFilter);
           this.listViewsFilter = cloneDeep(listViews);
-         const params =  getParamString(listViews)
-        this.query = { ...this.query, ...params};
-        this.load();
+          const params = getParamString(listViews)
+          this.query = { ...this.query, ...params };
+          this.load();
         }
       }
     });
@@ -384,7 +361,7 @@ showFilter() {
   FnEvent() {
     setTimeout(() => {
       var dragTarget = document.getElementById(this.gridKey);
-      if(dragTarget) {
+      if (dragTarget) {
         const click$ = fromEvent(dragTarget, 'click');
         click$.subscribe(event => {
           this.addChucVu()

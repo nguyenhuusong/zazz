@@ -76,7 +76,6 @@ export class NoiLamViecComponent implements OnInit {
     filter: '',
     offSet: 0,
     pageSize: 15,
-    organizeIds: '',
   }
   totalRecord = 0;
   DriverId = 0;
@@ -99,7 +98,6 @@ export class NoiLamViecComponent implements OnInit {
       filter: '',
       offSet: 0,
       pageSize: 15,
-      organizeIds: this.query.organizeIds
     }
     this.load();
   }
@@ -259,25 +257,10 @@ export class NoiLamViecComponent implements OnInit {
       { label: 'Danh sách tổ chức', routerLink: '/cai-dat/cai-dat-to-chuc' },
       { label: 'Danh sách nơi làm việc'},
     ];
-    this.getCustObjectListNew();
     this.load();
 
   }
 
-  listLevers = []
-  getCustObjectListNew() {
-    const opts1 = { params: new HttpParams({ fromString: `objKey=hrm_org_level` }) };
-    this.apiService.getCustObjectListNew(false,opts1.params.toString()).subscribe(results => {
-      this.listLevers = results.data.map(d => {
-        return {
-          label: d.objName,
-          value: d.objValue
-        }
-      });
-
-      this.listLevers = [{ label: 'Tất cả', value: 0 }, ...this.listLevers]
-    });
-  }
   ngAfterViewInit(): void {
     this.FnEvent();
   }
