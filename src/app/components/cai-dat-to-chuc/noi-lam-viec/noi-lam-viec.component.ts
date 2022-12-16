@@ -253,12 +253,6 @@ export class NoiLamViecComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-        if(results && results.length>0){
-          this.query.organizeIds = results;
-          this.load();
-        }
-    });
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Cài đặt' },
@@ -266,6 +260,8 @@ export class NoiLamViecComponent implements OnInit {
       { label: 'Danh sách nơi làm việc'},
     ];
     this.getCustObjectListNew();
+    this.load();
+
   }
 
   listLevers = []

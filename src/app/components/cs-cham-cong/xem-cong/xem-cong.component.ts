@@ -69,13 +69,8 @@ export class XemCongComponent implements OnInit, OnDestroy {
   items = [];
   ngOnInit(): void {
     this.titlePage = this.activatedRoute.data['_value'].title;
-    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-        if(results && results.length>0){
-          this.query.organizeIds = results;
-          this.getOrganizeTree()
-          this.getXemCongInfo();
-        }
-    });
+    this.getOrganizeTree()
+    this.getXemCongInfo();
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Chính sách' },

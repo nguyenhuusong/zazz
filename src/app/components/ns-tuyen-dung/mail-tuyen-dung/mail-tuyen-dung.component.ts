@@ -248,13 +248,7 @@ export class MailTuyenDungComponent implements OnInit, AfterViewChecked {
 
 
   ngOnInit() {
-    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-        if(results && results.length>0){
-          this.query.organizeIds = results;
-          this.load();
-          this.selectedValue = results;
-        }
-    });
+    this.load();
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Tuyển dụng'},

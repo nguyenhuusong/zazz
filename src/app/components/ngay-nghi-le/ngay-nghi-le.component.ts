@@ -245,15 +245,6 @@ export class NgayNghiLeComponent implements OnInit {
         suppressSizeToFit: true,
       },
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
-      // {
-      //   headerName: 'Thao tác',
-      //   filter: '',
-      //   maxWidth: 90,
-      //   pinned: 'right',
-      //   cellRenderer: 'buttonRendererComponent',
-      //   cellRendererParams: (params: any) => this.showButtons(params),
-      //   cellClass: ['action', 'border-right', 'no-auto'],
-      // },
       {
         headerComponentParams: {
           template:
@@ -356,45 +347,11 @@ export class NgayNghiLeComponent implements OnInit {
 
   ngOnInit() {
     this.getFilter();
-    this.getObjectList();
-    this.getObjectListWorkType();
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Cài đặt' },
       { label: 'Danh sách ngày nghỉ' },
     ];
-    this.getOrgan();
-  }
-  holiTypes = []
-  getObjectList() {
-    const queryParams = queryString.stringify({ objKey: 'holi_type' });
-    this.apiService.getCustObjectListNew(false, queryParams).subscribe(results => {
-      if (results.status === 'success') {
-        this.holiTypes = results.data.map(d => {
-          return {
-            label: d.objName,
-            value: d.objCode
-          }
-        });
-        this.holiTypes = [{ label: 'Tất cả', value: null }, ...this.holiTypes]
-      }
-    })
-  }
-
-  holiWorkType = []
-  getObjectListWorkType() {
-    const queryParams = queryString.stringify({ objKey: 'holi_work_type' });
-    this.apiService.getCustObjectListNew(false, queryParams).subscribe(results => {
-      if (results.status === 'success') {
-        this.holiWorkType = results.data.map(d => {
-          return {
-            label: d.objName,
-            value: d.objCode
-          }
-        });
-        this.holiWorkType = [{ label: 'Tất cả', value: null }, ...this.holiWorkType]
-      }
-    })
   }
 
   organizeList = []
@@ -483,18 +440,19 @@ export class NgayNghiLeComponent implements OnInit {
     { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger height-56 addNew', icon: 'pi pi-times' },
   ];
   getFilter() {
-    this.load();
-    this.apiService.getFilter('').subscribe(results => {
-      if(results.status === 'success') {
-        const listViews = cloneDeep(results.data.group_fields);
-        this.cloneListViewsFilter = cloneDeep(listViews);
-        this.listViewsFilter = [...listViews];
-        const params =  getParamString(listViews)
-        this.query = { ...this.query, ...params};
+    // this.apiService.getFilter('').subscribe(results => {
+    //   if(results.status === 'success') {
+    //     const listViews = cloneDeep(results.data.group_fields);
+    //     this.cloneListViewsFilter = cloneDeep(listViews);
+    //     this.listViewsFilter = [...listViews];
+    //     const params =  getParamString(listViews)
+    //     this.query = { ...this.query, ...params};
         
-        this.detailInfoFilter = results.data;
-      }
-    });
+    //     this.detailInfoFilter = results.data;
+    //   }
+    // });
+    this.load();
+
   }
 
    filterLoad(event) {

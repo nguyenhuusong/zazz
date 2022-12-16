@@ -138,7 +138,7 @@ export class CaiDatToChucComponent implements OnInit {
       org_level: 0,
       organizeIds: this.query.organizeIds
     }
-    this.load()
+    this.load();
   }
 
   onGridReady(params) {
@@ -480,15 +480,8 @@ export class CaiDatToChucComponent implements OnInit {
   dataRouter = null;
   ngOnInit() {
     this.getOrrginiaztions();
-    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-          if(results && results.length>0){
-            this.query.organizeIds = results;
-            this.organizeIdSelected = results;
-            this.getBoPhan();
-            this.getAgencyOrganizeMap();
-          }
-    });
-    
+    this.getBoPhan();
+    this.getAgencyOrganizeMap();
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Cài đặt' },
@@ -524,7 +517,8 @@ export class CaiDatToChucComponent implements OnInit {
           this.workTime();
         }
       },
-    ]
+    ];
+    this.load()
   }
 
   caiDatThamSo() {

@@ -221,18 +221,14 @@ export class NsCauHinhMailComponent implements OnInit {
   }
 
   ngOnInit() {
-      this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-        if(results && results.length>0){
-          this.query.organizeIds = results;
-          this.load();
-        }
-    });
+     
+    this.load();
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Tuyển dụng' },
       { label: 'Cấu hình' },
     ];
-    this.getEmployeeStatus();
+    
   }
   employeeStatus = []
   getEmployeeStatus() {

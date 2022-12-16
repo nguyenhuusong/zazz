@@ -491,7 +491,7 @@ export class CauTrucBangLuongComponent implements OnInit {
       { label: 'Cấu trúc bảng lương' },
     ];
     this.getAgencyOrganizeMap();
-    this.getEmployeeStatus();
+    
     this.getOrgan();
     this.itemsToolOfGrid = [
       {

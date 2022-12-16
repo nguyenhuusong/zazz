@@ -399,19 +399,6 @@ detailInfoFilter = null;
       tempId: null, 
       external_name: '' } 
     });
-    // this.displayNotify = true;
-    // this.modelAddNotifi = {
-    //   external_sub: this.moduleList.length > 0 ? this.moduleList[0].value : '',
-    //   notiId: 0,
-    //   ord_code: '',
-    //   custId: '',
-    //   tempId: null
-    // };
-    // this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-    //   if(results){
-    //     this.modelAddNotifi.external_sub = this.query.organizeIds
-    //   }
-    // });
   }
 
   addNotifytoProject() {

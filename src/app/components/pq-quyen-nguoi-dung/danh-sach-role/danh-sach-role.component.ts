@@ -39,14 +39,7 @@ export class DanhSachRoleComponent implements OnInit {
     this.displaySetting = true;
   }
   ngOnInit(): void {
-    // this.getClientRolePageByWebId()
-    // this.getWebMenuTree()
-    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-      if(results && results.length>0){
-        this.organizeIds = results;
-        this.getRoles();
-      }
-    });
+    this.getRoles();
   }
   listMenuTree = []
   getRoles() {
@@ -68,17 +61,6 @@ export class DanhSachRoleComponent implements OnInit {
 
   getClientRolePageByWebId() {
     this.columnDefs = []
-    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-      if(results && results.length>0){
-        const queryParams = queryString.stringify({ organizeIds: results });
-      this.apiService.getUserMenus(queryParams).subscribe(results => {
-        if (results.status === 'success') {
-          this.listsData = cloneDeep(results.data.dataList.roles);
-          this.initGrid(results.data.gridflexs);
-        }
-      })
-    }
-    });
   }
   listActions = [];
   sourceActions = [];

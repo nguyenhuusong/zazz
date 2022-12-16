@@ -90,13 +90,7 @@ export class NotifyDetailComponent implements OnInit {
       this.tempId = this.paramsObject.params.tempId;
     
       this.modelMarkdow.id = this.notiId;
-
-      this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-        if(results){
-          this.organSeleted = results
-          this.getAppNotifyInfo();
-        }
-      });
+      this.getAppNotifyInfo();
     });
   };
 

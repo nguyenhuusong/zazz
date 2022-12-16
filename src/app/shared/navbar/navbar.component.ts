@@ -123,7 +123,6 @@ export class NavbarComponent implements OnInit {
 
     ngOnInit() {
         this.userName = this.authService.getUserName();
-        this.getOragin();
     }
 
     update() {
@@ -139,36 +138,7 @@ export class NavbarComponent implements OnInit {
     // }
 
     detailOrganizes = []
-    getOragin(){
-      this.detailOrganizes = [];
-      this.organizeRole = null;
-      this.apiHrm.getUserOrganizeRole().subscribe(
-        (results: any) => {
-          if(results.status === "success"){
-            if(results.data && results.data && results.data.length > 0){
-              this.detailOrganizes = results.data
-                .map(d => {
-                  return {
-                    label: d.name,
-                    value: d.value
-                  };
-                });
-                let organizesStorage = localStorage.getItem("organizes")
-                if(organizesStorage === "null" || organizesStorage === null){
-                  this.organizeRole = this.detailOrganizes[0].value;
-                  localStorage.setItem('organizes', this.organizeRole);
-                  this.organizeInfoService.setStocks(this.organizeRole);
-                }else{
-                  this.organizeRole = organizesStorage;
-                  this.organizeInfoService.setStocks(this.organizeRole);
-                  this.changeDetector.detectChanges();
-                }
 
-            }
-          }
-        }),
-        error => { };
-    }
 
     ngAfterViewChecked(): void {
    
