@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiCoreService } from 'src/app/services/api-core/apicore.service';
@@ -20,6 +20,7 @@ export class ViTriCongViecComponent implements OnInit, AfterViewInit {
   detailInfo = null;
   @Input() empId = null;
   @Input() dataEmployeeStatus = null;
+  @Output() reloadEdit = new EventEmitter<any>();
   optionsButtonsPopup = [
     { label: 'Bỏ qua', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
     { label: 'Xác nhận', value: 'Update', class: 'btn-accept' }
@@ -270,6 +271,8 @@ export class ViTriCongViecComponent implements OnInit, AfterViewInit {
   isEditDetail = false;
   cancelSetDetail(event) {
     this.isEditDetail = false;
+    this.getEmployeeInfo();
+    this.reloadEdit.emit();
   }
 
   editDetail() {

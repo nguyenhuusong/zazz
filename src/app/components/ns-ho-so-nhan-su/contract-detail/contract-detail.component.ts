@@ -122,7 +122,11 @@ export class ContractDetailComponent implements OnInit {
     } else if (data === 'BackPage') {
       this.getContractInfo(this.activeIndex - 1)
     } else {
-      this.back.emit();
+      if(this.url === 'chi-tiet-xu-ly-hop-dong') {
+        this.router.navigate(['/nhan-su/xu-ly-hop-dong'])
+      }else {
+        this.back.emit();
+      }
     }
   }
 
@@ -143,16 +147,12 @@ export class ContractDetailComponent implements OnInit {
     }
     this.cloneListViews = cloneDeep(this.listViews); 
     this.listViews = [];
-    this.callApiInfo(params)
-    if(event.type === 'Submit' || event.type === 'SaveNhap') {
-      setTimeout(() => {
-        this.callback.emit();
-      }, 200);
-    }
+    this.callApiInfo(params, event.type)
+    
   }
 
 
-  callApiInfo(params) {
+  callApiInfo(params, type = 'Update') {
     this.spinner.show();
     this.apiService.setContractInfo(params).subscribe(results => {
       if (results.status === 'success') {
@@ -194,6 +194,16 @@ export class ContractDetailComponent implements OnInit {
         }
         this.spinner.hide();
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
+
+        if(type === 'Submit' || type === 'SaveNhap') {
+          setTimeout(() => {
+            if(this.url === 'chi-tiet-xu-ly-hop-dong') {
+              this.router.navigate(['/nhan-su/xu-ly-hop-dong'])
+            }else {
+              this.callback.emit();
+            }
+          }, 200);
+        }
       } else {
         this.listViews = cloneDeep(this.cloneListViews);
         this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });

@@ -82,12 +82,8 @@ export class ThongTinCaNhanEditDetailComponent implements OnInit {
     }
      this.cloneListViews = cloneDeep(this.listViews);
     this.listViews = [];
-    this.callApiInfo(params)
-    if(event.type === 'Submit' || event.type === 'SaveNhap') {
-      setTimeout(() => {
-        this.cancelSave.emit();
-      }, 200);
-    }
+    this.callApiInfo(params, event.type)
+   
   }
 
   stepActivated(): void {
@@ -113,7 +109,7 @@ export class ThongTinCaNhanEditDetailComponent implements OnInit {
   
   }
 
-  callApiInfo(params) {
+  callApiInfo(params, type = 'Update') {
     this.spinner.show();
     this.apiService.setEmpProfile(params).subscribe((results: any) => {
       if (results.status === 'success') {
@@ -151,6 +147,11 @@ export class ThongTinCaNhanEditDetailComponent implements OnInit {
         }
         this.spinner.hide();
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Cập nhật thông tin thành công' });
+        if(type === 'Submit' || type === 'SaveNhap') {
+          setTimeout(() => {
+            this.cancelSave.emit();
+          }, 200);
+        }
       } else {
         this.listViews = cloneDeep(this.cloneListViews);
         this.spinner.hide();

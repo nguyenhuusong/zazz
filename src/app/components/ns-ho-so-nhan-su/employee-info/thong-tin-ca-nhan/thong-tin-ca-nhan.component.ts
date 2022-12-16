@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiCoreService } from 'src/app/services/api-core/apicore.service';
@@ -17,8 +17,9 @@ import { fromEvent } from 'rxjs';
 })
 export class ThongTinCaNhanComponent implements OnInit {
   detailInfo = null;
-  @Input() empId = null
-  @Input() dataEmployeeStatus = null
+  @Input() empId = null;
+  @Input() dataEmployeeStatus = null;
+  @Output() reloadEdit = new EventEmitter<any>();
   constructor(
     private apiService: ApiHrmService,
     private apiCoreService: ApiCoreService,
@@ -120,6 +121,7 @@ export class ThongTinCaNhanComponent implements OnInit {
 
   cancelSetDetail(event) {
     this.isEditDetail = false;
+    this.getEmployeeInfo();
   }
 
 }

@@ -192,14 +192,8 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
     }
     this.closeListViewsDetail = cloneDeep(this.listViewsDetail);
     this.listViewsDetail = []
-    this.callApiInfo(params)
-    if (event.type === 'Submit' || event.type === 'SaveNhap') {
-      setTimeout(() => {
-       this.displayFormEditDetail = false;
-       this.getEmpProcessPageByEmpId();
-       this.cancelSave.emit()
-      }, 200);
-    }
+    this.callApiInfo(params, event.type)
+  
   }
 
   stepActivated(): void {
@@ -226,7 +220,7 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
 
   }
 
-  callApiInfo(params) {
+  callApiInfo(params, type = 'Update') {
     this.apiService.setEmpProcessInfo(params).subscribe((results: any) => {
       if (results.status === 'success') {
         this.listViewsDetail = cloneDeep(results.data.group_fields || []);
@@ -262,7 +256,14 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
           }
 
         }
-        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Cập nhật thông tin thành công' });
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Cập nhật thông tin thành công' });
+        if (type === 'Submit' || type === 'SaveNhap') {
+          setTimeout(() => {
+           this.displayFormEditDetail = false;
+           this.getEmpProcessPageByEmpId();
+           this.cancelSave.emit()
+          }, 200);
+        }
       } else {
         this.listViewsDetail = cloneDeep(this.closeListViewsDetail);
         this.messageService.add({

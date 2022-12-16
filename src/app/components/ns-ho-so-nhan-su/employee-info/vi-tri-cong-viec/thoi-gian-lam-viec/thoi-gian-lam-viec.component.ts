@@ -190,14 +190,8 @@ cloneListViewsDetail = [];
     }
     this.cloneListViewsDetail = cloneDeep(this.listViewsDetail)
     this.listViewsDetail = [];
-    this.callApiInfo(params)
-    if (event.type === 'Submit' || event.type === 'SaveNhap') {
-      setTimeout(() => {
-       this.displayFormEditDetail = false;
-       this.getEmpWorkingPageByEmpId();
-       this.cancelSave.emit()
-      }, 200);
-    }
+    this.callApiInfo(params, event.type)
+   
   }
 
   stepActivated(): void {
@@ -225,7 +219,7 @@ cloneListViewsDetail = [];
 
   }
 
-  callApiInfo(params) {
+  callApiInfo(params, type = 'Update') {
     this.spinner.show();
     this.apiService.setEmpWorking(params).subscribe((results: any) => {
       if (results.status === 'success') {
@@ -266,6 +260,13 @@ cloneListViewsDetail = [];
         }
         this.spinner.hide();
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.damessageta ? results.message : 'Cập nhật thông tin thành công' });
+        if (type === 'Submit' || type === 'SaveNhap') {
+          setTimeout(() => {
+           this.displayFormEditDetail = false;
+           this.getEmpWorkingPageByEmpId();
+           this.cancelSave.emit()
+          }, 200);
+        }
       } else {
         this.listViewsDetail = cloneDeep(this.cloneListViewsDetail);
         this.spinner.hide();
