@@ -267,13 +267,13 @@ export class PqThangMayComponent implements OnInit {
   }
 
   loadElevatorCardRole() {
-    this.apiService.getElevatorCardRole().subscribe(
-      (res: any) => {
-        if (res) {
-          this.modelCR = res.data;
-          this.cardinfo.cardRole = this.modelCR[0]['cardRole'];
-        }
-      });
+    // this.apiService.getElevatorCardRole().subscribe(
+    //   (res: any) => {
+    //     if (res) {
+    //       this.modelCR = res.data;
+    //       this.cardinfo.cardRole = this.modelCR[0]['cardRole'];
+    //     }
+    //   });
   }
 
   loadCardType() {

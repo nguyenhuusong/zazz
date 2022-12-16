@@ -162,6 +162,7 @@ export class CaiDatCongTyComponent implements OnInit, AfterViewChecked {
           }, 100);
         }
         this.spinner.hide();
+        this.FnEvent();
       },
       error => {
         this.spinner.hide();

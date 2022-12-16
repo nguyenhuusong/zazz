@@ -199,6 +199,7 @@ export class NgayNghiLeComponent implements OnInit {
           }, 100);
         }
         this.spinner.hide();
+        this.FnEvent();
       },
       error => {
         this.spinner.hide();
@@ -211,7 +212,7 @@ export class NgayNghiLeComponent implements OnInit {
         {
           onClick: this.EditEmployee.bind(this),
           label: 'Thông tin chi tiết',
-          icon: 'fa fa-eye',
+          icon: 'icon-edit',
           class: 'btn-primary mr5',
           hide: CheckHideAction(MENUACTIONROLEAPI.HolidayPage.url, ACTIONS.VIEW)
         },

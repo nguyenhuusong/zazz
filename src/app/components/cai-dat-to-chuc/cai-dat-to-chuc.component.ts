@@ -275,6 +275,7 @@ export class CaiDatToChucComponent implements OnInit {
           }, 100);
         }
         this.spinner.hide();
+        this.FnEvent();
       },
       error => {
         this.spinner.hide();

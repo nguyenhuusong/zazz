@@ -96,9 +96,6 @@ export class BieuMauComponent implements OnInit, OnDestroy {
       { label: this.dataRouter.title },
     ];
     this.getFilter()
-    // this.getAgencyOrganizeMap();
-    // this.getOrgan();
-    // this.getFormTypes();
   }
 
 
@@ -505,7 +502,6 @@ export class BieuMauComponent implements OnInit, OnDestroy {
 
   handleChange(event) {
     this.indexTab = event.index
-    this.getFilter();
     this.FnEvent()
   }
 
@@ -619,7 +615,7 @@ detailInfoFilter = null;
   //filter 
   getFilter() {
     // value === 1 ? '' : ''
-    this.apiService.getFilter('/api/v1/eating/GetEatingFilter').subscribe(results => {
+    this.apiService.getFilter('/api/v2/forms/GetFormGeneralFilter').subscribe(results => {
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);

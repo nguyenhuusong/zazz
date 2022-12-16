@@ -1,4 +1,7 @@
 :host::ng-deep {
+    .ag-cell-value{
+        width: 100%;
+    }
     .no-auto {
         border-left: none;
     }
