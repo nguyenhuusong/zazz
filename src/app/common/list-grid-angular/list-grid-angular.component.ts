@@ -424,7 +424,6 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
       this.gridColumnApi.autoSizeColumns(allColumnIds, false);
       const grid = document.getElementById(`${this.idGrid}`);
       if (grid) {
-        console.log(event)
         if ((event.left === 0) ||(event.left > 200 && event.left < 220)
           || (event.left > 400 && event.left < 420)
           || (event.left > 600 && event.left < 620)
