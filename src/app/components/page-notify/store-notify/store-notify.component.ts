@@ -152,32 +152,10 @@ export class StoreNotifyComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    
-    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-      if(results){
-        this.organSeleted = results;
-        this.perent_id = results;
-        this.getUserByPush();
-        if(this.isNotifi) {
-          // this.perent_id = this.notify.external_sub || null;
-          const items = this.moduleLists.filter(d => d.value === this.perent_id)
-          if (items.length > 0) this.getOrganizeTree(items[0].code)
-        }
-        }
-    })
+    this.getUserByPush();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-   this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-      if(results){
-        if(this.isNotifi) {
-          // this.perent_id = this.notify.external_sub || null;
-          const items = this.moduleLists.filter(d => d.value === this.perent_id)
-          if (items.length > 0) this.getOrganizeTree(items[0].code)
-         }
-      }
-    })
-  
   }
 
   getProductOrderPage() {

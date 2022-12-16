@@ -49,7 +49,7 @@ export class EmployeeInfoComponent implements OnInit {
       this.paramsObject = { ...params.keys, ...params };
       this.dataRouter = this.paramsObject.params;
       this.empId = this.paramsObject.params.empId || null;
-      this.getEmployeeStatus();
+      
 
     });
   }

@@ -229,14 +229,8 @@ export class PhepBuComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit() {
-    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-        if(results && results.length>0){
-          this.query.organizeIds = results;
-          this.organizeIdForDep = results;
-          this.getDepartments(this.query.organizeIds);
-          this.load();
-        }
-    });
+    this.getDepartments(this.query.organizeIds);
+    this.load();
     let currentDay = new Date().getDate();
     if(currentDay >= 25 && currentDay <= 31){
       this.query.month = this.query.month + 1;

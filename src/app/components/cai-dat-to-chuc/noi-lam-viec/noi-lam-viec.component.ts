@@ -14,6 +14,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { fromEvent } from 'rxjs';
+import { cloneDeep } from 'lodash';
+import { getParamString } from 'src/app/common/function-common/objects.helper';
 @Component({
   selector: 'app-noi-lam-viec',
   templateUrl: './noi-lam-viec.component.html',
@@ -76,7 +78,6 @@ export class NoiLamViecComponent implements OnInit {
     filter: '',
     offSet: 0,
     pageSize: 15,
-    organizeIds: '',
   }
   totalRecord = 0;
   DriverId = 0;
@@ -99,7 +100,6 @@ export class NoiLamViecComponent implements OnInit {
       filter: '',
       offSet: 0,
       pageSize: 15,
-      organizeIds: this.query.organizeIds
     }
     this.load();
   }
@@ -162,6 +162,43 @@ export class NoiLamViecComponent implements OnInit {
         this.spinner.hide();
        });
   }
+
+  listViewsFilter = [];
+  cloneListViewsFilter = [];
+  detailInfoFilter = null;
+  optionsButonFilter = [
+    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm height-56 addNew', icon: 'pi pi-search' },
+    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger height-56 addNew', icon: 'pi pi-times' },
+  ];
+  //filter 
+  getFilter() {
+    this.apiService.getFilter('/api/v2/worktime/GetWorktimeFilter').subscribe(results => {
+      if (results.status === 'success') {
+        const listViews = cloneDeep(results.data.group_fields);
+        this.cloneListViewsFilter = cloneDeep(listViews);
+        this.listViewsFilter = [...listViews];
+        const params = getParamString(listViews)
+        this.query = { ...this.query, ...params };
+        this.load();
+        this.detailInfoFilter = results.data;
+      }
+    });
+  }
+
+  filterLoad(event) {
+    this.query = { ...this.query, ...event.data };
+    this.load();
+  }
+
+  close(event) {
+    const listViews = cloneDeep(this.cloneListViewsFilter);
+    this.listViewsFilter = cloneDeep(listViews);
+    const params = getParamString(listViews)
+    this.query = { ...this.query, ...params };
+    this.load();
+    this.FnEvent();
+  }
+
   
   showButtons(event: any) {
     return {
@@ -253,35 +290,16 @@ export class NoiLamViecComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-        if(results && results.length>0){
-          this.query.organizeIds = results;
-          this.load();
-        }
-    });
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Cài đặt' },
       { label: 'Danh sách tổ chức', routerLink: '/cai-dat/cai-dat-to-chuc' },
       { label: 'Danh sách nơi làm việc'},
     ];
-    this.getCustObjectListNew();
+    this.getFilter();
+
   }
 
-  listLevers = []
-  getCustObjectListNew() {
-    const opts1 = { params: new HttpParams({ fromString: `objKey=hrm_org_level` }) };
-    this.apiService.getCustObjectListNew(false,opts1.params.toString()).subscribe(results => {
-      this.listLevers = results.data.map(d => {
-        return {
-          label: d.objName,
-          value: d.objValue
-        }
-      });
-
-      this.listLevers = [{ label: 'Tất cả', value: 0 }, ...this.listLevers]
-    });
-  }
   ngAfterViewInit(): void {
     this.FnEvent();
   }

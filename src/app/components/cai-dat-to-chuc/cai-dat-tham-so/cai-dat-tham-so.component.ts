@@ -59,11 +59,6 @@ export class CaiDatThamSoComponent implements OnInit, OnChanges {
     this.url = this.activatedRoute.data['_value'].url;
     this.manhinh = 'Edit'
     this.handleParams();
-    // this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-    //   if(results && results.length>0){
-    //     this.organizeIds = results;
-    //   }
-    // });
   }
 
   handleParams() {

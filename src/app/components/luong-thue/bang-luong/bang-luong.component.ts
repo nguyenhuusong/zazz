@@ -488,7 +488,7 @@ export class BangLuongComponent implements OnInit {
       { label: 'Lương - thuế' },
     ];
     this.getAgencyOrganizeMap();
-    this.getEmployeeStatus();
+    
     this.getOrgan();
     this.itemsToolOfGrid = [
       {

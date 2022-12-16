@@ -80,14 +80,7 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
         this.paramsObject = { ...params.keys, ...params };
         this.modelEdit.maternityId = this.paramsObject.params.maternityId || null;
         this.emId = this.paramsObject.params.emId || null;
-        this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-          if(results && results.length>0){
-            this.getMaternityInfo();
-            this.organIdSelected = results;
-          }
-        });
-        
-        // this.getChiTietForDsThaiSan();
+        this.getMaternityInfo();
       });
   };
 

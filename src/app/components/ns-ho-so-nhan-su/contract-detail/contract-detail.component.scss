@@ -13,5 +13,15 @@
             padding: unset;
         }
     }
+
+    .hsns {
+        .btn-group-edit-detail{
+            position: absolute !important;
+            top: 5px !important;
+            right: 100px !important;
+            bottom: inherit !important;
+        }
+    
+    }
    
 }

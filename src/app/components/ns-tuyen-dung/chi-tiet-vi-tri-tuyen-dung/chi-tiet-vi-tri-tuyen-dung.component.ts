@@ -67,12 +67,7 @@ export class ChiTietViTriTuyenDungComponent implements OnInit, OnDestroy {
         if(this.isCopy) {
           this.getVacancyReplicationInfo();
         }else{
-          this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-            if(results && results.length>0){
-              this.getVacancyInfo();
-              this.organIdSelected = results;
-            } 
-          });
+          this.getVacancyInfo();
         }
       });
   };

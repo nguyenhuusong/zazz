@@ -69,9 +69,6 @@ export class NsCauHinhComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.organizeInfoService.organizeInfo$.subscribe(({
-
-    }))
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Tuyển dụng' },

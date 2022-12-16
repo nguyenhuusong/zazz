@@ -44,13 +44,7 @@ export class NsChiTietCauHinhMailComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-      if(results && results.length>0){
-        this.organIdSelected = results;
-        this.getDetail();
-      }
-    });
-   
+    this.getDetail();
   }
 
   getDetail() {

@@ -329,7 +329,7 @@ export class XuLyHopDongComponent implements OnInit {
     this.router.navigate(['/nhan-su/xu-ly-hop-dong/chi-tiet-xu-ly-hop-dong'], { queryParams: modelContractInfo });
 
   }
-  
+
   isSearchEmp: boolean = false
   addNew() {
     this.isSearchEmp = true;
@@ -434,14 +434,8 @@ export class XuLyHopDongComponent implements OnInit {
   listPrints = []
   ngOnInit() {
     this.getContractFilter();
-    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-        if(results && results.length>0){
-          this.query.organizeIds = results;
-          this.query.organizeId = results;
-          this.getContractTypes();
-          this.getCompany();
-        }
-    });
+    this.getContractTypes();
+    this.getCompany();
     this.webSocketService.myWebSocket
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(

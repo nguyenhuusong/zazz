@@ -296,12 +296,8 @@ export class PheDuyetComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit() {
-    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-        if(results && results.length>0){
-          this.query.organizeIds = results;
-          this.getCompany();
-        }
-    });
+    this.getCompany();
+
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Nhân sự' },

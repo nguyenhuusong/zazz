@@ -491,7 +491,7 @@ export class ChiTietBangLuongComponent implements OnInit {
       { label: 'Chi tiết bảng lương' },
     ];
     this.getAgencyOrganizeMap();
-    this.getEmployeeStatus();
+    
     this.getOrgan();
     this.itemsToolOfGrid = [
       {

@@ -399,13 +399,7 @@ export class PqQuyenNguoiDungComponent implements OnInit {
       { label: 'Phân quyền' },
       { label: 'Danh sách người dùng' },
     ];
-
-    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-        if(results && results.length>0){
-          this.query.organizeIds = results;
-          this.load();
-        }
-    });
+    this.load();
     this.getOrganize();
     this.getJobTitles();
     this.getPositionList();

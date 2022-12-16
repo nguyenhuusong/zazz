@@ -12,6 +12,8 @@ import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { fromEvent } from 'rxjs';
+import { cloneDeep } from 'lodash';
+import { getParamString } from 'src/app/common/function-common/objects.helper';
 @Component({
   selector: 'app-ly-do-nghi-viec',
   templateUrl: './ly-do-nghi-viec.component.html',
@@ -82,9 +84,6 @@ export class LyDoNghiViecComponent implements OnInit {
     filter: '',
     offSet: 0,
     pageSize: 15,
-    organizeId: null,
-    reason_group: null,
-    organizeIds: '',
   }
   totalRecord = 0;
   DriverId = 0;
@@ -124,9 +123,6 @@ export class LyDoNghiViecComponent implements OnInit {
       filter: '',
       offSet: 0,
       pageSize: 15,
-      organizeId: null,
-      reason_group: null,
-      organizeIds: this.query.organizeIds
     }
     this.load();
   }
@@ -259,33 +255,12 @@ export class LyDoNghiViecComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-        if(results && results.length>0){
-          this.query.organizeIds = results;
-          this.query.organizeId = results;
-          this.load();
-        }
-    });
+    this.load();
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Cài đặt' },
       { label: 'Lý do nghỉ' },
     ];
-    this.getFeedbackType();
-  }
-  typeFeedBacks = [];
-  getFeedbackType() {
-    this.apiService.getFeedbackType().subscribe(results => {
-      if(results.status === 'success') {
-        this.typeFeedBacks = results.data.map(d => {
-          return {
-            label: d.feedbackTypeName,
-            value: d.feedbackTypeId
-          }
-        });
-        this.typeFeedBacks = [{label: 'Tất cả', value: null}, ...this.typeFeedBacks]
-      }
-    })
   }
 
   ngAfterViewInit(): void {
@@ -303,6 +278,46 @@ export class LyDoNghiViecComponent implements OnInit {
       }
     }, 300);
   }
+
+
+  listViewsFilter = [];
+  cloneListViewsFilter = [];
+  detailInfoFilter = null;
+  optionsButonFilter = [
+    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm height-56 addNew', icon: 'pi pi-search' },
+    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger height-56 addNew', icon: 'pi pi-times' },
+  ];
+  
+  getFilter() {
+    this.apiService.getFilter('/v2/leave/GetLeaveReasonFilter').subscribe(results => {
+      if(results.status === 'success') {
+        const listViews = cloneDeep(results.data.group_fields);
+        this.cloneListViewsFilter = cloneDeep(listViews);
+        this.listViewsFilter = [...listViews];
+        const params =  getParamString(listViews)
+        this.query = { ...this.query, ...params};
+        this.detailInfoFilter = results.data;
+        this.load();
+      }
+    });
+
+  }
+
+  filterLoad(event) {
+    this.query = { ...this.query, ...event.data };
+    this.load();
+    this.FnEvent();
+  }
+
+  closeFilter(event) {
+    const listViews = cloneDeep(this.cloneListViewsFilter);
+    this.listViewsFilter = cloneDeep(listViews);
+    const params = getParamString(listViews)
+    this.query = { ...this.query, ...params };
+    this.load();
+    this.FnEvent()
+  }
+
 }
 
 

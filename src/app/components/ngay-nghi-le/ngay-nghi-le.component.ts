@@ -12,7 +12,6 @@ import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { cloneDeep } from 'lodash';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
 import { DialogService } from 'primeng/dynamicdialog';
-import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { fromEvent } from 'rxjs';
 @Component({
   selector: 'app-ngay-nghi-le',
@@ -181,7 +180,7 @@ export class NgayNghiLeComponent implements OnInit {
     this.apiService.holidayPage(queryParams).subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
-        this.gridKey= results.data.dataList.gridKey;
+        this.gridKey = results.data.dataList.gridKey;
         if (this.query.offSet === 0) {
           this.cols = results.data.gridflexs;
           this.colsDetail = results.data.gridflexdetails ? results.data.gridflexdetails : [];
@@ -232,7 +231,7 @@ export class NgayNghiLeComponent implements OnInit {
       {
         headerName: 'Stt',
         filter: '',
-        maxWidth: 120,
+        maxWidth: 140,
         pinned: 'left',
         cellRenderer: params => {
           return params.rowIndex + 1
@@ -245,19 +244,10 @@ export class NgayNghiLeComponent implements OnInit {
         suppressSizeToFit: true,
       },
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
-      // {
-      //   headerName: 'Thao tác',
-      //   filter: '',
-      //   maxWidth: 90,
-      //   pinned: 'right',
-      //   cellRenderer: 'buttonRendererComponent',
-      //   cellRendererParams: (params: any) => this.showButtons(params),
-      //   cellClass: ['action', 'border-right', 'no-auto'],
-      // },
       {
         headerComponentParams: {
           template:
-          `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
+            `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
         },
         field: 'button',
         editable: false, width: 100,
@@ -356,45 +346,11 @@ export class NgayNghiLeComponent implements OnInit {
 
   ngOnInit() {
     this.getFilter();
-    this.getObjectList();
-    this.getObjectListWorkType();
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Cài đặt' },
       { label: 'Danh sách ngày nghỉ' },
     ];
-    this.getOrgan();
-  }
-  holiTypes = []
-  getObjectList() {
-    const queryParams = queryString.stringify({ objKey: 'holi_type' });
-    this.apiService.getCustObjectListNew(false, queryParams).subscribe(results => {
-      if (results.status === 'success') {
-        this.holiTypes = results.data.map(d => {
-          return {
-            label: d.objName,
-            value: d.objCode
-          }
-        });
-        this.holiTypes = [{ label: 'Tất cả', value: null }, ...this.holiTypes]
-      }
-    })
-  }
-
-  holiWorkType = []
-  getObjectListWorkType() {
-    const queryParams = queryString.stringify({ objKey: 'holi_work_type' });
-    this.apiService.getCustObjectListNew(false, queryParams).subscribe(results => {
-      if (results.status === 'success') {
-        this.holiWorkType = results.data.map(d => {
-          return {
-            label: d.objName,
-            value: d.objCode
-          }
-        });
-        this.holiWorkType = [{ label: 'Tất cả', value: null }, ...this.holiWorkType]
-      }
-    })
   }
 
   organizeList = []
@@ -482,22 +438,23 @@ export class NgayNghiLeComponent implements OnInit {
     { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm height-56 addNew', icon: 'pi pi-search' },
     { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger height-56 addNew', icon: 'pi pi-times' },
   ];
+  
   getFilter() {
-    this.load();
-    this.apiService.getFilter('').subscribe(results => {
+    this.apiService.getFilter('/api/v1/holiday/GetHolidayFilter').subscribe(results => {
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
         this.listViewsFilter = [...listViews];
         const params =  getParamString(listViews)
         this.query = { ...this.query, ...params};
-        
         this.detailInfoFilter = results.data;
+        this.load();
       }
     });
+
   }
 
-   filterLoad(event) {
+  filterLoad(event) {
     this.query = { ...this.query, ...event.data };
     this.load();
     this.FnEvent();
@@ -506,52 +463,10 @@ export class NgayNghiLeComponent implements OnInit {
   closeFilter(event) {
     const listViews = cloneDeep(this.cloneListViewsFilter);
     this.listViewsFilter = cloneDeep(listViews);
-    const params =  getParamString(listViews)
-    this.query = { ...this.query, ...params};
+    const params = getParamString(listViews)
+    this.query = { ...this.query, ...params };
     this.load();
     this.FnEvent()
-  }
-
-showFilter() {
-    const ref = this.dialogService.open(FormFilterComponent, {
-      header: 'Tìm kiếm nâng cao',
-      width: '40%',
-      contentStyle: "",
-      data: {
-        listViews: this.listViewsFilter,
-        detailInfoFilter: this.detailInfoFilter,
-        buttons: this.optionsButonFilter
-      }
-    });
-
-    ref.onClose.subscribe((event: any) => {
-      if (event) {
-        this.listViewsFilter = cloneDeep(event.listViewsFilter);
-        if (event.type === 'Search') {
-          this.query = { ...this.query, ...event.data };
-          this.load();
-        } else if (event.type === 'CauHinh') {
-          this.apiService.getFilter('/api/v2/meeting/GetLeaveFilter').subscribe(results => {
-            if (results.status === 'success') {
-              const listViews = cloneDeep(results.data.group_fields);
-              this.listViewsFilter = [...listViews];
-              const params =  getParamString(listViews)
-              this.query = { ...this.query, ...params};
-              this.load();
-              this.detailInfoFilter = results.data;
-              this.showFilter()
-            }
-          });
-
-        } else if (event.type === 'Reset') {
-          const listViews = cloneDeep(this.cloneListViewsFilter);
-          this.listViewsFilter = cloneDeep(listViews);
-         const params =  getParamString(listViews)
-        this.query = { ...this.query, ...params};
-        this.load();
-        }
-      }
-    });
   }
 
   ngAfterViewInit(): void {
@@ -561,7 +476,7 @@ showFilter() {
   FnEvent() {
     setTimeout(() => {
       var dragTarget = document.getElementById(this.gridKey);
-      if(dragTarget) {
+      if (dragTarget) {
         const click$ = fromEvent(dragTarget, 'click');
         click$.subscribe(event => {
           this.themmoingaynghi()

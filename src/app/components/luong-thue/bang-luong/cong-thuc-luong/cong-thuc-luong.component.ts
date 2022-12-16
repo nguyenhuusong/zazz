@@ -491,7 +491,7 @@ export class CongThucLuongComponent implements OnInit {
       { label: 'Công thức lương' },
     ];
     this.getAgencyOrganizeMap();
-    this.getEmployeeStatus();
+    
     this.getOrgan();
     this.itemsToolOfGrid = [
       {

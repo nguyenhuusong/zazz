@@ -400,7 +400,7 @@ export class QtThayDoiLuongComponent implements OnInit {
       { label: 'Quản lý nhân sự' },
       { label: 'Quá trình thay đổi lương' },
     ];
-    this.getEmployeeStatus();
+    
     this.getOrgan();
     this.itemsToolOfGrid = [
       {

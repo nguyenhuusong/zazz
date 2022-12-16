@@ -254,12 +254,7 @@ export class NghiViecComponent implements OnInit, AfterViewChecked {
       { label: 'Tuyển dụng'},
       { label: 'Tuyển dụng lại' },
     ];
-    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-        if(results && results.length>0){
-          this.query.organizeIds = results;
-          this.load();
-        }
-    });
+    this.load();
     this.getOrgan();
   }
 

@@ -123,11 +123,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
   dataViewNew = [];
   
   getOrganizeInfoService() {
-    this.organizeInfoService.organizeInfo$.subscribe((results: any) => {
-      if(results && results.length>0){
-        this.organizeInfoServiceId = results
-      }
-    });
+    
   }
   callApiDrop() {
     const promissall = [];

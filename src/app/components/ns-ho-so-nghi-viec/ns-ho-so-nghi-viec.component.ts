@@ -425,7 +425,7 @@ export class NsHoSoNghiViecComponent implements OnInit {
       { label: 'Danh sách hồ sơ nghỉ việc' },
     ];
     this.getCustObjectListNew();
-    this.getEmployeeStatus();
+    
   }
 
   onCellClicked(event) {

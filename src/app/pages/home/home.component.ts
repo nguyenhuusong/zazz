@@ -107,7 +107,6 @@ export class HomeComponent implements OnInit {
     
     this.getYears();
     this.getAgencyOrganizeMap();
-    this.getOrgan();
   }
   ngOnDestroy() {
   }
@@ -115,21 +114,6 @@ export class HomeComponent implements OnInit {
  chartOptions = {
   responsive: true
 };
-
-getOrgan() {
-  const queryParams = queryString.stringify({ filter: '' });
-  this.apiService.getOrganizations(queryParams).subscribe(results => {
-    if (results.status === 'success') {
-      this.organs = results.data.map(d => {
-        return {
-          label: d.organizationName,
-          value: `${d.organizeId}`
-        }
-      });
-      this.organs = [...this.organs];
-    }
-  })
-}
 
   theOrginSelected: any = {}
   getOriginLabelByid() {
