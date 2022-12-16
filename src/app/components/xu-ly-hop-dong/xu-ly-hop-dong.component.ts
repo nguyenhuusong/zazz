@@ -75,8 +75,6 @@ export class XuLyHopDongComponent implements OnInit {
     type: 'duyet_ho_so'
   }
 
-  statusContracts = [];
-  typeContracts = []
   public modules: Module[] = AllModules;
   public agGridFn = AgGridFn;
   cols: any[];
@@ -128,6 +126,7 @@ export class XuLyHopDongComponent implements OnInit {
   paramsPheDuyet: any = []
 
   isPrinted: boolean = false;
+  listsData = [];
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
@@ -175,7 +174,7 @@ export class XuLyHopDongComponent implements OnInit {
     this.loadjs++
     if (this.loadjs === 5) {
       if (b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight + 26;
+        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight + 10;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       } else {
@@ -184,23 +183,6 @@ export class XuLyHopDongComponent implements OnInit {
     }
   }
 
-  listsData = [];
-  listOrgRoots = [];
-  getOrgRoots() {
-    const queryParams = queryString.stringify({ filter: '' });
-    this.apiService.getOrganizations(queryParams).subscribe(results => {
-      if (results.status === 'success') {
-        this.listOrgRoots = results.data.map(d => {
-          return {
-            label: d.organizationName + '-' + d.organizationCd,
-            value: `${d.organizeId}`
-          }
-        });
-
-        this.listOrgRoots = [{ label: 'Tất cả', value: null }, ...this.listOrgRoots];
-      }
-    })
-  }
 
   displaySetting = false;
   gridKey = ''
@@ -434,8 +416,6 @@ export class XuLyHopDongComponent implements OnInit {
   listPrints = []
   ngOnInit() {
     this.getContractFilter();
-    this.getContractTypes();
-    this.getCompany();
     this.webSocketService.myWebSocket
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
@@ -454,8 +434,6 @@ export class XuLyHopDongComponent implements OnInit {
           console.log(err)
         },
       )
-    this.getOrgRoots();
-    this.getCustObjectListNew();
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Nhân sự' },
@@ -484,20 +462,6 @@ export class XuLyHopDongComponent implements OnInit {
       },
     ]
   }
-
-  getCustObjectListNew() {
-    const opts1 = { params: new HttpParams({ fromString: `objKey=contract_status` }) };
-    this.apiService.getCustObjectListNew(null, opts1.params.toString()).subscribe(results => {
-      this.statusContracts = results.data.map(d => {
-        return {
-          label: d.objName,
-          value: d.objValue
-        }
-      });
-      this.statusContracts = [{ label: 'Tất cả', value: null }, ...this.statusContracts]
-    });
-  }
-
 
   sizeToFit() {
     if (this.gridApi) {
@@ -530,21 +494,6 @@ export class XuLyHopDongComponent implements OnInit {
         this.gridColumnApi.autoSizeColumns(allColumnIds, false);
       }
     }
-  }
-
-  getContractTypes() {
-      const queryParams = queryString.stringify({ organizeId: this.query.organizeId });
-      this.apiService.getContractTypes(queryParams).subscribe(results => {
-        if (results.status === 'success') {
-          this.typeContracts = results.data.map(d => {
-            return {
-              label: d.name,
-              value: `${d.value}`
-            }
-          });
-          this.typeContracts = [{ label: 'Tất cả', value: null }, ...this.typeContracts];
-        }
-      })
   }
   modelPrint = {
     PrinterName: null,
@@ -757,24 +706,24 @@ export class XuLyHopDongComponent implements OnInit {
 
 
   getCompany() {
-    const query = { organizeIds: this.query.organizeIds}
-    this.apiService.getUserCompanies(queryString.stringify(query)).subscribe(
-      (results: any) => {
-        if(results.status === "success"){
-          this.companies = results.data
-            .map(d => {
-              return {
-                label: d.name,
-                value: d.value
-              };
-            });
-            if(this.companies.length > 0) {
-              this.query.companyIds = this.companies[0].value;
-            }
-            this.load();
-        }
-      }),
-      error => { };
+    // const query = { organizeIds: this.query.organizeIds}
+    // this.apiService.getUserCompanies(queryString.stringify(query)).subscribe(
+    //   (results: any) => {
+    //     if(results.status === "success"){
+    //       this.companies = results.data
+    //         .map(d => {
+    //           return {
+    //             label: d.name,
+    //             value: d.value
+    //           };
+    //         });
+    //         if(this.companies.length > 0) {
+    //           this.query.companyIds = this.companies[0].value;
+    //         }
+    //         this.load();
+    //     }
+    //   }),
+    //   error => { };
   }
 
 
