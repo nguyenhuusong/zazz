@@ -123,22 +123,6 @@ export class ChucVuComponent implements OnInit, AfterViewChecked {
     }
   }
 
-  organizes = []
-  getOrrginiaztions() {
-    const queryParams = queryString.stringify({ filter: '' });
-    this.apiService.getOrganizations(queryParams).subscribe(results => {
-      if (results.status === 'success') {
-        this.organizes = results.data.map(d => {
-          return {
-            label: d.organizationName,
-            value: `${d.organizeId}`
-          }
-        });
-        this.organizes = [...this.organizes];
-      }
-    })
-  }
-
   displaySetting = false;
   gridKey = ''
   cauhinh() {
@@ -265,13 +249,13 @@ export class ChucVuComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit() {
-    this.getFilter();
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Cài đặt' },
       { label: 'Danh sách tổ chức', routerLink: '/cai-dat/cai-dat-to-chuc' },
       { label: 'Danh sách chức vụ' },
     ];
+    this.getFilter();
   }
 
   listViewsFilter = [];
@@ -286,7 +270,7 @@ export class ChucVuComponent implements OnInit, AfterViewChecked {
   getFilter() {
     // value === 1 ? '' : ''
     this.load();
-    this.apiService.getFilter('/api/v1/eating/GetEatingFilter').subscribe(results => {
+    this.apiService.getFilter('/api/v2/position/GetPositionFilter').subscribe(results => {
       if (results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
