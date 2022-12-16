@@ -1860,14 +1860,9 @@ button{
             height: 14px;
             width: auto;
         }
-    }
-}
-
-p-dialog{
-    button{
-        &.p-button{
-            padding: 10px 17px !important;
-            border: 1px solid #4C97E4;
+        .pi{
+            height: 12px;
+            font-size: 100%;
         }
     }
 }
@@ -2791,7 +2786,7 @@ div.p-organizationchart {
             color: #2B2F33;
             outline: none;
             line-height: 1;
-            padding: 8px 27px 11px 7px;
+            padding: 9px 27px 9px 7px;
             min-height: 30px;
             height: 30px;
         }
@@ -5904,7 +5899,13 @@ app-thong-tin-ca-nhan-edit-detail{
 
 .search-em-in{
     &.p-dialog{
-        background: #00b5ea;
+        background: #0f204a;
+    }
+    width: 800px;
+    transition: all 0.4s ease;
+    &.search-em-result{
+        width: 1200px;
+        transition: all 0.4s ease;
     }
     .p-image{
         display: block;
@@ -5926,10 +5927,9 @@ app-thong-tin-ca-nhan-edit-detail{
         .search-in{
             display: flex;
             align-items: center;
-            background: #00b5ea;
+            background: #0f204a;
             padding-left: 15px;
             padding-right: 15px;
-            min-height: 320px;
             .search-group{
                 width: 100%;
                 margin-top: 10px;
@@ -5946,29 +5946,31 @@ app-thong-tin-ca-nhan-edit-detail{
                 position: relative;
             }
             .pi-search{
-                left: 8px;
+                right: 8px;
                 position: absolute;
                 top: 10px;
                 color: #ccc;
+                z-index: 3;
+                cursor: pointer;
             }
         }
         .search-res{
             padding-left: 10px;
             padding-right: 10px;
             background: #fff;
-            width: calc(100% - 30px);
             margin: auto;
             margin-bottom: 10px;
             border-radius: 4px;
+            height: 100%;
         }
     }
     .p-dialog-footer{
-        background: #00b5ea;
+        background: #0f204a;
         padding-top: 0px;
         padding-right: 15px;
     }
     .p-dialog-header{
-        background: #00b5ea;
+        background: #0f204a;
     color: #ffffff;
     border-bottom: none !important;
     box-shadow: none;
@@ -6004,3 +6006,78 @@ app-thong-tin-ca-nhan-edit-detail{
         height: 0;
     }
 }
+
+// Baseline styles
+
+.table {
+    width: 100%;
+    max-width: 100%;
+    // Cells
+    > thead,
+    > tbody,
+    > tfoot {
+      > tr {
+        > th,
+        > td {
+            padding: 8px;
+            line-height: 1.42857143;
+            vertical-align: top;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+            cursor: pointer;
+        }
+      }
+    }
+    // Bottom align for column headings
+    > thead > tr > th {
+        vertical-align: bottom;
+        position: sticky;
+        top: 0;
+        background: #fff;
+    }
+    tr{
+        &.active,
+        &:hover{
+            background: #f1f1f1;
+        }
+    }
+    // Remove top border from thead by default
+    > caption + thead,
+    > colgroup + thead,
+    > thead:first-child {
+      > tr:first-child {
+        > th,
+        > td {
+        }
+      }
+    }
+  }
+
+  .search-content{
+    width: calc(100% - 30px);
+    margin: auto !important;
+    .list-em{
+        background: #fff;
+        overflow: auto;
+        max-height: 400px;
+        border-radius: 4px;
+    }
+    .emInfo{
+        position: relative;
+        .uni-load{
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 9;
+        }
+    }
+    &>.col-4{
+        padding-left: 0px;
+    }
+    &>.col-8{
+        padding-right: 0px;
+    }
+  }
+  .p-button.p-button-secondary{
+    padding: 7px 7px !important;
+  }

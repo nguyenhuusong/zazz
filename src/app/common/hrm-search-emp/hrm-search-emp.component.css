@@ -7,3 +7,6 @@
 :host::ng-deep .breadcrumb .p-breadcrumb{
         margin-bottom: 0;
     }
+:host::ng-deep  {
+    
+}

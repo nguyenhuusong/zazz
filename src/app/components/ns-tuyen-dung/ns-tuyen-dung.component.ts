@@ -398,6 +398,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     this.getJobTitles();
     this.getOrgRoots();
     this.getVacancyPage();
+    this.getReRound();
     this.buttonTiemNang = [
       {
         label: 'Danh sách tiềm năng',
