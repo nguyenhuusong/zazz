@@ -5901,11 +5901,11 @@ app-thong-tin-ca-nhan-edit-detail{
     &.p-dialog{
         background: #0f204a;
     }
-    width: 800px;
-    transition: all 0.4s ease;
+    width: 600px;
+    transition: all 0.3s ease;
     &.search-em-result{
         width: 1200px;
-        transition: all 0.4s ease;
+        transition: all 0.3s ease;
     }
     .p-image{
         display: block;
@@ -6034,6 +6034,7 @@ app-thong-tin-ca-nhan-edit-detail{
         position: sticky;
         top: 0;
         background: #fff;
+        white-space: nowrap;
     }
     tr{
         &.active,
