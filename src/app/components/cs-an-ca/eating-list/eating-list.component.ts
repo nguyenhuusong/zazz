@@ -59,7 +59,7 @@ export class EatingListComponent implements OnInit, AfterViewChecked {
   query = {
     cusId: null,
     offSet: 0,
-    pageSize: 15,
+    pageSize: 20,
     fromdate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).add(-1,'months').format()),
     todate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).format()),
   }
@@ -106,7 +106,7 @@ export class EatingListComponent implements OnInit, AfterViewChecked {
     this.query = {
       cusId: this.query.cusId,
       offSet: 0,
-      pageSize: 15,
+      pageSize: 20,
       fromdate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).add(-1,'months').format()),
       todate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).format()),
     }
@@ -235,7 +235,7 @@ export class EatingListComponent implements OnInit, AfterViewChecked {
     this.loadjs ++ 
     if (this.loadjs === 5) {
       if(b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + d.clientHeight + e.clientHeight + 25;
+        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + d.clientHeight + e.clientHeight +10;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       }else {

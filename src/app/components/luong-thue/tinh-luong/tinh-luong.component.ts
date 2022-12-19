@@ -234,7 +234,7 @@ export class TinhLuongComponent implements OnInit {
     // this.loadjs++
     // if (this.loadjs === 5) {
     //   if (b && b.clientHeight) {
-    //     const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + d.clientHeight + e.clientHeight + 25;
+    //     const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + d.clientHeight + e.clientHeight +10;
     //     this.heightGrid = window.innerHeight - totalHeight
     //     this.changeDetector.detectChanges();
     //   } else {

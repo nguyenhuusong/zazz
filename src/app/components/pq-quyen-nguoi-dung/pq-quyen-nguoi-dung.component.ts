@@ -87,7 +87,7 @@ export class PqQuyenNguoiDungComponent implements OnInit {
   query = {
     filter: '',
     offSet: 0,
-    pageSize: 15,
+    pageSize: 20,
     organizeIds: '',
   }
   totalRecord = 0;
@@ -110,7 +110,7 @@ export class PqQuyenNguoiDungComponent implements OnInit {
     this.query = {
       filter: '',
       offSet: 0,
-      pageSize: 15,
+      pageSize: 20,
       organizeIds: this.query.organizeIds,
     }
     this.load();
@@ -300,7 +300,7 @@ export class PqQuyenNguoiDungComponent implements OnInit {
     this.loadjs ++ 
     if (this.loadjs === 5) {
       if(b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight + 25;
+        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight +10;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       }else {

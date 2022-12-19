@@ -62,7 +62,7 @@ export class TabThietLapThamSoComponent implements OnInit {
     filter: '',
     gridWidth: 0,
     offSet: 0,
-    pageSize: 15,
+    pageSize: 20,
     organizeIds: '',
   }
 
@@ -73,7 +73,7 @@ export class TabThietLapThamSoComponent implements OnInit {
       filter: '',
       gridWidth: 0,
       offSet: 0,
-      pageSize: 15,
+      pageSize: 20,
       organizeIds: this.query.organizeIds
     }
     this.load();

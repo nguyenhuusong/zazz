@@ -11,6 +11,11 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 const MAX_SIZE = 100000000;
+import { cloneDeep } from 'lodash';
+import { getParamString } from 'src/app/common/function-common/objects.helper';
+import { fromEvent } from 'rxjs';
+import { DialogService } from 'primeng/dynamicdialog';
+import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 
 @Component({
   selector: 'app-ds-tiem-nang',
@@ -31,6 +36,7 @@ export class DsTiemNangComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private changeDetector: ChangeDetectorRef,
     private organizeInfoService: OrganizeInfoService,
+    public dialogService: DialogService,
     private router: Router) {
 
     this.defaultColDef = {
@@ -47,6 +53,7 @@ export class DsTiemNangComponent implements OnInit {
       buttonAgGridComponent: ButtonAgGridComponent,
       avatarRendererFull: AvatarFullComponent,
     };
+    this.getFilter();
   }
   pagingComponent = {
     total: 0
@@ -70,7 +77,7 @@ export class DsTiemNangComponent implements OnInit {
     positionCd: null,
     filter: '',
     offSet: 0,
-    pageSize: 15,
+    pageSize: 20,
     organizeIds: '',
     fromDate: '',
     toDate: '',
@@ -112,7 +119,7 @@ export class DsTiemNangComponent implements OnInit {
     this.loadjs++
     if (this.loadjs === 5) {
       if (b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight + 25;
+        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight +10;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       } else {
@@ -129,7 +136,7 @@ export class DsTiemNangComponent implements OnInit {
       positionCd: null,
       filter: '',
       offSet: 0,
-      pageSize: 15,
+      pageSize: 20,
       fromDate: '',
       toDate: '',
       organizeIds: this.query.organizeIds,
@@ -289,7 +296,6 @@ export class DsTiemNangComponent implements OnInit {
   }
   ngOnInit() {
     this.getReRound();
-    this.load();
 
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
@@ -299,8 +305,6 @@ export class DsTiemNangComponent implements OnInit {
     ];
     this.getJobTitles();
     this.getOrgRoots();
-    this.getObjectList();
-    this.getStatus();
     this.getVacancyPage();
   }
 
@@ -320,21 +324,6 @@ export class DsTiemNangComponent implements OnInit {
     })
   }
 
-  getObjectList() {
-    const queryParams = queryString.stringify({ objKey: 'positiontype_group' });
-    this.apiService.getCustObjectListNew(false, queryParams).subscribe(results => {
-      if (results.status === 'success') {
-        this.positiontypes = results.data.map(d => {
-          return {
-            label: d.objName,
-            value: d.objCode
-          }
-        });
-        this.positiontypes = [{ label: 'Tất cả', value: null }, ...this.positiontypes]
-      }
-    })
-  }
-
   listOrgRoots = [];
   positiontypes = [];
   listJobTitles = [];
@@ -349,22 +338,6 @@ export class DsTiemNangComponent implements OnInit {
           }
         });
         this.listJobTitles = [{ label: 'Tất cả', value: null }, ...this.listJobTitles]
-      }
-    })
-  }
-
-  listStatus = []
-  getStatus() {
-    const queryParams = queryString.stringify({ objKey: 'recruitment_round' });
-    this.apiService.getCustObjectListNew(false, queryParams).subscribe(results => {
-      if (results.status === 'success') {
-        this.listStatus = results.data.map(d => {
-          return {
-            label: d.objName,
-            value: d.objValue
-          }
-        });
-        this.listStatus = [{ label: 'Tất cả', value: null }, ...this.listStatus];
       }
     })
   }
@@ -423,6 +396,83 @@ export class DsTiemNangComponent implements OnInit {
           }
         });
       },
+    });
+  }
+
+  listViewsFilter = [];
+  cloneListViewsFilter = [];
+  detailInfoFilter = null;
+  optionsButonFilter = [
+    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm height-56 addNew', icon: 'pi pi-search' },
+    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger height-56 addNew', icon: 'pi pi-times' },
+  ];
+  //filter 
+  getFilter() {
+    this.apiService.getFilter('/api/v1/recruitment/GetCandidateFilter').subscribe(results => {
+      if (results.status === 'success') {
+        const listViews = cloneDeep(results.data.group_fields);
+        this.cloneListViewsFilter = cloneDeep(listViews);
+        this.listViewsFilter = [...listViews];
+        const params = getParamString(listViews)
+        this.query = { ...this.query, ...params };
+        this.load();
+        this.detailInfoFilter = results.data;
+      }
+    });
+  }
+
+  filterLoad(event) {
+    this.query = { ...this.query, ...event.data };
+    this.load();
+  }
+
+  close(event) {
+    const listViews = cloneDeep(this.cloneListViewsFilter);
+    this.listViewsFilter = cloneDeep(listViews);
+    const params = getParamString(listViews)
+    this.query = { ...this.query, ...params };
+    this.load();
+  }
+
+  showFilter() {
+    const ref = this.dialogService.open(FormFilterComponent, {
+      header: 'Tìm kiếm nâng cao',
+      width: '40%',
+      contentStyle: "",
+      data: {
+        listViews: this.listViewsFilter,
+        detailInfoFilter: this.detailInfoFilter,
+        buttons: this.optionsButonFilter
+      }
+    });
+
+    ref.onClose.subscribe((event: any) => {
+      if (event) {
+        this.listViewsFilter = cloneDeep(event.listViewsFilter);
+        if (event.type === 'Search') {
+          this.query = { ...this.query, ...event.data };
+          this.load();
+        } else if (event.type === 'CauHinh') {
+          this.apiService.getFilter('/api/v1/recruitment/GetCandidateFilter').subscribe(results => {
+            if (results.status === 'success') {
+              const listViews = cloneDeep(results.data.group_fields);
+              this.listViewsFilter = [...listViews];
+              const params = getParamString(listViews)
+              this.query = { ...this.query, ...params };
+              this.load();
+              this.detailInfoFilter = results.data;
+              this.showFilter()
+            }
+          });
+
+        } else if (event.type === 'Reset') {
+          const listViews = cloneDeep(this.cloneListViewsFilter);
+          this.listViewsFilter = cloneDeep(listViews);
+          const params = getParamString(listViews)
+          this.query = { ...this.query, ...params };
+          this.load();
+        }
+      }
     });
   }
 

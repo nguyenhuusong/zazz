@@ -132,7 +132,7 @@ export class QtThayDoiLuongComponent implements OnInit {
     filter: '',
     gridWidth: 0,
     offSet: 0,
-    pageSize: 15,
+    pageSize: 20,
   }
 
   titleForm = {
@@ -156,7 +156,7 @@ export class QtThayDoiLuongComponent implements OnInit {
       filter: '',
       gridWidth: 0,
       offSet: 0,
-      pageSize: 15,
+      pageSize: 20,
     }
     this.load();
     this.FnEvent();
@@ -588,7 +588,7 @@ export class QtThayDoiLuongComponent implements OnInit {
     this.loadjs++
     if (this.loadjs === 5) {
       if (b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight + 25;
+        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight +10;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       } else {

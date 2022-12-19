@@ -96,7 +96,7 @@ export class XuLyHopDongComponent implements OnInit {
   query: any = {
     filter: '',
     offSet: 0,
-    pageSize: 15,
+    pageSize: 20,
     organizeId: null,
     orgId: null,
     contract_st: null,
@@ -136,7 +136,7 @@ export class XuLyHopDongComponent implements OnInit {
     this.query = {
       filter: '',
       offSet: 0,
-      pageSize: 15,
+      pageSize: 20,
       organizeId: null,
       orgId: null,
       contract_st: null,

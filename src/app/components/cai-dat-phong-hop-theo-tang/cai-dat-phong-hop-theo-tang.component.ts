@@ -104,7 +104,7 @@ export class CaiDatPhongHopTheoTangComponent implements OnInit {
       filter: '',
       gridWidth: '',
       offSet: 0,
-      pageSize: 15,
+      pageSize: 20,
       // organizeId: ''
     };
   }

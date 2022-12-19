@@ -36,7 +36,7 @@ export class ThietBiThangMayComponent implements OnInit {
       buildZone: '',
       buildCd: '',
       floorNumber: null,
-      pageSize: 15,
+      pageSize: 20,
       offset: 0,
       organizeIds: '',
     };

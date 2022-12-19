@@ -77,7 +77,7 @@ export class ChucVuComponent implements OnInit, AfterViewChecked {
   query = {
     filter: '',
     offSet: 0,
-    pageSize: 15,
+    pageSize: 20,
   }
   totalRecord = 0;
   DriverId = 0;
@@ -99,7 +99,7 @@ export class ChucVuComponent implements OnInit, AfterViewChecked {
     this.query = {
       filter: '',
       offSet: 0,
-      pageSize: 15,
+      pageSize: 20,
     }
     this.load();
   }
@@ -114,7 +114,7 @@ export class ChucVuComponent implements OnInit, AfterViewChecked {
     this.loadjs++
     if (this.loadjs === 5) {
       if (b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight + 25;
+        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight +10;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       } else {

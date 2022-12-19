@@ -83,7 +83,7 @@ export class ThamSoChungListComponent implements OnInit {
   query = {
     filter: '',
     offSet: 0,
-    pageSize: 15,
+    pageSize: 20,
     gridWidth: 1550,
   }
   totalRecord = 0;
@@ -111,7 +111,7 @@ detailInfoFilter = null;
     this.query = {
       filter: '',
       offSet: 0,
-      pageSize: 15,
+      pageSize: 20,
       gridWidth: 1550,
     }
     this.load();
@@ -163,7 +163,7 @@ detailInfoFilter = null;
     this.loadjs++
     if (this.loadjs === 5) {
       if (b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight + 25;
+        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight +10;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       } else {

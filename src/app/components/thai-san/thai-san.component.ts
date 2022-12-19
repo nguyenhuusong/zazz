@@ -77,7 +77,7 @@ export class ThaiSanComponent implements OnInit, AfterViewChecked {
   query = {
     filter: '',
     offSet: 0,
-    pageSize: 15,
+    pageSize: 20,
   }
   totalRecord = 0;
   DriverId = 0;
@@ -119,7 +119,7 @@ export class ThaiSanComponent implements OnInit, AfterViewChecked {
     this.query = {
       filter: '',
       offSet: 0,
-      pageSize: 15,
+      pageSize: 20,
     }
     this.load();
   }

@@ -35,7 +35,7 @@ export class BieuMauComponent implements OnInit, OnDestroy {
   query = {
     filter: '',
     offSet: 0,
-    pageSize: 15,
+    pageSize: 20,
   };
   cols: any[];
   totalRecord = 0;
@@ -501,8 +501,9 @@ export class BieuMauComponent implements OnInit, OnDestroy {
   }
 
   handleChange(event) {
-    this.indexTab = event.index
-    this.FnEvent()
+    this.indexTab = event.index;
+    this.load();
+    this.FnEvent();
   }
 
   listViews = []

@@ -46,7 +46,7 @@ export class CsThueThuNhapComponent implements OnInit, AfterViewChecked {
   query = {
     filter: '',
     offSet: 0,
-    pageSize: 15,
+    pageSize: 20,
   };
   totalRecord = 0;
   countRecord: any = {
@@ -111,7 +111,7 @@ detailInfoFilter = null;
     this.query = {
       filter: '',
       offSet: 0,
-      pageSize: 15,
+      pageSize: 20,
     };
   }
 
@@ -307,7 +307,7 @@ detailInfoFilter = null;
     this.loadjs ++ 
     if (this.loadjs === 5) {
       if(b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight + 25;
+        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight +10;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       }else {

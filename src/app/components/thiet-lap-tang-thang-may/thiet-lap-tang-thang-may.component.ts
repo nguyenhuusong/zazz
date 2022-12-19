@@ -77,7 +77,7 @@ export class ThietLapTangThangMayComponent implements OnInit {
     projectCd: '',
     buildZone: '',
     buildCd: '',
-    pageSize: 15,
+    pageSize: 20,
     offset: 0
   };
   load() {

@@ -101,7 +101,7 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
   query: any = {
     filter: '',
     offSet: 0,
-    pageSize: 15,
+    pageSize: 20,
   }
   totalRecord = 0;
   DriverId = 0;
@@ -123,7 +123,7 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
     this.query = {
       filter: '',
       offSet: 0,
-      pageSize: 15,
+      pageSize: 20,
     }
     if (this.companies.length > 0) {
       this.query.companyIds = this.companies[0].value;
@@ -298,11 +298,11 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
     this.loadjs++
     if (this.loadjs === 5) {
       if (b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight + 25;
+        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight +10;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       } else {
-        const totalHeight = a.clientHeight + d.clientHeight + e.clientHeight + 25;
+        const totalHeight = a.clientHeight + d.clientHeight + e.clientHeight +10;
         this.heightGrid = window.innerHeight - totalHeight
         this.loadjs = 0;
       }

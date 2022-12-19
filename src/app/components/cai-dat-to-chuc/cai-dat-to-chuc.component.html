@@ -102,7 +102,7 @@
                 trên tổng số
                 {{ countRecord.totalRecord }} kết quả</span>
             <p-paginator [rows]="query.pageSize" [totalRecords]="countRecord.totalRecord" [first]="first"
-                (onPageChange)="paginate($event)" [rowsPerPageOptions]="[15,30,45,100,200,{ showAll: 'ALL' }]">
+                (onPageChange)="paginate($event)" [rowsPerPageOptions]="[20,40,60,100,200,{ showAll: 'ALL' }]">
             </p-paginator>
         </div>
       </div>

@@ -72,7 +72,7 @@ export class NsCauHinhMailComponent implements OnInit {
     query = {
       filter: '',
       offSet: 0,
-      pageSize: 15,
+      pageSize: 20,
       organizeIds: '',
     }
 
@@ -80,7 +80,7 @@ export class NsCauHinhMailComponent implements OnInit {
     this.query = {
       filter: '',
       offSet: 0,
-      pageSize: 15,
+      pageSize: 20,
       organizeIds: this.query.organizeIds
     }
     this.load();

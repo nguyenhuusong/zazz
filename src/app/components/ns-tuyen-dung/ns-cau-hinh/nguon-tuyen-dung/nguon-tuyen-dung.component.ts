@@ -63,7 +63,7 @@ export class NguonTuyenDungComponent implements OnInit {
     filter: '',
     gridWidth: 0,
     offSet: 0,
-    pageSize: 15,
+    pageSize: 20,
     organizeIds: '',
   }
 
@@ -72,7 +72,7 @@ export class NguonTuyenDungComponent implements OnInit {
       filter: '',
       gridWidth: 0,
       offSet: 0,
-      pageSize: 15,
+      pageSize: 20,
       organizeId: this.query.organizeIds,
       organizeIds: this.query.organizeIds
     }

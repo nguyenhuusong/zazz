@@ -17,11 +17,11 @@
                             </span>
                     </div>
                 </div>
-                <p-button styleClass="reloadBtn hidden" (click)="cancel()">
+                <!-- <p-button styleClass="reloadBtn hidden" (click)="cancel()">
                     <svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M8.89128 1.80952C5.00096 1.80952 1.81817 5.01267 1.81817 9C1.81817 12.9873 5.00096 16.1905 8.89128 16.1905C11.1061 16.1905 13.087 15.1561 14.3877 13.526C14.7 13.1346 15.2718 13.0693 15.665 13.3801C16.0582 13.6908 16.1238 14.2599 15.8116 14.6513C14.1855 16.6891 11.6915 18 8.89128 18C3.9647 18 0 13.9544 0 9C0 4.04557 3.9647 0 8.89128 0C12.8587 0 16.2024 2.62369 17.3539 6.23284L18.2926 4.51929C18.5329 4.08057 19.0851 3.91882 19.5259 4.15801C19.9667 4.39719 20.1292 4.94675 19.8889 5.38547L17.6716 9.43309C17.5446 9.66497 17.3221 9.83003 17.0626 9.88497C16.803 9.93991 16.5323 9.87923 16.3215 9.71886L12.7738 7.02045C12.3749 6.71703 12.2987 6.14921 12.6035 5.75219C12.9084 5.35518 13.4789 5.2793 13.8778 5.58273L15.6726 6.94784C14.8021 3.96847 12.0851 1.80952 8.89128 1.80952Z" fill="#BDC4D8"/>
                     </svg>
-                </p-button>
+                </p-button> -->
                 <p-button (click)="op.toggle($event)" 
                     styleClass="p-button-sm height-56 ">
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -34,7 +34,7 @@
                 <p-button 
                     [disabled]="dataRowSelected.length > 0 ? false : true"
                     styleClass="p-button-sm height-56" label="Chuyển vòng" 
-                    (click)="recru.toggle($event)" 
+                    (onClick)="recru.toggle($event)" 
                     [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetCandidatePage.url, action: ACTIONS.ADD}">
                 </p-button>
                 <p-button styleClass="p-button-sm height-56" (click)="cauhinh()">
@@ -59,7 +59,7 @@
                     trên tổng số
                     {{ countRecord.totalRecord }} kết quả</span>
                 <p-paginator [rows]="query.pageSize" [totalRecords]="countRecord.totalRecord" [first]="first"
-                    (onPageChange)="paginate($event)" [rowsPerPageOptions]="[15,30,45,100,200,{ showAll: 'ALL' }]">
+                    (onPageChange)="paginate($event)" [rowsPerPageOptions]="[20,40,60,100,200,{ showAll: 'ALL' }]">
                 </p-paginator>
             </div>
         </div>
@@ -103,58 +103,8 @@
     </ng-template>
 </p-overlayPanel>
 
-
-<p-overlayPanel #op [style]="{width: '700px'}" styleClass="advance-seach">
+<p-overlayPanel #op [dismissable]="false" appendTo="body" >
     <ng-template pTemplate>
-        <div class="header-filter-search  grid">
-            <h3>Tìm kiếm nâng cao</h3>
-        </div>
-        <div class="header-filter-search grid mt-1">
-            <div class="icon col-12 pl-0" style="display: flex; flex-wrap: wrap;">
-                <div class="col-6">
-                    <div class="field-group select" [ngClass]=" query.can_st ? 'valid' : 'invalid' ">
-                        <label for="">Vòng tuyển dụng</label>
-                        <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
-                            [options]="listStatus" [(ngModel)]="query.can_st" name="can_st" [filter]="true">
-                            <ng-template let-item pTemplate="selectedItem">
-                                <span>{{item.label}}</span>
-                            </ng-template>
-                            <ng-template let-car pTemplate="item">
-                                <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                                    <div>{{car.label}}
-                                    </div>
-                                </div>
-                            </ng-template>
-                        </p-dropdown>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="field-group select" [ngClass]=" query.vacancyId ? 'valid' : 'invalid' ">
-                        <label for="">Vị trí tuyển dụng </label>
-                        <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
-                            [options]="listVacancy" [(ngModel)]="query.vacancyId" name="vacancyId" [filter]="true">
-                            <ng-template let-item pTemplate="selectedItem">
-                                <span>{{item.label}}</span>
-                            </ng-template>
-                            <ng-template let-car pTemplate="item">
-                                <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                                    <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}
-                                    </div>
-                                </div>
-                            </ng-template>
-                        </p-dropdown>
-                    </div>
-                </div>
-            </div>
-            <div class="input-group icon col-12 select-default text-right">
-                <label for="" style="visibility: hidden;">Classid <span class="pi pi-info-circle"
-                        style="font-size: 13px;color: orange;"></span></label>
-                <p-button label="Tìm kiếm" styleClass="mr-1" icon="pi pi-search" (click)="load()">
-                </p-button>
-                <p-button label="Làm mới" icon="pi pi-times" (click)="cancel()"
-                    styleClass="p-button-secondary">
-                </p-button>
-            </div>
-        </div>
+        <app-form-filter *ngIf="listViewsFilter.length > 0" [listFields]="listViewsFilter" [detailInfoFilter]="detailInfoFilter" [buttonsFilters] ="optionsButonFilter" (callback)="filterLoad($event)" (close)="op.hide()"></app-form-filter>
     </ng-template>
 </p-overlayPanel>

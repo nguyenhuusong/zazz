@@ -66,7 +66,7 @@ export class FormFilterComponent implements OnInit, OnChanges {
   query = {
     filter: '',
     offset: 0,
-    pageSize: 15,
+    pageSize: 20,
     gridWidth: 0
   };
   @Output() avatarUrl = new EventEmitter<any>();

@@ -58,7 +58,7 @@ export class PhepBuComponent implements OnInit, AfterViewChecked {
   query = {
     filter: '',
     offSet: 0,
-    pageSize: 15,
+    pageSize: 20,
     year: moment().year(),
     month: moment().month() + 1,
     organizeId: '',
@@ -95,7 +95,7 @@ export class PhepBuComponent implements OnInit, AfterViewChecked {
     this.loadjs++
     if (this.loadjs === 5) {
       if (b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + d.clientHeight + e.clientHeight + 25;
+        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + d.clientHeight + e.clientHeight +10;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       } else {
@@ -108,7 +108,7 @@ export class PhepBuComponent implements OnInit, AfterViewChecked {
     this.query = {
       filter: '',
       offSet: 0,
-      pageSize: 15,
+      pageSize: 20,
       year: moment().year(),
       month: moment().month(),
       organizeId: this.query.organizeIds,

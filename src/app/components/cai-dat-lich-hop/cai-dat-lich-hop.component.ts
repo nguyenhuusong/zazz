@@ -50,7 +50,7 @@ export class CaiDatLichHopComponent implements OnInit {
       filter: '',
       gridWidth: '',
       offSet: 0,
-      pageSize: 15,
+      pageSize: 20,
   }
   statusRoom = [
     {
@@ -128,11 +128,11 @@ export class CaiDatLichHopComponent implements OnInit {
     this.loadjs ++ 
     if (this.loadjs === 5) {
       if(b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight + 25;
+        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight +10;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       }else {
-        const totalHeight = a.clientHeight + d.clientHeight + e.clientHeight + 25;
+        const totalHeight = a.clientHeight + d.clientHeight + e.clientHeight +10;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
         this.loadjs = 0;
@@ -145,7 +145,7 @@ export class CaiDatLichHopComponent implements OnInit {
       filter: '',
       gridWidth: '',
       offSet: 0,
-      pageSize: 15,
+      pageSize: 20,
     };
   }
   			

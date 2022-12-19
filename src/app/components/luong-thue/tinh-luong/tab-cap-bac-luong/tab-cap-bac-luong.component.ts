@@ -62,7 +62,7 @@ import { fromEvent } from 'rxjs';
       filter: '',
       gridWidth: 0,
       offSet: 0,
-      pageSize: 15,
+      pageSize: 20,
       organizeIds: '',
     }
   
@@ -71,7 +71,7 @@ import { fromEvent } from 'rxjs';
         filter: '',
         gridWidth: 0,
         offSet: 0,
-        pageSize: 15,
+        pageSize: 20,
         organizeIds: this.query.organizeIds
       }
       this.load();

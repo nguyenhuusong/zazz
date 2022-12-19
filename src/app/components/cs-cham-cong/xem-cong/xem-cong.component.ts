@@ -46,7 +46,7 @@ export class XemCongComponent implements OnInit, OnDestroy {
     orgId: '',
     filter: '',
     organizeId: '',
-    pageSize: 15,
+    pageSize: 20,
     fromdate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).add(-1,'months').format()),
     todate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).format()),
     offSet: 0,
@@ -181,7 +181,7 @@ export class XemCongComponent implements OnInit, OnDestroy {
       orgId: '',
       filter: '',
       organizeId: '',
-      pageSize: 15,
+      pageSize: 20,
       fromdate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).add(-1,'months').format()),
       todate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).format()),
       offSet: 0,
@@ -208,7 +208,7 @@ export class XemCongComponent implements OnInit, OnDestroy {
     this.loadjs++
     if (this.loadjs === 5) {
       if (b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + d.clientHeight + e.clientHeight + 25;
+        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + d.clientHeight + e.clientHeight +10;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       } else {
