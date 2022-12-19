@@ -3315,14 +3315,17 @@ div.p-organizationchart {
                 }
             }
         }
-        &.p-steps-current{
-            &.active{
+        &.remove-active{
+            .p-steps-number{
+                text-indent: 0;
+                background: #ccc !important;
+                color: #fff;
                 &::after{
-                    border-top: 2px solid rgba(0, 0, 0, 0.12);
+                    background: none;
                 }
             }
         }
-        &.active{
+        &.active, &.remove-active{
             .p-steps-number {
                 // color: #4C97E4;
                 // background: #EBFAEF;
@@ -3359,6 +3362,14 @@ div.p-organizationchart {
                 border-top: 2px solid #34C759;
             }
             &.active-confirm{
+                &:before{
+                    border-top: 2px solid #34C759;
+                }
+                &::after{
+                    border-top: 2px solid #34C759;
+                }
+            }
+            &.remove-active-confirm{
                 &:before{
                     border-top: 2px solid rgba(0, 0, 0, 0.12);
                 }
