@@ -6087,12 +6087,14 @@ app-thong-tin-ca-nhan-edit-detail{
     padding: 8px 7px !important;
   }
 .box-item{
-    padding: 15px !important;
-    border: 1px solid #dfdfdf;
-    border-radius: 4px;
-    margin-bottom: 15px;
-    padding-bottom: 0 !important;
-    box-shadow: 1px 1px 5px #cccccc47;
+    .border-section{
+        padding: 15px !important;
+        border: 1px solid #dfdfdf;
+        border-radius: 4px;
+        margin-bottom: 15px;
+        padding-bottom: 0 !important;
+        box-shadow: 1px 1px 5px #cccccc47;
+    }
 }
 p-button button.p-button-sm{
     border: none

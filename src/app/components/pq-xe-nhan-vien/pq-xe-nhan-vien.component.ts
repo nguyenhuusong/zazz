@@ -17,6 +17,7 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
 import { fromEvent } from 'rxjs';
+import { stringify } from 'query-string';
 declare var jQuery: any;
 
 @Component({
@@ -27,7 +28,11 @@ declare var jQuery: any;
 export class PqXeNhanVienComponent implements OnInit {
   public modules: Module[] = AllModules;
   MENUACTIONROLEAPI = MENUACTIONROLEAPI;
-  ACTIONS = ACTIONS
+  ACTIONS = ACTIONS;
+  optionsButon = [
+    { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
+    { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check'  }
+  ]
 
   public agGridFn = AgGridFn;
   constructor(
@@ -132,6 +137,11 @@ detailInfoFilter = null;
     { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm height-56 addNew', icon: 'pi pi-search' },
     { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger height-56 addNew', icon: 'pi pi-times' },
   ];
+
+  
+  detailInfo = null;
+  listViews = [];
+  isDetailVehic = false;
   ngOnInit(): void {
     this.itemsBreadcrumb = [
       { label: 'Trang chủ', routerLink: '/home' },
@@ -227,6 +237,7 @@ detailInfoFilter = null;
     this.spinner.show();
     const query = { ...this.query };
     const queryParams = queryString.stringify(query);
+    this.initGrid();
     this.apiService.getEmployeeVehiclePage(queryParams).subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
@@ -234,7 +245,6 @@ detailInfoFilter = null;
         if (this.query.offSet === 0) {
           this.gridflexs = results.data.gridflexs;
         }
-        this.initGrid();
         this.countRecord.totalRecord = results.data.dataList.recordsTotal;
         this.countRecord.totalRecord = results.data.dataList.recordsTotal;
         this.countRecord.currentRecordStart = results.data.dataList.recordsTotal === 0 ? this.query.offSet = 0 : this.query.offSet + 1;
@@ -267,7 +277,7 @@ detailInfoFilter = null;
         },
         {
           onClick: this.editVehicleCard.bind(this),
-          label: 'Sửa xe',
+          label: 'Xem chi tiết',
           icon: 'fa fa-edit',
           class: 'btn-primary mr5',
           hide: CheckHideAction(MENUACTIONROLEAPI.GetEmployeeVehiclePage.url, ACTIONS.VIEW)
@@ -378,7 +388,8 @@ detailInfoFilter = null;
         cellRendererParams: (params: any) => this.showButtons(params),
         checkboxSelection: false,
         field: 'checkbox'
-      }]
+      },
+    ]
   }
 
   onGridReady(params): void {
@@ -474,7 +485,7 @@ detailInfoFilter = null;
   // }
 
   editVehicleCard(event): void {
-    console.log('event event event event', event)
+    this.getEmpVehicleInfo(event.event.rowData.cardVehicleId);
     const cardVehicleId = event.rowData.cardVehicleId;
     this.modelTM.imageLinks = cloneDeep(this.imageLinksCard);
     if (cardVehicleId === null || cardVehicleId === 0) {
@@ -750,8 +761,9 @@ detailInfoFilter = null;
   }
 
   addVehicleCard(): void {
-    this.modelTM.type = 1;
+    // this.getEmpVehicleInfo();
     // this.modelTM.organizeId =  '';
+    this.modelTM.type = 1;
     this.modelTM.cardVehicleId = 0;
     this.modelTM.vehicleNoTM = '';
     this.modelTM.vehicleNameTM = '';
@@ -764,10 +776,48 @@ detailInfoFilter = null;
     this.modelTM.vehicleColorTM = '';
     this.modelTM.noteTM = '';
     this.modelTM.imageLinks = cloneDeep(this.imageLinksCard);
+
   }
 
-  getEmployeeVehicleInfo() {
-    
+  getEmpVehicleInfo(cardVehicleId = null) {
+    this.isDetailVehic = true;
+    this.apiService.getEmpVehicleInfo(stringify({cardVehicleId: cardVehicleId})).subscribe((results: any) => { 
+      if (results.status === 'success') {
+        this.listViews = [...results.data.group_fields];
+        this.detailInfo = results.data;
+      }
+    })
+  }
+
+  setEmpVehicleInfo(data) {
+    this.spinner.show();
+    const params = {
+      ...this.detailInfo, group_fields: data
+    }
+    this.apiService.setEmployeeVehicleInfo(params)
+      .subscribe((results: any) => {
+        if (results.status === 'success') {
+          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
+          this.isDetailVehic = false;
+          this.spinner.hide();
+        } else {
+          this.messageService.add({
+            severity: 'error', summary: 'Thông báo',
+            detail: results.message
+          });
+          this.spinner.hide();
+        }
+      }), error => {
+        this.spinner.hide();
+      };
+  }
+
+  quaylai(data) {
+    this.isDetailVehic = false;
+  }
+
+  closeDetailVehic() {
+    this.isDetailVehic = false;
   }
 
   checkEnddateVehicleCard(isSend): void {
@@ -924,7 +974,7 @@ showFilter() {
           this.addVehicleCard()
         });
       }
-    }, 2000);
+    }, 4000);
   }
 
 }

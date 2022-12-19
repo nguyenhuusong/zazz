@@ -2,55 +2,57 @@
     <div class="grid">
         <ng-container *ngFor="let group of dataView; let idx = index">
             <!-- //box-item -->
-            <div class="{{group.group_column}} border-section">
-                <p-panel>
-                    <ng-template pTemplate="header">
-                        <div class="grid d-flex justify-content-between" style="width: 100%">
-                            <h3 class="title-section">{{group.group_name}}</h3>
-                            <span *ngIf="group.group_name !== 'Giấy tờ'" class="pi pi-cog cursor-pointer" (click)="CauHinh()"></span>
-                            <!-- <p-button label="Thêm mới" icon="pi pi-plus" (click)="addEmpDependent()" styleClass="p-button-sm mr-1"></p-button> -->
+            <div class="{{group.group_column}} ">
+                <div class="border-section">
+                    <p-panel>
+                        <ng-template pTemplate="header">
+                            <div class="grid d-flex justify-content-between" style="width: 100%">
+                                <h3 class="title-section">{{group.group_name}}</h3>
+                                <span *ngIf="group.group_name !== 'Giấy tờ'" class="pi pi-cog cursor-pointer" (click)="CauHinh()"></span>
+                                <!-- <p-button label="Thêm mới" icon="pi pi-plus" (click)="addEmpDependent()" styleClass="p-button-sm mr-1"></p-button> -->
+                            </div>
+                        </ng-template>
+                        <div class="row" style="flex-wrap: wrap">
+                            <!-- <div class="col-md-2 avatar-c" *ngIf="isShowAvatar && detailInfo?.avatarUrl && idx === 0">
+                                <p-image
+                                    src="{{ detailInfo?.avatarUrl ? detailInfo?.avatarUrl : 'https://www.leviateair.com/wp-content/uploads/2017/01/No-Images.jpeg'}}"
+                                    [preview]="true" alt="Image" width="200">
+                                </p-image>
+                            </div> -->
+                            <div *ngFor="let element of group.fields;let i=index" 
+                            [hidden]="!element.isVisiable"
+                            [ngClass]="{'isEmpty': element.isEmpty, 'has-image': includeImage && element?.columnType === 'image', 'image-iam': element?.columnType === 'image'}" 
+                            class="{{element.columnClass}} ">
+                            <app-type-image [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element?.columnType === 'image'" (avatarUrlCallback)="avatarUrlCallback($event)"></app-type-image>
+                            <app-type-text [modelFields]="modelFields" [element]="element" [submit]="submit" *ngIf="element?.columnType === 'input'"></app-type-text>
+                            <app-type-select [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'khongDung'"></app-type-select> 
+                            <app-type-selectTree [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'selectTree' && element.isVisiable" [dataView]="dataView"></app-type-selectTree>
+                            <app-type-autocomplete [modelFields]="modelFields" [dataView]="dataView" [element]="element" *ngIf="element?.columnType === 'autocomplete'" [submit]="submit"></app-type-autocomplete>
+                            <app-type-selectTrees (emitTreeValue)="getValueTree($event)" [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'selectTrees' && element.isVisiable" [dataView]="dataView"></app-type-selectTrees>
+                            <app-type-dropdown [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'dropdown' || element.columnType === 'select'" [submit]="submit" [paramsObject]="paramsObject" [dataView]="dataView" (callback)="resetData($event)" (dataInfo)="getDataInfo($event)"></app-type-dropdown>
+                            <app-type-number [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'number'"></app-type-number>
+                            <app-type-currency [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'currency'"></app-type-currency>
+                            <app-type-checkbox  [dataView]="dataView" [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'checkbox'"></app-type-checkbox>
+                            <app-type-textarea [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'textarea'"></app-type-textarea>
+                            <app-type-datetime [modelFields]="modelFields" [submit]="submit" [element]="element" *ngIf="element.columnType === 'datetime'"></app-type-datetime>
+                            <app-type-datefulltime [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'datefulltime'"></app-type-datefulltime>
+                            <app-type-timeonly [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'timeonly'"></app-type-timeonly>
+                            <app-type-multiSelect  [element]="element" *ngIf="element.columnType === 'multiSelect'" [modelFields]="modelFields" [submit]="submit" [dataView]="dataView"></app-type-multiSelect>
+                            <app-type-markdown [element]="element" [modelMarkdow]="modelMarkdow" *ngIf="element.columnType === 'markdown'"></app-type-markdown>
+                            <app-type-checkboxList [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'checkboxList'"></app-type-checkboxList>
+                            <app-type-checkboxradiolist [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'checkboxradiolist'"></app-type-checkboxradiolist>
+                            <app-type-linkurl [element]="element" *ngIf="element.columnType === 'linkUrl'" [dataView]="dataView"></app-type-linkurl>
+                            <app-type-linkurl-drag [isUploadMultiple]="isUploadMultiple" [element]="element" *ngIf="element.columnType === 'linkUrlDrag'" (callback)="getFilesDrag($event)" [dataView]="dataView"></app-type-linkurl-drag>
+                            <app-type-members (searchMember)="memberGetQuery($event)" [element]="element" *ngIf="element.columnType === 'members'" [modelFields]="modelFields" [dataView]="dataView"></app-type-members>
+                            <app-type-chips (emitChipsValue)="emitChipsValue($event)" [element]="element" *ngIf="element.columnType === 'chips'" [modelFields]="modelFields" [dataView]="dataView"></app-type-chips>
+                            <app-type-listMch [element]="element" *ngIf="element.columnType === 'listMch'" [modelFields]="modelFields" [dataView]="dataView"></app-type-listMch>
+                            <app-type-roomImg [element]="element" *ngIf="element.columnType === 'roomImg'" [modelFields]="modelFields" [dataView]="dataView"></app-type-roomImg>
+                            <app-type-onOff [element]="element" *ngIf="element.columnType === 'onOff'" [modelFields]="modelFields" [dataView]="dataView"></app-type-onOff>
+                            <app-type-label [element]="element" *ngIf="element.columnType === 'label'" [modelFields]="modelFields" [dataView]="dataView"></app-type-label>
                         </div>
-                    </ng-template>
-                    <div class="row" style="flex-wrap: wrap">
-                        <!-- <div class="col-md-2 avatar-c" *ngIf="isShowAvatar && detailInfo?.avatarUrl && idx === 0">
-                            <p-image
-                                src="{{ detailInfo?.avatarUrl ? detailInfo?.avatarUrl : 'https://www.leviateair.com/wp-content/uploads/2017/01/No-Images.jpeg'}}"
-                                [preview]="true" alt="Image" width="200">
-                            </p-image>
-                        </div> -->
-                        <div *ngFor="let element of group.fields;let i=index" 
-                        [hidden]="!element.isVisiable"
-                        [ngClass]="{'isEmpty': element.isEmpty, 'has-image': includeImage && element?.columnType === 'image', 'image-iam': element?.columnType === 'image'}" 
-                        class="{{element.columnClass}} ">
-                        <app-type-image [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element?.columnType === 'image'" (avatarUrlCallback)="avatarUrlCallback($event)"></app-type-image>
-                        <app-type-text [modelFields]="modelFields" [element]="element" [submit]="submit" *ngIf="element?.columnType === 'input'"></app-type-text>
-                        <app-type-select [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'khongDung'"></app-type-select> 
-                        <app-type-selectTree [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'selectTree' && element.isVisiable" [dataView]="dataView"></app-type-selectTree>
-                        <app-type-autocomplete [modelFields]="modelFields" [dataView]="dataView" [element]="element" *ngIf="element?.columnType === 'autocomplete'" [submit]="submit"></app-type-autocomplete>
-                        <app-type-selectTrees (emitTreeValue)="getValueTree($event)" [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'selectTrees' && element.isVisiable" [dataView]="dataView"></app-type-selectTrees>
-                        <app-type-dropdown [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'dropdown' || element.columnType === 'select'" [submit]="submit" [paramsObject]="paramsObject" [dataView]="dataView" (callback)="resetData($event)" (dataInfo)="getDataInfo($event)"></app-type-dropdown>
-                        <app-type-number [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'number'"></app-type-number>
-                        <app-type-currency [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'currency'"></app-type-currency>
-                        <app-type-checkbox  [dataView]="dataView" [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'checkbox'"></app-type-checkbox>
-                        <app-type-textarea [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'textarea'"></app-type-textarea>
-                        <app-type-datetime [modelFields]="modelFields" [submit]="submit" [element]="element" *ngIf="element.columnType === 'datetime'"></app-type-datetime>
-                        <app-type-datefulltime [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'datefulltime'"></app-type-datefulltime>
-                        <app-type-timeonly [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'timeonly'"></app-type-timeonly>
-                        <app-type-multiSelect  [element]="element" *ngIf="element.columnType === 'multiSelect'" [modelFields]="modelFields" [submit]="submit" [dataView]="dataView"></app-type-multiSelect>
-                        <app-type-markdown [element]="element" [modelMarkdow]="modelMarkdow" *ngIf="element.columnType === 'markdown'"></app-type-markdown>
-                        <app-type-checkboxList [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'checkboxList'"></app-type-checkboxList>
-                        <app-type-checkboxradiolist [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'checkboxradiolist'"></app-type-checkboxradiolist>
-                        <app-type-linkurl [element]="element" *ngIf="element.columnType === 'linkUrl'" [dataView]="dataView"></app-type-linkurl>
-                        <app-type-linkurl-drag [isUploadMultiple]="isUploadMultiple" [element]="element" *ngIf="element.columnType === 'linkUrlDrag'" (callback)="getFilesDrag($event)" [dataView]="dataView"></app-type-linkurl-drag>
-                        <app-type-members (searchMember)="memberGetQuery($event)" [element]="element" *ngIf="element.columnType === 'members'" [modelFields]="modelFields" [dataView]="dataView"></app-type-members>
-                        <app-type-chips (emitChipsValue)="emitChipsValue($event)" [element]="element" *ngIf="element.columnType === 'chips'" [modelFields]="modelFields" [dataView]="dataView"></app-type-chips>
-                        <app-type-listMch [element]="element" *ngIf="element.columnType === 'listMch'" [modelFields]="modelFields" [dataView]="dataView"></app-type-listMch>
-                        <app-type-roomImg [element]="element" *ngIf="element.columnType === 'roomImg'" [modelFields]="modelFields" [dataView]="dataView"></app-type-roomImg>
-                        <app-type-onOff [element]="element" *ngIf="element.columnType === 'onOff'" [modelFields]="modelFields" [dataView]="dataView"></app-type-onOff>
-                        <app-type-label [element]="element" *ngIf="element.columnType === 'label'" [modelFields]="modelFields" [dataView]="dataView"></app-type-label>
-                    </div>
-                    </div>
-                </p-panel>
+                        </div>
+                    </p-panel>
+                </div>
             </div>
         </ng-container>
     </div>
