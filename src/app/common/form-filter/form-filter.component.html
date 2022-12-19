@@ -33,9 +33,9 @@
                 </div>
             </ng-container>
         </div>
-        <div class="button-filter text-right">
+        <div class="button-filter text-right d-flex gap-12">
             <ng-container *ngFor="let button of buttonsFilters">
-                <p-button label="{{button.label}}" (onClick)="onChangeButtonEdit(button.value)" [disabled]="button?.disabled" icon="{{button?.icon ? button?.icon : 'pi pi-plus'}}" styleClass="p-button-sm {{button?.class ? button?.class : ''}} mr-1"></p-button>
+                <p-button label="{{button.label}}" (onClick)="onChangeButtonEdit(button.value)" [disabled]="button?.disabled" icon="{{button?.icon ? button?.icon : 'pi pi-plus'}}" styleClass="p-button-sm {{button?.class ? button?.class : ''}}"></p-button>
             </ng-container>
             <!-- <p-button label="Cấu hình" styleClass="p-button-sm height-56 addNew" icon="pi pi-cog" (click)="CauHinh()"></p-button> -->
             <p-button label="Đóng" styleClass="p-button-sm p-button-secondary bg-secondary height-56 addNew ml-1" icon="pi pi-times" (click)="cancel($event)"></p-button>

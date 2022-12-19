@@ -1861,7 +1861,7 @@ button{
             width: auto;
         }
         .pi{
-            height: 12px;
+            height: 14px;
             font-size: 100%;
         }
     }
@@ -4521,7 +4521,7 @@ p-dialog{
                 font-weight: 500;
             }
             button{
-                height: 28px;
+                height: 30px;
             }
         }
     }
@@ -6179,5 +6179,11 @@ app-form-filter{
                 }
             }
         }
+    }
+}
+
+.button-filter{
+    button{
+        margin-left: 0px !important;
     }
 }

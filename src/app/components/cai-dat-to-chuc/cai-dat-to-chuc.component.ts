@@ -575,6 +575,7 @@ export class CaiDatToChucComponent implements OnInit {
   rowSelected(event) {
     if(event.length>0){
       this.organizeIdsParam = event[0].orgId;
+      this.query.organizeIds = event[0].orgId;
     }else{
       this.organizeIdsParam = ''
     }
