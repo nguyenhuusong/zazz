@@ -148,7 +148,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
     filter: '',
     gridWidth: 0,
     offSet: 0,
-    pageSize: 15,
+    pageSize: 20,
   }
 
   titleForm = {
@@ -172,7 +172,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
       filter: '',
       gridWidth: 0,
       offSet: 0,
-      pageSize: 15,
+      pageSize: 20,
     }
     this.load();
   }
