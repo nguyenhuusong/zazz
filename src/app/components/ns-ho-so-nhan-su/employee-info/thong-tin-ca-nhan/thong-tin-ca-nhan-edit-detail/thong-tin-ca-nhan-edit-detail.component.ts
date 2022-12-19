@@ -55,10 +55,10 @@ export class ThongTinCaNhanEditDetailComponent implements OnInit {
 
         this.optionsButtonsView = [
           { label: '', value: 'BackPage', class: `p-button-secondary ${results.data.prev_st ? '' : 'hidden'}`, icon: 'pi pi-caret-left',  },
-          { label: '', value: 'Update', class: `btn-accept ${results.data.next_st ? '' : 'hidden'}`, icon: 'pi pi-caret-right' },
-          { label: 'Lưu tạm', value: 'SaveNhap', class: `btn-accept ${results.data.save_st ? '' : 'hidden'}`, icon: 'pi pi-caret-right' },
-          { label: 'Xác nhận', value: 'Submit', class: `btn-accept ${results.data.submit_st ? '' : 'hidden'}`, icon: 'pi pi-check' },
-          { label: 'Đóng', value: 'Close', class: `btn-danger`, icon: 'pi pi-times' }
+          { label: '', value: 'Update', class: `btn-accept ${results.data.next_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-caret-right' },
+          { label: 'Lưu tạm', value: 'SaveNhap', class: `btn-accept ${results.data.save_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-caret-right' },
+          { label: 'Xác nhận', value: 'Submit', class: `btn-accept ${results.data.submit_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
+          { label: 'Đóng', value: 'Close', class: `p-button-danger ml-1`, icon: 'pi pi-times' }
         ]
       };
     }, error => {
@@ -75,7 +75,6 @@ export class ThongTinCaNhanEditDetailComponent implements OnInit {
      this.cloneListViews = cloneDeep(this.listViews);
     this.listViews = [];
     this.callApiInfo(params, event.type)
-   
   }
 
   stepActivated(): void {
@@ -123,10 +122,10 @@ export class ThongTinCaNhanEditDetailComponent implements OnInit {
         }, 100);
         this.optionsButtonsView = [
           { label: '', value: 'BackPage', class: `p-button-secondary ${results.data.prev_st ? '' : 'hidden'}`, icon: 'pi pi-caret-left',  },
-          { label: '', value: 'Update', class: `btn-accept ${results.data.next_st ? '' : 'hidden'}`, icon: 'pi pi-caret-right' },
-          { label: 'Lưu tạm', value: 'SaveNhap', class: `btn-accept ${results.data.save_st ? '' : 'hidden'}`, icon: 'pi pi-caret-right' },
-          { label: 'Xác nhận', value: 'Submit', class: `btn-accept ${results.data.submit_st ? '' : 'hidden'}`, icon: 'pi pi-check' },
-          { label: 'Đóng', value: 'Close', class: `btn-danger`, icon: 'pi pi-times' }
+          { label: '', value: 'Update', class: `btn-accept ${results.data.next_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-caret-right' },
+          { label: 'Lưu tạm', value: 'SaveNhap', class: `btn-accept ${results.data.save_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-caret-right' },
+          { label: 'Xác nhận', value: 'Submit', class: `btn-accept ${results.data.submit_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
+          { label: 'Đóng', value: 'Close', class: `p-button-danger ml-1`, icon: 'pi pi-times' }
         ]
         this.spinner.hide();
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Cập nhật thông tin thành công' });

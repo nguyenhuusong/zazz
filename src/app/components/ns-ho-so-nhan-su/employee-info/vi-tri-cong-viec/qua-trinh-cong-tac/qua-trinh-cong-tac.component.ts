@@ -25,9 +25,11 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
     private confirmationService: ConfirmationService,
   ) { }
   optionsButtonsView = [
-    { label: 'Bỏ qua', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
-    { label: 'Lưu tạm', value: 'Update', class: 'btn-accept' },
-    { label: 'Tiếp tục', value: 'Update', class: 'btn-accept' }
+    { label: '', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-caret-left' },
+    { label: '', value: 'Update', class: 'btn-accept', icon: 'pi pi-caret-right' },
+    { label: 'Lưu tạm', value: 'SaveNhap', class: 'btn-accept', icon: 'pi pi-caret-right' },
+    { label: 'Xác nhận', value: 'Submit', class: 'btn-accept', icon: 'pi pi-check' },
+    { label: 'Đóng', value: 'Close', class: 'btn-accept', icon: 'pi pi-times' }
   ]
 
   ngAfterViewInit(): void {
@@ -160,26 +162,13 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
         setTimeout(() => {
           this.stepActivated();
         }, 100);
-        if (results.data.submit_st) {
-          this.optionsButtonsView = [
-            { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
-            { label: 'Trình duyệt', value: 'Submit', class: 'btn-accept' }
-          ]
-        } else {
-          if (results.data.save_st) {
-            this.optionsButtonsView = [
-              { label: results.data.flow_cur === 0 ? 'Hủy' : 'Quay lại', value: results.data.flow_cur === 0 ? 'Cancel' : 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
-              { label: 'Lưu tạm', value: 'SaveNhap', class: 'btn-accept' },
-              { label: 'Tiếp tục', value: 'Update', class: 'btn-accept' }
-            ]
-          } else {
-            this.optionsButtonsView = [
-              { label: results.data.flow_cur === 0 ? 'Hủy' : 'Quay lại', value: results.data.flow_cur === 0 ? 'Cancel' : 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
-              { label: 'Tiếp tục', value: 'Update', class: 'btn-accept' }
-            ]
-          }
-
-        }
+        this.optionsButtonsView =[
+          { label: '', value: 'BackPage', class: `p-button-secondary ${results.data.prev_st ? '' : 'hidden'}`, icon: 'pi pi-caret-left',  },
+          { label: '', value: 'Update', class: `btn-accept ${results.data.next_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-caret-right' },
+          { label: 'Lưu tạm', value: 'SaveNhap', class: `btn-accept ${results.data.save_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-caret-right' },
+          { label: 'Xác nhận', value: 'Submit', class: `btn-accept ${results.data.submit_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
+          { label: 'Đóng', value: 'Close', class: `p-button-danger ml-1`, icon: 'pi pi-times' }
+        ]
       };
     }, error => {
       this.spinner.hide();
@@ -190,15 +179,11 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
 
   callBackForm(event) {
     const params = {
-      ...this.dataDetailInfo, group_fields: event.data, flow_cur: this.flowCurrent
+      ...this.dataDetailInfo, group_fields: event.data, flow_cur: event.type === 'Submit' ?  this.flowCurrent : this.flowCurrent -1
     }
     this.closeListViewsDetail = cloneDeep(this.listViewsDetail);
     this.listViewsDetail = []
     this.callApiInfo(params, event.type)
-
-
-    
-  
   }
 
   stepActivated(): void {
@@ -225,7 +210,6 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
     this.closeListViewsDetail = cloneDeep(this.listViewsDetail);
     this.listViewsDetail = [];
     this.callApiInfo(params)
-
   }
 
   callApiInfo(params, type = 'Update') {
@@ -245,26 +229,13 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
         setTimeout(() => {
           this.stepActivated();
         }, 100);
-        if (results.data.submit_st) {
-          this.optionsButtonsView = [
-            { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
-            { label: 'Trình duyệt', value: 'Submit', class: 'btn-accept' }
-          ]
-        } else {
-          if (results.data.save_st) {
-            this.optionsButtonsView = [
-              { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
-              { label: 'Lưu tạm', value: 'Update', class: 'btn-accept' },
-              { label: 'Tiếp tục', value: 'Update', class: 'btn-accept' }
-            ]
-          } else {
-            this.optionsButtonsView = [
-              { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
-              { label: 'Tiếp tục', value: 'Update', class: 'btn-accept' }
-            ]
-          }
-
-        }
+        this.optionsButtonsView =[
+          { label: '', value: 'BackPage', class: `p-button-secondary ${results.data.prev_st ? '' : 'hidden'}`, icon: 'pi pi-caret-left',  },
+          { label: '', value: 'Update', class: `btn-accept ${results.data.next_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-caret-right' },
+          { label: 'Lưu tạm', value: 'SaveNhap', class: `btn-accept ${results.data.save_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-caret-right' },
+          { label: 'Xác nhận', value: 'Submit', class: `btn-accept ${results.data.submit_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
+          { label: 'Đóng', value: 'Close', class: `p-button-danger ml-1`, icon: 'pi pi-times' }
+        ]
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Cập nhật thông tin thành công' });
         if (type === 'Submit' || type === 'SaveNhap') {
           setTimeout(() => {
@@ -288,7 +259,7 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
       this.getDetail()
     } else if (data === 'BackPage') {
       this.listViewsDetail = [];
-      this.getDetail(this.flowCurrent - 2)
+      this.getDetail(this.flowCurrent === 1 ? this.flowCurrent: this.flowCurrent - 2)
     } else {
       this.displayFormEditDetail = false;
     }
