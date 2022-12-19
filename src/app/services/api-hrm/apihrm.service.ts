@@ -1266,6 +1266,10 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v2/cardvehicle/GetEmployeeVehicleInfo?` + queryParams, this.options);
   }
 
+  getEmpVehicleInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/cardvehicle/GetEmpVehicleInfo?` + queryParams, this.options);
+  }
+
   setEmployeeVehicleInfo(params): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/cardvehicle/SetEmployeeVehicleInfo`, params, this.options)
   }
