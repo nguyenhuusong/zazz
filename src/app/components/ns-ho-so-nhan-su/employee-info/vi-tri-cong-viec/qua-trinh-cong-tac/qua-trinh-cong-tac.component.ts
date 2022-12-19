@@ -135,19 +135,21 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
 
 
   activeIndex = 0;
+  flowCurrent = 0;
   steps = [];
-  getDetail(flow_st = null) {
+  getDetail(flow_cur = null) {
     this.FnEvent();
     this.spinner.show();
     this.dataDetailInfo = null;
     this.listViewsDetail = [];
-    const query = { empId: this.empId, processId: this.processId, flow_st: flow_st }
+    const query = { empId: this.empId, processId: this.processId, flow_cur: flow_cur }
     this.apiService.getEmpProcessInfo(queryString.stringify(query)).subscribe(results => {
       if (results.status === 'success') {
         this.spinner.hide();
         this.listViewsDetail = cloneDeep(results.data.group_fields || []);
         this.dataDetailInfo = results.data;
         this.activeIndex = results.data.flow_st;
+        this.flowCurrent = results.data.flow_cur + 1;
         this.steps = results.data?.flowStatuses?.map(d => {
           return {
             label: d.flow_name,
@@ -166,13 +168,13 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
         } else {
           if (results.data.save_st) {
             this.optionsButtonsView = [
-              { label: results.data.flow_st === 0 ? 'Hủy' : 'Quay lại', value: results.data.flow_st === 0 ? 'Cancel' : 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
+              { label: results.data.flow_cur === 0 ? 'Hủy' : 'Quay lại', value: results.data.flow_cur === 0 ? 'Cancel' : 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
               { label: 'Lưu tạm', value: 'SaveNhap', class: 'btn-accept' },
               { label: 'Tiếp tục', value: 'Update', class: 'btn-accept' }
             ]
           } else {
             this.optionsButtonsView = [
-              { label: results.data.flow_st === 0 ? 'Hủy' : 'Quay lại', value: results.data.flow_st === 0 ? 'Cancel' : 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
+              { label: results.data.flow_cur === 0 ? 'Hủy' : 'Quay lại', value: results.data.flow_cur === 0 ? 'Cancel' : 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
               { label: 'Tiếp tục', value: 'Update', class: 'btn-accept' }
             ]
           }
@@ -188,20 +190,26 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
 
   callBackForm(event) {
     const params = {
-      ...this.dataDetailInfo, group_fields: event.data, flow_st: this.activeIndex
+      ...this.dataDetailInfo, group_fields: event.data, flow_cur: this.flowCurrent
     }
     this.closeListViewsDetail = cloneDeep(this.listViewsDetail);
     this.listViewsDetail = []
     this.callApiInfo(params, event.type)
+
+
+    
   
   }
 
   stepActivated(): void {
+    console.log(this.flowCurrent)
     const stepS = document.querySelectorAll('.steps-contract .p-steps-item');
     if (stepS.length > 0) {
       for (let i = 0; i < this.steps.length; i++) {
-        if (i <= this.activeIndex) {
-          stepS[i].className += ' active';
+        if (i <= this.flowCurrent) {
+          console.log(i,i<= this.flowCurrent && i !== 0)
+          // console.log(i !== 1)
+          stepS[i].className +=  ` p-highlight ${i<= this.activeIndex ? 'active' : 'remove-active'} ${i<= this.flowCurrent && this.flowCurrent !== 1 ? 'active-confirm' : 'remove-active-confirm'}`;
         } else {
           stepS[i].classList.value = `p-steps-item icon-${i}`;
         }
@@ -212,7 +220,7 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
   closeListViewsDetail = []
   setDetail(data) {
     const params = {
-      ...this.dataDetailInfo, group_fields: data, flow_st: this.activeIndex + 1
+      ...this.dataDetailInfo, group_fields: data, flow_cur: this.flowCurrent
     };
     this.closeListViewsDetail = cloneDeep(this.listViewsDetail);
     this.listViewsDetail = [];
@@ -226,6 +234,7 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
         this.listViewsDetail = cloneDeep(results.data.group_fields || []);
         this.dataDetailInfo = results.data;
         this.activeIndex = results.data.flow_st;
+        this.flowCurrent = results.data.flow_cur + 1;
         this.getEmpProcessPageByEmpId();
         this.steps = results.data.flowStatuses.map(d => {
           return {
@@ -279,7 +288,7 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
       this.getDetail()
     } else if (data === 'BackPage') {
       this.listViewsDetail = [];
-      this.getDetail(this.activeIndex - 1)
+      this.getDetail(this.flowCurrent - 2)
     } else {
       this.displayFormEditDetail = false;
     }

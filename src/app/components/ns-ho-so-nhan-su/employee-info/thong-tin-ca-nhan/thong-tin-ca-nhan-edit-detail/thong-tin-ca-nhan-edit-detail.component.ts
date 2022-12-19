@@ -19,26 +19,30 @@ export class ThongTinCaNhanEditDetailComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private messageService: MessageService,
     ) { }
-    optionsButtonsView = [
-      { label: 'Bỏ qua', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
-      { label: 'Lưu tạm', value: 'Update', class: 'btn-accept' },
-      { label: 'Tiếp tục', value: 'Update', class: 'btn-accept' }
+   optionsButtonsView = [
+      { label: '', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-caret-left' },
+      { label: '', value: 'Update', class: 'btn-accept', icon: 'pi pi-caret-right' },
+      { label: 'Lưu tạm', value: 'SaveNhap', class: 'btn-accept', icon: 'pi pi-caret-right' },
+      { label: 'Xác nhận', value: 'Submit', class: 'btn-accept', icon: 'pi pi-check' },
+      { label: 'Đóng', value: 'Close', class: 'btn-accept', icon: 'pi pi-times' }
     ]
   ngOnInit(): void {
     this.getDetail();
   }
   activeIndex = 0;
+  flowCurrent = 0;
   steps = [];
-  getDetail(flow_st = null) {
+  getDetail(flow_cur = null) {
     this.spinner.show();
     this.detailInfo = null;
-    const query = { empId: this.empId, edit_is: true, flow_st: flow_st }
+    const query = { empId: this.empId, edit_is: true, flow_cur: flow_cur }
     this.apiService.getEmpProfile(queryString.stringify(query)).subscribe(results => {
       if (results.status === 'success') {
         this.spinner.hide();
         this.listViews = cloneDeep(results.data.group_fields || []);
         this.detailInfo = results.data;
         this.activeIndex = results.data.flow_st;
+        this.flowCurrent = results.data.flow_cur + 1;
         this.steps = results.data.flowStatuses.map(d => {
           return {
             label: d.flow_name,
@@ -48,26 +52,14 @@ export class ThongTinCaNhanEditDetailComponent implements OnInit {
         setTimeout(() => {
           this.stepActivated();
         }, 100);
-        if(results.data.submit_st) {
-          this.optionsButtonsView = [
-            { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
-            { label: 'Trình duyệt', value: 'Submit', class: 'btn-accept' }
-          ]
-        }else {
-          if(results.data.save_st) {
-            this.optionsButtonsView = [
-              { label: results.data.flow_st === 0 ? 'Hủy' : 'Quay lại', value: results.data.flow_st === 0 ? 'Cancel': 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
-              { label: 'Lưu tạm', value: 'SaveNhap', class: 'btn-accept' },
-              { label: 'Tiếp tục', value: 'Update', class: 'btn-accept' }
-            ]
-          }else {
-            this.optionsButtonsView = [
-              { label: results.data.flow_st === 0 ? 'Hủy' : 'Quay lại', value: results.data.flow_st === 0 ? 'Cancel': 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
-              { label: 'Tiếp tục', value: 'Update', class: 'btn-accept' }
-            ]
-          }
-       
-        }
+
+        this.optionsButtonsView = [
+          { label: '', value: 'BackPage', class: `p-button-secondary ${results.data.prev_st ? '' : 'hidden'}`, icon: 'pi pi-caret-left',  },
+          { label: '', value: 'Update', class: `btn-accept ${results.data.next_st ? '' : 'hidden'}`, icon: 'pi pi-caret-right' },
+          { label: 'Lưu tạm', value: 'SaveNhap', class: `btn-accept ${results.data.save_st ? '' : 'hidden'}`, icon: 'pi pi-caret-right' },
+          { label: 'Xác nhận', value: 'Submit', class: `btn-accept ${results.data.submit_st ? '' : 'hidden'}`, icon: 'pi pi-check' },
+          { label: 'Đóng', value: 'Close', class: `btn-danger`, icon: 'pi pi-times' }
+        ]
       };
     }, error => {
       this.spinner.hide();
@@ -78,7 +70,7 @@ export class ThongTinCaNhanEditDetailComponent implements OnInit {
   cloneListViews = [];
   callBackForm(event) {
     const params = {
-      ...this.detailInfo, group_fields: event.data, flow_st: event.type === 'Submit' ?  this.activeIndex + 1 : this.activeIndex
+      ...this.detailInfo, group_fields: event.data, flow_cur: event.type === 'Submit' ?  this.flowCurrent : this.flowCurrent -1
     }
      this.cloneListViews = cloneDeep(this.listViews);
     this.listViews = [];
@@ -87,11 +79,14 @@ export class ThongTinCaNhanEditDetailComponent implements OnInit {
   }
 
   stepActivated(): void {
+    console.log(this.flowCurrent)
     const stepS = document.querySelectorAll('.steps-contract .p-steps-item');
     if (stepS.length > 0) {
       for (let i = 0; i < this.steps.length; i++) {
-        if (i <= this.activeIndex) {
-          stepS[i].className += ' active';
+        if (i <= this.flowCurrent) {
+          console.log(i,i<= this.flowCurrent && i !== 0)
+          // console.log(i !== 1)
+          stepS[i].className +=  ` p-highlight ${i<= this.activeIndex ? 'active' : 'remove-active'} ${i<= this.flowCurrent && this.flowCurrent !== 1 ? 'active-confirm' : 'remove-active-confirm'}`;
         } else {
           stepS[i].classList.value = `p-steps-item icon-${i}`;
         }
@@ -101,7 +96,7 @@ export class ThongTinCaNhanEditDetailComponent implements OnInit {
 
   setDetail(data) {
     const  params = {
-      ...this.detailInfo, group_fields: data, flow_st: this.activeIndex + 1
+      ...this.detailInfo, group_fields: data, flow_cur: this.flowCurrent
     };
     this.cloneListViews = cloneDeep(this.listViews);
     this.listViews = [];
@@ -116,6 +111,7 @@ export class ThongTinCaNhanEditDetailComponent implements OnInit {
         this.listViews = cloneDeep(results.data.group_fields || []);
         this.detailInfo = results.data;
         this.activeIndex = results.data.flow_st;
+        this.flowCurrent = results.data.flow_cur + 1;
         this.steps = results.data.flowStatuses.map(d => {
           return {
             label: d.flow_name,
@@ -125,26 +121,13 @@ export class ThongTinCaNhanEditDetailComponent implements OnInit {
         setTimeout(() => {
           this.stepActivated();
         }, 100);
-        if(results.data.submit_st) {
-          this.optionsButtonsView = [
-            { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
-            { label: 'Trình duyệt', value: 'Submit', class: 'btn-accept' }
-          ]
-        }else {
-          if(results.data.save_st) {
-            this.optionsButtonsView = [
-              { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
-              { label: 'Lưu tạm', value: 'Update', class: 'btn-accept' },
-              { label: 'Tiếp tục', value: 'Update', class: 'btn-accept' }
-            ]
-          }else {
-            this.optionsButtonsView = [
-              { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
-              { label: 'Tiếp tục', value: 'Update', class: 'btn-accept' }
-            ]
-          }
-       
-        }
+        this.optionsButtonsView = [
+          { label: '', value: 'BackPage', class: `p-button-secondary ${results.data.prev_st ? '' : 'hidden'}`, icon: 'pi pi-caret-left',  },
+          { label: '', value: 'Update', class: `btn-accept ${results.data.next_st ? '' : 'hidden'}`, icon: 'pi pi-caret-right' },
+          { label: 'Lưu tạm', value: 'SaveNhap', class: `btn-accept ${results.data.save_st ? '' : 'hidden'}`, icon: 'pi pi-caret-right' },
+          { label: 'Xác nhận', value: 'Submit', class: `btn-accept ${results.data.submit_st ? '' : 'hidden'}`, icon: 'pi pi-check' },
+          { label: 'Đóng', value: 'Close', class: `btn-danger`, icon: 'pi pi-times' }
+        ]
         this.spinner.hide();
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Cập nhật thông tin thành công' });
         if(type === 'Submit' || type === 'SaveNhap') {
@@ -168,10 +151,7 @@ export class ThongTinCaNhanEditDetailComponent implements OnInit {
       this.getDetail()
     } else if (data === 'BackPage') {
       this.listViews = [];
-      const params = {
-        ...this.detailInfo, flow_st: this.activeIndex - 1
-      }
-      this.getDetail(this.activeIndex - 1)
+      this.getDetail(this.flowCurrent === 1 ?this.flowCurrent: this.flowCurrent - 2)
     } else {
       this.cancelSave.emit();
     }
