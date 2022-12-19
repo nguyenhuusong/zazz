@@ -148,11 +148,11 @@ export class EditViTriCongViecComponent implements OnInit {
        
         // }
         this.spinner.hide();
-        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Cập nhật thông tin thành công' });
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Cập nhật thông tin thành công' });
       } else {
         this.spinner.hide();
         this.messageService.add({
-          severity: 'error', summary: 'Thông báo', detail: results.message
+          severity: 'error', summary: 'Thông báo', detail: results.data
         });
       }
     }, error => {
