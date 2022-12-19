@@ -72,7 +72,7 @@ styleClass="search-em-in {{ dataSearched?.length > 0 ? 'search-em-result' : '' }
                 <div class="uni-load " [ngClass]="isLoadingInfo ? 'loading' : ''"></div>
                 <div class="col-3 text-center">
                     <p-image src="{{ dataInfo?.avatar_url ? dataInfo.avatar_url : '../../../../../assets/images/no-image2.png' }}" alt="Image" width="250"></p-image>
-                    <span><b>Mã NV: </b>{{ dataInfo?.code }}</span>
+                    <span>Mã NV: <b>{{ dataInfo?.code }}</b></span>
                 </div>
                 <div class="col-9">
                     <div class="grid">

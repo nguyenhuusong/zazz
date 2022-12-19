@@ -3682,7 +3682,7 @@ div.p-organizationchart {
     .btn-group-edit-detail{
         position: absolute;
         right: 16px;
-        top: 150px;
+        top: 110px;
         z-index: 9;
         display: flex;
         align-items: center;
@@ -6082,3 +6082,11 @@ app-thong-tin-ca-nhan-edit-detail{
   .p-button.p-button-secondary{
     padding: 7px 7px !important;
   }
+.box-item{
+    padding: 15px;
+    border: 1px solid #dfdfdf;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    padding-bottom: 0;
+    box-shadow: 1px 1px 5px #cccccc47;
+}

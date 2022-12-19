@@ -14,6 +14,10 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { fromEvent } from 'rxjs';
+import { cloneDeep } from 'lodash';
+import { getParamString } from 'src/app/common/function-common/objects.helper';
+import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
+import { DialogService } from 'primeng/dynamicdialog';
 @Component({
   selector: 'app-thiet-lap-wifi',
   templateUrl: './thiet-lap-wifi.component.html',
@@ -31,6 +35,7 @@ export class ThietLapWifiComponent implements OnInit, AfterViewChecked {
     private messageService: MessageService,
     private changeDetector: ChangeDetectorRef,
     private organizeInfoService: OrganizeInfoService,
+    private dialogService: DialogService,
     private router: Router) {
 
     this.defaultColDef = {
@@ -47,6 +52,7 @@ export class ThietLapWifiComponent implements OnInit, AfterViewChecked {
       buttonAgGridComponent: ButtonAgGridComponent,
       avatarRendererFull: AvatarFullComponent,
     };
+    this.getEmpFilter();
   }
   pagingComponent = {
     total: 0
@@ -311,6 +317,84 @@ export class ThietLapWifiComponent implements OnInit, AfterViewChecked {
         });
       }
     }, 300);
+  }
+
+  listViewsFilter = [];
+  cloneListViewsFilter = [];
+  detailInfoFilter = null;
+  optionsButonFilter = [
+    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm ml-2 height-56 addNew', icon: 'pi pi-plus' },
+    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger ml-2 height-56 addNew', icon: 'pi pi-times' },
+  ];
+
+  getEmpFilter() {
+    this.apiService.getFilter('/api/v1/timekeeping/GetTimekeepingWifiFilter').subscribe(results => {
+      if(results.status === 'success') {
+        const listViews = cloneDeep(results.data.group_fields);
+        this.cloneListViewsFilter = cloneDeep(listViews);
+        this.listViewsFilter = [...listViews];
+        const params =  getParamString(listViews)
+        this.query = { ...this.query, ...params};
+        this.load();
+        this.detailInfoFilter = results.data;
+      }
+    });
+  }
+   filterLoad(event) {
+    this.query = { ...this.query, ...event.data };
+    this.load();
+    this.FnEvent();
+  }
+
+  close(event) {
+    const listViews = cloneDeep(this.cloneListViewsFilter);
+    this.listViewsFilter = cloneDeep(listViews);
+    const params =  getParamString(listViews)
+    this.query = { ...this.query, ...params};
+    this.load();
+    this.FnEvent();
+  }
+
+showFilter() {
+    const ref = this.dialogService.open(FormFilterComponent, {
+      header: 'Tìm kiếm nâng cao',
+      width: '40%',
+      contentStyle: "",
+      data: {
+        listViews: this.listViewsFilter,
+        detailInfoFilter: this.detailInfoFilter,
+        buttons: this.optionsButonFilter
+      }
+    });
+
+    ref.onClose.subscribe((event: any) => {
+      if (event) {
+        this.listViewsFilter = cloneDeep(event.listViewsFilter);
+        if (event.type === 'Search') {
+          this.query = { ...this.query, ...event.data };
+          this.load();
+        } else if (event.type === 'CauHinh') {
+          this.apiService.getFilter('/api/v2/maternity/GetMaternityFilter').subscribe(results => {
+            if (results.status === 'success') {
+              const listViews = cloneDeep(results.data.group_fields);
+              this.listViewsFilter = [...listViews];
+              const params =  getParamString(listViews)
+              this.query = { ...this.query, ...params};
+              this.load();
+              this.detailInfoFilter = results.data;
+              this.showFilter()
+            }
+          });
+
+        } else if (event.type === 'Reset') {
+          const listViews = cloneDeep(this.cloneListViewsFilter);
+          this.listViewsFilter = cloneDeep(listViews);
+         const params =  getParamString(listViews)
+        this.query = { ...this.query, ...params};
+        this.load();
+        }
+      }
+    });
   }
 
 }

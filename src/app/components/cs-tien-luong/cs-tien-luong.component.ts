@@ -56,7 +56,6 @@ export class CsTienLuongComponent implements OnInit {
 
   modelAdd = {
     date: new Date(),
-    organizeId: ''
   }
   listOrgRoots = [];
   listRecordStatus = [];
@@ -101,7 +100,6 @@ export class CsTienLuongComponent implements OnInit {
     currentRecordStart: 0,
     currentRecordEnd: 0
   }
-  organizeIds = '';
 
   onGridReady(params) {
     this.gridApi = params.api;
@@ -248,7 +246,6 @@ export class CsTienLuongComponent implements OnInit {
     this.displayFrom = true;
     this.modelAdd = {
       date: new Date(),
-      organizeId: this.organizeIds
     }
 
 
