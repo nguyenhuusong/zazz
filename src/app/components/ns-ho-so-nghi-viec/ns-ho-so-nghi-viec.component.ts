@@ -219,7 +219,7 @@ export class NsHoSoNghiViecComponent implements OnInit {
     return {
       buttons: [
         {
-          onClick: this.EditEmployee.bind(this),
+          onClick: this.editRow.bind(this),
           label: 'Xem chi tiết',
           icon: 'fa fa-edit',
           class: 'btn-primary mr5',
@@ -227,7 +227,7 @@ export class NsHoSoNghiViecComponent implements OnInit {
 
         },
         {
-          onClick: this.delTerminateInfo.bind(this),
+          onClick: this.delRow.bind(this),
           label: 'Xóa',
           icon: 'fa fa-edit',
           class: 'btn-primary mr5',
@@ -311,13 +311,26 @@ export class NsHoSoNghiViecComponent implements OnInit {
       }]
   }
 
-  EditEmployee(event) {
+  editRow({rowData}) {
     const params = {
-      empId: event.rowData.empId,
-      terminateId: event.rowData.terminateId
+      empId: rowData.empId,
+      terminateId: rowData.terminateId
     }
     this.router.navigate(['/nhan-su/ho-so-nghi-viec/chi-tiet-ho-so-nghi-viec'], { queryParams: params });
   }
+
+  onCellClicked(event) {
+    if (event.column.colId == "avatar_url") {
+      this.isShowAvatar = true;
+      this.imgAvatar = event.value;
+    }else {
+      if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
+        this.editRow(event = {rowData: event.data})
+      }
+    }
+    
+  }
+
   displayChangeStatus = false;
   modelPheDuyet = {
     id: '',
@@ -366,7 +379,7 @@ export class NsHoSoNghiViecComponent implements OnInit {
   }
 
 
-  delTerminateInfo(event) {
+  delRow(event) {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn thực hiện thao tác?',
       accept: () => {
@@ -426,13 +439,7 @@ export class NsHoSoNghiViecComponent implements OnInit {
     this.getTerminateFilter();
   }
 
-  onCellClicked(event) {
-    if (event.column.colId == "avatar_url") {
-      this.isShowAvatar = true;
-      this.imgAvatar = event.value;
-    }
-  }
-
+ 
   getEmployeeStatus() {
     this.apiService.getEmployeeStatus().subscribe(results => {
       if (results.status === 'success') {

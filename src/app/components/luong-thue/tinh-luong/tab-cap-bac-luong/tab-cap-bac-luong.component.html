@@ -6,6 +6,8 @@
         [listsData]="listsData"
         [idGrid]="gridKey + '_45dfs'"
         [height]="heightGrid"
+        (showConfig)="cauhinh()"
+        (onCellClicked)="onCellClicked($event)"
         app-tab-cap-bac-bang-luong
         >
     </app-list-grid-angular>

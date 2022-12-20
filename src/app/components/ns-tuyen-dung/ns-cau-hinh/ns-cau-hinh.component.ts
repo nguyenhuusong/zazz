@@ -88,18 +88,18 @@ export class NsCauHinhComponent implements OnInit {
   }
 
 
-  editEvent(event) {
+  editEvent(rowData) {
     let id = null;
     if(this.tabIndex === 0){
-      this.idForm = event.rowData.mail_Id
+      this.idForm = rowData.mail_Id
     }else if(this.tabIndex === 1){
-      this.idForm = event.rowData.Id
+      this.idForm = rowData.Id
     }else if(this.tabIndex === 2){
-      this.idForm = event.rowData.source_Id
+      this.idForm = rowData.source_Id
     }
     this.isFormDetail = true;
     
-    const queryParams = queryString.stringify({recordId: event.rowData.id});
+    // const queryParams = queryString.stringify({recordId: event.rowData.id});
     // this.apiService.getPayrollAppInfo(queryParams).subscribe(results => {
     //   if (results.status === 'success') {
     //     this.listViews = cloneDeep(results.data.group_fields);

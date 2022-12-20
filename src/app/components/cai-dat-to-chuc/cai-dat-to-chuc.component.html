@@ -95,6 +95,7 @@
             (callback)="rowSelected($event)"
             [rowSelection]="'single'"
             (showConfig)="cauhinh()"
+            (onCellClicked)="onCellClicked($event)"
             [listsData]="listsData" [height]="heightGrid" [columnDefs]="columnDefs"></app-list-grid-angular>
           <div class="paginator">
             <span>Từ {{ countRecord.currentRecordStart }} đến

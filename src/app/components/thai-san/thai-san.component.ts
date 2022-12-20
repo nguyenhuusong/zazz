@@ -168,14 +168,14 @@ export class ThaiSanComponent implements OnInit, AfterViewChecked {
     return {
       buttons: [
         {
-          onClick: this.XemChiTiet.bind(this),
+          onClick: this.editRow.bind(this),
           label: 'Xem chi tiết',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
           // hide: CheckHideAction(MENUACTIONROLEAPI.GetMaternityPage.url, ACTIONS.VIEW)
         },
         {
-          onClick: this.delMaternityInfo.bind(this),
+          onClick: this.delRow.bind(this),
           label: 'Xóa ',
           icon: 'pi pi-trash',
           class: 'btn-primary mr5',
@@ -267,7 +267,7 @@ export class ThaiSanComponent implements OnInit, AfterViewChecked {
     };
   }
 
-  delMaternityInfo(event) {
+  delRow(event) {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn thực hiện mở tài khoản?',
       accept: () => {
@@ -285,11 +285,17 @@ export class ThaiSanComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  XemChiTiet(event) {
+  editRow({rowData}) {
     const params = {
-      maternityId: event.rowData.maternityId
+      maternityId: rowData.maternityId
     }
     this.router.navigate(['/nhan-su/thai-san/chi-tiet-thai-san'], { queryParams: params });
+  }
+
+  onCellClicked(event) {
+    if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
+      this.editRow(event = {rowData: event.data})
+    }
   }
 
   isSearchEmp = false;

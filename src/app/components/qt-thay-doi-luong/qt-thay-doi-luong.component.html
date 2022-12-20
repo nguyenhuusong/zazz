@@ -70,6 +70,7 @@
                 [idGrid]="gridKey + '_45dfs'"
                 [rowSelection]="'multiple'"
                 (showConfig)="cauhinh()"
+                (onCellClicked)="onCellClicked($event)"
                 >
             </app-list-grid-angular>
             <div class="paginator">

@@ -146,7 +146,7 @@ import { fromEvent } from 'rxjs';
             hide: CheckHideAction(MENUACTIONROLEAPI.GetPayrollAppInfoPage.url, ACTIONS.VIEW_TINH_LUONG_CAP_BAC_LUONG)
           },
           {
-            onClick: this.deleteRow.bind(this),
+            onClick: this.delRow.bind(this),
             label: 'Xóa',
             icon: 'fa fa-trash',
             class: 'btn-primary mr5',
@@ -156,9 +156,16 @@ import { fromEvent } from 'rxjs';
       };
     }
   
-    editRow(event) {
-      this.idOutPut.emit(event)
+    editRow({rowData}) {
+      this.idOutPut.emit(rowData)
     }
+
+    onCellClicked(event) {
+      if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
+        this.editRow(event = {rowData: event.data})
+      }
+    }
+  
   
     initGrid() {
       this.columnDefs = [
@@ -179,7 +186,7 @@ import { fromEvent } from 'rxjs';
         }]
     }
   
-    deleteRow(event) {
+    delRow(event) {
       this.confirmationService.confirm({
         message: 'Bạn có chắc chắn muốn xóa?',
         accept: () => {

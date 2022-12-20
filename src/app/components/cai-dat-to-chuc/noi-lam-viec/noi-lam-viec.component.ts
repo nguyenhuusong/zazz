@@ -207,7 +207,7 @@ export class NoiLamViecComponent implements OnInit {
     return {
       buttons: [
         {
-          onClick: this.XemChiTiet.bind(this),
+          onClick: this.editRow.bind(this),
           label: 'Thông tin chi tiết',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
@@ -215,7 +215,7 @@ export class NoiLamViecComponent implements OnInit {
 
         },
         {
-          onClick: this.xoacongty.bind(this),
+          onClick: this.delRow.bind(this),
           label: 'Xóa ',
           icon: 'pi pi-trash',
           class: 'btn-primary mr5',
@@ -246,7 +246,7 @@ export class NoiLamViecComponent implements OnInit {
  
   }
 
-  xoacongty(event) {
+  delRow(event) {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa nơi làm việc?',
       accept: () => {
@@ -263,11 +263,17 @@ export class NoiLamViecComponent implements OnInit {
     });
   }
 
-  XemChiTiet(event) {
+  editRow({rowData}) {
     const params = {
-      workplaceId: event.rowData.workplaceId,
+      workplaceId: rowData.workplaceId,
     }
     this.router.navigate(['/cai-dat/noi-lam-viec/chi-tiet-noi-lam-viec'], { queryParams: params });
+  }
+
+  onCellClicked(event) {
+    if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
+      this.editRow(event = {rowData: event.data})
+    }
   }
 
   addNoiLamViec() {

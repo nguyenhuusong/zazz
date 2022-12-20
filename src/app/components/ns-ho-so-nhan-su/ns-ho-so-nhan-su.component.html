@@ -97,6 +97,7 @@
                 [columnDefs]="columnDefs"
                 [rowSelection]="'multiple'"
                 [floatingFilter]="true"
+                (onCellClicked)="onCellClicked($event)"
                 (callback)="rowSelected($event)"
                 (showConfig)="cauhinh()"
                 >

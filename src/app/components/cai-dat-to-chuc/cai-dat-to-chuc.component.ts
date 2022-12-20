@@ -293,7 +293,7 @@ export class CaiDatToChucComponent implements OnInit {
           hide: CheckHideAction(MENUACTIONROLEAPI.GetOrganizePage.url, ACTIONS.VIEW)
         },
         {
-          onClick: this.editOrgin.bind(this),
+          onClick: this.editRow.bind(this),
           label: 'Sửa tổ chức',
           icon: 'fa fa-edit',
           class: 'btn-primary mr5',
@@ -310,19 +310,24 @@ export class CaiDatToChucComponent implements OnInit {
     };
   }
 
-  editOrgin(event) {
-    this.getOrganizeLevelList(event.rowData.parentId);
+  editRow({rowData}) {
+    this.getOrganizeLevelList(rowData.parentId);
     this.modeAgencyOrganize.organizeId = this.query.organizeIds;
-    this.modeAgencyOrganize.org_level = event.rowData.org_level;
-    this.modeAgencyOrganize.org_name = event.rowData.org_name;
-    this.modeAgencyOrganize.orgId = event.rowData.orgId;
-    // this.selectedNodeTree = event.rowData.orgId;
-    this.modeAgencyOrganize.parentId = event.rowData.parentId
+    this.modeAgencyOrganize.org_level = rowData.org_level;
+    this.modeAgencyOrganize.org_name = rowData.org_name;
+    this.modeAgencyOrganize.orgId = rowData.orgId;
+    // this.selectedNodeTree = rowData.orgId;
+    this.modeAgencyOrganize.parentId = rowData.parentId
     this.getOrganizeTreeByOr();
     this.displayOrganize = true;
-   
-    
   }
+
+  onCellClicked(event) {
+    if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
+      this.editRow(event = {rowData: event.data})
+    }
+  }
+  
   delOrgin(event) {
     this.spinner.show();
     this.confirmationService.confirm({

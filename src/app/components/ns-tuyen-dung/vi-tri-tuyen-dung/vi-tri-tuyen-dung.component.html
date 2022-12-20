@@ -52,6 +52,7 @@
             <app-list-grid-angular  
                 *ngIf="columnDefs.length > 0"
                 (callback)="rowSelected($event)"
+                (onCellClicked)="onCellClicked($event)"
                 [listsData]="listsData" [height]="heightGrid"
                 (showConfig)="cauhinh()"
                 [idGrid]="gridKey + '_45dfs'"

@@ -71,7 +71,7 @@
     <section class="content pb-0">
         <div class="grid-default" #container>
             <app-list-grid-angular  *ngIf="columnDefs && columnDefs.length > 0"
-                [listsData]="listsData" [height]="heightGrid"
+                [listsData]="listsData" [height]="heightGrid" (onCellClicked)="onCellClicked($event)"
                 (showConfig)="cauhinh()" [idGrid]="gridKey + '_45dfs'"
                 [columnDefs]="columnDefs"></app-list-grid-angular>
             <div class="paginator">

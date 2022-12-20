@@ -169,7 +169,7 @@ export class PheDuyetComponent implements OnInit, AfterViewChecked {
     return {
       buttons: [
         {
-          onClick: this.XemChiTiet.bind(this),
+          onClick: this.editRow.bind(this),
           label: 'Xem chi tiết',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
@@ -266,11 +266,17 @@ export class PheDuyetComponent implements OnInit, AfterViewChecked {
   //   });
   // }
 
-  XemChiTiet(event) {
+  editRow({rowData}) {
     const params = {
-      wft_id: event.rowData.wft_id
+      wft_id: rowData.wft_id
     }
     this.router.navigate(['/nhan-su/phe-duyet/chi-tiet-phe-duyet'], { queryParams: params });
+  }
+
+  onCellClicked(event) {
+    if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
+      this.editRow(event = {rowData: event.data})
+    }
   }
 
   addPheDuyet() {

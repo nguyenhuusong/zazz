@@ -191,14 +191,14 @@ export class QuanLyHopDongComponent implements OnInit {
     return {
       buttons: [
         {
-          onClick: this.XemChiTiet.bind(this),
+          onClick: this.editRow.bind(this),
           label: 'Xem chi tiết',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
           hide: CheckHideAction(MENUACTIONROLEAPI.GetContractTypePage.url, ACTIONS.VIEW)
         },
         {
-          onClick: this.xoahopdong.bind(this),
+          onClick: this.delRow.bind(this),
           label: 'Xóa',
           icon: 'pi pi-trash',
           class: 'btn-primary mr5',
@@ -228,7 +228,7 @@ export class QuanLyHopDongComponent implements OnInit {
       }]
   }
 
-  xoahopdong(event) {
+  delRow(event) {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa hợp đồng?',
       accept: () => {
@@ -245,11 +245,17 @@ export class QuanLyHopDongComponent implements OnInit {
     });
   }
 
-  XemChiTiet(event) {
+  editRow({rowData}) {
     const params = {
-      contractTypeId: event.rowData.contractTypeId,
+      contractTypeId: rowData.contractTypeId,
     }
     this.router.navigate(['/cai-dat/quan-ly-hop-dong/chi-tiet-hop-dong'], { queryParams: params });
+  }
+
+  onCellClicked(event) {
+    if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
+      this.editRow(event = {rowData: event.data})
+    }
   }
 
 

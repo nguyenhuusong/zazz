@@ -68,7 +68,7 @@
     <section class="content pb-0">
         <div class="grid-default" #container>
             <app-list-grid-angular *ngIf="columnDefs && columnDefs.length > 0" [listsData]="listsData" [height]="heightGrid"
-                [rowSelection]="'multiple'" (callback)="rowSelected($event)" [columnDefs]="columnDefs">
+                [rowSelection]="'multiple'" (callback)="rowSelected($event)" (onCellClicked)="onCellClicked($event)" [columnDefs]="columnDefs">
             </app-list-grid-angular>
             <div class="paginator">
                 <span>Từ {{ countRecord.currentRecordStart }} đến

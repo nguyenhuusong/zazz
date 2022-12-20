@@ -170,14 +170,14 @@ export class LichLamViecComponent implements OnInit {
     return {
       buttons: [
         {
-          onClick: this.XemChiTiet.bind(this),
+          onClick: this.editRow.bind(this),
           label: 'Thông tin chi tiết',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
           hide: CheckHideAction(MENUACTIONROLEAPI.GetWorktimePage.url, ACTIONS.VIEW)
         },
         {
-          onClick: this.delWorktimeInfo.bind(this),
+          onClick: this.delRow.bind(this),
           label: 'Xóa ',
           icon: 'pi pi-trash',
           class: 'btn-primary mr5',
@@ -207,7 +207,7 @@ export class LichLamViecComponent implements OnInit {
       }]
   }
 
-  delWorktimeInfo(event) {
+  delRow(event) {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa lịch làm việc?',
       accept: () => {
@@ -238,11 +238,17 @@ export class LichLamViecComponent implements OnInit {
     });
   }
 
-  XemChiTiet(event) {
+  editRow({rowData}) {
     const params = {
-      work_cd: event.rowData.work_cd,
+      work_cd: rowData.work_cd,
     }
     this.router.navigate(['/cai-dat/lich-lam-viec/chi-tiet-lich-lam-viec'], { queryParams: params });
+  }
+
+  onCellClicked(event) {
+    if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
+      this.editRow(event = {rowData: event.data})
+    }
   }
 
   addLichLamViec() {

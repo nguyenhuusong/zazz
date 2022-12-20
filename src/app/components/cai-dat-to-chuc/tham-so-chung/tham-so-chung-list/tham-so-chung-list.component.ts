@@ -216,7 +216,7 @@ detailInfoFilter = null;
     return {
       buttons: [
         {
-          onClick: this.handleEdit.bind(this),
+          onClick: this.editRow.bind(this),
           label: 'Xem chi tiết',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
@@ -252,7 +252,7 @@ detailInfoFilter = null;
       }]
   }
 
-  handleDelete(event) {
+  delRow(event) {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa hợp đồng?',
       accept: () => {
@@ -269,10 +269,15 @@ detailInfoFilter = null;
     });
   }
 
-  handleEdit(event) {
-    this.router.navigate([`/cai-dat/tham-so-chung/${event.rowData.id}`]);
+  editRow({rowData}) {
+    this.router.navigate([`/cai-dat/tham-so-chung/${rowData.id}`]);
   }
 
+  onCellClicked(event) {
+    if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
+      this.editRow(event = {rowData: event.data})
+    }
+  }
 
   handleAdd() {
     this.router.navigate(['/cai-dat/tham-so-chung/null']);

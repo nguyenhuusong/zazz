@@ -277,14 +277,14 @@ export class NsHoSoNhanSuComponent implements OnInit {
     return {
       buttons: [
         {
-          onClick: this.EditEmployee.bind(this),
+          onClick: this.editRow.bind(this),
           label: 'Thông tin chi tiết',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
           hide: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.VIEW)
         },
         {
-          onClick: this.xoanhanvien.bind(this),
+          onClick: this.delRow.bind(this),
           label: 'Xóa nhân viên này',
           icon: 'fa fa-trash',
           class: 'btn-primary mr5',
@@ -375,7 +375,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
     };
   }
 
-  xoanhanvien(event) {
+  delRow(event) {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa nhân viên?',
       accept: () => {
@@ -473,12 +473,24 @@ export class NsHoSoNhanSuComponent implements OnInit {
     });
   }
 
-  EditEmployee(event) {
+  editRow({rowData}) {
     const params = {
-      empId: event.rowData.empId
+      empId: rowData.empId
     }
     this.router.navigate(['/nhan-su/ho-so-nhan-su/chi-tiet-ho-so-nhan-su'], { queryParams: params });
   }
+
+  onCellClicked(event) {
+    if (event.column.colId == "avatar_url") {
+      this.isShowAvatar = true;
+      this.imgAvatar = event.value;
+    }else {
+      if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
+          this.editRow(event = {rowData: event.data})
+      }
+    }
+  }
+
 
   find() {
     this.load();
@@ -542,13 +554,6 @@ export class NsHoSoNhanSuComponent implements OnInit {
 
   Close() {
     this.displayOrganize = false;
-  }
-
-  onCellClicked(event) {
-    if (event.column.colId == "avatar_url") {
-      this.isShowAvatar = true;
-      this.imgAvatar = event.value;
-    }
   }
 
   exportGrid() {
