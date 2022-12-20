@@ -117,7 +117,8 @@ export class ThongTinHoSoCaNhanComponent implements OnInit {
         }
         this.spinner.hide();
         this.listsData = repo.data.dataList.data || [];
-        this.initGrid(repo.data.gridflexs)
+        this.initGrid(repo.data.gridflexs);
+        this.FnEvent();
       } else {
         this.spinner.hide();
       }
@@ -128,7 +129,8 @@ export class ThongTinHoSoCaNhanComponent implements OnInit {
     if(event === 'CauHinh') {
       this.addEmpRecord();
     }else {
-      this.displayFormEditDetail = false
+      this.displayFormEditDetail = false;
+      this.getEmpRecordPage();
     }
   }
 

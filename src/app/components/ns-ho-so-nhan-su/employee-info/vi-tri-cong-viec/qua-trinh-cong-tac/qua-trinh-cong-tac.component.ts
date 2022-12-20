@@ -42,7 +42,6 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
       if(dragTarget) {
         const click$ = fromEvent(dragTarget, 'click');
         click$.subscribe(event => {
-          console.log(event)
           this.addProcess()
         });
       }
@@ -67,7 +66,8 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
         }
         this.spinner.hide();
         this.listsData = repo.data.dataList.data || [];
-        this.initGrid(repo.data.gridflexs)
+        this.initGrid(repo.data.gridflexs);
+        this.FnEvent();
       } else {
         this.spinner.hide();
       }
@@ -165,7 +165,7 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
         this.optionsButtonsView =[
           { label: '', value: 'BackPage', class: `p-button-secondary ${results.data.prev_st ? '' : 'hidden'}`, icon: 'pi pi-caret-left',  },
           { label: '', value: 'Update', class: `btn-accept ${results.data.next_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-caret-right' },
-          { label: 'Lưu tạm', value: 'SaveNhap', class: `btn-accept ${results.data.save_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-caret-right' },
+          { label: 'Lưu tạm', value: 'SaveNhap', class: `btn-accept ${results.data.save_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
           { label: 'Xác nhận', value: 'Submit', class: `btn-accept ${results.data.submit_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
           { label: 'Đóng', value: 'Close', class: `p-button-danger ml-1`, icon: 'pi pi-times' }
         ]
@@ -232,7 +232,7 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
         this.optionsButtonsView =[
           { label: '', value: 'BackPage', class: `p-button-secondary ${results.data.prev_st ? '' : 'hidden'}`, icon: 'pi pi-caret-left',  },
           { label: '', value: 'Update', class: `btn-accept ${results.data.next_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-caret-right' },
-          { label: 'Lưu tạm', value: 'SaveNhap', class: `btn-accept ${results.data.save_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-caret-right' },
+          { label: 'Lưu tạm', value: 'SaveNhap', class: `btn-accept ${results.data.save_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
           { label: 'Xác nhận', value: 'Submit', class: `btn-accept ${results.data.submit_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
           { label: 'Đóng', value: 'Close', class: `p-button-danger ml-1`, icon: 'pi pi-times' }
         ]
@@ -241,7 +241,7 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
           setTimeout(() => {
            this.displayFormEditDetail = false;
            this.getEmpProcessPageByEmpId();
-           this.cancelSave.emit()
+           this.cancelSave.emit();
           }, 200);
         }
       } else {
@@ -262,6 +262,8 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
       this.getDetail(this.flowCurrent === 1 ? this.flowCurrent: this.flowCurrent - 2)
     } else {
       this.displayFormEditDetail = false;
+      this.getEmpProcessPageByEmpId();
+      this.cancelSave.emit();
     }
   }
   deleteRow(event) {
