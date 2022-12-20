@@ -25,9 +25,11 @@ export class ThoiGianLamViecComponent implements OnInit, AfterViewInit {
     private confirmationService: ConfirmationService,
   ) { }
   optionsButtonsView = [
-    { label: 'Bỏ qua', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
-    { label: 'Lưu tạm', value: 'Update', class: 'btn-accept' },
-    { label: 'Tiếp tục', value: 'Update', class: 'btn-accept' }
+    { label: '', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-caret-left' },
+    { label: '', value: 'Update', class: 'btn-accept', icon: 'pi pi-caret-right' },
+    { label: 'Lưu tạm', value: 'SaveNhap', class: 'btn-accept', icon: 'pi pi-caret-right' },
+    { label: 'Xác nhận', value: 'Submit', class: 'btn-accept', icon: 'pi pi-check' },
+    { label: 'Đóng', value: 'Close', class: 'btn-accept', icon: 'pi pi-times' }
   ]
 
   ngAfterViewInit(): void {
@@ -119,7 +121,8 @@ export class ThoiGianLamViecComponent implements OnInit, AfterViewInit {
     if (event === 'CauHinh') {
       this.getDetail();
     } else {
-      this.displayFormEditDetail = false
+      this.displayFormEditDetail = false;
+      this.getEmpWorkingPageByEmpId();
     }
   }
 
@@ -134,6 +137,7 @@ export class ThoiGianLamViecComponent implements OnInit, AfterViewInit {
   }
 
   activeIndex = 0;
+  flowCurrent = 0;
   steps = [];
   getDetail(flow_st = null) {
     this.FnEvent();
@@ -147,6 +151,7 @@ export class ThoiGianLamViecComponent implements OnInit, AfterViewInit {
         this.listViewsDetail = cloneDeep(results.data.group_fields || []);
         this.dataDetailInfo = results.data;
         this.activeIndex = results.data.flow_st;
+        this.flowCurrent = results.data.flow_cur + 1;
         this.steps = results.data?.flowStatuses?.map(d => {
           return {
             label: d.flow_name,
@@ -157,26 +162,13 @@ export class ThoiGianLamViecComponent implements OnInit, AfterViewInit {
         setTimeout(() => {
           this.stepActivated();
         }, 100);
-        if (results.data.submit_st) {
-          this.optionsButtonsView = [
-            { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
-            { label: 'Trình duyệt', value: 'Submit', class: 'btn-accept' }
-          ]
-        } else {
-          if (results.data.save_st) {
-            this.optionsButtonsView = [
-              { label: results.data.flow_st === 0 ? 'Hủy' : 'Quay lại', value: results.data.flow_st === 0 ? 'Cancel' : 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
-              { label: 'Lưu tạm', value: 'SaveNhap', class: 'btn-accept' },
-              { label: 'Tiếp tục', value: 'Update', class: 'btn-accept' }
-            ]
-          } else {
-            this.optionsButtonsView = [
-              { label: results.data.flow_st === 0 ? 'Hủy' : 'Quay lại', value: results.data.flow_st === 0 ? 'Cancel' : 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
-              { label: 'Tiếp tục', value: 'Update', class: 'btn-accept' }
-            ]
-          }
-
-        }
+        this.optionsButtonsView = [
+          { label: '', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-caret-left' },
+          { label: '', value: 'Update', class: 'btn-accept', icon: 'pi pi-caret-right' },
+          { label: 'Lưu tạm', value: 'SaveNhap', class: 'btn-accept', icon: 'pi pi-caret-right' },
+          { label: 'Xác nhận', value: 'Submit', class: 'btn-accept', icon: 'pi pi-check' },
+          { label: 'Đóng', value: 'Close', class: 'btn-accept', icon: 'pi pi-times' }
+        ]
       };
     }, error => {
       this.spinner.hide();
@@ -187,20 +179,22 @@ export class ThoiGianLamViecComponent implements OnInit, AfterViewInit {
 cloneListViewsDetail = [];
   callBackForm(event) {
     const params = {
-      ...this.dataDetailInfo, group_fields: event.data, flow_st: this.activeIndex
+      ...this.dataDetailInfo, group_fields: event.data, flow_cur: event.type === 'Submit' ?  this.flowCurrent : this.flowCurrent -1
     }
     this.cloneListViewsDetail = cloneDeep(this.listViewsDetail)
     this.listViewsDetail = [];
     this.callApiInfo(params, event.type)
-   
   }
 
   stepActivated(): void {
+    console.log(this.flowCurrent)
     const stepS = document.querySelectorAll('.steps-contract .p-steps-item');
     if (stepS.length > 0) {
       for (let i = 0; i < this.steps.length; i++) {
-        if (i <= this.activeIndex) {
-          stepS[i].className += ' active';
+        if (i <= this.flowCurrent) {
+          console.log(i,i<= this.flowCurrent && i !== 0)
+          // console.log(i !== 1)
+          stepS[i].className +=  ` p-highlight ${i<= this.activeIndex ? 'active' : 'remove-active'} ${i<= this.flowCurrent && this.flowCurrent !== 1 ? 'active-confirm' : 'remove-active-confirm'}`;
         } else {
           stepS[i].classList.value = `p-steps-item icon-${i}`;
         }
@@ -208,11 +202,9 @@ cloneListViewsDetail = [];
     }
   }
 
-
-
   setDetail(data) {
     const params = {
-      ...this.dataDetailInfo, group_fields: data, flow_st: this.activeIndex + 1
+      ...this.dataDetailInfo, group_fields: data, flow_cur: this.flowCurrent
     };
     this.cloneListViewsDetail = cloneDeep(this.listViewsDetail)
     this.listViewsDetail = [];
@@ -228,6 +220,7 @@ cloneListViewsDetail = [];
           this.listViewsDetail = cloneDeep(results.data.group_fields || []);
           this.dataDetailInfo = results.data;
           this.activeIndex = results.data.flow_st;
+          this.flowCurrent = results.data.flow_cur + 1;
           this.getEmpWorkingPageByEmpId();
           this.steps = results.data.flowStatuses.map(d => {
             return {
@@ -238,26 +231,13 @@ cloneListViewsDetail = [];
           setTimeout(() => {
             this.stepActivated();
           }, 100);
-          if (results.data.submit_st) {
-            this.optionsButtonsView = [
-              { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
-              { label: 'Trình duyệt', value: 'Submit', class: 'btn-accept' }
-            ]
-          } else {
-            if (results.data.save_st) {
-              this.optionsButtonsView = [
-                { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
-                { label: 'Lưu tạm', value: 'Update', class: 'btn-accept' },
-                { label: 'Tiếp tục', value: 'Update', class: 'btn-accept' }
-              ]
-            } else {
-              this.optionsButtonsView = [
-                { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
-                { label: 'Tiếp tục', value: 'Update', class: 'btn-accept' }
-              ]
-            }
-
-          }
+          this.optionsButtonsView = [
+            { label: '', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-caret-left' },
+            { label: '', value: 'Update', class: 'btn-accept', icon: 'pi pi-caret-right' },
+            { label: 'Lưu tạm', value: 'SaveNhap', class: 'btn-accept', icon: 'pi pi-caret-right' },
+            { label: 'Xác nhận', value: 'Submit', class: 'btn-accept', icon: 'pi pi-check' },
+            { label: 'Đóng', value: 'Close', class: 'btn-accept', icon: 'pi pi-times' }
+          ]
         }
         this.spinner.hide();
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.damessageta ? results.message : 'Cập nhật thông tin thành công' });
@@ -284,8 +264,9 @@ cloneListViewsDetail = [];
       this.getDetail()
     } else if (data === 'BackPage') {
       this.listViewsDetail = [];
-      this.getDetail(this.activeIndex - 1)
+      this.getDetail(this.flowCurrent === 1 ? this.flowCurrent: this.flowCurrent - 2)
     } else {
+      this.displayFormEditDetail = false;
       this.getEmpWorkingPageByEmpId();
       this.cancelSave.emit();
     }
