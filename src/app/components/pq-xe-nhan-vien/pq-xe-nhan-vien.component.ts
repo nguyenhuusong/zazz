@@ -237,13 +237,13 @@ detailInfoFilter = null;
     this.spinner.show();
     const query = { ...this.query };
     const queryParams = queryString.stringify(query);
-    this.initGrid();
     this.apiService.getEmployeeVehiclePage(queryParams).subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         this.gridKey= results.data.dataList.gridKey;
         if (this.query.offSet === 0) {
           this.gridflexs = results.data.gridflexs;
+          this.initGrid();
         }
         this.countRecord.totalRecord = results.data.dataList.recordsTotal;
         this.countRecord.totalRecord = results.data.dataList.recordsTotal;
