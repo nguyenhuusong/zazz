@@ -1,10 +1,17 @@
 
   <div class="row d-flex bottom">
-    <div class="col-md-3">
+    <!-- <div class="col-md-3">
       <div class="field-group select mb-0" [ngClass]=" perent_id? 'valid' : 'invalid' ">
         <label for="">Tổ chức</label>
-        <p-dropdown appendTo="body" [disabled]="true" [autoZIndex]="true" [autoDisplayFirst]="false" 
-            [options]="moduleLists" [(ngModel)]="perent_id"  [required] (onChange)="getOrganizeTree($event.code)"
+        <p-dropdown 
+            appendTo="body" 
+            [disabled]="true" 
+            [autoZIndex]="true" 
+            [autoDisplayFirst]="false" 
+            [options]="moduleLists" 
+            [(ngModel)]="perent_id"  
+            [required] 
+            (onChange)="getOrganizeTree()"
             name="perent_id" [filter]="true">
             <ng-template let-item pTemplate="selectedItem">
                 <span>{{item.label}}</span>
@@ -16,11 +23,24 @@
             </ng-template>
         </p-dropdown>
       </div>
-    </div>
+    </div> -->
     <div class="col-md-3">
       <div class="field-group mb-0 select treeselect label-8" [ngClass]=" sub_prod_cd? 'valid' : 'invalid' ">
         <label for="">Bộ phận</label>
-        <p-treeSelect [(ngModel)]="sub_prod_cd" [filterInputAutoFocus]="true" [filter]="true" [metaKeySelection]="false" [options]="departmentFiltes" display="chip" (onNodeSelect)="onNodeSelect($event)" (onNodeUnselect)="onNodeUnselect($event)" [metaKeySelection]="false" selectionMode="multiple"  appendTo="body" name="sub_prod_cd" placeholder="Chọn phòng ban"></p-treeSelect>
+        <p-treeSelect [(ngModel)]="sub_prod_cd" 
+          [filterInputAutoFocus]="true" 
+          [filter]="true" 
+          [metaKeySelection]="false" 
+          [options]="departmentFiltes" 
+          display="chip" 
+          (onNodeSelect)="onNodeSelect($event)" 
+          (onNodeUnselect)="onNodeUnselect($event)" 
+          [metaKeySelection]="false" 
+          selectionMode="multiple"  
+          appendTo="body" 
+          name="sub_prod_cd" 
+          placeholder="Chọn phòng ban">
+        </p-treeSelect>
       </div>
     </div>
     <div class="col-md-3">
