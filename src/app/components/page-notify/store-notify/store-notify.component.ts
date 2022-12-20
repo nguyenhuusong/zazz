@@ -66,7 +66,6 @@ export class StoreNotifyComponent implements OnInit, OnChanges {
   moduleList = [];
   MENUACTIONROLEAPI = MENUACTIONROLEAPI;
   ACTIONS = ACTIONS;
-  organSeleted = null
 
   gridflexs = [
     {
@@ -220,7 +219,6 @@ export class StoreNotifyComponent implements OnInit, OnChanges {
   getUserByPush() {
     this.columnDefs = []
     const params = {
-      "organizeId": this.organSeleted,
       "orgIds": this.danhsachphongban,
       "employees": [],
       "filter": this.query.filter
