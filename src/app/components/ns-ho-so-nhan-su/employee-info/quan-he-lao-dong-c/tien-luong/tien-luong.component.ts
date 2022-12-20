@@ -63,6 +63,7 @@ export class TienLuongComponent implements OnInit, AfterViewInit {
         this.spinner.hide();
         this.listsData = repo.data.dataList.data || [];
         this.initGrid(repo.data.gridflexs)
+        this.FnEvent();
       } else {
         this.spinner.hide();
       }
@@ -116,7 +117,8 @@ export class TienLuongComponent implements OnInit, AfterViewInit {
     if (event === 'CauHinh') {
       this.getDetail();
     } else {
-      this.displayFormEditDetail = false
+      this.displayFormEditDetail = false;
+      this.getSalaryInfoPageByEmpId();
     }
   }
 

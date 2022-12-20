@@ -105,7 +105,8 @@ export class QuaTrinhLamViecComponent implements OnInit {
         }
         this.spinner.hide();
         this.listsData = repo.data.dataList.data || [];
-        this.initGrid(repo.data.gridflexs)
+        this.initGrid(repo.data.gridflexs);
+        this.FnEvent();
       } else {
         this.spinner.hide();
       }
@@ -116,7 +117,8 @@ export class QuaTrinhLamViecComponent implements OnInit {
     if(event === 'CauHinh') {
       this.GetEmpWorked();
     }else {
-      this.displayFormEditDetail = false
+      this.displayFormEditDetail = false;
+      this.getEmpWorkedPage();
     }
   }
 

@@ -104,7 +104,8 @@ export class QuaTrinhHocVanComponent implements OnInit {
         }
         this.spinner.hide();
         this.listsData = repo.data.dataList.data || [];
-        this.initGrid(repo.data.gridflexs)
+        this.initGrid(repo.data.gridflexs);
+        this.FnEvent();
       } else {
         this.spinner.hide();
       }
@@ -115,7 +116,8 @@ export class QuaTrinhHocVanComponent implements OnInit {
     if(event === 'CauHinh') {
       this.GetEmpEducation();
     }else {
-      this.displayFormEditDetail = false
+      this.displayFormEditDetail = false;
+      this.getEducationPage();
     }
   }
 

@@ -65,6 +65,7 @@ export class ThoiGianLamViecComponent implements OnInit, AfterViewInit {
         this.spinner.hide();
         this.listsData = repo.data.dataList.data || [];
         this.initGrid(repo.data.gridflexs)
+        this.FnEvent();
       } else {
         this.spinner.hide();
       }
@@ -264,7 +265,7 @@ cloneListViewsDetail = [];
           setTimeout(() => {
            this.displayFormEditDetail = false;
            this.getEmpWorkingPageByEmpId();
-           this.cancelSave.emit()
+           this.cancelSave.emit();
           }, 200);
         }
       } else {
@@ -285,7 +286,8 @@ cloneListViewsDetail = [];
       this.listViewsDetail = [];
       this.getDetail(this.activeIndex - 1)
     } else {
-      this.displayFormEditDetail = false;
+      this.getEmpWorkingPageByEmpId();
+      this.cancelSave.emit();
     }
   }
   deleteRow(event) {
