@@ -142,13 +142,13 @@ export class GridPushListComponent implements OnInit, OnChanges {
   showButtons(event: any) {
     return {
       buttons: [
-        {
-          onClick: this.handleDelete.bind(this),
-          label: 'Xóa',
-          icon: 'fa fa-trash',
-          class: 'btn-google text-white',
-          hide: CheckHideAction(MENUACTIONROLEAPI.GetAppNotifyPage.url, ACTIONS.DANH_SACH_GUI_THONG_BAO_XOA)
-        }
+        // {
+        //   onClick: this.handleDelete.bind(this),
+        //   label: 'Xóa',
+        //   icon: 'fa fa-trash',
+        //   class: 'btn-google text-white',
+        //   hide: CheckHideAction(MENUACTIONROLEAPI.GetAppNotifyPage.url, ACTIONS.DANH_SACH_GUI_THONG_BAO_XOA)
+        // }
       ]
     };
   }

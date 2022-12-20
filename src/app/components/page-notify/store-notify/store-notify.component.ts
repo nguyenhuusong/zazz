@@ -66,7 +66,6 @@ export class StoreNotifyComponent implements OnInit, OnChanges {
   moduleList = [];
   MENUACTIONROLEAPI = MENUACTIONROLEAPI;
   ACTIONS = ACTIONS;
-  organSeleted = null
 
   gridflexs = [
     {
@@ -152,6 +151,7 @@ export class StoreNotifyComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
+    this.getOrganizeTree();
     this.getUserByPush();
   }
 
@@ -171,7 +171,9 @@ export class StoreNotifyComponent implements OnInit, OnChanges {
     }
   }
 
-  getOrganizeTree(value): void {
+  
+
+  getOrganizeTree(): void {
     const queryParams = queryString.stringify({ parentId: this.perent_id });
     this.apiService.getOrganizeTree(queryParams)
       .subscribe((results: any) => {
@@ -217,7 +219,6 @@ export class StoreNotifyComponent implements OnInit, OnChanges {
   getUserByPush() {
     this.columnDefs = []
     const params = {
-      "organizeId": this.organSeleted,
       "orgIds": this.danhsachphongban,
       "employees": [],
       "filter": this.query.filter
