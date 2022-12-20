@@ -86,7 +86,7 @@
             [detailInfoFilter]="detailInfoFilter" 
             [buttonsFilters] ="optionsButonFilter" 
             (callback)="filterLoad($event)" 
-            (close)="op.hide()">
+            (close)="close($event);op.hide()">
         </app-form-filter>
     </ng-template>
 </p-overlayPanel>

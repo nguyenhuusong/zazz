@@ -255,6 +255,16 @@ export class LyDoNghiViecComponent implements OnInit {
     this.load();
   }
 
+  close(event) {
+    if(event !== 'Close') {
+    const listViews = cloneDeep(this.cloneListViewsFilter);
+    this.listViewsFilter = cloneDeep(listViews);
+    const params =  getParamString(listViews)
+    this.query = { ...this.query, ...params};
+    this.load();
+    }
+  }
+
   ngOnInit() {
     this.load();
     this.items = [

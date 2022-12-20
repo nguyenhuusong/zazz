@@ -635,12 +635,14 @@ detailInfoFilter = null;
   }
 
   close(event) {
-    const listViews = cloneDeep(this.cloneListViewsFilter);
-    this.listViewsFilter = cloneDeep(listViews);
-    const params =  getParamString(listViews)
-    this.query = { ...this.query, ...params};
-    this.load();
-    this.FnEvent()
+    if(event !== 'Close') {
+      const listViews = cloneDeep(this.cloneListViewsFilter);
+      this.listViewsFilter = cloneDeep(listViews);
+      const params =  getParamString(listViews)
+      this.query = { ...this.query, ...params};
+      this.load();
+      this.FnEvent()
+    }
   }
 
 showFilter() {

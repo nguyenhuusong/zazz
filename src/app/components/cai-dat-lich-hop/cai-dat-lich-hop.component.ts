@@ -483,11 +483,13 @@ detailInfoFilter = null;
   }
 
   close(event) {
+    if(event !== 'Close') {
     const listViews = cloneDeep(this.cloneListViewsFilter);
     this.listViewsFilter = cloneDeep(listViews);
     const params =  getParamString(listViews)
     this.model = { ...this.model, ...params};
     this.load();
+    }
   }
 
 showFilter() {

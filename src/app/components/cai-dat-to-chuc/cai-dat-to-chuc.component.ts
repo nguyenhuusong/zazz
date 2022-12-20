@@ -602,30 +602,31 @@ export class CaiDatToChucComponent implements OnInit {
       value: 'Add'
     }
     
-    if (this.detailOrganizeMap.parentId) {
-      // this.getOrganizeTree(this.detailOrganizeMap.organizeId);
-      this.getOrganizeLevelList(this.detailOrganizeMap.organizeId);
-      this.modeAgencyOrganize = {
-        orgId: null,
-        organizeId: this.query.organizeIds,
-        org_name: '',
-        org_level: this.detailOrganizeMap.org_level + 1,
-        parentId: this.detailOrganizeMap.orgId,
-        org_type: '',
-        isChild: false,
-        de_cd: null,
-      }
-    } else {
-      this.modeAgencyOrganize = {
-        orgId: null,
-        organizeId: this.listAgencyMap.length > 0 ? this.detailOrganizeMap.organizeId : null,
-        org_name: '',
-        org_level: this.listAgencyMap.length > 0 ? 1 : 0,
-        parentId: null,
-        org_type: '',
-        isChild: false,
-        de_cd: null,
-      }
+    // if (this.detailOrganizeMap.parentId) {
+    //   // this.getOrganizeTree(this.detailOrganizeMap.organizeId);
+    //   this.getOrganizeLevelList(this.detailOrganizeMap.organizeId);
+    //   this.modeAgencyOrganize = {
+    //     orgId: null,
+    //     organizeId: this.query.organizeIds,
+    //     org_name: '',
+    //     org_level: this.detailOrganizeMap.org_level + 1,
+    //     parentId: this.detailOrganizeMap.orgId,
+    //     org_type: '',
+    //     isChild: false,
+    //     de_cd: null,
+    //   }
+    // } else {
+     
+    // }
+    this.modeAgencyOrganize = {
+      orgId: null,
+      organizeId: this.listAgencyMap.length > 0 ? this.detailOrganizeMap.organizeId : null,
+      org_name: '',
+      org_level: this.listAgencyMap.length > 0 ? 1 : 0,
+      parentId: null,
+      org_type: '',
+      isChild: false,
+      de_cd: null,
     }
     this.displayOrganize = true;
     this.displayButton = false;

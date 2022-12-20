@@ -37,7 +37,7 @@
     </section>
 <p-overlayPanel #op [dismissable]="false" appendTo="body" >
     <ng-template pTemplate>
-        <app-form-filter *ngIf="listViewsFilter.length > 0" [listFields]="listViewsFilter" [detailInfoFilter]="detailInfoFilter" [buttonsFilters] ="optionsButonFilter" (callback)="filterLoad($event)" (close)="op.hide()"></app-form-filter>
+        <app-form-filter *ngIf="listViewsFilter.length > 0" [listFields]="listViewsFilter" [detailInfoFilter]="detailInfoFilter" [buttonsFilters] ="optionsButonFilter" (callback)="filterLoad($event)" (close)="close($event);op.hide()"></app-form-filter>
     </ng-template>
 </p-overlayPanel>
     <section class="content pb-0">

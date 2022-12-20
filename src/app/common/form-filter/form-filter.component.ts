@@ -251,7 +251,7 @@ export class FormFilterComponent implements OnInit, OnChanges {
 
   cancel(event) {
     this.displaySetting = false;
-    this.close.emit();
+    this.close.emit(event);
   }
 
   changeDropdown(event) {

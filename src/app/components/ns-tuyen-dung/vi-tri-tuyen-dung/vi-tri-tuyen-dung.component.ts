@@ -373,11 +373,13 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
   }
 
   close(event) {
+    if(event !== 'Close') {
     const listViews = cloneDeep(this.cloneListViewsFilter);
     this.listViewsFilter = cloneDeep(listViews);
     const params = getParamString(listViews)
     this.query = { ...this.query, ...params };
     this.load();
+    }
   }
 
   showFilter() {

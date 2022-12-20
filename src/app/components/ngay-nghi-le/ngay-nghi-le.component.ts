@@ -439,6 +439,16 @@ export class NgayNghiLeComponent implements OnInit {
     { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm height-56 addNew', icon: 'pi pi-search' },
     { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger height-56 addNew', icon: 'pi pi-times' },
   ];
+
+  close(event) {
+    if(event !== 'Close') {
+    const listViews = cloneDeep(this.cloneListViewsFilter);
+    this.listViewsFilter = cloneDeep(listViews);
+    const params =  getParamString(listViews)
+    this.query = { ...this.query, ...params};
+    this.load();
+    }
+  }
   
   getFilter() {
     this.apiService.getFilter('/api/v1/holiday/GetHolidayFilter').subscribe(results => {
