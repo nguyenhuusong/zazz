@@ -29,7 +29,7 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
   ];
   modelEdit = {
     maternityId: null,
-    keyObj: '',
+    empId: null,
   }
   titlePage = '';
   listsDataMaternityPregnancy = [];
@@ -44,7 +44,7 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
   dataDetail = []
   heightGrid = 300;
   organIdSelected = '';
-  emId = '';
+  empId = '';
   emDataInfo = []
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -79,7 +79,8 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
       .subscribe((params) => {
         this.paramsObject = { ...params.keys, ...params };
         this.modelEdit.maternityId = this.paramsObject.params.maternityId || null;
-        this.emId = this.paramsObject.params.emId || null;
+        this.modelEdit.empId = this.paramsObject.params.empId || null;
+        this.empId = this.paramsObject.params.empId || null;
         this.getMaternityInfo();
       });
   };
@@ -89,7 +90,6 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
     this.columnDefDetail = []
     this.dataDetail = []
     this.colsDetail = [];
-    this.modelEdit.keyObj = '';
     this.listsDataMaternityPregnancy = [];
     this.columnDefMaternityPregnancy = [];
     this.columnDefKhamThai = []
@@ -117,7 +117,6 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
     this.dataDetail = [];
     this.detailInfo = [];
     this.listViews = [];
-    this.modelEdit.keyObj = '';
     const queryParams = queryString.stringify(this.modelEdit);
     this.apiService.getMaternityInfo(queryParams)
       .pipe(takeUntil(this.unsubscribe$))
@@ -144,10 +143,10 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
           // this.initGrid();
         }
         // set by emid
-        if(this.emId) {
+        if(this.empId) {
           let listViews = cloneDeep(this.listViews);
           this.listViews = []
-          const queryParams = queryString.stringify({ empId: this.emId });
+          const queryParams = queryString.stringify({ empId: this.empId });
           this.apiService.getEmpWorkJob(queryParams).subscribe(results => {
   
             let companyValue = getValueOfField(results.data.group_fields, 'companyId');
@@ -159,8 +158,8 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
                   if(field.field_name === 'companyName') { 
                     field.columnValue = companyValue;
                   }else if(field.field_name === 'empId') { 
-                    field.columnObject = field.columnObject + '&organizeId=' + orgcdsValue + '&ftUserId=' + this.emId
-                    field.columnValue = this.emId;
+                    field.columnObject = field.columnObject + '&organizeId=' + orgcdsValue + '&ftUserId=' + this.empId
+                    field.columnValue = this.empId;
                   }
                 });
               })

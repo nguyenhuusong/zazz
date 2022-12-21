@@ -440,7 +440,7 @@ showFilter() {
   seachEmValue(event) {
     const params = {
       maternityId: null,
-      emId: event.value
+      empId: event.value
     }
     if(event.value) {
       this.router.navigate(['/nhan-su/thai-san/them-moi-thai-san'], { queryParams: params });
