@@ -425,8 +425,8 @@ export class AppTypeSelectTreesComponent implements OnInit, OnChanges {
                 </p-dropdown>
                 <div *ngIf="element.field_name==='roomId'" class="chon-lich-hop" style="
                       position: absolute;
-                      right: 0px;
-                      top: 26px;
+                      right: -3px;
+                      top: 23px;
                       z-index: 9;
                   ">
                   <p-button [disabled]="element.columnValue ? false : true " (onClick)="chonLichHop()" styleClass="p-button-sm " label="Chọn lịch họp" icon="pi pi-clock"></p-button>&nbsp;
