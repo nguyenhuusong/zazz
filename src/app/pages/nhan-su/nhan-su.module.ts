@@ -100,6 +100,8 @@ import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { TbhDsDinhKemComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/thue-bao-hiem/tbh-ds-dinh-kem/tbh-ds-dinh-kem.component';
 import { TbhQtDongBtComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/thue-bao-hiem/tbh-qt-dong-bt/tbh-qt-dong-bt.component';
 import { HrmSearchEmpModule } from 'src/app/common/hrm-search-emp/hrm-search-emp.module';
+import { DanhSachTreConComponent } from 'src/app/components/thai-san/danh-sach-tre-con/danh-sach-tre-con.component';
+import { DanhSachKhamThaiComponent } from 'src/app/components/thai-san/danh-sach-kham-thai/danh-sach-kham-thai.component';
 
 @NgModule({
   imports: [
@@ -210,6 +212,8 @@ import { HrmSearchEmpModule } from 'src/app/common/hrm-search-emp/hrm-search-emp
     QuaTrinhDaoTaoComponent,
     KyNangComponent,
     ChungChiComponent,
+    DanhSachTreConComponent,
+    DanhSachKhamThaiComponent,
 
   ],
   providers: [ ]

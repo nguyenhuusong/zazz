@@ -8,8 +8,11 @@
         [detail]="detailInfo" [manhinh]="'Edit'" 
         [optionsButtonsEdit]="optionsButon"  [dataView]="listViews"
         (callback)="setMaternityInfo($event)" (callbackcancel)="quaylai($event)"></app-edit-detail>
-        <hr>
-        <section class="row mt-1" *ngIf="modelEdit.maternityId">
+        <p-divider></p-divider>
+        <app-danh-sach-kham-thai [maternityId]="modelEdit?.maternityId" *ngIf="modelEdit?.maternityId"></app-danh-sach-kham-thai>
+        <app-danh-sach-tre-con [maternityId]="modelEdit?.maternityId" *ngIf="modelEdit?.maternityId"></app-danh-sach-tre-con>
+
+        <!-- <section class="row mt-1" *ngIf="modelEdit.maternityId">
             <div class="col-md-6">
                 <p-panel>
                     <ng-template pTemplate="header">
@@ -81,7 +84,7 @@
                 [listsData]="dataDetail" [height]="heightGrid"
                 (firstDataRendered)="onFirstDataRendered($event)"
                 [columnDefs]="columnDefDetail"></app-list-grid-angular>
-        </section>
+        </section> -->
    </div>
 </div>
 
