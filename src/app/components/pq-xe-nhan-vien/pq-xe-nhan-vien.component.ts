@@ -767,7 +767,7 @@ onCellClicked(event) {
   }
 
   addVehicleCard(): void {
-    // this.getEmpVehicleInfo();
+    this.getEmpVehicleInfo();
     // this.modelTM.organizeId =  '';
     this.modelTM.type = 1;
     this.modelTM.cardVehicleId = 0;
