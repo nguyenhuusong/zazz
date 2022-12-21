@@ -143,7 +143,7 @@ export class KyNangComponent implements OnInit {
               },
 
               {
-                onClick: this.deleteRow.bind(this),
+                onClick: this.delRow.bind(this),
                 label: 'Xóa',
                 icon: 'pi pi-trash',
                 key: 'delete-qua-trinh-hop-dong',
@@ -155,9 +155,16 @@ export class KyNangComponent implements OnInit {
       }
     ];
   }
+
+  onCellClicked(event) {
+    if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
+      this.editRow(event = {rowData: event.data})
+    }
+  }
+
   trainId = null;
-  editRow(event) {
-    this.trainId = event.rowData.metaId
+  editRow({rowData}) {
+    this.trainId = rowData.metaId
     this.getTrainFile();
   }
 
@@ -177,7 +184,7 @@ export class KyNangComponent implements OnInit {
     })
   }
 
-  deleteRow(event) {
+  delRow(event) {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa thời gian làm việc này?',
       accept: () => {

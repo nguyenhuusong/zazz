@@ -175,7 +175,7 @@ export class QuaTrinhHopDongComponent implements OnInit {
                 class: 'btn-danger',
               },
               {
-                onClick: this.deleteRow.bind(this),
+                onClick: this.delRow.bind(this),
                 label: 'Xóa',
                 icon: 'pi pi-trash',
                 key: 'delete-qua-trinh-hop-dong',
@@ -194,14 +194,20 @@ export class QuaTrinhHopDongComponent implements OnInit {
     comment: ''
   }
 
-  editRow(event) {
+  editRow({rowData}) {
     this.modelContractInfo = {
-      contractId: event.rowData.contractId,
-      contractTypeId: event.rowData.contractTypeId,
+      contractId: rowData.contractId,
+      contractTypeId: rowData.contractTypeId,
       empId: this.detailInfo.empId,
       detailInfo: this.detailInfo,
     }
     this.hienthihopdong = true;
+  }
+
+  onCellClicked(event) {
+    if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
+      this.editRow(event = {rowData: event.data})
+    }
   }
 
   displayApproveContract = false;
@@ -246,7 +252,7 @@ export class QuaTrinhHopDongComponent implements OnInit {
   }
 
 
-  deleteRow(event) {
+  delRow(event) {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa thời gian làm việc này?',
       accept: () => {

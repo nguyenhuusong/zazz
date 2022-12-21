@@ -16,6 +16,7 @@
                     [title]="'Chứng chỉ'"
                     [listsData]="listsData" 
                     (showConfig)="CauHinh()"
+                    (onCellClicked)="onCellClicked($event)"
                     [columnDefs]="columnDefs">
                 </app-list-grid-angular>
                 </div>

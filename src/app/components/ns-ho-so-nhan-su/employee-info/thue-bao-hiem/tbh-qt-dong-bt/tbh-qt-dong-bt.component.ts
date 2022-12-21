@@ -144,7 +144,7 @@ export class TbhQtDongBtComponent implements OnInit {
               },
 
               {
-                onClick: this.deleteRow.bind(this),
+                onClick: this.delRow.bind(this),
                 label: 'Xóa',
                 icon: 'pi pi-trash',
                 key: 'delete-qua-trinh-hop-dong',
@@ -157,12 +157,18 @@ export class TbhQtDongBtComponent implements OnInit {
     ];
   }
 
-  editRow(event) {
-    this.insuranceId = event.rowData.insuranceId;
+  editRow({rowData}) {
+    this.insuranceId = rowData.insuranceId;
     this.getEmpInsuranceInfo();
   }
 
-  deleteRow(event) {
+  onCellClicked(event) {
+    if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
+      this.editRow(event = {rowData: event.data})
+    }
+  }
+
+  delRow(event) {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa?',
       accept: () => {

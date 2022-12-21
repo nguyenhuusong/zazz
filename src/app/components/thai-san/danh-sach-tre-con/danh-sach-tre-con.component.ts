@@ -146,7 +146,7 @@ export class DanhSachTreConComponent implements OnInit {
               },
 
               {
-                onClick: this.deleteRow.bind(this),
+                onClick: this.delRow.bind(this),
                 label: 'Xóa',
                 icon: 'pi pi-trash',
                 key: 'delete-qua-trinh-hop-dong',
@@ -158,13 +158,19 @@ export class DanhSachTreConComponent implements OnInit {
       }
     ];
   }
-  
-  editRow(event) {
-    this.childId = event.rowData.childId;
+
+  onCellClicked(event) {
+    if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
+      this.editRow(event = {rowData: event.data})
+    }
+  }
+
+  editRow({rowData}) {
+    this.childId = rowData.childId;
     this.getMaternityChildInfo();
   }
 
-  deleteRow(event) {
+  delRow(event) {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa thời gian làm việc này?',
       accept: () => {

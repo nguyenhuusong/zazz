@@ -99,7 +99,7 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
               },
 
               {
-                onClick: this.deleteRow.bind(this),
+                onClick: this.delRow.bind(this),
                 label: 'Xóa',
                 icon: 'pi pi-trash',
                 key: 'delete-qua-trinh-hop-dong',
@@ -112,10 +112,17 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
     ];
   }
   processId = null;
-  editRow(event) {
-    this.processId = event.rowData.processId;
+  editRow({rowData}) {
+    this.processId = rowData.processId;
     this.getDetail();
   }
+
+  onCellClicked(event) {
+    if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
+      this.editRow(event = {rowData: event.data})
+    }
+  }
+
   displayFormEditDetail = false;
   canceldataDetailInfo(event) {
     if (event === 'CauHinh') {
@@ -266,7 +273,8 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
       this.cancelSave.emit();
     }
   }
-  deleteRow(event) {
+  
+  delRow(event) {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa quá trình làm việc này?',
       accept: () => {
