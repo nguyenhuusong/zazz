@@ -214,8 +214,8 @@ export class AppTypeSelectComponent implements OnInit {
      <div class="field-group select treeselect" [ngClass]="'valid'" > 
      <label class="text-nowrap label-tex" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
       <p-treeSelect [appendTo]="'body'" 
-      [name]="element.field_name" [filterInputAutoFocus]="true" 
-      [filter]="true" [options]="element.options || []" [(ngModel)]="element.columnValue" 
+      [name]="element.field_name" 
+      [filter]="true" [options]="element.options || []" [(ngModel)]="element.columnValue"
       [filterInputAutoFocus]="true"  selectionMode="single" [disabled]="element.isDisable" 
       placeholder="Select Item" (onNodeSelect)="selectNode($event, element.field_name, element)" 
       [required]="element && element.isRequire && element?.isVisiable && !element.isEmpty"></p-treeSelect>
@@ -246,6 +246,7 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
   }
 
   selectNode(event,field_name, element) {
+    console.log(this.element)
     if(this.element.field_name === "org_Id"){
       this.setValue('', 'User_Id')
     }
@@ -258,8 +259,12 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
         element.fields.forEach(element1 => {
           if(fields.indexOf(element1.field_name) > -1) {
             if(element1.columnObject) {
-              const params = element1.columnObject.split("?")
-              element1.columnObject = params[0]  + `?${field_name}=${event.node.data}`
+              this.setValue(element1.columnType === 'multiSelect' ? [] : '', element1.field_name)
+              const params = element1.columnObject.split("?");
+              let params1 = params[1].split("&");
+              const indexparams1 = params1.filter(d => !d.includes(`${field_name}=`));
+              indexparams1.push(`${field_name}=${event.node.data}`);
+              element1.columnObject = params[0]  + `?${indexparams1.join("&")}`
               if(element1.columnType === 'selectTree' || element1.columnType === 'selectTrees') {
                 promissall.push(this.apiHrmV2Service.getCustObjectListTreeV2(element1.columnObject, element1.field_name));
               }else {
