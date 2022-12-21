@@ -40,6 +40,7 @@ import { ConfigGridTableFormModule } from '../config-grid-table-form/config-grid
 import {ChipsModule} from 'primeng/chips';
 import {InputSwitchModule} from 'primeng/inputswitch';
 import { HrmSearchEmpModule } from '../hrm-search-emp/hrm-search-emp.module';
+import { ChipModule } from 'primeng/chip';
 @NgModule({
   imports: [
     FormsModule,
@@ -63,6 +64,7 @@ import { HrmSearchEmpModule } from '../hrm-search-emp/hrm-search-emp.module';
     AutoCompleteModule,
     FileUploadModule,
     SelectButtonModule,
+    ChipModule,
     MultiSelectModule,
     CurrencyDirectiveModule,
     PageMarkdownModule,

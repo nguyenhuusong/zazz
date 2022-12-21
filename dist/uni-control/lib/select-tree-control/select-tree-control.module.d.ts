@@ -4,8 +4,9 @@ import * as i2 from "@angular/common";
 import * as i3 from "@angular/forms";
 import * as i4 from "primeng/button";
 import * as i5 from "primeng/treeselect";
+import * as i6 from "primeng/chip";
 export declare class SelectTreeControlModule {
     static ɵfac: i0.ɵɵFactoryDeclaration<SelectTreeControlModule, never>;
-    static ɵmod: i0.ɵɵNgModuleDeclaration<SelectTreeControlModule, [typeof i1.SelectTreeControlComponent], [typeof i2.CommonModule, typeof i3.FormsModule, typeof i4.ButtonModule, typeof i5.TreeSelectModule], [typeof i1.SelectTreeControlComponent]>;
+    static ɵmod: i0.ɵɵNgModuleDeclaration<SelectTreeControlModule, [typeof i1.SelectTreeControlComponent], [typeof i2.CommonModule, typeof i3.FormsModule, typeof i4.ButtonModule, typeof i5.TreeSelectModule, typeof i6.ChipModule], [typeof i1.SelectTreeControlComponent]>;
     static ɵinj: i0.ɵɵInjectorDeclaration<SelectTreeControlModule>;
 }
