@@ -80,7 +80,7 @@
 </div>
 
 
-<p-dialog [(visible)]="displayCreateVehicleCard"  [baseZIndex]="99" [modal]="true"
+<p-dialog [(visible)]="isShowP"  [baseZIndex]="99" [modal]="true"
   [style]="{width: '1000px', height: 'auto'}">
   <p-header>
      {{ modelTM?.cardVehicleId ? 'Sửa vé gửi xe' : 'Thêm vé gửi xe' }}
@@ -366,7 +366,7 @@ styleClass="menu-option-right" #menuButton></p-menu>
   </ng-template>
 </p-overlayPanel>
 
-<p-dialog header="Xe nhân viên" (onHide)="closeDetailVehic()" [(visible)]="isDetailVehic" 
+<p-dialog header="{{ isNew ? 'Thêm mới xe' : 'Sửa xe' }}" (onHide)="closeDetailVehic()" [(visible)]="isDetailVehic" 
 [modal]="true" [style]="{width: '50vw'}" 
 [maximizable]="true"
 [draggable]="false" [resizable]="false" [focusTrap]="false" styleClass="popup-setting">

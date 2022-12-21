@@ -96,7 +96,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
   query = {
     filter: '',
     offset: 0,
-    pageSize: 20,
+    pageSize: 15,
     gridWidth: 0
   };
   modelFields = {};
