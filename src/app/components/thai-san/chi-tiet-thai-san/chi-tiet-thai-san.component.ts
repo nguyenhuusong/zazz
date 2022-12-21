@@ -78,9 +78,11 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((params) => {
         this.paramsObject = { ...params.keys, ...params };
+        console.log(this.paramsObject.params.maternityId)
         this.modelEdit.maternityId = this.paramsObject.params.maternityId || null;
         this.modelEdit.empId = this.paramsObject.params.empId || null;
         this.empId = this.paramsObject.params.empId || null;
+        console.log(this.paramsObject)
         this.getMaternityInfo();
       });
   };
@@ -117,6 +119,7 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
     this.dataDetail = [];
     this.detailInfo = [];
     this.listViews = [];
+    console.log(this.modelEdit)
     const queryParams = queryString.stringify(this.modelEdit);
     this.apiService.getMaternityInfo(queryParams)
       .pipe(takeUntil(this.unsubscribe$))
@@ -414,40 +417,40 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
   }
 
   saveCallApi(event) {
-    this.spinner.show();
-    let groupFieldNew = event;
-    groupFieldNew[0].fields.forEach(element => {
-      if(element.field_name === "meta_file_name") {
-        element.columnValue = this.fileThaiSan.name;
-      }else if(element.field_name === "meta_file_type") {
-        element.columnValue = this.fileThaiSan.type;
-      }else if(element.field_name === "meta_title") {
-        element.columnValue = "File dữ liệu khám thai";
-      }else if(element.field_name === "meta_file_size") {
-        element.columnValue = this.fileThaiSan.size;
-      }
-    });
-    const params = {
-      ...this.detailInfo_other, group_fields: groupFieldNew
-    }
-    this.apiService.setMaternityPregnancyInfo(this.modelAdd.set,params)
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((results: any) => {
-        if (results.status === 'success') {
-          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
-          this.spinner.hide();
-          this.displayAddThaiSan = false;
-          this.getChiTietForDsThaiSan();
-        } else {
-          this.messageService.add({
-            severity: 'error', summary: 'Thông báo',
-            detail: results.message
-          });
-          this.spinner.hide();
-        }
-      }), error => {
-        this.spinner.hide();
-      };
+    // this.spinner.show();
+    // let groupFieldNew = event;
+    // groupFieldNew[0].fields.forEach(element => {
+    //   if(element.field_name === "meta_file_name") {
+    //     element.columnValue = this.fileThaiSan.name;
+    //   }else if(element.field_name === "meta_file_type") {
+    //     element.columnValue = this.fileThaiSan.type;
+    //   }else if(element.field_name === "meta_title") {
+    //     element.columnValue = "File dữ liệu khám thai";
+    //   }else if(element.field_name === "meta_file_size") {
+    //     element.columnValue = this.fileThaiSan.size;
+    //   }
+    // });
+    // const params = {
+    //   ...this.detailInfo_other, group_fields: groupFieldNew
+    // }
+    // this.apiService.setMaternityPregnancyInfo(this.modelAdd.set,params)
+    //   .pipe(takeUntil(this.unsubscribe$))
+    //   .subscribe((results: any) => {
+    //     if (results.status === 'success') {
+    //       this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
+    //       this.spinner.hide();
+    //       this.displayAddThaiSan = false;
+    //       this.getChiTietForDsThaiSan();
+    //     } else {
+    //       this.messageService.add({
+    //         severity: 'error', summary: 'Thông báo',
+    //         detail: results.message
+    //       });
+    //       this.spinner.hide();
+    //     }
+    //   }), error => {
+    //     this.spinner.hide();
+    //   };
   }
 
   isDetailLichThaiSan = false

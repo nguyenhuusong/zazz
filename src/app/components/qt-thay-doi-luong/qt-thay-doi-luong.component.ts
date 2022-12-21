@@ -601,10 +601,7 @@ export class QtThayDoiLuongComponent implements OnInit {
   }
   isSearchEmp: boolean = false
   addNew() {
-    
-
     this.isSearchEmp = true;
-
   }
 
   seachEmValue(event) {

@@ -99,7 +99,7 @@ export class ThoiGianLamViecComponent implements OnInit, AfterViewInit {
               },
 
               {
-                onClick: this.deleteRow.bind(this),
+                onClick: this.delRow.bind(this),
                 label: 'Xóa',
                 icon: 'pi pi-trash',
                 key: 'delete-qua-trinh-hop-dong',
@@ -112,10 +112,17 @@ export class ThoiGianLamViecComponent implements OnInit, AfterViewInit {
     ];
   }
   workingId = null;
-  editRow(event) {
-    this.workingId = event.rowData.id;
+  editRow({rowData}) {
+    this.workingId = rowData.id;
     this.getDetail();
   }
+
+  onCellClicked(event) {
+    if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
+      this.editRow(event = {rowData: event.data})
+    }
+  }
+
   displayFormEditDetail = false;
   canceldataDetailInfo(event) {
     if (event === 'CauHinh') {
@@ -271,7 +278,8 @@ cloneListViewsDetail = [];
       this.cancelSave.emit();
     }
   }
-  deleteRow(event) {
+  
+  delRow(event) {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa quá trình làm việc này?',
       accept: () => {

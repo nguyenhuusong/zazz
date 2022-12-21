@@ -9,12 +9,12 @@ import { AgGridFn } from 'src/app/common/function-common/common';
 import { fromEvent } from 'rxjs';
 
 @Component({
-  selector: 'app-qua-trinh-dao-tao',
-  templateUrl: './qua-trinh-dao-tao.component.html',
-  styleUrls: ['./qua-trinh-dao-tao.component.scss']
+  selector: 'app-danh-sach-tre-con',
+  templateUrl: './danh-sach-tre-con.component.html',
+  styleUrls: ['./danh-sach-tre-con.component.scss']
 })
-export class QuaTrinhDaoTaoComponent implements OnInit {
-  @Input() empId = null;
+export class DanhSachTreConComponent implements OnInit {
+  @Input() maternityId = null;
   optionsButtonsPopup = [
     { label: 'Bỏ qua', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
     { label: 'Xác nhận', value: 'Update', class: 'btn-accept' }
@@ -36,34 +36,36 @@ export class QuaTrinhDaoTaoComponent implements OnInit {
 
   FnEvent() {
     setTimeout(() => {
-      var dragTarget = document.getElementById(`${this.gridKey}_daotao`);
+      var dragTarget = document.getElementById(`${this.gridKey}`);
       if(dragTarget) {
         const click$ = fromEvent(dragTarget, 'click');
         click$.subscribe(event => {
-          this.addTraining()
+          this.themKhamThai()
         });
       }
     }, 300);
   }
 
   ngOnInit(): void {
-    this.getTrainningPage();
+    this.getMaternityChildPage();
   }
   displaySetting = false;
   CauHinh() {
     this.displaySetting = true;
   }
-  addTraining() {
-    this.getAddTraining();
+  childId = null;
+  themKhamThai() {
+    this.childId = null;
+    this.getMaternityChildInfo();
   }
 
   listViewsDetail = [];
   dataDetailInfo = null;
   displayFormEditDetail = false
-  getAddTraining() {
-    const queryParams = queryString.stringify({ empId: this.empId});
+  getMaternityChildInfo() {
+    const queryParams = queryString.stringify({ maternityId: this.maternityId, childId: this.childId});
     this.listViewsDetail = [];
-    this.apiService.addTraining(queryParams).subscribe(results => {
+    this.apiService.getMaternityChildInfo(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.listViewsDetail = cloneDeep(results.data.group_fields);
         this.dataDetailInfo = results.data;
@@ -76,11 +78,11 @@ export class QuaTrinhDaoTaoComponent implements OnInit {
     const param = {
       ...this.dataDetailInfo, group_fields: data
     }
-    this.apiService.setTrainFile(param).subscribe(results => {
+    this.apiService.setMaternityChildInfo(param).subscribe(results => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thêm mới thành công' });
         this.displayFormEditDetail = false;
-        this.getTrainningPage();
+        this.getMaternityChildPage();
         this.FnEvent();
         this.spinner.hide();
       } else {
@@ -91,11 +93,11 @@ export class QuaTrinhDaoTaoComponent implements OnInit {
   
   }
 
-  getTrainningPage() {
+  getMaternityChildPage() {
     this.spinner.show();
     this.columnDefs = [];
-    const queryParams = queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 });
-    this.apiService.getTrainningPage(queryParams).subscribe(repo => {
+    const queryParams = queryString.stringify({ maternityId: this.maternityId, offSet: 0, pageSize: 10000 });
+    this.apiService.getMaternityChildPage(queryParams).subscribe(repo => {
       if (repo.status === 'success') {
         if (repo.data.dataList.gridKey) {
           this.gridKey = repo.data.dataList.gridKey;
@@ -112,10 +114,10 @@ export class QuaTrinhDaoTaoComponent implements OnInit {
 
   cancelDetailInfo(event) {
     if(event === 'CauHinh') {
-      this.addTraining();
+      this.getMaternityChildInfo();
     }else {
       this.displayFormEditDetail = false;
-      this.getTrainningPage();
+      this.getMaternityChildPage();
     }
   }
 
@@ -125,7 +127,7 @@ export class QuaTrinhDaoTaoComponent implements OnInit {
       {
         headerComponentParams: {
           template:
-          `<button  class="btn-button" id="${this.gridKey}_daotao"> <span class="pi pi-plus action-grid-add" ></span></button>`,
+          `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
         },
         field: 'gridflexdetails1',
         cellClass: ['border-right', 'no-auto'],
@@ -156,11 +158,6 @@ export class QuaTrinhDaoTaoComponent implements OnInit {
       }
     ];
   }
-  trainId = null;
-  editRow({rowData}) {
-    this.trainId = rowData.metaId
-    this.getTrainFile();
-  }
 
   onCellClicked(event) {
     if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
@@ -168,31 +165,20 @@ export class QuaTrinhDaoTaoComponent implements OnInit {
     }
   }
 
-  getTrainFile() {
-    this.spinner.show();
-    const queryParams = queryString.stringify({ trainId: this.trainId });
-    this.listViewsDetail = [];
-    this.apiService.getTrainFile(queryParams).subscribe(result => {
-      if (result.status === 'success') {
-        this.listViewsDetail = cloneDeep(result.data.group_fields);
-        this.dataDetailInfo = result.data;
-        this.displayFormEditDetail = true;
-        this.spinner.hide();
-      } else {
-        this.spinner.hide();
-      }
-    })
+  editRow({rowData}) {
+    this.childId = rowData.childId;
+    this.getMaternityChildInfo();
   }
 
   delRow(event) {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa thời gian làm việc này?',
       accept: () => {
-        const queryParams = queryString.stringify({trainId: event.rowData.trainId});
-        this.apiService.delTrainFile(queryParams).subscribe((results: any) => {
+        const queryParams = queryString.stringify({childId: event.rowData.childId});
+        this.apiService.delMaternityChildInfo(queryParams).subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
-            this.getTrainningPage();
+            this.getMaternityChildPage();
             this.FnEvent();
           } else {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });

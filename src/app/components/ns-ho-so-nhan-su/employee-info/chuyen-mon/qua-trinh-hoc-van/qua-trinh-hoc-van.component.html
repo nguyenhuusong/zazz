@@ -15,6 +15,7 @@
                     [listsData]="listsData" 
                     [idGrid]="gridKey + '_45dfs'"
                     (showConfig)="CauHinh()"
+                    (onCellClicked)="onCellClicked($event)"
                     [columnDefs]="columnDefs">
                 </app-list-grid-angular>
                 </div>
