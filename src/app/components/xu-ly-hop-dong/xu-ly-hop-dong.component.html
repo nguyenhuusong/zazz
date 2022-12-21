@@ -140,6 +140,7 @@
             [rowSelection]="'multiple'" 
             [idGrid]="'prints'" 
             (callback)="rowSelected($event)" 
+            (onCellClicked)="onCellClicked($event)" 
             (showConfig)="cauhinh()"
             [detailCellRendererParams]="detailCellRendererParams"
             [columnDefs]="columnDefsPrint"></app-list-grid-angular>
