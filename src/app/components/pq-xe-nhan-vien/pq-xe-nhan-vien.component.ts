@@ -35,6 +35,8 @@ export class PqXeNhanVienComponent implements OnInit {
   ]
 
   public agGridFn = AgGridFn;
+  isShowP = false;
+  isNew = true;
   constructor(
     private apiService: ApiHrmService,
     private route: ActivatedRoute,
@@ -485,6 +487,7 @@ detailInfoFilter = null;
   // }
 
   editRow({rowData}): void {
+    this.isNew = false;
     this.getEmpVehicleInfo(rowData.cardVehicleId);
     const cardVehicleId = rowData.cardVehicleId;
     this.modelTM.imageLinks = cloneDeep(this.imageLinksCard);
@@ -767,6 +770,7 @@ onCellClicked(event) {
   }
 
   addVehicleCard(): void {
+    this.isNew = true;
     this.getEmpVehicleInfo();
     // this.modelTM.organizeId =  '';
     this.modelTM.type = 1;
@@ -982,7 +986,7 @@ showFilter() {
           this.addVehicleCard()
         });
       }
-    }, 4000);
+    }, 200);
   }
 
 }
