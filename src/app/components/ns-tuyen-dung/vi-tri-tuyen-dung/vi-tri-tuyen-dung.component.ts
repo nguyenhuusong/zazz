@@ -183,14 +183,14 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
     return {
       buttons: [
         {
-          onClick: this.XemChiTiet.bind(this),
+          onClick: this.editRow.bind(this),
           label: 'Xem chi tiết',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
           hide: CheckHideAction(MENUACTIONROLEAPI.GetVacancyPage.url, ACTIONS.VIEW)
         },
         {
-          onClick: this.xoavitri.bind(this),
+          onClick: this.delRow.bind(this),
           label: 'Xóa',
           icon: 'pi pi-trash',
           class: 'btn-primary mr5',
@@ -236,7 +236,7 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
 
   }
 
-  xoavitri(event) {
+  delRow(event) {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa vị trí tuyển dụng?',
       accept: () => {
@@ -253,11 +253,17 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  XemChiTiet(event) {
+  editRow({rowData}) {
     const params = {
-      vacancyId: event.rowData.vacancyId
+      vacancyId: rowData.vacancyId
     }
     this.router.navigate(['/tuyen-dung/vi-tri-tuyen-dung/chi-tiet-vi-tri-tuyen-dung'], { queryParams: params });
+  }
+
+  onCellClicked(event) {
+    if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
+      this.editRow(event = {rowData: event.data})
+    }
   }
 
   create() {

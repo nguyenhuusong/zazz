@@ -215,14 +215,14 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
     return {
       buttons: [
         {
-          onClick: this.handleEdit.bind(this),
+          onClick: this.editRow.bind(this),
           label: 'Thông tin chi tiết',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
           hide: this.CheckHideSua(event)
         },
         {
-          onClick: this.handleDelete.bind(this),
+          onClick: this.delRow.bind(this),
           label: 'Xóa tài liệu',
           icon: 'fa fa-trash',
           class: 'btn-primary mr5',
@@ -258,7 +258,7 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
     }
   }
 
-  handleDelete(event) {
+  delRow(event) {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa tài liệu?',
       accept: () => {
@@ -275,9 +275,15 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  handleEdit(event) {
-    this.formTypeId = event.rowData.form_type_id;
+  editRow({rowData}) {
+    this.formTypeId = rowData.form_type_id;
     this.addNewPopup = true;
+  }
+
+  onCellClicked(event) {
+    if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
+      this.editRow(event = {rowData: event.data})
+    }
   }
 
   handleAdd(): void {

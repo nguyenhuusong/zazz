@@ -199,7 +199,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
           hide: CheckHideAction(MENUACTIONROLEAPI.GetCandidatePage.url, ACTIONS.DANH_GIA_KET_QUA)
         },
         {
-          onClick: this.xoatuyendung.bind(this),
+          onClick: this.delRow.bind(this),
           label: 'Xóa ',
           icon: 'pi pi-trash',
           class: 'btn-primary mr5',
@@ -319,7 +319,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     
   }
 
-  xoatuyendung(event) {
+  delRow(event) {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa tuyển dụng?',
       accept: () => {
@@ -337,11 +337,17 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  editRow(event) {
+  editRow({rowData}) {
     const params = {
-      canId: event.rowData.canId
+      canId: rowData.canId
     }
     this.router.navigate(['/tuyen-dung/ds-tuyen-dung/chi-tiet-tuyen-dung'], { queryParams: params });
+  }
+
+  onCellClicked(event) {
+    if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
+      this.editRow(event = {rowData: event.data})
+    }
   }
 
   viewRow(event) {

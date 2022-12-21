@@ -150,7 +150,7 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
     return {
       buttons: [
         {
-          onClick: this.XemChiTiet.bind(this),
+          onClick: this.editRow.bind(this),
           label: 'Xem chi tiết',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
@@ -161,11 +161,11 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
 
   dataInfo: any = []
   isShowInfo = false
-  XemChiTiet(event) {
+  editRow({rowData}) {
     this.spinner.show();
     this.isShowInfo = true;
     const query = {
-      empId: event.rowData.empId,
+      empId: rowData.empId,
       year: this.query.year,
       month: this.query.month,
     }
@@ -178,6 +178,12 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
         }
       }),
       error => { };
+  }
+
+  onCellClicked(event) {
+    if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
+      this.editRow(event = {rowData: event.data})
+    }
   }
 
   initGrid() {

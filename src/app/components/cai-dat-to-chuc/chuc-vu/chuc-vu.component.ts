@@ -167,14 +167,14 @@ export class ChucVuComponent implements OnInit, AfterViewChecked {
     return {
       buttons: [
         {
-          onClick: this.XemChiTiet.bind(this),
+          onClick: this.editRow.bind(this),
           label: 'Thông tin chi tiết',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
           hide: CheckHideAction(MENUACTIONROLEAPI.GetPositionPage.url, ACTIONS.VIEW)
         },
         {
-          onClick: this.xoacongty.bind(this),
+          onClick: this.delRow.bind(this),
           label: 'Xóa chức vụ',
           icon: 'pi pi-trash',
           hide: CheckHideAction(MENUACTIONROLEAPI.GetPositionPage.url, ACTIONS.DELETE)
@@ -203,7 +203,7 @@ export class ChucVuComponent implements OnInit, AfterViewChecked {
 
   }
 
-  xoacongty(event) {
+  delRow(event) {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn thực hiện xóa chức vụ?',
       accept: () => {
@@ -220,12 +220,19 @@ export class ChucVuComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  XemChiTiet(event) {
+  editRow({rowData}) {
     const params = {
-      positionId: event.rowData.positionId,
+      positionId: rowData.positionId,
     }
     this.router.navigate(['/cai-dat/chuc-vu/chi-tiet-chuc-vu'], { queryParams: params });
   }
+
+  onCellClicked(event) {
+    if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
+      this.editRow(event = {rowData: event.data})
+    }
+  }
+
 
   addChucVu() {
     const params = {

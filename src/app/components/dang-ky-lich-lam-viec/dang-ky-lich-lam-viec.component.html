@@ -55,6 +55,7 @@
                 [listsData]="listsData" [height]="heightGrid"
                 [rowSelection]="'multiple'"
                 (callback)="rowSelected($event)"
+                (onCellClicked)="onCellClicked($event)"
                 (showConfig)="cauhinh()"
                 [columnDefs]="columnDefs"></app-list-grid-angular>
             <div class="paginator">

@@ -87,6 +87,7 @@
                         [columnDefs]="columnDefs2"
                         [rowSelection]="'multiple'"
                         (callback)="rowSelected($event)"
+                        (onCellClicked)="onCellClicked($event)"
                         (showConfig)="cauhinh()" [idGrid]="gridKey + '_45dfs'"
                         >
                         <!-- (firstDataRendered)="onFirstDataRendered($event)" -->

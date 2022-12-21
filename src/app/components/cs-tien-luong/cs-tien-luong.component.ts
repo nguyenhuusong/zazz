@@ -159,7 +159,7 @@ export class CsTienLuongComponent implements OnInit {
     return {
       buttons: [
         {
-          onClick: this.XemChiTiet.bind(this),
+          onClick: this.editRow.bind(this),
           label: 'Xem chi tiết',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
@@ -235,11 +235,17 @@ export class CsTienLuongComponent implements OnInit {
     // });
   }
 
-  XemChiTiet(event) {
+  editRow({rowData}) {
     const params = {
-      recordId: event.rowData.recordId
+      recordId: rowData.recordId
     }
     this.router.navigate(['/chinh-sach/tien-luong/chi-tiet-tien-luong'], { queryParams: params });
+  }
+
+  onCellClicked(event) {
+    if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
+      this.editRow(event = {rowData: event.data})
+    }
   }
 
   addTienLuong() {

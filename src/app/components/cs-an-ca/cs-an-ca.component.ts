@@ -193,7 +193,7 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
     return {
       buttons: [
         {
-          onClick: this.listDetail.bind(this),
+          onClick: this.editRow.bind(this),
           label: 'Xem chi tiết',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
@@ -382,8 +382,7 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
   }
 
   // list ăn ca
-  listDetail(event = null) {
-
+  editRow(event = null) {
     const params = {
       cusId: ''
     }
@@ -392,6 +391,16 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
     }
     this.router.navigate(['/chinh-sach/an-ca/chi-tiet-danh-sach-an-ca'], { queryParams: params });
   }
+
+  onCellClicked(event) {
+    if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
+      const params = {
+        cusId: event.data.custId
+      }
+      this.router.navigate(['/chinh-sach/an-ca/chi-tiet-danh-sach-an-ca'], { queryParams: params });
+    }
+  }
+
 
   rowSelected(event) {
     this.rowDataSelected = event;

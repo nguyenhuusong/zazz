@@ -276,14 +276,14 @@ detailInfoFilter = null;
           hide: this.CheckHideApprove(event)
         },
         {
-          onClick: this.editVehicleCard.bind(this),
+          onClick: this.editRow.bind(this),
           label: 'Xem chi tiết',
           icon: 'fa fa-edit',
           class: 'btn-primary mr5',
           hide: CheckHideAction(MENUACTIONROLEAPI.GetEmployeeVehiclePage.url, ACTIONS.VIEW)
         },
         {
-          onClick: this.deleteCardVehicle.bind(this),
+          onClick: this.delRow.bind(this),
           label: 'Xóa xe',
           icon: 'pi pi-trash',
           class: 'btn-danger mr5',
@@ -484,9 +484,9 @@ detailInfoFilter = null;
 
   // }
 
-  editVehicleCard(event): void {
-    this.getEmpVehicleInfo(event.event.rowData.cardVehicleId);
-    const cardVehicleId = event.rowData.cardVehicleId;
+  editRow({rowData}): void {
+    this.getEmpVehicleInfo(rowData.cardVehicleId);
+    const cardVehicleId = rowData.cardVehicleId;
     this.modelTM.imageLinks = cloneDeep(this.imageLinksCard);
     if (cardVehicleId === null || cardVehicleId === 0) {
       alert('Cần phê duyệt');
@@ -496,7 +496,7 @@ detailInfoFilter = null;
           this.modelTM.type = 2;
           this.modelTM.cardVehicleId = results.data.cardVehicleId;
           this.modelTM.vehicleNoTM = results.data.vehicleNo;
-          this.modelTM.organizeId = event.rowData.organizeId;
+          this.modelTM.organizeId = rowData.organizeId;
           this.modelTM.vehicleNameTM = results.data.vehicleName;
           this.modelTM.vehicleTypeIdTM = results.data.vehicleTypeId;
           this.modelTM.vehiclecardCd = results.data.cardId;
@@ -509,7 +509,7 @@ detailInfoFilter = null;
           this.imageLinksCard[0].cardVehicleId = this.modelTM.cardVehicleId;
           this.imageLinksCard[1].cardVehicleId = this.modelTM.cardVehicleId;
           this.imageLinksCard[2].cardVehicleId = this.modelTM.cardVehicleId;
-          this.modelTM.cusId = event.rowData.custId;
+          this.modelTM.cusId = rowData.custId;
           // this.modelTM.cardId = results.data.cardId;
           this.getImageUrl(results.data.imageLinks)
           this.getUserByPush();
@@ -521,6 +521,12 @@ detailInfoFilter = null;
 
   }
 
+
+onCellClicked(event) {
+  if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
+    this.editRow(event = {rowData: event.data})
+  }
+}
 
   getImageUrl(datas) {
     if(datas[0]){
@@ -695,7 +701,7 @@ detailInfoFilter = null;
 
   }
 
-  deleteCardVehicle(event): void {
+  delRow(event): void {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn thực hiện xóa dịch vụ gửi xe này?',
       accept: () => {

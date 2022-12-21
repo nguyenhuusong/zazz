@@ -105,20 +105,20 @@ export class TinhLuongComponent implements OnInit {
     }
   }
 
-  editEvent(event) {
+  editEvent(rowData) {
     let id = null;
     if (this.tabIndex === 0) {
-      this.idForm = event.rowData.appInfoId
+      this.idForm = rowData.appInfoId
     } else if (this.tabIndex === 1) {
-      this.idForm = event.rowData.id
+      this.idForm = rowData.id
     } else if (this.tabIndex === 2) {
-      this.idForm = event.rowData.componentId
+      this.idForm = rowData.componentId
     } else if (this.tabIndex === 3) {
-      this.idForm = event.rowData.baseId
+      this.idForm = rowData.baseId
     }
     this.isFormDetail = true;
 
-    const queryParams = queryString.stringify({ recordId: event.rowData.id });
+    // const queryParams = queryString.stringify({ recordId: event.rowData.id });
     // this.apiService.getPayrollAppInfo(queryParams).subscribe(results => {
     //   if (results.status === 'success') {
     //     this.listViews = cloneDeep(results.data.group_fields);

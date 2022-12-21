@@ -173,14 +173,14 @@ export class CaiDatCongTyComponent implements OnInit, AfterViewChecked {
     return {
       buttons: [
         {
-          onClick: this.XemChiTiet.bind(this),
+          onClick: this.editRow.bind(this),
           label: 'Xem chi tiết',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
           hide: CheckHideAction(MENUACTIONROLEAPI.GetCompanyPage.url, ACTIONS.VIEW)
         },
         {
-          onClick: this.xoacongty.bind(this),
+          onClick: this.delRow.bind(this),
           label: 'Xóa công ty',
           icon: 'pi pi-trash',
           class: 'btn-primary mr5',
@@ -209,7 +209,7 @@ export class CaiDatCongTyComponent implements OnInit, AfterViewChecked {
       }]
   }
 
-  xoacongty(event) {
+  delRow(event) {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa công ty?',
       accept: () => {
@@ -226,11 +226,17 @@ export class CaiDatCongTyComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  XemChiTiet(event) {
+  editRow({rowData}) {
     const params = {
-      companyId: event.rowData.companyId
+      companyId: rowData.companyId
     }
     this.router.navigate(['/cai-dat/cai-dat-cong-ty/chi-tiet-cong-ty'], { queryParams: params });
+  }
+
+  onCellClicked(event) {
+    if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
+      this.editRow(event = {rowData: event.data})
+    }
   }
 
   addCongTy() {

@@ -286,7 +286,7 @@ export class BieuMauComponent implements OnInit, OnDestroy {
     return {
       buttons: [
         {
-          onClick: this.EditEmployee.bind(this),
+          onClick: this.editRow.bind(this),
           label: 'Thông tin chi tiết',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
@@ -294,7 +294,7 @@ export class BieuMauComponent implements OnInit, OnDestroy {
 
         },
         {
-          onClick: this.handleDelete.bind(this),
+          onClick: this.delRow.bind(this),
           label: 'Xóa tài liệu',
           icon: 'fa fa-trash',
           class: 'btn-primary mr5',
@@ -304,7 +304,7 @@ export class BieuMauComponent implements OnInit, OnDestroy {
     };
   }
 
-  handleDelete(event) {
+  delRow(event) {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa tài liệu?',
       accept: () => {
@@ -322,15 +322,32 @@ export class BieuMauComponent implements OnInit, OnDestroy {
     });
   }
 
-  EditEmployee(event) {
-    // this.router.navigateByUrl(`/chinh-sach/tai-lieu-chung/${event.rowData.form_id}`);
-    this.formId = event.rowData.form_id;
+  editRow({rowData}) {
+    this.formId =rowData.form_id;
     this.addNewPopup = true;
     if(this.indexTab === 0){
       this.titleHeader = 'Sửa tài liệu chung'
     }else {
       this.titleHeader = 'Sửa tài liệu cá nhân'
     }
+  }
+
+  onCellClicked(event) {
+    if(event.colDef.field === "link_view"){
+      if(event.data.link_view){
+        var url = event.data.link_view;
+        var elem = document.createElement('a');
+        elem.href = url;
+        elem.target = 'hiddenIframe';
+        elem.click();
+      }
+      
+    }else {
+      if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
+        this.editRow(event = {rowData: event.data})
+      }
+    }
+
   }
 
 
@@ -581,19 +598,7 @@ export class BieuMauComponent implements OnInit, OnDestroy {
     
   }
 
-  onCellClicked(event){ 
-    if(event.colDef.field === "link_view"){
-      if(event.data.link_view){
-        var url = event.data.link_view;
-        var elem = document.createElement('a');
-        elem.href = url;
-        elem.target = 'hiddenIframe';
-        elem.click();
-      }
-      
-    }
-  }
-
+ 
   rowSelected(data) {
     this.listDataSelect = []
     if(this.indexTab === 1){
