@@ -205,7 +205,7 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
     return {
       buttons: [
         {
-          onClick: this.XemChiTiet.bind(this),
+          onClick: this.editRow.bind(this),
           label: 'Xem chi tiết',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
@@ -356,13 +356,14 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
     // });
   }
 
-  XemChiTiet(event) {
-    // const params = {
-    //   id: event.rowData.id
-    // }
-    // this.router.navigate(['/chinh-sach/nghi-phep/chi-tiet-nghi-phep'], { queryParams: params });
-    this.getLeaveInfo(event.rowData.id);
-
+  editRow({rowData}) {
+    this.getLeaveInfo(rowData.id);
+  }
+  
+  onCellClicked(event) {
+    if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
+      this.editRow(event = {rowData: event.data})
+    }
   }
 
   find() {

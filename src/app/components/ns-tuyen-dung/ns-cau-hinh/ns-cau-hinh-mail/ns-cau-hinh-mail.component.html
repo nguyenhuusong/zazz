@@ -26,6 +26,7 @@
         [rowSelection]="'multiple'"
         [listsData]="listsData"
         (showConfig)="cauhinh()"
+        (onCellClicked)="onCellClicked($event)"
         [idGrid]="gridKey + '_45dfs'"
         [height]="heightGrid"
         >

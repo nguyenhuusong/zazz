@@ -210,14 +210,14 @@ export class NgayNghiLeComponent implements OnInit {
     return {
       buttons: [
         {
-          onClick: this.EditEmployee.bind(this),
+          onClick: this.editRow.bind(this),
           label: 'Thông tin chi tiết',
           icon: 'icon-edit',
           class: 'btn-primary mr5',
           hide: CheckHideAction(MENUACTIONROLEAPI.HolidayPage.url, ACTIONS.VIEW)
         },
         {
-          onClick: this.xoanhanvien.bind(this),
+          onClick: this.delRow.bind(this),
           label: 'Xóa',
           icon: 'icon-delete',
           class: 'btn-primary mr5',
@@ -306,7 +306,7 @@ export class NgayNghiLeComponent implements OnInit {
     };
   }
 
-  xoanhanvien(event) {
+  delRow(event) {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa?',
       accept: () => {
@@ -323,11 +323,17 @@ export class NgayNghiLeComponent implements OnInit {
     });
   }
 
-  EditEmployee(event) {
+  editRow({rowData}) {
     const params = {
-      id: event.rowData.id
+      id: rowData.id
     }
     this.router.navigate(['/cai-dat/cai-dat-ngay-nghi-le/chi-tiet-ngay-nghi'], { queryParams: params });
+  }
+
+  onCellClicked(event) {
+    if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
+      this.editRow(event = {rowData: event.data})
+    }
   }
 
   find() {

@@ -240,14 +240,14 @@ export class QtThayDoiLuongComponent implements OnInit {
     return {
       buttons: [
         {
-          onClick: this.EditRow.bind(this),
+          onClick: this.editRow.bind(this),
           label: 'Sửa',
           icon: 'pi pi-tablet',
           class: 'btn-primary mr5',
           hide: CheckHideAction(MENUACTIONROLEAPI.GetHrmPayrollRecordPage.url, ACTIONS.VIEW)
         },
         {
-          onClick: this.deleteRow.bind(this),
+          onClick: this.delRow.bind(this),
           label: 'Xóa',
           icon: 'fa fa-trash',
           class: 'btn-primary mr5',
@@ -257,14 +257,20 @@ export class QtThayDoiLuongComponent implements OnInit {
     };
   }
   idEdit = null;
-  EditRow(event) {
+  editRow({rowData}) {
     const params = {
-      Id: event.rowData.id
+      Id: rowData.id
     }
     this.router.navigate(['/nhan-su/qua-trinh-thay-doi-luong/chi-tiet-qua-trinh-thay-doi-luong'], { queryParams: params });
   }
 
-  deleteRow(event) {
+  onCellClicked(event) {
+    if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
+      this.editRow(event = {rowData: event.data})
+    }
+  }
+
+  delRow(event) {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa?',
       accept: () => {
@@ -446,13 +452,6 @@ export class QtThayDoiLuongComponent implements OnInit {
 
   Close() {
     this.displayOrganize = false;
-  }
-
-  onCellClicked(event) {
-    if (event.column.colId == "avatar_url") {
-      this.isShowAvatar = true;
-      this.imgAvatar = event.value;
-    }
   }
 
   exportGrid() {

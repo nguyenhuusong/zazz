@@ -229,7 +229,7 @@ export class XuLyHopDongComponent implements OnInit {
     return {
       buttons: [
         {
-          onClick: this.XemChiTiet.bind(this),
+          onClick: this.editRow.bind(this),
           label: 'Xem chi tiết',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
@@ -244,7 +244,7 @@ export class XuLyHopDongComponent implements OnInit {
           hide: this.CheckHideUpdateStatus(event),
         },
         {
-          onClick: this.XoaQuaTrinhHopDong.bind(this),
+          onClick: this.delRow.bind(this),
           label: 'Xóa ',
           icon: 'pi pi-trash',
           class: 'btn-primary mr5',
@@ -295,13 +295,19 @@ export class XuLyHopDongComponent implements OnInit {
 
   }
   // GET /api/v2/contract/GetContractInfo
-  XemChiTiet(event) {
+  editRow({rowData}) {
     const modelContractInfo = {
-      contractId: event.rowData.contractId,
-      empId: event.rowData.empId,
+      contractId: rowData.contractId,
+      empId:rowData.empId,
     }
     this.router.navigate(['/nhan-su/xu-ly-hop-dong/chi-tiet-xu-ly-hop-dong'], { queryParams: modelContractInfo });
 
+  }
+
+  onCellClicked(event) {
+    if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
+      this.editRow(event = {rowData: event.data})
+    }
   }
 
   isSearchEmp: boolean = false
@@ -329,7 +335,7 @@ export class XuLyHopDongComponent implements OnInit {
     this.displayApproveContract = true;
   }
 
-  XoaQuaTrinhHopDong(event) {
+  delRow(event) {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa hợp đồng?',
       accept: () => {

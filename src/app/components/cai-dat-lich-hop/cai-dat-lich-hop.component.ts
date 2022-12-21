@@ -194,14 +194,14 @@ export class CaiDatLichHopComponent implements OnInit {
       // đã họp và đang họp
       buttons: [
         {
-          onClick: this.handleEdit.bind(this),
+          onClick: this.editRow.bind(this),
           label: 'Sửa',
           icon: 'fa fa-pencil-square-o',
           class: 'btn-primary mr5',
           hide: this.CheckHideSua(event)
         },
         {
-          onClick: this.handleDelete.bind(this),
+          onClick: this.delRow.bind(this),
           label: 'Hủy',
           icon: 'pi pi-times',
           class: 'btn-danger mr5',
@@ -287,7 +287,7 @@ export class CaiDatLichHopComponent implements OnInit {
     meet_ud: '',
     reason_cancel: ''
   }
-  handleDelete(e): void {
+  delRow(e): void {
     this.isReasonDelete = true;
     this.queryDeleteLichHop.meet_ud = e.rowData.meet_ud
   }
@@ -396,11 +396,17 @@ export class CaiDatLichHopComponent implements OnInit {
     this.router.navigate(['/cai-dat/cai-dat-lich-hop/danh-sach-phong-hop']);
   }
 
-  handleEdit(e): void {
+  editRow({rowData}): void {
     const params = {
-      meet_ud: e.rowData.meet_ud
+      meet_ud: rowData.meet_ud
     }
     this.router.navigate(['/cai-dat/cai-dat-lich-hop/chi-tiet-lich-hop'], { queryParams: params });
+  }
+
+  onCellClicked(event) {
+    if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
+      this.editRow(event = {rowData: event.data})
+    }
   }
 
   onGridReady(params): void {

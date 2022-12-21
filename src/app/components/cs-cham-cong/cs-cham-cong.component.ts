@@ -222,7 +222,7 @@ detailInfoFilter = null;
     return {
       buttons: [
         {
-          onClick: this.XemChiTiet.bind(this),
+          onClick: this.editRow.bind(this),
           label: 'Xem chi tiết',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
@@ -249,13 +249,19 @@ detailInfoFilter = null;
       }]
   }
 
-  XemChiTiet(event) {
+  editRow({rowData}) {
     const params = {
-      empId: event.rowData.empId,
+      empId: rowData.empId,
       salary_month: this.query.month,
       salary_year: this.query.year
     }
     this.router.navigate(['/chinh-sach/cham-cong/chi-tiet-cham-cong'], { queryParams: params });
+  }
+
+  onCellClicked(event) {
+    if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
+      this.editRow(event = {rowData: event.data})
+    }
   }
 
 

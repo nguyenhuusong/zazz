@@ -172,7 +172,7 @@ export class LyDoNghiViecComponent implements OnInit {
     return {
       buttons: [
         {
-          onClick: this.XemChiTiet.bind(this),
+          onClick: this.editRow.bind(this),
           label: 'Xem chi tiết',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
@@ -180,7 +180,7 @@ export class LyDoNghiViecComponent implements OnInit {
 
         },
         {
-          onClick: this.Xoa.bind(this),
+          onClick: this.delRow.bind(this),
           label: 'Xóa',
           icon: 'pi pi-trash',
           class: 'btn-primary mr5',
@@ -190,7 +190,7 @@ export class LyDoNghiViecComponent implements OnInit {
     };
   }
 
-  Xoa(event) {
+  delRow(event) {
   this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa?',
       accept: () => {
@@ -226,11 +226,17 @@ export class LyDoNghiViecComponent implements OnInit {
       }]
   }
 
-  XemChiTiet(event) {
+  editRow({rowData}) {
     const params = {
-      reason_code: event.rowData.reason_code,
+      reason_code: rowData.reason_code,
     }
     this.router.navigate(['/cai-dat/ly-do-nghi/chi-tiet-ly-do-nghi'], { queryParams: params });
+  }
+
+  onCellClicked(event) {
+    if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
+      this.editRow(event = {rowData: event.data})
+    }
   }
 
   create() {

@@ -197,14 +197,14 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
     return {
       buttons: [
         {
-          onClick: this.XemChiTiet.bind(this),
+          onClick: this.editRow.bind(this),
           label: 'Xem chi tiết',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
           hide: CheckHideAction(MENUACTIONROLEAPI.GetJobPage.url, ACTIONS.VIEW)
         },
         {
-          onClick: this.xoalinhvuc.bind(this),
+          onClick: this.delRow.bind(this),
           label: 'Xóa ',
           icon: 'pi pi-trash',
           class: 'btn-primary mr5',
@@ -234,7 +234,7 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
       }]
   }
 
-  xoalinhvuc(event) {
+  delRow(event) {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn thực hiện xóa Chuyên môn này !',
       accept: () => {
@@ -251,12 +251,19 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  XemChiTiet(event) {
+  editRow({rowData}) {
     const params = {
-      jobId: event.rowData.jobId
+      jobId: rowData.jobId
     }
     this.router.navigate(['/tuyen-dung/chuyen-mon/chi-tiet-linh-vuc-tuyen-dung'], { queryParams: params });
   }
+
+  onCellClicked(event) {
+    if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
+      this.editRow(event = {rowData: event.data})
+    }
+  }
+  
 
   addJob() {
     const params = {

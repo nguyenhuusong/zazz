@@ -210,7 +210,7 @@ export class DangKyLichLamViecComponent implements OnInit {
     return {
       buttons: [
         {
-          onClick: this.XemChiTiet.bind(this),
+          onClick: this.editRow.bind(this),
           label: 'Xem chi tiết',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
@@ -227,10 +227,18 @@ export class DangKyLichLamViecComponent implements OnInit {
     };
   }
 
-  XemChiTiet(event) {
-    const queryParams = queryString.stringify({ empId: event.rowData.empId, gd: event.rowData.gd });
+  editRow({rowData}) {
+    const queryParams = queryString.stringify({ empId: rowData.empId, gd: rowData.gd });
     this.getEmpWorking(queryParams);
   }
+
+  onCellClicked(event) {
+    if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
+      this.editRow(event = {rowData: event.data})
+    }
+  }
+
+
   listViewsDependent = [];
   detailDependentInfo = null;
   displayFormEditDetail = false;

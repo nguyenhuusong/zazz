@@ -227,17 +227,18 @@ export class NghiViecComponent implements OnInit, AfterViewChecked {
         showDisabledCheckboxes: true,
       },
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
-      {
-        headerName: 'Thao tác',
-        filter: '',
-        width: 100,
-        pinned: 'right',
-        cellRenderer: 'buttonAgGridComponent',
-        cellClass: ['border-right', 'no-auto'],
-        cellRendererParams: (params: any) => this.showButtons(params),
-        checkboxSelection: false,
-        field: 'checkbox'
-      }]
+      // {
+      //   headerName: 'Thao tác',
+      //   filter: '',
+      //   width: 100,
+      //   pinned: 'right',
+      //   cellRenderer: 'buttonAgGridComponent',
+      //   cellClass: ['border-right', 'no-auto'],
+      //   cellRendererParams: (params: any) => this.showButtons(params),
+      //   checkboxSelection: false,
+      //   field: 'checkbox'
+      // }
+    ]
 
   }
   find() {

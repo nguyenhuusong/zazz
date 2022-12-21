@@ -176,14 +176,14 @@ export class ThietLapWifiComponent implements OnInit, AfterViewChecked {
     return {
       buttons: [
         {
-          onClick: this.XemChiTiet.bind(this),
+          onClick: this.editRow.bind(this),
           label: 'Xem chi tiết',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
           hide: CheckHideAction(MENUACTIONROLEAPI.GetTimekeepingWifiPage.url, ACTIONS.VIEW)
         },
         {
-          onClick: this.xoaThietLapWifi.bind(this),
+          onClick: this.delRow.bind(this),
           label: 'Xóa',
           icon: 'pi pi-trash',
           class: 'btn-primary mr5',
@@ -212,7 +212,7 @@ export class ThietLapWifiComponent implements OnInit, AfterViewChecked {
       }]
   }
 
-  xoaThietLapWifi(event) {
+  delRow(event) {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa thiết lập wifi?',
       accept: () => {
@@ -229,11 +229,17 @@ export class ThietLapWifiComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  XemChiTiet(event) {
+  editRow({rowData}) {
     const params = {
-      id: event.rowData.id
+      id: rowData.id
     }
     this.router.navigate(['/cai-dat/thiet-lap-wifi/chi-tiet'], { queryParams: params });
+  }
+
+  onCellClicked(event) {
+    if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
+      this.editRow(event = {rowData: event.data})
+    }
   }
 
   addNew() {

@@ -199,7 +199,7 @@ detailInfoFilter = null;
     return {
       buttons: [
         {
-          onClick: this.handleEdit.bind(this),
+          onClick: this.editRow.bind(this),
           label: 'Sửa',
           icon: 'fa fa-pencil-square-o',
           class: 'btn-primary mr5',
@@ -316,8 +316,14 @@ detailInfoFilter = null;
     }
   }
 
-  handleEdit(e): void {
-    this.router.navigate(['/chinh-sach/thue-thu-nhap/chi-tiet-thue-thu-nhap'], { queryParams: {id: e.rowData.id} })
+  editRow({rowData}): void {
+    this.router.navigate(['/chinh-sach/thue-thu-nhap/chi-tiet-thue-thu-nhap'], { queryParams: {id: rowData.id} })
+  }
+
+  onCellClicked(event) {
+    if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
+      this.editRow(event = {rowData: event.data})
+    }
   }
 
   onGridReady(params): void {

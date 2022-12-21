@@ -241,7 +241,7 @@ detailInfoFilter = null;
       buttons: [
 
         {
-          onClick: this.handleEdit.bind(this),
+          onClick: this.editRow.bind(this),
           label: 'Sửa',
           icon: 'fa fa-edit',
           class: 'btn-dropbox text-white',
@@ -262,7 +262,7 @@ detailInfoFilter = null;
           hide: CheckHideAction(MENUACTIONROLEAPI.GetAppNotifyPage.url, ACTIONS.CONG_BO)
         },
         {
-          onClick: this.handleDelete.bind(this),
+          onClick: this.delRow.bind(this),
           label: 'Xóa',
           icon: 'fa fa-trash',
           class: 'btn-google text-white',
@@ -320,7 +320,7 @@ detailInfoFilter = null;
     });
   }
 
-  handleDelete(e) {
+  delRow(e) {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn thực hiện hành động này?',
       accept: () => {
@@ -349,12 +349,18 @@ detailInfoFilter = null;
     }
   }
 
-  handleEdit(data) {
-    this.modelAddNotifi.notiId = data.rowData.n_id
+  editRow({rowData}) {
+    this.modelAddNotifi.notiId = rowData.n_id
     this.Actions.value = 'Info';
     this.Actions.label = 'Sửa thông báo';
     this.router.navigate(['/cai-dat/thong-bao/chi-tiet-thong-bao'], 
-    { queryParams: { notiId: data.rowData.n_id, external_sub: data.rowData.external_sub } });
+    { queryParams: { notiId: rowData.n_id, external_sub: rowData.external_sub } });
+  }
+
+  onCellClicked(event) {
+    if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
+      this.editRow(event = {rowData: event.data})
+    }
   }
 
   createNotify() {
