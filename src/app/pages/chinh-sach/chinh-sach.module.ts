@@ -61,6 +61,7 @@ import { EatingListComponent } from 'src/app/components/cs-an-ca/eating-list/eat
 import { ImportPhepBuComponent } from 'src/app/components/phep-bu/import-phep-bu/import-phep-bu.component';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { FormFilterModule } from 'src/app/common/form-filter/form-filter.module';
+import { HrmSearchEmpModule } from 'src/app/common/hrm-search-emp/hrm-search-emp.module';
 
 @NgModule({
   imports: [
@@ -100,6 +101,7 @@ import { FormFilterModule } from 'src/app/common/form-filter/form-filter.module'
     OrganizationChartModule,
     ConfigGridTableFormModule,
     CheckHideActionsDirectiveModule,
+    HrmSearchEmpModule,
     AgGridModule.withComponents([
       ButtonRendererComponent,
       ButtonRendererComponent1,

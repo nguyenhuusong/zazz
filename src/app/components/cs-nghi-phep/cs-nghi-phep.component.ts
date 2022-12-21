@@ -450,20 +450,17 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
   }
 
   addNewNghiPhep() {
-    // const params = {
-    //   id: ''
-    // }
-    // this.router.navigate(['/chinh-sach/nghi-phep/chi-tiet-nghi-phep'], { queryParams: params });
-    this.getLeaveInfo();
+    this.isSearchEmp = true; 
   }
 
-  listViews = []
-  detailInfo = []
+  listViews = [];
+  detailInfo = [];
+  empId = null;
   getLeaveInfo(id = null) {
     this.listViews = []
     this.addEdit = true;
     this.leaveId = id;
-    const queryParams = queryString.stringify({ id: id });
+    const queryParams = queryString.stringify({ id: id, empId: this.empId});
     this.apiService.getLeaveInfo(queryParams)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {
@@ -664,10 +661,25 @@ showFilter() {
         console.log('dragTarget', dragTarget)
         const click$ = fromEvent(dragTarget, 'click');
         click$.subscribe(event => {
-          this.addNewNghiPhep()
+          this.addNew()
         });
       }
     }, 3000);
+  }
+
+  isSearchEmp: boolean = false
+  addNew() {
+    this.isSearchEmp = true;
+  }
+
+  seachEmValue(event) {
+    if(event.value) {
+        this.empId = event.value
+       this.getLeaveInfo(null);
+
+    }else{
+      this.isSearchEmp = false;
+    }
   }
 }
 
