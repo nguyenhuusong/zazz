@@ -78,7 +78,7 @@
     (seachEmValue)="seachEmValue($event)">
 </app-hrm-search-emp>
 
-<p-overlayPanel #op [dismissable]="false" appendTo="body" >
+<p-overlayPanel #op [style]="{'width': '40rem'}" [dismissable]="false" appendTo="body" >
     <ng-template pTemplate>
         <app-form-filter 
             *ngIf="listViewsFilter.length > 0" 
