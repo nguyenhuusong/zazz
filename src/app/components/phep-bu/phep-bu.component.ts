@@ -12,7 +12,11 @@ import * as moment from 'moment';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 const MAX_SIZE = 100000000;
-
+import { cloneDeep } from 'lodash';
+import { getParamString } from 'src/app/common/function-common/objects.helper';
+import { fromEvent } from 'rxjs';
+import { DialogService } from 'primeng/dynamicdialog';
+import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 @Component({
   selector: 'app-phep-bu',
   templateUrl: './phep-bu.component.html',
@@ -32,6 +36,7 @@ export class PhepBuComponent implements OnInit, AfterViewChecked {
     private spinner: NgxSpinnerService,
     private changeDetector: ChangeDetectorRef,
     private organizeInfoService: OrganizeInfoService,
+    private dialogService: DialogService,
     private router: Router) {
 
     this.defaultColDef = {
@@ -45,6 +50,7 @@ export class PhepBuComponent implements OnInit, AfterViewChecked {
       buttonAgGridComponent: ButtonAgGridComponent,
       avatarRendererFull: AvatarFullComponent,
     };
+    this.getFilter();
   }
   frameworkComponents;
   public agGridFn = AgGridFn;
@@ -61,8 +67,6 @@ export class PhepBuComponent implements OnInit, AfterViewChecked {
     pageSize: 20,
     year: moment().year(),
     month: moment().month() + 1,
-    organizeId: '',
-    organizeIds: '',
   }
   totalRecord = 0;
   first = 0;
@@ -81,21 +85,21 @@ export class PhepBuComponent implements OnInit, AfterViewChecked {
     annualAdd: '',
     annualMonth: ''
   }
-  orgId: ''
-  annulOptions = []
-  departments = []
-  organizeIdForDep = ''
-  months = []
+  orgId: '';
+  annulOptions = [];
+  departments = [];
+  organizeIdForDep = '';
+  months = [];
+  itemsToolOfGrid: any[] = [];
   ngAfterViewChecked(): void {
     const a: any = document.querySelector(".header");
     const b: any = document.querySelector(".sidebarBody");
-    const c: any = document.querySelector(".bread-filter");
     const d: any = document.querySelector(".bread-crumb");
     const e: any = document.querySelector(".paginator");
     this.loadjs++
     if (this.loadjs === 5) {
       if (b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + d.clientHeight + e.clientHeight +10;
+        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight +10;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       } else {
@@ -111,8 +115,6 @@ export class PhepBuComponent implements OnInit, AfterViewChecked {
       pageSize: 20,
       year: moment().year(),
       month: moment().month(),
-      organizeId: this.query.organizeIds,
-      organizeIds: this.query.organizeIds
     }
     this.load();
   }
@@ -201,9 +203,12 @@ export class PhepBuComponent implements OnInit, AfterViewChecked {
     this.columnDefs = [
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       {
-        headerName: 'Thao tác',
+        headerComponentParams: {
+          template:
+          `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
+        },
         filter: '',
-        width: 100,
+        width: 60,
         pinned: 'right',
         cellRenderer: 'buttonAgGridComponent',
         cellClass: ['border-right', 'no-auto'],
@@ -229,8 +234,7 @@ export class PhepBuComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit() {
-    this.getDepartments(this.query.organizeIds);
-    this.load();
+    this.getDepartments();
     let currentDay = new Date().getDate();
     if(currentDay >= 25 && currentDay <= 31){
       this.query.month = this.query.month + 1;
@@ -238,9 +242,9 @@ export class PhepBuComponent implements OnInit, AfterViewChecked {
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Chính sách' },
+      { label: 'Phép năm', routerLink: '/chinh-sach/phep-nam' },
       { label: 'Phép bù' },
     ];
-    this.getOrgRoots();
     this.months = [
       { label: 'Tháng 1', value: 1 },
       { label: 'Tháng 2', value: 2 },
@@ -254,24 +258,27 @@ export class PhepBuComponent implements OnInit, AfterViewChecked {
       { label: 'Tháng 10', value: 10 },
       { label: 'Tháng 11', value: 11 },
       { label: 'Tháng 12', value: 12 },
+    ];
+    this.itemsToolOfGrid = [
+      {
+        label: 'Thêm mới phép bù phòng ban',
+        code: 'themmoi',
+        icon: 'pi pi-plus',
+        command: () => {
+          this.addNewPhepBuDep();
+        },
+        disabled: CheckHideAction(MENUACTIONROLEAPI.GetAnnualAddPage.url, ACTIONS.ADD_PHEP_BU_PHONG_BAN),
+      },
+      {
+        label: 'Import',
+        code: 'import',
+        icon: 'pi pi-file-excel',
+        command: () => {
+          this.importFileExel();
+        },
+        disabled: CheckHideAction(MENUACTIONROLEAPI.GetAnnualAddPage.url, ACTIONS.IMPORT),
+      },
     ]
-  }
-
-  organizeId = ''
-  orgRoots = [];
-  getOrgRoots() {
-    const queryParams = queryString.stringify({ filter: '' });
-    this.apiService.getOrganizations(queryParams).subscribe(results => {
-      if (results.status === 'success') {
-        this.orgRoots = results.data.map(d => {
-          return {
-            label: d.organizationName + '-' + d.organizationCd,
-            value: `${d.organizeId}`
-          }
-        });
-        this.orgRoots = [{ label: 'Tất cả', value: null }, ...this.orgRoots]
-      }
-    })
   }
 
 
@@ -303,8 +310,8 @@ export class PhepBuComponent implements OnInit, AfterViewChecked {
     //   this.getDepartments(this.organizeIdForDep);
     // }
   }
-  getDepartments(parentId) {
-    const queryParams = queryString.stringify({ parentId: parentId })
+  getDepartments() {
+    const queryParams = queryString.stringify({  })
     this.apiService.getOrganizeTree(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.departments = results.data;
@@ -324,6 +331,104 @@ export class PhepBuComponent implements OnInit, AfterViewChecked {
   importFileExel() {
     this.router.navigate(['/chinh-sach/phep-bu/import']);
   }
+
+
+  listViewsFilter = [];
+  cloneListViewsFilter = [];
+  detailInfoFilter = null;
+  optionsButonFilter = [
+    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm ml-2 height-56 addNew', icon: 'pi pi-plus' },
+    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger ml-2 height-56 addNew', icon: 'pi pi-times' },
+  ];
+
+  ngAfterViewInit(): void {
+    this.FnEvent();
+  }
+
+  FnEvent() {
+    setTimeout(() => {
+      var dragTarget = document.getElementById(this.gridKey);
+      if(dragTarget) {
+        const click$ = fromEvent(dragTarget, 'click');
+        click$.subscribe(event => {
+          this.addNewPhepBu()
+        });
+      }
+    }, 300);
+  }
+
+  getFilter() {
+    this.apiService.getFilter('/api/v2/annualleave/GetAnnualLeaveFilter').subscribe(results => {
+      if(results.status === 'success') {
+        const listViews = cloneDeep(results.data.group_fields);
+        this.cloneListViewsFilter = cloneDeep(listViews);
+        this.listViewsFilter = [...listViews];
+        const params =  getParamString(listViews)
+        this.query = { ...this.query, ...params};
+        this.load();
+        this.FnEvent();
+        this.detailInfoFilter = results.data;
+      }
+    });
+  }
+  
+   filterLoad(event) {
+    this.query = { ...this.query, ...event.data };
+    this.load();
+    this.FnEvent();
+  }
+
+  close(event) {
+    const listViews = cloneDeep(this.cloneListViewsFilter);
+    this.listViewsFilter = cloneDeep(listViews);
+    const params =  getParamString(listViews)
+    this.query = { ...this.query, ...params};
+    this.load();
+    this.FnEvent();
+  }
+
+showFilter() {
+    const ref = this.dialogService.open(FormFilterComponent, {
+      header: 'Tìm kiếm nâng cao',
+      width: '40%',
+      contentStyle: "",
+      data: {
+        listViews: this.listViewsFilter,
+        detailInfoFilter: this.detailInfoFilter,
+        buttons: this.optionsButonFilter
+      }
+    });
+
+    ref.onClose.subscribe((event: any) => {
+      if (event) {
+        this.listViewsFilter = cloneDeep(event.listViewsFilter);
+        if (event.type === 'Search') {
+          this.query = { ...this.query, ...event.data };
+          this.load();
+        } else if (event.type === 'CauHinh') {
+        this.apiService.getFilter('/api/v2/annualleave/GetAnnualLeaveFilter').subscribe(results => {
+            if (results.status === 'success') {
+              const listViews = cloneDeep(results.data.group_fields);
+              this.listViewsFilter = [...listViews];
+              const params =  getParamString(listViews)
+              this.query = { ...this.query, ...params};
+              this.load();
+              this.detailInfoFilter = results.data;
+              this.showFilter()
+            }
+          });
+
+        } else if (event.type === 'Reset') {
+          const listViews = cloneDeep(this.cloneListViewsFilter);
+          this.listViewsFilter = cloneDeep(listViews);
+         const params =  getParamString(listViews)
+        this.query = { ...this.query, ...params};
+        this.load();
+        }
+      }
+    });
+  }
+
 
 
 }
