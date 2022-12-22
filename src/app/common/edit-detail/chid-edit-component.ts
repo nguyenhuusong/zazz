@@ -239,6 +239,7 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
     private spinner: NgxSpinnerService
   ) { }
   ngOnInit(): void {
+    // this.element.columnValue = typeof this.element.columnValue === 'string' ? null : this.element.columnValue
   }
 
   checkIsObject(data: any): boolean {
@@ -246,7 +247,6 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
   }
 
   selectNode(event,field_name, element) {
-    console.log(this.element)
     if(this.element.field_name === "org_Id"){
       this.setValue('', 'User_Id')
     }

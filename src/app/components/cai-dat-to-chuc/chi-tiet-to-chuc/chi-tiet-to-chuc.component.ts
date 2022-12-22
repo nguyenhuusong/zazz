@@ -16,7 +16,7 @@ export class ChiTietToChucComponent implements OnInit, OnChanges {
   manhinh = 'View';
   indexTab = 0;
   optionsButtonsView = [
-    { label: 'Sửa', value: 'Edit', class: CheckHideAction(MENUACTIONROLEAPI.GetOrganizePage.url, ACTIONS.EDIT) ? 'hidden' : ''}, 
+    { label: 'Sửa', value: 'Update', class: CheckHideAction(MENUACTIONROLEAPI.GetOrganizePage.url, ACTIONS.EDIT) ? 'hidden' : ''}, 
     { label: 'Quay lại', value: 'Back', class: 'p-button-secondary'  }];
   constructor(
     private apiService: ApiHrmService,
@@ -85,11 +85,11 @@ export class ChiTietToChucComponent implements OnInit, OnChanges {
       if (results.status === 'success') {
         this.listViews = cloneDeep(results.data.group_fields);
         this.detailInfo = results.data;
-        this.orgLevels = this.listViews[0].fields.filter(d => d.field_name === 'org_level')
-        this.listsDataCompanies = [...this.detailInfo.companies]
-        this.listsDataPositions = [...this.detailInfo.positions]
-        this.aGridFnCompanies(this.detailInfo.gridflexdetails2)
-        this.aGridFnPositions(this.detailInfo.gridflexdetails1)
+        // this.orgLevels = this.listViews[0].fields.filter(d => d.field_name === 'org_level')
+        // this.listsDataCompanies = [...this.detailInfo.companies]
+        // this.listsDataPositions = [...this.detailInfo.positions]
+        // this.aGridFnCompanies(this.detailInfo.gridflexdetails2)
+        // this.aGridFnPositions(this.detailInfo.gridflexdetails1)
       }
     })
   }
@@ -198,6 +198,7 @@ export class ChiTietToChucComponent implements OnInit, OnChanges {
   }
 
   setOrganizeInfo(data) {
+    debugger
     const params = {
       ...this.detailInfo, group_fields: data
     };
