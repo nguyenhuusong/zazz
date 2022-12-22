@@ -23,11 +23,13 @@ export class ContractDetailComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private router: Router
   ) { }
-  optionsButon = [
-    { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
-    { label: 'Tiếp tục', value: 'Update', class: '', icon: 'pi pi-save' },
-    { label: 'Lưu tạm', value: 'SaveNhap', class: '', icon: 'pi pi-save' },
-  ];
+  optionsButtonsView = [
+    { label: '', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-caret-left' },
+    { label: '', value: 'Update', class: 'btn-accept', icon: 'pi pi-caret-right' },
+    { label: 'Lưu tạm', value: 'SaveNhap', class: 'btn-accept', icon: 'pi pi-caret-right' },
+    { label: 'Xác nhận', value: 'Submit', class: 'btn-accept', icon: 'pi pi-check' },
+    { label: 'Đóng', value: 'Close', class: 'btn-accept', icon: 'pi pi-times' }
+  ]
   columnDefs = [];
   listsData = [];
   gridflexs= [];
@@ -87,12 +89,20 @@ export class ContractDetailComponent implements OnInit {
     this.apiService.setContractCreate({ empId: this.modelContractInfo.empId }).subscribe(results => {
       if (results.status === 'success') {
         this.activeIndex = results.data.flow_st;
+        this.flowCurrent = results.data.flow_cur + 1;
         this.steps = results.data.flowStatuses.map(d => {
           return {
             label: d.flow_name,
             value: d.flow_st
           }
         });
+        this.optionsButtonsView =[
+          { label: '', value: 'BackPage', class: `p-button-secondary ${results.data.prev_st ? '' : 'hidden'}`, icon: 'pi pi-caret-left',  },
+          { label: '', value: 'Update', class: `btn-accept ${results.data.next_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-caret-right' },
+          { label: 'Lưu tạm', value: 'SaveNhap', class: `btn-accept ${results.data.save_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
+          { label: 'Xác nhận', value: 'Submit', class: `btn-accept ${results.data.submit_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
+          { label: 'Đóng', value: 'Close', class: `p-button-danger ml-1`, icon: 'pi pi-times' }
+        ]
         this.listViews = cloneDeep(results.data.group_fields);
         setTimeout(() => {
           this.stepActivated();
@@ -107,8 +117,9 @@ export class ContractDetailComponent implements OnInit {
     const stepS = document.querySelectorAll('.steps-contract .p-steps-item');
     if (stepS.length > 0) {
       for (let i = 0; i < this.steps.length; i++) {
-        if (i <= this.activeIndex) {
-          stepS[i].className += ' active';
+        if (i <= this.flowCurrent) {
+          console.log(i,i<= this.flowCurrent && i !== 0)
+          stepS[i].className +=  ` p-highlight ${i<= this.activeIndex ? 'active' : 'remove-active'} ${i<= this.flowCurrent && this.flowCurrent !== 1 ? 'active-confirm' : 'remove-active-confirm'}`;
         } else {
           stepS[i].classList.value = `p-steps-item icon-${i}`;
         }
@@ -120,7 +131,7 @@ export class ContractDetailComponent implements OnInit {
     if (data === 'CauHinh') {
       this.modelContractInfo.contractId ? this.getContractInfo() : this.setContractCreate();
     } else if (data === 'BackPage') {
-      this.getContractInfo(this.activeIndex - 1)
+      this.getContractInfo(this.flowCurrent === 1 ? this.flowCurrent: this.flowCurrent - 2)
     } else {
       if(this.url === 'chi-tiet-xu-ly-hop-dong') {
         this.router.navigate(['/nhan-su/xu-ly-hop-dong'])
@@ -133,7 +144,7 @@ export class ContractDetailComponent implements OnInit {
   setContractInfo(data) {
     this.listViews = [];
     const params = {
-      ...this.detailInfo, group_fields: data, flow_st: this.activeIndex + 1
+      ...this.detailInfo, group_fields: data, flow_cur: this.flowCurrent
     }
     this.cloneListViews = cloneDeep(this.listViews); 
     this.listViews = [];
@@ -143,7 +154,7 @@ export class ContractDetailComponent implements OnInit {
   cloneListViews = []
   callBackForm(event) {
     const params = {
-      ...this.detailInfo, group_fields: event.data, flow_st: event.type === 'Submit' ?  this.activeIndex + 1 : this.activeIndex
+      ...this.detailInfo, group_fields: event.data, flow_cur: event.type === 'Submit' ?  this.flowCurrent : this.flowCurrent -1
     }
     this.cloneListViews = cloneDeep(this.listViews); 
     this.listViews = [];
@@ -151,47 +162,28 @@ export class ContractDetailComponent implements OnInit {
     
   }
 
-
+  flowCurrent = 0
   callApiInfo(params, type = 'Update') {
     this.spinner.show();
     this.apiService.setContractInfo(params).subscribe(results => {
       if (results.status === 'success') {
         this.activeIndex = results.data.flow_st;
-        // this.steps = results.data.flowStatuses.map(d => {
-        //   return {
-        //     label: d.flow_name,
-        //     value: d.flow_st
-        //   }
-        // });
         this.listViews = cloneDeep(results.data.group_fields);
         setTimeout(() => {
           this.stepActivated();
         }, 100);
         this.detailInfo = results.data;
-        if(results.data.flow_st === 0) {
-          this.optionsButon = [
-            { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
-            { label: 'Tiếp tục', value: 'Update', class: '', icon: 'pi pi-save' },
-            results.data.save_st ? { label: 'Lưu tạm', value: 'SaveNhap', class: '', icon: 'pi pi-save' }: null,
-          ];
-        }else {
-          if(results.data.submit_st) {
-            this.optionsButon = [
-              { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
-              { label: 'Trình duyệt', value: 'Submit', class: '', icon: 'pi pi-save' },
-            ];
-          }else {
-            this.optionsButon = [
-              { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
-              { label: 'Tiếp tục', value: 'Update', class: '', icon: 'pi pi-save' },
-              results.data.save_st ? { label: 'Lưu tạm', value: 'SaveNhap', class: '', icon: 'pi pi-save' }: null,
-            ];
-          }
-        
-         if(results.data.flow_st > 1 && results.data.contractId) this.getContractMetaPage();
-         if((results.data.flow_st > 0 && results.data.flow_st < 4) && results.data.contractId) this.getSalaryComponentPage();
-         if((results.data.flow_st > 0 && results.data.flow_st < 4)  && !results.data.contractId) this.getSalaryComponentPageNotContractId(results.data);
-        }
+        this.flowCurrent = results.data.flow_cur + 1;
+        this.optionsButtonsView =[
+          { label: '', value: 'BackPage', class: `p-button-secondary ${results.data.prev_st ? '' : 'hidden'}`, icon: 'pi pi-caret-left',  },
+          { label: '', value: 'Update', class: `btn-accept ${results.data.next_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-caret-right' },
+          { label: 'Lưu tạm', value: 'SaveNhap', class: `btn-accept ${results.data.save_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
+          { label: 'Xác nhận', value: 'Submit', class: `btn-accept ${results.data.submit_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
+          { label: 'Đóng', value: 'Close', class: `p-button-danger ml-1`, icon: 'pi pi-times' }
+        ]
+        if(results.data.flow_cur > 1 && results.data.contractId) this.getContractMetaPage();
+        if((results.data.flow_cur > 0 && results.data.flow_cur < 4) && results.data.contractId) this.getSalaryComponentPage();
+        if((results.data.flow_cur > 0 && results.data.flow_cur < 4)  && !results.data.contractId) this.getSalaryComponentPageNotContractId(results.data);
         this.spinner.hide();
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
 
@@ -215,34 +207,16 @@ export class ContractDetailComponent implements OnInit {
     })
   }
 
-  getContractInfo(flow_st = null) {
+  getContractInfo(flow_cur = null) {
     this.detailInfo = null;
     this.listViews = [];
     this.spinner.show();
-    const queryParams = queryString.stringify({ contractId: this.modelContractInfo.contractId, flow_st: flow_st  });
+    const queryParams = queryString.stringify({ contractId: this.modelContractInfo.contractId, flow_cur: flow_cur });
     this.apiService.getContractInfo(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.activeIndex = results.data.flow_st;
-        if(results.data.flow_st === 0) {
-          this.optionsButon = [
-            { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
-            { label: 'Tiếp tục', value: 'Update', class: '', icon: 'pi pi-save' },
-            results.data.save_st ? { label: 'Lưu tạm', value: 'SaveNhap', class: '', icon: 'pi pi-save' }: null,
-          ];
-        }else {
-          if(results.data.submit_st) {
-            this.optionsButon = [
-              { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
-              { label: 'Trình duyệt', value: 'SaveNhap', class: '', icon: 'pi pi-save' },
-            ];
-          }else {
-            this.optionsButon = [
-              { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
-              { label: 'Tiếp tục', value: 'Update', class: '', icon: 'pi pi-save' },
-              results.data.save_st ? { label: 'Lưu tạm', value: 'SaveNhap', class: '', icon: 'pi pi-save' }: null,
-            ];
-          }
-        }
+        this.flowCurrent = results.data.flow_cur + 1;
+       
         this.steps = results.data.flowStatuses.map(d => {
           return {
             label: d.flow_name,
@@ -253,9 +227,16 @@ export class ContractDetailComponent implements OnInit {
         setTimeout(() => {
           this.stepActivated();
         }, 100);
+        this.optionsButtonsView =[
+          { label: '', value: 'BackPage', class: `p-button-secondary ${results.data.prev_st ? '' : 'hidden'}`, icon: 'pi pi-caret-left',  },
+          { label: '', value: 'Update', class: `btn-accept ${results.data.next_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-caret-right' },
+          { label: 'Lưu tạm', value: 'SaveNhap', class: `btn-accept ${results.data.save_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
+          { label: 'Xác nhận', value: 'Submit', class: `btn-accept ${results.data.submit_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
+          { label: 'Đóng', value: 'Close', class: `p-button-danger ml-1`, icon: 'pi pi-times' }
+        ]
         this.detailInfo = results.data;
-        if(results.data.flow_st > 1) this.getContractMetaPage();
-        if(results.data.flow_st > 0) this.getSalaryComponentPage();
+        if(results.data.flow_cur > 1) this.getContractMetaPage();
+        if(results.data.flow_cur > 0) this.getSalaryComponentPage();
         this.spinner.hide();
       }
     })
