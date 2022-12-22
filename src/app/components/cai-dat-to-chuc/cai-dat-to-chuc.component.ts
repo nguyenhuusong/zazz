@@ -485,7 +485,7 @@ export class CaiDatToChucComponent implements OnInit {
   url = '';
   dataRouter = null;
   ngOnInit() {
-    this.getOrrginiaztions();
+    // this.getOrrginiaztions();
     this.getBoPhan();
     this.getAgencyOrganizeMap();
     this.items = [
