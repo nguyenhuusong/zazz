@@ -272,12 +272,12 @@ export class LyDoNghiViecComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.load();
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Cài đặt' },
       { label: 'Lý do nghỉ' },
     ];
+    this.getFilter();
   }
 
   ngAfterViewInit(): void {
@@ -306,7 +306,7 @@ export class LyDoNghiViecComponent implements OnInit {
   ];
   
   getFilter() {
-    this.apiService.getFilter('/v2/leave/GetLeaveReasonFilter').subscribe(results => {
+    this.apiService.getFilter('/api/v2/leave/GetLeaveReasonFilter').subscribe(results => {
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);

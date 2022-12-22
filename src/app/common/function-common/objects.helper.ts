@@ -178,11 +178,13 @@ export function setMembers(element1, datas) {
 
   export function setSelectTreeValue(element1, datas) {
     element1.options = datas;
-    if ((element1.columnType === 'selectTrees') && (element1.field_name === 'org_Id')) {
+    if ((element1.columnType === 'selectTrees')) {
       const ids = element1.columnValue ? element1.columnValue.split(',') : []
       const results = [];
+      console.log(ids)
       findNodeInTree1(element1.options, ids, element1, results);
       element1.columnValue = results;
+      console.log(element1.columnValue)
     } else {
       if (!element1.columnValue || element1.columnValue === 'all') {
         element1.columnValue = null;
@@ -208,7 +210,7 @@ export function setMembers(element1, datas) {
       if (list[i].children && list[i].children.length) {
         findNodeInTree1(list[i].children, ids, element1, results);
       }
-      if (ids.includes(list[i].data)) {
+      if (ids.includes(list[i].orgId)) {
         results.push(list[i]);
       }
     }
