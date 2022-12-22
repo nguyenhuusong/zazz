@@ -12,8 +12,9 @@ import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.comp
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
-import { findNodeInTree } from 'src/app/common/function-common/objects.helper';
+import { findNodeInTree, getParamString } from 'src/app/common/function-common/objects.helper';
 import { fromEvent } from 'rxjs';
+import { cloneDeep } from 'lodash';
 @Component({
   selector: 'app-cai-dat-to-chuc',
   templateUrl: './cai-dat-to-chuc.component.html',
@@ -52,7 +53,14 @@ export class CaiDatToChucComponent implements OnInit {
     { label: 'Đã duyệt', value: 1 },
     { label: 'Từ chối', value: 2 },
     { label: 'Khởi tạo', value: null },
-  ]
+  ];
+  listViewsFilter = [];
+  cloneListViewsFilter = [];
+  detailInfoFilter = null;
+  optionsButonFilter = [
+    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm height-56 addNew', icon: 'pi pi-search' },
+    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger height-56 addNew', icon: 'pi pi-times' },
+  ];
   totalRecord = 0;
   first = 0;
   countRecord: any = {
@@ -145,7 +153,7 @@ export class CaiDatToChucComponent implements OnInit {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
   }
-  
+
 
   getAgencyOrganizeMap(type = false) {
     this.spinner.show();
@@ -225,7 +233,7 @@ export class CaiDatToChucComponent implements OnInit {
   }
 
   getOrganizeLevelList(parentId) {
-    const queryParams = queryString.stringify({parentId: parentId});
+    const queryParams = queryString.stringify({ parentId: parentId });
     this.apiService.getOrganizeLevelList(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.organizeLevelList = results.data.map(d => {
@@ -234,7 +242,7 @@ export class CaiDatToChucComponent implements OnInit {
             value: d.org_level
           }
         });
-        this.modeAgencyOrganize.org_level = this.modeAgencyOrganize.org_level ? this.modeAgencyOrganize.org_level :this.organizeLevelList[0].value 
+        this.modeAgencyOrganize.org_level = this.modeAgencyOrganize.org_level ? this.modeAgencyOrganize.org_level : this.organizeLevelList[0].value
       }
     })
   }
@@ -249,14 +257,14 @@ export class CaiDatToChucComponent implements OnInit {
   load() {
     this.columnDefs = []
     this.spinner.show();
-    let params: any = {... this.query};
+    let params: any = { ... this.query };
     params.orgId = this.selectedValue ? this.selectedValue.orgId : null;
     this.organizeIdsParam = '';
     const queryParams = queryString.stringify(params);
     this.apiService.getOrganizePage(queryParams).subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
-        this.gridKey= results.data.dataList.gridKey
+        this.gridKey = results.data.dataList.gridKey
         if (this.query.offSet === 0) {
           this.cols = results.data.gridflexs;
           this.colsDetail = results.data.gridflexdetails ? results.data.gridflexdetails : [];
@@ -264,14 +272,14 @@ export class CaiDatToChucComponent implements OnInit {
         this.initGrid();
         this.countRecord.totalRecord = results.data.dataList.recordsTotal;
         this.countRecord.totalRecord = results.data.dataList.recordsTotal;
-        this.countRecord.currentRecordStart = results.data.dataList.recordsTotal === 0 ? this.query.offSet = 0 :  this.query.offSet + 1;
+        this.countRecord.currentRecordStart = results.data.dataList.recordsTotal === 0 ? this.query.offSet = 0 : this.query.offSet + 1;
         if ((results.data.dataList.recordsTotal - this.query.offSet) > this.query.pageSize) {
           this.countRecord.currentRecordEnd = this.query.offSet + Number(this.query.pageSize);
         } else {
           this.countRecord.currentRecordEnd = results.data.dataList.recordsTotal;
           setTimeout(() => {
             const noData = document.querySelector('.ag-overlay-no-rows-center');
-            if (noData) { noData.innerHTML = 'Không có kết quả phù hợp'}
+            if (noData) { noData.innerHTML = 'Không có kết quả phù hợp' }
           }, 100);
         }
         this.spinner.hide();
@@ -310,7 +318,7 @@ export class CaiDatToChucComponent implements OnInit {
     };
   }
 
-  editRow({rowData}) {
+  editRow({ rowData }) {
     this.getOrganizeLevelList(rowData.parentId);
     this.modeAgencyOrganize.organizeId = this.query.organizeIds;
     this.modeAgencyOrganize.org_level = rowData.org_level;
@@ -323,11 +331,11 @@ export class CaiDatToChucComponent implements OnInit {
   }
 
   onCellClicked(event) {
-    if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
-      this.editRow(event = {rowData: event.data})
+    if (event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
+      this.editRow(event = { rowData: event.data })
     }
   }
-  
+
   delOrgin(event) {
     this.spinner.show();
     this.confirmationService.confirm({
@@ -366,7 +374,7 @@ export class CaiDatToChucComponent implements OnInit {
       {
         headerComponentParams: {
           template:
-          `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
+            `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
         },
         filter: '',
         width: 60,
@@ -486,10 +494,10 @@ export class CaiDatToChucComponent implements OnInit {
   dataRouter = null;
   ngOnInit() {
     // this.getOrrginiaztions();
-    this.getBoPhan();
+    // this.getBoPhan();
     this.getAgencyOrganizeMap();
     this.items = [
-      { label: 'Trang chủ' , routerLink: '/home' },
+      { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Cài đặt' },
       { label: 'Danh sách tổ chức', routerLink: '/cai-dat/cai-dat-to-chuc' },
     ];
@@ -512,7 +520,7 @@ export class CaiDatToChucComponent implements OnInit {
         label: 'Cài đặt tham số',
         icon: 'pi pi-refresh',
         command: () => {
-         
+
 
         }
       },
@@ -524,7 +532,7 @@ export class CaiDatToChucComponent implements OnInit {
         }
       },
     ];
-    this.load()
+    this.getFilter()
   }
 
   caiDatThamSo() {
@@ -563,25 +571,25 @@ export class CaiDatToChucComponent implements OnInit {
   }
   organizes = []
   getOrrginiaztions() {
-    const queryParams = queryString.stringify({ filter: ''});
+    const queryParams = queryString.stringify({ filter: '' });
     this.apiService.getOrganizations(queryParams).subscribe(results => {
-      if(results.status === 'success') {
-          this.organizes = results.data.map(d => {
-            return {
-              label: d.organizationName,
-              value: `${d.organizeId}`
-            }
-          });
-          this.organizes = [{label: 'UNION-SUNSHINE', value: null}, ...this.organizes];
+      if (results.status === 'success') {
+        this.organizes = results.data.map(d => {
+          return {
+            label: d.organizationName,
+            value: `${d.organizeId}`
+          }
+        });
+        this.organizes = [{ label: 'UNION-SUNSHINE', value: null }, ...this.organizes];
       }
     })
   }
 
   rowSelected(event) {
-    if(event.length>0){
+    if (event.length > 0) {
       this.organizeIdsParam = event[0].orgId;
       this.query.organizeIds = event[0].orgId;
-    }else{
+    } else {
       this.organizeIdsParam = ''
     }
   }
@@ -606,7 +614,7 @@ export class CaiDatToChucComponent implements OnInit {
       label: 'Thêm mới phòng ban',
       value: 'Add'
     }
-    
+
     // if (this.detailOrganizeMap.parentId) {
     //   // this.getOrganizeTree(this.detailOrganizeMap.organizeId);
     //   this.getOrganizeLevelList(this.detailOrganizeMap.organizeId);
@@ -621,7 +629,7 @@ export class CaiDatToChucComponent implements OnInit {
     //     de_cd: null,
     //   }
     // } else {
-     
+
     // }
     this.modeAgencyOrganize = {
       orgId: null,
@@ -639,7 +647,7 @@ export class CaiDatToChucComponent implements OnInit {
   }
   listOrganizeTreeByOr = []
   getOrganizeTreeByOr() {
-    this.selectedNodeTree =null
+    this.selectedNodeTree = null
     const queryParams = queryString.stringify({ parentId: this.organizeIdSelected });
     this.apiService.getOrganizeTree(queryParams).subscribe(results => {
       if (results.status === 'success') {
@@ -651,11 +659,11 @@ export class CaiDatToChucComponent implements OnInit {
 
   findNodeInTree(list, nodeId): any {
     for (let i = 0; i < list.length; i++) {
-      if (list[i].data === nodeId ) {
+      if (list[i].data === nodeId) {
         this.selectedNodeTree = list[i];
-        }else if (Array.isArray(list[i].children) && list[i].children.length) {
-          this.findNodeInTree(list[i].children, nodeId);
-        }
+      } else if (Array.isArray(list[i].children) && list[i].children.length) {
+        this.findNodeInTree(list[i].children, nodeId);
+      }
     }
   }
 
@@ -676,9 +684,9 @@ export class CaiDatToChucComponent implements OnInit {
   }
 
   departmentFiltes = [];
-  getBoPhan () {
+  getBoPhan() {
     const queryParams = queryString.stringify({ parentId: this.query.organizeIds });
-   this.apiService.getOrganizeTree(queryParams)
+    this.apiService.getOrganizeTree(queryParams)
       .subscribe((results: any) => {
         if (results && results.status === 'success') {
           this.departmentFiltes = results.data;
@@ -689,7 +697,7 @@ export class CaiDatToChucComponent implements OnInit {
   onChangeTreeDepart(event) {
 
   }
-  
+
   onNodeSelectAdd(event) {
     // this.getDepartments(event.node.parentId);
     this.getOrganizeLevelList(event.node.data);
@@ -816,7 +824,7 @@ export class CaiDatToChucComponent implements OnInit {
     this.loadjs++
     if (this.loadjs === 5) {
       if (b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight +10;
+        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight + 10;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       } else {
@@ -831,7 +839,7 @@ export class CaiDatToChucComponent implements OnInit {
   FnEvent() {
     setTimeout(() => {
       var dragTarget = document.getElementById(this.gridKey);
-      if(dragTarget) {
+      if (dragTarget) {
         const click$ = fromEvent(dragTarget, 'click');
         click$.subscribe(event => {
           this.Add()
@@ -839,6 +847,39 @@ export class CaiDatToChucComponent implements OnInit {
       }
     }, 300);
   }
+
+
+  //filter 
+  getFilter() {
+    this.apiService.getFilter('/api/v1/organize/GetOrganizeFilter').subscribe(results => {
+      if (results.status === 'success') {
+        const listViews = cloneDeep(results.data.group_fields);
+        this.cloneListViewsFilter = cloneDeep(listViews);
+        this.listViewsFilter = [...listViews];
+        const params = getParamString(listViews)
+        this.query = { ...this.query, ...params };
+        this.load();
+        this.detailInfoFilter = results.data;
+      }
+    });
+  }
+
+  filterLoad(event) {
+    this.query = { ...this.query, ...event.data };
+    console.log('this.query', this.query)
+    this.load();
+  }
+
+  close(event) {
+    if (event !== 'Close') {
+      const listViews = cloneDeep(this.cloneListViewsFilter);
+      this.listViewsFilter = cloneDeep(listViews);
+      const params = getParamString(listViews)
+      this.query = { ...this.query, ...params };
+      this.load();
+    }
+  }
+
 
 }
 

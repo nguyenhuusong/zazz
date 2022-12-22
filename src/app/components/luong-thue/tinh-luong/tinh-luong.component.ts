@@ -89,6 +89,7 @@ export class TinhLuongComponent implements OnInit {
       },
     ]
     this.checkIsAddNew();
+    this.checkTitleAddNew();
   }
 
   checkIsAddNew() {
