@@ -514,6 +514,7 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
 
   filterLoad(event) {
     this.query = { ...this.query, ...event.data };
+    console.log('this.query', this.query)
     this.load();
   }
 
