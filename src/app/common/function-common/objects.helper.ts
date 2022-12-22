@@ -188,6 +188,9 @@ export function setMembers(element1, datas) {
         element1.columnValue = null;
       } else {
         findNodeInTree2(element1.options, element1.columnValue, element1);
+        element1.columnValue = typeof element1.columnValue === 'string' ? null : element1.columnValue;
+
+        console.log("sadsadasd", element1)
       }
     }
   }

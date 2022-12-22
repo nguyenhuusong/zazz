@@ -5,7 +5,7 @@
     </section>
    <div class="content">
         <div class="">
-            <app-edit-detail [optionsButtonsEdit]="optionsButtonsView"  *ngIf="listViews.length> 0" [thongtinnhanvienNew]="true" [manhinh]="'Edit'" [dataView]="listViews" (callback)="setOrganizeInfo($event)" (callbackcancel)="cancelUpdate($event)"></app-edit-detail>
+            <app-edit-detail [optionsButtonsEdit]="optionsButtonsView" [detail]="detailInfo" *ngIf="listViews.length> 0" [thongtinnhanvienNew]="true" [manhinh]="'Edit'" [dataView]="listViews" (callback)="setOrganizeInfo($event)" (callbackcancel)="cancelUpdate($event)"></app-edit-detail>
         </div>
         <section>
             <div class="row mt-1" >
