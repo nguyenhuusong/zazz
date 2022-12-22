@@ -52,7 +52,6 @@ export class ThietLapWifiComponent implements OnInit, AfterViewChecked {
       buttonAgGridComponent: ButtonAgGridComponent,
       avatarRendererFull: AvatarFullComponent,
     };
-    this.getEmpFilter();
   }
   pagingComponent = {
     total: 0
@@ -265,44 +264,13 @@ export class ThietLapWifiComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit() {
-    this.load();
-   
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Cài đặt' },
       { label: 'Danh sách thiết lập wifi' },
     ];
-    this.getOrgan();
-    this.getWorkplaces();
-  }
-  organs = []
-  workplaceOptions = []
-  getWorkplaces() {
-    this.apiService.getWorkplaces().subscribe(results => {
-      if (results.status === 'success') {
-        this.workplaceOptions = results.data.map(d => {
-          return {
-            label: d.workplaceName,
-            value: d.workplaceId
-          }
-        });
-      }
-    })
-  }
+    this.getEmpFilter();
 
-  getOrgan() {
-    const queryParams = queryString.stringify({ filter: '' });
-    this.apiService.getOrganizations(queryParams).subscribe(results => {
-      if (results.status === 'success') {
-        this.organs = results.data.map(d => {
-          return {
-            label: d.organizationName,
-            value: `${d.organizeId}`
-          }
-        });
-        this.organs = [...this.organs];
-      }
-    })
   }
 
   quanlyloaihopdong() {

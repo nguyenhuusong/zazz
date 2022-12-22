@@ -306,7 +306,7 @@ export class LyDoNghiViecComponent implements OnInit {
   ];
   
   getFilter() {
-    this.apiService.getFilter('/v2/leave/GetLeaveReasonFilter').subscribe(results => {
+    this.apiService.getFilter('/api/v2/leave/GetLeaveReasonFilter').subscribe(results => {
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
