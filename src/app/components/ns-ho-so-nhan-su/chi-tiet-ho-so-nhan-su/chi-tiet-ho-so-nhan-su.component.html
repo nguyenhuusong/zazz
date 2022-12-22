@@ -90,7 +90,7 @@
                         *ngIf="listViews.length> 0 && manhinh === 'View'" optionLabel="label"
                         optionValue="value" (onChange)="onChangeButtonView($event)"> -->
                     <!-- </p-selectButton> <p-button *ngIf="selectedMenuCode === API_PROFILE.QUAN_HE_LAO_DONG && manhinh === 'View'" label="Tạo hợp đồng" (click)="taohopdong()" styleClass="p-button-outlined ml-1 p-button-secondary"></p-button> -->
-                    <p-overlayPanel #op [style]="{width: '450px'}">
+                    <p-overlayPanel #op [style]="{'width': '40rem'}" [style]="{width: '450px'}">
                         <ng-template pTemplate>
                             <label for="" >Chọn loại hợp đồng</label> <br>
                             <p-dropdown [autoZIndex]="true" [autoDisplayFirst]="false" [style]="{'width': '100%'}" [options]="listContractTypes"

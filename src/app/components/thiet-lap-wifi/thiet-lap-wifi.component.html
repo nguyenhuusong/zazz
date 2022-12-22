@@ -75,7 +75,7 @@
     <app-config-grid-table-form *ngIf="displaySetting && gridKey" [typeConfig]="'TableInfo'"   [gridKey]="gridKey"></app-config-grid-table-form>
 </p-dialog>
 
-<p-overlayPanel #op [dismissable]="false" appendTo="body" >
+<p-overlayPanel #op [style]="{'width': '40rem'}" [dismissable]="false" appendTo="body" >
     <ng-template pTemplate>
         <app-form-filter 
             *ngIf="listViewsFilter.length > 0" 
