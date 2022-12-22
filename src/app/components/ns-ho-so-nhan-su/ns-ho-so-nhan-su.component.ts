@@ -514,7 +514,6 @@ export class NsHoSoNhanSuComponent implements OnInit {
       { label: 'Quản lý nhân sự' },
     ];
     this.getEmpFilter();
-    this.getOrgan();
 
   }
   employeeStatus = []
