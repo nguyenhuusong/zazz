@@ -119,7 +119,7 @@ export class HrmSearchEmpComponent {
     this.isLoadingInfo = true;
     const queryParams = queryString.stringify({ empId: info.empId });
     this.empId = info.empId;
-    this.dataInfo = null;
+    // this.dataInfo = null;
     this.dataInfoCallback = info.empId
     this.apiService.getEmpProfile(queryParams).subscribe(results => {
       if (results.status === 'success') {

@@ -45,7 +45,7 @@ styleClass="search-em-in {{ dataSearched?.length > 0 ? 'search-em-result' : '' }
         </div>
     </div>
     <div class="search-content grid" *ngIf="dataSearched && dataSearched.length > 0">
-        <div class="col-4">
+        <div [ngClass]="dataInfo ? 'col-4' : 'col-12'">
             <div class="list-em">
                 <table class="table" cellspacing="0">
                     <thead>
