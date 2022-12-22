@@ -272,12 +272,12 @@ export class LyDoNghiViecComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.load();
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Cài đặt' },
       { label: 'Lý do nghỉ' },
     ];
+    this.getFilter();
   }
 
   ngAfterViewInit(): void {
