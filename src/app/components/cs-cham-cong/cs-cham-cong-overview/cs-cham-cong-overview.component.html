@@ -105,30 +105,137 @@
             <div class="col-10">
                 <div class="grid">
                     <div class="col-5">
-                        <div class="box">
-    
+                        <div class="box-view box-100">
+                            <div class="head">
+                                <h4>Tình hình nghỉ theo thời gian</h4>
+                                CÔNG TY CỔ PHẦN ĐẦU TƯ CÔNG NGHỆ UNICLOUD<br>
+                                (01/01/2021 - 31/12/2022)
+                            </div>
+                            <div class="chart">
+                                <canvas  id="nghiTheoThoiGian"></canvas>
+                              </div>
                         </div>
                     </div>
                     <div class="col-7">
-    
+                        <div class="box-view box-100">
+                            <div class="chart">
+                                <div class="head">
+                                    <h4>Tình hình nghỉ theo phòng ban</h4>
+                                    CÔNG TY CỔ PHẦN ĐẦU TƯ CÔNG NGHỆ UNICLOUD<br>
+                                    (01/01/2021 - 31/12/2022)
+                                </div>
+                                <canvas id="nghiTheoPhongBan"></canvas>
+                                <div id="legend-nghiTheoPhongBan" class="legend-default">
+                                    <ul></ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="grid">
                     <div class="col-5">
-                        <div class="box">
-
+                        <div class="box box-view box-100">
+                            <div class="head">
+                                <h4>Phân tích loại nghỉ</h4>
+                                Tất cả đơn vị<br>
+                                (01/01/2021 - 31/12/2022)
+                            </div>
+                            <div class="chart grid">
+                                <div class="col-8">
+                                    <canvas  id="loaiNghi"></canvas>
+                                </div>
+                                <div class="col-4">
+                                    <div id="legend-loaiNghi" class="legend-default dou" style="margin-top: 0px">
+                                        <ul></ul>
+                                    </div>
+                                </div>
+                              </div>
                         </div>
                     </div>
                     <div class="col-7">
                         <div class="grid">
                             <div class="col-6">
-                                <div class="box">
-        
+                                <div class="box box-view box-100">
+                                    <div class="head">
+                                        <h4>Danh sách đi muộn về sớm</h4>
+                                        CÔNG TY CỔ PHẦN ĐẦU TƯ CÔNG NGHỆ UNICLOUD<br>
+                                        (01/01/2021 - 31/12/2022)
+                                    </div>
+                                    <div class="list-item-info">
+                                        <div class="item d-flex gap-12">
+                                            <div class="avar"><img src="../../../../assets/images/avatar.jpg"></div>
+                                            <div class="inf">
+                                                <label>Nguyễn Văn A</label>
+                                                <p>CÔNG TY CỔ PHẦN ĐẦU TƯ CÔNG NGHỆ UNICLOUD</p>
+                                            </div>
+                                            <div class="number-time"><b>9 lần</b></div>
+                                        </div>
+                                        <div class="item d-flex gap-12">
+                                            <div class="avar"><img src="../../../../assets/images/avatar.jpg"></div>
+                                            <div class="inf">
+                                                <label>Nguyễn Văn A</label>
+                                                <p>CÔNG TY CỔ PHẦN ĐẦU TƯ CÔNG NGHỆ UNICLOUD</p>
+                                            </div>
+                                            <div class="number-time"><b>9 lần</b></div>
+                                        </div>
+                                        <div class="item d-flex gap-12">
+                                            <div class="avar"><img src="../../../../assets/images/avatar.jpg"></div>
+                                            <div class="inf">
+                                                <label>Nguyễn Văn A</label>
+                                                <p>CÔNG TY CỔ PHẦN ĐẦU TƯ CÔNG NGHỆ UNICLOUD</p>
+                                            </div>
+                                            <div class="number-time"><b>9 lần</b></div>
+                                        </div>
+                                        <div class="item d-flex gap-12">
+                                            <div class="avar"><img src="../../../../assets/images/avatar.jpg"></div>
+                                            <div class="inf">
+                                                <label>Nguyễn Văn A</label>
+                                                <p>CÔNG TY CỔ PHẦN ĐẦU TƯ CÔNG NGHỆ UNICLOUD</p>
+                                            </div>
+                                            <div class="number-time"><b>9 lần</b></div>
+                                        </div>
+                                        <div class="item d-flex gap-12">
+                                            <div class="avar"><img src="../../../../assets/images/avatar.jpg"></div>
+                                            <div class="inf">
+                                                <label>Nguyễn Văn A</label>
+                                                <p>CÔNG TY CỔ PHẦN ĐẦU TƯ CÔNG NGHỆ UNICLOUD</p>
+                                            </div>
+                                            <div class="number-time"><b>9 lần</b></div>
+                                        </div>
+                                        <div class="item d-flex gap-12">
+                                            <div class="avar"><img src="../../../../assets/images/avatar.jpg"></div>
+                                            <div class="inf">
+                                                <label>Nguyễn Văn A</label>
+                                                <p>CÔNG TY CỔ PHẦN ĐẦU TƯ CÔNG NGHỆ UNICLOUD</p>
+                                            </div>
+                                            <div class="number-time"><b>9 lần</b></div>
+                                        </div>
+                                        <div class="item d-flex gap-12">
+                                            <div class="avar"><img src="../../../../assets/images/avatar.jpg"></div>
+                                            <div class="inf">
+                                                <label>Nguyễn Văn A</label>
+                                                <p>CÔNG TY CỔ PHẦN ĐẦU TƯ CÔNG NGHỆ UNICLOUD</p>
+                                            </div>
+                                            <div class="number-time"><b>9 lần</b></div>
+                                        </div>
+                                        <div class="item d-flex gap-12">
+                                            <div class="avar"><img src="../../../../assets/images/avatar.jpg"></div>
+                                            <div class="inf">
+                                                <label>Nguyễn Văn A</label>
+                                                <p>CÔNG TY CỔ PHẦN ĐẦU TƯ CÔNG NGHỆ UNICLOUD</p>
+                                            </div>
+                                            <div class="number-time"><b>9 lần</b></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-6">
-                                <div class="box">
-        
+                                <div class="box box-view box-100">
+                                    <div class="head">
+                                        <h4>Tần xuất đi muộn về sớm</h4>
+                                        Tất cả đơn vị<br>
+                                        (01/01/2021 - 31/12/2022)
+                                    </div>
                                 </div>
                             </div>
                         </div>

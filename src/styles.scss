@@ -6210,6 +6210,64 @@ app-form-filter{
     border: none;
     box-shadow: 0 10px 40px 0 #3e396b12, 0 2px 9px 0 #3e396b0f;
     border-radius: 5px;
+    margin-bottom: 10px;
+    .number-vlaue{
+        font-size: 22px;
+    }
+    h4{
+        margin-top: 0px;
+        margin-bottom: 5px;
+    }
+    &.box-100{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+    }
+    canvas{
+        max-height: 300px;
+    }
+    .head{
+        margin-bottom: 10px;
+    }
+    .list-item-info{
+        max-height: 300px;
+        overflow-y: auto;
+        .item{
+            margin-bottom: 6px;
+        }
+        .avar{
+            min-width: 40px;
+            height: 40px;
+            border-radius: 100%;
+            position: relative;
+            display: block;
+            overflow: hidden;
+            img{
+                position: absolute;
+                top: 0px;
+                height: 100%;
+                width: 100%;
+                left: 0px;
+                object-fit: cover;
+            }
+        }
+        .number-time{
+            white-space: nowrap;
+        }
+        .inf{
+            label{
+                font-weight: bold;
+            }
+            p{
+                margin-bottom: 0px;
+                margin-top: 0px;
+                line-height: 1;
+                color: #999;
+                font-size: 12px;
+            }
+        }
+    }
 }
 .fields{
     font-size: 12px;
