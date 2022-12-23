@@ -5633,7 +5633,6 @@ p-button{
         position: fixed;
         bottom: 0px;
         left: 0px;
-        width: calc(100% - 40px);
     }
     .p-dialog-content{
         padding-right: 0px;
@@ -6204,4 +6203,24 @@ app-form-filter{
 .colLink{
     color: #0C3399 !important;
     cursor: pointer;
+}
+.box-view{
+    padding: 15px;
+    background: #fff;
+    border: none;
+    box-shadow: 0 10px 40px 0 #3e396b12, 0 2px 9px 0 #3e396b0f;
+    border-radius: 5px;
+}
+.fields{
+    font-size: 12px;
+    margin-bottom: 5px;
+    &.no-border{
+        .p-dropdown{
+            border: none;
+            .p-dropdown-label{
+                font-size: 12px;
+                padding: 0px;
+            }
+        }
+    }
 }

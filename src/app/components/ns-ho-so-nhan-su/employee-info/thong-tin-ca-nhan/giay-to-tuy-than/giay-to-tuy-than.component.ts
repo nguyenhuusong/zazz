@@ -144,13 +144,13 @@ export class GiayToTuyThanComponent implements OnInit {
               //   key: 'view-job-detail',
               //   class: 'btn-primary mr5',
               // },
-              {
-                onClick: this.delRow.bind(this),
-                label: 'Xóa',
-                icon: 'pi pi-trash',
-                key: 'delete-qua-trinh-hop-dong',
-                class: 'btn-danger',
-              },
+              // {
+              //   onClick: this.delRow.bind(this),
+              //   label: 'Xóa',
+              //   icon: 'pi pi-trash',
+              //   key: 'delete-qua-trinh-hop-dong',
+              //   class: 'btn-danger',
+              // },
             ]
           };
         },
@@ -172,7 +172,7 @@ export class GiayToTuyThanComponent implements OnInit {
 
   delRow(event) {
     this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn xóa thời gian làm việc này?',
+      message: 'Bạn có chắc chắn muốn xóa?',
       accept: () => {
         const queryParams = queryString.stringify({id: event.rowData.id});
         this.apiService.delEmpWorking(queryParams).subscribe((results: any) => {

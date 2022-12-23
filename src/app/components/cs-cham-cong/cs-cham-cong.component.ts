@@ -173,6 +173,10 @@ detailInfoFilter = null;
     })
   }
 
+  tongQuan() {
+    this.router.navigate(['/chinh-sach/cham-cong/tong-quan']);
+  }
+
   ExportCheckInOut() {
     this.router.navigate(['/chinh-sach/cham-cong/xem-cong']);
   }
@@ -303,6 +307,14 @@ detailInfoFilter = null;
         disabled: CheckHideAction(MENUACTIONROLEAPI.GetEmployeeSalaryMonthPage.url, ACTIONS.EXPORT),
         command: () => {
           this.Export();
+        }
+      },
+      {
+        label: 'Tổng quan',
+        code: 'overview',
+        icon: 'pi pi-chart-bar',
+        command: () => {
+          this.tongQuan();
         }
       },
     ];

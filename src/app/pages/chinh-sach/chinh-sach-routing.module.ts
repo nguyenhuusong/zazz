@@ -21,6 +21,7 @@ import { ChiTietPhepBuComponent } from 'src/app/components/phep-bu/chi-tiet-phep
 import { XemCongComponent } from 'src/app/components/cs-cham-cong/xem-cong/xem-cong.component';
 import { EatingListComponent } from 'src/app/components/cs-an-ca/eating-list/eating-list.component';
 import { ImportPhepBuComponent } from 'src/app/components/phep-bu/import-phep-bu/import-phep-bu.component';
+import { CsChamCongOverviewComponent } from 'src/app/components/cs-cham-cong/cs-cham-cong-overview/cs-cham-cong-overview.component';
 
 const routes: Routes = [
   {
@@ -95,6 +96,16 @@ const routes: Routes = [
       url: 'chi-tiet-cham-cong',
     },
   },
+  {
+    path: 'cham-cong/tong-quan',
+    component: CsChamCongOverviewComponent,
+    data: {
+      title: 'Tổng quan',
+      url: 'tong-quan',
+    },
+  },
+
+  
 //nghỉ phép
 {
   path: 'giai-trinh-cong',
