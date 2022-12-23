@@ -789,10 +789,6 @@ export class ApiHrmService {
     return this.http.delete<any>(`${apiHrmServer}/api/v1/recruitment/DelCandidateInfo?` + queryParams, this.options)
   }
 
-  getJobTitles(): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetJobTitles`, this.options)
-  }
-
   getCandidateStatus(): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetCandidateStatus?`, this.options)
   }
@@ -810,13 +806,6 @@ export class ApiHrmService {
     return this.http.delete<any>(`${apiHrmServer}/api/v1/recruitment/DelVacancyInfo?` + queryParams, this.options)
   }
 
-  getJobPage(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetJobPage?` + queryParams, this.options)
-  }
-
-  delJobInfo(queryParams): Observable<any> {
-    return this.http.delete<any>(`${apiHrmServer}/api/v1/recruitment/DelJobInfo?` + queryParams, this.options)
-  }
 
   getVacancyInfo(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetVacancyInfo?` + queryParams, this.options)
@@ -828,14 +817,6 @@ export class ApiHrmService {
 
   setVacancyInfo(params): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v1/recruitment/SetVacancyInfo`, params, this.options)
-  }
-
-  getJobInfo(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetJobInfo?` + queryParams, this.options)
-  }
-
-  setJobInfo(params): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v1/recruitment/SetJobInfo`, params, this.options)
   }
 
   getCandidateInfo(queryParams): Observable<any> {
@@ -2183,4 +2164,25 @@ export class ApiHrmService {
     return this.http.post<any>(`https://apiidentity.sunshinegroup.vn/Identify/idcard`, data, customOptions)
   }
 
+  // Job
+
+  getJobPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/jobs/GetJobPage?` + queryParams, this.options);
+  }
+
+  getJobInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/jobs/GetJobInfo?` + queryParams, this.options);
+  }
+
+  getJobTitles(): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/jobs/GetJobTitles`, this.options);
+  }
+  
+  delJobInfo(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v1/jobs/DelJobInfo?` + queryParams, this.options);
+  }
+
+  setJobInfo(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/jobs/SetJobInfo`, queryParams, this.options);
+  }
 }

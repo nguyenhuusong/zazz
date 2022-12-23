@@ -173,7 +173,7 @@ export class NoiLamViecComponent implements OnInit {
   ];
   //filter 
   getFilter() {
-    this.apiService.getFilter('/api/v2/worktime/GetWorktimeFilter').subscribe(results => {
+    this.apiService.getFilter('/api/v2/workplace/GetWorkplaceFilter').subscribe(results => {
       if (results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);

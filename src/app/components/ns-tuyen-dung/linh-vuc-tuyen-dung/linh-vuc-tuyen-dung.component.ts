@@ -285,7 +285,7 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
   }
 
   getEmpFilter() {
-    this.apiService.getFilter('/api/v1/recruitment/GetJobFilter').subscribe(results => {
+    this.apiService.getFilter('/api/v1/jobs/GetJobFilter').subscribe(results => {
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
