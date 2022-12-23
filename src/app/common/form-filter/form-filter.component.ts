@@ -132,27 +132,28 @@ export class FormFilterComponent implements OnInit, OnChanges {
     if (promissall.length > 0) {
       this.spinner.show();
         forkJoin(promissall.filter(d => d !== undefined)).subscribe((results: any) => {
+          const responses = results.filter(d => d !== undefined);
           this.spinner.hide();
           dataView.forEach(element => {
             element.fields.forEach(element1 => {
-              if (results.map(d => d.key).indexOf(element1.field_name) > -1) {
+              if (responses.map(d => d.key).indexOf(element1.field_name) > -1) {
                 if (element1.columnType === 'autocomplete') {
-                  const datas = results.filter(d => d.key === element1.field_name);
+                  const datas = responses.filter(d => d.key === element1.field_name);
                   setValueAndOptionsAutocomplete(element1, datas[0].result);
                 } else if (element1.columnType === 'checkboxradiolist') {
-                  const datas = results.filter(d => d.key === element1.field_name);
+                  const datas = responses.filter(d => d.key === element1.field_name);
                   setCheckboxradiolistValue(element1, datas[0].result)
                 } else if ((element1.columnType === 'selectTree') || (element1.columnType === 'selectTrees')) {
-                  const datas = results.filter(d => d.key === element1.field_name);
+                  const datas = responses.filter(d => d.key === element1.field_name);
                   setSelectTreeValue(element1, datas[0].result)
                 } else if (element1.columnType === 'multiSelect') {
-                  const datas = results.filter(d => d.key === element1.field_name);
+                  const datas = responses.filter(d => d.key === element1.field_name);
                   setMultiSelectValue(element1, datas[0].result)
                 } else if (element1.columnType === 'members') {
-                  const datas = results.filter(d => d.key === element1.field_name);
+                  const datas = responses.filter(d => d.key === element1.field_name);
                   setMembers(element1, datas[0].result)
                 } else {
-                  const datas = results.filter(d => d.key === element1.field_name);
+                  const datas = responses.filter(d => d.key === element1.field_name);
                   setValueAndOptions(element1, datas[0].result);
                 }
               }

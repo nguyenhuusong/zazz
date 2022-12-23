@@ -411,7 +411,7 @@ export class CaiDatToChucComponent implements OnInit {
         },
       },
       getDetailRowData(params) {
-        params.successCallback(params.data.AgencyGenerals);
+        params.successCallback(params.data.organizes);
       },
       excelStyles: [
         {
@@ -420,10 +420,10 @@ export class CaiDatToChucComponent implements OnInit {
         }
       ],
       template: function (params) {
-        var personName = params.data.theme;
+        var personName = params.data.org_cd;
         return (
           '<div style="height: 100%; background-color: #EDF6FF; padding: 20px; box-sizing: border-box;">' +
-          `  <div style="height: 10%; padding: 2px; font-weight: bold;">###### Danh sách (${params.data.AgencyGenerals.length}) : [` +
+          `  <div style="height: 10%; padding: 2px; font-weight: bold;">Danh sách (${params.data.organizes.length}) : [` +
           personName + ']' +
           '</div>' +
           '  <div ref="eDetailGrid" style="height: 90%;"></div>' +
