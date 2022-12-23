@@ -28,6 +28,7 @@ export class ThongTinNguoiPhuThuocComponent implements OnInit {
   listsData = [];
   columnDefs = [];
   gridKey = '';
+  isEdit = false;
 
   ngAfterViewInit(): void {
    this.FnEvent();
@@ -56,6 +57,7 @@ export class ThongTinNguoiPhuThuocComponent implements OnInit {
   dependentId = null;
   themMoiDinhKem() {
     this.dependentId = null;
+    this.isEdit = false;
     this.getEmpDependent();
   }
 
@@ -161,6 +163,7 @@ export class ThongTinNguoiPhuThuocComponent implements OnInit {
 
   editRow({rowData}) {
     this.dependentId = rowData.dependentId;
+    this.isEdit = true;
     this.getEmpDependent();
   }
 
