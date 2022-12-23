@@ -167,8 +167,6 @@ export class EditDetailComponent implements OnInit, OnChanges {
     if (promissall.length > 0) {
     this.spinner.show();
       forkJoin(promissall.filter(d => d !== undefined)).subscribe((results: any) => {
-        console.log(results)
-
         const responses = results.filter(d => d !== undefined);
         this.spinner.hide();
         this.dataViewNew.forEach(element => {

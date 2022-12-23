@@ -63,6 +63,7 @@ import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { FormFilterModule } from 'src/app/common/form-filter/form-filter.module';
 import { HrmSearchEmpModule } from 'src/app/common/hrm-search-emp/hrm-search-emp.module';
 import { CsChamCongOverviewComponent } from 'src/app/components/cs-cham-cong/cs-cham-cong-overview/cs-cham-cong-overview.component';
+import { PanelModule } from 'primeng/panel';
 
 @NgModule({
   imports: [
@@ -85,6 +86,7 @@ import { CsChamCongOverviewComponent } from 'src/app/components/cs-cham-cong/cs-
     EditDetailModule,
     FileUploadModule,
     MenuModule,
+    PanelModule,
     CardModule,
     BadgeModule,
     TooltipModule,

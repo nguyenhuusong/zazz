@@ -290,7 +290,7 @@ export class BieuMauComponent implements OnInit, OnDestroy {
           label: 'Thông tin chi tiết',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
-          hide: this.indexTab === 0 || CheckHideAction(MENUACTIONROLEAPI.GetFormGeneral.url, ACTIONS.VIEW)
+          // hide: this.indexTab === 0 || CheckHideAction(MENUACTIONROLEAPI.GetFormGeneral.url, ACTIONS.VIEW)
 
         },
         {
@@ -298,7 +298,7 @@ export class BieuMauComponent implements OnInit, OnDestroy {
           label: 'Xóa tài liệu',
           icon: 'fa fa-trash',
           class: 'btn-primary mr5',
-          hide: this.indexTab === 0 || CheckHideAction(MENUACTIONROLEAPI.GetFormGeneral.url, ACTIONS.DELETE)
+          // hide: this.indexTab === 0 || CheckHideAction(MENUACTIONROLEAPI.GetFormGeneral.url, ACTIONS.DELETE)
         },
       ]
     };
@@ -323,6 +323,7 @@ export class BieuMauComponent implements OnInit, OnDestroy {
   }
 
   editRow({rowData}) {
+    debugger
     this.formId =rowData.form_id;
     this.addNewPopup = true;
     if(this.indexTab === 0){
@@ -376,7 +377,7 @@ export class BieuMauComponent implements OnInit, OnDestroy {
       },
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       {
-        headerName: '    ...',
+        headerName: '',
         filter: '',
         maxWidth: 80,
         pinned: 'right',
@@ -411,19 +412,20 @@ export class BieuMauComponent implements OnInit, OnDestroy {
         showDisabledCheckboxes: true,
       },
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
-      {
-        headerComponentParams: {
-          template:
-          `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
-        },
-        filter: '',
-        maxWidth: 80,
-        pinned: 'right',
-        cellRenderer: 'buttonAgGridComponent',
-        cellClass: ['border-right', 'no-auto', 'cell-options'],
-        cellRendererParams: (params: any) => this.showButtons(params),
-        field: 'checkbox'
-      }]
+      // {
+      //   headerComponentParams: {
+      //     template:
+      //     `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
+      //   },
+      //   filter: '',
+      //   maxWidth: 80,
+      //   pinned: 'right',
+      //   cellRenderer: 'buttonAgGridComponent',
+      //   cellClass: ['border-right', 'no-auto', 'cell-options'],
+      //   cellRendererParams: (params: any) => this.showButtons(params),
+      //   field: 'checkbox'
+      // },
+    ]
   }
 
   onFirstDataRendered(params: any) {

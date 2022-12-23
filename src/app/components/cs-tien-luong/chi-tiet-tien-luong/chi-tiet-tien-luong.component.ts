@@ -19,8 +19,9 @@ export class ChiTietTienLuongComponent implements OnInit, OnChanges, OnDestroy {
   manhinh = 'Edit';
   indexTab = 0;
   optionsButtonsView = [
-    { label: 'Lưu', value: 'Update', class: CheckHideAction(MENUACTIONROLEAPI.GetSalaryRecordPage.url, ACTIONS.EDIT) ? 'hidden' : ''}, 
-    { label: 'Quay lại', value: 'Back' }];
+    { label: 'Quay lại', value: 'Back' , icon: "pi pi-times", class: "p-button-danger"},
+    { label: 'Lưu lại', value: 'Update', class: CheckHideAction(MENUACTIONROLEAPI.GetSalaryRecordPage.url, ACTIONS.EDIT) ? 'hidden' : '', icon: "pi pi-check"}, 
+  ];
   constructor(
     private apiService: ApiHrmService,
     private activatedRoute: ActivatedRoute,
@@ -88,18 +89,20 @@ export class ChiTietTienLuongComponent implements OnInit, OnChanges, OnDestroy {
   };
 
   setSalaryCreateDraft() {
+    this.spinner.show();
     this.apiService.setSalaryCreateDraft(this.paramsObject.params).subscribe(results => {
       if (results.status === 'success') {
         this.listViews = cloneDeep(results.data.group_fields);
         this.detailInfo = results.data;
         this.listsData = cloneDeep(this.detailInfo.monthdays);
         this.columnDefs = [...AgGridFn(this.detailInfo.gridflexs1 || [])
-       
       ];
+      this.spinner.hide();
       }
     })
   }
   getSalaryRecordInfo() {
+    this.spinner.show();
     this.listViews = [];
     this.listsData = [];
     const queryParams = queryString.stringify({recordId: this.recordId});
@@ -121,6 +124,7 @@ export class ChiTietTienLuongComponent implements OnInit, OnChanges, OnDestroy {
         //   // cellRendererParams: params => this.showButton()
         // }
       ];
+      this.spinner.hide();
       }
     })
   }
@@ -128,6 +132,7 @@ export class ChiTietTienLuongComponent implements OnInit, OnChanges, OnDestroy {
   OnClick(e) {
 
   }
+  gridKey = '';
   listDataNew = [];
   handleChange(index) {
     this.columnDefs = []
@@ -141,12 +146,18 @@ export class ChiTietTienLuongComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
+  displaySetting = false;
+  CauHinh() {
+    this.displaySetting = true;
+  }
+
   getSalaryEmployeePage() {
     this.spinner.show();
     const queryParams = queryString.stringify({recordId: this.recordId});
     this.apiService.getSalaryEmployeePage(queryParams).subscribe(results => {
       if(results.status === 'success') {
         this.listsData =results.data.dataList.data;
+        this.gridKey= results.data?.dataList?.gridKey;
         this.columnDefs = [
           ...AgGridFn(results.data.gridflexs),
         ]
