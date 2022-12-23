@@ -6183,6 +6183,15 @@ app-form-filter{
                 }
             }
         }
+        input{
+            height: 32px;
+            border: 1px solid #D1D4DC;
+            border-radius: 4px;
+            &:focus{
+                border: 1px solid #0979FD;
+                outline: none;
+            }
+        }
     }
 }
 
