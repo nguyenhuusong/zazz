@@ -95,6 +95,7 @@
             (callback)="rowSelected($event)"
             [rowSelection]="'single'"
             (showConfig)="cauhinh()"
+            [detailCellRendererParams]="detailCellRendererParams"
             (onCellClicked)="onCellClicked($event)"
             [listsData]="listsData" [height]="heightGrid" [columnDefs]="columnDefs"></app-list-grid-angular>
           <div class="paginator">
