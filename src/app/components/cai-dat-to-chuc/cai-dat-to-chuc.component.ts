@@ -384,15 +384,29 @@ export class CaiDatToChucComponent implements OnInit {
         cellRendererParams: (params: any) => this.showButtons(params),
         checkboxSelection: false,
         field: 'checkbox'
-      }]
+      },
+    ]
     this.detailCellRendererParams = {
       detailGridOptions: {
-        frameworkComponents: {},
+        frameworkComponents: {
+          buttonAgGridComponent: ButtonAgGridComponent
+        },
         getRowHeight: (params) => {
           return 40;
         },
         columnDefs: [
           ...AgGridFn(this.colsDetail),
+          {
+            header: '',
+            filter: '',
+            width: 60,
+            pinned: 'right',
+            cellRenderer: 'buttonAgGridComponent',
+            cellClass: ['border-right', 'no-auto'],
+            cellRendererParams: (params: any) => this.showButtons(params),
+            checkboxSelection: false,
+            field: 'checkbox'
+          },
         ],
 
         enableCellTextSelection: true,
