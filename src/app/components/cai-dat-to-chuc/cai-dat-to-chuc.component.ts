@@ -99,16 +99,11 @@ export class CaiDatToChucComponent implements OnInit {
 
     };
   }
-  query = {
+  query: any = {
     filter: '',
     gridWidth: 0,
     offSet: 0,
     pageSize: 20,
-    orgId: 0,
-    isLock: -1,
-    isApprove: -1,
-    org_level: 0,
-    organizeIds: '',
   }
 
   organizeIdsParam = '';
@@ -140,11 +135,6 @@ export class CaiDatToChucComponent implements OnInit {
       gridWidth: 0,
       offSet: 0,
       pageSize: 20,
-      orgId: this.selectedValue,
-      isLock: -1,
-      isApprove: -1,
-      org_level: 0,
-      organizeIds: this.query.organizeIds
     }
     this.load();
   }
@@ -166,7 +156,7 @@ export class CaiDatToChucComponent implements OnInit {
           localStorage.setItem('organize', JSON.stringify(this.listAgencyMap[0]));
           this.query.orgId = this.selectedNode.orgId;
           this.query.org_level = this.selectedNode.org_level;
-          this.load();
+          // this.load();
         } else {
           this.selectedNode = JSON.parse(localStorage.getItem("organize"));
           this.query.orgId = this.selectedNode.orgId;
@@ -177,7 +167,7 @@ export class CaiDatToChucComponent implements OnInit {
           if (type) {
             this.isHrDiagram = true;
           }
-          this.load();
+          // this.load();
         }
         this.spinner.hide();
       }
@@ -395,7 +385,7 @@ export class CaiDatToChucComponent implements OnInit {
           return 40;
         },
         columnDefs: [
-          ...AgGridFn(this.colsDetail),
+          ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
           {
             header: '',
             filter: '',
