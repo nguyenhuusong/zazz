@@ -172,7 +172,7 @@ export class ThongTinNguoiPhuThuocComponent implements OnInit {
 
   delRow(event) {
     this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn xóa thời gian làm việc này?',
+      message: 'Bạn có chắc chắn muốn xóa?',
       accept: () => {
         const queryParams = queryString.stringify({dependentId: event.rowData.dependentId});
         this.apiService.delEmpDependent(queryParams).subscribe((results: any) => {
