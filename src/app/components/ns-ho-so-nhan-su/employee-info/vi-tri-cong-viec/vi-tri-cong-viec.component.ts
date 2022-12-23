@@ -181,8 +181,8 @@ export class ViTriCongViecComponent implements OnInit, AfterViewInit {
   }
 
   fnNghiViec() {
-    this.modelDuyet.empId = this.detailInfo.empId;
-    this.modelDuyet.full_name = this.detailInfo.fullName;
+    this.modelDuyet.empId = this.dataEmployeeStatus.empId;
+    this.modelDuyet.full_name = this.dataEmployeeStatus.fullName;
     this.titleForm.title = 'Xác nhận nhân viên nghỉ việc';
     this.titleForm.type = 'NghiViec';
     this.displayDialog = true;
