@@ -137,13 +137,13 @@ export class GiayToTuyThanComponent implements OnInit {
         cellRendererParams: params => {
           return {
             buttons: [
-              {
-                onClick: this.editRow.bind(this),
-                label: 'Xem chi tiết',
-                icon: 'fa fa-edit editing',
-                key: 'view-job-detail',
-                class: 'btn-primary mr5',
-              },
+              // {
+              //   onClick: this.editRow.bind(this),
+              //   label: 'Xem chi tiết',
+              //   icon: 'fa fa-edit editing',
+              //   key: 'view-job-detail',
+              //   class: 'btn-primary mr5',
+              // },
               {
                 onClick: this.delRow.bind(this),
                 label: 'Xóa',
