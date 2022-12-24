@@ -55,8 +55,7 @@ export class HomeComponent implements OnInit {
   bg = [
     '#4591FE',
     '#F0D042',
-    '#FF7C59',
-    '#DA100B',
+    '#f68c1f',
     '#FFA384',
     '#36eb44',
     '#beeb36',
@@ -168,7 +167,7 @@ chartSlNhanSu() {
         label: 'My First Dataset',
         data: value,
         backgroundColor: [
-          '#4591FE',
+          '#f68c1f',
         ],
         borderWidth: 1,
         cornerRadius: 20,
@@ -222,7 +221,7 @@ chartBDNhanSu() {
         label: 'Tiếp nhận',
         data: valueNsIn,
         backgroundColor: [
-          '#1F8B24',
+          '#0a58ca',
         ],
         borderWidth: 1,
         cornerRadius: 20,

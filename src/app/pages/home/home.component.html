@@ -1,5 +1,5 @@
 <div class="content-body">
-    <div class="grid">
+    <!-- <div class="grid">
       <div class="col-12">
         <div class="col-12">
             <div class="select-ori mr-2 float-left">
@@ -26,7 +26,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     
     <!-- row 1 -->
     <div class="grid boxs">
@@ -74,7 +74,7 @@
             <div class="chart-section">
               <div class="d-flex bet ">
                   <div class="des">
-                    <h3>Số lượng nhân sự </h3>
+                    <h3 style="color:#0a58ca ;">Số lượng nhân sự </h3>
                     <!-- <p>Công ty KSFinance</p> -->
                   </div>
                   <div class="select-noborder d-flex bet middle">
@@ -92,7 +92,7 @@
             <div class="chart-section">
               <div class="d-flex bet middle">
                 <div class="desc">
-                  <h3>Biến động nhân sự </h3>
+                  <h3 style="color:#0a58ca ;">Biến động nhân sự </h3>
                   <p>{{ selectedNode?.label }}</p>
                 </div>
                 <div id="legend-bien-dong-nhan-su" class="legend-default line">
@@ -136,8 +136,8 @@
               </li>
             </ul>
           </div>
-          <div class="box">
-            <h3>Thống kê hợp đồng theo loại hợp đồng</h3>
+          <div class="box  mt-3">
+            <h3>Thống kê giới tính</h3>
             <p>{{ theOrginSelected[0]?.label }} - Đến ngày {{ queryDashboard.months}}/{{ queryDashboard.years}}</p>
             <!-- <div class="chart" style="max-width: 300px; margin: auto">
               <p-chart type="doughnut" [data]="dataDou" [style]="{'width': '40%'}"></p-chart>

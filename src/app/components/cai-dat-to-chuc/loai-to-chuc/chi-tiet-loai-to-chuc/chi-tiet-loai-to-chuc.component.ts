@@ -63,7 +63,7 @@ export class ChiTietLoaiToChucComponent implements OnInit, OnChanges {
     this.activatedRoute.queryParamMap.subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.dataRouter = this.paramsObject.params;
-      this.org_level = this.paramsObject.params.org_level || null;
+      this.org_level = this.paramsObject.params.org_level || 0;
       this.getOrgLevelInfo();
     });
   };

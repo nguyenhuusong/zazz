@@ -84,7 +84,7 @@ export class CsChamCongOverviewComponent implements OnInit {
           label: '',
           data: [10, 20, 40, 30, 10, 100, 100, 20, 10, 40, 50, 60],
           backgroundColor: [
-            '#1F8B24',
+            '#0a58ca',
           ],
         },
       ]
@@ -120,7 +120,7 @@ export class CsChamCongOverviewComponent implements OnInit {
           label: '',
           data: [10, 20, 40, 30, 10, 100, 100, 20, 10, 40, 50, 60],
           backgroundColor: [
-            '#1F8B24',
+            '#0a58ca',
           ],
         },
       ]

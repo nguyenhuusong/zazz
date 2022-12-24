@@ -362,18 +362,6 @@ export class CaiDatToChucComponent implements OnInit {
       return data.orgHierarchy;
     };
     this.columnDefs = [
-      {
-        headerName: '',
-        filter: '',
-        maxWidth: 60,
-        pinned: 'left',
-        cellClass: ['border-right', 'no-auto'],
-        checkboxSelection: true,
-        headerCheckboxSelection: true,
-        headerCheckboxSelectionFilteredOnly: true,
-        field: 'checkbox2',
-        suppressSizeToFit: true,
-      },
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       {
         headerComponentParams: {
