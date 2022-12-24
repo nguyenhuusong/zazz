@@ -91,14 +91,14 @@
   </section>
   <section class="content pb-0">
       <div class="grid-default" #container>
-          <app-list-grid-angular *ngIf="columnDefs.length > 0" 
-            (callback)="rowSelected($event)"
-            [rowSelection]="'single'"
-            (showConfig)="cauhinh()"
-            [detailCellRendererParams]="detailCellRendererParams"
-            (onCellClicked)="onCellClicked($event)"
-            [listsData]="listsData" [height]="heightGrid" [columnDefs]="columnDefs"></app-list-grid-angular>
-          <div class="paginator">
+            <app-list-grid-tree-angular *ngIf="columnDefs.length > 0 && autoGroupColumnDef && getDataPath"  (callback)="rowSelected($event)"  (onCellClicked)="onCellClicked($event)"  (showConfig)="cauhinh()"
+              [listsData]="listsData" [height]="heightGrid" [getDataPath]="getDataPath" [autoGroupColumnDef]="autoGroupColumnDef"
+              [columnDefs]="columnDefs"></app-list-grid-tree-angular>
+          
+          
+          
+          
+            <div class="paginator">
             <span>Từ {{ countRecord.currentRecordStart }} đến
                 {{ countRecord.currentRecordEnd }}
                 trên tổng số

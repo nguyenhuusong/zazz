@@ -1,0 +1,6 @@
+.img-popup img{
+    max-width: 100%;
+}
+:host::ng-deep .img-popup .p-dialog-header{
+    justify-content: end;
+}

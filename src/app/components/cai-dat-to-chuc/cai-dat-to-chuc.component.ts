@@ -345,8 +345,22 @@ export class CaiDatToChucComponent implements OnInit {
       }
     });
   }
-
+  autoGroupColumnDef = null;
+  getDataPath = null;
   initGrid() {
+    this.autoGroupColumnDef = {
+      headerName: 'Tổ chức',
+      cellClass: [ 'no-auto'],
+      // cellClass: parmas => parmas.node.level > 0  ?  ['hidden'] : [''],
+     minWidth: 400,
+
+      cellRendererParams: {
+        suppressCount: true,
+      },
+    }
+    this.getDataPath = (data) => {
+      return data.orgHierarchy;
+    };
     this.columnDefs = [
       {
         headerName: '',

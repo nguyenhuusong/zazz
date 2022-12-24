@@ -1,0 +1,71 @@
+  <p-button *ngIf="isShowButton" label="Add row" styleClass="p-button-sm add-a-row" (click)="addRow()"></p-button>
+<div class="section">
+  <ag-grid-angular 
+    [style.height]="domLayout === '' ? height + 'px' : ''"
+    [excelStyles]="excelStyles"
+    [getContextMenuItems]="getContextMenuItems"
+     #agGrid style="width: 100% "
+     id="{{idGrid}}"
+    class="ag-theme-material {{listsData?.length > 0 ? '' : 'hidden_row'}}"
+    [pinnedTopRowData]="pinnedTopRowData"
+    [domLayout]="domLayout"
+    [defaultExcelExportParams]="excelExportParams"
+    [defaultCsvExportParams]="csvExportParams"
+    [rowData]="listsData"
+    [columnDefs]="columnDefs"
+    [skipHeaderOnAutoSize]="false"
+    [headerHeight]="headerHeight"
+    [floatingFiltersHeight]="floatingFiltersHeight"
+    [floatingFilter]="floatingFilter"
+    [groupDefaultExpanded]="groupDefaultExpanded"
+    [treeData]="true"
+    [stopEditingWhenCellsLoseFocus]="true"    [modules]="modules"
+    [rowClassRules]="rowClassRules"
+    [overlayNoRowsTemplate]="noRowsTemplate"
+    [detailCellRendererParams]="detailCellRendererParams"
+    [tooltipShowDelay]="tooltipShowDelay"
+    (bodyScroll)="handleScroll($event)"
+    [rowSelection]="rowSelection"
+    (gridReady)="onGridReady($event)"
+    (rowDoubleClicked)="RowDoubleClicked($event)"
+    (cellDoubleClicked)="CellDoubleClicked($event)"
+    [defaultColDef]="defaultColDef"
+    [enableCellTextSelection]="true"
+    [suppressCopyRowsToClipboard]="true"
+    [enableRangeSelection]="true"
+    [getRowHeight]="getRowHeight"
+    (rowSelected)="onRowSelected($event)"
+    (cellValueChanged)="onCellValueChanged($event)"
+    [accentedSort]="true"
+    (cellClicked)="CellClicked($event)"
+    [isRowSelectable]="isRowSelectable"
+    [getMainMenuItems]="getMainMenuItems"
+    [getDataPath]="getDataPath"
+    [autoGroupColumnDef]="autoGroupColumnDef"
+    (firstDataRendered)="onFirstDataRendered($event)"
+    [frameworkComponents]="frameworkComponents">
+  </ag-grid-angular>
+</div>
+<!-- [sideBar]="sideBar" -->
+
+<!-- [suppressRowClickSelection]="true" -->
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+<!-- 
+
+  <p-dialog class="img-popup" [(visible)]="isShowImage" [style]="{width: '600px'}">
+    <img [src]="imgCard">
+</p-dialog> -->
