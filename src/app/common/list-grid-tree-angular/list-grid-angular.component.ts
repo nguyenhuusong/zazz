@@ -87,7 +87,7 @@ export class ListGridAngularTreeComponent implements OnInit, OnChanges {
   gridApi: any;
   getRowHeight: any;
   gridColumnApi: any;
-  groupDefaultExpanded = 0;
+  groupDefaultExpanded = -1;
   heightAuto = 0;
   tooltipShowDelay = 0;
   isRowMaster

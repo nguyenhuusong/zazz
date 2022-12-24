@@ -2185,4 +2185,28 @@ export class ApiHrmService {
   setJobInfo(queryParams): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v1/jobs/SetJobInfo`, queryParams, this.options);
   }
+
+  // GetOrgLevelFilter
+  getOrgLevelFilter(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/organize/GetOrgLevelFilter?` + queryParams, this.options);
+  }
+
+  getOrgLevelPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/organize/GetOrgLevelPage?` + queryParams, this.options);
+  }
+
+  getOrgLevelInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/organize/GetOrgLevelInfo?` + queryParams, this.options);
+  }
+  
+  delOrgLevelInfo(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v1/organize/DelOrgLevelInfo?` + queryParams, this.options);
+  }
+
+  setOrgLevelInfo(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/organize/SetOrgLevelInfo`, queryParams, this.options);
+  }
+
+
+
 }

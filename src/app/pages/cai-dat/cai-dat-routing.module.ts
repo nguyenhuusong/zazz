@@ -30,6 +30,8 @@ import { NgayNghiLeComponent } from 'src/app/components/ngay-nghi-le/ngay-nghi-l
 import { ChiTietNgayNghiComponent } from 'src/app/components/ngay-nghi-le/chi-tiet-ngay-nghi/chi-tiet-ngay-nghi.component';
 import { ThietLapWifiComponent } from 'src/app/components/thiet-lap-wifi/thiet-lap-wifi.component';
 import { ChiTietThietLapWifiComponent } from 'src/app/components/thiet-lap-wifi/chi-tiet-thiet-lap-wifi/chi-tiet-thiet-lap-wifi.component';
+import { LoaiToChucComponent } from 'src/app/components/cai-dat-to-chuc/loai-to-chuc/loai-to-chuc.component';
+import { ChiTietLoaiToChucComponent } from 'src/app/components/cai-dat-to-chuc/loai-to-chuc/chi-tiet-loai-to-chuc/chi-tiet-loai-to-chuc.component';
 
 const routes: Routes = [
   {
@@ -241,6 +243,32 @@ const routes: Routes = [
     component: ChiTietNoiLamViecComponent,
     data: {
       title: 'Chi tiết nơi làm việc',
+      url: 'chi-tiet-noi-lam-viec',
+    },
+  },
+
+   // Loại tổ chức
+   {
+    path: 'loai-to-chuc',
+    component: LoaiToChucComponent,
+    data: {
+      title: 'Danh sách loại tổ chức',
+      url: 'loai-to-chuc',
+    },
+  },
+  {
+    path: 'loai-to-chuc/them-moi-loai-to-chuc',
+    component: ChiTietLoaiToChucComponent,
+    data: {
+      title: 'Thêm mới loại tổ chức',
+      url: 'them-moi-loai-to-chuc',
+    },
+  },
+  {
+    path: 'loai-to-chuc/chi-tiet-loai-to-chuc',
+    component: ChiTietLoaiToChucComponent,
+    data: {
+      title: 'Chi tiết loại tổ chức',
       url: 'chi-tiet-noi-lam-viec',
     },
   },

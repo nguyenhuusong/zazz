@@ -514,42 +514,42 @@ export class CaiDatToChucComponent implements OnInit {
     // this.getOrrginiaztions();
     // this.getBoPhan();
     this.getAgencyOrganizeMap();
+    this.initMenuItem();
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Cài đặt' },
       { label: 'Danh sách tổ chức', routerLink: '/cai-dat/cai-dat-to-chuc' },
     ];
-    this.menuItem = [
-      {
-        label: 'Chức vụ',
-        icon: 'pi pi-refresh',
-        command: () => {
-          this.addPosition();
-        }
-      },
-      {
-        label: 'Nơi làm việc',
-        icon: 'pi pi-refresh',
-        command: () => {
-          this.AddWorkplace();
-        }
-      },
-      {
-        label: 'Cài đặt tham số',
-        icon: 'pi pi-refresh',
-        command: () => {
+    // this.menuItem = [
+    //   {
+    //     label: 'Chức vụ',
+    //     icon: 'pi pi-refresh',
+    //     command: () => {
+    //       this.addPosition();
+    //     }
+    //   },
+    //   {
+    //     label: 'Nơi làm việc',
+    //     icon: 'pi pi-refresh',
+    //     command: () => {
+    //       this.AddWorkplace();
+    //     }
+    //   },
+    //   {
+    //     label: 'Cài đặt tham số',
+    //     icon: 'pi pi-refresh',
+    //     command: () => {
 
-
-        }
-      },
-      {
-        label: 'Lịch làm việc',
-        icon: 'pi pi-calendar',
-        command: () => {
-          this.workTime();
-        }
-      },
-    ];
+    //     }
+    //   },
+    //   {
+    //     label: 'Lịch làm việc',
+    //     icon: 'pi pi-calendar',
+    //     command: () => {
+    //       this.workTime();
+    //     }
+    //   },
+    // ];
     this.getFilter()
   }
 
@@ -884,7 +884,6 @@ export class CaiDatToChucComponent implements OnInit {
 
   filterLoad(event) {
     this.query = { ...this.query, ...event.data };
-    console.log('this.query', this.query)
     this.load();
   }
 
@@ -898,6 +897,29 @@ export class CaiDatToChucComponent implements OnInit {
     }
   }
 
+  initMenuItem() {
+    this.menuItem = [
+      {
+        label: 'Cài đặt tham số',
+        icon: 'pi pi-refresh',
+        command: () => {
+          this.caiDatThamSo();
+        }
+      },
+      {
+        label: 'Cài đặt loại tổ chức',
+        icon: 'pi pi-refresh',
+        command: () => {
+          this.loaiToChuc();
+        }
+      },
+  
+    ]
+  }
 
+  loaiToChuc() {
+    this.router.navigate(['/cai-dat/loai-to-chuc']);
+
+  }
 }
 

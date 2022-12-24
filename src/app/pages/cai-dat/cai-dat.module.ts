@@ -79,6 +79,8 @@ import { ChonThoiGianComponent } from 'src/app/components/cai-dat-lich-hop/chon-
 import { CheckHideActionsDirectiveModule } from 'src/app/directive/check-action.module';
 import { FormFilterModule } from 'src/app/common/form-filter/form-filter.module';
 import { ListGridAngularTreeModule } from 'src/app/common/list-grid-tree-angular/list-grid-angular.module';
+import { LoaiToChucComponent } from 'src/app/components/cai-dat-to-chuc/loai-to-chuc/loai-to-chuc.component';
+import { ChiTietLoaiToChucComponent } from 'src/app/components/cai-dat-to-chuc/loai-to-chuc/chi-tiet-loai-to-chuc/chi-tiet-loai-to-chuc.component';
 FullCalendarModule.registerPlugins([
   // register FullCalendar plugins
   dayGridPlugin,
@@ -168,7 +170,9 @@ FullCalendarModule.registerPlugins([
     ThietLapWifiComponent,
     ChiTietThietLapWifiComponent,
     ChonLichHopComponent,
-    ChonThoiGianComponent
+    ChonThoiGianComponent,
+    LoaiToChucComponent,
+    ChiTietLoaiToChucComponent
   ],
   providers: []
 })
