@@ -65,14 +65,14 @@ export class CaiDatThamSoComponent implements OnInit, OnChanges {
     this.activatedRoute.queryParamMap.subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.dataRouter = this.paramsObject.params;
-      this.organizeId = this.paramsObject.params.organizeId;
+      // this.organizeId = this.paramsObject.params.organizeId;
       this.getOrganizeConfig();
     });
   };
   detailInfo = null;
   getOrganizeConfig() {
     this.listViews = [];
-    const queryParams = queryString.stringify({organizeIds: this.organizeId});
+    const queryParams = queryString.stringify({organizeIds: null});
     this.apiService.getOrganizeConfig(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.detailInfo = results.data;

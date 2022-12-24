@@ -542,14 +542,7 @@ export class CaiDatToChucComponent implements OnInit {
   }
 
   caiDatThamSo() {
-    if (this.query.organizeIds) {
-      const params = {
-        organizeId: this.organizeIdsParam
-      }
-      this.router.navigate(['/cai-dat/cai-dat-tham-so'], { queryParams: params });
-    } else {
-      this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Không tìm thấy tổ chức' });
-    }
+    this.router.navigate(['/cai-dat/cai-dat-tham-so'], { queryParams: null });
   }
 
   workTime() {
