@@ -619,8 +619,8 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v1/organize/GetOrganizeInfo?` + queryParams, this.options)
   }
 
-  getCompanyList(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v2/compay/GetCompanyList?` + queryParams, this.options)
+  getCompanies(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/compay/GetCompanies?` + queryParams, this.options)
   }
 
   getOrganizeParam(queryParams): Observable<any> {
@@ -1144,6 +1144,10 @@ export class ApiHrmService {
 
   setComAuthorizeInfo(params): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/compay/SetComAuthorizeInfo`, params, this.options)
+  }
+
+  getComAuthorizePage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/compay/GetComAuthorizePage?` + queryParams, this.options)
   }
 
   getContractTypePage(queryParams): Observable<any> {
@@ -2206,6 +2210,41 @@ export class ApiHrmService {
   setOrgLevelInfo(queryParams): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v1/organize/SetOrgLevelInfo`, queryParams, this.options);
   }
+
+  getOrgCompanyPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/organize/GetOrgCompanyPage?` + queryParams, this.options);
+  }
+
+  setOrgCompany(queryParams): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v1/organize/SetOrgCompany`, queryParams, this.options);
+  }
+
+  getOrgPositionPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/organize/GetOrgPositionPage?` + queryParams, this.options);
+  }
+
+  getOrgPosition(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/organize/GetOrgPosition?` + queryParams, this.options);
+  }
+
+  setOrgPosition(queryParams): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v1/organize/SetOrgPosition`, queryParams, this.options);
+  }
+
+  getOrgJobPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/organize/GetOrgJobPage?` + queryParams, this.options);
+  }
+
+  setOrgJob(queryParams): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v1/organize/SetOrgJob`, queryParams, this.options);
+  }
+
+  //Customer
+
+  getCustSearch(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/customer/GetCustSearch?` + queryParams, this.options);
+  }
+
 
 
 

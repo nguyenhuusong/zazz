@@ -44,7 +44,6 @@ import { OrganizationChartModule } from 'primeng/organizationchart';
 import { ChiTietToChucComponent } from 'src/app/components/cai-dat-to-chuc/chi-tiet-to-chuc/chi-tiet-to-chuc.component';
 import { GridAddModule } from 'src/app/common/grid-add/grid-add.module';
 import { PanelModule } from 'primeng/panel';
-import { ChucVuComponent } from 'src/app/components/cai-dat-to-chuc/chuc-vu/chuc-vu.component';
 import { NoiLamViecComponent } from 'src/app/components/cai-dat-to-chuc/noi-lam-viec/noi-lam-viec.component';
 import { CaiDatThamSoComponent } from 'src/app/components/cai-dat-to-chuc/cai-dat-tham-so/cai-dat-tham-so.component';
 import { LichLamViecComponent } from 'src/app/components/cai-dat-to-chuc/lich-lam-viec/lich-lam-viec.component';
@@ -81,6 +80,15 @@ import { FormFilterModule } from 'src/app/common/form-filter/form-filter.module'
 import { ListGridAngularTreeModule } from 'src/app/common/list-grid-tree-angular/list-grid-angular.module';
 import { LoaiToChucComponent } from 'src/app/components/cai-dat-to-chuc/loai-to-chuc/loai-to-chuc.component';
 import { ChiTietLoaiToChucComponent } from 'src/app/components/cai-dat-to-chuc/loai-to-chuc/chi-tiet-loai-to-chuc/chi-tiet-loai-to-chuc.component';
+import { CongTyComponent } from 'src/app/components/cai-dat-to-chuc/chi-tiet-to-chuc/cong-ty/cong-ty.component';
+import { ChucVuComponent as PositionOrgId } from 'src/app/components/cai-dat-to-chuc/chi-tiet-to-chuc/chuc-vu/chuc-vu.component';
+import { ChucVuComponent } from 'src/app/components/cai-dat-to-chuc/chuc-vu/chuc-vu.component';
+import {DividerModule} from 'primeng/divider';
+import {OrderListModule} from 'primeng/orderlist';
+import { ChuyenMonComponent } from 'src/app/components/cai-dat-to-chuc/chi-tiet-to-chuc/chuyen-mon/chuyen-mon.component';
+import { HrmSearchCustomerModule } from 'src/app/common/hrm-search-customer/hrm-search-customer.module';
+import { NguoiDuyetComponent } from 'src/app/components/cai-dat-cong-ty/nguoi-duyet/nguoi-duyet.component';
+
 FullCalendarModule.registerPlugins([
   // register FullCalendar plugins
   dayGridPlugin,
@@ -115,6 +123,7 @@ FullCalendarModule.registerPlugins([
     SliderModule,
     SidebarModule,
     CaiDatRoutingModule,
+    OrderListModule,
     CurrencyFormatPipeModule,
     DialogModule,
     DropdownModule,
@@ -122,6 +131,7 @@ FullCalendarModule.registerPlugins([
     TabViewModule,
     OverlayPanelModule,
     PaginatorModule,
+    DividerModule,
     GridAddModule,
     PanelModule,
     HrmBreadCrumbModule,
@@ -130,6 +140,7 @@ FullCalendarModule.registerPlugins([
     ConfirmDialogModule,
     ConfigGridTableFormModule,
     CheckboxModule,
+    HrmSearchCustomerModule,
     CheckHideActionsDirectiveModule,
     AgGridModule.withComponents([
       ButtonRendererComponent,
@@ -172,7 +183,12 @@ FullCalendarModule.registerPlugins([
     ChonLichHopComponent,
     ChonThoiGianComponent,
     LoaiToChucComponent,
-    ChiTietLoaiToChucComponent
+    ChiTietLoaiToChucComponent,
+    CongTyComponent,
+    PositionOrgId,
+    ChuyenMonComponent,
+    NguoiDuyetComponent,
+
   ],
   providers: []
 })

@@ -17,12 +17,13 @@
               </div>
         </p-tabPanel>
         <p-tabPanel header="Đăng ký người duyệt">
-            <p-card styleClass="mt-1">
+            <app-nguoi-duyet [companyId]="companyId" *ngIf="indexTab === 1"></app-nguoi-duyet>
+            <!-- <p-card styleClass="mt-1">
             <ng-template pTemplate="header">
              <div class="d-flex">
                 <div class="col-6" style="padding: 0;">
                     <div class="panel-heading" style="padding: 10px 0;">
-                        <h6 class="panel-title" style="color: black; font-weight: 500; margin-bottom: 0px;">Danh sách người duyệt<p-badge *ngIf="listsData.length > 0" value="{{listsData.length}}" styleClass="ml-2 p-mr-2"></p-badge></h6></div>
+                        <h6 class="panel-title" style="color: black; font-weight: 500; margin-bottom: 0px;">Danh sách người duyệt<p-badge *ngIf="listsData?.length > 0" value="{{listsData.length}}" styleClass="ml-2 p-mr-2"></p-badge></h6></div>
                 </div>
                 <div class="col-6 justify-content-end text-right">
                     <p-button label="Thêm mới" styleClass="p-button-sm" (click)="addComAuthorizeInfo()"></p-button>
@@ -36,7 +37,7 @@
                     [columnDefs]="columnDefs"></app-list-grid-angular>
                 </div>
             </section>
-            </p-card>
+            </p-card> -->
         </p-tabPanel>
       </p-tabView>
    </div>
