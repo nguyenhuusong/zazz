@@ -3497,12 +3497,28 @@ div.p-organizationchart {
         border-bottom: 1px solid #e2e2e2;
         &:first-child{
             border-bottom: 1px solid #babfc7;
+            .ag-header-cell-text{
+                color: #212633;
+                font-size: 14px;
+            }
         }
         &:not(:first-child) .ag-header-cell{
             border-top: none;
             .ag-input-field-input{
                 background: #f1f2f4;
             }
+        }
+       .ag-header-cell-resize::after {
+            content: "";
+            position: absolute;
+            z-index: 1;
+            display: block;
+            left: calc(50% - 1px);
+            width: 2px;
+            height: 30%;
+            top: calc(50% - 15%);
+            background-color: rgba(186, 191, 199, 0.5);
+            background-color: rgba(186, 191, 199, 0.5);
         }
     }
 }
