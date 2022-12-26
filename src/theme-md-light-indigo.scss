@@ -8,7 +8,7 @@
     --main-background: #182850;
     --main-background-hover: #0868d9;
     --color-with-background: #ffffff;
-    --main-color: #4C97E4;
+    --main-color: #0a58ca;
     --white-background: #ffffff;
     --orange-background: #FF7C59;
 
@@ -516,7 +516,7 @@ body{
 p-button{
     button{
         &.p-button-sm{
-            border: 1px solid #4C97E4;
+            border: 1px solid #0a58ca;
             &.p-disabled{
                 border-color: transparent
             }

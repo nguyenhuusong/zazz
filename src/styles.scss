@@ -551,7 +551,7 @@ body {
                 &:last-child{
                     a{
                         span{
-                            color: #4C97E4 !important;
+                            color: #f68c1f !important;
                         }
                     }
                 }
@@ -2216,7 +2216,7 @@ button{
         }
     }
     .bg-success, .bg-info{
-        background: #2cab02;
+        background: #0a58ca;
         color: #fff !important;
         font-size: 12px;
         padding: 3px 6px;
@@ -2500,7 +2500,7 @@ div.p-organizationchart {
     }
     &.bg-success{
         // color: #34C759;
-        background: #34C759;
+        background: #0a58ca;
         width: 100%;
         &:after {
             background: #34C759;
@@ -6246,7 +6246,7 @@ app-form-filter{
 }
 
 .colLink{
-    color: #0C3399 !important;
+    color: #f68c1f !important;
     cursor: pointer;
 }
 .box-view{
