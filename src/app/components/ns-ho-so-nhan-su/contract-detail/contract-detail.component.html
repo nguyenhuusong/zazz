@@ -8,7 +8,7 @@
 </div>
 <p-card>
     <div class="status-line steps-contract col-12 m-auto">
-        <p-steps [model]="steps" [(activeIndex)]="activeIndex" [readonly]="false"></p-steps>
+        <p-steps [model]="steps" *ngIf="listViews.length> 0" [(activeIndex)]="activeIndex" [readonly]="false"></p-steps>
     </div>
 </p-card>
 <p-divider></p-divider>

@@ -89,7 +89,7 @@ export class ContractDetailComponent implements OnInit {
     this.apiService.setContractCreate({ empId: this.modelContractInfo.empId }).subscribe(results => {
       if (results.status === 'success') {
         this.activeIndex = results.data.flow_st;
-        this.flowCurrent = results.data.flow_cur + 1;
+        this.flowCurrent = results.data.flow_cur;
         this.steps = results.data.flowStatuses.map(d => {
           return {
             label: d.flow_name,
@@ -117,12 +117,14 @@ export class ContractDetailComponent implements OnInit {
     const stepS = document.querySelectorAll('.steps-contract .p-steps-item');
     if (stepS.length > 0) {
       for (let i = 0; i < this.steps.length; i++) {
+        console.log(this.activeIndex)
         if (i <= this.flowCurrent) {
-          console.log(i,i<= this.flowCurrent && i !== 0)
-          stepS[i].className +=  ` p-highlight ${i<= this.activeIndex ? 'active' : 'remove-active'} ${i<= this.flowCurrent && this.flowCurrent !== 1 ? 'active-confirm' : 'remove-active-confirm'}`;
+          stepS[i].className +=  ` p-highlight ${i<= this.activeIndex? 'active' : 'remove-active'}`;
+          stepS[i].className +=  ` ${i<= this.flowCurrent ? 'active-confirm' : 'remove-active-confirm'}`;
         } else {
           stepS[i].classList.value = `p-steps-item icon-${i}`;
         }
+        
       }
     }
   }
@@ -154,7 +156,7 @@ export class ContractDetailComponent implements OnInit {
   cloneListViews = []
   callBackForm(event) {
     const params = {
-      ...this.detailInfo, group_fields: event.data, flow_cur: event.type === 'Submit' ?  this.flowCurrent : this.flowCurrent -1
+      ...this.detailInfo, group_fields: event.data, flow_cur: this.flowCurrent
     }
     this.cloneListViews = cloneDeep(this.listViews); 
     this.listViews = [];
@@ -168,12 +170,13 @@ export class ContractDetailComponent implements OnInit {
     this.apiService.setContractInfo(params).subscribe(results => {
       if (results.status === 'success') {
         this.activeIndex = results.data.flow_st;
+        console.log("results.data.flow_st", results.data.flow_st)
         this.listViews = cloneDeep(results.data.group_fields);
         setTimeout(() => {
           this.stepActivated();
         }, 100);
         this.detailInfo = results.data;
-        this.flowCurrent = results.data.flow_cur + 1;
+        this.flowCurrent = results.data.flow_cur;
         this.optionsButtonsView =[
           { label: '', value: 'BackPage', class: `p-button-secondary ${results.data.prev_st ? '' : 'hidden'}`, icon: 'pi pi-caret-left',  },
           { label: '', value: 'Update', class: `btn-accept ${results.data.next_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-caret-right' },
@@ -198,6 +201,15 @@ export class ContractDetailComponent implements OnInit {
         }
       } else {
         this.listViews = cloneDeep(this.cloneListViews);
+        this.flowCurrent = this.detailInfo.flow_cur;
+        this.activeIndex = this.detailInfo.flow_st;
+        console.log("this.detailInfo.flow_st", this.detailInfo.flow_st)
+        if(this.detailInfo.flow_cur > 1 && this.detailInfo.contractId) this.getContractMetaPage();
+        if((this.detailInfo.flow_cur > 0 && this.detailInfo.flow_cur < 4) && this.detailInfo.contractId) this.getSalaryComponentPage();
+        if((this.detailInfo.flow_cur > 0 && this.detailInfo.flow_cur < 4)  && !this.detailInfo.contractId) this.getSalaryComponentPageNotContractId(this.detailInfo);
+        setTimeout(() => {
+          this.stepActivated();
+        }, 100);
         this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
         this.spinner.hide();
       }
@@ -215,7 +227,7 @@ export class ContractDetailComponent implements OnInit {
     this.apiService.getContractInfo(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.activeIndex = results.data.flow_st;
-        this.flowCurrent = results.data.flow_cur + 1;
+        this.flowCurrent = results.data.flow_cur;
        
         this.steps = results.data.flowStatuses.map(d => {
           return {

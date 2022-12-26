@@ -67,6 +67,8 @@ export class HomeComponent implements OnInit {
     '#36eb6e',
   ]
   ngOnInit() {
+    this.getDashboardInfo();
+    this.load();
     this.columnDefs = [
       {
        headerName: 'Thời gian',
@@ -105,7 +107,7 @@ export class HomeComponent implements OnInit {
     ];
     
     this.getYears();
-    this.getAgencyOrganizeMap();
+    // this.getAgencyOrganizeMap();
   }
   ngOnDestroy() {
   }
@@ -428,7 +430,7 @@ chartBDNhanSu() {
     this.selectedNode = null;
     this.listAgencyMap = []
     this.isHrDiagram = true;
-    this.getAgencyOrganizeMap(true);
+    // this.getAgencyOrganizeMap(true);
   }
   getAgencyOrganizeMap(type = false) {
     this.apiService.getAgencyOrganizeMap().subscribe(results => {
@@ -444,7 +446,7 @@ chartBDNhanSu() {
           // this.query.org_level = this.selectedNode.org_level;
           this.load();
         } else {
-          this.selectedNode = JSON.parse(localStorage.getItem("organize"));
+          // this.selectedNode = JSON.parse(localStorage.getItem("organize"));
           this.queryDashboard.orgid = this.selectedNode.orgId;
           this.getOriginLabelByid();
           // this.parseObjectProperties(this.listAgencyMap, this.selectedNode.organizeId);
