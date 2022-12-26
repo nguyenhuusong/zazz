@@ -63,6 +63,8 @@
     --BDC4D8: #BDC4D8;
 
     --8E9ABB: #8E9ABB;
+
+    --f68c1f: #f68c1f
     
 }
 
@@ -95,16 +97,16 @@ body{
             &> .p-menuitem-link{
                 &:not(.p-disabled):hover {
                     .p-menuitem-text{
-                        color: var(--525B73);
+                        color: var(--white-color);
                     }
                     background: none;
                     .p-submenu-icon,
                     .p-menuitem-icon{
-                        color: var(--525B73);
+                        color: var(--white-color);
                     }
                 }
                 .p-menuitem-icon{
-                    color: var(--525B73);
+                    color: var(--white-color);
                 }
                 &.p-menuitem-link-active{
                 }
@@ -118,45 +120,45 @@ body{
             }
             &>.p-menuitem-link{
                 .p-menuitem-text{
-                    color: var(--525B73)
+                    color: var(--white-color)
                 }
                 .p-submenu-icon{
-                    color: var(--525B73);
+                    color: var(--white-color);
                 }
             }
             &.p-menuitem-active{
                 &>a{
                     &>.p-menuitem-text{
-                        color: var(--main-color) !important;
+                        color: var(--f68c1f) !important;
                     }
                     .p-submenu-icon{
-                        color: var(--main-color) !important;
+                        color: var(--f68c1f) !important;
                     }
                 }
             }
             &>a{
                 &:hover{
                     &>.p-menuitem-text{
-                        color: var(--main-color) !important;
+                        color: var(--f68c1f) !important;
                     }
                 }
             }
             &.parent_active{
                 &>a{
                     &>.p-menuitem-text{
-                        color: var(--main-color);
+                        color: var(--f68c1f);
                     }
                 }
                 .p-menuitem-icon{
-                    color: var(--main-color);
+                    color: var(--f68c1f);
                 }
                 .p-submenu-icon{
-                    color: var(--main-color);
+                    color: var(--f68c1f);
                 }
                 .p-submenu-list{
                     &>li.active{
                         &>a{
-                            background: var(--main-color);
+                            background: var(--f68c1f);
                             .p-menuitem-text{
                                 color: var(--white-color);
                             }
@@ -181,7 +183,7 @@ body{
                 a{
                     &:focus,
                     &:hover{
-                        background: var(--main-color);
+                        background: var(--f68c1f);
                         span{
                             color: var(--white-color) !important;
                         }
@@ -870,7 +872,7 @@ p-button{
 }
 .header{
     .p-toolbar{
-        background: var(--main-background);
+        background: var(--white-background);
         // box-shadow: var(--box-shadow-005);
     }
 }
