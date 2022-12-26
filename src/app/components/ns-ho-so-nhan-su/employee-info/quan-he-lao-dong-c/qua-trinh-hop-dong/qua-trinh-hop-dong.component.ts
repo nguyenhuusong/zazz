@@ -80,6 +80,7 @@ export class QuaTrinhHopDongComponent implements OnInit {
   emitContract(event) {
     this.hienthihopdong = false;
     this.getContractPageByEmpId();
+    this.cancelSave.emit();
   }
 
   listViewsDetail = [];
