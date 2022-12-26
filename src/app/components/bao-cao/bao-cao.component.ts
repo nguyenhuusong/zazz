@@ -110,12 +110,12 @@ export class BaoCaoComponent implements OnInit {
 
   getCompanyList(element1: any): void {
     const queryParams = queryString.stringify({ orgId: 0 });
-    this.apiService.getCompanyList(queryParams).subscribe(results => {
+    this.apiService.getCompanies(queryParams).subscribe(results => {
       if (results.status === 'success') {
         element1.options = results.data.map(res => {
           return {
-            label: `${res.companyName}`,
-            value: `${res.companyId}`
+            label: `${res.name}`,
+            value: `${res.value}`
           };
         });
         element1[element1.param_cd] = element1.param_default;

@@ -338,17 +338,17 @@ detailInfoFilter = null;
     this.load();
   }
 
-  getCompanies(): void {
-    const queryParams = queryString.stringify({});
-    this.apiService.getCompanyList(queryParams)
-      .subscribe((results: any) => {
-        this.companies = results.data
-          .map(d => {
-            return { label: d.companyName, value: d.companyId };
-          });
-        this.companies = [{ label: 'Tất cả', value: '' }, ...this.companies];
-      });
-  }
+  // getCompanies(): void {
+  //   const queryParams = queryString.stringify({});
+  //   this.apiService.getCompanyList(queryParams)
+  //     .subscribe((results: any) => {
+  //       this.companies = results.data
+  //         .map(d => {
+  //           return { label: d.companyName, value: d.companyId };
+  //         });
+  //       this.companies = [{ label: 'Tất cả', value: '' }, ...this.companies];
+  //     });
+  // }
 
   handlerError(error): void {
     console.log(error);

@@ -1,0 +1,135 @@
+import { Component, EventEmitter, Input, Output, } from '@angular/core';
+import { MessageService } from 'primeng/api';
+import * as queryString from 'querystring';
+import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
+@Component({
+  selector: 'app-hrm-search-customer',
+  templateUrl: './hrm-search-customer.component.html',
+  styleUrls: ['./hrm-search-customer.component.css'],
+})
+export class HrmSearchCustomerComponent {
+  @Input() isSearch: any = false;
+  @Output() seachEmValue = new EventEmitter<any>();
+  constructor(
+    private apiService: ApiHrmService,
+    private messageService: MessageService,
+  ) { }
+  searchBy = 'code'
+  searchBys = [
+    { label: 'Mã Khách hàng', value: 0 },
+    { label: 'Số CMT/ HC', value: 1 },
+    { label: 'Số điện thoại', value: 2 },
+    { label: 'Tên khách hàng', value: 3 },
+  ];
+  modelStaff = '';
+  listStaff = [];
+  query = {
+    filter: '',
+    keyType: '',
+    keyName: ''
+  }
+  isLoading = false;
+  dataSearched: any = [];
+  dataSearcheSelect: any = [];
+  dataInfo: any = null
+  empId = '';
+  dataInfoCallback: any = []
+  isSearching = false
+  ngOnInit(): void {
+
+  }
+
+  changeKeyType(event) {
+
+  }
+
+  clearEvent(event) {
+    this.modelStaff = '';
+  }
+
+  // onSelectStaff(event) {
+  //   this.isSearching = false
+  //   this.dataSearcheSelect = this.dataSearched.filter( d => event.value === d.empId);
+  //   const queryParams = queryString.stringify({ empId: this.dataSearcheSelect[0].empId });
+  //   this.empId = this.dataSearcheSelect[0].empId;
+  //   this.dataInfoCallback = this.dataSearcheSelect[0]
+  //   this.apiService.getEmpProfile(queryParams).subscribe(results => {
+  //     if (results.status === 'success') {
+  //       this.dataInfo = {
+  //         address: getFieldValueAggrid(results.data, 'origin_add'),
+  //       }
+  //     }
+  //   } )
+  // }
+
+  // getStaffsAtStore(event = null) {
+  //   this.isLoading = true;
+  //   this.isSearching = true;
+  //   this.apiService.getEmployeePage(queryString.stringify({ filter: this.modelStaff})).subscribe(
+  //     (results: any) => {
+  //       this.isLoading = false;
+  //       this.dataSearched = results.data.dataList.data;
+  //       this.listStaff = results.data.dataList.data.map(res => {
+  //         return {
+  //           label: res.full_name + ' - ' + res.code + ' - ' + res.phone1,
+  //           value: res.empId
+  //         };
+  //       });
+  //     })
+  // }
+
+  cancelItem() {
+    let callbackValue = {
+      status: 'cancel',
+      value: ''
+    }
+    this.dataInfo = null
+    this.isSearch = false
+    this.seachEmValue.emit(callbackValue)
+  }
+
+  searchEmp() {
+    this.isLoading = true;
+    this.isSearching = true;
+    this.dataInfo = null;
+    this.apiService.getCustSearch(queryString.stringify({ keyName: this.query.keyName, keyType: this.query.keyType, offSet: 0, pageSize: 50 })).subscribe((results: any) => {
+      this.isLoading = false;
+      this.dataSearched = results.data.dataList.data;
+    })
+  }
+
+  getItem() {
+    let callbackValue = {
+      status: 'ok',
+      value: this.empId,
+      dataInfo: this.dataInfo.empId
+    }
+    if (this.empId) {
+      this.seachEmValue.emit(callbackValue);
+      this.isSearch = false
+    } else {
+      this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Chưa chọn nhân viên' });
+    }
+  }
+  isLoadingInfo = false;
+  getEmpInfo(info) {
+    this.isLoadingInfo = true;
+    console.log(info)
+    this.dataInfo = info;
+    // const queryParams = queryString.stringify({ empId: info.empId });
+    // this.empId = info.empId;
+    // // this.dataInfo = null;
+    // this.dataInfoCallback = info.empId
+    // this.apiService.getEmpProfile(queryParams).subscribe(results => {
+    //   if (results.status === 'success') {
+    //     this.isLoadingInfo = false;
+    //     this.dataInfo = {
+    //       address: getFieldValueAggrid(results.data, 'origin_add'),
+    //       ...info
+    //     }
+    //   }
+    // })
+  }
+
+
+}

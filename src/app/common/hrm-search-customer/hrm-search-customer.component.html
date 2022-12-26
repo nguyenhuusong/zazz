@@ -1,0 +1,123 @@
+<p-dialog 
+styleClass="search-em-in {{ dataSearched?.length > 0 ? 'search-em-result' : '' }}"
+[(visible)]="isSearch" 
+[draggable]="false" 
+[resizable]="false" 
+[autoZIndex]="true" 
+[modal]="true" 
+(onHide)="cancelItem()"
+>
+
+<ng-template pTemplate="header">
+    Tìm kiếm nhân viên
+</ng-template>
+    <div class="search-in" [ngClass]="{'res': dataSearched.length > 0}">
+        <div class="search-group field-group select d-flex" style="display: flex">
+            <div class="col-3 pd-0" style="padding-right: 10px !important;border-right: 1px solid #ebe8e8;">
+                <p-dropdown 
+                 (onChange)="changeKeyType($event)"
+                  [(ngModel)]="query.keyType" 
+                appendTo="body" 
+                [baseZIndex]="100" 
+                [options]="searchBys" 
+                placeholder="Tìm kiếm theo" >
+                </p-dropdown>
+            </div>
+            <div class="col-9 pd-0">
+                <!-- <p-button styleClass="p-button-sm " icon=" pi pi-search" (click)="getStaffsAtStore()"></p-button> -->
+                <span class="pi pi-search"></span>
+                <span class="number-res" *ngIf="dataSearched && dataSearched.length > 0 && isSearching">{{ dataSearched.length }} kết quả</span>
+                <div class="uni-load " [ngClass]="isLoading ? 'loading' : ''"></div>
+                <div class="field-group text mb-0">
+                    <input type="text" class="form-control" 
+                    [(ngModel)]="query.keyName" name="keyName" (keyup.enter)="searchEmp()">
+                </div>
+                <!-- <p-autoComplete 
+                    type="search" 
+                    appendTo="body" 
+                    (onClear)="clearEvent($event)" 
+                    placeholder="Nhập nhân viên" 
+                    [(ngModel)]="modelStaff" 
+                    [suggestions]="listStaff" 
+                    (onSelect)="onSelectStaff($event)"
+                    (completeMethod)="getStaffsAtStore($event)" emptyMessage="Không tìm thấy nhân viên" field="label">
+                </p-autoComplete> -->
+                </div>
+        </div>
+    </div>
+    <div class="search-content grid" *ngIf="dataSearched && dataSearched.length > 0">
+        <div [ngClass]="dataInfo ? 'col-4' : 'col-12'">
+            <div class="list-em">
+                <table class="table" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Họ tên</th>
+                            <th>Mã nhân viên</th>
+                            <th>Số điện thoại</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngFor="let emInfo of dataSearched">
+                            <tr (click)="getEmpInfo(emInfo)" [ngClass]="emInfo.empId === empId ? 'active' : ''">
+                                <td><b>{{ emInfo?.full_name }}</b></td>
+                                <td>{{ emInfo?.code }}</td>
+                                <td>{{ emInfo?.phone1 }}</td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-8">
+            <div class="d-flex search-res emInfo" *ngIf="dataInfo">
+                <div class="uni-load " [ngClass]="isLoadingInfo ? 'loading' : ''"></div>
+                <div class="col-3 text-center">
+                    <p-image src="{{ dataInfo?.avatar_url ? dataInfo.avatar_url : '../../../../../assets/images/no-image2.png' }}" alt="Image" width="250"></p-image>
+                    <span>Mã NV: <b>{{ dataInfo?.code }}</b></span>
+                </div>
+                <div class="col-9">
+                    <div class="grid">
+                        <label class="col-3">Họ tên</label>
+                        <span class="col-9"><b>{{ dataInfo?.full_name }}</b></span>
+                    </div>
+                    <div class="grid">
+                        <label class="col-3">Email</label>
+                        <span class="col-9"><b>{{ dataInfo?.email1 }}</b></span>
+                    </div>
+                    <div class="grid">
+                        <label class="col-3">Số điên thoại</label>
+                        <span class="col-9"><b>{{ dataInfo?.phone1 }}</b></span>
+                    </div>
+                    <div class="grid">
+                        <label class="col-3">Vị trí</label>
+                        <span class="col-9"><b>{{ dataInfo?.position }}</b></span>
+                    </div>
+                    <div class="grid">
+                        <label class="col-3">Địa chỉ</label>
+                        <span class="col-9"><b>{{ dataInfo?.address }}</b></span>
+                    </div>
+                    <div class="grid">
+                        <label class="col-3">Đơn vị</label>
+                        <span class="col-9"><b>{{ dataInfo?.organization }}</b></span>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <ng-template pTemplate="footer">
+        <div  *ngIf="empId">
+            <button type="button" 
+                class="p-button-secondary btn-cancel height-56" 
+                pButton icon="pi pi-times" label="Hủy bỏ" 
+                (click)="cancelItem()">
+            </button>
+            <p-button 
+                styleClass="p-button-sm mr-1 height-56" 
+                (click)="getItem()">
+            Xác nhận
+            </p-button>
+        </div>
+    </ng-template>
+</p-dialog>
