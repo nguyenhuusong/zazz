@@ -309,14 +309,14 @@ detailInfoFilter = null;
           this.Export();
         }
       },
-      {
-        label: 'Tổng quan',
-        code: 'overview',
-        icon: 'pi pi-chart-bar',
-        command: () => {
-          this.tongQuan();
-        }
-      },
+      // {
+      //   label: 'Tổng quan',
+      //   code: 'overview',
+      //   icon: 'pi pi-chart-bar',
+      //   command: () => {
+      //     this.tongQuan();
+      //   }
+      // },
     ];
     this.getFilter();
   }

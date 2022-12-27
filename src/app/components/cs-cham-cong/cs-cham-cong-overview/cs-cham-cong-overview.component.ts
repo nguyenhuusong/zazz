@@ -53,9 +53,6 @@ export class CsChamCongOverviewComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private router: Router
   ) { }
-  queryNghiTheoThoiGian = {
-
-  }
   numberDimuon = 0;
   listDimuon = [];
   dataDimuon: any = {}
@@ -65,6 +62,15 @@ export class CsChamCongOverviewComponent implements OnInit {
     pageSize: 20,
     fromdate: new Date(moment(new Date()).format()),
     todate: new Date(moment(new Date()).format()),
+  }
+  
+  queryNghiTheoThoiGian = {
+    filter: '',
+    offSet: 0,
+    pageSize: 20,
+    fromdate: new Date(moment(new Date(new Date().getFullYear() - 1, new Date().getMonth(), new Date().getDate())).format("YYYY-MM-DD")),
+    todate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).format("YYYY-MM-DD")),
+
   }
   ngOnInit(): void {
     this.items = [
@@ -113,11 +119,11 @@ export class CsChamCongOverviewComponent implements OnInit {
 
   nghiTheoThoiGian() {
     this.spinner.show();
-    let params: any = { ... this.queryDiMuonVeSom };
+    let params: any = { ... this.queryNghiTheoThoiGian };
     delete params.fromdate
     delete params.todate
-    params.fromdate = moment(new Date(this.queryDiMuonVeSom.fromdate)).format('YYYY-MM-DD')
-    params.todate = moment(new Date(this.queryDiMuonVeSom.todate)).format('YYYY-MM-DD');
+    params.fromdate = moment(new Date(this.queryNghiTheoThoiGian.fromdate)).format('YYYY-MM-DD')
+    params.todate = moment(new Date(this.queryNghiTheoThoiGian.todate)).format('YYYY-MM-DD');
     const queryParams = queryString.stringify(params);
     let dataChart = []
     this.apiService.getLeaveForMonth(queryParams).subscribe(
@@ -169,9 +175,9 @@ export class CsChamCongOverviewComponent implements OnInit {
     };
     this.drawChart(configs, datas)
   }
-  dataChartPhongban = []
+  dataChartPhongban = null
   nghiTheoPhongBan() {
-    this.dataChartPhongban = []
+    this.dataChartPhongban = null
     this.spinner.show();
     let params: any = { ... this.queryDiMuonVeSom };
     delete params.fromdate
@@ -228,8 +234,9 @@ export class CsChamCongOverviewComponent implements OnInit {
     };
     this.drawChart(configs, datas)
   }
-
+  dataLoaiNghi = null
   loaiNghi() {
+    this.dataLoaiNghi = null
     let params: any = { ... this.queryDiMuonVeSom };
     delete params.fromdate
     delete params.todate
@@ -242,10 +249,10 @@ export class CsChamCongOverviewComponent implements OnInit {
         this.labelLoaiNghi = results.data.leave.map( d => {
           return d.leave_name
         });
-        dataChart = results.data.leave.map( d => {
+        this.dataLoaiNghi = results.data.leave.map( d => {
           return d.num_leave
         });
-        this.chartLoaiNghi(dataChart);
+        this.chartLoaiNghi(this.dataLoaiNghi);
       },
       error => {
     });

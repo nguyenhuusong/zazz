@@ -121,7 +121,7 @@
                                         <div class="fields no-border">
                                             <p-calendar placeholder="Từ ngày" 
                                             panelStyleClass="datepicker-default" placeholder="DD/MM/YYYY"
-                                            [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="queryDiMuonVeSom.fromdate" 
+                                            [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="queryNghiTheoThoiGian.fromdate" 
                                             [monthNavigator]="true" (onSelect)="changeFromDate()"
                                             [yearNavigator]="true" inputId="navigators" dateFormat="dd/mm/yy"
                                             name="fromdate"></p-calendar>
@@ -130,7 +130,7 @@
                                         <div class="fields no-border">
                                             <p-calendar placeholder="Đến ngày" 
                                             panelStyleClass="datepicker-default" placeholder="DD/MM/YYYY"
-                                            [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="queryDiMuonVeSom.todate" 
+                                            [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="queryNghiTheoThoiGian.todate" 
                                             [monthNavigator]="true" (onSelect)="changeToDate()"
                                             [yearNavigator]="true" inputId="navigators" dateFormat="dd/mm/yy"
                                             name="fromdate"></p-calendar>
@@ -178,7 +178,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="grid">
+                <div class="grid box-100">
                     <div class="col-5">
                         <div class="box box-view box-100">
                             <div class="head">
@@ -206,7 +206,7 @@
                             </div>
                             <div class="chart grid">
                                 <div class="col-8">
-                                    <canvas  id="loaiNghi"></canvas>
+                                    <canvas *ngIf="dataLoaiNghi" id="loaiNghi"></canvas>
                                 </div>
                                 <div class="col-4">
                                     <div id="legend-loaiNghi" class="legend-default dou" style="margin-top: 0px">
@@ -217,7 +217,7 @@
                         </div>
                     </div>
                     <div class="col-7">
-                        <div class="grid">
+                        <div class="grid" style="height: 100%">
                             <div class="col-6">
                                 <div class="box box-view box-100">
                                     <div class="head">
