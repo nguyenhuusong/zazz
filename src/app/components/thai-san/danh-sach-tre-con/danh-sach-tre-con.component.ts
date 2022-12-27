@@ -172,7 +172,7 @@ export class DanhSachTreConComponent implements OnInit {
 
   delRow(event) {
     this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn xóa thời gian làm việc này?',
+      message: 'Bạn có chắc chắn muốn xóa?',
       accept: () => {
         const queryParams = queryString.stringify({childId: event.rowData.childId});
         this.apiService.delMaternityChildInfo(queryParams).subscribe((results: any) => {
