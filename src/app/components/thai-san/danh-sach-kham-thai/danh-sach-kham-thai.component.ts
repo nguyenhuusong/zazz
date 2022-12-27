@@ -53,9 +53,9 @@ export class DanhSachKhamThaiComponent implements OnInit {
   CauHinh() {
     this.displaySetting = true;
   }
-  pregnancId = null;
+  pregnancyId = null;
   themKhamThai() {
-    this.pregnancId = null;
+    this.pregnancyId = null;
     this.getMaternityPregnancInfo();
   }
 
@@ -63,7 +63,7 @@ export class DanhSachKhamThaiComponent implements OnInit {
   dataDetailInfo = null;
   displayFormEditDetail = false
   getMaternityPregnancInfo() {
-    const queryParams = queryString.stringify({ maternityId: this.maternityId, pregnancId: this.pregnancId});
+    const queryParams = queryString.stringify({ maternityId: this.maternityId, pregnancyId: this.pregnancyId});
     this.listViewsDetail = [];
     this.apiService.getMaternityPregnancInfo(queryParams).subscribe(results => {
       if (results.status === 'success') {
@@ -160,7 +160,7 @@ export class DanhSachKhamThaiComponent implements OnInit {
   }
 
   editRow({rowData}) {
-    this.pregnancId = rowData.pregnancId;
+    this.pregnancyId = rowData.pregnancyId;
     this.getMaternityPregnancInfo();
   }
 
@@ -174,7 +174,7 @@ export class DanhSachKhamThaiComponent implements OnInit {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa thời gian làm việc này?',
       accept: () => {
-        const queryParams = queryString.stringify({pregnancId: event.rowData.pregnancId});
+        const queryParams = queryString.stringify({pregnancyId: event.rowData.pregnancyId});
         this.apiService.delMaternityPregnancyInfo(queryParams).subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
