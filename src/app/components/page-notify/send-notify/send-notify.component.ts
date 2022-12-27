@@ -101,7 +101,7 @@ export class SendNotifyComponent implements OnInit, AfterViewInit,OnDestroy {
         const dataSave = {
           ids: items,
           n_id: this.notify.n_id,
-          action: this.action,
+          action: this.action.toString(),
           run_act: this.run_act
         };
 
