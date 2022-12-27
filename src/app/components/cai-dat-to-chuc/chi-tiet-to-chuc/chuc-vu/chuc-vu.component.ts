@@ -76,8 +76,10 @@ export class ChucVuComponent implements OnInit {
                 this.listSources.push(item)
               }
             }
-            this.listTargets= [...this.listTargets]
-            this.listSources= [...this.listSources]
+            this.listTargets= [...this.listTargets];
+            this.listSources= [...this.listSources];
+            console.log(this.listTargets)
+            console.log(this.listSources)
           }
       } 
     })
