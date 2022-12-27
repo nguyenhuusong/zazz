@@ -4,6 +4,7 @@ import * as moment from 'moment';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as queryString from 'querystring';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-cs-cham-cong-overview',
   templateUrl: './cs-cham-cong-overview.component.html',
@@ -50,6 +51,7 @@ export class CsChamCongOverviewComponent implements OnInit {
   constructor(
     private apiService: ApiHrmService,
     private spinner: NgxSpinnerService,
+    private router: Router
   ) { }
   queryNghiTheoThoiGian = {
 
@@ -167,8 +169,9 @@ export class CsChamCongOverviewComponent implements OnInit {
     };
     this.drawChart(configs, datas)
   }
-
+  dataChartPhongban = []
   nghiTheoPhongBan() {
+    this.dataChartPhongban = []
     this.spinner.show();
     let params: any = { ... this.queryDiMuonVeSom };
     delete params.fromdate
@@ -183,10 +186,10 @@ export class CsChamCongOverviewComponent implements OnInit {
         this.dataOrigns = results.data.leave.map( d => {
           return `Tháng + ${d.organize_name}`
         });
-        dataChart = results.data.leave.map( d => {
+        this.dataChartPhongban = results.data.leave.map( d => {
           return d.num_leave
         });
-        this.chartNghiTheoPhongBan(dataChart);
+        this.chartNghiTheoPhongBan(this.dataChartPhongban);
       },
       error => {
     });
@@ -366,4 +369,7 @@ export class CsChamCongOverviewComponent implements OnInit {
       }
     }
 
+    goToChamCong() {
+      this.router.navigate(['/chinh-sach/cham-cong']);
+    }
 }

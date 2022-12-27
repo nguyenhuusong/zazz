@@ -309,6 +309,7 @@ export class CaiDatToChucComponent implements OnInit {
   }
 
   editRow({ rowData }) {
+    this.titleForm.label = 'Chỉnh sửa tổ chức',
     this.getOrganizeLevelList(rowData.parentId);
     this.modeAgencyOrganize.organizeId = this.query.organizeIds;
     this.modeAgencyOrganize.org_level = rowData.org_level;
