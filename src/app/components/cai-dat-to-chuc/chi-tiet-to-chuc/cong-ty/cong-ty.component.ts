@@ -167,6 +167,7 @@ export class CongTyComponent implements OnInit {
               this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
               this.getOrgCompanyPage();
               this.spinner.hide();
+              this.displayFormEditDetail = false;
             }else {
               this.spinner.hide();
             }

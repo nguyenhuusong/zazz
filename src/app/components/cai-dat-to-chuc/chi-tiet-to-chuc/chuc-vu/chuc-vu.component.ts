@@ -78,8 +78,6 @@ export class ChucVuComponent implements OnInit {
             }
             this.listTargets= [...this.listTargets];
             this.listSources= [...this.listSources];
-            console.log(this.listTargets)
-            console.log(this.listSources)
           }
       } 
     })
@@ -99,6 +97,7 @@ export class ChucVuComponent implements OnInit {
         this.initGrid(repo.data.gridflexs);
         this.FnEvent();
         this.getOrgPosition();
+        this.displayFormEditDetail = false;
       } else {
         this.spinner.hide();
       }

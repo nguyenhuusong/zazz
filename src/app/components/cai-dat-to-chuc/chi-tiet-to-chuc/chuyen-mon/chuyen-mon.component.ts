@@ -164,6 +164,7 @@ export class ChuyenMonComponent implements OnInit {
               this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
               this.getOrgJobPage();
               this.spinner.hide();
+              this.displayFormEditDetail = false;
             }else {
               this.spinner.hide();
             }
