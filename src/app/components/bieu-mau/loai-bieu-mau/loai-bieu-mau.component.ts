@@ -182,7 +182,7 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
       query.typeForm = this.query.typeForm.data;
     } 
     const queryParams = queryString.stringify(query);
-    this.apiService.getFormsTypePage(queryParams)
+    this.apiService.getFormTypeTreePage(queryParams)
     .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;

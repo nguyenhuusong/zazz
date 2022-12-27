@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Chart } from 'chart.js';
-
+import * as moment from 'moment';
+import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
+import * as queryString from 'querystring';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-cs-cham-cong-overview',
   templateUrl: './cs-cham-cong-overview.component.html',
@@ -44,8 +47,23 @@ export class CsChamCongOverviewComponent implements OnInit {
     '#36ebb9',
     '#36eb6e',
   ]
-  constructor() { }
+  constructor(
+    private apiService: ApiHrmService,
+    private spinner: NgxSpinnerService,
+  ) { }
+  queryNghiTheoThoiGian = {
 
+  }
+  numberDimuon = 0;
+  listDimuon = [];
+  dataDimuon: any = {}
+  queryDiMuonVeSom = {
+    filter: '',
+    offSet: 0,
+    pageSize: 20,
+    fromdate: new Date(moment(new Date()).format()),
+    todate: new Date(moment(new Date()).format()),
+  }
   ngOnInit(): void {
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
@@ -55,10 +73,68 @@ export class CsChamCongOverviewComponent implements OnInit {
     ];
     this.nghiTheoThoiGian();
     this.nghiTheoPhongBan();
-    this.charDou();
+    this.loaiNghi();
+    this.diSomVeMuon();
+  }
+
+  diSomVeMuon () {
+    this.spinner.show();
+    let params: any = { ... this.queryDiMuonVeSom };
+    delete params.fromdate
+    delete params.todate
+    params.fromdate = moment(new Date(this.queryDiMuonVeSom.fromdate)).format('YYYY-MM-DD')
+    params.todate = moment(new Date(this.queryDiMuonVeSom.todate)).format('YYYY-MM-DD');
+    const queryParams = queryString.stringify(params);
+    this.apiService.getTimekeepingLate(queryParams).subscribe(
+      (results: any) => {
+        this.spinner.hide();
+        this.numberDimuon = results.data.num_late;
+        this.listDimuon = results.data.timekeeping;
+        this.dataDimuon = results.data
+      },
+      error => {
+    });
+    
+  }
+
+  changeFromDate() {
+    this.diSomVeMuon();
+    this.nghiTheoThoiGian();
+    this.nghiTheoPhongBan();
+  }
+
+  changeToDate() {
+    this.diSomVeMuon();
+    this.nghiTheoThoiGian();
+    this.nghiTheoPhongBan();
   }
 
   nghiTheoThoiGian() {
+    this.spinner.show();
+    let params: any = { ... this.queryDiMuonVeSom };
+    delete params.fromdate
+    delete params.todate
+    params.fromdate = moment(new Date(this.queryDiMuonVeSom.fromdate)).format('YYYY-MM-DD')
+    params.todate = moment(new Date(this.queryDiMuonVeSom.todate)).format('YYYY-MM-DD');
+    const queryParams = queryString.stringify(params);
+    let dataChart = []
+    this.apiService.getLeaveForMonth(queryParams).subscribe(
+      (results: any) => {
+        this.spinner.hide();
+        this.labelMonths = results.data.leave.map( d => {
+          return `Tháng + ${d.month_name}`
+        });
+        dataChart = results.data.leave.map( d => {
+          return d.num_leave
+        });
+        this.chartNghiTheoThoiGian(dataChart);
+      },
+      error => {
+    });
+    
+  }
+
+  chartNghiTheoThoiGian(values) {
     let configs = {
       type: 'line',
       canvasID: 'nghiTheoThoiGian',
@@ -82,19 +158,41 @@ export class CsChamCongOverviewComponent implements OnInit {
         datasets: [
           {
           label: '',
-          data: [10, 20, 40, 30, 10, 100, 100, 20, 10, 40, 50, 60],
+          data: values,
           backgroundColor: [
             '#0a58ca',
           ],
         },
       ]
-  
-      
     };
     this.drawChart(configs, datas)
   }
 
   nghiTheoPhongBan() {
+    this.spinner.show();
+    let params: any = { ... this.queryDiMuonVeSom };
+    delete params.fromdate
+    delete params.todate
+    params.fromdate = moment(new Date(this.queryDiMuonVeSom.fromdate)).format('YYYY-MM-DD')
+    params.todate = moment(new Date(this.queryDiMuonVeSom.todate)).format('YYYY-MM-DD');
+    const queryParams = queryString.stringify(params);
+    let dataChart = []
+    this.apiService.getLeaveForOrganize(queryParams).subscribe(
+      (results: any) => {
+        this.spinner.hide();
+        this.dataOrigns = results.data.leave.map( d => {
+          return `Tháng + ${d.organize_name}`
+        });
+        dataChart = results.data.leave.map( d => {
+          return d.num_leave
+        });
+        this.chartNghiTheoPhongBan(dataChart);
+      },
+      error => {
+    });
+  }
+
+  chartNghiTheoPhongBan(values) {
     let configs = {
       type: 'bar',
       canvasID: 'nghiTheoPhongBan',
@@ -124,13 +222,33 @@ export class CsChamCongOverviewComponent implements OnInit {
           ],
         },
       ]
-  
-      
     };
     this.drawChart(configs, datas)
   }
 
-  charDou() {
+  loaiNghi() {
+    let params: any = { ... this.queryDiMuonVeSom };
+    delete params.fromdate
+    delete params.todate
+    params.fromdate = moment(new Date(this.queryDiMuonVeSom.fromdate)).format('YYYY-MM-DD')
+    params.todate = moment(new Date(this.queryDiMuonVeSom.todate)).format('YYYY-MM-DD');
+    const queryParams = queryString.stringify(params);
+    let dataChart = []
+    this.apiService.getLeavePieChart(queryParams).subscribe(
+      (results: any) => {
+        this.labelLoaiNghi = results.data.leave.map( d => {
+          return d.leave_name
+        });
+        dataChart = results.data.leave.map( d => {
+          return d.num_leave
+        });
+        this.chartLoaiNghi(dataChart);
+      },
+      error => {
+    });
+  }
+
+  chartLoaiNghi(values) {
     let configs = {
       type: 'doughnut',
       canvasID: 'loaiNghi',
@@ -153,7 +271,7 @@ export class CsChamCongOverviewComponent implements OnInit {
     for(let i = 0; i < this.labelLoaiNghi.length; i++){
       bg.push(this.bg[i]);
     };
-    let value = [10, 40, 60, 30]
+    let value = values
     let datas = {
       labels: this.labelLoaiNghi,
       datasets: [{
