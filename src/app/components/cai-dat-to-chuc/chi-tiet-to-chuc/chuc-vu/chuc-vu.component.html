@@ -33,20 +33,24 @@
         [gridKey]="gridKey"></app-config-grid-table-form>
 </p-dialog>
 
-<p-dialog styleClass="popup-btngroup-edit-detail"  [(visible)]="displayFormEditDetail" [draggable]="false"  [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '800px', height: 'auto'}">
+<p-dialog styleClass="popup-btngroup-edit-detail"  [(visible)]="displayFormEditDetail" [draggable]="false"  [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '1000px', height: 'auto'}">
     <p-header>
        Thêm mới chức vụ
     </p-header>
-    <p-orderList [value]="listPosition" [(selection)]="selectedPosition" filterBy="positionName">
-        <ng-template let-car pTemplate="item">
-            <div>
-                <div style="font-size:14px;float:right;margin:15px 5px 0 0">{{car.positionName}}</div>
+
+    <p-pickList [source]="listSources" [target]="listTargets" sourceHeader="Danh sách chức vụ chưa nằm trong tổ chức" targetHeader="Danh sách chức vụ nằm trong tổ chức" [dragdrop]="true"
+    [responsive]="true" [sourceStyle]="{'height':'40rem'}" [targetStyle]="{'height':'40rem'}" filterBy="name"
+    sourceFilterPlaceholder="Tìm kiếm tên chức vụ" targetFilterPlaceholder="Tìm kiếm tên chức vụ">
+    <ng-template let-product let-i="index" pTemplate="item">
+        <div class="product-item">
+            <div class="product-list-detail">
+                <h5 class="mb-2"> {{i + 1}}. {{product.positionName}}</h5>
             </div>
-        </ng-template>
-    </p-orderList>
+        </div>
+    </ng-template>
+</p-pickList>
     <p-footer style="display: flex;justify-content:space-between ;">
         <div style="color: #f68c1f;">
-            Control + (Chọn nhiều)
         </div>
         <div>
             <p-button styleClass="p-button-sm p-button-danger" icon="pi pi-times" label="Đóng" (click)="displayFormEditDetail = false"> </p-button>
@@ -54,4 +58,3 @@
         </div>
      </p-footer>
 </p-dialog>
-

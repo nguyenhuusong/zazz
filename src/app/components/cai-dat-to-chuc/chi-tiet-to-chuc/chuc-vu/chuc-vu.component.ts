@@ -5,6 +5,7 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as queryString from 'querystring';
 import { AgGridFn } from 'src/app/common/function-common/common';
 import { fromEvent } from 'rxjs';
+import { cloneDeep } from 'lodash';
 @Component({
   selector: 'app-chuc-vu-orgid',
   templateUrl: './chuc-vu.component.html',
@@ -26,7 +27,8 @@ export class ChucVuComponent implements OnInit {
   listsData = [];
   columnDefs = [];
   gridKey = '';
-
+  listSources = [];
+  listTargets = [];
   ngAfterViewInit(): void {
     this.FnEvent();
   }
@@ -44,7 +46,6 @@ export class ChucVuComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getOrgPosition();
     this.getOrgPositionPage();
   }
 
@@ -64,6 +65,20 @@ export class ChucVuComponent implements OnInit {
     this.apiService.getOrgPosition(queryParams).subscribe(results => {
       if (results.status === 'success') {
           this.listPosition = results.data;
+          if(this.listsData.length === 0) {
+            this.listSources = cloneDeep(this.listPosition);
+            this.listTargets = []
+          }else {
+            for(let item of this.listPosition) {
+              if(this.listsData.map(d => d.positionId).indexOf(item.positionId) > -1) { 
+                this.listTargets.push(item)
+              }else {
+                this.listSources.push(item)
+              }
+            }
+            this.listTargets= [...this.listTargets];
+            this.listSources= [...this.listSources];
+          }
       } 
     })
   }
@@ -81,6 +96,8 @@ export class ChucVuComponent implements OnInit {
         this.listsData = repo.data.dataList.data || [];
         this.initGrid(repo.data.gridflexs);
         this.FnEvent();
+        this.getOrgPosition();
+        this.displayFormEditDetail = false;
       } else {
         this.spinner.hide();
       }
@@ -138,10 +155,10 @@ export class ChucVuComponent implements OnInit {
   }
 
   xacnhan() {
-      if(this.selectedPosition.length > 0) {
+      if(this.listTargets.length > 0) {
         const params = {
           orgDepId: this.orgId,
-          positionIds: this.selectedPosition.map(d => d.positionId)
+          positionIds: this.listTargets.map(d => d.positionId)
         }
         this.spinner.show();
         this.apiService.setOrgPosition(params).subscribe(results => {

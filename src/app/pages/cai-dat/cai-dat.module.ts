@@ -88,6 +88,7 @@ import {OrderListModule} from 'primeng/orderlist';
 import { ChuyenMonComponent } from 'src/app/components/cai-dat-to-chuc/chi-tiet-to-chuc/chuyen-mon/chuyen-mon.component';
 import { HrmSearchCustomerModule } from 'src/app/common/hrm-search-customer/hrm-search-customer.module';
 import { NguoiDuyetComponent } from 'src/app/components/cai-dat-cong-ty/nguoi-duyet/nguoi-duyet.component';
+import {PickListModule} from 'primeng/picklist';
 
 FullCalendarModule.registerPlugins([
   // register FullCalendar plugins
@@ -126,6 +127,7 @@ FullCalendarModule.registerPlugins([
     OrderListModule,
     CurrencyFormatPipeModule,
     DialogModule,
+    PickListModule,
     DropdownModule,
     PageNotifyModule,
     TabViewModule,
