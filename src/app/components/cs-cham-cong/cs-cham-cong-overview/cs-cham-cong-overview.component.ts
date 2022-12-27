@@ -70,7 +70,21 @@ export class CsChamCongOverviewComponent implements OnInit {
     pageSize: 20,
     fromdate: new Date(moment(new Date(new Date().getFullYear() - 1, new Date().getMonth(), new Date().getDate())).format("YYYY-MM-DD")),
     todate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).format("YYYY-MM-DD")),
-
+  }
+  
+  queryNghiTheoPB = {
+    filter: '',
+    offSet: 0,
+    pageSize: 20,
+    fromdate: new Date(moment(new Date()).format()),
+    todate: new Date(moment(new Date()).format()),
+  }
+  queryLoainghi = {
+    filter: '',
+    offSet: 0,
+    pageSize: 20,
+    fromdate: new Date(moment(new Date(new Date().getFullYear() - 1, new Date().getMonth(), new Date().getDate())).format("YYYY-MM-DD")),
+    todate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).format("YYYY-MM-DD")),
   }
   ngOnInit(): void {
     this.items = [
@@ -107,16 +121,27 @@ export class CsChamCongOverviewComponent implements OnInit {
 
   changeFromDate() {
     this.diSomVeMuon();
-    this.nghiTheoThoiGian();
-    this.nghiTheoPhongBan();
-    this.loaiNghi();
+    // this.nghiTheoThoiGian();
+    // this.nghiTheoPhongBan();
+    // this.loaiNghi();
   }
 
   changeToDate() {
     this.diSomVeMuon();
-    this.nghiTheoThoiGian();
-    this.nghiTheoPhongBan();
-    this.loaiNghi();
+    // this.nghiTheoThoiGian();
+    // this.nghiTheoPhongBan();
+    // this.loaiNghi();
+  }
+
+  
+  changeDate(value) {
+    if(value === 'phongban') {
+      this.nghiTheoPhongBan();
+    }else if(value === 'nghitheothoigian'){
+      this.nghiTheoThoiGian();
+    }else if(value === 'phantichloainghi'){
+      this.loaiNghi();
+    }
   }
 
   nghiTheoThoiGian() {
@@ -181,11 +206,11 @@ export class CsChamCongOverviewComponent implements OnInit {
   nghiTheoPhongBan() {
     this.dataChartPhongban = null
     this.spinner.show();
-    let params: any = { ... this.queryDiMuonVeSom };
+    let params: any = { ... this.queryNghiTheoPB };
     delete params.fromdate
     delete params.todate
-    params.fromdate = moment(new Date(this.queryDiMuonVeSom.fromdate)).format('YYYY-MM-DD')
-    params.todate = moment(new Date(this.queryDiMuonVeSom.todate)).format('YYYY-MM-DD');
+    params.fromdate = moment(new Date(this.queryNghiTheoPB.fromdate)).format('YYYY-MM-DD')
+    params.todate = moment(new Date(this.queryNghiTheoPB.todate)).format('YYYY-MM-DD');
     const queryParams = queryString.stringify(params);
     let dataChart = []
     this.apiService.getLeaveForOrganize(queryParams).subscribe(
@@ -204,6 +229,7 @@ export class CsChamCongOverviewComponent implements OnInit {
       error => {
     });
   }
+
 
   chartNghiTheoPhongBan(values) {
     let configs = {

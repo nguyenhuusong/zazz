@@ -122,7 +122,7 @@
                                             <p-calendar placeholder="Từ ngày" 
                                             panelStyleClass="datepicker-default" placeholder="DD/MM/YYYY"
                                             [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="queryNghiTheoThoiGian.fromdate" 
-                                            [monthNavigator]="true" (onSelect)="changeFromDate()"
+                                            [monthNavigator]="true" (onSelect)="changeDate('nghitheothoigian')"
                                             [yearNavigator]="true" inputId="navigators" dateFormat="dd/mm/yy"
                                             name="fromdate"></p-calendar>
                                         </div>
@@ -131,7 +131,7 @@
                                             <p-calendar placeholder="Đến ngày" 
                                             panelStyleClass="datepicker-default" placeholder="DD/MM/YYYY"
                                             [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="queryNghiTheoThoiGian.todate" 
-                                            [monthNavigator]="true" (onSelect)="changeToDate()"
+                                            [monthNavigator]="true" (onSelect)="changeDate('nghitheothoigian')"
                                             [yearNavigator]="true" inputId="navigators" dateFormat="dd/mm/yy"
                                             name="fromdate"></p-calendar>
                                         </div>
@@ -154,8 +154,8 @@
                                         <div class="fields no-border">
                                             <p-calendar placeholder="Từ ngày" 
                                             panelStyleClass="datepicker-default" placeholder="DD/MM/YYYY"
-                                            [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="queryDiMuonVeSom.fromdate" 
-                                            [monthNavigator]="true" (onSelect)="changeFromDate()"
+                                            [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="queryNghiTheoPB.fromdate" 
+                                            [monthNavigator]="true" (onSelect)="changeDate('phongban')"
                                             [yearNavigator]="true" inputId="navigators" dateFormat="dd/mm/yy"
                                             name="fromdate"></p-calendar>
                                         </div>
@@ -163,8 +163,8 @@
                                         <div class="fields no-border">
                                             <p-calendar placeholder="Đến ngày" 
                                             panelStyleClass="datepicker-default" placeholder="DD/MM/YYYY"
-                                            [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="queryDiMuonVeSom.todate" 
-                                            [monthNavigator]="true" (onSelect)="changeToDate()"
+                                            [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="queryNghiTheoPB.todate" 
+                                            [monthNavigator]="true" (onSelect)="changeDate('phongban')"
                                             [yearNavigator]="true" inputId="navigators" dateFormat="dd/mm/yy"
                                             name="fromdate"></p-calendar>
                                         </div>
@@ -188,8 +188,8 @@
                                     <div class="fields no-border">
                                         <p-calendar placeholder="Từ ngày" 
                                         panelStyleClass="datepicker-default" placeholder="DD/MM/YYYY"
-                                        [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="queryDiMuonVeSom.fromdate" 
-                                        [monthNavigator]="true" (onSelect)="changeFromDate()"
+                                        [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="queryLoainghi.fromdate" 
+                                        [monthNavigator]="true" (onSelect)="changeDate('phantichloainghi')"
                                         [yearNavigator]="true" inputId="navigators" dateFormat="dd/mm/yy"
                                         name="fromdate"></p-calendar>
                                     </div>
@@ -197,8 +197,8 @@
                                     <div class="fields no-border">
                                         <p-calendar placeholder="Đến ngày" 
                                         panelStyleClass="datepicker-default" placeholder="DD/MM/YYYY"
-                                        [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="queryDiMuonVeSom.todate" 
-                                        [monthNavigator]="true" (onSelect)="changeToDate()"
+                                        [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="queryLoainghi.todate" 
+                                        [monthNavigator]="true" (onSelect)="changeDate('phantichloainghi')"
                                         [yearNavigator]="true" inputId="navigators" dateFormat="dd/mm/yy"
                                         name="fromdate"></p-calendar>
                                     </div>
