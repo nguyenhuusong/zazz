@@ -102,6 +102,8 @@ import { TbhQtDongBtComponent } from 'src/app/components/ns-ho-so-nhan-su/employ
 import { HrmSearchEmpModule } from 'src/app/common/hrm-search-emp/hrm-search-emp.module';
 import { DanhSachTreConComponent } from 'src/app/components/thai-san/danh-sach-tre-con/danh-sach-tre-con.component';
 import { DanhSachKhamThaiComponent } from 'src/app/components/thai-san/danh-sach-kham-thai/danh-sach-kham-thai.component';
+import { LyDoNghiViecComponent } from 'src/app/components/ns-ho-so-nghi-viec/ly-do-nghi-viec/ly-do-nghi-viec.component';
+import { ChiTietLyDoNghiViecComponent } from 'src/app/components/ns-ho-so-nghi-viec/ly-do-nghi-viec/chi-tiet-ly-do-nghi-viec/chi-tiet-ly-do-nghi-viec.component';
 
 @NgModule({
   imports: [
@@ -214,7 +216,8 @@ import { DanhSachKhamThaiComponent } from 'src/app/components/thai-san/danh-sach
     ChungChiComponent,
     DanhSachTreConComponent,
     DanhSachKhamThaiComponent,
-
+    LyDoNghiViecComponent,
+    ChiTietLyDoNghiViecComponent,
   ],
   providers: [ ]
 })

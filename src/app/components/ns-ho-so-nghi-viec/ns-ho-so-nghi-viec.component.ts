@@ -437,9 +437,22 @@ export class NsHoSoNghiViecComponent implements OnInit {
       { label: 'Danh sách hồ sơ nghỉ việc' },
     ];
     this.getTerminateFilter();
+    this.initMenuItem();
+  }
+  menuItem = []
+  initMenuItem() {
+    this.menuItem = [
+      {
+        label: 'Lý do nghỉ việc',
+        icon: 'pi pi-refresh',
+        command: () => {
+          this.router.navigate(['/nhan-su/ly-do-nghi-viec']);
+        }
+      },
+  
+    ]
   }
 
- 
   getEmployeeStatus() {
     this.apiService.getEmployeeStatus().subscribe(results => {
       if (results.status === 'success') {

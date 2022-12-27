@@ -141,7 +141,7 @@ import { FormFilterModule } from 'src/app/common/form-filter/form-filter.module'
     NsCauHinhMailComponent,
     NguonTuyenDungComponent,
     ChiTietNguonTuyenDungComponent,
-    NsChiTietCauHinhMailComponent
+    NsChiTietCauHinhMailComponent,
   ],
   providers: [ ]
 })
