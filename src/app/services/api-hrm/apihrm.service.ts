@@ -1745,6 +1745,10 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v2/forms/GetFormsTypePage?${queryParams}`, this.options)
   }
 
+  getFormTypeTreePage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/forms/GetFormTypeTreePage?${queryParams}`, this.options)
+  }
+
   getFormsTypes(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/forms/GetFormsTypes?${queryParams}`, this.options)
   }
@@ -2245,7 +2249,20 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v1/customer/GetCustSearch?` + queryParams, this.options);
   }
 
-
+  // TimekeepingChart
+  getTimekeepingLate(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/timekeepingchart/GetTimekeepingLate?` + queryParams, this.options);
+  }
+  getLeaveForMonth(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/timekeepingchart/GetLeaveForMonth?` + queryParams, this.options);
+  }
+  getLeaveForOrganize(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/timekeepingchart/GetLeaveForOrganize?` + queryParams, this.options);
+  }
+  getLeavePieChart(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/timekeepingchart/GetLeavePieChart?` + queryParams, this.options);
+  }
+  
 
 
 }

@@ -3891,6 +3891,7 @@ ul{
                     &:first-child{
                         width: 16px;
                         height: 16px;
+                        min-width: 16px;
                         border-radius: 4px;
                         margin-right: 5px;
                         display: inline-block;
@@ -6265,7 +6266,8 @@ app-form-filter{
     border-radius: 5px;
     margin-bottom: 10px;
     .number-vlaue{
-        font-size: 22px;
+        font-size: 25px;
+        padding: 10px 0px;
     }
     h4{
         margin-top: 0px;
@@ -6333,6 +6335,18 @@ app-form-filter{
                 padding: 0px;
             }
         }
+        p-calendar{
+            input{
+                border: none;
+                padding: 0px;
+                font-size: 12px;
+                outline: none;
+                &:focus{
+                    box-shadow: none;
+                }
+                cursor: pointer;
+            }
+        }
     }
 }
 .fill-f68c1f{
@@ -6340,4 +6354,7 @@ app-form-filter{
 }
 .fill-0a58ca{
     fill: #0a58ca;
+}
+.relative{
+    
 }
