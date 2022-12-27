@@ -2264,5 +2264,26 @@ export class ApiHrmService {
   }
   
 
+  //TerminateReason
+  getTerminateReasonFilter(): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/TerminateReason/GetTerminateReasonFilter`, this.options);
+  }
+  getTerminateReasonPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/TerminateReason/GetTerminateReasonPage?` + queryParams, this.options);
+  }
+
+  getTerminateReasonInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/TerminateReason/GetTerminateReasonInfo?` + queryParams, this.options);
+  }
+
+  delTerminateReasonInfo(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/TerminateReason/DelTerminateReasonInfo?` + queryParams, this.options);
+  }
+
+  setTerminateReasonInfo(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/TerminateReason/SetTerminateReasonInfo`, queryParams, this.options);
+  }
+
+
 
 }

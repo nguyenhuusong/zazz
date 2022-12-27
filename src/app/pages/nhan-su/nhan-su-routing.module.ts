@@ -20,6 +20,8 @@ import { QtThayDoiLuongComponent } from 'src/app/components/qt-thay-doi-luong/qt
 import { ChiTietQTThayDoiLuongComponent } from 'src/app/components/qt-thay-doi-luong/chi-tiet-qt-thay-doi-luong/chi-tiet-qt-thay-doi-luong.component';
 import { EmployeeInfoComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/employee-info.component';
 import { ContractDetailComponent } from 'src/app/components/ns-ho-so-nhan-su/contract-detail/contract-detail.component';
+import { LyDoNghiViecComponent } from 'src/app/components/ns-ho-so-nghi-viec/ly-do-nghi-viec/ly-do-nghi-viec.component';
+import { ChiTietLyDoNghiViecComponent } from 'src/app/components/ns-ho-so-nghi-viec/ly-do-nghi-viec/chi-tiet-ly-do-nghi-viec/chi-tiet-ly-do-nghi-viec.component';
 
 const routes: Routes = [
   {
@@ -77,6 +79,33 @@ const routes: Routes = [
     data: {
       title: 'Chi tiết hồ sơ nhân sự',
       url: 'chi-tiet-ho-so-nhan-su',
+    },
+  },
+
+  //Ly do nghỉ việc
+
+  {
+    path: 'ly-do-nghi-viec',
+    component: LyDoNghiViecComponent,
+    data: {
+      title: 'Danh sách lý do tuyển dụng',
+      url: 'ly-do-nghi-viec',
+    },
+  },
+  {
+    path: 'ly-do-nghi-viec/them-moi-ly-do-nghi-viec',
+    component: ChiTietLyDoNghiViecComponent,
+    data: {
+      title: 'Thêm mới lý do tuyển dụng',
+      url: 'them-moi-ly-do-nghi-viec',
+    },
+  },
+  {
+    path: 'ly-do-nghi-viec/chi-tiet-ly-do-nghi-viec',
+    component: ChiTietLyDoNghiViecComponent,
+    data: {
+      title: 'Chi tiết lý do tuyển dụng',
+      url: 'chi-tiet-ly-do-nghi-viec',
     },
   },
 
