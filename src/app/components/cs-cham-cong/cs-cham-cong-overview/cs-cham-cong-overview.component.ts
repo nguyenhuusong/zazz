@@ -109,12 +109,14 @@ export class CsChamCongOverviewComponent implements OnInit {
     this.diSomVeMuon();
     this.nghiTheoThoiGian();
     this.nghiTheoPhongBan();
+    this.loaiNghi();
   }
 
   changeToDate() {
     this.diSomVeMuon();
     this.nghiTheoThoiGian();
     this.nghiTheoPhongBan();
+    this.loaiNghi();
   }
 
   nghiTheoThoiGian() {
@@ -192,10 +194,12 @@ export class CsChamCongOverviewComponent implements OnInit {
         this.dataOrigns = results.data.leave.map( d => {
           return `Tháng + ${d.organize_name}`
         });
-        this.dataChartPhongban = results.data.leave.map( d => {
+        this.dataChartPhongban = results.data
+        dataChart = results.data.leave.map( d => {
           return d.num_leave
         });
-        this.chartNghiTheoPhongBan(this.dataChartPhongban);
+        console.log('dataChart', dataChart)
+        this.chartNghiTheoPhongBan(dataChart);
       },
       error => {
     });
@@ -225,7 +229,7 @@ export class CsChamCongOverviewComponent implements OnInit {
         datasets: [
           {
           label: '',
-          data: [10, 20, 40, 30, 10, 100, 100, 20, 10, 40, 50, 60],
+          data: values,
           backgroundColor: [
             '#0a58ca',
           ],
@@ -249,10 +253,11 @@ export class CsChamCongOverviewComponent implements OnInit {
         this.labelLoaiNghi = results.data.leave.map( d => {
           return d.leave_name
         });
-        this.dataLoaiNghi = results.data.leave.map( d => {
+        this.dataLoaiNghi = results.data
+        dataChart = results.data.leave.map( d => {
           return d.num_leave
         });
-        this.chartLoaiNghi(this.dataLoaiNghi);
+        this.chartLoaiNghi(dataChart);
       },
       error => {
     });
