@@ -5,6 +5,7 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as queryString from 'querystring';
 import { AgGridFn } from 'src/app/common/function-common/common';
 import { fromEvent } from 'rxjs';
+import { cloneDeep } from 'lodash';
 @Component({
   selector: 'app-chuyen-mon-orgid',
   templateUrl: './chuyen-mon.component.html',
@@ -44,7 +45,6 @@ export class ChuyenMonComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getJobTitles();
     this.getOrgJobPage();
   }
 
@@ -56,13 +56,28 @@ export class ChuyenMonComponent implements OnInit {
   addCompany() {
     this.displayFormEditDetail = true;
   }
-
+  listSources = [];
+  listTargets = [];
   listJobs = [];
   selectedJobs = [];
   getJobTitles() {
     this.apiService.getJobTitles().subscribe(results => {
       if (results.status === 'success') {
           this.listJobs = results.data;
+          if(this.listsData.length === 0) {
+            this.listSources = cloneDeep(this.listJobs);
+            this.listTargets = []
+          }else {
+            for(let item of this.listJobs) {
+              if(this.listsData.map(d => d.jobId).indexOf(item.value) > -1) { 
+                this.listTargets.push(item)
+              }else {
+                this.listSources.push(item)
+              }
+            }
+            this.listTargets= [...this.listTargets]
+            this.listSources= [...this.listSources]
+          }
       } 
     })
   }
@@ -80,6 +95,7 @@ export class ChuyenMonComponent implements OnInit {
         this.listsData = repo.data.dataList.data || [];
         this.initGrid(repo.data.gridflexs);
         this.FnEvent();
+        this.getJobTitles();
       } else {
         this.spinner.hide();
       }
@@ -137,10 +153,10 @@ export class ChuyenMonComponent implements OnInit {
   }
 
   xacnhan() {
-      if(this.selectedJobs.length > 0) {
+      if(this.listTargets.length > 0) {
         const params = {
           orgDepId: this.orgId,
-          jobIds: this.selectedJobs.map(d => d.value)
+          jobIds: this.listTargets.map(d => d.value)
         }
         this.spinner.show();
         this.apiService.setOrgJob(params).subscribe(results => {

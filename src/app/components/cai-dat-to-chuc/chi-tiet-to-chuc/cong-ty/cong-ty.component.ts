@@ -45,7 +45,7 @@ export class CongTyComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getCompanyList();
+ 
     this.getOrgCompanyPage();
   }
 
@@ -57,7 +57,8 @@ export class CongTyComponent implements OnInit {
   addCompany() {
     this.displayFormEditDetail = true;
   }
-
+  listSources = [];
+  listTargets = [];
   listCompanies = [];
   selectedCompanies = [];
   getCompanyList() {
@@ -65,6 +66,21 @@ export class CongTyComponent implements OnInit {
     this.apiService.getCompanies(queryParams).subscribe(results => {
       if (results.status === 'success') {
           this.listCompanies = results.data;
+          if(this.listsData.length === 0) {
+            this.listSources = cloneDeep(this.listCompanies);
+            this.listTargets = []
+          }else {
+            for(let item of this.listCompanies) {
+              if(this.listsData.map(d => d.companyId).indexOf(item.value) > -1) { 
+                this.listTargets.push(item)
+              }else {
+                this.listSources.push(item)
+              }
+            }
+            this.listTargets= [...this.listTargets]
+            this.listSources= [...this.listSources]
+          }
+
       } 
     })
   }
@@ -80,6 +96,7 @@ export class CongTyComponent implements OnInit {
         }
         this.spinner.hide();
         this.listsData = repo.data.dataList.data || [];
+        this.getCompanyList();
         this.initGrid(repo.data.gridflexs);
         this.FnEvent();
       } else {
@@ -139,10 +156,10 @@ export class CongTyComponent implements OnInit {
   }
 
   xacnhan() {
-      if(this.selectedCompanies.length > 0) {
+      if(this.listTargets.length > 0) {
         const params = {
           orgDepId: this.orgId,
-          companyIds: this.selectedCompanies.map(d => d.value)
+          companyIds: this.listTargets.map(d => d.value)
         }
         this.spinner.show();
         this.apiService.setOrgCompany(params).subscribe(results => {
