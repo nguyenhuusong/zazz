@@ -45,7 +45,6 @@ export class CongTyComponent implements OnInit {
   }
 
   ngOnInit(): void {
- 
     this.getOrgCompanyPage();
   }
 
@@ -56,12 +55,15 @@ export class CongTyComponent implements OnInit {
   displayFormEditDetail = false;
   addCompany() {
     this.displayFormEditDetail = true;
+
   }
   listSources = [];
   listTargets = [];
   listCompanies = [];
   selectedCompanies = [];
   getCompanyList() {
+    this.listSources = [];
+    this.listTargets = [];
     const queryParams = queryString.stringify({ filter: '' });
     this.apiService.getCompanies(queryParams).subscribe(results => {
       if (results.status === 'success') {
@@ -86,6 +88,8 @@ export class CongTyComponent implements OnInit {
   }
 
   getOrgCompanyPage() {
+    this.listTargets= []
+    this.listSources= []
     this.spinner.show();
     this.columnDefs = [];
     const queryParams = queryString.stringify({ orgId: this.orgId, offSet: 0, pageSize: 10000 });
@@ -96,9 +100,9 @@ export class CongTyComponent implements OnInit {
         }
         this.spinner.hide();
         this.listsData = repo.data.dataList.data || [];
-        this.getCompanyList();
         this.initGrid(repo.data.gridflexs);
         this.FnEvent();
+        this.getCompanyList();
       } else {
         this.spinner.hide();
       }

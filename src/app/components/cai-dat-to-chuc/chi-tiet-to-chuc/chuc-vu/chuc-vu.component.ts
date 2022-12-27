@@ -84,6 +84,8 @@ export class ChucVuComponent implements OnInit {
   }
 
   getOrgPositionPage() {
+    this.listTargets= [];
+    this.listSources= [];
     this.spinner.show();
     this.columnDefs = [];
     const queryParams = queryString.stringify({ orgId: this.orgId, offSet: 0, pageSize: 10000 });
