@@ -4,6 +4,7 @@ import * as moment from 'moment';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as queryString from 'querystring';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-cs-cham-cong-overview',
   templateUrl: './cs-cham-cong-overview.component.html',
@@ -50,10 +51,8 @@ export class CsChamCongOverviewComponent implements OnInit {
   constructor(
     private apiService: ApiHrmService,
     private spinner: NgxSpinnerService,
+    private router: Router
   ) { }
-  queryNghiTheoThoiGian = {
-
-  }
   numberDimuon = 0;
   listDimuon = [];
   dataDimuon: any = {}
@@ -63,6 +62,29 @@ export class CsChamCongOverviewComponent implements OnInit {
     pageSize: 20,
     fromdate: new Date(moment(new Date()).format()),
     todate: new Date(moment(new Date()).format()),
+  }
+  
+  queryNghiTheoThoiGian = {
+    filter: '',
+    offSet: 0,
+    pageSize: 20,
+    fromdate: new Date(moment(new Date(new Date().getFullYear() - 1, new Date().getMonth(), new Date().getDate())).format("YYYY-MM-DD")),
+    todate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).format("YYYY-MM-DD")),
+  }
+  
+  queryNghiTheoPB = {
+    filter: '',
+    offSet: 0,
+    pageSize: 20,
+    fromdate: new Date(moment(new Date()).format()),
+    todate: new Date(moment(new Date()).format()),
+  }
+  queryLoainghi = {
+    filter: '',
+    offSet: 0,
+    pageSize: 20,
+    fromdate: new Date(moment(new Date(new Date().getFullYear() - 1, new Date().getMonth(), new Date().getDate())).format("YYYY-MM-DD")),
+    todate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).format("YYYY-MM-DD")),
   }
   ngOnInit(): void {
     this.items = [
@@ -99,23 +121,36 @@ export class CsChamCongOverviewComponent implements OnInit {
 
   changeFromDate() {
     this.diSomVeMuon();
-    this.nghiTheoThoiGian();
-    this.nghiTheoPhongBan();
+    // this.nghiTheoThoiGian();
+    // this.nghiTheoPhongBan();
+    // this.loaiNghi();
   }
 
   changeToDate() {
     this.diSomVeMuon();
-    this.nghiTheoThoiGian();
-    this.nghiTheoPhongBan();
+    // this.nghiTheoThoiGian();
+    // this.nghiTheoPhongBan();
+    // this.loaiNghi();
+  }
+
+  
+  changeDate(value) {
+    if(value === 'phongban') {
+      this.nghiTheoPhongBan();
+    }else if(value === 'nghitheothoigian'){
+      this.nghiTheoThoiGian();
+    }else if(value === 'phantichloainghi'){
+      this.loaiNghi();
+    }
   }
 
   nghiTheoThoiGian() {
     this.spinner.show();
-    let params: any = { ... this.queryDiMuonVeSom };
+    let params: any = { ... this.queryNghiTheoThoiGian };
     delete params.fromdate
     delete params.todate
-    params.fromdate = moment(new Date(this.queryDiMuonVeSom.fromdate)).format('YYYY-MM-DD')
-    params.todate = moment(new Date(this.queryDiMuonVeSom.todate)).format('YYYY-MM-DD');
+    params.fromdate = moment(new Date(this.queryNghiTheoThoiGian.fromdate)).format('YYYY-MM-DD')
+    params.todate = moment(new Date(this.queryNghiTheoThoiGian.todate)).format('YYYY-MM-DD');
     const queryParams = queryString.stringify(params);
     let dataChart = []
     this.apiService.getLeaveForMonth(queryParams).subscribe(
@@ -167,14 +202,15 @@ export class CsChamCongOverviewComponent implements OnInit {
     };
     this.drawChart(configs, datas)
   }
-
+  dataChartPhongban = null
   nghiTheoPhongBan() {
+    this.dataChartPhongban = null
     this.spinner.show();
-    let params: any = { ... this.queryDiMuonVeSom };
+    let params: any = { ... this.queryNghiTheoPB };
     delete params.fromdate
     delete params.todate
-    params.fromdate = moment(new Date(this.queryDiMuonVeSom.fromdate)).format('YYYY-MM-DD')
-    params.todate = moment(new Date(this.queryDiMuonVeSom.todate)).format('YYYY-MM-DD');
+    params.fromdate = moment(new Date(this.queryNghiTheoPB.fromdate)).format('YYYY-MM-DD')
+    params.todate = moment(new Date(this.queryNghiTheoPB.todate)).format('YYYY-MM-DD');
     const queryParams = queryString.stringify(params);
     let dataChart = []
     this.apiService.getLeaveForOrganize(queryParams).subscribe(
@@ -183,14 +219,17 @@ export class CsChamCongOverviewComponent implements OnInit {
         this.dataOrigns = results.data.leave.map( d => {
           return `Tháng + ${d.organize_name}`
         });
+        this.dataChartPhongban = results.data
         dataChart = results.data.leave.map( d => {
           return d.num_leave
         });
+        console.log('dataChart', dataChart)
         this.chartNghiTheoPhongBan(dataChart);
       },
       error => {
     });
   }
+
 
   chartNghiTheoPhongBan(values) {
     let configs = {
@@ -216,7 +255,7 @@ export class CsChamCongOverviewComponent implements OnInit {
         datasets: [
           {
           label: '',
-          data: [10, 20, 40, 30, 10, 100, 100, 20, 10, 40, 50, 60],
+          data: values,
           backgroundColor: [
             '#0a58ca',
           ],
@@ -225,8 +264,9 @@ export class CsChamCongOverviewComponent implements OnInit {
     };
     this.drawChart(configs, datas)
   }
-
+  dataLoaiNghi = null
   loaiNghi() {
+    this.dataLoaiNghi = null
     let params: any = { ... this.queryDiMuonVeSom };
     delete params.fromdate
     delete params.todate
@@ -239,6 +279,7 @@ export class CsChamCongOverviewComponent implements OnInit {
         this.labelLoaiNghi = results.data.leave.map( d => {
           return d.leave_name
         });
+        this.dataLoaiNghi = results.data
         dataChart = results.data.leave.map( d => {
           return d.num_leave
         });
@@ -366,4 +407,7 @@ export class CsChamCongOverviewComponent implements OnInit {
       }
     }
 
+    goToChamCong() {
+      this.router.navigate(['/chinh-sach/cham-cong']);
+    }
 }
