@@ -160,7 +160,7 @@ export class ChuyenMonComponent implements OnInit {
         }
         this.spinner.show();
         this.apiService.setOrgJob(params).subscribe(results => {
-            if(results.status === 200) {
+          if(results.status === 'success') {
               this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
               this.getOrgJobPage();
               this.spinner.hide();
