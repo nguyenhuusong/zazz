@@ -32,7 +32,7 @@ export class HrmSearchCustomerComponent {
   dataSearched: any = [];
   dataSearcheSelect: any = [];
   dataInfo: any = null
-  empId = '';
+  custId = '';
   dataInfoCallback: any = []
   isSearching = false
   ngOnInit(): void {
@@ -49,9 +49,9 @@ export class HrmSearchCustomerComponent {
 
   // onSelectStaff(event) {
   //   this.isSearching = false
-  //   this.dataSearcheSelect = this.dataSearched.filter( d => event.value === d.empId);
-  //   const queryParams = queryString.stringify({ empId: this.dataSearcheSelect[0].empId });
-  //   this.empId = this.dataSearcheSelect[0].empId;
+  //   this.dataSearcheSelect = this.dataSearched.filter( d => event.value === d.custId);
+  //   const queryParams = queryString.stringify({ custId: this.dataSearcheSelect[0].custId });
+  //   this.custId = this.dataSearcheSelect[0].custId;
   //   this.dataInfoCallback = this.dataSearcheSelect[0]
   //   this.apiService.getEmpProfile(queryParams).subscribe(results => {
   //     if (results.status === 'success') {
@@ -72,7 +72,7 @@ export class HrmSearchCustomerComponent {
   //       this.listStaff = results.data.dataList.data.map(res => {
   //         return {
   //           label: res.full_name + ' - ' + res.code + ' - ' + res.phone1,
-  //           value: res.empId
+  //           value: res.custId
   //         };
   //       });
   //     })
@@ -101,10 +101,10 @@ export class HrmSearchCustomerComponent {
   getItem() {
     let callbackValue = {
       status: 'ok',
-      value: this.empId,
-      dataInfo: this.dataInfo.empId
+      value: this.custId,
+      dataInfo: this.dataInfo.custId
     }
-    if (this.empId) {
+    if (this.custId) {
       this.seachEmValue.emit(callbackValue);
       this.isSearch = false
     } else {
@@ -114,12 +114,11 @@ export class HrmSearchCustomerComponent {
   isLoadingInfo = false;
   getEmpInfo(info) {
     this.isLoadingInfo = true;
-    console.log(info)
     this.dataInfo = info;
-    // const queryParams = queryString.stringify({ empId: info.empId });
-    // this.empId = info.empId;
+    // const queryParams = queryString.stringify({ custId: info.custId });
+    // this.custId = info.custId;
     // // this.dataInfo = null;
-    // this.dataInfoCallback = info.empId
+    // this.dataInfoCallback = info.custId
     // this.apiService.getEmpProfile(queryParams).subscribe(results => {
     //   if (results.status === 'success') {
     //     this.isLoadingInfo = false;

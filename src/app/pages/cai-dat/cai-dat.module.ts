@@ -86,9 +86,9 @@ import { ChucVuComponent } from 'src/app/components/cai-dat-to-chuc/chuc-vu/chuc
 import {DividerModule} from 'primeng/divider';
 import {OrderListModule} from 'primeng/orderlist';
 import { ChuyenMonComponent } from 'src/app/components/cai-dat-to-chuc/chi-tiet-to-chuc/chuyen-mon/chuyen-mon.component';
-import { HrmSearchCustomerModule } from 'src/app/common/hrm-search-customer/hrm-search-customer.module';
 import { NguoiDuyetComponent } from 'src/app/components/cai-dat-cong-ty/nguoi-duyet/nguoi-duyet.component';
 import {PickListModule} from 'primeng/picklist';
+import { HrmSearchEmpModule } from 'src/app/common/hrm-search-emp/hrm-search-emp.module';
 
 FullCalendarModule.registerPlugins([
   // register FullCalendar plugins
@@ -142,7 +142,7 @@ FullCalendarModule.registerPlugins([
     ConfirmDialogModule,
     ConfigGridTableFormModule,
     CheckboxModule,
-    HrmSearchCustomerModule,
+    HrmSearchEmpModule,
     CheckHideActionsDirectiveModule,
     AgGridModule.withComponents([
       ButtonRendererComponent,

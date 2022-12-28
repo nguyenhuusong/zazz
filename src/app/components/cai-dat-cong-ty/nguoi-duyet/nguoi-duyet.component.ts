@@ -33,7 +33,7 @@ export class NguoiDuyetComponent implements OnInit {
   modelAuth = {
     auth_id: '',
     companyId: '',
-    cif_no: ''
+    custId: ''
   }
 
   ngAfterViewInit(): void {
@@ -63,7 +63,7 @@ export class NguoiDuyetComponent implements OnInit {
     this.modelAuth = {
       auth_id: '',
       companyId: '',
-      cif_no: ''
+      custId : ''
     }
     this.isSearchEmp = true;
   }
@@ -203,11 +203,13 @@ export class NguoiDuyetComponent implements OnInit {
     if(!event.value) {
       this.isSearchEmp = false;
     }else{
-      console.log(event)
-      // this.element.columnValue = {
-      //   name: event.dataInfo.full_name,
-      //   code: event.dataInfo.empId
-      // }
+      this.modelAuth = {
+        auth_id: '',
+        companyId: this.companyId,
+        custId : event.custId
+      }
+      this.getComAuthorizeInfo();
+     
     }
   }
 
