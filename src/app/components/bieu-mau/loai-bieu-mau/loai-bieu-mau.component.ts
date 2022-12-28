@@ -290,8 +290,22 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
     this.formTypeId = null;
     this.addNewPopup = true;
   }
-
+  getDataPath = null;
+  autoGroupColumnDef = null;
   initGrid() {
+    this.autoGroupColumnDef = {
+      headerName: 'Tổ chức',
+      cellClass: [ 'no-auto'],
+      // cellClass: parmas => parmas.node.level > 0  ?  ['hidden'] : [''],
+     minWidth: 400,
+
+      cellRendererParams: {
+        suppressCount: true,
+      },
+    }
+    this.getDataPath = (data) => {
+      return data.orgHierarchy;
+    };
     this.columnDefs = [
       {
         headerName: 'Stt',

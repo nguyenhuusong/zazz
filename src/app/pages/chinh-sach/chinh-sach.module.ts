@@ -64,6 +64,7 @@ import { FormFilterModule } from 'src/app/common/form-filter/form-filter.module'
 import { HrmSearchEmpModule } from 'src/app/common/hrm-search-emp/hrm-search-emp.module';
 import { CsChamCongOverviewComponent } from 'src/app/components/cs-cham-cong/cs-cham-cong-overview/cs-cham-cong-overview.component';
 import { PanelModule } from 'primeng/panel';
+import { ListGridAngularTreeModule } from 'src/app/common/list-grid-tree-angular/list-grid-angular.module';
 
 @NgModule({
   imports: [
@@ -111,6 +112,7 @@ import { PanelModule } from 'primeng/panel';
     ]),
     FormFilterModule,
     DynamicDialogModule,
+    ListGridAngularTreeModule
   ],
 
   declarations: [
