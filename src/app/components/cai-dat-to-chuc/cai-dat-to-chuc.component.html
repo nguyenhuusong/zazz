@@ -52,8 +52,14 @@
   </section>
   <section class="content pb-0">
       <div class="grid-default" #container>
-            <app-list-grid-tree-angular *ngIf="columnDefs.length > 0 && autoGroupColumnDef && getDataPath"  (callback)="rowSelected($event)"  (onCellClicked)="onCellClicked($event)"  (showConfig)="cauhinh()"
-              [listsData]="listsData" [height]="heightGrid" [getDataPath]="getDataPath" [autoGroupColumnDef]="autoGroupColumnDef"
+            <app-list-grid-tree-angular 
+            *ngIf="columnDefs.length > 0 && autoGroupColumnDef && getDataPath"  
+            (callback)="rowSelected($event)"  
+            (onCellClicked)="onCellClicked($event)"  
+            (showConfig)="cauhinh()"
+              [listsData]="listsData" 
+              [height]="heightGrid" 
+              [getDataPath]="getDataPath" [autoGroupColumnDef]="autoGroupColumnDef"
               [columnDefs]="columnDefs"></app-list-grid-tree-angular>
           
             <div class="paginator">

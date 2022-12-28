@@ -294,11 +294,9 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
   autoGroupColumnDef = null;
   initGrid() {
     this.autoGroupColumnDef = {
-      headerName: 'Tổ chức',
+      headerName: 'Tên loại tài liệu',
       cellClass: [ 'no-auto'],
-      // cellClass: parmas => parmas.node.level > 0  ?  ['hidden'] : [''],
-     minWidth: 400,
-
+      minWidth: 400,
       cellRendererParams: {
         suppressCount: true,
       },
