@@ -1138,6 +1138,10 @@ export class ApiHrmService {
     return this.http.delete<any>(`${apiHrmServer}/api/v2/compay/DelComAuthorizeInfo?` + queryParams, this.options)
   }
 
+  setCompanyAuthDefault(queryParams): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v2/compay/SetCompanyAuthDefault`, queryParams, this.options)
+  }
+
   getComAuthorizeInfo(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/compay/GetComAuthorizeInfo?` + queryParams, this.options)
   }

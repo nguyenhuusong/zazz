@@ -105,6 +105,7 @@ export class HrmSearchEmpComponent {
     let callbackValue = {
       status: 'ok',
       value: this.empId,
+      custId: this.dataInfo.CustId,
       dataInfo: this.dataInfo.empId
     }
     if(this.empId) {
