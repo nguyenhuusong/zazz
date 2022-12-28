@@ -62,7 +62,7 @@ export class AppTypeImageComponent implements OnInit {
       const getDAte = new Date();
       const getTime = getDAte.getTime();
       const storageRef = firebase.storage().ref();
-      const uploadTask = storageRef.child(`ksbond/images/${getTime}-${event.target.files[0].name}`).put(event.target.files[0]);
+      const uploadTask = storageRef.child(`ksbond/images/${getTime}-uninini-${event.target.files[0].name}`).put(event.target.files[0]);
       uploadTask.on('state_changed', (snapshot) => {
       }, (error) => {
       }, () => {
@@ -1589,7 +1589,7 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
   
   theFileName(file){
     if(file){
-      let fileName = file.split('/').pop().split('?')[0].split('-').pop();
+      let fileName = file.split('/').pop().split('?')[0].split('-uninini-').pop();
       return fileName;
     }
   }
@@ -1617,7 +1617,7 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
           const getDAte = new Date();
           const getTime = getDAte.getTime();
           const storageRef = firebase.storage().ref();
-          const uploadTask = storageRef.child(`s-hrm/images/${getTime}-${event.currentFiles[index].name}`).put(event.currentFiles[index]);
+          const uploadTask = storageRef.child(`s-hrm/images/${getTime}-uninini-${event.currentFiles[index].name}`).put(event.currentFiles[index]);
           uploadTask.on('state_changed', (snapshot) => {
           }, (error) => {
             console.log('error', error)

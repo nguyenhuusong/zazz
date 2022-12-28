@@ -172,12 +172,12 @@ export class ThongTinNguoiLienHeComponent implements OnInit {
 
   delRow(event) {
     this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn xóa thời gian làm việc này?',
+      message: 'Bạn có chắc chắn muốn xóa bản ghi này?',
       accept: () => {
         const queryParams = queryString.stringify({cont_id: event.rowData.cont_id});
         this.apiService.delEmpContact(queryParams).subscribe((results: any) => {
           if (results.status === 'success') {
-            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Xóa thành công' });
             this.getEmpContactPage();
             this.FnEvent();
           } else {

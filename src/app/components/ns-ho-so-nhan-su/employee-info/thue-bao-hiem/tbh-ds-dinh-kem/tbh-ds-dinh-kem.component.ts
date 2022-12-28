@@ -109,6 +109,13 @@ export class TbhDsDinhKemComponent implements OnInit {
   
   }
 
+  theFileName(file){
+    if(file){
+      let fileName = file.split('/').pop().split('?')[0].split('-uninini-').pop();
+      return fileName;
+    }
+  }
+  
   getEmpAttactInsurPage() {
     this.spinner.show();
     this.columnDefs = [];
@@ -119,7 +126,11 @@ export class TbhDsDinhKemComponent implements OnInit {
           this.gridKey = repo.data.dataList.gridKey;
         }
         this.spinner.hide();
-        this.listsData = repo.data.dataList.data || [];
+        this.listsData = repo.data.dataList.data.map(d => {
+          return {
+            ...d, fileName: this.theFileName(d.meta_file_url)
+          }
+        }) || [];
         this.initGrid(repo.data.gridflexs)
       } else {
         this.spinner.hide();
@@ -187,12 +198,12 @@ export class TbhDsDinhKemComponent implements OnInit {
 
   delRow(event) {
     this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn xóa?',
+      message: 'Bạn có chắc chắn muốn xóa bản ghi này?',
       accept: () => {
         const queryParams = queryString.stringify({metaId: event.rowData.metaId});
         this.apiService.delEmpAttachInsur(queryParams).subscribe((results: any) => {
           if (results.status === 'success') {
-            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Xóa thành công' });
             this.getEmpAttactInsurPage();
             this.FnEvent();
           } else {

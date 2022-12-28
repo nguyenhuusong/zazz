@@ -91,6 +91,14 @@ export class DanhSachDinhKemComponent implements OnInit {
   
   }
 
+  theFileName(file){
+    if(file){
+      let fileName = file.split('/').pop().split('?')[0].split('-uninini-').pop();
+      return fileName;
+    }
+  }
+
+
   getEmpPersonalPage() {
     this.spinner.show();
     this.columnDefs = [];
@@ -101,7 +109,11 @@ export class DanhSachDinhKemComponent implements OnInit {
           this.gridKey = repo.data.dataList.gridKey;
         }
         this.spinner.hide();
-        this.listsData = repo.data.dataList.data || [];
+        this.listsData = repo.data.dataList.data.map(d => {
+          return {
+            ...d, fileName: this.theFileName(d.meta_file_url)
+          }
+        }) || [];
         this.initGrid(repo.data.gridflexs);
         this.FnEvent();
       } else {

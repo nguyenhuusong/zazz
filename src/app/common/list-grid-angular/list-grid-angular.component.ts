@@ -440,8 +440,72 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
   }
 
   addRow() {
+    this.typeConfig === 'FormInfo' ? 'SetFormViewInfo' : 'SetGridViewInfo'
+    if (this.typeConfig === 'FormInfo') {
+      this.listsData = [
+        {
+          group_cd: this.listsData[0].group_cd,
+          group_by: this.listsData[0].group_by,
+          field_name: null,
+          data_type: this.listsData[0].data_type,
+          columnLabel: null,
+          originalValue: null,
+          columnValue: null,
+          columnDisplay: this.listsData[0].columnDisplay,
+          columnClass: this.listsData[0].columnClass,
+          columnColor: this.listsData[0].columnColor,
+          columnType: this.listsData[0].columnType,
+          columnObject: this.listsData[0].columnObject,
+          columnObjectUrl: this.listsData[0].columnObjectUrl,
+          columnTooltip: this.listsData[0].columnTooltip,
+          isSpecial: this.listsData[0].isSpecial,
+          isRequire: this.listsData[0].isRequire,
+          isDisable: this.listsData[0].isDisable,
+          isVisiable: this.listsData[0].isVisiable,
+          hideInApp: this.listsData[0].hideInApp,
+          isChange: this.listsData[0].isChange,
+          isEmpty: this.listsData[0].isEmpty,
+          id: 0,
+          table_name: this.listsData[0].table_name,
+          view_type: this.listsData[0].view_type,
+          ordinal: this.listsData.length + 1,
+          columnDefault: this.listsData[0].columnDefault
+        },
+        ...this.listsData
+      ]
+    } else {
+      this.listsData = [
+        {
+          id: 0,
+          view_grid: this.listsData[0].view_grid,
+          view_type: this.listsData[0].view_type,
+          data_type: this.listsData[0].data_type,
+          ordinal: this.listsData.length + 1,
+          isUsed: true,
+          cellClass: this.listsData[0].cellClass,
+          columnField: this.listsData[0].table_name,
+          columnCaption: this.listsData[0].table_name,
+          columnWidth: this.listsData[0].columnWidth,
+          fieldType: this.listsData[0].table_name,
+          pinned: this.listsData[0].table_name,
+          isMasterDetail: false,
+          isStatusLable: false,
+          isHide: false,
+          isFilter: false
+        },
+        ...this.listsData
+      ]
+    }
+    setTimeout(() => {
+      this.gridApi.setFocusedCell(0, 'columnField');
+      this.gridApi.startEditingCell({
+        rowIndex: 0,
+        colKey: 'columnField',
+      });
+    }, 500);
 
   }
+
   displaySetting = false;
   getMainMenuItems=(params)=> {
     let athleteMenuItems = params.defaultItems.slice(0);

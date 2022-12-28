@@ -1,4 +1,3 @@
-<p-button *ngIf="isShowButton" label="Add row" styleClass="p-button-sm add-a-row" (click)="addRow()"></p-button>
 <div class="section">
   <ag-grid-angular 
     [style.height]="domLayout === '' ? height + 'px' : ''"
@@ -48,6 +47,8 @@
     [frameworkComponents]="frameworkComponents">
   </ag-grid-angular>
 </div>
+<p-button *ngIf="isShowButton" label="Add row" icon="pi pi-plus" styleClass="p-button-sm mt-1" (click)="addRow()"></p-button>
+
 <!-- [sideBar]="sideBar" -->
 
 <!-- [suppressRowClickSelection]="true" -->
