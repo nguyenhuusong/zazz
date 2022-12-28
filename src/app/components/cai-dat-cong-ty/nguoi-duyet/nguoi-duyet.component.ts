@@ -153,7 +153,7 @@ export class NguoiDuyetComponent implements OnInit {
                 key: 'view-job-detail',
                 class: 'btn-primary mr5',
               },
-
+              
               {
                 onClick: this.delRow.bind(this),
                 label: 'Xóa',
@@ -161,6 +161,13 @@ export class NguoiDuyetComponent implements OnInit {
                 key: 'delete-qua-trinh-hop-dong',
                 class: 'btn-danger',
               },
+              {
+                onClick: this.defaultAuth.bind(this),
+                label: 'Người ký mặc định',
+                icon: 'fa fa-edit editing',
+                key: 'view-job-detail',
+                class: 'btn-primary mr5',
+              }
             ]
           };
         },
@@ -168,8 +175,25 @@ export class NguoiDuyetComponent implements OnInit {
     ];
   }
 
+  defaultAuth(event) {
+    this.confirmationService.confirm({
+      message: `Bạn có chắc chắn muốn xác nhận ${event.rowData.authFullName} là người ký mặc định?`,
+      accept: () => {
+        this.apiService.setCompanyAuthDefault({authId: event.rowData.authid}).subscribe((results: any) => {
+          if (results.status === 'success') {
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Xác nhận thành công' });
+            this.getComAuthorizePage();
+            this.FnEvent();
+          } else {
+            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+          }
+        });
+      }
+    });
+  }
+
   editRow({rowData}) {
-    this.modelAuth.auth_id  = rowData.auth_id
+    this.modelAuth.auth_id  = rowData.authid
     this.getComAuthorizeInfo();
   }
 
@@ -182,12 +206,12 @@ export class NguoiDuyetComponent implements OnInit {
 
   delRow(event) {
     this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn xóa thời gian làm việc này?',
+      message: `Bạn có chắc chắn muốn xóa ${event.rowData.authFullName} khỏi danh sách người duyệt`,
       accept: () => {
-        const queryParams = queryString.stringify({authId: event.rowData.authId});
+        const queryParams = queryString.stringify({authId: event.rowData.authid});
         this.apiService.delComAuthorizeInfo(queryParams).subscribe((results: any) => {
           if (results.status === 'success') {
-            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Xóa thành công' });
             this.getComAuthorizePage();
             this.FnEvent();
           } else {
