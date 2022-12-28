@@ -2475,6 +2475,9 @@ div.p-organizationchart {
         // left: 0px;
         // border-radius: 100%;
     }
+    &.bg-primary{
+        background: #0d6efd;
+    }
     &.bg-secondary {
         // background: #6c757d;
         // border: 1px solid #6c757d;
@@ -2487,33 +2490,27 @@ div.p-organizationchart {
     }
     &.bg-danger{
         // color: #c82333;
-        background: #c82333;
-        &:after {
-            background: #c82333;
-        }
+        background: #dc3545;
     }
     &.bg-warning{
         background: #ffc107;
-        // color: #ffc107;
-        &:after {
-            background: #ffc107;
-        }
     }
     &.bg-success{
         // color: #34C759;
-        background: #34C759;
+        background: #198754;
         width: 100%;
-        &:after {
-            background: #34C759;
-        }
     }
     &.bg-dark{
         color: #ffffff;
-        background: #1A1A40
+        background: #212529
     }
     &.bg-info{
         color: #ffffff;
-        background: #28a745;
+        background: #0dcaf0;
+    }
+    &.bg-light{
+        color: #212529;
+        background: #f8f9fa;
     }
 }
 .p-card-header-custom{
