@@ -6365,3 +6365,16 @@ app-form-filter{
 .relative{
     
 }
+app-type-linkurl-drag{
+    .wrap-upload{
+        .p-fileupload-buttonbar{
+            .p-fileupload-choose{
+                width: 143px;
+                margin-bottom: -40px;
+                position: relative;
+                z-index: 8;
+                background: transparent;
+            }
+        }
+    }
+}

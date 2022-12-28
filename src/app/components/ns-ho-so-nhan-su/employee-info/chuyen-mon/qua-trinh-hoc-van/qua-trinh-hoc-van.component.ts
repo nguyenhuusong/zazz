@@ -172,7 +172,7 @@ export class QuaTrinhHocVanComponent implements OnInit {
 
   delRow(event) {
     this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn xóa thời gian làm việc này?',
+      message: 'Bạn có chắc chắn muốn xóa?',
       accept: () => {
         const queryParams = queryString.stringify({qualId: event.rowData.qualId});
         this.apiService.delEmpEducation(queryParams).subscribe((results: any) => {

@@ -29,7 +29,7 @@ export class KyNangComponent implements OnInit {
   listsData = [];
   columnDefs = [];
   gridKey = '';
-
+  files = null
   ngAfterViewInit(): void {
    this.FnEvent();
   }
@@ -74,6 +74,18 @@ export class KyNangComponent implements OnInit {
   }
 
   setDetailInfo(data) {
+    if(this.files && this.files.length > 0){
+      data[0].fields.forEach(element => {
+        if(element.field_name === "meta_file_size") {
+          element.columnValue = this.files[0].size
+        }else if(element.field_name === "meta_file_type") {
+          element.columnValue = this.files[0].type;
+        }
+        else if(element.field_name === "meta_file_name") {
+          element.columnValue = this.files[0].name;
+        }
+      });
+    }
     const param = {
       ...this.dataDetailInfo, group_fields: data
     }
@@ -200,6 +212,10 @@ export class KyNangComponent implements OnInit {
         });
       }
     });
+  }
+
+  getFilesDetail(event) {
+    this.files = event;
   }
 
 }
