@@ -245,12 +245,16 @@
                                     </div>
                                     <div class="list-item-info" *ngIf="dataDimuon.timekeeping" >
                                         <div class="item d-flex gap-12" *ngFor="let item of dataDimuon.timekeeping">
-                                            <div class="avar"><img src="../../../../assets/images/avatar.jpg"></div>
+                                            <div class="avar"><img src="{{ item?.image_url ? item.image_url : '../../../../assets/images/avatar.jpg' }}"></div>
                                             <div class="inf">
                                                 <label>{{ item.fullName }}</label>
                                                 <p>{{ item.organize_name }}</p>
                                             </div>
                                             <div class="number-time"><b>{{ item.num_late }} lần</b></div>
+                                        </div>
+                                        <div class="loadMore d-flex bet">
+                                            <div>{{ dataDimuon.timekeeping.length }} kết quả</div>
+                                            <div (click)="loadMore()">Xem Thêm</div>
                                         </div>
                                     </div>
                                 </div>

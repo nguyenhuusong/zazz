@@ -59,7 +59,7 @@ export class CsChamCongOverviewComponent implements OnInit {
   queryDiMuonVeSom = {
     filter: '',
     offSet: 0,
-    pageSize: 20,
+    pageSize: 50,
     fromdate: new Date(moment(new Date()).format()),
     todate: new Date(moment(new Date()).format()),
   }
@@ -266,12 +266,13 @@ export class CsChamCongOverviewComponent implements OnInit {
   }
   dataLoaiNghi = null
   loaiNghi() {
-    this.dataLoaiNghi = null
-    let params: any = { ... this.queryDiMuonVeSom };
+    this.dataLoaiNghi = null;
+    this.labelLoaiNghi = null;
+    let params: any = { ... this.queryLoainghi };
     delete params.fromdate
     delete params.todate
-    params.fromdate = moment(new Date(this.queryDiMuonVeSom.fromdate)).format('YYYY-MM-DD')
-    params.todate = moment(new Date(this.queryDiMuonVeSom.todate)).format('YYYY-MM-DD');
+    params.fromdate = moment(new Date(this.queryLoainghi.fromdate)).format('YYYY-MM-DD')
+    params.todate = moment(new Date(this.queryLoainghi.todate)).format('YYYY-MM-DD');
     const queryParams = queryString.stringify(params);
     let dataChart = []
     this.apiService.getLeavePieChart(queryParams).subscribe(
@@ -283,6 +284,7 @@ export class CsChamCongOverviewComponent implements OnInit {
         dataChart = results.data.leave.map( d => {
           return d.num_leave
         });
+        console.log('dataChart', dataChart)
         this.chartLoaiNghi(dataChart);
       },
       error => {
@@ -405,6 +407,12 @@ export class CsChamCongOverviewComponent implements OnInit {
         // chart.destroy();
         }, 500);
       }
+    }
+
+    loadMore() {
+      this.queryDiMuonVeSom.offSet = this.queryDiMuonVeSom.offSet + this.queryDiMuonVeSom.pageSize;
+      this.queryDiMuonVeSom.pageSize = this.queryDiMuonVeSom.offSet + 50;
+      this.diSomVeMuon();
     }
 
     goToChamCong() {

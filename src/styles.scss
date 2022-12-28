@@ -6288,6 +6288,16 @@ app-form-filter{
     .list-item-info{
         max-height: 400px;
         overflow-y: auto;
+        position: relative;
+        .loadMore{
+            position: sticky;
+            bottom: 0;
+            background: #fff;
+            left: 0px;
+            width: 100%;
+            z-index: 999;
+            cursor: pointer;
+        }
         .item{
             margin-bottom: 6px;
         }
