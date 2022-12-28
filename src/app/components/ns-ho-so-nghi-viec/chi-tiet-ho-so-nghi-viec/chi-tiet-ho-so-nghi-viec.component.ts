@@ -248,6 +248,7 @@ export class ChiTietHoSoNghiViecComponent implements OnInit, OnChanges, OnDestro
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Cập nhật thông tin thành công' });
         this.getTerminateInfo();
+        this.back.emit();
       } else {
         this.messageService.add({
           severity: 'error', summary: 'Thông báo', detail: results.message

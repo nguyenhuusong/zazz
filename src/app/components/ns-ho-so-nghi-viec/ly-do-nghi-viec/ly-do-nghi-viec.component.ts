@@ -139,7 +139,7 @@ export class LyDoNghiViecComponent implements OnInit {
 
   fnBack() {
     this.load();
-    this.displayFormEditDetail = false
+    this.displayFormEditDetail = false;
   }
 
   showButtons(event: any) {
@@ -233,6 +233,7 @@ export class LyDoNghiViecComponent implements OnInit {
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Nhân sự' },
+      { label: 'Hồ sơ nhân sự nghỉ việc', routerLink: '/nhan-su/ho-so-nghi-viec' },
       { label: 'Danh sách lý do nghỉ việc' },
     ];
     this.getTerminateReasonFilter();
