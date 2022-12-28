@@ -36,7 +36,7 @@ export class ChiTietAnCaComponent implements OnInit, OnChanges, OnDestroy {
   displaysearchUserMaster = false;
   listViewsForm = [];
   detailComAuthorizeInfo = null;
-  custId = null
+  empId = null;
   listViews = []
   imagesUrl = []
   paramsObject = null
@@ -99,7 +99,7 @@ export class ChiTietAnCaComponent implements OnInit, OnChanges, OnDestroy {
     this.activatedRoute.queryParamMap.subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.dataRouter = this.paramsObject.params;
-      this.custId = this.paramsObject.params.custId;
+      this.empId = this.paramsObject.params.empId;
       this.getEatingList();
     });
   };
@@ -110,7 +110,7 @@ export class ChiTietAnCaComponent implements OnInit, OnChanges, OnDestroy {
   columnDefs
   getAnCaInfo() {
     this.listViews = [];
-    const queryParams = queryString.stringify({ cusId: this.custId });
+    const queryParams = queryString.stringify({ cusId: this.empId });
     this.apiService.getEatingInfo(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.listViews = cloneDeep(results.data.group_fields);
@@ -123,7 +123,7 @@ export class ChiTietAnCaComponent implements OnInit, OnChanges, OnDestroy {
   listDates = [];
   getEatingList() {
     const queryParams = queryString.stringify({
-      cusId: this.custId,
+      cusId: this.empId,
       fromDate: moment(new Date()).startOf('month').format('DD/MM/YYYY'),
       toDate: moment(new Date()).endOf('month').format('DD/MM/YYYY'),
     });

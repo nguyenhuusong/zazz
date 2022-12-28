@@ -383,13 +383,8 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
 
   // list ăn ca
   editRow(event = null) {
-    const params = {
-      cusId: ''
-    }
-    if (event) {
-      params.cusId = event.rowData.custId
-    }
-    this.router.navigate(['/chinh-sach/an-ca/chi-tiet-danh-sach-an-ca'], { queryParams: params });
+    this.modelAddEating.empId = event.rowData.empId
+    this.router.navigate(['/chinh-sach/an-ca/chi-tiet-danh-sach-an-ca'], { queryParams: this.modelAddEating });
   }
 
   onCellClicked(event) {
@@ -405,13 +400,11 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
   rowSelected(event) {
     this.rowDataSelected = event;
   }
-
   handAddNew() {
     this.detailInfo = []
     this.listViews = []
-    const params = { cusId: null }
     this.isDetail = true;
-    this.apiService.getEatingForCreateInfo(queryString.stringify(params)).subscribe(results => {
+    this.apiService.getEatingForCreateInfo(queryString.stringify(this.modelAddEating)).subscribe(results => {
       if (results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.listViews = [...listViews];
@@ -568,6 +561,22 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
         }
       }
     });
+  }
+
+  isSearchEmp = false;
+  modelAddEating = {
+    empId: null
+  }
+  seachEmValue(event) {
+    if(!event.value) {
+      this.isSearchEmp = false;
+    }else{
+      this.modelAddEating = {
+        empId : event.empId
+      }
+      this.handAddNew();
+     
+    }
   }
 
 }

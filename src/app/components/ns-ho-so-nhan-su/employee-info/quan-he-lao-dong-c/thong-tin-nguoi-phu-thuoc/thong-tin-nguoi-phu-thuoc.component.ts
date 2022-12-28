@@ -65,7 +65,7 @@ export class ThongTinNguoiPhuThuocComponent implements OnInit {
   dataDetailInfo = null;
   displayFormEditDetail = false
   getEmpDependent() {
-    const queryParams = queryString.stringify({ empId: this.empId});
+    const queryParams = queryString.stringify({ empId: this.empId, dependentId: this.dependentId});
     this.listViewsDetail = [];
     this.apiService.getEmpDependent(queryParams).subscribe(results => {
       if (results.status === 'success') {

@@ -25,8 +25,8 @@ export class ThoiGianLamViecComponent implements OnInit, AfterViewInit {
     private confirmationService: ConfirmationService,
   ) { }
   optionsButtonsView = [
-    { label: '', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-caret-left' },
-    { label: '', value: 'Update', class: 'btn-accept', icon: 'pi pi-caret-right' },
+    { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-caret-left' },
+    { label: 'Tiếp tục', value: 'Update', class: 'btn-accept', icon: 'pi pi-caret-right' },
     { label: 'Lưu tạm', value: 'SaveNhap', class: 'btn-accept', icon: 'pi pi-caret-right' },
     { label: 'Xác nhận', value: 'Submit', class: 'btn-accept', icon: 'pi pi-check' },
     { label: 'Đóng', value: 'Close', class: 'btn-accept', icon: 'pi pi-times' }
@@ -170,8 +170,8 @@ export class ThoiGianLamViecComponent implements OnInit, AfterViewInit {
           this.stepActivated();
         }, 100);
         this.optionsButtonsView = [
-          { label: '', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-caret-left' },
-          { label: '', value: 'Update', class: 'btn-accept', icon: 'pi pi-caret-right' },
+          { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-caret-left' },
+          { label: 'Tiếp tục', value: 'Update', class: 'btn-accept', icon: 'pi pi-caret-right' },
           { label: 'Lưu tạm', value: 'SaveNhap', class: 'btn-accept', icon: 'pi pi-caret-right' },
           { label: 'Xác nhận', value: 'Submit', class: 'btn-accept', icon: 'pi pi-check' },
           { label: 'Đóng', value: 'Close', class: 'btn-accept', icon: 'pi pi-times' }
@@ -239,8 +239,8 @@ cloneListViewsDetail = [];
             this.stepActivated();
           }, 100);
           this.optionsButtonsView = [
-            { label: '', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-caret-left' },
-            { label: '', value: 'Update', class: 'btn-accept', icon: 'pi pi-caret-right' },
+            { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-caret-left' },
+            { label: 'Tiếp tục', value: 'Update', class: 'btn-accept', icon: 'pi pi-caret-right' },
             { label: 'Lưu tạm', value: 'SaveNhap', class: 'btn-accept', icon: 'pi pi-caret-right' },
             { label: 'Xác nhận', value: 'Submit', class: 'btn-accept', icon: 'pi pi-check' },
             { label: 'Đóng', value: 'Close', class: 'btn-accept', icon: 'pi pi-times' }

@@ -70,7 +70,7 @@ export class QuaTrinhHopDongComponent implements OnInit {
   taohopdong() {
     this.modelContractInfo = {
       detailInfo: this.detailInfo,
-      contractId: this.detailInfo.contractId || null,
+      contractId: null,
       empId: this.detailInfo.empId,
       contractTypeId: null,
     }

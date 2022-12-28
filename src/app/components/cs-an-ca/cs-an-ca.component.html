@@ -102,3 +102,11 @@
             (close)="close($event);op.hide()"></app-form-filter>
     </ng-template>
 </p-overlayPanel>
+
+
+
+<app-hrm-search-emp 
+    *ngIf="isSearchEmp" 
+    [isSearch]="isSearchEmp" 
+    (seachEmValue)="seachEmValue($event)">
+</app-hrm-search-emp>
