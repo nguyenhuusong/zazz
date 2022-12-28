@@ -88,8 +88,8 @@
     <p-header>
         Danh sách in
     </p-header>
-    <div class="row">
-        <div class="col-md-8 mt-2">
+    <div class="grid">
+        <div class="col-4">
             <div class="field-group select valid">
                 <label for="" style="z-index: 2">Danh sách máy in</label>
                 <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" [options]="listPrints"
@@ -105,7 +105,7 @@
                 </p-dropdown>
             </div>
         </div>
-        <div class="col-md-2 mt-2">
+        <div class="col-2">
             <div class="field-group valid">
                 <label for="" style="z-index: 2">Số lần in</label>
                 <input type="number" name="Copies" [(ngModel)]="modelPrint.Copies">
@@ -124,9 +124,9 @@
 
             <!-- </div> -->
         </div>
-        <div class="col-md-2 mt-2">
-            <label for="" style="visibility: hidden;display: block;">Thực hiện</label>
-            <p-button label="Thực hiện" styleClass="p-button-sm btn-h56 mb-2"
+        <div class="col-2">
+            <label for="" style="visibility: hidden;display: block;margin-bottom: 3px;">Thực hiện</label>
+            <p-button label="Thực hiện" styleClass="p-button-sm mb-2"
                 [disabled]="filesPrints.length === 0 || !modelPrint.PrinterName || modelPrint.Copies === 0 || !modelPrint.Copies"
                 (onClick)="openPrint()"></p-button>
         </div>

@@ -6,12 +6,12 @@
                 display: block;
                 &::after{
                     content: "";
-                    padding-top: 56%;
+                    padding-top: 100%;
                     display: block;
                 }
                 &>img{
                     position: absolute;
-                    object-fit: cover;
+                    object-fit: contain;
                     top: 0px;
                     width: 100%;
                     left: 0px;
