@@ -65,7 +65,7 @@ export class ChiTietNgayNghiComponent implements OnInit, OnDestroy {
     this.listDayWeeks = flatten(listDayWeeks)
     this.dsSaturdays = flatten(dsSaturdays)
     this.dsSundays = flatten(dsSundays)
-    this.dates = this.dsNgayThuongs[5];
+    this.dates = this.dsNgayThuongs[new Date().getMonth()];
     this.titlePage = this.activatedRoute.data['_value'].title;
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
