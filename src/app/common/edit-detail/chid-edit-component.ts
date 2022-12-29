@@ -1554,6 +1554,7 @@ export class AppTypeLinkUrlRadioListComponent implements OnInit {
 export class AppTypeLinkUrlDragComponent implements OnInit {
   @Input() element;
   @Input() dataView;
+  @Input() modelFields;
   @Input() submit = false;
   @Output() callback = new EventEmitter<any>();
   uploadedFiles: any[] = [];
@@ -1636,7 +1637,13 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
                     }
                     this.uploadedFiles.push(event.currentFiles[index].name);
                     element1.columnValue = this.uploadedFiles.toString();
-                  } 
+                  } else if (this.element.field_name === 'meta_file_url') {
+                    //   // danh sach file dinh kem, ct ns
+                     this.setValue(event.currentFiles[index].name,'meta_file_name')
+                     this.setValue(event.currentFiles[index].size,'meta_file_size')
+                     this.setValue(event.currentFiles[index].type,'meta_file_type')
+                      this.callback.emit(event.currentFiles);
+                     }
                 });
               });
             }).catch(error => {
@@ -1671,10 +1678,11 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
           }
           
         }
-        if (this.element.field_name === 'meta_file_url') {
-          // danh sach file dinh kem, ct ns
-          this.callback.emit(event.currentFiles);
-        }
+        // if (this.element.field_name === 'meta_file_url') {
+        //   // danh sach file dinh kem, ct ns
+        //   // this.setValue(event.currentFiles[index].name,'meta_file_name')
+        //   this.callback.emit(event.currentFiles);
+        // }
       }else{
         this.spinner.hide();
         if(event.files.length > 0){
@@ -1690,6 +1698,18 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
       setTimeout(() => {
         this.isUpload = false;
       }, 1000);
+  }
+
+  setValue(value, field_name) {
+    this.dataView.forEach(element => {
+      element.fields.forEach(element1 => {
+        if (element1.field_name === field_name) {
+          element1.columnValue = value;
+          this.modelFields[field_name].error = this.modelFields[field_name].isRequire && !element1.columnValue ? true : false;
+          this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
+        }
+      });
+    });
   }
 
   // checkFileType(type){

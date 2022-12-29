@@ -269,7 +269,7 @@ export class ThaiSanComponent implements OnInit, AfterViewChecked {
 
   delRow(event) {
     this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn thực hiện mở tài khoản?',
+      message: 'Bạn có chắc chắn muốn thực hiện xóa bản ghi này?',
       accept: () => {
         const queryParams = queryString.stringify({ maternityId: event.rowData.maternityId });
         this.apiService.delMaternityInfo(queryParams).subscribe(results => {
