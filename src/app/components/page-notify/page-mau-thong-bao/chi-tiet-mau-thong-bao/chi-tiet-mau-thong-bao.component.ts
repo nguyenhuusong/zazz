@@ -166,7 +166,7 @@ setItemByActionList() {
     this.listViews.forEach( group => {
       group.fields.forEach(field => {
         if(field.field_name === 'content_notify') {
-          if(actionlistValueKey["notification"]){
+          if(actionlistValueKey["push"]){
             field.isVisiable = true;
           }else{
             field.isVisiable = false;
@@ -185,7 +185,7 @@ setItemByActionList() {
           }
         }
         else if(field.field_name === 'isPublish' || field.field_name === 'content_type'  || field.field_name === 'content_markdown') { 
-          if(actionlistValueKey["email"] || actionlistValueKey["notification"]){
+          if(actionlistValueKey["email"] || actionlistValueKey["push"]){
             field.isVisiable = true;
           }else{
             field.isVisiable = false;
