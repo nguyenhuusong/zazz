@@ -213,9 +213,9 @@ export class FormFilterComponent implements OnInit, OnChanges {
     group_fields.forEach(results => {
       results.fields.forEach(data => {
         if (data.columnType === 'datetime' && data.isVisiable) {
-          params[data.field_name]= data.columnValue ? moment(new Date(data.columnValue)).format('DD-MM-YYYY') : null
+          params[data.field_name]= data.columnValue ? moment(new Date(data.columnValue)).format('DD/MM/YYYY') : null
         } else if (data.columnType === 'datefulltime' && data.isVisiable) {
-          params[data.field_name]= data.columnValue ? moment(data.columnValue).format('DD-MM-YYYY HH:mm:ss') : null
+          params[data.field_name]= data.columnValue ? moment(data.columnValue).format('DD/MM/YYYY HH:mm:ss') : null
         } else if (data.columnType === 'timeonly') {
           params[data.field_name]= data.columnValue ?  `${data.columnValue}:00` : null
 

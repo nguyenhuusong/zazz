@@ -449,6 +449,13 @@ export class NsHoSoNghiViecComponent implements OnInit {
           this.router.navigate(['/nhan-su/ly-do-nghi-viec']);
         }
       },
+      {
+        label: 'HĐ mẫu nghỉ việc',
+        icon: 'pi pi-refresh',
+        command: () => {
+          this.router.navigate(['/cai-dat/quan-ly-hop-dong']);
+        }
+      },
   
     ]
   }
