@@ -695,6 +695,22 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v2/contracttype/GetContractTypes?${queryParams}`, this.options)
   }
 
+  getContractTypeTemplatePage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/contracttype/GetContractTypeTemplatePage?${queryParams}`, this.options)
+  }
+
+  getContractTypeTemplate(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/contracttype/GetContractTypeTemplate?${queryParams}`, this.options)
+  }
+
+  delContractTypeTemplate(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/contracttype/DelContractTypeTemplate?${queryParams}`, this.options)
+  }
+
+  setContractTypeTemplate(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/contracttype/SetContractTypeTemplate`, queryParams, this.options)
+  }
+
   getPrintFiles(queryParams): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/contract/GetPrintFiles`,queryParams, this.options)
   }

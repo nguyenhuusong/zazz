@@ -89,6 +89,7 @@ import { ChuyenMonComponent } from 'src/app/components/cai-dat-to-chuc/chi-tiet-
 import { NguoiDuyetComponent } from 'src/app/components/cai-dat-cong-ty/nguoi-duyet/nguoi-duyet.component';
 import {PickListModule} from 'primeng/picklist';
 import { HrmSearchEmpModule } from 'src/app/common/hrm-search-emp/hrm-search-emp.module';
+import { AddContractComponent } from 'src/app/components/quan-ly-hop-dong/add-contract/add-contract.component';
 
 FullCalendarModule.registerPlugins([
   // register FullCalendar plugins
@@ -190,7 +191,7 @@ FullCalendarModule.registerPlugins([
     PositionOrgId,
     ChuyenMonComponent,
     NguoiDuyetComponent,
-
+    AddContractComponent
   ],
   providers: []
 })

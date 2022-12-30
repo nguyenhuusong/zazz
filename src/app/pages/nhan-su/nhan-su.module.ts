@@ -104,6 +104,7 @@ import { DanhSachTreConComponent } from 'src/app/components/thai-san/danh-sach-t
 import { DanhSachKhamThaiComponent } from 'src/app/components/thai-san/danh-sach-kham-thai/danh-sach-kham-thai.component';
 import { LyDoNghiViecComponent } from 'src/app/components/ns-ho-so-nghi-viec/ly-do-nghi-viec/ly-do-nghi-viec.component';
 import { ChiTietLyDoNghiViecComponent } from 'src/app/components/ns-ho-so-nghi-viec/ly-do-nghi-viec/chi-tiet-ly-do-nghi-viec/chi-tiet-ly-do-nghi-viec.component';
+import { HopDongComponent } from 'src/app/components/ns-ho-so-nhan-su/contract-detail/hop-dong/hop-dong.component';
 
 @NgModule({
   imports: [
@@ -218,6 +219,7 @@ import { ChiTietLyDoNghiViecComponent } from 'src/app/components/ns-ho-so-nghi-v
     DanhSachKhamThaiComponent,
     LyDoNghiViecComponent,
     ChiTietLyDoNghiViecComponent,
+    HopDongComponent
   ],
   providers: [ ]
 })
