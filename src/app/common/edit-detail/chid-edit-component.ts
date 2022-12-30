@@ -425,7 +425,7 @@ export class AppTypeSelectTreesComponent implements OnInit, OnChanges {
                 </p-dropdown>
                 <div *ngIf="element.field_name==='roomId'" class="chon-lich-hop" style="
                       position: absolute;
-                      right: -3px;
+                      right: -4px;
                       top: 23px;
                       z-index: 9;
                   ">
