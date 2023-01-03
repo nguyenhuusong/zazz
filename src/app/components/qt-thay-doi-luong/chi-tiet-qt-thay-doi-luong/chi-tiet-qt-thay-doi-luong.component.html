@@ -1,14 +1,41 @@
-
 <div class="main-grid product-detail">
     <section>
-        <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
+        <div class="breadcrumb">
+            <p-breadcrumb [model]="itemsMenu"></p-breadcrumb>
+            <h3>{{titlePage}}</h3>
+        </div>
     </section>
-   <div class="content">
-        <app-edit-detail *ngIf="listViews.length> 0" 
-            [detail]="detailInfo" [manhinh]="'Edit'" 
-            [optionsButtonsEdit]="optionsButon"  
-            [dataView]="listViews"
-            (callback)="setSalaryInfoDevM($event)" 
-            (callbackcancel)="quaylai($event)"></app-edit-detail>
-    </div>
 </div>
+<p-card>
+    <div class="status-line steps-contract col-12 m-auto">
+        <p-steps [model]="steps" *ngIf="listViews.length> 0" [(activeIndex)]="activeIndex" [readonly]="false"></p-steps>
+    </div>
+</p-card>
+<p-divider></p-divider>
+<p-card>
+   
+    <div>
+        <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'"
+            [optionsButtonsEdit]="optionsButtonsView" [dataView]="listViews" (callback)="setSalaryInfoDevM($event)" (callBackForm)="callBackForm($event)"
+            (callbackcancel)="cancel($event)"></app-edit-detail>
+            <p-divider></p-divider>
+
+            <app-thanh-phan-luong [salaryInfoId]="modelEdit.Id" *ngIf="detailInfo && detailInfo?.flow_cur > 1"></app-thanh-phan-luong>
+    </div>
+       
+</p-card>
+
+
+<!-- <p-dialog [(visible)]="displayuploadcontract" [autoZIndex]="true" [modal]="true"  appendTo="body"
+    [style]="{width: '800px', height: 'auto'}">
+    <p-header>
+        Tải lên hợp đồng [{{metafile?.meta_title}}]
+    </p-header>
+    <app-upload-file [maxFileSize]="8000000" [multiple]="" (callback)="handleUpload($event)" *ngIf="displayuploadcontract"></app-upload-file>
+</p-dialog>
+
+
+<p-dialog header="Cài đặt cấu hình" [(visible)]="displaySetting" (onHide)="gridKeyForm === 'view_hrm_contract_files' ? getContractMetaPage() : getSalaryComponentPage()" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
+    [draggable]="false" [resizable]="false" [focusTrap]="false" styleClass="popup-setting">
+    <app-config-grid-table-form *ngIf="displaySetting && gridKeyForm" [typeConfig]="'TableInfo'"   [gridKey]="gridKeyForm"></app-config-grid-table-form>
+</p-dialog> -->

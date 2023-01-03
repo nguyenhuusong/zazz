@@ -1530,6 +1530,10 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v2/terminate/GetStatusTimelineTerminate`, this.options)
   }
 
+  getTerminateStatus(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/terminate/GetTerminateStatus?` + queryParams, this.options)
+  }
+
   // Holiday
 
   getHolidayPage(queryParams): Observable<any> {
@@ -1710,6 +1714,10 @@ export class ApiHrmService {
 
   getSalaryInfoPageByEmpId(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/salaryInfo/GetSalaryInfoPageByEmpId?` + queryParams, this.options)
+  }
+
+  getSalaryComponentPageV1(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/salaryInfo/GetSalaryComponentPage?` + queryParams, this.options)
   }
 
   setSalaryInfoNew(data): Observable<any> {

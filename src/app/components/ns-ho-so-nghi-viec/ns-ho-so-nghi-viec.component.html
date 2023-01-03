@@ -68,30 +68,16 @@
     <p-image class="img-popup" [src]="imgAvatar" alt="Image" [preview]="false" ></p-image>
 </p-dialog>
 
-<p-dialog header="Thay đổi trạng thái" [(visible)]="displayChangeStatus" [modal]="true" [style]="{width: '660px'}"
+<p-dialog header="Thay đổi trạng thái" [(visible)]="displayChangeStatus" [modal]="true" [style]="{width: '1300px'}"
     [draggable]="false" [resizable]="false">
-    <div class="col-md-12 mt-1" style="padding: 0"> 
+    <app-cap-nhat-trang-thai-nghi-viec [terminateId]="modelPheDuyet.id" *ngIf="displayChangeStatus"></app-cap-nhat-trang-thai-nghi-viec>
+    <!-- <div class="col-md-12 mt-1" style="padding: 0"> 
         <div class="field-group multi-select" [ngClass]=" modelPheDuyet.status_key ? 'valid' : 'invalid' ">
             <label for="">status_key</label>
             <p-multiSelect [autoZIndex]="true" [options]="listTerminateKey" [(ngModel)]="modelPheDuyet.status_key" optionLabel="name"></p-multiSelect>
         </div>
     </div>
-    <!-- <div class="col-md-12 mt-1" style="padding: 0">
-        <div class="field-group select label-8" [ngClass]=" modelPheDuyet.status ? 'valid' : 'invalid' ">
-                <p-dropdown [autoZIndex]="true" [autoDisplayFirst]="false" [style]="{'width': '100%'}" [options]="listStatus"
-                [(ngModel)]="modelPheDuyet.status" name="status">
-                <ng-template let-item pTemplate="selectedItem">
-                    <span>{{item.label}}</span>
-                </ng-template>
-                <ng-template let-car pTemplate="item">
-                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                        <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
-                    </div>
-                </ng-template>
-                </p-dropdown>
-            <label for="">Trạng thái phê duyệt</label>
-        </div>
-    </div> -->
+    
     <div class="col-md-12 mt-1" style="padding: 0">
         <div class="field-group date valid">
             <label for="">Ngày xác nhận</label>
@@ -111,7 +97,7 @@
     <div class="col-md-12 mt-1 text-right d-flex justify-content-end">
         <p-button label="Xác nhận" styleClass="p-button-sm mr-1" (click)="xacnhan()"> </p-button>
         <p-button label="Hủy bỏ" styleClass="p-button-sm p-button-secondary mr-1" (click)="displayChangeStatus = !displayChangeStatus"> </p-button>
-    </div>
+    </div> -->
 
 </p-dialog>
 
