@@ -91,6 +91,8 @@ import {PickListModule} from 'primeng/picklist';
 import { HrmSearchEmpModule } from 'src/app/common/hrm-search-emp/hrm-search-emp.module';
 import { AddContractComponent } from 'src/app/components/quan-ly-hop-dong/add-contract/add-contract.component';
 import { UploadFileModule } from 'src/app/common/upload-file/upload-file.module';
+import { ChucDanhComponent } from 'src/app/components/chuc-danh/chuc-danh.component';
+import { ChiTietChucDanhComponent } from 'src/app/components/chuc-danh/chi-tiet-chuc-danh/chi-tiet-chuc-danh.component';
 
 FullCalendarModule.registerPlugins([
   // register FullCalendar plugins
@@ -193,7 +195,9 @@ FullCalendarModule.registerPlugins([
     PositionOrgId,
     ChuyenMonComponent,
     NguoiDuyetComponent,
-    AddContractComponent
+    AddContractComponent,
+    ChucDanhComponent,
+    ChiTietChucDanhComponent
   ],
   providers: []
 })

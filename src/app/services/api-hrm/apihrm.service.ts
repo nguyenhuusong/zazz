@@ -1042,13 +1042,30 @@ export class ApiHrmService {
   setOrganizeCompany(queryParams): Observable<any> {
     return this.http.put<any>(`${apiHrmServer}/api/v1/organize/SetOrganizeCompany`, queryParams, this.options)
   }
+  // Position
 
   getPositionPage(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/position/GetPositionPage?` + queryParams, this.options)
   }
 
+  getPositionTitlePage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/position/GetPositionTitlePage?` + queryParams, this.options)
+  }
+
+  getPositionTitleInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/position/GetPositionTitleInfo?` + queryParams, this.options)
+  }
+
+  setPositionTitleInfo(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/position/SetPositionTitleInfo` ,  queryParams, this.options)
+  }
+
   delPositionInfo(queryParams): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v2/position/DelPositionInfo?` + queryParams, this.options)
+  }
+
+  delPositionTitleInfo(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/position/DelPositionTitleInfo?` + queryParams, this.options)
   }
 
   delWorkplaceInfo(queryParams): Observable<any> {

@@ -32,6 +32,8 @@ import { ThietLapWifiComponent } from 'src/app/components/thiet-lap-wifi/thiet-l
 import { ChiTietThietLapWifiComponent } from 'src/app/components/thiet-lap-wifi/chi-tiet-thiet-lap-wifi/chi-tiet-thiet-lap-wifi.component';
 import { LoaiToChucComponent } from 'src/app/components/cai-dat-to-chuc/loai-to-chuc/loai-to-chuc.component';
 import { ChiTietLoaiToChucComponent } from 'src/app/components/cai-dat-to-chuc/loai-to-chuc/chi-tiet-loai-to-chuc/chi-tiet-loai-to-chuc.component';
+import { ChucDanhComponent } from 'src/app/components/chuc-danh/chuc-danh.component';
+import { ChiTietChucDanhComponent } from 'src/app/components/chuc-danh/chi-tiet-chuc-danh/chi-tiet-chuc-danh.component';
 
 const routes: Routes = [
   {
@@ -218,6 +220,31 @@ const routes: Routes = [
     data: {
       title: 'Chi tiết chức vụ',
       url: 'chi-tiet-chuc-vu',
+    },
+  },
+   // Cài đặt chức danh
+   {
+    path: 'chuc-danh',
+    component: ChucDanhComponent,
+    data: {
+      title: 'Danh sách chức danh',
+      url: 'chuc-danh',
+    },
+  },
+  {
+    path: 'chuc-danh/them-moi-chuc-danh',
+    component: ChiTietChucDanhComponent,
+    data: {
+      title: 'Thêm mới chức danh',
+      url: 'them-moi-chuc-danh',
+    },
+  },
+  {
+    path: 'chuc-danh/chi-tiet-chuc-danh',
+    component: ChiTietChucDanhComponent,
+    data: {
+      title: 'Chi tiết chức danh',
+      url: 'chi-tiet-chuc-danh',
     },
   },
 
