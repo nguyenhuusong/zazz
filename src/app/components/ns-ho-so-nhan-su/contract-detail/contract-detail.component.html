@@ -38,13 +38,13 @@
                 </p-panel>
             </div>
         </div>  
-        <div class="grid wrap-edit-detail">
+        <app-hop-dong [contractId]="detailInfo?.contractId" *ngIf="this.detailInfo?.flow_st > 2"></app-hop-dong>
+        <!-- <div class="grid wrap-edit-detail">
             <div class="col-12 border-section " *ngIf="this.detailInfo?.flow_st > 2">
                 <p-panel>
                     <ng-template pTemplate="header">
                         <div class="grid d-flex justify-content-between">
                             <h3 class="title-section">Danh sách hồ sơ hợp đồng</h3>
-                            <!-- <p-button label="Thêm mới" icon="pi pi-plus" (click)="addWorked()" styleClass="p-button-sm mr-1"></p-button> -->
                         </div>
                     </ng-template>
                     <div class="row" style="flex-wrap: wrap">
@@ -55,7 +55,7 @@
                     </div>
                 </p-panel>
             </div>
-        </div>
+        </div> -->
 </p-card>
 
 

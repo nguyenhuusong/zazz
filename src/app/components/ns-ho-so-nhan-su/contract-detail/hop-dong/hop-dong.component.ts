@@ -13,7 +13,7 @@ import { fromEvent } from 'rxjs';
   styleUrls: ['./hop-dong.component.scss']
 })
 export class HopDongComponent implements OnInit {
-  @Input() empId = null;
+  @Input() contractId = null;
   optionsButtonsPopup = [
     { label: 'Bỏ qua', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
     { label: 'Xác nhận', value: 'Update', class: 'btn-accept' }
@@ -89,7 +89,7 @@ export class HopDongComponent implements OnInit {
   getContractMetaPage() {
     this.spinner.show();
     this.columnDefs = [];
-    const queryParams = queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 });
+    const queryParams = queryString.stringify({ contractId: this.contractId, offSet: 0, pageSize: 10000 });
     this.apiService.getContractMetaPage(queryParams).subscribe(repo => {
       if (repo.status === 'success') {
         if (repo.data.dataList.gridKey) {

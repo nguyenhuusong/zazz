@@ -46,7 +46,8 @@ export class UploadFileComponent implements OnInit {
                 type: file.type,
                 size: file.size,
                 name: file.name,
-                url: downloadURL
+                url: downloadURL,
+                file: file
               }
               this.listAttach.push(params);
               this.spinner.hide();
@@ -59,8 +60,7 @@ export class UploadFileComponent implements OnInit {
       this.spinner.hide();
     }
 
-
-
+    // thêm chức danh
 
 
 
@@ -99,7 +99,6 @@ export class UploadFileComponent implements OnInit {
   }
 
   onSubmitUpload() {
-    console.log(this.listAttach);
     this.callback.emit(this.listAttach);
     // this.c
   }

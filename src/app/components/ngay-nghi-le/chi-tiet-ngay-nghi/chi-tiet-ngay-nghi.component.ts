@@ -48,6 +48,7 @@ export class ChiTietNgayNghiComponent implements OnInit, OnDestroy {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
+  year = new Date().getFullYear();
   checkAllday = false;
   listDayWeeks = [];
   dsNgayThuongs = [];
@@ -57,10 +58,10 @@ export class ChiTietNgayNghiComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     const listDayWeeks = [], dsSaturdays = [], dsSundays = [];
     for (let i = 0; i < 12; i++) {
-      listDayWeeks.push(getDaysOfEndWeek(2022, i + 1));
-      this.dsNgayThuongs.push(getDaysOfMonth(2022, i + 1))
-      dsSaturdays.push(getDaysOfSaturDay(2022, i + 1))
-      dsSundays.push(getDaysOfSunday(2022, i + 1))
+      listDayWeeks.push(getDaysOfEndWeek(new Date().getFullYear(), i + 1));
+      this.dsNgayThuongs.push(getDaysOfMonth(new Date().getFullYear(), i + 1))
+      dsSaturdays.push(getDaysOfSaturDay(new Date().getFullYear(), i + 1))
+      dsSundays.push(getDaysOfSunday(new Date().getFullYear(), i + 1))
     }
     this.listDayWeeks = flatten(listDayWeeks)
     this.dsSaturdays = flatten(dsSaturdays)
@@ -94,7 +95,6 @@ export class ChiTietNgayNghiComponent implements OnInit, OnDestroy {
     } else {
       this.selectedDates = [];
     }
-
   }
 
   modelEdit = {
@@ -185,7 +185,6 @@ export class ChiTietNgayNghiComponent implements OnInit, OnDestroy {
       const catDate = parseInt(date.value.split('-')[0]);
       if(catDate % 2 === 0) {
         this.selectedDates.push(date.id_date);
-        console.log( this.selectedDates)
       }
   })
   this.selectedDates = [...this.selectedDates]

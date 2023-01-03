@@ -1195,6 +1195,16 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v2/contracttype/UploadFileContract`, params, this.options)
   }
 
+
+  // uploadFileContract(data): Observable<any> {
+  //   const customOptions = {
+  //     headers: new HttpHeaders({
+  //       Authorization: this.authService.getAuthorizationHeaderValue(),
+  //     })
+  //   };
+  //   return this.http.post<any>(`${apiHrmServer}/api/v2/contracttype/UploadFileContract`, data, customOptions);
+  // }
+
   delContractTypeInfo(queryParams): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v2/contracttype/DelContractTypeInfo?` + queryParams, this.options)
   }

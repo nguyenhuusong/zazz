@@ -30,14 +30,14 @@ export class AddContractComponent implements OnInit {
   gridKey = '';
   files = null
   ngAfterViewInit(): void {
-   this.FnEvent();
+    this.FnEvent();
   }
 
 
   FnEvent() {
     setTimeout(() => {
       var dragTarget = document.getElementById(`${this.gridKey}_kynang`);
-      if(dragTarget) {
+      if (dragTarget) {
         const click$ = fromEvent(dragTarget, 'click');
         click$.subscribe(event => {
           this.addSkill()
@@ -61,7 +61,7 @@ export class AddContractComponent implements OnInit {
   dataDetailInfo = null;
   displayFormEditDetail = false
   getContractTypeTemplate() {
-    const queryParams = queryString.stringify({ contractTypeId: this.contractTypeId, tempId: this.tempId});
+    const queryParams = queryString.stringify({ contractTypeId: this.contractTypeId, tempId: this.tempId });
     this.listViewsDetail = [];
     this.apiService.getContractTypeTemplate(queryParams).subscribe(results => {
       if (results.status === 'success') {
@@ -73,14 +73,14 @@ export class AddContractComponent implements OnInit {
   }
 
   setDetailInfo(data) {
-    if(this.files && this.files.length > 0){
+    if (this.files && this.files.length > 0) {
       data[0].fields.forEach(element => {
-        if(element.field_name === "meta_file_size") {
+        if (element.field_name === "meta_file_size") {
           element.columnValue = this.files[0].size
-        }else if(element.field_name === "meta_file_type") {
+        } else if (element.field_name === "meta_file_type") {
           element.columnValue = this.files[0].type;
         }
-        else if(element.field_name === "meta_file_name") {
+        else if (element.field_name === "meta_file_name") {
           element.columnValue = this.files[0].name;
         }
       });
@@ -100,7 +100,7 @@ export class AddContractComponent implements OnInit {
         this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
       }
     })
-  
+
   }
 
   getContractTypeTemplatePage() {
@@ -122,9 +122,9 @@ export class AddContractComponent implements OnInit {
   }
 
   cancelDetailInfo(event) {
-    if(event === 'CauHinh') {
+    if (event === 'CauHinh') {
       this.getContractTypeTemplate();
-    }else {
+    } else {
       this.displayFormEditDetail = false
     }
   }
@@ -135,7 +135,7 @@ export class AddContractComponent implements OnInit {
       {
         headerComponentParams: {
           template:
-          `<button  class="btn-button" id="${this.gridKey}_kynang"> <span class="pi pi-plus action-grid-add" ></span></button>`,
+            `<button  class="btn-button" id="${this.gridKey}_kynang"> <span class="pi pi-plus action-grid-add" ></span></button>`,
         },
         field: 'gridflexdetails1',
         cellClass: ['border-right', 'no-auto'],
@@ -145,7 +145,7 @@ export class AddContractComponent implements OnInit {
         cellRendererParams: params => {
           return {
             buttons: [
-              
+
               {
                 onClick: this.editRow.bind(this),
                 label: 'Xem chi tiết',
@@ -155,14 +155,14 @@ export class AddContractComponent implements OnInit {
               },
               {
                 onClick: this.dowloadFileDemo.bind(this),
-                label: 'Tải về file',
+                label: 'Dowload file',
                 icon: 'fa fa-edit editing',
                 key: 'view-job-detail',
                 class: 'btn-primary mr5',
               },
               {
                 onClick: this.uploadFile.bind(this),
-                label: 'Tải lên file',
+                label: 'Cập nhật file',
                 icon: 'fa fa-edit editing',
                 key: 'view-job-detail',
                 class: 'btn-primary mr5',
@@ -181,11 +181,7 @@ export class AddContractComponent implements OnInit {
     ];
   }
 
-  uploadFile() {
-
-  }
-
-  dowloadFileDemo({rowData}) {
+  dowloadFileDemo({ rowData }) {
     this.downloadButtonClicked(rowData.meta_file_tpl);
   }
 
@@ -199,16 +195,15 @@ export class AddContractComponent implements OnInit {
 
 
   onCellClicked(event) {
-    if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
-      this.editRow(event = {rowData: event.data})
+    if (event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
+      this.editRow(event = { rowData: event.data })
     }
   }
 
   trainId = null;
-  editRow({rowData}) {
+  editRow({ rowData }) {
     this.tempId = rowData.hrm_tpl_id;
     this.getContractTypeTemplate();
-
   }
 
 
@@ -216,7 +211,7 @@ export class AddContractComponent implements OnInit {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa bản ghi này?',
       accept: () => {
-        const queryParams = queryString.stringify({tempId: event.rowData.tempId});
+        const queryParams = queryString.stringify({ tempId: event.rowData.tempId });
         this.apiService.delTrainFile(queryParams).subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
@@ -232,6 +227,29 @@ export class AddContractComponent implements OnInit {
 
   getFilesDetail(event) {
     this.files = event;
+
+    const formData = new FormData()
+  }
+  detailRow = null;
+  displayuploadcontract = false;
+
+  handleUpload(event) {
+    this.spinner.show();
+    let fomrData = new FormData();
+    fomrData.append('formFile', event[0].file);
+    fomrData.append('tempId', this.tempId);
+    fomrData.append('tpl_url', event[0].url);
+    this.apiService.uploadFileContract(fomrData).subscribe(results => {
+      if (results.status === 'success') {
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'upload thành công' });
+      }
+    })
+
   }
 
+  uploadFile({ rowData }) {
+    this.tempId = rowData.hrm_tpl_id;
+    this.detailRow = rowData;
+    this.displayuploadcontract = true;
+  }
 }

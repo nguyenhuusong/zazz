@@ -90,6 +90,7 @@ import { NguoiDuyetComponent } from 'src/app/components/cai-dat-cong-ty/nguoi-du
 import {PickListModule} from 'primeng/picklist';
 import { HrmSearchEmpModule } from 'src/app/common/hrm-search-emp/hrm-search-emp.module';
 import { AddContractComponent } from 'src/app/components/quan-ly-hop-dong/add-contract/add-contract.component';
+import { UploadFileModule } from 'src/app/common/upload-file/upload-file.module';
 
 FullCalendarModule.registerPlugins([
   // register FullCalendar plugins
@@ -143,6 +144,7 @@ FullCalendarModule.registerPlugins([
     ConfirmDialogModule,
     ConfigGridTableFormModule,
     CheckboxModule,
+    UploadFileModule,
     HrmSearchEmpModule,
     CheckHideActionsDirectiveModule,
     AgGridModule.withComponents([
