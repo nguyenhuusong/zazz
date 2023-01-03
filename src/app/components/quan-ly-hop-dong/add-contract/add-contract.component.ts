@@ -202,7 +202,7 @@ export class AddContractComponent implements OnInit {
 
   trainId = null;
   editRow({ rowData }) {
-    this.tempId = rowData.hrm_tpl_id;
+    this.tempId = rowData.tempId;
     this.getContractTypeTemplate();
   }
 
@@ -238,17 +238,18 @@ export class AddContractComponent implements OnInit {
     let fomrData = new FormData();
     fomrData.append('formFile', event[0].file);
     fomrData.append('tempId', this.tempId);
-    fomrData.append('tpl_url', event[0].url);
+    fomrData.append('tpl_url', this.detailRow.tpl_url);
     this.apiService.uploadFileContract(fomrData).subscribe(results => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'upload thành công' });
+        this.getContractTypeTemplatePage();
       }
     })
 
   }
 
   uploadFile({ rowData }) {
-    this.tempId = rowData.hrm_tpl_id;
+    this.tempId = rowData.tempId;
     this.detailRow = rowData;
     this.displayuploadcontract = true;
   }
