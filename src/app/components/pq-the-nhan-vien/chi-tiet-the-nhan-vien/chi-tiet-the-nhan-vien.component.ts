@@ -47,13 +47,15 @@ export class ChiTietTheNhanVienComponent implements OnInit, OnDestroy {
   modelEdit = {
     carCode: null,
   }
-  titlePage = ''
+  titlePage = '';
+  empId = '';
   handleParams() {
     this.activatedRoute.queryParamMap
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((params) => {
         this.paramsObject = { ...params.keys, ...params };
         this.modelEdit.carCode = this.paramsObject.params.canId || null
+        this.empId = this.paramsObject.params.empId || null
         this.GetEmployeeCardInfo();
       });
   };
@@ -66,6 +68,14 @@ export class ChiTietTheNhanVienComponent implements OnInit, OnDestroy {
         if (results.status === 'success') {
           this.listViews = [...results.data.group_fields];
           this.detailInfo = results.data;
+          this.listViews.forEach( group => {
+            group.fields.forEach(field => {
+              if(field.field_name === 'CustId') { 
+                field.columnValue = this.empId;
+              }
+            });
+          })
+          this.listViews = [...this.listViews];
         }
       });
   }

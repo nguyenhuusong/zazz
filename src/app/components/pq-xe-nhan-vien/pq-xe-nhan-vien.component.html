@@ -376,3 +376,9 @@ styleClass="menu-option-right" #menuButton></p-menu>
   [dataView]="listViews"
   (callback)="setEmpVehicleInfo($event)" (callbackcancel)="quaylai($event)"></app-edit-detail>
 </p-dialog>
+
+<app-hrm-search-emp 
+    *ngIf="isSearchEmp" 
+    [isSearch]="isSearchEmp" 
+    (seachEmValue)="seachEmValue($event)">
+</app-hrm-search-emp>

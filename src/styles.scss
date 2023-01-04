@@ -3082,11 +3082,11 @@ div.p-organizationchart {
     }
     // #type
     &.checkbox{
-        .p-checkbox{
-            position: absolute;
-            bottom: 8px;
-        }
-        min-height: 54px;
+        // .p-checkbox{
+        //     position: absolute;
+        //     bottom: 8px;
+        // }
+        min-height: 56px;
         .p-checkbox-label{
             color: rgba(0, 0, 0, 0.87);
             font-size: 16px;
