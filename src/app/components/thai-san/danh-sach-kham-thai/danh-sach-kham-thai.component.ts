@@ -172,7 +172,7 @@ export class DanhSachKhamThaiComponent implements OnInit {
 
   delRow(event) {
     this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn xóa thời gian làm việc này?',
+      message: 'Bạn có chắc chắn muốn xóa?',
       accept: () => {
         const queryParams = queryString.stringify({pregnancyId: event.rowData.pregnancyId});
         this.apiService.delMaternityPregnancyInfo(queryParams).subscribe((results: any) => {

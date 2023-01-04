@@ -311,7 +311,7 @@ export class PqQuyenNguoiDungComponent implements OnInit {
 
   xoaNguoiDung(event) {
     this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn thực hiện mở tài khoản?',
+      message: 'Bạn có chắc chắn muốn xóa?',
       accept: () => {
         const queryParams = queryString.stringify({ userId: event.rowData.userId });
         this.apiService.removeUser(queryParams).subscribe(results => {
