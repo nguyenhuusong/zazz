@@ -60,8 +60,8 @@ export class CsChamCongOverviewComponent implements OnInit {
     filter: '',
     offSet: 0,
     pageSize: 50,
-    fromdate: new Date(moment(new Date()).format()),
-    todate: new Date(moment(new Date()).format()),
+    fromdate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).add(-3,'months').format()),
+    todate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).format()),
   }
   
   queryNghiTheoThoiGian = {
@@ -76,15 +76,22 @@ export class CsChamCongOverviewComponent implements OnInit {
     filter: '',
     offSet: 0,
     pageSize: 20,
-    fromdate: new Date(moment(new Date()).format()),
-    todate: new Date(moment(new Date()).format()),
+    fromdate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).add(-3,'months').format()),
+    todate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).format()),
   }
   queryLoainghi = {
     filter: '',
     offSet: 0,
     pageSize: 20,
-    fromdate: new Date(moment(new Date(new Date().getFullYear() - 1, new Date().getMonth(), new Date().getDate())).format("YYYY-MM-DD")),
-    todate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).format("YYYY-MM-DD")),
+    fromdate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).add(-3,'months').format()),
+    todate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).format()),
+  }
+  queryAnCa = {
+    filter: '',
+    offSet: 0,
+    pageSize: 50,
+    fromdate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).add(-3,'months').format()),
+    todate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).format()),
   }
   ngOnInit(): void {
     this.items = [
@@ -97,6 +104,7 @@ export class CsChamCongOverviewComponent implements OnInit {
     this.nghiTheoPhongBan();
     this.loaiNghi();
     this.diSomVeMuon();
+    this.dsAnCa();
   }
 
   diSomVeMuon () {
@@ -113,6 +121,24 @@ export class CsChamCongOverviewComponent implements OnInit {
         this.numberDimuon = results.data.num_late;
         this.listDimuon = results.data.timekeeping;
         this.dataDimuon = results.data
+      },
+      error => {
+    });
+    
+  }
+  dataAnca = null;
+  dsAnCa () {
+    this.spinner.show();
+    let params: any = { ... this.queryAnCa };
+    delete params.fromdate
+    delete params.todate
+    params.fromdate = moment(new Date(this.queryDiMuonVeSom.fromdate)).format('YYYY-MM-DD')
+    params.todate = moment(new Date(this.queryDiMuonVeSom.todate)).format('YYYY-MM-DD');
+    const queryParams = queryString.stringify(params);
+    this.apiService.getTotalEatingChart(queryParams).subscribe(
+      (results: any) => {
+        this.spinner.hide();
+        this.dataAnca = results.data
       },
       error => {
     });
@@ -141,6 +167,8 @@ export class CsChamCongOverviewComponent implements OnInit {
       this.nghiTheoThoiGian();
     }else if(value === 'phantichloainghi'){
       this.loaiNghi();
+    }else if(value === 'anca'){
+      this.dsAnCa();
     }
   }
 
@@ -157,7 +185,7 @@ export class CsChamCongOverviewComponent implements OnInit {
       (results: any) => {
         this.spinner.hide();
         this.labelMonths = results.data.leave.map( d => {
-          return `Tháng + ${d.month_name}`
+          return `Tháng ${d.month_name}`
         });
         dataChart = results.data.leave.map( d => {
           return d.num_leave
@@ -217,7 +245,7 @@ export class CsChamCongOverviewComponent implements OnInit {
       (results: any) => {
         this.spinner.hide();
         this.dataOrigns = results.data.leave.map( d => {
-          return `Tháng + ${d.organize_name}`
+          return `${d.organize_name}`
         });
         this.dataChartPhongban = results.data
         dataChart = results.data.leave.map( d => {
@@ -409,10 +437,17 @@ export class CsChamCongOverviewComponent implements OnInit {
       }
     }
 
-    loadMore() {
-      this.queryDiMuonVeSom.offSet = this.queryDiMuonVeSom.offSet + this.queryDiMuonVeSom.pageSize;
-      this.queryDiMuonVeSom.pageSize = this.queryDiMuonVeSom.offSet + 50;
-      this.diSomVeMuon();
+    loadMore(value) {
+      if(value === 'disomvemuon') {
+        this.queryDiMuonVeSom.offSet = this.queryDiMuonVeSom.offSet + this.queryDiMuonVeSom.pageSize;
+        this.queryDiMuonVeSom.pageSize = this.queryDiMuonVeSom.offSet + 50;
+        this.diSomVeMuon();
+      }else if(value === 'dsanca'){
+        this.queryAnCa.offSet = this.queryAnCa.offSet + this.queryAnCa.pageSize;
+        this.queryAnCa.pageSize = this.queryAnCa.offSet + 50;
+        this.dsAnCa();
+      }
+      
     }
 
     goToChamCong() {

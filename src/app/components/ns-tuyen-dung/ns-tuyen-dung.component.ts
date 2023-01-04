@@ -103,6 +103,9 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   loadjs = 0;
   heightGrid = 450;
 
+  // sentEmail gửi email thành công
+  sentEmail = false;
+
   // the value for check disabled 'Chuyển vòng radio'
   canSttValue: any = null
   ngAfterViewChecked(): void {
@@ -672,6 +675,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   }
 
   sendEmail() {
+    this.sentEmail = false;
     if(!this.mailInputValue) {
       this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Chưa chọn nội dung gửi' });
       return
@@ -684,18 +688,23 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     this.spinner.show();
     this.apiService.sendRecruitMail(data).subscribe(results => {
       if (results.status === 'success') {
+        this.sentEmail = true;
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Gửi thành công' });
         this.mailInputValue = '';
         this.dataRowSelected = [];
-        const params = {
-          meet_ud: null
-        }
+        
         this.spinner.hide();
-        return this.router.navigate(['/cai-dat/cai-dat-lich-hop/them-moi-lich-hop'], { queryParams: params });
       } else {
         this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.data : null });
       }
     })
+  }
+
+  themLichHop() {
+    const params = {
+      meet_ud: null
+    }
+    return this.router.navigate(['/cai-dat/cai-dat-lich-hop/them-moi-lich-hop'], { queryParams: params });
   }
 
   isSubmitTiemNang = false;

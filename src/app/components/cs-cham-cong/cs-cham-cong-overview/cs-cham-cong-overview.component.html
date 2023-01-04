@@ -254,7 +254,7 @@
                                         </div>
                                         <div class="loadMore d-flex bet">
                                             <div>{{ dataDimuon.timekeeping.length }} kết quả</div>
-                                            <div (click)="loadMore()">Xem Thêm</div>
+                                            <div (click)="loadMore('disomvemuon')">Xem Thêm</div>
                                         </div>
                                     </div>
                                 </div>
@@ -262,14 +262,14 @@
                             <div class="col-6">
                                 <div class="box box-view box-100">
                                     <div class="head">
-                                        <h4>Tần xuất đi muộn về sớm</h4>
+                                        <h4>Danh sách ăn ca</h4>
                                         Tất cả đơn vị<br>
                                         <div class="d-flex relative bet col-10 pd-0">
                                             <div class="fields no-border">
                                                 <p-calendar placeholder="Từ ngày" 
                                                 panelStyleClass="datepicker-default" placeholder="DD/MM/YYYY"
-                                                [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="queryDiMuonVeSom.fromdate" 
-                                                [monthNavigator]="true" (onSelect)="changeFromDate()"
+                                                [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="queryAnCa.fromdate" 
+                                                [monthNavigator]="true" (onSelect)="changeDate('anca')"
                                                 [yearNavigator]="true" inputId="navigators" dateFormat="dd/mm/yy"
                                                 name="fromdate"></p-calendar>
                                             </div>
@@ -277,11 +277,25 @@
                                             <div class="fields no-border">
                                                 <p-calendar placeholder="Đến ngày" 
                                                 panelStyleClass="datepicker-default" placeholder="DD/MM/YYYY"
-                                                [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="queryDiMuonVeSom.todate" 
-                                                [monthNavigator]="true" (onSelect)="changeToDate()"
+                                                [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="queryAnCa.todate" 
+                                                [monthNavigator]="true" (onSelect)="changeDate('anca')"
                                                 [yearNavigator]="true" inputId="navigators" dateFormat="dd/mm/yy"
                                                 name="fromdate"></p-calendar>
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div class="list-item-info" *ngIf="dataAnca.eating" >
+                                        <div class="item d-flex gap-12" *ngFor="let item of dataAnca.eating">
+                                            <div class="avar"><img src="{{ item?.image_url ? item.image_url : '../../../../assets/images/avatar.jpg' }}"></div>
+                                            <div class="inf">
+                                                <label>{{ item.fullName }}</label>
+                                                <p>{{ item.organize_name }}</p>
+                                            </div>
+                                            <div class="number-time"><b>{{ item.total }} lần</b></div>
+                                        </div>
+                                        <div class="loadMore d-flex bet">
+                                            <div>{{ dataAnca.eating.length }} kết quả</div>
+                                            <div (click)="loadMore('dsanca')">Xem Thêm</div>
                                         </div>
                                     </div>
                                 </div>

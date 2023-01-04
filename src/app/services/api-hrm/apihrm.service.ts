@@ -2322,6 +2322,10 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v2/timekeepingchart/GetLeavePieChart?` + queryParams, this.options);
   }
   
+  getTotalEatingChart(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/timekeepingchart/GetTotalEatingChart?` + queryParams, this.options);
+  }
+  
 
   //TerminateReason
   getTerminateReasonFilter(): Observable<any> {

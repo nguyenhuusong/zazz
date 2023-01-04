@@ -114,18 +114,20 @@
     </ng-template>
 </p-overlayPanel>
 
-<p-dialog styleClass="hideHeaderForm" header="Gửi mail" (onHide)="onHideSendEmail($event)"
+<!-- sentEmail: gửi email thành công -->
+<p-dialog styleClass="hideHeaderForm" header="{{ sentEmail ? 'Gửi mail Thành công' : 'Gửi mail' }}" (onHide)="onHideSendEmail($event)"
     [(visible)]="isSendMail" 
     [modal]="true" [style]="{width: '600px'}"
     [draggable]="false" [resizable]="false" [focusTrap]="false" >
-    <div class="field-group select">
+    <div class="field-group select" *ngIf="!sentEmail">
         <label>Nội dung gửi <span style="color: red">*</span></label>
         <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
-            [options]="mailsInput" placeholder="Chọn nội dung gửi" [(ngModel)]="mailInputValue" name="mailInputValue">
-            </p-dropdown>
-        </div>
+        [options]="mailsInput" placeholder="Chọn nội dung gửi" [(ngModel)]="mailInputValue" name="mailInputValue">
+        </p-dropdown>
+    </div>
+        <p-button *ngIf="sentEmail" icon="pi pi-calendar" (click)="themLichHop()" label="Thêm lịch họp"></p-button>
         <ng-template pTemplate="footer">
-            <div class="d-flex end">
+            <div class="d-flex end" *ngIf="!sentEmail">
               <p-button (click)="cancelSendEmail()" styleClass="p-button-sm p-button-secondary" label="Bỏ qua" icon="pi pi-times-circle"></p-button>&nbsp;
               <p-button (click)="sendEmail()" [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetCandidatePage.url, action: ACTIONS.SEND_EMAIL}">Gửi email</p-button>
             </div>
