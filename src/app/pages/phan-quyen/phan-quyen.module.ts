@@ -56,6 +56,7 @@ import { PickListModule } from 'primeng/picklist';
 import { CheckboxModule } from 'primeng/checkbox';
 import { CheckHideActionsDirectiveModule } from 'src/app/directive/check-action.module';
 import { FormFilterModule } from 'src/app/common/form-filter/form-filter.module';
+import { HrmSearchEmpModule } from 'src/app/common/hrm-search-emp/hrm-search-emp.module';
 @NgModule({
   imports: [
     MessagesModule,
@@ -98,6 +99,7 @@ import { FormFilterModule } from 'src/app/common/form-filter/form-filter.module'
     PickListModule,
     CheckboxModule,
     FormFilterModule,
+    HrmSearchEmpModule,
     CheckHideActionsDirectiveModule,
     AgGridModule.withComponents([
       ButtonRendererComponent,

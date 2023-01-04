@@ -70,11 +70,12 @@ export class PqTheNhanVienComponent implements OnInit {
   itemsToolOfGrid: any[] = [];
   listViewsFilter = [];
   cloneListViewsFilter = [];
-detailInfoFilter = null;
+  detailInfoFilter = null;
   optionsButonFilter = [
     { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm height-56 addNew', icon: 'pi pi-search' },
     { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger height-56 addNew', icon: 'pi pi-times' },
   ];
+  isSearchEmp = false;
   constructor(
     private apiService: ApiHrmService,
     private fileService: ExportFileService,
@@ -297,7 +298,7 @@ detailInfoFilter = null;
           `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
         },
         filter: '',
-        width: 6,
+        width: 70,
         pinned: 'right',
         cellRenderer: 'buttonAgGridComponent',
         cellClass: ['border-right', 'no-auto'],
@@ -469,10 +470,23 @@ detailInfoFilter = null;
   displaythenv = false;
   handleAdd(): void {
     // this.displaythenv = true;
+    this.isSearchEmp = true;
+    // const params = {
+    //   canId: null
+    // }
+    // this.router.navigate(['/phan-quyen/the-nhan-vien/them-moi-the-nhan-vien'], { queryParams: params });
+  }
+
+  seachEmValue(event) {
     const params = {
-      canId: null
+      canId: null,
+      empId: event.value
     }
-    this.router.navigate(['/phan-quyen/the-nhan-vien/them-moi-the-nhan-vien'], { queryParams: params });
+    if(event.value) {
+      this.router.navigate(['/phan-quyen/the-nhan-vien/them-moi-the-nhan-vien'], { queryParams: params });
+    }else{
+      this.isSearchEmp = false;
+    }
   }
 
   onChangeTree(a): void {

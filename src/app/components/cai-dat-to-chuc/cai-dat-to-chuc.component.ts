@@ -224,15 +224,22 @@ export class CaiDatToChucComponent implements OnInit {
 
   getOrganizeLevelList(parentId) {
     const queryParams = queryString.stringify({ parentId: parentId });
-    this.apiService.getOrganizeLevelList(queryParams).subscribe(results => {
+    this.apiService.getOrgLevelList(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.organizeLevelList = results.data.map(d => {
           return {
-            label: d.org_level_name,
-            value: d.org_level
+            label: d.name,
+            value: d.value
           }
         });
-        this.modeAgencyOrganize.org_level = this.modeAgencyOrganize.org_level ? this.modeAgencyOrganize.org_level : this.organizeLevelList[0].value
+        // this.modeAgencyOrganize.org_level = this.modeAgencyOrganize.org_level ? this.modeAgencyOrganize.org_level : this.organizeLevelList[0].value
+        if(this.modeAgencyOrganize.org_level) {
+          this.modeAgencyOrganize.org_level = this.modeAgencyOrganize.org_level;
+        }else{
+          if(this.organizeLevelList.length > 0) {
+            this.modeAgencyOrganize.org_level = this.organizeLevelList[0].value;
+          }
+        }
       }
     })
   }
@@ -309,7 +316,7 @@ export class CaiDatToChucComponent implements OnInit {
   }
 
   editRow({ rowData }) {
-    this.titleForm.label = 'Chỉnh sửa tổ chức',
+    this.titleForm.label = 'Chỉnh sửa tổ chức';
     this.getOrganizeLevelList(rowData.parentId);
     this.modeAgencyOrganize.organizeId = this.query.organizeIds;
     this.modeAgencyOrganize.org_level = rowData.org_level;
@@ -370,7 +377,7 @@ export class CaiDatToChucComponent implements OnInit {
             `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
         },
         filter: '',
-        width: 60,
+        width: 70,
         pinned: 'right',
         cellRenderer: 'buttonAgGridComponent',
         cellClass: ['border-right', 'no-auto'],
@@ -845,7 +852,7 @@ export class CaiDatToChucComponent implements OnInit {
           this.Add()
         });
       }
-    }, 300);
+    }, 600);
   }
 
 

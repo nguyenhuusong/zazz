@@ -981,6 +981,10 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v1/organize/GetOrganizeLevelList?` + queryParams, this.options);
   }
 
+  getOrgLevelList(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/organize/GetOrgLevelList?` + queryParams, this.options);
+  }
+
   getOrganizeList(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/organize/GetOrganizeList?` + queryParams, this.options);
   }

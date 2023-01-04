@@ -82,7 +82,6 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
         this.modelEdit.maternityId = this.paramsObject.params.maternityId || null;
         this.modelEdit.empId = this.paramsObject.params.empId || null;
         this.empId = this.paramsObject.params.empId || null;
-        console.log(this.paramsObject)
         this.getMaternityInfo();
       });
   };
@@ -119,7 +118,6 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
     this.dataDetail = [];
     this.detailInfo = [];
     this.listViews = [];
-    console.log(this.modelEdit)
     const queryParams = queryString.stringify(this.modelEdit);
     this.apiService.getMaternityInfo(queryParams)
       .pipe(takeUntil(this.unsubscribe$))

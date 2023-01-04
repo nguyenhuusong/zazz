@@ -383,7 +383,7 @@ detailInfoFilter = null;
           `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
         },
         filter: '',
-        width: 60,
+        width: 70,
         pinned: 'right',
         cellRenderer: 'buttonAgGridComponent',
         cellClass: ['border-right', 'no-auto'],
@@ -983,10 +983,23 @@ showFilter() {
       if(dragTarget) {
         const click$ = fromEvent(dragTarget, 'click');
         click$.subscribe(event => {
-          this.addVehicleCard()
+          // this.addVehicleCard()
+          this.isSearchEmp = true;
         });
       }
-    }, 200);
+    }, 400);
+  }
+  isSearchEmp = false;
+  seachEmValue(event) {
+    const params = {
+      maternityId: null,
+      empId: event.value
+    }
+    if(event.value) {
+      this.addVehicleCard();
+    }else{
+      this.isSearchEmp = false;
+    }
   }
 
 }
