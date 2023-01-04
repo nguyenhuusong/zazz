@@ -56,34 +56,33 @@ export class HopDongComponent implements OnInit {
     elem.click();
   }
 
-  // handleUpload(datas) {
-  //   if (datas.length > 0) {
-  //     const indexobj = this.listsData.findIndex(d => d.sourceId === this.record.sourceId);
-  //     let record = { ... this.listsData[indexobj] };
-  //     record.meta_file_url = datas[0].url;
-  //     record.meta_file_type = datas[0].type;
-  //     record.meta_file_size = datas[0].size;
-  //     record.meta_file_name = datas[0].name;
-  //     this.listsData[indexobj] = record;
-  //     this.listsData = [... this.listsData];
-  //     this.listViewsRecordInfo.records = this.listsData;
-  //     this.displayuploadcontract = false;
-  //     this.saveCreateContract();
-  //   }
-  // }
-  // saveCreateContract() {
-  //   this.spinner.show();
-  //   this.apiService.setRecordInfo(this.listViewsRecordInfo).subscribe(results => {
-  //     if (results.status === 'success') {
-  //       this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data });
-  //       this.displayCreateContract = false;
-  //       this.getEmployeeInfo();
-  //       this.spinner.hide();
-  //     } else {
-  //       this.spinner.hide();
-  //     }
-  //   })
-  // }
+  handleUpload(datas) {
+    if (datas.length > 0) {
+      const indexobj = this.listsData.findIndex(d => d.sourceId === this.record.sourceId);
+      let record = { ... this.listsData[indexobj] };
+      record.meta_file_url = datas[0].url;
+      record.meta_file_type = datas[0].type;
+      record.meta_file_size = datas[0].size;
+      record.meta_file_name = datas[0].name;
+      this.listsData[indexobj] = record;
+      this.listsData = [... this.listsData];
+      this.displayuploadcontract = false;
+      this.saveCreateContract();
+    }
+  }
+  saveCreateContract() {
+    // this.spinner.show();
+    // this.apiService.setRecordInfo(this.listViewsRecordInfo).subscribe(results => {
+    //   if (results.status === 'success') {
+    //     this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data });
+    //     this.displayuploadcontract = false;
+    //     this.getContractMetaPage();
+    //     this.spinner.hide();
+    //   } else {
+    //     this.spinner.hide();
+    //   }
+    // })
+  }
 
 
   getContractMetaPage() {
@@ -120,10 +119,24 @@ export class HopDongComponent implements OnInit {
         cellRendererParams: params => {
           return {
             buttons: [
+              // {
+              //   onClick: this.editRow.bind(this),
+              //   label: 'Xem chi tiết',
+              //   icon: 'fa fa-edit editing',
+              //   key: 'view-job-detail',
+              //   class: 'btn-primary mr5',
+              // },
               {
-                onClick: this.editRow.bind(this),
-                label: 'Xem chi tiết',
+                onClick: this.dowloadFile.bind(this),
+                label: 'Xem File',
                 icon: 'fa fa-edit editing',
+                key: 'view-job-detail',
+                class: 'btn-primary mr5',
+              },
+              {
+                onClick: this.uploadContract.bind(this),
+                label: 'Tải lên file ký duyệt',
+                icon: 'pi pi-upload',
                 key: 'view-job-detail',
                 class: 'btn-primary mr5',
               },
@@ -140,6 +153,10 @@ export class HopDongComponent implements OnInit {
         },
       }
     ];
+  }
+
+  dowloadFile({rowData}) {
+    this.downloadButtonClicked(rowData.temp_view_url)
   }
 
   onCellClicked(event) {
