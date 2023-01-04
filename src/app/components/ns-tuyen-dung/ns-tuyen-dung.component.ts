@@ -628,7 +628,9 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Chuyển thành công!' });
             this.recruitmentStatusSelected = null;
             this.isSendMail = true;
+            this.isChuyenVong = false;
           } else {
+            this.isChuyenVong = false;
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
           }
         });
