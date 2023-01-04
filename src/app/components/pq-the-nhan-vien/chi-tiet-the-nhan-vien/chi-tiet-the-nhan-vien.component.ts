@@ -46,6 +46,7 @@ export class ChiTietTheNhanVienComponent implements OnInit, OnDestroy {
   }
   modelEdit = {
     carCode: null,
+    empId: null
   }
   titlePage = '';
   empId = '';
@@ -55,7 +56,7 @@ export class ChiTietTheNhanVienComponent implements OnInit, OnDestroy {
       .subscribe((params) => {
         this.paramsObject = { ...params.keys, ...params };
         this.modelEdit.carCode = this.paramsObject.params.canId || null
-        this.empId = this.paramsObject.params.empId || null
+        this.modelEdit.empId = this.paramsObject.params.empId || null
         this.GetEmployeeCardInfo();
       });
   };
@@ -68,14 +69,14 @@ export class ChiTietTheNhanVienComponent implements OnInit, OnDestroy {
         if (results.status === 'success') {
           this.listViews = [...results.data.group_fields];
           this.detailInfo = results.data;
-          this.listViews.forEach( group => {
-            group.fields.forEach(field => {
-              if(field.field_name === 'CustId') { 
-                field.columnValue = this.empId;
-              }
-            });
-          })
-          this.listViews = [...this.listViews];
+          // this.listViews.forEach( group => {
+          //   group.fields.forEach(field => {
+          //     if(field.field_name === 'CustId') { 
+          //       field.columnValue = this.modelEdit.empId;
+          //     }
+          //   });
+          // })
+          // this.listViews = [...this.listViews];
         }
       });
   }

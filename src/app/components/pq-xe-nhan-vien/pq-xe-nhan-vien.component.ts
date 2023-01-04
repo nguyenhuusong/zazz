@@ -769,9 +769,9 @@ onCellClicked(event) {
     this.load();
   }
 
-  addVehicleCard(): void {
+  addVehicleCard(empId = null): void {
     this.isNew = true;
-    this.getEmpVehicleInfo();
+    this.getEmpVehicleInfo(null, empId);
     // this.modelTM.organizeId =  '';
     this.modelTM.type = 1;
     this.modelTM.cardVehicleId = 0;
@@ -789,9 +789,9 @@ onCellClicked(event) {
 
   }
 
-  getEmpVehicleInfo(cardVehicleId = null) {
+  getEmpVehicleInfo(cardVehicleId = null, empId = null) {
     this.isDetailVehic = true;
-    this.apiService.getEmpVehicleInfo(stringify({cardVehicleId: cardVehicleId})).subscribe((results: any) => { 
+    this.apiService.getEmpVehicleInfo(stringify({cardVehicleId: cardVehicleId, empId: empId})).subscribe((results: any) => { 
       if (results.status === 'success') {
         this.listViews = [...results.data.group_fields];
         this.detailInfo = results.data;
@@ -996,7 +996,7 @@ showFilter() {
       empId: event.value
     }
     if(event.value) {
-      this.addVehicleCard();
+      this.addVehicleCard(event.value);
     }else{
       this.isSearchEmp = false;
     }
