@@ -23,7 +23,6 @@ export class NghiViecComponent implements OnInit, AfterViewChecked {
   listsData: any[] = [];
   MENUACTIONROLEAPI = MENUACTIONROLEAPI;
   ACTIONS = ACTIONS;
-  organs = [];
   selectedNode;
   listAgencyMap: TreeNode[];
   organizeList = []
@@ -256,7 +255,6 @@ export class NghiViecComponent implements OnInit, AfterViewChecked {
       { label: 'Tuyển dụng lại' },
     ];
     this.load();
-    this.getOrgan();
   }
 
   hrDiagram() {
@@ -293,21 +291,6 @@ export class NghiViecComponent implements OnInit, AfterViewChecked {
       });      
     })
     return datas
-  }
-
-  getOrgan() {
-    const queryParams = queryString.stringify({ filter: '' });
-    this.apiService.getOrganizations(queryParams).subscribe(results => {
-      if (results.status === 'success') {
-        this.organs = results.data.map(d => {
-          return {
-            label: d.organizationName,
-            value: `${d.organizeId}`
-          }
-        });
-        this.organs = [...this.organs];
-      }
-    })
   }
 
   getAgencyOrganizeMap(type = false) {

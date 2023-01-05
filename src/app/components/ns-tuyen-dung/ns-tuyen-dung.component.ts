@@ -405,7 +405,6 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
       { label: 'Danh sách tuyển dụng' },
     ];
     this.getJobTitles();
-    this.getOrgRoots();
     this.getVacancyPage();
     this.getReRound();
     this.buttonTiemNang = [
@@ -501,22 +500,6 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     })
   }
 
-  getOrgRoots() {
-    this.apiService.getOrgRoots().subscribe(results => {
-      if (results.status === 'success') {
-        this.listOrgRoots = results.data.map(d => {
-          return {
-            label: d.org_name + '-' + d.org_cd,
-            value: `${d.orgId}`,
-            code: `${d.orgId}`,
-          }
-        });
-
-        this.listOrgRoots = [{ label: 'Tất cả', value: null }, ...this.listOrgRoots];
-      }
-    })
-  }
-
   // positiontypes = [];
   // getObjectList() {
   //   const queryParams = queryString.stringify({ objKey: 'positiontype_group' });
@@ -533,7 +516,6 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   //   })
   // }
 
-  listOrgRoots = [];
   listJobTitles = [];
   positions = [{ label: 'Tất cả', value: null }];
   getJobTitles() {
