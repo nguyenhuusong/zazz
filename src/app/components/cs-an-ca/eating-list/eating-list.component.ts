@@ -60,8 +60,8 @@ export class EatingListComponent implements OnInit, AfterViewChecked {
     empId: null,
     offSet: 0,
     pageSize: 20,
-    fromdate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).add(-1,'months').format()),
-    todate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).format()),
+    fromDate: null,
+    toDate: null,
   }
   totalRecord = 0;
   DriverId = 0;
@@ -93,8 +93,8 @@ export class EatingListComponent implements OnInit, AfterViewChecked {
     this.activatedRoute.queryParamMap.subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.query.empId = this.paramsObject.params.empId;
-      this.query.fromdate = this.paramsObject.params.fromDate;
-      this.query.todate = this.paramsObject.params.toDate;
+      this.query.fromDate = this.paramsObject.params.fromDate;
+      this.query.toDate = this.paramsObject.params.toDate;
       this.load();
     });
   };
@@ -109,8 +109,8 @@ export class EatingListComponent implements OnInit, AfterViewChecked {
       empId: this.query.empId,
       offSet: 0,
       pageSize: 20,
-      fromdate: this.query.fromdate,
-      todate: this.query.todate,
+      fromDate: this.query.fromDate,
+      toDate: this.query.toDate,
     }
     this.load();
   }
@@ -281,10 +281,10 @@ export class EatingListComponent implements OnInit, AfterViewChecked {
   exportData() {
     this.spinner.show();
     let params: any = {... this.query};
-    delete params.fromdate
-    delete params.todate
-    params.FromDate = moment(new Date(this.query.fromdate)).format('YYYY-MM-DD')
-    params.ToDate = moment(new Date(this.query.todate)).format('YYYY-MM-DD');
+    delete params.fromDate
+    delete params.toDate
+    params.FromDate = moment(new Date(this.query.fromDate)).format('YYYY-MM-DD')
+    params.ToDate = moment(new Date(this.query.toDate)).format('YYYY-MM-DD');
     const queryParams = queryString.stringify(params);
 
       this.apiService.exportEatingInfo(queryParams).subscribe(results => {
