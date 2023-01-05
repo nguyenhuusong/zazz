@@ -224,7 +224,7 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
         },
         // headerName: 'Thao tác',
         filter: '',
-        width: 60,
+        width: 70,
         pinned: 'right',
         cellRenderer: 'buttonAgGridComponent',
         cellClass: [ 'no-auto'],

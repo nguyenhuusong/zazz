@@ -485,8 +485,8 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
   exportData() {
     this.spinner.show();
     let params: any = { ... this.query };
-    let companyIds = this.query.companyIds ? this.query.companyIds.toString() : '' ;
-    params.companyIds = companyIds;
+    // let companyIds = this.query.companyIds ? this.query.companyIds.toString() : '' ;
+    // params.companyIds = companyIds;
     // delete params.fromdate
     // delete params.todate
     // params.FromDate = moment(new Date(this.query.fromdate)).format('YYYY-MM-DD')
