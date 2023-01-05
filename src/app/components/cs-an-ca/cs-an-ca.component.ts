@@ -149,7 +149,7 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
       if (dragTarget) {
         const click$ = fromEvent(dragTarget, 'click');
         click$.subscribe(event => {
-          this.handAddNew()
+          this.isSearchEmp = true;
         });
       }
     }, 300);
@@ -572,7 +572,7 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
       this.isSearchEmp = false;
     }else{
       this.modelAddEating = {
-        empId : event.empId
+        empId : event.value
       }
       this.handAddNew();
      
