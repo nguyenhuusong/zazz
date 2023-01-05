@@ -1846,7 +1846,7 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
       let orgId:any = await this.getValueByKey('org_Id');
         
       if(!organizeId){
-        const queryParams = queryString.stringify({ offSet: 0, pageSize: 20, fullName: this.searchText })
+        const queryParams = queryString.stringify({ offSet: 0, pageSize: 1000, fullName: this.searchText })
         this.apiService.getHrmMeetingPerson(queryParams).subscribe( res => {
           this.spinner.hide();
               if(res.status === 'success') {
@@ -1972,7 +1972,7 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
       // if(this.element.field_name === "org_Id"){
       //   this.setValue('', 'User_Id')
       // }
-      if(this.members.length > 0) {
+      if(this.members && this.members.length > 0) {
         this.element.options = cloneDeep(this.members);
         for(let item of this.element.options) {
           for(let item1 of item.child) {

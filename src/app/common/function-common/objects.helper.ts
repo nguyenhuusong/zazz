@@ -284,10 +284,12 @@ export function setMembers(element1, datas) {
         }else if ((data.columnType === 'number')) {
           data.columnValue = data.columnValue ? formatNumber(+data.columnValue) : 0;
           params[data.field_name]= numeral(data.columnValue).value();
+        }else if ((data.columnType === 'input')) {
+          params[data.field_name]= data.columnValue ? data.columnValue : '';
         }
       })
     });
-
+    
     return params;
   }
 

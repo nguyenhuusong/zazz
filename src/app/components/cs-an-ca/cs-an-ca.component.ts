@@ -135,6 +135,10 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
 
   displaySetting = false;
   gridKey = ''
+
+  modelAddEating: any = {
+    empId: null
+  }
   cauhinh() {
     this.displaySetting = true;
   }
@@ -382,8 +386,19 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
   }
 
   // list ăn ca
+  chiTietAnCa(event = null) {
+    // this.modelAddEating.empId = event ? event.rowData.empId : null
+    this.modelAddEating.empId =  null;
+    this.modelAddEating.fromDate = this.query.fromDate ? this.query.fromDate : moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).add(-1,'months').format('MM-DD-YYYY');
+    this.modelAddEating.toDate = this.query.toDate ? this.query.toDate : moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).format('MM-DD-YYYY');
+    console.log('this.modelAddEating', this.modelAddEating)
+    this.router.navigate(['/chinh-sach/an-ca/chi-tiet-danh-sach-an-ca'], { queryParams: this.modelAddEating });
+  }
+
   editRow(event = null) {
     this.modelAddEating.empId = event.rowData.empId
+    this.modelAddEating.fromDate = this.query.fromDate ? this.query.fromDate : moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).add(-1,'months').format('MM-DD-YYYY');
+    this.modelAddEating.toDate = this.query.toDate ? this.query.toDate : moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).format('MM-DD-YYYY');
     this.router.navigate(['/chinh-sach/an-ca/chi-tiet-danh-sach-an-ca'], { queryParams: this.modelAddEating });
   }
 
@@ -470,7 +485,7 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
   exportData() {
     this.spinner.show();
     let params: any = { ... this.query };
-    let companyIds = this.query.companyIds.toString();
+    let companyIds = this.query.companyIds ? this.query.companyIds.toString() : '' ;
     params.companyIds = companyIds;
     delete params.fromdate
     delete params.todate
@@ -564,9 +579,6 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
   }
 
   isSearchEmp = false;
-  modelAddEating = {
-    empId: null
-  }
   seachEmValue(event) {
     if(!event.value) {
       this.isSearchEmp = false;

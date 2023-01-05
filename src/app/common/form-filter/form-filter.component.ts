@@ -239,6 +239,8 @@ export class FormFilterComponent implements OnInit, OnChanges {
         }else if ((data.columnType === 'number')) {
           data.columnValue = data.columnValue ? this.formatNumber(+data.columnValue) : 0;
           params[data.field_name]= numeral(data.columnValue).value();
+        }else if ((data.columnType === 'input')) {
+          params[data.field_name]= data.columnValue ? data.columnValue : '';
         }
       })
     });

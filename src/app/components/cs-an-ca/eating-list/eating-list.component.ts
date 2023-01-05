@@ -92,7 +92,9 @@ export class EatingListComponent implements OnInit, AfterViewChecked {
   handleParams() {
     this.activatedRoute.queryParamMap.subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
-      this.query.empId = this.paramsObject.params.cusId;
+      this.query.empId = this.paramsObject.params.empId;
+      this.query.fromdate = this.paramsObject.params.fromDate;
+      this.query.todate = this.paramsObject.params.toDate;
       this.load();
     });
   };
@@ -107,8 +109,8 @@ export class EatingListComponent implements OnInit, AfterViewChecked {
       empId: this.query.empId,
       offSet: 0,
       pageSize: 20,
-      fromdate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).add(-1,'months').format()),
-      todate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).format()),
+      fromdate: this.query.fromdate,
+      todate: this.query.todate,
     }
     this.load();
   }
@@ -120,10 +122,10 @@ export class EatingListComponent implements OnInit, AfterViewChecked {
     this.columnDefs = []
     this.spinner.show();
     let params: any = {... this.query};
-    delete params.fromdate
-    delete params.todate
-    params.fromDate = moment(new Date(this.query.fromdate)).format('MM-DD-YYYY')
-    params.toDate = moment(new Date(this.query.todate)).format('MM-DD-YYYY');
+    // delete params.fromdate
+    // delete params.todate
+    // params.fromDate = moment(new Date(this.query.fromdate)).format('MM-DD-YYYY')
+    // params.toDate = moment(new Date(this.query.todate)).format('MM-DD-YYYY');
     const queryParams = queryString.stringify(params);
 
     this.apiService.getEatingList(queryParams).subscribe(
