@@ -487,10 +487,10 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
     let params: any = { ... this.query };
     let companyIds = this.query.companyIds ? this.query.companyIds.toString() : '' ;
     params.companyIds = companyIds;
-    delete params.fromdate
-    delete params.todate
-    params.FromDate = moment(new Date(this.query.fromdate)).format('YYYY-MM-DD')
-    params.ToDate = moment(new Date(this.query.todate)).format('YYYY-MM-DD');
+    // delete params.fromdate
+    // delete params.todate
+    // params.FromDate = moment(new Date(this.query.fromdate)).format('YYYY-MM-DD')
+    // params.ToDate = moment(new Date(this.query.todate)).format('YYYY-MM-DD');
     params.orgId = this.selectedValue ? this.selectedValue.orgId : null
 
     const queryParams = queryString.stringify(params);
