@@ -265,7 +265,7 @@ export function setMembers(element1, datas) {
           params[data.field_name]= data.columnValue ?  `${data.columnValue}:00` : null
 
         } else if (data.columnType === 'selectTree') {
-          params[data.field_name]= data.columnValue ? data.columnValue.data : null;
+          params[data.field_name]= data.columnValue ? data.columnValue.orgId : null;
           delete data.options;
         } else if (data.columnType === 'currency') {
           params[data.field_name]= data.columnValue ? numeral(data.columnValue).value() : null

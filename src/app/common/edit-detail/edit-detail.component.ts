@@ -278,7 +278,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
           data.columnValue = typeof data.columnValue === 'string' ?  `${data.columnValue}:00` : moment(data.columnValue).format('HH:mm');
           // data.columnValue = typeof data.columnValue === 'string' ? `${data.columnValue}:00` : null;
         } else if (data.columnType === 'selectTree') {
-          data.columnValue = data.columnValue ? data.columnValue.data : null;
+          data.columnValue = data.columnValue ? data.columnValue.orgId : null;
           delete data.options;
         }else if (data.columnType === 'selectTrees') {
           data.columnValue = data.columnValue && data.columnValue.length > 0 ? data.columnValue.map(d => d.orgId).toString() : null;
