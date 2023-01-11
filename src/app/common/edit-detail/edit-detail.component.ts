@@ -1,6 +1,6 @@
 import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
 import { HttpParams } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, OnChanges, ChangeDetectorRef } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, OnChanges, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { cloneDeep } from 'lodash';
 import * as moment from 'moment';
 import { ApiService } from 'src/app/services/api.service';
@@ -101,6 +101,11 @@ export class EditDetailComponent implements OnInit, OnChanges {
   };
   modelFields = {};
 
+
+  ngAfterViewInit() {
+    this.changeDetech.detectChanges();
+  }
+
   // tổ chức hiện tại được chọn
   organizeInfoServiceId = ''
   async ngOnInit(): Promise<void> {
@@ -149,7 +154,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
           }
           this.modelFields[element1.field_name] = dataValidation
         }
-        if (element1.columnType === 'select' || element1.columnType === 'dropdown' || element1.columnType === 'selectTree' || element1.columnType === 'selectTrees'
+        if (element1.columnType === 'select' || element1.columnType === 'members' || element1.columnType === 'dropdown' || element1.columnType === 'selectTree' || element1.columnType === 'selectTrees'
           || element1.columnType === 'checkboxList' || element1.columnType === 'checkboxradiolist'
           || element1.columnType === 'multiSelect' || element1.columnType === 'autocomplete' ) {
             if(element1.columnObject) {
@@ -159,6 +164,11 @@ export class EditDetailComponent implements OnInit, OnChanges {
                 promissall.push(this.apiHrmV2Service.getAutocompleteLinkApiV2(element1.columnObject, element1.field_name));
               }else {
                 promissall.push(this.apiHrmV2Service.getCustObjectListV2(element1.columnObject, element1.field_name));
+              }
+            }else {
+              if(element1.columnType === 'members') {
+                const queryParams = queryString.stringify({ftUserId: element1.columnValue });
+                promissall.push(this.apiHrmV2Service.getEmployeeSearchGetUserIdV2(queryParams, element1.field_name));
               }
             }
           }
@@ -186,6 +196,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
                 setMultiSelectValue(element1, datas[0].result)
               } else if (element1.columnType === 'members') {
                 const datas = responses.filter(d => d.key === element1.field_name);
+                // element1.columnValue = datas[0].result
+                // this.changeDetech.detectChanges();
                 setMembers(element1, datas[0].result)
               } else {
                 const datas = responses.filter(d => d.key === element1.field_name);

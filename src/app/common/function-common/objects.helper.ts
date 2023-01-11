@@ -168,12 +168,12 @@ export function checkIsObject(data): boolean {
 
 export function setMembers(element1, datas) {
     element1.options = [...datas];
-    element1.options.forEach(member => {
-      member.isCheck = false;
-      member.child.forEach(user => {
-        user.isCheck = false;
-      })
-    })
+    // element1.options.forEach(member => {
+    //   member.isCheck = false;
+    //   member.child.forEach(user => {
+    //     user.isCheck = false;
+    //   })
+    // })
   }
 
   export function setSelectTreeValue(element1, datas) {

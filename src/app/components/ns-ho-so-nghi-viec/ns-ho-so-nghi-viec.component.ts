@@ -233,13 +233,13 @@ export class NsHoSoNghiViecComponent implements OnInit {
           class: 'btn-primary mr5',
           hide: CheckHideAction(MENUACTIONROLEAPI.GetTerminatePage.url, ACTIONS.DELETE)
         },
-        {
-          onClick: this.tuyenDungLai.bind(this),
-          label: 'Tuyển dụng lại',
-          icon: 'fa fa-edit',
-          class: 'btn-primary mr5',
-          hide: CheckHideAction(MENUACTIONROLEAPI.GetTerminatePage.url, ACTIONS.TUYEN_DUNG_LAI)
-        },
+        // {
+        //   onClick: this.tuyenDungLai.bind(this),
+        //   label: 'Tuyển dụng lại',
+        //   icon: 'fa fa-edit',
+        //   class: 'btn-primary mr5',
+        //   hide: CheckHideAction(MENUACTIONROLEAPI.GetTerminatePage.url, ACTIONS.TUYEN_DUNG_LAI)
+        // },
         {
           onClick: this.changeStatus.bind(this),
           label: 'Thay đổi trạng thái',

@@ -286,6 +286,22 @@ export class ApiHrmV2Service {
     )
   }
 
+  getEmployeeSearchGetUserIdV2(queryParams, field_name): Observable<any> {
+    return this.httpClient.get(`${apiHrmServer}/api/v2/employee/GetEmployeeSearch?` + queryParams, this.options).pipe(
+      map((repon: any) => {
+        return { key: field_name, result: repon.data.map(d => {
+          return {
+            label: d.fullName + '-' + d.phone,
+            value: `${d.userId}`,
+            ...d
+          }
+        }) };
+      }), catchError(error => {
+        return throwError('Capital not found!');
+      })
+    )
+  }
+
 
   getHrmPayrollTypePageV2(queryParams, field_name): Observable<any> {
     return this.httpClient.get(`${apiHrmServer}/api/v1/payrollType/GetHrmPayrollTypePage?` + queryParams, this.options).pipe(

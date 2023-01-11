@@ -323,7 +323,6 @@ export class BieuMauComponent implements OnInit, OnDestroy {
   }
 
   editRow({rowData}) {
-    debugger
     this.formId =rowData.form_id;
     this.addNewPopup = true;
     if(this.indexTab === 0){
