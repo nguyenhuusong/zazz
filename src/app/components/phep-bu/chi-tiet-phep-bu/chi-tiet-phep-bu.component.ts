@@ -49,6 +49,7 @@ export class ChiTietPhepBuComponent implements OnInit, OnDestroy {
   }
   modelEdit = {
     annualId: "",
+    empId: null
   }
   titlePage = ''
   handleParams() {
@@ -57,6 +58,7 @@ export class ChiTietPhepBuComponent implements OnInit, OnDestroy {
       .subscribe((params) => {
         this.paramsObject = { ...params.keys, ...params };
         this.modelEdit.annualId = this.paramsObject.params.annualId || ""
+        this.modelEdit.empId = this.paramsObject.params.empId || ""
         this.getAnnualAddInfo();
       });
   };

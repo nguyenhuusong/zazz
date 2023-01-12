@@ -119,6 +119,13 @@
     <app-config-grid-table-form *ngIf="displaySetting && gridKey" [typeConfig]="'TableInfo'"   [gridKey]="gridKey"></app-config-grid-table-form>
 </p-dialog>
 
+<app-hrm-search-emp 
+    *ngIf="isSearchEmp" 
+    [isSearch]="isSearchEmp" 
+    (seachEmValue)="seachEmValue($event)">
+</app-hrm-search-emp>
+
+
 
 <!-- <p-overlayPanel #op [style]="{'width': '40rem'}" [style]="{width: '700px'}" styleClass="advance-seach">
     <ng-template pTemplate>

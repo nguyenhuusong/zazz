@@ -2041,6 +2041,7 @@ export class AppTypeChips implements OnInit {
   ) { }
   ngOnInit(): void {
     // this.modelFields[this.element?.field_name].error = false;
+    this.element.columnValue =this.element.columnValue ? this.element.columnValue.split(',') : []
   }
 
   luau() {

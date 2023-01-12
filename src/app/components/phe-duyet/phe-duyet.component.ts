@@ -11,7 +11,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 const MAX_SIZE = 100000000;
-
+import { cloneDeep } from 'lodash';
+import { getParamString } from 'src/app/common/function-common/objects.helper';
 @Component({
   selector: 'app-phe-duyet',
   templateUrl: './phe-duyet.component.html',
@@ -23,7 +24,10 @@ export class PheDuyetComponent implements OnInit, AfterViewChecked {
   items = []
   MENUACTIONROLEAPI = MENUACTIONROLEAPI;
   ACTIONS = ACTIONS
-
+  optionsButonFilter = [
+    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm ml-2 height-56 addNew', icon: 'pi pi-plus' },
+    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger ml-2 height-56 addNew', icon: 'pi pi-times' },
+  ];
   constructor(
     private apiService: ApiHrmService,
     private route: ActivatedRoute,
@@ -68,12 +72,10 @@ export class PheDuyetComponent implements OnInit, AfterViewChecked {
   objectActionDetail: any;
   gridflexs: any;
   getRowHeight;
-  query = {
+  query: any = {
     filter: '',
     offSet: 0,
     pageSize: 100000000,
-    organizeIds: '',
-    companyIds: [],
   }
   totalRecord = 0;
   DriverId = 0;
@@ -116,11 +118,6 @@ export class PheDuyetComponent implements OnInit, AfterViewChecked {
       filter: '',
       offSet: 0,
       pageSize: 100000000,
-      organizeIds: this.query.organizeIds,
-      companyIds: this.query.companyIds,
-    }
-    if(this.companies.length > 0) {
-      this.query.companyIds = this.companies[0].value;
     }
     this.load();
   }
@@ -131,12 +128,41 @@ export class PheDuyetComponent implements OnInit, AfterViewChecked {
     this.displaySetting = true;
   }
 
+  cloneListViewsFilter = [];
+  listViewsFilter = [];
+  detailInfoFilter = null;
+  getFilter() {
+    this.apiService.getFilter('/api/v2/work/GetWorkflowFilter').subscribe(results => {
+      if(results.status === 'success') {
+        const listViews = results.data.group_fields && results.data.group_fields.length > 0 ? cloneDeep(results.data.group_fields) : [];
+        this.cloneListViewsFilter = cloneDeep(listViews);
+        this.listViewsFilter = [...listViews];
+        const params =  getParamString(listViews)
+        this.query = { ...this.query, ...params};
+        this.load();
+        this.detailInfoFilter = results.data;
+      }
+    });
+  }
+  
+   filterLoad(event) {
+    this.query = { ...this.query, ...event.data };
+    this.load();
+  }
+
+  close(event) {
+    const listViews = cloneDeep(this.cloneListViewsFilter);
+    this.listViewsFilter = cloneDeep(listViews);
+    const params =  getParamString(listViews)
+    this.query = { ...this.query, ...params};
+    this.load();
+  }
+
+
   load() {
     this.columnDefs = []
     this.spinner.show();
     let params: any = {... this.query};
-    let companyIds = this.query.companyIds.toString();
-    params.companyIds =  companyIds;
     const queryParams = queryString.stringify(params);
     this.apiService.getWorkflowPage(queryParams).subscribe(
       (results: any) => {
@@ -302,14 +328,12 @@ export class PheDuyetComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit() {
-    this.load();
-
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Nhân sự' },
       { label: 'Danh sách phê duyệt' },
     ];
-
+    this.getFilter();
   }
 
   getCompany() {

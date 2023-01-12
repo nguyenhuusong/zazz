@@ -128,7 +128,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
       buttonAgGridComponent: ButtonAgGridComponent,
       avatarRendererFull: AvatarFullComponent,
     };
-    this.initMenuActionPages(getActionByPathMenu('quan-he-lao-dong', this.MENUACTIONROLEAPI.GetEmployeePage.url, ['import', 'export', 'changeOrganization']))
+    this.initMenuActionPages(getActionByPathMenu('quan-he-lao-dong', this.MENUACTIONROLEAPI.GetEmployeePage.url, ['import', 'export']))
   }
 
   initMenuActionPages(listMenus) {

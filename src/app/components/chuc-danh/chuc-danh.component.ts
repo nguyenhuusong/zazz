@@ -173,7 +173,7 @@ export class ChucDanhComponent implements OnInit, AfterViewChecked {
         },
         {
           onClick: this.delRow.bind(this),
-          label: 'Xóa chức vụ',
+          label: 'Xóa chức danh',
           icon: 'pi pi-trash',
           hide: CheckHideAction(MENUACTIONROLEAPI.GetPositionPage.url, ACTIONS.DELETE)
         },
@@ -208,7 +208,7 @@ export class ChucDanhComponent implements OnInit, AfterViewChecked {
         const queryParams = queryString.stringify({ positionTitleId: event.rowData.positionTitleId });
         this.apiService.delPositionTitleInfo(queryParams).subscribe(results => {
           if (results.status === 'success') {
-            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa chức danh thành công' });
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Xóa chức danh thành công' });
             this.load();
           } else {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });

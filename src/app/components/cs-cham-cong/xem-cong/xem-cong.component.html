@@ -1,20 +1,11 @@
     <div class="main-grid">
         <section class="bread-crumb">
-            <div class="d-flex bottom bet">
-                <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
-                <p-button styleClass="p-button-sm height-56" (click)="cauhinh()">
-                    <svg width="20" height="17" viewBox="0 0 20 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M19.5 17V0H0.50855L0.5 17H19.5ZM6.675 15.3187H2.21V6.81868H6.675V15.3187ZM8.575 15.3187V6.81868H17.79V15.3187H8.575ZM2.21 1.68132V5.13736H17.79V1.68132H2.21Z" fill="#F3F8FF"/>
-                    </svg>
-                    &nbsp;
-                    Cấu hình
-                </p-button>
-            </div>
-        </section>
-        <section class="bread-filter">
-            <div class="d-flex end bottom gap-16">
-                <div class="col-item">
-                    <div class="filter filter-search">
+            <div class="d-flex bet middle">
+                <div class="col-3 pd-0">
+                    <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
+                </div>
+                <div class="d-flex end mid bottom gap-12 col-9 pd-0">
+                    <div class="filter filter-search col-2 pd-0">
                         <div class="field-group text search mb-0" [ngClass]=" query.filter ? 'valid' : 'invalid' ">
                             <input class="input-default" placeholder="Tìm kiếm" type="text" autocomplete="off" id="filter"
                                 (keydown.enter)="query.offSet = 0; first = 0;getXemCongInfo()"
@@ -29,8 +20,7 @@
                                 </span>
                         </div>
                     </div>
-                </div>
-                <p-button (click)="op.toggle($event)" 
+                    <p-button (click)="op.toggle($event)" 
                     styleClass="p-button-sm height-56 ">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M11.2913 3.47726H0.769231C0.344396 3.47726 0 3.14148 0 2.72726C0 2.31305 0.344396 1.97726 0.769231 1.97726H11.4465C11.8523 0.96494 12.8427 0.25 14 0.25C15.1573 0.25 16.1477 0.96494 16.5535 1.97726H19.2309C19.6557 1.97726 20.0001 2.31305 20.0001 2.72726C20.0001 3.14148 19.6557 3.47726 19.2309 3.47726H16.7087C16.4828 4.76856 15.356 5.75 14 5.75C12.644 5.75 11.5172 4.76856 11.2913 3.47726ZM12.7587 2.85147C12.753 2.90017 12.75 2.94974 12.75 3C12.75 3.69036 13.3096 4.25 14 4.25C14.6904 4.25 15.25 3.69036 15.25 3C15.25 2.30964 14.6904 1.75 14 1.75C13.3762 1.75 12.8591 2.20697 12.7652 2.80443C12.7636 2.82026 12.7614 2.83594 12.7587 2.85147Z" fill="#F3F8FF"/>
@@ -42,7 +32,7 @@
                 <p-button styleClass="p-button-sm height-56" icon="pi pi-cloud-download" label="Export" (click)="Export()"
                     [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetTimekeepingDetail.url, action: ACTIONS.EXPORT}"
                 ></p-button>
-        
+                </div>
             </div>
             <p-overlayPanel #op [style]="{'width': '40rem'}" [style]="{width: '700px'}" styleClass="advance-seach">
                 <ng-template pTemplate>

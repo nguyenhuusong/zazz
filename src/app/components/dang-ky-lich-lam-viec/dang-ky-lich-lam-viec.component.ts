@@ -357,14 +357,13 @@ export class DangKyLichLamViecComponent implements OnInit {
   }
 
   getWorkTime() {
-    // const queryParams = queryString.stringify({ organizeId: this.query.organizeIds });
-    // this.apiService.getWorktimeList(queryParams).subscribe(results => {
-    //   if (results.status === 'success') {
-    //     this.listWorkCds = results.data.map(d => {
-    //       return { label: d.work_times + '-' + d.work_cd, value: d.work_cd }
-    //     });
-    //   }
-    // })
+    this.apiService.getWorktimeList().subscribe(results => {
+      if (results.status === 'success') {
+        this.listWorkCds = results.data.map(d => {
+          return { label: d.name, value: d.value }
+        });
+      }
+    })
   }
 
   saveForm() {
@@ -477,6 +476,7 @@ export class DangKyLichLamViecComponent implements OnInit {
       { label: 'Danh sách đăng ký lịch làm việc' },
     ];
     this.getEmpWorkingFilter();
+    this.getWorkTime();
   }
 
   getFeedbackType() {

@@ -177,12 +177,14 @@ export class PhepBuComponent implements OnInit, AfterViewChecked {
       ]
     };
   }
+
   XemChiTiet(event) {
     const params = {
       annualId: event.rowData.annualId
     }
     this.router.navigate(['/chinh-sach/phep-bu/chi-tiet-phep-bu'], { queryParams: params });
   }
+
   delRecord(event) {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa phép bù?',
@@ -260,15 +262,15 @@ export class PhepBuComponent implements OnInit, AfterViewChecked {
       { label: 'Tháng 12', value: 12 },
     ];
     this.itemsToolOfGrid = [
-      {
-        label: 'Thêm mới phép bù phòng ban',
-        code: 'themmoi',
-        icon: 'pi pi-plus',
-        command: () => {
-          this.addNewPhepBuDep();
-        },
-        disabled: CheckHideAction(MENUACTIONROLEAPI.GetAnnualAddPage.url, ACTIONS.ADD_PHEP_BU_PHONG_BAN),
-      },
+      // {
+      //   label: 'Thêm mới phép bù phòng ban',
+      //   code: 'themmoi',
+      //   icon: 'pi pi-plus',
+      //   command: () => {
+      //     this.addNewPhepBuDep();
+      //   },
+      //   disabled: CheckHideAction(MENUACTIONROLEAPI.GetAnnualAddPage.url, ACTIONS.ADD_PHEP_BU_PHONG_BAN),
+      // },
       {
         label: 'Import',
         code: 'import',
@@ -283,10 +285,7 @@ export class PhepBuComponent implements OnInit, AfterViewChecked {
 
 
   addNewPhepBu() {
-    const params = {
-      annualId: ""
-    }
-    this.router.navigate(['/chinh-sach/phep-bu/them-moi-phep-bu'], { queryParams: params });
+    this.isSearchEmp = true;
   }
   addNewPhepBuDep() {
     this.isShowAddPhepBuDep = true;
@@ -387,47 +386,19 @@ export class PhepBuComponent implements OnInit, AfterViewChecked {
     this.FnEvent();
   }
 
-showFilter() {
-    const ref = this.dialogService.open(FormFilterComponent, {
-      header: 'Tìm kiếm nâng cao',
-      width: '40%',
-      contentStyle: "",
-      data: {
-        listViews: this.listViewsFilter,
-        detailInfoFilter: this.detailInfoFilter,
-        buttons: this.optionsButonFilter
-      }
-    });
-
-    ref.onClose.subscribe((event: any) => {
-      if (event) {
-        this.listViewsFilter = cloneDeep(event.listViewsFilter);
-        if (event.type === 'Search') {
-          this.query = { ...this.query, ...event.data };
-          this.load();
-        } else if (event.type === 'CauHinh') {
-        this.apiService.getFilter('/api/v2/annualleave/GetAnnualLeaveFilter').subscribe(results => {
-            if (results.status === 'success') {
-              const listViews = cloneDeep(results.data.group_fields);
-              this.listViewsFilter = [...listViews];
-              const params =  getParamString(listViews)
-              this.query = { ...this.query, ...params};
-              this.load();
-              this.detailInfoFilter = results.data;
-              this.showFilter()
-            }
-          });
-
-        } else if (event.type === 'Reset') {
-          const listViews = cloneDeep(this.cloneListViewsFilter);
-          this.listViewsFilter = cloneDeep(listViews);
-         const params =  getParamString(listViews)
-        this.query = { ...this.query, ...params};
-        this.load();
-        }
-      }
-    });
+  isSearchEmp = false
+  seachEmValue(event) {
+    const params = {
+      annualId: null,
+      empId: event.value
+    }
+    if(event.value) {
+      this.router.navigate(['/chinh-sach/phep-bu/them-moi-phep-bu'], { queryParams: params });
+    }else{
+      this.isSearchEmp = false;
+    }
   }
+
 
 
 

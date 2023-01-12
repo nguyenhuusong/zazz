@@ -219,6 +219,7 @@ export class PageLoaiThongBaoComponent implements OnInit, OnDestroy, AfterViewCh
             this.load();
           } else {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+            this.spinner.hide();
           }
         });
       }

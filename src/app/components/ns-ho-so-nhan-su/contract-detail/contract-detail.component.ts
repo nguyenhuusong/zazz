@@ -133,7 +133,7 @@ export class ContractDetailComponent implements OnInit {
     if (data === 'CauHinh') {
       this.modelContractInfo.contractId ? this.getContractInfo() : this.setContractCreate();
     } else if (data === 'BackPage') {
-      this.getContractInfo(this.flowCurrent === 1 ? this.flowCurrent: this.flowCurrent - 2)
+      this.getContractInfo(this.flowCurrent === 1 ? this.flowCurrent: this.flowCurrent - 1)
     } else {
       if(this.url === 'chi-tiet-xu-ly-hop-dong') {
         this.router.navigate(['/nhan-su/xu-ly-hop-dong'])
