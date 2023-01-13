@@ -97,14 +97,6 @@ export class XuLyHopDongComponent implements OnInit {
     filter: '',
     offSet: 0,
     pageSize: 20,
-    organizeId: null,
-    orgId: null,
-    contract_st: null,
-    contractTypeId: null,
-    fromDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).add(-1, 'months').format("YYYY-MM-DD")),
-    toDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).format("YYYY-MM-DD")),
-    organizeIds: '',
-    companyIds: [],
   }
   totalRecord = 0;
   DriverId = 0;
@@ -137,14 +129,6 @@ export class XuLyHopDongComponent implements OnInit {
       filter: '',
       offSet: 0,
       pageSize: 20,
-      organizeId: null,
-      orgId: null,
-      contract_st: null,
-      contractTypeId: null,
-      fromDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).add(-1, 'months').format("YYYY-MM-DD")),
-      toDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())).format("YYYY-MM-DD")),
-      organizeIds: this.query.organizeIds,
-      companyIds: this.query.companyIds,
     }
     if(this.companies.length > 0) {
       this.query.companyIds = this.companies[0].value;
@@ -777,58 +761,17 @@ detailInfoFilter = null;
     this.load();
   }
 
-  close(event) {
+  close({event, datas}) {
     if(event !== 'Close') {
-    const listViews = cloneDeep(this.cloneListViewsFilter);
-    this.listViewsFilter = cloneDeep(listViews);
-    const params =  getParamString(listViews)
-    this.query = { ...this.query, ...params};
-    this.load();
+      const listViews = cloneDeep(this.cloneListViewsFilter);
+      this.listViewsFilter = cloneDeep(listViews);
+      const params =  getParamString(listViews)
+      this.query = { ...this.query, ...params};
+      this.load();
+    }else {
+      this.listViewsFilter =  cloneDeep(datas);
     }
   }
-
-showFilter() {
-    const ref = this.dialogService.open(FormFilterComponent, {
-      header: 'Tìm kiếm nâng cao',
-      width: '40%',
-      contentStyle: "",
-      data: {
-        listViews: this.listViewsFilter,
-        detailInfoFilter: this.detailInfoFilter,
-        buttons: this.optionsButonFilter
-      }
-    });
-
-    ref.onClose.subscribe((event: any) => {
-      if (event) {
-        this.listViewsFilter = cloneDeep(event.listViewsFilter);
-        if (event.type === 'Search') {
-          this.query = { ...this.query, ...event.data };
-          this.load();
-        } else if (event.type === 'CauHinh') {
-        this.apiService.getContractFilter().subscribe(results => {
-            if (results.status === 'success') {
-              const listViews = cloneDeep(results.data.group_fields);
-              this.listViewsFilter = [...listViews];
-              const params =  getParamString(listViews)
-              this.query = { ...this.query, ...params};
-              this.load();
-              this.detailInfoFilter = results.data;
-              this.showFilter()
-            }
-          });
-
-        } else if (event.type === 'Reset') {
-          const listViews = cloneDeep(this.cloneListViewsFilter);
-          this.listViewsFilter = cloneDeep(listViews);
-         const params =  getParamString(listViews)
-        this.query = { ...this.query, ...params};
-        this.load();
-        }
-      }
-    });
-  }
-
 }
 
 

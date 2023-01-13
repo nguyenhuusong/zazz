@@ -41,16 +41,11 @@ export class DanhSachPhongHopComponent implements OnInit {
   getRowHeight;
   cards = [];
   first = 0;
-  model = {
+  model: any = {
     filter: '',
     gridWidth: '',
     offSet: 0,
     pageSize: 20,
-    floor_No: '',
-    workplaceId: '',
-    roomId: '',
-    status_meet: '',
-    orgIds: '',
   };
   totalRecord = 0;
   countRecord: any = {
@@ -123,11 +118,6 @@ export class DanhSachPhongHopComponent implements OnInit {
       gridWidth: '',
       offSet: 0,
       pageSize: 20,
-      floor_No: '',
-      workplaceId: '',
-      roomId: '',
-      status_meet: '',
-      orgIds: localStorage.getItem("organizes")
     };
   }
 
@@ -183,6 +173,7 @@ export class DanhSachPhongHopComponent implements OnInit {
           }, 100);
         }
         this.spinner.hide();
+        this.FnEvent()
       },
       error => {
         this.spinner.hide();
@@ -396,17 +387,18 @@ export class DanhSachPhongHopComponent implements OnInit {
     this.model = { ...this.model, ...event.data };
     this.load();
   }
-
-  close(event) {
-    if(event !== 'Close') {
+  
+close({event, datas}) {
+  if(event !== 'Close') {
     const listViews = cloneDeep(this.cloneListViewsFilter);
     this.listViewsFilter = cloneDeep(listViews);
     const params =  getParamString(listViews)
     this.model = { ...this.model, ...params};
     this.load();
-    this.FnEvent();
-    }
+  }else {
+    this.listViewsFilter =  cloneDeep(datas);
   }
+}
 
 showFilter() {
     const ref = this.dialogService.open(FormFilterComponent, {

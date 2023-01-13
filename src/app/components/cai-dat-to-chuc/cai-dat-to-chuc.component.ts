@@ -256,8 +256,6 @@ export class CaiDatToChucComponent implements OnInit {
     this.columnDefs = []
     this.spinner.show();
     let params: any = { ... this.query };
-    params.orgId = this.selectedValue ? this.selectedValue.orgId : null;
-    this.organizeIdsParam = '';
     const queryParams = queryString.stringify(params);
     this.apiService.getOrganizePage(queryParams).subscribe(
       (results: any) => {
@@ -517,6 +515,7 @@ export class CaiDatToChucComponent implements OnInit {
       { label: 'Cài đặt' },
       { label: 'Danh sách tổ chức', routerLink: '/cai-dat/cai-dat-to-chuc' },
     ];
+    this.getFilter()
     // this.menuItem = [
     //   {
     //     label: 'Chức vụ',
@@ -547,7 +546,6 @@ export class CaiDatToChucComponent implements OnInit {
     //     }
     //   },
     // ];
-    this.getFilter()
   }
 
   caiDatThamSo() {
@@ -619,6 +617,7 @@ export class CaiDatToChucComponent implements OnInit {
 
   backPage() {
     this.load();
+    this.displayOrganize = false;
   }
 
   Add() {
@@ -887,13 +886,15 @@ export class CaiDatToChucComponent implements OnInit {
     this.load();
   }
 
-  close(event) {
-    if (event !== 'Close') {
+  close({event, datas}) {
+    if(event !== 'Close') {
       const listViews = cloneDeep(this.cloneListViewsFilter);
       this.listViewsFilter = cloneDeep(listViews);
-      const params = getParamString(listViews)
-      this.query = { ...this.query, ...params };
+      const params =  getParamString(listViews)
+      this.query = { ...this.query, ...params};
       this.load();
+    }else {
+      this.listViewsFilter =  cloneDeep(datas);
     }
   }
 

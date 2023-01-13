@@ -77,12 +77,8 @@ export class ThietLapWifiComponent implements OnInit, AfterViewChecked {
   getRowHeight;
   query = {
     filter: '',
-    workplaceId: '',
-    status: '',
-    orgId: '',
     offSet: 0,
     pageSize: 20,
-    organizeIds: '',
   }
   totalRecord = 0;
   DriverId = 0;
@@ -101,12 +97,8 @@ export class ThietLapWifiComponent implements OnInit, AfterViewChecked {
   cancel() {
     this.query = {
       filter: '',
-      workplaceId: '',
-      status: '',
-      orgId: '',
       offSet: 0,
       pageSize: 20,
-      organizeIds: this.query.organizeIds
     }
     this.load();
   }
@@ -320,16 +312,18 @@ export class ThietLapWifiComponent implements OnInit, AfterViewChecked {
     this.FnEvent();
   }
 
-  close(event) {
+  close({event, datas}) {
     if(event !== 'Close') {
-    const listViews = cloneDeep(this.cloneListViewsFilter);
-    this.listViewsFilter = cloneDeep(listViews);
-    const params =  getParamString(listViews)
-    this.query = { ...this.query, ...params};
-    this.load();
-    this.FnEvent();
+      const listViews = cloneDeep(this.cloneListViewsFilter);
+      this.listViewsFilter = cloneDeep(listViews);
+      const params =  getParamString(listViews)
+      this.query = { ...this.query, ...params};
+      this.load();
+    }else {
+      this.listViewsFilter =  cloneDeep(datas);
     }
   }
+
 
 showFilter() {
     const ref = this.dialogService.open(FormFilterComponent, {

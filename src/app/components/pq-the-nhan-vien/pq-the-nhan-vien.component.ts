@@ -513,14 +513,15 @@ export class PqTheNhanVienComponent implements OnInit {
     this.load();
   }
 
-  close(event) {
+  close({event, datas}) {
     if(event !== 'Close') {
-    const listViews = cloneDeep(this.cloneListViewsFilter);
-    this.listViewsFilter = cloneDeep(listViews);
-    const params =  getParamString(listViews)
-    this.model = { ...this.model, ...params};
-    this.load();
-    this.FnEvent();
+      const listViews = cloneDeep(this.cloneListViewsFilter);
+      this.listViewsFilter = cloneDeep(listViews);
+      const params =  getParamString(listViews)
+      this.model = { ...this.model, ...params};
+      this.load();
+    }else {
+      this.listViewsFilter =  cloneDeep(datas);
     }
   }
 

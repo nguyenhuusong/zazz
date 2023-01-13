@@ -158,7 +158,6 @@ export class CaiDatLichHopComponent implements OnInit {
   load() {
     this.columnDefs = []
     this.spinner.show();
-    // this.model.Time = moment(this.model.Time).format('HH:mm')
     let params: any = { ... this.model };
     const queryParams = queryString.stringify(params);
     this.apiService.getMeetingPage(queryParams).subscribe(
@@ -488,13 +487,15 @@ detailInfoFilter = null;
     this.FnEvent();
   }
 
-  close(event) {
+  close({event, datas}) {
     if(event !== 'Close') {
-    const listViews = cloneDeep(this.cloneListViewsFilter);
-    this.listViewsFilter = cloneDeep(listViews);
-    const params =  getParamString(listViews)
-    this.model = { ...this.model, ...params};
-    this.load();
+      const listViews = cloneDeep(this.cloneListViewsFilter);
+      this.listViewsFilter = cloneDeep(listViews);
+      const params =  getParamString(listViews)
+      this.model = { ...this.model, ...params};
+      this.load();
+    }else {
+      this.listViewsFilter =  cloneDeep(datas);
     }
   }
 

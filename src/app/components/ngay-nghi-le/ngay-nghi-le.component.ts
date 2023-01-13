@@ -101,17 +101,11 @@ export class NgayNghiLeComponent implements OnInit {
 
 
   }
-  query = {
+  query: any = {
     filter: '',
     gridWidth: 0,
     offSet: 0,
     pageSize: 20,
-    OrganizeId: null,
-    DepartmentId: null,
-    HoliType: null,
-    HoliWorkType: null,
-    Year: 2022,
-    organizeIds: '',
   }
   displayOrganize = false;
   listAgencyMap: TreeNode[];
@@ -126,12 +120,6 @@ export class NgayNghiLeComponent implements OnInit {
       gridWidth: 0,
       offSet: 0,
       pageSize: 20,
-      OrganizeId: this.query.OrganizeId,
-      DepartmentId: null,
-      HoliType: null,
-      HoliWorkType: null,
-      Year: 2022,
-      organizeIds: this.query.organizeIds
     }
     this.load();
   }
@@ -352,12 +340,13 @@ export class NgayNghiLeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getFilter();
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Cài đặt' },
       { label: 'Danh sách ngày nghỉ' },
     ];
+    this.getFilter();
+
   }
 
   organizeList = []
@@ -446,13 +435,15 @@ export class NgayNghiLeComponent implements OnInit {
     { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger height-56 addNew', icon: 'pi pi-times' },
   ];
 
-  close(event) {
+  close({event, datas}) {
     if(event !== 'Close') {
-    const listViews = cloneDeep(this.cloneListViewsFilter);
-    this.listViewsFilter = cloneDeep(listViews);
-    const params =  getParamString(listViews)
-    this.query = { ...this.query, ...params};
-    this.load();
+      const listViews = cloneDeep(this.cloneListViewsFilter);
+      this.listViewsFilter = cloneDeep(listViews);
+      const params =  getParamString(listViews)
+      this.query = { ...this.query, ...params};
+      this.load();
+    }else {
+      this.listViewsFilter =  cloneDeep(datas);
     }
   }
   

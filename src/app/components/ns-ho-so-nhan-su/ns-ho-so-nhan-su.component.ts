@@ -869,14 +869,15 @@ export class NsHoSoNhanSuComponent implements OnInit {
     this.load();
   }
   isShow = true;
-  close(event) {
+  close({event, datas}) {
     if(event !== 'Close') {
-    const listViews = cloneDeep(this.cloneListViewsFilter);
-    this.listViewsFilter = cloneDeep(listViews);
-    const params =  getParamString(listViews)
-    this.query = { ...this.query, ...params};
-    this.load();
-    this.isShow = false;
+      const listViews = cloneDeep(this.cloneListViewsFilter);
+      this.listViewsFilter = cloneDeep(listViews);
+      const params =  getParamString(listViews)
+      this.query = { ...this.query, ...params};
+      this.load();
+    }else {
+      this.listViewsFilter =  cloneDeep(datas);
     }
   }
 

@@ -70,17 +70,10 @@ export class DsTiemNangComponent implements OnInit {
   gridColumnApi: any;
   gridflexs: any;
   getRowHeight;
-  query = {
-    vacancyId: 0,
-    can_st: null,
-    organizeId: null,
-    positionCd: null,
+  query: any = {
     filter: '',
     offSet: 0,
     pageSize: 20,
-    organizeIds: '',
-    fromDate: '',
-    toDate: '',
   }
   totalRecord = 0;
   DriverId = 0;
@@ -130,16 +123,9 @@ export class DsTiemNangComponent implements OnInit {
 
   cancel() {
     this.query = {
-      vacancyId: 0,
-      can_st: null,
-      organizeId: null,
-      positionCd: null,
       filter: '',
       offSet: 0,
       pageSize: 20,
-      fromDate: '',
-      toDate: '',
-      organizeIds: this.query.organizeIds,
     }
     this.load();
   }
@@ -426,56 +412,16 @@ export class DsTiemNangComponent implements OnInit {
     this.load();
   }
 
-  close(event) {
+  close({event, datas}) {
     if(event !== 'Close') {
-    const listViews = cloneDeep(this.cloneListViewsFilter);
-    this.listViewsFilter = cloneDeep(listViews);
-    const params = getParamString(listViews)
-    this.query = { ...this.query, ...params };
-    this.load();
+      const listViews = cloneDeep(this.cloneListViewsFilter);
+      this.listViewsFilter = cloneDeep(listViews);
+      const params =  getParamString(listViews)
+      this.query = { ...this.query, ...params};
+      this.load();
+    }else {
+      this.listViewsFilter =  cloneDeep(datas);
     }
-  }
-
-  showFilter() {
-    const ref = this.dialogService.open(FormFilterComponent, {
-      header: 'Tìm kiếm nâng cao',
-      width: '40%',
-      contentStyle: "",
-      data: {
-        listViews: this.listViewsFilter,
-        detailInfoFilter: this.detailInfoFilter,
-        buttons: this.optionsButonFilter
-      }
-    });
-
-    ref.onClose.subscribe((event: any) => {
-      if (event) {
-        this.listViewsFilter = cloneDeep(event.listViewsFilter);
-        if (event.type === 'Search') {
-          this.query = { ...this.query, ...event.data };
-          this.load();
-        } else if (event.type === 'CauHinh') {
-          this.apiService.getFilter('/api/v1/recruitment/GetCandidateFilter').subscribe(results => {
-            if (results.status === 'success') {
-              const listViews = cloneDeep(results.data.group_fields);
-              this.listViewsFilter = [...listViews];
-              const params = getParamString(listViews)
-              this.query = { ...this.query, ...params };
-              this.load();
-              this.detailInfoFilter = results.data;
-              this.showFilter()
-            }
-          });
-
-        } else if (event.type === 'Reset') {
-          const listViews = cloneDeep(this.cloneListViewsFilter);
-          this.listViewsFilter = cloneDeep(listViews);
-          const params = getParamString(listViews)
-          this.query = { ...this.query, ...params };
-          this.load();
-        }
-      }
-    });
   }
 
 }

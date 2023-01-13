@@ -144,6 +144,13 @@ export class ThongTinNguoiLienHeComponent implements OnInit {
                 key: 'view-job-detail',
                 class: 'btn-primary mr5',
               },
+              {
+                onClick: this.applyDefaule.bind(this),
+                label: 'Áp dụng',
+                icon: 'fa fa-edit editing',
+                key: 'view-job-detail',
+                class: 'btn-primary mr5',
+              },
 
               {
                 onClick: this.delRow.bind(this),
@@ -157,6 +164,23 @@ export class ThongTinNguoiLienHeComponent implements OnInit {
         },
       }
     ];
+  }
+
+  applyDefaule({rowData}) {
+    this.confirmationService.confirm({
+      message: 'Bạn có chắc chắn muốn xóa bản ghi này?',
+      accept: () => {
+        this.apiService.defaultEmpContact({cont_id: rowData.cont_id, empId: this.empId}).subscribe((results: any) => {
+          if (results.status === 'success') {
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Xóa thành công' });
+            this.getEmpContactPage();
+            this.cancelSave.emit();
+          } else {
+            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+          }
+        });
+      }
+    });
   }
 
   editRow({rowData}) {

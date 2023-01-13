@@ -233,6 +233,6 @@ styleClass="menu-option-right" #menuButton></p-menu>
 <!-- filter -->
 <p-overlayPanel #op [style]="{'width': '40rem'}" [dismissable]="false" appendTo="body" >
     <ng-template pTemplate>
-        <app-form-filter *ngIf="listViewsFilter.length > 0" [listFields]="listViewsFilter" [detailInfoFilter]="detailInfoFilter" [buttonsFilters] ="optionsButonFilter" (callback)="filterLoad($event)" (close)="close($event);op.hide()"></app-form-filter>
+        <app-form-filter *ngIf="listViewsFilter.length > 0" [listFields]="listViewsFilter" [detailInfoFilter]="detailInfoFilter" [buttonsFilters] ="optionsButonFilter" (callback)="filterLoad($event)" (close)="close($event)"></app-form-filter>
     </ng-template>
 </p-overlayPanel>

@@ -50,7 +50,6 @@ export class PhepBuComponent implements OnInit, AfterViewChecked {
       buttonAgGridComponent: ButtonAgGridComponent,
       avatarRendererFull: AvatarFullComponent,
     };
-    this.getFilter();
   }
   frameworkComponents;
   public agGridFn = AgGridFn;
@@ -61,12 +60,10 @@ export class PhepBuComponent implements OnInit, AfterViewChecked {
   gridApi: any;
   clientWidth: any;
   gridflexs: any;
-  query = {
+  query: any = {
     filter: '',
     offSet: 0,
     pageSize: 20,
-    year: moment().year(),
-    month: moment().month() + 1,
   }
   totalRecord = 0;
   first = 0;
@@ -113,8 +110,6 @@ export class PhepBuComponent implements OnInit, AfterViewChecked {
       filter: '',
       offSet: 0,
       pageSize: 20,
-      year: moment().year(),
-      month: moment().month(),
     }
     this.load();
   }
@@ -151,6 +146,8 @@ export class PhepBuComponent implements OnInit, AfterViewChecked {
           }, 100);
         }
         this.spinner.hide();
+         this.FnEvent();
+
       },
       error => {
         this.spinner.hide();
@@ -236,31 +233,7 @@ export class PhepBuComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit() {
-    this.getDepartments();
-    let currentDay = new Date().getDate();
-    if(currentDay >= 25 && currentDay <= 31){
-      this.query.month = this.query.month + 1;
-    }
-    this.items = [
-      { label: 'Trang chủ', routerLink: '/home' },
-      { label: 'Chính sách' },
-      { label: 'Phép năm', routerLink: '/chinh-sach/phep-nam' },
-      { label: 'Phép bù' },
-    ];
-    this.months = [
-      { label: 'Tháng 1', value: 1 },
-      { label: 'Tháng 2', value: 2 },
-      { label: 'Tháng 3', value: 3 },
-      { label: 'Tháng 4', value: 4 },
-      { label: 'Tháng 5', value: 5 },
-      { label: 'Tháng 6', value: 6 },
-      { label: 'Tháng 7', value: 7 },
-      { label: 'Tháng 8', value: 8 },
-      { label: 'Tháng 9', value: 9 },
-      { label: 'Tháng 10', value: 10 },
-      { label: 'Tháng 11', value: 11 },
-      { label: 'Tháng 12', value: 12 },
-    ];
+   
     this.itemsToolOfGrid = [
       // {
       //   label: 'Thêm mới phép bù phòng ban',
@@ -281,6 +254,8 @@ export class PhepBuComponent implements OnInit, AfterViewChecked {
         disabled: CheckHideAction(MENUACTIONROLEAPI.GetAnnualAddPage.url, ACTIONS.IMPORT),
       },
     ]
+    this.getFilter();
+
   }
 
 
@@ -377,13 +352,16 @@ export class PhepBuComponent implements OnInit, AfterViewChecked {
     this.FnEvent();
   }
 
-  close(event) {
-    const listViews = cloneDeep(this.cloneListViewsFilter);
-    this.listViewsFilter = cloneDeep(listViews);
-    const params =  getParamString(listViews)
-    this.query = { ...this.query, ...params};
-    this.load();
-    this.FnEvent();
+  close({event, datas}) {
+    if(event !== 'Close') {
+      const listViews = cloneDeep(this.cloneListViewsFilter);
+      this.listViewsFilter = cloneDeep(listViews);
+      const params =  getParamString(listViews)
+      this.query = { ...this.query, ...params};
+      this.load();
+    }else {
+      this.listViewsFilter =  cloneDeep(datas);
+    }
   }
 
   isSearchEmp = false

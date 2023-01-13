@@ -125,9 +125,6 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
       offSet: 0,
       pageSize: 20,
     }
-    if (this.companies.length > 0) {
-      this.query.companyIds = this.companies[0].value;
-    }
     this.load();
   }
 
@@ -525,13 +522,15 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
     this.load();
   }
 
-  close(event) {
+  close({event, datas}) {
     if(event !== 'Close') {
-    const listViews = cloneDeep(this.cloneListViewsFilter);
-    this.listViewsFilter = cloneDeep(listViews);
-    const params = getParamString(listViews)
-    this.query = { ...this.query, ...params };
-    this.load();
+      const listViews = cloneDeep(this.cloneListViewsFilter);
+      this.listViewsFilter = cloneDeep(listViews);
+      const params =  getParamString(listViews)
+      this.query = { ...this.query, ...params};
+      this.load();
+    }else {
+      this.listViewsFilter =  cloneDeep(datas);
     }
   }
 

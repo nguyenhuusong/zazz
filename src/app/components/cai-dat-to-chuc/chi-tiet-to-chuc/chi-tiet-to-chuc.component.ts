@@ -53,20 +53,7 @@ export class ChiTietToChucComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    if(this.orgId === null) {
-      this.getOrganizeInfo();
-    }else {
-      this.titlePage = this.activatedRoute.data['_value'].title;
-      this.items = [
-        { label: 'Trang chủ' , routerLink: '/home' },
-        { label: 'Cài đặt' },
-        { label: 'Danh sách tổ chức', routerLink: '/cai-dat/cai-dat-to-chuc' },
-        { label: `${this.titlePage}` },
-      ];
-      this.url = this.activatedRoute.data['_value'].url;
-      this.handleParams();
-    }
- 
+    this.handleParams();
   }
 
   handleParams() {
@@ -74,6 +61,16 @@ export class ChiTietToChucComponent implements OnInit, OnChanges {
       this.paramsObject = { ...params.keys, ...params };
       this.dataRouter = this.paramsObject.params;
       this.orgId = this.paramsObject.params.orgId || null;
+      if(this.orgId) {
+        this.titlePage = this.activatedRoute.data['_value'].title;
+        this.items = [
+          { label: 'Trang chủ' , routerLink: '/home' },
+          { label: 'Cài đặt' },
+          { label: 'Danh sách tổ chức', routerLink: '/cai-dat/cai-dat-to-chuc' },
+          { label: `${this.titlePage}` },
+        ];
+        this.url = this.activatedRoute.data['_value'].url;
+      }
       this.getOrganizeInfo();
     });
   };

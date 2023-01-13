@@ -29,9 +29,6 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
   heightGrid = 0;
   query = {
     filter: '',
-    organizeId: '',
-    typeForm: null,
-    createDate: '',
     offSet: 0,
     pageSize: 15
   };
@@ -175,12 +172,6 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
     this.columnDefs = []
     this.spinner.show();
     const query = {...this.query};
-    if (query.createDate && typeof query.createDate !== 'string') {
-      query.createDate = moment(query.createDate).format('YYYY-MM-DD');
-    }
-    if (typeof this.query.typeForm === 'object' && this.query && this.query.typeForm) {
-      query.typeForm = this.query.typeForm.data;
-    } 
     const queryParams = queryString.stringify(query);
     this.apiService.getFormTypeTreePage(queryParams)
     .subscribe(
@@ -425,10 +416,7 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
 
   cancel() {
     this.query = {
-      organizeId: '',
       filter: '',
-      typeForm: '',
-      createDate: '',
       offSet: 0,
       pageSize: 10
     }
@@ -473,7 +461,6 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
     { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger height-56 addNew', icon: 'pi pi-times' },
   ];
   getFilter() {
-    // value === 1 ? '' : ''
     this.apiService.getFilter('/api/v1/eating/GetEatingFilter').subscribe(results => {
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
@@ -492,14 +479,15 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
     this.load();
   }
 
-  close(event) {
+  close({event, datas}) {
     if(event !== 'Close') {
       const listViews = cloneDeep(this.cloneListViewsFilter);
       this.listViewsFilter = cloneDeep(listViews);
       const params =  getParamString(listViews)
       this.query = { ...this.query, ...params};
       this.load();
-      this.FnEvent()
+    }else {
+      this.listViewsFilter =  cloneDeep(datas);
     }
   }
 

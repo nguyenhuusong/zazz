@@ -2124,6 +2124,9 @@ export class ApiHrmService {
   delEmpContact(queryParams): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v2/employeeprofile/DelEmpContact?` +  queryParams, this.options)
   }
+  defaultEmpContact(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/employeeprofile/DefaultEmpContact`, queryParams, this.options)
+  }
 
   // EmpWorking
   

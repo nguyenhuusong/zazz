@@ -75,15 +75,11 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
   gridflexs: any;
   listJobTitles = [];
   getRowHeight;
-  query = {
-    jobId: -1,
+  query: any = {
     filter: '',
     offSet: 0,
     pageSize: 20,
     gridWidth: 1300,
-    organizeId: null,
-    positionTypeCd: null,
-    organizeIds: '',
   }
   totalRecord = 0;
   DriverId = 0;
@@ -131,14 +127,10 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
 
   cancel() {
     this.query = {
-      jobId: -1,
-      positionTypeCd: null,
       filter: '',
       offSet: 0,
       pageSize: 20,
       gridWidth: 1300,
-      organizeId: null,
-      organizeIds: this.query.organizeIds,
     }
     this.load();
   }
@@ -186,7 +178,8 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
             if (noData) { noData.innerHTML = 'Không có kết quả phù hợp'}
           }, 100);
         }
-        this.spinner.hide();
+      this.FnEvent();
+      this.spinner.hide();
       },
       error => {
         this.spinner.hide();
@@ -304,14 +297,15 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
     this.FnEvent();
   }
 
-  close(event) {
+  close({event, datas}) {
     if(event !== 'Close') {
-    const listViews = cloneDeep(this.cloneListViewsFilter);
-    this.listViewsFilter = cloneDeep(listViews);
-    const params =  getParamString(listViews)
-    this.query = { ...this.query, ...params};
-    this.load();
-    this.FnEvent();
+      const listViews = cloneDeep(this.cloneListViewsFilter);
+      this.listViewsFilter = cloneDeep(listViews);
+      const params =  getParamString(listViews)
+      this.query = { ...this.query, ...params};
+      this.load();
+    }else {
+      this.listViewsFilter =  cloneDeep(datas);
     }
   }
 
