@@ -236,13 +236,13 @@ export class XuLyHopDongComponent implements OnInit {
           hide: CheckHideAction(MENUACTIONROLEAPI.GetContractPage.url, ACTIONS.VIEW)
 
         },
-        {
-          onClick: this.updateStatus.bind(this),
-          label: 'Cập nhật trạng thái hợp đồng',
-          icon: 'pi pi-pencil',
-          class: 'btn-primary mr5',
-          hide: this.CheckHideUpdateStatus(event),
-        },
+        // {
+        //   onClick: this.updateStatus.bind(this),
+        //   label: 'Cập nhật trạng thái hợp đồng',
+        //   icon: 'pi pi-pencil',
+        //   class: 'btn-primary mr5',
+        //   hide: this.CheckHideUpdateStatus(event),
+        // },
         {
           onClick: this.delRow.bind(this),
           label: 'Xóa ',

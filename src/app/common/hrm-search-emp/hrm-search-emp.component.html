@@ -14,17 +14,21 @@ styleClass="search-em-in {{ dataSearched?.length > 0 ? 'search-em-result' : '' }
     <div class="search-in" [ngClass]="{'res': dataSearched.length > 0}">
         <div class="search-group field-group select d-flex" style="display: flex">
             <div class="col-3 pd-0" style="padding-right: 10px !important;border-right: 1px solid #ebe8e8;">
-                <p-dropdown 
-                appendTo="body" 
-                [baseZIndex]="100" 
-                [(ngModel)]="searchBy"
-                [options]="searchBys" 
-                placeholder="Tìm kiếm theo" >
+                <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" placeholder="Tìm kiếm theo" 
+                [options]="searchBys" [(ngModel)]="searchBy" name="searchBy">
+                <ng-template let-item pTemplate="selectedItem">
+                    <span>{{item.label}}</span>
+                </ng-template>
+                <ng-template let-car pTemplate="item">
+                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                        <div>{{car.label}}</div>
+                    </div>
+                </ng-template>
                 </p-dropdown>
             </div>
             <div class="col-9 pd-0">
                 <!-- <p-button styleClass="p-button-sm " icon=" pi pi-search" (click)="getStaffsAtStore()"></p-button> -->
-                <span class="pi pi-search"></span>
+                <span class="pi pi-search" (click)="searchEmp()"></span>
                 <span class="number-res" *ngIf="dataSearched && dataSearched.length > 0 && isSearching">{{ dataSearched.length }} kết quả</span>
                 <div class="uni-load " [ngClass]="isLoading ? 'loading' : ''"></div>
                 <div class="field-group text mb-0">

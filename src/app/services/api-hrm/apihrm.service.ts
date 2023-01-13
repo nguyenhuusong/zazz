@@ -880,6 +880,10 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v2/employee/GetEmployeePage?` + queryParams, this.options);
   }
 
+  getEmployeeSearchPopup(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/employee/GetEmployeeSearchPopup?` + queryParams, this.options);
+  }
+
   deleteEmployee(employeeId): Observable<string> {
     return this.http
       .delete<string>(`${apiHrmServer}/api/v2/employee/DeleteEmployee?empId=${employeeId}`, this.options);

@@ -16,8 +16,8 @@ export class ChiTietToChucComponent implements OnInit, OnChanges {
   manhinh = 'View';
   indexTab = 0;
   optionsButtonsView = [
-    { label: 'Sửa', value: 'Update', class: CheckHideAction(MENUACTIONROLEAPI.GetOrganizePage.url, ACTIONS.EDIT) ? 'hidden' : ''}, 
-    { label: 'Quay lại', value: 'Back', class: 'p-button-secondary'  }];
+    { label: 'Lưu lại', value: 'Update', icon: 'pi pi-check', class: CheckHideAction(MENUACTIONROLEAPI.GetOrganizePage.url, ACTIONS.EDIT) ? 'hidden' : ''}, 
+    { label: 'Quay lại', value: 'Back', icon: 'pi pi-times', class: 'p-button-secondary'  }];
   constructor(
     private apiService: ApiHrmService,
     private activatedRoute: ActivatedRoute,
@@ -25,7 +25,7 @@ export class ChiTietToChucComponent implements OnInit, OnChanges {
     private confirmationService: ConfirmationService,
     private router: Router
   ) { }
-  orgId = null;
+  @Input() orgId = null;
   listViews = [];
   imagesUrl = [];
   paramsObject = null;
@@ -53,22 +53,27 @@ export class ChiTietToChucComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.titlePage = this.activatedRoute.data['_value'].title;
-    this.items = [
-      { label: 'Trang chủ' , routerLink: '/home' },
-      { label: 'Cài đặt' },
-      { label: 'Danh sách tổ chức', routerLink: '/cai-dat/cai-dat-to-chuc' },
-      { label: `${this.titlePage}` },
-    ];
-    this.url = this.activatedRoute.data['_value'].url;
-    this.handleParams();
+    if(this.orgId === null) {
+      this.getOrganizeInfo();
+    }else {
+      this.titlePage = this.activatedRoute.data['_value'].title;
+      this.items = [
+        { label: 'Trang chủ' , routerLink: '/home' },
+        { label: 'Cài đặt' },
+        { label: 'Danh sách tổ chức', routerLink: '/cai-dat/cai-dat-to-chuc' },
+        { label: `${this.titlePage}` },
+      ];
+      this.url = this.activatedRoute.data['_value'].url;
+      this.handleParams();
+    }
+ 
   }
 
   handleParams() {
     this.activatedRoute.queryParamMap.subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.dataRouter = this.paramsObject.params;
-      this.orgId = this.paramsObject.params.orgId;
+      this.orgId = this.paramsObject.params.orgId || null;
       this.getOrganizeInfo();
     });
   };
@@ -111,7 +116,11 @@ export class ChiTietToChucComponent implements OnInit, OnChanges {
     this.apiService.setOrganizeInfo(params).subscribe((results: any) => {
       if (results.status === 'success') {
         this.displayUserInfo = false;
-        this.router.navigate(['/cai-dat/cai-dat-to-chuc']);
+        if(this.orgId) {
+          this.router.navigate(['/cai-dat/cai-dat-to-chuc']);
+        }else {
+          this.back.emit();
+        }
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Cập nhật thông tin thành công' });
       } else {
         this.messageService.add({
@@ -142,7 +151,11 @@ export class ChiTietToChucComponent implements OnInit, OnChanges {
     if(data === 'CauHinh') {
       this.getOrganizeInfo();
     }else {
-      this.router.navigate(['/cai-dat/cai-dat-to-chuc']);
+      if(this.orgId) {
+        this.router.navigate(['/cai-dat/cai-dat-to-chuc']);
+      }else {
+        this.back.emit();
+      }
     }
   }
 

@@ -19,15 +19,15 @@ export class HrmSearchEmpComponent {
   searchBys: any = [
     {
       label: 'Mã nhân viên',
-      value: 'code'
+      value: 1
     },
     {
       label: 'Họ tên',
-      value: 'name'
+      value: 2
     },
     {
       label: 'Số điện thoại',
-      value: 'phone'
+      value: 3
     }
   ];
   modelStaff = '';
@@ -95,7 +95,7 @@ export class HrmSearchEmpComponent {
     this.isLoading = true;
     this.isSearching = true;
     this.dataInfo = null;
-    this.apiService.getEmployeePage(queryString.stringify({ filter: this.query.filter, pageSize: 30})).subscribe((results: any) => {
+    this.apiService.getEmployeeSearchPopup(queryString.stringify({ filter: this.query.filter, searchType: this.searchBy, pageSize: 30})).subscribe((results: any) => {
       this.isLoading = false;
       this.dataSearched = results.data.dataList.data;
     })

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import * as queryString from 'querystring';
 import { ConfirmationService, MessageService, TreeNode } from 'primeng/api';
@@ -24,6 +24,7 @@ export class CaiDatToChucComponent implements OnInit {
   pagingComponent = {
     total: 0
   };
+ 
   MENUACTIONROLEAPI = MENUACTIONROLEAPI;
   ACTIONS = ACTIONS
   selectedValue = null
@@ -297,13 +298,13 @@ export class CaiDatToChucComponent implements OnInit {
           class: 'btn-primary mr5',
           hide: CheckHideAction(MENUACTIONROLEAPI.GetOrganizePage.url, ACTIONS.VIEW)
         },
-        {
-          onClick: this.editRow.bind(this),
-          label: 'Sửa tổ chức',
-          icon: 'fa fa-edit',
-          class: 'btn-primary mr5',
-          hide: CheckHideAction(MENUACTIONROLEAPI.GetOrganizePage.url, ACTIONS.EDIT)
-        },
+        // {
+        //   onClick: this.editRow.bind(this),
+        //   label: 'Sửa tổ chức',
+        //   icon: 'fa fa-edit',
+        //   class: 'btn-primary mr5',
+        //   hide: CheckHideAction(MENUACTIONROLEAPI.GetOrganizePage.url, ACTIONS.EDIT)
+        // },
         {
           onClick: this.delOrgin.bind(this),
           label: 'Xóa tổ chức',
@@ -616,41 +617,51 @@ export class CaiDatToChucComponent implements OnInit {
     })
   }
 
+  backPage() {
+    this.load();
+  }
+
   Add() {
-    this.titleForm = {
-      label: 'Thêm mới phòng ban',
-      value: 'Add'
-    }
-
-    // if (this.detailOrganizeMap.parentId) {
-    //   // this.getOrganizeTree(this.detailOrganizeMap.organizeId);
-    //   this.getOrganizeLevelList(this.detailOrganizeMap.organizeId);
-    //   this.modeAgencyOrganize = {
-    //     orgId: null,
-    //     organizeId: this.query.organizeIds,
-    //     org_name: '',
-    //     org_level: this.detailOrganizeMap.org_level + 1,
-    //     parentId: this.detailOrganizeMap.orgId,
-    //     org_type: '',
-    //     isChild: false,
-    //     de_cd: null,
-    //   }
-    // } else {
-
-    // }
-    this.modeAgencyOrganize = {
-      orgId: null,
-      organizeId: this.listAgencyMap.length > 0 ? this.detailOrganizeMap.organizeId : null,
-      org_name: '',
-      org_level: this.listAgencyMap.length > 0 ? 1 : 0,
-      parentId: null,
-      org_type: '',
-      isChild: false,
-      de_cd: null,
-    }
     this.displayOrganize = true;
-    this.displayButton = false;
-    this.getOrganizeTreeByOr();
+
+    // const params = {
+    //   orgId: null
+    // }
+    // this.router.navigate(['/cai-dat/cai-dat-to-chuc/chi-tiet-to-chuc'], { queryParams: params })
+    // this.titleForm = {
+    //   label: 'Thêm mới phòng ban',
+    //   value: 'Add'
+    // }
+
+    // // if (this.detailOrganizeMap.parentId) {
+    // //   // this.getOrganizeTree(this.detailOrganizeMap.organizeId);
+    // //   this.getOrganizeLevelList(this.detailOrganizeMap.organizeId);
+    // //   this.modeAgencyOrganize = {
+    // //     orgId: null,
+    // //     organizeId: this.query.organizeIds,
+    // //     org_name: '',
+    // //     org_level: this.detailOrganizeMap.org_level + 1,
+    // //     parentId: this.detailOrganizeMap.orgId,
+    // //     org_type: '',
+    // //     isChild: false,
+    // //     de_cd: null,
+    // //   }
+    // // } else {
+
+    // // }
+    // this.modeAgencyOrganize = {
+    //   orgId: null,
+    //   organizeId: this.listAgencyMap.length > 0 ? this.detailOrganizeMap.organizeId : null,
+    //   org_name: '',
+    //   org_level: this.listAgencyMap.length > 0 ? 1 : 0,
+    //   parentId: null,
+    //   org_type: '',
+    //   isChild: false,
+    //   de_cd: null,
+    // }
+    // this.displayOrganize = true;
+    // this.displayButton = false;
+    // this.getOrganizeTreeByOr();
   }
   listOrganizeTreeByOr = []
   getOrganizeTreeByOr() {

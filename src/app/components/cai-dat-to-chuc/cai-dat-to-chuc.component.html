@@ -78,66 +78,9 @@
 
 <p-dialog [(visible)]="displayOrganize" [draggable]="false" [resizable]="false"  [modal]="true" [style]="{width: '700px', height: 'auto'}">
     <p-header>
-        {{titleForm.label}}
+        Thêm mới tổ chức
     </p-header>
-    <div class=" col-md-12 mt-1">
-      <div class="field-group treeselect select label-8" > 
-        <label for="">Tổ chức</label>
-          <p-dropdown appendTo="body"  [baseZIndex]="100" 
-          [options]="organizes" [(ngModel)]="organizeIdSelected" (onChange)="onSelectOrgan()"
-          name="organizeId" [filter]="true">
-          <ng-template let-item pTemplate="selectedItem">
-            <span>{{item.label}}</span>
-          </ng-template>
-          <ng-template let-car pTemplate="item">
-            <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-              <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
-            </div>
-          </ng-template>
-        </p-dropdown>
-      </div>
-    </div>
-    <div class=" col-md-12 mt-1">
-      <div class="field-group treeselect select label-8" >
-        <label for="">Trực thuộc</label>
-          <p-treeSelect [(ngModel)]="selectedNodeTree" 
-          [appendTo]="'body'"
-          [name]="selectedNodeTree"
-          [options]="listOrganizeTreeByOr" 
-          (onNodeSelect)="onNodeSelectAdd($event)"
-          selectionMode="single" placeholder="Select Item"></p-treeSelect>
-      </div>
-    </div>
-    <div class=" col-md-12 mt-1">
-      <div class="field-group select" [ngClass]=" modeAgencyOrganize.org_level ? 'valid' : 'invalid' ">
-        <label for="">Phân cấp</label>
-          <p-dropdown appendTo="body" 
-            [baseZIndex]="100" [autoDisplayFirst]="false" [required]
-            [options]="organizeLevelList"  
-            [(ngModel)]="modeAgencyOrganize.org_level" name="org_level" [filter]="true">
-          <ng-template let-item pTemplate="selectedItem">
-            <span>{{item.label}}</span>
-          </ng-template>
-          <ng-template let-car pTemplate="item">
-            <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-              <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
-            </div>
-          </ng-template>
-        </p-dropdown>
-      </div>
-    </div>
-    <div class=" col-md-12 mt-1">
-        <div class="field-group text" [ngClass]=" modeAgencyOrganize.org_name ? 'valid' : 'invalid' ">
-          <label for="">Tên phòng ban  <span style="color:red" >*</span></label>
-          <input type="text" [(ngModel)]="modeAgencyOrganize.org_name" name="org_name" class="form-control">
-        </div>
-    </div>
-   
-    
-    <div class=" col-md-12 mt-1 d-flex justify-content-end">
-        <p-button styleClass="p-button-sm mr-1" label="Lưu lại" (click)="Save()" icon="pi pi-check"></p-button>
-        <p-button styleClass="p-button-secondary p-button-sm" (click)="Close()" label="Đóng lại" icon="pi pi-times"> </p-button>
-    </div>
+    <app-chi-tiet-to-chuc [orgId]="" (back)="backPage()"></app-chi-tiet-to-chuc>
 </p-dialog>
 
 <p-dialog header="Chức năng"  [autoZIndex]="true"  [modal]="true" [draggable]="false" [resizable]="false" [(visible)]="displayButton">
