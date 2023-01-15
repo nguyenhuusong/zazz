@@ -44,6 +44,11 @@ export class TienLuongComponent implements OnInit, AfterViewInit {
       }
     }, 300);
   }
+
+  callbackForm() {
+    this.getSalaryInfoPageByEmpId();
+    this.displayFormEditDetail = false;
+  }
   
   ngOnInit(): void {
     this.getSalaryInfoPageByEmpId();
@@ -107,9 +112,9 @@ export class TienLuongComponent implements OnInit, AfterViewInit {
       }
     ];
   }
-  salaryId = null;
+  salaryInfoId = null;
   editRow({rowData}) {
-    this.salaryId = rowData.id;
+    this.salaryInfoId = rowData.salaryInfoId;
     this.getDetail();
   }
 
@@ -135,7 +140,7 @@ export class TienLuongComponent implements OnInit, AfterViewInit {
   }
 
   addTienLuong() {
-    this.salaryId = null
+    this.salaryInfoId = null
     this.getDetail();
   }
 
@@ -146,7 +151,7 @@ export class TienLuongComponent implements OnInit, AfterViewInit {
     this.spinner.show();
     this.dataDetailInfo = null;
     this.listViewsDetail = [];
-    const query = { empId: this.empId, id: this.salaryId, flow_st: flow_st }
+    const query = { empId: this.empId, id: this.salaryInfoId, flow_st: flow_st }
     this.apiService.getSalaryInfoNew(queryString.stringify(query)).subscribe(results => {
       if (results.status === 'success') {
         this.spinner.hide();
@@ -294,7 +299,7 @@ export class TienLuongComponent implements OnInit, AfterViewInit {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa quá trình làm việc này?',
       accept: () => {
-        const queryParams = queryString.stringify({ id: event.rowData.salaryId });
+        const queryParams = queryString.stringify({ salaryInfoId: event.rowData.salaryInfoId });
         this.apiService.delSalaryInfoNew(queryParams).subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
