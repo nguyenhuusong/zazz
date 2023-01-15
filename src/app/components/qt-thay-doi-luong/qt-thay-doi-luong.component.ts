@@ -261,7 +261,7 @@ export class QtThayDoiLuongComponent implements OnInit {
   idEdit = null;
   editRow({rowData}) {
     const params = {
-      Id: rowData.id
+      salaryInfoId: rowData.salaryInfoId
     }
     this.router.navigate(['/nhan-su/qua-trinh-thay-doi-luong/chi-tiet-qua-trinh-thay-doi-luong'], { queryParams: params });
   }
@@ -276,7 +276,7 @@ export class QtThayDoiLuongComponent implements OnInit {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa?',
       accept: () => {
-        const queryParams = queryString.stringify({Id: event.rowData.id});
+        const queryParams = queryString.stringify({salaryInfoId: event.rowData.salaryInfoId});
         this.apiService.delSalaryInfoNew(queryParams).subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa nhân viên thành công' });
@@ -608,7 +608,7 @@ export class QtThayDoiLuongComponent implements OnInit {
 
   seachEmValue(event) {
     const params = {
-      Id: null,
+      salaryInfoId: null,
       empId: event.value
     }
     if(event.value) {

@@ -42,7 +42,7 @@ export class ChiTietQTThayDoiLuongComponent implements OnInit {
   url = '';
   itemsMenu = [];
   modelEdit = {
-    Id: null,
+    salaryInfoId: null,
     empId: null
   }
   ngOnInit(): void {
@@ -61,7 +61,7 @@ export class ChiTietQTThayDoiLuongComponent implements OnInit {
   handleParams(): void {
     this.activatedRoute.queryParamMap.subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
-      this.modelEdit.Id = this.paramsObject.params.Id || null
+      this.modelEdit.salaryInfoId = this.paramsObject.params.salaryInfoId || null
       this.modelEdit.empId = this.paramsObject.params.empId || null
       this.getSalaryInfoDevM();
     });
