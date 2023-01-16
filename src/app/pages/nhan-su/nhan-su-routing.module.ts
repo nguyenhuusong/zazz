@@ -22,6 +22,7 @@ import { EmployeeInfoComponent } from 'src/app/components/ns-ho-so-nhan-su/emplo
 import { ContractDetailComponent } from 'src/app/components/ns-ho-so-nhan-su/contract-detail/contract-detail.component';
 import { LyDoNghiViecComponent } from 'src/app/components/ns-ho-so-nghi-viec/ly-do-nghi-viec/ly-do-nghi-viec.component';
 import { ChiTietLyDoNghiViecComponent } from 'src/app/components/ns-ho-so-nghi-viec/ly-do-nghi-viec/chi-tiet-ly-do-nghi-viec/chi-tiet-ly-do-nghi-viec.component';
+import { DetailTerminateComponent } from 'src/app/components/ns-ho-so-nghi-viec/detail-terminate/detail-terminate.component';
 
 const routes: Routes = [
   {
@@ -121,7 +122,7 @@ const routes: Routes = [
 
   {
     path: 'ho-so-nghi-viec/chi-tiet-ho-so-nghi-viec',
-    component: ChiTietHoSoNghiViecComponent,
+    component: DetailTerminateComponent,
     data: {
       title: 'Chi tiết hồ sơ nghỉ việc',
       url: 'ho-so-nghi-viec/chi-tiet-ho-so-nghi-viec',
