@@ -36,10 +36,12 @@
 
 <p-dialog styleClass="popup-btngroup-edit-detail"  [(visible)]="displayFormEditDetail" [draggable]="false"  [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '1400px', height: 'auto'}">
     <p-header>
-        Thêm quá trình lương
+        {{salaryInfoId ? 'Chỉnh sửa quá trình lương' : 'Thêm mới quá trình lương'}}
     </p-header>
 
-    <p-card>
+    <app-chi-tiet-qt-thay-doi-luong [empId]="empId" *ngIf="displayFormEditDetail" [salaryInfoId]="salaryInfoId" (callback)="callbackForm()" [isDialog] =  "true"></app-chi-tiet-qt-thay-doi-luong>
+
+    <!-- <p-card>
         <div class="status-line steps-contract col-12 m-auto">
             <p-steps [model]="steps" [(activeIndex)]="activeIndex" [readonly]="false"></p-steps>
         </div>
@@ -52,7 +54,7 @@
             (callBackForm)="callBackForm($event)"
             (callbackcancel)="canceDetail($event)"></app-edit-detail>
     </p-card>
-    
+     -->
 </p-dialog>
 
 

@@ -15,6 +15,9 @@ import { AgGridFn } from 'src/app/common/function-common/common';
 export class ChiTietQTThayDoiLuongComponent implements OnInit {
   @Output() callback = new EventEmitter<any>();
   @Output() back = new EventEmitter<any>();
+  @Input() isDialog = false;
+  @Input() empId = null;
+  @Input() salaryInfoId = null;
   constructor(
     private apiService: ApiHrmService,
     private messageService: MessageService,
@@ -42,7 +45,7 @@ export class ChiTietQTThayDoiLuongComponent implements OnInit {
   url = '';
   itemsMenu = [];
   modelEdit = {
-    Id: null,
+    salaryInfoId: null,
     empId: null
   }
   ngOnInit(): void {
@@ -54,14 +57,20 @@ export class ChiTietQTThayDoiLuongComponent implements OnInit {
       { label: 'Quá trình thay đổi lương', routerLink: '/nhan-su/qua-trinh-thay-doi-luong' },
       { label: `${this.titlePage}` },
     ]
-    this.handleParams();
+    if(this.isDialog) {
+      this.modelEdit.salaryInfoId = this.salaryInfoId
+      this.modelEdit.empId = this.empId;
+      this.getSalaryInfoDevM();
+    }else {
+      this.handleParams();
+    }
   }
   paramsObject = null;
 
   handleParams(): void {
     this.activatedRoute.queryParamMap.subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
-      this.modelEdit.Id = this.paramsObject.params.Id || null
+      this.modelEdit.salaryInfoId = this.paramsObject.params.salaryInfoId || null
       this.modelEdit.empId = this.paramsObject.params.empId || null
       this.getSalaryInfoDevM();
     });
@@ -87,9 +96,9 @@ export class ChiTietQTThayDoiLuongComponent implements OnInit {
     if (data === 'CauHinh') {
       this.getSalaryInfoDevM() 
     } else if (data === 'BackPage') {
-      this.getSalaryInfoDevM(this.flowCurrent === 1 ? this.flowCurrent: this.flowCurrent - 2)
+      this.getSalaryInfoDevM(this.flowCurrent === 1 ? this.flowCurrent: this.flowCurrent - 1)
     } else {
-      this.router.navigate(['/nhan-su/qua-trinh-thay-doi-luong'])
+     this.isDialog ? this.callback.emit() : this.router.navigate(['/nhan-su/qua-trinh-thay-doi-luong']);
     }
   }
 
@@ -138,7 +147,7 @@ export class ChiTietQTThayDoiLuongComponent implements OnInit {
 
         if(type === 'Submit' || type === 'SaveNhap') {
           setTimeout(() => {
-            this.router.navigate(['/nhan-su/qua-trinh-thay-doi-luong'])
+            this.isDialog ? this.callback.emit() : this.router.navigate(['/nhan-su/qua-trinh-thay-doi-luong'])
           }, 200);
         }
       } else {
