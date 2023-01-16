@@ -44,7 +44,7 @@ export class DetailTerminateComponent implements OnInit {
   url = '';
   itemsMenu = [];
   modelEdit = {
-    id: null,
+    terminateId: null,
     empId: null
   }
   ngOnInit(): void {
@@ -57,7 +57,7 @@ export class DetailTerminateComponent implements OnInit {
       { label: `${this.titlePage}` },
     ]
     if(this.isDialog) {
-      this.modelEdit.id = this.id
+      this.modelEdit.terminateId = this.id
       this.modelEdit.empId = this.empId;
       this.getTerminateInfo();
     }else {
@@ -69,10 +69,14 @@ export class DetailTerminateComponent implements OnInit {
   handleParams(): void {
     this.activatedRoute.queryParamMap.subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
-      this.modelEdit.id = this.paramsObject.params.terminateId || null
+      this.modelEdit.terminateId = this.paramsObject.params.terminateId || null
       this.modelEdit.empId = this.paramsObject.params.empId || null
       this.getTerminateInfo();
     });
+  }
+  indexTab = 0;
+  handleChange(index) {
+    this.indexTab = index;
   }
 
   stepActivated(): void {
@@ -169,8 +173,8 @@ export class DetailTerminateComponent implements OnInit {
     this.detailInfo = null;
     this.listViews = [];
     this.spinner.show();
-    const queryParams = queryString.stringify({...this.modelEdit, flow_cur: flow_cur });
-    this.apiService.getSalaryInfoNew(queryParams).subscribe(results => {
+    const queryParams = queryString.stringify({ terminateId: this.modelEdit.terminateId, flow_cur: flow_cur });
+    this.apiService.getTerminateInfo(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.activeIndex = results.data.flow_st;
         this.flowCurrent = results.data.flow_cur;

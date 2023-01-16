@@ -13,12 +13,32 @@
 </p-card>
 <p-divider></p-divider>
 <p-card>
+
+    <p-tabView [(activeIndex)]="indexTab" (onChange)="handleChange($event.index)">
+        <p-tabPanel header="Thông tin chung">
+            <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'"
+                [optionsButtonsEdit]="optionsButtonsView" [dataView]="listViews" (callback)="setTerminateInfo($event)" (callBackForm)="callBackForm($event)"
+                (callbackcancel)="cancel($event)"></app-edit-detail>
+        </p-tabPanel>
+        <p-tabPanel header="Danh sách hồ sơ">
+            <!-- <div class="grid-default border">
+                <app-list-grid-angular [domLayout]="'autoHeight'"
+                    *ngIf="indexTab === 1 && columnDefs.length > 0" [title]="'Chứng chỉ'"
+                    [listsData]="listsData" (FnClick)="OnClick($event)" [columnDefs]="columnDefs">
+                </app-list-grid-angular>
+            </div> -->
+        </p-tabPanel>
+    </p-tabView>
+
+
+
+
+
+
    
     <div>
-        <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'"
-            [optionsButtonsEdit]="optionsButtonsView" [dataView]="listViews" (callback)="setTerminateInfo($event)" (callBackForm)="callBackForm($event)"
-            (callbackcancel)="cancel($event)"></app-edit-detail>
-            <p-divider></p-divider>
+       
+            <!-- <p-divider></p-divider> -->
 
             <!-- <app-thanh-phan-luong [salaryInfoId]="modelEdit.id" *ngIf="detailInfo && detailInfo?.flow_cur > 1"></app-thanh-phan-luong> -->
     </div>
