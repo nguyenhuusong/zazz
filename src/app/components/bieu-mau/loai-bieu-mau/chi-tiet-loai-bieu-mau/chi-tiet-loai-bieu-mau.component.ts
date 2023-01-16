@@ -19,8 +19,8 @@ export class ChiTietLoaiBieuMauComponent implements OnInit, OnDestroy {
   detailInfo = null
   listViews = [];
   optionsButon = [
-    { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
-    { label: 'Lưu lại', value: 'Update', class: CheckHideAction(MENUACTIONROLEAPI.GetFormsTypePage.url, ACTIONS.EDIT) ? 'hidden' : '', icon: 'pi pi-check' }
+    // { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
+    // { label: 'Lưu lại', value: 'Update', class: CheckHideAction(MENUACTIONROLEAPI.GetFormsTypePage.url, ACTIONS.EDIT) ? 'hidden' : '', icon: 'pi pi-check' }
   ];
   titlePage = '';
   @Input() formTypeId: string = null;

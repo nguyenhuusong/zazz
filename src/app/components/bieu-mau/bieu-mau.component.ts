@@ -293,13 +293,13 @@ export class BieuMauComponent implements OnInit, OnDestroy {
           // hide: this.indexTab === 0 || CheckHideAction(MENUACTIONROLEAPI.GetFormGeneral.url, ACTIONS.VIEW)
 
         },
-        {
-          onClick: this.delRow.bind(this),
-          label: 'Xóa tài liệu',
-          icon: 'fa fa-trash',
-          class: 'btn-primary mr5',
-          // hide: this.indexTab === 0 || CheckHideAction(MENUACTIONROLEAPI.GetFormGeneral.url, ACTIONS.DELETE)
-        },
+        // {
+        //   onClick: this.delRow.bind(this),
+        //   label: 'Xóa tài liệu',
+        //   icon: 'fa fa-trash',
+        //   class: 'btn-primary mr5',
+        //   // hide: this.indexTab === 0 || CheckHideAction(MENUACTIONROLEAPI.GetFormGeneral.url, ACTIONS.DELETE)
+        // },
       ]
     };
   }

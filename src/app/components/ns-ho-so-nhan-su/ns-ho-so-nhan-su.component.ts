@@ -283,13 +283,13 @@ export class NsHoSoNhanSuComponent implements OnInit {
           class: 'btn-primary mr5',
           hide: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.VIEW)
         },
-        {
-          onClick: this.delRow.bind(this),
-          label: 'Xóa nhân viên này',
-          icon: 'fa fa-trash',
-          class: 'btn-primary mr5',
-          hide: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.DELETE)
-        },
+        // {
+        //   onClick: this.delRow.bind(this),
+        //   label: 'Xóa nhân viên này',
+        //   icon: 'fa fa-trash',
+        //   class: 'btn-primary mr5',
+        //   hide: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.DELETE)
+        // },
       ]
     };
   }
