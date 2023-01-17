@@ -45,7 +45,7 @@ export class TienIchComponent implements OnInit {
     this.listViewsForm = [];
     this.detailInfo = null;
     const queryParams = queryString.stringify({ empId: this.empId });
-    this.apiService.getEmployeeData('GetEmployeeByUtility', queryParams).subscribe(results => {
+    this.apiService.getEmpOtherInfo(queryParams).subscribe(results => {
       if (results.status === 'success') {
         if (!this.codeStaff) {
           this.codeStaff = getFieldValueAggrid(results.data, 'code');
@@ -69,11 +69,11 @@ export class TienIchComponent implements OnInit {
   }
 
  
-  setEmployeeInfo(data) {
+  setEmpOtherInfo(data) {
     const  params = {
       ...this.detailInfo, group_fields: data
     };
-    this.apiService.setEmployeeInfo(params).subscribe((results: any) => {
+    this.apiService.setEmpOtherInfo(params).subscribe((results: any) => {
       if (results.status === 'success') {
       
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Cập nhật thông tin thành công' });

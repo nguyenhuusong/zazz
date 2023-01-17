@@ -19,30 +19,29 @@
         </div>
         <div class="col-3"></div>
     </div>
-    <div class="content page-detail" style="padding: 0;">
-        <p-panel styleClass="no-header">
-            <div class="">
-                <div class="row col-md-12">
-                    <div class="page-detail-edit-detail" >
-                        <app-edit-detail *ngIf="listViews.length> 0" 
-                            [detail]="detailInfo" 
-                            [detailInfo]="detailInfo" 
-                            [thongtinnhanvienNew]="true" 
-                            [manhinh]="'Edit'" 
-                            [optionsButtonsEdit]="optionsButtonsView"  
-                            [dataView]="listViews"
-                            (callback)="setEmployeeInfo($event)" 
-                            (callbackcancel)="cancelUpdate($event)">
-                        </app-edit-detail>
+        <div class="content page-detail" style="padding: 0;">
+            <p-panel styleClass="no-header">
+                <div class="">
+                    <div class="row col-md-12">
+                        <div class="page-detail-edit-detail">
+                            <app-edit-detail *ngIf="listViews.length> 0" 
+                                [detail]="detailInfo" 
+                                [detailInfo]="detailInfo" 
+                                [thongtinnhanvienNew]="true" 
+                                [manhinh]="'Edit'" 
+                                [optionsButtonsEdit]="optionsButtonsView"  
+                                [dataView]="listViews"
+                                (callback)="setEmpOtherInfo($event)" 
+                                (callbackcancel)="cancelUpdate($event)">
+                            </app-edit-detail>
+                            <p-divider></p-divider>
+                            <app-danh-sach-xe [empId]="empId"></app-danh-sach-xe>
+                            <app-danh-sach-thiet-bi [empId]="empId"></app-danh-sach-thiet-bi>
+                            <app-tai-khoan [empId]="empId"></app-tai-khoan>
+                        </div>
+    
                     </div>
-
-                    </div>
-                    </div>
-        </p-panel>
+                </div>
+            </p-panel>
         </div>
-
-    </section>
-
-    <section>
-        <h6 class="title-section">Xe nhân viên </h6>
     </section>

@@ -93,6 +93,8 @@ import { AddContractComponent } from 'src/app/components/quan-ly-hop-dong/add-co
 import { UploadFileModule } from 'src/app/common/upload-file/upload-file.module';
 import { ChucDanhComponent } from 'src/app/components/chuc-danh/chuc-danh.component';
 import { ChiTietChucDanhComponent } from 'src/app/components/chuc-danh/chi-tiet-chuc-danh/chi-tiet-chuc-danh.component';
+import { DanhMucLoaiGiayToComponent } from 'src/app/components/danh-muc-loai-giay-to/danh-muc-loai-giay-to.component';
+import { ChiTietLoaiGiayToComponent } from 'src/app/components/danh-muc-loai-giay-to/chi-tiet-loai-giay-to/chi-tiet-loai-giay-to.component';
 
 FullCalendarModule.registerPlugins([
   // register FullCalendar plugins
@@ -197,7 +199,9 @@ FullCalendarModule.registerPlugins([
     NguoiDuyetComponent,
     AddContractComponent,
     ChucDanhComponent,
-    ChiTietChucDanhComponent
+    ChiTietChucDanhComponent,
+    DanhMucLoaiGiayToComponent,
+    ChiTietLoaiGiayToComponent,
   ],
   providers: []
 })

@@ -1801,14 +1801,15 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn phê duyệt?',
       accept: () => {
-        this.apiService.timekeepingDeviceStatus(data).subscribe(results => {
-          if (results.status === 'success') {
-            this.selectedMenuCode = API_PROFILE.THONG_TIN_CA_NHAN;
-            this.listsData[4] = []
-            this.getEmployeeInfo();
-            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
-          }
-        })
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Chức năng đang phát triển'});
+        // this.apiService.timekeepingDeviceStatus(data).subscribe(results => {
+        //   if (results.status === 'success') {
+        //     this.selectedMenuCode = API_PROFILE.THONG_TIN_CA_NHAN;
+        //     this.listsData[4] = []
+        //     this.getEmployeeInfo();
+        //     this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
+        //   }
+        // })
       }
     });
   }
@@ -1821,14 +1822,15 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn từ chối phê duyệt?',
       accept: () => {
-        this.apiService.timekeepingDeviceStatus(data).subscribe(results => {
-          if (results.status === 'success') {
-            this.selectedMenuCode = API_PROFILE.THONG_TIN_CA_NHAN;
-            this.listsData[4] = []
-            this.getEmployeeInfo();
-            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
-          }
-        })
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Chức năng đang phát triển' });
+
+        // this.apiService.timekeepingDeviceStatus(data).subscribe(results => {
+        //   if (results.status === 'success') {
+        //     this.selectedMenuCode = API_PROFILE.THONG_TIN_CA_NHAN;
+        //     this.listsData[4] = []
+        //     this.getEmployeeInfo();
+        //   }
+        // })
       }
     });
   }

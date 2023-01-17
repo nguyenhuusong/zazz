@@ -896,6 +896,22 @@ export class ApiHrmService {
   setEmployeeClose(params): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/employee/SetEmployeeClose`, params, this.options)
   }
+  
+  setEmployeeBlockV2(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/employee/SetEmployeeBlock`, params, this.options)
+  }
+
+  setEmployeeOpenV2(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/employee/SetEmployeeOpen`, params, this.options)
+  }
+
+  lockEmployeeV2(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/employee/LockEmployee`, params, this.options)
+  }
+
+  unLockEmployeeV2(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/employee/UnLockEmployee`, params, this.options)
+  }
 
   setEmployeeApprovehrm(params): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/employee/SetEmployeeApprove`, params, this.options)
@@ -1469,6 +1485,10 @@ export class ApiHrmService {
   setEmployeeCardInfo(queryParams): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/cardvehicle/SetEmployeeCardInfo`, queryParams, this.options)
   }
+
+  getEmpVehiclePageByEmp(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/cardvehicle/GetEmpVehiclePageByEmp?` + queryParams, this.options)
+  }
   
   getParameterPage(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/work/GetParameterPage?` + queryParams, this.options)
@@ -1703,9 +1723,9 @@ export class ApiHrmService {
     return this.http.delete<any>(`${apiHrmServer}/api/v1/payrollRecord/DelHrmPayrollRecord?${queryParams}`, this.options)
   }
 
-  timekeepingDeviceStatus(data): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v1/timekeeping/TimekeepingDeviceStatus`, data , this.options)
-  }
+  // timekeepingDeviceStatus(data): Observable<any> {
+  //   return this.http.post<any>(`${apiHrmServer}/api/v1/timekeeping/TimekeepingDeviceStatus`, data , this.options)
+  // }
 
   // new qt thay doi luong
   getSalaryInfoPageNew(queryParams): Observable<any> {
@@ -2093,6 +2113,12 @@ export class ApiHrmService {
   getEmpRecordPage(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/employeeprofile/GetEmpRecordPage?` +  queryParams, this.options)
   }
+  getEmpRecord(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/employeeprofile/GetEmpRecord?` +  queryParams, this.options)
+  }
+  setEmpRecord(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/employeeprofile/SetEmpRecord` , queryParams, this.options)
+  }
   addEmpRecord(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/employeeprofile/AddEmpRecord?` +  queryParams, this.options)
   }
@@ -2126,6 +2152,22 @@ export class ApiHrmService {
   }
   defaultEmpContact(queryParams): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/employeeprofile/DefaultEmpContact`, queryParams, this.options)
+  }
+
+  getEmpRecordTypePage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/employeeprofile/GetEmpRecordTypePage?` +  queryParams, this.options)
+  }
+
+  setEmpRecordTypeInfo(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/employeeprofile/SetEmpRecordTypeInfo` , queryParams, this.options)
+  }
+
+  getEmpRecordTypeInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/employeeprofile/GetEmpRecordTypeInfo?` +  queryParams, this.options)
+  }
+
+  delEmpRecordTypeInfo(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/employeeprofile/DelEmpRecordTypeInfo?` +  queryParams, this.options)
   }
 
   // EmpWorking
@@ -2352,6 +2394,48 @@ export class ApiHrmService {
 
   setTerminateReasonInfo(queryParams): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/TerminateReason/SetTerminateReasonInfo`, queryParams, this.options);
+  }
+
+  // EmpOtherGET /api/v2/empother/GetEmpOtherInfo
+
+  getEmpOtherInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/empother/GetEmpOtherInfo?` + queryParams, this.options);
+  }
+
+  getEmpUserPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/empother/GetEmpUserPage?` + queryParams, this.options);
+  }
+
+  getEmployeeByUtility(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/empother/GetEmployeeByUtility?` + queryParams, this.options);
+  }
+
+  getEmpUserInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/empother/GetEmpUserInfo?` + queryParams, this.options);
+  }
+  
+  getEmpDeviceByEmp(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/empother/GetEmpDeviceByEmp?` + queryParams, this.options);
+  }
+
+  delEmpDevices(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/empother/DelEmpDevices?` + queryParams, this.options);
+  }
+
+  delEmpUserInfo(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/empother/DelEmpUserInfo?` + queryParams, this.options);
+  }
+
+  setEmpOtherInfo(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/empother/SetEmpOtherInfo` , queryParams, this.options);
+  }
+
+  setEmpUserInfo(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/empother/SetEmpUserInfo` , queryParams, this.options);
+  }
+
+  setEmpDeviceStatus(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/empother/SetEmpDeviceStatus` , queryParams, this.options);
   }
 
 

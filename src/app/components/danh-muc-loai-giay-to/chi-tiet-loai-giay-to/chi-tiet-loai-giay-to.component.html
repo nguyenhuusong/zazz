@@ -1,0 +1,13 @@
+
+<div class="main-grid product-detail">
+    <section>
+        <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
+    </section>
+   <div class="content">
+    <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'" [dataView]="listViews"
+        [optionsButtonsEdit]="optionsButtonsView" 
+        (callback)="SetEmpRecordTypeInfo($event)" (callbackcancel)="cancelUpdate($event)"></app-edit-detail>
+        
+   </div>
+   
+</div>

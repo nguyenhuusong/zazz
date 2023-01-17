@@ -261,19 +261,6 @@ export class NsHoSoNhanSuComponent implements OnInit {
   }
 
   showButtons(event: any) {
-    // const buttons = []
-    // const actions = getActionByPathMenu('nhan-su', this.MENUACTIONROLEAPI.GetEmployeePage.url, ['EditEmployee'])
-    // for(let item of actions) {
-    //   buttons.push({
-    //     onClick: this[item].bind(this),
-    //     label: item.actionName,
-    //     icon: 'fa fa-eye',
-    //     class: 'btn-primary mr5',
-    //   })
-    // }
-    // return {
-    //   buttons: buttons
-    // };
     return {
       buttons: [
         {
@@ -283,13 +270,36 @@ export class NsHoSoNhanSuComponent implements OnInit {
           class: 'btn-primary mr5',
           hide: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.VIEW)
         },
-        // {
-        //   onClick: this.delRow.bind(this),
-        //   label: 'Xóa nhân viên này',
-        //   icon: 'fa fa-trash',
-        //   class: 'btn-primary mr5',
-        //   hide: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.DELETE)
-        // },
+        {
+          onClick: this.delRow.bind(this),
+          label: 'Xóa nhân viên này',
+          icon: 'fa fa-trash',
+          class: 'btn-primary mr5',
+        },
+        {
+          onClick: this.SetEmployeeBlock.bind(this),
+          label: 'Chặn hồ sơ',
+          icon: 'fa fa-trash',
+          class: 'btn-primary mr5',
+        },
+        {
+          onClick: this.SetEmployeeOpen.bind(this),
+          label: 'Bỏ chặn hồ sơ',
+          icon: 'fa fa-trash',
+          class: 'btn-primary mr5',
+        },
+        {
+          onClick: this.LockEmployee.bind(this),
+          label: 'khóa hồ sơ',
+          icon: 'fa fa-trash',
+          class: 'btn-primary mr5',
+        },
+        {
+          onClick: this.UnLockEmployee.bind(this),
+          label: 'Mở khóa hồ sơ',
+          icon: 'fa fa-trash',
+          class: 'btn-primary mr5',
+        },
       ]
     };
   }
@@ -381,7 +391,59 @@ export class NsHoSoNhanSuComponent implements OnInit {
       accept: () => {
         this.apiService.deleteEmployee(event.rowData.empId).subscribe((results: any) => {
           if (results.status === 'success') {
-            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa nhân viên thành công' });
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Xóa nhân viên thành công' });
+            this.load();
+          } else {
+            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+          }
+        });
+      }
+    });
+  }
+
+  SetEmployeeBlock(event) {
+    this.modelBlockAndOpen = {
+      empId: event.rowData.empId,
+      workDt: null,
+      comments: null,
+      type: 'block'
+    }
+    this.displayApproveContract = true;
+  }
+ 
+  SetEmployeeOpen(event) {
+    this.modelBlockAndOpen = {
+      empId: event.rowData.empId,
+      workDt: null,
+      comments: null,
+      type: 'open'
+    }
+    this.displayApproveContract = true;
+  }
+
+  LockEmployee(event) {
+    this.confirmationService.confirm({
+      message: 'Bạn có chắc chắn muốn khóa  hồ sơ nhân viên ?',
+      accept: () => {
+        this.apiService.lockEmployeeV2({empId :event.rowData.empId}).subscribe((results: any) => {
+          if (results.status === 'success') {
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Xóa nhân viên thành công' });
+            this.load();
+          } else {
+            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+          }
+        });
+      }
+    });
+  }
+
+  UnLockEmployee(event) {
+    this.confirmationService.confirm({
+      message: 'Bạn có chắc chắn muốn mở khóa hồ sơ nhân viên ?',
+      accept: () => {
+        this.apiService.unLockEmployeeV2({empId :event.rowData.empId}).subscribe((results: any) => {
+          if (results.status === 'success') {
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Xóa nhân viên thành công' });
             this.load();
           } else {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
@@ -925,6 +987,39 @@ showFilter() {
     //     }
     //   }
     // });
+  }
+
+  displayApproveContract = false;
+  modelBlockAndOpen = {
+    empId: null,
+    workDt: null,
+    comments: null,
+    type: 'open'
+  }
+
+  submit() {
+    let params = {...this.modelBlockAndOpen};
+    delete this.modelBlockAndOpen.type
+    if(this.modelBlockAndOpen.type === 'open') {
+      this.apiService.setEmployeeOpenV2(params).subscribe((results: any) => {
+        if (results.status === 'success') {
+          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Mở chặn thành công' });
+          this.load();
+        } else {
+          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+        }
+      });
+    }else {
+      this.apiService.setEmployeeBlockV2(params).subscribe((results: any) => {
+        if (results.status === 'success') {
+          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Chặn thành công' });
+          this.load();
+        } else {
+          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+        }
+      });
+    }
+
   }
 
 }

@@ -3,18 +3,20 @@
         <p-panel>
             <ng-template pTemplate="header">
                 <div class="grid d-flex justify-content-between">
-                    <h3 class="title-section">Danh sách hồ sơ cá nhân</h3>
+                    <h3 class="title-section">Danh sách thiết bị</h3>
                 </div>
             </ng-template>
             <div class="row" style="flex-wrap: wrap">
                 <div class="grid-default border">
                     <app-list-grid-angular 
-                    [domLayout]="'autoHeight'" 
+                    [domLayout]="'autoHeight'"
+                    [idGrid]="gridKey + '_45dfs'" 
                     *ngIf="columnDefs.length > 0" 
-                    [idGrid]="gridKey + '_45dfs'"
+                    [heightRow]="50"
                     [title]="'Chứng chỉ'"
                     [listsData]="listsData" 
                     (showConfig)="CauHinh()"
+                    (onCellClicked)="onCellClicked($event)"
                     [columnDefs]="columnDefs">
                 </app-list-grid-angular>
                 </div>
@@ -26,7 +28,7 @@
 
 
 <p-dialog header="Cài đặt cấu hình " [appendTo]="'body'" [focusTrap]="false" styleClass="popup-setting"
-    (onHide)="getEmpRecordPage()" [(visible)]="displaySetting" [modal]="true" [style]="{width: '50vw'}"
+    (onHide)="getEmpDeviceByEmp()" [(visible)]="displaySetting" [modal]="true" [style]="{width: '50vw'}"
     [maximizable]="true" [draggable]="false" [resizable]="false">
     <app-config-grid-table-form *ngIf="displaySetting && gridKey" [typeConfig]="'TableInfo'"
         [gridKey]="gridKey"></app-config-grid-table-form>
@@ -34,31 +36,12 @@
 
 <p-dialog styleClass="popup-btngroup-edit-detail"  [(visible)]="displayFormEditDetail" [draggable]="false"  [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '1400px', height: 'auto'}">
     <p-header>
-       Danh sách hồ sơ cá nhân cần cập nhật
+        Giấy tờ tùy thân
     </p-header>
-    <app-list-grid-angular 
-    [domLayout]="'autoHeight'" 
-    *ngIf="columnDefsRecord.length > 0" 
-    [idGrid]="gridKey + '_45dfsupload'"
-    [title]="'Chứng chỉ'"
-    [listsData]="listsDataRecord" 
-    [columnDefs]="columnDefsRecord">
-</app-list-grid-angular>
-<ng-template pTemplate="footer">
-    <p-button label="Lưu hồ sơ" styleClass="p-button-sm mr-1" (onClick)="saveRecord()" icon="pi pi-check"></p-button>
-    <p-button label="Đóng" styleClass="p-button-sm p-button-secondary" (onClick)="displayFormEditDetail = !displayFormEditDetail" icon="pi pi-time"></p-button>
-</ng-template>
-
+    <app-edit-detail [optionsButtonsEdit]="optionsButtonsPopup" *ngIf="listViewsDetail.length> 0 && displayFormEditDetail" [detailInfo]="dataDetailInfo"
+        [detail]="dataDetailInfo" [manhinh]="'Edit'" [thongtinnhanvienNew]="true"
+        [dataView]="listViewsDetail" (callback)="setDetailInfo($event)"
+        (callbackcancel)="cancelDetailInfo($event)"></app-edit-detail>
 </p-dialog>
-
-
-<p-dialog [(visible)]="displayuploadcontract" [autoZIndex]="true" [modal]="true"  appendTo="body"
-    [style]="{width: '800px', height: 'auto'}">
-    <p-header>
-        Tải hồ sơ cá nhân [{{metafile?.meta_title}}]
-    </p-header>
-    <app-upload-file [maxFileSize]="8000000" [multiple]="" (callback)="handleUpload($event)" *ngIf="displayuploadcontract"></app-upload-file>
-</p-dialog>
-
 
 

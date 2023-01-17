@@ -34,6 +34,8 @@ import { LoaiToChucComponent } from 'src/app/components/cai-dat-to-chuc/loai-to-
 import { ChiTietLoaiToChucComponent } from 'src/app/components/cai-dat-to-chuc/loai-to-chuc/chi-tiet-loai-to-chuc/chi-tiet-loai-to-chuc.component';
 import { ChucDanhComponent } from 'src/app/components/chuc-danh/chuc-danh.component';
 import { ChiTietChucDanhComponent } from 'src/app/components/chuc-danh/chi-tiet-chuc-danh/chi-tiet-chuc-danh.component';
+import { DanhMucLoaiGiayToComponent } from 'src/app/components/danh-muc-loai-giay-to/danh-muc-loai-giay-to.component';
+import { ChiTietLoaiGiayToComponent } from 'src/app/components/danh-muc-loai-giay-to/chi-tiet-loai-giay-to/chi-tiet-loai-giay-to.component';
 
 const routes: Routes = [
   {
@@ -360,6 +362,33 @@ const routes: Routes = [
     data: {
       title: 'Chi tiết hợp đồng',
       url: 'chi-tiet-hop-dong',
+    },
+  },
+
+  // Danh mục loại giấy tờ
+
+  {
+    path: 'cai-dat-loai-giay-to',
+    component: DanhMucLoaiGiayToComponent,
+    data: {
+      title: 'Danh mục loại giấy tờ',
+      url: 'cai-dat-loai-giay-to',
+    },
+  },
+  {
+    path: 'cai-dat-loai-giay-to/them-moi-loai-giay-to',
+    component: ChiTietLoaiGiayToComponent,
+    data: {
+      title: 'Thêm mới loại giấy tờ',
+      url: 'them-moi-loai-giay-to',
+    },
+  },
+  {
+    path: 'cai-dat-loai-giay-to/chi-tiet-loai-giay-to',
+    component: ChiTietLoaiGiayToComponent,
+    data: {
+      title: 'Chi tiết loại giấy tờ',
+      url: 'chi-tiet-loai-giay-to',
     },
   },
 

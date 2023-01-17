@@ -28,7 +28,10 @@ export class ThongTinHoSoCaNhanComponent implements OnInit {
   ) { }
   listsData = [];
   columnDefs = [];
+  listsDataRecord = [];
+  columnDefsRecord = [];
   gridKey = '';
+  gridKeyRecord = '';
 
   ngAfterViewInit(): void {
     this.FnEvent();
@@ -56,27 +59,55 @@ export class ThongTinHoSoCaNhanComponent implements OnInit {
   }
   cont_id = null
   themMoiThongTinHSCN() {
-    this.addEmpRecord();
+    this.getEmpRecord();
   }
 
   listViewsDetail = [];
   dataDetailInfo = null;
   displayFormEditDetail = false
-  addEmpRecord() {
+  getEmpRecord() {
+    this.columnDefsRecord = [];
     const queryParams = queryString.stringify({ empId: this.empId});
     this.listViewsDetail = [];
-    this.apiService.addEmpRecord(queryParams).subscribe(results => {
+    this.apiService.getEmpRecord(queryParams).subscribe(results => {
       if (results.status === 'success') {
-        this.listViewsDetail = cloneDeep(results.data.group_fields);
+        // if (results.data.dataList.gridKey) {
+        //   this.gridKeyRecord = results.data.dataList.gridKey;
+        // }
+        this.spinner.hide();
+        this.listsDataRecord = results.data.records || [];
         this.dataDetailInfo = results.data;
+        this.initGrid('columnDefsRecord',results.data.gridflexdetails1);
         this.displayFormEditDetail = true;
+      } else {
+        this.spinner.hide();
       }
+     
     })
   }
 
   fileUpload: any = []
   getFileHSCN(event) {
     this.fileUpload = event
+  }
+
+  saveRecord() {
+    const params = {
+      gridflexdetails1: this.dataDetailInfo.gridflexdetails1,
+      records: this.listsDataRecord
+    }
+    this.apiService.setEmpRecord(params).subscribe(results => {
+      if (results.status === 'success') {
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thêm mới thành công' });
+        this.displayFormEditDetail = false;
+        this.getEmpRecordPage();
+        this.FnEvent()
+        this.spinner.hide();
+      } else {
+        this.spinner.hide();
+        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
+      }
+    })
   }
 
   setDetailInfo(data) {
@@ -117,7 +148,7 @@ export class ThongTinHoSoCaNhanComponent implements OnInit {
         }
         this.spinner.hide();
         this.listsData = repo.data.dataList.data || [];
-        this.initGrid(repo.data.gridflexs);
+        this.initGrid('columnDefs', repo.data.gridflexs);
         this.FnEvent();
       } else {
         this.spinner.hide();
@@ -127,16 +158,17 @@ export class ThongTinHoSoCaNhanComponent implements OnInit {
 
   cancelDetailInfo(event) {
     if(event === 'CauHinh') {
-      this.addEmpRecord();
+      // this.getEmpRecord();
     }else {
       this.displayFormEditDetail = false;
       this.getEmpRecordPage();
     }
   }
 
-  initGrid(gridflexs) {
-    this.columnDefs = [
+  initGrid(columnDefs,gridflexs) {
+    this[columnDefs] = [
       ...AgGridFn(gridflexs || []),
+      columnDefs === 'columnDefs' ?
       {
         headerComponentParams: {
           template:
@@ -168,14 +200,38 @@ export class ThongTinHoSoCaNhanComponent implements OnInit {
             ]
           };
         },
+      } :  {
+        field: 'gridflexdetails1',
+        cellClass: ['border-right', 'no-auto'],
+        pinned: 'right',
+        width: 70,
+        cellRenderer: 'buttonAgGridComponent',
+        cellRendererParams: params => {
+          return {
+            buttons: [
+              {
+                onClick: this.uploadFile.bind(this),
+                label: 'Upload',
+                icon: 'fa fa-edit editing',
+                key: 'view-job-detail',
+                class: 'btn-primary mr5',
+              },
+            ]
+          };
+        },
       }
     ];
+  }
+
+  uploadFile(event) {
+    this.metafile = event.rowData;
+    this.displayuploadcontract = true;
   }
 
   editRow(event) {
     this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Chức năng đang phát triển'});
     // this.cont_id = event.rowData.cont_id;
-    // this.addEmpRecord();
+    // this.getEmpRecord();
   }
 
   onCellClicked(event) {
@@ -202,4 +258,19 @@ export class ThongTinHoSoCaNhanComponent implements OnInit {
     });
   }
 
+  metafile = null;
+  displayuploadcontract = false;
+  handleUpload(event) {
+    this.columnDefsRecord = [];
+    let params = {...this.metafile}
+    params.meta_file_url = event[0].url;
+    params.meta_file_name = event[0].name;
+    params.meta_file_type = event[0].type;
+    params.meta_file_size = event[0].size;
+    const indexObj = this.listsDataRecord.findIndex(d => d.sourceId === params.sourceId);
+    this.listsDataRecord[indexObj] = params;
+    this.listsDataRecord = [...this.listsDataRecord];
+    this.initGrid('columnDefsRecord',this.dataDetailInfo.gridflexdetails1);
+    this.displayuploadcontract = false;
+  }
 }

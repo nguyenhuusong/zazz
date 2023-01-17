@@ -108,6 +108,9 @@ import { HopDongComponent } from 'src/app/components/ns-ho-so-nhan-su/contract-d
 import { ThanhPhanLuongComponent } from 'src/app/components/qt-thay-doi-luong/thanh-phan-luong/thanh-phan-luong.component';
 import { CapNhatTrangThaiNghiViecComponent } from 'src/app/components/ns-ho-so-nghi-viec/cap-nhat-trang-thai-nghi-viec/cap-nhat-trang-thai-nghi-viec.component';
 import { DetailTerminateComponent } from 'src/app/components/ns-ho-so-nghi-viec/detail-terminate/detail-terminate.component';
+import { DanhSachXeComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/tien-ich/danh-sach-xe/danh-sach-xe.component';
+import { TaiKhoanComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/tien-ich/tai-khoan/tai-khoan.component';
+import { DanhSachThietBiComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/tien-ich/danh-sach-thiet-bi/danh-sach-thiet-bi.component';
 
 @NgModule({
   imports: [
@@ -226,6 +229,9 @@ import { DetailTerminateComponent } from 'src/app/components/ns-ho-so-nghi-viec/
     ThanhPhanLuongComponent,
     CapNhatTrangThaiNghiViecComponent,
     DetailTerminateComponent,
+    DanhSachXeComponent,
+    TaiKhoanComponent,
+    DanhSachThietBiComponent,
 
   ],
   providers: [ ]
