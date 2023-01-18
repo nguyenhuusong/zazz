@@ -21,12 +21,7 @@
                 (callbackcancel)="cancel($event)"></app-edit-detail>
         </p-tabPanel>
         <p-tabPanel header="Danh sách hồ sơ">
-            <!-- <div class="grid-default border">
-                <app-list-grid-angular [domLayout]="'autoHeight'"
-                    *ngIf="indexTab === 1 && columnDefs.length > 0" [title]="'Chứng chỉ'"
-                    [listsData]="listsData" (FnClick)="OnClick($event)" [columnDefs]="columnDefs">
-                </app-list-grid-angular>
-            </div> -->
+           <app-ho-so [terminateId]="modelEdit.terminateId" *ngIf="indexTab === 1 && modelEdit.terminateId"></app-ho-so>
         </p-tabPanel>
     </p-tabView>
 

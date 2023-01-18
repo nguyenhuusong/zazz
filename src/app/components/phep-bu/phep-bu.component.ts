@@ -232,7 +232,15 @@ export class PhepBuComponent implements OnInit, AfterViewChecked {
     this.load();
   }
 
+
   ngOnInit() {
+
+    this.items = [
+      { label: 'Trang chủ', routerLink: '/home' },
+      { label: 'Chính sách' },
+      { label: 'Phép năm' , routerLink: '/chinh-sach/phep-nam'},
+      { label: 'Danh sách phép bù' },
+    ];
    
     this.itemsToolOfGrid = [
       // {
