@@ -56,34 +56,6 @@ export class HopDongComponent implements OnInit {
     elem.click();
   }
 
-  handleUpload(datas) {
-    if (datas.length > 0) {
-      const indexobj = this.listsData.findIndex(d => d.sourceId === this.record.sourceId);
-      let record = { ... this.listsData[indexobj] };
-      record.meta_file_url = datas[0].url;
-      record.meta_file_type = datas[0].type;
-      record.meta_file_size = datas[0].size;
-      record.meta_file_name = datas[0].name;
-      this.listsData[indexobj] = record;
-      this.listsData = [... this.listsData];
-      this.displayuploadcontract = false;
-      this.saveCreateContract();
-    }
-  }
-  saveCreateContract() {
-    // this.spinner.show();
-    // this.apiService.setRecordInfo(this.listViewsRecordInfo).subscribe(results => {
-    //   if (results.status === 'success') {
-    //     this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data });
-    //     this.displayuploadcontract = false;
-    //     this.getContractMetaPage();
-    //     this.spinner.hide();
-    //   } else {
-    //     this.spinner.hide();
-    //   }
-    // })
-  }
-
 
   getContractMetaPage() {
     this.spinner.show();
@@ -96,20 +68,38 @@ export class HopDongComponent implements OnInit {
         }
         this.spinner.hide();
         this.listsData = repo.data.dataList.data || [];
-        this.initGrid(repo.data.gridflexs)
+        this.initGrid('columnDefs', repo.data.gridflexs);
+        this.FnEvent();
       } else {
         this.spinner.hide();
       }
     })
   }
 
-  initGrid(gridflexs) {
-    this.columnDefs = [
+  FnEvent() {
+    setTimeout(() => {
+      var dragTarget = document.getElementById(`${this.gridKey}_hopdong`);
+      if(dragTarget) {
+        const click$ = fromEvent(dragTarget, 'click');
+        click$.subscribe(event => {
+          console.log("sdsdsd")
+          this.addContract()
+        });
+      }
+    }, 300);
+  }
+
+  addContract() {
+    this.getContractRecord();
+  }
+
+  initGrid(columnDefs ,gridflexs) {
+    this[columnDefs] = [
       ...AgGridFn(gridflexs || []),
-      {
+      columnDefs === 'columnDefs' ? {
         headerComponentParams: {
           template:
-          `<button  class="btn-button" id="${this.gridKey}_kynang"> <span class="pi pi-plus action-grid-add" ></span></button>`,
+          `<button  class="btn-button" id="${this.gridKey}_hopdong"> <span class="pi pi-upload action-grid-add" ></span></button>`,
         },
         field: 'gridflexdetails1',
         cellClass: ['border-right', 'no-auto'],
@@ -119,13 +109,6 @@ export class HopDongComponent implements OnInit {
         cellRendererParams: params => {
           return {
             buttons: [
-              // {
-              //   onClick: this.editRow.bind(this),
-              //   label: 'Xem chi tiết',
-              //   icon: 'fa fa-edit editing',
-              //   key: 'view-job-detail',
-              //   class: 'btn-primary mr5',
-              // },
               {
                 onClick: this.dowloadFile.bind(this),
                 label: 'Xem File',
@@ -133,20 +116,41 @@ export class HopDongComponent implements OnInit {
                 key: 'view-job-detail',
                 class: 'btn-primary mr5',
               },
+              // {
+              //   onClick: this.uploadContract.bind(this),
+              //   label: 'Tải lên file ký duyệt',
+              //   icon: 'pi pi-upload',
+              //   key: 'view-job-detail',
+              //   class: 'btn-primary mr5',
+              // },
+
+            
+            ]
+          };
+        },
+      } : {
+        
+        field: 'gridflexdetails12',
+        cellClass: ['border-right', 'no-auto'],
+        pinned: 'right',
+        width: 70,
+        cellRenderer: 'buttonAgGridComponent',
+        cellRendererParams: params => {
+          return {
+            buttons: [
               {
-                onClick: this.uploadContract.bind(this),
+                onClick: this.dowloadFile.bind(this),
+                label: 'Tải về file mẫu',
+                icon: 'fa fa-edit editing',
+                key: 'view-job-detail',
+                class: 'btn-primary mr5',
+              },
+              {
+                onClick: this.uploadFile.bind(this),
                 label: 'Tải lên file ký duyệt',
                 icon: 'pi pi-upload',
                 key: 'view-job-detail',
                 class: 'btn-primary mr5',
-              },
-
-              {
-                onClick: this.delRow.bind(this),
-                label: 'Xóa',
-                icon: 'pi pi-trash',
-                key: 'delete-qua-trinh-hop-dong',
-                class: 'btn-danger',
               },
             ]
           };
@@ -169,6 +173,65 @@ export class HopDongComponent implements OnInit {
   editRow({rowData}) {
     this.trainId = rowData.metaId
     // this.getTrainFile();
+  }
+  columnDefsRecord = [];
+  listsDataRecord = [];
+  dataDetailInfo = null;
+  displayFormEditDetail =false;
+  getContractRecord() {
+    this.columnDefsRecord = [];
+    const queryParams = queryString.stringify({ contractId: this.contractId});
+    this.apiService.getContractRecord(queryParams).subscribe(results => {
+      if (results.status === 'success') {
+        this.spinner.hide();
+        this.listsDataRecord = results.data.records || [];
+        this.dataDetailInfo = results.data;
+        this.initGrid('columnDefsRecord',results.data.gridflexdetails1);
+        this.displayFormEditDetail = true;
+      } else {
+        this.spinner.hide();
+      }
+    })
+  }
+
+  saveContractRecord() {
+    const params = {
+      gridflexdetails1: this.dataDetailInfo.gridflexdetails1,
+      records: this.listsDataRecord
+    }
+    this.apiService.setContractRecord(params).subscribe(results => {
+      if (results.status === 'success') {
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thêm mới thành công' });
+        this.displayFormEditDetail = false;
+        this.getContractMetaPage();
+        this.spinner.hide();
+      } else {
+        this.spinner.hide();
+        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
+      }
+    })
+  }
+  metafile = null;
+  uploadFile(event) {
+    this.metafile = event.rowData;
+    this.displayuploadcontract = true;
+  }
+
+  
+  handleUpload(event) {
+    if(event && event.length > 0) {
+      this.columnDefsRecord = [];
+      let params = {...this.metafile}
+      params.meta_file_url = event[0].url;
+      params.meta_file_name = event[0].name;
+      params.meta_file_type = event[0].type;
+      params.meta_file_size = event[0].size;
+      const indexObj = this.listsDataRecord.findIndex(d => d.sourceId === params.sourceId);
+      this.listsDataRecord[indexObj] = params;
+      this.listsDataRecord = [...this.listsDataRecord];
+      this.initGrid('columnDefsRecord',this.dataDetailInfo.gridflexdetails1);
+      this.displayuploadcontract = false;
+    }
   }
 
 

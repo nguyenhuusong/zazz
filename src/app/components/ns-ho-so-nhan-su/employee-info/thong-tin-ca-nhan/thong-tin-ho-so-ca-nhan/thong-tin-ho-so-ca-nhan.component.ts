@@ -82,7 +82,6 @@ export class ThongTinHoSoCaNhanComponent implements OnInit {
       } else {
         this.spinner.hide();
       }
-     
     })
   }
 

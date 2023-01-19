@@ -48,7 +48,7 @@ export class ChiTietPhepBuComponent implements OnInit, OnDestroy {
     this.handleParams();
   }
   modelEdit = {
-    annualId: "",
+    Id: "",
     empId: null
   }
   titlePage = ''
@@ -57,7 +57,7 @@ export class ChiTietPhepBuComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((params) => {
         this.paramsObject = { ...params.keys, ...params };
-        this.modelEdit.annualId = this.paramsObject.params.annualId || ""
+        this.modelEdit.Id = this.paramsObject.params.annualId || ""
         this.modelEdit.empId = this.paramsObject.params.empId || ""
         this.getAnnualAddInfo();
       });

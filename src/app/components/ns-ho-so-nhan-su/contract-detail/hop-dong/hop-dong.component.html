@@ -36,9 +36,28 @@
 <p-dialog [(visible)]="displayuploadcontract" [autoZIndex]="true" [modal]="true"  appendTo="body"
     [style]="{width: '800px', height: 'auto'}">
     <p-header>
-        Tải lên hợp đồng [{{record?.meta_title}}]
+        Tải lên hợp đồng [{{metafile?.meta_title}}]
     </p-header>
     <app-upload-file [multiple]="" (callback)="handleUpload($event)" *ngIf="displayuploadcontract"></app-upload-file>
+</p-dialog>
+
+<p-dialog styleClass="popup-btngroup-edit-detail"  [(visible)]="displayFormEditDetail" [draggable]="false"  [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '1400px', height: 'auto'}">
+    <p-header>
+       Danh sách hồ sơ cá nhân cần cập nhật
+    </p-header>
+    <app-list-grid-angular 
+    [domLayout]="'autoHeight'" 
+    *ngIf="columnDefsRecord.length > 0" 
+    [idGrid]="gridKey + '_45dfsupload'"
+    [title]="'Chứng chỉ'"
+    [listsData]="listsDataRecord" 
+    [columnDefs]="columnDefsRecord">
+</app-list-grid-angular>
+<ng-template pTemplate="footer">
+    <p-button label="Lưu hồ sơ" styleClass="p-button-sm mr-1" (onClick)="saveContractRecord()" icon="pi pi-check"></p-button>
+    <p-button label="Đóng" styleClass="p-button-sm p-button-secondary" (onClick)="displayFormEditDetail = !displayFormEditDetail" icon="pi pi-time"></p-button>
+</ng-template>
+
 </p-dialog>
 
 

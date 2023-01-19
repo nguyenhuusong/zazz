@@ -274,35 +274,35 @@ export class NsHoSoNhanSuComponent implements OnInit {
           label: 'Xóa nhân viên này',
           icon: 'fa fa-trash',
           class: 'btn-primary mr5',
-          hide: event.data.emp_st === 1
+          hide: event.data.emp_st === 1 
         },
         {
           onClick: this.SetEmployeeBlock.bind(this),
           label: 'Chặn hồ sơ',
-          icon: 'fa fa-trash',
+          icon: 'pi pi-align-center',
           class: 'btn-primary mr5',
           hide: event.data.emp_st === 1
         },
         {
           onClick: this.SetEmployeeOpen.bind(this),
           label: 'Bỏ chặn hồ sơ',
-          icon: 'fa fa-trash',
+          icon: 'pi pi-align-center',
           class: 'btn-primary mr5',
           hide: event.data.emp_st === 1
         },
         {
           onClick: this.LockEmployee.bind(this),
           label: 'khóa hồ sơ',
-          icon: 'fa fa-trash',
+          icon: 'pi pi-align-center',
           class: 'btn-primary mr5',
-          hide: event.data.emp_st === 0
+          hide: event.data.emp_st === 1 && event.data.lock_st
         },
         {
           onClick: this.UnLockEmployee.bind(this),
           label: 'Mở khóa hồ sơ',
-          icon: 'fa fa-trash',
+          icon: 'pi pi-align-center',
           class: 'btn-primary mr5',
-          hide: event.data.emp_st === 0
+          hide: event.data.emp_st === 1 && !event.data.lock_st
         },
       ]
     };

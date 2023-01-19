@@ -367,8 +367,16 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v2/contract/GetSalaryComponentPage?` + queryParams, this.options)
   }
 
+  getContractRecord(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/contract/GetContractRecord?` + queryParams, this.options)
+  }
+
   setContractCreate(queryParams): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/contract/SetContractCreate` , queryParams, this.options)
+  }
+
+  setContractRecord(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/contract/SetContractRecord` , queryParams, this.options)
   }
 
   setContractSigned(queryParams): Observable<any> {

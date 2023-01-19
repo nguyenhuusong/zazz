@@ -177,7 +177,7 @@ export class PhepBuComponent implements OnInit, AfterViewChecked {
 
   XemChiTiet(event) {
     const params = {
-      annualId: event.rowData.annualId
+      annualId: event.rowData.id
     }
     this.router.navigate(['/chinh-sach/phep-bu/chi-tiet-phep-bu'], { queryParams: params });
   }
@@ -186,7 +186,7 @@ export class PhepBuComponent implements OnInit, AfterViewChecked {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa phép bù?',
       accept: () => {
-        const queryParams = queryString.stringify({ annualId: event.rowData.annualId });
+        const queryParams = queryString.stringify({ Id: event.rowData.id });
         this.apiService.delAnnualAddInfo(queryParams).subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa phép bù thành công' });

@@ -182,7 +182,7 @@ export class DanhSachThietBiComponent implements OnInit {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa?',
       accept: () => {
-        const queryParams = queryString.stringify({id: event.rowData.id});
+        const queryParams = queryString.stringify({device_id: event.rowData.device_id});
         this.apiService.delEmpDevices(queryParams).subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Xóa thành công' });
@@ -198,10 +198,9 @@ export class DanhSachThietBiComponent implements OnInit {
 
   SetEmpDeviceStatus(event) {
     this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn xóa?',
+      message: 'Bạn chắc chắn muốn phê duyệt bản ghi này?',
       accept: () => {
-        const queryParams = queryString.stringify({device_id: event.rowData.device_id, request_st: 1});
-        this.apiService.setEmpDeviceStatus(queryParams).subscribe((results: any) => {
+        this.apiService.setEmpDeviceStatus({device_id: event.rowData.device_id, request_st: 1}).subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Duyệt thành công' });
             this.getEmpDeviceByEmp();

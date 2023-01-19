@@ -182,7 +182,7 @@ export class DanhSachDinhKemComponent implements OnInit {
 
   delRow(event) {
     this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn xóa thời gian làm việc này?',
+      message: 'Bạn có chắc chắn muốn xóa bản ghi này ?',
       accept: () => {
         const queryParams = queryString.stringify({metaId: event.rowData.metaId});
         this.apiService.empproFileDelEmpAttach(queryParams).subscribe((results: any) => {
