@@ -28,6 +28,7 @@ export class BaoCaoComponent implements OnInit {
   listReports = [];
   chiTietThamSoBaoCao = null;
   items = [];
+  isSubmit = false;
 
   ngAfterViewChecked() {
     this.changeDetector.detectChanges();
@@ -82,6 +83,7 @@ export class BaoCaoComponent implements OnInit {
   }
 
   getDetailReport(event) {
+    this.isSubmit = false
     let items = this.reports.filter(d => d.report_id === this.query.report_type)
     this.chiTietThamSoBaoCao = items[0];
     // if(this.chiTietThamSoBaoCao.report_id == 7) {
@@ -184,10 +186,19 @@ export class BaoCaoComponent implements OnInit {
       }
     });
   }
-
   ViewExcel(type): void {
+    this.isSubmit = true;
     this.spinner.show();
     const params = this.getParams(type);
+
+    // check required tháng sinh
+    let report_type: any = this.query.report_type
+    if(report_type && parseInt(report_type) === 13) {
+      if(!params['month'] || params['month'] === undefined) {
+        this.spinner.hide();
+        return;
+      }
+    }
     const name = this.listReports.filter(t => t.value === this.query.report_type)[0].label;
     const api = this.listReports.filter(t => t.value === this.query.report_type)[0].api;
     if (api) {
@@ -208,8 +219,17 @@ export class BaoCaoComponent implements OnInit {
   }
 
   exportExcel(type): void {
+    this.isSubmit = true;
     this.spinner.show();
     const params = this.getParams(type);
+    // check required tháng sinh
+    let report_type: any = this.query.report_type
+    if(report_type && parseInt(report_type) === 13) {
+      if(!params['month'] || params['month'] === undefined) {
+        this.spinner.hide();
+        return;
+      }
+    }
     const name = this.listReports.filter(t => t.value === this.query.report_type)[0].label;
     const api = this.listReports.filter(t => t.value === this.query.report_type)[0].api;
     if (api) {

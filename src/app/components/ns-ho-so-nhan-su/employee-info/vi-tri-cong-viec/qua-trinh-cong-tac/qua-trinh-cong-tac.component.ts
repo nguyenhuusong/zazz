@@ -276,7 +276,7 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
   
   delRow(event) {
     this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn xóa quá trình làm việc này?',
+      message: 'Bạn có chắc chắn muốn xóa bản ghi này?',
       accept: () => {
         const queryParams = queryString.stringify({ processId: event.rowData.processId });
         this.apiService.delEmpProcessInfo(queryParams).subscribe((results: any) => {

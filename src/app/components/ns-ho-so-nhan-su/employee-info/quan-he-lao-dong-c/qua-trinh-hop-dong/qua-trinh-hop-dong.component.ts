@@ -255,7 +255,7 @@ export class QuaTrinhHopDongComponent implements OnInit {
 
   delRow(event) {
     this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn xóa thời gian làm việc này?',
+      message: 'Bạn có chắc chắn muốn xóa bản ghi này?',
       accept: () => {
         const queryParams = queryString.stringify({contractId: event.rowData.contractId});
         this.apiService.delContractInfo(queryParams).subscribe((results: any) => {

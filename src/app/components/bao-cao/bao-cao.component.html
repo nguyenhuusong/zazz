@@ -88,6 +88,9 @@
                         <label for="">{{paramater?.param_name}}: </label>
                         <input type="text" class="form-control" [(ngModel)]="paramater[paramater?.param_cd]"
                         name="{{paramater.param_cd}}">
+                        <div class="alert-validation alert-danger" *ngIf="!paramater[paramater?.param_cd] && isSubmit">
+                            Nhập tháng sinh
+                        </div>
                       </div>
                   </div>
                     </ng-container>

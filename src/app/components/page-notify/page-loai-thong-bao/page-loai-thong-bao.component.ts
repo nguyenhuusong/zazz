@@ -12,6 +12,7 @@ import { AgGridFn } from 'src/app/common/function-common/common';
 import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
 import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.component';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
+import { fromEvent } from 'rxjs';
 @Component({
   selector: 'app-page-loai-thong-bao',
   templateUrl: './page-loai-thong-bao.component.html',
@@ -145,6 +146,10 @@ export class PageLoaiThongBaoComponent implements OnInit, OnDestroy, AfterViewCh
           }, 100);
         }
         this.spinner.hide();
+        var dragTarget = document.getElementById(this.gridKey);
+        if(dragTarget) {
+          this.FnEvent();
+        }
       },
       error => {
         this.spinner.hide();
@@ -194,7 +199,10 @@ export class PageLoaiThongBaoComponent implements OnInit, OnDestroy, AfterViewCh
     this.columnDefs = [
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       {
-        headerName: 'Thao tác',
+        headerComponentParams: {
+          template:
+          `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
+        },
         filter: '',
         width: 100,
         pinned: 'right',
@@ -252,5 +260,21 @@ export class PageLoaiThongBaoComponent implements OnInit, OnDestroy, AfterViewCh
 
   handleFilter() {
     this.load();
+  }
+
+  ngAfterViewInit(): void {
+    this.FnEvent();
+  }
+
+  FnEvent() {
+    setTimeout(() => {
+      var dragTarget = document.getElementById(this.gridKey);
+      if(dragTarget) {
+        const click$ = fromEvent(dragTarget, 'click');
+        click$.subscribe(event => {
+          this.addNotifyRef()
+        });
+      }
+    }, 300);
   }
 }

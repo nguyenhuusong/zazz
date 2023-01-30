@@ -206,7 +206,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
           label: 'Xóa ',
           icon: 'pi pi-trash',
           class: 'btn-primary mr5',
-          hide: CheckHideAction(MENUACTIONROLEAPI.GetCandidatePage.url, ACTIONS.DELETE)
+          hide: CheckHideAction(MENUACTIONROLEAPI.GetCandidatePage.url, ACTIONS.DELETE) || event.data.can_st === 10
         },
       ]
     };
