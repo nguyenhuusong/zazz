@@ -173,7 +173,7 @@ export class DanhMucLoaiGiayToComponent implements OnInit, AfterViewChecked {
         },
         {
           onClick: this.delRow.bind(this),
-          label: 'Xóa chức danh',
+          label: 'Xóa',
           icon: 'pi pi-trash',
         },
       ]
@@ -202,12 +202,12 @@ export class DanhMucLoaiGiayToComponent implements OnInit, AfterViewChecked {
 
   delRow(event) {
     this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn thực hiện xóa chức danh?',
+      message: 'Bạn có chắc chắn muốn xóa loại giấy tờ này?',
       accept: () => {
         const queryParams = queryString.stringify({ recordTypeId: event.rowData.recordTypeId });
         this.apiService.delEmpRecordTypeInfo(queryParams).subscribe(results => {
           if (results.status === 'success') {
-            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Xóa chức danh thành công' });
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Xóa thành công' });
             this.load();
           } else {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });

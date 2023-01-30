@@ -168,11 +168,11 @@ export class ThongTinNguoiLienHeComponent implements OnInit {
 
   applyDefaule({rowData}) {
     this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn xóa bản ghi này?',
+      message: 'Bạn có chắc chắn muốn áp dụng?',
       accept: () => {
         this.apiService.defaultEmpContact({cont_id: rowData.cont_id, empId: this.empId}).subscribe((results: any) => {
           if (results.status === 'success') {
-            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Xóa thành công' });
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Áp dụng thành công' });
             this.getEmpContactPage();
             this.cancelSave.emit();
           } else {
