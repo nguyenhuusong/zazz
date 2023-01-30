@@ -281,31 +281,58 @@ export class NsHoSoNhanSuComponent implements OnInit {
           label: 'Chặn hồ sơ',
           icon: 'pi pi-align-center',
           class: 'btn-primary mr5',
-          hide: event.data.emp_st === 1
+          hide: this.checkSetEmployeeBlock(event)
         },
         {
           onClick: this.SetEmployeeOpen.bind(this),
           label: 'Bỏ chặn hồ sơ',
           icon: 'pi pi-align-center',
           class: 'btn-primary mr5',
-          hide: event.data.emp_st === 1
+          hide: this.checkSetEmployeeOpen(event)
         },
         {
           onClick: this.LockEmployee.bind(this),
           label: 'khóa hồ sơ',
           icon: 'pi pi-align-center',
           class: 'btn-primary mr5',
-          hide: event.data.emp_st === 1 && event.data.lock_st
+          hide: this.checkLockEmployee(event)
         },
         {
           onClick: this.UnLockEmployee.bind(this),
           label: 'Mở khóa hồ sơ',
           icon: 'pi pi-align-center',
           class: 'btn-primary mr5',
-          hide: event.data.emp_st === 1 && !event.data.lock_st
+          hide: this.checkUnLockEmployee(event)
         },
       ]
     };
+  }
+
+  checkSetEmployeeOpen(event) {
+    if(event.data.emp_st === 0 && event.data.block_st === 1) {
+      return false
+    }
+    return true
+  }
+  checkSetEmployeeBlock(event) {
+    if(event.data.emp_st === 0 && event.data.block_st === 0) {
+      return false
+    }
+    return true
+  }
+
+  checkUnLockEmployee(event) {
+    if(event.data.emp_st === 1 && event.data.lock_st) {
+      return false
+    }
+    return true
+  }
+
+  checkLockEmployee(event) {
+    if(event.data.emp_st === 1 && !event.data.lock_st) {
+      return false
+    }
+    return true
   }
 
   initGrid() {
