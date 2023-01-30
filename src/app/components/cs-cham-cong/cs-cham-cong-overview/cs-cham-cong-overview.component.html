@@ -284,7 +284,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="list-item-info" *ngIf="dataAnca.eating" >
+                                    <div class="list-item-info" *ngIf="dataAnca?.eating" >
                                         <div class="item d-flex gap-12" *ngFor="let item of dataAnca.eating">
                                             <div class="avar"><img src="{{ item?.image_url ? item.image_url : '../../../../assets/images/avatar.jpg' }}"></div>
                                             <div class="inf">
