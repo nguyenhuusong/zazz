@@ -188,7 +188,7 @@ cloneListViewsDetail = [];
     const params = {
       ...this.dataDetailInfo, group_fields: event.data, flow_cur: event.type === 'Submit' ?  this.flowCurrent : this.flowCurrent -1
     }
-    this.cloneListViewsDetail = cloneDeep(this.listViewsDetail)
+    this.cloneListViewsDetail = cloneDeep(event.data)
     this.listViewsDetail = [];
     this.callApiInfo(params, event.type)
   }
@@ -213,7 +213,7 @@ cloneListViewsDetail = [];
     const params = {
       ...this.dataDetailInfo, group_fields: data, flow_cur: this.flowCurrent
     };
-    this.cloneListViewsDetail = cloneDeep(this.listViewsDetail)
+    this.cloneListViewsDetail = cloneDeep(data)
     this.listViewsDetail = [];
     this.callApiInfo(params)
 

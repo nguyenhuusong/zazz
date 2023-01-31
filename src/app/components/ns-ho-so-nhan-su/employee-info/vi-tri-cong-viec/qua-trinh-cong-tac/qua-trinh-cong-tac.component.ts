@@ -188,7 +188,7 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
     const params = {
       ...this.dataDetailInfo, group_fields: event.data, flow_cur: event.type === 'Submit' ?  this.flowCurrent : this.flowCurrent -1
     }
-    this.closeListViewsDetail = cloneDeep(this.listViewsDetail);
+    this.closeListViewsDetail = cloneDeep(event.data);
     this.listViewsDetail = []
     this.callApiInfo(params, event.type)
   }
@@ -214,7 +214,7 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
     const params = {
       ...this.dataDetailInfo, group_fields: data, flow_cur: this.flowCurrent
     };
-    this.closeListViewsDetail = cloneDeep(this.listViewsDetail);
+    this.closeListViewsDetail = cloneDeep(data);
     this.listViewsDetail = [];
     this.callApiInfo(params)
   }

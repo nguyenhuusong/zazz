@@ -72,7 +72,7 @@ export class ThongTinCaNhanEditDetailComponent implements OnInit {
     const params = {
       ...this.detailInfo, group_fields: event.data, flow_cur: event.type === 'Submit' ?  this.flowCurrent : this.flowCurrent -1
     }
-     this.cloneListViews = cloneDeep(this.listViews);
+     this.cloneListViews = cloneDeep(event.data);
     this.listViews = [];
     this.callApiInfo(params, event.type)
   }
@@ -97,7 +97,7 @@ export class ThongTinCaNhanEditDetailComponent implements OnInit {
     const  params = {
       ...this.detailInfo, group_fields: data, flow_cur: this.flowCurrent
     };
-    this.cloneListViews = cloneDeep(this.listViews);
+    this.cloneListViews = cloneDeep(data);
     this.listViews = [];
     this.callApiInfo(params)
   
