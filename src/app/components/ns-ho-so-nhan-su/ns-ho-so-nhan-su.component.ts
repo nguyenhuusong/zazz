@@ -308,6 +308,10 @@ export class NsHoSoNhanSuComponent implements OnInit {
     };
   }
 
+//   emp_st = 0: Xóa, Phong tỏa
+// emp_st = 2: Xóa, Mở phong tỏa
+// emp_st = 1, islock = false: Khóa
+// emp_st = 1, islock = true: Mở khóa
   checkSetEmployeeOpen(event) {
     if(event.data.emp_st === 2) {
       return false
