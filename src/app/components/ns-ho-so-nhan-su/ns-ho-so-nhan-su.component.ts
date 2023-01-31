@@ -1034,7 +1034,7 @@ showFilter() {
 
   submit() {
     let params = {...this.modelBlockAndOpen};
-    delete this.modelBlockAndOpen.type
+    delete params.type
     if(this.modelBlockAndOpen.type === 'open') {
       this.apiService.setEmployeeOpenV2(params).subscribe((results: any) => {
         if (results.status === 'success') {
