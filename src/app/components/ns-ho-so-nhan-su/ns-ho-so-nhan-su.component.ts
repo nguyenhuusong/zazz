@@ -322,7 +322,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
   }
 
   checkUnLockEmployee(event) {
-    if(event.data.emp_st === 1 && event.data.lock_st) {
+    if(event.data.emp_st === 2 && event.data.lock_st) {
       return false
     }
     return true
