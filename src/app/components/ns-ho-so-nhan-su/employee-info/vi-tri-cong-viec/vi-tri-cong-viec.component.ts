@@ -272,7 +272,7 @@ export class ViTriCongViecComponent implements OnInit, AfterViewInit {
   cancelSetDetail(event) {
     this.isEditDetail = false;
     this.getEmployeeInfo();
-    this.reloadEdit.emit();
+    // this.reloadEdit.emit();
   }
 
   editDetail() {
