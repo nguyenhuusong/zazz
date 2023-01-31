@@ -45,8 +45,18 @@
     [columnDefs]="columnDefsRecord">
 </app-list-grid-angular>
 <ng-template pTemplate="footer">
-    <p-button label="Lưu hồ sơ" styleClass="p-button-sm mr-1" (onClick)="saveRecord()" icon="pi pi-check"></p-button>
-    <p-button label="Đóng" styleClass="p-button-sm p-button-secondary" (onClick)="displayFormEditDetail = !displayFormEditDetail" icon="pi pi-time"></p-button>
+    <div class="d-flex" style="justify-content: space-between">
+        <div>
+            <div class="field-checkbox">
+                <p-checkbox [(ngModel)]="is_full_submit" [binary]="true" inputId="binary"></p-checkbox>
+                <label for="binary">Đã up đủ file</label>
+            </div>
+        </div>
+       <div>
+        <p-button label="Lưu hồ sơ" styleClass="p-button-sm mr-1" (onClick)="saveRecord()" icon="pi pi-check"></p-button>
+        <p-button label="Đóng" styleClass="p-button-sm p-button-secondary" (onClick)="displayFormEditDetail = !displayFormEditDetail" icon="pi pi-time"></p-button>
+       </div>
+    </div>
 </ng-template>
 
 </p-dialog>

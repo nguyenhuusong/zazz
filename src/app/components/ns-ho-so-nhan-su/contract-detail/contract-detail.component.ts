@@ -109,6 +109,10 @@ export class ContractDetailComponent implements OnInit {
         }, 100);
         this.detailInfo = results.data;
         this.spinner.hide();
+      }else {
+        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
+        this.back.emit();
+        this.spinner.hide();
       }
     })
   }
@@ -253,6 +257,10 @@ export class ContractDetailComponent implements OnInit {
         this.detailInfo = results.data;
         if(results.data.flow_cur > 1) this.getContractMetaPage();
         if(results.data.flow_cur > 0) this.getSalaryComponentPage();
+        this.spinner.hide();
+      }else {
+        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
+        this.back.emit();
         this.spinner.hide();
       }
     })

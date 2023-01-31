@@ -19,6 +19,7 @@ export class ThongTinHoSoCaNhanComponent implements OnInit {
     { label: 'Bỏ qua', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
     { label: 'Xác nhận', value: 'Update', class: 'btn-accept' }
   ]
+  is_full_submit = false;
   @Output() cancelSave = new EventEmitter<any>();
   constructor(
     private apiService: ApiHrmService,
@@ -92,8 +93,10 @@ export class ThongTinHoSoCaNhanComponent implements OnInit {
 
   saveRecord() {
     const params = {
+      ...this.dataDetailInfo,
       gridflexdetails1: this.dataDetailInfo.gridflexdetails1,
-      records: this.listsDataRecord
+      records: this.listsDataRecord,
+      is_full_submit: this.is_full_submit,
     }
     this.apiService.setEmpRecord(params).subscribe(results => {
       if (results.status === 'success') {

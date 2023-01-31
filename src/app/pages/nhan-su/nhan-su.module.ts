@@ -112,7 +112,7 @@ import { DanhSachXeComponent } from 'src/app/components/ns-ho-so-nhan-su/employe
 import { TaiKhoanComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/tien-ich/tai-khoan/tai-khoan.component';
 import { DanhSachThietBiComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/tien-ich/danh-sach-thiet-bi/danh-sach-thiet-bi.component';
 import { HoSoComponent } from 'src/app/components/ns-ho-so-nghi-viec/detail-terminate/ho-so/ho-so.component';
-
+import {CheckboxModule} from 'primeng/checkbox';
 @NgModule({
   imports: [
     MessagesModule,
@@ -131,6 +131,7 @@ import { HoSoComponent } from 'src/app/components/ns-ho-so-nghi-viec/detail-term
     DetailAccountModule,
     ListboxModule,
     UserDetailModule,
+    CheckboxModule,
     MultiSelectModule,
     ListGridAngularModule,
     PaginatorModule,
