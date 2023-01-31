@@ -274,18 +274,18 @@ export class NsHoSoNhanSuComponent implements OnInit {
           label: 'Xóa nhân viên này',
           icon: 'fa fa-trash',
           class: 'btn-primary mr5',
-          hide: event.data.emp_st === 1 
+          hide: event.data.emp_st !== 0
         },
         {
           onClick: this.SetEmployeeBlock.bind(this),
-          label: 'Chặn hồ sơ',
+          label: 'Phong tỏa',
           icon: 'pi pi-align-center',
           class: 'btn-primary mr5',
           hide: this.checkSetEmployeeBlock(event)
         },
         {
           onClick: this.SetEmployeeOpen.bind(this),
-          label: 'Bỏ chặn hồ sơ',
+          label: 'Mở phong tỏa',
           icon: 'pi pi-align-center',
           class: 'btn-primary mr5',
           hide: this.checkSetEmployeeOpen(event)
@@ -309,20 +309,20 @@ export class NsHoSoNhanSuComponent implements OnInit {
   }
 
   checkSetEmployeeOpen(event) {
-    if(event.data.emp_st === 0 && event.data.block_st === 1) {
+    if(event.data.emp_st === 2) {
       return false
     }
     return true
   }
   checkSetEmployeeBlock(event) {
-    if(event.data.emp_st === 0 && event.data.block_st === 0) {
+    if(event.data.emp_st === 0) {
       return false
     }
     return true
   }
 
   checkUnLockEmployee(event) {
-    if(event.data.emp_st === 2 && event.data.lock_st) {
+    if(event.data.emp_st === 1 && event.data.lock_st) {
       return false
     }
     return true
