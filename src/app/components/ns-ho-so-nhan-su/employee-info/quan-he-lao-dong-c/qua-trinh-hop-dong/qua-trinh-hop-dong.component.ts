@@ -168,13 +168,13 @@ export class QuaTrinhHopDongComponent implements OnInit {
                 key: 'view-job-detail',
                 class: 'btn-primary mr5',
               },
-              {
-                onClick: this.duyetHopDong.bind(this),
-                label: 'Duyệt hợp đồng',
-                icon: 'pi pi-check',
-                key: 'duyet-hop-dong',
-                class: 'btn-danger',
-              },
+              // {
+              //   onClick: this.duyetHopDong.bind(this),
+              //   label: 'Duyệt hợp đồng',
+              //   icon: 'pi pi-check',
+              //   key: 'duyet-hop-dong',
+              //   class: 'btn-danger',
+              // },
               {
                 onClick: this.delRow.bind(this),
                 label: 'Xóa',

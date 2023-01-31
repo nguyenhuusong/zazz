@@ -1163,14 +1163,14 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
                     class: 'btn-primary mr5',
                     hide: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CHI_TIET_HO_SO_QHLD_QTHD_XEM_CHI_TIET)
                   },
-                  {
-                    onClick: this.OnClick.bind(this),
-                    label: 'Duyệt hợp đồng',
-                    icon: 'pi pi-check',
-                    key: 'duyet-hop-dong',
-                    class: 'btn-danger',
-                    hide: this.CheckHideDuyetHopDong(params)
-                  },
+                  // {
+                  //   onClick: this.OnClick.bind(this),
+                  //   label: 'Duyệt hợp đồng',
+                  //   icon: 'pi pi-check',
+                  //   key: 'duyet-hop-dong',
+                  //   class: 'btn-danger',
+                  //   hide: this.CheckHideDuyetHopDong(params)
+                  // },
                   {
                     onClick: this.OnClick.bind(this),
                     label: 'Xóa',
