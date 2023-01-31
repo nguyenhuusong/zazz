@@ -443,7 +443,7 @@ export class CaiDatLichHopComponent implements OnInit {
     this.FnEvent();
   }
 
-  handleAdd(empId = null): void {
+  handleAdd(): void {
     const params = {
       meet_ud: ''
     }
@@ -551,24 +551,10 @@ showFilter() {
       if(dragTarget) {
         const click$ = fromEvent(dragTarget, 'click');
         click$.subscribe(event => {
-          // this.handleAdd()
-          this.isSearchEmp = true;
+          this.handleAdd()
         });
       }
     }, 300);
-  }
-
-  isSearchEmp = false;
-  seachEmValue(event) {
-    const params = {
-      maternityId: null,
-      empId: event.value
-    }
-    if(event.value) {
-      this.handleAdd(event.value);
-    }else{
-      this.isSearchEmp = false;
-    }
   }
 }
 
