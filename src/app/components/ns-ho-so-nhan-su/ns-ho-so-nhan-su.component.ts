@@ -1040,6 +1040,7 @@ showFilter() {
         if (results.status === 'success') {
           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Mở chặn thành công' });
           this.load();
+          this.displayApproveContract = false;
         } else {
           this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
         }
@@ -1049,6 +1050,7 @@ showFilter() {
         if (results.status === 'success') {
           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Chặn thành công' });
           this.load();
+          this.displayApproveContract = false;
         } else {
           this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
         }
