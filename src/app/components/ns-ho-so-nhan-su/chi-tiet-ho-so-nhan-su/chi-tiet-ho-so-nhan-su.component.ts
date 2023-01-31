@@ -1915,7 +1915,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn thực hiện hủy hồ sơ này ?',
       accept: () => {
-        const indexobj = this.listsDataRecord.findIndex(d => d.sourceId === event.rowData.sourceId);
+        const indexobj = this.listsDataRecord.findIndex(d => d.metaId === event.rowData.metaId);
         let record = { ... this.listsDataRecord[indexobj] };
         record.meta_file_url = "";
         record.meta_file_size = "";
@@ -2074,7 +2074,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
 
   handleUpload(datas) {
     if (datas.length > 0) {
-      const indexobj = this.listsDataRecord.findIndex(d => d.sourceId === this.record.sourceId);
+      const indexobj = this.listsDataRecord.findIndex(d => d.metaId === this.record.metaId);
       let record = { ... this.listsDataRecord[indexobj] };
       record.meta_file_url = datas[0].url;
       record.meta_file_type = datas[0].type;
