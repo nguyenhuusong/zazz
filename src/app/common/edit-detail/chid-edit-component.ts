@@ -1769,7 +1769,7 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
                       </svg>
                     </div>
                     <div class="room" *ngFor="let member of element.options; let i = index">
-                     <div class="head"><input id="president_{{member.group}}_{{i}}" type="checkbox" style="margin-right: 5px" name="{{member.group}}_{{i}}" (change)="handleChangeParent(member, i)" [checked]="member?.isCheck" /> <h3 class="title">{{member.group}} ({{member.child.length}})</h3></div>
+                     <div class="head"><input id="president_{{member.group}}_{{i}}" type="checkbox" style="margin-right: 5px" name="{{member.group}}_{{i}}" (change)="handleChangeParent(member, i)" [checked]="member?.isCheck" /> <h3 class="title">{{member.group}} ({{ member?.child && member?.child.length ? member.child.length : 0}})</h3></div>
                       <div class="item d-flex middle gap16" *ngFor="let user of member.child; let idx = index">
                       <input id="president_{{user.userId}}_{{idx}}" type="checkbox" style="margin-right: 5px" name="president_{{user.userId}}_{{idx}}" (change)="handleChangeChild(user, i, member, idx)" [checked]="user?.isCheck" />
                         <div class="img" *ngIf="!user.avatarUrl"><img src="../../../assets/images/avatar.jpg"></div>
@@ -2041,7 +2041,7 @@ export class AppTypeChips implements OnInit {
   ) { }
   ngOnInit(): void {
     // this.modelFields[this.element?.field_name].error = false;
-    this.element.columnValue =this.element.columnValue ? this.element.columnValue.split(',') : []
+    this.element.columnValue = this.element.columnValue && this.element.columnValue.length > 0 ? this.element.columnValue.split(',') : []
   }
 
   luau() {
