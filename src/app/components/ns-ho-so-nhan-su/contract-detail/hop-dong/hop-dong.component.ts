@@ -226,7 +226,7 @@ export class HopDongComponent implements OnInit {
       params.meta_file_name = event[0].name;
       params.meta_file_type = event[0].type;
       params.meta_file_size = event[0].size;
-      const indexObj = this.listsDataRecord.findIndex(d => d.sourceId === params.sourceId);
+      const indexObj = this.listsDataRecord.findIndex(d => d.metaId === params.metaId);
       this.listsDataRecord[indexObj] = params;
       this.listsDataRecord = [...this.listsDataRecord];
       this.initGrid('columnDefsRecord',this.dataDetailInfo.gridflexdetails1);
