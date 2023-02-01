@@ -187,6 +187,7 @@ export class HopDongComponent implements OnInit {
         this.spinner.hide();
         this.listsDataRecord = results.data.records || [];
         this.dataDetailInfo = results.data;
+        this.is_full_submit = this.dataDetailInfo.is_full_submit;
         this.initGrid('columnDefsRecord',results.data.gridflexdetails1);
         this.displayFormEditDetail = true;
       } else {
