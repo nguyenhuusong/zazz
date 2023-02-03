@@ -194,8 +194,6 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
   }
 
   stepActivated(): void {
-    console.log(this.activeIndex)
-    console.log(this.flowCurrent)
     const stepS = document.querySelectorAll('.steps-contract .p-steps-item');
     if (stepS.length > 0) {
       for (let i = 0; i < this.steps.length; i++) {

@@ -61,11 +61,7 @@ export class ContractDetailComponent implements OnInit {
       ]
       this.handleParams();
     } else {
-      if (this.modelContractInfo.contractId) {
-        this.getContractInfo();
-      } else {
-        this.setContractCreate();
-      }
+      this.getContractInfo();
     }
   }
   paramsObject = null;
@@ -74,11 +70,7 @@ export class ContractDetailComponent implements OnInit {
     this.activatedRoute.queryParamMap.subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.modelContractInfo = this.paramsObject.params;
-      if (this.modelContractInfo.contractId) {
-        this.getContractInfo();
-      } else {
-        this.setContractCreate();
-      }
+      this.getContractInfo();
     });
   }
  
@@ -121,14 +113,11 @@ export class ContractDetailComponent implements OnInit {
     const stepS = document.querySelectorAll('.steps-contract .p-steps-item');
     if (stepS.length > 0) {
       for (let i = 0; i < this.steps.length; i++) {
-        console.log(this.activeIndex)
         if (i <= this.flowCurrent) {
-          stepS[i].className +=  ` p-highlight ${i<= this.activeIndex? 'active' : 'remove-active'}`;
-          stepS[i].className +=  ` ${i<= this.flowCurrent ? 'active-confirm' : 'remove-active-confirm'}`;
+          stepS[i].className +=  ` p-highlight ${i< this.activeIndex ? 'active' : 'remove-active'} ${i< this.flowCurrent && this.flowCurrent !== 1 ? 'active-confirm' : 'remove-active-confirm'}`;
         } else {
           stepS[i].classList.value = `p-steps-item icon-${i}`;
         }
-        
       }
     }
   }
@@ -152,11 +141,10 @@ export class ContractDetailComponent implements OnInit {
   }
 
   setContractInfo(data) {
-    this.listViews = [];
     const params = {
-      ...this.detailInfo, group_fields: data, flow_cur: this.flowCurrent
-    }
-    this.cloneListViews = cloneDeep(this.listViews); 
+      ...this.detailInfo , group_fields: data, flow_cur: this.flowCurrent
+    };
+    this.cloneListViews = cloneDeep(data); 
     this.listViews = [];
     this.callApiInfo(params)
    
@@ -164,9 +152,9 @@ export class ContractDetailComponent implements OnInit {
   cloneListViews = []
   callBackForm(event) {
     const params = {
-      ...this.detailInfo, group_fields: event.data, flow_cur: this.flowCurrent
+      ...this.detailInfo, group_fields: event.data, flow_cur: event.type === 'Submit' ?  this.flowCurrent : this.flowCurrent -1
     }
-    this.cloneListViews = cloneDeep(this.listViews); 
+    this.cloneListViews = cloneDeep(event.data); 
     this.listViews = [];
     this.callApiInfo(params, event.type);
   }
@@ -177,7 +165,6 @@ export class ContractDetailComponent implements OnInit {
     this.apiService.setContractInfo(params).subscribe(results => {
       if (results.status === 'success') {
         this.activeIndex = results.data.flow_st;
-        console.log("results.data.flow_st", results.data.flow_st)
         this.listViews = cloneDeep(results.data.group_fields);
         setTimeout(() => {
           this.stepActivated();
@@ -230,12 +217,11 @@ export class ContractDetailComponent implements OnInit {
     this.detailInfo = null;
     this.listViews = [];
     this.spinner.show();
-    const queryParams = queryString.stringify({ contractId: this.modelContractInfo.contractId, flow_cur: flow_cur });
+    const queryParams = queryString.stringify({ contractId: this.modelContractInfo.contractId, flow_cur: flow_cur, empId: this.modelContractInfo.empId });
     this.apiService.getContractInfo(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.activeIndex = results.data.flow_st;
         this.flowCurrent = results.data.flow_cur;
-       
         this.steps = results.data.flowStatuses.map(d => {
           return {
             label: d.flow_name,
@@ -251,7 +237,6 @@ export class ContractDetailComponent implements OnInit {
           { label: 'Tiếp tục', value: 'Update', class: `btn-accept ${results.data.next_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-caret-right' },
           { label: 'Lưu tạm', value: 'SaveNhap', class: `btn-accept ${results.data.save_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
           { label: 'Xác nhận', value: 'Submit', class: `btn-accept ${results.data.submit_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
-          // { label: 'Tải về hồ sơ mẫu', value: 'Dowload', class: `btn-accept ${results.data.flow_cur > 1 ? '' : 'hidden'} ml-1`, icon: 'pi pi-dowload' },
           { label: 'Đóng', value: 'Close', class: `p-button-danger ml-1`, icon: 'pi pi-times' }
         ]
         this.detailInfo = results.data;
