@@ -172,7 +172,7 @@ export class HopDongComponent implements OnInit {
 
   trainId = null;
   editRow({rowData}) {
-    this.trainId = rowData.metaId
+    this.trainId = rowData.trainId
     // this.getTrainFile();
   }
   columnDefsRecord = [];
