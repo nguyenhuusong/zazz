@@ -384,7 +384,7 @@ export class NsHoSoNghiViecComponent implements OnInit {
       message: 'Bạn có chắc chắn muốn thực hiện thao tác?',
       accept: () => {
         this.spinner.show();
-        const queryParams = queryString.stringify({ id: event.rowData.id });
+        const queryParams = queryString.stringify({ terminateId: event.rowData.terminateId });
         this.apiService.delTerminateInfo(queryParams).subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa hồ sơ thành công' });
