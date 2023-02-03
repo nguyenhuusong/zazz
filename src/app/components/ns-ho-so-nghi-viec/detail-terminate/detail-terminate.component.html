@@ -19,6 +19,11 @@
             <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'"
                 [optionsButtonsEdit]="optionsButtonsView" [dataView]="listViews" (callback)="setTerminateInfo($event)" (callBackForm)="callBackForm($event)"
                 (callbackcancel)="cancel($event)"></app-edit-detail>
+            <div *ngIf="detailInfo.flow_cur === 2" style="position: absolute;
+            bottom: 0;
+            right: 40px;">
+                <p-button label="Xử lý bàn giao" styleClass="p-button-sm" icon="pi pi-check"  (click)="xulybangiao()"></p-button>
+            </div>
         </p-tabPanel>
         <p-tabPanel header="Danh sách hồ sơ">
            <app-ho-so [terminateId]="modelEdit.terminateId" *ngIf="indexTab === 1 && modelEdit.terminateId"></app-ho-so>
@@ -54,3 +59,36 @@
     [draggable]="false" [resizable]="false" [focusTrap]="false" styleClass="popup-setting">
     <app-config-grid-table-form *ngIf="displaySetting && gridKeyForm" [typeConfig]="'TableInfo'"   [gridKey]="gridKeyForm"></app-config-grid-table-form>
 </p-dialog> -->
+
+<p-dialog header="Xử lý bàn giao" [(visible)]="displayChangeStatus" [modal]="true" [style]="{width: '1300px'}"
+    [draggable]="false" [resizable]="false">
+    <app-cap-nhat-trang-thai-nghi-viec [terminateId]="modelPheDuyet.id" (back)="xacnhan()" *ngIf="displayChangeStatus"></app-cap-nhat-trang-thai-nghi-viec>
+    <!-- <div class="col-md-12 mt-1" style="padding: 0"> 
+        <div class="field-group multi-select" [ngClass]=" modelPheDuyet.status_key ? 'valid' : 'invalid' ">
+            <label for="">status_key</label>
+            <p-multiSelect [autoZIndex]="true" [options]="listTerminateKey" [(ngModel)]="modelPheDuyet.status_key" optionLabel="name"></p-multiSelect>
+        </div>
+    </div>
+    
+    <div class="col-md-12 mt-1" style="padding: 0">
+        <div class="field-group date valid">
+            <label for="">Ngày xác nhận</label>
+            <p-calendar placeholder="DD/MM/YYYY" appendTo="body" [baseZIndex]="101" [(ngModel)]="modelPheDuyet.status_dt"
+                [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" inputId="navigators"
+                dateFormat="dd/mm/yy" name="status_dt"></p-calendar>
+            </div>
+    </div>
+
+    <div class="col-md-12 mt-1" style="padding: 0">
+        <div class="field-group textarea">
+            <label for="">Ghi chú</label>
+            <textarea name="comment" [(ngModel)]="modelPheDuyet.comment"  class="form-control" cols="30" rows="10"></textarea>
+        </div>
+    </div>
+
+    <div class="col-md-12 mt-1 text-right d-flex justify-content-end">
+        <p-button label="Xác nhận" styleClass="p-button-sm mr-1" (click)="xacnhan()"> </p-button>
+        <p-button label="Hủy bỏ" styleClass="p-button-sm p-button-secondary mr-1" (click)="displayChangeStatus = !displayChangeStatus"> </p-button>
+    </div> -->
+
+</p-dialog>

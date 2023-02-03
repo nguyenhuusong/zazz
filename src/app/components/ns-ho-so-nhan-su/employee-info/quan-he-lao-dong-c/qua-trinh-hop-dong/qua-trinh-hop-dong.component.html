@@ -2,8 +2,23 @@
     <div class="col-12 border-section ">
         <p-panel>
             <ng-template pTemplate="header">
-                <div class="grid d-flex justify-content-between">
-                    <h3 class="title-section">Quá trình hợp đồng</h3>
+                <div style="display: flex; justify-content: space-between;">
+                    <div class="grid d-flex justify-content-between">
+                        <h3 class="title-section">Quá trình hợp đồng</h3>
+                    </div>
+                    <div>
+                        <p-button (onClick)="Prints()"  *ngIf="this.listPrints.length > 0" label="PRINT" icon="pi pi-print" styleClass="p-button-sm height-56"
+                            [disabled]="isShowbtnPheDuyet">
+                        </p-button>
+        
+                        <p-button class="" *ngIf="this.listPrints.length === 0" (click)="DowloadPlugin()"
+                            styleClass="p-button-sm height-56">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M0 0H16V16H0V0Z" fill="#F3F8FF"/>
+                                </svg>
+                                &nbsp;Cài plugin
+                        </p-button>
+                    </div>
                 </div>
             </ng-template>
             <div class="row" style="flex-wrap: wrap">
@@ -14,6 +29,8 @@
                     [idGrid]="gridKey + '_45dfs'"
                     [title]="'Chứng chỉ'"
                     [listsData]="listsData" 
+                    [rowSelection]="'multiple'"
+                     (callback)="rowSelected($event)"
                     (showConfig)="CauHinh()"
                     (onCellClicked)="onCellClicked($event)"
                     [columnDefs]="columnDefs">
@@ -72,6 +89,106 @@
     [autoZIndex]=true [draggable]="false" [resizable]="false">
     <app-contract-detail *ngIf="hienthihopdong" [modelContractInfo]="modelContractInfo"
         (callback)="emitContract($event)" (back)="cancelPopupContract()"></app-contract-detail>
+</p-dialog>
+
+<p-dialog [(visible)]="displayPrint" [baseZIndex]="99" [modal]="true" [style]="{width: '1400px', height: 'auto'}">
+    <!-- <ngx-loading [show]="loading1" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading> -->
+    <p-header>
+        Danh sách in
+    </p-header>
+    <div class="grid">
+        <div class="col-4">
+            <div class="field-group select valid">
+                <label for="" style="z-index: 2">Danh sách máy in</label>
+                <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" [options]="listPrints"
+                    [(ngModel)]="modelPrint.PrinterName" name="PrinterName">
+                    <ng-template let-item pTemplate="selectedItem">
+                        <span style="vertical-align:middle;">{{item.label}}</span>
+                    </ng-template>
+                    <ng-template let-car pTemplate="item">
+                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                            <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="field-group valid">
+                <label for="" style="z-index: 2">Số lần in</label>
+                <input type="number" name="Copies" [(ngModel)]="modelPrint.Copies">
+            </div>
+            <!-- <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
+                                [options]="soLanIn" [(ngModel)]="modelPrint.Copies" name="Copies" >
+                                <ng-template let-item pTemplate="selectedItem">
+                                    <span style="vertical-align:middle;">{{item.label}}</span>
+                                </ng-template>
+                                <ng-template let-car pTemplate="item">
+                                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                                        <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                                    </div>
+                                </ng-template>
+                            </p-dropdown> -->
+
+            <!-- </div> -->
+        </div>
+        <div class="col-2">
+            <label for="" style="visibility: hidden;display: block;margin-bottom: 3px;">Thực hiện</label>
+            <p-button label="Thực hiện" styleClass="p-button-sm mb-2"
+                [disabled]="filesPrints.length === 0 || !modelPrint.PrinterName || modelPrint.Copies === 0 || !modelPrint.Copies"
+                (onClick)="openPrint()"></p-button>
+        </div>
+    </div>
+
+
+    <div class="grid-default border">
+        <app-list-grid-angular *ngIf="columnDefsPrint.length > 0" 
+            [listsData]="filesPrints" 
+            [domLayout]="'autoHeight'"
+            [rowSelection]="'multiple'" 
+            [idGrid]="'prints'" 
+            (callback)="rowSelected($event)" 
+            [detailCellRendererParams]="detailCellRendererParams"
+            [columnDefs]="columnDefsPrint"></app-list-grid-angular>
+    </div>
+
+
+    <!-- <div class="row mt-1">
+        <div class="group-textarea" [ngClass]="modelAddHoliday?.holi_des ? 'valid' : 'invalid' ">
+            <textarea type="text" id="holi_des"  class="form-control" [(ngModel)]="modelAddHoliday.holi_des" cols="30" rows="10" name="holi_des"></textarea>
+            <label for="">Mô tả:<span style="color:red">*</span> </label>
+        </div>
+    </div>
+    <div class="row mt-1">
+        <div class="d-flex align-items-end" style="width: 100%;">
+            <div class="group-dropdown default mb-0">
+                <label  for=""> Kiểu lịch: </label>
+                <div style="flex-grow: 1">
+                    <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
+                        [options]="listLich" [(ngModel)]="modelAddHoliday.calendar_type" name="calendar_type" >
+                        <ng-template let-item pTemplate="selectedItem">
+                            <span style="vertical-align:middle;">{{item.label}}</span>
+                        </ng-template>
+                        <ng-template let-car pTemplate="item">
+                            <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                                <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row mt-1">
+        <div class="col-md-6"></div>
+        <div class="col-md-6 text-right">
+            <p-button label="Cập nhật" icon="pi pi-check" styleClass="p-button-sm mr-1" (click)="updateHoliday()"> </p-button>
+            <p-button *ngIf="this.modelAddHoliday.holi_is" label="Hủy ngày nghỉ" icon="pi pi-trash" (click)="FnHuy()" styleClass="p-button-sm p-button-danger mr-1"> </p-button>
+            <p-button label="Đóng" icon="pi pi-times" styleClass="p-button-sm p-button-secondary" (click)="displayAddHoliday = !displayAddHoliday"> </p-button>
+        </div>
+    </div> -->
 </p-dialog>
 
 

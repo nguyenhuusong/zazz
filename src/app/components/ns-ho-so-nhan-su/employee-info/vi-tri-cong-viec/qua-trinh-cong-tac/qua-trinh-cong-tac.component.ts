@@ -158,7 +158,7 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
         this.listViewsDetail = cloneDeep(results.data.group_fields || []);
         this.dataDetailInfo = results.data;
         this.activeIndex = results.data.flow_st;
-        this.flowCurrent = results.data.flow_cur + 1;
+        this.flowCurrent = results.data.flow_cur;
         this.steps = results.data?.flowStatuses?.map(d => {
           return {
             label: d.flow_name,
@@ -194,19 +194,31 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
   }
 
   stepActivated(): void {
+    console.log(this.activeIndex)
     console.log(this.flowCurrent)
     const stepS = document.querySelectorAll('.steps-contract .p-steps-item');
     if (stepS.length > 0) {
       for (let i = 0; i < this.steps.length; i++) {
         if (i <= this.flowCurrent) {
-          console.log(i,i<= this.flowCurrent && i !== 0)
-          // console.log(i !== 1)
-          stepS[i].className +=  ` p-highlight ${i<= this.activeIndex ? 'active' : 'remove-active'} ${i<= this.flowCurrent && this.flowCurrent !== 1 ? 'active-confirm' : 'remove-active-confirm'}`;
+          stepS[i].className +=  ` p-highlight ${i< this.activeIndex ? 'active' : 'remove-active'} ${i< this.flowCurrent && this.flowCurrent !== 1 ? 'active-confirm' : 'remove-active-confirm'}`;
         } else {
           stepS[i].classList.value = `p-steps-item icon-${i}`;
         }
       }
     }
+
+    // const stepS = document.querySelectorAll('.steps-contract .p-steps-item');
+    // if (stepS.length > 0) {
+    //   for (let i = 0; i < this.steps.length; i++) {
+    //     if (i < this.activeIndex) {
+    //       stepS[i].className += ' p-highlight active ';
+    //     }else if(i === this.activeIndex){
+    //       stepS[i].className += ' p-highlight active p-steps-current';
+    //     } else {
+    //       stepS[i].classList.value = `p-steps-item icon-${i}`;
+    //     }
+    //   }
+    // }
   }
 
   closeListViewsDetail = []
@@ -225,7 +237,7 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
         this.listViewsDetail = cloneDeep(results.data.group_fields || []);
         this.dataDetailInfo = results.data;
         this.activeIndex = results.data.flow_st;
-        this.flowCurrent = results.data.flow_cur + 1;
+        this.flowCurrent = results.data.flow_cur;
         this.getEmpProcessPageByEmpId();
         this.steps = results.data.flowStatuses.map(d => {
           return {
@@ -266,7 +278,7 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
       this.getDetail()
     } else if (data === 'BackPage') {
       this.listViewsDetail = [];
-      this.getDetail(this.flowCurrent === 1 ? this.flowCurrent: this.flowCurrent - 2)
+      this.getDetail(this.flowCurrent === 1 ? this.flowCurrent: this.flowCurrent -1)
     } else {
       this.displayFormEditDetail = false;
       this.getEmpProcessPageByEmpId();
