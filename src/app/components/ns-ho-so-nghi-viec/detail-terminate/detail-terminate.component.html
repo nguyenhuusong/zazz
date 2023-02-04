@@ -19,11 +19,7 @@
             <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'"
                 [optionsButtonsEdit]="optionsButtonsView" [dataView]="listViews" (callback)="setTerminateInfo($event)" (callBackForm)="callBackForm($event)"
                 (callbackcancel)="cancel($event)"></app-edit-detail>
-            <div *ngIf="detailInfo.flow_cur === 2" style="position: absolute;
-            bottom: 0;
-            right: 40px;">
-                <p-button label="Xử lý bàn giao" styleClass="p-button-sm" icon="pi pi-check"  (click)="xulybangiao()"></p-button>
-            </div>
+            
         </p-tabPanel>
         <p-tabPanel header="Danh sách hồ sơ">
            <app-ho-so [terminateId]="modelEdit.terminateId" *ngIf="indexTab === 1 && modelEdit.terminateId"></app-ho-so>

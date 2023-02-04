@@ -82,8 +82,6 @@ export class DetailTerminateComponent implements OnInit {
   }
 
   stepActivated(): void {
-    console.log(this.activeIndex)
-    console.log(this.flowCurrent)
     const stepS = document.querySelectorAll('.steps-contract .p-steps-item');
     if (stepS.length > 0) {
       for (let i = 0; i < this.steps.length; i++) {
@@ -101,6 +99,8 @@ export class DetailTerminateComponent implements OnInit {
     } else if (data === 'BackPage') {
       this.listViews = [];
       this.getTerminateInfo(this.flowCurrent === 1 ? this.flowCurrent: this.flowCurrent -1)
+    } else if (data === 'NghiViec') {
+      this.xulybangiao();
     } else {
      this.isDialog ? this.callback.emit() : this.router.navigate(['/nhan-su/ho-so-nghi-viec']);
     }
@@ -219,17 +219,17 @@ export class DetailTerminateComponent implements OnInit {
   }
 
   getCustObjectListNew() {
-    const opts1 = { params: new HttpParams({ fromString: `objKey=terminate_key` }) };
-    this.apiService.getObjectGroup(opts1.params.toString()).subscribe(results => {
-      this.listTerminateKey = results.data.map(d => {
-        return {
-          name: d.name,
-          code: d.value
-        }
-      });
+    // const opts1 = { params: new HttpParams({ fromString: `objKey=terminate_key` }) };
+    // this.apiService.getObjectGroup(opts1.params.toString()).subscribe(results => {
+    //   this.listTerminateKey = results.data.map(d => {
+    //     return {
+    //       name: d.name,
+    //       code: d.value
+    //     }
+    //   });
 
-      this.listTerminateKey = [...this.listTerminateKey]
-    });
+    //   this.listTerminateKey = [...this.listTerminateKey]
+    // });
   }
 
   xacnhan() {
