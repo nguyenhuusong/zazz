@@ -124,7 +124,7 @@ export class ContractDetailComponent implements OnInit {
 
   cancel(data) {
     if (data === 'CauHinh') {
-      this.modelContractInfo.contractId ? this.getContractInfo() : this.setContractCreate();
+      this.getContractInfo()
     } else if (data === 'BackPage') {
       this.getContractInfo(this.flowCurrent === 1 ? this.flowCurrent : this.flowCurrent - 1)
     } else if (data === 'Dowload') {
