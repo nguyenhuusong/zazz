@@ -270,6 +270,11 @@ export class EditDetailComponent implements OnInit, OnChanges {
     }
   }
 
+  onChangeIsSpecial($event) {
+    let group_fields = cloneDeep(this.dataView)
+    this.callbackform(group_fields, 'IsSpecial');
+  }
+
 
   callbackform(group_fields, type) {
     group_fields.forEach(results => {
@@ -337,7 +342,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
     });
     if (type === 'Update') {
       this.callback.emit(group_fields);
-    }else if( type === 'SaveNhap' ||  type === 'Submit') {
+    }else if( type === 'SaveNhap' ||  type === 'Submit' || 'IsSpecial') {
       this.callBackForm.emit({data : group_fields, type: type})
     } else {
       this.callback1.emit(group_fields);

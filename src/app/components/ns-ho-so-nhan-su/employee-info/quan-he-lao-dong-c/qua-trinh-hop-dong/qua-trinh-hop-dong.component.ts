@@ -95,6 +95,7 @@ export class QuaTrinhHopDongComponent implements OnInit {
     empId: null,
     detailInfo: null,
     contractTypeId: null,
+    themmoi: false
   }
   isShowbtnPheDuyet = true;
   hienthihopdong = false;
@@ -104,6 +105,7 @@ export class QuaTrinhHopDongComponent implements OnInit {
       contractId: null,
       empId: this.detailInfo.empId,
       contractTypeId: null,
+      themmoi: true
     }
     this.hienthihopdong = true;
   }
@@ -236,6 +238,7 @@ export class QuaTrinhHopDongComponent implements OnInit {
       contractTypeId: rowData.contractTypeId,
       empId: this.detailInfo.empId,
       detailInfo: this.detailInfo,
+      themmoi: false
     }
     this.hienthihopdong = true;
   }

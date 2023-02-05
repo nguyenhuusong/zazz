@@ -122,26 +122,32 @@ export class AppTypeTextComponent implements OnInit {
   @Input() element;
   @Input() modelFields;
   @Input() submit = false;
+  @Output() special = new EventEmitter<any>();
   constructor() { }
   ngOnInit(): void {
   }
 
   onChangeValue(value, field_name, element) {
     element.columnValue = element.columnValue.trim();
-    if (element.columnValue === '') {
-      this.modelFields[field_name].error = this.modelFields[field_name].isRequire && !this.element.columnValue ? true : false
-      this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
-      let numberDay = moment().daysInMonth();
-      if (field_name === 'annualAdd')
-        if (this.element.columnValue > numberDay) {
-          this.modelFields[field_name].error = true;
-          this.modelFields[field_name].message = "Phép bù đã nhập lớn hơn số ngày trong tháng này";
-        }
-      return;
+    if(element.isSpecial) {
+        this.special.emit(value)
     }else {
-      this.modelFields[field_name].error =false;
-      this.modelFields[field_name].message = ''
+      if (element.columnValue === '') {
+        this.modelFields[field_name].error = this.modelFields[field_name].isRequire && !this.element.columnValue ? true : false
+        this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
+        let numberDay = moment().daysInMonth();
+        if (field_name === 'annualAdd')
+          if (this.element.columnValue > numberDay) {
+            this.modelFields[field_name].error = true;
+            this.modelFields[field_name].message = "Phép bù đã nhập lớn hơn số ngày trong tháng này";
+          }
+        return;
+      }else {
+        this.modelFields[field_name].error =false;
+        this.modelFields[field_name].message = ''
+      }
     }
+    
   }
 
 
@@ -233,6 +239,7 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
   @Input() dataView;
   @Input() modelFields;
   @Input() submit = false;
+  @Output() special = new EventEmitter<any>();
   constructor(
     private apiService: ApiHrmService,
     private apiHrmV2Service: ApiHrmV2Service,
@@ -247,6 +254,9 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
   }
 
   selectNode(event,field_name, element) {
+    if(element.isSpecial) {
+      this.special.emit(event.node.data)
+    }
     if(this.element.field_name === "org_Id"){
       this.setValue('', 'User_Id')
     }
@@ -448,6 +458,7 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
   @Input() modelFields;
   @Input() submit = false;
   @Output() emitDropdownValue = new EventEmitter<any>();
+  @Output() special = new EventEmitter<any>();
   loading = false;
   floorID = '';
   constructor(
@@ -502,6 +513,9 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
   }
 
   async onChangeValue(value, field_name, element) {
+    if(element.isSpecial) {
+      this.special.emit(value)
+    }
     this.modelFields[field_name].error = this.modelFields[field_name].isRequire && !this.element.columnValue ? true : false;
     this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
 
@@ -788,6 +802,7 @@ export class AppTypeNumberComponent implements OnInit {
   @Input() element;
   @Input() modelFields;
   @Input() submit = false;
+  @Output() special = new EventEmitter<any>();
   constructor(
     private apiService: ApiHrmService
   ) { }
@@ -795,6 +810,9 @@ export class AppTypeNumberComponent implements OnInit {
   }
 
   onChangeValue(event, field_name, element) {
+    if(element.isSpecial) {
+      this.special.emit(event.value)
+    }
     // if(field_name === 'from_day' || field_name === 'to_day'){
 
     // }else{
@@ -851,6 +869,7 @@ export class AppTypeCurrencyComponent implements OnInit {
   @Input() element;
   @Input() modelFields;
   @Input() submit = false;
+  @Output() special = new EventEmitter<any>();
   constructor(
     private apiService: ApiHrmService
   ) { }
@@ -863,6 +882,9 @@ export class AppTypeCurrencyComponent implements OnInit {
   }
 
   changePrice(event, field_name, element) {
+    if(element.isSpecial) {
+      this.special.emit(event.target.value)
+    }
     this.modelFields[field_name].error = this.modelFields[field_name].isRequire && !this.element.columnValue ? true : false;
     this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
   }

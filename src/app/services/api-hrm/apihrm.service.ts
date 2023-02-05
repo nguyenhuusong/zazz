@@ -376,7 +376,7 @@ export class ApiHrmService {
   }
 
   setContractCreate(queryParams): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v2/contract/SetContractCreate` , queryParams, this.options)
+    return this.http.post<any>(`${apiHrmServer}/api/v2/contract/SetContractDraft` , queryParams, this.options)
   }
 
   setContractRecord(queryParams): Observable<any> {
