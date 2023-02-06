@@ -631,7 +631,8 @@ onCellClicked(event) {
   }
 
   addVehicleApprove(event): void {
-    this.modelApprove.cardCd = '';
+    
+    this.modelApprove.cardCd = event.rowData.cardCd;
     this.modelApprove.cardVehicleId = event.rowData.cardVehicleId;
     this.modelApprove.endTime = new Date();
     this.displayVehicleApprove = true;
