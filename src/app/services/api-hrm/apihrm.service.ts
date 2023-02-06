@@ -1772,6 +1772,10 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v1/salaryInfo/SetSalaryInfo`, data , this.options)
   }
 
+  setSalaryDraft(data): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/salaryInfo/SetSalaryDraft`, data , this.options)
+  }
+
   delSalaryInfoNew(queryParams): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v1/salaryInfo/DelSalaryInfo?${queryParams}`, this.options)
   }

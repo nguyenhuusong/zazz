@@ -356,6 +356,7 @@ export class HoSoComponent implements OnInit {
     for(let item of this.filesPrints) {
       filesPrints = [...item.contractFiles]
     }
+    console.log(filesPrints)
     const data = {
       "action": "PRINT",
       "data": {
@@ -376,6 +377,7 @@ export class HoSoComponent implements OnInit {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         repon => {
+          console.log(repon)
           if (this.isPrinted) {
             this.spinner.hide();
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'In thành công' });

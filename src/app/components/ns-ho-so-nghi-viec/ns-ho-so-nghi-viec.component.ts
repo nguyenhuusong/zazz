@@ -240,13 +240,13 @@ export class NsHoSoNghiViecComponent implements OnInit {
         //   class: 'btn-primary mr5',
         //   hide: CheckHideAction(MENUACTIONROLEAPI.GetTerminatePage.url, ACTIONS.TUYEN_DUNG_LAI)
         // },
-        {
-          onClick: this.changeStatus.bind(this),
-          label: 'Thay đổi trạng thái',
-          icon: 'fa fa-check',
-          class: 'btn-primary mr5',
-          hide: CheckHideAction(MENUACTIONROLEAPI.GetTerminatePage.url, ACTIONS.CAP_NHAT_TT)
-        },
+        // {
+        //   onClick: this.changeStatus.bind(this),
+        //   label: 'Thay đổi trạng thái',
+        //   icon: 'fa fa-check',
+        //   class: 'btn-primary mr5',
+        //   hide: CheckHideAction(MENUACTIONROLEAPI.GetTerminatePage.url, ACTIONS.CAP_NHAT_TT)
+        // },
       ]
     };
   }
