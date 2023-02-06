@@ -607,8 +607,8 @@ export class NsHoSoNhanSuComponent implements OnInit {
   ngOnInit() {
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
-      { label: 'Nhân sự' },
-      { label: 'Quản lý nhân sự' },
+      { label: 'Quan hệ lao động' },
+      { label: 'Hồ sơ nhân sự' },
     ];
     this.getEmpFilter();
 

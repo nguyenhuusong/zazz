@@ -418,7 +418,7 @@ export class XuLyHopDongComponent implements OnInit {
       )
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
-      { label: 'Nhân sự' },
+      { label: 'Quan hệ lao động' },
       { label: 'Xử lý hợp đồng' }
     ];
     this.getQueryLocalSotrage();

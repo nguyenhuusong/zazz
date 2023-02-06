@@ -327,7 +327,7 @@ export class ThaiSanComponent implements OnInit, AfterViewChecked {
   ngOnInit() {
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
-      { label: 'Nhân sự' },
+      { label: 'Quan hệ lao động' },
       { label: 'Danh sách thai sản' },
     ];
     this.getEmpFilter()

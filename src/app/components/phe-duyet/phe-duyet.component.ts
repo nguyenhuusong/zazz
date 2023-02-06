@@ -333,7 +333,7 @@ export class PheDuyetComponent implements OnInit, AfterViewChecked {
   ngOnInit() {
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
-      { label: 'Nhân sự' },
+      { label: 'Quan hệ lao động' },
       { label: 'Danh sách phê duyệt' },
     ];
     this.getFilter();

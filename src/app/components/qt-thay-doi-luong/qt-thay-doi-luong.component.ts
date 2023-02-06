@@ -404,7 +404,7 @@ export class QtThayDoiLuongComponent implements OnInit {
   ngOnInit() {
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
-      { label: 'Quản lý nhân sự' },
+      { label: 'Quan hệ lao động' },
       { label: 'Quá trình thay đổi lương' },
     ];
     
