@@ -113,6 +113,7 @@ import { TaiKhoanComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-
 import { DanhSachThietBiComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/tien-ich/danh-sach-thiet-bi/danh-sach-thiet-bi.component';
 import { HoSoComponent } from 'src/app/components/ns-ho-so-nghi-viec/detail-terminate/ho-so/ho-so.component';
 import {CheckboxModule} from 'primeng/checkbox';
+import { HopDongComponent as SalaryHopDongComponent } from 'src/app/components/qt-thay-doi-luong/chi-tiet-qt-thay-doi-luong/hop-dong/hop-dong.component';
 @NgModule({
   imports: [
     MessagesModule,
@@ -228,6 +229,7 @@ import {CheckboxModule} from 'primeng/checkbox';
     LyDoNghiViecComponent,
     ChiTietLyDoNghiViecComponent,
     HopDongComponent,
+    SalaryHopDongComponent,
     ThanhPhanLuongComponent,
     CapNhatTrangThaiNghiViecComponent,
     DetailTerminateComponent,
