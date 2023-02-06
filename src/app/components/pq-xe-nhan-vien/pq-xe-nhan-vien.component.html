@@ -313,7 +313,7 @@
               <label>Mã thẻ
                 <span style="color:red">*</span>
               </label>
-              <input type="text" class="form-control" name="cardCd" [(ngModel)]="modelApprove.cardCd" id="cardCd" required
+              <input type="text" class="form-control" name="cardCd" disabled [(ngModel)]="modelApprove.cardCd" id="cardCd" required
                 #cardCd="ngModel" placeholder="Mã thẻ">
               <div *ngIf="cardCd.errors && (cardCd.dirty || cardCd.touched)" class="alert-validation alert-danger">
                 <div *ngIf="cardCd.errors.required">Trường này bắt buộc nhập</div>

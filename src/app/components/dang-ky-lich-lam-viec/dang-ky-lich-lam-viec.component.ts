@@ -473,6 +473,7 @@ export class DangKyLichLamViecComponent implements OnInit {
   ngOnInit() {
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
+      { label: 'Quan hệ lao động' },
       { label: 'Danh sách đăng ký lịch làm việc' },
     ];
     this.getEmpWorkingFilter();
