@@ -116,13 +116,14 @@ export class HopDongComponent implements OnInit {
                 key: 'view-job-detail',
                 class: 'btn-primary mr5',
               },
-              // {
-              //   onClick: this.uploadContract.bind(this),
-              //   label: 'Tải lên file ký duyệt',
-              //   icon: 'pi pi-upload',
-              //   key: 'view-job-detail',
-              //   class: 'btn-primary mr5',
-              // },
+              {
+                onClick: this.dowloadFileUpload.bind(this),
+                label: 'Tải về hồ sơ đã ký',
+                icon: 'pi pi-upload',
+                key: 'view-job-detail',
+                class: 'btn-primary mr5',
+                hide: !params.data.meta_upload_url
+              },
 
             
             ]
@@ -146,6 +147,14 @@ export class HopDongComponent implements OnInit {
                 class: 'btn-primary mr5',
               },
               {
+                onClick: this.dowloadFileupload.bind(this),
+                label: 'Tải về file đã ký',
+                icon: 'fa fa-edit editing',
+                key: 'view-job-detail',
+                class: 'btn-primary mr5',
+                hide: !params.data.meta_file_url
+              },
+              {
                 onClick: this.uploadFile.bind(this),
                 label: 'Tải lên file ký duyệt',
                 icon: 'pi pi-upload',
@@ -157,6 +166,15 @@ export class HopDongComponent implements OnInit {
         },
       }
     ];
+  }
+
+  dowloadFileupload({rowData}) {
+    this.downloadButtonClicked(rowData.meta_file_url)
+  }
+
+
+  dowloadFileUpload({rowData}) {
+    this.downloadButtonClicked(rowData.meta_upload_url)
   }
 
   dowloadFile({rowData}) {

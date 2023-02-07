@@ -202,26 +202,38 @@ export class HoSoComponent implements OnInit {
         cellRendererParams: params => {
           return {
             buttons: [
-              // {
-              //   onClick: this.editRow.bind(this),
-              //   label: 'Xem chi tiết',
-              //   icon: 'fa fa-edit editing',
-              //   key: 'view-job-detail',
-              //   class: 'btn-primary mr5',
-              // },
-
-              // {
-              //   onClick: this.delRow.bind(this),
-              //   label: 'Xóa',
-              //   icon: 'pi pi-trash',
-              //   key: 'delete-qua-trinh-hop-dong',
-              //   class: 'btn-danger',
-              // },
+              {
+                onClick: this.dowloadFile.bind(this),
+                label: 'Xem File',
+                icon: 'fa fa-edit editing',
+                key: 'view-job-detail',
+                class: 'btn-primary mr5',
+              },
+              {
+                onClick: this.dowloadFileUpload.bind(this),
+                label: 'Tải về hồ sơ đã ký',
+                icon: 'pi pi-upload',
+                key: 'view-job-detail',
+                class: 'btn-primary mr5',
+                hide: !params.data.meta_upload_url
+              },
             ]
           };
         },
       }
     ];
+  }
+
+  dowloadFile({rowData}) {
+    this.downloadButtonClicked(rowData.temp_view_url)
+  }
+
+  dowloadFileupload({rowData}) {
+    this.downloadButtonClicked(rowData.meta_file_url)
+  }
+
+  dowloadFileUpload({rowData}) {
+    this.downloadButtonClicked(rowData.meta_upload_url)
   }
 
   editRow({rowData}) {
