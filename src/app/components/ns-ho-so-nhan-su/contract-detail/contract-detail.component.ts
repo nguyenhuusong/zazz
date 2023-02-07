@@ -142,7 +142,7 @@ export class ContractDetailComponent implements OnInit {
 
   setContractInfo(data) {
     const params = {
-      ...this.detailInfo, group_fields: data, flow_cur: this.flowCurrent
+      ...this.detailInfo, group_fields: data, flow_cur: this.flowCurrent, action: 'next'
     };
     this.cloneListViews = cloneDeep(data);
     this.listViews = [];
@@ -160,7 +160,9 @@ export class ContractDetailComponent implements OnInit {
       this.setContractDraft(params);
     } else {
       const params = {
-        ...this.detailInfo, group_fields: event.data, flow_cur: event.type === 'Submit' ? this.flowCurrent : this.flowCurrent - 1
+        ...this.detailInfo, group_fields: event.data
+        , flow_cur: event.type === 'Submit' ? this.flowCurrent : this.flowCurrent - 1
+        , action: event.type === 'Submit' ? 'submit' : 'save'
       }
       this.cloneListViews = cloneDeep(event.data);
       this.listViews = [];

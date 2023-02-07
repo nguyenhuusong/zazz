@@ -186,7 +186,10 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
 
   callBackForm(event) {
     const params = {
-      ...this.dataDetailInfo, group_fields: event.data, flow_cur: event.type === 'Submit' ?  this.flowCurrent : this.flowCurrent -1
+      ...this.dataDetailInfo
+      , group_fields: event.data
+      , flow_cur: event.type === 'Submit' ?  this.flowCurrent : this.flowCurrent -1
+      , action: event.type === 'Submit' ? 'submit' : 'save'
     }
     this.closeListViewsDetail = cloneDeep(event.data);
     this.listViewsDetail = []
@@ -222,7 +225,7 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
   closeListViewsDetail = []
   setDetail(data) {
     const params = {
-      ...this.dataDetailInfo, group_fields: data, flow_cur: this.flowCurrent
+      ...this.dataDetailInfo, group_fields: data, flow_cur: this.flowCurrent, action: 'next'
     };
     this.closeListViewsDetail = cloneDeep(data);
     this.listViewsDetail = [];
