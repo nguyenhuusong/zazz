@@ -1760,6 +1760,10 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v1/salaryInfo/GetSalaryInfo?` + queryParams, this.options)
   }
 
+  getSalaryMetaPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/salaryInfo/GetSalaryMetaPage?` + queryParams, this.options)
+  }
+
   getSalaryInfoPageByEmpId(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/salaryInfo/GetSalaryInfoPageByEmpId?` + queryParams, this.options)
   }
@@ -1768,8 +1772,16 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v1/salaryInfo/GetSalaryComponentPage?` + queryParams, this.options)
   }
 
+  getSalaryRecord(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/salaryInfo/GetSalaryRecord?` + queryParams, this.options)
+  }
+
   setSalaryInfoNew(data): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v1/salaryInfo/SetSalaryInfo`, data , this.options)
+  }
+
+  setSalaryRecord(data): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/salaryInfo/SetSalaryRecord`, data , this.options)
   }
 
   setSalaryDraft(data): Observable<any> {

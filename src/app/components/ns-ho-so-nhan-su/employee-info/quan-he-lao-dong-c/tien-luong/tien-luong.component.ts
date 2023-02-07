@@ -36,7 +36,7 @@ export class TienLuongComponent implements OnInit, AfterViewInit {
   FnEvent() {
     setTimeout(() => {
       var dragTarget = document.getElementById(this.gridKey);
-      if(dragTarget) {
+      if (dragTarget) {
         const click$ = fromEvent(dragTarget, 'click');
         click$.subscribe(event => {
           this.addTienLuong()
@@ -49,7 +49,7 @@ export class TienLuongComponent implements OnInit, AfterViewInit {
     this.getSalaryInfoPageByEmpId();
     this.displayFormEditDetail = false;
   }
-  
+
   ngOnInit(): void {
     this.getSalaryInfoPageByEmpId();
   }
@@ -81,7 +81,7 @@ export class TienLuongComponent implements OnInit, AfterViewInit {
       {
         headerComponentParams: {
           template:
-          `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
+            `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
         },
         field: 'gridflexdetails1',
         cellClass: ['border-right', 'no-auto'],
@@ -113,14 +113,15 @@ export class TienLuongComponent implements OnInit, AfterViewInit {
     ];
   }
   salaryInfoId = null;
-  editRow({rowData}) {
+  editRow({ rowData }) {
     this.salaryInfoId = rowData.salaryInfoId;
-    this.getDetail();
+    this.displayFormEditDetail = true;
+    // this.getDetail();
   }
 
   onCellClicked(event) {
-    if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
-      this.editRow(event = {rowData: event.data})
+    if (event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
+      this.editRow(event = { rowData: event.data })
     }
   }
 
@@ -140,8 +141,9 @@ export class TienLuongComponent implements OnInit, AfterViewInit {
   }
 
   addTienLuong() {
-    this.salaryInfoId = null
-    this.getDetail();
+    this.salaryInfoId = null;
+    this.displayFormEditDetail = true;
+    // this.getDetail();
   }
 
   activeIndex = 0;
@@ -151,7 +153,7 @@ export class TienLuongComponent implements OnInit, AfterViewInit {
     this.spinner.show();
     this.dataDetailInfo = null;
     this.listViewsDetail = [];
-    const query = { empId: this.empId, id: this.salaryInfoId, flow_st: flow_st }
+    const query = { empId: this.empId, salaryInfoId: this.salaryInfoId, flow_st: flow_st }
     this.apiService.getSalaryInfoNew(queryString.stringify(query)).subscribe(results => {
       if (results.status === 'success') {
         this.spinner.hide();
@@ -197,19 +199,23 @@ export class TienLuongComponent implements OnInit, AfterViewInit {
 
   cloneListViewsDetail = [];
   callBackForm(event) {
-    const params = {
-      ...this.dataDetailInfo, group_fields: event.data, flow_st: this.activeIndex
-    }
-    // this.cloneListViewsDetail = cloneDeep(this.listViewsDetail);
-    // this.listViewsDetail = []
-    this.callApiInfo(params)
-    if (event.type === 'Submit' || event.type === 'SaveNhap') {
-      setTimeout(() => {
-       this.displayFormEditDetail = false;
-       this.getSalaryInfoPageByEmpId();
-       this.cancelSave.emit()
-      }, 200);
-    }
+
+    this.displayFormEditDetail = false;
+    this.getSalaryInfoPageByEmpId();
+    this.cancelSave.emit()
+    // const params = {
+    //   ...this.dataDetailInfo, group_fields: event.data, flow_st: this.activeIndex
+    // }
+    // // this.cloneListViewsDetail = cloneDeep(this.listViewsDetail);
+    // // this.listViewsDetail = []
+    // this.callApiInfo(params)
+    // if (event.type === 'Submit' || event.type === 'SaveNhap') {
+    //   setTimeout(() => {
+    //    this.displayFormEditDetail = false;
+    //    this.getSalaryInfoPageByEmpId();
+    //    this.cancelSave.emit()
+    //   }, 200);
+    // }
   }
 
   stepActivated(): void {
@@ -238,40 +244,7 @@ export class TienLuongComponent implements OnInit, AfterViewInit {
     this.spinner.show();
     this.apiService.setSalaryInfoNew(params).subscribe((results: any) => {
       if (results.status === 'success') {
-        // this.listViewsDetail = cloneDeep(results.data.group_fields || []);
-        // this.dataDetailInfo = results.data;
-        // this.activeIndex = results.data.flow_st;
-        // this.getSalaryInfoPageByEmpId();
-        // this.steps = results.data.flowStatuses.map(d => {
-        //   return {
-        //     label: d.flow_name,
-        //     value: d.flow_st
-        //   }
-        // });
-        // setTimeout(() => {
-        //   this.stepActivated();
-        // }, 100);
-        // if (results.data.submit_st) {
-        //   this.optionsButtonsView = [
-        //     { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
-        //     { label: 'Trình duyệt', value: 'Submit', class: 'btn-accept' }
-        //   ]
-        // } else {
-        //   if (results.data.save_st) {
-        //     this.optionsButtonsView = [
-        //       { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
-        //       { label: 'Lưu tạm', value: 'Update', class: 'btn-accept' },
-        //       { label: 'Tiếp tục', value: 'Update', class: 'btn-accept' }
-        //     ]
-        //   } else {
-        //     this.optionsButtonsView = [
-        //       { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
-        //       { label: 'Tiếp tục', value: 'Update', class: 'btn-accept' }
-        //     ]
-        //   }
-
-        // }
-        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thành công'});
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thành công' });
         this.displayFormEditDetail = false;
         this.spinner.hide();
         this.getSalaryInfoPageByEmpId();
