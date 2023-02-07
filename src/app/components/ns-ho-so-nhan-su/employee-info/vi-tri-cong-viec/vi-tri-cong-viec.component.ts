@@ -179,13 +179,13 @@ export class ViTriCongViecComponent implements OnInit, AfterViewInit {
       this.spinner.hide();
     });
   }
-
+  displayFormTerminate = false;
   fnNghiViec() {
     this.modelDuyet.empId = this.dataEmployeeStatus.empId;
     this.modelDuyet.full_name = this.dataEmployeeStatus.fullName;
     this.titleForm.title = 'Xác nhận nhân viên nghỉ việc';
     this.titleForm.type = 'NghiViec';
-    this.displayDialog = true;
+    this.displayFormTerminate = true;
     this.noDisableInput = false;
   }
   modelDuyet = {
@@ -271,6 +271,7 @@ export class ViTriCongViecComponent implements OnInit, AfterViewInit {
   isEditDetail = false;
   cancelSetDetail(event) {
     this.isEditDetail = false;
+    this.displayFormTerminate = false;
     this.getEmployeeInfo();
     // this.reloadEdit.emit();
   }

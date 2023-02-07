@@ -188,7 +188,7 @@ export class DetailTerminateComponent implements OnInit {
     this.detailInfo = null;
     this.listViews = [];
     this.spinner.show();
-    const queryParams = queryString.stringify({ terminateId: this.modelEdit.terminateId, flow_cur: flow_cur });
+    const queryParams = queryString.stringify({ terminateId: this.modelEdit.terminateId, flow_cur: flow_cur, empId: this.modelEdit.empId });
     this.apiService.getTerminateInfo(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.activeIndex = results.data.flow_st;
