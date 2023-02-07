@@ -12,7 +12,10 @@ import { AgGridFn } from 'src/app/common/function-common/common';
   styleUrls: ['./contract-detail.component.scss'],
 })
 export class ContractDetailComponent implements OnInit {
-  @Input() modelContractInfo: any = null
+  @Input() modelContractInfo: any = {
+    contractId: null,
+    empId: null
+  }
   @Output() callback = new EventEmitter<any>();
   @Output() back = new EventEmitter<any>();
   constructor(
@@ -69,7 +72,8 @@ export class ContractDetailComponent implements OnInit {
   handleParams(): void {
     this.activatedRoute.queryParamMap.subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
-      this.modelContractInfo = this.paramsObject.params;
+      this.modelContractInfo.contractId = this.paramsObject.params.contractId;
+      this.modelContractInfo.empId = this.paramsObject.params.empId;
       this.getContractInfo();
     });
   }
@@ -190,6 +194,7 @@ export class ContractDetailComponent implements OnInit {
     this.apiService.setContractDraft(params).subscribe(results => {
       if (results.status === 'success') {
         this.activeIndex = results.data.flow_st;
+        this.modelContractInfo.contractId = results.data.contractId;
         this.listViews = cloneDeep(results.data.group_fields);
         setTimeout(() => {
           this.stepActivated();
@@ -225,6 +230,7 @@ export class ContractDetailComponent implements OnInit {
     this.apiService.setContractInfo(params).subscribe(results => {
       if (results.status === 'success') {
         this.activeIndex = results.data.flow_st;
+        this.modelContractInfo.contractId = results.data.contractId;
         this.listViews = cloneDeep(results.data.group_fields);
         setTimeout(() => {
           this.stepActivated();
@@ -259,6 +265,12 @@ export class ContractDetailComponent implements OnInit {
         this.messageService.add({
           severity: 'error', summary: 'Thông báo', detail: results.message
         });
+
+        this.activeIndex = this.detailInfo.flow_st;
+        this.flowCurrent = this.detailInfo.flow_cur;
+        setTimeout(() => {
+          this.stepActivated();
+        }, 100);
         // this.listViews = cloneDeep(this.cloneListViews);
         // this.flowCurrent = this.detailInfo.flow_cur;
         // this.activeIndex = this.detailInfo.flow_st;
@@ -281,11 +293,13 @@ export class ContractDetailComponent implements OnInit {
     this.detailInfo = null;
     this.listViews = [];
     this.spinner.show();
+    console.log(this.modelContractInfo)
     const queryParams = queryString.stringify({ contractId: this.modelContractInfo.contractId, flow_cur: flow_cur, empId: this.modelContractInfo.empId });
     this.apiService.getContractInfo(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.activeIndex = results.data.flow_st;
         this.flowCurrent = results.data.flow_cur;
+        this.modelContractInfo.contractId = results.data.contractId;
         this.steps = results.data.flowStatuses.map(d => {
           return {
             label: d.flow_name,

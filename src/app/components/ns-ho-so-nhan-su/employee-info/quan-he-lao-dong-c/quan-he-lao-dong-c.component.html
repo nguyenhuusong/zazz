@@ -37,7 +37,7 @@
                         <p-divider></p-divider>
                         <app-qua-trinh-hop-dong [empId]="empId" [detailInfo]="detailInfo" *ngIf="listViews.length >0 " (cancelSave)="cancelSave()"></app-qua-trinh-hop-dong>
                         <app-tien-luong [empId]="empId" *ngIf="listViews.length >0 "></app-tien-luong> 
-                        <app-thong-tin-nguoi-phu-thuoc  *ngIf="listViews.length >0 " [empId]="empId"></app-thong-tin-nguoi-phu-thuoc> 
+                        <app-thong-tin-nguoi-phu-thuoc  *ngIf="listViews.length >0 " [empId]="empId" (cancelSave)="getEmployeeInfo()"></app-thong-tin-nguoi-phu-thuoc> 
 
                     </div>
 

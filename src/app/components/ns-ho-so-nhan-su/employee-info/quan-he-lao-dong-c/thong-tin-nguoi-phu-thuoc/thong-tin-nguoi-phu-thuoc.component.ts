@@ -85,6 +85,7 @@ export class ThongTinNguoiPhuThuocComponent implements OnInit {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thêm mới thành công' });
         this.displayFormEditDetail = false;
         this.getEmpDependentPage();
+        this.cancelSave.emit();
         this.FnEvent();
         this.spinner.hide();
       } else {
