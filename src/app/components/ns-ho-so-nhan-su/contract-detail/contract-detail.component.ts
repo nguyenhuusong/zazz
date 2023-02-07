@@ -116,7 +116,7 @@ export class ContractDetailComponent implements OnInit {
         if (i <= this.flowCurrent) {
           stepS[i].className += ` p-highlight ${i < this.activeIndex ? 'active' : 'remove-active'} ${i < this.flowCurrent && this.flowCurrent !== 1 ? 'active-confirm' : 'remove-active-confirm'}`;
         } else {
-          stepS[i].classList.value = `p-steps-item icon-${i}`;
+          stepS[i].className += ` p-highlight ${i < this.activeIndex ? 'active' : 'remove-active'} ${i < this.flowCurrent && this.flowCurrent !== 1 ? 'active-confirm' : 'remove-active-confirm'}`;
         }
       }
     }
@@ -141,13 +141,16 @@ export class ContractDetailComponent implements OnInit {
   }
 
   setContractInfo(data) {
-    const params = {
-      ...this.detailInfo, group_fields: data, flow_cur: this.flowCurrent, action: 'next'
-    };
-    this.cloneListViews = cloneDeep(data);
-    this.listViews = [];
-    this.callApiInfo(params)
-
+    if(this.flowCurrent > this.activeIndex) {
+      const params = {
+        ...this.detailInfo, group_fields: data, flow_cur: this.flowCurrent, action: 'next'
+      };
+      this.cloneListViews = cloneDeep(data);
+      this.listViews = [];
+      this.callApiInfo(params)
+    }else {
+      this.getContractInfo(this.flowCurrent + 1);
+    }
   }
   cloneListViews = []
   callBackForm(event) {
@@ -159,14 +162,26 @@ export class ContractDetailComponent implements OnInit {
       this.listViews = [];
       this.setContractDraft(params);
     } else {
-      const params = {
-        ...this.detailInfo, group_fields: event.data
-        , flow_cur: event.type === 'Submit' ? this.flowCurrent : this.flowCurrent - 1
-        , action: event.type === 'Submit' ? 'submit' : 'save'
+
+      if(this.flowCurrent > this.activeIndex) {
+        const params = {
+          ...this.detailInfo, group_fields: event.data
+          , flow_cur: event.type === 'Submit' ? this.flowCurrent : this.flowCurrent - 1
+          , action: event.type === 'Submit' ? 'submit' : 'save'
+        }
+        this.cloneListViews = cloneDeep(event.data);
+        this.listViews = [];
+        this.callApiInfo(params, event.type);
+      }else {
+        const params = {
+          ...this.detailInfo, group_fields: event.data
+          , flow_st: this.detailInfo.flow_cur
+          , action: event.type === 'Submit' ? 'submit' : 'save'
+        }
+        this.cloneListViews = cloneDeep(event.data);
+        this.listViews = [];
+        this.callApiInfo(params, event.type);
       }
-      this.cloneListViews = cloneDeep(event.data);
-      this.listViews = [];
-      this.callApiInfo(params, event.type);
     }
   }
 

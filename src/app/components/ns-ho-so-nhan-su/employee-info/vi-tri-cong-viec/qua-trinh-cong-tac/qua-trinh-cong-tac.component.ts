@@ -185,15 +185,28 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
 
 
   callBackForm(event) {
-    const params = {
-      ...this.dataDetailInfo
-      , group_fields: event.data
-      , flow_cur: event.type === 'Submit' ?  this.flowCurrent : this.flowCurrent -1
-      , action: event.type === 'Submit' ? 'submit' : 'save'
-    }
-    this.closeListViewsDetail = cloneDeep(event.data);
-    this.listViewsDetail = []
-    this.callApiInfo(params, event.type)
+    if(this.flowCurrent > this.activeIndex) {
+      const params = {
+        ...this.dataDetailInfo
+        , group_fields: event.data
+        , flow_cur: event.type === 'Submit' ?  this.flowCurrent : this.flowCurrent -1
+        , action: event.type === 'Submit' ? 'submit' : 'save'
+      }
+      this.closeListViewsDetail = cloneDeep(event.data);
+      this.listViewsDetail = []
+      this.callApiInfo(params, event.type)
+      }else {
+        const params = {
+          ...this.dataDetailInfo
+          , group_fields: event.data
+          , flow_st: this.dataDetailInfo.flow_cur
+          , action: event.type === 'Submit' ? 'submit' : 'save'
+        }
+        this.closeListViewsDetail = cloneDeep(event.data);
+        this.listViewsDetail = []
+        this.callApiInfo(params, event.type)
+      }
+
   }
 
   stepActivated(): void {
@@ -203,7 +216,7 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
         if (i <= this.flowCurrent) {
           stepS[i].className +=  ` p-highlight ${i< this.activeIndex ? 'active' : 'remove-active'} ${i< this.flowCurrent && this.flowCurrent !== 1 ? 'active-confirm' : 'remove-active-confirm'}`;
         } else {
-          stepS[i].classList.value = `p-steps-item icon-${i}`;
+          stepS[i].className +=  ` p-highlight ${i< this.activeIndex ? 'active' : 'remove-active'} ${i< this.flowCurrent && this.flowCurrent !== 1 ? 'active-confirm' : 'remove-active-confirm'}`;
         }
       }
     }
@@ -224,12 +237,17 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
 
   closeListViewsDetail = []
   setDetail(data) {
-    const params = {
-      ...this.dataDetailInfo, group_fields: data, flow_cur: this.flowCurrent, action: 'next'
-    };
-    this.closeListViewsDetail = cloneDeep(data);
-    this.listViewsDetail = [];
-    this.callApiInfo(params)
+    if(this.flowCurrent > this.activeIndex) {
+      const params = {
+        ...this.dataDetailInfo, group_fields: data, flow_cur: this.flowCurrent, action: 'next'
+      };
+      this.closeListViewsDetail = cloneDeep(data);
+      this.listViewsDetail = [];
+      this.callApiInfo(params)
+    }else {
+      this.getDetail(this.flowCurrent + 1);
+    }
+   
   }
 
   callApiInfo(params, type = 'Update') {
