@@ -27,7 +27,7 @@ export class ChiTietPheDuyetComponent implements OnInit, OnDestroy {
     wft_id: "",
     work_type: "",
     approve_st: 0,
-    reason:  ""
+    reason: ""
   }
 
   titlePage = '';
@@ -58,19 +58,19 @@ export class ChiTietPheDuyetComponent implements OnInit, OnDestroy {
     ];
     this.handleParams();
   }
- 
+
   handleParams() {
     this.activatedRoute.queryParamMap
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((params) => {
         this.paramsObject = { ...params.keys, ...params };
-        this.wft_id = this.paramsObject.params.wft_id  || null
+        this.wft_id = this.paramsObject.params.wft_id || null
         this.getWorkflowInfo();
       });
   };
- 
+
   getWorkflowInfo() {
-    const queryParams = queryString.stringify({wft_id: this.wft_id});
+    const queryParams = queryString.stringify({ wft_id: this.wft_id });
     this.apiService.getWorkflowInfo(queryParams)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {
@@ -110,12 +110,56 @@ export class ChiTietPheDuyetComponent implements OnInit, OnDestroy {
   }
 
   quaylai(data) {
-    if(data === 'CauHinh') {
+    if (data === 'CauHinh') {
       this.getWorkflowInfo();
-    }else {
+    } else if (data === 'NghiViec') {
+      this.xulybangiao();
+    } else {
       this.router.navigate(['/nhan-su/phe-duyet']);
     }
   }
+
+
+  displayChangeStatus = false;
+  modelPheDuyet = {
+    id: '',
+    status_key: '',
+    status: 1,
+    comment: '',
+    status_dt: new Date()
+  }
+  listTerminateKey = [];
+
+  xulybangiao() {
+    this.modelPheDuyet = {
+      id: this.detailInfo.terminateId,
+      status_key: this.listTerminateKey.length > 0 ? this.listTerminateKey[0].value : '',
+      status: 1,
+      comment: '',
+      status_dt: new Date()
+    }
+    this.displayChangeStatus = true;
+  }
+
+  getCustObjectListNew() {
+    // const opts1 = { params: new HttpParams({ fromString: `objKey=terminate_key` }) };
+    // this.apiService.getObjectGroup(opts1.params.toString()).subscribe(results => {
+    //   this.listTerminateKey = results.data.map(d => {
+    //     return {
+    //       name: d.name,
+    //       code: d.value
+    //     }
+    //   });
+
+    //   this.listTerminateKey = [...this.listTerminateKey]
+    // });
+  }
+
+  xacnhan() {
+    this.getWorkflowInfo();
+    this.displayChangeStatus = false;
+  }
+
 
   pheDuyet() {
     this.displayPheDuyet = true;
