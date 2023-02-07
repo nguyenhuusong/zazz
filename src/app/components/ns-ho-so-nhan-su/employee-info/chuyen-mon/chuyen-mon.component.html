@@ -20,7 +20,7 @@
         </div>
         <div class="col-3">
             <div class="d-flex end gap-16 icons-detail-config">
-                <span class="pi pi-pencil" pTooltip="Chỉnh sửa" tooltipPosition="left"></span>
+                <span class="pi pi-pencil" pTooltip="Chỉnh sửa" tooltipPosition="left" (click)="editDetail()"></span>
                 <!-- <span class="pi pi-cog" pTooltip="Cấu hình" tooltipPosition="left"></span> -->
             </div>
         </div>
@@ -48,3 +48,11 @@
     </div>
 
 </section>
+
+<p-dialog [(visible)]="isEditDetail" [autoZIndex]="true" [modal]="true"  appendTo="body"
+    [style]="{width: '1300px', height: 'auto'}">
+    <p-header>
+       Chỉnh sửa chuyên môn
+    </p-header>
+        <app-edit-chuyen-mon *ngIf="isEditDetail" [empId]="empId" (cancelSave)="cancelSetDetail($event)"></app-edit-chuyen-mon>
+</p-dialog>

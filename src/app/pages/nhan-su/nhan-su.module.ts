@@ -114,6 +114,7 @@ import { DanhSachThietBiComponent } from 'src/app/components/ns-ho-so-nhan-su/em
 import { HoSoComponent } from 'src/app/components/ns-ho-so-nghi-viec/detail-terminate/ho-so/ho-so.component';
 import {CheckboxModule} from 'primeng/checkbox';
 import { HopDongComponent as SalaryHopDongComponent } from 'src/app/components/qt-thay-doi-luong/chi-tiet-qt-thay-doi-luong/hop-dong/hop-dong.component';
+import { EditChuyenMonComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/chuyen-mon/edit-chuyen-mon/edit-chuyen-mon.component';
 @NgModule({
   imports: [
     MessagesModule,
@@ -196,7 +197,7 @@ import { HopDongComponent as SalaryHopDongComponent } from 'src/app/components/q
     QtThayDoiLuongComponent,
     ChiTietQTThayDoiLuongComponent,
     ContractDetailComponent,
-    
+    EditChuyenMonComponent,
     EmployeeInfoComponent,
     ThongTinCaNhanComponent,
     ThongTinCaNhanEditDetailComponent,

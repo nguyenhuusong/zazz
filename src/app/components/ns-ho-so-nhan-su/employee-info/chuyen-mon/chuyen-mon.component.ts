@@ -87,6 +87,18 @@ export class ChuyenMonComponent implements OnInit {
   }
 
   columnDefs = [];
+
+  isEditDetail = false;
+  cancelSetDetail(event) {
+    this.isEditDetail = false;
+    this.getEmpQualification();
+    // this.reloadEdit.emit();
+  }
+
+  editDetail() {
+    this.isEditDetail = true;
+  }
+
 }
 
 

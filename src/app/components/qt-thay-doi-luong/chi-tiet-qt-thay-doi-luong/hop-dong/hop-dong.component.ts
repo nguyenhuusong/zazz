@@ -141,7 +141,7 @@ export class HopDongComponent implements OnInit {
             buttons: [
               {
                 onClick: this.dowloadFile.bind(this),
-                label: 'Tải về file mẫu',
+                label: 'Xem File',
                 icon: 'fa fa-edit editing',
                 key: 'view-job-detail',
                 class: 'btn-primary mr5',
@@ -169,7 +169,7 @@ export class HopDongComponent implements OnInit {
   }
 
   dowloadFileupload({rowData}) {
-    this.downloadButtonClicked(rowData.meta_file_url)
+    this.downloadButtonClicked(rowData.meta_upload_url)
   }
 
 

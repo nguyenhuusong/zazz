@@ -107,7 +107,7 @@ export class ContractDetailComponent implements OnInit {
         this.spinner.hide();
       } else {
         this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
-        this.back.emit();
+        this.backpage();
         this.spinner.hide();
       }
     })
@@ -136,12 +136,16 @@ export class ContractDetailComponent implements OnInit {
         this.downloadButtonClicked(item.temp_download_url);
       }
     } else {
-      if (this.url === 'chi-tiet-xu-ly-hop-dong') {
-        this.router.navigate(['/nhan-su/xu-ly-hop-dong'])
-      } else {
-        this.back.emit();
-      }
+     this.backpage();
     }
+  }
+
+  backpage() {
+    if (this.url === 'chi-tiet-xu-ly-hop-dong') {
+      this.router.navigate(['/nhan-su/xu-ly-hop-dong'])
+    } else {
+      this.back.emit();
+    }  
   }
 
   setContractInfo(data) {
@@ -323,7 +327,7 @@ export class ContractDetailComponent implements OnInit {
         this.spinner.hide();
       } else {
         this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
-        this.back.emit();
+        this.backpage();
         this.spinner.hide();
       }
     })
