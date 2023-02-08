@@ -23,6 +23,7 @@ import { ContractDetailComponent } from 'src/app/components/ns-ho-so-nhan-su/con
 import { LyDoNghiViecComponent } from 'src/app/components/ns-ho-so-nghi-viec/ly-do-nghi-viec/ly-do-nghi-viec.component';
 import { ChiTietLyDoNghiViecComponent } from 'src/app/components/ns-ho-so-nghi-viec/ly-do-nghi-viec/chi-tiet-ly-do-nghi-viec/chi-tiet-ly-do-nghi-viec.component';
 import { DetailTerminateComponent } from 'src/app/components/ns-ho-so-nghi-viec/detail-terminate/detail-terminate.component';
+import { ImportTerminateComponent } from 'src/app/components/ns-ho-so-nghi-viec/import-terminate/import-terminate.component';
 
 const routes: Routes = [
   {
@@ -128,7 +129,14 @@ const routes: Routes = [
       url: 'ho-so-nghi-viec/chi-tiet-ho-so-nghi-viec',
     },
   },
-
+  {
+    path: 'ho-so-nghi-viec/import',
+    component: ImportTerminateComponent,
+    data: {
+      title: 'Import hồ sơ nghỉ việc',
+      url: 'ho-so-nghi-viec/import',
+    },
+  },
   // Thai sản
 
   {

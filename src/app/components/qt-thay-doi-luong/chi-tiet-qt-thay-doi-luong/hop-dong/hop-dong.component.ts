@@ -117,6 +117,13 @@ export class HopDongComponent implements OnInit {
                 class: 'btn-primary mr5',
               },
               {
+                onClick: this.dowloadFileDemo.bind(this),
+                label: 'Tải file mẫu',
+                icon: 'fa fa-edit editing',
+                key: 'view-job-detail',
+                class: 'btn-primary mr5',
+              },
+              {
                 onClick: this.dowloadFileUpload.bind(this),
                 label: 'Tải về hồ sơ đã ký',
                 icon: 'pi pi-upload',
@@ -140,8 +147,8 @@ export class HopDongComponent implements OnInit {
           return {
             buttons: [
               {
-                onClick: this.dowloadFile.bind(this),
-                label: 'Xem File',
+                onClick: this.dowloadFileDemo.bind(this),
+                label: 'Tải file mẫu',
                 icon: 'fa fa-edit editing',
                 key: 'view-job-detail',
                 class: 'btn-primary mr5',
@@ -168,17 +175,21 @@ export class HopDongComponent implements OnInit {
     ];
   }
 
+  dowloadFileDemo({rowData}) {
+    this.downloadButtonClicked(rowData.temp_download_url);
+  }
+
   dowloadFileupload({rowData}) {
-    this.downloadButtonClicked(rowData.meta_upload_url)
+    this.downloadButtonClicked(rowData.meta_upload_url);
   }
 
 
   dowloadFileUpload({rowData}) {
-    this.downloadButtonClicked(rowData.meta_upload_url)
+    this.downloadButtonClicked(rowData.meta_upload_url);
   }
 
   dowloadFile({rowData}) {
-    this.downloadButtonClicked(rowData.temp_view_url)
+    this.downloadButtonClicked(rowData.temp_view_url);
   }
 
   onCellClicked(event) {
@@ -243,7 +254,7 @@ export class HopDongComponent implements OnInit {
     if(event && event.length > 0) {
       this.columnDefsRecord = [];
       let params = {...this.metafile}
-      params.meta_file_url = event[0].url;
+      params.meta_upload_url = event[0].url;
       params.meta_file_name = event[0].name;
       params.meta_file_type = event[0].type;
       params.meta_file_size = event[0].size;

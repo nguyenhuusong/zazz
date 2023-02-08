@@ -1582,6 +1582,10 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v2/terminate/SetTerminateMetaUpload`, queryParams, this.options)
   }
 
+  setTerminateImport(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/terminate/SetTerminateImport`, queryParams, this.options)
+  }
+
   // Holiday
 
   getHolidayPage(queryParams): Observable<any> {
