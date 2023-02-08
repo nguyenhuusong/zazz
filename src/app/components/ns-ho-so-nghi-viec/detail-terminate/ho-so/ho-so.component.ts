@@ -210,6 +210,13 @@ export class HoSoComponent implements OnInit {
                 class: 'btn-primary mr5',
               },
               {
+                onClick: this.dowloadFileDemo.bind(this),
+                label: 'Tải file mẫu',
+                icon: 'fa fa-edit editing',
+                key: 'view-job-detail',
+                class: 'btn-primary mr5',
+              },
+              {
                 onClick: this.dowloadFileUpload.bind(this),
                 label: 'Tải về hồ sơ đã ký',
                 icon: 'pi pi-upload',
@@ -224,16 +231,20 @@ export class HoSoComponent implements OnInit {
     ];
   }
 
+  dowloadFileDemo({rowData}) {
+    this.downloadButtonClicked(rowData.temp_download_url);
+  }
+
   dowloadFile({rowData}) {
-    this.downloadButtonClicked(rowData.temp_view_url)
+    this.downloadButtonClicked(rowData.temp_view_url);
   }
 
   dowloadFileupload({rowData}) {
-    this.downloadButtonClicked(rowData.meta_file_url)
+    this.downloadButtonClicked(rowData.meta_file_url);
   }
 
   dowloadFileUpload({rowData}) {
-    this.downloadButtonClicked(rowData.meta_upload_url)
+    this.downloadButtonClicked(rowData.meta_upload_url);
   }
 
   editRow({rowData}) {
