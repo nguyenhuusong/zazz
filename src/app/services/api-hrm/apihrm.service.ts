@@ -1583,7 +1583,13 @@ export class ApiHrmService {
   }
 
   setTerminateImport(queryParams): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v2/terminate/SetTerminateImport`, queryParams, this.options)
+    const customOptions = {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue()
+      })
+    };
+    return this.http.post<any>(`${apiHrmServer}/api/v2/terminate/SetTerminateImport`, queryParams, customOptions)
+
   }
 
   // Holiday

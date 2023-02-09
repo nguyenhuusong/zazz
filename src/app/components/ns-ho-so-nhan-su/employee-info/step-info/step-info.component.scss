@@ -1,5 +1,6 @@
 :host::ng-deep {
     .bg-primary {
+        background: none !important;
         .p-steps-number {
             background: #0d6efd !important;
             color: #ffffff !important;
@@ -7,6 +8,7 @@
     }
 
     .bg-secondary {
+        background: none !important;
         .p-steps-number {
             background: #6c757d !important;
             color: #ffffff !important;
@@ -18,18 +20,21 @@
     }
 
     .bg-danger {
+        background: none !important;
         .p-steps-number {
             background: #dc3545 !important;
         }
     }
 
     .bg-warning {
+        background: none !important;
         .p-steps-number {
             background: #ffc107 !important;
         }
     }
 
     .bg-success {
+        background: none !important;
         .p-steps-number {
             background: #198754 !important;
             color: #ffffff !important;
@@ -37,6 +42,7 @@
     }
 
     .bg-dark {
+        background: none !important;
         .p-steps-number {
             color: #ffffff !important;
             background: #212529 !important
@@ -44,6 +50,7 @@
     }
 
     .bg-info {
+        background: none !important;
         .p-steps-number {
             color: #ffffff !important;
             background: #0dcaf0 !important;
@@ -52,6 +59,7 @@
     }
 
     .bg-light {
+        background: none !important;
         .p-steps-number {
             color: #212529 !important;
             background: #f8f9fa !important;
