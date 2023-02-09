@@ -51,7 +51,7 @@ export class ImportTerminateComponent implements OnInit {
       this.spinner.show();
       this.isShowUpload = false;
       let fomrData = new FormData();
-      fomrData.append('formFile', event.currentFiles[0]);
+      fomrData.append('file', event.currentFiles[0]);
       this.apiService.setTerminateImport(fomrData)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {

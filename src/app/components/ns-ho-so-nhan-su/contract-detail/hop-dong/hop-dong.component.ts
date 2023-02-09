@@ -112,7 +112,7 @@ export class HopDongComponent implements OnInit {
             buttons: [
               {
                 onClick: this.dowloadFile.bind(this),
-                label: 'Xem File',
+                label: 'Xem file mẫu',
                 icon: 'fa fa-edit editing',
                 key: 'view-job-detail',
                 class: 'btn-primary mr5',
@@ -147,6 +147,13 @@ export class HopDongComponent implements OnInit {
         cellRendererParams: params => {
           return {
             buttons: [
+              {
+                onClick: this.dowloadFile.bind(this),
+                label: 'Xem file mẫu',
+                icon: 'fa fa-edit editing',
+                key: 'view-job-detail',
+                class: 'btn-primary mr5',
+              },
               {
                 onClick: this.dowloadFileDemo.bind(this),
                 label: 'Tải file mẫu',

@@ -1683,7 +1683,7 @@ export class ApiHrmService {
         Authorization: this.authService.getAuthorizationHeaderValue()
       })
     };
-    return this.http.post<any>(`${apiHrmServer}/api/v2/employee/Import`, data, customOptions);
+    return this.http.post<any>(`${apiHrmServer}/api/v2/employee/setEmployeeImport`, data, customOptions);
   }
 
   ImportVehicle(data): Observable<any> {

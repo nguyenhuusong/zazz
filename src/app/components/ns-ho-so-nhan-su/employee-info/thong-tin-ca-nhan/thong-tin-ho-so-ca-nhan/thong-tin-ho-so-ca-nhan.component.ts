@@ -185,23 +185,23 @@ export class ThongTinHoSoCaNhanComponent implements OnInit {
         cellRendererParams: params => {
           return {
             buttons: [
-              {
-                onClick: this.dowloadFile.bind(this),
-                label: 'Xem File',
-                icon: 'fa fa-edit editing',
-                key: 'view-job-detail',
-                class: 'btn-primary mr5',
-              },
-              {
-                onClick: this.dowloadFileDemo.bind(this),
-                label: 'Tải file mẫu',
-                icon: 'fa fa-edit editing',
-                key: 'view-job-detail',
-                class: 'btn-primary mr5',
-              },
+              // {
+              //   onClick: this.dowloadFile.bind(this),
+              //   label: 'Xem File',
+              //   icon: 'fa fa-edit editing',
+              //   key: 'view-job-detail',
+              //   class: 'btn-primary mr5',
+              // },
+              // {
+              //   onClick: this.dowloadFileDemo.bind(this),
+              //   label: 'Tải file mẫu',
+              //   icon: 'fa fa-edit editing',
+              //   key: 'view-job-detail',
+              //   class: 'btn-primary mr5',
+              // },
               {
                 onClick: this.dowloadFileUpload.bind(this),
-                label: 'Tải về hồ sơ đã ký',
+                label: 'upload hồ sơ',
                 icon: 'pi pi-upload',
                 key: 'view-job-detail',
                 class: 'btn-primary mr5',
@@ -226,23 +226,23 @@ export class ThongTinHoSoCaNhanComponent implements OnInit {
         cellRendererParams: params => {
           return {
             buttons: [
-              {
-                onClick: this.dowloadFile.bind(this),
-                label: 'Xem File',
-                icon: 'fa fa-edit editing',
-                key: 'view-job-detail',
-                class: 'btn-primary mr5',
-              },
-              {
-                onClick: this.dowloadFileDemo.bind(this),
-                label: 'Tải file mẫu',
-                icon: 'fa fa-edit editing',
-                key: 'view-job-detail',
-                class: 'btn-primary mr5',
-              },
+              // {
+              //   onClick: this.dowloadFile.bind(this),
+              //   label: 'Xem File',
+              //   icon: 'fa fa-edit editing',
+              //   key: 'view-job-detail',
+              //   class: 'btn-primary mr5',
+              // },
+              // {
+              //   onClick: this.dowloadFileDemo.bind(this),
+              //   label: 'Tải file mẫu',
+              //   icon: 'fa fa-edit editing',
+              //   key: 'view-job-detail',
+              //   class: 'btn-primary mr5',
+              // },
               {
                 onClick: this.dowloadFileUpload.bind(this),
-                label: 'Tải về file đã ký',
+                label: 'Tải về file đã upload',
                 icon: 'fa fa-edit editing',
                 key: 'view-job-detail',
                 class: 'btn-primary mr5',
@@ -290,12 +290,12 @@ export class ThongTinHoSoCaNhanComponent implements OnInit {
 
   delRow(event) {
     this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn xóa thời gian làm việc này?',
+      message: 'Bạn có chắc chắn muốn xóa bản ghi này này?',
       accept: () => {
         const queryParams = queryString.stringify({metaId: event.rowData.metaId});
         this.apiService.empproFileDelEmpAttach(queryParams).subscribe((results: any) => {
           if (results.status === 'success') {
-            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Xóa thành công' });
             this.getEmpRecordPage();
             this.FnEvent();
           } else {
