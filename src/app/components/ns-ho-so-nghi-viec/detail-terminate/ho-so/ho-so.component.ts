@@ -45,6 +45,7 @@ export class HoSoComponent implements OnInit {
   ngOnDestroy() {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
+    this.webSocketService.closeConnection();
   }
 
   FnEvent() {

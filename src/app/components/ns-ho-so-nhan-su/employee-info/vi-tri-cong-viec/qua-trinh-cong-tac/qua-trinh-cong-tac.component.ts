@@ -299,9 +299,10 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
       this.listViewsDetail = [];
       this.getDetail(this.flowCurrent === 1 ? this.flowCurrent: this.flowCurrent -1)
     } else {
-      this.getEmpProcessPageByEmpId();
+      this.listViewsDetail = [];
       this.displayFormEditDetail = false;
       this.cancelSave.emit();
+      this.getEmpProcessPageByEmpId();
     }
   }
   

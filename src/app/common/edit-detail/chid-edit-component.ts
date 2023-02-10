@@ -235,7 +235,7 @@ export class AppTypeSelectComponent implements OnInit {
                 `,
 })
 export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
-  @Input() element;
+  @Input() element: any;
   @Input() dataView;
   @Input() modelFields;
   @Input() submit = false;
@@ -246,7 +246,9 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
     private spinner: NgxSpinnerService
   ) { }
   ngOnInit(): void {
-    // this.element.columnValue = typeof this.element.columnValue === 'string' ? null : this.element.columnValue
+    console.log(typeof this.element.columnValue);
+
+    // this.element.columnValue = typeof this.element.columnValue === 'string' ? [] : this.element.columnValue
   }
 
   checkIsObject(data: any): boolean {

@@ -40,6 +40,7 @@ export class QuaTrinhHopDongComponent implements OnInit {
   ngOnDestroy() {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
+    this.webSocketService.closeConnection();
   }
 
   ngAfterViewInit(): void {
@@ -463,6 +464,8 @@ export class QuaTrinhHopDongComponent implements OnInit {
         },
       )
   }
+
+  
 
 
 

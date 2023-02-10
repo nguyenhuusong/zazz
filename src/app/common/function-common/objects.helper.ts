@@ -184,7 +184,7 @@ export function setMembers(element1, datas) {
       findNodeInTree1(element1.options, ids, element1, results);
       element1.columnValue = results;
     } else {
-      if (!element1.columnValue || element1.columnValue === 'all') {
+      if (!element1.columnValue || element1.columnValue === null || element1.columnValue === 'all') {
         element1.columnValue = null;
       } else {
         findNodeInTree2(element1.options, element1.columnValue, element1);

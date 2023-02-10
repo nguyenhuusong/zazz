@@ -190,7 +190,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
                 setCheckboxradiolistValue(element1, datas[0].result)
               } else if ((element1.columnType === 'selectTree') || (element1.columnType === 'selectTrees')) {
                 const datas = responses.filter(d => d.key === element1.field_name);
-                setSelectTreeValue(element1, datas[0].result)
+                setSelectTreeValue(element1, datas[0].result);
               } else if (element1.columnType === 'multiSelect') {
                 const datas = responses.filter(d => d.key === element1.field_name);
                 setMultiSelectValue(element1, datas[0].result)

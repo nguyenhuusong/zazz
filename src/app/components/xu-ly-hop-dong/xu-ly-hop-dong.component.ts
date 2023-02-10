@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import * as queryString from 'querystring';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -27,7 +27,7 @@ import { getParamString } from 'src/app/common/function-common/objects.helper';
   templateUrl: './xu-ly-hop-dong.component.html',
   styleUrls: ['./xu-ly-hop-dong.component.scss']
 })
-export class XuLyHopDongComponent implements OnInit {
+export class XuLyHopDongComponent implements OnInit, OnDestroy {
   MENUACTIONROLEAPI = MENUACTIONROLEAPI;
   ACTIONS = ACTIONS
   dataContractTypes: any;
@@ -393,29 +393,14 @@ export class XuLyHopDongComponent implements OnInit {
   ngOnDestroy() {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
+    this.webSocketService.closeConnection();
+
   }
 
   listPrints = []
   ngOnInit() {
     this.getContractFilter();
-    this.webSocketService.myWebSocket
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        repon => {
-          repon = JSON.parse(repon)
-          if (repon && repon.data && repon.data.length > 0) {
-            this.listPrints = repon.data.map(d => {
-              return {
-                label: d,
-                value: d
-              }
-            })
-          }
-        },
-        err => {
-          console.log(err)
-        },
-      )
+    this.getWebSocketService();
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Quan hệ lao động' },
@@ -443,6 +428,29 @@ export class XuLyHopDongComponent implements OnInit {
         }
       },
     ]
+  }
+
+  getWebSocketService() {
+    this.webSocketService.myWebSocket
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
+      repon => {
+        repon = JSON.parse(repon)
+        if (repon && repon.data && repon.data.length > 0) {
+          this.listPrints = repon.data.map(d => {
+            return {
+              label: d,
+              value: d
+            }
+          });
+          localStorage.setItem('listPrints', JSON.stringify(this.listPrints))
+
+        }
+      },
+      err => {
+        console.log(err)
+      },
+    )
   }
 
   sizeToFit() {

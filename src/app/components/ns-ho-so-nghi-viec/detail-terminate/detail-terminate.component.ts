@@ -5,9 +5,6 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as queryString from 'querystring';
 import { cloneDeep } from 'lodash';
-import { AgGridFn } from 'src/app/common/function-common/common';
-import { HttpParams } from '@angular/common/http';
-import * as moment from 'moment';
 @Component({
   selector: 'app-detail-terminate',
   templateUrl: './detail-terminate.component.html',
@@ -112,7 +109,7 @@ export class DetailTerminateComponent implements OnInit {
       const params = {
         ...this.detailInfo, group_fields: data, flow_cur: this.flowCurrent, action: 'next'
       }
-      this.cloneListViews = cloneDeep(this.listViews); 
+      this.cloneListViews = cloneDeep(data); 
       this.listViews = [];
       this.callApiInfo(params)
     }else {
@@ -174,6 +171,7 @@ export class DetailTerminateComponent implements OnInit {
         }
       } else {
         this.listViews = cloneDeep(this.cloneListViews);
+        this.spinner.hide();
         this.messageService.add({
           severity: 'error', summary: 'Thông báo', detail: results.message
         });
@@ -212,6 +210,12 @@ export class DetailTerminateComponent implements OnInit {
           { label: 'Đóng', value: 'Close', class: `p-button-danger ml-1`, icon: 'pi pi-times' }
         ]
         this.spinner.hide();
+      }else {
+        this.spinner.hide();
+        this.messageService.add({
+          severity: 'error', summary: 'Thông báo', detail: results.message
+        });
+        this.isDialog ? this.callback.emit() : this.router.navigate(['/nhan-su/ho-so-nghi-viec'])
       }
     })
   }
