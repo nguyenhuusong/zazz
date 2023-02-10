@@ -149,6 +149,7 @@ export class DetailTerminateComponent implements OnInit {
       if (results.status === 'success') {
         this.activeIndex = results.data.flow_st;
         this.flowCurrent = results.data.flow_cur;
+        this.modelEdit.terminateId = results.data.terminateId;
         this.listViews = cloneDeep(results.data.group_fields);
         setTimeout(() => {
           this.stepActivated();
@@ -191,6 +192,7 @@ export class DetailTerminateComponent implements OnInit {
       if (results.status === 'success') {
         this.activeIndex = results.data.flow_st;
         this.flowCurrent = results.data.flow_cur;
+        this.modelEdit.terminateId = results.data.terminateId;
         this.steps = results.data.flowStatuses.map(d => {
           return {
             label: d.flow_name,

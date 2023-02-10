@@ -201,6 +201,14 @@ export class ThongTinHoSoCaNhanComponent implements OnInit {
               // },
               {
                 onClick: this.dowloadFileUpload.bind(this),
+                label: 'Tải về file đã upload',
+                icon: 'fa fa-edit editing',
+                key: 'view-job-detail',
+                class: 'btn-primary mr5',
+                hide: !params.data.meta_upload_url
+              },
+              {
+                onClick: this.dowloadFileUpload.bind(this),
                 label: 'upload hồ sơ',
                 icon: 'pi pi-upload',
                 key: 'view-job-detail',
