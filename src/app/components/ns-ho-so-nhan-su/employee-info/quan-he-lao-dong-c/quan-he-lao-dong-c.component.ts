@@ -34,7 +34,7 @@ export class QuanHeLaoDongCComponent implements OnInit {
   }
   optionsButtonsView = [
     { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-save' },
-    { label: 'Xuất hồ sơ', value: 'xuatHoSo', class: '', icon: 'pi file-excel' },
+    // { label: 'Xuất hồ sơ', value: 'xuatHoSo', class: '', icon: 'pi file-excel' },
   ]
   codeStaff = ''
   listViews = [];

@@ -92,7 +92,7 @@ export class ViTriCongViecComponent implements OnInit, AfterViewInit {
 
   optionsButtonsView = [
     { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-save' },
-    { label: 'Xuất hồ sơ', value: 'xuatHoSo', class: '', icon: 'pi file-excel' },
+    // { label: 'Xuất hồ sơ', value: 'xuatHoSo', class: '', icon: 'pi file-excel' },
   ]
 
   cancelSave() {
