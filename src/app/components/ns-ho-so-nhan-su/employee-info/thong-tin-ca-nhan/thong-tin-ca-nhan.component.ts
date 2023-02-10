@@ -124,5 +124,6 @@ export class ThongTinCaNhanComponent implements OnInit {
     this.getEmployeeInfo();
   }
 
+
 }
 

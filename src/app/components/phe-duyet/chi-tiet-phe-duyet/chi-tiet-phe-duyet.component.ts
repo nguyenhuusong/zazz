@@ -132,7 +132,7 @@ export class ChiTietPheDuyetComponent implements OnInit, OnDestroy {
 
   xulybangiao() {
     this.modelPheDuyet = {
-      id: this.detailInfo.terminateId,
+      id: this.detailInfo.tnx_id,
       status_key: this.listTerminateKey.length > 0 ? this.listTerminateKey[0].value : '',
       status: 1,
       comment: '',
