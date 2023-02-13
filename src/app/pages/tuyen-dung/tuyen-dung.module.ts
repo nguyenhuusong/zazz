@@ -67,6 +67,11 @@ import { ChiTietNguonTuyenDungComponent } from 'src/app/components/ns-tuyen-dung
 import { NsChiTietCauHinhMailComponent } from 'src/app/components/ns-tuyen-dung/ns-cau-hinh/ns-cau-hinh-mail/chi-tiet-cau-hinh-mail/chi-tiet-ns-cau-hinh-mail.component';
 import { HrmStepModule } from 'src/app/common/hrm-steps/hrm-step.module';
 import { FormFilterModule } from 'src/app/common/form-filter/form-filter.module';
+import { KeHoachTuyenDungComponent } from 'src/app/components/ke-hoach-tuyen-dung/ke-hoach-tuyen-dung.component';
+import { ChiTietKeHoachTuyenDungComponent } from 'src/app/components/ke-hoach-tuyen-dung/chi-tiet-ke-hoach-tuyen-dung/chi-tiet-ke-hoach-tuyen-dung.component';
+import { ImportKeHoachComponent } from 'src/app/components/ke-hoach-tuyen-dung/import-ke-hoach/import-ke-hoach.component';
+import { DividerModule } from 'primeng/divider';
+import { StepsModule } from 'primeng/steps';
 @NgModule({
   imports: [
     MessagesModule,
@@ -119,7 +124,9 @@ import { FormFilterModule } from 'src/app/common/form-filter/form-filter.module'
       ButtonRendererComponent,
       ButtonRendererComponent1
     ]),
-    HrmStepModule
+    HrmStepModule,
+    DividerModule,
+    StepsModule
   ],
 
   declarations: [
@@ -142,6 +149,9 @@ import { FormFilterModule } from 'src/app/common/form-filter/form-filter.module'
     NguonTuyenDungComponent,
     ChiTietNguonTuyenDungComponent,
     NsChiTietCauHinhMailComponent,
+    KeHoachTuyenDungComponent,
+    ChiTietKeHoachTuyenDungComponent,
+    ImportKeHoachComponent,
   ],
   providers: [ ]
 })

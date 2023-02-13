@@ -660,11 +660,11 @@ export class ApiHrmService {
   }
 
   getVacancyPage(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetVacancyPage?` + queryParams, this.options)
+    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitvacancy/GetVacancyPage?` + queryParams, this.options)
   }
 
   getVacancyFilter(): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetVacancyFilter`, this.options)
+    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitvacancy/GetVacancyFilter`, this.options)
   }
 
   getOrgRoots(): Observable<any> {
@@ -831,20 +831,20 @@ export class ApiHrmService {
   }
 
   delVacancyInfo(queryParams): Observable<any> {
-    return this.http.delete<any>(`${apiHrmServer}/api/v1/recruitment/DelVacancyInfo?` + queryParams, this.options)
+    return this.http.delete<any>(`${apiHrmServer}/api/v1/recruitvacancy/DelVacancyInfo?` + queryParams, this.options)
   }
 
 
   getVacancyInfo(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetVacancyInfo?` + queryParams, this.options)
+    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitvacancy/GetVacancyInfo?` + queryParams, this.options)
   }
 
   getVacancyReplicationInfo(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetVacancyReplicationInfo?` + queryParams, this.options)
+    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitvacancy/GetVacancyReplicationInfo?` + queryParams, this.options)
   }
 
   setVacancyInfo(params): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v1/recruitment/SetVacancyInfo`, params, this.options)
+    return this.http.post<any>(`${apiHrmServer}/api/v1/recruitvacancy/SetVacancyInfo`, params, this.options)
   }
 
   getCandidateInfo(queryParams): Observable<any> {
@@ -884,7 +884,7 @@ export class ApiHrmService {
   }
 
   exportVacancy(queryParams): Observable<any> {
-    return this.http.get(`${apiHrmServer}/api/v1/recruitment/ExportVacancy/?${queryParams}`, {
+    return this.http.get(`${apiHrmServer}/api/v1/recruitvacancy/ExportVacancy/?${queryParams}`, {
       headers: new HttpHeaders({
         Authorization: this.authService.getAuthorizationHeaderValue(),
       }),
@@ -2530,6 +2530,39 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v2/empother/SetEmpDeviceStatus` , queryParams, this.options);
   }
 
+  // RecruitPlan
+  getRecruitPlanFilter(): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitplan/GetRecruitPlanFilter`, this.options);
+  }
+
+  getRecruitPlanPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitplan/GetRecruitPlanPage?` + queryParams, this.options);
+  }
+
+  setRecruitPlanExport(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitplan/SetRecruitPlanExport?` + queryParams, this.options);
+  }
+
+  getRecruitPlan(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitplan/GetRecruitPlan?` + queryParams, this.options);
+  }
+
+  delRecruitPlan(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/recruitplan/DelRecruitPlan?` + queryParams, this.options);
+  }
+
+  setRecruitPlan(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/recruitplan/SetRecruitPlan` , queryParams, this.options);
+  }
+
+  setRecruitPlanImport(data): Observable<any> {
+    const customOptions = {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue()
+      })
+    };
+    return this.http.post<any>(`${apiHrmServer}/api/v2/recruitplan/SetRecruitPlanImport`, data, customOptions);
+  }
 
 
 }

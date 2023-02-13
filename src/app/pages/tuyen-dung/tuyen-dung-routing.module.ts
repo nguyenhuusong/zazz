@@ -14,6 +14,9 @@ import { ImportTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/impor
 import { DsTiemNangComponent } from 'src/app/components/ns-tuyen-dung/ds-tiem-nang/ds-tiem-nang.component';
 import { MailDaGuiComponent } from 'src/app/components/ns-tuyen-dung/mail-da-gui/mail-da-gui.component';
 import { NsCauHinhComponent } from 'src/app/components/ns-tuyen-dung/ns-cau-hinh/ns-cau-hinh.component';
+import { KeHoachTuyenDungComponent } from 'src/app/components/ke-hoach-tuyen-dung/ke-hoach-tuyen-dung.component';
+import { ImportKeHoachComponent } from 'src/app/components/ke-hoach-tuyen-dung/import-ke-hoach/import-ke-hoach.component';
+import { ChiTietKeHoachTuyenDungComponent } from 'src/app/components/ke-hoach-tuyen-dung/chi-tiet-ke-hoach-tuyen-dung/chi-tiet-ke-hoach-tuyen-dung.component';
 
 const routes: Routes = [
   {
@@ -84,6 +87,40 @@ const routes: Routes = [
     data: {
       title: 'Chi tiết vị trí tuyển dụng',
       url: 'chi-tiet-vi-tri-tuyen-dung',
+    },
+  },
+  //ke hoach tuyen dung
+
+  {
+    path: 'ke-hoach-tuyen-dung',
+    component: KeHoachTuyenDungComponent,
+    data: {
+      title: 'Danh sách kế hoạch tuyển dụng',
+      url: 'ke-hoach-tuyen-dung',
+    },
+  },
+  {
+    path: 'ke-hoach-tuyen-dung/import',
+    component: ImportKeHoachComponent,
+    data: {
+      title: 'Import kế hoạch tuyển dụng',
+      url: 'import',
+    },
+  },
+  {
+    path: 'ke-hoach-tuyen-dung/them-moi-ke-hoach-tuyen-dung',
+    component: ChiTietKeHoachTuyenDungComponent,
+    data: {
+      title: 'Thêm mới kế hoạch tuyển dụng',
+      url: 'them-moi-ke-hoach-tuyen-dung',
+    },
+  },
+  {
+    path: 'ke-hoach-tuyen-dung/chi-tiet-ke-hoach-tuyen-dung',
+    component: ChiTietKeHoachTuyenDungComponent,
+    data: {
+      title: 'Chi tiết kế hoạch tuyển dụng',
+      url: 'chi-tiet-ke-hoach-tuyen-dung',
     },
   },
   {
