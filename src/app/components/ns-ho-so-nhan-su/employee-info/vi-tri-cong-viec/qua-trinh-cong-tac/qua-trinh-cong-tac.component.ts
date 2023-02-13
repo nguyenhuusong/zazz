@@ -323,6 +323,11 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
       }
     });
   }
+
+  callbackSave() {
+    this.displayFormEditDetail = false;
+    this.getEmpProcessPageByEmpId();
+  }
 }
 
 

@@ -24,6 +24,8 @@ import { LyDoNghiViecComponent } from 'src/app/components/ns-ho-so-nghi-viec/ly-
 import { ChiTietLyDoNghiViecComponent } from 'src/app/components/ns-ho-so-nghi-viec/ly-do-nghi-viec/chi-tiet-ly-do-nghi-viec/chi-tiet-ly-do-nghi-viec.component';
 import { DetailTerminateComponent } from 'src/app/components/ns-ho-so-nghi-viec/detail-terminate/detail-terminate.component';
 import { ImportTerminateComponent } from 'src/app/components/ns-ho-so-nghi-viec/import-terminate/import-terminate.component';
+import { XuLyQuaTrinhCongTacComponent } from 'src/app/components/xu-ly-qua-trinh-cong-tac/xu-ly-qua-trinh-cong-tac.component';
+import { ChiTietXuLyQtCongTacComponent } from 'src/app/components/xu-ly-qua-trinh-cong-tac/chi-tiet-xu-ly-qt-cong-tac/chi-tiet-xu-ly-qt-cong-tac.component';
 
 const routes: Routes = [
   {
@@ -57,6 +59,30 @@ const routes: Routes = [
     data: {
       title: 'Danh sách xử lý hợp đồng',
       url: 'chi-tiet-xu-ly-hop-dong',
+    },
+  },
+  {
+    path: 'xu-ly-qua-trinh-cong-tac',
+    component: XuLyQuaTrinhCongTacComponent,
+    data: {
+      title: 'Danh sách quá trình công tác',
+      url: 'xu-ly-qua-trinh-cong-tac',
+    },
+  },
+  {
+    path: 'xu-ly-qua-trinh-cong-tac/them-moi-xu-ly-qua-trinh-cong-tac',
+    component: ChiTietXuLyQtCongTacComponent,
+    data: {
+      title: 'Thêm mới quá trình công tác',
+      url: 'them-moi-xu-ly-qua-trinh-cong-tac',
+    },
+  },
+  {
+    path: 'xu-ly-qua-trinh-cong-tac/chi-tiet-xu-ly-qua-trinh-cong-tac',
+    component: ChiTietXuLyQtCongTacComponent,
+    data: {
+      title: 'Chi tiết quá trình công tác',
+      url: 'chi-tiet-xu-ly-qua-trinh-cong-tac',
     },
   },
   {

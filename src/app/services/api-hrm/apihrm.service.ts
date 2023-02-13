@@ -2256,6 +2256,14 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v2/working/GetEmpProcessPageByEmpId?` +  queryParams, this.options)
   }
 
+  getEmpProcessFilter(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/working/GetEmpProcessFilter`, this.options)
+  }
+
+  getEmpProcessPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/working/GetEmpProcessPage?` +  queryParams, this.options)
+  }
+
   getEmpWorkJob(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/working/GetEmpWorkJob?` +  queryParams, this.options)
   }
