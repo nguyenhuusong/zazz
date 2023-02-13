@@ -18,6 +18,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { getParamString, searchTree } from 'src/app/common/function-common/objects.helper';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { DialogService } from 'primeng/dynamicdialog';
+import * as FileSaver from 'file-saver';
 @Component({
   selector: 'app-ns-ho-so-nhan-su',
   templateUrl: './ns-ho-so-nhan-su.component.html',
@@ -670,31 +671,16 @@ export class NsHoSoNhanSuComponent implements OnInit {
     this.query.pageSize = 1000000;
     const query = { ...this.query };
     const queryParams = queryString.stringify(query);
-    this.apiService.getEmployeePage(queryParams).subscribe(
+    this.apiService.setEmployeeExport(queryParams).subscribe(
       (results: any) => {
-        const dataExport = [];
-        let gridflexs = results.data.gridflexs;
-        let arrKey = gridflexs.map(elementName => elementName.columnField);
 
-        let dataList = results.data.dataList.data;
-        for (let elementValue of dataList) {
-          const data: any = {};
-          for (let elementName of gridflexs) {
-            if (arrKey.indexOf(elementName.columnField) > -1 && !elementName.isHide && elementName.columnField !== 'statusName') {
-              let valueColumn = elementValue[elementName.columnField];
-              if (elementName.columnField == 'status_name' || elementName.columnField == 'isContacted' || elementName.columnField == 'isProfileFull' || elementName.columnField == 'lockName') {
-                valueColumn = this.replaceHtmlToText(valueColumn);
-              }
-              data[elementName.columnCaption] = valueColumn || '';
-            }
-
-          }
-
-          dataExport.push(data);
+        if (results.type === 'application/json') {
+          this.spinner.hide();
+        } else if (results.type === 'application/octet-stream') {
+          var blob = new Blob([results], { type: 'application/msword' });
+          FileSaver.saveAs(blob, `Danh sách hồ sơ nhân sự` + ".xlsx");
+          this.spinner.hide();
         }
-        this.fileService.exportAsExcelFile(dataExport, 'Danh sách hồ sơ nhân sự ' + new Date());
-
-        this.spinner.hide();
       },
       error => {
         this.spinner.hide();

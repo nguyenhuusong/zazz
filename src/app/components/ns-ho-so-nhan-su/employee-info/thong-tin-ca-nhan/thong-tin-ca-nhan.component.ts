@@ -99,13 +99,12 @@ export class ThongTinCaNhanComponent implements OnInit {
 
   exportResume() {
     this.spinner.show();
-    // empId: this.detailInfo.empId
-    this.apiService.setEmployeeExport(queryString.stringify({  })).subscribe(results => {
+    this.apiService.exportResume(queryString.stringify({ empId: this.detailInfo.empId })).subscribe(results => {
       if (results.type === 'application/json') {
         this.spinner.hide();
       } else if (results.type === 'application/octet-stream') {
         var blob = new Blob([results], { type: 'application/msword' });
-        FileSaver.saveAs(blob, `Thông tin hồ sơ cá nhân` + ".xlsx");
+        FileSaver.saveAs(blob, `Thông tin hồ sơ cá nhân` + ".docx");
         this.spinner.hide();
       }
     })
