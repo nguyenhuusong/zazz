@@ -2216,6 +2216,15 @@ export class ApiHrmService {
     return this.http.delete<any>(`${apiHrmServer}/api/v2/employeeprofile/DelEmpRecordTypeInfo?` +  queryParams, this.options)
   }
 
+  setEmployeeExport(queryParams: any): Observable<Blob> {
+    return this.http.get(`${apiHrmServer}/api/v2/employee/SetEmployeeExport?${queryParams}`, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
+  }
+
   // EmpWorking
   
   getEmpWorkingPageByEmpId(queryParams): Observable<any> {
