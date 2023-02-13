@@ -36,6 +36,8 @@ import { ChucDanhComponent } from 'src/app/components/chuc-danh/chuc-danh.compon
 import { ChiTietChucDanhComponent } from 'src/app/components/chuc-danh/chi-tiet-chuc-danh/chi-tiet-chuc-danh.component';
 import { DanhMucLoaiGiayToComponent } from 'src/app/components/danh-muc-loai-giay-to/danh-muc-loai-giay-to.component';
 import { ChiTietLoaiGiayToComponent } from 'src/app/components/danh-muc-loai-giay-to/chi-tiet-loai-giay-to/chi-tiet-loai-giay-to.component';
+import { ImportReasonComponent } from 'src/app/components/ly-do-nghi-viec/import-reason/import-reason.component';
+import { ImportHopDongMauComponent } from 'src/app/components/quan-ly-hop-dong/import-hop-dong-mau/import-hop-dong-mau.component';
 
 const routes: Routes = [
   {
@@ -171,6 +173,15 @@ const routes: Routes = [
     data: {
       title: 'Chi tiết lý do nghỉ việc',
       url: 'chi-tiet-ly-do-nghi',
+    },
+  },
+
+  {
+    path: 'ly-do-nghi/import',
+    component: ImportReasonComponent,
+    data: {
+      title: 'Import lý do nghỉ',
+      url: 'import',
     },
   },
 
@@ -364,6 +375,17 @@ const routes: Routes = [
       url: 'chi-tiet-hop-dong',
     },
   },
+
+  {
+    path: 'quan-ly-hop-dong/import-hop-dong-mau',
+    component: ImportHopDongMauComponent,
+    data: {
+      title: 'Import hợp đồng mẫu',
+      url: 'import-hop-dong-mau',
+    },
+  },
+
+  
 
   // Danh mục loại giấy tờ
 

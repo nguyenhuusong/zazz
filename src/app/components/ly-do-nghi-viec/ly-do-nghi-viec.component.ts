@@ -14,6 +14,7 @@ import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { fromEvent } from 'rxjs';
 import { cloneDeep } from 'lodash';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
+import * as FileSaver from 'file-saver';
 @Component({
   selector: 'app-ly-do-nghi-viec',
   templateUrl: './ly-do-nghi-viec.component.html',
@@ -272,14 +273,51 @@ export class LyDoNghiViecComponent implements OnInit {
       this.listViewsFilter =  cloneDeep(datas);
     }
   }
-
+  menuItemUtil = [];
   ngOnInit() {
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Cài đặt' },
       { label: 'Lý do nghỉ' },
     ];
+    this.menuItemUtil = [
+      {
+        label: 'Import lý do',
+        icon: 'pi pi-refresh',
+        command: () => {
+          this.ImportReason();
+        }
+      },
+      {
+        label: 'Export lý do',
+        icon: 'pi pi-refresh',
+        command: () => {
+          this.ExportReason();
+        }
+      },
+    ]
     this.getFilter();
+  }
+
+  ImportReason() {
+    this.router.navigate(['/cai-dat/ly-do-nghi/import'])
+  }
+
+  ExportReason() {
+    this.spinner.show();
+    let params = {...this.query};
+    delete params.offSet;
+    delete params.pageSize;
+    // empId: this.detailInfo.empId
+    this.apiService.setLeaveReasonExport(queryString.stringify({ ...params })).subscribe(results => {
+      if (results.type === 'application/json') {
+        this.spinner.hide();
+      } else if (results.type === 'application/octet-stream') {
+        var blob = new Blob([results], { type: 'application/msword' });
+        FileSaver.saveAs(blob, `Danh sách ly do nghỉ` + ".xlsx");
+        this.spinner.hide();
+      }
+    })
   }
 
   ngAfterViewInit(): void {
@@ -308,7 +346,7 @@ export class LyDoNghiViecComponent implements OnInit {
   ];
   
   getFilter() {
-    this.apiService.getFilter('/api/v2/leave/GetLeaveReasonFilter').subscribe(results => {
+    this.apiService.getFilter('/api/v2/leavereason/GetLeaveReasonFilter').subscribe(results => {
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);

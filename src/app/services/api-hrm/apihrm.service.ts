@@ -958,15 +958,32 @@ export class ApiHrmService {
   }
 
   getLeaveReasonPage(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v2/leave/GetLeaveReasonPage?` + queryParams, this.options)
+    return this.http.get<any>(`${apiHrmServer}/api/v2/leavereason/GetLeaveReasonPage?` + queryParams, this.options)
+  }
+
+  setLeaveReasonExport(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/leavereason/SetLeaveReasonExport?` + queryParams, this.options)
+  }
+
+  setLeaveReasonImport(params): Observable<any> {
+    const customOptions = {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      })
+    };
+    return this.http.post<any>(`${apiHrmServer}/api/v2/contracttype/UploadFileContract`, params, customOptions);
+  }
+
+  getLeaveReasonFilter(): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/leavereason/GetLeaveReasonFilter`, this.options)
   }
 
   delLeaveReason(queryParams): Observable<any> {
-    return this.http.delete<any>(`${apiHrmServer}/api/v2/leave/DelLeaveReason?` + queryParams, this.options)
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/leavereason/DelLeaveReason?` + queryParams, this.options)
   }
   
   getLeaveReason(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v2/leave/GetLeaveReason?` + queryParams, this.options)
+    return this.http.get<any>(`${apiHrmServer}/api/v2/leavereason/GetLeaveReason?` + queryParams, this.options)
   }
 
   getLeaveInfo(queryParams): Observable<any> {
@@ -986,7 +1003,7 @@ export class ApiHrmService {
   }
 
   setLeaveReason(queryParams): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v2/leave/SetLeaveReason`, queryParams, this.options)
+    return this.http.post<any>(`${apiHrmServer}/api/v2/leavereason/SetLeaveReason`, queryParams, this.options)
   }
 
   cancelLeaveStatuses(params): Observable<any> {
@@ -1242,6 +1259,10 @@ export class ApiHrmService {
   
   setContractTypeInfo(params): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/contracttype/SetContractTypeInfo`, params, this.options)
+  }
+
+  setContractTypeExport(params): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/contracttype/SetContractTypeExport?` + params, this.options)
   }
 
   // uploadFileContract(params): Observable<any> {
