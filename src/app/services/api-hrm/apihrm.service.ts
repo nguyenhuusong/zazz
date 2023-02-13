@@ -802,23 +802,23 @@ export class ApiHrmService {
   }
 
   getCandidatePage(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetCandidatePage?` + queryParams, this.options)
+    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitcandidate/GetCandidatePage?` + queryParams, this.options)
   }
 
   getCandidateFilter(): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetCandidateFilter`, this.options)
+    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitcandidate/GetCandidateFilter`, this.options)
   }
   
   getCandidatePotentialPage(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetCandidatePotentialPage?` + queryParams, this.options)
+    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitcandidate/GetCandidatePotentialPage?` + queryParams, this.options)
   }
 
   delCandidateInfo(queryParams): Observable<any> {
-    return this.http.delete<any>(`${apiHrmServer}/api/v1/recruitment/DelCandidateInfo?` + queryParams, this.options)
+    return this.http.delete<any>(`${apiHrmServer}/api/v1/recruitcandidate/DelCandidateInfo?` + queryParams, this.options)
   }
 
   getCandidateStatus(): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetCandidateStatus?`, this.options)
+    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitcandidate/GetCandidateStatus?`, this.options)
   }
 
   importCandidates(data): Observable<any> {
@@ -827,7 +827,7 @@ export class ApiHrmService {
         Authorization: this.authService.getAuthorizationHeaderValue()
       })
     };
-    return this.http.post<any>(`${apiHrmServer}/api/v1/recruitment/ImportCandidates`, data, customOptions);
+    return this.http.post<any>(`${apiHrmServer}/api/v1/recruitcandidate/ImportCandidates`, data, customOptions);
   }
 
   delVacancyInfo(queryParams): Observable<any> {
@@ -848,31 +848,39 @@ export class ApiHrmService {
   }
 
   getCandidateInfo(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetCandidateInfo?` + queryParams, this.options)
+    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitcandidate/GetCandidateInfo?` + queryParams, this.options)
   }
 
   getCandidatesViewInfo(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetCandidatesViewInfo?` + queryParams, this.options)
+    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitcandidate/GetCandidatesViewInfo?` + queryParams, this.options)
   }
 
   setCandidateInfo(params): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v1/recruitment/SetCandidateInfo`, params, this.options)
+    return this.http.post<any>(`${apiHrmServer}/api/v1/recruitcandidate/SetCandidateInfo`, params, this.options)
+  }
+
+  submitCandidateCV(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/recruitcandidate/SubmitCandidateCV`, params, this.options)
+  }
+
+  updateCandidates(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/recruitcandidate/UpdateCandidates`, params, this.options)
   }
 
   recruiUpdateStatus(queryParams, params = null): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v1/recruitment/UpdateStatus?`+ queryParams, params, this.options)
+    return this.http.post<any>(`${apiHrmServer}/api/v1/recruitcandidate/UpdateStatus?`+ queryParams, params, this.options)
   }
 
   getRecruitMailInput(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetRecruitMailInput?` + queryParams, this.options)
+    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitcandidate/GetRecruitMailInput?` + queryParams, this.options)
   }
 
   sendRecruitMail(data = null): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v1/recruitment/SendRecruitMail`, data, this.options)
+    return this.http.post<any>(`${apiHrmServer}/api/v1/recruitcandidate/SendRecruitMail`, data, this.options)
   }
 
   updateInterviewResult(query, data = null): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v1/recruitment/UpdateInterviewResult?` + query, data, this.options)
+    return this.http.post<any>(`${apiHrmServer}/api/v1/recruitcandidate/UpdateInterviewResult?` + query, data, this.options)
   }
 
   exportVacancy(queryParams): Observable<any> {
@@ -2037,23 +2045,23 @@ export class ApiHrmService {
   // tuye dung -> mail
   
   getRecruitSendMailPage(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetRecruitSendMailPage?` + queryParams, this.options)
+    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitcandidate/GetRecruitSendMailPage?` + queryParams, this.options)
   }
   getRecruitMailPage(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetRecruitMailPage?` + queryParams, this.options)
+    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitcandidate/GetRecruitMailPage?` + queryParams, this.options)
   }
   getRecruitMailInfo(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetRecruitMailInfo?${queryParams}`, this.options)
+    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitcandidate/GetRecruitMailInfo?${queryParams}`, this.options)
   }
   setRecruitMailInfo(data): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v1/recruitment/SetRecruitMailInfo`, data , this.options)
+    return this.http.post<any>(`${apiHrmServer}/api/v1/recruitcandidate/SetRecruitMailInfo`, data , this.options)
   }
   delRecruitMailInfo(queryParams): Observable<any> {
-    return this.http.delete<any>(`${apiHrmServer}/api/v1/recruitment/DelRecruitMailInfo?${queryParams}`, this.options)
+    return this.http.delete<any>(`${apiHrmServer}/api/v1/recruitcandidate/DelRecruitMailInfo?${queryParams}`, this.options)
   }
 
   updateCandidatesPotential(queryParams, data = null): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v1/recruitment/UpdateCandidatesPotential?${queryParams}`, data , this.options)
+    return this.http.post<any>(`${apiHrmServer}/api/v1/recruitcandidate/UpdateCandidatesPotential?${queryParams}`, data , this.options)
   }
 
   // vong tuyen dung
