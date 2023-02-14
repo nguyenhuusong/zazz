@@ -4,7 +4,7 @@ const host = {
   apiServer: 'https://api.sunshinetech.com.vn',
   apShomeServer: 'https://apiresident.sunshinetech.com.vn',
   apiCoreServer: 'https://apicore.sunshinetech.com.vn',
-  apiHrmConfig: 'https://dev.api.hrmconfig.unicloudgroup.com.vn',
+  apiHrmConfig: 'https://apiuniconfig.sunshinetech.com.vn',
   apiHrmServer: 'https://apihrm.sunshinetech.com.vn',
   uploadServer: 'https://data.sunshinegroup.vn/api/v1/FileHandler',
   // cloudFunction: 'https://us-central1-sunshine-super-app.cloudfunctions.net' //dev
@@ -17,7 +17,7 @@ const authenSettings = {
   redirect_uri: 'https://s-hrm.sunshineapp.vn/auth-callback',
   post_logout_redirect_uri: 'https://s-hrm.sunshineapp.vn',
   response_type: 'id_token token',
-  scope: 'openid profile api_sre api_home_service api_core_bigtec api_hrm_bigtec',
+  scope: 'openid profile api_sre api_home_service api_core_bigtec api_hrm_bigtec api_uni_config',
   filterProtocolClaims: true,
   loadUserInfo: true,
   automaticSilentRenew: true,
