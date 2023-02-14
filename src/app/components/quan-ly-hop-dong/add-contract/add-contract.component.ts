@@ -202,7 +202,7 @@ export class AddContractComponent implements OnInit {
 
   trainId = null;
   editRow({ rowData }) {
-    this.contractTypeId = rowData.contractTypeId;
+    this.tempId = rowData.tempId;
     this.getContractTypeTemplate();
   }
 
@@ -211,7 +211,7 @@ export class AddContractComponent implements OnInit {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa bản ghi này?',
       accept: () => {
-        const queryParams = queryString.stringify({ contractTypeId: event.rowData.contractTypeId });
+        const queryParams = queryString.stringify({ tempId: event.rowData.tempId });
         this.apiService.delContractTypeTemplate(queryParams).subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
@@ -243,6 +243,9 @@ export class AddContractComponent implements OnInit {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'upload thành công' });
         this.getContractTypeTemplatePage();
+        this.displayuploadcontract = false;
+      }else {
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Lỗi' });
       }
     })
 
