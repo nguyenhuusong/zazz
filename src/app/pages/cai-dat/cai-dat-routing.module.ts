@@ -23,9 +23,6 @@ import { QuanLyHopDongComponent } from 'src/app/components/quan-ly-hop-dong/quan
 import { ChiTietHopDongComponent } from 'src/app/components/quan-ly-hop-dong/chi-tiet-hop-dong/chi-tiet-hop-dong.component';
 import { LyDoNghiViecComponent } from 'src/app/components/ly-do-nghi-viec/ly-do-nghi-viec.component';
 import { ChiTietLyDoNghiViecComponent } from 'src/app/components/ly-do-nghi-viec/chi-tiet-ly-do-nghi-viec/chi-tiet-ly-do-nghi-viec.component';
-import { CaiDatPhongHopTheoTangComponent } from 'src/app/components/cai-dat-phong-hop-theo-tang/cai-dat-phong-hop-theo-tang.component';
-import { ChiTietPhongHopTheoTangComponent } from 'src/app/components/cai-dat-phong-hop-theo-tang/chi-tiet-phong-hop-theo-tang/chi-tiet-phong-hop-theo-tang.component';
-import { QuanLyNgayNghiComponent } from 'src/app/components/quan-ly-ngay-nghi/quan-ly-ngay-nghi.component';
 import { NgayNghiLeComponent } from 'src/app/components/ngay-nghi-le/ngay-nghi-le.component';
 import { ChiTietNgayNghiComponent } from 'src/app/components/ngay-nghi-le/chi-tiet-ngay-nghi/chi-tiet-ngay-nghi.component';
 import { ThietLapWifiComponent } from 'src/app/components/thiet-lap-wifi/thiet-lap-wifi.component';
@@ -355,7 +352,7 @@ const routes: Routes = [
     path: 'quan-ly-hop-dong',
     component: QuanLyHopDongComponent,
     data: {
-      title: 'Danh sách quản lý hợp đồng',
+      title: 'Danh sách quản lý hợp đồng mẫu',
       url: 'quan-ly-hop-dong',
     },
   },
@@ -363,7 +360,7 @@ const routes: Routes = [
     path: 'quan-ly-hop-dong/them-moi-hop-dong',
     component: ChiTietHopDongComponent,
     data: {
-      title: 'Thêm mới hợp đồng',
+      title: 'Thêm mới hợp đồng mẫu',
       url: 'them-moi-hop-dong',
     },
   },
@@ -371,7 +368,7 @@ const routes: Routes = [
     path: 'quan-ly-hop-dong/chi-tiet-hop-dong',
     component: ChiTietHopDongComponent,
     data: {
-      title: 'Chi tiết hợp đồng',
+      title: 'Chi tiết hợp đồng mẫu',
       url: 'chi-tiet-hop-dong',
     },
   },
