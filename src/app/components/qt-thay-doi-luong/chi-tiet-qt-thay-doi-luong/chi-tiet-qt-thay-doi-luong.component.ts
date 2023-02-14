@@ -100,7 +100,7 @@ export class ChiTietQTThayDoiLuongComponent implements OnInit {
 
   setSalaryInfoDevM(data) {
     this.listViews = [];
-    if(this.flowCurrent > this.activeIndex) {
+    if(this.flowCurrent >= this.activeIndex) {
       const params = {
         ...this.detailInfo
         , group_fields: data
@@ -124,7 +124,7 @@ export class ChiTietQTThayDoiLuongComponent implements OnInit {
       this.listViews = [];
       this.setSalaryDraft(params);
     } else {
-      if(this.flowCurrent > this.activeIndex) {
+      if(this.flowCurrent >= this.activeIndex) {
         const params = {
           ...this.detailInfo
           , group_fields: event.data

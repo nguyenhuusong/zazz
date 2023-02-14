@@ -185,7 +185,7 @@ export class ThoiGianLamViecComponent implements OnInit, AfterViewInit {
 
 cloneListViewsDetail = [];
   callBackForm(event) {
-    if(this.flowCurrent > this.activeIndex) {
+    if(this.flowCurrent >= this.activeIndex) {
       const params = {
         ...this.dataDetailInfo
         , group_fields: event.data
@@ -223,7 +223,7 @@ cloneListViewsDetail = [];
   }
 
   setDetail(data) {
-    if(this.flowCurrent > this.activeIndex) {
+    if(this.flowCurrent >= this.activeIndex) {
       const params = {
         ...this.dataDetailInfo, group_fields: data, flow_cur: this.flowCurrent
       };

@@ -101,7 +101,9 @@ export class ChiTietXuLyQtCongTacComponent implements OnInit {
   }
 
   setDetail(data) {
-    if(this.flowCurrent > this.activeIndex) {
+    console.log(this.flowCurrent)
+    console.log(this.activeIndex)
+    if(this.flowCurrent >= this.activeIndex) {
       this.listViews = [];
       const params = {
         ...this.detailInfo, group_fields: data, flow_cur: this.flowCurrent, action: 'next'
@@ -116,7 +118,7 @@ export class ChiTietXuLyQtCongTacComponent implements OnInit {
   }
   cloneListViews = []
   callBackForm(event) {
-    if(this.flowCurrent > this.activeIndex) {
+    if(this.flowCurrent >= this.activeIndex) {
       const params = {
         ...this.detailInfo
         , group_fields: event.data
@@ -139,7 +141,7 @@ export class ChiTietXuLyQtCongTacComponent implements OnInit {
       }
 
   }
-  
+
   flowCurrent = 0
   callApiInfo(params, type = 'Update') {
     this.spinner.show();
