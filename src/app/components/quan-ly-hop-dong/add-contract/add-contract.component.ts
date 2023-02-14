@@ -88,7 +88,7 @@ export class AddContractComponent implements OnInit {
     const param = {
       ...this.dataDetailInfo, group_fields: data
     }
-    this.apiService.setTrainFile(param).subscribe(results => {
+    this.apiService.setContractTypeTemplate(param).subscribe(results => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thêm mới thành công' });
         this.displayFormEditDetail = false;
@@ -202,7 +202,7 @@ export class AddContractComponent implements OnInit {
 
   trainId = null;
   editRow({ rowData }) {
-    this.tempId = rowData.tempId;
+    this.contractTypeId = rowData.contractTypeId;
     this.getContractTypeTemplate();
   }
 
@@ -211,8 +211,8 @@ export class AddContractComponent implements OnInit {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa bản ghi này?',
       accept: () => {
-        const queryParams = queryString.stringify({ tempId: event.rowData.tempId });
-        this.apiService.delTrainFile(queryParams).subscribe((results: any) => {
+        const queryParams = queryString.stringify({ contractTypeId: event.rowData.contractTypeId });
+        this.apiService.delContractTypeTemplate(queryParams).subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
             this.getContractTypeTemplatePage();

@@ -80,7 +80,7 @@
     <p-header>
         Thêm mới tổ chức
     </p-header>
-    <app-chi-tiet-to-chuc [orgId]="" (back)="backPage()"></app-chi-tiet-to-chuc>
+    <app-chi-tiet-to-chuc [orgId]="" *ngIf="displayOrganize" (back)="backPage()"></app-chi-tiet-to-chuc>
 </p-dialog>
 
 <p-dialog header="Chức năng"  [autoZIndex]="true"  [modal]="true" [draggable]="false" [resizable]="false" [(visible)]="displayButton">
