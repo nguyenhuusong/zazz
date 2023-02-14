@@ -139,11 +139,11 @@ export class ChiTietXuLyQtCongTacComponent implements OnInit {
       }
 
   }
-
+  
   flowCurrent = 0
   callApiInfo(params, type = 'Update') {
     this.spinner.show();
-    this.apiService.setTerminateInfo(params).subscribe(results => {
+    this.apiService.setEmpProcessInfo(params).subscribe(results => {
       if (results.status === 'success') {
         this.activeIndex = results.data.flow_st;
         this.flowCurrent = results.data.flow_cur;
