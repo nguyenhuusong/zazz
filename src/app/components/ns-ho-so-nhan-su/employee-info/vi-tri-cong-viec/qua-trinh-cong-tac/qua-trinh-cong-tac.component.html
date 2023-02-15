@@ -51,7 +51,7 @@
     </p-card>
      -->
 
-     <app-chi-tiet-xu-ly-qt-cong-tac *ngIf="displayFormEditDetail" [empId]="empId" [processId]="processId" (callback)="callbackSave()"></app-chi-tiet-xu-ly-qt-cong-tac>
+     <app-chi-tiet-xu-ly-qt-cong-tac *ngIf="displayFormEditDetail" [isDialog]="true" [empId]="empId" [processId]="processId" (callback)="callbackSave()"></app-chi-tiet-xu-ly-qt-cong-tac>
 </p-dialog>
 
 

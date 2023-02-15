@@ -149,7 +149,7 @@ export class ContractDetailComponent implements OnInit {
   }
 
   setContractInfo(data) {
-    if(this.flowCurrent > this.activeIndex) {
+    if(this.flowCurrent >= this.activeIndex) {
       const params = {
         ...this.detailInfo, group_fields: data, flow_cur: this.flowCurrent, action: 'next'
       };
@@ -171,7 +171,7 @@ export class ContractDetailComponent implements OnInit {
       this.setContractDraft(params);
     } else {
 
-      if(this.flowCurrent > this.activeIndex) {
+      if(this.flowCurrent >= this.activeIndex) {
         const params = {
           ...this.detailInfo, group_fields: event.data
           , flow_cur: event.type === 'Submit' ? this.flowCurrent : this.flowCurrent - 1

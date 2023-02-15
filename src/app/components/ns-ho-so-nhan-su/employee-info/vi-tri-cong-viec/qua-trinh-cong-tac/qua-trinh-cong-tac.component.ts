@@ -185,7 +185,7 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
 
 
   callBackForm(event) {
-    if(this.flowCurrent > this.activeIndex) {
+    if(this.flowCurrent >= this.activeIndex) {
       const params = {
         ...this.dataDetailInfo
         , group_fields: event.data
@@ -237,7 +237,7 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
 
   closeListViewsDetail = []
   setDetail(data) {
-    if(this.flowCurrent > this.activeIndex) {
+    if(this.flowCurrent >= this.activeIndex) {
       const params = {
         ...this.dataDetailInfo, group_fields: data, flow_cur: this.flowCurrent, action: 'next'
       };
