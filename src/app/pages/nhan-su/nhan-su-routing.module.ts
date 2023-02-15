@@ -271,11 +271,11 @@ const routes: Routes = [
    },
  },
   {
-   path: 'qua-trinh-thay-doi-luong/import',
+   path: 'qua-trinh-thay-doi-luong/import-salary',
    component: ImportQtThayDoiLuongComponent,
    data: {
      title: 'Import quá trình thay đổi lương',
-     url: 'import',
+     url: 'import-salary',
    },
  },
  {

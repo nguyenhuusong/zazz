@@ -43,8 +43,8 @@ export class ImportQtThayDoiLuongComponent implements OnInit {
   ngOnInit(): void {
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
-      { label: 'Danh sách hồ sơ nhân sự nghỉ việc', routerLink: '/nhan-su/ho-so-nghi-viec' },
-      { label: 'Import hồ sơ nhân sự nghỉ việc' },
+      { label: 'Danh sách quá trình thay đổi lương', routerLink: '/nhan-su/qua-trinh-thay-doi-luong' },
+      { label: 'Import quá trình thay đổi lương' },
     ];
   }
 
@@ -130,7 +130,7 @@ export class ImportQtThayDoiLuongComponent implements OnInit {
   back() {
     const main: any = document.querySelector(".main");
     main.className = 'main';
-    this.router.navigate(['/nhan-su/ho-so-nghi-viec']);
+    this.router.navigate(['/nhan-su/qua-trinh-thay-doi-luong']);
   }
 
   ngOnDestroy() {
@@ -155,7 +155,7 @@ export class ImportQtThayDoiLuongComponent implements OnInit {
   }
 
   getTemfileImport() {
-    this.apiService.exportReportLocalhost('assets/tpl-import-file/Import_HSNS_NghiViec.xlsx').subscribe((data: any) => {
+    this.apiService.exportReportLocalhost('assets/tpl-import-file/HSNS-QuaTrinhLuong_Import.xlsx').subscribe((data: any) => {
       this.createImageFromBlob(data)
     });
   }
@@ -164,7 +164,7 @@ export class ImportQtThayDoiLuongComponent implements OnInit {
     var blob = new Blob([image]);
     var url = window.URL.createObjectURL(blob);
     var anchor = document.createElement("a");
-    anchor.download = "Import_HSNS_NghiViec.xlsx";
+    anchor.download = "HSNS-QuaTrinhLuong_Import.xlsx";
     anchor.href = url;
     anchor.click();
   }
