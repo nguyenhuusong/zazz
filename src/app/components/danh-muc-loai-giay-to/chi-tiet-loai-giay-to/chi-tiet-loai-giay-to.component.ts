@@ -48,7 +48,7 @@ export class ChiTietLoaiGiayToComponent implements OnInit, OnChanges {
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Cài đặt' },
-      { label: 'Danh sách chức danh', routerLink: '/cai-dat/chuc-danh' },
+      { label: 'Danh mục loại giấy tờ', routerLink: '/cai-dat/cai-dat-loai-giay-to' },
       { label: `${this.titlePage}` },
     ];
     this.url = this.activatedRoute.data['_value'].url;
@@ -110,7 +110,7 @@ export class ChiTietLoaiGiayToComponent implements OnInit, OnChanges {
 
   goBack() {
    if(this.titlePage) {
-    this.router.navigate(['/cai-dat/chuc-danh']);
+    this.router.navigate(['/cai-dat/cai-dat-loai-giay-to']);
    }else {
     this.back.emit();
    }

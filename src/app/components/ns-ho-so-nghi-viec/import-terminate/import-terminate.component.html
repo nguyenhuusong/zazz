@@ -4,7 +4,7 @@
       <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
     </section>
     <section class="bread-filter">
-        <div class="d-flex bet middle gap-16">
+        <div class="d-flex bet middle gap-12">
             <div class="col-item">
                 <ul class="infos-import middle d-flex gap-12" *ngIf="dataImport">
                     <li><span class="pi pi-info-circle"></span></li>
@@ -16,7 +16,7 @@
                 </ul>
             </div>
             <div class="col-item">
-                <div class="d-flex align-items-center gap-16">
+                <div class="d-flex align-items-center gap-12">
                     <p-button type="button" class="p-button-sm " (click)="toggleGrid()" icon="pi pi-th-large" pTooltip="{{isFullScreen ? 'Ẩn toàn màn hình' : 'Hiển thị toàn màn hình'}}" tooltipPosition="top"></p-button>
                     <p-button styleClass="p-button-sm" (click)="getTemfileImport()" icon="pi pi-download" label="Tải file mẫu" *ngIf="isShowUpload"></p-button>
                     <p-fileUpload mode="basic" 
