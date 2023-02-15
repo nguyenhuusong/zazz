@@ -6,6 +6,16 @@ import { Subject, takeUntil } from 'rxjs';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { AgGridFn } from 'src/app/common/function-common/common';
+interface DataImport {
+  valid: boolean,
+  messages: string,
+  accept: boolean,
+  recordsTotal: number,
+  recordsFail: number,
+  recordsAccepted: number,
+  gridKey: string,
+}
+
 @Component({
   selector: 'app-import-ho-so-nhan-su',
   templateUrl: './import-ho-so-nhan-su.component.html',
@@ -19,6 +29,7 @@ export class ImportHoSoNhanSuComponent implements OnInit {
   listsData: Array<any> = []
   columnDefs: Array<any> = [];
   cols: any[];
+  dataImport: DataImport = null
   constructor(
     private spinner: NgxSpinnerService,
     private apiService: ApiHrmService,
@@ -55,29 +66,59 @@ export class ImportHoSoNhanSuComponent implements OnInit {
       this.apiService.employeeImport(fomrData)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {
-        if (results.status === 'success') {
-          if(results.data && results.data.dataList && results.data.dataList.data) {
-            this.cols = results.data.gridflexs;
-            this.initGrid();
-            const a: any = document.querySelector(".header");
-            const b: any = document.querySelector(".sidebarBody");
-            const c: any = document.querySelector(".bread-filter");
-            // const d: any = document.querySelector(".filterInput");
-            const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + 80;
-            this.heightGrid = window.innerHeight - totalHeight
-            this.changeDetector.detectChanges();
-            // this.onInitAgGrid();
-            this.listsData = results.data.dataList.data;
-          }
-          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
-          this.spinner.hide();
-        }else {
-          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
-          this.spinner.hide();
-        }
+        this.dataSet(results)
       })
     }
   }
+
+  checkData(accept = false) {
+    this.spinner.show();
+    this.isShowUpload = false;
+    const params = {
+      accept: accept,
+      imports: this.listsData
+    }
+    this.apiService.setEmployeeAccept(params)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(results => {
+        this.dataSet(results)
+      })
+  }
+
+  gridKey = '';
+  displaySetting = false;
+  cauhinh() {
+    this.displaySetting = true;
+  }
+
+  dataSet(results) {
+    if (results.status === 'success') {
+      this.dataImport = results.data;
+      if (results.data && results.data.dataList && results.data.dataList) {
+        this.cols = results.data.gridflexs.map(item => {
+          return {
+            ...item,
+            editable: true
+          }
+        });
+        this.gridKey = results.data.gridKey;
+        this.initGrid();
+        const a: any = document.querySelector(".header");
+        const b: any = document.querySelector(".sidebarBody");
+        const c: any = document.querySelector(".bread-filter");
+        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + 80;
+        this.heightGrid = window.innerHeight - totalHeight
+        this.changeDetector.detectChanges();
+        this.listsData = results.data.dataList;
+      }
+      this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
+      this.spinner.hide();
+    } else {
+      this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+      this.spinner.hide();
+    }
+  }
+
 
   initGrid() {
     this.columnDefs = [

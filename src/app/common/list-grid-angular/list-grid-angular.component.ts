@@ -26,6 +26,7 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
   @Output() callback = new EventEmitter<any>();
   @Output() showConfig = new EventEmitter<any>();
   @Input() columnDefs: Array<any> = [];
+  @Input() isConfig: boolean = true;
   @Input() rowSelection: string = 'single';
   @Input() frameworkComponents = {};
   @Input() detailCellRendererParams: any;
@@ -222,9 +223,9 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
     if (!event.node.isSelected() && this.isChange) {
       this.dataChange = event.data;
       if(this.typeConfig === 'FormInfo') {
-        this.callApiForm();
+       if(this.isConfig) this.callApiForm();
       }else {
-        this.callApi();
+        if(this.isConfig) this.callApi();
       }
     }
     this.callback.emit(this.gridApi.getSelectedRows())

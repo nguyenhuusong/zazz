@@ -979,7 +979,7 @@ export class ApiHrmService {
         Authorization: this.authService.getAuthorizationHeaderValue(),
       })
     };
-    return this.http.post<any>(`${apiHrmServer}/api/v2/contracttype/UploadFileContract`, params, customOptions);
+    return this.http.post<any>(`${apiHrmServer}/api/v2/leavereason/SetLeaveReasonImport`, params, customOptions);
   }
 
   getLeaveReasonFilter(): Observable<any> {
@@ -1056,6 +1056,10 @@ export class ApiHrmService {
 
   setListEmployeeChange(queryParams): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/employee/SetListEmployeeChange`, queryParams, this.options)
+  }
+
+  setEmployeeAccept(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/employee/SetEmployeeAccept`, queryParams, this.options)
   }
 
   delOrganize(queryParams): Observable<any> {
@@ -1611,6 +1615,10 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v2/terminate/SetTerminateMetaUpload`, queryParams, this.options)
   }
 
+  setTerminateAccept(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/terminate/SetTerminateAccept`, queryParams, this.options)
+  }
+
   setTerminateImport(queryParams): Observable<any> {
     const customOptions = {
       headers: new HttpHeaders({
@@ -1670,6 +1678,10 @@ export class ApiHrmService {
 
   setListContractStatus(params): Observable<any> {
     return this.http.put<any>(`${apiHrmServer}/api/v2/contract/SetListContractStatus`, params, this.options);
+  }
+
+  setContractAccept(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/contract/SetContractAccept`, params, this.options);
   }
 
   getDashboardInfo(params): Observable<any> {
@@ -2035,9 +2047,11 @@ export class ApiHrmService {
   employeeGetTerminatePage(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/employee/GetTerminatePage?` + queryParams, this.options)
   }
+
   recruitAgain(query, data = null): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/employee/RecruitAgain?` + query, data , this.options)
   } 
+
   getUserOrganizeRole(): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/user/GetUserOrganize`, this.options)
   }
