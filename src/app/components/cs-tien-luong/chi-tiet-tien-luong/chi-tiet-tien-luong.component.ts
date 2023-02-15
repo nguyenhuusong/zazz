@@ -1,264 +1,217 @@
-
-import { Component, EventEmitter, Input, OnInit, Output, OnChanges, OnDestroy } from '@angular/core';
-import * as queryString from 'querystring';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { cloneDeep } from 'lodash';
-import { ConfirmationService, MessageService } from 'primeng/api';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { Subject } from 'rxjs';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
-import { AgGridFn, CheckHideAction, TextFormatter } from 'src/app/common/function-common/common';
-import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import * as queryString from 'querystring';
+import { cloneDeep } from 'lodash';
 @Component({
   selector: 'app-chi-tiet-tien-luong',
   templateUrl: './chi-tiet-tien-luong.component.html',
   styleUrls: ['./chi-tiet-tien-luong.component.scss']
 })
-export class ChiTietTienLuongComponent implements OnInit, OnChanges, OnDestroy {
-  private readonly unsubscribe$: Subject<void> = new Subject();
-  manhinh = 'Edit';
-  indexTab = 0;
-  optionsButtonsView = [
-    { label: 'Quay lại', value: 'Back' , icon: "pi pi-times", class: "p-button-danger"},
-    { label: 'Lưu lại', value: 'Update', class: CheckHideAction(MENUACTIONROLEAPI.GetSalaryRecordPage.url, ACTIONS.EDIT) ? 'hidden' : '', icon: "pi pi-check"}, 
-  ];
+export class ChiTietTienLuongComponent implements OnInit {
   constructor(
     private apiService: ApiHrmService,
-    private activatedRoute: ActivatedRoute,
     private messageService: MessageService,
+    private activatedRoute: ActivatedRoute,
     private confirmationService: ConfirmationService,
     private spinner: NgxSpinnerService,
     private router: Router
   ) { }
-  displayScreemForm = false;
-  displaysearchUserMaster = false;
-  listViewsForm = [];
-  detailComAuthorizeInfo = null;
-  recordId = null
-  listViews = []
-  imagesUrl = []
-  paramsObject = null
-  displayUserInfo = false
-  titleForm = {
-    label: 'Cập nhật thông tin khách hàng',
-    value: 'Edit'
-  }
-  titlePage : string = '';
-  url: string = '';
-  items = [];
+  optionsButtonsView = [
+    { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-caret-left' },
+    { label: 'Tiếp tục', value: 'Update', class: 'btn-accept', icon: 'pi pi-caret-right' },
+    { label: 'Lưu tạm', value: 'SaveNhap', class: 'btn-accept', icon: 'pi pi-caret-right' },
+    { label: 'Xác nhận', value: 'Submit', class: 'btn-accept', icon: 'pi pi-check' },
+    { label: 'Đóng', value: 'Close', class: 'btn-accept', icon: 'pi pi-times' }
+  ]
+  displayuploadcontract = false;
+  metafile = null;
+  displaySetting= false;
+  gridKeyForm= '';
   detailInfo = null;
-  listsData = []
-  columnDefs = []
-  @Input() dataRouter = null
-  @Output() back = new EventEmitter<any>();
-
-  ngOnDestroy() {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
+  listViews = [];
+  steps = [];
+  activeIndex = 0;
+  titlePage = '';
+  url = '';
+  itemsMenu = [];
+  modelEdit = {
+    terminateId: null,
+    recordId: null
   }
-
-  ngOnChanges() {
- 
-  }
-
   ngOnInit(): void {
     this.titlePage = this.activatedRoute.data['_value'].title;
-    this.items = [
-      { label: 'Trang chủ' , routerLink: '/home' },
-      { label: 'Chính sách' },
-      { label: 'Danh sách tiền lương', routerLink: '/chinh-sach/tien-luong' },
-      { label: this.titlePage },
-    ];
     this.url = this.activatedRoute.data['_value'].url;
-    this.manhinh = 'Edit';
-      this.handleParams()
+    this.itemsMenu =  [
+      { label: 'Trang chủ' , routerLink: '/home' },
+      { label: 'Danh sách tiền lương', routerLink: '/chinh-sach/tien-luong' },
+      { label: `${this.titlePage}` },
+    ]
+    this.handleParams();
   }
+  paramsObject = null;
 
-  handleParams() {
+  handleParams(): void {
     this.activatedRoute.queryParamMap.subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
-      this.dataRouter = this.paramsObject.params;
-      this.recordId = this.paramsObject.params.recordId || null;
-      if(this.url === 'them-moi-tien-luong') {
-        this.setSalaryCreateDraft()
-      }else {
-        this.getSalaryRecordInfo();
-      }
-    
+      this.modelEdit.terminateId = this.paramsObject.params.terminateId || null
+      this.modelEdit.recordId = this.paramsObject.params.recordId || null
+      this.getSalaryRecordInfo();
     });
-  };
-
-  setSalaryCreateDraft() {
-    this.spinner.show();
-    this.apiService.setSalaryCreateDraft(this.paramsObject.params).subscribe(results => {
-      if (results.status === 'success') {
-        this.listViews = cloneDeep(results.data.group_fields);
-        this.detailInfo = results.data;
-        this.listsData = cloneDeep(this.detailInfo.monthdays);
-        this.columnDefs = [...AgGridFn(this.detailInfo.gridflexs1 || [])
-      ];
-      this.spinner.hide();
-      }
-    })
   }
-  getSalaryRecordInfo() {
-    this.spinner.show();
-    this.listViews = [];
-    this.listsData = [];
-    const queryParams = queryString.stringify({recordId: this.recordId});
-    this.apiService.getSalaryRecordInfo(queryParams).subscribe(results => {
-      if (results.status === 'success') {
-        this.listViews = cloneDeep(results.data.group_fields);
-        this.detailInfo = results.data;
-        this.listsData = cloneDeep(this.detailInfo.monthdays);
-        this.listDataNew =this.listsData;
-        this.columnDefs = [...this.agGridFnCustomer(this.detailInfo.gridflexs1 || [])
-        // , {
-        //   headerName: '',
-        //   field: 'button',
-        //   filter: '',
-        //   pinned: 'right',
-        //   width: 60,
-        //   cellRenderer: 'buttonRendererMutiComponent',
-        //   cellClass: ['border-right'],
-        //   // cellRendererParams: params => this.showButton()
-        // }
-      ];
-      this.spinner.hide();
-      }
-    })
-  }
-
-  OnClick(e) {
-
-  }
-  gridKey = '';
-  listDataNew = [];
+  indexTab = 0;
   handleChange(index) {
-    this.columnDefs = []
     this.indexTab = index;
-    if(this.indexTab === 1) {
-      this.getSalaryEmployeePage()
-    }else {
-      this.listsData = cloneDeep(this.detailInfo.monthdays);
-      this.listDataNew =this.listsData;
-      this.columnDefs = [...this.agGridFnCustomer(this.detailInfo.gridflexs1 || [])]
+  }
+
+  stepActivated(): void {
+    const stepS = document.querySelectorAll('.steps-contract .p-steps-item');
+    if (stepS.length > 0) {
+      for (let i = 0; i < this.steps.length; i++) {
+        if (i <= this.flowCurrent) {
+          stepS[i].className +=  ` p-highlight ${i< this.activeIndex ? 'active' : 'remove-active'} ${i< this.flowCurrent && this.flowCurrent !== 1 ? 'active-confirm' : 'remove-active-confirm'}`;
+        } else {
+          stepS[i].className +=  ` p-highlight ${i< this.activeIndex ? 'active' : 'remove-active'} ${i< this.flowCurrent && this.flowCurrent !== 1 ? 'active-confirm' : 'remove-active-confirm'}`;
+        }
+      }
+    }
+  }
+  cancel(data) {
+    if (data === 'CauHinh') {
+      this.getSalaryRecordInfo() 
+    } else if (data === 'BackPage') {
+      this.listViews = [];
+      this.getSalaryRecordInfo(this.flowCurrent === 1 ? this.flowCurrent: this.flowCurrent -1)
+    } else {
+      this.router.navigate(['/chinh-sach/tien-luong'])
     }
   }
 
-  displaySetting = false;
-  CauHinh() {
-    this.displaySetting = true;
-  }
-
-  getSalaryEmployeePage() {
-    this.spinner.show();
-    const queryParams = queryString.stringify({recordId: this.recordId});
-    this.apiService.getSalaryEmployeePage(queryParams).subscribe(results => {
-      if(results.status === 'success') {
-        this.listsData =results.data.dataList.data;
-        this.gridKey= results.data?.dataList?.gridKey;
-        this.columnDefs = [
-          ...AgGridFn(results.data.gridflexs),
-        ]
-        this.spinner.hide()
-      }else {
-        this.spinner.hide()
+  setTerminateInfo(data) {
+    if(this.flowCurrent >= this.activeIndex) {
+      this.listViews = [];
+      const params = {
+        ...this.detailInfo, group_fields: data, flow_cur: this.flowCurrent, action: 'next'
       }
-    })
+      this.cloneListViews = cloneDeep(data); 
+      this.listViews = [];
+      this.callApiInfo(params)
+    }else {
+      this.getSalaryRecordInfo(this.flowCurrent + 1);
+    }
+   
+  }
+  cloneListViews = []
+  callBackForm(event) {
+    if(this.flowCurrent >= this.activeIndex) {
+      const params = {
+        ...this.detailInfo
+        , group_fields: event.data
+        , flow_cur: event.type === 'Submit' ?  this.flowCurrent : this.flowCurrent -1
+        , action: event.type === 'Submit' ? 'submit' : 'save'
+      }
+      this.cloneListViews = cloneDeep(event.data); 
+      this.listViews = [];
+      this.callApiInfo(params, event.type);
+    }else {
+      const params = {
+        ...this.detailInfo
+        , group_fields: event.data
+        , flow_st: this.detailInfo.flow_cur
+        , action: event.type === 'Submit' ? 'submit' : 'save'
+      }
+      this.cloneListViews = cloneDeep(event.data); 
+      this.listViews = [];
+      this.callApiInfo(params, event.type);
+    }
   }
 
-  setSalaryRecordInfo(data) {
-    const params = {
-      ...this.detailInfo, group_fields: data
-    };
-    this.apiService.setSalaryRecordInfo(params).subscribe((results: any) => {
+  flowCurrent = 0
+  callApiInfo(params, type = 'Update') {
+    this.spinner.show();
+    this.apiService.setSalaryRecordInfo(params).subscribe(results => {
       if (results.status === 'success') {
-        this.displayUserInfo = false;
-        if(this.url === 'them-moi-tien-luong') {
-          this.goBack()
-        }else {
-          this.manhinh = 'Edit';
-          this.getSalaryRecordInfo();
+        this.activeIndex = results.data.flow_st;
+        this.flowCurrent = results.data.flow_cur;
+        this.modelEdit.terminateId = results.data.terminateId;
+        this.listViews = cloneDeep(results.data.group_fields);
+        setTimeout(() => {
+          this.stepActivated();
+        }, 100);
+        this.detailInfo = results.data;
+        this.optionsButtonsView =[
+          { label: 'Quay lại', value: 'BackPage', class: `p-button-secondary ${results.data.prev_st ? '' : 'hidden'}`, icon: 'pi pi-caret-left',  },
+          { label: 'Tiếp tục', value: 'Update', class: `btn-accept ${results.data.next_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-caret-right' },
+          { label: 'Lưu tạm', value: 'SaveNhap', class: `btn-accept ${results.data.save_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
+          { label: 'Xác nhận', value: 'Submit', class: `btn-accept ${results.data.submit_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
+          { label: 'Đóng', value: 'Close', class: `p-button-danger ml-1`, icon: 'pi pi-times' }
+        ]
+        this.spinner.hide();
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
+
+        if(type === 'Submit' || type === 'SaveNhap') {
+          setTimeout(() => {
+            this.router.navigate(['/chinh-sach/tien-luong'])
+          }, 200);
         }
-        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Cập nhật thông tin thành công' });
       } else {
+        this.listViews = cloneDeep(this.cloneListViews);
+        this.spinner.hide();
         this.messageService.add({
           severity: 'error', summary: 'Thông báo', detail: results.message
         });
       }
     }, error => {
-    });
+      this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: error });
+      this.spinner.hide();
+    })
+  }
+
+  getSalaryRecordInfo(flow_cur = null) {
+    this.detailInfo = null;
+    this.listViews = [];
+    this.spinner.show();
+    const queryParams = queryString.stringify({ terminateId: this.modelEdit.terminateId, flow_cur: flow_cur, recordId: this.modelEdit.recordId });
+    this.apiService.getSalaryRecordInfo(queryParams).subscribe(results => {
+      if (results.status === 'success') {
+        this.activeIndex = results.data.flow_st;
+        this.flowCurrent = results.data.flow_cur;
+        this.modelEdit.terminateId = results.data.terminateId;
+        this.steps = results.data.flowStatuses.map(d => {
+          return {
+            label: d.flow_name,
+            value: d.flow_st
+          }
+        });
+        this.detailInfo = results.data;
+        this.listViews = cloneDeep(results.data.group_fields);
+        setTimeout(() => {
+          this.stepActivated();
+        }, 100);
+        this.optionsButtonsView =[
+          { label: 'Quay lại', value: 'BackPage', class: `p-button-secondary ${results.data.prev_st ? '' : 'hidden'}`, icon: 'pi pi-caret-left',  },
+          { label: 'Tiếp tục', value: 'Update', class: `btn-accept ${results.data.next_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-caret-right' },
+          { label: 'Lưu tạm', value: 'SaveNhap', class: `btn-accept ${results.data.save_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
+          { label: 'Xác nhận', value: 'Submit', class: `btn-accept ${results.data.submit_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
+          { label: 'Đóng', value: 'Close', class: `p-button-danger ml-1`, icon: 'pi pi-times' }
+        ]
+        this.spinner.hide();
+      }else {
+        this.spinner.hide();
+        this.messageService.add({
+          severity: 'error', summary: 'Thông báo', detail: results.message
+        });
+        this.router.navigate(['/chinh-sach/tien-luong'])
+      }
+    })
   }
 
 
-  onChangeButtonView(event) {
-    this.manhinh = event.value;
-    if (event.value === 'Back') {
-      this.goBack();
-    }
-  }
+}
 
-  goBack() {
-   if(this.titlePage) {
-    this.router.navigate(['/chinh-sach/tien-luong']);
-   }else {
-    this.back.emit();
-   }
-  }
-
-  cancelUpdate(data) {
-    if(data === 'CauHinh') {
-      this.getSalaryRecordInfo();
-    }else {
-      this.router.navigate(['/chinh-sach/tien-luong']);
-    }
-   
-  }
   
-
-  cellRendererSanPham =(params) => {
-    console.log(params)
-    let rowData = [];
-    if (!params.value || params.value === '(Select All)') {
-      return params.value;
-    }
-    setTimeout(() => {
-      params.api.forEachNodeAfterFilter(node => {
-        console.log(node.data);
-        rowData.push(node.data)
-      } );
-      this.listDataNew =  rowData
-    }, 500);
-    return params.value;
-  }
-
-  agGridFnCustomer(lists: Array<any>) {
-    let arrAgGrids = [];
-    for (let value of lists) {
-     let row = {
-        headerName: value.columnCaption,
-        field: value.columnField,
-        cellClass: value.cellClass,
-        filter: value.isFilter ? 'agSetColumnFilter' : '',
-        sortable: false,
-        filterParams: {
-          caseSensitive: true,
-          textFormatter:  (r) => TextFormatter(r),
-          cellRenderer:  this.cellRendererSanPham,
-        },
-        cellRenderer: value.isMasterDetail ? 'agGroupCellRenderer' : '',
-        hide: value.isHide ? true : false,
-        pinned: value.pinned,
-        tooltipField: value.columnField,
-        headerTooltip: value.columnCaption
-        // valueFormatter: value.fieldType == 'decimal' ? ""
-    }
-        arrAgGrids.push(row);
-    }
-    return arrAgGrids
-}
-}
-
+  
 
 

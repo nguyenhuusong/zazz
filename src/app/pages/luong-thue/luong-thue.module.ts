@@ -56,6 +56,8 @@ import { TabCapBacLuongComponent } from 'src/app/components/luong-thue/tinh-luon
 import { ChiTietTabCapBacLuongComponent } from 'src/app/components/luong-thue/tinh-luong/tab-cap-bac-luong/chi-tiet-tab-cap-bac-luong/chi-tiet-tab-cap-bac-luong.component';
 import { MucLuongComponent } from 'src/app/components/luong-thue/tinh-luong/tab-bang-luong/muc-luong/muc-luong.component';
 import { FormFilterModule } from 'src/app/common/form-filter/form-filter.module';
+import { StepsModule } from 'primeng/steps';
+import { DividerModule } from 'primeng/divider';
 
 @NgModule({
   imports: [
@@ -99,6 +101,8 @@ import { FormFilterModule } from 'src/app/common/form-filter/form-filter.module'
     ConfirmDialogModule,
     ConfigGridTableFormModule,
     CheckboxModule,
+    StepsModule,
+    DividerModule,
     ListboxModule,
     AgGridModule.withComponents([
       ButtonRendererComponent,
