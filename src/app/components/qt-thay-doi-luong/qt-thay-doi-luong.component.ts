@@ -599,7 +599,7 @@ export class QtThayDoiLuongComponent implements OnInit {
   }
 
   importFileExel() {
-    this.router.navigate(['/nhan-su/ho-so-nhan-su/import']);
+    this.router.navigate(['/nhan-su/qua-trinh-thay-doi-luong/import']);
   }
   isSearchEmp: boolean = false
   addNew() {

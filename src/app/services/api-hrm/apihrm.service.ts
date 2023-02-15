@@ -1831,6 +1831,19 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v1/salaryInfo/SetSalaryInfo`, data , this.options)
   }
 
+  setSalaryInfoImport(data): Observable<any> {
+    const customOptions = {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      })
+    };
+    return this.http.post<any>(`${apiHrmServer}/api/v1/salaryInfo/SetSalaryInfoImport`, data , customOptions)
+  }
+
+  setSalaryInfoAccept(data): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/salaryInfo/SetSalaryInfoAccept`, data , this.options)
+  }
+
   setSalaryRecord(data): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v1/salaryInfo/SetSalaryRecord`, data , this.options)
   }

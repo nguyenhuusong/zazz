@@ -26,6 +26,7 @@ import { DetailTerminateComponent } from 'src/app/components/ns-ho-so-nghi-viec/
 import { ImportTerminateComponent } from 'src/app/components/ns-ho-so-nghi-viec/import-terminate/import-terminate.component';
 import { XuLyQuaTrinhCongTacComponent } from 'src/app/components/xu-ly-qua-trinh-cong-tac/xu-ly-qua-trinh-cong-tac.component';
 import { ChiTietXuLyQtCongTacComponent } from 'src/app/components/xu-ly-qua-trinh-cong-tac/chi-tiet-xu-ly-qt-cong-tac/chi-tiet-xu-ly-qt-cong-tac.component';
+import { ImportQtThayDoiLuongComponent } from 'src/app/components/qt-thay-doi-luong/import-qt-thay-doi-luong/import-qt-thay-doi-luong.component';
 
 const routes: Routes = [
   {
@@ -267,6 +268,14 @@ const routes: Routes = [
    data: {
      title: 'Quá trình thay đổi lương',
      url: 'qua-trinh-thay-doi-luong',
+   },
+ },
+  {
+   path: 'qua-trinh-thay-doi-luong/import',
+   component: ImportQtThayDoiLuongComponent,
+   data: {
+     title: 'Import quá trình thay đổi lương',
+     url: 'import',
    },
  },
  {
