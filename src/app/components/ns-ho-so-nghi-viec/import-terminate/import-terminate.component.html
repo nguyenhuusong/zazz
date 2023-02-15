@@ -4,7 +4,17 @@
       <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
     </section>
     <section class="bread-filter">
-        <div class="d-flex bet end bottom gap-16">
+        <div class="d-flex bet middle gap-16">
+            <div class="col-item">
+                <ul class="infos-import middle d-flex gap-12" *ngIf="dataImport">
+                    <li><span class="pi pi-info-circle"></span></li>
+                    <li><span>Tổng số bản ghi: </span><span class="text-color text-dark font-bold">{{ dataImport?.recordsTotal }}</span></li>
+                    <li><span>/</span></li>
+                    <li class="text-color text-success font-bold"><span>Số bản ghi thành công: </span><span>{{ (dataImport?.recordsTotal) - (dataImport?.recordsFail) }}</span></li>
+                    <li><span>/</span></li>
+                    <li class="text-color text-danger font-bold"><span>Số bản ghi lỗi: </span><span>{{ dataImport?.recordsFail }}</span></li>
+                </ul>
+            </div>
             <div class="col-item">
                 <div class="d-flex align-items-center gap-16">
                     <p-button type="button" class="p-button-sm " (click)="toggleGrid()" icon="pi pi-th-large" pTooltip="{{isFullScreen ? 'Ẩn toàn màn hình' : 'Hiển thị toàn màn hình'}}" tooltipPosition="top"></p-button>
