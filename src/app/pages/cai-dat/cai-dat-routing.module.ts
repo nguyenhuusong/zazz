@@ -35,6 +35,7 @@ import { DanhMucLoaiGiayToComponent } from 'src/app/components/danh-muc-loai-gia
 import { ChiTietLoaiGiayToComponent } from 'src/app/components/danh-muc-loai-giay-to/chi-tiet-loai-giay-to/chi-tiet-loai-giay-to.component';
 import { ImportReasonComponent } from 'src/app/components/ly-do-nghi-viec/import-reason/import-reason.component';
 import { ImportHopDongMauComponent } from 'src/app/components/quan-ly-hop-dong/import-hop-dong-mau/import-hop-dong-mau.component';
+import { ImportWifiComponent } from 'src/app/components/thiet-lap-wifi/import-wifi/import-wifi.component';
 
 const routes: Routes = [
   {
@@ -464,6 +465,14 @@ const routes: Routes = [
     data: {
       title: 'Danh sách thiết lập wifi',
       url: 'thiet-lap-wifi',
+    },
+  },
+  {
+    path: 'thiet-lap-wifi/import',
+    component: ImportWifiComponent,
+    data: {
+      title: 'Import thiết lập wifi',
+      url: 'import',
     },
   },
   {

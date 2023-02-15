@@ -1762,19 +1762,28 @@ export class ApiHrmService {
   }
 
   getTimekeepingWifiPage(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/timekeeping/GetTimekeepingWifiPage?` + queryParams, this.options)
+    return this.http.get<any>(`${apiHrmServer}/api/v1/timekeepingwifi/GetTimekeepingWifiPage?` + queryParams, this.options)
   }
 
   getTimekeepingWifiInfo(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/timekeeping/GetTimekeepingWifiInfo?${queryParams}`, this.options)
+    return this.http.get<any>(`${apiHrmServer}/api/v1/timekeepingwifi/GetTimekeepingWifiInfo?${queryParams}`, this.options)
   }
 
   setTimekeepingWifiInfo(data): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v1/timekeeping/SetTimekeepingWifiInfo`, data , this.options)
+    return this.http.post<any>(`${apiHrmServer}/api/v1/timekeepingwifi/SetTimekeepingWifiInfo`, data , this.options)
+  }
+
+  setTimekeepingWifiImport(params): Observable<any> {
+    const customOptions = {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      })
+    };
+    return this.http.post<any>(`${apiHrmServer}/api/v1/timekeepingwifi/SetTimekeepingWifiImport`, params, customOptions);
   }
 
   delTimekeepingWifiInfo(queryParams): Observable<any> {
-    return this.http.delete<any>(`${apiHrmServer}/api/v1/timekeeping/DelTimekeepingWifiInfo?${queryParams}`, this.options)
+    return this.http.delete<any>(`${apiHrmServer}/api/v1/timekeepingwifi/DelTimekeepingWifiInfo?${queryParams}`, this.options)
   }
 
   // quá trình thay đổi lương

@@ -254,15 +254,39 @@ export class ThietLapWifiComponent implements OnInit, AfterViewChecked {
     this.query.pageSize = event.rows;
     this.load();
   }
-
+  itemsToolOfGrid = []
   ngOnInit() {
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Cài đặt' },
       { label: 'Danh sách thiết lập wifi' },
     ];
+    this.itemsToolOfGrid = [
+      {
+        label: 'Import file',
+        code: 'Import',
+        icon: 'pi pi-file-excel',
+        disabled: CheckHideAction(MENUACTIONROLEAPI.GetContractPage.url, ACTIONS.IMPORT),
+        command: () => {
+          this.importFileExel();
+        }
+      },
+      // {
+      //   label: 'Cài plugin',
+      //   code: 'plugin',
+      //   icon: 'pi pi-cog',
+      //   disabled: this.listPrints.length !== 0,
+      //   command: () => {
+      //     this.DowloadPlugin();
+      //   }
+      // },
+    ]
     this.getEmpFilter();
 
+  }
+
+  importFileExel() {
+    this.router.navigate(['/cai-dat/thiet-lap-wifi/import']);
   }
 
   quanlyloaihopdong() {
@@ -294,7 +318,7 @@ export class ThietLapWifiComponent implements OnInit, AfterViewChecked {
   ];
 
   getEmpFilter() {
-    this.apiService.getFilter('/api/v1/timekeeping/GetTimekeepingWifiFilter').subscribe(results => {
+    this.apiService.getFilter('/api/v1/timekeepingwifi/GetTimekeepingWifiFilter').subscribe(results => {
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
@@ -325,47 +349,6 @@ export class ThietLapWifiComponent implements OnInit, AfterViewChecked {
   }
 
 
-showFilter() {
-    const ref = this.dialogService.open(FormFilterComponent, {
-      header: 'Tìm kiếm nâng cao',
-      width: '40%',
-      contentStyle: "",
-      data: {
-        listViews: this.listViewsFilter,
-        detailInfoFilter: this.detailInfoFilter,
-        buttons: this.optionsButonFilter
-      }
-    });
-
-    ref.onClose.subscribe((event: any) => {
-      if (event) {
-        this.listViewsFilter = cloneDeep(event.listViewsFilter);
-        if (event.type === 'Search') {
-          this.query = { ...this.query, ...event.data };
-          this.load();
-        } else if (event.type === 'CauHinh') {
-          this.apiService.getFilter('/api/v2/maternity/GetMaternityFilter').subscribe(results => {
-            if (results.status === 'success') {
-              const listViews = cloneDeep(results.data.group_fields);
-              this.listViewsFilter = [...listViews];
-              const params =  getParamString(listViews)
-              this.query = { ...this.query, ...params};
-              this.load();
-              this.detailInfoFilter = results.data;
-              this.showFilter()
-            }
-          });
-
-        } else if (event.type === 'Reset') {
-          const listViews = cloneDeep(this.cloneListViewsFilter);
-          this.listViewsFilter = cloneDeep(listViews);
-         const params =  getParamString(listViews)
-        this.query = { ...this.query, ...params};
-        this.load();
-        }
-      }
-    });
-  }
 
 }
 
