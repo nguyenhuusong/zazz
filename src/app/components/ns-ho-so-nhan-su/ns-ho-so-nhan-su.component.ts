@@ -138,7 +138,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
       this.itemsToolOfGrid.push({
         label: item.actionName,
         code: item.actionCd,
-        icon: 'pi pi-upload',
+        icon: item.actionCd === 'import' ? 'pi pi-download' : item.actionCd === 'export' ? 'pi pi-upload' : 'pi-info-circle',
         command: () => {
           this[item.actionCd]();
         }
