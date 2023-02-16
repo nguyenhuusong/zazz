@@ -623,6 +623,23 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v1/organize/GetOrganizePage?` + queryParams, this.options);
   }
 
+  setOrganizeExport(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/organize/SetOrganizeExport?` + queryParams, this.options);
+  }
+
+  setOrganizeImport(queryParams): Observable<any> {
+    const customOptions = {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue()
+      })
+    };
+    return this.http.post<any>(`${apiHrmServer}/api/v1/organize/SetOrganizeImport`,  queryParams, customOptions);
+  }
+
+  setOrganizeAccept(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/organize/SetOrganizeAccept`,  queryParams, this.options);
+  }
+
   getContract(queryParams): Observable<any> {
     return this.http.get<any>(`${apiCore}/api/v1/coresaler/GetContract?` + queryParams, this.options)
   }

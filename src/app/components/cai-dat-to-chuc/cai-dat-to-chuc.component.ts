@@ -12,9 +12,10 @@ import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.comp
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
-import { findNodeInTree, getParamString } from 'src/app/common/function-common/objects.helper';
+import { getParamString } from 'src/app/common/function-common/objects.helper';
 import { fromEvent } from 'rxjs';
 import { cloneDeep } from 'lodash';
+import * as FileSaver from 'file-saver';
 @Component({
   selector: 'app-cai-dat-to-chuc',
   templateUrl: './cai-dat-to-chuc.component.html',
@@ -901,6 +902,20 @@ export class CaiDatToChucComponent implements OnInit {
   initMenuItem() {
     this.menuItem = [
       {
+        label: 'Import tổ chức',
+        icon: 'pi pi-refresh',
+        command: () => {
+          this.importExcel();
+        }
+      },
+      {
+        label: 'Export tổ chức',
+        icon: 'pi pi-refresh',
+        command: () => {
+          this.ExportExcel();
+        }
+      },
+      {
         label: 'Cài đặt tham số',
         icon: 'pi pi-refresh',
         command: () => {
@@ -918,9 +933,35 @@ export class CaiDatToChucComponent implements OnInit {
     ]
   }
 
+  importExcel() {
+    this.router.navigate(['/cai-dat/cai-dat-to-chuc/import-to-chuc']);
+  }
+
+  ExportExcel() {
+    this.spinner.show();
+    this.query.pageSize = 1000000;
+    const query = { ...this.query };
+    const queryParams = queryString.stringify(query);
+    this.apiService.setOrganizeExport(queryParams).subscribe(
+      (results: any) => {
+
+        if (results.type === 'application/json') {
+          this.spinner.hide();
+        } else if (results.type === 'application/octet-stream') {
+          var blob = new Blob([results], { type: 'application/msword' });
+          FileSaver.saveAs(blob, `Danh sách hồ sơ nhân sự` + ".xlsx");
+          this.spinner.hide();
+        }
+      },
+      error => {
+        this.spinner.hide();
+      });
+  }
+
+  
+
   loaiToChuc() {
     this.router.navigate(['/cai-dat/loai-to-chuc']);
-
   }
 }
 

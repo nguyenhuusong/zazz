@@ -36,6 +36,7 @@ import { ChiTietLoaiGiayToComponent } from 'src/app/components/danh-muc-loai-gia
 import { ImportReasonComponent } from 'src/app/components/ly-do-nghi-viec/import-reason/import-reason.component';
 import { ImportHopDongMauComponent } from 'src/app/components/quan-ly-hop-dong/import-hop-dong-mau/import-hop-dong-mau.component';
 import { ImportWifiComponent } from 'src/app/components/thiet-lap-wifi/import-wifi/import-wifi.component';
+import { ImportToChucComponent } from 'src/app/components/cai-dat-to-chuc/import-to-chuc/import-to-chuc.component';
 
 const routes: Routes = [
   {
@@ -109,6 +110,14 @@ const routes: Routes = [
     data: {
       title: 'Danh sách quản lý tổ chức',
       url: 'cai-dat-to-chuc',
+    },
+  },
+  {
+    path: 'cai-dat-to-chuc/import-to-chuc',
+    component: ImportToChucComponent,
+    data: {
+      title: 'Import tổ chức',
+      url: 'import-to-chuc',
     },
   },
   {
