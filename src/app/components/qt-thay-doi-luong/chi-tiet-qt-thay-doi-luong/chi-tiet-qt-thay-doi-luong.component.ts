@@ -159,6 +159,7 @@ export class ChiTietQTThayDoiLuongComponent implements OnInit {
           this.stepActivated();
         }, 100);
         this.detailInfo = results.data;
+        this.modelEdit.salaryInfoId = results.data.salaryInfoId
         this.flowCurrent = results.data.flow_cur;
         this.optionsButtonsView =[
           { label: 'Quay lại', value: 'BackPage', class: `p-button-secondary ${results.data.prev_st ? '' : 'hidden'}`, icon: 'pi pi-caret-left', },
@@ -186,6 +187,7 @@ export class ChiTietQTThayDoiLuongComponent implements OnInit {
     this.apiService.setSalaryInfoNew(params).subscribe(results => {
       if (results.status === 'success') {
         this.activeIndex = results.data.flow_st;
+        this.modelEdit.salaryInfoId = results.data.salaryInfoId;
         this.listViews = cloneDeep(results.data.group_fields);
         setTimeout(() => {
           this.stepActivated();
@@ -232,6 +234,7 @@ export class ChiTietQTThayDoiLuongComponent implements OnInit {
       if (results.status === 'success') {
         this.activeIndex = results.data.flow_st;
         this.flowCurrent = results.data.flow_cur;
+        this.modelEdit.salaryInfoId = results.data.salaryInfoId;
         this.steps = results.data.flowStatuses.map(d => {
           return {
             label: d.flow_name,
