@@ -99,6 +99,7 @@ import { ImportReasonComponent } from 'src/app/components/ly-do-nghi-viec/import
 import { ImportHopDongMauComponent } from 'src/app/components/quan-ly-hop-dong/import-hop-dong-mau/import-hop-dong-mau.component';
 import { ImportWifiComponent } from 'src/app/components/thiet-lap-wifi/import-wifi/import-wifi.component';
 import { ImportToChucComponent } from 'src/app/components/cai-dat-to-chuc/import-to-chuc/import-to-chuc.component';
+import { ImportCongTyComponent } from 'src/app/components/cai-dat-cong-ty/import-cong-ty/import-cong-ty.component';
 
 FullCalendarModule.registerPlugins([
   // register FullCalendar plugins
@@ -210,6 +211,8 @@ FullCalendarModule.registerPlugins([
     ImportHopDongMauComponent,
     ImportWifiComponent,
     ImportToChucComponent,
+    ImportCongTyComponent,
+
 
   ],
   providers: []

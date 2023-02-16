@@ -1261,8 +1261,25 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v2/compay/GetComAuthorizeInfo?` + queryParams, this.options)
   }
 
+  setCompanyExport(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/compay/SetCompanyExport?` + queryParams, this.options)
+  }
+
   setComAuthorizeInfo(params): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/compay/SetComAuthorizeInfo`, params, this.options)
+  }
+
+  setCompanyImport(params): Observable<any> {
+    const customOptions = {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      })
+    };
+    return this.http.post<any>(`${apiHrmServer}/api/v2/compay/SetCompanyImport`, params, customOptions);
+  }
+
+  setCompanyAccept(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/compay/SetCompanyAccept`, params, this.options)
   }
 
   getComAuthorizePage(queryParams): Observable<any> {

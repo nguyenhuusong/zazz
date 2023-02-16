@@ -949,7 +949,7 @@ export class CaiDatToChucComponent implements OnInit {
           this.spinner.hide();
         } else if (results.type === 'application/octet-stream') {
           var blob = new Blob([results], { type: 'application/msword' });
-          FileSaver.saveAs(blob, `Danh sách hồ sơ nhân sự` + ".xlsx");
+          FileSaver.saveAs(blob, `Danh sách tổ chức` + ".xlsx");
           this.spinner.hide();
         }
       },
