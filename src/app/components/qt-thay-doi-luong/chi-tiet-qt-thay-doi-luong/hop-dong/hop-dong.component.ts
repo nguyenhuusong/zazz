@@ -3,8 +3,6 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as queryString from 'querystring';
-import { cloneDeep } from 'lodash';
-import * as moment from 'moment';
 import { AgGridFn } from 'src/app/common/function-common/common';
 import { fromEvent } from 'rxjs';
 @Component({
@@ -236,6 +234,7 @@ export class HopDongComponent implements OnInit {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thêm mới thành công' });
         this.displayFormEditDetail = false;
         this.getSalaryMetaPage();
+        this.cancelSave.emit();
         this.spinner.hide();
       } else {
         this.spinner.hide();
