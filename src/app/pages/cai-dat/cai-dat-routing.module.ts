@@ -38,6 +38,7 @@ import { ImportHopDongMauComponent } from 'src/app/components/quan-ly-hop-dong/i
 import { ImportWifiComponent } from 'src/app/components/thiet-lap-wifi/import-wifi/import-wifi.component';
 import { ImportToChucComponent } from 'src/app/components/cai-dat-to-chuc/import-to-chuc/import-to-chuc.component';
 import { ImportCongTyComponent } from 'src/app/components/cai-dat-cong-ty/import-cong-ty/import-cong-ty.component';
+import { ImportExcelComponent } from 'src/app/common/import-excel/import-excel.component';
 
 const routes: Routes = [
   {
@@ -236,6 +237,14 @@ const routes: Routes = [
     },
   },
   {
+    path: 'chuc-vu/import-chuc-vu',
+    component: ImportExcelComponent,
+    data: {
+      title: 'Import chức vụ',
+      url: 'import-chuc-vu',
+    },
+  },
+  {
     path: 'chuc-vu/them-moi-chuc-vu',
     component: ChiTietChucVuComponent,
     data: {
@@ -258,6 +267,14 @@ const routes: Routes = [
     data: {
       title: 'Danh sách chức danh',
       url: 'chuc-danh',
+    },
+  },
+  {
+    path: 'chuc-danh/import-chuc-danh',
+    component: ImportExcelComponent,
+    data: {
+      title: 'Import chức danh',
+      url: 'import-chuc-danh',
     },
   },
   {
@@ -284,6 +301,14 @@ const routes: Routes = [
     data: {
       title: 'Danh sách nơi làm việc',
       url: 'noi-lam-viec',
+    },
+  },
+  {
+    path: 'noi-lam-viec/import-noi-lam-viec',
+    component: ImportExcelComponent,
+    data: {
+      title: 'Import nơi làm việc',
+      url: 'import-noi-lam-viec',
     },
   },
   {
@@ -346,6 +371,14 @@ const routes: Routes = [
     data: {
       title: 'Danh sách lịch làm việc',
       url: 'lich-lam-viec',
+    },
+  },
+  {
+    path: 'lich-lam-viec/import-lich-lam-viec',
+    component: ImportExcelComponent,
+    data: {
+      title: 'Import lịch làm việc',
+      url: 'import-lich-lam-viec',
     },
   },
   {

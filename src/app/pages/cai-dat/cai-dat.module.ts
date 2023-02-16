@@ -100,6 +100,7 @@ import { ImportHopDongMauComponent } from 'src/app/components/quan-ly-hop-dong/i
 import { ImportWifiComponent } from 'src/app/components/thiet-lap-wifi/import-wifi/import-wifi.component';
 import { ImportToChucComponent } from 'src/app/components/cai-dat-to-chuc/import-to-chuc/import-to-chuc.component';
 import { ImportCongTyComponent } from 'src/app/components/cai-dat-cong-ty/import-cong-ty/import-cong-ty.component';
+import { ImportExcelModule } from 'src/app/common/import-excel/import-excel.module';
 
 FullCalendarModule.registerPlugins([
   // register FullCalendar plugins
@@ -160,7 +161,8 @@ FullCalendarModule.registerPlugins([
       ButtonRendererComponent,
       ButtonRendererComponent1
     ]),
-    FullCalendarModule
+    FullCalendarModule,
+    ImportExcelModule
   ],
 
   declarations: [

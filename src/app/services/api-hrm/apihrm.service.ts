@@ -2665,5 +2665,57 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v2/recruitplan/SetRecruitPlanImport`, data, customOptions);
   }
 
+  setPositionTitleImport(data): Observable<any> {
+    const customOptions = {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue()
+      })
+    };
+    return this.http.post<any>(`${apiHrmServer}/api/v2/position/SetPositionTitleImport`, data, customOptions);
+  }
+
+  setPositionImport(data): Observable<any> {
+    const customOptions = {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue()
+      })
+    };
+    return this.http.post<any>(`${apiHrmServer}/api/v2/position/SetPositionImport`, data, customOptions);
+  }
+
+  setWorkplaceImport(data): Observable<any> {
+    const customOptions = {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue()
+      })
+    };
+    return this.http.post<any>(`${apiHrmServer}/api/v2/workplace/SetWorkplaceImport`, data, customOptions);
+  }
+
+  setWorktimeImport(data): Observable<any> {
+    const customOptions = {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue()
+      })
+    };
+    return this.http.post<any>(`${apiHrmServer}/api/v2/worktime/SetWorktimeImport`, data, customOptions);
+  }
+
+  setPositionTitleExport(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/position/SetPositionTitleExport?` + queryParams, this.options)
+  }
+
+  setPositionExport(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/position/SetPositionExport?` + queryParams, this.options)
+  }
+
+  setWorkplaceExport(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/workplace/SetWorkplaceExport?` + queryParams, this.options)
+  }
+
+  setWorktimeExport(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/worktime/SetWorktimeExport?` + queryParams, this.options)
+  }
+
 
 }
