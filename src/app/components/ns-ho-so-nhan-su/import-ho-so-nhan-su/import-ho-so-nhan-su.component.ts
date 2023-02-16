@@ -111,7 +111,7 @@ export class ImportHoSoNhanSuComponent implements OnInit {
         this.changeDetector.detectChanges();
         this.listsData = results.data.dataList;
         if(!results.data.valid) {
-          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data.messages });
+          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.data.messages });
         }
       }
       this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
