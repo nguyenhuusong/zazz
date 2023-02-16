@@ -11,6 +11,7 @@ import { ImportExcelComponent } from './import-excel.component';
 import { ListGridAngularModule } from '../list-grid-angular/list-grid-angular.module';
 import { FileUploadModule } from 'primeng/fileupload';
 import { HrmBreadCrumbModule } from '../hrm-breadcrumb/hrm-breadcrumb.module';
+import { ConfigGridTableFormModule } from '../config-grid-table-form/config-grid-table-form.module';
 @NgModule({
   declarations: [
     ImportExcelComponent,
@@ -27,7 +28,8 @@ import { HrmBreadCrumbModule } from '../hrm-breadcrumb/hrm-breadcrumb.module';
     BreadcrumbModule,
     ListGridAngularModule,
     FileUploadModule,
-    HrmBreadCrumbModule
+    HrmBreadCrumbModule,
+    ConfigGridTableFormModule
   ],
   exports: [ImportExcelComponent],
   entryComponents: [],
