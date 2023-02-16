@@ -1803,6 +1803,10 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v1/timekeepingwifi/GetTimekeepingWifiInfo?${queryParams}`, this.options)
   }
 
+  setTimekeepingWifiExport(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/timekeepingwifi/SetTimekeepingWifiExport?${queryParams}`, this.options)
+  }
+
   setTimekeepingWifiInfo(data): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v1/timekeepingwifi/SetTimekeepingWifiInfo`, data , this.options)
   }
@@ -2456,12 +2460,25 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v1/jobs/GetJobTitles`, this.options);
   }
   
+  setJobExport (queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/jobs/SetJobExport?` + queryParams, this.options);
+  }
+  
   delJobInfo(queryParams): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v1/jobs/DelJobInfo?` + queryParams, this.options);
   }
 
   setJobInfo(queryParams): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v1/jobs/SetJobInfo`, queryParams, this.options);
+  }
+
+  setJobImport(queryParams): Observable<any> {
+    const customOptions = {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue()
+      })
+    };
+    return this.http.post<any>(`${apiHrmServer}/api/v1/jobs/SetJobImport`, queryParams, customOptions);
   }
 
   // GetOrgLevelFilter

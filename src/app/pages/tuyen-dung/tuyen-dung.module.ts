@@ -72,6 +72,7 @@ import { ChiTietKeHoachTuyenDungComponent } from 'src/app/components/ke-hoach-tu
 import { ImportKeHoachComponent } from 'src/app/components/ke-hoach-tuyen-dung/import-ke-hoach/import-ke-hoach.component';
 import { DividerModule } from 'primeng/divider';
 import { StepsModule } from 'primeng/steps';
+import { ImportLinhVucTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/linh-vuc-tuyen-dung/import-linh-vuc-tuyen-dung/import-linh-vuc-tuyen-dung.component';
 @NgModule({
   imports: [
     MessagesModule,
@@ -152,6 +153,7 @@ import { StepsModule } from 'primeng/steps';
     KeHoachTuyenDungComponent,
     ChiTietKeHoachTuyenDungComponent,
     ImportKeHoachComponent,
+    ImportLinhVucTuyenDungComponent
   ],
   providers: [ ]
 })

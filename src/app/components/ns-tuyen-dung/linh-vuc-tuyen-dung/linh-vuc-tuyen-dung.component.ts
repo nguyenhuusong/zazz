@@ -16,6 +16,7 @@ import { getParamString } from 'src/app/common/function-common/objects.helper';
 import { fromEvent } from 'rxjs';
 import { DialogService } from 'primeng/dynamicdialog';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
+import * as FileSaver from 'file-saver';
 @Component({
   selector: 'app-linh-vuc-tuyen-dung',
   templateUrl: './linh-vuc-tuyen-dung.component.html',
@@ -186,6 +187,8 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
       });
   }
 
+  
+
   showButtons(event: any) {
     return {
       buttons: [
@@ -268,13 +271,53 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
   find() {
     this.load();
   }
-
+  itemsToolOfGrid = [];
   ngOnInit() {
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Tuyển dụng', },
       { label: 'Danh sách Chuyên môn tuyển dụng' },
     ];
+
+    this.itemsToolOfGrid = [
+      {
+        label: 'Import file',
+        code: 'Import',
+        icon: 'pi pi-upload',
+        command: () => {
+          this.importFileExel();
+        }
+      },
+      {
+        label: 'Export file',
+        code: 'Import',
+        icon: 'pi pi-download',
+        command: () => {
+          this.exportExel();
+        }
+      },
+    ]
+  }
+
+  importFileExel() {
+    this.router.navigate(['/tuyen-dung/chuyen-mon/import-chuyen-mon']);
+  }
+
+  exportExel() {
+    this.spinner.show();
+    let params = {...this.query};
+    delete params.offSet;
+    delete params.pageSize;
+    // empId: this.detailInfo.empId
+    this.apiService.setJobExport(queryString.stringify({ ...params })).subscribe(results => {
+      if (results.type === 'application/json') {
+        this.spinner.hide();
+      } else if (results.type === 'application/octet-stream') {
+        var blob = new Blob([results], { type: 'application/msword' });
+        FileSaver.saveAs(blob, `Danh sách thiết lập wifi` + ".xlsx");
+        this.spinner.hide();
+      }
+    })
   }
 
   getEmpFilter() {

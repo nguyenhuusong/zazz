@@ -17,6 +17,7 @@ import { NsCauHinhComponent } from 'src/app/components/ns-tuyen-dung/ns-cau-hinh
 import { KeHoachTuyenDungComponent } from 'src/app/components/ke-hoach-tuyen-dung/ke-hoach-tuyen-dung.component';
 import { ImportKeHoachComponent } from 'src/app/components/ke-hoach-tuyen-dung/import-ke-hoach/import-ke-hoach.component';
 import { ChiTietKeHoachTuyenDungComponent } from 'src/app/components/ke-hoach-tuyen-dung/chi-tiet-ke-hoach-tuyen-dung/chi-tiet-ke-hoach-tuyen-dung.component';
+import { ImportLinhVucTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/linh-vuc-tuyen-dung/import-linh-vuc-tuyen-dung/import-linh-vuc-tuyen-dung.component';
 
 const routes: Routes = [
   {
@@ -139,6 +140,14 @@ const routes: Routes = [
     data: {
       title: 'Danh sách Chuyên môn tuyển dụng',
       url: 'chuyen-mon',
+    },
+  },
+  {
+    path: 'chuyen-mon/import-chuyen-mon',
+    component: ImportLinhVucTuyenDungComponent,
+    data: {
+      title: 'Import chuyên môn',
+      url: 'import-chuyen-mon',
     },
   },
   {

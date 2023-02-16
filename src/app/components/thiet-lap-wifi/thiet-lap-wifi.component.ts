@@ -16,8 +16,8 @@ import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { fromEvent } from 'rxjs';
 import { cloneDeep } from 'lodash';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
-import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { DialogService } from 'primeng/dynamicdialog';
+import * as FileSaver from 'file-saver';
 @Component({
   selector: 'app-thiet-lap-wifi',
   templateUrl: './thiet-lap-wifi.component.html',
@@ -271,15 +271,14 @@ export class ThietLapWifiComponent implements OnInit, AfterViewChecked {
           this.importFileExel();
         }
       },
-      // {
-      //   label: 'Cài plugin',
-      //   code: 'plugin',
-      //   icon: 'pi pi-cog',
-      //   disabled: this.listPrints.length !== 0,
-      //   command: () => {
-      //     this.DowloadPlugin();
-      //   }
-      // },
+      {
+        label: 'Export',
+        code: 'plugin',
+        icon: 'pi pi-cog',
+        command: () => {
+          this.ExportExcel();
+        }
+      },
     ]
     this.getEmpFilter();
 
@@ -287,6 +286,23 @@ export class ThietLapWifiComponent implements OnInit, AfterViewChecked {
 
   importFileExel() {
     this.router.navigate(['/cai-dat/thiet-lap-wifi/import']);
+  }
+
+  ExportExcel() {
+    this.spinner.show();
+    let params = {...this.query};
+    delete params.offSet;
+    delete params.pageSize;
+    // empId: this.detailInfo.empId
+    this.apiService.setTimekeepingWifiExport(queryString.stringify({ ...params })).subscribe(results => {
+      if (results.type === 'application/json') {
+        this.spinner.hide();
+      } else if (results.type === 'application/octet-stream') {
+        var blob = new Blob([results], { type: 'application/msword' });
+        FileSaver.saveAs(blob, `Danh sách thiết lập wifi` + ".xlsx");
+        this.spinner.hide();
+      }
+    })
   }
 
   quanlyloaihopdong() {
