@@ -211,11 +211,6 @@ export class ChiTietQTThayDoiLuongComponent implements OnInit {
         }
       } else {
         this.listViews = cloneDeep(this.cloneListViews);
-        // this.flowCurrent = this.detailInfo.flow_cur;
-        // this.activeIndex = this.detailInfo.flow_st;
-        // setTimeout(() => {
-        //   this.stepActivated();
-        // }, 100);
         this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
         this.spinner.hide();
       }
@@ -253,6 +248,9 @@ export class ChiTietQTThayDoiLuongComponent implements OnInit {
           { label: 'Đóng', value: 'Close', class: `p-button-danger ml-1`, icon: 'pi pi-times' }
         ]
         this.detailInfo = results.data;
+        this.spinner.hide();
+      }else {
+        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
         this.spinner.hide();
       }
     })
