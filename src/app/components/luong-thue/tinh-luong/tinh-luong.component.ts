@@ -14,6 +14,7 @@ import { TabThietLapThamSoComponent } from './tab-thiet-lap-tham-so/tab-thiet-la
 import { TabThanhPhanLuongComponent } from './tab-thanh-phan-luong/tab-thanh-phan-luong.component';
 import { TabCapBacLuongComponent } from './tab-cap-bac-luong/tab-cap-bac-luong.component';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import * as FileSaver from 'file-saver';
 @Component({
   selector: 'app-tinh-luong',
   templateUrl: './tinh-luong.component.html',
@@ -79,17 +80,42 @@ export class TinhLuongComponent implements OnInit {
     ];
     this.itemsToolOfGrid = [
       {
+        label: 'Import file',
+        code: 'Import',
+        icon: 'pi pi-download',
+        command: () => {
+          this.importFileExel();
+        }
+      },
+      {
         label: 'Export file',
         code: 'Import',
         icon: 'pi pi-download',
-        disabled: CheckHideAction(MENUACTIONROLEAPI.GetPayrollAppInfoPage.url, ACTIONS.IMPORT),
         command: () => {
-          // this.exportExel();
+          this.ExportExcel();
         }
       },
     ]
     this.checkIsAddNew();
     this.checkTitleAddNew();
+  }
+
+  importFileExel() {
+    this.router.navigate(['/luong-thue/tinh-luong/import-cap-bac-luong']);
+  }
+
+  ExportExcel() {
+    this.spinner.show();
+    let params = {...this.query};
+    this.apiService.setPayrollBaseExport(queryString.stringify({ ...params })).subscribe(results => {
+      if (results.type === 'application/json') {
+        this.spinner.hide();
+      } else if (results.type === 'application/octet-stream') {
+        var blob = new Blob([results], { type: 'application/msword' });
+        FileSaver.saveAs(blob, `Danh sách cấp bậc lương` + ".xlsx");
+        this.spinner.hide();
+      }
+    })
   }
 
   checkIsAddNew() {

@@ -2108,8 +2108,22 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v2/employee/GetTerminatePage?` + queryParams, this.options)
   }
 
+  setPayrollBaseImport(data): Observable<any> {
+    const customOptions = {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      })
+    };
+    return this.http.post<any>(`${apiHrmServer}/api/v1/payrollbase/SetPayrollBaseImport`, data , customOptions);
+
+  } 
+
   recruitAgain(query, data = null): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/employee/RecruitAgain?` + query, data , this.options)
+  } 
+
+  setPayrollBaseExport(query): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/payrollbase/SetPayrollBaseExport?` + query, this.options)
   } 
 
   getUserOrganizeRole(): Observable<any> {

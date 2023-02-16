@@ -58,6 +58,7 @@ import { MucLuongComponent } from 'src/app/components/luong-thue/tinh-luong/tab-
 import { FormFilterModule } from 'src/app/common/form-filter/form-filter.module';
 import { StepsModule } from 'primeng/steps';
 import { DividerModule } from 'primeng/divider';
+import { ImportCapBacLuongComponent } from 'src/app/components/luong-thue/tinh-luong/import-cap-bac-luong/import-cap-bac-luong.component';
 
 @NgModule({
   imports: [
@@ -126,6 +127,7 @@ import { DividerModule } from 'primeng/divider';
     ChiTietTabThietLapThamSoComponent,
     ChiTietTabCapBacLuongComponent,
     MucLuongComponent,
+    ImportCapBacLuongComponent
 
   ],
   exports: [
