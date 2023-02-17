@@ -18,6 +18,7 @@ import { KeHoachTuyenDungComponent } from 'src/app/components/ke-hoach-tuyen-dun
 import { ImportKeHoachComponent } from 'src/app/components/ke-hoach-tuyen-dung/import-ke-hoach/import-ke-hoach.component';
 import { ChiTietKeHoachTuyenDungComponent } from 'src/app/components/ke-hoach-tuyen-dung/chi-tiet-ke-hoach-tuyen-dung/chi-tiet-ke-hoach-tuyen-dung.component';
 import { ImportLinhVucTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/linh-vuc-tuyen-dung/import-linh-vuc-tuyen-dung/import-linh-vuc-tuyen-dung.component';
+import { ImportExcelComponent } from 'src/app/common/import-excel/import-excel.component';
 
 const routes: Routes = [
   {
@@ -144,10 +145,15 @@ const routes: Routes = [
   },
   {
     path: 'chuyen-mon/import-chuyen-mon',
-    component: ImportLinhVucTuyenDungComponent,
+    component: ImportExcelComponent,
     data: {
       title: 'Import chuyên môn',
       url: 'import-chuyen-mon',
+      titleDad : 'Danh sách Chuyên môn tuyển dụng',
+      urlDad: '/tuyen-dung/chuyen-mon',
+      api: 'setJobImport',
+      apiAccept: 'setJobAccept',
+      fileDoc: ''
     },
   },
   {

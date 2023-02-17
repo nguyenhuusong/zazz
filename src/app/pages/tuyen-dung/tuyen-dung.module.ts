@@ -73,6 +73,7 @@ import { ImportKeHoachComponent } from 'src/app/components/ke-hoach-tuyen-dung/i
 import { DividerModule } from 'primeng/divider';
 import { StepsModule } from 'primeng/steps';
 import { ImportLinhVucTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/linh-vuc-tuyen-dung/import-linh-vuc-tuyen-dung/import-linh-vuc-tuyen-dung.component';
+import { ImportExcelModule } from 'src/app/common/import-excel/import-excel.module';
 @NgModule({
   imports: [
     MessagesModule,
@@ -127,7 +128,8 @@ import { ImportLinhVucTuyenDungComponent } from 'src/app/components/ns-tuyen-dun
     ]),
     HrmStepModule,
     DividerModule,
-    StepsModule
+    StepsModule,
+    ImportExcelModule
   ],
 
   declarations: [

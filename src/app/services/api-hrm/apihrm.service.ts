@@ -2717,5 +2717,33 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v2/worktime/SetWorktimeExport?` + queryParams, this.options)
   }
 
+  setJobAccept(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/jobs/SetJobAccept`,  queryParams, this.options);
+  }
+
+  setWorktimeAccept(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/worktime/SetWorktimeAccept`,  queryParams, this.options);
+  }
+
+  setWorkplaceAccept(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/workplace/SetWorkplaceAccept`,  queryParams, this.options);
+  }
+
+  setTimekeepingWifiAccept(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/timekeepingwifi/SetTimekeepingWifiAccept`,  queryParams, this.options);
+  }
+
+  setPayrollBaseAccept(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/payrollbase/SetPayrollBaseAccept`,  queryParams, this.options);
+  }
+
+  setPositionTitleAccept(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/position/SetPositionTitleAccept`,  queryParams, this.options);
+  }
+
+  setPositionAccept(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/position/SetPositionAccept`,  queryParams, this.options);
+  }
+
 
 }

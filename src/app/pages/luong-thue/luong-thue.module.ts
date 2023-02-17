@@ -59,6 +59,7 @@ import { FormFilterModule } from 'src/app/common/form-filter/form-filter.module'
 import { StepsModule } from 'primeng/steps';
 import { DividerModule } from 'primeng/divider';
 import { ImportCapBacLuongComponent } from 'src/app/components/luong-thue/tinh-luong/import-cap-bac-luong/import-cap-bac-luong.component';
+import { ImportExcelModule } from 'src/app/common/import-excel/import-excel.module';
 
 @NgModule({
   imports: [
@@ -105,6 +106,7 @@ import { ImportCapBacLuongComponent } from 'src/app/components/luong-thue/tinh-l
     StepsModule,
     DividerModule,
     ListboxModule,
+    ImportExcelModule,
     AgGridModule.withComponents([
       ButtonRendererComponent,
       ButtonRendererComponent1

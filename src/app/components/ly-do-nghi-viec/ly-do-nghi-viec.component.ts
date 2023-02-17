@@ -300,7 +300,7 @@ export class LyDoNghiViecComponent implements OnInit {
   }
 
   ImportReason() {
-    this.router.navigate(['/cai-dat/ly-do-nghi/import'])
+    this.router.navigate(['/cai-dat/ly-do-nghi/import-ly-do-nghi'])
   }
 
   ExportReason() {

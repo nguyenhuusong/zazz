@@ -7,6 +7,7 @@ import { TinhLuongComponent } from 'src/app/components/luong-thue/tinh-luong/tin
 import { CauTrucBangLuongComponent } from 'src/app/components/luong-thue/bang-luong/cau-truc-bang-luong/cau-truc-bang-luong.component';
 import { CongThucLuongComponent } from 'src/app/components/luong-thue/bang-luong/cong-thuc-luong/cong-thuc-luong.component';
 import { ImportCapBacLuongComponent } from 'src/app/components/luong-thue/tinh-luong/import-cap-bac-luong/import-cap-bac-luong.component';
+import { ImportExcelComponent } from 'src/app/common/import-excel/import-excel.component';
 
 const routes: Routes = [
   {
@@ -32,10 +33,15 @@ const routes: Routes = [
   },
   {
     path: 'tinh-luong/import-cap-bac-luong',
-    component: ImportCapBacLuongComponent,
+    component: ImportExcelComponent,
     data: {
       title: 'Import cấp bậc lương',
       url: 'import-cap-bac-luong',
+      titleDad : 'Danh sách tính lương',
+      urlDad: '/luong-thue/tinh-luong',
+      api: 'setPayrollBaseImport',
+      apiAccept: 'setPayrollBaseAccept',
+      fileDoc: ''
     },
   },
   {

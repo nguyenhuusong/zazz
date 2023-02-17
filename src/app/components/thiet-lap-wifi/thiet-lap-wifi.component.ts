@@ -285,7 +285,7 @@ export class ThietLapWifiComponent implements OnInit, AfterViewChecked {
   }
 
   importFileExel() {
-    this.router.navigate(['/cai-dat/thiet-lap-wifi/import']);
+    this.router.navigate(['/cai-dat/thiet-lap-wifi/import-thiet-lap-wifi']);
   }
 
   ExportExcel() {

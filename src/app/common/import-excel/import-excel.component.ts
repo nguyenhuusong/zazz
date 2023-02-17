@@ -35,6 +35,15 @@ export class ImportExcelComponent implements OnInit {
   titleUrl: string = '';
   linkAPIUrl: string = '';
   dataImport: DataImport = null
+  
+  // truyen dũ liêu router
+  // title: 'Import chức danh',
+  // url: 'import-chuc-danh',
+  // titleDad : 'Danh sách chức danh',
+  // urlDad: '/cai-dat/chuc-danh',
+  // api: 'setPositionTitleImport',
+  // apiAccept: 'setPositionTitleAccept',
+  // fileDoc: ''
   constructor(
     private spinner: NgxSpinnerService,
     private apiService: ApiHrmService,
@@ -44,30 +53,13 @@ export class ImportExcelComponent implements OnInit {
     private messageService: MessageService,
   ) {
     this.dataRouter = this.route.data['_value'];
-    if(this.dataRouter.url === 'import-chuc-danh') {
-        this.linkUrl = '/cai-dat/chuc-danh';
-        this.titleUrl = 'Danh sách chức danh';
-        this.linkAPIUrl = 'setPositionTitleImport';
-    }else if(this.dataRouter.url === 'import-chuc-vu') {
-      this.linkUrl = '/cai-dat/chuc-vu';
-      this.titleUrl = 'Danh sách chức vụ';
-      this.linkAPIUrl = 'setPositionImport';
-    }else if(this.dataRouter.url === 'import-noi-lam-viec') {
-      this.linkUrl = '/cai-dat/noi-lam-viec';
-      this.titleUrl = 'Danh sách nơi làm việc';
-      this.linkAPIUrl = 'setWorkplaceImport';
-    }else if(this.dataRouter.url === 'import-lich-lam-viec') {
-      this.linkUrl = '/cai-dat/lich-lam-viec';
-      this.titleUrl = 'Danh sách lịch làm việc';
-      this.linkAPIUrl = 'setWorktimeImport';
-    }
    }
 
   private readonly unsubscribe$: Subject<void> = new Subject();
   ngOnInit(): void {
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
-      { label: this.titleUrl, routerLink: this.linkUrl },
+      { label: this.dataRouter.titleDad, routerLink: this.dataRouter.urlDad },
       { label: this.dataRouter.title },
     ];
   }
@@ -87,7 +79,7 @@ export class ImportExcelComponent implements OnInit {
       this.isShowUpload = false;
       let fomrData = new FormData();
       fomrData.append('file', event.currentFiles[0]);
-      this.apiService.setCompanyImport(fomrData)
+      this.apiService[this.dataRouter.api](fomrData)
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe(results => {
           this.dataSet(results)
@@ -107,7 +99,7 @@ export class ImportExcelComponent implements OnInit {
       accept: accept,
       imports: this.listsData
     }
-    this.apiService.setCompanyAccept(params)
+    this.apiService[this.dataRouter.apiAccept](params)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {
         this.dataSet(results)
@@ -156,7 +148,7 @@ export class ImportExcelComponent implements OnInit {
   back() {
     const main: any = document.querySelector(".main");
     main.className = 'main';
-    this.router.navigate([`${this.linkUrl}`]);
+    this.router.navigate([`${this.dataRouter.urlDad}`]);
   }
 
   ngOnDestroy() {
@@ -181,7 +173,7 @@ export class ImportExcelComponent implements OnInit {
   }
 
   getTemfileImport() {
-    this.apiService.exportReportLocalhost('assets/tpl-import-file/Import_HSNS_NghiViec.xlsx').subscribe((data: any) => {
+    this.apiService.exportReportLocalhost(`assets/tpl-import-file/${this.dataRouter.fileDoc}`).subscribe((data: any) => {
       this.createImageFromBlob(data)
     });
   }
@@ -190,7 +182,7 @@ export class ImportExcelComponent implements OnInit {
     var blob = new Blob([image]);
     var url = window.URL.createObjectURL(blob);
     var anchor = document.createElement("a");
-    anchor.download = "Import_HSNS_NghiViec.xlsx";
+    anchor.download = `${this.dataRouter.fileDoc}`;
     anchor.href = url;
     anchor.click();
   }
