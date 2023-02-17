@@ -168,7 +168,7 @@ export class CongTyComponent implements OnInit {
         this.spinner.show();
         this.apiService.setOrgCompany(params).subscribe(results => {
             if(results.status === 'success') {
-              this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
+              this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : results.message });
               this.getOrgCompanyPage();
               this.spinner.hide();
               this.displayFormEditDetail = false;

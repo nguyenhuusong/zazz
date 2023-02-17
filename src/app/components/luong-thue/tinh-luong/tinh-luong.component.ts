@@ -101,7 +101,11 @@ export class TinhLuongComponent implements OnInit {
   }
 
   importFileExel() {
-    this.router.navigate(['/luong-thue/tinh-luong/import-cap-bac-luong']);
+    if(this.tabIndex === 2) {
+      this.router.navigate(['/luong-thue/tinh-luong/import-thanh-phan-luong']);
+    }else if(this.tabIndex === 3) { 
+      this.router.navigate(['/luong-thue/tinh-luong/import-cap-bac-luong']);
+    }
   }
 
   ExportExcel() {
