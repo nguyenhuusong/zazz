@@ -37,6 +37,7 @@
             <app-list-grid-angular  
                 [listsData]="listsData" *ngIf="columnDefs.length > 0 && heightGrid > 0"
                  [height]="heightGrid"
+                 [isConfig] = "false"
                  (showConfig)="cauhinh()"
                  [getContextMenuItems]="getContextMenuItems"
                  (firstDataRendered)="onFirstDataRendered($event)"

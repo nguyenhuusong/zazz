@@ -42,6 +42,7 @@
                 [listsData]="listsData" *ngIf="columnDefs.length > 0 && heightGrid > 0"
                  [height]="heightGrid"
                  (showConfig)="cauhinh()"
+                 [isConfig] = "false"
                  [getContextMenuItems]="getContextMenuItems"
                 [columnDefs]="columnDefs"></app-list-grid-angular >
                 <div class="paginator" style="margin-top: 10px; text-align: right; margin-right: 25px; font-weight: 600;">
