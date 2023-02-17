@@ -2706,7 +2706,7 @@ export class ApiHrmService {
   }
 
   setPositionExport(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v2/position/SetPositionExport?` + queryParams, this.options)
+    return this.http.post<any>(`${apiHrmServer}/api/v2/position/SetPositionExport`, queryParams, this.options)
   }
 
   setWorkplaceExport(queryParams): Observable<any> {
@@ -2743,6 +2743,20 @@ export class ApiHrmService {
 
   setPositionAccept(queryParams): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/position/SetPositionAccept`,  queryParams, this.options);
+  }
+
+  setEmployeeExportDraft(data): Observable<any> {
+
+    // const customOptions = {
+    //   headers: new HttpHeaders({
+    //     Authorization: this.authService.getAuthorizationHeaderValue()
+    //   }),responseType: "blob"
+    // };
+
+    return this.http.post<any>(`${apiHrmServer}/api/v2/employee/SetEmployeeExportDraft`, data, this.options);
+
+
+    // return this.http.post<any>(`${apiHrmServer}/api/v2/employee/SetEmployeeExportDraft`, queryParams, this.options)
   }
 
 

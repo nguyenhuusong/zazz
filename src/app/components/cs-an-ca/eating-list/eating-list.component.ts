@@ -92,7 +92,7 @@ export class EatingListComponent implements OnInit, AfterViewChecked {
   handleParams() {
     this.activatedRoute.queryParamMap.subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
-      this.query.empId = this.paramsObject.params.empId;
+      this.query.empId = this.paramsObject.params.cusId;
       this.query.fromDate = this.paramsObject.params.fromDate;
       this.query.toDate = this.paramsObject.params.toDate;
       this.load();

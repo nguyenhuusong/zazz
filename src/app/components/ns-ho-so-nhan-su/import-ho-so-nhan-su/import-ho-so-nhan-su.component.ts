@@ -6,6 +6,8 @@ import { Subject, takeUntil } from 'rxjs';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { AgGridFn } from 'src/app/common/function-common/common';
+import * as queryString from 'querystring';
+import * as FileSaver from 'file-saver';
 interface DataImport {
   valid: boolean,
   messages: string,
@@ -29,7 +31,8 @@ export class ImportHoSoNhanSuComponent implements OnInit {
   listsData: Array<any> = []
   columnDefs: Array<any> = [];
   cols: any[];
-  dataImport: DataImport = null
+  dataImport: DataImport = null;
+  gridApi: any = null
   constructor(
     private spinner: NgxSpinnerService,
     private apiService: ApiHrmService,
@@ -56,8 +59,10 @@ export class ImportHoSoNhanSuComponent implements OnInit {
       this.heightGrid = HideFullScreen()
     }
   }
-
+  isImport = false;
+  dataImported = []
   onSelectFile(event) {
+    this.isImport = false;
     if (event.currentFiles.length > 0) {
       this.spinner.show();
       this.isShowUpload = false;
@@ -66,7 +71,7 @@ export class ImportHoSoNhanSuComponent implements OnInit {
       this.apiService.employeeImport(fomrData)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {
-        this.dataSet(results)
+        this.dataSet(results);
       })
     }
   }
@@ -116,6 +121,8 @@ export class ImportHoSoNhanSuComponent implements OnInit {
       }
       this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
       this.spinner.hide();
+
+      this.isImport = true;
     } else {
       this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
       this.spinner.hide();
@@ -172,8 +179,35 @@ export class ImportHoSoNhanSuComponent implements OnInit {
   }
 
   onFirstDataRendered(params) {
-    params.api.sizeColumnsToFit()
+    params.api.sizeColumnsToFit();
+    this.gridApi = params.api;
+    let rowData = [];
+    if(this.gridApi) {
+      this.gridApi.forEachNode(node => rowData.push(node.data));
+    }
+    this.dataImported = rowData;
   }
 
+  exportDraft() {
+    this.spinner.show();
+    const query = {
+      accept: true,
+      imports: this.dataImported
+    }
+    this.apiService.setEmployeeExportDraft(query).subscribe(
+      (results: any) => {
+
+        if (results.type === 'application/json') {
+          this.spinner.hide();
+        } else if (results.type === 'application/octet-stream') {
+          var blob = new Blob([results], { type: 'application/msword' });
+          FileSaver.saveAs(blob, `Danh sách nhân sự đã import` + ".xlsx");
+          this.spinner.hide();
+        }
+      },
+      error => {
+        this.spinner.hide();
+      });
+  }
 
 }
