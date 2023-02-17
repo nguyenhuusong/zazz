@@ -150,7 +150,7 @@ const routes: Routes = [
       urlDad: '/cai-dat/cai-dat-cong-ty',
       api: 'setCompanyImport',
       apiAccept: 'setCompanyAccept',
-      fileDoc: ''
+      fileDoc: 'file_mau_import_danh_muc_cong_ty.xls'
     },
   },
   {
@@ -207,7 +207,7 @@ const routes: Routes = [
       urlDad: '/cai-dat/ly-do-nghi',
       api: 'setLeaveReasonImport',
       apiAccept: 'setLeaveReasonAccept',
-      fileDoc: ''
+      fileDoc: 'file_mau_import_danh_muc_ly_do_nghi.xls'
     },
   },
 
@@ -255,7 +255,7 @@ const routes: Routes = [
       urlDad: '/cai-dat/chuc-vu',
       api: 'setPositionImport',
       apiAccept: 'setPositionAccept',
-      fileDoc: ''
+      fileDoc: 'file_mau_import_danh_muc_chuc_vu.xls'
     },
   },
   {
@@ -293,7 +293,7 @@ const routes: Routes = [
       urlDad: '/cai-dat/chuc-danh',
       api: 'setPositionTitleImport',
       apiAccept: 'setPositionTitleAccept',
-      fileDoc: ''
+      fileDoc: 'file_mau_import_danh_muc_chuc_danh.xls'
     },
   },
   {
@@ -332,7 +332,7 @@ const routes: Routes = [
       urlDad: '/cai-dat/noi-lam-viec',
       api: 'setWorkplaceImport',
       apiAccept: 'setWorkplaceAccept',
-      fileDoc: ''
+      fileDoc: 'file_mau_import_danh_muc_noi_lam_viec.xls'
     },
   },
   {
@@ -407,7 +407,7 @@ const routes: Routes = [
       urlDad: '/cai-dat/lich-lam-viec',
       api: 'setWorktimeImport',
       apiAccept: 'setWorktimeAccept',
-      fileDoc: ''
+      fileDoc: 'file_mau_import_danh_muc_lich_lam_viec.xls'
     },
   },
   {
@@ -562,7 +562,7 @@ const routes: Routes = [
       urlDad: '/cai-dat/thiet-lap-wifi',
       api: 'setTimekeepingWifiImport',
       apiAccept: 'setTimekeepingWifiAccept',
-      fileDoc: ''
+      fileDoc: 'file_mau_import_thiet_lap_wifi.xls'
     },
   },
   {

@@ -44,8 +44,6 @@
                     &nbsp; Tiện ích
                 </p-button>
 
-                <p-menu [model]="itemsToolOfGrid" [appendTo]="'body'" [popup]="true"
-                styleClass="menu-option-right" #menuButton></p-menu>
 
                 <p-button styleClass="p-button-sm height-56" (click)="addLichLamViec()"
                 [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetWorktimePage.url, action: ACTIONS.ADD}"
@@ -96,3 +94,6 @@
         <app-form-filter *ngIf="listViewsFilter.length > 0" [listFields]="listViewsFilter" [detailInfoFilter]="detailInfoFilter" [buttonsFilters] ="optionsButonFilter" (callback)="filterLoad($event)" (close)="close($event);op.hide()"></app-form-filter>
     </ng-template>
 </p-overlayPanel>
+
+<p-menu [model]="itemsToolOfGrid" [appendTo]="'body'" [popup]="true"
+styleClass="menu-option-right" #menuButton></p-menu>

@@ -41,7 +41,20 @@ const routes: Routes = [
       urlDad: '/luong-thue/tinh-luong',
       api: 'setPayrollBaseImport',
       apiAccept: 'setPayrollBaseAccept',
-      fileDoc: ''
+      fileDoc: 'file_mau_import_cap_bac_luong.xls'
+    },
+  },
+  {
+    path: 'tinh-luong/import-thanh-phan-luong',
+    component: ImportExcelComponent,
+    data: {
+      title: 'Import Thành phần lương',
+      url: 'import-cap-thanh-phan-luong',
+      titleDad : 'Danh sách tính lương',
+      urlDad: '/luong-thue/tinh-luong',
+      api: 'setPayrollBaseImport',
+      apiAccept: 'setPayrollBaseAccept',
+      fileDoc: 'file_mau_import_thanh_phan_luong.xls'
     },
   },
   {

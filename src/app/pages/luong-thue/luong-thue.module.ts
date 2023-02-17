@@ -60,6 +60,7 @@ import { StepsModule } from 'primeng/steps';
 import { DividerModule } from 'primeng/divider';
 import { ImportCapBacLuongComponent } from 'src/app/components/luong-thue/tinh-luong/import-cap-bac-luong/import-cap-bac-luong.component';
 import { ImportExcelModule } from 'src/app/common/import-excel/import-excel.module';
+import { ImportThanhPhanLuongComponent } from 'src/app/components/luong-thue/tinh-luong/import-thanh-phan-luong/import-thanh-phan-luong.component';
 
 @NgModule({
   imports: [
@@ -129,7 +130,8 @@ import { ImportExcelModule } from 'src/app/common/import-excel/import-excel.modu
     ChiTietTabThietLapThamSoComponent,
     ChiTietTabCapBacLuongComponent,
     MucLuongComponent,
-    ImportCapBacLuongComponent
+    ImportCapBacLuongComponent,
+    ImportThanhPhanLuongComponent
 
   ],
   exports: [
