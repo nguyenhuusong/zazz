@@ -944,7 +944,6 @@ export class CaiDatToChucComponent implements OnInit {
     const queryParams = queryString.stringify(query);
     this.apiService.setOrganizeExport(queryParams).subscribe(
       (results: any) => {
-
         if (results.type === 'application/json') {
           this.spinner.hide();
         } else if (results.type === 'application/octet-stream') {

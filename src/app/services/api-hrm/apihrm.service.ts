@@ -22,6 +22,12 @@ export class ApiHrmService {
       'Content-Type': 'application/json',
     })
   };
+  optionsExport = {
+    headers: new HttpHeaders({
+      Authorization: this.authService.getAuthorizationHeaderValue(),
+    }),
+    responseType: "blob"
+  };
 
   getIdentityCardInfomation(image: File) {
     const options = {
@@ -623,8 +629,13 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v1/organize/GetOrganizePage?` + queryParams, this.options);
   }
 
-  setOrganizeExport(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/organize/SetOrganizeExport?` + queryParams, this.options);
+  setOrganizeExport(queryParams): Observable<Blob> {
+    return this.http.get(`${apiHrmServer}/api/v1/organize/SetOrganizeExport?` + queryParams, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
   }
 
   setOrganizeImport(queryParams): Observable<any> {
@@ -986,8 +997,13 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v2/leavereason/GetLeaveReasonPage?` + queryParams, this.options)
   }
 
-  setLeaveReasonExport(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v2/leavereason/SetLeaveReasonExport?` + queryParams, this.options)
+  setLeaveReasonExport(queryParams): Observable<Blob> {
+    return this.http.get(`${apiHrmServer}/api/v2/leavereason/SetLeaveReasonExport?` + queryParams, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    })
   }
 
   setLeaveReasonImport(params): Observable<any> {
@@ -999,8 +1015,13 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v2/leavereason/SetLeaveReasonImport`, params, customOptions);
   }
 
-  setLeaveReasonExportDraft(params): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v2/leavereason/SetLeaveReasonExportDraft`, params, this.options);
+  setLeaveReasonExportDraft(params): Observable<Blob> {
+    return this.http.post(`${apiHrmServer}/api/v2/leavereason/SetLeaveReasonExportDraft`, params, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
   }
 
   getLeaveReasonFilter(): Observable<any> {
@@ -1265,8 +1286,13 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v2/compay/GetComAuthorizeInfo?` + queryParams, this.options)
   }
 
-  setCompanyExport(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v2/compay/SetCompanyExport?` + queryParams, this.options)
+  setCompanyExport(queryParams): Observable<Blob> {
+    return this.http.get(`${apiHrmServer}/api/v2/compay/SetCompanyExport?` + queryParams, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    })
   }
 
   setComAuthorizeInfo(params): Observable<any> {
@@ -1282,8 +1308,13 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v2/compay/SetCompanyImport`, params, customOptions);
   }
 
-  setCompanyExportDraft(params): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v2/compay/SetCompanyExportDraft`, params, this.options);
+  setCompanyExportDraft(params): Observable<Blob> {
+    return this.http.post(`${apiHrmServer}/api/v2/compay/SetCompanyExportDraft`, params, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
   }
 
   setCompanyAccept(params): Observable<any> {
@@ -1315,8 +1346,13 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v2/contracttype/SetContractTypeInfo`, params, this.options)
   }
 
-  setContractTypeExport(params): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v2/contracttype/SetContractTypeExport?` + params, this.options)
+  setContractTypeExport(params): Observable<Blob> {
+    return this.http.get(`${apiHrmServer}/api/v2/contracttype/SetContractTypeExport?` + params, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    })
   }
 
   // uploadFileContract(params): Observable<any> {
@@ -1670,8 +1706,13 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v2/terminate/SetTerminateImport`, queryParams, customOptions)
   }
 
-  setTerminateExportDraft(queryParams): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v2/terminate/SetTerminateExportDraft`, queryParams, this.options)
+  setTerminateExportDraft(queryParams): Observable<Blob> {
+    return this.http.post(`${apiHrmServer}/api/v2/terminate/SetTerminateExportDraft`, queryParams, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    })
   }
 
   // Holiday
@@ -1721,8 +1762,13 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v2/contract/Import`, data, customOptions);
   }
 
-  setContractExportDraft(data): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v2/contract/SetContractExportDraft`, data, this.options);
+  setContractExportDraft(data): Observable<Blob> {
+    return this.http.post(`${apiHrmServer}/api/v2/contract/SetContractExportDraft`, data, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
   }
 
   setListContractStatus(params): Observable<any> {
@@ -1818,8 +1864,13 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v1/timekeepingwifi/GetTimekeepingWifiInfo?${queryParams}`, this.options)
   }
 
-  setTimekeepingWifiExport(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/timekeepingwifi/SetTimekeepingWifiExport?${queryParams}`, this.options)
+  setTimekeepingWifiExport(queryParams): Observable<Blob> {
+    return this.http.get(`${apiHrmServer}/api/v1/timekeepingwifi/SetTimekeepingWifiExport?${queryParams}`, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    })
   }
 
   setTimekeepingWifiInfo(data): Observable<any> {
@@ -1835,8 +1886,13 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v1/timekeepingwifi/SetTimekeepingWifiImport`, params, customOptions);
   }
 
-  setTimekeepingWifiExportDraft(params): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v1/timekeepingwifi/SetTimekeepingWifiExportDraft`, params, this.options);
+  setTimekeepingWifiExportDraft(params): Observable<Blob> {
+    return this.http.post(`${apiHrmServer}/api/v1/timekeepingwifi/SetTimekeepingWifiExportDraft`, params, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
   }
 
   delTimekeepingWifiInfo(queryParams): Observable<any> {
@@ -1906,8 +1962,13 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v1/salaryInfo/SetSalaryInfoImport`, data , customOptions)
   }
 
-  setSalaryInfoExportDraft(data): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v1/salaryInfo/SetSalaryInfoExportDraft`, data , this.options)
+  setSalaryInfoExportDraft(data): Observable<Blob> {
+    return this.http.post(`${apiHrmServer}/api/v1/salaryInfo/SetSalaryInfoExportDraft`, data , {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    })
   }
 
   setSalaryInfoAccept(data): Observable<any> {
@@ -2140,16 +2201,26 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v1/payrollbase/SetPayrollBaseImport`, data , customOptions);
   } 
 
-  setPayrollBaseExportDraft(data): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v1/payrollbase/SetPayrollBaseExportDraft`, data , this.options);
+  setPayrollBaseExportDraft(data): Observable<Blob> {
+    return this.http.post(`${apiHrmServer}/api/v1/payrollbase/SetPayrollBaseExportDraft`, data , {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
   } 
 
   recruitAgain(query, data = null): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/employee/RecruitAgain?` + query, data , this.options)
   } 
 
-  setPayrollBaseExport(query): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/payrollbase/SetPayrollBaseExport?` + query, this.options)
+  setPayrollBaseExport(query): Observable<Blob> {
+    return this.http.get(`${apiHrmServer}/api/v1/payrollbase/SetPayrollBaseExport?` + query, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    })
   } 
 
   getUserOrganizeRole(): Observable<any> {
@@ -2500,8 +2571,13 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v1/jobs/GetJobTitles`, this.options);
   }
   
-  setJobExport (queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/jobs/SetJobExport?` + queryParams, this.options);
+  setJobExport (queryParams): Observable<Blob> {
+    return this.http.get(`${apiHrmServer}/api/v1/jobs/SetJobExport?` + queryParams, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
   }
   
   delJobInfo(queryParams): Observable<any> {
@@ -2521,8 +2597,13 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v1/jobs/SetJobImport`, queryParams, customOptions);
   }
 
-  setJobExportDraft(queryParams): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v1/jobs/SetJobExportDraft`, queryParams, this.options);
+  setJobExportDraft(queryParams): Observable<Blob> {
+    return this.http.post(`${apiHrmServer}/api/v1/jobs/SetJobExportDraft`, queryParams, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
   }
 
   // GetOrgLevelFilter
@@ -2574,8 +2655,13 @@ export class ApiHrmService {
     return this.http.put<any>(`${apiHrmServer}/api/v1/organize/SetOrgJob`, queryParams, this.options);
   }
   
-  setOrganizeExportDraft(data): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v1/organize/SetOrganizeExportDraft`, data, this.options);
+  setOrganizeExportDraft(data): Observable<Blob> {
+    return this.http.post(`${apiHrmServer}/api/v1/organize/SetOrganizeExportDraft`, data,  {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
   }
 
   //Customer
@@ -2717,12 +2803,22 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v2/position/SetPositionImport`, data, customOptions);
   }
 
-  setPositionExportDraft(data): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v2/position/SetPositionExportDraft`, data, this.options);
+  setPositionExportDraft(data): Observable<Blob> {
+    return this.http.post(`${apiHrmServer}/api/v2/position/SetPositionExportDraft`, data, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
   }
 
-  setPositionTitleExportDraft(data): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v2/position/SetPositionTitleExportDraft`, data, this.options);
+  setPositionTitleExportDraft(data): Observable<Blob> {
+    return this.http.post(`${apiHrmServer}/api/v2/position/SetPositionTitleExportDraft`, data, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
   }
 
   setWorkplaceImport(data): Observable<any> {
@@ -2734,8 +2830,13 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v2/workplace/SetWorkplaceImport`, data, customOptions);
   }
 
-  setWorkplaceExportDraft(data): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v2/workplace/SetWorkplaceExportDraft`, data, this.options);
+  setWorkplaceExportDraft(data): Observable<Blob> {
+    return this.http.post(`${apiHrmServer}/api/v2/workplace/SetWorkplaceExportDraft`, data,  {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
   }
 
   setWorktimeImport(data): Observable<any> {
@@ -2747,25 +2848,50 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v2/worktime/SetWorktimeImport`, data, customOptions);
   }
 
-  setWorktimeExportDraft(queryParams): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v2/worktime/SetWorktimeExportDraft` , queryParams, this.options)
+  setWorktimeExportDraft(queryParams): Observable<Blob> {
+    return this.http.post(`${apiHrmServer}/api/v2/worktime/SetWorktimeExportDraft` , queryParams, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    })
   }
 
 
-  setPositionTitleExport(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v2/position/SetPositionTitleExport?` + queryParams, this.options)
+  setPositionTitleExport(queryParams): Observable<Blob> {
+    return this.http.get(`${apiHrmServer}/api/v2/position/SetPositionTitleExport?` + queryParams, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    })
   }
 
-  setPositionExport(queryParams): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v2/position/SetPositionExport`, queryParams, this.options)
+  setPositionExport(queryParams): Observable<Blob> {
+    return this.http.post(`${apiHrmServer}/api/v2/position/SetPositionExport`, queryParams, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    })
   }
 
-  setWorkplaceExport(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v2/workplace/SetWorkplaceExport?` + queryParams, this.options)
+  setWorkplaceExport(queryParams): Observable<Blob> {
+    return this.http.get(`${apiHrmServer}/api/v2/workplace/SetWorkplaceExport?` + queryParams, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    })
   }
 
-  setWorktimeExport(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v2/worktime/SetWorktimeExport?` + queryParams, this.options)
+  setWorktimeExport(queryParams): Observable<Blob> {
+    return this.http.get(`${apiHrmServer}/api/v2/worktime/SetWorktimeExport?` + queryParams,{
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    })
   }
 
   setJobAccept(queryParams): Observable<any> {
@@ -2796,10 +2922,13 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v2/position/SetPositionAccept`,  queryParams, this.options);
   }
 
-  setEmployeeExportDraft(data): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v2/employee/SetEmployeeExportDraft`, data, this.options);
+  setEmployeeExportDraft(data): Observable<Blob> {
+    return this.http.post(`${apiHrmServer}/api/v2/employee/SetEmployeeExportDraft`, data, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
   }
-
-
 
 }
