@@ -154,7 +154,7 @@ const routes: Routes = [
       api: 'setJobImport',
       apiAccept: 'setJobAccept',
       fileDoc: 'file_mau_import_danh_muc_chuyen_mon.xls',
-      apiExport: ''
+      apiExport: 'setJobExportDraft'
     },
   },
   {

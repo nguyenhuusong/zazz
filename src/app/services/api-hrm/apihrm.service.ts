@@ -999,6 +999,10 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v2/leavereason/SetLeaveReasonImport`, params, customOptions);
   }
 
+  setLeaveReasonExportDraft(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/leavereason/SetLeaveReasonExportDraft`, params, this.options);
+  }
+
   getLeaveReasonFilter(): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/leavereason/GetLeaveReasonFilter`, this.options)
   }
@@ -1276,6 +1280,10 @@ export class ApiHrmService {
       })
     };
     return this.http.post<any>(`${apiHrmServer}/api/v2/compay/SetCompanyImport`, params, customOptions);
+  }
+
+  setCompanyExportDraft(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/compay/SetCompanyExportDraft`, params, this.options);
   }
 
   setCompanyAccept(params): Observable<any> {
@@ -1660,7 +1668,10 @@ export class ApiHrmService {
       })
     };
     return this.http.post<any>(`${apiHrmServer}/api/v2/terminate/SetTerminateImport`, queryParams, customOptions)
+  }
 
+  setTerminateExportDraft(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/terminate/SetTerminateExportDraft`, queryParams, this.options)
   }
 
   // Holiday
@@ -1708,6 +1719,10 @@ export class ApiHrmService {
       })
     };
     return this.http.post<any>(`${apiHrmServer}/api/v2/contract/Import`, data, customOptions);
+  }
+
+  setContractExportDraft(data): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/contract/SetContractExportDraft`, data, this.options);
   }
 
   setListContractStatus(params): Observable<any> {
@@ -1820,6 +1835,10 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v1/timekeepingwifi/SetTimekeepingWifiImport`, params, customOptions);
   }
 
+  setTimekeepingWifiExportDraft(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/timekeepingwifi/SetTimekeepingWifiExportDraft`, params, this.options);
+  }
+
   delTimekeepingWifiInfo(queryParams): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v1/timekeepingwifi/DelTimekeepingWifiInfo?${queryParams}`, this.options)
   }
@@ -1885,6 +1904,10 @@ export class ApiHrmService {
       })
     };
     return this.http.post<any>(`${apiHrmServer}/api/v1/salaryInfo/SetSalaryInfoImport`, data , customOptions)
+  }
+
+  setSalaryInfoExportDraft(data): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/salaryInfo/SetSalaryInfoExportDraft`, data , this.options)
   }
 
   setSalaryInfoAccept(data): Observable<any> {
@@ -2115,7 +2138,10 @@ export class ApiHrmService {
       })
     };
     return this.http.post<any>(`${apiHrmServer}/api/v1/payrollbase/SetPayrollBaseImport`, data , customOptions);
+  } 
 
+  setPayrollBaseExportDraft(data): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/payrollbase/SetPayrollBaseExportDraft`, data , this.options);
   } 
 
   recruitAgain(query, data = null): Observable<any> {
@@ -2495,6 +2521,10 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v1/jobs/SetJobImport`, queryParams, customOptions);
   }
 
+  setJobExportDraft(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/jobs/SetJobExportDraft`, queryParams, this.options);
+  }
+
   // GetOrgLevelFilter
   getOrgLevelFilter(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/organize/GetOrgLevelFilter?` + queryParams, this.options);
@@ -2687,6 +2717,14 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v2/position/SetPositionImport`, data, customOptions);
   }
 
+  setPositionExportDraft(data): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/position/SetPositionExportDraft`, data, this.options);
+  }
+
+  setPositionTitleExportDraft(data): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/position/SetPositionTitleExportDraft`, data, this.options);
+  }
+
   setWorkplaceImport(data): Observable<any> {
     const customOptions = {
       headers: new HttpHeaders({
@@ -2694,6 +2732,10 @@ export class ApiHrmService {
       })
     };
     return this.http.post<any>(`${apiHrmServer}/api/v2/workplace/SetWorkplaceImport`, data, customOptions);
+  }
+
+  setWorkplaceExportDraft(data): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/workplace/SetWorkplaceExportDraft`, data, this.options);
   }
 
   setWorktimeImport(data): Observable<any> {
@@ -2704,6 +2746,11 @@ export class ApiHrmService {
     };
     return this.http.post<any>(`${apiHrmServer}/api/v2/worktime/SetWorktimeImport`, data, customOptions);
   }
+
+  setWorktimeExportDraft(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/worktime/SetWorktimeExportDraft` , queryParams, this.options)
+  }
+
 
   setPositionTitleExport(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/position/SetPositionTitleExport?` + queryParams, this.options)

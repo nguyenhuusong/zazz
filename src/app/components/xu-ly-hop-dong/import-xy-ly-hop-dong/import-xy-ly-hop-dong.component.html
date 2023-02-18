@@ -27,6 +27,7 @@
                     *ngIf="isShowUpload" 
                     [showCancelButton]="true" (onSelect)="onSelectFile($event)"></p-fileUpload>
                     <p-button styleClass="p-button-sm p-button-secondary" (click)="back()" icon="pi pi-times" label="Quay lại" *ngIf="isShowUpload"></p-button>
+                    <p-button *ngIf="isImport" styleClass="p-button-sm" (click)="exportDraft()" icon="pi pi-download" label="Export" ></p-button>
                     <p-button styleClass="p-button-sm" (click)="checkData(false)" icon="pi pi-check" label="Kiểm tra" *ngIf="!isShowUpload"></p-button>
                     <p-button styleClass="p-button-sm" (click)="checkData(true)" icon="pi pi-check" label="Xác nhận" *ngIf="dataImport?.accept"></p-button>
                     <p-button styleClass="p-button-sm p-button-secondary" (click)="refetchFile()" icon="pi pi-times" label="làm mới" *ngIf="!isShowUpload"></p-button>

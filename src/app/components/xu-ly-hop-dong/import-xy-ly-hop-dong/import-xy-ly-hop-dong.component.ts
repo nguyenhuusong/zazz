@@ -6,6 +6,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { AgGridFn } from 'src/app/common/function-common/common';
+import * as FileSaver from 'file-saver';
 interface DataImport {
   valid: boolean,
   messages: string,
@@ -59,6 +60,7 @@ export class ImportXyLyHopDongComponent implements OnInit {
 
   onSelectFile(event) {
     if (event.currentFiles.length > 0) {
+      this.isImport = false;
       this.spinner.show();
       this.isShowUpload = false;
       let fomrData = new FormData();
@@ -111,6 +113,7 @@ export class ImportXyLyHopDongComponent implements OnInit {
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
         // this.onInitAgGrid();
+        this.isImport = true;
         this.listsData = results.data.dataList;
         if(!results.data.valid) {
           this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.data.messages });
@@ -172,6 +175,29 @@ export class ImportXyLyHopDongComponent implements OnInit {
     anchor.download = "file_mau_import_loai_hop_dong.xlsx";
     anchor.href = url;
     anchor.click();
+  }
+
+  isImport = false;
+  exportDraft() {
+    this.spinner.show();
+    const query = {
+      accept: true,
+      imports: this.listsData
+    }
+    this.apiService.setContractExportDraft(query).subscribe(
+      (results: any) => {
+
+        if (results.type === 'application/json') {
+          this.spinner.hide();
+        } else if (results.type === 'application/octet-stream') {
+          var blob = new Blob([results], { type: 'application/msword' });
+          FileSaver.saveAs(blob, `Danh sách xử lý hợp đồng import` + ".xlsx");
+          this.spinner.hide();
+        }
+      },
+      error => {
+        this.spinner.hide();
+      });
   }
 
 

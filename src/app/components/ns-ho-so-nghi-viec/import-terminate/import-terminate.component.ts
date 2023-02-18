@@ -6,6 +6,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { AgGridFn } from 'src/app/common/function-common/common';
+import * as FileSaver from 'file-saver';
 interface DataImport {
   valid: boolean,
   messages: string,
@@ -58,6 +59,7 @@ export class ImportTerminateComponent implements OnInit {
   }
 
   onSelectFile(event) {
+    this.isImport = false;
     if (event.currentFiles.length > 0) {
       this.spinner.show();
       this.isShowUpload = false;
@@ -110,6 +112,7 @@ export class ImportTerminateComponent implements OnInit {
         const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + 80;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
+        this.isImport = true;
         // this.onInitAgGrid();
         this.listsData = results.data.dataList;
         if(!results.data.valid) {
@@ -174,6 +177,28 @@ export class ImportTerminateComponent implements OnInit {
 
   onFirstDataRendered(params) {
     params.api.sizeColumnsToFit()
+  }
+  isImport = false;
+  exportDraft() {
+    this.spinner.show();
+    const query = {
+      accept: true,
+      imports: this.listsData
+    }
+    this.apiService.setTerminateExportDraft(query).subscribe(
+      (results: any) => {
+
+        if (results.type === 'application/json') {
+          this.spinner.hide();
+        } else if (results.type === 'application/octet-stream') {
+          var blob = new Blob([results], { type: 'application/msword' });
+          FileSaver.saveAs(blob, `Danh sách hồ sơ nghỉ việc import` + ".xlsx");
+          this.spinner.hide();
+        }
+      },
+      error => {
+        this.spinner.hide();
+      });
   }
 
 
