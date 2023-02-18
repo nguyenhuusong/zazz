@@ -2543,6 +2543,10 @@ export class ApiHrmService {
   setOrgJob(queryParams): Observable<any> {
     return this.http.put<any>(`${apiHrmServer}/api/v1/organize/SetOrgJob`, queryParams, this.options);
   }
+  
+  setOrganizeExportDraft(data): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/organize/SetOrganizeExportDraft`, data, this.options);
+  }
 
   //Customer
 
@@ -2746,18 +2750,9 @@ export class ApiHrmService {
   }
 
   setEmployeeExportDraft(data): Observable<any> {
-
-    // const customOptions = {
-    //   headers: new HttpHeaders({
-    //     Authorization: this.authService.getAuthorizationHeaderValue()
-    //   }),responseType: "blob"
-    // };
-
     return this.http.post<any>(`${apiHrmServer}/api/v2/employee/SetEmployeeExportDraft`, data, this.options);
-
-
-    // return this.http.post<any>(`${apiHrmServer}/api/v2/employee/SetEmployeeExportDraft`, queryParams, this.options)
   }
+
 
 
 }

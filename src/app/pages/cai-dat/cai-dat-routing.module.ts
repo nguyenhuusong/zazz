@@ -118,7 +118,8 @@ const routes: Routes = [
       urlDad: '/cai-dat/cai-dat-to-chuc',
       api: 'setOrganizeImport',
       apiAccept: 'setOrganizeAccept',
-      fileDoc: 'file_mau_import_danh_muc_to_chuc.xlsx'
+      fileDoc: 'file_mau_import_danh_muc_to_chuc.xlsx',
+      apiExport: 'setOrganizeExportDraft'
     },
   },
   {
@@ -150,7 +151,8 @@ const routes: Routes = [
       urlDad: '/cai-dat/cai-dat-cong-ty',
       api: 'setCompanyImport',
       apiAccept: 'setCompanyAccept',
-      fileDoc: 'file_mau_import_danh_muc_cong_ty.xls'
+      fileDoc: 'file_mau_import_danh_muc_cong_ty.xls',
+      apiExport: ''
     },
   },
   {
@@ -207,7 +209,8 @@ const routes: Routes = [
       urlDad: '/cai-dat/ly-do-nghi',
       api: 'setLeaveReasonImport',
       apiAccept: 'setLeaveReasonAccept',
-      fileDoc: 'file_mau_import_danh_muc_ly_do_nghi.xls'
+      fileDoc: 'file_mau_import_danh_muc_ly_do_nghi.xls',
+      apiExport: ''
     },
   },
 
@@ -255,7 +258,8 @@ const routes: Routes = [
       urlDad: '/cai-dat/chuc-vu',
       api: 'setPositionImport',
       apiAccept: 'setPositionAccept',
-      fileDoc: 'file_mau_import_danh_muc_chuc_vu.xls'
+      fileDoc: 'file_mau_import_danh_muc_chuc_vu.xls',
+      apiExport: ''
     },
   },
   {
@@ -293,7 +297,8 @@ const routes: Routes = [
       urlDad: '/cai-dat/chuc-danh',
       api: 'setPositionTitleImport',
       apiAccept: 'setPositionTitleAccept',
-      fileDoc: 'file_mau_import_danh_muc_chuc_danh.xls'
+      fileDoc: 'file_mau_import_danh_muc_chuc_danh.xls',
+      apiExport: ''
     },
   },
   {
@@ -332,7 +337,8 @@ const routes: Routes = [
       urlDad: '/cai-dat/noi-lam-viec',
       api: 'setWorkplaceImport',
       apiAccept: 'setWorkplaceAccept',
-      fileDoc: 'file_mau_import_danh_muc_noi_lam_viec.xls'
+      fileDoc: 'file_mau_import_danh_muc_noi_lam_viec.xls',
+      apiExport: ''
     },
   },
   {
@@ -407,7 +413,8 @@ const routes: Routes = [
       urlDad: '/cai-dat/lich-lam-viec',
       api: 'setWorktimeImport',
       apiAccept: 'setWorktimeAccept',
-      fileDoc: 'file_mau_import_danh_muc_lich_lam_viec.xls'
+      fileDoc: 'file_mau_import_danh_muc_lich_lam_viec.xls',
+      apiExport: ''
     },
   },
   {
@@ -464,7 +471,8 @@ const routes: Routes = [
       urlDad: '/cai-dat/quan-ly-hop-dong',
       api: 'setLeaveReasonImport',
       apiAccept: 'setLeaveReasonAccept',
-      fileDoc: ''
+      fileDoc: '',
+      apiExport: ''
     },
   },
 
@@ -562,7 +570,8 @@ const routes: Routes = [
       urlDad: '/cai-dat/thiet-lap-wifi',
       api: 'setTimekeepingWifiImport',
       apiAccept: 'setTimekeepingWifiAccept',
-      fileDoc: 'file_mau_import_thiet_lap_wifi.xls'
+      fileDoc: 'file_mau_import_thiet_lap_wifi.xls',
+      apiExport: ''
     },
   },
   {

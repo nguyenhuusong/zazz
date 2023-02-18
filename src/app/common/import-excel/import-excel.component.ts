@@ -7,6 +7,8 @@ import { Subject, takeUntil } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { AgGridFn } from 'src/app/common/function-common/common';
+import * as FileSaver from 'file-saver';
+import * as queryString from 'querystring';
 interface DataImport {
   valid: boolean,
   messages: string,
@@ -43,7 +45,8 @@ export class ImportExcelComponent implements OnInit {
   // urlDad: '/cai-dat/chuc-danh',
   // api: 'setPositionTitleImport',
   // apiAccept: 'setPositionTitleAccept',
-  // fileDoc: ''
+  // fileDoc: '',
+  // apiExport: ''
   constructor(
     private spinner: NgxSpinnerService,
     private apiService: ApiHrmService,
@@ -72,9 +75,11 @@ export class ImportExcelComponent implements OnInit {
       this.heightGrid = HideFullScreen()
     }
   }
-
+  isImport = false;
   onSelectFile(event) {
+    this.isImport = false;
     if (event.currentFiles.length > 0) {
+      
       this.spinner.show();
       this.isShowUpload = false;
       let fomrData = new FormData();
@@ -126,6 +131,7 @@ export class ImportExcelComponent implements OnInit {
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
         // this.onInitAgGrid();
+        this.isImport = true;
         this.listsData = results.data.dataList;
         if(!results.data.valid) {
           this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.data.messages });
@@ -189,6 +195,29 @@ export class ImportExcelComponent implements OnInit {
 
   onFirstDataRendered(params) {
     params.api.sizeColumnsToFit()
+  }
+
+  exportDraft() {
+    console.log(JSON.stringify(this.listsData))
+    this.spinner.show();
+    const params = {
+      accept: true,
+      imports: this.listsData
+    }
+    this.apiService[this.dataRouter.apiExport](params).subscribe(
+      (results: any) => {
+
+        if (results.type === 'application/json') {
+          this.spinner.hide();
+        } else if (results.type === 'application/octet-stream') {
+          var blob = new Blob([results], { type: 'application/msword' });
+          FileSaver.saveAs(blob, `Danh sách ${this.dataRouter.title}` + ".xlsx");
+          this.spinner.hide();
+        }
+      },
+      error => {
+        this.spinner.hide();
+      });
   }
 
 }

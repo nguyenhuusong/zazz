@@ -18,6 +18,7 @@
             <div class="col-item">
                 <div class="d-flex align-items-center gap-12">
                     <p-button type="button" class="p-button-sm " (click)="toggleGrid()" icon="pi pi-th-large" pTooltip="{{isFullScreen ? 'Ẩn toàn màn hình' : 'Hiển thị toàn màn hình'}}" tooltipPosition="top"></p-button>
+                    <p-button *ngIf="isImport" styleClass="p-button-sm" (click)="exportDraft()" icon="pi pi-download" label="Export" ></p-button>
                     <p-button styleClass="p-button-sm" (click)="getTemfileImport()" icon="pi pi-download" label="Tải file mẫu" *ngIf="isShowUpload"></p-button>
                     <p-fileUpload mode="basic" 
                     name="demo[]" 
