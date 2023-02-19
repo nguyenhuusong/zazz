@@ -34,10 +34,27 @@ export class TabNgayCongComponent implements OnInit {
  
   listDataNew = [];
   ngOnInit(): void {
-    this.listsData = cloneDeep(this.detailInfo.monthdays);
-    this.listDataNew =this.listsData;
-    this.columnDefs = [...this.agGridFnCustomer(this.detailInfo.gridflexs1 || [])]
+    this.getSalaryDayWorkingPage();
   }
+  
+  getSalaryDayWorkingPage() {
+    this.spinner.show();
+    this.columnDefs = [];
+    const queryParams = queryString.stringify({ recordId: this.recordId, offSet: 0, pageSize: 10000 });
+    this.apiService.getSalaryDayWorkingPage(queryParams).subscribe(repo => {
+      if (repo.status === 'success') {
+        if (repo.data.dataList.gridKey) {
+          this.gridKey = repo.data.dataList.gridKey;
+        }
+        this.spinner.hide();
+        this.listsData = repo.data.dataList.data || [];
+        this.agGridFnCustomer(repo.data.gridflexs);
+      } else {
+        this.spinner.hide();
+      }
+    })
+  }
+
   displaySetting = false;
   CauHinh() {
     this.displaySetting = true;
