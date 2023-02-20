@@ -43,7 +43,7 @@ export class ChiTietThueBaoHiemComponent implements OnInit, OnDestroy {
   }
   modelEdit = {
     empId: null,
-    isEdit: true
+    edit_is: true
   }
   titlePage = ''
   handleParams() {
