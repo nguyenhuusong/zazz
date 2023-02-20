@@ -289,7 +289,7 @@ export class QuanLyHopDongComponent implements OnInit {
     ];
     this.menuItemUtil = [
       {
-        label: 'Import lý do',
+        label: 'Import hợp đồng mẫu',
         icon: 'pi pi-refresh',
         command: () => {
           this.ImportReason();

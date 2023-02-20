@@ -139,7 +139,7 @@ const routes: Routes = [
     path: 'chuyen-mon',
     component: LinhVucTuyenDungComponent,
     data: {
-      title: 'Danh sách Chuyên môn tuyển dụng',
+      title: 'Danh sách chuyên môn tuyển dụng',
       url: 'chuyen-mon',
     },
   },
@@ -149,7 +149,7 @@ const routes: Routes = [
     data: {
       title: 'Import chuyên môn',
       url: 'import-chuyen-mon',
-      titleDad : 'Danh sách Chuyên môn tuyển dụng',
+      titleDad : 'Danh sách chuyên môn tuyển dụng',
       urlDad: '/tuyen-dung/chuyen-mon',
       api: 'setJobImport',
       apiAccept: 'setJobAccept',
@@ -161,7 +161,7 @@ const routes: Routes = [
     path: 'chuyen-mon/them-moi-linh-vuc-tuyen-dung',
     component: ChiTietLinhVucTuyenDungComponent,
     data: {
-      title: 'Thêm mới Chuyên môn tuyển dụng',
+      title: 'Thêm mới chuyên môn tuyển dụng',
       url: 'them-moi-linh-vuc-tuyen-dung',
     },
   },
@@ -169,7 +169,7 @@ const routes: Routes = [
     path: 'chuyen-mon/chi-tiet-linh-vuc-tuyen-dung',
     component: ChiTietLinhVucTuyenDungComponent,
     data: {
-      title: 'Chi tiết Chuyên môn tuyển dụng',
+      title: 'Chi tiết chuyên môn tuyển dụng',
       url: 'chi-tiet-linh-vuc-tuyen-dung',
     },
   },
