@@ -471,7 +471,7 @@ const routes: Routes = [
       urlDad: '/cai-dat/quan-ly-hop-dong',
       api: 'setLeaveReasonImport',
       apiAccept: 'setLeaveReasonAccept',
-      fileDoc: '',
+      fileDoc: 'DM_HopDongMau_Import.xlsx',
       apiExport: 'setLeaveReasonExportDraft'
     },
   },

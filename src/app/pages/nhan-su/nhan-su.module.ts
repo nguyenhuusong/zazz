@@ -119,6 +119,7 @@ import { ImportTerminateComponent } from 'src/app/components/ns-ho-so-nghi-viec/
 import { XuLyQuaTrinhCongTacComponent } from 'src/app/components/xu-ly-qua-trinh-cong-tac/xu-ly-qua-trinh-cong-tac.component';
 import { ChiTietXuLyQtCongTacComponent } from 'src/app/components/xu-ly-qua-trinh-cong-tac/chi-tiet-xu-ly-qt-cong-tac/chi-tiet-xu-ly-qt-cong-tac.component';
 import { ImportQtThayDoiLuongComponent } from 'src/app/components/qt-thay-doi-luong/import-qt-thay-doi-luong/import-qt-thay-doi-luong.component';
+import { ChiTietThueBaoHiemComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/thue-bao-hiem/chi-tiet-thue-bao-hiem/chi-tiet-thue-bao-hiem.component';
 @NgModule({
   imports: [
     MessagesModule,
@@ -245,7 +246,9 @@ import { ImportQtThayDoiLuongComponent } from 'src/app/components/qt-thay-doi-lu
     ImportTerminateComponent,
     XuLyQuaTrinhCongTacComponent,
     ChiTietXuLyQtCongTacComponent,
-    ImportQtThayDoiLuongComponent
+    ImportQtThayDoiLuongComponent,
+    ChiTietThueBaoHiemComponent,
+
 
   ],
   providers: [ ]
