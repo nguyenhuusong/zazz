@@ -176,6 +176,8 @@ export class ImportExcelComponent implements OnInit {
     this.isShowUpload = true;
     this.listsData = [];
     this.columnDefs = [];
+    this.isImport = false;
+    this.dataImport = null;
   }
 
   getTemfileImport() {
@@ -198,7 +200,6 @@ export class ImportExcelComponent implements OnInit {
   }
 
   exportDraft() {
-    console.log(JSON.stringify(this.listsData))
     this.spinner.show();
     const params = {
       accept: true,
