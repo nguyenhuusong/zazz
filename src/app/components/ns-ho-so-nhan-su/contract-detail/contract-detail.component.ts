@@ -221,6 +221,9 @@ export class ContractDetailComponent implements OnInit {
 
       } else {
         this.listViews = cloneDeep(this.cloneListViews);
+        setTimeout(() => {
+          this.stepActivated();
+         }, 100);
         this.messageService.add({
           severity: 'error', summary: 'Thông báo', detail: results.message
         });
@@ -270,8 +273,6 @@ export class ContractDetailComponent implements OnInit {
           severity: 'error', summary: 'Thông báo', detail: results.message
         });
 
-        this.activeIndex = this.detailInfo.flow_st;
-        this.flowCurrent = this.detailInfo.flow_cur;
         setTimeout(() => {
           this.stepActivated();
         }, 100);

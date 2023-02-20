@@ -172,6 +172,9 @@ export class DetailTerminateComponent implements OnInit {
         }
       } else {
         this.listViews = cloneDeep(this.cloneListViews);
+        setTimeout(() => {
+          this.stepActivated();
+         }, 100);
         this.spinner.hide();
         this.messageService.add({
           severity: 'error', summary: 'Thông báo', detail: results.message

@@ -172,6 +172,9 @@ export class ChiTietQTThayDoiLuongComponent implements OnInit {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
       } else {
         this.listViews = cloneDeep(this.cloneListViews);
+        setTimeout(() => {
+          this.stepActivated();
+         }, 100);
         this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
         this.spinner.hide();
       }
@@ -211,6 +214,9 @@ export class ChiTietQTThayDoiLuongComponent implements OnInit {
         }
       } else {
         this.listViews = cloneDeep(this.cloneListViews);
+       setTimeout(() => {
+        this.stepActivated();
+       }, 100);
         this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
         this.spinner.hide();
       }
