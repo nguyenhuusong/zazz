@@ -276,7 +276,7 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Tuyển dụng', },
-      { label: 'Danh sách Chuyên môn tuyển dụng' },
+      { label: 'Danh sách chuyên môn tuyển dụng' },
     ];
 
     this.itemsToolOfGrid = [

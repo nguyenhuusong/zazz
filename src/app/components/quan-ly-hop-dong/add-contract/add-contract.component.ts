@@ -60,8 +60,8 @@ export class AddContractComponent implements OnInit {
   listViewsDetail = [];
   dataDetailInfo = null;
   displayFormEditDetail = false
-  getContractTypeTemplate() {
-    const queryParams = queryString.stringify({ contractTypeId: this.contractTypeId, tempId: this.tempId });
+  getContractTypeTemplate(tempId = null) {
+    const queryParams = queryString.stringify({ contractTypeId: this.contractTypeId, tempId: tempId });
     this.listViewsDetail = [];
     this.apiService.getContractTypeTemplate(queryParams).subscribe(results => {
       if (results.status === 'success') {
@@ -203,7 +203,7 @@ export class AddContractComponent implements OnInit {
   trainId = null;
   editRow({ rowData }) {
     this.tempId = rowData.tempId;
-    this.getContractTypeTemplate();
+    this.getContractTypeTemplate(this.tempId);
   }
 
 

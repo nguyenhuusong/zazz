@@ -606,7 +606,7 @@ export const API_PROFILE  = {
         'url': '/tuyen-dung/ds-tuyen-dung'
     },
     'GetJobPage': {
-        'name': 'Danh sách Chuyên môn tuyển dụng',
+        'name': 'Danh sách chuyên môn tuyển dụng',
         'api': '0eed6cc8-55f4-4285-9f8e-bfc0ba572253',
         'menu': '',
         'url': '/tuyen-dung/chuyen-mon'
