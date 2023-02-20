@@ -65,7 +65,7 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
     this.titlePage = this.activatedRoute.data['_value'].title;
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
-      { label: 'Tuyển dụng' },
+      { label: 'Quan hệ lao động' },
       { label: 'danh sách thai sản', routerLink: '/nhan-su/thai-san' },
       { label: `${this.titlePage}` },
     ];

@@ -120,6 +120,8 @@ import { XuLyQuaTrinhCongTacComponent } from 'src/app/components/xu-ly-qua-trinh
 import { ChiTietXuLyQtCongTacComponent } from 'src/app/components/xu-ly-qua-trinh-cong-tac/chi-tiet-xu-ly-qt-cong-tac/chi-tiet-xu-ly-qt-cong-tac.component';
 import { ImportQtThayDoiLuongComponent } from 'src/app/components/qt-thay-doi-luong/import-qt-thay-doi-luong/import-qt-thay-doi-luong.component';
 import { ChiTietThueBaoHiemComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/thue-bao-hiem/chi-tiet-thue-bao-hiem/chi-tiet-thue-bao-hiem.component';
+import { BienDongBHXHComponent } from 'src/app/components/bien-dong-bhxh/bien-dong-bhxh.component';
+import { ChiTietBienDongBHXHComponent } from 'src/app/components/bien-dong-bhxh/chi-tiet-bien-dong-bhxh/chi-tiet-bien-dong-bhxh.component';
 @NgModule({
   imports: [
     MessagesModule,
@@ -248,7 +250,8 @@ import { ChiTietThueBaoHiemComponent } from 'src/app/components/ns-ho-so-nhan-su
     ChiTietXuLyQtCongTacComponent,
     ImportQtThayDoiLuongComponent,
     ChiTietThueBaoHiemComponent,
-
+    BienDongBHXHComponent,
+    ChiTietBienDongBHXHComponent
 
   ],
   providers: [ ]

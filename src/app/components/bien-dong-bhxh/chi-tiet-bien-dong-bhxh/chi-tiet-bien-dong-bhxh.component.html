@@ -1,0 +1,13 @@
+
+<div class="main-grid product-detail">
+    <section>
+        <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
+    </section>
+   <div class="content">
+    <app-edit-detail *ngIf="listViews.length> 0" 
+        [detail]="detailInfo" [manhinh]="'Edit'" 
+        [optionsButtonsEdit]="optionsButon"  [dataView]="listViews"
+        (callback)="setInfo($event)" (callbackcancel)="quaylai($event)"></app-edit-detail>
+        <p-divider></p-divider>
+   </div>
+</div>

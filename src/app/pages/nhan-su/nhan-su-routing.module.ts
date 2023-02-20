@@ -27,6 +27,9 @@ import { ImportTerminateComponent } from 'src/app/components/ns-ho-so-nghi-viec/
 import { XuLyQuaTrinhCongTacComponent } from 'src/app/components/xu-ly-qua-trinh-cong-tac/xu-ly-qua-trinh-cong-tac.component';
 import { ChiTietXuLyQtCongTacComponent } from 'src/app/components/xu-ly-qua-trinh-cong-tac/chi-tiet-xu-ly-qt-cong-tac/chi-tiet-xu-ly-qt-cong-tac.component';
 import { ImportQtThayDoiLuongComponent } from 'src/app/components/qt-thay-doi-luong/import-qt-thay-doi-luong/import-qt-thay-doi-luong.component';
+import { ChiTietBienDongBHXHComponent } from 'src/app/components/bien-dong-bhxh/chi-tiet-bien-dong-bhxh/chi-tiet-bien-dong-bhxh.component';
+import { BienDongBHXHComponent } from 'src/app/components/bien-dong-bhxh/bien-dong-bhxh.component';
+import { ImportExcelComponent } from 'src/app/common/import-excel/import-excel.component';
 
 const routes: Routes = [
   {
@@ -292,6 +295,48 @@ const routes: Routes = [
   data: {
     title: 'Chi tiết quá trình thay đổi lương',
     url: 'chi-tiet-qua-trinh-thay-doi-luong',
+  },
+},
+
+// biến động bhxh
+
+{
+  path: 'bien-dong-bhxh',
+  component: BienDongBHXHComponent,
+  data: {
+    title: 'Biến động bảo hiểm xã hội',
+    url: 'bien-dong-bhxh',
+  },
+},
+{
+  path: 'bien-dong-bhxh/them-moi-bien-dong-bhxh',
+  component: ChiTietBienDongBHXHComponent,
+  data: {
+    title: 'Thêm mới biến động bhxh',
+    url: 'bien-dong-bhxh/them-moi-bien-dong-bhxh',
+  },
+},
+{
+  path: 'bien-dong-bhxh/chi-tiet-bien-dong-bhxh',
+  component: ChiTietBienDongBHXHComponent,
+  data: {
+    title: 'Chi tiết biến động bhxh',
+    url: 'bien-dong-bhxh/chi-tiet-bien-dong-bhxh',
+  },
+},
+
+{
+  path: 'bien-dong-bhxh/import-cong-ty',
+  component: ImportExcelComponent,
+  data: {
+    title: 'Import biến động BHXH',
+    url: 'import-bien-dong-bhxh',
+    titleDad : 'Danh sách biến động BHXH',
+    urlDad: '/nhan-su/bien-dong-bhxh',
+    api: 'setCompanyImport',
+    apiAccept: 'setCompanyAccept',
+    fileDoc: 'DM_CongTy_Import.xls',
+    apiExport: 'setCompanyExportDraft'
   },
 },
   
