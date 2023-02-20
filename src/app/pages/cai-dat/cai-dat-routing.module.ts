@@ -151,7 +151,7 @@ const routes: Routes = [
       urlDad: '/cai-dat/cai-dat-cong-ty',
       api: 'setCompanyImport',
       apiAccept: 'setCompanyAccept',
-      fileDoc: 'file_mau_import_danh_muc_cong_ty.xls',
+      fileDoc: 'DM_CongTy_Import.xls',
       apiExport: 'setCompanyExportDraft'
     },
   },
@@ -209,7 +209,7 @@ const routes: Routes = [
       urlDad: '/cai-dat/ly-do-nghi',
       api: 'setLeaveReasonImport',
       apiAccept: 'setLeaveReasonAccept',
-      fileDoc: 'file_mau_import_danh_muc_ly_do_nghi.xls',
+      fileDoc: 'DM_LyDoNghi_Import.xls',
       apiExport: ''
     },
   },
@@ -258,7 +258,7 @@ const routes: Routes = [
       urlDad: '/cai-dat/chuc-vu',
       api: 'setPositionImport',
       apiAccept: 'setPositionAccept',
-      fileDoc: 'file_mau_import_danh_muc_chuc_vu.xls',
+      fileDoc: 'DM_ChucVu_Import.xls',
       apiExport: 'setPositionExportDraft'
     },
   },
@@ -297,7 +297,7 @@ const routes: Routes = [
       urlDad: '/cai-dat/chuc-danh',
       api: 'setPositionTitleImport',
       apiAccept: 'setPositionTitleAccept',
-      fileDoc: 'file_mau_import_danh_muc_chuc_danh.xls',
+      fileDoc: 'DM_ChucDanh_Import.xls',
       apiExport: 'setPositionTitleExportDraft'
     },
   },
@@ -337,7 +337,7 @@ const routes: Routes = [
       urlDad: '/cai-dat/noi-lam-viec',
       api: 'setWorkplaceImport',
       apiAccept: 'setWorkplaceAccept',
-      fileDoc: 'file_mau_import_danh_muc_noi_lam_viec.xls',
+      fileDoc: 'DM_NoiLamViec_Import.xls',
       apiExport: 'setWorkplaceExportDraft'
     },
   },
@@ -413,7 +413,7 @@ const routes: Routes = [
       urlDad: '/cai-dat/lich-lam-viec',
       api: 'setWorktimeImport',
       apiAccept: 'setWorktimeAccept',
-      fileDoc: 'file_mau_import_danh_muc_lich_lam_viec.xls',
+      fileDoc: 'DM_LichLamViec_Import.xls',
       apiExport: 'setWorktimeExportDraft'
     },
   },
@@ -471,7 +471,7 @@ const routes: Routes = [
       urlDad: '/cai-dat/quan-ly-hop-dong',
       api: 'setLeaveReasonImport',
       apiAccept: 'setLeaveReasonAccept',
-      fileDoc: 'DM_HopDongMau_Import.xlsx',
+      fileDoc: 'DM_HopDongMau_Import.xls',
       apiExport: 'setLeaveReasonExportDraft'
     },
   },
@@ -570,7 +570,7 @@ const routes: Routes = [
       urlDad: '/cai-dat/thiet-lap-wifi',
       api: 'setTimekeepingWifiImport',
       apiAccept: 'setTimekeepingWifiAccept',
-      fileDoc: 'file_mau_import_thiet_lap_wifi.xls',
+      fileDoc: 'DM_ ThietLapWiFi_Import.xls',
       apiExport: 'setTimekeepingWifiExportDraft'
     },
   },

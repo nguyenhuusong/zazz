@@ -153,7 +153,7 @@ const routes: Routes = [
       urlDad: '/tuyen-dung/chuyen-mon',
       api: 'setJobImport',
       apiAccept: 'setJobAccept',
-      fileDoc: 'file_mau_import_danh_muc_chuyen_mon.xls',
+      fileDoc: 'DM_ChuyenMon_Import.xls',
       apiExport: 'setJobExportDraft'
     },
   },

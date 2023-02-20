@@ -41,7 +41,7 @@ const routes: Routes = [
       urlDad: '/luong-thue/tinh-luong',
       api: 'setPayrollBaseImport',
       apiAccept: 'setPayrollBaseAccept',
-      fileDoc: 'file_mau_import_cap_bac_luong.xls',
+      fileDoc: 'DM_CapBacLuong_Import.xls',
       apiExport: 'setPayrollBaseExportDraft'
     },
   },
@@ -55,7 +55,7 @@ const routes: Routes = [
       urlDad: '/luong-thue/tinh-luong',
       api: 'setPayrollBaseImport',
       apiAccept: 'setPayrollBaseAccept',
-      fileDoc: 'file_mau_import_thanh_phan_luong.xls',
+      fileDoc: 'DM_ThanhPhanLuong_Import.xls',
       apiExport: ''
     },
   },
