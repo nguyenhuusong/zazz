@@ -158,9 +158,11 @@ export class ImportHoSoNhanSuComponent implements OnInit {
   }
 
   refetchFile() {
+    this.isImport = false
     this.isShowUpload = true;
     this.listsData  = [];
     this.columnDefs = [];
+    this.dataImport = null;
   }
 
   getTemfileImport() {
