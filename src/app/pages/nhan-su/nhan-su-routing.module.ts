@@ -326,17 +326,17 @@ const routes: Routes = [
 },
 
 {
-  path: 'bien-dong-bhxh/import-cong-ty',
+  path: 'bien-dong-bhxh/import-bien-dong-bhxh',
   component: ImportExcelComponent,
   data: {
     title: 'Import biến động BHXH',
     url: 'import-bien-dong-bhxh',
     titleDad : 'Danh sách biến động BHXH',
     urlDad: '/nhan-su/bien-dong-bhxh',
-    api: 'setCompanyImport',
-    apiAccept: 'setCompanyAccept',
+    api: 'setInsuranceImport',
+    apiAccept: 'setInsuranceAccept',
     fileDoc: 'DM_CongTy_Import.xls',
-    apiExport: 'setCompanyExportDraft'
+    apiExport: 'setInsuranceExportDraft'
   },
 },
   

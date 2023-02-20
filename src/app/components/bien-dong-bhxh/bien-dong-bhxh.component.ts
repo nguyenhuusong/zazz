@@ -353,7 +353,7 @@ export class BienDongBHXHComponent implements OnInit, AfterViewChecked {
   ];
 
   geFilter() {
-    this.apiService.getFilter('/api/v2/empInsurance/GetEmpInsuranceFilter').subscribe(results => {
+    this.apiService.getFilter('/api/v2/empinsurance/GetInsuranceFilter').subscribe(results => {
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
@@ -383,47 +383,6 @@ export class BienDongBHXHComponent implements OnInit, AfterViewChecked {
     }
   }
 
-showFilter() {
-    const ref = this.dialogService.open(FormFilterComponent, {
-      header: 'Tìm kiếm nâng cao',
-      width: '40%',
-      contentStyle: "",
-      data: {
-        listViews: this.listViewsFilter,
-        detailInfoFilter: this.detailInfoFilter,
-        buttons: this.optionsButonFilter
-      }
-    });
-
-    ref.onClose.subscribe((event: any) => {
-      if (event) {
-        this.listViewsFilter = cloneDeep(event.listViewsFilter);
-        if (event.type === 'Search') {
-          this.query = { ...this.query, ...event.data };
-          this.load();
-        } else if (event.type === 'CauHinh') {
-          this.apiService.getFilter('/api/v2/maternity/GetMaternityFilter').subscribe(results => {
-            if (results.status === 'success') {
-              const listViews = cloneDeep(results.data.group_fields);
-              this.listViewsFilter = [...listViews];
-              const params =  getParamString(listViews)
-              this.query = { ...this.query, ...params};
-              this.load();
-              this.detailInfoFilter = results.data;
-              this.showFilter()
-            }
-          });
-
-        } else if (event.type === 'Reset') {
-          const listViews = cloneDeep(this.cloneListViewsFilter);
-          this.listViewsFilter = cloneDeep(listViews);
-         const params =  getParamString(listViews)
-        this.query = { ...this.query, ...params};
-        this.load();
-        }
-      }
-    });
-  }
 
   seachEmValue(event) {
     const params = {
@@ -438,7 +397,7 @@ showFilter() {
   }
 
   importFileExel() {
-    this.router.navigate(['/nhan-su/bien-dong-bhxh/import-data']);
+    this.router.navigate(['/nhan-su/bien-dong-bhxh/import-bien-dong-bhxh']);
   }
 
 }
