@@ -54,14 +54,15 @@ export class AddContractComponent implements OnInit {
     this.displaySetting = true;
   }
   addSkill() {
+    this.tempId = null
     this.getContractTypeTemplate();
   }
   tempId = null;
   listViewsDetail = [];
   dataDetailInfo = null;
   displayFormEditDetail = false
-  getContractTypeTemplate(tempId = null) {
-    const queryParams = queryString.stringify({ contractTypeId: this.contractTypeId, tempId: tempId });
+  getContractTypeTemplate() {
+    const queryParams = queryString.stringify({ contractTypeId: this.contractTypeId, tempId: this.tempId });
     this.listViewsDetail = [];
     this.apiService.getContractTypeTemplate(queryParams).subscribe(results => {
       if (results.status === 'success') {
@@ -203,7 +204,7 @@ export class AddContractComponent implements OnInit {
   trainId = null;
   editRow({ rowData }) {
     this.tempId = rowData.tempId;
-    this.getContractTypeTemplate(this.tempId);
+    this.getContractTypeTemplate();
   }
 
 
