@@ -308,7 +308,7 @@ export class QuanLyHopDongComponent implements OnInit {
   }
 
   ImportReason() {
-    
+    this.router.navigate(['/cai-dat/quan-ly-hop-dong/import-hop-dong-mau'])
   }
 
   sizeToFit() {
