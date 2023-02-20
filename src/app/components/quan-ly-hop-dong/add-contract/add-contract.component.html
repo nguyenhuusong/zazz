@@ -35,7 +35,7 @@
 
 <p-dialog styleClass="popup-btngroup-edit-detail"  [(visible)]="displayFormEditDetail" [draggable]="false"  [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '1400px', height: 'auto'}">
     <p-header>
-       Thêm mới hợp đồng
+       {{ tempId ? 'Sửa hợp đồng' : 'Thêm mới hợp đồng' }} 
     </p-header>
     <app-edit-detail [optionsButtonsEdit]="optionsButtonsPopup" *ngIf="listViewsDetail.length> 0 && displayFormEditDetail" [detailInfo]="dataDetailInfo"
         [detail]="dataDetailInfo" [manhinh]="'Edit'" [thongtinnhanvienNew]="true"
