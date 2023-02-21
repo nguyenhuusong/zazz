@@ -2546,7 +2546,7 @@ export class ApiHrmService {
   }
 
   getInsuranceInfo(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v2/empinsurance/GetEmpInsuranceInfo?` + queryParams, this.options);
+    return this.http.get<any>(`${apiHrmServer}/api/v2/empinsurance/GetInsuranceInfo?` + queryParams, this.options);
   }
   setInsuranceInfo(queryParams): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/empinsurance/SetInsuranceInfo` ,  queryParams, this.options)

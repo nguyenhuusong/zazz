@@ -269,8 +269,8 @@ export class BienDongBHXHComponent implements OnInit, AfterViewChecked {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn thực hiện xóa bản ghi này?',
       accept: () => {
-        const queryParams = queryString.stringify({ Id: event.rowData.insuranceId });
-        this.apiService.delEmpInsurance(queryParams).subscribe(results => {
+        const queryParams = queryString.stringify({ insuranceId: event.rowData.insuranceId });
+        this.apiService.delInsuranceInfo(queryParams).subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa tuyển dụng thành công' });
             this.load();
