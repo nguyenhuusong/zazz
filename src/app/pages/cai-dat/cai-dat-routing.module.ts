@@ -570,7 +570,7 @@ const routes: Routes = [
       urlDad: '/cai-dat/thiet-lap-wifi',
       api: 'setTimekeepingWifiImport',
       apiAccept: 'setTimekeepingWifiAccept',
-      fileDoc: 'DM_ ThietLapWiFi_Import.xls',
+      fileDoc: 'DM_ThietLapWiFi_Import.xls',
       apiExport: 'setTimekeepingWifiExportDraft'
     },
   },
