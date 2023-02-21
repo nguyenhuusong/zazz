@@ -272,7 +272,7 @@ export class BienDongBHXHComponent implements OnInit, AfterViewChecked {
         const queryParams = queryString.stringify({ insuranceId: event.rowData.insuranceId });
         this.apiService.delInsuranceInfo(queryParams).subscribe(results => {
           if (results.status === 'success') {
-            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa tuyển dụng thành công' });
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
             this.load();
             this.FnEvent();
           } else {
