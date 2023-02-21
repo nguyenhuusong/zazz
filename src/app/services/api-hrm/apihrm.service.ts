@@ -2935,4 +2935,13 @@ export class ApiHrmService {
     });
   }
 
+  setInsuranceImport(params): Observable<any> {
+    const customOptions = {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      })
+    };
+    return this.http.post<any>(`${apiHrmServer}/api/v2/empinsurance/SetInsuranceImport`, params, customOptions);
+  }
+
 }
