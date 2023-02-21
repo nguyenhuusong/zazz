@@ -69,7 +69,7 @@ export class ChiTietThueBaoHiemComponent implements OnInit, OnDestroy {
     const params = {
       ...this.detailInfo, group_fields: data
     }
-    this.apiService.setEmpByInsuranceInfo(params)
+    this.apiService.setEmpByInsurance(params)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((results: any) => {
         if (results.status === 'success') {
