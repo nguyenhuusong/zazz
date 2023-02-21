@@ -178,7 +178,6 @@ export class BienDongBHXHComponent implements OnInit, AfterViewChecked {
           label: 'Xóa ',
           icon: 'pi pi-trash',
           class: 'btn-primary mr5',
-          hide: CheckHideAction(MENUACTIONROLEAPI.GetMaternityPage.url, ACTIONS.DELETE)
         },
       ]
     };
@@ -270,8 +269,8 @@ export class BienDongBHXHComponent implements OnInit, AfterViewChecked {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn thực hiện xóa bản ghi này?',
       accept: () => {
-        const queryParams = queryString.stringify({ maternityId: event.rowData.maternityId });
-        this.apiService.delMaternityInfo(queryParams).subscribe(results => {
+        const queryParams = queryString.stringify({ Id: event.rowData.insuranceId });
+        this.apiService.delEmpInsurance(queryParams).subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa tuyển dụng thành công' });
             this.load();
@@ -286,7 +285,7 @@ export class BienDongBHXHComponent implements OnInit, AfterViewChecked {
 
   editRow({rowData}) {
     const params = {
-      maternityId: rowData.maternityId
+      insuranceId: rowData.insuranceId
     }
     this.router.navigate(['/nhan-su/bien-dong-bhxh/chi-tiet-bien-dong-bhxh'], { queryParams: params });
   }
@@ -300,11 +299,6 @@ export class BienDongBHXHComponent implements OnInit, AfterViewChecked {
   isSearchEmp = false;
   addNew() {
     this.isSearchEmp = true;
-
-    // const params = {
-    //   maternityId: null
-    // }
-    // this.router.navigate(['/nhan-su/bien-dong-bhxh/them-moi-bien-dong-bhxh'], { queryParams: params });
   }
 
   find() {
