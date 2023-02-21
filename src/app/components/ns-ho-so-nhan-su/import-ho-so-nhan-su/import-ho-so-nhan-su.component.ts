@@ -166,7 +166,7 @@ export class ImportHoSoNhanSuComponent implements OnInit {
   }
 
   getTemfileImport() {
-    this.apiService.exportReportLocalhost('assets/tpl-import-file/file_mau_import_ho_so.xlsx').subscribe((data: any) => {
+    this.apiService.exportReportLocalhost('assets/tpl-import-file/HoSoNhanSu_Import.xlsx').subscribe((data: any) => {
       this.createImageFromBlob(data)
     });
   }
@@ -175,7 +175,7 @@ export class ImportHoSoNhanSuComponent implements OnInit {
     var blob = new Blob([image]);
     var url = window.URL.createObjectURL(blob);
     var anchor = document.createElement("a");
-    anchor.download = "file_mau_import_ho_so.xlsx";
+    anchor.download = "HoSoNhanSu_Import.xlsx";
     anchor.href = url;
     anchor.click();
   }

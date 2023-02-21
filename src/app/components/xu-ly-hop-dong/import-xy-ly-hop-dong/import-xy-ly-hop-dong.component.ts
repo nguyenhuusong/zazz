@@ -163,7 +163,7 @@ export class ImportXyLyHopDongComponent implements OnInit {
   }
 
   getTemfileImport() {
-    this.apiService.exportReportLocalhost('assets/tpl-import-file/Import_HDLD.xlsx').subscribe((data: any) => {
+    this.apiService.exportReportLocalhost('assets/HopDongLaoDong_Import.xlsx').subscribe((data: any) => {
       this.createImageFromBlob(data)
     });
   }
@@ -172,7 +172,7 @@ export class ImportXyLyHopDongComponent implements OnInit {
     var blob = new Blob([image]);
     var url = window.URL.createObjectURL(blob);
     var anchor = document.createElement("a");
-    anchor.download = "file_mau_import_loai_hop_dong.xlsx";
+    anchor.download = "HopDongLaoDong_Import.xlsx";
     anchor.href = url;
     anchor.click();
   }

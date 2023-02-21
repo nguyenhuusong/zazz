@@ -161,7 +161,7 @@ export class ImportTerminateComponent implements OnInit {
   }
 
   getTemfileImport() {
-    this.apiService.exportReportLocalhost('assets/tpl-import-file/Import_HSNS_NghiViec.xlsx').subscribe((data: any) => {
+    this.apiService.exportReportLocalhost('assets/tpl-import-file/HSNS_NghiViec_Import.xlsx').subscribe((data: any) => {
       this.createImageFromBlob(data)
     });
   }
@@ -170,7 +170,7 @@ export class ImportTerminateComponent implements OnInit {
     var blob = new Blob([image]);
     var url = window.URL.createObjectURL(blob);
     var anchor = document.createElement("a");
-    anchor.download = "Import_HSNS_NghiViec.xlsx";
+    anchor.download = "HSNS_NghiViec_Import.xlsx";
     anchor.href = url;
     anchor.click();
   }
