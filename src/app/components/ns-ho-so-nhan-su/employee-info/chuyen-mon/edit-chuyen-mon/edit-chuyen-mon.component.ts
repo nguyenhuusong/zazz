@@ -149,7 +149,7 @@ export class EditChuyenMonComponent implements OnInit {
         // }
         this.spinner.hide();
         this.cancelSave.emit();
-        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Cập nhật thông tin thành công' });
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data.messages ? results.data.messages : 'Cập nhật thông tin thành công' });
       } else {
         this.spinner.hide();
         this.messageService.add({
