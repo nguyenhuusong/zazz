@@ -56,7 +56,7 @@ export class TbhQtDongBtComponent implements OnInit {
   insuranceId = null;
   addWorked() {
     this.insuranceId = null;
-    this.getEmpInsuranceInfo();
+    this.displayFormEditDetail = true;
   }
 
   listViewsDetail = [];
@@ -159,7 +159,7 @@ export class TbhQtDongBtComponent implements OnInit {
 
   editRow({rowData}) {
     this.insuranceId = rowData.insuranceId;
-    this.getEmpInsuranceInfo();
+    this.displayFormEditDetail = true;
   }
 
   onCellClicked(event) {
