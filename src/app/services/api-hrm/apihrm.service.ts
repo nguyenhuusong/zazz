@@ -2563,6 +2563,9 @@ export class ApiHrmService {
   insurSetEmployeeChange(params): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/employeejob/SetEmployeeChange`, params, this.options)
   }
+  setEmpByInsurance(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/empinsurance/SetEmpByInsurance` ,  queryParams, this.options)
+  }
 
   getFilter(url): Observable<any> {
     return this.http.get<any>(`${apiHrmServer + url} `, this.options)
