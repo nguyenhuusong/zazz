@@ -2517,8 +2517,9 @@ export class ApiHrmService {
   getEmpByInsurance(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/empinsurance/GetEmpByInsurance?` + queryParams, this.options);
   }
+  // SetEmpByInsuranceInfo --> SetEmpByInsurance
   setEmpByInsuranceInfo(queryParams): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v2/empinsurance/SetEmpByInsuranceInfo` ,  queryParams, this.options)
+    return this.http.post<any>(`${apiHrmServer}/api/v2/empinsurance/SetEmpByInsurance` ,  queryParams, this.options)
   }
   getEmpAttactInsurPage(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/empinsurance/GetEmpAttactPage?` + queryParams, this.options);
@@ -2891,7 +2892,7 @@ export class ApiHrmService {
   }
 
   setPositionExport(queryParams): Observable<Blob> {
-    return this.http.post(`${apiHrmServer}/api/v2/position/SetPositionExport`, queryParams, {
+    return this.http.get(`${apiHrmServer}/api/v2/position/SetPositionExport?` + queryParams, {
       headers: new HttpHeaders({
         Authorization: this.authService.getAuthorizationHeaderValue(),
       }),

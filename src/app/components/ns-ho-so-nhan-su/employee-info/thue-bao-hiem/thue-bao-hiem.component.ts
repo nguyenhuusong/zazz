@@ -70,7 +70,7 @@ export class ThueBaoHiemComponent implements OnInit {
     const  params = {
       ...this.detailInfo, group_fields: data
     };
-    this.apiService.setEmpByInsurance(params).subscribe((results: any) => {
+    this.apiService.setEmpByInsuranceInfo(params).subscribe((results: any) => {
       if (results.status === 'success') {
       
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Cập nhật thông tin thành công' });
