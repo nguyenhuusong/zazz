@@ -57,7 +57,7 @@ export class ChiTietBienDongBHXHComponent implements OnInit {
     if (this.isDialog) {
       this.modelEdit.insuranceId = this.insuranceId
       this.modelEdit.empId = this.empId;
-      this.getEmpInsuranceInfo();
+      this.getInsuranceInfo();
     } else {
       this.handleParams();
     }
@@ -69,7 +69,7 @@ export class ChiTietBienDongBHXHComponent implements OnInit {
       this.paramsObject = { ...params.keys, ...params };
       this.modelEdit.insuranceId = this.paramsObject.params.insuranceId || null
       this.modelEdit.empId = this.paramsObject.params.empId || null
-      this.getEmpInsuranceInfo();
+      this.getInsuranceInfo();
     });
   }
   indexTab = 0;
@@ -91,17 +91,17 @@ export class ChiTietBienDongBHXHComponent implements OnInit {
   }
   cancel(data) {
     if (data === 'CauHinh') {
-      this.getEmpInsuranceInfo()
+      this.getInsuranceInfo()
     } else if (data === 'BackPage') {
       this.listViews = [];
-      this.getEmpInsuranceInfo(this.flowCurrent === 1 ? this.flowCurrent : this.flowCurrent - 1)
+      this.getInsuranceInfo(this.flowCurrent === 1 ? this.flowCurrent : this.flowCurrent - 1)
     } else if (data === 'NghiViec') {
     } else {
       this.isDialog ? this.callback.emit() : this.router.navigate(['/nhan-su/bien-dong-bhxh']);
     }
   }
 
-  setEmpInsuranceInfo(data) {
+  setInsuranceInfo(data) {
     if (this.flowCurrent >= this.activeIndex) {
       this.listViews = [];
       const params = {
@@ -111,7 +111,7 @@ export class ChiTietBienDongBHXHComponent implements OnInit {
       this.listViews = [];
       this.callApiInfo(params)
     } else {
-      this.getEmpInsuranceInfo(this.flowCurrent + 1);
+      this.getInsuranceInfo(this.flowCurrent + 1);
     }
 
   }
@@ -143,7 +143,7 @@ export class ChiTietBienDongBHXHComponent implements OnInit {
   flowCurrent = 0
   callApiInfo(params, type = 'Update') {
     this.spinner.show();
-    this.apiService.setEmpInsuranceInfo(params).subscribe(results => {
+    this.apiService.setInsuranceInfo(params).subscribe(results => {
       if (results.status === 'success') {
         this.activeIndex = results.data.flow_st;
         this.flowCurrent = results.data.flow_cur;
@@ -184,12 +184,12 @@ export class ChiTietBienDongBHXHComponent implements OnInit {
     })
   }
 
-  getEmpInsuranceInfo(flow_cur = null) {
+  getInsuranceInfo(flow_cur = null) {
     this.detailInfo = null;
     this.listViews = [];
     this.spinner.show();
     const queryParams = queryString.stringify({ insuranceId: this.modelEdit.insuranceId, flow_cur: flow_cur, empId: this.modelEdit.empId });
-    this.apiService.getEmpInsuranceInfo(queryParams).subscribe(results => {
+    this.apiService.getInsuranceInfo(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.activeIndex = results.data.flow_st;
         this.flowCurrent = results.data.flow_cur;

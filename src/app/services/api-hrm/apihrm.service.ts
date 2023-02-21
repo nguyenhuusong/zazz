@@ -2535,17 +2535,30 @@ export class ApiHrmService {
   getEmpInsurancePage(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/empinsurance/GetEmpInsurancePage?` + queryParams, this.options);
   }
+  getInsurancePageByEmp(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/empinsurance/GetInsurancePageByEmp?` + queryParams, this.options);
+  }
   getInsurancePage(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/empinsurance/GetInsurancePage?` + queryParams, this.options);
   }
   getEmpInsuranceInfo(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/empinsurance/GetEmpInsuranceInfo?` + queryParams, this.options);
   }
+
+  getInsuranceInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/empinsurance/GetEmpInsuranceInfo?` + queryParams, this.options);
+  }
+  setInsuranceInfo(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/empinsurance/SetInsuranceInfo` ,  queryParams, this.options)
+  }
   setEmpInsuranceInfo(queryParams): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/empinsurance/SetEmpInsuranceInfo` ,  queryParams, this.options)
   }
   delEmpInsurance(queryParams): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v2/empinsurance/DelEmpInsurance?` + queryParams  , this.options)
+  }
+  delInsuranceInfo(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/empinsurance/DelInsuranceInfo?` + queryParams  , this.options)
   }
   insurSetEmployeeChange(params): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/employeejob/SetEmployeeChange`, params, this.options)
