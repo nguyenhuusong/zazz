@@ -172,8 +172,8 @@ export class TbhQtDongBtComponent implements OnInit {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa?',
       accept: () => {
-        const queryParams = queryString.stringify({id: event.rowData.insuranceId});
-        this.apiService.delEmpInsurance(queryParams).subscribe((results: any) => {
+        const queryParams = queryString.stringify({insuranceId: event.rowData.insuranceId});
+        this.apiService.delInsuranceInfo(queryParams).subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
             this.getInsurancePageByEmp();
