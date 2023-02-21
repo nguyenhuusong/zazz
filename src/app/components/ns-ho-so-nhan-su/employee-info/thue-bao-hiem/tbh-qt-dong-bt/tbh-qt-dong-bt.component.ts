@@ -186,4 +186,9 @@ export class TbhQtDongBtComponent implements OnInit {
     });
   }
 
+  handleSaveInsurance() {
+    this.getEmpInsurancePage();
+    this.displayFormEditDetail = false;
+  }
+
 }

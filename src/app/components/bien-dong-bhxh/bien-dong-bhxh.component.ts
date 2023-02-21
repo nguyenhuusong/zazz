@@ -134,7 +134,7 @@ export class BienDongBHXHComponent implements OnInit, AfterViewChecked {
     this.spinner.show();
     const params: any = { ...this.query };
     const queryParams = queryString.stringify(params);
-    this.apiService.getEmpInsurancePage(queryParams).subscribe(
+    this.apiService.getInsurancePage(queryParams).subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         this.gridKey= results.data.dataList.gridKey;

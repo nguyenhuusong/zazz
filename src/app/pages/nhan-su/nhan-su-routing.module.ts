@@ -335,7 +335,7 @@ const routes: Routes = [
     urlDad: '/nhan-su/bien-dong-bhxh',
     api: 'setInsuranceImport',
     apiAccept: 'setInsuranceAccept',
-    fileDoc: 'DM_CongTy_Import.xls',
+    fileDoc: 'bien_dong_bhxh_import.xlsx',
     apiExport: 'setInsuranceExportDraft'
   },
 },

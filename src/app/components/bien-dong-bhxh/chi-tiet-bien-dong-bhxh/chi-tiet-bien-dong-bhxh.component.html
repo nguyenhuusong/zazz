@@ -1,13 +1,23 @@
-
-<div class="main-grid product-detail">
+<div class="main-grid product-detail" *ngIf="!isDialog">
     <section>
-        <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
+        <div class="breadcrumb">
+            <p-breadcrumb [model]="itemsMenu"></p-breadcrumb>
+            <h3>{{titlePage}}</h3>
+        </div>
     </section>
-   <div class="content">
-    <app-edit-detail *ngIf="listViews.length> 0" 
-        [detail]="detailInfo" [manhinh]="'Edit'" 
-        [optionsButtonsEdit]="optionsButon"  [dataView]="listViews"
-        (callback)="setInfo($event)" (callbackcancel)="quaylai($event)"></app-edit-detail>
-        <p-divider></p-divider>
-   </div>
 </div>
+<p-card>
+    <div class="status-line steps-contract col-12 m-auto">
+        <p-steps [model]="steps" *ngIf="listViews.length> 0" [(activeIndex)]="activeIndex" [readonly]="false"></p-steps>
+    </div>
+</p-card>
+<p-divider></p-divider>
+<p-card>
+    <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'"
+        [optionsButtonsEdit]="optionsButtonsView" [dataView]="listViews" (callback)="setEmpInsuranceInfo($event)" (callBackForm)="callBackForm($event)"
+        (callbackcancel)="cancel($event)"></app-edit-detail>
+    <div>
+    </div>
+       
+</p-card>
+

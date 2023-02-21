@@ -2535,6 +2535,9 @@ export class ApiHrmService {
   getEmpInsurancePage(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/empinsurance/GetEmpInsurancePage?` + queryParams, this.options);
   }
+  getInsurancePage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/empinsurance/GetInsurancePage?` + queryParams, this.options);
+  }
   getEmpInsuranceInfo(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/empinsurance/GetEmpInsuranceInfo?` + queryParams, this.options);
   }
@@ -2920,6 +2923,14 @@ export class ApiHrmService {
 
   setPositionTitleAccept(queryParams): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/position/SetPositionTitleAccept`,  queryParams, this.options);
+  }
+
+  setInsuranceAccept(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/empinsurance/SetInsuranceAccept`,  queryParams, this.options);
+  }
+
+  setInsuranceExportDraft(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/empinsurance/SetInsuranceExportDraft`,  queryParams, this.options);
   }
 
   setPositionAccept(queryParams): Observable<any> {

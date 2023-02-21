@@ -1,139 +1,230 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
-const queryString = require('query-string');
-import { cloneDeep } from 'lodash';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { Subject, takeUntil } from 'rxjs';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
-import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
-import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
-import { OrganizeInfoService } from 'src/app/services/organize-info.service';
-import { getValueOfField, setOrganizeId } from 'src/app/utils/common/function-common';
-
+import * as queryString from 'querystring';
+import { cloneDeep } from 'lodash';
 @Component({
   selector: 'app-chi-tiet-bien-dong-bhxh',
   templateUrl: './chi-tiet-bien-dong-bhxh.component.html',
   styleUrls: ['./chi-tiet-bien-dong-bhxh.component.scss']
 })
-export class ChiTietBienDongBHXHComponent implements OnInit, OnDestroy {
-  items: MenuItem[] = [];
-  paramsObject = null;
-  detailInfo = null
-  listViews = [];
-  MENUACTIONROLEAPI = MENUACTIONROLEAPI;
-  ACTIONS = ACTIONS
-  optionsButon = [
-    { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
-    { label: 'Lưu lại', value: 'Update', class: CheckHideAction(MENUACTIONROLEAPI.GetMaternityPage.url, ACTIONS.EDIT) ? 'hidden' : '', icon: 'pi pi-check' }
-  ];
-  modelEdit = {
-    insuranceId: null,
-    empId: null,
-  }
-  titlePage = '';
-  listsDataMaternityPregnancy = [];
-  listsDataMaternityChild = [];
-  columnDefMaternityChild = [];
-  columnDefMaternityPregnancy = [];
-  displayAddThaiSan = false;
-  empId = '';
+export class ChiTietBienDongBHXHComponent implements OnInit {
+  @Output() callback = new EventEmitter<any>();
+  @Output() back = new EventEmitter<any>();
+  @Input() isDialog = false;
+  @Input() empId = null;
+  @Input() insuranceId = null;
   constructor(
-    private activatedRoute: ActivatedRoute,
     private apiService: ApiHrmService,
-    private spinner: NgxSpinnerService,
-    private confirmationService: ConfirmationService,
     private messageService: MessageService,
-    private organizeInfoService: OrganizeInfoService,
+    private activatedRoute: ActivatedRoute,
+    private confirmationService: ConfirmationService,
+    private spinner: NgxSpinnerService,
     private router: Router
   ) { }
-  private readonly unsubscribe$: Subject<void> = new Subject();
-  ngOnDestroy() {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
+  optionsButtonsView = [
+    { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-caret-left' },
+    { label: 'Tiếp tục', value: 'Update', class: 'btn-accept', icon: 'pi pi-caret-right' },
+    { label: 'Lưu tạm', value: 'SaveNhap', class: 'btn-accept', icon: 'pi pi-caret-right' },
+    { label: 'Xác nhận', value: 'Submit', class: 'btn-accept', icon: 'pi pi-check' },
+    { label: 'Đóng', value: 'Close', class: 'btn-accept', icon: 'pi pi-times' }
+  ]
+  displayuploadcontract = false;
+  metafile = null;
+  displaySetting = false;
+  gridKeyForm = '';
+  detailInfo = null;
+  listViews = [];
+  steps = [];
+  activeIndex = 0;
+  titlePage = '';
+  url = '';
+  itemsMenu = [];
+  modelEdit = {
+    insuranceId: null,
+    empId: null
   }
-
   ngOnInit(): void {
     this.titlePage = this.activatedRoute.data['_value'].title;
-    this.items = [
+    this.url = this.activatedRoute.data['_value'].url;
+    this.itemsMenu = [
       { label: 'Trang chủ', routerLink: '/home' },
-      { label: 'Quan hệ lao động' },
-      { label: 'danh sách biến động bảo hiểm xã hội', routerLink: '/nhan-su/bien-dong-bhxh' },
+      { label: 'Danh sách biến động BHXH', routerLink: '/nhan-su/bien-dong-bhxh' },
       { label: `${this.titlePage}` },
-    ];
-    this.handleParams();
-    this.organizeInfoService.fetchAll();
-  }
- 
-  handleParams() {
-    this.activatedRoute.queryParamMap
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((params) => {
-        this.paramsObject = { ...params.keys, ...params };
-        this.modelEdit.insuranceId = this.paramsObject.params.insuranceId || null;
-        this.modelEdit.empId = this.paramsObject.params.empId || null;
-        this.empId = this.paramsObject.params.empId || null;
-        this.getInfo();
-      });
-  };
- 
-  getInfo() {
-    this.detailInfo = [];
-    this.listViews = [];
-    const queryParams = queryString.stringify(this.modelEdit);
-    this.apiService.getEmpInsuranceInfo(queryParams)
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(results => {
-        if (results.status === 'success') {
-          const listViews = cloneDeep(results.data.group_fields);
-          this.listViews = [...listViews];
-          this.detailInfo = results.data;
-
-          // this.initGrid();
-        }
-      });
-  }
-
-
-  setInfo(data) {
-    this.spinner.show();
-    const params = {
-      ...this.detailInfo, group_fields: data
+    ]
+    if (this.isDialog) {
+      this.modelEdit.insuranceId = this.insuranceId
+      this.modelEdit.empId = this.empId;
+      this.getEmpInsuranceInfo();
+    } else {
+      this.handleParams();
     }
-    this.apiService.setEmpInsuranceInfo(params)
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((results: any) => {
-        if (results.status === 'success') {
-          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
-          this.spinner.hide();
-          this.goBack()
+  }
+  paramsObject = null;
+
+  handleParams(): void {
+    this.activatedRoute.queryParamMap.subscribe((params) => {
+      this.paramsObject = { ...params.keys, ...params };
+      this.modelEdit.insuranceId = this.paramsObject.params.insuranceId || null
+      this.modelEdit.empId = this.paramsObject.params.empId || null
+      this.getEmpInsuranceInfo();
+    });
+  }
+  indexTab = 0;
+  handleChange(index) {
+    this.indexTab = index;
+  }
+
+  stepActivated(): void {
+    const stepS = document.querySelectorAll('.steps-contract .p-steps-item');
+    if (stepS.length > 0) {
+      for (let i = 0; i < this.steps.length; i++) {
+        if (i <= this.flowCurrent) {
+          stepS[i].className += ` p-highlight ${i < this.activeIndex ? 'active' : 'remove-active'} ${i < this.flowCurrent && this.flowCurrent !== 1 ? 'active-confirm' : 'remove-active-confirm'}`;
         } else {
-          this.messageService.add({
-            severity: 'error', summary: 'Thông báo',
-            detail: results.message
-          });
-          this.spinner.hide();
+          stepS[i].className += ` p-highlight ${i < this.activeIndex ? 'active' : 'remove-active'} ${i < this.flowCurrent && this.flowCurrent !== 1 ? 'active-confirm' : 'remove-active-confirm'}`;
         }
-      }), error => {
-        this.spinner.hide();
-      };
-  }
-
-  goBack() {
-      this.router.navigate(['/nhan-su/bien-dong-bhxh']);
-  }
-
-  quaylai(data) {
-    if(data === 'CauHinh') {
-      this.getInfo();
-    }else {
-      this.router.navigate(['/nhan-su/bien-dong-bhxh']);
+      }
     }
   }
-  modelAdd = {
-    title: '',
-    set: 'SetMaternityPregnancyInfo'
+  cancel(data) {
+    if (data === 'CauHinh') {
+      this.getEmpInsuranceInfo()
+    } else if (data === 'BackPage') {
+      this.listViews = [];
+      this.getEmpInsuranceInfo(this.flowCurrent === 1 ? this.flowCurrent : this.flowCurrent - 1)
+    } else if (data === 'NghiViec') {
+    } else {
+      this.isDialog ? this.callback.emit() : this.router.navigate(['/nhan-su/bien-dong-bhxh']);
+    }
   }
 
+  setEmpInsuranceInfo(data) {
+    if (this.flowCurrent >= this.activeIndex) {
+      this.listViews = [];
+      const params = {
+        ...this.detailInfo, group_fields: data, flow_cur: this.flowCurrent, action: 'next'
+      }
+      this.cloneListViews = cloneDeep(data);
+      this.listViews = [];
+      this.callApiInfo(params)
+    } else {
+      this.getEmpInsuranceInfo(this.flowCurrent + 1);
+    }
+
+  }
+  cloneListViews = []
+  callBackForm(event) {
+    if (this.flowCurrent >= this.activeIndex) {
+      const params = {
+        ...this.detailInfo
+        , group_fields: event.data
+        , flow_cur: event.type === 'Submit' ? this.flowCurrent : this.flowCurrent - 1
+        , action: event.type === 'Submit' ? 'submit' : 'save'
+      }
+      this.cloneListViews = cloneDeep(event.data);
+      this.listViews = [];
+      this.callApiInfo(params, event.type);
+    } else {
+      const params = {
+        ...this.detailInfo
+        , group_fields: event.data
+        , flow_st: this.detailInfo.flow_cur
+        , action: event.type === 'Submit' ? 'submit' : 'save'
+      }
+      this.cloneListViews = cloneDeep(event.data);
+      this.listViews = [];
+      this.callApiInfo(params, event.type);
+    }
+  }
+
+  flowCurrent = 0
+  callApiInfo(params, type = 'Update') {
+    this.spinner.show();
+    this.apiService.setEmpInsuranceInfo(params).subscribe(results => {
+      if (results.status === 'success') {
+        this.activeIndex = results.data.flow_st;
+        this.flowCurrent = results.data.flow_cur;
+        this.modelEdit.insuranceId = results.data.insuranceId;
+        this.listViews = cloneDeep(results.data.group_fields);
+        setTimeout(() => {
+          this.stepActivated();
+        }, 100);
+        this.detailInfo = results.data;
+        this.optionsButtonsView = [
+          { label: 'Quay lại', value: 'BackPage', class: `p-button-secondary ${results.data.prev_st ? '' : 'hidden'}`, icon: 'pi pi-caret-left', },
+          { label: 'Tiếp tục', value: 'Update', class: `btn-accept ${results.data.next_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-caret-right' },
+          { label: 'Lưu tạm', value: 'SaveNhap', class: `btn-accept ${results.data.save_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
+          { label: 'Xác nhận', value: 'Submit', class: `btn-accept ${results.data.submit_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
+          { label: 'Đóng', value: 'Close', class: `p-button-danger ml-1`, icon: 'pi pi-times' }
+        ]
+        this.spinner.hide();
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
+
+        if (type === 'Submit' || type === 'SaveNhap') {
+          setTimeout(() => {
+            this.isDialog ? this.callback.emit() : this.router.navigate(['/nhan-su/bien-dong-bhxh'])
+          }, 200);
+        }
+      } else {
+        this.listViews = cloneDeep(this.cloneListViews);
+        setTimeout(() => {
+          this.stepActivated();
+        }, 100);
+        this.spinner.hide();
+        this.messageService.add({
+          severity: 'error', summary: 'Thông báo', detail: results.message
+        });
+      }
+    }, error => {
+      this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: error });
+      this.spinner.hide();
+    })
+  }
+
+  getEmpInsuranceInfo(flow_cur = null) {
+    this.detailInfo = null;
+    this.listViews = [];
+    this.spinner.show();
+    const queryParams = queryString.stringify({ insuranceId: this.modelEdit.insuranceId, flow_cur: flow_cur, empId: this.modelEdit.empId });
+    this.apiService.getEmpInsuranceInfo(queryParams).subscribe(results => {
+      if (results.status === 'success') {
+        this.activeIndex = results.data.flow_st;
+        this.flowCurrent = results.data.flow_cur;
+        this.modelEdit.insuranceId = results.data.insuranceId;
+        this.steps = results.data.flowStatuses.map(d => {
+          return {
+            label: d.flow_name,
+            value: d.flow_st
+          }
+        });
+        this.detailInfo = results.data;
+        this.listViews = cloneDeep(results.data.group_fields);
+        setTimeout(() => {
+          this.stepActivated();
+        }, 100);
+        this.optionsButtonsView = [
+          { label: 'Quay lại', value: 'BackPage', class: `p-button-secondary ${results.data.prev_st ? '' : 'hidden'}`, icon: 'pi pi-caret-left', },
+          { label: 'Tiếp tục', value: 'Update', class: `btn-accept ${results.data.next_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-caret-right' },
+          { label: 'Lưu tạm', value: 'SaveNhap', class: `btn-accept ${results.data.save_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
+          { label: 'Xác nhận', value: 'Submit', class: `btn-accept ${results.data.submit_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
+          { label: 'Đóng', value: 'Close', class: `p-button-danger ml-1`, icon: 'pi pi-times' }
+        ]
+        this.spinner.hide();
+      } else {
+        this.spinner.hide();
+        this.messageService.add({
+          severity: 'error', summary: 'Thông báo', detail: results.message
+        });
+        this.isDialog ? this.callback.emit() : this.router.navigate(['/nhan-su/bien-dong-bhxh'])
+      }
+    })
+  }
 }
+
+
+
+
 

@@ -35,8 +35,10 @@
     <p-header>
         {{ insuranceId ? 'Chi tiết quá trình đóng bảo hiểm' : 'Thêm mới quá trình đóng bảo hiểm'}}
     </p-header>
-    <app-edit-detail [optionsButtonsEdit]="optionsButtonsPopup" *ngIf="listViewsDetail.length> 0 && displayFormEditDetail" [detailInfo]="dataDetailInfo"
+
+    <app-chi-tiet-bien-dong-bhxh [insuranceId]="insuranceId" [empId]="empId" [isDialog]="true" (callback)="handleSaveInsurance()"></app-chi-tiet-bien-dong-bhxh>
+    <!-- <app-edit-detail [optionsButtonsEdit]="optionsButtonsPopup" *ngIf="listViewsDetail.length> 0 && displayFormEditDetail" [detailInfo]="dataDetailInfo"
         [detail]="dataDetailInfo" [manhinh]="'Edit'" [thongtinnhanvienNew]="true"
         [dataView]="listViewsDetail" (callback)="setDetailInfo($event)"
-        (callbackcancel)="cancelDetailInfo($event)"></app-edit-detail>
+        (callbackcancel)="cancelDetailInfo($event)"></app-edit-detail> -->
 </p-dialog>
