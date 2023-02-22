@@ -210,7 +210,7 @@ const routes: Routes = [
       api: 'setLeaveReasonImport',
       apiAccept: 'setLeaveReasonAccept',
       fileDoc: 'DM_LyDoNghi_Import.xls',
-      apiExport: ''
+      apiExport: 'setLeaveReasonExportDraft'
     },
   },
 
