@@ -98,6 +98,7 @@ export class ImportExcelComponent implements OnInit {
   }
 
   checkData(accept = false) {
+    this.columnDefs = [];
     this.spinner.show();
     this.isShowUpload = false;
     const params = {

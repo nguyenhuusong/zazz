@@ -1063,6 +1063,10 @@ export class ApiHrmService {
   cancelLeaveStatuses(params): Observable<any> {
     return this.http.put<any>(`${apiHrmServer}/api/v2/leave/CancelLeaveStatuses`, params, this.options)
   }
+  
+  setLeaveReasonAccept(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/leavereason/SetLeaveReasonAccept`, queryParams, this.options)
+  }
 
   getEatingInfo(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/eating/GetEatingInfo?` + queryParams, this.options)
