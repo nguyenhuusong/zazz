@@ -298,7 +298,7 @@ export class ChucDanhComponent implements OnInit, AfterViewChecked {
           this.spinner.hide();
         } else if (results.type === 'application/octet-stream') {
           var blob = new Blob([results], { type: 'application/msword' });
-          FileSaver.saveAs(blob, `Danh sách công ty` + ".xlsx");
+          FileSaver.saveAs(blob, `Danh sách chức danh` + ".xlsx");
           this.spinner.hide();
         }
       },
