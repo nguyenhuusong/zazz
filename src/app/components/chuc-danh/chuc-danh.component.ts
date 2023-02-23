@@ -15,7 +15,7 @@ import { getParamString } from 'src/app/common/function-common/objects.helper';
 import { fromEvent } from 'rxjs';
 import { DialogService } from 'primeng/dynamicdialog';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
-
+import * as FileSaver from 'file-saver';
 @Component({
   selector: 'app-chuc-danh',
   templateUrl: './chuc-danh.component.html',
@@ -112,7 +112,7 @@ export class ChucDanhComponent implements OnInit, AfterViewChecked {
     this.loadjs++
     if (this.loadjs === 5) {
       if (b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight +10;
+        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight + 10;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       } else {
@@ -218,7 +218,7 @@ export class ChucDanhComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  editRow({rowData}) {
+  editRow({ rowData }) {
     const params = {
       positionTitleId: rowData.positionTitleId,
     }
@@ -226,8 +226,8 @@ export class ChucDanhComponent implements OnInit, AfterViewChecked {
   }
 
   onCellClicked(event) {
-    if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
-      this.editRow(event = {rowData: event.data})
+    if (event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
+      this.editRow(event = { rowData: event.data })
     }
   }
 
@@ -253,7 +253,7 @@ export class ChucDanhComponent implements OnInit, AfterViewChecked {
     this.query.pageSize = event.rows;
     this.load();
   }
-
+  itemsToolOfGrid = [];
   ngOnInit() {
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
@@ -261,7 +261,50 @@ export class ChucDanhComponent implements OnInit, AfterViewChecked {
       { label: 'Danh sách tổ chức', routerLink: '/cai-dat/cai-dat-to-chuc' },
       { label: 'Danh sách chức danh' },
     ];
+    this.itemsToolOfGrid = [
+      {
+        label: 'Import file',
+        code: 'Import',
+        icon: 'pi pi-upload',
+        command: () => {
+          this.importFileExel();
+        }
+      },
+      {
+        label: 'Export file',
+        code: 'Import',
+        icon: 'pi pi-download',
+        command: () => {
+          this.exportExel();
+        }
+      },
+    ]
     this.getFilter();
+  }
+
+  importFileExel() {
+    this.router.navigate(['/cai-dat/chuc-danh/import-chuc-danh']);
+  }
+
+  exportExel() {
+    this.spinner.show();
+    this.query.pageSize = 1000000;
+    const query = { ...this.query };
+    const queryParams = queryString.stringify(query);
+    this.apiService.setPositionTitleExport(queryParams).subscribe(
+      (results: any) => {
+
+        if (results.type === 'application/json') {
+          this.spinner.hide();
+        } else if (results.type === 'application/octet-stream') {
+          var blob = new Blob([results], { type: 'application/msword' });
+          FileSaver.saveAs(blob, `Danh sách chức danh` + ".xlsx");
+          this.spinner.hide();
+        }
+      },
+      error => {
+        this.spinner.hide();
+      });
   }
 
   listViewsFilter = [];
@@ -293,59 +336,18 @@ export class ChucDanhComponent implements OnInit, AfterViewChecked {
     this.load();
   }
 
-  close({event, datas}) {
-    if(event !== 'Close') {
+  close({ event, datas }) {
+    if (event !== 'Close') {
       const listViews = cloneDeep(this.cloneListViewsFilter);
       this.listViewsFilter = cloneDeep(listViews);
-      const params =  getParamString(listViews)
-      this.query = { ...this.query, ...params};
+      const params = getParamString(listViews)
+      this.query = { ...this.query, ...params };
       this.load();
-    }else {
-      this.listViewsFilter =  cloneDeep(datas);
+    } else {
+      this.listViewsFilter = cloneDeep(datas);
     }
   }
 
-  showFilter() {
-    const ref = this.dialogService.open(FormFilterComponent, {
-      header: 'Tìm kiếm nâng cao',
-      width: '40%',
-      contentStyle: "",
-      data: {
-        listViews: this.listViewsFilter,
-        detailInfoFilter: this.detailInfoFilter,
-        buttons: this.optionsButonFilter
-      }
-    });
-
-    ref.onClose.subscribe((event: any) => {
-      if (event) {
-        this.listViewsFilter = cloneDeep(event.listViewsFilter);
-        if (event.type === 'Search') {
-          this.query = { ...this.query, ...event.data };
-          this.load();
-        } else if (event.type === 'CauHinh') {
-          this.apiService.getEmpFilter().subscribe(results => {
-            if (results.status === 'success') {
-              const listViews = cloneDeep(results.data.group_fields);
-              this.listViewsFilter = [...listViews];
-              const params = getParamString(listViews)
-              this.query = { ...this.query, ...params };
-              this.load();
-              this.detailInfoFilter = results.data;
-              this.showFilter()
-            }
-          });
-
-        } else if (event.type === 'Reset') {
-          const listViews = cloneDeep(this.cloneListViewsFilter);
-          this.listViewsFilter = cloneDeep(listViews);
-          const params = getParamString(listViews)
-          this.query = { ...this.query, ...params };
-          this.load();
-        }
-      }
-    });
-  }
 
   ngAfterViewInit(): void {
     this.FnEvent();

@@ -19,8 +19,8 @@ export class ChiTietPheDuyetComponent implements OnInit, OnDestroy {
   detailInfo = null
   listViews = [];
   optionsButon = [
-    { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
-    { label: 'Phê duyệt', value: 'Update', class: '', icon: 'pi pi-check' }
+    { label: 'Quay lại', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
+    { label: 'Xác nhận', value: 'Update', class: '', icon: 'pi pi-check' }
   ];
   wft_id: any = ''
   setWorkQuery = {

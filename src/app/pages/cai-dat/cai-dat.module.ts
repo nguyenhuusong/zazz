@@ -95,6 +95,7 @@ import { ChucDanhComponent } from 'src/app/components/chuc-danh/chuc-danh.compon
 import { ChiTietChucDanhComponent } from 'src/app/components/chuc-danh/chi-tiet-chuc-danh/chi-tiet-chuc-danh.component';
 import { DanhMucLoaiGiayToComponent } from 'src/app/components/danh-muc-loai-giay-to/danh-muc-loai-giay-to.component';
 import { ChiTietLoaiGiayToComponent } from 'src/app/components/danh-muc-loai-giay-to/chi-tiet-loai-giay-to/chi-tiet-loai-giay-to.component';
+import { ImportExcelModule } from 'src/app/common/import-excel/import-excel.module';
 
 FullCalendarModule.registerPlugins([
   // register FullCalendar plugins
@@ -155,7 +156,8 @@ FullCalendarModule.registerPlugins([
       ButtonRendererComponent,
       ButtonRendererComponent1
     ]),
-    FullCalendarModule
+    FullCalendarModule,
+    ImportExcelModule
   ],
 
   declarations: [
@@ -201,7 +203,9 @@ FullCalendarModule.registerPlugins([
     ChucDanhComponent,
     ChiTietChucDanhComponent,
     DanhMucLoaiGiayToComponent,
-    ChiTietLoaiGiayToComponent,
+    ChiTietLoaiGiayToComponent
+
+
   ],
   providers: []
 })

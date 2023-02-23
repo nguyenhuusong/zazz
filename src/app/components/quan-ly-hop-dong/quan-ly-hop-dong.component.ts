@@ -17,7 +17,7 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
 import { fromEvent } from 'rxjs';
-
+import * as FileSaver from 'file-saver';
 @Component({
   selector: 'app-quan-ly-hop-dong',
   templateUrl: './quan-ly-hop-dong.component.html',
@@ -280,17 +280,36 @@ export class QuanLyHopDongComponent implements OnInit {
     this.query.pageSize = event.rows;
     this.load();
   }
-
+  menuItemUtil = [];
   ngOnInit() {
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Cài đặt' },
       { label: 'Danh sách loại hợp đồng' },
     ];
+    this.menuItemUtil = [
+      {
+        label: 'Import hợp đồng mẫu',
+        icon: 'pi pi-refresh',
+        command: () => {
+          this.ImportReason();
+        }
+      },
+      {
+        label: 'Export mẫu hợp đồng',
+        icon: 'pi pi-refresh',
+        command: () => {
+          this.ExportContractType();
+        }
+      },
+    ]
     this.handleParams();
     this.getFilter();
   }
 
+  ImportReason() {
+    this.router.navigate(['/cai-dat/quan-ly-hop-dong/import-hop-dong-mau'])
+  }
 
   sizeToFit() {
     if (this.gridApi) {
@@ -428,6 +447,25 @@ export class QuanLyHopDongComponent implements OnInit {
       }
     }, 300);
   }
+
+  ExportContractType() {
+    this.spinner.show();
+    let params = {...this.query};
+    delete params.offSet;
+    delete params.pageSize;
+    // empId: this.detailInfo.empId
+    this.apiService.setContractTypeExport(queryString.stringify({ ...params })).subscribe(results => {
+      if (results.type === 'application/json') {
+        this.spinner.hide();
+      } else if (results.type === 'application/octet-stream') {
+        var blob = new Blob([results], { type: 'application/msword' });
+        FileSaver.saveAs(blob, `Danh sách mẫu file` + ".xlsx");
+        this.spinner.hide();
+      }
+    })
+  }
+
+  
 
 }
 

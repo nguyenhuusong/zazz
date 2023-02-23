@@ -149,7 +149,7 @@ export class ContractDetailComponent implements OnInit {
   }
 
   setContractInfo(data) {
-    if(this.flowCurrent > this.activeIndex) {
+    if(this.flowCurrent >= this.activeIndex) {
       const params = {
         ...this.detailInfo, group_fields: data, flow_cur: this.flowCurrent, action: 'next'
       };
@@ -171,7 +171,7 @@ export class ContractDetailComponent implements OnInit {
       this.setContractDraft(params);
     } else {
 
-      if(this.flowCurrent > this.activeIndex) {
+      if(this.flowCurrent >= this.activeIndex) {
         const params = {
           ...this.detailInfo, group_fields: event.data
           , flow_cur: event.type === 'Submit' ? this.flowCurrent : this.flowCurrent - 1
@@ -221,6 +221,9 @@ export class ContractDetailComponent implements OnInit {
 
       } else {
         this.listViews = cloneDeep(this.cloneListViews);
+        setTimeout(() => {
+          this.stepActivated();
+         }, 100);
         this.messageService.add({
           severity: 'error', summary: 'Thông báo', detail: results.message
         });
@@ -270,8 +273,6 @@ export class ContractDetailComponent implements OnInit {
           severity: 'error', summary: 'Thông báo', detail: results.message
         });
 
-        this.activeIndex = this.detailInfo.flow_st;
-        this.flowCurrent = this.detailInfo.flow_cur;
         setTimeout(() => {
           this.stepActivated();
         }, 100);

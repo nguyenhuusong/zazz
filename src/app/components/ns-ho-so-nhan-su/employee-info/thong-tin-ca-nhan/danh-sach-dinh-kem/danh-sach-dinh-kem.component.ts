@@ -154,6 +154,14 @@ export class DanhSachDinhKemComponent implements OnInit {
                 key: 'view-job-detail',
                 class: 'btn-primary mr5',
               },
+              {
+                onClick: this.dowloadFileUpload.bind(this),
+                label: 'Tải về file đã upload',
+                icon: 'fa fa-edit editing',
+                key: 'view-job-detail',
+                class: 'btn-primary mr5',
+                hide: !params.data.temp_view_url
+              },
 
               {
                 onClick: this.delRow.bind(this),
@@ -167,6 +175,18 @@ export class DanhSachDinhKemComponent implements OnInit {
         },
       }
     ];
+  }
+
+  dowloadFileUpload({rowData}) {
+    this.downloadButtonClicked(rowData.temp_view_url)
+  }
+
+  downloadButtonClicked(urlLink) {
+    var url = urlLink;
+    var elem = document.createElement('a');
+    elem.href = url;
+    elem.target = 'hiddenIframe';
+    elem.click();
   }
 
   editRow(event) {

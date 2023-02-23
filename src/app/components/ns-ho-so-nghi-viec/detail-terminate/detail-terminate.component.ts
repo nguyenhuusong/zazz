@@ -104,7 +104,7 @@ export class DetailTerminateComponent implements OnInit {
   }
 
   setTerminateInfo(data) {
-    if(this.flowCurrent > this.activeIndex) {
+    if(this.flowCurrent >= this.activeIndex) {
       this.listViews = [];
       const params = {
         ...this.detailInfo, group_fields: data, flow_cur: this.flowCurrent, action: 'next'
@@ -119,7 +119,7 @@ export class DetailTerminateComponent implements OnInit {
   }
   cloneListViews = []
   callBackForm(event) {
-    if(this.flowCurrent > this.activeIndex) {
+    if(this.flowCurrent >= this.activeIndex) {
       const params = {
         ...this.detailInfo
         , group_fields: event.data
@@ -172,6 +172,9 @@ export class DetailTerminateComponent implements OnInit {
         }
       } else {
         this.listViews = cloneDeep(this.cloneListViews);
+        setTimeout(() => {
+          this.stepActivated();
+         }, 100);
         this.spinner.hide();
         this.messageService.add({
           severity: 'error', summary: 'Thông báo', detail: results.message

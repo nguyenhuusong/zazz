@@ -6,7 +6,6 @@ import { NgModule } from '@angular/core';
 import { CaiDatLichHopComponent } from 'src/app/components/cai-dat-lich-hop/cai-dat-lich-hop.component';
 import { CaiDatToChucComponent } from 'src/app/components/cai-dat-to-chuc/cai-dat-to-chuc.component';
 import { CaiDatCongTyComponent } from 'src/app/components/cai-dat-cong-ty/cai-dat-cong-ty.component';
-import { CaiDatNgayNghiLeComponent } from 'src/app/components/cai-dat-ngay-nghi-le/cai-dat-ngay-nghi-le.component';
 import { ChiTietLichHopComponent } from 'src/app/components/cai-dat-lich-hop/chi-tiet-lich-hop/chi-tiet-lich-hop.component';
 import { DanhSachPhongHopComponent } from 'src/app/components/cai-dat-lich-hop/danh-sach-phong-hop/danh-sach-phong-hop.component';
 import { ChiTietPhongHopComponent } from 'src/app/components/cai-dat-lich-hop/danh-sach-phong-hop/chi-tiet-phong-hop/chi-tiet-phong-hop.component';
@@ -23,9 +22,6 @@ import { QuanLyHopDongComponent } from 'src/app/components/quan-ly-hop-dong/quan
 import { ChiTietHopDongComponent } from 'src/app/components/quan-ly-hop-dong/chi-tiet-hop-dong/chi-tiet-hop-dong.component';
 import { LyDoNghiViecComponent } from 'src/app/components/ly-do-nghi-viec/ly-do-nghi-viec.component';
 import { ChiTietLyDoNghiViecComponent } from 'src/app/components/ly-do-nghi-viec/chi-tiet-ly-do-nghi-viec/chi-tiet-ly-do-nghi-viec.component';
-import { CaiDatPhongHopTheoTangComponent } from 'src/app/components/cai-dat-phong-hop-theo-tang/cai-dat-phong-hop-theo-tang.component';
-import { ChiTietPhongHopTheoTangComponent } from 'src/app/components/cai-dat-phong-hop-theo-tang/chi-tiet-phong-hop-theo-tang/chi-tiet-phong-hop-theo-tang.component';
-import { QuanLyNgayNghiComponent } from 'src/app/components/quan-ly-ngay-nghi/quan-ly-ngay-nghi.component';
 import { NgayNghiLeComponent } from 'src/app/components/ngay-nghi-le/ngay-nghi-le.component';
 import { ChiTietNgayNghiComponent } from 'src/app/components/ngay-nghi-le/chi-tiet-ngay-nghi/chi-tiet-ngay-nghi.component';
 import { ThietLapWifiComponent } from 'src/app/components/thiet-lap-wifi/thiet-lap-wifi.component';
@@ -36,6 +32,7 @@ import { ChucDanhComponent } from 'src/app/components/chuc-danh/chuc-danh.compon
 import { ChiTietChucDanhComponent } from 'src/app/components/chuc-danh/chi-tiet-chuc-danh/chi-tiet-chuc-danh.component';
 import { DanhMucLoaiGiayToComponent } from 'src/app/components/danh-muc-loai-giay-to/danh-muc-loai-giay-to.component';
 import { ChiTietLoaiGiayToComponent } from 'src/app/components/danh-muc-loai-giay-to/chi-tiet-loai-giay-to/chi-tiet-loai-giay-to.component';
+import { ImportExcelComponent } from 'src/app/common/import-excel/import-excel.component';
 
 const routes: Routes = [
   {
@@ -112,6 +109,20 @@ const routes: Routes = [
     },
   },
   {
+    path: 'cai-dat-to-chuc/import-to-chuc',
+    component: ImportExcelComponent,
+    data: {
+      title: 'Import tổ chức',
+      url: 'import-to-chuc',
+      titleDad : 'Danh sách quản lý tổ chức',
+      urlDad: '/cai-dat/cai-dat-to-chuc',
+      api: 'setOrganizeImport',
+      apiAccept: 'setOrganizeAccept',
+      fileDoc: 'file_mau_import_danh_muc_to_chuc.xlsx',
+      apiExport: 'setOrganizeExportDraft'
+    },
+  },
+  {
     path: 'cai-dat-to-chuc/chi-tiet-to-chuc',
     component: ChiTietToChucComponent,
     data: {
@@ -128,6 +139,20 @@ const routes: Routes = [
     data: {
       title: 'Danh sách công ty',
       url: 'cai-dat-cong-ty',
+    },
+  },
+  {
+    path: 'cai-dat-cong-ty/import-cong-ty',
+    component: ImportExcelComponent,
+    data: {
+      title: 'Import công ty',
+      url: 'import-cong-ty',
+      titleDad : 'Danh sách công ty',
+      urlDad: '/cai-dat/cai-dat-cong-ty',
+      api: 'setCompanyImport',
+      apiAccept: 'setCompanyAccept',
+      fileDoc: 'DM_CongTy_Import.xls',
+      apiExport: 'setCompanyExportDraft'
     },
   },
   {
@@ -174,6 +199,21 @@ const routes: Routes = [
     },
   },
 
+  {
+    path: 'ly-do-nghi/import-ly-do-nghi',
+    component: ImportExcelComponent,
+    data: {
+      title: 'Import lý do nghỉ',
+      url: 'import-ly-do-nghi',
+      titleDad : 'Danh sách lý do nghỉ việc',
+      urlDad: '/cai-dat/ly-do-nghi',
+      api: 'setLeaveReasonImport',
+      apiAccept: 'setLeaveReasonAccept',
+      fileDoc: 'DM_LyDoNghi_Import.xls',
+      apiExport: 'setLeaveReasonExportDraft'
+    },
+  },
+
   // cài đặt ngày nghỉ lễ
   {
     path: 'cai-dat-ngay-nghi-le',
@@ -209,6 +249,20 @@ const routes: Routes = [
     },
   },
   {
+    path: 'chuc-vu/import-chuc-vu',
+    component: ImportExcelComponent,
+    data: {
+      title: 'Import chức vụ',
+      url: 'import-chuc-vu',
+      titleDad : 'Danh sách chức vụ',
+      urlDad: '/cai-dat/chuc-vu',
+      api: 'setPositionImport',
+      apiAccept: 'setPositionAccept',
+      fileDoc: 'DM_ChucVu_Import.xls',
+      apiExport: 'setPositionExportDraft'
+    },
+  },
+  {
     path: 'chuc-vu/them-moi-chuc-vu',
     component: ChiTietChucVuComponent,
     data: {
@@ -231,6 +285,20 @@ const routes: Routes = [
     data: {
       title: 'Danh sách chức danh',
       url: 'chuc-danh',
+    },
+  },
+  {
+    path: 'chuc-danh/import-chuc-danh',
+    component: ImportExcelComponent,
+    data: {
+      title: 'Import chức danh',
+      url: 'import-chuc-danh',
+      titleDad : 'Danh sách chức danh',
+      urlDad: '/cai-dat/chuc-danh',
+      api: 'setPositionTitleImport',
+      apiAccept: 'setPositionTitleAccept',
+      fileDoc: 'DM_ChucDanh_Import.xls',
+      apiExport: 'setPositionTitleExportDraft'
     },
   },
   {
@@ -257,6 +325,20 @@ const routes: Routes = [
     data: {
       title: 'Danh sách nơi làm việc',
       url: 'noi-lam-viec',
+    },
+  },
+  {
+    path: 'noi-lam-viec/import-noi-lam-viec',
+    component: ImportExcelComponent,
+    data: {
+      title: 'Import nơi làm việc',
+      url: 'import-noi-lam-viec',
+      titleDad : 'Danh sách nơi làm việc',
+      urlDad: '/cai-dat/noi-lam-viec',
+      api: 'setWorkplaceImport',
+      apiAccept: 'setWorkplaceAccept',
+      fileDoc: 'DM_NoiLamViec_Import.xls',
+      apiExport: 'setWorkplaceExportDraft'
     },
   },
   {
@@ -322,6 +404,20 @@ const routes: Routes = [
     },
   },
   {
+    path: 'lich-lam-viec/import-lich-lam-viec',
+    component: ImportExcelComponent,
+    data: {
+      title: 'Import lịch làm việc',
+      url: 'import-lich-lam-viec',
+      titleDad : 'Danh sách lịch làm việc',
+      urlDad: '/cai-dat/lich-lam-viec',
+      api: 'setWorktimeImport',
+      apiAccept: 'setWorktimeAccept',
+      fileDoc: 'DM_LichLamViec_Import.xls',
+      apiExport: 'setWorktimeExportDraft'
+    },
+  },
+  {
     path: 'lich-lam-viec/them-moi-lich-lam-viec',
     component: ChiTietLichLamViecComponent,
     data: {
@@ -344,7 +440,7 @@ const routes: Routes = [
     path: 'quan-ly-hop-dong',
     component: QuanLyHopDongComponent,
     data: {
-      title: 'Danh sách quản lý hợp đồng',
+      title: 'Danh sách quản lý hợp đồng mẫu',
       url: 'quan-ly-hop-dong',
     },
   },
@@ -352,7 +448,7 @@ const routes: Routes = [
     path: 'quan-ly-hop-dong/them-moi-hop-dong',
     component: ChiTietHopDongComponent,
     data: {
-      title: 'Thêm mới hợp đồng',
+      title: 'Thêm mới hợp đồng mẫu',
       url: 'them-moi-hop-dong',
     },
   },
@@ -360,10 +456,27 @@ const routes: Routes = [
     path: 'quan-ly-hop-dong/chi-tiet-hop-dong',
     component: ChiTietHopDongComponent,
     data: {
-      title: 'Chi tiết hợp đồng',
+      title: 'Chi tiết hợp đồng mẫu',
       url: 'chi-tiet-hop-dong',
     },
   },
+
+  {
+    path: 'quan-ly-hop-dong/import-hop-dong-mau',
+    component: ImportExcelComponent,
+    data: {
+      title: 'Import hợp đồng mẫu',
+      url: 'import-hop-dong-mau',
+      titleDad : 'Danh sách quản lý hợp đồng mẫu',
+      urlDad: '/cai-dat/quan-ly-hop-dong',
+      api: 'setLeaveReasonImport',
+      apiAccept: 'setLeaveReasonAccept',
+      fileDoc: 'DM_HopDongMau_Import.xls',
+      apiExport: 'setLeaveReasonExportDraft'
+    },
+  },
+
+  
 
   // Danh mục loại giấy tờ
 
@@ -445,6 +558,20 @@ const routes: Routes = [
     data: {
       title: 'Danh sách thiết lập wifi',
       url: 'thiet-lap-wifi',
+    },
+  },
+  {
+    path: 'thiet-lap-wifi/import-thiet-lap-wifi',
+    component: ImportExcelComponent,
+    data: {
+      title: 'Import thiết lập wifi',
+      url: 'import-thiet-lap-wifi',
+      titleDad : 'Danh sách thiết lập wifi',
+      urlDad: '/cai-dat/thiet-lap-wifi',
+      api: 'setTimekeepingWifiImport',
+      apiAccept: 'setTimekeepingWifiAccept',
+      fileDoc: 'DM_ThietLapWiFi_Import.xls',
+      apiExport: 'setTimekeepingWifiExportDraft'
     },
   },
   {

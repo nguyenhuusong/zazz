@@ -54,6 +54,7 @@ export class AddContractComponent implements OnInit {
     this.displaySetting = true;
   }
   addSkill() {
+    this.tempId = null
     this.getContractTypeTemplate();
   }
   tempId = null;
@@ -88,7 +89,7 @@ export class AddContractComponent implements OnInit {
     const param = {
       ...this.dataDetailInfo, group_fields: data
     }
-    this.apiService.setTrainFile(param).subscribe(results => {
+    this.apiService.setContractTypeTemplate(param).subscribe(results => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thêm mới thành công' });
         this.displayFormEditDetail = false;
@@ -212,7 +213,7 @@ export class AddContractComponent implements OnInit {
       message: 'Bạn có chắc chắn muốn xóa bản ghi này?',
       accept: () => {
         const queryParams = queryString.stringify({ tempId: event.rowData.tempId });
-        this.apiService.delTrainFile(queryParams).subscribe((results: any) => {
+        this.apiService.delContractTypeTemplate(queryParams).subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
             this.getContractTypeTemplatePage();
@@ -243,6 +244,9 @@ export class AddContractComponent implements OnInit {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'upload thành công' });
         this.getContractTypeTemplatePage();
+        this.displayuploadcontract = false;
+      }else {
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Lỗi' });
       }
     })
 

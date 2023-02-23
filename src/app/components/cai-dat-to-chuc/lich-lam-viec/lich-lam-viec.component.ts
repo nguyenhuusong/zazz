@@ -18,6 +18,7 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
 import { fromEvent } from 'rxjs';
+import * as FileSaver from 'file-saver';
 @Component({
   selector: 'app-lich-lam-viec',
   templateUrl: './lich-lam-viec.component.html',
@@ -117,7 +118,7 @@ export class LichLamViecComponent implements OnInit {
     this.loadjs++
     if (this.loadjs === 5) {
       if (b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight +10;
+        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight + 10;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       } else {
@@ -238,7 +239,7 @@ export class LichLamViecComponent implements OnInit {
     });
   }
 
-  editRow({rowData}) {
+  editRow({ rowData }) {
     const params = {
       work_cd: rowData.work_cd,
     }
@@ -246,8 +247,8 @@ export class LichLamViecComponent implements OnInit {
   }
 
   onCellClicked(event) {
-    if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
-      this.editRow(event = {rowData: event.data})
+    if (event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
+      this.editRow(event = { rowData: event.data })
     }
   }
 
@@ -272,7 +273,7 @@ export class LichLamViecComponent implements OnInit {
     this.query.pageSize = event.rows;
     this.load();
   }
-
+  itemsToolOfGrid = [];
   ngOnInit() {
     // this.getOrgRoots();
     this.items = [
@@ -281,6 +282,25 @@ export class LichLamViecComponent implements OnInit {
       { label: 'Danh sách tổ chức', routerLink: '/cai-dat/cai-dat-to-chuc' },
       { label: 'Lịch làm việc' },
     ];
+
+    this.itemsToolOfGrid = [
+      {
+        label: 'Import file',
+        code: 'Import',
+        icon: 'pi pi-upload',
+        command: () => {
+          this.importFileExel();
+        }
+      },
+      {
+        label: 'Export file',
+        code: 'Import',
+        icon: 'pi pi-download',
+        command: () => {
+          this.exportExel();
+        }
+      },
+    ]
     // this.getCustObjectListNew();
 
     // this.route.queryParamMap.subscribe((params: any) => {
@@ -290,6 +310,32 @@ export class LichLamViecComponent implements OnInit {
 
     this.getFilter();
   }
+
+  importFileExel() {
+    this.router.navigate(['/cai-dat/lich-lam-viec/import-lich-lam-viec']);
+  }
+
+  exportExel() {
+    this.spinner.show();
+    this.query.pageSize = 1000000;
+    const query = { ...this.query };
+    const queryParams = queryString.stringify(query);
+    this.apiService.setWorktimeExport(queryParams).subscribe(
+      (results: any) => {
+
+        if (results.type === 'application/json') {
+          this.spinner.hide();
+        } else if (results.type === 'application/octet-stream') {
+          var blob = new Blob([results], { type: 'application/msword' });
+          FileSaver.saveAs(blob, `Danh sách lịch làm việc` + ".xlsx");
+          this.spinner.hide();
+        }
+      },
+      error => {
+        this.spinner.hide();
+      });
+  }
+
   listOrgRoots = [];
   getOrgRoots() {
     this.apiService.getOrgRoots().subscribe(results => {
@@ -347,15 +393,15 @@ export class LichLamViecComponent implements OnInit {
     this.load();
   }
 
-  close({event, datas}) {
-    if(event !== 'Close') {
+  close({ event, datas }) {
+    if (event !== 'Close') {
       const listViews = cloneDeep(this.cloneListViewsFilter);
       this.listViewsFilter = cloneDeep(listViews);
-      const params =  getParamString(listViews)
-      this.query = { ...this.query, ...params};
+      const params = getParamString(listViews)
+      this.query = { ...this.query, ...params };
       this.load();
-    }else {
-      this.listViewsFilter =  cloneDeep(datas);
+    } else {
+      this.listViewsFilter = cloneDeep(datas);
     }
   }
 

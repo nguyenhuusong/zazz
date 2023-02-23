@@ -16,8 +16,8 @@ import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { fromEvent } from 'rxjs';
 import { cloneDeep } from 'lodash';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
-import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { DialogService } from 'primeng/dynamicdialog';
+import * as FileSaver from 'file-saver';
 @Component({
   selector: 'app-thiet-lap-wifi',
   templateUrl: './thiet-lap-wifi.component.html',
@@ -254,15 +254,55 @@ export class ThietLapWifiComponent implements OnInit, AfterViewChecked {
     this.query.pageSize = event.rows;
     this.load();
   }
-
+  itemsToolOfGrid = []
   ngOnInit() {
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Cài đặt' },
       { label: 'Danh sách thiết lập wifi' },
     ];
+    this.itemsToolOfGrid = [
+      {
+        label: 'Import file',
+        code: 'Import',
+        icon: 'pi pi-file-excel',
+        disabled: CheckHideAction(MENUACTIONROLEAPI.GetContractPage.url, ACTIONS.IMPORT),
+        command: () => {
+          this.importFileExel();
+        }
+      },
+      {
+        label: 'Export',
+        code: 'plugin',
+        icon: 'pi pi-cog',
+        command: () => {
+          this.ExportExcel();
+        }
+      },
+    ]
     this.getEmpFilter();
 
+  }
+
+  importFileExel() {
+    this.router.navigate(['/cai-dat/thiet-lap-wifi/import-thiet-lap-wifi']);
+  }
+
+  ExportExcel() {
+    this.spinner.show();
+    let params = {...this.query};
+    delete params.offSet;
+    delete params.pageSize;
+    // empId: this.detailInfo.empId
+    this.apiService.setTimekeepingWifiExport(queryString.stringify({ ...params })).subscribe(results => {
+      if (results.type === 'application/json') {
+        this.spinner.hide();
+      } else if (results.type === 'application/octet-stream') {
+        var blob = new Blob([results], { type: 'application/msword' });
+        FileSaver.saveAs(blob, `Danh sách thiết lập wifi` + ".xlsx");
+        this.spinner.hide();
+      }
+    })
   }
 
   quanlyloaihopdong() {
@@ -294,7 +334,7 @@ export class ThietLapWifiComponent implements OnInit, AfterViewChecked {
   ];
 
   getEmpFilter() {
-    this.apiService.getFilter('/api/v1/timekeeping/GetTimekeepingWifiFilter').subscribe(results => {
+    this.apiService.getFilter('/api/v1/timekeepingwifi/GetTimekeepingWifiFilter').subscribe(results => {
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
@@ -325,47 +365,6 @@ export class ThietLapWifiComponent implements OnInit, AfterViewChecked {
   }
 
 
-showFilter() {
-    const ref = this.dialogService.open(FormFilterComponent, {
-      header: 'Tìm kiếm nâng cao',
-      width: '40%',
-      contentStyle: "",
-      data: {
-        listViews: this.listViewsFilter,
-        detailInfoFilter: this.detailInfoFilter,
-        buttons: this.optionsButonFilter
-      }
-    });
-
-    ref.onClose.subscribe((event: any) => {
-      if (event) {
-        this.listViewsFilter = cloneDeep(event.listViewsFilter);
-        if (event.type === 'Search') {
-          this.query = { ...this.query, ...event.data };
-          this.load();
-        } else if (event.type === 'CauHinh') {
-          this.apiService.getFilter('/api/v2/maternity/GetMaternityFilter').subscribe(results => {
-            if (results.status === 'success') {
-              const listViews = cloneDeep(results.data.group_fields);
-              this.listViewsFilter = [...listViews];
-              const params =  getParamString(listViews)
-              this.query = { ...this.query, ...params};
-              this.load();
-              this.detailInfoFilter = results.data;
-              this.showFilter()
-            }
-          });
-
-        } else if (event.type === 'Reset') {
-          const listViews = cloneDeep(this.cloneListViewsFilter);
-          this.listViewsFilter = cloneDeep(listViews);
-         const params =  getParamString(listViews)
-        this.query = { ...this.query, ...params};
-        this.load();
-        }
-      }
-    });
-  }
 
 }
 

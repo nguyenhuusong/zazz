@@ -33,7 +33,7 @@ export class ThueBaoHiemComponent implements OnInit {
 
   }
   optionsButtonsView = [
-    { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-save' },
+    // { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-save' },
     // { label: 'Xuất hồ sơ', value: 'xuatHoSo', class: '', icon: 'pi file-excel' },
   ]
   codeStaff = ''
@@ -43,7 +43,7 @@ export class ThueBaoHiemComponent implements OnInit {
     this.spinner.show();
     this.listViews = [];
     this.detailInfo = null;
-    const queryParams = queryString.stringify({ empId: this.empId });
+    const queryParams = queryString.stringify({ empId: this.empId, isEdit : false });
     this.apiService.getEmpByInsurance(queryParams).subscribe(results => {
       if (results.status === 'success') {
         if (!this.codeStaff) {
@@ -117,6 +117,15 @@ export class ThueBaoHiemComponent implements OnInit {
 
   }
 
+  isEditDetail = false;
+  editDetail() {
+    this.isEditDetail = true;
+  }
+
+  cancelSetDetail(event) {
+    this.isEditDetail = false;
+    this.getEmpByInsurance();
+  }
 
 }
 

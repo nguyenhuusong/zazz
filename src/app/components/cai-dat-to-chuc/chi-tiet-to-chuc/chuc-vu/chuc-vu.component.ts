@@ -165,7 +165,7 @@ export class ChucVuComponent implements OnInit {
         this.spinner.show();
         this.apiService.setOrgPosition(params).subscribe(results => {
           if(results.status === 'success') {
-              this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
+              this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : results.message });
               this.getOrgPositionPage();
               this.spinner.hide();
             }else {

@@ -474,7 +474,7 @@ export class QtThayDoiLuongComponent implements OnInit {
     this.query.pageSize = 1000000;
     const query = { ...this.query };
     const queryParams = queryString.stringify(query);
-    this.apiService.getEmployeePage(queryParams).subscribe(
+    this.apiService.getSalaryInfoPageNew(queryParams).subscribe(
       (results: any) => {
         const dataExport = [];
         let gridflexs = results.data.gridflexs;
@@ -599,7 +599,7 @@ export class QtThayDoiLuongComponent implements OnInit {
   }
 
   importFileExel() {
-    this.router.navigate(['/nhan-su/ho-so-nhan-su/import']);
+    this.router.navigate(['/nhan-su/qua-trinh-thay-doi-luong/import-salary']);
   }
   isSearchEmp: boolean = false
   addNew() {

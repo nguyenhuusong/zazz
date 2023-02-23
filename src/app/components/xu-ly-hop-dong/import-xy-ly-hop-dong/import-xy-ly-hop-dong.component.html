@@ -6,17 +6,30 @@
       <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
     </section>
     <section class="bread-filter">
-        <div class="d-flex bet end bottom gap-16">
+        <div class="d-flex bet middle gap-12">
             <div class="col-item">
-                <div class="d-flex align-items-center gap-16">
-                    <p-button type="button" class="p-button-sm mr-2" (click)="toggleGrid()" icon="pi pi-th-large" pTooltip="{{isFullScreen ? 'Ẩn toàn màn hình' : 'Hiển thị toàn màn hình'}}" tooltipPosition="top"></p-button>
-                    <p-button styleClass="p-button-sm mr-2" (click)="getTemfileImport()" icon="pi pi-download" label="Tải file mẫu" *ngIf="isShowUpload"></p-button>
+                <ul class="infos-import middle d-flex gap-12" *ngIf="dataImport">
+                    <li><span class="pi pi-info-circle"></span></li>
+                    <li><span>Tổng số bản ghi: </span><span class="text-color text-dark font-bold">{{ dataImport?.recordsTotal }}</span></li>
+                    <li><span>/</span></li>
+                    <li class="text-color text-success font-bold"><span>Số bản ghi thành công: </span><span>{{ (dataImport?.recordsTotal) - (dataImport?.recordsFail) }}</span></li>
+                    <li><span>/</span></li>
+                    <li class="text-color text-danger font-bold"><span>Số bản ghi lỗi: </span><span>{{ dataImport?.recordsFail }}</span></li>
+                </ul>
+            </div>
+            <div class="col-item">
+                <div class="d-flex align-items-center gap-12">
+                    <p-button type="button" class="p-button-sm " (click)="toggleGrid()" icon="pi pi-th-large" pTooltip="{{isFullScreen ? 'Ẩn toàn màn hình' : 'Hiển thị toàn màn hình'}}" tooltipPosition="top"></p-button>
+                    <p-button styleClass="p-button-sm" (click)="getTemfileImport()" icon="pi pi-download" label="Tải file mẫu" *ngIf="isShowUpload"></p-button>
                     <p-fileUpload mode="basic" 
                     name="demo[]" 
                     chooseLabel="Tạo mới import" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" 
                     *ngIf="isShowUpload" 
                     [showCancelButton]="true" (onSelect)="onSelectFile($event)"></p-fileUpload>
-                    <p-button styleClass="p-button-sm p-button-secondary ml-2" (click)="back()" icon="pi pi-times" label="Quay lại" *ngIf="isShowUpload"></p-button>
+                    <p-button styleClass="p-button-sm p-button-secondary" (click)="back()" icon="pi pi-times" label="Quay lại" *ngIf="isShowUpload"></p-button>
+                    <p-button *ngIf="isImport" styleClass="p-button-sm" (click)="exportDraft()" icon="pi pi-download" label="Export" ></p-button>
+                    <p-button styleClass="p-button-sm" (click)="checkData(false)" icon="pi pi-check" label="Kiểm tra" *ngIf="!isShowUpload"></p-button>
+                    <p-button styleClass="p-button-sm" (click)="checkData(true)" icon="pi pi-check" label="Xác nhận" *ngIf="dataImport?.accept"></p-button>
                     <p-button styleClass="p-button-sm p-button-secondary" (click)="refetchFile()" icon="pi pi-times" label="làm mới" *ngIf="!isShowUpload"></p-button>
                 </div>
             </div>
@@ -29,6 +42,8 @@
             <app-list-grid-angular  
                 [listsData]="listsData" *ngIf="columnDefs.length > 0 && heightGrid > 0"
                  [height]="heightGrid"
+                 (showConfig)="cauhinh()"
+                 [isConfig] = "false"
                  [getContextMenuItems]="getContextMenuItems"
                 [columnDefs]="columnDefs"></app-list-grid-angular >
                 <div class="paginator" style="margin-top: 10px; text-align: right; margin-right: 25px; font-weight: 600;">
@@ -44,6 +59,10 @@
     </div>
 </section>
             
+<p-dialog header="Cài đặt cấu hình" [(visible)]="displaySetting" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
+    [draggable]="false" [resizable]="false" [focusTrap]="false" styleClass="popup-setting">
+    <app-config-grid-table-form *ngIf="displaySetting && gridKey" [typeConfig]="'TableInfo'"   [gridKey]="gridKey"></app-config-grid-table-form>
+</p-dialog>
 
 
  

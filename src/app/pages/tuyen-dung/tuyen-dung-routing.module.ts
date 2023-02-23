@@ -14,6 +14,11 @@ import { ImportTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/impor
 import { DsTiemNangComponent } from 'src/app/components/ns-tuyen-dung/ds-tiem-nang/ds-tiem-nang.component';
 import { MailDaGuiComponent } from 'src/app/components/ns-tuyen-dung/mail-da-gui/mail-da-gui.component';
 import { NsCauHinhComponent } from 'src/app/components/ns-tuyen-dung/ns-cau-hinh/ns-cau-hinh.component';
+import { KeHoachTuyenDungComponent } from 'src/app/components/ke-hoach-tuyen-dung/ke-hoach-tuyen-dung.component';
+import { ImportKeHoachComponent } from 'src/app/components/ke-hoach-tuyen-dung/import-ke-hoach/import-ke-hoach.component';
+import { ChiTietKeHoachTuyenDungComponent } from 'src/app/components/ke-hoach-tuyen-dung/chi-tiet-ke-hoach-tuyen-dung/chi-tiet-ke-hoach-tuyen-dung.component';
+import { ImportLinhVucTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/linh-vuc-tuyen-dung/import-linh-vuc-tuyen-dung/import-linh-vuc-tuyen-dung.component';
+import { ImportExcelComponent } from 'src/app/common/import-excel/import-excel.component';
 
 const routes: Routes = [
   {
@@ -86,6 +91,40 @@ const routes: Routes = [
       url: 'chi-tiet-vi-tri-tuyen-dung',
     },
   },
+  //ke hoach tuyen dung
+
+  {
+    path: 'ke-hoach-tuyen-dung',
+    component: KeHoachTuyenDungComponent,
+    data: {
+      title: 'Danh sách kế hoạch tuyển dụng',
+      url: 'ke-hoach-tuyen-dung',
+    },
+  },
+  {
+    path: 'ke-hoach-tuyen-dung/import',
+    component: ImportKeHoachComponent,
+    data: {
+      title: 'Import kế hoạch tuyển dụng',
+      url: 'import',
+    },
+  },
+  {
+    path: 'ke-hoach-tuyen-dung/them-moi-ke-hoach-tuyen-dung',
+    component: ChiTietKeHoachTuyenDungComponent,
+    data: {
+      title: 'Thêm mới kế hoạch tuyển dụng',
+      url: 'them-moi-ke-hoach-tuyen-dung',
+    },
+  },
+  {
+    path: 'ke-hoach-tuyen-dung/chi-tiet-ke-hoach-tuyen-dung',
+    component: ChiTietKeHoachTuyenDungComponent,
+    data: {
+      title: 'Chi tiết kế hoạch tuyển dụng',
+      url: 'chi-tiet-ke-hoach-tuyen-dung',
+    },
+  },
   {
     path: 'danh-sach-nghi-viec',
     component: NghiViecComponent,
@@ -100,15 +139,29 @@ const routes: Routes = [
     path: 'chuyen-mon',
     component: LinhVucTuyenDungComponent,
     data: {
-      title: 'Danh sách Chuyên môn tuyển dụng',
+      title: 'Danh sách chuyên môn tuyển dụng',
       url: 'chuyen-mon',
+    },
+  },
+  {
+    path: 'chuyen-mon/import-chuyen-mon',
+    component: ImportExcelComponent,
+    data: {
+      title: 'Import chuyên môn',
+      url: 'import-chuyen-mon',
+      titleDad : 'Danh sách chuyên môn tuyển dụng',
+      urlDad: '/tuyen-dung/chuyen-mon',
+      api: 'setJobImport',
+      apiAccept: 'setJobAccept',
+      fileDoc: 'DM_ChuyenMon_Import.xls',
+      apiExport: 'setJobExportDraft'
     },
   },
   {
     path: 'chuyen-mon/them-moi-linh-vuc-tuyen-dung',
     component: ChiTietLinhVucTuyenDungComponent,
     data: {
-      title: 'Thêm mới Chuyên môn tuyển dụng',
+      title: 'Thêm mới chuyên môn tuyển dụng',
       url: 'them-moi-linh-vuc-tuyen-dung',
     },
   },
@@ -116,7 +169,7 @@ const routes: Routes = [
     path: 'chuyen-mon/chi-tiet-linh-vuc-tuyen-dung',
     component: ChiTietLinhVucTuyenDungComponent,
     data: {
-      title: 'Chi tiết Chuyên môn tuyển dụng',
+      title: 'Chi tiết chuyên môn tuyển dụng',
       url: 'chi-tiet-linh-vuc-tuyen-dung',
     },
   },

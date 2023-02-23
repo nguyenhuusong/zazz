@@ -788,7 +788,7 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
   selector: 'app-type-number',
   template: `   <div class="field-group" [ngClass]=" element.columnValue ? 'valid' : 'invalid' ">
   <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
-                  <input type="number" class="form-control" [(ngModel)]="element.columnValue" [min]=0
+                  <input type="number" oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : 0" class="form-control" [(ngModel)]="element.columnValue" [min]=0
                     name={{element.field_name}} [disabled]="element.isDisable" (change)="onChangeValue($event.target, element.field_name, element)"
                     [required]="element.isRequire && element.isVisiable && !element.isEmpty">
                   <div *ngIf="submit && modelFields[element.field_name].error" class="alert-validation alert-danger"> 

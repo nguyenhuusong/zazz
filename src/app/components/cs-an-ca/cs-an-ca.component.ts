@@ -401,7 +401,7 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
   onCellClicked(event) {
     if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
       const params = {
-        cusId: event.data.custId
+        cusId: event.data.empId
       }
       this.router.navigate(['/chinh-sach/an-ca/chi-tiet-danh-sach-an-ca'], { queryParams: params });
     }

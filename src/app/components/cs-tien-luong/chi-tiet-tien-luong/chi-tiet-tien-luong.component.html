@@ -1,80 +1,44 @@
 <div class="main-grid product-detail">
     <section>
-        <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
+        <div class="breadcrumb">
+            <p-breadcrumb [model]="itemsMenu"></p-breadcrumb>
+            <h3>{{titlePage}}</h3>
+        </div>
     </section>
+</div>
+<p-card>
     <section>
+        <div class="status-line steps-contract col-12 m-auto">
+            <p-steps [model]="steps" *ngIf="listViews.length> 0" [(activeIndex)]="activeIndex" [readonly]="false"></p-steps>
+        </div>
+    </section>
+</p-card>
+<p-divider></p-divider>
+<p-card>
+
     <p-tabView [(activeIndex)]="indexTab" (onChange)="handleChange($event.index)">
         <p-tabPanel header="Thông tin chung">
-            <app-edit-detail *ngIf="listViews.length> 0 && manhinh === 'Edit'" 
-                [thongtinnhanvienNew]="true" [optionsButtonsEdit]="optionsButtonsView" 
-                [manhinh]="manhinh" [dataView]="listViews" 
-                (callback)="setSalaryRecordInfo($event)" 
-                (callbackcancel)="cancelUpdate($event)"></app-edit-detail>
-                <div class="grid wrap-edit-detail">
-                    <div class="col-12 border-section ">
-                        <p-panel>
-                            <ng-template pTemplate="header">
-                                <div class="grid d-flex justify-content-between">
-                                    <h3 class="title-section">Ngày công <p-badge *ngIf="listsData && listsData.length > 0"
-                                        value="{{listsData.length}}" styleClass="p-mr-2">
-                                        </p-badge></h3>
-                                </div>
-                            </ng-template>
-                            <div class="row" style="flex-wrap: wrap">
-                                <div class="grid-default border">
-                                    <app-list-grid-angular 
-                                    [domLayout]="'autoHeight'" 
-                                    *ngIf="columnDefs.length > 0" 
-                                    [title]="'Chứng chỉ'"
-                                    [idGrid]="gridKey + '_45dfs'"
-                                    [listsData]="listsData" 
-                                    (showConfig)="CauHinh()"
-                                    [floatingFilter]="true"
-                                    [columnDefs]="columnDefs">
-                                </app-list-grid-angular>
-                                </div>
-                            </div>
-                        </p-panel>
-                    </div>
-                </div>
+            <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'"
+                [optionsButtonsEdit]="optionsButtonsView" [dataView]="listViews" (callback)="setTerminateInfo($event)" (callBackForm)="callBackForm($event)"
+                (callbackcancel)="cancel($event)"></app-edit-detail>
+            <app-tab-ngay-cong [recordId]="modelEdit.recordId" *ngIf="detailInfo" [detailInfo]="detailInfo"></app-tab-ngay-cong>
         </p-tabPanel>
-        <p-tabPanel header="Nhân viên" *ngIf="recordId">
-
-            <div class="grid wrap-edit-detail">
-                <div class="col-12 border-section ">
-                    <p-panel>
-                        <ng-template pTemplate="header">
-                            <div class="grid d-flex justify-content-between">
-                                <h3 class="title-section">Danh sách nhân viên <p-badge *ngIf="listsData && listsData.length > 0"
-                                    value="{{listsData.length}}" styleClass="p-mr-2">
-                                    </p-badge></h3>
-                            </div>
-                        </ng-template>
-                        <div class="row" style="flex-wrap: wrap">
-                            <div class="grid-default border">
-                                <app-list-grid-angular 
-                                [domLayout]="'autoHeight'" 
-                                *ngIf="columnDefs.length > 0" 
-                                [title]="'Chứng chỉ'"
-                                [idGrid]="gridKey + '_45dfs'"
-                                [listsData]="listsData" 
-                                (showConfig)="CauHinh()"
-                                [floatingFilter]="true"
-                                [columnDefs]="columnDefs">
-                            </app-list-grid-angular>
-                            </div>
-                        </div>
-                    </p-panel>
-                </div>
-            </div>
-      </p-tabPanel>
-      </p-tabView>
-   </section>
+        <p-tabPanel header="Danh sách nhân viên">
+            <app-tab-nhan-vien [recordId]="modelEdit.recordId" *ngIf="indexTab === 1 && modelEdit.recordId"></app-tab-nhan-vien>
+           <!-- <app-ho-so [terminateId]="modelEdit.terminateId" *ngIf="indexTab === 1 && modelEdit.terminateId"></app-ho-so> -->
+        </p-tabPanel>
+    </p-tabView>
    
-</div>
+    <div>
+       
+
+    </div>
+       
+</p-card>
 
 
-<p-dialog header="Cài đặt cấu hình" [(visible)]="displaySetting" (onHide)="getSalaryEmployeePage()" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
-    [draggable]="false" [resizable]="false" [focusTrap]="false" styleClass="popup-setting">
-    <app-config-grid-table-form *ngIf="displaySetting && gridKey" [typeConfig]="'TableInfo'"   [gridKey]="gridKey"></app-config-grid-table-form>
-</p-dialog>
+
+<!-- <p-dialog header="Xử lý bàn giao" [(visible)]="displayChangeStatus" [modal]="true" [style]="{width: '1300px'}"
+    [draggable]="false" [resizable]="false">
+    <app-cap-nhat-trang-thai-nghi-viec [terminateId]="modelPheDuyet.id" (back)="xacnhan()" *ngIf="displayChangeStatus"></app-cap-nhat-trang-thai-nghi-viec>
+</p-dialog> -->

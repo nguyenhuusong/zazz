@@ -24,6 +24,12 @@ import { LyDoNghiViecComponent } from 'src/app/components/ns-ho-so-nghi-viec/ly-
 import { ChiTietLyDoNghiViecComponent } from 'src/app/components/ns-ho-so-nghi-viec/ly-do-nghi-viec/chi-tiet-ly-do-nghi-viec/chi-tiet-ly-do-nghi-viec.component';
 import { DetailTerminateComponent } from 'src/app/components/ns-ho-so-nghi-viec/detail-terminate/detail-terminate.component';
 import { ImportTerminateComponent } from 'src/app/components/ns-ho-so-nghi-viec/import-terminate/import-terminate.component';
+import { XuLyQuaTrinhCongTacComponent } from 'src/app/components/xu-ly-qua-trinh-cong-tac/xu-ly-qua-trinh-cong-tac.component';
+import { ChiTietXuLyQtCongTacComponent } from 'src/app/components/xu-ly-qua-trinh-cong-tac/chi-tiet-xu-ly-qt-cong-tac/chi-tiet-xu-ly-qt-cong-tac.component';
+import { ImportQtThayDoiLuongComponent } from 'src/app/components/qt-thay-doi-luong/import-qt-thay-doi-luong/import-qt-thay-doi-luong.component';
+import { ChiTietBienDongBHXHComponent } from 'src/app/components/bien-dong-bhxh/chi-tiet-bien-dong-bhxh/chi-tiet-bien-dong-bhxh.component';
+import { BienDongBHXHComponent } from 'src/app/components/bien-dong-bhxh/bien-dong-bhxh.component';
+import { ImportExcelComponent } from 'src/app/common/import-excel/import-excel.component';
 
 const routes: Routes = [
   {
@@ -57,6 +63,30 @@ const routes: Routes = [
     data: {
       title: 'Danh sách xử lý hợp đồng',
       url: 'chi-tiet-xu-ly-hop-dong',
+    },
+  },
+  {
+    path: 'xu-ly-qua-trinh-cong-tac',
+    component: XuLyQuaTrinhCongTacComponent,
+    data: {
+      title: 'Danh sách quá trình công tác',
+      url: 'xu-ly-qua-trinh-cong-tac',
+    },
+  },
+  {
+    path: 'xu-ly-qua-trinh-cong-tac/them-moi-xu-ly-qua-trinh-cong-tac',
+    component: ChiTietXuLyQtCongTacComponent,
+    data: {
+      title: 'Thêm mới quá trình công tác',
+      url: 'them-moi-xu-ly-qua-trinh-cong-tac',
+    },
+  },
+  {
+    path: 'xu-ly-qua-trinh-cong-tac/chi-tiet-xu-ly-qua-trinh-cong-tac',
+    component: ChiTietXuLyQtCongTacComponent,
+    data: {
+      title: 'Chi tiết quá trình công tác',
+      url: 'chi-tiet-xu-ly-qua-trinh-cong-tac',
     },
   },
   {
@@ -243,6 +273,14 @@ const routes: Routes = [
      url: 'qua-trinh-thay-doi-luong',
    },
  },
+  {
+   path: 'qua-trinh-thay-doi-luong/import-salary',
+   component: ImportQtThayDoiLuongComponent,
+   data: {
+     title: 'Import quá trình thay đổi lương',
+     url: 'import-salary',
+   },
+ },
  {
   path: 'qua-trinh-thay-doi-luong/them-moi-qua-trinh-thay-doi-luong',
   component: ChiTietQTThayDoiLuongComponent,
@@ -257,6 +295,48 @@ const routes: Routes = [
   data: {
     title: 'Chi tiết quá trình thay đổi lương',
     url: 'chi-tiet-qua-trinh-thay-doi-luong',
+  },
+},
+
+// biến động bhxh
+
+{
+  path: 'bien-dong-bhxh',
+  component: BienDongBHXHComponent,
+  data: {
+    title: 'Biến động bảo hiểm xã hội',
+    url: 'bien-dong-bhxh',
+  },
+},
+{
+  path: 'bien-dong-bhxh/them-moi-bien-dong-bhxh',
+  component: ChiTietBienDongBHXHComponent,
+  data: {
+    title: 'Thêm mới biến động bhxh',
+    url: 'bien-dong-bhxh/them-moi-bien-dong-bhxh',
+  },
+},
+{
+  path: 'bien-dong-bhxh/chi-tiet-bien-dong-bhxh',
+  component: ChiTietBienDongBHXHComponent,
+  data: {
+    title: 'Chi tiết biến động bhxh',
+    url: 'bien-dong-bhxh/chi-tiet-bien-dong-bhxh',
+  },
+},
+
+{
+  path: 'bien-dong-bhxh/import-bien-dong-bhxh',
+  component: ImportExcelComponent,
+  data: {
+    title: 'Import biến động BHXH',
+    url: 'import-bien-dong-bhxh',
+    titleDad : 'Danh sách biến động BHXH',
+    urlDad: '/nhan-su/bien-dong-bhxh',
+    api: 'setInsuranceImport',
+    apiAccept: 'setInsuranceAccept',
+    fileDoc: 'bien_dong_bhxh_import.xlsx',
+    apiExport: 'setInsuranceExportDraft'
   },
 },
   

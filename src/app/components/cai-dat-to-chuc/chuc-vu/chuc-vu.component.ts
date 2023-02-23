@@ -17,6 +17,7 @@ import { getParamString } from 'src/app/common/function-common/objects.helper';
 import { fromEvent } from 'rxjs';
 import { DialogService } from 'primeng/dynamicdialog';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
+import * as FileSaver from 'file-saver';
 @Component({
   selector: 'app-chuc-vu',
   templateUrl: './chuc-vu.component.html',
@@ -114,7 +115,7 @@ export class ChucVuComponent implements OnInit, AfterViewChecked {
     this.loadjs++
     if (this.loadjs === 5) {
       if (b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight +10;
+        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight + 10;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       } else {
@@ -220,7 +221,7 @@ export class ChucVuComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  editRow({rowData}) {
+  editRow({ rowData }) {
     const params = {
       positionId: rowData.positionId,
     }
@@ -228,8 +229,8 @@ export class ChucVuComponent implements OnInit, AfterViewChecked {
   }
 
   onCellClicked(event) {
-    if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
-      this.editRow(event = {rowData: event.data})
+    if (event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
+      this.editRow(event = { rowData: event.data })
     }
   }
 
@@ -255,7 +256,7 @@ export class ChucVuComponent implements OnInit, AfterViewChecked {
     this.query.pageSize = event.rows;
     this.load();
   }
-
+  itemsToolOfGrid = [];
   ngOnInit() {
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
@@ -263,8 +264,58 @@ export class ChucVuComponent implements OnInit, AfterViewChecked {
       { label: 'Danh sách tổ chức', routerLink: '/cai-dat/cai-dat-to-chuc' },
       { label: 'Danh sách chức vụ' },
     ];
+    this.itemsToolOfGrid = [
+      {
+        label: 'Import file',
+        code: 'Import',
+        icon: 'pi pi-upload',
+        command: () => {
+          this.importFileExel();
+        }
+      },
+      {
+        label: 'Export file',
+        code: 'Import',
+        icon: 'pi pi-download',
+        command: () => {
+          this.exportExel();
+        }
+      },
+    ]
     this.getFilter();
   }
+
+  importFileExel() {
+    this.router.navigate(['/cai-dat/chuc-vu/import-chuc-vu']);
+  }
+
+  exportExel() {
+    this.spinner.show();
+    this.query.pageSize = 1000000;
+    const query = { ...this.query };
+    const queryParams = queryString.stringify(query);
+    this.apiService.setPositionExport(queryParams).subscribe(
+      (results: any) => {
+
+        if (results.type === 'application/json') {
+          this.spinner.hide();
+        } else if (results.type === 'application/octet-stream') {
+          var blob = new Blob([results], { type: 'application/msword' });
+          FileSaver.saveAs(blob, `Danh sách chức vụ` + ".xlsx");
+          this.spinner.hide();
+        }
+      },
+      error => {
+        this.spinner.hide();
+      });
+  }
+
+
+
+
+
+
+
 
   listViewsFilter = [];
   cloneListViewsFilter = [];
@@ -295,15 +346,15 @@ export class ChucVuComponent implements OnInit, AfterViewChecked {
     this.load();
   }
 
-  close({event, datas}) {
-    if(event !== 'Close') {
+  close({ event, datas }) {
+    if (event !== 'Close') {
       const listViews = cloneDeep(this.cloneListViewsFilter);
       this.listViewsFilter = cloneDeep(listViews);
-      const params =  getParamString(listViews)
-      this.query = { ...this.query, ...params};
+      const params = getParamString(listViews)
+      this.query = { ...this.query, ...params };
       this.load();
-    }else {
-      this.listViewsFilter =  cloneDeep(datas);
+    } else {
+      this.listViewsFilter = cloneDeep(datas);
     }
   }
 

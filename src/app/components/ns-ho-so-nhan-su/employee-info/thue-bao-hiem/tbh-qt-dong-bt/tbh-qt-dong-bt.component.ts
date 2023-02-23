@@ -47,7 +47,7 @@ export class TbhQtDongBtComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getEmpInsurancePage();
+    this.getInsurancePageByEmp();
   }
   displaySetting = false;
   CauHinh() {
@@ -56,7 +56,7 @@ export class TbhQtDongBtComponent implements OnInit {
   insuranceId = null;
   addWorked() {
     this.insuranceId = null;
-    this.getEmpInsuranceInfo();
+    this.displayFormEditDetail = true;
   }
 
   listViewsDetail = [];
@@ -82,7 +82,7 @@ export class TbhQtDongBtComponent implements OnInit {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thêm mới thành công' });
         this.displayFormEditDetail = false;
-        this.getEmpInsurancePage();
+        this.getInsurancePageByEmp();
         this.FnEvent();
         this.spinner.hide();
       } else {
@@ -93,11 +93,11 @@ export class TbhQtDongBtComponent implements OnInit {
   
   }
 
-  getEmpInsurancePage() {
+  getInsurancePageByEmp() {
     this.spinner.show();
     this.columnDefs = [];
     const queryParams = queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 });
-    this.apiService.getEmpInsurancePage(queryParams).subscribe(repo => {
+    this.apiService.getInsurancePageByEmp(queryParams).subscribe(repo => {
       if (repo.status === 'success') {
         if (repo.data.dataList.gridKey) {
           this.gridKey = repo.data.dataList.gridKey;
@@ -159,7 +159,7 @@ export class TbhQtDongBtComponent implements OnInit {
 
   editRow({rowData}) {
     this.insuranceId = rowData.insuranceId;
-    this.getEmpInsuranceInfo();
+    this.displayFormEditDetail = true;
   }
 
   onCellClicked(event) {
@@ -172,11 +172,11 @@ export class TbhQtDongBtComponent implements OnInit {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa?',
       accept: () => {
-        const queryParams = queryString.stringify({id: event.rowData.insuranceId});
-        this.apiService.delEmpInsurance(queryParams).subscribe((results: any) => {
+        const queryParams = queryString.stringify({insuranceId: event.rowData.insuranceId});
+        this.apiService.delInsuranceInfo(queryParams).subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
-            this.getEmpInsurancePage();
+            this.getInsurancePageByEmp();
             this.FnEvent();
           } else {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
@@ -184,6 +184,11 @@ export class TbhQtDongBtComponent implements OnInit {
         });
       }
     });
+  }
+
+  handleSaveInsurance() {
+    this.getInsurancePageByEmp();
+    this.displayFormEditDetail = false;
   }
 
 }

@@ -200,14 +200,14 @@ export class NgayNghiLeComponent implements OnInit {
         {
           onClick: this.editRow.bind(this),
           label: 'Thông tin chi tiết',
-          icon: 'icon-edit',
+          icon: 'fa fa-eye',
           class: 'btn-primary mr5',
           hide: CheckHideAction(MENUACTIONROLEAPI.HolidayPage.url, ACTIONS.VIEW)
         },
         {
           onClick: this.delRow.bind(this),
           label: 'Xóa',
-          icon: 'icon-delete',
+          icon: 'pi pi-trash',
           class: 'btn-primary mr5',
           hide: CheckHideAction(MENUACTIONROLEAPI.HolidayPage.url, ACTIONS.DELETE)
         },
@@ -236,13 +236,16 @@ export class NgayNghiLeComponent implements OnInit {
       {
         headerComponentParams: {
           template:
-            `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
+          `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
         },
-        field: 'button',
-        editable: false, width: 100,
-        cellRenderer: 'buttonRendererComponent',
+        filter: '',
+        width: 70,
+        pinned: 'right',
+        cellRenderer: 'buttonAgGridComponent',
+        cellClass: ['border-right', 'no-auto'],
         cellRendererParams: (params: any) => this.showButtons(params),
-        cellClass: ['action', 'border-right', 'no-auto'],
+        checkboxSelection: false,
+        field: 'checkbox'
       },
     ]
 

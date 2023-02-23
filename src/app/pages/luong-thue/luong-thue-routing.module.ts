@@ -6,6 +6,8 @@ import { ChiTietBangLuongComponent } from 'src/app/components/luong-thue/bang-lu
 import { TinhLuongComponent } from 'src/app/components/luong-thue/tinh-luong/tinh-luong.component';
 import { CauTrucBangLuongComponent } from 'src/app/components/luong-thue/bang-luong/cau-truc-bang-luong/cau-truc-bang-luong.component';
 import { CongThucLuongComponent } from 'src/app/components/luong-thue/bang-luong/cong-thuc-luong/cong-thuc-luong.component';
+import { ImportCapBacLuongComponent } from 'src/app/components/luong-thue/tinh-luong/import-cap-bac-luong/import-cap-bac-luong.component';
+import { ImportExcelComponent } from 'src/app/common/import-excel/import-excel.component';
 
 const routes: Routes = [
   {
@@ -27,6 +29,34 @@ const routes: Routes = [
     data: {
       title: 'Thiết lập tham số',
       url: 'thiet-lap-tham-so',
+    },
+  },
+  {
+    path: 'tinh-luong/import-cap-bac-luong',
+    component: ImportExcelComponent,
+    data: {
+      title: 'Import cấp bậc lương',
+      url: 'import-cap-bac-luong',
+      titleDad : 'Danh sách tính lương',
+      urlDad: '/luong-thue/tinh-luong',
+      api: 'setPayrollBaseImport',
+      apiAccept: 'setPayrollBaseAccept',
+      fileDoc: 'DM_CapBacLuong_Import.xls',
+      apiExport: 'setPayrollBaseExportDraft'
+    },
+  },
+  {
+    path: 'tinh-luong/import-thanh-phan-luong',
+    component: ImportExcelComponent,
+    data: {
+      title: 'Import Thành phần lương',
+      url: 'import-cap-thanh-phan-luong',
+      titleDad : 'Danh sách tính lương',
+      urlDad: '/luong-thue/tinh-luong',
+      api: 'setPayrollBaseImport',
+      apiAccept: 'setPayrollBaseAccept',
+      fileDoc: 'DM_ThanhPhanLuong_Import.xls',
+      apiExport: ''
     },
   },
   {

@@ -20,8 +20,8 @@
         </div>
         <div class="col-3">
             <div class="d-flex end gap-16 icons-detail-config">
-                <!-- <span class="pi pi-pencil" pTooltip="Chỉnh sửa" tooltipPosition="left"></span> -->
-                <!-- <span class="pi pi-cog" pTooltip="Cấu hình" tooltipPosition="left"></span> -->
+                <!-- <span class="mr-2 pi pi-file-export" style="color: blue; cursor: pointer;" (click)="exportResume()" >Xuất hồ sơ</span> -->
+                <span class="pi pi-pencil" pTooltip="Chỉnh sửa" (click)="editDetail()" tooltipPosition="left"></span>
             </div>
         </div>
     </div>
@@ -49,6 +49,15 @@
         </p-panel>
         </div>
     </section>
+
+    
+<p-dialog [(visible)]="isEditDetail" [autoZIndex]="true" [modal]="true"  appendTo="body"
+[style]="{width: '1300px', height: 'auto'}">
+<p-header>
+    Sửa thông tin thuế bảo hiểm
+</p-header>
+    <app-chi-tiet-thue-bao-hiem *ngIf="isEditDetail" [empId]="empId" (cancelSave)="cancelSetDetail($event)"></app-chi-tiet-thue-bao-hiem>
+</p-dialog>
 
     <!-- <p-dialog styleClass="popup-btngroup-edit-detail" [(visible)]="displayFormEditDetail" [draggable]="false"  [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '800px', height: 'auto'}">
         <p-header>

@@ -65,6 +65,10 @@ import { HrmSearchEmpModule } from 'src/app/common/hrm-search-emp/hrm-search-emp
 import { CsChamCongOverviewComponent } from 'src/app/components/cs-cham-cong/cs-cham-cong-overview/cs-cham-cong-overview.component';
 import { PanelModule } from 'primeng/panel';
 import { ListGridAngularTreeModule } from 'src/app/common/list-grid-tree-angular/list-grid-angular.module';
+import { TabNhanVienComponent } from 'src/app/components/cs-tien-luong/chi-tiet-tien-luong/tab-nhan-vien/tab-nhan-vien.component';
+import { TabNgayCongComponent } from 'src/app/components/cs-tien-luong/chi-tiet-tien-luong/tab-ngay-cong/tab-ngay-cong.component';
+import { StepsModule } from 'primeng/steps';
+import { DividerModule } from 'primeng/divider';
 
 @NgModule({
   imports: [
@@ -106,6 +110,8 @@ import { ListGridAngularTreeModule } from 'src/app/common/list-grid-tree-angular
     ConfigGridTableFormModule,
     CheckHideActionsDirectiveModule,
     HrmSearchEmpModule,
+    StepsModule,
+    DividerModule,
     AgGridModule.withComponents([
       ButtonRendererComponent,
       ButtonRendererComponent1,
@@ -138,7 +144,9 @@ import { ListGridAngularTreeModule } from 'src/app/common/list-grid-tree-angular
     XemCongComponent,
     EatingListComponent,
     ImportPhepBuComponent,
-    CsChamCongOverviewComponent
+    CsChamCongOverviewComponent,
+    TabNhanVienComponent,
+    TabNgayCongComponent,
   ],
   providers: [],
 })

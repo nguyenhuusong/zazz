@@ -36,7 +36,7 @@
         Thêm mới quá trình công tác
     </p-header>
 
-    <p-card>
+    <!-- <p-card>
         <div class="status-line steps-contract col-12 m-auto">
             <p-steps [model]="steps" [(activeIndex)]="activeIndex" [readonly]="false"></p-steps>
         </div>
@@ -49,7 +49,9 @@
             (callBackForm)="callBackForm($event)"
             (callbackcancel)="canceDetail($event)"></app-edit-detail>
     </p-card>
-    
+     -->
+
+     <app-chi-tiet-xu-ly-qt-cong-tac *ngIf="displayFormEditDetail" [isDialog]="true" [empId]="empId" [processId]="processId" (callback)="callbackSave()"></app-chi-tiet-xu-ly-qt-cong-tac>
 </p-dialog>
 
 
