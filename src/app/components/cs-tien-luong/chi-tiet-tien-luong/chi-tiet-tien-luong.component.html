@@ -21,9 +21,9 @@
             <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'"
                 [optionsButtonsEdit]="optionsButtonsView" [dataView]="listViews" (callback)="setTerminateInfo($event)" (callBackForm)="callBackForm($event)"
                 (callbackcancel)="cancel($event)"></app-edit-detail>
-            <app-tab-ngay-cong [recordId]="modelEdit.recordId" *ngIf="detailInfo" [detailInfo]="detailInfo"></app-tab-ngay-cong>
+            <app-tab-ngay-cong [recordId]="modelEdit.recordId" *ngIf="detailInfo && this.flowCurrent > 1" [detailInfo]="detailInfo"></app-tab-ngay-cong>
         </p-tabPanel>
-        <p-tabPanel header="Danh sách nhân viên">
+        <p-tabPanel header="Danh sách nhân viên" *ngIf="this.flowCurrent > 1">
             <app-tab-nhan-vien [recordId]="modelEdit.recordId" *ngIf="indexTab === 1 && modelEdit.recordId"></app-tab-nhan-vien>
            <!-- <app-ho-so [terminateId]="modelEdit.terminateId" *ngIf="indexTab === 1 && modelEdit.terminateId"></app-ho-so> -->
         </p-tabPanel>

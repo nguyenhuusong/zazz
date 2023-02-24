@@ -123,7 +123,7 @@ export class DetailTerminateComponent implements OnInit {
       const params = {
         ...this.detailInfo
         , group_fields: event.data
-        , flow_cur: event.type === 'Submit' ?  this.flowCurrent : this.flowCurrent -1
+        , flow_cur: event.type === 'Submit' ?  this.flowCurrent : this.flowCurrent
         , action: event.type === 'Submit' ? 'submit' : 'save'
       }
       this.cloneListViews = cloneDeep(event.data); 

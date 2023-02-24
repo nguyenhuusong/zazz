@@ -69,12 +69,32 @@ export class ThongTinCaNhanEditDetailComponent implements OnInit {
 
   cloneListViews = [];
   callBackForm(event) {
-    const params = {
-      ...this.detailInfo, group_fields: event.data, flow_cur: event.type === 'Submit' ?  this.flowCurrent : this.flowCurrent -1
+    if(this.flowCurrent >= this.activeIndex) {
+      const params = {
+        ...this.detailInfo, group_fields: event.data
+        , flow_cur: event.type === 'Submit' ? this.flowCurrent : this.flowCurrent
+        , action: event.type === 'Submit' ? 'submit' : 'save'
+      }
+      this.cloneListViews = cloneDeep(event.data);
+      this.listViews = [];
+      this.callApiInfo(params, event.type);
+    }else {
+      const params = {
+        ...this.detailInfo, group_fields: event.data
+        , flow_st: this.detailInfo.flow_cur
+        , action: event.type === 'Submit' ? 'submit' : 'save'
+      }
+      this.cloneListViews = cloneDeep(event.data);
+      this.listViews = [];
+      this.callApiInfo(params, event.type);
     }
-     this.cloneListViews = cloneDeep(event.data);
-    this.listViews = [];
-    this.callApiInfo(params, event.type)
+
+    // const params = {
+    //   ...this.detailInfo, group_fields: event.data, flow_cur: event.type === 'Submit' ?  this.flowCurrent : this.flowCurrent -1
+    // }
+    //  this.cloneListViews = cloneDeep(event.data);
+    // this.listViews = [];
+    // this.callApiInfo(params, event.type)
   }
 
   stepActivated(): void {
@@ -94,12 +114,23 @@ export class ThongTinCaNhanEditDetailComponent implements OnInit {
   }
 
   setDetail(data) {
-    const  params = {
-      ...this.detailInfo, group_fields: data, flow_cur: this.flowCurrent
-    };
-    this.cloneListViews = cloneDeep(data);
-    this.listViews = [];
-    this.callApiInfo(params)
+    if(this.flowCurrent >= this.activeIndex) {
+      const params = {
+        ...this.detailInfo, group_fields: data, flow_cur: this.flowCurrent, action: 'next'
+      };
+      this.cloneListViews = cloneDeep(data);
+      this.listViews = [];
+      this.callApiInfo(params)
+    }else {
+      this.getDetail(this.flowCurrent + 1);
+    }
+
+    // const  params = {
+    //   ...this.detailInfo, group_fields: data, flow_cur: this.flowCurrent
+    // };
+    // this.cloneListViews = cloneDeep(data);
+    // this.listViews = [];
+    // this.callApiInfo(params)
   
   }
 
