@@ -163,7 +163,7 @@ export class ImportXyLyHopDongComponent implements OnInit {
   }
 
   getTemfileImport() {
-    this.apiService.exportReportLocalhost('assets/HopDongLaoDong_Import.xlsx').subscribe((data: any) => {
+    this.apiService.exportReportLocalhost('assets/tpl-import-file/HopDongLaoDong_Import.xlsx').subscribe((data: any) => {
       this.createImageFromBlob(data)
     });
   }
