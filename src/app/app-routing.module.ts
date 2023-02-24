@@ -90,7 +90,13 @@ const appRoutes: Routes = [
       //   path: 'report',
       //   loadChildren: () => import('../app/pages/bao-cao/bao-cao.module').then(m => m.BaoCaoModule)
       // },
-      
+
+      // uni url: for all using in project
+      // icon...
+      {
+        path: 'uni',
+        loadChildren: () => import('../app/pages/uni-common/uni-common.module').then(m => m.UniCommonModule)
+      },
     ], canActivate: [AuthGuardService]
   },
  

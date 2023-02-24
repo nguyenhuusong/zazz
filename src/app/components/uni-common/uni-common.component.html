@@ -1,0 +1,21 @@
+<p-tabView>
+    <p-tabPanel header="Uni icons">
+        <div class="uni-icons pd-4 mt-4 mr-4" style="padding: 20px">
+            <app-uni-icon *ngFor="let icon of icons" class="mr-1 text-textMedium"
+                [name]="icon.name"
+                nz-tooltip
+                [nzTooltipMouseEnterDelay]="'0.3'"
+                [nzTooltipTitle]=""
+                nzTooltipPlacement="bottom"
+                [size]="20"
+                [style.color]="icon.color">
+        </app-uni-icon>
+    </div>
+    </p-tabPanel>
+    <p-tabPanel header="Uni 2">
+        Content 2
+    </p-tabPanel>
+    <p-tabPanel header="Uni 3">
+        Content 3
+    </p-tabPanel>
+</p-tabView>
