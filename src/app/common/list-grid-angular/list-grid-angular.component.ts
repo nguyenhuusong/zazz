@@ -129,6 +129,8 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
           return dataItem && dataItem.contractFiles ? dataItem.contractFiles.length > 0 : false;
         }else if (dataItem.organizes) {
           return dataItem && dataItem.organizes ? dataItem.organizes.length > 0 : false;
+        }else if (dataItem.workdays) {
+          return dataItem && dataItem.workdays ? dataItem.workdays.length > 0 : false;
         }  else {
           return false
         }

@@ -6,8 +6,17 @@
     .steps-contract {
         width: 75% !important
     }
-}
-.max-h-600{
-    max-height: 600px;
-    overflow: auto;
+    .max-h-600{
+        max-height: 600px;
+        overflow: auto;
+    }
+
+    .chi-tiet-tien-luong {
+        .p-card-body {
+            padding: 0;
+            .p-card-content {
+                padding: 0;
+            }
+        }
+    }
 }

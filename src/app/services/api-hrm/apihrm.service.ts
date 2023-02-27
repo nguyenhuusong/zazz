@@ -281,8 +281,28 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v1/salary/getSalaryEmployeePage?` + queryParams, this.options)
   }
   
-  getSalaryDayWorkingPage(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/salary/GetSalaryDayWorkingPage?` + queryParams, this.options)
+  getSalaryWorkTimePage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/salary/GetSalaryWorkTimePage?` + queryParams, this.options)
+  }
+
+  getSalaryEatingPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/salary/GetSalaryEatingPage?` + queryParams, this.options)
+  }
+  
+  getSalarySupportPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/salary/GetSalarySupportPage?` + queryParams, this.options)
+  }
+
+  getSalaryDeductPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/salary/GetSalaryDeductPage?` + queryParams, this.options)
+  }
+
+  getSalaryPartimePage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/salary/GetSalaryPartimePage?` + queryParams, this.options)
+  }
+
+  getSalaryPrerformancePage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/salary/GetSalaryPrerformancePage?` + queryParams, this.options)
   }
   
   getSalaryRecordInfo(queryParams): Observable<any> {
@@ -1066,6 +1086,15 @@ export class ApiHrmService {
   
   setLeaveReasonAccept(queryParams): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/leavereason/SetLeaveReasonAccept`, queryParams, this.options)
+  }
+
+  exportLeave(queryParams): Observable<any> {
+    return this.http.get(`${apiHrmServer}/api/v2/leave/ExportLeave/?${queryParams}`, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
   }
 
   getEatingInfo(queryParams): Observable<any> {
@@ -2664,15 +2693,15 @@ export class ApiHrmService {
   }
 
   getOrgPositionPage(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/organize/GetOrgPositionPage?` + queryParams, this.options);
+    return this.http.get<any>(`${apiHrmServer}/api/v1/organize/GetOrgPositionTitlePage?` + queryParams, this.options);
   }
 
   getOrgPosition(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/organize/GetOrgPosition?` + queryParams, this.options);
+    return this.http.get<any>(`${apiHrmServer}/api/v2/position/GetPositionTitles?` + queryParams, this.options);
   }
 
   setOrgPosition(queryParams): Observable<any> {
-    return this.http.put<any>(`${apiHrmServer}/api/v1/organize/SetOrgPosition`, queryParams, this.options);
+    return this.http.put<any>(`${apiHrmServer}/api/v1/organize/SetOrgPositionTitle`, queryParams, this.options);
   }
 
   getOrgJobPage(queryParams): Observable<any> {

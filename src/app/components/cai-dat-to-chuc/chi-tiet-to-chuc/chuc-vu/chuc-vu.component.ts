@@ -160,7 +160,7 @@ export class ChucVuComponent implements OnInit {
       if(this.listTargets.length > 0) {
         const params = {
           orgDepId: this.orgId,
-          positionIds: this.listTargets.map(d => d.positionId)
+          positionTitleIds: this.listTargets.map(d => d.value)
         }
         this.spinner.show();
         this.apiService.setOrgPosition(params).subscribe(results => {

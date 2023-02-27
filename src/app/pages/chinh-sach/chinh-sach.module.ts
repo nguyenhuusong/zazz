@@ -69,6 +69,12 @@ import { TabNhanVienComponent } from 'src/app/components/cs-tien-luong/chi-tiet-
 import { TabNgayCongComponent } from 'src/app/components/cs-tien-luong/chi-tiet-tien-luong/tab-ngay-cong/tab-ngay-cong.component';
 import { StepsModule } from 'primeng/steps';
 import { DividerModule } from 'primeng/divider';
+import { ChamCongComponent } from 'src/app/components/cs-tien-luong/chi-tiet-tien-luong/cham-cong/cham-cong.component';
+import { AnCaComponent } from 'src/app/components/cs-tien-luong/chi-tiet-tien-luong/an-ca/an-ca.component';
+import { HieuSuatLaoDongComponent } from 'src/app/components/cs-tien-luong/chi-tiet-tien-luong/hieu-suat-lao-dong/hieu-suat-lao-dong.component';
+import { LamNgoaiGioComponent } from 'src/app/components/cs-tien-luong/chi-tiet-tien-luong/lam-ngoai-gio/lam-ngoai-gio.component';
+import { HoTroComponent } from 'src/app/components/cs-tien-luong/chi-tiet-tien-luong/ho-tro/ho-tro.component';
+import { GiamTruThueComponent } from 'src/app/components/cs-tien-luong/chi-tiet-tien-luong/giam-tru-thue/giam-tru-thue.component';
 
 @NgModule({
   imports: [
@@ -147,6 +153,12 @@ import { DividerModule } from 'primeng/divider';
     CsChamCongOverviewComponent,
     TabNhanVienComponent,
     TabNgayCongComponent,
+    ChamCongComponent,
+    AnCaComponent,
+    HieuSuatLaoDongComponent,
+    LamNgoaiGioComponent,
+    HoTroComponent,
+    GiamTruThueComponent,
   ],
   providers: [],
 })

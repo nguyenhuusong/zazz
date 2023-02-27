@@ -19,6 +19,8 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
 import { fromEvent } from 'rxjs';
+import * as FileSaver from 'file-saver';
+import { ExportFileService } from 'src/app/services/export-file.service';
 @Component({
   selector: 'app-cs-nghi-phep',
   templateUrl: './cs-nghi-phep.component.html',
@@ -36,6 +38,7 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
   dataNghiPhep: any;
   addEdit = false;
   leaveId = '';
+  itemsToolOfGrid: any[] = [];
   constructor(
     private spinner: NgxSpinnerService,
     private apiService: ApiHrmService,
@@ -46,6 +49,7 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
     private organizeInfoService: OrganizeInfoService,
     private router: Router,
     public dialogService: DialogService,
+    private fileService: ExportFileService,
     private apiBaseService: ApiService) {
 
     this.defaultColDef = {
@@ -392,6 +396,17 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
     ];
     // this.getOrgRoots();
     // this.getRequestStatus();
+
+    this.itemsToolOfGrid = [
+      {
+        label: 'Export',
+        code: 'export',
+        icon: 'pi pi-download',
+        command: () => {
+          this.ExportData();
+        }
+      },
+    ];
   }
 
   getLeaveReasons() {
@@ -683,6 +698,56 @@ showFilter() {
       this.isSearchEmp = false;
     }
   }
+
+  ExportData() {
+    this.query.pageSize = 1000000;
+    let params: any = { ... this.query };
+    const queryParams = queryString.stringify(params);
+    // this.apiService.exportLeave(queryParams).subscribe(results => {
+    //   if (results.type === 'application/json') {
+    //     this.spinner.hide();
+    //   } else {
+    //     var blob = new Blob([results], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    //     FileSaver.saveAs(blob, `Danh sách giải trình công` + ".xlsx");
+    //     this.spinner.hide();
+    //   }
+    // })
+
+    this.apiService.getLeavePage(queryParams).subscribe(
+      (results: any) => {
+        const dataExport = [];
+        let gridflexs = results.data.gridflexs;
+        let arrKey = gridflexs.map(elementName => elementName.columnField);
+
+        let dataList = results.data.dataList.data;
+        for (let elementValue of dataList) {
+          const data: any = {};
+          for (let elementName of gridflexs) {
+            if (arrKey.indexOf(elementName.columnField) > -1 && !elementName.isHide && elementName.columnField !== 'statusName') {
+              let valueColumn = elementValue[elementName.columnField];
+              if (elementName.columnField == 'request_status') {
+                valueColumn = this.replaceHtmlToText(valueColumn);
+              }
+              data[elementName.columnCaption] = valueColumn || '';
+            }
+
+          }
+
+          dataExport.push(data);
+        }
+        this.fileService.exportAsExcelFile(dataExport, 'Danh sách giải trình công');
+
+        this.spinner.hide();
+      },
+      error => {
+        this.spinner.hide();
+      });
+  }
+
+  replaceHtmlToText(string) {
+    return string.replace(/(<([^>]+)>)/gi, "");
+  }
+
 }
 
 

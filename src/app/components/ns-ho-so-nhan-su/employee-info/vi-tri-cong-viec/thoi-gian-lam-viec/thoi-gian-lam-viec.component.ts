@@ -189,7 +189,7 @@ cloneListViewsDetail = [];
       const params = {
         ...this.dataDetailInfo
         , group_fields: event.data
-        , flow_cur: event.type === 'Submit' ?  this.flowCurrent : this.flowCurrent -1
+        , flow_cur: event.type === 'Submit' ?  this.flowCurrent : this.flowCurrent
         , action: event.type === 'Submit' ? 'submit' : 'save'
       }
       this.cloneListViewsDetail = cloneDeep(event.data)
