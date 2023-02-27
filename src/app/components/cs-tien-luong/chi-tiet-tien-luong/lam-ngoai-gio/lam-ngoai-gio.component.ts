@@ -32,18 +32,18 @@ export class LamNgoaiGioComponent implements OnInit {
   detailCellRendererParams = null;
   listDataNew = [];
   ngOnInit(): void {
-    this.getSalaryDayWorkingPage();
+    this.getSalaryPartimePage();
   }
 
   cauhinh() {
     this.displaySetting = true;
   }
   
-  getSalaryDayWorkingPage() {
+  getSalaryPartimePage() {
     this.spinner.show();
     this.columnDefs = [];
     const queryParams = queryString.stringify({ recordId: this.recordId, offSet: 0, pageSize: 10000 });
-    this.apiService.getSalaryWorkTimePage(queryParams).subscribe(repo => {
+    this.apiService.getSalaryPartimePage(queryParams).subscribe(repo => {
       if (repo.status === 'success') {
         if (repo.data.gridKey) {
           this.gridKey = repo.data.dataList.gridKey;

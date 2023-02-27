@@ -31,18 +31,18 @@ export class HieuSuatLaoDongComponent implements OnInit {
   detailCellRendererParams = null;
   listDataNew = [];
   ngOnInit(): void {
-    this.getSalaryDayWorkingPage();
+    this.getSalaryPrerformancePage();
   }
 
   cauhinh() {
     this.displaySetting = true;
   }
   
-  getSalaryDayWorkingPage() {
+  getSalaryPrerformancePage() {
     this.spinner.show();
     this.columnDefs = [];
     const queryParams = queryString.stringify({ recordId: this.recordId, offSet: 0, pageSize: 10000 });
-    this.apiService.getSalaryWorkTimePage(queryParams).subscribe(repo => {
+    this.apiService.getSalaryPrerformancePage(queryParams).subscribe(repo => {
       if (repo.status === 'success') {
         if (repo.data.gridKey) {
           this.gridKey = repo.data.dataList.gridKey;

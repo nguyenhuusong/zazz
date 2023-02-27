@@ -296,6 +296,14 @@ export class ApiHrmService {
   getSalaryDeductPage(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/salary/GetSalaryDeductPage?` + queryParams, this.options)
   }
+
+  getSalaryPartimePage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/salary/GetSalaryPartimePage?` + queryParams, this.options)
+  }
+
+  getSalaryPrerformancePage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/salary/GetSalaryPrerformancePage?` + queryParams, this.options)
+  }
   
   getSalaryRecordInfo(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/salary/GetSalaryRecordInfo?` + queryParams, this.options)
