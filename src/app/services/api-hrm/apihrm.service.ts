@@ -1068,6 +1068,15 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v2/leavereason/SetLeaveReasonAccept`, queryParams, this.options)
   }
 
+  exportLeave(queryParams): Observable<any> {
+    return this.http.get(`${apiHrmServer}/api/v2/leave/ExportLeave/?${queryParams}`, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
+  }
+
   getEatingInfo(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/eating/GetEatingInfo?` + queryParams, this.options)
   }

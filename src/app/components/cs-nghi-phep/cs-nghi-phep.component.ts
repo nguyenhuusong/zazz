@@ -19,6 +19,7 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
 import { fromEvent } from 'rxjs';
+import * as FileSaver from 'file-saver';
 @Component({
   selector: 'app-cs-nghi-phep',
   templateUrl: './cs-nghi-phep.component.html',
@@ -36,6 +37,7 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
   dataNghiPhep: any;
   addEdit = false;
   leaveId = '';
+  itemsToolOfGrid: any[] = [];
   constructor(
     private spinner: NgxSpinnerService,
     private apiService: ApiHrmService,
@@ -392,6 +394,17 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
     ];
     // this.getOrgRoots();
     // this.getRequestStatus();
+
+    this.itemsToolOfGrid = [
+      {
+        label: 'Export',
+        code: 'export',
+        icon: 'pi pi-download',
+        command: () => {
+          this.ExportData();
+        }
+      },
+    ];
   }
 
   getLeaveReasons() {
@@ -682,6 +695,21 @@ showFilter() {
     }else{
       this.isSearchEmp = false;
     }
+  }
+
+  ExportData() {
+    this.query.pageSize = 1000000;
+    let params: any = { ... this.query };
+    const queryParams = queryString.stringify(params);
+    this.apiService.exportLeave(queryParams).subscribe(results => {
+      if (results.type === 'application/json') {
+        this.spinner.hide();
+      } else {
+        var blob = new Blob([results], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        FileSaver.saveAs(blob, `Danh sách giải trình công` + ".xlsx");
+        this.spinner.hide();
+      }
+    })
   }
 }
 
