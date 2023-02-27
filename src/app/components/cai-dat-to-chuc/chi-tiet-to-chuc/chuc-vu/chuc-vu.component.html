@@ -38,13 +38,13 @@
        Thêm mới chức vụ
     </p-header>
 
-    <p-pickList [source]="listSources" [target]="listTargets" sourceHeader="Danh sách chức vụ chưa nằm trong tổ chức" targetHeader="Danh sách chức vụ nằm trong tổ chức" [dragdrop]="true"
+    <p-pickList [source]="listSources" [target]="listTargets" sourceHeader="Danh sách chức vụ *Chưa* nằm trong tổ chức" targetHeader="Danh sách chức vụ nằm trong tổ chức" [dragdrop]="true"
     [responsive]="true" [sourceStyle]="{'height':'40rem'}" [targetStyle]="{'height':'40rem'}" filterBy="name"
     sourceFilterPlaceholder="Tìm kiếm tên chức vụ" targetFilterPlaceholder="Tìm kiếm tên chức vụ">
     <ng-template let-product let-i="index" pTemplate="item">
         <div class="product-item">
             <div class="product-list-detail">
-                <h5 class="mb-2"> {{i + 1}}. {{product.positionName}}</h5>
+                <h5 class="mb-2"> {{i + 1}}. {{product.name}}</h5>
             </div>
         </div>
     </ng-template>

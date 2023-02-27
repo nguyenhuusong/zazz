@@ -2664,15 +2664,15 @@ export class ApiHrmService {
   }
 
   getOrgPositionPage(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/organize/GetOrgPositionPage?` + queryParams, this.options);
+    return this.http.get<any>(`${apiHrmServer}/api/v1/organize/GetOrgPositionTitlePage?` + queryParams, this.options);
   }
 
   getOrgPosition(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/organize/GetOrgPosition?` + queryParams, this.options);
+    return this.http.get<any>(`${apiHrmServer}/api/v2/position/GetPositionTitles?` + queryParams, this.options);
   }
 
   setOrgPosition(queryParams): Observable<any> {
-    return this.http.put<any>(`${apiHrmServer}/api/v1/organize/SetOrgPosition`, queryParams, this.options);
+    return this.http.put<any>(`${apiHrmServer}/api/v1/organize/SetOrgPositionTitle`, queryParams, this.options);
   }
 
   getOrgJobPage(queryParams): Observable<any> {
