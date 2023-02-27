@@ -46,11 +46,10 @@ export class LamNgoaiGioComponent implements OnInit {
     this.apiService.getSalaryWorkTimePage(queryParams).subscribe(repo => {
       if (repo.status === 'success') {
         if (repo.data.gridKey) {
-          this.gridKey = repo.data.gridKey;
+          this.gridKey = repo.data.dataList.gridKey;
         }
         this.spinner.hide();
-        this.listsData = repo.data.dataList || [];
-        this.colsDetail = repo.data.childgridflexs || [];
+        this.listsData = repo.data.dataList.data || [];
         this.initGrid(repo.data.gridflexs);
       } else {
         this.spinner.hide();
