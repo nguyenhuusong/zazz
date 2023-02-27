@@ -131,7 +131,8 @@ import { ImportThanhPhanLuongComponent } from 'src/app/components/luong-thue/tin
     ChiTietTabCapBacLuongComponent,
     MucLuongComponent,
     ImportCapBacLuongComponent,
-    ImportThanhPhanLuongComponent
+    ImportThanhPhanLuongComponent,
+   
 
   ],
   exports: [

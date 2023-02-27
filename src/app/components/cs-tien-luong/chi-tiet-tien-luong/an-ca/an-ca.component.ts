@@ -3,16 +3,14 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as queryString from 'querystring';
-import { cloneDeep } from 'lodash';
-import * as moment from 'moment';
 import { AgGridFn, TextFormatter } from 'src/app/common/function-common/common';
-import { fromEvent } from 'rxjs';
+
 @Component({
-  selector: 'app-tab-ngay-cong',
-  templateUrl: './tab-ngay-cong.component.html',
-  styleUrls: ['./tab-ngay-cong.component.scss']
+  selector: 'app-an-ca',
+  templateUrl: './an-ca.component.html',
+  styleUrls: ['./an-ca.component.scss']
 })
-export class TabNgayCongComponent implements OnInit {
+export class AnCaComponent implements OnInit {
   @Input() recordId = null;
   @Input() detailInfo = null;
   optionsButtonsPopup = [
@@ -34,18 +32,18 @@ export class TabNgayCongComponent implements OnInit {
   detailCellRendererParams = null;
   listDataNew = [];
   ngOnInit(): void {
-    this.getSalaryDayWorkingPage();
+    this.getSalaryEatingPage();
   }
 
   cauhinh() {
     this.displaySetting = true;
   }
   
-  getSalaryDayWorkingPage() {
+  getSalaryEatingPage() {
     this.spinner.show();
     this.columnDefs = [];
     const queryParams = queryString.stringify({ recordId: this.recordId, offSet: 0, pageSize: 10000 });
-    this.apiService.getSalaryWorkTimePage(queryParams).subscribe(repo => {
+    this.apiService.getSalaryEatingPage(queryParams).subscribe(repo => {
       if (repo.status === 'success') {
         if (repo.data.gridKey) {
           this.gridKey = repo.data.gridKey;

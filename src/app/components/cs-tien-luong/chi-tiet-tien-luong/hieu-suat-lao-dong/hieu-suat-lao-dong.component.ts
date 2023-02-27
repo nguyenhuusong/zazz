@@ -3,16 +3,13 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as queryString from 'querystring';
-import { cloneDeep } from 'lodash';
-import * as moment from 'moment';
 import { AgGridFn, TextFormatter } from 'src/app/common/function-common/common';
-import { fromEvent } from 'rxjs';
 @Component({
-  selector: 'app-tab-ngay-cong',
-  templateUrl: './tab-ngay-cong.component.html',
-  styleUrls: ['./tab-ngay-cong.component.scss']
+  selector: 'app-hieu-suat-lao-dong',
+  templateUrl: './hieu-suat-lao-dong.component.html',
+  styleUrls: ['./hieu-suat-lao-dong.component.scss']
 })
-export class TabNgayCongComponent implements OnInit {
+export class HieuSuatLaoDongComponent implements OnInit {
   @Input() recordId = null;
   @Input() detailInfo = null;
   optionsButtonsPopup = [
