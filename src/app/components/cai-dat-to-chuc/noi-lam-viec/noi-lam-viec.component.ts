@@ -327,7 +327,7 @@ export class NoiLamViecComponent implements OnInit {
       {
         label: 'Tỉnh thành',
         code: 'Import',
-        icon: 'pi pi-download',
+        icon: 'pi pi-server',
         command: () => {
           this.loadProvince();
         }
