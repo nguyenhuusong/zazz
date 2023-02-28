@@ -25,7 +25,7 @@ export class ChiTietLoaiToChucComponent implements OnInit, OnChanges {
     private confirmationService: ConfirmationService,
     private router: Router
   ) { }
-  org_level = null
+  org_level_cd = null
   listViews = []
   imagesUrl = []
   paramsObject = null
@@ -63,7 +63,7 @@ export class ChiTietLoaiToChucComponent implements OnInit, OnChanges {
     this.activatedRoute.queryParamMap.subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.dataRouter = this.paramsObject.params;
-      this.org_level = this.paramsObject.params.org_level || 0;
+      this.org_level_cd = this.paramsObject.params.org_level_cd || 0;
       this.getOrgLevelInfo();
     });
   };
@@ -71,7 +71,7 @@ export class ChiTietLoaiToChucComponent implements OnInit, OnChanges {
   detailInfo = null;
   getOrgLevelInfo() {
     this.listViews = [];
-    const queryParams = queryString.stringify({org_level: this.org_level});
+    const queryParams = queryString.stringify({org_level_cd: this.org_level_cd});
     this.apiService.getOrgLevelInfo(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.listViews = cloneDeep(results.data.group_fields);
