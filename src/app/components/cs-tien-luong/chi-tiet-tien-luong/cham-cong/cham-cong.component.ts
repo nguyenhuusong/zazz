@@ -42,7 +42,7 @@ export class ChamCongComponent implements OnInit {
   getTimekeepingPage() {
     this.spinner.show();
     this.columnDefs = [];
-    const queryParams = queryString.stringify({ offSet: 0, pageSize: 10000 });
+    const queryParams = queryString.stringify({ recordId: this.recordId, offSet: 0, pageSize: 10000 });
     this.apiService.getTimekeepingPage(queryParams).subscribe(repo => {
       if (repo.status === 'success') {
         if (repo.data.gridKey) {
