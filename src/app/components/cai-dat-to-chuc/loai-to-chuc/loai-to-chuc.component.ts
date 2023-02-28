@@ -250,7 +250,7 @@ export class LoaiToChucComponent implements OnInit {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa loại tổ chức?',
       accept: () => {
-        const queryParams = queryString.stringify({ org_level: event.rowData.org_level });
+        const queryParams = queryString.stringify({ org_level_cd: event.rowData.org_level_cd });
         this.apiService.delOrgLevelInfo(queryParams).subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Đã xóa nơi làm việc' });
@@ -265,7 +265,7 @@ export class LoaiToChucComponent implements OnInit {
 
   editRow({rowData}) {
     const params = {
-      org_level: rowData.org_level,
+      org_level_cd: rowData.org_level_cd,
     }
     this.router.navigate(['/cai-dat/loai-to-chuc/chi-tiet-loai-to-chuc'], { queryParams: params });
   }
@@ -278,7 +278,7 @@ export class LoaiToChucComponent implements OnInit {
 
   addLoaiToChuc() {
     const params = {
-      org_level: null
+      org_level_cd: null
     }
     this.router.navigate(['/cai-dat/loai-to-chuc/them-moi-loai-to-chuc'], { queryParams: params });
   }
