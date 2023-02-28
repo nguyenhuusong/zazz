@@ -324,9 +324,21 @@ export class NoiLamViecComponent implements OnInit {
           this.exportExel();
         }
       },
+      {
+        label: 'Tỉnh thành',
+        code: 'Import',
+        icon: 'pi pi-download',
+        command: () => {
+          this.loadProvince();
+        }
+      },
     ]
     this.getFilter();
 
+  }
+
+  loadProvince() {
+    this.router.navigate(['/cai-dat/tinh-thanh']);
   }
 
   importFileExel() {

@@ -1255,7 +1255,23 @@ export class ApiHrmService {
   getWorkplaceInfo(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/workplace/GetWorkplaceInfo?` + queryParams, this.options)
   }
+
+  delProvinceInfo(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/workplace/DelProvinceInfo?` + queryParams, this.options)
+  }
+
+  getProvincePage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/workplace/GetProvincePage?` + queryParams, this.options)
+  }
+
+  getProvinceInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/workplace/GetProvinceInfo?` + queryParams, this.options)
+  }
   
+  setProvinceInfo(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/workplace/SetProvinceInfo`, queryParams, this.options)
+  }
+
   setWorkplaceInfo(queryParams): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/workplace/SetWorkplaceInfo`, queryParams, this.options)
   }

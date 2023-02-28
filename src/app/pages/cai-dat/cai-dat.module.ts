@@ -96,6 +96,8 @@ import { ChiTietChucDanhComponent } from 'src/app/components/chuc-danh/chi-tiet-
 import { DanhMucLoaiGiayToComponent } from 'src/app/components/danh-muc-loai-giay-to/danh-muc-loai-giay-to.component';
 import { ChiTietLoaiGiayToComponent } from 'src/app/components/danh-muc-loai-giay-to/chi-tiet-loai-giay-to/chi-tiet-loai-giay-to.component';
 import { ImportExcelModule } from 'src/app/common/import-excel/import-excel.module';
+import { ProvinceComponent } from 'src/app/components/province/province.component';
+import { DetailProvinceComponent } from 'src/app/components/province/detail-province/detail-province.component';
 
 FullCalendarModule.registerPlugins([
   // register FullCalendar plugins
@@ -203,7 +205,9 @@ FullCalendarModule.registerPlugins([
     ChucDanhComponent,
     ChiTietChucDanhComponent,
     DanhMucLoaiGiayToComponent,
-    ChiTietLoaiGiayToComponent
+    ChiTietLoaiGiayToComponent,
+    ProvinceComponent,
+    DetailProvinceComponent
 
 
   ],

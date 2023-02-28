@@ -33,6 +33,8 @@ import { ChiTietChucDanhComponent } from 'src/app/components/chuc-danh/chi-tiet-
 import { DanhMucLoaiGiayToComponent } from 'src/app/components/danh-muc-loai-giay-to/danh-muc-loai-giay-to.component';
 import { ChiTietLoaiGiayToComponent } from 'src/app/components/danh-muc-loai-giay-to/chi-tiet-loai-giay-to/chi-tiet-loai-giay-to.component';
 import { ImportExcelComponent } from 'src/app/common/import-excel/import-excel.component';
+import { ProvinceComponent } from 'src/app/components/province/province.component';
+import { DetailProvinceComponent } from 'src/app/components/province/detail-province/detail-province.component';
 
 const routes: Routes = [
   {
@@ -355,6 +357,47 @@ const routes: Routes = [
     data: {
       title: 'Chi tiết nơi làm việc',
       url: 'chi-tiet-noi-lam-viec',
+    },
+  },
+
+  // Tỉnh thành
+
+  {
+    path: 'tinh-thanh',
+    component: ProvinceComponent,
+    data: {
+      title: 'Danh sách tỉnh thành',
+      url: 'tinh-thanh',
+    },
+  },
+  {
+    path: 'tinh-thanh/import-tinh-thanh',
+    component: ImportExcelComponent,
+    data: {
+      title: 'Import tỉnh thành',
+      url: 'import-tinh-thanh',
+      titleDad : 'Danh sách tỉnh thành',
+      urlDad: '/cai-dat/tinh-thanh',
+      api: 'setWorkplaceImport',
+      apiAccept: 'setWorkplaceAccept',
+      fileDoc: 'DM_NoiLamViec_Import.xls',
+      apiExport: 'setWorkplaceExportDraft'
+    },
+  },
+  {
+    path: 'tinh-thanh/them-moi-tinh-thanh',
+    component: DetailProvinceComponent,
+    data: {
+      title: 'Thêm mới tỉnh thành',
+      url: 'them-moi-tinh-thanh',
+    },
+  },
+  {
+    path: 'tinh-thanh/chi-tiet-tinh-thanh',
+    component: DetailProvinceComponent,
+    data: {
+      title: 'Chi tiết tỉnh thành',
+      url: 'chi-tiet-tinh-thanh',
     },
   },
 

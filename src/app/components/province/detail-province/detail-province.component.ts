@@ -11,11 +11,11 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 @Component({
-  selector: 'app-chi-tiet-thiet-lap-wifi',
-  templateUrl: './chi-tiet-thiet-lap-wifi.component.html',
-  styleUrls: ['./chi-tiet-thiet-lap-wifi.component.scss']
+  selector: 'app-detail-province',
+  templateUrl: './detail-province.component.html',
+  styleUrls: ['./detail-province.component.scss']
 })
-export class ChiTietThietLapWifiComponent implements OnInit, OnChanges, OnDestroy {
+export class DetailProvinceComponent implements OnInit, OnChanges, OnDestroy {
   private readonly unsubscribe$: Subject<void> = new Subject();
   manhinh = 'View';
   indexTab = 0;
@@ -51,8 +51,7 @@ export class ChiTietThietLapWifiComponent implements OnInit, OnChanges, OnDestro
     this.titlePage = this.activatedRoute.data['_value'].title;
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
-      { label: 'Cài đặt' },
-      { label: 'Danh sách thiết lập wifi', routerLink: '/cai-dat/thiet-lap-wifi' },
+      { label: 'Danh sách tỉnh thành', routerLink: '/cai-dat/thiet-lap-wifi' },
       { label: this.titlePage },
     ];
     this.url = this.activatedRoute.data['_value'].url;
@@ -65,17 +64,17 @@ export class ChiTietThietLapWifiComponent implements OnInit, OnChanges, OnDestro
       this.paramsObject = { ...params.keys, ...params };
       this.dataRouter = this.paramsObject.params;
       this.id = this.paramsObject.params.id;
-      this.getTimekeepingWifiInfo();
+      this.getProvinceInfo();
     });
   };
   detailInfo = null;
   listsData = []
   columnDefs
-  getTimekeepingWifiInfo() {
+  getProvinceInfo() {
     this.listViews = [];
     this.listsData = [];
     const queryParams = queryString.stringify({ id: this.id });
-    this.apiService.getTimekeepingWifiInfo(queryParams).subscribe(results => {
+    this.apiService.getProvinceInfo(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.listViews = cloneDeep(results.data.group_fields);
         this.detailInfo = results.data;
@@ -83,14 +82,14 @@ export class ChiTietThietLapWifiComponent implements OnInit, OnChanges, OnDestro
     })
   }
 
-  setTimekeepingWifiInfo(data) {
+  setProvinceInfo(data) {
     const params = {
       ...this.detailInfo, group_fields: data
     };
-    this.apiService.setTimekeepingWifiInfo(params).subscribe((results: any) => {
+    this.apiService.setProvinceInfo(params).subscribe((results: any) => {
       if (results.status === 'success') {
         this.goBack()
-        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message});
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
       } else {
         this.messageService.add({
           severity: 'error', summary: 'Thông báo', detail: results.message
@@ -110,7 +109,7 @@ export class ChiTietThietLapWifiComponent implements OnInit, OnChanges, OnDestro
 
   cancelUpdate(data) {
     if(data === 'CauHinh') {
-      this.getTimekeepingWifiInfo();
+      this.getProvinceInfo();
     }else {
       this.goBack();
     }
