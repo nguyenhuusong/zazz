@@ -178,7 +178,7 @@ export class ProvinceComponent implements OnInit, AfterViewChecked {
           label: 'Xóa ',
           icon: 'pi pi-trash',
           class: 'btn-primary mr5',
-          hide: CheckHideAction(MENUACTIONROLEAPI.GetMaternityPage.url, ACTIONS.DELETE)
+          // hide: CheckHideAction(MENUACTIONROLEAPI.GetMaternityPage.url, ACTIONS.DELETE)
         },
       ]
     };
@@ -270,7 +270,7 @@ export class ProvinceComponent implements OnInit, AfterViewChecked {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn thực hiện xóa bản ghi này?',
       accept: () => {
-        const queryParams = queryString.stringify({ maternityId: event.rowData.maternityId });
+        const queryParams = queryString.stringify({ provinceId: event.rowData.id });
         this.apiService.delProvinceInfo(queryParams).subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa tuyển dụng thành công' });
@@ -286,7 +286,7 @@ export class ProvinceComponent implements OnInit, AfterViewChecked {
 
   editRow({rowData}) {
     const params = {
-      maternityId: rowData.maternityId
+      provinceId: rowData.id
     }
     this.router.navigate(['/cai-dat/tinh-thanh/chi-tiet-tinh-thanh'], { queryParams: params });
   }
@@ -300,7 +300,7 @@ export class ProvinceComponent implements OnInit, AfterViewChecked {
   isSearchEmp = false;
   addProvince() {
     const params = {
-      maternityId: null
+      provinceId: null
     }
     this.router.navigate(['/cai-dat/tinh-thanh/them-moi-tinh-thanh'], { queryParams: params });
   }
@@ -325,7 +325,7 @@ export class ProvinceComponent implements OnInit, AfterViewChecked {
   ngOnInit() {
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
-      { label: 'Danh sách nơi làm việc' },
+      { label: 'Danh sách nơi làm việc', routerLink: '/cai-dat/noi-lam-viec' },
       { label: 'Danh sách tỉnh thành' },
     ];
     this.getEmpFilter()
@@ -396,7 +396,7 @@ export class ProvinceComponent implements OnInit, AfterViewChecked {
 
   seachEmValue(event) {
     const params = {
-      maternityId: null,
+      provinceId: null,
       empId: event.value
     }
     // if(event.value) {

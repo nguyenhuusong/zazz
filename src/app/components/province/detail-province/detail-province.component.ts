@@ -29,7 +29,7 @@ export class DetailProvinceComponent implements OnInit, OnChanges, OnDestroy {
     private spinner: NgxSpinnerService,
     private router: Router
   ) { }
-  id = null
+  provinceId = null
   listViews = []
   paramsObject = null
   titlePage: string = '';
@@ -51,7 +51,7 @@ export class DetailProvinceComponent implements OnInit, OnChanges, OnDestroy {
     this.titlePage = this.activatedRoute.data['_value'].title;
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
-      { label: 'Danh sách tỉnh thành', routerLink: '/cai-dat/thiet-lap-wifi' },
+      { label: 'Danh sách tỉnh thành', routerLink: '/cai-dat/tinh-thanh' },
       { label: this.titlePage },
     ];
     this.url = this.activatedRoute.data['_value'].url;
@@ -63,7 +63,7 @@ export class DetailProvinceComponent implements OnInit, OnChanges, OnDestroy {
     this.activatedRoute.queryParamMap.subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.dataRouter = this.paramsObject.params;
-      this.id = this.paramsObject.params.id;
+      this.provinceId = this.paramsObject.params.provinceId;
       this.getProvinceInfo();
     });
   };
@@ -73,7 +73,7 @@ export class DetailProvinceComponent implements OnInit, OnChanges, OnDestroy {
   getProvinceInfo() {
     this.listViews = [];
     this.listsData = [];
-    const queryParams = queryString.stringify({ id: this.id });
+    const queryParams = queryString.stringify({ provinceId: this.provinceId });
     this.apiService.getProvinceInfo(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.listViews = cloneDeep(results.data.group_fields);
@@ -101,7 +101,7 @@ export class DetailProvinceComponent implements OnInit, OnChanges, OnDestroy {
 
   goBack() {
     if (this.titlePage) {
-      this.router.navigate(['/cai-dat/thiet-lap-wifi']);
+      this.router.navigate(['/cai-dat/tinh-thanh']);
     } else {
       this.back.emit();
     }
