@@ -6,7 +6,7 @@ import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
 
 declare var jQuery: any;
 
@@ -83,8 +83,16 @@ export class ThietBiThangMayComponent implements OnInit {
     this.getProjectCd();
   }
 
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   getBuidingsSearch() {
-    this.apiService.getBuildCdByProjectCd(this.model.projectCd).subscribe(
+    this.apiService.getBuildCdByProjectCd(this.model.projectCd)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (res: any) => {
         if (res) {
           this.builds = res.data;
@@ -93,7 +101,9 @@ export class ThietBiThangMayComponent implements OnInit {
   }
   findBuildZone() {
   this.searchBuildzones = [];
-    this.apiService.getBuildZoneByBuildCd(this.model.projectCd, this.model.buildCd).subscribe((results: any) => {
+    this.apiService.getBuildZoneByBuildCd(this.model.projectCd, this.model.buildCd)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
       this.searchBuildzones = results.data;
     })
   }
@@ -107,7 +117,9 @@ export class ThietBiThangMayComponent implements OnInit {
     this.apiService.getElevatorDevicePage(this.model.filter,
       this.model.offset,this.model.pageSize,
       this.model.projectCd,
-      this.model.buildZone, this.model.buildCd, this.model.floorNumber).subscribe(
+      this.model.buildZone, this.model.buildCd, this.model.floorNumber)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
       (results: any) => {
         this.listsData = results.data;
         if (this.model.offset === 0) {
@@ -203,24 +215,28 @@ export class ThietBiThangMayComponent implements OnInit {
   }
 
   getProjectCd(){
-    this.apiService.getProjects().subscribe((results: any) => {
+    this.apiService.getProjects()
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
       this.projects = results.data;
     })
   }
 
   getBuildingZones() {
     this.buildingZones = [];
-    this.apiService.getBuildZoneByBuildCd(this.modelElevator.projectCd, this.modelElevator.buildCd).subscribe((results: any) => {
+    this.apiService.getBuildZoneByBuildCd(this.modelElevator.projectCd, this.modelElevator.buildCd)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
       this.buildingZones = results.data;
     },
     error => { });
-    // this.apiService.getElevatorBankShafts(this.modelElevator.projectCd).subscribe((results: any) => {
-    //   this.listShafts = results.data;
-    // },error => { });
+   
   }
 
   loadGetBuildings() {
-    this.apiService.getBuildCdByProjectCd(this.modelElevator.projectCd).subscribe(
+    this.apiService.getBuildCdByProjectCd(this.modelElevator.projectCd)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
      (res: any) => {
        if (res) {
          this.modelBuilding = res.data;
@@ -230,7 +246,9 @@ export class ThietBiThangMayComponent implements OnInit {
 
   loadGetFloors() {
     this.floorsCreate = [];
-    this.apiService.getElevatorFloors(this.modelElevator.buildCd).subscribe(
+    this.apiService.getElevatorFloors(this.modelElevator.buildCd)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
     (res: any) => {
       if (res) {
         this.floorsCreate = res.data;
@@ -240,20 +258,15 @@ export class ThietBiThangMayComponent implements OnInit {
 
   findFloors() {
     this.searchFloors = [];
-    this.apiService.getElevatorFloors(this.model.buildCd).subscribe(
+    this.apiService.getElevatorFloors(this.model.buildCd)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
     (res: any) => {
       if (res) {
         this.searchFloors = res.data;
       }
     });
   }
-
-  // getFloors() {
-  //   this.apiService.GetBuildFloorByProjectCdBuildCd(this.modelElevator.projectCd, '').subscribe((results: any) => {
-  //     this.floorsCreate = results.data;
-  //   },error => { });
-  // }
-
   
   loadjs = 0;
   heightGrid = 0
@@ -319,7 +332,9 @@ export class ThietBiThangMayComponent implements OnInit {
         elevatorBank: null,
         buildCd: this.modelElevator.buildCd
     }
-    this.apiService.setMasElevatorDevice(params).subscribe((result: any) => {
+    this.apiService.setMasElevatorDevice(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((result: any) => {
       if(result.status === 'success') {
         this.isDialog = false;
         this.load();

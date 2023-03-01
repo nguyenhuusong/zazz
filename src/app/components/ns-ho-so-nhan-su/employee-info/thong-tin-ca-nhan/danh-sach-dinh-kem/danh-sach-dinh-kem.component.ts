@@ -4,9 +4,8 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as queryString from 'querystring';
 import { cloneDeep } from 'lodash';
-import * as moment from 'moment';
 import { AgGridFn } from 'src/app/common/function-common/common';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-danh-sach-dinh-kem',
   templateUrl: './danh-sach-dinh-kem.component.html',
@@ -28,6 +27,12 @@ export class DanhSachDinhKemComponent implements OnInit {
   listsData = [];
   columnDefs = [];
   gridKey = '';
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
 
   ngAfterViewInit(): void {
     this.FnEvent();
@@ -63,7 +68,9 @@ export class DanhSachDinhKemComponent implements OnInit {
   addEmpPersonal() {
     const queryParams = queryString.stringify({ empId: this.empId});
     this.listViewsDetail = [];
-    this.apiService.addEmpPersonal(queryParams).subscribe(results => {
+    this.apiService.addEmpPersonal(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listViewsDetail = cloneDeep(results.data.group_fields);
         this.dataDetailInfo = results.data;
@@ -76,7 +83,9 @@ export class DanhSachDinhKemComponent implements OnInit {
     const param = {
       ...this.dataDetailInfo, group_fields: data
     }
-    this.apiService.empproFileSetEmpAttach(param).subscribe(results => {
+    this.apiService.empproFileSetEmpAttach(param)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thêm mới thành công' });
         this.displayFormEditDetail = false;
@@ -93,7 +102,13 @@ export class DanhSachDinhKemComponent implements OnInit {
 
   theFileName(file){
     if(file){
-      let fileName = file.split('/').pop().split('?')[0].split('-uninini-').pop();
+      let fileName = file.split('/')
+      .pipe(takeUntil(this.unsubscribe$))
+      .pop()
+      .pipe(takeUntil(this.unsubscribe$))
+      .split('?')[0].split('-uninini-')
+      .pipe(takeUntil(this.unsubscribe$))
+      .pop();
       return fileName;
     }
   }
@@ -103,7 +118,9 @@ export class DanhSachDinhKemComponent implements OnInit {
     this.spinner.show();
     this.columnDefs = [];
     const queryParams = queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 });
-    this.apiService.getEmpPersonalPage(queryParams).subscribe(repo => {
+    this.apiService.getEmpPersonalPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(repo => {
       if (repo.status === 'success') {
         if (repo.data.dataList.gridKey) {
           this.gridKey = repo.data.dataList.gridKey;
@@ -205,7 +222,9 @@ export class DanhSachDinhKemComponent implements OnInit {
       message: 'Bạn có chắc chắn muốn xóa bản ghi này ?',
       accept: () => {
         const queryParams = queryString.stringify({metaId: event.rowData.metaId});
-        this.apiService.empproFileDelEmpAttach(queryParams).subscribe((results: any) => {
+        this.apiService.empproFileDelEmpAttach(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
             this.getEmpPersonalPage();

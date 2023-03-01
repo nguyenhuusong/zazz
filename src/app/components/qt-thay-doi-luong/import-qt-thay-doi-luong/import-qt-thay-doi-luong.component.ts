@@ -161,7 +161,9 @@ export class ImportQtThayDoiLuongComponent implements OnInit {
   }
 
   getTemfileImport() {
-    this.apiService.exportReportLocalhost('assets/tpl-import-file/HSNS-QuaTrinhLuong_Import.xlsx').subscribe((data: any) => {
+    this.apiService.exportReportLocalhost('assets/tpl-import-file/HSNS-QuaTrinhLuong_Import.xlsx')
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((data: any) => {
       this.createImageFromBlob(data)
     });
   }
@@ -186,7 +188,9 @@ export class ImportQtThayDoiLuongComponent implements OnInit {
       accept: true,
       imports: this.listsData
     }
-    this.apiService.setTerminateExportDraft(query).subscribe(
+    this.apiService.setTerminateExportDraft(query)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
 
         if (results.type === 'application/json') {

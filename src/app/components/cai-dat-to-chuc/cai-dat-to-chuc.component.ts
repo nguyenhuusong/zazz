@@ -13,7 +13,7 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
 import { cloneDeep } from 'lodash';
 import * as FileSaver from 'file-saver';
 @Component({
@@ -149,7 +149,9 @@ export class CaiDatToChucComponent implements OnInit {
 
   getAgencyOrganizeMap(type = false) {
     this.spinner.show();
-    this.apiService.getAgencyOrganizeMap().subscribe(results => {
+    this.apiService.getAgencyOrganizeMap()
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listAgencyMap = [...results.data.root];
         if (localStorage.getItem("organize") === null) {
@@ -226,7 +228,9 @@ export class CaiDatToChucComponent implements OnInit {
 
   getOrganizeLevelList(parentId) {
     const queryParams = queryString.stringify({ parentId: parentId });
-    this.apiService.getOrgLevelList(queryParams).subscribe(results => {
+    this.apiService.getOrgLevelList(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.organizeLevelList = results.data.map(d => {
           return {
@@ -258,7 +262,9 @@ export class CaiDatToChucComponent implements OnInit {
     this.spinner.show();
     let params: any = { ... this.query };
     const queryParams = queryString.stringify(params);
-    this.apiService.getOrganizePage(queryParams).subscribe(
+    this.apiService.getOrganizePage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         this.gridKey = results.data.dataList.gridKey
@@ -340,7 +346,9 @@ export class CaiDatToChucComponent implements OnInit {
       message: 'Bạn có chắc chắn muốn thực hiện hành động này?',
       accept: () => {
         const queryParams = queryString.stringify({ orgId: event.rowData.orgId });
-        this.apiService.delOrganize(queryParams).subscribe(results => {
+        this.apiService.delOrganize(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
             this.displayButton = false;
@@ -492,7 +500,9 @@ export class CaiDatToChucComponent implements OnInit {
 
   getDepartments(parentId) {
     const queryParams = queryString.stringify({ parentId: parentId })
-    this.apiService.organizeGetDepartments(queryParams).subscribe(results => {
+    this.apiService.organizeGetDepartments(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.departments = results.data.map(d => {
           return {
@@ -579,7 +589,9 @@ export class CaiDatToChucComponent implements OnInit {
   organizes = []
   getOrrginiaztions() {
     const queryParams = queryString.stringify({ filter: '' });
-    this.apiService.getOrganizations(queryParams).subscribe(results => {
+    this.apiService.getOrganizations(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.organizes = results.data.map(d => {
           return {
@@ -603,7 +615,9 @@ export class CaiDatToChucComponent implements OnInit {
 
   getOrganizeList(organizeId) {
     const queryParams = queryString.stringify({ org_level: this.detailOrganizeMap.org_level, organizeId: organizeId });
-    this.apiService.getOrganizeList(queryParams).subscribe(results => {
+    this.apiService.getOrganizeList(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.organizeList = results.data;
         this.organizeList = this.organizeList.map(d => {
@@ -667,7 +681,9 @@ export class CaiDatToChucComponent implements OnInit {
   getOrganizeTreeByOr() {
     this.selectedNodeTree = null
     const queryParams = queryString.stringify({ parentId: this.organizeIdSelected });
-    this.apiService.getOrganizeTree(queryParams).subscribe(results => {
+    this.apiService.getOrganizeTree(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listOrganizeTreeByOr = results.data;
         this.findNodeInTree(this.listOrganizeTreeByOr, this.modeAgencyOrganize.parentId);
@@ -688,7 +704,9 @@ export class CaiDatToChucComponent implements OnInit {
 
   getOrganizeTree(organizeId) {
     const queryParams = queryString.stringify({ parentId: organizeId });
-    this.apiService.getOrganizeTree(queryParams).subscribe(results => {
+    this.apiService.getOrganizeTree(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listOrganizeTree = results.data;
         const queryParams1 = queryString.stringify({ parentId: this.detailOrganizeMap.orgId });
@@ -705,6 +723,7 @@ export class CaiDatToChucComponent implements OnInit {
   getBoPhan() {
     const queryParams = queryString.stringify({ parentId: this.query.organizeIds });
     this.apiService.getOrganizeTree(queryParams)
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe((results: any) => {
         if (results && results.status === 'success') {
           this.departmentFiltes = results.data;
@@ -736,7 +755,9 @@ export class CaiDatToChucComponent implements OnInit {
     }
     this.listOrganizeTree = [];
     const queryParams = queryString.stringify({ parentId: this.detailOrganizeMap.organizeId });
-    this.apiService.getOrganizeTree(queryParams).subscribe(results => {
+    this.apiService.getOrganizeTree(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listOrganizeTree = results.data;
         const queryParams1 = queryString.stringify({ parentId: this.detailOrganizeMap.parentId });
@@ -767,7 +788,9 @@ export class CaiDatToChucComponent implements OnInit {
       message: 'Bạn có chắc chắn muốn thực hiện hành động này?',
       accept: () => {
         const queryParams = queryString.stringify({ orgId: this.detailOrganizeMap.orgId });
-        this.apiService.delOrganize(queryParams).subscribe(results => {
+        this.apiService.delOrganize(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
             this.displayButton = false;
@@ -806,7 +829,9 @@ export class CaiDatToChucComponent implements OnInit {
     // }
     delete params.isChild;
     delete params.de_cd;
-    this.apiService.setOrganize(params).subscribe(results => {
+    this.apiService.setOrganize(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Cập nhật thành công' });
         this.getAgencyOrganizeMap();
@@ -869,7 +894,9 @@ export class CaiDatToChucComponent implements OnInit {
 
   //filter 
   getFilter() {
-    this.apiService.getFilter('/api/v1/organize/GetOrganizeFilter').subscribe(results => {
+    this.apiService.getFilter('/api/v1/organize/GetOrganizeFilter')
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
@@ -942,7 +969,9 @@ export class CaiDatToChucComponent implements OnInit {
     this.query.pageSize = 1000000;
     const query = { ...this.query };
     const queryParams = queryString.stringify(query);
-    this.apiService.setOrganizeExport(queryParams).subscribe(
+    this.apiService.setOrganizeExport(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         if (results.type === 'application/json') {
           this.spinner.hide();
@@ -955,6 +984,12 @@ export class CaiDatToChucComponent implements OnInit {
       error => {
         this.spinner.hide();
       });
+  }
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   

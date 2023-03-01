@@ -13,8 +13,8 @@ import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { cloneDeep } from 'lodash';
 import { DialogService } from 'primeng/dynamicdialog';
-import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-gop-y-kien',
   templateUrl: './gop-y-kien.component.html',
@@ -100,11 +100,18 @@ export class GopYKienComponent implements OnInit {
   heightGrid = 0;
   listViewsFilter = [];
   cloneListViewsFilter = [];
-detailInfoFilter = null;
+  detailInfoFilter = null;
   optionsButonFilter = [
     { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm height-56 addNew', icon: 'pi pi-search' },
     { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger height-56 addNew', icon: 'pi pi-times' },
   ];
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   ngAfterViewChecked(): void {
     const a: any = document.querySelector(".header");
     const b: any = document.querySelector(".sidebarBody");
@@ -148,7 +155,9 @@ detailInfoFilter = null;
     this.spinner.show();
     let params: any = {... this.query};
     const queryParams = queryString.stringify(params);
-    this.apiService.getFeedbackPage(queryParams).subscribe(
+    this.apiService.getFeedbackPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         this.gridKey= results.data.dataList.gridKey;
@@ -259,7 +268,9 @@ detailInfoFilter = null;
 
   //filter 
   getFilter() {
-    this.apiService.getFilter('/api/v1/feedback/GetFeedbackFilter').subscribe(results => {
+    this.apiService.getFilter('/api/v1/feedback/GetFeedbackFilter')
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
@@ -288,47 +299,7 @@ detailInfoFilter = null;
       this.listViewsFilter =  cloneDeep(datas);
     }
   }
-showFilter() {
-    const ref = this.dialogService.open(FormFilterComponent, {
-      header: 'Tìm kiếm nâng cao',
-      width: '40%',
-      contentStyle: "",
-      data: {
-        listViews: this.listViewsFilter,
-        detailInfoFilter: this.detailInfoFilter,
-        buttons: this.optionsButonFilter
-      }
-    });
 
-    ref.onClose.subscribe((event: any) => {
-      if (event) {
-        this.listViewsFilter = cloneDeep(event.listViewsFilter);
-        if (event.type === 'Search') {
-          this.query = { ...this.query, ...event.data };
-          this.load();
-        } else if (event.type === 'CauHinh') {
-          this.apiService.getFilter('/api/v1/feedback/GetFeedbackFilter').subscribe(results => {
-            if (results.status === 'success') {
-              const listViews = cloneDeep(results.data.group_fields);
-              this.listViewsFilter = [...listViews];
-              const params =  getParamString(listViews)
-              this.query = { ...this.query, ...params};
-              this.load();
-              this.detailInfoFilter = results.data;
-              this.showFilter()
-            }
-          });
-
-        } else if (event.type === 'Reset') {
-          const listViews = cloneDeep(this.cloneListViewsFilter);
-          this.listViewsFilter = cloneDeep(listViews);
-         const params =  getParamString(listViews)
-        this.query = { ...this.query, ...params};
-        this.load();
-        }
-      }
-    });
-  }
 }
 
 

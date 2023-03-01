@@ -2,10 +2,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as queryString from 'querystring';
 import { cloneDeep } from 'lodash';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-chi-tiet-ke-hoach-tuyen-dung',
   templateUrl: './chi-tiet-ke-hoach-tuyen-dung.component.html',
@@ -24,6 +25,12 @@ export class ChiTietKeHoachTuyenDungComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private router: Router
   ) { }
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   optionsButtonsView = [
     { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-caret-left' },
     { label: 'Tiếp tục', value: 'Update', class: 'btn-accept', icon: 'pi pi-caret-right' },
@@ -143,7 +150,9 @@ export class ChiTietKeHoachTuyenDungComponent implements OnInit {
   flowCurrent = 0
   callApiInfo(params, type = 'Update') {
     this.spinner.show();
-    this.apiService.setRecruitPlan(params).subscribe(results => {
+    this.apiService.setRecruitPlan(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.activeIndex = results.data.flow_st;
         this.flowCurrent = results.data.flow_cur;
@@ -189,7 +198,9 @@ export class ChiTietKeHoachTuyenDungComponent implements OnInit {
     this.listViews = [];
     this.spinner.show();
     const queryParams = queryString.stringify({ vacancyId: this.modelEdit.vacancyId, flow_cur: flow_cur, empId: this.modelEdit.empId });
-    this.apiService.getRecruitPlan(queryParams).subscribe(results => {
+    this.apiService.getRecruitPlan(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.activeIndex = results.data.flow_st;
         this.flowCurrent = results.data.flow_cur;

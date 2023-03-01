@@ -5,6 +5,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as queryString from 'querystring';
 import { AgGridFn, TextFormatter } from 'src/app/common/function-common/common';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-lam-ngoai-gio',
   templateUrl: './lam-ngoai-gio.component.html',
@@ -22,8 +23,6 @@ export class LamNgoaiGioComponent implements OnInit {
   constructor(
     private apiService: ApiHrmService,
     private spinner: NgxSpinnerService,
-    private messageService: MessageService,
-    private confirmationService: ConfirmationService,
   ) { }
   listsData = [];
   columnDefs = [];
@@ -31,6 +30,13 @@ export class LamNgoaiGioComponent implements OnInit {
   colsDetail = [];
   detailCellRendererParams = null;
   listDataNew = [];
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   ngOnInit(): void {
     this.getSalaryPartimePage();
   }
@@ -43,7 +49,9 @@ export class LamNgoaiGioComponent implements OnInit {
     this.spinner.show();
     this.columnDefs = [];
     const queryParams = queryString.stringify({ recordId: this.recordId, offSet: 0, pageSize: 10000 });
-    this.apiService.getSalaryPartimePage(queryParams).subscribe(repo => {
+    this.apiService.getSalaryPartimePage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(repo => {
       if (repo.status === 'success') {
         if (repo.data.gridKey) {
           this.gridKey = repo.data.dataList.gridKey;

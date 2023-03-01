@@ -17,6 +17,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { DialogService } from 'primeng/dynamicdialog';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-dang-ky-lich-lam-viec',
   templateUrl: './dang-ky-lich-lam-viec.component.html',
@@ -104,6 +105,13 @@ export class DangKyLichLamViecComponent implements OnInit {
 
   loadjs = 0;
   heightGrid = 0
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   ngAfterViewChecked(): void {
     const a: any = document.querySelector(".header");
     const b: any = document.querySelector(".sidebarBody");
@@ -173,7 +181,9 @@ export class DangKyLichLamViecComponent implements OnInit {
     this.spinner.show();
     let params: any = { ... this.query };
     const queryParams = queryString.stringify(params);
-    this.apiService.getEmpWorkingPage(queryParams).subscribe(
+    this.apiService.getEmpWorkingPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         this.gridKey= results.data.dataList.gridKey;
@@ -244,7 +254,9 @@ export class DangKyLichLamViecComponent implements OnInit {
   displayFormEditDetail = false;
   getEmpWorking(query) {
     this.listViewsDependent = [];
-    this.apiService.getEmpWorking(query).subscribe(results => {
+    this.apiService.getEmpWorking(query)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listViewsDependent = cloneDeep(results.data.group_fields);
         this.detailDependentInfo = results.data;
@@ -257,7 +269,9 @@ export class DangKyLichLamViecComponent implements OnInit {
     const param = {
       ...this.detailDependentInfo, group_fields: data
     }
-    this.apiService.setEmpWorking(param).subscribe(results => {
+    this.apiService.setEmpWorking(param)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thêm mới thành công' });
         this.displayFormEditDetail = false;
@@ -291,6 +305,7 @@ export class DangKyLichLamViecComponent implements OnInit {
   timekeepingSpecials = [];
   getTimekeepingSpecials () {
     this.apiServiceCore.getObjectList('object_refer_st')
+    .pipe(takeUntil(this.unsubscribe$))
     .subscribe(response => {
       if(response.status === 'success'){
         this.timekeepingSpecials = response.data.map( d => {
@@ -306,6 +321,7 @@ export class DangKyLichLamViecComponent implements OnInit {
   timekeepingSpecialCode = [];
   getTimekeepingSpecialCode () {
     this.apiServiceCore.getObjectList('timekeeping_special')
+    .pipe(takeUntil(this.unsubscribe$))
     .subscribe(response => {
       if(response.status === 'success'){
         this.timekeepingSpecialCode = response.data.map( d => {
@@ -357,7 +373,9 @@ export class DangKyLichLamViecComponent implements OnInit {
   }
 
   getWorkTime() {
-    this.apiService.getWorktimeList().subscribe(results => {
+    this.apiService.getWorktimeList()
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listWorkCds = results.data.map(d => {
           return { label: d.name, value: d.value }
@@ -386,7 +404,9 @@ export class DangKyLichLamViecComponent implements OnInit {
         gd: d.empId
       }
     });
-    this.apiService.setEmpWorkingChanges(params).subscribe(results => {
+    this.apiService.setEmpWorkingChanges(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Đổi lịch công việc thành công' });
         this.load();
@@ -401,7 +421,9 @@ export class DangKyLichLamViecComponent implements OnInit {
 
   getCustObjectListNew(params) {
     const queryParams = queryString.stringify({ objKey: params });
-    this.apiService.getCustObjectListNew(true, queryParams).subscribe(results => {
+    this.apiService.getCustObjectListNew(true, queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (params === 'empworking_app_st') {
         this.listAppSt = results.data.map(d => {
           return {
@@ -481,7 +503,9 @@ export class DangKyLichLamViecComponent implements OnInit {
   }
 
   getFeedbackType() {
-    this.apiService.getFeedbackType().subscribe(results => {
+    this.apiService.getFeedbackType()
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.typeFeedBacks = results.data.map(d => {
           return {
@@ -501,7 +525,9 @@ export class DangKyLichLamViecComponent implements OnInit {
         gd: d.userId
       }
     });
-    this.apiService.setEmpWorkingChanges(params).subscribe(results => {
+    this.apiService.setEmpWorkingChanges(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Đổi lịch công việc thành công' });
         this.load();
@@ -640,7 +666,9 @@ detailInfoFilter = null;
   ];
 
   getEmpWorkingFilter() {
-    this.apiService.getEmpWorkingFilter().subscribe(results => {
+    this.apiService.getEmpWorkingFilter()
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
@@ -668,51 +696,6 @@ detailInfoFilter = null;
       this.listViewsFilter =  cloneDeep(datas);
     }
   }
-
-showFilter() {
-    const ref = this.dialogService.open(FormFilterComponent, {
-      header: 'Tìm kiếm nâng cao',
-      width: '40%',
-      contentStyle: "",
-      data: {
-        listViews: this.listViewsFilter,
-        detailInfoFilter: this.detailInfoFilter,
-        buttons: this.optionsButonFilter
-      }
-    });
-
-    ref.onClose.subscribe((event: any) => {
-      if (event) {
-        this.listViewsFilter = cloneDeep(event.listViewsFilter);
-        if (event.type === 'Search') {
-          this.query = { ...this.query, ...event.data };
-          this.load();
-        } else if (event.type === 'CauHinh') {
-        this.apiService.getEmpWorkingFilter().subscribe(results => {
-            if (results.status === 'success') {
-              const listViews = cloneDeep(results.data.group_fields);
-              this.listViewsFilter = [...listViews];
-                const params =  getParamString(listViews)
-                this.query = { ...this.query, ...params};
-                this.load();
-              this.detailInfoFilter = results.data;
-              this.showFilter()
-            }
-          });
-
-        } else if (event.type === 'Reset') {
-          const listViews = cloneDeep(this.cloneListViewsFilter);
-          this.listViewsFilter = cloneDeep(listViews);
-         const params =  getParamString(listViews)
-        this.query = { ...this.query, ...params};
-        this.load();
-        }
-      }
-    });
-  }
-
-
-  
 
 }
 

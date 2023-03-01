@@ -109,7 +109,9 @@ export class ChiTietTabBangLuongComponent implements OnInit, OnDestroy {
     this.spinner.show();
     this.columnDefs = [];
     const queryParams = queryString.stringify({ appInfoId: this.idForm, offSet: 0, pageSize: 10000 });
-    this.apiService.getPayrollComponentPage(queryParams).subscribe(repo => {
+    this.apiService.getPayrollComponentPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(repo => {
       if (repo.status === 'success') {
         this.listsData = repo.data.dataList.data;
         this.gridflexs = repo.data.gridflexs;
@@ -192,7 +194,9 @@ export class ChiTietTabBangLuongComponent implements OnInit, OnDestroy {
       message: 'Bạn có chắc chắn muốn xóa',
       accept: () => {
         const query = queryString.stringify({Id: event.rowData.id})
-        this.apiService.delPayrollComponent(query).subscribe((results: any) => {
+        this.apiService.delPayrollComponent(query)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa công' });
             this.getPayrollComponentPage();

@@ -49,6 +49,7 @@ export class ChiTietLichHopComponent implements OnInit, OnDestroy {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
+
   titlePage = '';
   items = [];
   roomId = '';
@@ -83,7 +84,9 @@ export class ChiTietLichHopComponent implements OnInit, OnDestroy {
   getMeetingInfo(): void {
     this.listViews = [];
     this.listsData = [];
-    this.apiService.getMeetingInfo(`?meet_ud=${this.meet_ud || ''}`).subscribe(results => {
+    this.apiService.getMeetingInfo(`?meet_ud=${this.meet_ud || ''}`)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         results.data.group_fields.forEach(group => {
           // group.fields.forEach(d=> {
@@ -152,7 +155,9 @@ export class ChiTietLichHopComponent implements OnInit, OnDestroy {
     const params = {
       ...this.detailInfo, group_fields: data, members: this.listsData
     };
-    this.apiService.setMeetingInfo(params).subscribe((results: any) => {
+    this.apiService.setMeetingInfo(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
       if (results.status === 'success') {
         this.spinner.hide();
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data });

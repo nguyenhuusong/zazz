@@ -16,7 +16,7 @@ import { cloneDeep } from 'lodash';
 import { DialogService } from 'primeng/dynamicdialog';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-ns-tuyen-dung',
@@ -106,6 +106,12 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   // sentEmail gửi email thành công
   sentEmail = false;
 
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   // the value for check disabled 'Chuyển vòng radio'
   canSttValue: any = null
   ngAfterViewChecked(): void {
@@ -145,7 +151,9 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     this.columnDefs = []
     this.spinner.show();
     const queryParams = queryString.stringify(this.query);
-    this.apiService.getCandidatePage(queryParams).subscribe(
+    this.apiService.getCandidatePage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         this.gridKey= results.data.dataList.gridKey;
@@ -310,7 +318,9 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
 
   rowSelected(event) {
     this.dataRowSelected = event;
-    this.recruitmentStatusSelected = this.dataRowSelected.map( d => d.can_st).toString();
+    this.recruitmentStatusSelected = this.dataRowSelected.map( d => d.can_st)
+    .pipe(takeUntil(this.unsubscribe$))
+    .toString();
     this.canSttValue = this.dataRowSelected.sort((a,b)=>a.can_st-b.can_st)[this.dataRowSelected.length - 1];
     // check role for set tiem nang && check for tuy chon
     this.buttonTiemNang[1].disabled = CheckHideAction(MENUACTIONROLEAPI.GetCandidatePage.url, ACTIONS.TIEM_NANG) && this.dataRowSelected.length > 0;
@@ -327,7 +337,9 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
       message: 'Bạn có chắc chắn muốn xóa tuyển dụng?',
       accept: () => {
         const queryParams = queryString.stringify({ canId: event.rowData.canId });
-        this.apiService.delCandidateInfo(queryParams).subscribe(results => {
+        this.apiService.delCandidateInfo(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa tuyển dụng thành công' });
             this.load();
@@ -369,17 +381,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   }
 
   getOrgPositions() {
-    // this.positions = [];
-    // let items = this.listOrgRoots.filter(d => d.value === this.query.organizeId)
-    // const queryParams = queryString.stringify({ orgId: items[0].code });
-    // this.apiService.getOrgPositions(queryParams).subscribe(results => {
-    //   if (results.status === 'success') {
-    //     this.positions = results.data.map(d => {
-    //       return { label: d.positionName, value: d.positionCd }
-    //     });
-    //     this.positions = [{ label: 'Tất cả', value: '' }, ...this.positions]
-    //   }
-    // })
+   
   }
 
   find() {
@@ -485,7 +487,9 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn tạo tài khoản?',
       accept: () => {
-        this.apiService.setCandidateRegisters(data).subscribe((results: any) => {
+        this.apiService.setCandidateRegisters(data)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((results: any) => {
           if (results.status === 'success') {
               this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Cập nhật thành công' });
               this.isSendMail = true;
@@ -500,26 +504,12 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     })
   }
 
-  // positiontypes = [];
-  // getObjectList() {
-  //   const queryParams = queryString.stringify({ objKey: 'positiontype_group' });
-  //   this.apiService.getCustObjectListNew(false, queryParams).subscribe(results => {
-  //     if (results.status === 'success') {
-  //       this.positiontypes = results.data.map(d => {
-  //         return {
-  //           label: d.objName,
-  //           value: d.objCode
-  //         }
-  //       });
-  //       this.positiontypes = [{ label: 'Tất cả', value: null }, ...this.positiontypes]
-  //     }
-  //   })
-  // }
-
   listJobTitles = [];
   positions = [{ label: 'Tất cả', value: null }];
   getJobTitles() {
-    this.apiService.getJobTitles().subscribe(results => {
+    this.apiService.getJobTitles()
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listJobTitles = results.data.map(d => {
           return {
@@ -535,7 +525,9 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   listStatus = []
   getStatus() {
     const queryParams = queryString.stringify({ objKey: 'recruitment_round' });
-    this.apiService.getCustObjectListNew(false, queryParams).subscribe(results => {
+    this.apiService.getCustObjectListNew(false, queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listStatus = results.data.map(d => {
           return {
@@ -550,7 +542,9 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
 
   getReRound() {
     this.recruitmentStatus = []
-    this.apiService.getRecruitRoundTitles(queryString.stringify({ organizeIds: this.organizeIdSelected })).subscribe(results => {
+    this.apiService.getRecruitRoundTitles(queryString.stringify({ organizeIds: this.organizeIdSelected }))
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.recruitmentStatus = results.data.map(d => {
           return {
@@ -563,25 +557,14 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   }
     
   getVacancyPage() {
-    // const queryParams = queryString.stringify({
-    //   jobId: this.query.jobId,
-    //   active_st: 1
-    // });
-    // this.apiService.getVacancyPage(queryParams).subscribe(results => {
-    //   if (results.status === 'success') {
-    //     this.listVacancy = results.data.dataList.data.map(d => {
-    //       return {
-    //         label: d.job_name,
-    //         value: d.vacancyId
-    //       }
-    //     })
-    //   }
-    // })
+    
   }
 
   getRecruitMailInput() {
     this.isSendMail = true;
-    this.apiService.getRecruitMailInput(queryString.stringify({organizeIds: this.organizeIdSelected})).subscribe(results => {
+    this.apiService.getRecruitMailInput(queryString.stringify({organizeIds: this.organizeIdSelected}))
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.mailsInput = results.data.recruitmentMail.map(d => {
           return {
@@ -597,14 +580,20 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn chuyển vòng?',
       accept: () => {
-        let dataUpdateStatus = this.dataRowSelected.map( d => d.canId).toString();
-        let vacancyId = this.dataRowSelected.map( d => d.vacancyId).toString();
+        let dataUpdateStatus = this.dataRowSelected.map( d => d.canId)
+        .pipe(takeUntil(this.unsubscribe$))
+        .toString();
+        let vacancyId = this.dataRowSelected.map( d => d.vacancyId)
+        .pipe(takeUntil(this.unsubscribe$))
+        .toString();
         const query = {
           canId: dataUpdateStatus,
           can_st: this.recruitmentStatusSelected,
           vacancyId: vacancyId
         }
-        this.apiService.recruiUpdateStatus(queryString.stringify(query)).subscribe((results: any) => {
+        this.apiService.recruiUpdateStatus(queryString.stringify(query))
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((results: any) => {
           if (results.status === 'success') {
             this.getRecruitMailInput();
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Chuyển thành công!' });
@@ -638,7 +627,9 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   sendRate() {
     this.isSubmitRate = true;
     if(this.queryRate.canId && this.queryRate.InterviewResult) { 
-        this.apiService.updateInterviewResult(queryString.stringify(this.queryRate), null).subscribe(results => {
+        this.apiService.updateInterviewResult(queryString.stringify(this.queryRate), null)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Gửi thành công' });
             this.isRateRecui = false;
@@ -664,13 +655,17 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
       this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Chưa chọn nội dung gửi' });
       return
     }
-    let canId = this.dataRowSelected.map( d => d.canId).toString()
+    let canId = this.dataRowSelected.map( d => d.canId)
+    .pipe(takeUntil(this.unsubscribe$))
+    .toString()
     const data = {
       mail_Id: this.mailInputValue,
       can_Id: canId
     }
     this.spinner.show();
-    this.apiService.sendRecruitMail(data).subscribe(results => {
+    this.apiService.sendRecruitMail(data)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.sentEmail = true;
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Gửi thành công' });
@@ -700,7 +695,9 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
 
   tiemNang() {
     this.isTiemNang = true;
-    this.queryTiemNang.canId = this.dataRowSelected.map( d => d.canId).toString();
+    this.queryTiemNang.canId = this.dataRowSelected.map( d => d.canId)
+    .pipe(takeUntil(this.unsubscribe$))
+    .toString();
   }
 
   setTiemNang() {
@@ -708,7 +705,9 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     if(!this.queryTiemNang.reason_rejiect){
       return;
     }
-    this.apiService.updateCandidatesPotential(queryString.stringify(this.queryTiemNang), null).subscribe(results => {
+    this.apiService.updateCandidatesPotential(queryString.stringify(this.queryTiemNang), null)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Cập nhật thành công' });
           this.load();
@@ -774,7 +773,9 @@ detailInfoFilter = null;
   ];
 
   getCandidateFilter() {
-    this.apiService.getCandidateFilter().subscribe(results => {
+    this.apiService.getCandidateFilter()
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);

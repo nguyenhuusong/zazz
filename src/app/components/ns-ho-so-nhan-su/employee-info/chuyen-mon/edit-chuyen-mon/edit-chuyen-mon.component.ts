@@ -4,6 +4,7 @@ import * as queryString from 'querystring';
 import { cloneDeep } from 'lodash';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-edit-chuyen-mon',
   templateUrl: './edit-chuyen-mon.component.html',
@@ -24,6 +25,13 @@ export class EditChuyenMonComponent implements OnInit {
       { label: 'Xác nhận', value: 'Update', class: 'btn-accept' },
       // { label: 'Tiếp tục', value: 'Update', class: 'btn-accept' }
     ]
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   ngOnInit(): void {
     this.getDetail();
   }
@@ -33,7 +41,9 @@ export class EditChuyenMonComponent implements OnInit {
     this.spinner.show();
     this.detailInfo = null;
     const query = { empId: this.empId, edit_is: true }
-    this.apiService.getEmpQualification(queryString.stringify(query)).subscribe(results => {
+    this.apiService.getEmpQualification(queryString.stringify(query))
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.spinner.hide();
         this.listViews = cloneDeep(results.data.group_fields || []);
@@ -113,7 +123,9 @@ export class EditChuyenMonComponent implements OnInit {
 
   callApiInfo(params) {
     this.spinner.show();
-    this.apiService.setEmpQualification(params).subscribe((results: any) => {
+    this.apiService.setEmpQualification(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
       if (results.status === 'success') {
         // this.listViews = cloneDeep(results.data.group_fields || []);
         // this.detailInfo = results.data;

@@ -12,6 +12,7 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
+import { Subject, takeUntil } from 'rxjs';
 const MAX_SIZE = 100000000;
 @Component({
   selector: 'app-nghi-viec',
@@ -52,6 +53,12 @@ export class NghiViecComponent implements OnInit, AfterViewChecked {
       buttonAgGridComponent: ButtonAgGridComponent,
       avatarRendererFull: AvatarFullComponent,
     };
+  }
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   public modules: Module[] = AllModules;
@@ -146,7 +153,9 @@ export class NghiViecComponent implements OnInit, AfterViewChecked {
     this.columnDefs = []
     this.spinner.show();
     const queryParams = queryString.stringify(this.query);
-    this.apiService.getTerminatePage(queryParams).subscribe(
+    this.apiService.getTerminatePage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         this.gridKey= results.data.dataList.gridKey;
@@ -198,7 +207,9 @@ export class NghiViecComponent implements OnInit, AfterViewChecked {
         this.confirmationService.confirm({
           message: 'Bạn có chắc chắn muốn tuyển dụng lại?',
           accept: () => {
-            this.apiService.recruitAgain(params).subscribe((results: any) => {
+            this.apiService.recruitAgain(params)
+            .pipe(takeUntil(this.unsubscribe$))
+            .subscribe((results: any) => {
               if (results.status === 'success') {
                 this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
                 this.spinner.hide();
@@ -294,7 +305,9 @@ export class NghiViecComponent implements OnInit, AfterViewChecked {
   }
 
   getAgencyOrganizeMap(type = false) {
-    this.apiService.getAgencyOrganizeMap().subscribe(results => {
+    this.apiService.getAgencyOrganizeMap()
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listAgencyMap = [...results.data.root];
         if (localStorage.getItem("organize") === null || localStorage.getItem("organize") === 'undefined') {

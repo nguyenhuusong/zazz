@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { cloneDeep } from 'lodash';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { Subject } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { AgGridFn } from 'src/app/common/function-common/common';
 @Component({
@@ -78,7 +78,9 @@ export class ChiTietChamCongComponent implements OnInit, OnDestroy {
     this.listViews = [];
     this.listsData = [];
     const queryParams = queryString.stringify(this.paramsObject.params);
-    this.apiService.getTimekeepingInfo(queryParams).subscribe(results => {
+    this.apiService.getTimekeepingInfo(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listViews = cloneDeep(results.data.group_fields);
         this.detailInfo = results.data;

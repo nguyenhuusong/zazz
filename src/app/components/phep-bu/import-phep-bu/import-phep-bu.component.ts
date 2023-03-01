@@ -113,7 +113,9 @@ export class ImportPhepBuComponent implements OnInit {
   }
 
   getTemfileImport() {
-    this.apiService.exportReportLocalhost('assets/tpl-import-file/file_mau_import_phep_bu.xlsx').subscribe((data: any) => {
+    this.apiService.exportReportLocalhost('assets/tpl-import-file/file_mau_import_phep_bu.xlsx')
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((data: any) => {
       this.createImageFromBlob(data)
     });
   }

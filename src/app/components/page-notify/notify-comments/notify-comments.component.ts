@@ -5,6 +5,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { MessageService } from 'primeng/api';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { ACTIONS, CONSTANTS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-notify-comments',
   templateUrl: './notify-comments.component.html',
@@ -38,6 +39,12 @@ export class NotifyCommentsComponent implements OnInit, OnChanges{
               private apiService: ApiHrmService) {
   }
 
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   ngOnChanges(changes: SimpleChanges) {
     if (changes.notify && this.notify && this.notify.notiId) {
       this.query.notiId = this.notify ? this.notify.notiId : 0;
@@ -45,11 +52,14 @@ export class NotifyCommentsComponent implements OnInit, OnChanges{
     }
   }
 
+
   getNotificationCommentList() {
     let params = {...this.query}
     console.log('params', params)
     const queryParams = queryString.stringify(params);
-    this.apiService.getNotifyCommentList(queryParams).subscribe((res: any) => {
+    this.apiService.getNotifyCommentList(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((res: any) => {
       this.comments = res.data;
       this.comments.forEach(comment => {
         if (comment.childCommentCount > 0) {
@@ -108,7 +118,9 @@ export class NotifyCommentsComponent implements OnInit, OnChanges{
       comments: data.answerComment
     };
     data.answerComment = '';
-    this.apiService.setNotifyComment(commentForSave).subscribe((res: any) => {
+    this.apiService.setNotifyComment(commentForSave)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((res: any) => {
       if (res.status === 'success') {
         if (!data.childComments) {
           data.childComments = [];
@@ -141,7 +153,9 @@ export class NotifyCommentsComponent implements OnInit, OnChanges{
     this.apiService.setNotifyCommentAuth({
       commentId: comment.commentId,
       status
-    }).subscribe((res: any) => {
+    })
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((res: any) => {
       if (res.status === 'success') {
         if (status) {
           this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: CONSTANTS.MESSAGE_ALERT.APPROVED_SUCCESSFUL });

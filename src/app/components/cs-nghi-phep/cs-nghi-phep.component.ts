@@ -5,13 +5,12 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiService } from 'src/app/services/api.service';
 import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
 import { NgxSpinnerService } from 'ngx-spinner';
-import * as moment from 'moment';
 import { CustomTooltipComponent } from 'src/app/common/ag-component/customtooltip.component';
 import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
 import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.component';
 import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
-import { flatMap, Subject, takeUntil } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { cloneDeep } from 'lodash';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
@@ -19,7 +18,6 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
 import { fromEvent } from 'rxjs';
-import * as FileSaver from 'file-saver';
 import { ExportFileService } from 'src/app/services/export-file.service';
 @Component({
   selector: 'app-cs-nghi-phep',
@@ -31,8 +29,10 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
   ACTIONS = ACTIONS
   optionsButon = [
     { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
-    { label: 'Lưu lại', value: 'Update', class: CheckHideAction(MENUACTIONROLEAPI.GetLeavePage.url, ACTIONS.EDIT) ? 'hidden' : ''
-    , icon: 'pi pi-check'  }
+    {
+      label: 'Lưu lại', value: 'Update', class: CheckHideAction(MENUACTIONROLEAPI.GetLeavePage.url, ACTIONS.EDIT) ? 'hidden' : ''
+      , icon: 'pi pi-check'
+    }
   ]
   private readonly unsubscribe$: Subject<void> = new Subject();
   dataNghiPhep: any;
@@ -131,13 +131,13 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
     const b: any = document.querySelector(".sidebarBody");
     const d: any = document.querySelector(".bread-crumb");
     const e: any = document.querySelector(".paginator");
-    this.loadjs ++ 
+    this.loadjs++
     if (this.loadjs === 5) {
-      if(b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight +10;
+      if (b && b.clientHeight) {
+        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight + 10;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
-      }else {
+      } else {
         this.loadjs = 0;
       }
     }
@@ -152,8 +152,8 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
     }
     this.load();
   }
-  		
-	displaySetting = false;
+
+  displaySetting = false;
   gridKey = ''
   cauhinh() {
     this.displaySetting = true;
@@ -163,48 +163,45 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
   load() {
     this.columnDefs = []
     this.spinner.show();
-    const queryParams: any = {...this.query};
+    const queryParams: any = { ...this.query };
     const queryStrings = queryString.stringify(queryParams);
-    this.apiService.getLeavePage(queryStrings).subscribe(
-      (results: any) => {
-        this.listsData = results.data.dataList.data;
-        this.gridKey= results.data.dataList.gridKey;
-			
-        if (this.query.offSet === 0) {
-          this.cols = results.data.gridflexs;
-          this.colsDetail = results.data.gridflexdetails ? results.data.gridflexdetails : [];
-        }
-        this.initGrid();
-        this.countRecord.totalRecord = results.data.dataList.recordsTotal;
-        this.countRecord.totalRecord = results.data.dataList.recordsTotal;
-        this.countRecord.currentRecordStart = results.data.dataList.recordsTotal === 0 ? this.query.offSet = 0 :  this.query.offSet + 1;
-        if ((results.data.dataList.recordsTotal - this.query.offSet) > this.query.pageSize) {
-          this.countRecord.currentRecordEnd = this.query.offSet + Number(this.query.pageSize);
-        } else {
-          this.countRecord.currentRecordEnd = results.data.dataList.recordsTotal;
-          setTimeout(() => {
-            const noData = document.querySelector('.ag-overlay-no-rows-center');
-            if (noData) { noData.innerHTML = 'Không có kết quả phù hợp'}
-          }, 100);
-        }
-        this.spinner.hide();
-        this.FnEvent();
-      },
-      error => {
-        this.spinner.hide();
-       });
+    this.apiService.getLeavePage(queryStrings)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        (results: any) => {
+          this.listsData = results.data.dataList.data;
+          this.gridKey = results.data.dataList.gridKey;
+
+          if (this.query.offSet === 0) {
+            this.cols = results.data.gridflexs;
+            this.colsDetail = results.data.gridflexdetails ? results.data.gridflexdetails : [];
+          }
+          this.initGrid();
+          this.countRecord.totalRecord = results.data.dataList.recordsTotal;
+          this.countRecord.totalRecord = results.data.dataList.recordsTotal;
+          this.countRecord.currentRecordStart = results.data.dataList.recordsTotal === 0 ? this.query.offSet = 0 : this.query.offSet + 1;
+          if ((results.data.dataList.recordsTotal - this.query.offSet) > this.query.pageSize) {
+            this.countRecord.currentRecordEnd = this.query.offSet + Number(this.query.pageSize);
+          } else {
+            this.countRecord.currentRecordEnd = results.data.dataList.recordsTotal;
+            setTimeout(() => {
+              const noData = document.querySelector('.ag-overlay-no-rows-center');
+              if (noData) { noData.innerHTML = 'Không có kết quả phù hợp' }
+            }, 100);
+          }
+          this.spinner.hide();
+          this.FnEvent();
+        },
+        error => {
+          this.spinner.hide();
+        });
   }
 
   // set kỳ công
   defauDateFilter() {
-    // let currentDay = new Date().getDate();
-    // if(currentDay >= 25 && currentDay <= 31){
-    //   this.query.month = this.query.month + 1;
-    //   this.query.fromdate = new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).format())
-    //   this.query.todate = new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).add( +1 ,'months').format())
-    // }
+
   }
-  
+
   showButtons(event: any) {
     return {
       buttons: [
@@ -223,18 +220,7 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
           class: 'btn-primary mr5',
           hide: CheckHideAction(MENUACTIONROLEAPI.GetLeavePage.url, ACTIONS.HUY_DUYET)
         },
-        // {
-        //   onClick: this.xoaTienLuong.bind(this),
-        //   label: 'Xóa',
-        //   icon: 'pi pi-trash',
-        //   class: 'btn-primary mr5',
-        // },
-        // {
-        //   onClick: this.CloseAccount.bind(this),
-        //   label: 'Đóng tài khoản',
-        //   icon: 'pi pi-trash',
-        //   class: 'btn-primary mr5',
-        // },
+
       ]
     };
   }
@@ -254,28 +240,30 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
 
   huyDuyet() {
     this.queryHuyDuyet.comment = this.reason_cancel;
-    if(!this.queryHuyDuyet.comment){
+    if (!this.queryHuyDuyet.comment) {
       this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Vui lòng nhập lý do' });
       return
     }
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn hủy duyệt?',
       accept: () => {
-        this.apiService.cancelLeaveStatuses(this.queryHuyDuyet).subscribe(results => {
-          if (results.status === 'success') {
-            this.isReason = false;
-            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Hủy duyệt thành công' });
-            this.load();
-            this.FnEvent();
-          } else {
-            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
-          }
-        });
+        this.apiService.cancelLeaveStatuses(this.queryHuyDuyet)
+          .pipe(takeUntil(this.unsubscribe$))
+          .subscribe(results => {
+            if (results.status === 'success') {
+              this.isReason = false;
+              this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Hủy duyệt thành công' });
+              this.load();
+              this.FnEvent();
+            } else {
+              this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+            }
+          });
       }
     });
   }
 
-  
+
 
   initGrid() {
     this.columnDefs = [
@@ -283,7 +271,7 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
       {
         headerComponentParams: {
           template:
-          `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
+            `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
         },
         filter: '',
         width: 100,
@@ -295,52 +283,52 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
         field: 'checkbox'
       }]
 
-      this.detailCellRendererParams = {
-        detailGridOptions: {
-          frameworkComponents: {},
-          getRowHeight: (params) => {
-            return 40;
-          },
-          columnDefs: [
-            ...AgGridFn(this.colsDetail),
-          ],
-
-          enableCellTextSelection: true,
-          onFirstDataRendered(params) {
-            let allColumnIds: any = [];
-            params.columnApi.getAllColumns()
-              .forEach((column: any) => {
-                if (column.colDef.cellClass.indexOf('auto') < 0) {
-                  allColumnIds.push(column)
-                } else {
-                  column.colDef.suppressSizeToFit = true;
-                  allColumnIds.push(column)
-                }
-              });
-            params.api.sizeColumnsToFit(allColumnIds);
-          },
+    this.detailCellRendererParams = {
+      detailGridOptions: {
+        frameworkComponents: {},
+        getRowHeight: (params) => {
+          return 40;
         },
-        getDetailRowData(params) {
-          params.successCallback(params.data.Owns);
-        },
-        excelStyles: [
-          {
-            id: 'stringType',
-            dataType: 'string'
-          }
+        columnDefs: [
+          ...AgGridFn(this.colsDetail),
         ],
-        template: function (params) {
-          var personName = params.data.theme;
-          return (
-            '<div style="height: 100%; background-color: #EDF6FF; padding: 20px; box-sizing: border-box;">' +
-            `  <div style="height: 10%; padding: 2px; font-weight: bold;">###### Danh sách (${params.data.Owns.length}) : [` +
-            personName + ']' +
-            '</div>' +
-            '  <div ref="eDetailGrid" style="height: 90%;"></div>' +
-            '</div>'
-          );
+
+        enableCellTextSelection: true,
+        onFirstDataRendered(params) {
+          let allColumnIds: any = [];
+          params.columnApi.getAllColumns()
+            .forEach((column: any) => {
+              if (column.colDef.cellClass.indexOf('auto') < 0) {
+                allColumnIds.push(column)
+              } else {
+                column.colDef.suppressSizeToFit = true;
+                allColumnIds.push(column)
+              }
+            });
+          params.api.sizeColumnsToFit(allColumnIds);
         },
-      };
+      },
+      getDetailRowData(params) {
+        params.successCallback(params.data.Owns);
+      },
+      excelStyles: [
+        {
+          id: 'stringType',
+          dataType: 'string'
+        }
+      ],
+      template: function (params) {
+        var personName = params.data.theme;
+        return (
+          '<div style="height: 100%; background-color: #EDF6FF; padding: 20px; box-sizing: border-box;">' +
+          `  <div style="height: 10%; padding: 2px; font-weight: bold;">###### Danh sách (${params.data.Owns.length}) : [` +
+          personName + ']' +
+          '</div>' +
+          '  <div ref="eDetailGrid" style="height: 90%;"></div>' +
+          '</div>'
+        );
+      },
+    };
   }
 
   xoaTienLuong(event) {
@@ -360,13 +348,13 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
     // });
   }
 
-  editRow({rowData}) {
+  editRow({ rowData }) {
     this.getLeaveInfo(rowData.id);
   }
-  
+
   onCellClicked(event) {
-    if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
-      this.editRow(event = {rowData: event.data})
+    if (event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
+      this.editRow(event = { rowData: event.data })
     }
   }
 
@@ -390,7 +378,7 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
 
   ngOnInit() {
     this.items = [
-      { label: 'Trang chủ' , routerLink: '/home' },
+      { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Chính sách' },
       { label: 'Giải trình công' },
     ];
@@ -427,7 +415,7 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
     //   }
     // })
   }
-  
+
   getRequestStatus() {
     // this.apiBaseService.getObjectList('hrm_leave_status')
     // .subscribe(response => {
@@ -451,21 +439,23 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
   }
 
   getOrgRoots() {
-    this.apiService.getOrgRoots().subscribe(results => {
-      if (results.status === 'success') {
-        this.listOrgRoots = results.data.map(d => {
-          return {
-            label: d.org_name,
-            value: `${d.orgId}`
-          }
-        });
-        this.listOrgRoots = [{ label: 'Tất cả', value: null }, ...this.listOrgRoots];
-      }
-    })
+    this.apiService.getOrgRoots()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(results => {
+        if (results.status === 'success') {
+          this.listOrgRoots = results.data.map(d => {
+            return {
+              label: d.org_name,
+              value: `${d.orgId}`
+            }
+          });
+          this.listOrgRoots = [{ label: 'Tất cả', value: null }, ...this.listOrgRoots];
+        }
+      })
   }
 
   addNewNghiPhep() {
-    this.isSearchEmp = true; 
+    this.isSearchEmp = true;
   }
 
   listViews = [];
@@ -475,7 +465,7 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
     this.listViews = []
     this.addEdit = true;
     this.leaveId = id;
-    const queryParams = queryString.stringify({ id: id, empId: this.empId});
+    const queryParams = queryString.stringify({ id: id, empId: this.empId });
     this.apiService.getLeaveInfo(queryParams)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {
@@ -488,34 +478,34 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
   }
   setLeaveInfo(data) {
     this.spinner.show();
-      const params = {
-        ...this.detailInfo, group_fields: data
-      }
+    const params = {
+      ...this.detailInfo, group_fields: data
+    }
     this.checkLeaveOverLap(params)
   }
 
   checkLeaveOverLap(params) {
     this.apiService.checkLeaveOverLap(params)
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe((results: any) => {
-      if (results.status === 'success') {
-        // this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data });
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((results: any) => {
+        if (results.status === 'success') {
+          // this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data });
 
-        this.confirmationService.confirm({
-          message: results.message,
-          accept: () => {
-            this.setLeaveInfoOver(params);
-          }
-        });
+          this.confirmationService.confirm({
+            message: results.message,
+            accept: () => {
+              this.setLeaveInfoOver(params);
+            }
+          });
+          this.spinner.hide();
+        } else {
+          // set immediately
+          this.spinner.hide();
+          this.setLeaveInfoWhenCheckNoOk(params)
+        }
+      }), error => {
         this.spinner.hide();
-      } else {
-        // set immediately
-        this.spinner.hide();
-        this.setLeaveInfoWhenCheckNoOk(params)
-      }
-    }), error => {
-      this.spinner.hide();
-    };
+      };
   }
 
   // lưu khi check 'checkLeaveOverLap' status !== 'success'
@@ -541,22 +531,22 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
 
   setLeaveInfoOver(params) {
     this.apiService.setLeaveHrmInfo(params)
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe((results: any) => {
-      if (results.status === 'success') {
-        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((results: any) => {
+        if (results.status === 'success') {
+          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
+          this.spinner.hide();
+          this.addEdit = false
+        } else {
+          this.messageService.add({
+            severity: 'error', summary: 'Thông báo',
+            detail: results.message
+          });
+          this.spinner.hide();
+        }
+      }), error => {
         this.spinner.hide();
-        this.addEdit = false
-      } else {
-        this.messageService.add({
-          severity: 'error', summary: 'Thông báo',
-          detail: results.message
-        });
-        this.spinner.hide();
-      }
-    }), error => {
-      this.spinner.hide();
-    };
+      };
   }
 
   getCompany() {
@@ -582,87 +572,47 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
 
   listViewsFilter = [];
   cloneListViewsFilter = [];
-detailInfoFilter = null;
+  detailInfoFilter = null;
   optionsButonFilter = [
     { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm height-56 addNew', icon: 'pi pi-search' },
     { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger height-56 addNew', icon: 'pi pi-times' },
   ];
   //filter 
   getFilter() {
-    this.apiService.getFilter('/api/v2/leave/GetLeaveFilter').subscribe(results => {
-      if(results.status === 'success') {
+    this.apiService.getFilter('/api/v2/leave/GetLeaveFilter')
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
+      if (results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
         this.listViewsFilter = [...listViews];
-        const params =  getParamString(listViews)
-        this.query = { ...this.query, ...params};
+        const params = getParamString(listViews)
+        this.query = { ...this.query, ...params };
         this.load();
         this.detailInfoFilter = results.data;
       }
     });
   }
 
-   filterLoad(event) {
+  filterLoad(event) {
     this.query = { ...this.query, ...event.data };
     this.load();
     this.FnEvent();
   }
 
-  close({event, datas}) {
-    if(event !== 'Close') {
+  close({ event, datas }) {
+    if (event !== 'Close') {
       const listViews = cloneDeep(this.cloneListViewsFilter);
       this.listViewsFilter = cloneDeep(listViews);
-      const params =  getParamString(listViews)
-      this.query = { ...this.query, ...params};
+      const params = getParamString(listViews)
+      this.query = { ...this.query, ...params };
       this.load();
-    }else {
-      this.listViewsFilter =  cloneDeep(datas);
+    } else {
+      this.listViewsFilter = cloneDeep(datas);
     }
   }
 
-showFilter() {
-    const ref = this.dialogService.open(FormFilterComponent, {
-      header: 'Tìm kiếm nâng cao',
-      width: '40%',
-      contentStyle: "",
-      data: {
-        listViews: this.listViewsFilter,
-        detailInfoFilter: this.detailInfoFilter,
-        buttons: this.optionsButonFilter
-      }
-    });
-
-    ref.onClose.subscribe((event: any) => {
-      if (event) {
-        this.listViewsFilter = cloneDeep(event.listViewsFilter);
-        if (event.type === 'Search') {
-          this.query = { ...this.query, ...event.data };
-          this.load();
-        } else if (event.type === 'CauHinh') {
-          this.apiService.getFilter('/api/v2/leave/GetLeaveFilter').subscribe(results => {
-            if (results.status === 'success') {
-              const listViews = cloneDeep(results.data.group_fields);
-              this.listViewsFilter = [...listViews];
-              const params =  getParamString(listViews)
-              this.query = { ...this.query, ...params};
-              this.load();
-              this.detailInfoFilter = results.data;
-              this.showFilter()
-            }
-          });
-
-        } else if (event.type === 'Reset') {
-          const listViews = cloneDeep(this.cloneListViewsFilter);
-          this.listViewsFilter = cloneDeep(listViews);
-         const params =  getParamString(listViews)
-        this.query = { ...this.query, ...params};
-        this.load();
-        }
-      }
-    });
-  }
-
-  quaylai(event){
+  quaylai(event) {
     this.addEdit = false;
     this.FnEvent();
   }
@@ -674,7 +624,7 @@ showFilter() {
   FnEvent() {
     setTimeout(() => {
       var dragTarget = document.getElementById(this.gridKey);
-      if(dragTarget) {
+      if (dragTarget) {
         console.log('dragTarget', dragTarget)
         const click$ = fromEvent(dragTarget, 'click');
         click$.subscribe(event => {
@@ -690,11 +640,11 @@ showFilter() {
   }
 
   seachEmValue(event) {
-    if(event.value) {
-        this.empId = event.value
-       this.getLeaveInfo(null);
+    if (event.value) {
+      this.empId = event.value
+      this.getLeaveInfo(null);
 
-    }else{
+    } else {
       this.isSearchEmp = false;
     }
   }
@@ -703,17 +653,9 @@ showFilter() {
     this.query.pageSize = 1000000;
     let params: any = { ... this.query };
     const queryParams = queryString.stringify(params);
-    // this.apiService.exportLeave(queryParams).subscribe(results => {
-    //   if (results.type === 'application/json') {
-    //     this.spinner.hide();
-    //   } else {
-    //     var blob = new Blob([results], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-    //     FileSaver.saveAs(blob, `Danh sách giải trình công` + ".xlsx");
-    //     this.spinner.hide();
-    //   }
-    // })
-
-    this.apiService.getLeavePage(queryParams).subscribe(
+    this.apiService.getLeavePage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         const dataExport = [];
         let gridflexs = results.data.gridflexs;

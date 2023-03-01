@@ -120,7 +120,9 @@ export class SendNotifyComponent implements OnInit, AfterViewInit,OnDestroy {
 
   setNotifyToPushRun(dataSave) {
     this.spinner.show();
-    this.apiService.setNotifyToPushRun(dataSave).subscribe((result: any) => {
+    this.apiService.setNotifyToPushRun(dataSave)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((result: any) => {
       if (result.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: result.data ? result.data : 'Thành công' });
         this.spinner.hide();
@@ -136,7 +138,9 @@ export class SendNotifyComponent implements OnInit, AfterViewInit,OnDestroy {
     this.action = getFieldValueAggrid(this.notify, 'actionlist', '');
     this.action = this.action.split(',')
     const queryParams = queryString.stringify({ objKey: 'notify_template' });
-    this.apiService.getObjects(queryParams).subscribe(results => {
+    this.apiService.getObjects(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.actions = results.data.map( d => {
           return {

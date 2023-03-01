@@ -4,9 +4,8 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as queryString from 'querystring';
 import { cloneDeep } from 'lodash';
-import * as moment from 'moment';
 import { AgGridFn } from 'src/app/common/function-common/common';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-nguoi-duyet',
@@ -74,7 +73,9 @@ export class NguoiDuyetComponent implements OnInit {
   getComAuthorizeInfo() {
     const queryParams = queryString.stringify(this.modelAuth);
     this.listViewsDetail = [];
-    this.apiService.getComAuthorizeInfo(queryParams).subscribe(results => {
+    this.apiService.getComAuthorizeInfo(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listViewsDetail = cloneDeep(results.data.group_fields);
         this.dataDetailInfo = results.data;
@@ -87,7 +88,9 @@ export class NguoiDuyetComponent implements OnInit {
     const param = {
       ...this.dataDetailInfo, group_fields: data
     }
-    this.apiService.setComAuthorizeInfo(param).subscribe(results => {
+    this.apiService.setComAuthorizeInfo(param)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thêm mới thành công' });
         this.displayFormEditDetail = false;
@@ -106,7 +109,9 @@ export class NguoiDuyetComponent implements OnInit {
     this.spinner.show();
     this.columnDefs = [];
     const queryParams = queryString.stringify({ companyId: this.companyId, offSet: 0, pageSize: 10000 });
-    this.apiService.getComAuthorizePage(queryParams).subscribe(repo => {
+    this.apiService.getComAuthorizePage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(repo => {
       if (repo.status === 'success') {
         if (repo.data.dataList.gridKey) {
           this.gridKey = repo.data.dataList.gridKey;
@@ -179,7 +184,9 @@ export class NguoiDuyetComponent implements OnInit {
     this.confirmationService.confirm({
       message: `Bạn có chắc chắn muốn xác nhận ${event.rowData.authFullName} là người ký mặc định?`,
       accept: () => {
-        this.apiService.setCompanyAuthDefault({authId: event.rowData.authid}).subscribe((results: any) => {
+        this.apiService.setCompanyAuthDefault({authId: event.rowData.authid})
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Xác nhận thành công' });
             this.getComAuthorizePage();
@@ -209,7 +216,9 @@ export class NguoiDuyetComponent implements OnInit {
       message: `Bạn có chắc chắn muốn xóa ${event.rowData.authFullName} khỏi danh sách người duyệt`,
       accept: () => {
         const queryParams = queryString.stringify({authId: event.rowData.authid});
-        this.apiService.delComAuthorizeInfo(queryParams).subscribe((results: any) => {
+        this.apiService.delComAuthorizeInfo(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Xóa thành công' });
             this.getComAuthorizePage();
@@ -235,6 +244,12 @@ export class NguoiDuyetComponent implements OnInit {
       this.getComAuthorizeInfo();
      
     }
+  }
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
 }

@@ -11,6 +11,7 @@ import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { CONSTANTS } from 'src/app/shared/constants';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-grid-push-list',
   templateUrl: './grid-push-list.component.html',
@@ -93,8 +94,16 @@ export class GridPushListComponent implements OnInit, OnChanges {
     // this.load();
   }
 
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   getFilterType() {
-    this.apiService.getNotifyPushStatus().subscribe((result: any) => {
+    this.apiService.getNotifyPushStatus()
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((result: any) => {
       this.notifyTypes = result.data;
     });
   }
@@ -111,7 +120,9 @@ export class GridPushListComponent implements OnInit, OnChanges {
     this.columnDefs = []
     this.spinner.show();
     const queryParams = queryString.stringify(this.filter);
-    this.apiService.getNotifyToPushs(queryParams).subscribe(
+    this.apiService.getNotifyToPushs(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.items = results.data;
         this.listsData = results.data.dataList.data;
@@ -190,7 +201,9 @@ export class GridPushListComponent implements OnInit, OnChanges {
       message: `${CONSTANTS.CONFIRM.DELETE}`,
       accept: () => {
         const queryParams = queryString.stringify({ id: e.rowData.userId });
-        this.apiService.delNotifyPush(queryParams).subscribe(results => {
+        this.apiService.delNotifyPush(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xoá thành công' });
             this.load();

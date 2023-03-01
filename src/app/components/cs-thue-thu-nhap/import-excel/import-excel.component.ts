@@ -4,6 +4,7 @@ import * as moment from 'moment';
 import { MessageService } from 'primeng/api';
 import { finalize } from 'rxjs/operators';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-import-excel',
@@ -19,6 +20,12 @@ export class ImportExcelComponent implements OnInit {
   date = null;
   file = null;
   loading = false;
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   ngOnInit(): void {
   }
 
@@ -43,6 +50,7 @@ export class ImportExcelComponent implements OnInit {
     .pipe(
       finalize(() => this.loading = false)
     )
+    .pipe(takeUntil(this.unsubscribe$))
     .subscribe(response => {
       if (response.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Import file thành công' });

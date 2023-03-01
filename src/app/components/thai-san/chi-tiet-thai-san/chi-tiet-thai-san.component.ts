@@ -274,7 +274,9 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
       message: 'Bạn có chắc chắn muốn xóa?',
       accept: () => {
         const queryParams = queryString.stringify({ matPolicyId: event.rowData.matPolicyId, maternityId: event.rowData.maternityId });
-        this.apiService.delMaternityPolicyInfo(queryParams).subscribe(results => {
+        this.apiService.delMaternityPolicyInfo(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
             this.getChiTietForDsThaiSan();
@@ -291,7 +293,9 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
       message: 'Bạn có chắc chắn muốn xóa?',
       accept: () => {
         const queryParams = queryString.stringify({ childId: event.rowData.childId });
-        this.apiService.delMaternityChildInfo(queryParams).subscribe(results => {
+        this.apiService.delMaternityChildInfo(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
             this.getChiTietForDsThaiSan();
@@ -308,7 +312,9 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
       message: 'Bạn có chắc chắn muốn xóa?',
       accept: () => {
         const queryParams = queryString.stringify({ pregnancyId: event.rowData.pregnancyId });
-        this.apiService.delMaternityPregnancyInfo(queryParams).subscribe(results => {
+        this.apiService.delMaternityPregnancyInfo(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
             this.getChiTietForDsThaiSan();
@@ -382,7 +388,9 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
   }
   
   getMaternityPregnancInfo(queryParams) {
-    this.apiService.getMaternityPregnancInfo(queryParams).subscribe(results => {
+    this.apiService.getMaternityPregnancInfo(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.listViews_other = listViews;
@@ -393,7 +401,9 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
   }
 
   getMaternityChildInfo(queryParams) {
-    this.apiService.getMaternityChildInfo(queryParams).subscribe(results => {
+    this.apiService.getMaternityChildInfo(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.listViews_other = listViews;

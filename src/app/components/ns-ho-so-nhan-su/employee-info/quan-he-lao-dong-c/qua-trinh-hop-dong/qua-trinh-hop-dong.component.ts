@@ -123,7 +123,9 @@ export class QuaTrinhHopDongComponent implements OnInit {
   addEmpPersonal() {
     const queryParams = queryString.stringify({ empId: this.empId});
     this.listViewsDetail = [];
-    this.apiService.addEmpPersonal(queryParams).subscribe(results => {
+    this.apiService.addEmpPersonal(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listViewsDetail = cloneDeep(results.data.group_fields);
         this.dataDetailInfo = results.data;
@@ -136,7 +138,9 @@ export class QuaTrinhHopDongComponent implements OnInit {
     const param = {
       ...this.dataDetailInfo, group_fields: data
     }
-    this.apiService.empproFileSetEmpAttach(param).subscribe(results => {
+    this.apiService.empproFileSetEmpAttach(param)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thêm mới thành công' });
         this.displayFormEditDetail = false;
@@ -155,7 +159,9 @@ export class QuaTrinhHopDongComponent implements OnInit {
     this.spinner.show();
     this.columnDefs = [];
     const queryParams = queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 });
-    this.apiService.getContractPageByEmpId(queryParams).subscribe(repo => {
+    this.apiService.getContractPageByEmpId(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(repo => {
       if (repo.status === 'success') {
         if (repo.data.dataList.gridKey) {
           this.gridKey = repo.data.dataList.gridKey;
@@ -260,6 +266,7 @@ export class QuaTrinhHopDongComponent implements OnInit {
   duyetHoSo() {
     this.spinner.show();
     this.apiService.setContractStatus(this.modelDuyetHopDong)
+    .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {
         if (results.status === 'success') {
           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
@@ -278,7 +285,9 @@ export class QuaTrinhHopDongComponent implements OnInit {
     this.spinner.show();
     this.apiService.setContractCancel({
       contractId: this.modelDuyetHopDong.contractId
-    }).subscribe(results => {
+    })
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
         this.getContractPageByEmpId();
@@ -297,7 +306,9 @@ export class QuaTrinhHopDongComponent implements OnInit {
       message: 'Bạn có chắc chắn muốn xóa bản ghi này?',
       accept: () => {
         const queryParams = queryString.stringify({contractId: event.rowData.contractId});
-        this.apiService.delContractInfo(queryParams).subscribe((results: any) => {
+        this.apiService.delContractInfo(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
             this.getContractPageByEmpId();
@@ -351,7 +362,9 @@ export class QuaTrinhHopDongComponent implements OnInit {
         seq: index + 1
       }
     })
-    this.apiService.getPrintFiles(params).subscribe(results => {
+    this.apiService.getPrintFiles(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.filesPrints = results.data.dataList.data;
         this.dataPrint = results.data;

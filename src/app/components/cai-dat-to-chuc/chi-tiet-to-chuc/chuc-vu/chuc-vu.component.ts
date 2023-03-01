@@ -4,7 +4,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as queryString from 'querystring';
 import { AgGridFn } from 'src/app/common/function-common/common';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
 import { cloneDeep } from 'lodash';
 @Component({
   selector: 'app-chuc-vu-orgid',
@@ -58,11 +58,19 @@ export class ChucVuComponent implements OnInit {
     this.displayFormEditDetail = true;
   }
 
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   listPosition = [];
   selectedPosition = [];
   getOrgPosition() {
     const queryParams = queryString.stringify({ filter: '' });
-    this.apiService.getOrgPosition(queryParams).subscribe(results => {
+    this.apiService.getOrgPosition(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
           this.listPosition = results.data;
           if(this.listsData.length === 0) {
@@ -89,7 +97,9 @@ export class ChucVuComponent implements OnInit {
     this.spinner.show();
     this.columnDefs = [];
     const queryParams = queryString.stringify({ orgId: this.orgId, offSet: 0, pageSize: 10000 });
-    this.apiService.getOrgPositionPage(queryParams).subscribe(repo => {
+    this.apiService.getOrgPositionPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(repo => {
       if (repo.status === 'success') {
         if (repo.data.dataList.gridKey) {
           this.gridKey = repo.data.dataList.gridKey;
@@ -163,7 +173,9 @@ export class ChucVuComponent implements OnInit {
           positionTitleIds: this.listTargets.map(d => d.value)
         }
         this.spinner.show();
-        this.apiService.setOrgPosition(params).subscribe(results => {
+        this.apiService.setOrgPosition(params)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(results => {
           if(results.status === 'success') {
               this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : results.message });
               this.getOrgPositionPage();

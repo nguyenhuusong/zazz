@@ -5,6 +5,7 @@ import { MessageService } from 'primeng/api';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { EChooseType, IdentityCard } from 'src/app/models/identity-card.model';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
+import { Subject } from 'rxjs';
 @Component({
   selector: 'app-detect-card',
   templateUrl: './detect-card.component.html',
@@ -42,6 +43,12 @@ export class DetectCardComponent implements OnInit, OnChanges {
   @Output() callback = new EventEmitter<any>();
   @Output() reset= new EventEmitter<any>();
   ngOnInit(): void {
+  }
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   ngOnChanges(event) {

@@ -11,7 +11,7 @@ import showdown from 'showdown';
 import { CheckHideAction } from 'src/app/common/function-common/common';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
-import { getFieldValueAggrid } from 'src/app/utils/common/function-common';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-notify-detail',
   templateUrl: './notify-detail.component.html',
@@ -80,8 +80,17 @@ export class NotifyDetailComponent implements OnInit {
     this.getNotifyTempList();
   }
 
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
+
   handleParams() {
-    this.activatedRoute.queryParamMap.subscribe((params) => {
+    this.activatedRoute.queryParamMap
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.notiId = this.paramsObject.params.notiId;
      
@@ -106,7 +115,9 @@ export class NotifyDetailComponent implements OnInit {
         tempId: this.tempId, 
         external_name: this.external_name 
       });
-    this.apiService.getNotifyInfo(queryParams).subscribe(results => {
+    this.apiService.getNotifyInfo(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listViews = cloneDeep(results.data.group_fields);
         this.setItemByActionList();
@@ -231,7 +242,9 @@ export class NotifyDetailComponent implements OnInit {
   moduleLists = []
   getModuleList() {
     const queryParams = queryString.stringify({ filter: ''});
-    this.apiService.getOrganizations(queryParams).subscribe(results => {
+    this.apiService.getOrganizations(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         const moduleLists = results.data.map(d => {
           return {
@@ -254,7 +267,9 @@ export class NotifyDetailComponent implements OnInit {
           const params = {
             ids: data.map(t => t.id)
           };
-          this.apiService.delNotifyPushs(params).subscribe(results => {
+          this.apiService.delNotifyPushs(params)
+          .pipe(takeUntil(this.unsubscribe$))
+          .subscribe(results => {
             if (results.status === 'success') {
               this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Thành công' });
               this.loadForm = true;
@@ -317,7 +332,9 @@ export class NotifyDetailComponent implements OnInit {
         }
       }),
     }
-    this.apiService.setNotifyInfo(params).subscribe(results => {
+    this.apiService.setNotifyInfo(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data.messages ? results.data.messages : 'Thành công' });
         this.spinner.hide();
@@ -330,7 +347,9 @@ export class NotifyDetailComponent implements OnInit {
   }
 
   getNotifyTempList() {
-    this.apiService.getNotifyTempList().subscribe(results => {
+    this.apiService.getNotifyTempList()
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.notifyTempList = results.data.map(res => {
           return {

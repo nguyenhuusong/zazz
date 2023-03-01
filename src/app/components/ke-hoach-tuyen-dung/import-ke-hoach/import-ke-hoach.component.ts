@@ -113,7 +113,9 @@ export class ImportKeHoachComponent implements OnInit {
   }
 
   getTemfileImport() {
-    this.apiService.exportReportLocalhost('assets/tpl-import-file/Import_HSNS_NghiViec.xlsx').subscribe((data: any) => {
+    this.apiService.exportReportLocalhost('assets/tpl-import-file/Import_HSNS_NghiViec.xlsx')
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((data: any) => {
       this.createImageFromBlob(data)
     });
   }

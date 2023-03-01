@@ -5,10 +5,9 @@ import { ApiCoreService } from 'src/app/services/api-core/apicore.service';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as queryString from 'querystring';
 import { cloneDeep } from 'lodash';
-import * as moment from 'moment';
-import * as FileSaver from 'file-saver';
-import { AgGridFn, getFieldValueAggrid } from 'src/app/utils/common/function-common';
+import {  getFieldValueAggrid } from 'src/app/utils/common/function-common';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-thue-bao-hiem',
   templateUrl: './thue-bao-hiem.component.html',
@@ -30,8 +29,14 @@ export class ThueBaoHiemComponent implements OnInit {
 
   ngOnInit(): void {
     this.getEmpByInsurance();
-
   }
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   optionsButtonsView = [
     // { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-save' },
     // { label: 'Xuất hồ sơ', value: 'xuatHoSo', class: '', icon: 'pi file-excel' },
@@ -44,7 +49,9 @@ export class ThueBaoHiemComponent implements OnInit {
     this.listViews = [];
     this.detailInfo = null;
     const queryParams = queryString.stringify({ empId: this.empId, isEdit : false });
-    this.apiService.getEmpByInsurance(queryParams).subscribe(results => {
+    this.apiService.getEmpByInsurance(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         if (!this.codeStaff) {
           this.codeStaff = getFieldValueAggrid(results.data, 'code');
@@ -70,7 +77,9 @@ export class ThueBaoHiemComponent implements OnInit {
     const  params = {
       ...this.detailInfo, group_fields: data
     };
-    this.apiService.setEmpByInsuranceInfo(params).subscribe((results: any) => {
+    this.apiService.setEmpByInsuranceInfo(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
       if (results.status === 'success') {
       
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Cập nhật thông tin thành công' });

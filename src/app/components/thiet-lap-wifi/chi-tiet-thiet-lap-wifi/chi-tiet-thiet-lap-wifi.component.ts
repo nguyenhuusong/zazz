@@ -75,7 +75,9 @@ export class ChiTietThietLapWifiComponent implements OnInit, OnChanges, OnDestro
     this.listViews = [];
     this.listsData = [];
     const queryParams = queryString.stringify({ id: this.id });
-    this.apiService.getTimekeepingWifiInfo(queryParams).subscribe(results => {
+    this.apiService.getTimekeepingWifiInfo(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listViews = cloneDeep(results.data.group_fields);
         this.detailInfo = results.data;
@@ -87,7 +89,9 @@ export class ChiTietThietLapWifiComponent implements OnInit, OnChanges, OnDestro
     const params = {
       ...this.detailInfo, group_fields: data
     };
-    this.apiService.setTimekeepingWifiInfo(params).subscribe((results: any) => {
+    this.apiService.setTimekeepingWifiInfo(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
       if (results.status === 'success') {
         this.goBack()
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message});

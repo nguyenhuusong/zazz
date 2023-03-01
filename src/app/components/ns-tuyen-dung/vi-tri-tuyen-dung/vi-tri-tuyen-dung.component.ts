@@ -19,7 +19,7 @@ const MAX_SIZE = 100000000;
 import { cloneDeep } from 'lodash';
 import { DialogService } from 'primeng/dynamicdialog';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-vi-tri-tuyen-dung',
@@ -59,6 +59,12 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
     };
 
     this.getVacancyFilter();
+  }
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   public modules: Module[] = AllModules;
@@ -147,7 +153,9 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
     this.spinner.show();
     let params: any = { ... this.query };
     const queryParams = queryString.stringify(params);
-    this.apiService.getVacancyPage(queryParams).subscribe(
+    this.apiService.getVacancyPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         this.gridKey = results.data.dataList.gridKey;
@@ -241,7 +249,9 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
       message: 'Bạn có chắc chắn muốn xóa vị trí tuyển dụng?',
       accept: () => {
         const queryParams = queryString.stringify({ vacancyId: event.rowData.vacancyId });
-        this.apiService.delVacancyInfo(queryParams).subscribe(results => {
+        this.apiService.delVacancyInfo(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa vị trí tuyển dụng thành công' });
             this.load();
@@ -326,7 +336,9 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
   export() {
     let params: any = { ... this.query };
     const queryParams = queryString.stringify(params);
-    this.apiService.exportVacancy(queryParams).subscribe(results => {
+    this.apiService.exportVacancy(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.type === 'application/json') {
         this.spinner.hide();
       } else {
@@ -360,7 +372,9 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
   ];
 
   getVacancyFilter() {
-    this.apiService.getVacancyFilter().subscribe(results => {
+    this.apiService.getVacancyFilter()
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
@@ -408,7 +422,9 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
           this.query = { ...this.query, ...event.data };
           this.load();
         } else if (event.type === 'CauHinh') {
-          this.apiService.getVacancyFilter().subscribe(results => {
+          this.apiService.getVacancyFilter()
+          .pipe(takeUntil(this.unsubscribe$))
+          .subscribe(results => {
             if (results.status === 'success') {
               const listViews = cloneDeep(results.data.group_fields);
               this.listViewsFilter = [...listViews];

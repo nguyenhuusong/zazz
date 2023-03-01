@@ -113,7 +113,9 @@ export class ImportTuyenDungComponent implements OnInit {
   }
 
   getTemfileImport() {
-    this.apiService.exportReportLocalhost('assets/tpl-import-file/file_mau_import_tuyen_dung.xlsx').subscribe((data: any) => {
+    this.apiService.exportReportLocalhost('assets/tpl-import-file/file_mau_import_tuyen_dung.xlsx')
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((data: any) => {
       this.createImageFromBlob(data)
     });
   }

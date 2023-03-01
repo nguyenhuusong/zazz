@@ -1,10 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output, OnChanges, OnDestroy } from '@angular/core';
-import * as queryString from 'querystring';
 import { ActivatedRoute, Router } from '@angular/router';
 import { cloneDeep } from 'lodash';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { Subject } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { CheckHideAction } from 'src/app/common/function-common/common';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
@@ -23,8 +22,6 @@ export class ChiTietThueThuNhapComponent implements OnInit, OnDestroy {
     private apiService: ApiHrmService,
     private activatedRoute: ActivatedRoute,
     private messageService: MessageService,
-    private confirmationService: ConfirmationService,
-    private spinner: NgxSpinnerService,
     private router: Router
   ) { }
   displayScreemForm = false;
@@ -67,7 +64,9 @@ export class ChiTietThueThuNhapComponent implements OnInit, OnDestroy {
   }
 
   handleParams() {
-    this.activatedRoute.queryParamMap.subscribe((params) => {
+    this.activatedRoute.queryParamMap
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.dataRouter = this.paramsObject.params;
       this.id = this.paramsObject.params.id;
@@ -78,7 +77,9 @@ export class ChiTietThueThuNhapComponent implements OnInit, OnDestroy {
   getIncomeTaxInfo() {
     this.listViews = [];
     this.listsData = [];
-    this.apiService.getIncomeTaxInfo(this.id).subscribe(results => {
+    this.apiService.getIncomeTaxInfo(this.id)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listViews = cloneDeep(results.data.group_fields);
         this.detailInfo = results.data;
@@ -92,7 +93,9 @@ export class ChiTietThueThuNhapComponent implements OnInit, OnDestroy {
 
   setAccountInfo(data): void {
     const params = { ...this.detailInfo, group_fields: data };
-    this.apiService.setIncomTaxInfo(params).subscribe((results: any) => {
+    this.apiService.setIncomTaxInfo(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
       if (results.status === 'success') {
         this.goBack();
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });

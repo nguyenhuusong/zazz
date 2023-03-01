@@ -5,6 +5,7 @@ import { cloneDeep } from 'lodash';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import * as firebase from 'firebase';
 import { ApiCoreService } from 'src/app/services/api-core/apicore.service';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-user-detail',
   templateUrl: './user-detail.component.html',
@@ -40,6 +41,12 @@ export class UserDetailComponent implements OnInit, OnChanges {
     }
   }
 
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   ngOnChanges() {
 
     this.user_id = this.keyName;
@@ -48,7 +55,9 @@ export class UserDetailComponent implements OnInit, OnChanges {
   }
 
   handleParams() {
-    this.activatedRoute.queryParamMap.subscribe((params) => {
+    this.activatedRoute.queryParamMap
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.user_id = this.paramsObject.params.loginName;
       this.manhinh = this.paramsObject.params.type;
@@ -59,7 +68,9 @@ export class UserDetailComponent implements OnInit, OnChanges {
   getProfileInfo() {
     this.listViews = [];
     const queryParams = queryString.stringify({ loginName: this.user_id });
-    this.apiService.getProfileInfo(queryParams).subscribe(results => {
+    this.apiService.getProfileInfo(queryParams)
+     .pipe(takeUntil(this.unsubscribe$))
+     .subscribe(results => {
       if (results.status === 'success') {
         this.detailInfo = results.data;
         this.listViews = cloneDeep(results.data.group_fields);
@@ -87,7 +98,9 @@ export class UserDetailComponent implements OnInit, OnChanges {
     const params = {
       ...this.detailInfo, group_fields: data
     };
-    this.apiService.setProfileInfo(params).subscribe((results: any) => {
+    this.apiService.setProfileInfo(params)
+     .pipe(takeUntil(this.unsubscribe$))
+     .subscribe((results: any) => {
       if (results.status === 'success') {
         this.displayUserInfo = false;
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Cập nhật thông tin thành công' });
@@ -107,7 +120,9 @@ export class UserDetailComponent implements OnInit, OnChanges {
       this.confirmationService.confirm({
         message: 'Bạn muốn xác minh thông tin chứng minh thư là đúng ?',
         accept: () => {
-          this.apiService.setProfileIdcardVerify({ loginName: this.detailInfo.loginName }).subscribe(results => {
+          this.apiService.setProfileIdcardVerify({ loginName: this.detailInfo.loginName })
+           .pipe(takeUntil(this.unsubscribe$))
+           .subscribe(results => {
             if (results.status === 'success') {
               this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Thông tin đã được xác minh thành công' });
               this.manhinh = 'Edit';

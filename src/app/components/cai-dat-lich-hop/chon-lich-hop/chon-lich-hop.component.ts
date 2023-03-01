@@ -5,6 +5,7 @@ import * as queryString from 'querystring';
 import { dateFormatter } from 'src/app/utils/common/function-common';
 import * as moment from 'moment';
 import timeGridPlugin from '@fullcalendar/timegrid';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-chon-lich-hop',
@@ -27,7 +28,11 @@ export class ChonLichHopComponent implements OnInit, OnChanges {
   showChooseDate = false;
 
   weeks = ['Chủ nhật', 'Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7']
-
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
   constructor(
     private apiService: ApiService
   ) {
@@ -157,6 +162,7 @@ export class ChonLichHopComponent implements OnInit, OnChanges {
     if (changes.meetingInfo && this.meetingInfo.roomId && this.meetingInfo.floorNo) {
       const queryParams = queryString.stringify(this.meetingInfo);
       this.apiService.getMeetRoomForCheck(queryParams)
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe(response => {
         response.data.map(t => this.convertDataToEvent(t)).forEach(t => {
           this.calendarApi.addEvent(t);

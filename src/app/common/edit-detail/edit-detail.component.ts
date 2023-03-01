@@ -130,6 +130,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
   getOrganizeInfoService() {
     
   }
+ 
   callApiDrop() {
     const promissall = [];
     const source = timer(50);
@@ -176,7 +177,9 @@ export class EditDetailComponent implements OnInit, OnChanges {
     });
     if (promissall.length > 0) {
     this.spinner.show();
-      forkJoin(promissall.filter(d => d !== undefined)).subscribe((results: any) => {
+      forkJoin(promissall.filter(d => d !== undefined))
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((results: any) => {
         const responses = results.filter(d => d !== undefined);
         this.spinner.hide();
         this.dataViewNew.forEach(element => {

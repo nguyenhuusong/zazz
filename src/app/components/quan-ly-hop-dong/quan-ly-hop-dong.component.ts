@@ -16,7 +16,7 @@ import { cloneDeep } from 'lodash';
 import { DialogService } from 'primeng/dynamicdialog';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
 import * as FileSaver from 'file-saver';
 @Component({
   selector: 'app-quan-ly-hop-dong',
@@ -56,6 +56,12 @@ export class QuanLyHopDongComponent implements OnInit {
   }
   pagingComponent = {
     total: 0
+  }
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   titleForm = {
@@ -134,7 +140,9 @@ export class QuanLyHopDongComponent implements OnInit {
   listOrgRoots = [];
   getOrgRoots() {
     const queryParams = queryString.stringify({ filter: '' });
-    this.apiService.getOrganizations(queryParams).subscribe(results => {
+    this.apiService.getOrganizations(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listOrgRoots = results.data.map(d => {
           return {
@@ -158,7 +166,9 @@ export class QuanLyHopDongComponent implements OnInit {
     this.columnDefs = []
     this.spinner.show();
     const queryParams = queryString.stringify(this.query);
-    this.apiService.getContractTypePage(queryParams).subscribe(
+    this.apiService.getContractTypePage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         this.gridKey = results.data.dataList.gridKey;
@@ -233,7 +243,9 @@ export class QuanLyHopDongComponent implements OnInit {
       message: 'Bạn có chắc chắn muốn xóa hợp đồng?',
       accept: () => {
         const queryParams = queryString.stringify({ contractTypeId: event.rowData.contractTypeId });
-        this.apiService.delContractTypeInfo(queryParams).subscribe(results => {
+        this.apiService.delContractTypeInfo(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa hợp đồng thành công' });
             this.load();
@@ -360,7 +372,9 @@ export class QuanLyHopDongComponent implements OnInit {
   ];
   //filter 
   getFilter() {
-    this.apiService.getFilter('/api/v2/contracttype/GetContractTypeFilter').subscribe(results => {
+    this.apiService.getFilter('/api/v2/contracttype/GetContractTypeFilter')
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
@@ -409,7 +423,9 @@ export class QuanLyHopDongComponent implements OnInit {
           this.query = { ...this.query, ...event.data };
           this.load();
         } else if (event.type === 'CauHinh') {
-          this.apiService.getFilter('/api/v2/contracttype/GetContractTypeFilter').subscribe(results => {
+          this.apiService.getFilter('/api/v2/contracttype/GetContractTypeFilter')
+          .pipe(takeUntil(this.unsubscribe$))
+          .subscribe(results => {
             if (results.status === 'success') {
               const listViews = cloneDeep(results.data.group_fields);
               this.listViewsFilter = [...listViews];
@@ -454,7 +470,9 @@ export class QuanLyHopDongComponent implements OnInit {
     delete params.offSet;
     delete params.pageSize;
     // empId: this.detailInfo.empId
-    this.apiService.setContractTypeExport(queryString.stringify({ ...params })).subscribe(results => {
+    this.apiService.setContractTypeExport(queryString.stringify({ ...params }))
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.type === 'application/json') {
         this.spinner.hide();
       } else if (results.type === 'application/octet-stream') {

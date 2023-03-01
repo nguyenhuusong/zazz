@@ -1,16 +1,15 @@
 import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router, Params } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as queryString from 'querystring';
-import { ConfirmationService, MessageService, TreeNode } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { ExportFileService } from 'src/app/services/export-file.service';
-import { cloneDeep } from 'lodash';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-tab-bang-luong',
   templateUrl: './tab-bang-luong.component.html',
@@ -93,11 +92,19 @@ export class TabBangLuongComponent implements OnInit {
     this.gridColumnApi = params.columnApi;
   }
 
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   load() {
     this.columnDefs = [];
     this.spinner.show();
     const queryParams = queryString.stringify(this.query);
-    this.apiService.getPayrollInfoPage(queryParams).subscribe(
+    this.apiService.getPayrollInfoPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.listsData = results?.data?.dataList?.data;
         this.gridKey= results?.data?.dataList?.gridKey;
@@ -202,7 +209,9 @@ export class TabBangLuongComponent implements OnInit {
       message: 'Bạn có chắc chắn muốn xóa',
       accept: () => {
         const query = queryString.stringify({Id: event.rowData.appInfoId})
-        this.apiService.delPayrollInfo(query).subscribe((results: any) => {
+        this.apiService.delPayrollInfo(query)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa công' });
             this.load();
@@ -258,7 +267,9 @@ export class TabBangLuongComponent implements OnInit {
   }
   employeeStatus = []
   getEmployeeStatus() {
-    this.apiService.getEmployeeStatus().subscribe(results => {
+    this.apiService.getEmployeeStatus()
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.employeeStatus = []
         results.data.forEach(s => {
@@ -281,7 +292,9 @@ export class TabBangLuongComponent implements OnInit {
     this.query.pageSize = 1000000;
     const query = { ...this.query };
     const queryParams = queryString.stringify(query);
-    this.apiService.getEmployeePage(queryParams).subscribe(
+    this.apiService.getEmployeePage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         const dataExport = [];
         let gridflexs = results.data.gridflexs;

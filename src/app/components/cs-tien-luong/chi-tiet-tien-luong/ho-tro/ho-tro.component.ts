@@ -4,6 +4,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as queryString from 'querystring';
 import { AgGridFn, TextFormatter } from 'src/app/common/function-common/common';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-ho-tro',
   templateUrl: './ho-tro.component.html',
@@ -24,6 +25,13 @@ export class HoTroComponent implements OnInit {
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
   ) { }
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   listsData = [];
   columnDefs = [];
   gridKey = '';
@@ -42,7 +50,9 @@ export class HoTroComponent implements OnInit {
     this.spinner.show();
     this.columnDefs = [];
     const queryParams = queryString.stringify({ recordId: this.recordId, offSet: 0, pageSize: 10000 });
-    this.apiService.getSalarySupportPage(queryParams).subscribe(repo => {
+    this.apiService.getSalarySupportPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(repo => {
       if (repo.status === 'success') {
         if (repo.data.gridKey) {
           this.gridKey = repo.data.dataList.gridKey;

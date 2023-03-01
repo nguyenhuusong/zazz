@@ -23,7 +23,8 @@ export class ChiTietThueBaoHiemComponent implements OnInit, OnDestroy {
   optionsButon = [
     { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
     { label: 'Lưu lại', value: 'Update', class: CheckHideAction(MENUACTIONROLEAPI.GetAnnualAddPage.url, ACTIONS.EDIT) ? 'hidden' : '', icon: 'pi pi-check' }
-  ]
+  ];
+  
   constructor(
     private activatedRoute: ActivatedRoute,
     private apiService: ApiHrmService,

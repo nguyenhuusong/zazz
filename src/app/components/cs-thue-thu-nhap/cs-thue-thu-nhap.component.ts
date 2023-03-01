@@ -18,6 +18,7 @@ import { cloneDeep, uniqBy } from 'lodash';
 import { DialogService } from 'primeng/dynamicdialog';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-cs-thue-thu-nhap',
   templateUrl: './cs-thue-thu-nhap.component.html',
@@ -98,6 +99,12 @@ detailInfoFilter = null;
     this.initFilter();
   }
 
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   ngOnInit(): void {
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
@@ -121,6 +128,7 @@ detailInfoFilter = null;
     query.pageSize = 1000000;
     const queryParams = queryString.stringify(query);
     this.apiService.getIncomeTaxPage(queryParams)
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe((results: any) => {
         const dataExport = [];
         results.data.dataList.data.forEach(element => {
@@ -168,7 +176,9 @@ detailInfoFilter = null;
     this.columnDefs = []
     this.spinner.show();
     const queryParams = queryString.stringify(this.query);
-    this.apiService.getIncomeTaxPage(queryParams).subscribe(
+    this.apiService.getIncomeTaxPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         this.gridKey= results.data.dataList.gridKey;
@@ -385,7 +395,9 @@ detailInfoFilter = null;
 
   //filter 
   getFilter() {
-    this.apiService.getFilter('/api/v2/incometax/GetIncomeTaxFilter').subscribe(results => {
+    this.apiService.getFilter('/api/v2/incometax/GetIncomeTaxFilter')
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
@@ -413,48 +425,6 @@ detailInfoFilter = null;
     }else {
       this.listViewsFilter =  cloneDeep(datas);
     }
-  }
-
-showFilter() {
-    const ref = this.dialogService.open(FormFilterComponent, {
-      header: 'Tìm kiếm nâng cao',
-      width: '40%',
-      contentStyle: "",
-      data: {
-        listViews: this.listViewsFilter,
-        detailInfoFilter: this.detailInfoFilter,
-        buttons: this.optionsButonFilter
-      }
-    });
-
-    ref.onClose.subscribe((event: any) => {
-      if (event) {
-        this.listViewsFilter = cloneDeep(event.listViewsFilter);
-        if (event.type === 'Search') {
-          this.query = { ...this.query, ...event.data };
-          this.load();
-        } else if (event.type === 'CauHinh') {
-          this.apiService.getFilter('/api/v2/incometax/GetIncomeTaxFilter').subscribe(results => {
-            if (results.status === 'success') {
-              const listViews = cloneDeep(results.data.group_fields);
-              this.listViewsFilter = [...listViews];
-              const params =  getParamString(listViews)
-              this.query = { ...this.query, ...params};
-              this.load();
-              this.detailInfoFilter = results.data;
-              this.showFilter()
-            }
-          });
-
-        } else if (event.type === 'Reset') {
-          const listViews = cloneDeep(this.cloneListViewsFilter);
-          this.listViewsFilter = cloneDeep(listViews);
-         const params =  getParamString(listViews)
-        this.query = { ...this.query, ...params};
-        this.load();
-        }
-      }
-    });
   }
 }
 

@@ -6,7 +6,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as queryString from 'querystring';
 import { cloneDeep } from 'lodash';
-import { AgGridFn } from 'src/app/common/function-common/common';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-chi-tiet-qt-thay-doi-luong',
   templateUrl: './chi-tiet-qt-thay-doi-luong.component.html',
@@ -48,6 +48,13 @@ export class ChiTietQTThayDoiLuongComponent implements OnInit {
     salaryInfoId: null,
     empId: null
   }
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   ngOnInit(): void {
     this.titlePage = this.activatedRoute.data['_value'].title;
     this.url = this.activatedRoute.data['_value'].url;
@@ -67,7 +74,9 @@ export class ChiTietQTThayDoiLuongComponent implements OnInit {
   paramsObject = null;
 
   handleParams(): void {
-    this.activatedRoute.queryParamMap.subscribe((params) => {
+    this.activatedRoute.queryParamMap
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.modelEdit.salaryInfoId = this.paramsObject.params.salaryInfoId || null
       this.modelEdit.empId = this.paramsObject.params.empId || null
@@ -151,7 +160,9 @@ export class ChiTietQTThayDoiLuongComponent implements OnInit {
 
   setSalaryDraft(params) {
     this.spinner.show();
-    this.apiService.setSalaryDraft(params).subscribe(results => {
+    this.apiService.setSalaryDraft(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.activeIndex = results.data.flow_st;
         this.listViews = cloneDeep(results.data.group_fields);
@@ -187,7 +198,9 @@ export class ChiTietQTThayDoiLuongComponent implements OnInit {
   flowCurrent = 0
   callApiInfo(params, type = 'Update') {
     this.spinner.show();
-    this.apiService.setSalaryInfoNew(params).subscribe(results => {
+    this.apiService.setSalaryInfoNew(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.activeIndex = results.data.flow_st;
         this.modelEdit.salaryInfoId = results.data.salaryInfoId;
@@ -231,7 +244,9 @@ export class ChiTietQTThayDoiLuongComponent implements OnInit {
     this.listViews = [];
     this.spinner.show();
     const queryParams = queryString.stringify({...this.modelEdit, flow_cur: flow_cur });
-    this.apiService.getSalaryInfoNew(queryParams).subscribe(results => {
+    this.apiService.getSalaryInfoNew(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.activeIndex = results.data.flow_st;
         this.flowCurrent = results.data.flow_cur;

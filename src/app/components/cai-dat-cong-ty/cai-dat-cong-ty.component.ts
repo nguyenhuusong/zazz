@@ -3,7 +3,6 @@ import { AfterViewChecked, ChangeDetectorRef, Component, OnInit, ViewChild } fro
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import * as queryString from 'querystring';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { ApiService } from 'src/app/services/api.service';
 import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { CustomTooltipComponent } from 'src/app/common/ag-component/customtooltip.component';
@@ -15,9 +14,8 @@ import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { cloneDeep } from 'lodash';
 import { DialogService } from 'primeng/dynamicdialog';
-import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
 import * as FileSaver from 'file-saver';
 @Component({
   selector: 'app-cai-dat-cong-ty',
@@ -109,7 +107,12 @@ export class CaiDatCongTyComponent implements OnInit, AfterViewChecked {
     }
     this.load();
   }
-
+  
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
 
   loadjs = 0;
   heightGrid = 0
@@ -141,7 +144,9 @@ export class CaiDatCongTyComponent implements OnInit, AfterViewChecked {
     this.columnDefs = []
     this.spinner.show();
     const queryParams = queryString.stringify(this.query);
-    this.apiService.getCompanyPage(queryParams).subscribe(
+    this.apiService.getCompanyPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         this.gridKey= results.data.dataList.gridKey
@@ -215,7 +220,9 @@ export class CaiDatCongTyComponent implements OnInit, AfterViewChecked {
       message: 'Bạn có chắc chắn muốn xóa công ty?',
       accept: () => {
         const queryParams = queryString.stringify({ companyId: event.rowData.companyId });
-        this.apiService.delCompanyInfo(queryParams).subscribe(results => {
+        this.apiService.delCompanyInfo(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa công ty thành công' });
             this.load();
@@ -299,7 +306,9 @@ export class CaiDatCongTyComponent implements OnInit, AfterViewChecked {
     this.query.pageSize = 1000000;
     const query = { ...this.query };
     const queryParams = queryString.stringify(query);
-    this.apiService.setCompanyExport(queryParams).subscribe(
+    this.apiService.setCompanyExport(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
 
         if (results.type === 'application/json') {
@@ -329,7 +338,9 @@ detailInfoFilter = null;
 
   //filter 
   getFilter() {
-    this.apiService.getFilter('/api/v2/compay/GetCompanyFilter').subscribe(results => {
+    this.apiService.getFilter('/api/v2/compay/GetCompanyFilter')
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
@@ -375,9 +386,6 @@ detailInfoFilter = null;
       }
     }, 300);
   }
-
-  
-
 }
 
 

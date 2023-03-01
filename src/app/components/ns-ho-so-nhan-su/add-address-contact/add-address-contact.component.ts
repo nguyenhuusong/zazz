@@ -4,7 +4,7 @@ import { cloneDeep } from 'lodash';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiService } from 'src/app/services/api.service';
 import * as queryString from 'querystring';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Subject, takeUntil } from 'rxjs';
 import { ApiCoreService } from 'src/app/services/api-core/apicore.service';
 @Component({
   selector: 'app-add-address-contact',
@@ -21,6 +21,12 @@ export class AddAddressContactComponent implements OnInit, OnChanges {
     private confirmationService: ConfirmationService,
     private router: Router
   ) { }
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
 
   contAdd1s = [];
   huyens = [];
@@ -103,6 +109,7 @@ export class AddAddressContactComponent implements OnInit, OnChanges {
   geAddressList(type, parent_code) {
     const queryParams = queryString.stringify({ parent_code: parent_code });
     this.apiServiceCore.geAddressList(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {
         if (results.status === 'success') {
           if (type === 'tinh') {
@@ -166,7 +173,9 @@ export class AddAddressContactComponent implements OnInit, OnChanges {
 
   saveAddress() {
     const params = { ...this.modelAddress };
-    this.apiServiceCore.setCustAddressContact(params).subscribe((results: any) => {
+    this.apiServiceCore.setCustAddressContact(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
         this.back.emit();

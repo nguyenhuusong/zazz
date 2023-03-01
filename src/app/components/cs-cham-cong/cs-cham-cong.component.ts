@@ -2,7 +2,6 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import * as queryString from 'querystring';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { ApiService } from 'src/app/services/api.service';
 import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
@@ -16,8 +15,8 @@ import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { cloneDeep } from 'lodash';
 import { DialogService } from 'primeng/dynamicdialog';
-import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-cs-cham-cong',
   templateUrl: './cs-cham-cong.component.html',
@@ -138,6 +137,12 @@ detailInfoFilter = null;
     }
   }
 
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
@@ -162,7 +167,9 @@ detailInfoFilter = null;
 
     const queryParams = queryString.stringify(params);
     this.spinner.show();
-    this.apiService.getExportReport('ExportBangLuongThang',queryParams).subscribe(results => {
+    this.apiService.getExportReport('ExportBangLuongThang',queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.type === 'application/json') {
         this.spinner.hide();
       } else {
@@ -193,7 +200,9 @@ detailInfoFilter = null;
     this.spinner.show();
     let params: any = {... this.query};
     const queryParams = queryString.stringify(params);
-    this.apiService.getEmployeeSalaryMonthPage(queryParams).subscribe(
+    this.apiService.getEmployeeSalaryMonthPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         this.gridKey= results.data.dataList.gridKey;
@@ -308,44 +317,21 @@ detailInfoFilter = null;
         command: () => {
           this.Export();
         }
-      },
-      // {
-      //   label: 'Tổng quan',
-      //   code: 'overview',
-      //   icon: 'pi pi-chart-bar',
-      //   command: () => {
-      //     this.tongQuan();
-      //   }
-      // },
+      }
     ];
     this.getFilter();
   }
 
 
   getCompany() {
-    // const query = { organizeIds: this.query.organizeIds}
-    // this.apiService.getUserCompanies(queryString.stringify(query)).subscribe(
-    //   (results: any) => {
-    //     if(results.status === "success"){
-    //       this.companies = results.data
-    //         .map(d => {
-    //           return {
-    //             label: d.name,
-    //             value: d.value
-    //           };
-    //         });
-    //         if(this.companies.length > 0) {
-    //           this.query.companyIds = this.companies[0].value;
-    //         }
-    //         this.load();
-    //     }
-    //   }),
-    //   error => { };
+    
   }
 
   //filter 
   getFilter() {
-    this.apiService.getFilter('/api/v1/timekeeping/GetTimekeepingFilter').subscribe(results => {
+    this.apiService.getFilter('/api/v1/timekeeping/GetTimekeepingFilter')
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
@@ -377,7 +363,9 @@ detailInfoFilter = null;
 
 
   getOrgRoots() {
-    this.apiService.getOrgRoots().subscribe(results => {
+    this.apiService.getOrgRoots()
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listOrgRoots = results.data.map(d => {
           return {

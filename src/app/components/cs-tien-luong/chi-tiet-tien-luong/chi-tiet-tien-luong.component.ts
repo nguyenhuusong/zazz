@@ -1,10 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as queryString from 'querystring';
 import { cloneDeep } from 'lodash';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-chi-tiet-tien-luong',
   templateUrl: './chi-tiet-tien-luong.component.html',
@@ -40,7 +41,13 @@ export class ChiTietTienLuongComponent implements OnInit {
   modelEdit = {
     terminateId: null,
     recordId: null
+  };
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
+
   ngOnInit(): void {
     this.titlePage = this.activatedRoute.data['_value'].title;
     this.url = this.activatedRoute.data['_value'].url;
@@ -54,7 +61,9 @@ export class ChiTietTienLuongComponent implements OnInit {
   paramsObject = null;
 
   handleParams(): void {
-    this.activatedRoute.queryParamMap.subscribe((params) => {
+    this.activatedRoute.queryParamMap
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.modelEdit.terminateId = this.paramsObject.params.terminateId || null
       this.modelEdit.recordId = this.paramsObject.params.recordId || null
@@ -131,7 +140,9 @@ export class ChiTietTienLuongComponent implements OnInit {
   flowCurrent = 0
   callApiInfo(params, type = 'Update') {
     this.spinner.show();
-    this.apiService.setSalaryRecordInfo(params).subscribe(results => {
+    this.apiService.setSalaryRecordInfo(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.activeIndex = results.data.flow_st;
         this.flowCurrent = results.data.flow_cur;
@@ -177,7 +188,9 @@ export class ChiTietTienLuongComponent implements OnInit {
     this.listViews = [];
     this.spinner.show();
     const queryParams = queryString.stringify({ terminateId: this.modelEdit.terminateId, flow_cur: flow_cur, recordId: this.modelEdit.recordId });
-    this.apiService.getSalaryRecordInfo(queryParams).subscribe(results => {
+    this.apiService.getSalaryRecordInfo(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.activeIndex = results.data.flow_st;
         this.flowCurrent = results.data.flow_cur;

@@ -6,6 +6,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import * as firebase from 'firebase';
 import { ApiService } from 'src/app/services/api.service';
 import { ApiCoreService } from 'src/app/services/api-core/apicore.service';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-card-info',
   templateUrl: './card-info.component.html',
@@ -36,6 +37,12 @@ export class CardInfoComponent implements OnInit, OnChanges {
     }
   }
 
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   ngOnInit(): void {
 
   }
@@ -59,7 +66,9 @@ export class CardInfoComponent implements OnInit, OnChanges {
     if (this.isAddCustomer) {
       this.back.emit(params);
     } else {
-      this.apiCoreService.setCustIndiIdentity(params).subscribe((results: any) => {
+      this.apiCoreService.setCustIndiIdentity(params)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((results: any) => {
         if (results.status === 'success') {
           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
           this.back.emit();

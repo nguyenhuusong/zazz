@@ -6,6 +6,7 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as queryString from 'querystring';
 import { cloneDeep } from 'lodash';
 import { AgGridFn } from 'src/app/common/function-common/common';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-contract-detail',
   templateUrl: './contract-detail.component.html',
@@ -52,6 +53,13 @@ export class ContractDetailComponent implements OnInit {
   titlePage = '';
   url = '';
   itemsMenu = [];
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+  
   ngOnInit(): void {
 
     this.titlePage = this.activatedRoute.data['_value'].title;
@@ -70,7 +78,9 @@ export class ContractDetailComponent implements OnInit {
   paramsObject = null;
 
   handleParams(): void {
-    this.activatedRoute.queryParamMap.subscribe((params) => {
+    this.activatedRoute.queryParamMap
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.modelContractInfo.contractId = this.paramsObject.params.contractId;
       this.modelContractInfo.empId = this.paramsObject.params.empId;
@@ -82,7 +92,9 @@ export class ContractDetailComponent implements OnInit {
     this.detailInfo = null;
     this.listViews = [];
     this.spinner.show();
-    this.apiService.setContractCreate({ empId: this.modelContractInfo.empId }).subscribe(results => {
+    this.apiService.setContractCreate({ empId: this.modelContractInfo.empId })
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.activeIndex = results.data.flow_st;
         this.flowCurrent = results.data.flow_cur;
@@ -195,7 +207,9 @@ export class ContractDetailComponent implements OnInit {
 
   setContractDraft(params) {
     this.spinner.show();
-    this.apiService.setContractDraft(params).subscribe(results => {
+    this.apiService.setContractDraft(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.activeIndex = results.data.flow_st;
         this.modelContractInfo.contractId = results.data.contractId;
@@ -234,7 +248,9 @@ export class ContractDetailComponent implements OnInit {
   flowCurrent = 0
   callApiInfo(params, type = 'Update') {
     this.spinner.show();
-    this.apiService.setContractInfo(params).subscribe(results => {
+    this.apiService.setContractInfo(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.activeIndex = results.data.flow_st;
         this.modelContractInfo.contractId = results.data.contractId;
@@ -300,7 +316,9 @@ export class ContractDetailComponent implements OnInit {
     this.spinner.show();
     console.log(this.modelContractInfo)
     const queryParams = queryString.stringify({ contractId: this.modelContractInfo.contractId, flow_cur: flow_cur, empId: this.modelContractInfo.empId });
-    this.apiService.getContractInfo(queryParams).subscribe(results => {
+    this.apiService.getContractInfo(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.activeIndex = results.data.flow_st;
         this.flowCurrent = results.data.flow_cur;
@@ -339,7 +357,9 @@ export class ContractDetailComponent implements OnInit {
     this.spinner.show();
     this.columnDefs = [];
     const queryParams = queryString.stringify({ contractId: this.detailInfo.contractId, offSet: 0, pageSize: 10000 });
-    this.apiService.getContractMetaPage(queryParams).subscribe(repo => {
+    this.apiService.getContractMetaPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(repo => {
       if (repo.status === 'success') {
         this.listsData = repo.data.dataList.data;
         this.gridflexs = repo.data.gridflexs;
@@ -358,7 +378,9 @@ export class ContractDetailComponent implements OnInit {
     this.spinner.show();
     this.columnDefs_1 = [];
     const queryParams = queryString.stringify({ contractId: this.detailInfo.contractId, offSet: 0, pageSize: 10000 });
-    this.apiService.getSalaryComponentPage(queryParams).subscribe(repo => {
+    this.apiService.getSalaryComponentPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(repo => {
       if (repo.status === 'success') {
         this.listsData_1 = repo.data.dataList.data;
         this.gridflexs_1 = repo.data.gridflexs;
@@ -474,7 +496,9 @@ export class ContractDetailComponent implements OnInit {
 
   handleUpload(datas) {
     if (datas.length > 0) {
-      this.apiService.setContractUpload({ metaId: this.metafile.metaId, meta_upload_url: datas[0].url }).subscribe(
+      this.apiService.setContractUpload({ metaId: this.metafile.metaId, meta_upload_url: datas[0].url })
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
         results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Upload hợp đồng ký thành công' });

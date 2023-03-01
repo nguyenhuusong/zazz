@@ -35,6 +35,7 @@ export class ChiTietPhongHopTheoTangComponent implements OnInit, OnDestroy {
   columnDefs;
   @Input() dataRouter = null;
   @Output() back = new EventEmitter<any>();
+
   ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
@@ -66,7 +67,9 @@ export class ChiTietPhongHopTheoTangComponent implements OnInit, OnDestroy {
   getMeetingFloorInfo(): void {
     this.listViews = [];
     this.listsData = [];
-    this.apiService.getMeetingFloorInfo(`?floorId=${this.floorId || ''}`).subscribe(results => {
+    this.apiService.getMeetingFloorInfo(`?floorId=${this.floorId || ''}`)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listViews = cloneDeep(results.data.group_fields);
         this.detailInfo = results.data;
@@ -80,7 +83,9 @@ export class ChiTietPhongHopTheoTangComponent implements OnInit, OnDestroy {
     const params = {
       ...this.detailInfo, group_fields: data, members: this.listsData
     };
-    this.apiService.setMeetingFloorInfo(params).subscribe((results: any) => {
+    this.apiService.setMeetingFloorInfo(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data });
       this.onBack()

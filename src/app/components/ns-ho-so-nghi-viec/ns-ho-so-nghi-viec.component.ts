@@ -6,19 +6,17 @@ import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { HttpParams } from '@angular/common/http';
 import { cloneDeep } from 'lodash';
-
 import * as moment from 'moment';
 import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { CustomTooltipComponent } from 'src/app/common/ag-component/customtooltip.component';
 import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
 import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.component';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
-import { Tree } from 'primeng/tree';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
-import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { DialogService } from 'primeng/dynamicdialog';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-ns-ho-so-nghi-viec',
   templateUrl: './ns-ho-so-nghi-viec.component.html',
@@ -92,12 +90,14 @@ export class NsHoSoNghiViecComponent implements OnInit {
     offSet: 0,
     pageSize: 20,
   }
-
-  employeeStatus = [
-   
-  ]
+  employeeStatus = []
   isHrDiagram: boolean = false
 
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
   cancel() {
     this.query = {
       filter: '',
@@ -158,7 +158,6 @@ export class NsHoSoNghiViecComponent implements OnInit {
     // this.load()
   }
 
-
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
@@ -176,7 +175,9 @@ export class NsHoSoNghiViecComponent implements OnInit {
     this.spinner.show();
     let params: any = {... this.query};
     const queryParams = queryString.stringify(params);
-    this.apiService.getTerminatePage(queryParams).subscribe(
+    this.apiService.getTerminatePage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         this.gridKey= results.data.dataList.gridKey;
@@ -256,7 +257,9 @@ export class NsHoSoNghiViecComponent implements OnInit {
   detailInfoEmployee = null;
   tuyenDungLai(event) {
     const queryParams = queryString.stringify({ empId: event.rowData.empId });
-    this.apiService.getEmployeeData('GetEmployeeByJob', queryParams).subscribe(results => {
+    this.apiService.getEmployeeData('GetEmployeeByJob', queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listViews = cloneDeep(results.data.group_fields || []);
         this.detailInfoEmployee = results.data;
@@ -281,7 +284,9 @@ export class NsHoSoNghiViecComponent implements OnInit {
     let params = {
       ...this.detailInfoEmployee, group_fields: data, workDt: moment(new Date(this.modelDuyet.workDt)).format('DD/MM/YYYY'),comments: this.modelDuyet.comments
     }
-    this.apiService.setEmployeeRehired(params).subscribe((results: any) => {
+    this.apiService.setEmployeeRehired(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
       if (results.status === 'success') {
         this.displayDialog = false;
         this.load();
@@ -365,7 +370,9 @@ export class NsHoSoNghiViecComponent implements OnInit {
     delete params.status;
     delete params.status_key;
     params.status_dt = moment(new Date(this.modelPheDuyet.status_dt)).format('DD/MM/YYYY');
-    this.apiService.setTerminateStatus(params).subscribe(results => {
+    this.apiService.setTerminateStatus(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Thay đổi trạng thái thành công' });
         this.load();
@@ -385,7 +392,9 @@ export class NsHoSoNghiViecComponent implements OnInit {
       accept: () => {
         this.spinner.show();
         const queryParams = queryString.stringify({ terminateId: event.rowData.terminateId });
-        this.apiService.delTerminateInfo(queryParams).subscribe(results => {
+        this.apiService.delTerminateInfo(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa hồ sơ thành công' });
             this.load();
@@ -402,7 +411,9 @@ export class NsHoSoNghiViecComponent implements OnInit {
 
   getCustObjectListNew() {
     const opts1 = { params: new HttpParams({ fromString: `objKey=terminate_key` }) };
-    this.apiService.getObjectGroup(opts1.params.toString()).subscribe(results => {
+    this.apiService.getObjectGroup(opts1.params.toString())
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       this.listTerminateKey = results.data.map(d => {
         return {
           name: d.name,
@@ -467,7 +478,9 @@ export class NsHoSoNghiViecComponent implements OnInit {
   }
 
   getEmployeeStatus() {
-    this.apiService.getEmployeeStatus().subscribe(results => {
+    this.apiService.getEmployeeStatus()
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         console.log(results, 'results results results ')
         this.employeeStatus = []
@@ -488,24 +501,6 @@ export class NsHoSoNghiViecComponent implements OnInit {
   companies = []
 
   getCompany() {
-    // const query = { organizeIds: this.query.organizeIds}
-    // this.apiService.getUserCompanies(queryString.stringify(query)).subscribe(
-    //   (results: any) => {
-    //     if(results.status === "success"){
-    //       this.companies = results.data
-    //         .map(d => {
-    //           return {
-    //             label: d.name,
-    //             value: d.value
-    //           };
-    //         });
-    //         if(this.companies.length > 0) {
-    //           this.query.companyIds = this.companies[0].value;
-    //         }
-    //         this.load();
-    //     }
-    //   }),
-    //   error => { };
   }
 
   hrDiagram() {
@@ -540,7 +535,9 @@ detailInfoFilter = null;
   ];
 
   getTerminateFilter() {
-    this.apiService.getTerminateFilter().subscribe(results => {
+    this.apiService.getTerminateFilter()
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);

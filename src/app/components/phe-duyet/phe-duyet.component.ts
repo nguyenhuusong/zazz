@@ -13,6 +13,7 @@ import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 const MAX_SIZE = 100000000;
 import { cloneDeep } from 'lodash';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-phe-duyet',
   templateUrl: './phe-duyet.component.html',
@@ -128,11 +129,18 @@ export class PheDuyetComponent implements OnInit, AfterViewChecked {
     this.displaySetting = true;
   }
 
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
   cloneListViewsFilter = [];
   listViewsFilter = [];
   detailInfoFilter = null;
   getFilter() {
-    this.apiService.getFilter('/api/v2/work/GetWorkflowFilter').subscribe(results => {
+    this.apiService.getFilter('/api/v2/work/GetWorkflowFilter')
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if(results.status === 'success') {
         const listViews = results.data.group_fields && results.data.group_fields.length > 0 ? cloneDeep(results.data.group_fields) : [];
         this.cloneListViewsFilter = cloneDeep(listViews);
@@ -167,7 +175,9 @@ export class PheDuyetComponent implements OnInit, AfterViewChecked {
     this.spinner.show();
     let params: any = {... this.query};
     const queryParams = queryString.stringify(params);
-    this.apiService.getWorkflowPage(queryParams).subscribe(
+    this.apiService.getWorkflowPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         this.gridKey = results.data.dataList.gridKey;
@@ -278,22 +288,6 @@ export class PheDuyetComponent implements OnInit, AfterViewChecked {
     };
   }
 
-  // delMaternityInfo(event) {
-  //   this.confirmationService.confirm({
-  //     message: 'Bạn có chắc chắn muốn thực hiện mở tài khoản?',
-  //     accept: () => {
-  //       const queryParams = queryString.stringify({ maternityId: event.rowData.maternityId });
-  //       this.apiService.delMaternityInfo(queryParams).subscribe(results => {
-  //         if (results.status === 'success') {
-  //           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa tuyển dụng thành công' });
-  //           this.load();
-  //         } else {
-  //           this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
-  //         }
-  //       });
-  //     }
-  //   });
-  // }
 
   editRow({rowData}) {
     const params = {
@@ -340,24 +334,7 @@ export class PheDuyetComponent implements OnInit, AfterViewChecked {
   }
 
   getCompany() {
-    // const query = { organizeIds: this.query.organizeIds}
-    // this.apiService.getUserCompanies(queryString.stringify(query)).subscribe(
-    //   (results: any) => {
-    //     if(results.status === "success"){
-    //       this.companies = results.data
-    //         .map(d => {
-    //           return {
-    //             label: d.name,
-    //             value: d.value
-    //           };
-    //         });
-    //         if(this.companies.length > 0) {
-    //           this.query.companyIds = this.companies[0].value;
-    //         }
-    //         this.load();
-    //     }
-    //   }),
-    //   error => { };
+   
   }
 
 

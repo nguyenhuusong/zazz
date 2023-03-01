@@ -5,6 +5,7 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as queryString from 'querystring';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-cs-cham-cong-overview',
   templateUrl: './cs-cham-cong-overview.component.html',
@@ -93,6 +94,13 @@ export class CsChamCongOverviewComponent implements OnInit {
     fromdate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).add(-3,'months').format()),
     todate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).format()),
   }
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   ngOnInit(): void {
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
@@ -115,7 +123,9 @@ export class CsChamCongOverviewComponent implements OnInit {
     params.fromdate = moment(new Date(this.queryDiMuonVeSom.fromdate)).format('YYYY-MM-DD')
     params.todate = moment(new Date(this.queryDiMuonVeSom.todate)).format('YYYY-MM-DD');
     const queryParams = queryString.stringify(params);
-    this.apiService.getTimekeepingLate(queryParams).subscribe(
+    this.apiService.getTimekeepingLate(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.spinner.hide();
         this.numberDimuon = results.data.num_late;
@@ -135,7 +145,9 @@ export class CsChamCongOverviewComponent implements OnInit {
     params.fromdate = moment(new Date(this.queryDiMuonVeSom.fromdate)).format('YYYY-MM-DD')
     params.todate = moment(new Date(this.queryDiMuonVeSom.todate)).format('YYYY-MM-DD');
     const queryParams = queryString.stringify(params);
-    this.apiService.getTotalEatingChart(queryParams).subscribe(
+    this.apiService.getTotalEatingChart(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.spinner.hide();
         this.dataAnca = results.data
@@ -181,7 +193,9 @@ export class CsChamCongOverviewComponent implements OnInit {
     params.todate = moment(new Date(this.queryNghiTheoThoiGian.todate)).format('YYYY-MM-DD');
     const queryParams = queryString.stringify(params);
     let dataChart = []
-    this.apiService.getLeaveForMonth(queryParams).subscribe(
+    this.apiService.getLeaveForMonth(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.spinner.hide();
         this.labelMonths = results.data.leave.map( d => {
@@ -241,7 +255,9 @@ export class CsChamCongOverviewComponent implements OnInit {
     params.todate = moment(new Date(this.queryNghiTheoPB.todate)).format('YYYY-MM-DD');
     const queryParams = queryString.stringify(params);
     let dataChart = []
-    this.apiService.getLeaveForOrganize(queryParams).subscribe(
+    this.apiService.getLeaveForOrganize(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.spinner.hide();
         this.dataOrigns = results.data.leave.map( d => {
@@ -251,13 +267,11 @@ export class CsChamCongOverviewComponent implements OnInit {
         dataChart = results.data.leave.map( d => {
           return d.num_leave
         });
-        console.log('dataChart', dataChart)
         this.chartNghiTheoPhongBan(dataChart);
       },
       error => {
     });
   }
-
 
   chartNghiTheoPhongBan(values) {
     let configs = {
@@ -303,7 +317,9 @@ export class CsChamCongOverviewComponent implements OnInit {
     params.todate = moment(new Date(this.queryLoainghi.todate)).format('YYYY-MM-DD');
     const queryParams = queryString.stringify(params);
     let dataChart = []
-    this.apiService.getLeavePieChart(queryParams).subscribe(
+    this.apiService.getLeavePieChart(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.labelLoaiNghi = results.data.leave.map( d => {
           return d.leave_name

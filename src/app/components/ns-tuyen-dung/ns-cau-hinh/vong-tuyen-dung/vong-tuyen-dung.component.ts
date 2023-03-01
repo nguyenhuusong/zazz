@@ -9,7 +9,7 @@
   import { cloneDeep } from 'lodash';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
   @Component({
     selector: 'app-vong-tuyen-dung',
     templateUrl: './vong-tuyen-dung.component.html',
@@ -78,6 +78,12 @@ import { fromEvent } from 'rxjs';
       }
       this.load();
     }
+
+    private readonly unsubscribe$: Subject<void> = new Subject();
+    ngOnDestroy() {
+      this.unsubscribe$.next();
+      this.unsubscribe$.complete();
+    }
   
     onGridReady(params) {
       this.gridApi = params.api;
@@ -88,7 +94,9 @@ import { fromEvent } from 'rxjs';
       this.columnDefs = [];
       this.spinner.show();
       const queryParams = queryString.stringify(this.query);
-      this.apiService.getRecruitRoundPage(queryParams).subscribe(
+      this.apiService.getRecruitRoundPage(queryParams)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
         (results: any) => {
           this.listsData = results.data.dataList.data;
           this.gridKey= results.data.dataList.gridKey;
@@ -191,7 +199,9 @@ import { fromEvent } from 'rxjs';
         message: 'Bạn có chắc chắn muốn xóa?',
         accept: () => {
           const query = queryString.stringify({Id: event.rowData.Id})
-          this.apiService.delRecruitRoundInfo(query).subscribe((results: any) => {
+          this.apiService.delRecruitRoundInfo(query)
+          .pipe(takeUntil(this.unsubscribe$))
+          .subscribe((results: any) => {
             if (results.status === 'success') {
               this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
               this.load();

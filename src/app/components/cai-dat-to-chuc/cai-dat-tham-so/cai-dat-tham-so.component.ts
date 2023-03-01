@@ -6,6 +6,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiService } from 'src/app/services/api.service';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-cai-dat-tham-so',
   templateUrl: './cai-dat-tham-so.component.html',
@@ -39,7 +40,12 @@ export class CaiDatThamSoComponent implements OnInit, OnChanges {
   @Input() dataRouter = null
   @Output() back = new EventEmitter<any>();
 
-
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+  
   ngOnChanges() {
     // this.optionsButtonsView = [{ label: 'Sửa', value: 'Edit' }, { label: 'Đóng', value: 'Back' }];
     // this.titlePage = null;
@@ -62,7 +68,9 @@ export class CaiDatThamSoComponent implements OnInit, OnChanges {
   }
 
   handleParams() {
-    this.activatedRoute.queryParamMap.subscribe((params) => {
+    this.activatedRoute.queryParamMap
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.dataRouter = this.paramsObject.params;
       // this.organizeId = this.paramsObject.params.organizeId;
@@ -73,7 +81,9 @@ export class CaiDatThamSoComponent implements OnInit, OnChanges {
   getOrganizeConfig() {
     this.listViews = [];
     const queryParams = queryString.stringify({organizeIds: null});
-    this.apiService.getOrganizeConfig(queryParams).subscribe(results => {
+    this.apiService.getOrganizeConfig(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.detailInfo = results.data;
         this.listViews = cloneDeep(results.data.group_fields);
@@ -89,7 +99,9 @@ export class CaiDatThamSoComponent implements OnInit, OnChanges {
     const params = {
       ...this.detailInfo, group_fields: data
     };
-    this.apiService.setOrganizeConfig(params).subscribe((results: any) => {
+    this.apiService.setOrganizeConfig(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
       if (results.status === 'success') {
         this.goBack()
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Thêm tham số thành công' });

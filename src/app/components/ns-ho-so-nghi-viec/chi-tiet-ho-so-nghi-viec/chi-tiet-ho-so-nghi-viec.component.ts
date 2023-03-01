@@ -3,9 +3,8 @@ import * as queryString from 'querystring';
 import { ActivatedRoute, Router } from '@angular/router';
 import { cloneDeep } from 'lodash';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { ApiService } from 'src/app/services/api.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { Subject } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import * as moment from 'moment';
@@ -88,7 +87,9 @@ export class ChiTietHoSoNghiViecComponent implements OnInit, OnChanges, OnDestro
   }
 
   handleParams() {
-    this.activatedRoute.queryParamMap.subscribe((params) => {
+    this.activatedRoute.queryParamMap
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.dataRouter = this.paramsObject.params;
       this.terminateId = this.paramsObject.params.terminateId;
@@ -104,7 +105,9 @@ export class ChiTietHoSoNghiViecComponent implements OnInit, OnChanges, OnDestro
     this.listViews = [];
     this.listsData = [];
     const queryParams = queryString.stringify({id: this.terminateId});
-    this.apiService.getTerminateInfo(queryParams).subscribe(results => {
+    this.apiService.getTerminateInfo(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listViews = cloneDeep(results.data.group_fields);
         this.detailInfo = results.data;
@@ -224,7 +227,9 @@ export class ChiTietHoSoNghiViecComponent implements OnInit, OnChanges, OnDestro
   handleUpload(datas) {
     if (datas.length > 0) {
     
-      this.apiService.setContractUpload({ meta_id: this.metafile.meta_id, meta_upload_url: datas[0].url }).subscribe(
+      this.apiService.setContractUpload({ meta_id: this.metafile.meta_id, meta_upload_url: datas[0].url })
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
         results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Upload hợp đồng ký thành công' });
@@ -244,7 +249,9 @@ export class ChiTietHoSoNghiViecComponent implements OnInit, OnChanges, OnDestro
     const params = {
       ...this.detailInfo, group_fields: data
     }
-    this.apiService.setTerminateInfo(params).subscribe((results: any) => {
+    this.apiService.setTerminateInfo(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Cập nhật thông tin thành công' });
         this.getTerminateInfo();
@@ -283,6 +290,7 @@ export class ChiTietHoSoNghiViecComponent implements OnInit, OnChanges, OnDestro
     delete parmas.exprire_date;
     parmas.group_fields = cloneDeep(this.listViewsFormEmp);
     this.apiService.setEmployeeRehired(parmas)
+    .pipe(takeUntil(this.unsubscribe$))
     .subscribe((results: any) => {
       if (results.status === 'success') {
         this.showRehire = false;
@@ -301,7 +309,9 @@ export class ChiTietHoSoNghiViecComponent implements OnInit, OnChanges, OnDestro
 
   getEmployeeInfo(): void {
     const queryParams = queryString.stringify({ empId: this.empId });
-    this.apiService.getEmployeeData('GetEmployeeByJob', queryParams).subscribe(results => {
+    this.apiService.getEmployeeData('GetEmployeeByJob', queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listViewsEmp = cloneDeep(results.data.group_fields || []);
         this.listViewsFormEmp = cloneDeep(results.data.group_fields || []);

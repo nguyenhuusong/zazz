@@ -124,7 +124,9 @@ export class PageLoaiThongBaoComponent implements OnInit, OnDestroy, AfterViewCh
     this.columnDefs = []
     this.spinner.show();
     const queryParams = queryString.stringify(this.query);
-    this.apiService.getNotifyRefPage(queryParams).subscribe(
+    this.apiService.getNotifyRefPage(queryParams)
+    .pipe(takeUntil(this.destroy$))
+    .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         this.gridKey= results.data.dataList.gridKey;
@@ -220,7 +222,9 @@ export class PageLoaiThongBaoComponent implements OnInit, OnDestroy, AfterViewCh
       accept: () => {
         this.spinner.show();
         const queryParams = queryString.stringify({ source_ref: e.rowData.source_ref });
-        this.apiService.delNotifyRef(queryParams).subscribe(results => {
+        this.apiService.delNotifyRef(queryParams)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data });
             this.spinner.hide();

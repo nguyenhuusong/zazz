@@ -9,7 +9,7 @@ import { ExportFileService } from 'src/app/services/export-file.service';
 import { cloneDeep } from 'lodash';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-nguon-tuyen-dung',
   templateUrl: './nguon-tuyen-dung.component.html',
@@ -47,6 +47,11 @@ export class NguonTuyenDungComponent implements OnInit {
     totalRecord: 0,
     currentRecordStart: 0,
     currentRecordEnd: 0
+  }
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
   constructor(
     private apiService: ApiHrmService,
@@ -88,7 +93,9 @@ export class NguonTuyenDungComponent implements OnInit {
     this.columnDefs = [];
     this.spinner.show();
     const queryParams = queryString.stringify(this.query);
-    this.apiService.getRecruitSourcePage(queryParams).subscribe(
+    this.apiService.getRecruitSourcePage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         this.gridKey= results.data.dataList.gridKey;
@@ -192,7 +199,9 @@ export class NguonTuyenDungComponent implements OnInit {
       message: 'Bạn có chắc chắn muốn xóa?',
       accept: () => {
         const query = queryString.stringify({Id: event.rowData.Id})
-        this.apiService.delRecruitSourceInfo(query).subscribe((results: any) => {
+        this.apiService.delRecruitSourceInfo(query)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
             this.load();

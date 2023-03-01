@@ -5,16 +5,14 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
 import { CustomTooltipComponent } from 'src/app/common/ag-component/customtooltip.component';
 import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
-import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
+import { AgGridFn } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
-import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { cloneDeep } from 'lodash';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
 import { DialogService } from 'primeng/dynamicdialog';
-import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 
 
 @Component({
@@ -53,7 +51,11 @@ export class DanhMucLoaiGiayToComponent implements OnInit, AfterViewChecked {
   pagingComponent = {
     total: 0
   }
-
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
   public modules: Module[] = AllModules;
   public agGridFn = AgGridFn;
   cols: any[];
@@ -133,7 +135,9 @@ export class DanhMucLoaiGiayToComponent implements OnInit, AfterViewChecked {
     this.columnDefs = []
     this.spinner.show();
     const queryParams = queryString.stringify(this.query);
-    this.apiService.getEmpRecordTypePage(queryParams).subscribe(
+    this.apiService.getEmpRecordTypePage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         this.gridKey = results.data.dataList.gridKey
@@ -205,7 +209,9 @@ export class DanhMucLoaiGiayToComponent implements OnInit, AfterViewChecked {
       message: 'Bạn có chắc chắn muốn xóa loại giấy tờ này?',
       accept: () => {
         const queryParams = queryString.stringify({ recordTypeId: event.rowData.recordTypeId });
-        this.apiService.delEmpRecordTypeInfo(queryParams).subscribe(results => {
+        this.apiService.delEmpRecordTypeInfo(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Xóa thành công' });
             this.load();
@@ -270,10 +276,11 @@ export class DanhMucLoaiGiayToComponent implements OnInit, AfterViewChecked {
     { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger height-56 addNew', icon: 'pi pi-times' },
   ];
 
-  //filter 
   getFilter() {
     this.load();
-    this.apiService.getFilter('/api/v2/employeeprofile/GetEmpRecordTypeFilter').subscribe(results => {
+    this.apiService.getFilter('/api/v2/employeeprofile/GetEmpRecordTypeFilter')
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
@@ -301,7 +308,6 @@ export class DanhMucLoaiGiayToComponent implements OnInit, AfterViewChecked {
       this.listViewsFilter =  cloneDeep(datas);
     }
   }
-
 
   ngAfterViewInit(): void {
     this.FnEvent();

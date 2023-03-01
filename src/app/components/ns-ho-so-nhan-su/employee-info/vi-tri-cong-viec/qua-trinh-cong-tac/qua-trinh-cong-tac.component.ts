@@ -7,7 +7,7 @@ import { cloneDeep } from 'lodash';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { AgGridFn } from 'src/app/common/function-common/common';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-qua-trinh-cong-tac',
   templateUrl: './qua-trinh-cong-tac.component.html',
@@ -31,6 +31,12 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
     { label: 'Xác nhận', value: 'Submit', class: 'btn-accept', icon: 'pi pi-check' },
     { label: 'Đóng', value: 'Close', class: 'btn-accept', icon: 'pi pi-times' }
   ]
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
 
   ngAfterViewInit(): void {
     this.FnEvent();
@@ -59,7 +65,9 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
     this.spinner.show();
     this.columnDefs = [];
     const queryParams = queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 });
-    this.apiService.getEmpProcessPageByEmpId(queryParams).subscribe(repo => {
+    this.apiService.getEmpProcessPageByEmpId(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(repo => {
       if (repo.status === 'success') {
         if (repo.data.dataList.gridKey) {
           this.gridKey = repo.data.dataList.gridKey;
@@ -152,7 +160,9 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
     this.dataDetailInfo = null;
     this.listViewsDetail = [];
     const query = { empId: this.empId, processId: this.processId, flow_cur: flow_cur }
-    this.apiService.getEmpProcessInfo(queryString.stringify(query)).subscribe(results => {
+    this.apiService.getEmpProcessInfo(queryString.stringify(query))
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.spinner.hide();
         this.listViewsDetail = cloneDeep(results.data.group_fields || []);
@@ -251,7 +261,9 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
   }
 
   callApiInfo(params, type = 'Update') {
-    this.apiService.setEmpProcessInfo(params).subscribe((results: any) => {
+    this.apiService.setEmpProcessInfo(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
       if (results.status === 'success') {
         this.listViewsDetail = cloneDeep(results.data.group_fields || []);
         this.dataDetailInfo = results.data;
@@ -311,7 +323,9 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
       message: 'Bạn có chắc chắn muốn xóa bản ghi này?',
       accept: () => {
         const queryParams = queryString.stringify({ processId: event.rowData.processId });
-        this.apiService.delEmpProcessInfo(queryParams).subscribe((results: any) => {
+        this.apiService.delEmpProcessInfo(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
             this.getEmpProcessPageByEmpId();

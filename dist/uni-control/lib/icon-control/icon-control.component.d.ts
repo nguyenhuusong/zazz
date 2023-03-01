@@ -9,5 +9,5 @@ export declare class IconControlComponent {
     constructor();
     get iconUrl(): string;
     static ɵfac: i0.ɵɵFactoryDeclaration<IconControlComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<IconControlComponent, "app-icon-control", never, { "name": "name"; "size": "size"; "fill": "fill"; "nzTooltipMouseEnterDelay": "nzTooltipMouseEnterDelay"; "nzTooltipTitle": "nzTooltipTitle"; }, {}, never, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<IconControlComponent, "svg-icon", never, { "name": "name"; "size": "size"; "fill": "fill"; "nzTooltipMouseEnterDelay": "nzTooltipMouseEnterDelay"; "nzTooltipTitle": "nzTooltipTitle"; }, {}, never, never>;
 }

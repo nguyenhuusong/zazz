@@ -15,7 +15,7 @@ import { cloneDeep } from 'lodash';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { DialogService } from 'primeng/dynamicdialog';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-thai-san',
   templateUrl: './thai-san.component.html',
@@ -53,6 +53,12 @@ export class ThaiSanComponent implements OnInit, AfterViewChecked {
       buttonAgGridComponent: ButtonAgGridComponent,
       avatarRendererFull: AvatarFullComponent,
     };
+  }
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
   pagingComponent = {
     total: 0
@@ -134,7 +140,9 @@ export class ThaiSanComponent implements OnInit, AfterViewChecked {
     this.spinner.show();
     const params: any = { ...this.query };
     const queryParams = queryString.stringify(params);
-    this.apiService.getMaternityPage(queryParams).subscribe(
+    this.apiService.getMaternityPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         this.gridKey= results.data.dataList.gridKey;
@@ -271,7 +279,9 @@ export class ThaiSanComponent implements OnInit, AfterViewChecked {
       message: 'Bạn có chắc chắn muốn thực hiện xóa bản ghi này?',
       accept: () => {
         const queryParams = queryString.stringify({ maternityId: event.rowData.maternityId });
-        this.apiService.delMaternityInfo(queryParams).subscribe(results => {
+        this.apiService.delMaternityInfo(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa tuyển dụng thành công' });
             this.load();
@@ -336,24 +346,7 @@ export class ThaiSanComponent implements OnInit, AfterViewChecked {
 
 
   getCompany() {
-    // const query = { organizeIds: this.query.organizeIds}
-    // this.apiService.getUserCompanies(queryString.stringify(query)).subscribe(
-    //   (results: any) => {
-    //     if(results.status === "success"){
-    //       this.companies = results.data
-    //         .map(d => {
-    //           return {
-    //             label: d.name,
-    //             value: d.value
-    //           };
-    //         });
-    //         if(this.companies.length > 0) {
-    //           this.query.companyIds = this.companies[0].value;
-    //         }
-    //         this.load();
-    //     }
-    //   }),
-    //   error => { };
+   
   }
 
 
@@ -366,7 +359,9 @@ export class ThaiSanComponent implements OnInit, AfterViewChecked {
   ];
 
   getEmpFilter() {
-    this.apiService.getFilter('/api/v2/maternity/GetMaternityFilter').subscribe(results => {
+    this.apiService.getFilter('/api/v2/maternity/GetMaternityFilter')
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
@@ -415,7 +410,9 @@ showFilter() {
           this.query = { ...this.query, ...event.data };
           this.load();
         } else if (event.type === 'CauHinh') {
-          this.apiService.getFilter('/api/v2/maternity/GetMaternityFilter').subscribe(results => {
+          this.apiService.getFilter('/api/v2/maternity/GetMaternityFilter')
+          .pipe(takeUntil(this.unsubscribe$))
+          .subscribe(results => {
             if (results.status === 'success') {
               const listViews = cloneDeep(results.data.group_fields);
               this.listViewsFilter = [...listViews];

@@ -125,7 +125,9 @@ export class PageMauThongBaoComponent implements OnInit, OnDestroy, AfterViewChe
     this.columnDefs = []
     this.spinner.show();
     const queryParams = queryString.stringify(this.query);
-    this.apiService.getNotifyTempPage(queryParams).subscribe(
+    this.apiService.getNotifyTempPage(queryParams)
+    .pipe(takeUntil(this.destroy$))
+    .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         this.gridKey= results.data.dataList.gridKey;
@@ -214,7 +216,9 @@ export class PageMauThongBaoComponent implements OnInit, OnDestroy, AfterViewChe
       accept: () => {
         this.spinner.show();
         const queryParams = queryString.stringify({ tempId: e.rowData.tempId });
-        this.apiService.delNotifyTemp(queryParams).subscribe(results => {
+        this.apiService.delNotifyTemp(queryParams)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
             this.spinner.hide();

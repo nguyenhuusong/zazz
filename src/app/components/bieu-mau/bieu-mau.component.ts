@@ -131,6 +131,7 @@ export class BieuMauComponent implements OnInit, OnDestroy {
     .pipe(
       finalize(() => this.spinner.hide())
     )
+    .pipe(takeUntil(this.unsubscribe$))
     .subscribe(response => {
       const data = response.data;
       this.loopEveryNodeTree(data);
@@ -210,7 +211,9 @@ export class BieuMauComponent implements OnInit, OnDestroy {
 
   getOrgan() {
     const queryParams = queryString.stringify({ filter: '' });
-    this.apiService.getOrganizations(queryParams).subscribe(results => {
+    this.apiService.getOrganizations(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.organs = results.data.map(d => {
           return {
@@ -252,7 +255,9 @@ export class BieuMauComponent implements OnInit, OnDestroy {
     this.spinner.show();
     const query = {...this.query};
     const queryParams = queryString.stringify(query);
-    this.apiService.getFormGeneral(queryParams, this.indexTab === 0 ? 'GetFormGeneral' : 'GetFormPersonal').subscribe(
+    this.apiService.getFormGeneral(queryParams, this.indexTab === 0 ? 'GetFormGeneral' : 'GetFormPersonal')
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         this.gridKey= results.data.dataList.gridKey
@@ -309,7 +314,9 @@ export class BieuMauComponent implements OnInit, OnDestroy {
       message: 'Bạn có chắc chắn muốn xóa tài liệu?',
       accept: () => {
         const queryParams = queryString.stringify({formId: event.rowData.form_id});
-        this.apiService.delFormsInfo(queryParams).subscribe((results: any) => {
+        this.apiService.delFormsInfo(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa tài liệu thành công!' });
             this.load();
@@ -438,7 +445,9 @@ export class BieuMauComponent implements OnInit, OnDestroy {
     this.query.pageSize = 1000000;
     const query = { ...this.query };
     const queryParams = queryString.stringify(query);
-    this.apiService.getFormPage(queryParams).subscribe(
+    this.apiService.getFormPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         const dataExport = [];
         let gridflexs = results.data.gridflexs;
@@ -621,7 +630,9 @@ detailInfoFilter = null;
   //filter 
   getFilter() {
     // value === 1 ? '' : ''
-    this.apiService.getFilter('/api/v2/forms/GetFormGeneralFilter').subscribe(results => {
+    this.apiService.getFilter('/api/v2/forms/GetFormGeneralFilter')
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
@@ -651,47 +662,6 @@ detailInfoFilter = null;
     }
   }
 
-showFilter() {
-    const ref = this.dialogService.open(FormFilterComponent, {
-      header: 'Tìm kiếm nâng cao',
-      width: '40%',
-      contentStyle: "",
-      data: {
-        listViews: this.listViewsFilter,
-        detailInfoFilter: this.detailInfoFilter,
-        buttons: this.optionsButonFilter
-      }
-    });
-
-    ref.onClose.subscribe((event: any) => {
-      if (event) {
-        this.listViewsFilter = cloneDeep(event.listViewsFilter);
-        if (event.type === 'Search') {
-          this.query = { ...this.query, ...event.data };
-          this.load();
-        } else if (event.type === 'CauHinh') {
-        this.apiService.getEmpFilter().subscribe(results => {
-            if (results.status === 'success') {
-              const listViews = cloneDeep(results.data.group_fields);
-              this.listViewsFilter = [...listViews];
-              const params =  getParamString(listViews)
-              this.query = { ...this.query, ...params};
-              this.load();
-              this.detailInfoFilter = results.data;
-              this.showFilter()
-            }
-          });
-
-        } else if (event.type === 'Reset') {
-          const listViews = cloneDeep(this.cloneListViewsFilter);
-          this.listViewsFilter = cloneDeep(listViews);
-         const params =  getParamString(listViews)
-        this.query = { ...this.query, ...params};
-        this.load();
-        }
-      }
-    });
-  }
 
   ngAfterViewInit(): void {
     this.FnEvent();

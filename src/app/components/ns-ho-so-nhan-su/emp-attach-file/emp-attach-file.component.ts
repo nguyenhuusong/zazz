@@ -6,6 +6,7 @@ import * as queryString from 'querystring';
 import { cloneDeep } from 'lodash';
 import * as firebase from 'firebase';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-emp-attach-file',
   templateUrl: './emp-attach-file.component.html',
@@ -28,11 +29,20 @@ export class EmpAttachFileComponent implements OnInit {
   ngOnInit(): void {
     this.getContractInfo();
   }
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   getContractInfo() {
     this.listViews  = []
     this.spinner.show();
     const queryParams = queryString.stringify(this.modelAttach);
-    this.apiService.getEmpAttach(queryParams).subscribe(results => {
+    this.apiService.getEmpAttach(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listViews = cloneDeep(results.data.group_fields);
         this.detailInfo = results.data;
@@ -73,7 +83,9 @@ export class EmpAttachFileComponent implements OnInit {
         ...this.detailInfo, group_fields: data
       }
       this.spinner.show();
-      this.apiService.setEmpAttach(params).subscribe(results => {
+      this.apiService.setEmpAttach(params)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(results => {
         if(results.status === 'success') {
           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data: 'Thêm mới file đình kèm thành công !'});
           this.callback.emit();

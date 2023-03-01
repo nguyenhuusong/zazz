@@ -4,9 +4,8 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as queryString from 'querystring';
 import { cloneDeep } from 'lodash';
-import * as moment from 'moment';
 import { AgGridFn } from 'src/app/common/function-common/common';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-chung-chi',
@@ -30,6 +29,12 @@ export class ChungChiComponent implements OnInit {
   columnDefs = [];
   gridKey = '';
 
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+  
   ngAfterViewInit(): void {
     this.FnEvent();
   }
@@ -64,7 +69,9 @@ export class ChungChiComponent implements OnInit {
   getAddCertificate() {
     const queryParams = queryString.stringify({ empId: this.empId});
     this.listViewsDetail = [];
-    this.apiService.addCertificate(queryParams).subscribe(results => {
+    this.apiService.addCertificate(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listViewsDetail = cloneDeep(results.data.group_fields);
         this.dataDetailInfo = results.data;
@@ -77,7 +84,9 @@ export class ChungChiComponent implements OnInit {
     const param = {
       ...this.dataDetailInfo, group_fields: data
     }
-    this.apiService.setTrainFile(param).subscribe(results => {
+    this.apiService.setTrainFile(param)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thêm mới thành công' });
         this.displayFormEditDetail = false;
@@ -96,7 +105,9 @@ export class ChungChiComponent implements OnInit {
     this.spinner.show();
     this.columnDefs = [];
     const queryParams = queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 });
-    this.apiService.getCertificatePage(queryParams).subscribe(repo => {
+    this.apiService.getCertificatePage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(repo => {
       if (repo.status === 'success') {
         if (repo.data.dataList.gridKey) {
           this.gridKey = repo.data.dataList.gridKey;
@@ -174,7 +185,9 @@ export class ChungChiComponent implements OnInit {
     this.spinner.show();
     const queryParams = queryString.stringify({ trainId: this.trainId });
     this.listViewsDetail = [];
-    this.apiService.getTrainFile(queryParams).subscribe(result => {
+    this.apiService.getTrainFile(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(result => {
       if (result.status === 'success') {
         this.listViewsDetail = cloneDeep(result.data.group_fields);
         this.dataDetailInfo = result.data;
@@ -191,7 +204,9 @@ export class ChungChiComponent implements OnInit {
       message: 'Bạn có chắc chắn muốn xóa thời gian làm việc này?',
       accept: () => {
         const queryParams = queryString.stringify({trainId: event.rowData.trainId});
-        this.apiService.delTrainFile(queryParams).subscribe((results: any) => {
+        this.apiService.delTrainFile(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
             this.getCertificatePage();

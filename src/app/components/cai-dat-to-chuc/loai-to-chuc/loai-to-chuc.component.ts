@@ -13,7 +13,7 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
 import { cloneDeep } from 'lodash';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
 @Component({
@@ -24,7 +24,11 @@ import { getParamString } from 'src/app/common/function-common/objects.helper';
 export class LoaiToChucComponent implements OnInit {
   MENUACTIONROLEAPI = MENUACTIONROLEAPI;
   ACTIONS = ACTIONS
-
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
   dataWorkplace: any;
   constructor(
     private apiService: ApiHrmService,
@@ -135,7 +139,9 @@ export class LoaiToChucComponent implements OnInit {
     this.columnDefs = []
     this.spinner.show();
     const queryParams = queryString.stringify(this.query);
-    this.apiService.getOrgLevelPage(queryParams).subscribe(
+    this.apiService.getOrgLevelPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         this.gridKey= results.data.dataList.gridKey;
@@ -173,7 +179,9 @@ export class LoaiToChucComponent implements OnInit {
   ];
   //filter 
   getFilter() {
-    this.apiService.getFilter('/api/v1/organize/GetOrgLevelFilter').subscribe(results => {
+    this.apiService.getFilter('/api/v1/organize/GetOrgLevelFilter')
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
@@ -251,7 +259,9 @@ export class LoaiToChucComponent implements OnInit {
       message: 'Bạn có chắc chắn muốn xóa loại tổ chức?',
       accept: () => {
         const queryParams = queryString.stringify({ org_level_cd: event.rowData.org_level_cd });
-        this.apiService.delOrgLevelInfo(queryParams).subscribe(results => {
+        this.apiService.delOrgLevelInfo(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Đã xóa nơi làm việc' });
             this.load();

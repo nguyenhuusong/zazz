@@ -4,7 +4,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as queryString from 'querystring';
 import { AgGridFn } from 'src/app/common/function-common/common';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-hop-dong-salary',
   templateUrl: './hop-dong.component.html',
@@ -41,7 +41,12 @@ export class HopDongComponent implements OnInit {
     this.displayuploadcontract = true;
     this.record = event.rowData;
   }
-
+  
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
   
   DeleteMeta(event) {
 
@@ -60,7 +65,9 @@ export class HopDongComponent implements OnInit {
     this.spinner.show();
     this.columnDefs = [];
     const queryParams = queryString.stringify({ salaryInfoId: this.salaryInfoId, offSet: 0, pageSize: 10000 });
-    this.apiService.getSalaryMetaPage(queryParams).subscribe(repo => {
+    this.apiService.getSalaryMetaPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(repo => {
       if (repo.status === 'success') {
         if (repo.data.dataList.gridKey) {
           this.gridKey = repo.data.dataList.gridKey;
@@ -208,7 +215,9 @@ export class HopDongComponent implements OnInit {
   getSalaryRecord() {
     this.columnDefsRecord = [];
     const queryParams = queryString.stringify({ salaryInfoId: this.salaryInfoId});
-    this.apiService.getSalaryRecord(queryParams).subscribe(results => {
+    this.apiService.getSalaryRecord(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.spinner.hide();
         this.listsDataRecord = results.data.records || [];
@@ -229,7 +238,9 @@ export class HopDongComponent implements OnInit {
       records: this.listsDataRecord,
       is_full_submit: this.is_full_submit
     }
-    this.apiService.setSalaryRecord(params).subscribe(results => {
+    this.apiService.setSalaryRecord(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thêm mới thành công' });
         this.displayFormEditDetail = false;
@@ -265,23 +276,7 @@ export class HopDongComponent implements OnInit {
     }
   }
 
-
   delRow(event) {
-    // this.confirmationService.confirm({
-    //   message: 'Bạn có chắc chắn muốn xóa thời gian làm việc này?',
-    //   accept: () => {
-    //     const queryParams = queryString.stringify({trainId: event.rowData.trainId});
-    //     this.apiService.delTrainFile(queryParams).subscribe((results: any) => {
-    //       if (results.status === 'success') {
-    //         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
-    //         this.getSalaryMetaPage();
-    //         this.FnEvent();
-    //       } else {
-    //         this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
-    //       }
-    //     });
-    //   }
-    // });
   }
 
   getFilesDetail(event) {

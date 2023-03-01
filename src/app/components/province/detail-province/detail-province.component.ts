@@ -60,7 +60,9 @@ export class DetailProvinceComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   handleParams() {
-    this.activatedRoute.queryParamMap.subscribe((params) => {
+    this.activatedRoute.queryParamMap
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.dataRouter = this.paramsObject.params;
       this.provinceId = this.paramsObject.params.provinceId;
@@ -74,7 +76,9 @@ export class DetailProvinceComponent implements OnInit, OnChanges, OnDestroy {
     this.listViews = [];
     this.listsData = [];
     const queryParams = queryString.stringify({ provinceId: this.provinceId });
-    this.apiService.getProvinceInfo(queryParams).subscribe(results => {
+    this.apiService.getProvinceInfo(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listViews = cloneDeep(results.data.group_fields);
         this.detailInfo = results.data;
@@ -86,7 +90,9 @@ export class DetailProvinceComponent implements OnInit, OnChanges, OnDestroy {
     const params = {
       ...this.detailInfo, group_fields: data
     };
-    this.apiService.setProvinceInfo(params).subscribe((results: any) => {
+    this.apiService.setProvinceInfo(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
       if (results.status === 'success') {
         this.goBack()
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });

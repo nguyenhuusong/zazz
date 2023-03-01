@@ -4,6 +4,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as queryString from 'querystring';
 import { AgGridFn, TextFormatter } from 'src/app/common/function-common/common';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-hieu-suat-lao-dong',
   templateUrl: './hieu-suat-lao-dong.component.html',
@@ -34,6 +35,12 @@ export class HieuSuatLaoDongComponent implements OnInit {
     this.getSalaryPrerformancePage();
   }
 
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+  
   cauhinh() {
     this.displaySetting = true;
   }
@@ -42,7 +49,9 @@ export class HieuSuatLaoDongComponent implements OnInit {
     this.spinner.show();
     this.columnDefs = [];
     const queryParams = queryString.stringify({ recordId: this.recordId, offSet: 0, pageSize: 10000 });
-    this.apiService.getSalaryPrerformancePage(queryParams).subscribe(repo => {
+    this.apiService.getSalaryPrerformancePage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(repo => {
       if (repo.status === 'success') {
         if (repo.data.gridKey) {
           this.gridKey = repo.data.dataList.gridKey;

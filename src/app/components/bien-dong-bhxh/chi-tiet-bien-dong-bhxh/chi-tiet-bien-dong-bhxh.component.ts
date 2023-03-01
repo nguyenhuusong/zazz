@@ -5,6 +5,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as queryString from 'querystring';
 import { cloneDeep } from 'lodash';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-chi-tiet-bien-dong-bhxh',
   templateUrl: './chi-tiet-bien-dong-bhxh.component.html',
@@ -65,7 +66,9 @@ export class ChiTietBienDongBHXHComponent implements OnInit {
   paramsObject = null;
 
   handleParams(): void {
-    this.activatedRoute.queryParamMap.subscribe((params) => {
+    this.activatedRoute.queryParamMap
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.modelEdit.insuranceId = this.paramsObject.params.insuranceId || null
       this.modelEdit.empId = this.paramsObject.params.empId || null
@@ -143,7 +146,9 @@ export class ChiTietBienDongBHXHComponent implements OnInit {
   flowCurrent = 0
   callApiInfo(params, type = 'Update') {
     this.spinner.show();
-    this.apiService.setInsuranceInfo(params).subscribe(results => {
+    this.apiService.setInsuranceInfo(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.activeIndex = results.data.flow_st;
         this.flowCurrent = results.data.flow_cur;
@@ -189,7 +194,9 @@ export class ChiTietBienDongBHXHComponent implements OnInit {
     this.listViews = [];
     this.spinner.show();
     const queryParams = queryString.stringify({ insuranceId: this.modelEdit.insuranceId, flow_cur: flow_cur, empId: this.modelEdit.empId });
-    this.apiService.getInsuranceInfo(queryParams).subscribe(results => {
+    this.apiService.getInsuranceInfo(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.activeIndex = results.data.flow_st;
         this.flowCurrent = results.data.flow_cur;
@@ -221,6 +228,12 @@ export class ChiTietBienDongBHXHComponent implements OnInit {
         this.isDialog ? this.callback.emit() : this.router.navigate(['/nhan-su/bien-dong-bhxh'])
       }
     })
+  }
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }
 

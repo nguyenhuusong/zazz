@@ -4,9 +4,8 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as queryString from 'querystring';
 import { cloneDeep } from 'lodash';
-import * as moment from 'moment';
 import { AgGridFn } from 'src/app/common/function-common/common';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-thong-tin-nguoi-lien-he',
@@ -32,6 +31,12 @@ export class ThongTinNguoiLienHeComponent implements OnInit {
 
   ngAfterViewInit(): void {
     this.FnEvent();
+  }
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   FnEvent() {
@@ -65,7 +70,9 @@ export class ThongTinNguoiLienHeComponent implements OnInit {
   empProfileGetEmpContact() {
     const queryParams = queryString.stringify({ empId: this.empId, cont_id: this.cont_id });
     this.listViewsDetail = [];
-    this.apiService.empProfileGetEmpContact(queryParams).subscribe(results => {
+    this.apiService.empProfileGetEmpContact(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listViewsDetail = cloneDeep(results.data.group_fields);
         this.dataDetailInfo = results.data;
@@ -78,7 +85,9 @@ export class ThongTinNguoiLienHeComponent implements OnInit {
     const param = {
       ...this.dataDetailInfo, group_fields: data
     }
-    this.apiService.empProfileSetEmpContact(param).subscribe(results => {
+    this.apiService.empProfileSetEmpContact(param)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thêm mới thành công' });
         this.displayFormEditDetail = false;
@@ -97,7 +106,9 @@ export class ThongTinNguoiLienHeComponent implements OnInit {
     this.spinner.show();
     this.columnDefs = [];
     const queryParams = queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 });
-    this.apiService.getEmpContactPage(queryParams).subscribe(repo => {
+    this.apiService.getEmpContactPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(repo => {
       if (repo.status === 'success') {
         if (repo.data.dataList.gridKey) {
           this.gridKey = repo.data.dataList.gridKey;
@@ -170,7 +181,9 @@ export class ThongTinNguoiLienHeComponent implements OnInit {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn áp dụng?',
       accept: () => {
-        this.apiService.defaultEmpContact({cont_id: rowData.cont_id, empId: this.empId}).subscribe((results: any) => {
+        this.apiService.defaultEmpContact({cont_id: rowData.cont_id, empId: this.empId})
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Áp dụng thành công' });
             this.getEmpContactPage();
@@ -199,7 +212,9 @@ export class ThongTinNguoiLienHeComponent implements OnInit {
       message: 'Bạn có chắc chắn muốn xóa bản ghi này?',
       accept: () => {
         const queryParams = queryString.stringify({cont_id: event.rowData.cont_id});
-        this.apiService.delEmpContact(queryParams).subscribe((results: any) => {
+        this.apiService.delEmpContact(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Xóa thành công' });
             this.getEmpContactPage();

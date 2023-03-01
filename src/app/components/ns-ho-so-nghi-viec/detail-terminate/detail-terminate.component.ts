@@ -5,6 +5,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as queryString from 'querystring';
 import { cloneDeep } from 'lodash';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-detail-terminate',
   templateUrl: './detail-terminate.component.html',
@@ -46,6 +47,11 @@ export class DetailTerminateComponent implements OnInit {
     terminateId: null,
     empId: null
   }
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
   ngOnInit(): void {
     this.getCustObjectListNew();
     this.titlePage = this.activatedRoute.data['_value'].title;
@@ -66,7 +72,9 @@ export class DetailTerminateComponent implements OnInit {
   paramsObject = null;
 
   handleParams(): void {
-    this.activatedRoute.queryParamMap.subscribe((params) => {
+    this.activatedRoute.queryParamMap
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.modelEdit.terminateId = this.paramsObject.params.terminateId || null
       this.modelEdit.empId = this.paramsObject.params.empId || null
@@ -145,7 +153,9 @@ export class DetailTerminateComponent implements OnInit {
   flowCurrent = 0
   callApiInfo(params, type = 'Update') {
     this.spinner.show();
-    this.apiService.setTerminateInfo(params).subscribe(results => {
+    this.apiService.setTerminateInfo(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.activeIndex = results.data.flow_st;
         this.flowCurrent = results.data.flow_cur;
@@ -191,7 +201,9 @@ export class DetailTerminateComponent implements OnInit {
     this.listViews = [];
     this.spinner.show();
     const queryParams = queryString.stringify({ terminateId: this.modelEdit.terminateId, flow_cur: flow_cur, empId: this.modelEdit.empId });
-    this.apiService.getTerminateInfo(queryParams).subscribe(results => {
+    this.apiService.getTerminateInfo(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.activeIndex = results.data.flow_st;
         this.flowCurrent = results.data.flow_cur;

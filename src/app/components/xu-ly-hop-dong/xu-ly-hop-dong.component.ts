@@ -179,7 +179,9 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
     this.spinner.show();
     let params: any = { ... this.query };
     const queryParams = queryString.stringify(params);
-    this.apiService.getContractPage(queryParams).subscribe(
+    this.apiService.getContractPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         this.gridKey= results.data.dataList.gridKey;
@@ -324,7 +326,9 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
       message: 'Bạn có chắc chắn muốn xóa hợp đồng?',
       accept: () => {
         const queryParams = queryString.stringify({ contractId: event.rowData.contractId });
-        this.apiService.delContractInfo(queryParams).subscribe((results: any) => {
+        this.apiService.delContractInfo(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa hợp đồng thành công' });
             this.load();
@@ -517,7 +521,9 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
         seq: index + 1
       }
     })
-    this.apiService.getPrintFiles(params).subscribe(results => {
+    this.apiService.getPrintFiles(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.filesPrints = results.data.dataList.data;
         this.dataPrint = results.data;
@@ -547,7 +553,9 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
           comment: d.contractId
         }
       })
-      this.apiService.setListContractStatus(this.paramsPheDuyet).subscribe((res: any) => {
+      this.apiService.setListContractStatus(this.paramsPheDuyet)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((res: any) => {
         if (res.status === 'success') {
           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: res.data ? res.data : '' });
         } else {
@@ -665,6 +673,7 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
     let params = {...this.modelDuyetHopDong};
     delete params.type;
     this.apiService.setContractStatus(params)
+    .pipe(takeUntil(this.unsubscribe$))
     .subscribe(results => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
@@ -682,7 +691,9 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
     this.spinner.show();
     this.apiService.setContractCancel({
       contractId: this.modelDuyetHopDong.contractId
-    }).subscribe(results => {
+    })
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
         this.load();
@@ -751,7 +762,9 @@ detailInfoFilter = null;
   ];
 
   getContractFilter() {
-    this.apiService.getContractFilter().subscribe(results => {
+    this.apiService.getContractFilter()
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);

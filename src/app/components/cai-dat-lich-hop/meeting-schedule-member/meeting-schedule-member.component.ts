@@ -10,6 +10,7 @@ import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-render
 import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.component';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-meeting-schedule-member',
   templateUrl: './meeting-schedule-member.component.html',
@@ -63,10 +64,18 @@ export class MeetingScheduleMemberComponent implements OnInit {
     this.getOrrginiaztions();
   }
 
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+      this.unsubscribe$.next();
+      this.unsubscribe$.complete();
+    }
+
   organizes = []
   getOrrginiaztions() {
     const queryParams = queryString.stringify({ filter: ''});
-    this.apiService.getOrganizations(queryParams).subscribe(results => {
+    this.apiService.getOrganizations(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if(results.status === 'success') {
           this.organizes = results.data.map(d => {
             return {

@@ -18,7 +18,7 @@ import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { DialogService } from 'primeng/dynamicdialog';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-qt-thay-doi-luong',
   templateUrl: './qt-thay-doi-luong.component.html',
@@ -148,6 +148,12 @@ export class QtThayDoiLuongComponent implements OnInit {
 
   isHrDiagram: boolean = false
 
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   onmouseenter(event) {
     console.log(event)
   }
@@ -208,7 +214,9 @@ export class QtThayDoiLuongComponent implements OnInit {
     this.columnDefs = []
     this.spinner.show();
     const queryParams = queryString.stringify(this.query);
-    this.apiService.getSalaryInfoPageNew(queryParams).subscribe(
+    this.apiService.getSalaryInfoPageNew(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.listsData = results?.data?.dataList?.data;
         this.gridKey= results?.data?.dataList?.gridKey;
@@ -277,7 +285,9 @@ export class QtThayDoiLuongComponent implements OnInit {
       message: 'Bạn có chắc chắn muốn xóa?',
       accept: () => {
         const queryParams = queryString.stringify({salaryInfoId: event.rowData.salaryInfoId});
-        this.apiService.delSalaryInfoNew(queryParams).subscribe((results: any) => {
+        this.apiService.delSalaryInfoNew(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa nhân viên thành công' });
             this.load();
@@ -431,21 +441,7 @@ export class QtThayDoiLuongComponent implements OnInit {
   }
   employeeStatus = []
   getEmployeeStatus() {
-    // this.apiService.getEmployeeStatus().subscribe(results => {
-    //   if (results.status === 'success') {
-    //     this.employeeStatus = []
-    //     results.data.forEach(s => {
-    //       if (s.value != "3") {
-    //         this.employeeStatus.push({
-    //           label: s.name,
-    //           value: s.value
-    //         })
-    //       }
-    //     }
-    //     )
-    //     this.employeeStatus = [{ label: 'Chọn trạng thái', value: -1 }, ...this.employeeStatus];
-    //   }
-    // })
+   
   }
 
   Back() {
@@ -474,7 +470,9 @@ export class QtThayDoiLuongComponent implements OnInit {
     this.query.pageSize = 1000000;
     const query = { ...this.query };
     const queryParams = queryString.stringify(query);
-    this.apiService.getSalaryInfoPageNew(queryParams).subscribe(
+    this.apiService.getSalaryInfoPageNew(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         const dataExport = [];
         let gridflexs = results.data.gridflexs;
@@ -531,7 +529,9 @@ export class QtThayDoiLuongComponent implements OnInit {
 
   getOrgan() {
     const queryParams = queryString.stringify({ filter: '' });
-    this.apiService.getOrganizations(queryParams).subscribe(results => {
+    this.apiService.getOrganizations(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.organs = results.data.map(d => {
           return {
@@ -619,24 +619,7 @@ export class QtThayDoiLuongComponent implements OnInit {
   }
 
   getCompany() {
-    // const query = { organizeIds: this.query.organizeIds}
-    // this.apiService.getUserCompanies(queryString.stringify(query)).subscribe(
-    //   (results: any) => {
-    //     if(results.status === "success"){
-    //       this.companies = results.data
-    //         .map(d => {
-    //           return {
-    //             label: d.name,
-    //             value: d.value
-    //           };
-    //         });
-    //         if(this.companies.length > 0) {
-    //           this.query.companyIds = this.companies[0].value
-    //         }
-    //         this.load();
-    //     }
-    //   }),
-    //   error => { };
+    
   }
 
 
@@ -649,7 +632,9 @@ detailInfoFilter = null;
   ];
 
   getSalaryInfoFilter() {
-    this.apiService.getSalaryInfoFilter().subscribe(results => {
+    this.apiService.getSalaryInfoFilter()
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
@@ -698,7 +683,9 @@ showFilter() {
           this.query = { ...this.query, ...event.data };
           this.load();
         } else if (event.type === 'CauHinh') {
-        this.apiService.getSalaryInfoFilter().subscribe(results => {
+        this.apiService.getSalaryInfoFilter()
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(results => {
             if (results.status === 'success') {
               const listViews = cloneDeep(results.data.group_fields);
               this.listViewsFilter = [...listViews];

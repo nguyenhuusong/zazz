@@ -3,10 +3,10 @@ import * as queryString from 'querystring';
 import { ActivatedRoute, Router } from '@angular/router';
 import { cloneDeep } from 'lodash';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { ApiService } from 'src/app/services/api.service';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-chi-tiet-to-chuc',
   templateUrl: './chi-tiet-to-chuc.component.html',
@@ -49,6 +49,12 @@ export class ChiTietToChucComponent implements OnInit, OnChanges {
   @Output() back = new EventEmitter<any>();
   items=  [];
 
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   ngOnChanges() {
   }
 
@@ -57,7 +63,9 @@ export class ChiTietToChucComponent implements OnInit, OnChanges {
   }
 
   handleParams() {
-    this.activatedRoute.queryParamMap.subscribe((params) => {
+    this.activatedRoute.queryParamMap
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.dataRouter = this.paramsObject.params;
       this.orgId = this.paramsObject.params.orgId || null;
@@ -78,7 +86,9 @@ export class ChiTietToChucComponent implements OnInit, OnChanges {
   getOrganizeInfo() {
     this.listViews = [];
     const queryParams = queryString.stringify({ orgId: this.orgId });
-    this.apiService.getOrganizeInfo(queryParams).subscribe(results => {
+    this.apiService.getOrganizeInfo(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listViews = cloneDeep(results.data.group_fields);
         this.detailInfo = results.data;
@@ -110,7 +120,9 @@ export class ChiTietToChucComponent implements OnInit, OnChanges {
     const params = {
       ...this.detailInfo, group_fields: data
     };
-    this.apiService.setOrganizeInfo(params).subscribe((results: any) => {
+    this.apiService.setOrganizeInfo(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
       if (results.status === 'success') {
         this.displayUserInfo = false;
         if(this.orgId) {

@@ -6,11 +6,9 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as queryString from 'querystring';
 import { cloneDeep } from 'lodash';
 import * as moment from 'moment';
-import * as FileSaver from 'file-saver';
-import { AgGridFn, getFieldValueAggrid } from 'src/app/utils/common/function-common';
+import {  getFieldValueAggrid } from 'src/app/utils/common/function-common';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { API_PROFILE } from 'src/app/common/constants/constant';
-import { fromEvent } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-vi-tri-cong-viec',
   templateUrl: './vi-tri-cong-viec.component.html',
@@ -27,21 +25,17 @@ export class ViTriCongViecComponent implements OnInit, AfterViewInit {
   ]
   constructor(
     private apiService: ApiHrmService,
-    private apiCoreService: ApiCoreService,
-    private activatedRoute: ActivatedRoute,
     private messageService: MessageService,
-    private confirmationService: ConfirmationService,
     private spinner: NgxSpinnerService,
-    private router: Router
   ) { }
   ngAfterViewInit(): void {
-  //  setTimeout(() => {
-  //   var dragTarget = document.getElementById('view_hrm_emp_process_page');
-  //   const click$ = fromEvent(dragTarget, 'click');
-  //   click$.subscribe( event => {
-  //     console.log(event)
-  //   });
-  //  }, 500);
+
+  }
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   ngOnInit(): void {
@@ -83,7 +77,9 @@ export class ViTriCongViecComponent implements OnInit, AfterViewInit {
   }
 
   getTerminateReasons() {
-    this.apiService.getTerminateReasons().subscribe(results => {
+    this.apiService.getTerminateReasons()
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.terminateReasons = results.data;
       }
@@ -108,7 +104,9 @@ export class ViTriCongViecComponent implements OnInit, AfterViewInit {
     this.listViewsForm = [];
     this.detailInfo = null;
     const queryParams = queryString.stringify({ empId: this.empId });
-    this.apiService.getEmpWorkJob(queryParams).subscribe(results => {
+    this.apiService.getEmpWorkJob(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         if (!this.codeStaff) {
           this.codeStaff = getFieldValueAggrid(results.data, 'code');
@@ -136,7 +134,9 @@ export class ViTriCongViecComponent implements OnInit, AfterViewInit {
     const  params = {
       ...this.detailInfo, group_fields: data
     };
-    this.apiService.setEmployeeInfo(params).subscribe((results: any) => {
+    this.apiService.setEmployeeInfo(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
       if (results.status === 'success') {
       
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Cập nhật thông tin thành công' });
@@ -169,7 +169,9 @@ export class ViTriCongViecComponent implements OnInit, AfterViewInit {
     const queryParams = queryString.stringify({ empId: this.empId });
 
     // change old api this.apiService.getEmployeeData(this.keyParamGetInfo, queryParams).subscribe(results => {
-    this.apiService.getEmployeeChangeInfo(queryParams).subscribe(results => {
+    this.apiService.getEmployeeChangeInfo(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listViewsForm = cloneDeep(results.data.group_fields || []);
         this.detailInfoForm = results.data;
@@ -209,7 +211,9 @@ export class ViTriCongViecComponent implements OnInit, AfterViewInit {
 
   setEmployeeChange(parmas) {
     // change old api this.apiService.setEmployeeChange(parmas).subscribe((results: any) => {
-    this.apiService.insurSetEmployeeChange(parmas).subscribe((results: any) => {
+    this.apiService.insurSetEmployeeChange(parmas)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
       if (results.status === 'success') {
         this.displayDialog = false;
         // this.manhinh = 'Edit';
@@ -243,7 +247,9 @@ export class ViTriCongViecComponent implements OnInit, AfterViewInit {
 
   terminateReasons = [];
   setEmployeeTermilate(parmas) {
-    this.apiService.setEmployeeTermilate(parmas).subscribe((results: any) => {
+    this.apiService.setEmployeeTermilate(parmas)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
       if (results.status === 'success') {
         this.displayDialog = false;
         this.getEmployeeInfo();

@@ -7,6 +7,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-danh-sach-role',
   templateUrl: './danh-sach-role.component.html',
@@ -45,7 +46,9 @@ export class DanhSachRoleComponent implements OnInit {
   getRoles() {
     this.columnDefs = []
         const query = {  organizeIds: this.organizeIds }
-        this.apiService.getMenuConfigInfo(queryString.stringify(query)).subscribe((results: any) => {
+        this.apiService.getMenuConfigInfo(queryString.stringify(query))
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((results: any) => {
           if (results.status === 'success') {
             this.listsData = cloneDeep(results?.data?.roles);
             this.dataMenuActionRole = results.data;
@@ -59,6 +62,12 @@ export class DanhSachRoleComponent implements OnInit {
 
   }
 
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   getClientRolePageByWebId() {
     this.columnDefs = []
   }
@@ -66,15 +75,7 @@ export class DanhSachRoleComponent implements OnInit {
   sourceActions = [];
   targetActions = [];
   menus: any = [];
-  // getWebMenuTree() {
-  //   this.columnDefs = []
-  //   const queryParams = queryString.stringify({ webId: this.detailInfo.webId });
-  //   this.apiService.getWebMenuTree(queryParams).subscribe(results => {
-  //     if (results.status === 'success') {
-  //       this.menus = cloneDeep(results.data);
-  //     }
-  //   })
-  // }
+  
 
   onTargetFilter(event) {
     if (event.query === "") {
@@ -135,7 +136,9 @@ export class DanhSachRoleComponent implements OnInit {
     this.listViews = [];
     this.displayInfo = true;
     const queryParams = queryString.stringify({ id: id});
-    this.apiService.getRoleInfo(queryParams).subscribe(results => {
+    this.apiService.getRoleInfo(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listViews = cloneDeep(results.data.group_fields);
         this.detailDetailInfo = results.data;
@@ -149,7 +152,9 @@ export class DanhSachRoleComponent implements OnInit {
       message: 'Bạn có chắc chắn muốn thực hiện hành động này?',
       accept: () => {
         const queryParams = queryString.stringify({ id: event.rowData.roleId });
-        this.apiService.deleteRole(queryParams).subscribe(results => {
+        this.apiService.deleteRole(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
             this.callback.emit();
@@ -170,7 +175,9 @@ export class DanhSachRoleComponent implements OnInit {
     };
     
     const queryParams = queryString.stringify({ organizeIds: this.organizeIds });
-    this.apiService.SetRoleInfo(params, queryParams).subscribe((results: any) => {
+    this.apiService.SetRoleInfo(params, queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
         this.spinner.hide();
@@ -350,12 +357,15 @@ export class DanhSachRoleComponent implements OnInit {
   listMenuRoles = []
   getRoleInfoSidebar(id) {
     const queryParams = queryString.stringify({ id: id });
-    this.apiService.getRoleInfo(queryParams).subscribe(results => {
+    this.apiService.getRoleInfo(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.detailDetailInfo = results.data;
         this.listMenuRoles = cloneDeep(this.detailDetailInfo.rolemenu);
         this.menus.forEach(m => {
-          if (this.listMenuRoles.map(q => q.menuId).indexOf(m.menuId) > -1) {
+          if (this.listMenuRoles.map(q => q.menuId)
+          .indexOf(m.menuId) > -1) {
             m.isCheck = true;
             this.listMenuRoles.forEach(a => {
               if (m.menuId === a.menuId) {
@@ -379,7 +389,8 @@ export class DanhSachRoleComponent implements OnInit {
           }
           if(m.submenus){
             m.submenus.forEach(d => {
-              if (this.listMenuRoles.map(q => q.menuId).indexOf(d.menuId) > -1) {
+              if (this.listMenuRoles.map(q => q.menuId)
+              .indexOf(d.menuId) > -1) {
                 d.isCheck = true;
                 //load is check action
           

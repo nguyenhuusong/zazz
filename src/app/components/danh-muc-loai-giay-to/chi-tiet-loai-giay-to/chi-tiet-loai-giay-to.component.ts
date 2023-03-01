@@ -2,11 +2,9 @@ import { Component, EventEmitter, Input, OnInit, Output, OnChanges } from '@angu
 import * as queryString from 'querystring';
 import { ActivatedRoute, Router } from '@angular/router';
 import { cloneDeep } from 'lodash';
-import { ConfirmationService, MessageService } from 'primeng/api';
-import { ApiService } from 'src/app/services/api.service';
+import { MessageService } from 'primeng/api';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
-import { CheckHideAction } from 'src/app/common/function-common/common';
-import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-chi-tiet-loai-giay-to',
   templateUrl: './chi-tiet-loai-giay-to.component.html',
@@ -21,9 +19,14 @@ export class ChiTietLoaiGiayToComponent implements OnInit, OnChanges {
     private apiService: ApiHrmService,
     private activatedRoute: ActivatedRoute,
     private messageService: MessageService,
-    private confirmationService: ConfirmationService,
     private router: Router
   ) { }
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   recordTypeId = null
   listViews = []
   imagesUrl = []
@@ -58,7 +61,9 @@ export class ChiTietLoaiGiayToComponent implements OnInit, OnChanges {
   }
 
   handleParams() {
-    this.activatedRoute.queryParamMap.subscribe((params) => {
+    this.activatedRoute.queryParamMap
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.dataRouter = this.paramsObject.params;
       this.recordTypeId = this.paramsObject.params.recordTypeId || null;
@@ -70,7 +75,9 @@ export class ChiTietLoaiGiayToComponent implements OnInit, OnChanges {
   getEmpRecordTypeInfo() {
     this.listViews = [];
     const queryParams = queryString.stringify({recordTypeId: this.recordTypeId	});
-    this.apiService.getEmpRecordTypeInfo(queryParams).subscribe(results => {
+    this.apiService.getEmpRecordTypeInfo(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listViews = cloneDeep(results.data.group_fields);
         this.detailInfo = results.data;
@@ -86,7 +93,9 @@ export class ChiTietLoaiGiayToComponent implements OnInit, OnChanges {
     const params = {
       ...this.detailInfo, group_fields: data
     };
-    this.apiService.setEmpRecordTypeInfo(params).subscribe((results: any) => {
+    this.apiService.setEmpRecordTypeInfo(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
       if (results.status === 'success') {
         this.displayUserInfo = false;
         this.goBack()

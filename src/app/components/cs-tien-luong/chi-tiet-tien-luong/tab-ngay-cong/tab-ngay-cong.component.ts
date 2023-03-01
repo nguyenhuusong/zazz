@@ -3,10 +3,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as queryString from 'querystring';
-import { cloneDeep } from 'lodash';
-import * as moment from 'moment';
 import { AgGridFn, TextFormatter } from 'src/app/common/function-common/common';
-import { fromEvent } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-tab-ngay-cong',
   templateUrl: './tab-ngay-cong.component.html',
@@ -33,6 +31,12 @@ export class TabNgayCongComponent implements OnInit {
   colsDetail = [];
   detailCellRendererParams = null;
   listDataNew = [];
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   ngOnInit(): void {
     this.getSalaryDayWorkingPage();
   }
@@ -45,7 +49,9 @@ export class TabNgayCongComponent implements OnInit {
     this.spinner.show();
     this.columnDefs = [];
     const queryParams = queryString.stringify({ recordId: this.recordId, offSet: 0, pageSize: 10000 });
-    this.apiService.getSalaryWorkTimePage(queryParams).subscribe(repo => {
+    this.apiService.getSalaryWorkTimePage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(repo => {
       if (repo.status === 'success') {
         if (repo.data.gridKey) {
           this.gridKey = repo.data.gridKey;

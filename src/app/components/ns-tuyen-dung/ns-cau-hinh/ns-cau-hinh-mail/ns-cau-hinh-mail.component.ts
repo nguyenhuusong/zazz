@@ -10,7 +10,7 @@ import { ExportFileService } from 'src/app/services/export-file.service';
 import { cloneDeep } from 'lodash';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-ns-cau-hinh-mail',
   templateUrl: './ns-cau-hinh-mail.component.html',
@@ -86,6 +86,12 @@ export class NsCauHinhMailComponent implements OnInit {
     this.load();
   }
 
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
@@ -95,7 +101,9 @@ export class NsCauHinhMailComponent implements OnInit {
     this.columnDefs = [];
     this.spinner.show();
     const queryParams = queryString.stringify(this.query);
-    this.apiService.getRecruitMailPage(queryParams).subscribe(
+    this.apiService.getRecruitMailPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.listsData = results?.data?.dataList?.data;
         this.gridKey= results?.data?.dataList?.gridKey;
@@ -197,7 +205,9 @@ export class NsCauHinhMailComponent implements OnInit {
       message: 'Bạn có chắc chắn muốn xóa?',
       accept: () => {
         const queryParams = queryString.stringify({ Id: event.rowData.Id });
-        this.apiService.delRecruitMailInfo(queryParams).subscribe(results => {
+        this.apiService.delRecruitMailInfo(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
             this.load();
@@ -236,7 +246,9 @@ export class NsCauHinhMailComponent implements OnInit {
   }
   employeeStatus = []
   getEmployeeStatus() {
-    this.apiService.getEmployeeStatus().subscribe(results => {
+    this.apiService.getEmployeeStatus()
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.employeeStatus = []
         results.data.forEach(s => {
@@ -259,7 +271,9 @@ export class NsCauHinhMailComponent implements OnInit {
     this.query.pageSize = 1000000;
     const query = { ...this.query };
     const queryParams = queryString.stringify(query);
-    this.apiService.getEmployeePage(queryParams).subscribe(
+    this.apiService.getEmployeePage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         const dataExport = [];
         let gridflexs = results.data.gridflexs;
