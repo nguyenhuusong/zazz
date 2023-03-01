@@ -77,10 +77,10 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
 
   public modules: Module[] = AllModules;
   public agGridFn = AgGridFn;
-  cols: any[];
-  colsDetail: any[];
+  cols: any[]= [];
+  colsDetail: any[] = [];
   items = [];
-  columnDefs;
+  columnDefs = [];
   detailRowHeight;
   defaultColDef;
   frameworkComponents;
