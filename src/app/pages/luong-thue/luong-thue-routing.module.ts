@@ -42,7 +42,9 @@ const routes: Routes = [
       api: 'setPayrollBaseImport',
       apiAccept: 'setPayrollBaseAccept',
       fileDoc: 'DM_CapBacLuong_Import.xls',
-      apiExport: 'setPayrollBaseExportDraft'
+      apiExport: 'setPayrollBaseExportDraft',
+      apiTemImport: 'getPayrollBaseImportTemp',
+      fileNameTemImport: 'file_mau_danh_muc_cap_bac_luong',
     },
   },
   {

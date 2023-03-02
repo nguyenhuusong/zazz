@@ -154,7 +154,9 @@ const routes: Routes = [
       api: 'setCompanyImport',
       apiAccept: 'setCompanyAccept',
       fileDoc: 'DM_CongTy_Import.xls',
-      apiExport: 'setCompanyExportDraft'
+      apiExport: 'setCompanyExportDraft',
+      apiTemImport: 'getCompanyImportTemp',
+      fileNameTemImport: 'file_mau_danh_muc_cong_ty',
     },
   },
   {
@@ -212,7 +214,9 @@ const routes: Routes = [
       api: 'setLeaveReasonImport',
       apiAccept: 'setLeaveReasonAccept',
       fileDoc: 'DM_LyDoNghi_Import.xls',
-      apiExport: 'setLeaveReasonExportDraft'
+      apiExport: 'setLeaveReasonExportDraft',
+      apiTemImport: 'getLeaveReasonImportTemp',
+      fileNameTemImport: 'file_mau_ly_do_nghi',
     },
   },
 
@@ -261,7 +265,9 @@ const routes: Routes = [
       api: 'setPositionImport',
       apiAccept: 'setPositionAccept',
       fileDoc: 'DM_ChucVu_Import.xls',
-      apiExport: 'setPositionExportDraft'
+      apiExport: 'setPositionExportDraft',
+      apiTemImport: 'getPositionImportTemp',
+      fileNameTemImport: 'file_mau_danh_muc_chuc_vu',
     },
   },
   {
@@ -300,7 +306,9 @@ const routes: Routes = [
       api: 'setPositionTitleImport',
       apiAccept: 'setPositionTitleAccept',
       fileDoc: 'DM_ChucDanh_Import.xls',
-      apiExport: 'setPositionTitleExportDraft'
+      apiExport: 'setPositionTitleExportDraft',
+      apiTemImport: 'getPositionTitleImportTemp',
+      fileNameTemImport: 'file_mau_danh_muc_chuc_danh',
     },
   },
   {
@@ -340,7 +348,9 @@ const routes: Routes = [
       api: 'setWorkplaceImport',
       apiAccept: 'setWorkplaceAccept',
       fileDoc: 'DM_NoiLamViec_Import.xls',
-      apiExport: 'setWorkplaceExportDraft'
+      apiExport: 'setWorkplaceExportDraft',
+      apiTemImport: 'getWorkplaceImportTemp',
+      fileNameTemImport: 'file_mau_noi_lam_viec',
     },
   },
   {
@@ -457,7 +467,9 @@ const routes: Routes = [
       api: 'setWorktimeImport',
       apiAccept: 'setWorktimeAccept',
       fileDoc: 'DM_LichLamViec_Import.xls',
-      apiExport: 'setWorktimeExportDraft'
+      apiExport: 'setWorktimeExportDraft',
+      apiTemImport: 'getWorktimeImportTemp',
+      fileNameTemImport: 'file_mau_lich_lam_viec',
     },
   },
   {
@@ -515,7 +527,9 @@ const routes: Routes = [
       api: 'setLeaveReasonImport',
       apiAccept: 'setLeaveReasonAccept',
       fileDoc: 'DM_HopDongMau_Import.xls',
-      apiExport: 'setLeaveReasonExportDraft'
+      apiExport: 'setLeaveReasonExportDraft',
+      apiTemImport: 'getContractTypeImportTemp',
+      fileNameTemImport: 'file_mau_hop_dong_mau',
     },
   },
 
@@ -614,7 +628,9 @@ const routes: Routes = [
       api: 'setTimekeepingWifiImport',
       apiAccept: 'setTimekeepingWifiAccept',
       fileDoc: 'DM_ThietLapWiFi_Import.xls',
-      apiExport: 'setTimekeepingWifiExportDraft'
+      apiExport: 'setTimekeepingWifiExportDraft',
+      apiTemImport: 'getTimekeepingWifiImportTemp',
+      fileNameTemImport: 'file_mau_thiet_bi_wifi',
     },
   },
   {
