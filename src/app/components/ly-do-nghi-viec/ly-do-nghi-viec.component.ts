@@ -11,7 +11,7 @@ import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.comp
 import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
 import { cloneDeep } from 'lodash';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
 import * as FileSaver from 'file-saver';
@@ -96,7 +96,13 @@ export class LyDoNghiViecComponent implements OnInit {
   }
 
   loadjs = 0;
-  heightGrid = 0
+  heightGrid = 0;
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   ngAfterViewChecked(): void {
     const a: any = document.querySelector(".header");
     const b: any = document.querySelector(".sidebarBody");
@@ -140,7 +146,9 @@ export class LyDoNghiViecComponent implements OnInit {
     this.spinner.show();
     let params: any = {... this.query};
     const queryParams = queryString.stringify(params);
-    this.apiService.getLeaveReasonPage(queryParams).subscribe(
+    this.apiService.getLeaveReasonPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         this.gridKey= results.data.dataList.gridKey;
@@ -196,7 +204,9 @@ export class LyDoNghiViecComponent implements OnInit {
       message: 'Bạn có chắc chắn muốn xóa?',
       accept: () => {
         const queryParams = queryString.stringify({ reason_code: event.rowData.reason_code });
-        this.apiService.delLeaveReason(queryParams).subscribe(results => {
+        this.apiService.delLeaveReason(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
             this.load();
@@ -309,7 +319,9 @@ export class LyDoNghiViecComponent implements OnInit {
     delete params.offSet;
     delete params.pageSize;
     // empId: this.detailInfo.empId
-    this.apiService.setLeaveReasonExport(queryString.stringify({ ...params })).subscribe(results => {
+    this.apiService.setLeaveReasonExport(queryString.stringify({ ...params }))
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.type === 'application/json') {
         this.spinner.hide();
       } else if (results.type === 'application/octet-stream') {
@@ -346,7 +358,9 @@ export class LyDoNghiViecComponent implements OnInit {
   ];
   
   getFilter() {
-    this.apiService.getFilter('/api/v2/leavereason/GetLeaveReasonFilter').subscribe(results => {
+    this.apiService.getFilter('/api/v2/leavereason/GetLeaveReasonFilter')
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);

@@ -182,9 +182,17 @@ export class ImportExcelComponent implements OnInit {
   }
 
   getTemfileImport() {
-    this.apiService.exportReportLocalhost(`assets/tpl-import-file/${this.dataRouter.fileDoc}`).subscribe((data: any) => {
-      this.createImageFromBlob(data)
-    });
+    this.apiService[this.dataRouter.apiTemImport]()
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
+      if (results.type === 'application/json') {
+        this.spinner.hide();
+      } else {
+        var blob = new Blob([results], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        FileSaver.saveAs(blob, `${this.dataRouter.fileNameTemImport}` +".xlsx");
+        this.spinner.hide();
+      }
+    })
   }
 
   createImageFromBlob(image: Blob) {

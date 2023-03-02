@@ -8,8 +8,10 @@ export declare class MarkdownControlComponent implements OnInit {
     modelFields: any;
     detail: any;
     submit: boolean;
+    modelMarkdow: any;
     callbackMarkdown: EventEmitter<any>;
     ngOnInit(): void;
+    handleAttackFile(): void;
     inputFocus(event: any): void;
     inputFocusOut(event: any): void;
     onChangeValue(event: any, field_name: any, element: any): void;

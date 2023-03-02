@@ -13,6 +13,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import * as moment from 'moment';
+import { Subject, takeUntil } from 'rxjs';
 const MAX_SIZE = 100000000;
 @Component({
   selector: 'app-mail-da-gui',
@@ -49,6 +50,12 @@ export class MailDaGuiComponent implements OnInit, AfterViewChecked {
       buttonAgGridComponent: ButtonAgGridComponent,
       avatarRendererFull: AvatarFullComponent,
     };
+  }
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   public modules: Module[] = AllModules;
@@ -145,7 +152,9 @@ export class MailDaGuiComponent implements OnInit, AfterViewChecked {
     params.FromDate = moment(new Date(this.query.fromDate)).format('YYYY-MM-DD')
     params.ToDate = moment(new Date(this.query.toDate)).format('YYYY-MM-DD');
     const queryParams = queryString.stringify(params);
-    this.apiService.getRecruitSendMailPage(queryParams).subscribe(
+    this.apiService.getRecruitSendMailPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         this.gridKey= results.data.dataList.gridKey;

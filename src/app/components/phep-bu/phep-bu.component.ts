@@ -14,9 +14,8 @@ import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 const MAX_SIZE = 100000000;
 import { cloneDeep } from 'lodash';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
 import { DialogService } from 'primeng/dynamicdialog';
-import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 @Component({
   selector: 'app-phep-bu',
   templateUrl: './phep-bu.component.html',
@@ -50,6 +49,12 @@ export class PhepBuComponent implements OnInit, AfterViewChecked {
       buttonAgGridComponent: ButtonAgGridComponent,
       avatarRendererFull: AvatarFullComponent,
     };
+  }
+  
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
   frameworkComponents;
   public agGridFn = AgGridFn;
@@ -124,7 +129,9 @@ export class PhepBuComponent implements OnInit, AfterViewChecked {
     this.columnDefs = []
     this.spinner.show();
     const queryParams = queryString.stringify(this.query);
-    this.apiService.getAnnualAddPage(queryParams).subscribe(
+    this.apiService.getAnnualAddPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         this.gridKey= results.data.dataList.gridKey;
@@ -187,7 +194,9 @@ export class PhepBuComponent implements OnInit, AfterViewChecked {
       message: 'Bạn có chắc chắn muốn xóa phép bù?',
       accept: () => {
         const queryParams = queryString.stringify({ Id: event.rowData.id });
-        this.apiService.delAnnualAddInfo(queryParams).subscribe(results => {
+        this.apiService.delAnnualAddInfo(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa phép bù thành công' });
             this.load();
@@ -277,7 +286,9 @@ export class PhepBuComponent implements OnInit, AfterViewChecked {
   setPhepBuDep() {
     let params: any = { ...this.querAddNewPhepBuDep };
     params.orgId = params.orgId.orgId;
-    this.apiService.setAnnualAddOrgInfo(params).subscribe((results: any) => {
+    this.apiService.setAnnualAddOrgInfo(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Thêm mới thành công' });
         this.isShowAddPhepBuDep = false
@@ -294,7 +305,9 @@ export class PhepBuComponent implements OnInit, AfterViewChecked {
   }
   getDepartments() {
     const queryParams = queryString.stringify({  })
-    this.apiService.getOrganizeTree(queryParams).subscribe(results => {
+    this.apiService.getOrganizeTree(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.departments = results.data;
       }
@@ -340,7 +353,9 @@ export class PhepBuComponent implements OnInit, AfterViewChecked {
   }
 
   getFilter() {
-    this.apiService.getFilter('/api/v2/annualleave/GetAnnualLeaveFilter').subscribe(results => {
+    this.apiService.getFilter('/api/v2/annualleave/GetAnnualLeaveFilter')
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);

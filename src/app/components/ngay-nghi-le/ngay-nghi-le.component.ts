@@ -1,18 +1,16 @@
 import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService, TreeNode } from 'primeng/api';
 import * as queryString from 'querystring';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
-import { ExportFileService } from 'src/app/services/export-file.service';
-import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { cloneDeep } from 'lodash';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
 import { DialogService } from 'primeng/dynamicdialog';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil} from 'rxjs';
 @Component({
   selector: 'app-ngay-nghi-le',
   templateUrl: './ngay-nghi-le.component.html',
@@ -78,12 +76,9 @@ export class NgayNghiLeComponent implements OnInit {
   constructor(
     private apiService: ApiHrmService,
     private spinner: NgxSpinnerService,
-    private route: ActivatedRoute,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
-    private fileService: ExportFileService,
     private changeDetector: ChangeDetectorRef,
-    private organizeInfoService: OrganizeInfoService,
     public dialogService: DialogService,
     private router: Router) {
     this.defaultColDef = {
@@ -98,8 +93,6 @@ export class NgayNghiLeComponent implements OnInit {
     };
     this.frameworkComponents = {
     };
-
-
   }
   query: any = {
     filter: '',
@@ -122,6 +115,12 @@ export class NgayNghiLeComponent implements OnInit {
       pageSize: 20,
     }
     this.load();
+  }
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   onGridReady(params) {
@@ -165,7 +164,9 @@ export class NgayNghiLeComponent implements OnInit {
     this.columnDefs = []
     this.spinner.show();
     const queryParams = queryString.stringify(this.query);
-    this.apiService.holidayPage(queryParams).subscribe(
+    this.apiService.holidayPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         this.gridKey = results.data.dataList.gridKey;
@@ -302,7 +303,9 @@ export class NgayNghiLeComponent implements OnInit {
       message: 'Bạn có chắc chắn muốn xóa?',
       accept: () => {
         const queryParams = queryString.stringify({ id: event.rowData.id });
-        this.apiService.deleteHoliday(queryParams).subscribe((results: any) => {
+        this.apiService.deleteHoliday(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
             this.load();
@@ -393,7 +396,9 @@ export class NgayNghiLeComponent implements OnInit {
   organs = []
   getOrgan() {
     const queryParams = queryString.stringify({ filter: '' });
-    this.apiService.getOrganizations(queryParams).subscribe(results => {
+    this.apiService.getOrganizations(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.organs = results.data.map(d => {
           return {
@@ -451,7 +456,9 @@ export class NgayNghiLeComponent implements OnInit {
   }
   
   getFilter() {
-    this.apiService.getFilter('/api/v1/holiday/GetHolidayFilter').subscribe(results => {
+    this.apiService.getFilter('/api/v1/holiday/GetHolidayFilter')
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);

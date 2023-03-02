@@ -33,6 +33,7 @@ export class ChiTietTabCapBacLuongComponent implements OnInit, OnDestroy {
     private router: Router
   ) { }
   private readonly unsubscribe$: Subject<void> = new Subject();
+  
   ngOnDestroy() {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();

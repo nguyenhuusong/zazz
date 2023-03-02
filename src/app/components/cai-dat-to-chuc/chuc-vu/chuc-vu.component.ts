@@ -1,10 +1,8 @@
-import { AfterViewChecked, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router, Params } from '@angular/router';
+import { AfterViewChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as queryString from 'querystring';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { ApiService } from 'src/app/services/api.service';
 import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
-import { HttpParams } from '@angular/common/http';
 import { CustomTooltipComponent } from 'src/app/common/ag-component/customtooltip.component';
 import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
 import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
@@ -14,9 +12,8 @@ import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { cloneDeep } from 'lodash';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
 import { DialogService } from 'primeng/dynamicdialog';
-import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import * as FileSaver from 'file-saver';
 @Component({
   selector: 'app-chuc-vu',
@@ -91,6 +88,12 @@ export class ChucVuComponent implements OnInit, AfterViewChecked {
   loading = false;
   paramsObject = null
 
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+  
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
@@ -135,7 +138,9 @@ export class ChucVuComponent implements OnInit, AfterViewChecked {
     this.columnDefs = []
     this.spinner.show();
     const queryParams = queryString.stringify(this.query);
-    this.apiService.getPositionPage(queryParams).subscribe(
+    this.apiService.getPositionPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         this.gridKey = results.data.dataList.gridKey
@@ -209,7 +214,9 @@ export class ChucVuComponent implements OnInit, AfterViewChecked {
       message: 'Bạn có chắc chắn muốn thực hiện xóa chức vụ?',
       accept: () => {
         const queryParams = queryString.stringify({ positionId: event.rowData.positionId });
-        this.apiService.delPositionInfo(queryParams).subscribe(results => {
+        this.apiService.delPositionInfo(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa chức vụ thành công' });
             this.load();
@@ -294,7 +301,9 @@ export class ChucVuComponent implements OnInit, AfterViewChecked {
     this.query.pageSize = 1000000;
     const query = { ...this.query };
     const queryParams = queryString.stringify(query);
-    this.apiService.setPositionExport(queryParams).subscribe(
+    this.apiService.setPositionExport(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
 
         if (results.type === 'application/json') {
@@ -310,13 +319,6 @@ export class ChucVuComponent implements OnInit, AfterViewChecked {
       });
   }
 
-
-
-
-
-
-
-
   listViewsFilter = [];
   cloneListViewsFilter = [];
   detailInfoFilter = null;
@@ -329,7 +331,9 @@ export class ChucVuComponent implements OnInit, AfterViewChecked {
   getFilter() {
     // value === 1 ? '' : ''
     this.load();
-    this.apiService.getFilter('/api/v2/position/GetPositionFilter').subscribe(results => {
+    this.apiService.getFilter('/api/v2/position/GetPositionFilter')
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
@@ -356,48 +360,6 @@ export class ChucVuComponent implements OnInit, AfterViewChecked {
     } else {
       this.listViewsFilter = cloneDeep(datas);
     }
-  }
-
-  showFilter() {
-    const ref = this.dialogService.open(FormFilterComponent, {
-      header: 'Tìm kiếm nâng cao',
-      width: '40%',
-      contentStyle: "",
-      data: {
-        listViews: this.listViewsFilter,
-        detailInfoFilter: this.detailInfoFilter,
-        buttons: this.optionsButonFilter
-      }
-    });
-
-    ref.onClose.subscribe((event: any) => {
-      if (event) {
-        this.listViewsFilter = cloneDeep(event.listViewsFilter);
-        if (event.type === 'Search') {
-          this.query = { ...this.query, ...event.data };
-          this.load();
-        } else if (event.type === 'CauHinh') {
-          this.apiService.getEmpFilter().subscribe(results => {
-            if (results.status === 'success') {
-              const listViews = cloneDeep(results.data.group_fields);
-              this.listViewsFilter = [...listViews];
-              const params = getParamString(listViews)
-              this.query = { ...this.query, ...params };
-              this.load();
-              this.detailInfoFilter = results.data;
-              this.showFilter()
-            }
-          });
-
-        } else if (event.type === 'Reset') {
-          const listViews = cloneDeep(this.cloneListViewsFilter);
-          this.listViewsFilter = cloneDeep(listViews);
-          const params = getParamString(listViews)
-          this.query = { ...this.query, ...params };
-          this.load();
-        }
-      }
-    });
   }
 
   ngAfterViewInit(): void {

@@ -158,7 +158,9 @@ export class ImportLinhVucTuyenDungComponent implements OnInit {
   }
 
   getTemfileImport() {
-    this.apiService.exportReportLocalhost('assets/tpl-import-file/file_mau_import_ho_so.xlsx').subscribe((data: any) => {
+    this.apiService.exportReportLocalhost('assets/tpl-import-file/file_mau_import_ho_so.xlsx')
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((data: any) => {
       this.createImageFromBlob(data)
     });
   }

@@ -2,18 +2,16 @@ import { AfterViewChecked, ChangeDetectorRef, Component, OnInit } from '@angular
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService, TreeNode } from 'primeng/api';
-import { finalize } from 'rxjs';
+import { finalize, Subject } from 'rxjs';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { ExportFileService } from 'src/app/services/export-file.service';
 import * as queryString from 'querystring';
 import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
-import * as moment from 'moment';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { cloneDeep } from 'lodash';
-import { fromEvent } from 'rxjs';
+import { fromEvent, takeUntil } from 'rxjs';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
 import { DialogService } from 'primeng/dynamicdialog';
-import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 
 @Component({
   selector: 'app-loai-bieu-mau',
@@ -104,6 +102,7 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
     .pipe(
       finalize(() => this.spinner.hide())
     )
+    .pipe(takeUntil(this.unsubscribe$))
     .subscribe(response => {
       if (response.status === 'success') {
         const data = response.data;
@@ -174,6 +173,7 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
     const query = {...this.query};
     const queryParams = queryString.stringify(query);
     this.apiService.getFormTypeTreePage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
     .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
@@ -254,7 +254,9 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
       message: 'Bạn có chắc chắn muốn xóa tài liệu?',
       accept: () => {
         const queryParams = queryString.stringify({formId: event.rowData.form_type_id});
-        this.apiService.delFormsTypeInfo(queryParams).subscribe((results: any) => {
+        this.apiService.delFormsTypeInfo(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa tài liệu thành công' });
             this.load();
@@ -379,7 +381,9 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
     this.query.pageSize = 1000000;
     const query = { ...this.query };
     const queryParams = queryString.stringify(query);
-    this.apiService.getFormPage(queryParams).subscribe(
+    this.apiService.getFormPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         const dataExport = [];
         let gridflexs = results.data.gridflexs;
@@ -461,7 +465,9 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
     { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger height-56 addNew', icon: 'pi pi-times' },
   ];
   getFilter() {
-    this.apiService.getFilter('/api/v1/eating/GetEatingFilter').subscribe(results => {
+    this.apiService.getFilter('/api/v1/eating/GetEatingFilter')
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
@@ -491,48 +497,6 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
     }
   }
 
-showFilter() {
-    const ref = this.dialogService.open(FormFilterComponent, {
-      header: 'Tìm kiếm nâng cao',
-      width: '40%',
-      contentStyle: "",
-      data: {
-        listViews: this.listViewsFilter,
-        detailInfoFilter: this.detailInfoFilter,
-        buttons: this.optionsButonFilter
-      }
-    });
-
-    ref.onClose.subscribe((event: any) => {
-      if (event) {
-        this.listViewsFilter = cloneDeep(event.listViewsFilter);
-        if (event.type === 'Search') {
-          this.query = { ...this.query, ...event.data };
-          this.load();
-        } else if (event.type === 'CauHinh') {
-        this.apiService.getEmpFilter().subscribe(results => {
-            if (results.status === 'success') {
-              const listViews = cloneDeep(results.data.group_fields);
-              this.listViewsFilter = [...listViews];
-              const params =  getParamString(listViews)
-              this.query = { ...this.query, ...params};
-              this.load();
-              this.detailInfoFilter = results.data;
-              this.showFilter()
-            }
-          });
-
-        } else if (event.type === 'Reset') {
-          const listViews = cloneDeep(this.cloneListViewsFilter);
-          this.listViewsFilter = cloneDeep(listViews);
-         const params =  getParamString(listViews)
-        this.query = { ...this.query, ...params};
-        this.load();
-        }
-      }
-    });
-  }
-
   ngAfterViewInit(): void {
     this.FnEvent();
   }
@@ -540,7 +504,6 @@ showFilter() {
   FnEvent() {
     setTimeout(() => {
       var dragTarget = document.getElementById(this.gridKey);
-      console.log('dragTarget', dragTarget)
       if(dragTarget) {
         const click$ = fromEvent(dragTarget, 'click');
         click$.subscribe(event => {
@@ -549,4 +512,11 @@ showFilter() {
       }
     }, 300);
   }
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
 }

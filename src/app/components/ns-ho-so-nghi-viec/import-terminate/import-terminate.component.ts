@@ -161,7 +161,9 @@ export class ImportTerminateComponent implements OnInit {
   }
 
   getTemfileImport() {
-    this.apiService.exportReportLocalhost('assets/tpl-import-file/HSNS_NghiViec_Import.xlsx').subscribe((data: any) => {
+    this.apiService.exportReportLocalhost('assets/tpl-import-file/HSNS_NghiViec_Import.xlsx')
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((data: any) => {
       this.createImageFromBlob(data)
     });
   }
@@ -185,7 +187,9 @@ export class ImportTerminateComponent implements OnInit {
       accept: true,
       imports: this.listsData
     }
-    this.apiService.setTerminateExportDraft(query).subscribe(
+    this.apiService.setTerminateExportDraft(query)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
 
         if (results.type === 'application/json') {

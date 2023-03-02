@@ -1,12 +1,12 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, Params } from '@angular/router';
+import { Router } from '@angular/router';
 import * as queryString from 'querystring';
-import { ConfirmationService, MessageService } from 'primeng/api';
-import { ApiService } from 'src/app/services/api.service';
+import {MessageService } from 'primeng/api';
 import { NgxSpinnerService } from 'ngx-spinner';
 import * as moment from 'moment';
 import * as FileSaver from 'file-saver';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-bao-cao',
   templateUrl: './bao-cao.component.html',
@@ -42,10 +42,18 @@ export class BaoCaoComponent implements OnInit {
     this.load();
   }
 
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   load(): void {
     this.spinner.show();
     const queryParams = queryString.stringify({ report_type: -1 });
-    this.apiService.getReportList(queryParams).subscribe(
+    this.apiService.getReportList(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.reports = results.data;
         this.listReports = results.data.map(d => {
@@ -112,7 +120,9 @@ export class BaoCaoComponent implements OnInit {
 
   getCompanyList(element1: any): void {
     const queryParams = queryString.stringify({ orgId: 0 });
-    this.apiService.getCompanies(queryParams).subscribe(results => {
+    this.apiService.getCompanies(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         element1.options = results.data.map(res => {
           return {
@@ -127,7 +137,9 @@ export class BaoCaoComponent implements OnInit {
 
   getOrganizeParam(element1: any): void {
     const queryParams = queryString.stringify({ filter:'' });
-    this.apiService.getOrganizeParam(queryParams).subscribe(results => {
+    this.apiService.getOrganizeParam(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         element1.options = results.data.map(res => {
           return {
@@ -151,7 +163,9 @@ export class BaoCaoComponent implements OnInit {
   getDepartmentParams(organizeId: any[]): void {
     console.log(organizeId.map(d => d.code))
     const queryParams = queryString.stringify({ organizeId: organizeId.map(d => d.code).toString() });
-    this.apiService.getDepartmentParams(queryParams).subscribe(results => {
+    this.apiService.getDepartmentParams(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.setValue(results.data,'departmentId')
       }
@@ -174,7 +188,9 @@ export class BaoCaoComponent implements OnInit {
 
   getObjectList(element1: any): void {
     const queryParams = queryString.stringify({ objKey: 'object_bm_st' });
-    this.apiService.getCustObjectListNew(false,queryParams).subscribe(results => {
+    this.apiService.getCustObjectListNew(false,queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         element1.options = results.data.map(res => {
           return {
@@ -204,6 +220,7 @@ export class BaoCaoComponent implements OnInit {
     if (api) {
       const queryParams = queryString.stringify(params);
       this.apiService.getReport(api, queryParams)
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe(response => {
         if (response.type === 'application/json') {
           this.spinner.hide();
@@ -235,6 +252,7 @@ export class BaoCaoComponent implements OnInit {
     if (api) {
       const queryParams = queryString.stringify(params);
       this.apiService.getReport(api, queryParams)
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe(response => {
         if (response.type === 'application/json') {
           this.spinner.hide();
@@ -257,6 +275,7 @@ export class BaoCaoComponent implements OnInit {
     if (api) {
       const queryParams = queryString.stringify(params);
       this.apiService.getReport(api, queryParams)
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe(response => {
         if (response.type === 'application/json') {
           this.spinner.hide();

@@ -12,10 +12,9 @@ import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 const MAX_SIZE = 100000000;
 import { cloneDeep } from 'lodash';
-import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { DialogService } from 'primeng/dynamicdialog';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-bien-dong-bhxh',
   templateUrl: './bien-dong-bhxh.component.html',
@@ -129,12 +128,20 @@ export class BienDongBHXHComponent implements OnInit, AfterViewChecked {
     this.displaySetting = true;
   }
 
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   load() {
     this.columnDefs = []
     this.spinner.show();
     const params: any = { ...this.query };
     const queryParams = queryString.stringify(params);
-    this.apiService.getInsurancePage(queryParams).subscribe(
+    this.apiService.getInsurancePage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         this.gridKey= results.data.dataList.gridKey;
@@ -270,7 +277,9 @@ export class BienDongBHXHComponent implements OnInit, AfterViewChecked {
       message: 'Bạn có chắc chắn muốn thực hiện xóa bản ghi này?',
       accept: () => {
         const queryParams = queryString.stringify({ insuranceId: event.rowData.insuranceId });
-        this.apiService.delInsuranceInfo(queryParams).subscribe(results => {
+        this.apiService.delInsuranceInfo(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
             this.load();
@@ -347,7 +356,9 @@ export class BienDongBHXHComponent implements OnInit, AfterViewChecked {
   ];
 
   geFilter() {
-    this.apiService.getFilter('/api/v2/empinsurance/GetInsuranceFilter').subscribe(results => {
+    this.apiService.getFilter('/api/v2/empinsurance/GetInsuranceFilter')
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);

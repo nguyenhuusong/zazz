@@ -7,6 +7,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { CheckHideAction } from 'src/app/common/function-common/common';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-chi-tiet-chuc-danh',
@@ -40,7 +41,12 @@ export class ChiTietChucDanhComponent implements OnInit, OnChanges {
 
   @Input() dataRouter = null
   @Output() back = new EventEmitter<any>();
-
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+  
   ngOnChanges() {
 
   }
@@ -60,7 +66,9 @@ export class ChiTietChucDanhComponent implements OnInit, OnChanges {
   }
 
   handleParams() {
-    this.activatedRoute.queryParamMap.subscribe((params) => {
+    this.activatedRoute.queryParamMap
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.dataRouter = this.paramsObject.params;
       this.positionTitleId = this.paramsObject.params.positionTitleId || null;
@@ -73,7 +81,9 @@ export class ChiTietChucDanhComponent implements OnInit, OnChanges {
   getPositionTitleInfo() {
     this.listViews = [];
     const queryParams = queryString.stringify({positionTitleId: this.positionTitleId, organizeId	: this.organizeId	});
-    this.apiService.getPositionTitleInfo(queryParams).subscribe(results => {
+    this.apiService.getPositionTitleInfo(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listViews = cloneDeep(results.data.group_fields);
         this.detailInfo = results.data;
@@ -89,7 +99,9 @@ export class ChiTietChucDanhComponent implements OnInit, OnChanges {
     const params = {
       ...this.detailInfo, group_fields: data
     };
-    this.apiService.setPositionTitleInfo(params).subscribe((results: any) => {
+    this.apiService.setPositionTitleInfo(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
       if (results.status === 'success') {
         this.displayUserInfo = false;
         this.goBack()

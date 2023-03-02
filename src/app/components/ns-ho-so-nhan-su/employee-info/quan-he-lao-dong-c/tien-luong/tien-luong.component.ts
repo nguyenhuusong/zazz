@@ -7,7 +7,7 @@ import { cloneDeep } from 'lodash';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { AgGridFn } from 'src/app/common/function-common/common';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-tien-luong',
   templateUrl: './tien-luong.component.html',
@@ -31,6 +31,12 @@ export class TienLuongComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.FnEvent();
+  }
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   FnEvent() {
@@ -60,7 +66,9 @@ export class TienLuongComponent implements OnInit, AfterViewInit {
     this.spinner.show();
     this.columnDefs = [];
     const queryParams = queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 });
-    this.apiService.getSalaryInfoPageByEmpId(queryParams).subscribe(repo => {
+    this.apiService.getSalaryInfoPageByEmpId(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(repo => {
       if (repo.status === 'success') {
         if (repo.data.dataList.gridKey) {
           this.gridKey = repo.data.dataList.gridKey;
@@ -154,7 +162,9 @@ export class TienLuongComponent implements OnInit, AfterViewInit {
     this.dataDetailInfo = null;
     this.listViewsDetail = [];
     const query = { empId: this.empId, salaryInfoId: this.salaryInfoId, flow_st: flow_st }
-    this.apiService.getSalaryInfoNew(queryString.stringify(query)).subscribe(results => {
+    this.apiService.getSalaryInfoNew(queryString.stringify(query))
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.spinner.hide();
         this.listViewsDetail = cloneDeep(results.data.group_fields || []);
@@ -242,7 +252,9 @@ export class TienLuongComponent implements OnInit, AfterViewInit {
 
   callApiInfo(params) {
     this.spinner.show();
-    this.apiService.setSalaryInfoNew(params).subscribe((results: any) => {
+    this.apiService.setSalaryInfoNew(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thành công' });
         this.displayFormEditDetail = false;
@@ -273,7 +285,9 @@ export class TienLuongComponent implements OnInit, AfterViewInit {
       message: 'Bạn có chắc chắn muốn xóa bản ghi này?',
       accept: () => {
         const queryParams = queryString.stringify({ salaryInfoId: event.rowData.salaryInfoId });
-        this.apiService.delSalaryInfoNew(queryParams).subscribe((results: any) => {
+        this.apiService.delSalaryInfoNew(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
             this.getSalaryInfoPageByEmpId();

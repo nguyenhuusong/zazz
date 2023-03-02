@@ -6,10 +6,9 @@
   import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
   import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
   import { ExportFileService } from 'src/app/services/export-file.service';
-  import { cloneDeep } from 'lodash';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
   @Component({
     selector: 'app-tab-cap-bac-bang-luong',
     templateUrl: './tab-cap-bac-luong.component.html',
@@ -65,6 +64,12 @@ import { fromEvent } from 'rxjs';
       pageSize: 20,
       organizeIds: '',
     }
+
+    private readonly unsubscribe$: Subject<void> = new Subject();
+    ngOnDestroy() {
+      this.unsubscribe$.next();
+      this.unsubscribe$.complete();
+    }
   
     cancel() {
       this.query = {
@@ -107,7 +112,9 @@ import { fromEvent } from 'rxjs';
       this.columnDefs = [];
       this.spinner.show();
       const queryParams = queryString.stringify(this.query);
-      this.apiService.getPayrollBasePage(queryParams).subscribe(
+      this.apiService.getPayrollBasePage(queryParams)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
         (results: any) => {
           this.listsData = results.data.dataList.data;
           this.gridKey= results.data.dataList.gridKey;
@@ -191,7 +198,9 @@ import { fromEvent } from 'rxjs';
         message: 'Bạn có chắc chắn muốn xóa?',
         accept: () => {
           const query = queryString.stringify({baseId: event.rowData.baseId})
-          this.apiService.delPayrollBase(query).subscribe((results: any) => {
+          this.apiService.delPayrollBase(query)
+          .pipe(takeUntil(this.unsubscribe$))
+          .subscribe((results: any) => {
             if (results.status === 'success') {
               this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
               this.load();

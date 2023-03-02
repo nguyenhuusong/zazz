@@ -42,10 +42,12 @@ export class ChonThoiGianComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private messageService: MessageService,
     ) { }
+    
   ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
+
   ngOnInit(): void {
     this.handleParams();
   }
@@ -89,7 +91,9 @@ export class ChonThoiGianComponent implements OnInit {
       meet_start: `${value.startTime.getHours()}:${(value.startTime.getMinutes()< 10 ?'0' :'') + value.startTime.getMinutes()}`,
       meet_time:  value.meet_time
     }
-    this.apiService.checkTimeHrm(queryParam).subscribe(results => {
+    this.apiService.checkTimeHrm(queryParam)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data });
         this.chooseTime.emit(queryParam);

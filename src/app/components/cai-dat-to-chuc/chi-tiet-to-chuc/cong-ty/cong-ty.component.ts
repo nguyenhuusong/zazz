@@ -5,7 +5,7 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as queryString from 'querystring';
 import { cloneDeep } from 'lodash';
 import { AgGridFn } from 'src/app/common/function-common/common';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-cong-ty-orgid',
   templateUrl: './cong-ty.component.html',
@@ -27,6 +27,12 @@ export class CongTyComponent implements OnInit {
   listsData = [];
   columnDefs = [];
   gridKey = '';
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
 
   ngAfterViewInit(): void {
     this.FnEvent();
@@ -65,7 +71,9 @@ export class CongTyComponent implements OnInit {
     this.listSources = [];
     this.listTargets = [];
     const queryParams = queryString.stringify({ filter: '' });
-    this.apiService.getCompanies(queryParams).subscribe(results => {
+    this.apiService.getCompanies(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
           this.listCompanies = results.data;
           if(this.listsData.length === 0) {
@@ -82,7 +90,6 @@ export class CongTyComponent implements OnInit {
             this.listTargets= [...this.listTargets]
             this.listSources= [...this.listSources]
           }
-
       } 
     })
   }
@@ -93,7 +100,9 @@ export class CongTyComponent implements OnInit {
     this.spinner.show();
     this.columnDefs = [];
     const queryParams = queryString.stringify({ orgId: this.orgId, offSet: 0, pageSize: 10000 });
-    this.apiService.getOrgCompanyPage(queryParams).subscribe(repo => {
+    this.apiService.getOrgCompanyPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(repo => {
       if (repo.status === 'success') {
         if (repo.data.dataList.gridKey) {
           this.gridKey = repo.data.dataList.gridKey;
@@ -166,7 +175,9 @@ export class CongTyComponent implements OnInit {
           companyIds: this.listTargets.map(d => d.value)
         }
         this.spinner.show();
-        this.apiService.setOrgCompany(params).subscribe(results => {
+        this.apiService.setOrgCompany(params)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(results => {
             if(results.status === 'success') {
               this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : results.message });
               this.getOrgCompanyPage();

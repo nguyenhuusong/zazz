@@ -111,7 +111,9 @@ export class HoSoComponent implements OnInit {
   getEmpAttachInsur() {
     const queryParams = queryString.stringify({ terminateId: this.terminateId, metaId: this.metaId});
     this.listViewsDetail = [];
-    this.apiService.getEmpAttachInsur(queryParams).subscribe(results => {
+    this.apiService.getEmpAttachInsur(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listViewsDetail = cloneDeep(results.data.group_fields);
         this.dataDetailInfo = results.data;
@@ -139,7 +141,9 @@ export class HoSoComponent implements OnInit {
     const param = {
       ...this.dataDetailInfo, group_fields: data
     }
-    this.apiService.setEmpAttachInsur(param).subscribe(results => {
+    this.apiService.setEmpAttachInsur(param)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thêm mới thành công' });
         this.displayFormEditDetail = false;
@@ -165,7 +169,9 @@ export class HoSoComponent implements OnInit {
     this.spinner.show();
     this.columnDefs = [];
     const queryParams = queryString.stringify({ terminateId: this.terminateId, offSet: 0, pageSize: 10000 });
-    this.apiService.getTerminateMetaPage(queryParams).subscribe(repo => {
+    this.apiService.getTerminateMetaPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(repo => {
       if (repo.status === 'success') {
         if (repo.data.dataList.gridKey) {
           this.gridKey = repo.data.dataList.gridKey;
@@ -265,7 +271,9 @@ export class HoSoComponent implements OnInit {
       message: 'Bạn có chắc chắn muốn xóa bản ghi này?',
       accept: () => {
         const queryParams = queryString.stringify({metaId: event.rowData.metaId});
-        this.apiService.delEmpAttachInsur(queryParams).subscribe((results: any) => {
+        this.apiService.delEmpAttachInsur(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Xóa thành công' });
             this.getTerminateMetaPage();
@@ -304,7 +312,9 @@ export class HoSoComponent implements OnInit {
       key: this.terminateId,
       data: null,
       seq: 1
-    }]).subscribe(results => {
+    }])
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.filesPrints = results.data.dataList.data;
         this.dataPrint = results.data;

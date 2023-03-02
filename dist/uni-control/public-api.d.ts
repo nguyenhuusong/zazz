@@ -29,3 +29,7 @@ export * from './lib/select-tree-control/select-tree-control.component';
 export * from './lib/select-tree-control/select-tree-control.module';
 export * from './lib/linkurl-control/linkurl-control.component';
 export * from './lib/linkurl-control/linkurl-control.module';
+export * from './lib/icon-control/icon-control.component';
+export * from './lib/icon-control/icon-control.module';
+export * from './lib/icon-control/icon-control-svg/icon-control-svg.component';
+export * from './lib/icon-control/icon-control-svg/icon-control-svg.module';

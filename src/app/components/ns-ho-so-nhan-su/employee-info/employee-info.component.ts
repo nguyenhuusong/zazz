@@ -5,6 +5,7 @@ import { MessageService, ConfirmationService } from 'primeng/api';
 import { ApiCoreService } from 'src/app/services/api-core/apicore.service';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as queryString from 'querystring';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-employee-info',
   templateUrl: './employee-info.component.html',
@@ -23,7 +24,14 @@ export class EmployeeInfoComponent implements OnInit {
   ) { }
   titlePage = '';
   items = [];
-  linkUrl = ''
+  linkUrl = '';
+  
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   ngOnInit(): void {
     this.titlePage = this.activatedRoute.data['_value'].title;
     this.items = [
@@ -45,7 +53,9 @@ export class EmployeeInfoComponent implements OnInit {
   dataRouter = null;
   empId = null;
   handleParams(): void {
-    this.activatedRoute.queryParamMap.subscribe((params) => {
+    this.activatedRoute.queryParamMap
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.dataRouter = this.paramsObject.params;
       this.empId = this.paramsObject.params.empId || null;
@@ -59,7 +69,9 @@ export class EmployeeInfoComponent implements OnInit {
   dataEmployeeStatus = null;
   getEmployeeStatus() {
     const queryParams = queryString.stringify({ empId: this.empId });
-    this.apiService.getEmployeeStatus(queryParams).subscribe(results => {
+    this.apiService.getEmployeeStatus(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.dataEmployeeStatus = results.data;
         this.handleChange(results.data.tab_st);

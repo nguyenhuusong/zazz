@@ -1,5 +1,4 @@
 import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router, Params } from '@angular/router';
 import * as queryString from 'querystring';
 import { ConfirmationService, MessageService, TreeNode } from 'primeng/api';
 import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
@@ -7,10 +6,9 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { ExportFileService } from 'src/app/services/export-file.service';
-import { cloneDeep } from 'lodash';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-tab-thiet-lap-tham-so',
   templateUrl: './tab-thiet-lap-tham-so.component.html',
@@ -67,7 +65,11 @@ export class TabThietLapThamSoComponent implements OnInit {
   }
 
   gridKey = ''
-
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
   cancel() {
     this.query = {
       filter: '',
@@ -109,7 +111,9 @@ export class TabThietLapThamSoComponent implements OnInit {
     this.columnDefs = [];
     this.spinner.show();
     const queryParams = queryString.stringify(this.query);
-    this.apiService.getPayrollParamPage(queryParams).subscribe(
+    this.apiService.getPayrollParamPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         this.gridKey= results.data.dataList.gridKey;
@@ -193,7 +197,9 @@ export class TabThietLapThamSoComponent implements OnInit {
       message: 'Bạn có chắc chắn muốn xóa?',
       accept: () => {
         const query = queryString.stringify({Id: event.rowData.id})
-        this.apiService.delPayrollParam(query).subscribe((results: any) => {
+        this.apiService.delPayrollParam(query)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
             this.load();

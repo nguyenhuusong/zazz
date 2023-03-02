@@ -3,8 +3,8 @@ import * as queryString from 'querystring';
 import { ActivatedRoute, Router } from '@angular/router';
 import { cloneDeep } from 'lodash';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { ApiService } from 'src/app/services/api.service';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-detail-account',
   templateUrl: './detail-account.component.html',
@@ -36,7 +36,11 @@ export class DetailAccountComponent implements OnInit, OnChanges {
   @Input() detailAccount = null
   @Input() isModal = false
   @Output() back = new EventEmitter<any>();
-
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
 
   ngOnChanges(event) {
     console.log(event)
@@ -72,7 +76,9 @@ export class DetailAccountComponent implements OnInit, OnChanges {
   }
 
   handleParams() {
-    this.activatedRoute.queryParamMap.subscribe((params) => {
+    this.activatedRoute.queryParamMap
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.detailAccount = this.paramsObject.params;
       this.account_no = this.paramsObject.params.account_no;
@@ -90,7 +96,9 @@ export class DetailAccountComponent implements OnInit, OnChanges {
   getAccountInfo() {
     this.listViews = [];
     const queryParams = queryString.stringify(this.detailAccount);
-    this.apiService.getAccountInfo(queryParams).subscribe(results => {
+    this.apiService.getAccountInfo(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.detailInfo = results.data;
         this.listViews = cloneDeep(results.data.group_fields);
@@ -116,7 +124,9 @@ export class DetailAccountComponent implements OnInit, OnChanges {
     const params = {
       ...this.detailInfo, group_fields: data
     };
-    this.apiService.setAccountInfo(params).subscribe((results: any) => {
+    this.apiService.setAccountInfo(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
       if (results.status === 'success') {
         this.displayUserInfo = false;
         if(this.isModal) {

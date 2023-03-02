@@ -4,9 +4,8 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as queryString from 'querystring';
 import { cloneDeep } from 'lodash';
-import * as moment from 'moment';
 import { AgGridFn } from 'src/app/common/function-common/common';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-tai-khoan',
   templateUrl: './tai-khoan.component.html',
@@ -28,7 +27,11 @@ export class TaiKhoanComponent implements OnInit {
   listsData = [];
   columnDefs = [];
   gridKey = ''
-
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
   ngAfterViewInit(): void {
     this.FnEvent();
   }
@@ -64,7 +67,9 @@ export class TaiKhoanComponent implements OnInit {
   getEmpUserInfo() {
     const queryParams = queryString.stringify({ empId: this.empId, userId: this.userId });
     this.listViewsDetail = [];
-    this.apiService.getEmpUserInfo(queryParams).subscribe(results => {
+    this.apiService.getEmpUserInfo(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listViewsDetail = cloneDeep(results.data.group_fields);
         this.dataDetailInfo = results.data;
@@ -77,7 +82,9 @@ export class TaiKhoanComponent implements OnInit {
     const param = {
       ...this.dataDetailInfo, group_fields: data
     }
-    this.apiService.setEmpUserInfo(param).subscribe(results => {
+    this.apiService.setEmpUserInfo(param)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thêm mới thành công' });
         this.displayFormEditDetail = false;
@@ -96,7 +103,9 @@ export class TaiKhoanComponent implements OnInit {
     this.spinner.show();
     this.columnDefs = [];
     const queryParams = queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 });
-    this.apiService.getEmpUserPage(queryParams).subscribe(repo => {
+    this.apiService.getEmpUserPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(repo => {
       if (repo.status === 'success') {
         if (repo.data.dataList.gridKey) {
           this.gridKey = repo.data.dataList.gridKey;
@@ -174,7 +183,9 @@ export class TaiKhoanComponent implements OnInit {
       message: 'Bạn có chắc chắn muốn xóa?',
       accept: () => {
         const queryParams = queryString.stringify({userId: event.rowData.userId});
-        this.apiService.delEmpUserInfo(queryParams).subscribe((results: any) => {
+        this.apiService.delEmpUserInfo(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
             this.getEmpUserPage();

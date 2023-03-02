@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { cloneDeep } from 'lodash';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { Subject } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as moment from 'moment';
 import { CheckHideAction } from 'src/app/common/function-common/common';
@@ -96,7 +96,9 @@ export class ChiTietAnCaComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   handleParams() {
-    this.activatedRoute.queryParamMap.subscribe((params) => {
+    this.activatedRoute.queryParamMap
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.dataRouter = this.paramsObject.params;
       this.empId = this.paramsObject.params.empId;
@@ -111,7 +113,9 @@ export class ChiTietAnCaComponent implements OnInit, OnChanges, OnDestroy {
   getAnCaInfo() {
     this.listViews = [];
     const queryParams = queryString.stringify({ cusId: this.empId });
-    this.apiService.getEatingInfo(queryParams).subscribe(results => {
+    this.apiService.getEatingInfo(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listViews = cloneDeep(results.data.group_fields);
         this.detailInfo = results.data;
@@ -181,7 +185,9 @@ export class ChiTietAnCaComponent implements OnInit, OnChanges, OnDestroy {
     const params = {
       ...this.detailInfo, group_fields: data, menuDate: this.selectedDates
     };
-    this.apiService.setEatingInfo(params).subscribe((results: any) => {
+    this.apiService.setEatingInfo(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
       if (results.status === 'success') {
         this.displayUserInfo = false;
         if(this.url === 'them-moi-nghi-phep') {

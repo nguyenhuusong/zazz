@@ -102,7 +102,9 @@ export class QuanLyNgayNghiComponent implements OnInit, AfterViewChecked, OnDest
     this.columnDefs = []
     this.spinner.show();
     const queryParams = queryString.stringify(this.query);
-    this.apiService.getHolidayPage(queryParams).subscribe(
+    this.apiService.getHolidayPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.listHolidays = results.data.months;
         this.listHolidays.forEach(d => {
@@ -213,7 +215,9 @@ export class QuanLyNgayNghiComponent implements OnInit, AfterViewChecked, OnDest
     this.spinner.show();
     let params = { ...this.modelAddHoliday };
     delete params.holi_is
-    this.apiService.setHolidayAdd(params).subscribe(results => {
+    this.apiService.setHolidayAdd(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Cập nhật thành công' });
         this.displayAddHoliday = false;
@@ -233,7 +237,9 @@ export class QuanLyNgayNghiComponent implements OnInit, AfterViewChecked, OnDest
           year: this.query.year
         };
         this.spinner.show();
-        this.apiService.setHolidayCreate(params).subscribe(results => {
+        this.apiService.setHolidayCreate(params)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Tạo ngày nghỉ thành công' });
             this.load();
@@ -256,7 +262,9 @@ export class QuanLyNgayNghiComponent implements OnInit, AfterViewChecked, OnDest
         };
         this.spinner.show();
         const queryParams = queryString.stringify(params);
-        this.apiService.delHoliday(queryParams).subscribe(results => {
+        this.apiService.delHoliday(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Hủy ngày nghỉ thành công' });
             this.displayAddHoliday = false;

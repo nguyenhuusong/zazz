@@ -7,6 +7,7 @@ import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AgGridFn } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-quyet-dinh-luong',
@@ -14,7 +15,11 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
   styleUrls: ['./quyet-dinh-luong.component.scss']
 })
 export class QuyetDinhLuongComponent implements OnInit {
-
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
   dataContractTypes: any;
   constructor(
     private apiService: ApiHrmService,
@@ -89,7 +94,9 @@ export class QuyetDinhLuongComponent implements OnInit {
   listOrgRoots = [];
   getOrgRoots() {
     const queryParams = queryString.stringify({filter: ''});
-    this.apiService.getOrganizations(queryParams).subscribe(results => {
+    this.apiService.getOrganizations(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listOrgRoots = results.data.map(d => {
           return {
@@ -113,7 +120,9 @@ export class QuyetDinhLuongComponent implements OnInit {
     this.columnDefs = []
     this.spinner.show();
     const queryParams = queryString.stringify(this.query);
-    this.apiService.getSalaryInfoPage(queryParams).subscribe(
+    this.apiService.getSalaryInfoPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         this.gridKey= results.data.dataList.gridKey;

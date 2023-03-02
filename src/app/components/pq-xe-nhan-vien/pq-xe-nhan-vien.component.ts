@@ -16,10 +16,8 @@ import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { DialogService } from 'primeng/dynamicdialog';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
 import { stringify } from 'query-string';
-declare var jQuery: any;
-
 @Component({
   selector: 'app-pq-xe-nhan-vien',
   templateUrl: './pq-xe-nhan-vien.component.html',
@@ -177,6 +175,12 @@ detailInfoFilter = null;
     this.GetHrmCardByCustId();
   }
 
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   handleChangeOrganize(): void {
     // this.model.orgId = '';
     // this.getOrganizeTree();
@@ -186,6 +190,7 @@ detailInfoFilter = null;
   getOrganize(): void {
     const queryParams = queryString.stringify({ filter: '' });
     this.apiService.getOrganizations(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         (results: any) => {
           this.organizes = results.data
@@ -239,7 +244,9 @@ detailInfoFilter = null;
     this.spinner.show();
     const query = { ...this.query };
     const queryParams = queryString.stringify(query);
-    this.apiService.getEmployeeVehiclePage(queryParams).subscribe(
+    this.apiService.getEmployeeVehiclePage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         this.gridKey= results.data.dataList.gridKey;
@@ -348,7 +355,9 @@ detailInfoFilter = null;
   dataPositionList = []
   getPositionList() {
     const queryParams = queryString.stringify({ objKey: 'positiontype_group' });
-    this.apiService.getCustObjectListNew(false, queryParams).subscribe(results => {
+    this.apiService.getCustObjectListNew(false, queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.dataPositionList = results.data.map(d => {
           return {
@@ -362,7 +371,9 @@ detailInfoFilter = null;
 
   workplaceOptions = []
   getWorkplaces() {
-    this.apiService.getWorkplaces().subscribe(results => {
+    this.apiService.getWorkplaces()
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.workplaceOptions = results.data.map(d => {
           return {
@@ -418,7 +429,9 @@ detailInfoFilter = null;
       pageSize: null
     };
     const queryParams = queryString.stringify(params);
-    this.apiService.getEmployeeList(queryParams).subscribe((repo: any) => {
+    this.apiService.getEmployeeList(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((repo: any) => {
       this.results = repo.data;
       if (type === 'edit') {
         const objcusId = this.results.filter(d => d.custId === this.modelTM.cusId);
@@ -494,7 +507,9 @@ detailInfoFilter = null;
     if (cardVehicleId === null || cardVehicleId === 0) {
       alert('Cần phê duyệt');
     } else {
-      this.apiService.getDetailEmployeeVehicleInfo(cardVehicleId).subscribe(
+      this.apiService.getDetailEmployeeVehicleInfo(cardVehicleId)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
         (results: any) => {
           this.modelTM.type = 2;
           this.modelTM.cardVehicleId = results.data.cardVehicleId;
@@ -568,7 +583,9 @@ onCellClicked(event) {
     
       this.apiService.setCardVehicle(this.modelTM.cardVehicleId, null,
         this.modelTM.vehicleTypeIdTM, this.modelTM.vehicleNoTM, this.modelTM.vehicleColorTM, this.modelTM.vehicleNameTM,
-        startTimeTm, endTimeTm, this.modelTM.noteTM, this.modelTM.cusId, this.modelTM.imageLinks).subscribe((results: any) => {
+        startTimeTm, endTimeTm, this.modelTM.noteTM, this.modelTM.cusId, this.modelTM.imageLinks)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((results: any) => {
           if (results.status === 'error') {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
           } else {
@@ -590,7 +607,9 @@ onCellClicked(event) {
   listCard = []
   GetHrmCardByCustId() {
     const queryParam = queryString.stringify({ custId: this.modelTM.cusId })
-    this.apiService.getHrmCardByCustId(queryParam).subscribe((results : any) => {
+    this.apiService.getHrmCardByCustId(queryParam)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results : any) => {
       if(results.status === 'success') {
         this.listCard = results.data.map( d => { 
           return  { label: d.cardCd, value: d.cardId }
@@ -643,8 +662,9 @@ onCellClicked(event) {
     if (this.show) {
       dataSave.endTime = this.datetostring(this.modelApprove.endTime);
     }
-    this.apiService.setVehicleApprove(dataSave).
-      subscribe((response: any) => {
+    this.apiService.setVehicleApprove(dataSave)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((response: any) => {
         if (response.status === 'success') {
           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Phê duyệt vé xe thành công' });
           this.displayVehicleApprove = false;
@@ -663,6 +683,7 @@ onCellClicked(event) {
       message: 'Bạn có chắc chắn muốn thực hiện Khóa dịch vụ gửi xe này?',
       accept: () => {
         this.apiService.lockCardVehicle(event.rowData.cardVehicleId)
+        .pipe(takeUntil(this.unsubscribe$))
           .subscribe((results : any) => {
             if(results.status === 'success') {
               this.load();
@@ -691,6 +712,7 @@ onCellClicked(event) {
       message: 'Bạn có chắc chắn muốn thực hiện Mở khóa dịch vụ gửi xe này?',
       accept: () => {
         this.apiService.unlockCardVehicle(event.rowData.cardVehicleId)
+        .pipe(takeUntil(this.unsubscribe$))
           .subscribe((results: any) => {
             if(results.status === 'success') {
               this.load();
@@ -710,6 +732,7 @@ onCellClicked(event) {
       message: 'Bạn có chắc chắn muốn thực hiện xóa dịch vụ gửi xe này?',
       accept: () => {
         this.apiService.setVehicleRemove({ cardVehicleId: event.rowData.cardVehicleId })
+        .pipe(takeUntil(this.unsubscribe$))
           .subscribe(response => {
             if (response.status === 'success') {
               this.load();
@@ -749,7 +772,9 @@ onCellClicked(event) {
   }
 
   loadVehicelTypes(): void {
-    this.apiService.getVehicleTypes().subscribe(
+    this.apiService.getVehicleTypes()
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.vehicleTypes = results.data;
         // this.loadCardVip(this.model.custId);
@@ -792,7 +817,9 @@ onCellClicked(event) {
 
   getEmpVehicleInfo(cardVehicleId = null, empId = null) {
     this.isDetailVehic = true;
-    this.apiService.getEmpVehicleInfo(stringify({cardVehicleId: cardVehicleId, empId: empId})).subscribe((results: any) => { 
+    this.apiService.getEmpVehicleInfo(stringify({cardVehicleId: cardVehicleId, empId: empId}))
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => { 
       if (results.status === 'success') {
         this.listViews = [...results.data.group_fields];
         this.detailInfo = results.data;
@@ -806,6 +833,7 @@ onCellClicked(event) {
       ...this.detailInfo, group_fields: data
     }
     this.apiService.setEmployeeVehicleInfo(params)
+    .pipe(takeUntil(this.unsubscribe$))
       .subscribe((results: any) => {
         if (results.status === 'success') {
           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
@@ -850,7 +878,9 @@ onCellClicked(event) {
     this.query.pageSize = 1000000;
     const query = { ...this.query };
     const queryParams = queryString.stringify(query);
-    this.apiService.getEmployeeVehiclePage(queryParams).subscribe((results: any) => {
+    this.apiService.getEmployeeVehiclePage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
       const dataExport = [];
       let gridflexs = results.data.gridflexs;
       let arrKey = gridflexs.map(elementName => elementName.columnField);
@@ -883,7 +913,9 @@ onCellClicked(event) {
   getUserByPush() {
     this.spinner.show();
     this.listUsers = []
-    this.apiService.getEmployeeSearch(queryString.stringify({ organizeId: this.modelTM.organizeId })).subscribe(results => {
+    this.apiService.getEmployeeSearch(queryString.stringify({ organizeId: this.modelTM.organizeId }))
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listUsers = results.data.map(d => {
           return {
@@ -904,7 +936,9 @@ onCellClicked(event) {
 
   //filter 
   getFilter() {
-    this.apiService.getFilter('/api/v2/cardvehicle/GetEmpCardFilter').subscribe(results => {
+    this.apiService.getFilter('/api/v2/cardvehicle/GetEmpCardFilter')
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
@@ -955,7 +989,9 @@ showFilter() {
           this.query = { ...this.query, ...event.data };
           this.load();
         } else if (event.type === 'CauHinh') {
-          this.apiService.getFilter('/api/v2/cardvehicle/GetEmpCardFilter').subscribe(results => {
+          this.apiService.getFilter('/api/v2/cardvehicle/GetEmpCardFilter')
+          .pipe(takeUntil(this.unsubscribe$))
+          .subscribe(results => {
             if (results.status === 'success') {
               const listViews = cloneDeep(results.data.group_fields);
               this.listViewsFilter = [...listViews];

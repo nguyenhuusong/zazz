@@ -29,7 +29,9 @@ styleClass="search-em-in {{ dataSearched?.length > 0 ? 'search-em-result' : '' }
             <div class="col-9 pd-0">
                 <!-- <p-button styleClass="p-button-sm " icon=" pi pi-search" (click)="getStaffsAtStore()"></p-button> -->
                 <span class="pi pi-search" (click)="searchEmp()"></span>
-                <span class="number-res" *ngIf="dataSearched && dataSearched.length > 0 && isSearching">{{ dataSearched.length }} kết quả</span>
+                <span class="number-res" *ngIf="isSearching">
+                    {{ dataSearched && dataSearched.length > 0 ? dataSearched.length : 0 }} kết quả
+                </span>
                 <div class="uni-load " [ngClass]="isLoading ? 'loading' : ''"></div>
                 <div class="field-group text mb-0">
                     <input type="text" class="form-control" 

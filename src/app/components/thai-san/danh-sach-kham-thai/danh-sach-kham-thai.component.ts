@@ -6,7 +6,7 @@ import * as queryString from 'querystring';
 import { cloneDeep } from 'lodash';
 import * as moment from 'moment';
 import { AgGridFn } from 'src/app/common/function-common/common';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-danh-sach-kham-thai',
@@ -14,6 +14,11 @@ import { fromEvent } from 'rxjs';
   styleUrls: ['./danh-sach-kham-thai.component.scss']
 })
 export class DanhSachKhamThaiComponent implements OnInit {
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
   @Input() maternityId = null;
   optionsButtonsPopup = [
     { label: 'Bỏ qua', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
@@ -65,7 +70,9 @@ export class DanhSachKhamThaiComponent implements OnInit {
   getMaternityPregnancInfo() {
     const queryParams = queryString.stringify({ maternityId: this.maternityId, pregnancyId: this.pregnancyId});
     this.listViewsDetail = [];
-    this.apiService.getMaternityPregnancInfo(queryParams).subscribe(results => {
+    this.apiService.getMaternityPregnancInfo(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listViewsDetail = cloneDeep(results.data.group_fields);
         this.dataDetailInfo = results.data;
@@ -78,7 +85,9 @@ export class DanhSachKhamThaiComponent implements OnInit {
     const param = {
       ...this.dataDetailInfo, group_fields: data
     }
-    this.apiService.setMaternityPregnancyInfo(param).subscribe(results => {
+    this.apiService.setMaternityPregnancyInfo(param)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thêm mới thành công' });
         this.displayFormEditDetail = false;
@@ -97,7 +106,9 @@ export class DanhSachKhamThaiComponent implements OnInit {
     this.spinner.show();
     this.columnDefs = [];
     const queryParams = queryString.stringify({ maternityId: this.maternityId, offSet: 0, pageSize: 10000 });
-    this.apiService.getMaternityPregnancPage(queryParams).subscribe(repo => {
+    this.apiService.getMaternityPregnancPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(repo => {
       if (repo.status === 'success') {
         if (repo.data.dataList.gridKey) {
           this.gridKey = repo.data.dataList.gridKey;
@@ -175,7 +186,9 @@ export class DanhSachKhamThaiComponent implements OnInit {
       message: 'Bạn có chắc chắn muốn xóa?',
       accept: () => {
         const queryParams = queryString.stringify({pregnancyId: event.rowData.pregnancyId});
-        this.apiService.delMaternityPregnancyInfo(queryParams).subscribe((results: any) => {
+        this.apiService.delMaternityPregnancyInfo(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
             this.getMaternityPregnancPage();

@@ -7,6 +7,7 @@ import { cloneDeep } from 'lodash';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-create-contract-info',
   templateUrl: './create-contract-info.component.html',
@@ -41,6 +42,13 @@ export class CreateContractInfoComponent implements OnInit {
   url = '';
   itemsMenu = [];
   paramsObject = null;
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   ngOnInit(): void {
     this.titlePage = this.activatedRoute.data['_value'].title;
     this.url = this.activatedRoute.data['_value'].url;
@@ -64,7 +72,9 @@ export class CreateContractInfoComponent implements OnInit {
   }
 
   handleParams(): void {
-    this.activatedRoute.queryParamMap.subscribe((params) => {
+    this.activatedRoute.queryParamMap
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.modelContractInfo = this.paramsObject.params;
       this.getContractInfo();
@@ -85,7 +95,9 @@ export class CreateContractInfoComponent implements OnInit {
         delete params.detailInfo
     }
     const queryParams = queryString.stringify(params);
-    this.apiService.getContractInfo(queryParams).subscribe(results => {
+    this.apiService.getContractInfo(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.restData(results);
         this.activeIndex = results.data.flow_st;
@@ -278,7 +290,9 @@ export class CreateContractInfoComponent implements OnInit {
 
   handleUpload(datas) {
     if (datas.length > 0) {
-      this.apiService.setContractUpload({ metaId: this.metafile.metaId, meta_upload_url: datas[0].url }).subscribe(
+      this.apiService.setContractUpload({ metaId: this.metafile.metaId, meta_upload_url: datas[0].url })
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
         results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Upload hợp đồng ký thành công' });
@@ -296,7 +310,9 @@ export class CreateContractInfoComponent implements OnInit {
     if (datas.length > 0) {
       this.spinner.show();
       const queryParams = queryString.stringify({contractId: this.detailInfo.contractId });
-      this.apiService.setContractSignedUpload(queryParams, {link_contract: datas[0].url }).subscribe(
+      this.apiService.setContractSignedUpload(queryParams, {link_contract: datas[0].url })
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
         results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Upload hợp đồng thành công' });
@@ -313,44 +329,14 @@ export class CreateContractInfoComponent implements OnInit {
     }
   }
 
-
-  // SaveUploadContract(event) {
-  //   this.spinner.show();
-  //   if (event.currentFiles[0] && event.currentFiles[0].size > 0) {
-  //     const getDAte = new Date();
-  //     const getTime = getDAte.getTime();
-  //     const storageRef = firebase.storage().ref();
-  //     const uploadTask = storageRef.child(`sipt/file-contract/${getTime}-${event.currentFiles[0].name})`).put(event.currentFiles[0]);
-  //     uploadTask.on('state_changed', (snapshot) => {
-  //     }, (error) => {
-  //       this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: error.message });
-  //       this.spinner.hide();
-  //     }, () => {
-  //       uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-  //         if (downloadURL) {
-  //           const indexobj = this.listsData.findIndex(d => d.tpl_type === this.metafile.tpl_type);
-  //           let metafile = { ... this.listsData[indexobj] };
-  //           metafile.meta_file_url = downloadURL;
-  //           metafile.meta_file_type = event.currentFiles[0].type;
-  //           metafile.meta_file_size = event.currentFiles[0].size;
-  //           metafile.meta_file_name = event.currentFiles[0].name;
-  //           this.listsData[indexobj] = metafile;
-  //           this.listsData = [... this.listsData];
-  //           this.detailInfo.metafiles = this.listsData
-  //           this.displayuploadcontract = false;
-  //           this.spinner.hide();
-  //         }
-  //       });
-  //     });
-  //   }
-  // }
-
   setContractInfo(data) {
     const params = {
       ...this.detailInfo, group_fields: data
     }
     this.spinner.show();
-    this.apiService.setContractInfo(params).subscribe(results => {
+    this.apiService.setContractInfo(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Tạo hợp đồng thành công' });
         this.callback.emit();
@@ -375,7 +361,9 @@ export class CreateContractInfoComponent implements OnInit {
       ...this.detailInfo, group_fields: data
     }
     this.spinner.show();
-    this.apiService.setContractDraft(params).subscribe(results => {
+    this.apiService.setContractDraft(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Tạm tính thành công' });
         // this.callback.emit();
@@ -519,7 +507,9 @@ export class CreateContractInfoComponent implements OnInit {
           accept: () => {
             this.spinner.show();
             const queryParams = queryString.stringify({contractId: this.detailInfo.contractId, isSigned: true});
-            this.apiService.setContractSigned(queryParams).subscribe((results: any) => {
+            this.apiService.setContractSigned(queryParams)
+            .pipe(takeUntil(this.unsubscribe$))
+            .subscribe((results: any) => {
               if (results.status === 'success') {
                 this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xác nhận ký thành công !' });
                 this.getContractInfo();
@@ -542,7 +532,9 @@ export class CreateContractInfoComponent implements OnInit {
           accept: () => {
             this.spinner.show();
             const queryParams = queryString.stringify({contractId: this.detailInfo.contractId, isCompleted: true});
-            this.apiService.setContractComplete(queryParams).subscribe((results: any) => {
+            this.apiService.setContractComplete(queryParams)
+            .pipe(takeUntil(this.unsubscribe$))
+            .subscribe((results: any) => {
               if (results.status === 'success') {
                 this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xác nhận hoàn thành !' });
                 this.getContractInfo();

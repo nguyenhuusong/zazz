@@ -15,8 +15,8 @@ import * as FileSaver from 'file-saver';
 const MAX_SIZE = 100000000;
 import { cloneDeep } from 'lodash';
 import { DialogService } from 'primeng/dynamicdialog';
-import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-phep-nam',
   templateUrl: './phep-nam.component.html',
@@ -98,6 +98,12 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
     }
   }
 
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   cancel() {
     this.query = {
       filter: '',
@@ -118,7 +124,9 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
     this.spinner.show();
     const params: any = { ...this.query };
     const queryParams = queryString.stringify(params);
-    this.apiService.getAnnualLeavePage(queryParams).subscribe(
+    this.apiService.getAnnualLeavePage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         this.gridKey= results.data.dataList.gridKey;
@@ -169,7 +177,9 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
       year: this.query.year,
       month: this.query.month,
     }
-    this.apiService.getLeaveRequestMonthInfo(queryString.stringify(query)).subscribe(
+    this.apiService.getLeaveRequestMonthInfo(queryString.stringify(query))
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         if(results.status === "success"){
           this.spinner.hide();
@@ -223,13 +233,7 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
       { label: 'Chính sách' },
       { label: 'Phép năm' },
     ];
-    // this.getOrgRoots();
-    // let currentDay = new Date().getDate();
-    // if(currentDay >= 25 && currentDay <= 31){
-    //   this.query.month = this.query.month + 1;
-    // }
-
-    // this.getMonthYear();
+  
     this.getFilter();
   }
 
@@ -241,7 +245,9 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
   orgRoots = [];
   getOrgRoots() {
     const queryParams = queryString.stringify({ filter: '' });
-    this.apiService.getOrganizations(queryParams).subscribe(results => {
+    this.apiService.getOrganizations(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.orgRoots = results.data.map(d => {
           return {
@@ -257,7 +263,9 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
 
   getCompany() {
     const query = { organizeIds: this.query.organizeIds}
-    this.apiService.getUserCompanies(queryString.stringify(query)).subscribe(
+    this.apiService.getUserCompanies(queryString.stringify(query))
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         if(results.status === "success"){
           this.companies = results.data
@@ -281,7 +289,9 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
     this.query.pageSize = 1000000;
     const query = { ...this.query };
     const queryParams = queryString.stringify(query);
-      this.apiService.exportAnnualleave(queryParams).subscribe(results => {
+      this.apiService.exportAnnualleave(queryParams)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(results => {
         if (results.type === 'application/json') {
           this.spinner.hide();
         } else {
@@ -336,7 +346,9 @@ detailInfoFilter = null;
   ];
   //filter 
   getFilter() {
-    this.apiService.getFilter('/api/v2/annualleave/GetAnnualLeaveFilter').subscribe(results => {
+    this.apiService.getFilter('/api/v2/annualleave/GetAnnualLeaveFilter')
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);

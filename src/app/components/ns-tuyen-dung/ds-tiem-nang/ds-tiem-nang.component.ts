@@ -13,10 +13,8 @@ import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 const MAX_SIZE = 100000000;
 import { cloneDeep } from 'lodash';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
-import { fromEvent } from 'rxjs';
 import { DialogService } from 'primeng/dynamicdialog';
-import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
-
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-ds-tiem-nang',
   templateUrl: './ds-tiem-nang.component.html',
@@ -58,6 +56,13 @@ export class DsTiemNangComponent implements OnInit {
   pagingComponent = {
     total: 0
   }
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   public agGridFn = AgGridFn;
   cols: any[];
   colsDetail: any[];
@@ -141,7 +146,9 @@ export class DsTiemNangComponent implements OnInit {
     this.columnDefs = []
     this.spinner.show();
     const queryParams = queryString.stringify(this.query);
-    this.apiService.getCandidatePotentialPage(queryParams).subscribe(
+    this.apiService.getCandidatePotentialPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         this.gridKey= results.data.dataList.gridKey;
@@ -203,7 +210,9 @@ export class DsTiemNangComponent implements OnInit {
       message: 'Bạn có chắc chắn muốn xóa tuyển dụng?',
       accept: () => {
         const queryParams = queryString.stringify({ canId: event.rowData.canId });
-        this.apiService.delCandidateInfo(queryParams).subscribe(results => {
+        this.apiService.delCandidateInfo(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa tuyển dụng thành công' });
             this.load();
@@ -247,7 +256,9 @@ export class DsTiemNangComponent implements OnInit {
 
   rowSelected(event) {
     this.dataRowSelected = event;
-    this.recruitmentStatusSelected = this.dataRowSelected.map( d => d.can_st).toString();
+    this.recruitmentStatusSelected = this.dataRowSelected.map( d => d.can_st)
+    .pipe(takeUntil(this.unsubscribe$))
+    .toString();
     this.canSttValue = this.dataRowSelected.sort((a,b)=>a.can_st-b.can_st)[this.dataRowSelected.length - 1];
     // check role for set tiem nang
   }
@@ -256,7 +267,9 @@ export class DsTiemNangComponent implements OnInit {
     this.positions = [];
     let items = this.listOrgRoots.filter(d => d.value === this.query.organizeId)
     const queryParams = queryString.stringify({ orgId: items[0].code });
-    this.apiService.getOrgPositions(queryParams).subscribe(results => {
+    this.apiService.getOrgPositions(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.positions = results.data.map(d => {
           return { label: d.positionName, value: d.positionCd }
@@ -295,7 +308,9 @@ export class DsTiemNangComponent implements OnInit {
   }
 
   getOrgRoots() {
-    this.apiService.getOrgRoots().subscribe(results => {
+    this.apiService.getOrgRoots()
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listOrgRoots = results.data.map(d => {
           return {
@@ -315,7 +330,9 @@ export class DsTiemNangComponent implements OnInit {
   listJobTitles = [];
   positions = [{ label: 'Tất cả', value: null }];
   getJobTitles() {
-    this.apiService.getJobTitles().subscribe(results => {
+    this.apiService.getJobTitles()
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listJobTitles = results.data.map(d => {
           return {
@@ -330,7 +347,9 @@ export class DsTiemNangComponent implements OnInit {
 
   getReRound() {
     this.recruitmentStatus = []
-    this.apiService.getRecruitRoundTitles(queryString.stringify({ organizeIds: this.organizeIdSelected })).subscribe(results => {
+    this.apiService.getRecruitRoundTitles(queryString.stringify({ organizeIds: this.organizeIdSelected }))
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.recruitmentStatus = results.data.map(d => {
           return {
@@ -347,7 +366,9 @@ export class DsTiemNangComponent implements OnInit {
       // jobId: this.query.jobId,
       active_st: 1
     });
-    this.apiService.getVacancyPage(queryParams).subscribe(results => {
+    this.apiService.getVacancyPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listVacancy = results.data.dataList.data.map(d => {
           return {
@@ -363,14 +384,20 @@ export class DsTiemNangComponent implements OnInit {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn chuyển vòng?',
       accept: () => {
-        let dataUpdateStatus = this.dataRowSelected.map( d => d.canId).toString();
-        let vacancyId = this.dataRowSelected.map( d => d.vacancyId).toString();
+        let dataUpdateStatus = this.dataRowSelected.map( d => d.canId)
+        .pipe(takeUntil(this.unsubscribe$))
+        .toString();
+        let vacancyId = this.dataRowSelected.map( d => d.vacancyId)
+        .pipe(takeUntil(this.unsubscribe$))
+        .toString();
         const query = {
           canId: dataUpdateStatus,
           can_st: this.recruitmentStatusSelected,
           vacancyId: vacancyId
         }
-        this.apiService.recruiUpdateStatus(queryString.stringify(query)).subscribe((results: any) => {
+        this.apiService.recruiUpdateStatus(queryString.stringify(query))
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Chuyển thành công!' });
             this.dataRowSelected = [];
@@ -394,7 +421,9 @@ export class DsTiemNangComponent implements OnInit {
   ];
   //filter 
   getFilter() {
-    this.apiService.getFilter('/api/v1/recruitment/GetCandidateFilter').subscribe(results => {
+    this.apiService.getFilter('/api/v1/recruitment/GetCandidateFilter')
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);

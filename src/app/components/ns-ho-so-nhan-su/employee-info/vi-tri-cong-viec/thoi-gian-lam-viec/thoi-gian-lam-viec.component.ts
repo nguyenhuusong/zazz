@@ -7,7 +7,7 @@ import { cloneDeep } from 'lodash';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { AgGridFn } from 'src/app/common/function-common/common';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-thoi-gian-lam-viec',
   templateUrl: './thoi-gian-lam-viec.component.html',
@@ -30,7 +30,13 @@ export class ThoiGianLamViecComponent implements OnInit, AfterViewInit {
     { label: 'Lưu tạm', value: 'SaveNhap', class: 'btn-accept', icon: 'pi pi-caret-right' },
     { label: 'Xác nhận', value: 'Submit', class: 'btn-accept', icon: 'pi pi-check' },
     { label: 'Đóng', value: 'Close', class: 'btn-accept', icon: 'pi pi-times' }
-  ]
+  ];
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
 
   ngAfterViewInit(): void {
     this.FnEvent();
@@ -59,7 +65,9 @@ export class ThoiGianLamViecComponent implements OnInit, AfterViewInit {
     this.spinner.show();
     this.columnDefs = [];
     const queryParams = queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 });
-    this.apiService.getEmpWorkingPageByEmpId(queryParams).subscribe(repo => {
+    this.apiService.getEmpWorkingPageByEmpId(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(repo => {
       if (repo.status === 'success') {
         if (repo.data.dataList.gridKey) {
           this.gridKey = repo.data.dataList.gridKey;
@@ -152,7 +160,9 @@ export class ThoiGianLamViecComponent implements OnInit, AfterViewInit {
     this.dataDetailInfo = null;
     this.listViewsDetail = [];
     const query = { empId: this.empId, id: this.workingId, flow_st: flow_st }
-    this.apiService.getEmpWorking(queryString.stringify(query)).subscribe(results => {
+    this.apiService.getEmpWorking(queryString.stringify(query))
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.spinner.hide();
         this.listViewsDetail = cloneDeep(results.data.group_fields || []);
@@ -237,7 +247,9 @@ cloneListViewsDetail = [];
 
   callApiInfo(params, type = 'Update') {
     this.spinner.show();
-    this.apiService.setEmpWorking(params).subscribe((results: any) => {
+    this.apiService.setEmpWorking(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
       if (results.status === 'success') {
         if(results.data) {
           this.listViewsDetail = cloneDeep(results.data.group_fields || []);
@@ -300,7 +312,9 @@ cloneListViewsDetail = [];
       message: 'Bạn có chắc chắn muốn xóa bản ghi này?',
       accept: () => {
         const queryParams = queryString.stringify({ id: event.rowData.id });
-        this.apiService.delEmpWorking(queryParams).subscribe((results: any) => {
+        this.apiService.delEmpWorking(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
             this.getEmpWorkingPageByEmpId();

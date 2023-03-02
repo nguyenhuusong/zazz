@@ -6,10 +6,9 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { ExportFileService } from 'src/app/services/export-file.service';
-import { cloneDeep } from 'lodash';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-tab-thanh-phan-luong',
   templateUrl: './tab-thanh-phan-luong.component.html',
@@ -77,6 +76,12 @@ export class TabThanhPhanLuongComponent implements OnInit {
     this.load();
   }
 
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
@@ -106,7 +111,9 @@ export class TabThanhPhanLuongComponent implements OnInit {
     this.columnDefs = [];
     this.spinner.show();
     const queryParams = queryString.stringify(this.query);
-    this.apiService.getComponentPage(queryParams).subscribe(
+    this.apiService.getComponentPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         this.gridKey= results.data.dataList.gridKey;
@@ -190,7 +197,9 @@ export class TabThanhPhanLuongComponent implements OnInit {
       message: 'Bạn có chắc chắn muốn xóa?',
       accept: () => {
         const query = queryString.stringify({Id: event.rowData.componentId})
-        this.apiService.delComponent(query).subscribe((results: any) => {
+        this.apiService.delComponent(query)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
             this.load();

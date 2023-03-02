@@ -3,10 +3,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as queryString from 'querystring';
-import { cloneDeep } from 'lodash';
-import * as moment from 'moment';
 import { AgGridFn } from 'src/app/common/function-common/common';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-hop-dong',
   templateUrl: './hop-dong.component.html',
@@ -19,6 +17,13 @@ export class HopDongComponent implements OnInit {
     { label: 'Xác nhận', value: 'Update', class: 'btn-accept' }
   ];
   is_full_submit = false;
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   @Output() cancelSave = new EventEmitter<any>();
   constructor(
     private apiService: ApiHrmService,
@@ -44,7 +49,6 @@ export class HopDongComponent implements OnInit {
     this.record = event.rowData;
   }
 
-  
   DeleteMeta(event) {
 
   }
@@ -62,7 +66,9 @@ export class HopDongComponent implements OnInit {
     this.spinner.show();
     this.columnDefs = [];
     const queryParams = queryString.stringify({ contractId: this.contractId, offSet: 0, pageSize: 10000 });
-    this.apiService.getContractMetaPage(queryParams).subscribe(repo => {
+    this.apiService.getContractMetaPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(repo => {
       if (repo.status === 'success') {
         if (repo.data.dataList.gridKey) {
           this.gridKey = repo.data.dataList.gridKey;
@@ -217,7 +223,9 @@ export class HopDongComponent implements OnInit {
   getContractRecord() {
     this.columnDefsRecord = [];
     const queryParams = queryString.stringify({ contractId: this.contractId});
-    this.apiService.getContractRecord(queryParams).subscribe(results => {
+    this.apiService.getContractRecord(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.spinner.hide();
         this.listsDataRecord = results.data.records || [];
@@ -238,7 +246,9 @@ export class HopDongComponent implements OnInit {
       records: this.listsDataRecord,
       is_full_submit: this.is_full_submit
     }
-    this.apiService.setContractRecord(params).subscribe(results => {
+    this.apiService.setContractRecord(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thêm mới thành công' });
         this.displayFormEditDetail = false;
@@ -273,25 +283,6 @@ export class HopDongComponent implements OnInit {
       this.initGrid('columnDefsRecord',this.dataDetailInfo.gridflexdetails1);
       this.displayuploadcontract = false;
     }
-  }
-
-
-  delRow(event) {
-    // this.confirmationService.confirm({
-    //   message: 'Bạn có chắc chắn muốn xóa thời gian làm việc này?',
-    //   accept: () => {
-    //     const queryParams = queryString.stringify({trainId: event.rowData.trainId});
-    //     this.apiService.delTrainFile(queryParams).subscribe((results: any) => {
-    //       if (results.status === 'success') {
-    //         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
-    //         this.getContractMetaPage();
-    //         this.FnEvent();
-    //       } else {
-    //         this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
-    //       }
-    //     });
-    //   }
-    // });
   }
 
   getFilesDetail(event) {

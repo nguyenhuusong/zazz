@@ -10,6 +10,7 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { AgGridFn } from 'src/app/common/function-common/common';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-store-notify',
   templateUrl: './store-notify.component.html',
@@ -171,11 +172,16 @@ export class StoreNotifyComponent implements OnInit, OnChanges {
     }
   }
 
-  
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
 
   getOrganizeTree(): void {
     const queryParams = queryString.stringify({ parentId: this.perent_id });
     this.apiService.getOrganizeTree(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
       .subscribe((results: any) => {
         if (results && results.status === 'success') {
           this.departmentFiltes = results.data || [];
@@ -224,7 +230,9 @@ export class StoreNotifyComponent implements OnInit, OnChanges {
       "filter": this.query.filter
     }
     this.spinner.show();
-    this.apiService.getUserByPush(params).subscribe(results => {
+    this.apiService.getUserByPush(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listsData = results.data.map(d => {
           return { ...d, active: false }
@@ -270,7 +278,9 @@ export class StoreNotifyComponent implements OnInit, OnChanges {
 
   storePushList(params) {
     this.spinner.show();
-    this.apiService.setNotifyCreatePush(params).subscribe((result: any) => {
+    this.apiService.setNotifyCreatePush(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((result: any) => {
       if (result.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: result.data ? result.data : 'Thành công' });
         this.spinner.hide();

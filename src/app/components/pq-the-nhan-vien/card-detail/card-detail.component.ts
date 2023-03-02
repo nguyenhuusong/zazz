@@ -3,7 +3,7 @@ import { concatMap, debounceTime, delay, distinctUntilChanged, map, switchMap } 
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import * as queryString from 'querystring';
-import { concat, of } from 'rxjs';
+import { concat, of, Subject, takeUntil } from 'rxjs';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 
 @Component({
@@ -26,6 +26,12 @@ export class CardDetailComponent implements OnInit {
   ngOnInit(): void {
     this.getOrganize();
     this.initForm();
+  }
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   initForm(): void {
@@ -78,6 +84,7 @@ export class CardDetailComponent implements OnInit {
         distinctUntilChanged(),
         switchMap(t => of(t))
       )
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe((res: any) => {
         this.results = res.data.map(item => ({
           name: item.fullName + '-' + item.phone || item.employeeName + '-' + item.phone, code: item.code,empId: item.empId, custId: item.custId, phone: item.phone, email: item.email , departmentName:item.departmentName 
@@ -118,6 +125,7 @@ export class CardDetailComponent implements OnInit {
         })
     } else {
       this.apiService.setCardVip(cardFormValue.cardCd, cardFormValue.employeeId, cardFormValue.cardName)
+      .pipe(takeUntil(this.unsubscribe$))
         .subscribe((response: any) => {
           if (response.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Thêm mới thẻ thành công' });
@@ -154,6 +162,7 @@ export class CardDetailComponent implements OnInit {
   organizes = [];
   getOrganize(): void {
     this.apiService.getOrgRoots()
+    .pipe(takeUntil(this.unsubscribe$))
     .subscribe(
       (results: any) => {
         this.organizes = results.data

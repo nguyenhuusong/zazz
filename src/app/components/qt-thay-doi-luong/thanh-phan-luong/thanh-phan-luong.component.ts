@@ -3,10 +3,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as queryString from 'querystring';
-import { cloneDeep } from 'lodash';
-import * as moment from 'moment';
 import { AgGridFn } from 'src/app/common/function-common/common';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-thanh-phan-luong',
   templateUrl: './thanh-phan-luong.component.html',
@@ -28,7 +26,13 @@ export class ThanhPhanLuongComponent implements OnInit {
   listsData = [];
   columnDefs = [];
   gridKey = '';
-  files = null
+  files = null;
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
  
   ngOnInit(): void {
     this.getSalaryComponentPageV1();
@@ -42,7 +46,9 @@ export class ThanhPhanLuongComponent implements OnInit {
     this.spinner.show();
     this.columnDefs = [];
     const queryParams = queryString.stringify({ salaryInfoId: this.salaryInfoId, offSet: 0, pageSize: 10000 });
-    this.apiService.getSalaryComponentPageV1(queryParams).subscribe(repo => {
+    this.apiService.getSalaryComponentPageV1(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(repo => {
       if (repo.status === 'success') {
         if (repo.data.dataList.gridKey) {
           this.gridKey = repo.data.dataList.gridKey;
@@ -108,37 +114,11 @@ export class ThanhPhanLuongComponent implements OnInit {
   }
 
   getTrainFile() {
-    // this.spinner.show();
-    // const queryParams = queryString.stringify({ trainId: this.trainId });
-    // this.listViewsDetail = [];
-    // this.apiService.getTrainFile(queryParams).subscribe(result => {
-    //   if (result.status === 'success') {
-    //     this.listViewsDetail = cloneDeep(result.data.group_fields);
-    //     this.dataDetailInfo = result.data;
-    //     this.displayFormEditDetail = true;
-    //     this.spinner.hide();
-    //   } else {
-    //     this.spinner.hide();
-    //   }
-    // })
+   
   }
 
   delRow(event) {
-    // this.confirmationService.confirm({
-    //   message: 'Bạn có chắc chắn muốn xóa thời gian làm việc này?',
-    //   accept: () => {
-    //     const queryParams = queryString.stringify({trainId: event.rowData.trainId});
-    //     this.apiService.delTrainFile(queryParams).subscribe((results: any) => {
-    //       if (results.status === 'success') {
-    //         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
-    //         this.getSalaryComponentPageV1();
-    //         this.FnEvent();
-    //       } else {
-    //         this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
-    //       }
-    //     });
-    //   }
-    // });
+  
   }
 
   getFilesDetail(event) {

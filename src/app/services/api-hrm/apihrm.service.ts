@@ -66,6 +66,16 @@ export class ApiHrmService {
   setWorktimeInfo(queryParams): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/worktime/SetWorktimeInfo`, queryParams, this.options)
   }
+
+  getWorktimeImportTemp(): Observable<any> {
+    return this.http.get(`${apiHrmServer}/api/v2/worktime/GetWorktimeImportTemp`, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
+  }
+
   //góp ý
   getFeedbackInfo(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/feedback/GetFeedbackInfo?` + queryParams, this.options)
@@ -1030,6 +1040,15 @@ export class ApiHrmService {
     })
   }
 
+  getLeaveReasonImportTemp(): Observable<any> {
+    return this.http.get(`${apiHrmServer}/api/v2/leavereason/GetLeaveReasonImportTemp`, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
+  }
+
   setLeaveReasonImport(params): Observable<any> {
     const customOptions = {
       headers: new HttpHeaders({
@@ -1255,9 +1274,34 @@ export class ApiHrmService {
   getWorkplaceInfo(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/workplace/GetWorkplaceInfo?` + queryParams, this.options)
   }
+
+  delProvinceInfo(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/workplace/DelProvinceInfo?` + queryParams, this.options)
+  }
+
+  getProvincePage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/workplace/GetProvincePage?` + queryParams, this.options)
+  }
+
+  getProvinceInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/workplace/GetProvinceInfo?` + queryParams, this.options)
+  }
   
+  setProvinceInfo(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/workplace/SetProvinceInfo`, queryParams, this.options)
+  }
+
   setWorkplaceInfo(queryParams): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/workplace/SetWorkplaceInfo`, queryParams, this.options)
+  }
+
+  getWorkplaceImportTemp(): Observable<any> {
+    return this.http.get(`${apiHrmServer}/api/v2/workplace/GetWorkplaceImportTemp`, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
   }
 
   getCompanyPage(queryParams): Observable<any> {
@@ -1332,6 +1376,15 @@ export class ApiHrmService {
     })
   }
 
+  getCompanyImportTemp(): Observable<any> {
+    return this.http.get(`${apiHrmServer}/api/v2/compay/GetCompanyImportTemp`, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
+  }
+  
   setComAuthorizeInfo(params): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/compay/SetComAuthorizeInfo`, params, this.options)
   }
@@ -1409,6 +1462,16 @@ export class ApiHrmService {
   delContractTypeInfo(queryParams): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v2/contracttype/DelContractTypeInfo?` + queryParams, this.options)
   }
+
+  getContractTypeImportTemp(): Observable<any> {
+    return this.http.get(`${apiHrmServer}/api/v2/contracttype/GetContractTypeImportTemp`, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
+  }
+
 
   // api cũ
   getCardCustomers<T>(filter): Observable<T> {
@@ -1936,6 +1999,15 @@ export class ApiHrmService {
     return this.http.delete<any>(`${apiHrmServer}/api/v1/timekeepingwifi/DelTimekeepingWifiInfo?${queryParams}`, this.options)
   }
 
+  getTimekeepingWifiImportTemp(): Observable<any> {
+    return this.http.get(`${apiHrmServer}/api/v1/timekeepingwifi/GetTimekeepingWifiImportTemp`, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
+  }
+
   // quá trình thay đổi lương
   getHrmPayrollRecordPage(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/payrollRecord/GetHrmPayrollRecordPage?` + queryParams, this.options)
@@ -2246,6 +2318,15 @@ export class ApiHrmService {
       responseType: "blob"
     });
   } 
+
+  getPayrollBaseImportTemp(): Observable<any> {
+    return this.http.get(`${apiHrmServer}/api/v1/payrollbase/GetPayrollBaseImportTemp`, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
+  }
 
   recruitAgain(query, data = null): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/employee/RecruitAgain?` + query, data , this.options)
@@ -2662,6 +2743,15 @@ export class ApiHrmService {
       responseType: "blob"
     });
   }
+  
+  getJobImportTemp(): Observable<any> {
+    return this.http.get(`${apiHrmServer}/api/v1/jobs/GetJobImportTemp/`, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
+  }
 
   // GetOrgLevelFilter
   getOrgLevelFilter(queryParams): Observable<any> {
@@ -2698,6 +2788,24 @@ export class ApiHrmService {
 
   getOrgPosition(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/position/GetPositionTitles?` + queryParams, this.options);
+  }
+
+  getPositionTitleImportTemp(): Observable<any> {
+    return this.http.get(`${apiHrmServer}/api/v2/position/GetPositionTitleImportTemp`, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
+  }
+
+  getPositionImportTemp(): Observable<any> {
+    return this.http.get(`${apiHrmServer}/api/v2/position/GetPositionImportTemp`, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
   }
 
   setOrgPosition(queryParams): Observable<any> {

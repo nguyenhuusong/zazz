@@ -4,6 +4,7 @@ import * as queryString from 'querystring';
 import { cloneDeep } from 'lodash';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-thong-tin-ca-nhan-edit-detail',
   templateUrl: './thong-tin-ca-nhan-edit-detail.component.html',
@@ -32,11 +33,20 @@ export class ThongTinCaNhanEditDetailComponent implements OnInit {
   activeIndex = 0;
   flowCurrent = 0;
   steps = [];
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   getDetail(flow_cur = null) {
     this.spinner.show();
     this.detailInfo = null;
     const query = { empId: this.empId, edit_is: true, flow_cur: flow_cur }
-    this.apiService.getEmpProfile(queryString.stringify(query)).subscribe(results => {
+    this.apiService.getEmpProfile(queryString.stringify(query))
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.spinner.hide();
         this.listViews = cloneDeep(results.data.group_fields || []);
@@ -136,7 +146,9 @@ export class ThongTinCaNhanEditDetailComponent implements OnInit {
 
   callApiInfo(params, type = 'Update') {
     this.spinner.show();
-    this.apiService.setEmpProfile(params).subscribe((results: any) => {
+    this.apiService.setEmpProfile(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
       if (results.status === 'success') {
         this.listViews = cloneDeep(results.data.group_fields || []);
         this.detailInfo = results.data;

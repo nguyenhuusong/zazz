@@ -73,7 +73,9 @@ export class ChiTietCongTyComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   handleParams() {
-    this.activatedRoute.queryParamMap.subscribe((params) => {
+    this.activatedRoute.queryParamMap
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.dataRouter = this.paramsObject.params;
       this.companyId = this.paramsObject.params.companyId;
@@ -87,7 +89,9 @@ export class ChiTietCongTyComponent implements OnInit, OnChanges, OnDestroy {
     this.listViews = [];
     this.listsData = [];
     const queryParams = queryString.stringify({ companyId: this.companyId });
-    this.apiService.getCompanyInfo(queryParams).subscribe(results => {
+    this.apiService.getCompanyInfo(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listViews = cloneDeep(results.data.group_fields);
         this.detailInfo = results.data;
@@ -171,7 +175,9 @@ export class ChiTietCongTyComponent implements OnInit, OnChanges, OnDestroy {
     const params = {
       ...this.detailInfo, group_fields: data
     };
-    this.apiService.setCompanyInfo(params).subscribe((results: any) => {
+    this.apiService.setCompanyInfo(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
       if (results.status === 'success') {
         this.displayUserInfo = false;
         this.goBack()
@@ -229,7 +235,9 @@ export class ChiTietCongTyComponent implements OnInit, OnChanges, OnDestroy {
     this.spinner.show();
     this.listViewsForm = [];
     const queryParams = queryString.stringify(this.modelComAuthorizeInfo);
-    this.apiService.getComAuthorizeInfo(queryParams).subscribe(results => {
+    this.apiService.getComAuthorizeInfo(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listViewsForm = cloneDeep(results.data.group_fields);
         this.detailComAuthorizeInfo = results.data;
@@ -251,7 +259,9 @@ export class ChiTietCongTyComponent implements OnInit, OnChanges, OnDestroy {
     const params = {
       ...this.detailComAuthorizeInfo, group_fields: data
     };
-    this.apiService.setComAuthorizeInfo(params).subscribe((results: any) => {
+    this.apiService.setComAuthorizeInfo(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
       if (results.status === 'success') {
         this.displayScreemForm = false;
         this.getCompanyInfo();

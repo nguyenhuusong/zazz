@@ -17,7 +17,7 @@ import { cloneDeep } from 'lodash';
 import { DialogService } from 'primeng/dynamicdialog';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
 import * as FileSaver from 'file-saver';
 @Component({
   selector: 'app-xu-ly-qua-trinh-cong-tac',
@@ -131,11 +131,19 @@ export class XuLyQuaTrinhCongTacComponent implements OnInit {
     this.displaySetting = true;
   }
 
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   load() {
     this.columnDefs = []
     this.spinner.show();
     const queryParams = queryString.stringify(this.query);
-    this.apiService.getEmpProcessPage(queryParams).subscribe(
+    this.apiService.getEmpProcessPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         this.gridKey = results.data.dataList.gridKey;
@@ -210,7 +218,9 @@ export class XuLyQuaTrinhCongTacComponent implements OnInit {
       message: 'Bạn có chắc chắn muốn xóa bản ghi này?',
       accept: () => {
         const queryParams = queryString.stringify({ processId: event.rowData.processId });
-        this.apiService.delEmpProcessInfo(queryParams).subscribe((results: any) => {
+        this.apiService.delEmpProcessInfo(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
             this.load();
@@ -295,7 +305,9 @@ export class XuLyQuaTrinhCongTacComponent implements OnInit {
   ];
   //filter 
   getFilter() {
-    this.apiService.getFilter('/api/v2/working/GetEmpProcessFilter').subscribe(results => {
+    this.apiService.getFilter('/api/v2/working/GetEmpProcessFilter')
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);

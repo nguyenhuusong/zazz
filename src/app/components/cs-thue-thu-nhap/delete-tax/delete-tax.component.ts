@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import * as moment from 'moment';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { ApiService } from 'src/app/services/api.service';
 import * as queryString from 'querystring';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-delete-tax',
@@ -21,6 +21,13 @@ export class DeleteTaxComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private messageService: MessageService
   ) { }
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   ngOnInit(): void {
   }
 
@@ -44,6 +51,7 @@ export class DeleteTaxComponent implements OnInit {
       message: 'Bạn có chắc chắn muốn xóa tất cả thuế thu nhập của công ty không?',
       accept: () => {
         this.apiService.deleteReportIncomeTaxs(queryString.stringify({datereport: date, companyId: this.companyId}))
+        .pipe(takeUntil(this.unsubscribe$))
         .subscribe(response => {
           if (response.status === 'success') {
             this.messageService.add({

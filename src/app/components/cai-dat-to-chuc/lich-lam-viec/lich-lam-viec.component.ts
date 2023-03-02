@@ -17,7 +17,7 @@ import { cloneDeep } from 'lodash';
 import { DialogService } from 'primeng/dynamicdialog';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
 import * as FileSaver from 'file-saver';
 @Component({
   selector: 'app-lich-lam-viec',
@@ -94,6 +94,13 @@ export class LichLamViecComponent implements OnInit {
   loading = false;
   paramsObject = null
   status = []
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
@@ -138,7 +145,9 @@ export class LichLamViecComponent implements OnInit {
     this.columnDefs = []
     this.spinner.show();
     const queryParams = queryString.stringify(this.query);
-    this.apiService.getWorktimePage(queryParams).subscribe(
+    this.apiService.getWorktimePage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         this.gridKey = results.data.dataList.gridKey
@@ -213,7 +222,9 @@ export class LichLamViecComponent implements OnInit {
       message: 'Bạn có chắc chắn muốn xóa lịch làm việc?',
       accept: () => {
         const queryParams = queryString.stringify({ work_cd: event.rowData.work_cd });
-        this.apiService.DelWorktimeInfo(queryParams).subscribe(results => {
+        this.apiService.DelWorktimeInfo(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa lịch làm việc thành công' });
             this.load();
@@ -228,7 +239,9 @@ export class LichLamViecComponent implements OnInit {
   getStatus() {
     this.status = []
     const opts1 = { params: new HttpParams({ fromString: `objKey=worktimes_flexible` }) };
-    this.apiService.getCustObjectListNew(true, opts1.params.toString()).subscribe(results => {
+    this.apiService.getCustObjectListNew(true, opts1.params.toString())
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       this.status = results.data.map(d => {
         return {
           label: d.objName,
@@ -320,7 +333,9 @@ export class LichLamViecComponent implements OnInit {
     this.query.pageSize = 1000000;
     const query = { ...this.query };
     const queryParams = queryString.stringify(query);
-    this.apiService.setWorktimeExport(queryParams).subscribe(
+    this.apiService.setWorktimeExport(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
 
         if (results.type === 'application/json') {
@@ -338,7 +353,9 @@ export class LichLamViecComponent implements OnInit {
 
   listOrgRoots = [];
   getOrgRoots() {
-    this.apiService.getOrgRoots().subscribe(results => {
+    this.apiService.getOrgRoots()
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listOrgRoots = results.data.map(d => {
           return {
@@ -354,7 +371,9 @@ export class LichLamViecComponent implements OnInit {
   listLevers = []
   getCustObjectListNew() {
     const opts1 = { params: new HttpParams({ fromString: `objKey=hrm_org_level` }) };
-    this.apiService.getCustObjectListNew(true, opts1.params.toString()).subscribe(results => {
+    this.apiService.getCustObjectListNew(true, opts1.params.toString())
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       this.listLevers = results.data.map(d => {
         return {
           label: d.objName,
@@ -375,7 +394,9 @@ export class LichLamViecComponent implements OnInit {
   ];
   //filter 
   getFilter() {
-    this.apiService.getFilter('/api/v2/worktime/GetWorktimeFilter').subscribe(results => {
+    this.apiService.getFilter('/api/v2/worktime/GetWorktimeFilter')
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
@@ -403,48 +424,6 @@ export class LichLamViecComponent implements OnInit {
     } else {
       this.listViewsFilter = cloneDeep(datas);
     }
-  }
-
-  showFilter() {
-    const ref = this.dialogService.open(FormFilterComponent, {
-      header: 'Tìm kiếm nâng cao',
-      width: '40%',
-      contentStyle: "",
-      data: {
-        listViews: this.listViewsFilter,
-        detailInfoFilter: this.detailInfoFilter,
-        buttons: this.optionsButonFilter
-      }
-    });
-
-    ref.onClose.subscribe((event: any) => {
-      if (event) {
-        this.listViewsFilter = cloneDeep(event.listViewsFilter);
-        if (event.type === 'Search') {
-          this.query = { ...this.query, ...event.data };
-          this.load();
-        } else if (event.type === 'CauHinh') {
-          this.apiService.getFilter('/api/v2/worktime/GetWorktimeFilter').subscribe(results => {
-            if (results.status === 'success') {
-              const listViews = cloneDeep(results.data.group_fields);
-              this.listViewsFilter = [...listViews];
-              const params = getParamString(listViews)
-              this.query = { ...this.query, ...params };
-              this.load();
-              this.detailInfoFilter = results.data;
-              this.showFilter()
-            }
-          });
-
-        } else if (event.type === 'Reset') {
-          const listViews = cloneDeep(this.cloneListViewsFilter);
-          this.listViewsFilter = cloneDeep(listViews);
-          const params = getParamString(listViews)
-          this.query = { ...this.query, ...params };
-          this.load();
-        }
-      }
-    });
   }
 
   ngAfterViewInit(): void {

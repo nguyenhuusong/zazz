@@ -122,7 +122,6 @@ export class ChiTietNghiPhepComponent implements OnInit, OnDestroy {
     }else {
       this.router.navigate(['/chinh-sach/nghi-phep']);
     }
-
   }
 
 }

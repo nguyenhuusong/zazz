@@ -11,6 +11,7 @@ import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common
 import { ApiCoreService } from 'src/app/services/api-core/apicore.service';
 import { getFieldValueAggrid } from 'src/app/utils/common/function-common';
 import * as FileSaver from 'file-saver';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-chi-tiet-ho-so-nhan-su',
   templateUrl: './chi-tiet-ho-so-nhan-su.component.html',
@@ -122,6 +123,13 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     private router: Router
   ) { }
   items = []
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   ngOnChanges(): void {
     // this.optionsButtonsView = [{ label: 'Sửa', value: 'Edit' }, { label: 'Đóng', value: 'Back' }];
     // this.titlePage = null;
@@ -161,7 +169,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
 
   getContractTypes() {
     const queryParams = queryString.stringify({ organizeId: this.detailInfo.organizeId });
-    this.apiService.getContractTypes(queryParams).subscribe(results => {
+    this.apiService.getContractTypes(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listContractTypes = results.data.map(d => {
           return {
@@ -175,7 +185,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
 
   getUsersByAdmin() {
     const queryParams = queryString.stringify({ admin_st: 1 });
-    this.apiService.getUsersByAdmin(queryParams).subscribe(results => {
+    this.apiService.getUsersByAdmin(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listUsersByAdmin = results.data.map(d => {
           return {
@@ -188,7 +200,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   }
 
   getTerminateReasons() {
-    this.apiService.getTerminateReasons().subscribe(results => {
+    this.apiService.getTerminateReasons()
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.terminateReasons = results.data;
       }
@@ -235,7 +249,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   }
 
   handleParams(): void {
-    this.activatedRoute.queryParamMap.subscribe((params) => {
+    this.activatedRoute.queryParamMap
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.dataRouter = this.paramsObject.params;
       this.empId = this.paramsObject.params.empId;
@@ -248,7 +264,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     this.listViews = [];
     const queryParams = queryString.stringify({ empId: this.empId });
     // this.detailMenu.code = this.selectedMenuCode
-    this.apiService.getEmployeeData(this.selectedMenuCode !== 'quanLyTaiKhoan' ? this.selectedMenuCode : 'GetEmployeeByReportTo', queryParams).subscribe(results => {
+    this.apiService.getEmployeeData(this.selectedMenuCode !== 'quanLyTaiKhoan' ? this.selectedMenuCode : 'GetEmployeeByReportTo', queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         if (results.data.flow_st === 0) {
           this.selectedMenuCode = this.menuItems[0].code;
@@ -278,7 +296,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     this.spinner.show();
     this.listViewsReportTo = [];
     const queryParams = queryString.stringify({ empId: this.empId });
-    this.apiService.getEmployeeData('GetEmployeeByReportTo', queryParams).subscribe(results => {
+    this.apiService.getEmployeeData('GetEmployeeByReportTo', queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listViewsReportTo = cloneDeep(results.data.group_fields || []);
         this.detailInfoReportTo = results.data;
@@ -400,7 +420,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     this.listsData = [[], [], [], []];
     const queryParams = queryString.stringify({ empId: this.empId });
     // this.detailMenu.code = this.selectedMenuCode
-    this.apiService.getEmployeeData(this.selectedMenuCode !== 'quanLyTaiKhoan' ? this.selectedMenuCode : 'GetEmployeeByReportTo', queryParams).subscribe(results => {
+    this.apiService.getEmployeeData(this.selectedMenuCode !== 'quanLyTaiKhoan' ? this.selectedMenuCode : 'GetEmployeeByReportTo', queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         if (!this.codeStaff) {
           this.codeStaff = getFieldValueAggrid(results.data, 'code');
@@ -922,7 +944,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   apiEmpTrainPage(param, link, index, title) {
     this.titleEmpTrain = link;
     this.spinner.show();
-    this.apiService.getEmpTrainPage(param, link).subscribe(repo => {
+    this.apiService.getEmpTrainPage(param, link)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(repo => {
         if(repo.status ==='success') {
           if (repo.data.dataList.gridKey) {
             this.gridKey[index] = repo.data.dataList.gridKey;
@@ -1032,7 +1056,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     this.spinner.show();
     this.apiEmpTrainInfo = 'GetEmpWorked';
     const queryParams = queryString.stringify({ empId: this.empId, id: this.idEmpTrain});
-    this.apiService.getEmpWorked(queryParams).subscribe(result => {
+    this.apiService.getEmpWorked(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(result => {
       if(result.status === 'success') {
         this.listViewsEmpTrain = result.data.group_fields;
         this.detailEmpTrainInfo = result.data;
@@ -1047,7 +1073,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     this.spinner.show();
     this.apiEmpTrainInfo = 'AddEducation';
     const queryParams = queryString.stringify({ empId: this.empId});
-    this.apiService.addEducation(queryParams).subscribe(result => {
+    this.apiService.addEducation(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(result => {
       if(result.status === 'success') {
         this.listViewsEmpTrain = result.data.group_fields;
         this.detailEmpTrainInfo = result.data;
@@ -1062,7 +1090,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     this.spinner.show();
     this.apiEmpTrainInfo = 'AddTraining';
     const queryParams = queryString.stringify({ empId: this.empId});
-    this.apiService.addTraining(queryParams).subscribe(result => {
+    this.apiService.addTraining(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(result => {
       if(result.status === 'success') {
         this.listViewsEmpTrain = result.data.group_fields;
         this.detailEmpTrainInfo = result.data;
@@ -1077,7 +1107,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     this.spinner.show();
     this.apiEmpTrainInfo = 'AddSkill';
     const queryParams = queryString.stringify({ empId: this.empId});
-    this.apiService.addSkill(queryParams).subscribe(result => {
+    this.apiService.addSkill(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(result => {
       if(result.status === 'success') {
         this.listViewsEmpTrain = result.data.group_fields;
         this.detailEmpTrainInfo = result.data;
@@ -1099,7 +1131,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     this.spinner.show();
     this.apiEmpTrainInfo = 'AddCertificate';
     const queryParams = queryString.stringify({ empId: this.empId});
-    this.apiService.addCertificate(queryParams).subscribe(result => {
+    this.apiService.addCertificate(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(result => {
       if(result.status === 'success') {
         this.listViewsEmpTrain = result.data.group_fields;
         this.detailEmpTrainInfo = result.data;
@@ -1113,7 +1147,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   GetTrainFile() {
     this.spinner.show();
     const queryParams = queryString.stringify({ trainId: this.idEmpTrain});
-    this.apiService.getTrainFile(queryParams).subscribe(result => {
+    this.apiService.getTrainFile(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(result => {
       if(result.status === 'success') {
         this.listViewsEmpTrain = result.data.group_fields;
         this.detailEmpTrainInfo = result.data;
@@ -1126,7 +1162,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
 
   DelEmpWorked(event) {
     const queryParams = queryString.stringify({ empId: this.empId});
-    this.apiService.delEmpWorked(queryParams).subscribe(result => {
+    this.apiService.delEmpWorked(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(result => {
       if(result.status === 'success') {
         this.apiEmpTrainPage(queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 }), 'GetEmpWorkedPage', 0, 'Quá trình làm việc')
       }
@@ -1137,7 +1175,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     this.spinner.show();
     this.columnDefs = [];
     const queryParams = queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 });
-    this.apiService.getContractPageByEmpId(queryParams).subscribe(repo => {
+    this.apiService.getContractPageByEmpId(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(repo => {
       if (repo.status === 'success') {
         if (repo.data.dataList.gridKey) {
           this.gridKey[0] = repo.data.dataList.gridKey;
@@ -1198,7 +1238,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     this.spinner.show();
     this.columnDefs = [];
     const queryParams = queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 });
-    this.apiService.getEmpDependentPage(queryParams).subscribe(repo => {
+    this.apiService.getEmpDependentPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(repo => {
       if (repo.status === 'success') {
         if (repo.data.dataList.gridKey) {
           this.gridKey[0] = repo.data.dataList.gridKey;
@@ -1247,7 +1289,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     this.spinner.show();
     this.columnDefs = [];
     const queryParams = queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 });
-    this.apiService.getSalaryInfoPageByEmpId(queryParams).subscribe(repo => {
+    this.apiService.getSalaryInfoPageByEmpId(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(repo => {
       if (repo.status === 'success') {
         this.columnDefs[1] = [...AgGridFn(repo.data.gridflexs || [])];
         this.listsData[1] = repo.data.dataList.data || [];
@@ -1333,7 +1377,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     }
 
     if(this.selectedMenuCode === 'GetEmpQualification') {
-      this.apiService.setEmpQualification(params).subscribe((results: any) => {
+      this.apiService.setEmpQualification(params)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((results: any) => {
         if (results.status === 'success') {
           this.displayUserInfo = false;
           if (this.url === 'them-moi-cong-ty') {
@@ -1351,7 +1397,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       }, error => {
       });
     }else {
-      this.apiService.setEmployeeInfo(params).subscribe((results: any) => {
+      this.apiService.setEmployeeInfo(params)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((results: any) => {
         if (results.status === 'success') {
           this.displayUserInfo = false;
           if (this.url === 'them-moi-cong-ty') {
@@ -1377,7 +1425,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn thực hiện hành động này không?',
       accept: () => {
-        this.apiService.lockUser(e.rowData.userId).subscribe(results => {
+        this.apiService.lockUser(e.rowData.userId)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(results => {
           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Khóa tài khoản thành công' });
           this.getEmployeeInfo();
         }, error => { });
@@ -1389,7 +1439,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn thực hiện hành động này không?',
       accept: () => {
-        this.apiService.unLockUser(e.rowData.userId).subscribe(results => {
+        this.apiService.unLockUser(e.rowData.userId)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(results => {
           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Mở khóa tài khoản thành công' });
           this.getEmployeeInfo();
         }, error => { });
@@ -1449,7 +1501,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   }
 
   setEmployeeCancel(parmas) {
-    this.apiService.setEmployeeCancel(parmas).subscribe((results: any) => {
+    this.apiService.setEmployeeCancel(parmas)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
       if (results.status === 'success') {
         this.displayDialog = false;
         this.manhinh = 'Edit';
@@ -1465,7 +1519,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   }
 
   setEmployeeOpen(parmas) {
-    this.apiService.setEmployeeOpenhrm(parmas).subscribe((results: any) => {
+    this.apiService.setEmployeeOpenhrm(parmas)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
       if (results.status === 'success') {
         this.displayDialog = false;
         this.manhinh = 'Edit';
@@ -1481,7 +1537,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   }
 
   setEmployeeApprove(parmas) {
-    this.apiService.setEmployeeApprovehrm(parmas).subscribe((results: any) => {
+    this.apiService.setEmployeeApprovehrm(parmas)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
       if (results.status === 'success') {
         this.displayDialog = false;
         this.manhinh = 'Edit';
@@ -1497,7 +1555,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   }
 
   setEmployeeChange(parmas) {
-    this.apiService.setEmployeeChange(parmas).subscribe((results: any) => {
+    this.apiService.setEmployeeChange(parmas)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
       if (results.status === 'success') {
         this.displayDialog = false;
         this.manhinh = 'Edit';
@@ -1514,7 +1574,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   }
 
   setEmployeeTermilate(parmas) {
-    this.apiService.setEmployeeTermilate(parmas).subscribe((results: any) => {
+    this.apiService.setEmployeeTermilate(parmas)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
       if (results.status === 'success') {
         this.displayDialog = false;
         this.manhinh = 'Edit';
@@ -1530,7 +1592,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   }
 
   setEmployeeRehired(parmas) {
-    this.apiService.setEmployeeRehired(parmas).subscribe((results: any) => {
+    this.apiService.setEmployeeRehired(parmas)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
       if (results.status === 'success') {
         this.displayDialog = false;
         this.manhinh = 'Edit';
@@ -1615,7 +1679,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   getEmployeeChangeInfo() {
     this.listViewsForm = []
     const queryParams = queryString.stringify({ empId: this.empId });
-    this.apiService.getEmployeeData(this.keyParamGetInfo === 'GetEmployeeChangeInfo' ? 'GetEmployeeChangeInfo' : this.selectedMenuCode, queryParams).subscribe(results => {
+    this.apiService.getEmployeeData(this.keyParamGetInfo === 'GetEmployeeChangeInfo' ? 'GetEmployeeChangeInfo' : this.selectedMenuCode, queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         // this.listViews = cloneDeep(results.data.group_fields || []);
         this.listViewsForm = cloneDeep(results.data.group_fields || []);
@@ -1641,7 +1707,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   getRecordInfo() {
     this.columnDefsRecord = []
     const queryParams = queryString.stringify({ empId: this.detailInfo.empId });
-    this.apiService.getRecordInfo(queryParams).subscribe(results => {
+    this.apiService.getRecordInfo(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listsDataRecord = results.data.records || [];
         this.listViewsRecordInfo = results.data;
@@ -1782,7 +1850,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
 
   exportResume() {
     this.spinner.show();
-    this.apiService.exportResume(queryString.stringify({ empId: this.detailInfo.empId })).subscribe(results => {
+    this.apiService.exportResume(queryString.stringify({ empId: this.detailInfo.empId }))
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.type === 'application/json') {
         this.spinner.hide();
       } else if (results.type === 'application/octet-stream') {
@@ -1838,6 +1908,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   duyetHoSo() {
     this.spinner.show();
     this.apiService.setContractStatus(this.modelDuyetHopDong)
+    .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {
         if (results.status === 'success') {
           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
@@ -1855,7 +1926,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     this.spinner.show();
     this.apiService.setContractCancel({
       contractId: this.modelDuyetHopDong.contractId
-    }).subscribe(results => {
+    })
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
         this.getEmployeeInfo();
@@ -1883,7 +1956,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       message: 'Bạn có chắc chắn muốn xóa thông tin tài khoản này không  ?',
       accept: () => {
         const queryParams = queryString.stringify({ loginName: loginName, cif_no: this.detailInfo.cif_no });
-        this.apiCoreService.deleteCustUser(queryParams).subscribe(results => {
+        this.apiCoreService.deleteCustUser(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
             this.getEmployeeInfo();
@@ -1899,7 +1974,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       message: 'Bạn có chắc chắn muốn thực hiện thao tác này ?',
       accept: () => {
         const queryParams = queryString.stringify({ loginName: event.rowData.loginName });
-        this.apiService.deleteUser(queryParams).subscribe(results => {
+        this.apiService.deleteUser(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công quyền người dùng' });
             this.getEmployeeInfo();
@@ -1935,7 +2012,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       message: 'Bạn có chắc chắn muốn xóa thông tin này ?',
       accept: () => {
         const queryParams = queryString.stringify({ gd: gd });
-        this.apiService.hrmDelEmpWorking(queryParams).subscribe(results => {
+        this.apiService.hrmDelEmpWorking(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
             this.getEmployeeInfo();
@@ -1956,7 +2035,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       loginName: this.keyName,
       cif_no: this.detailInfo.cif_no
     }
-    this.apiCoreService.setCustUser(params).subscribe(results => {
+    this.apiCoreService.setCustUser(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data });
         this.isShowAddUserLogin = false;
@@ -1973,7 +2054,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   getCustIndiIdentity(event) {
     const params = { custId: event.rowData.custId, idcard_no: event.rowData.idcard_no };
     const queryParams = queryString.stringify(params);
-    this.apiCoreService.getCustIndiIdentity(queryParams).subscribe(results => {
+    this.apiCoreService.getCustIndiIdentity(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.thongtinchitietthe = results.data;
         this.isShowCustIndiCreate = true;
@@ -1997,7 +2080,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       message: 'Bạn có chắc chắn muốn thực xóa hợp đồng?',
       accept: () => {
         const queryParams = queryString.stringify({ contractId: event.rowData.contractId });
-        this.apiService.delContractInfo(queryParams).subscribe((results: any) => {
+        this.apiService.delContractInfo(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa hợp đồng thành công' });
             this.getEmployeeInfo();
@@ -2014,7 +2099,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       message: 'Bạn có chắc chắn muốn thực xóa hợp đồng?',
       accept: () => {
         const queryParams = queryString.stringify({ metaId: event.rowData.metaId });
-        this.apiService.delEmpAttach(queryParams).subscribe((results: any) => {
+        this.apiService.delEmpAttach(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa file đính kèm thành công' });
             this.getEmployeeInfo();
@@ -2031,7 +2118,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       message: 'Bạn có chắc chắn muốn thực xóa người phụ thuộc này?',
       accept: () => {
         const queryParams = queryString.stringify({ dependentId: event.rowData.dependentId });
-        this.apiService.delEmpDependent(queryParams).subscribe((results: any) => {
+        this.apiService.delEmpDependent(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa người phụ thuộc thành công' });
             this.getEmployeeInfo();
@@ -2048,7 +2137,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       message: 'Bạn có chắc chắn muốn thực xóa người liên hệ này?',
       accept: () => {
         const queryParams = queryString.stringify({ cont_id: event.rowData.cont_id });
-        this.apiService.delEmpContact(queryParams).subscribe((results: any) => {
+        this.apiService.delEmpContact(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa người liên hệ thành công' });
             this.getEmployeeInfo();
@@ -2089,7 +2180,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   }
   saveCreateContract() {
     this.spinner.show();
-    this.apiService.setRecordInfo(this.listViewsRecordInfo).subscribe(results => {
+    this.apiService.setRecordInfo(this.listViewsRecordInfo)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data });
         this.displayCreateContract = false;
@@ -2182,7 +2275,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       ...datasCard,
       custId: this.detailInfo.custId
     }
-    this.apiCoreService.setCustIndiIdentityCreate(params).subscribe(results => {
+    this.apiCoreService.setCustIndiIdentityCreate(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
         this.thongtinchitietthe = results.data;
@@ -2270,7 +2365,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
 
   getEmpContact(query) {
     this.listViewsDependent = [];
-    this.apiService.getEmpContact(query).subscribe(results => {
+    this.apiService.getEmpContact(query)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listViewsDependent = cloneDeep(results.data.group_fields);
         this.detailDependentInfo = results.data;
@@ -2281,7 +2378,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
 
   getEmpDependent(query) {
     this.listViewsDependent = [];
-    this.apiService.getEmpDependent(query).subscribe(results => {
+    this.apiService.getEmpDependent(query)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listViewsDependent = cloneDeep(results.data.group_fields);
         this.detailDependentInfo = results.data;
@@ -2292,7 +2391,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
 
   getEmpWorking(query) {
     this.listViewsDependent = [];
-    this.apiService.getEmpWorking(query).subscribe(results => {
+    this.apiService.getEmpWorking(query)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listViewsDependent = cloneDeep(results.data.group_fields);
         this.detailDependentInfo = results.data;
@@ -2307,7 +2408,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
     }
     this.spinner.show();
     if (this.selectedMenuCode === API_PROFILE.THUE_BAO_HIEM) {
-      this.apiService.setEmpDependent(param).subscribe(results => {
+      this.apiService.setEmpDependent(param)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(results => {
         if (results.status === 'success') {
           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thêm mới thành công' });
           this.displayFormEditDetail = false;
@@ -2319,7 +2422,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
         }
       })
     } else if (this.selectedMenuCode === API_PROFILE.CONG_VIEC) {
-      this.apiService.setEmpWorking(param).subscribe(results => {
+      this.apiService.setEmpWorking(param)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(results => {
         if (results.status === 'success') {
           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thêm mới thành công' });
           this.displayFormEditDetail = false;
@@ -2331,7 +2436,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
         }
       })
     } else {
-      this.apiService.setEmpContact(param).subscribe(results => {
+      this.apiService.setEmpContact(param)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(results => {
         if (results.status === 'success') {
           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thêm mới thành công' });
           this.displayFormEditDetail = false;
@@ -2377,7 +2484,9 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
       const params = {
         ...this.detailInfo, group_fields: data
       }
-      this.apiService.setEmpWorked(params).subscribe((results: any) => {
+      this.apiService.setEmpWorked(params)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((results: any) => {
         if (results.status === 'success') {
           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Cập nhật thông tin thành công' });
           this.apiEmpTrainPage(queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 }), 'GetEmpWorkedPage', 0, 'Quá trình làm việc');

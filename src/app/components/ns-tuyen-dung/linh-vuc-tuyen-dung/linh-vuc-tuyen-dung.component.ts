@@ -13,7 +13,7 @@ import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { cloneDeep } from 'lodash';
 const MAX_SIZE = 100000000;
 import { getParamString } from 'src/app/common/function-common/objects.helper';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
 import { DialogService } from 'primeng/dynamicdialog';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import * as FileSaver from 'file-saver';
@@ -56,6 +56,12 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
   }
   pagingComponent = {
     total: 0
+  }
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   public agGridFn = AgGridFn;
@@ -155,7 +161,9 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
     this.columnDefs = []
     this.spinner.show();
     const queryParams = queryString.stringify(this.query);
-    this.apiService.getJobPage(queryParams).subscribe(
+    this.apiService.getJobPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         this.gridKey= results.data.dataList.gridKey;
@@ -235,7 +243,9 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
       message: 'Bạn có chắc chắn muốn thực hiện xóa Chuyên môn này !',
       accept: () => {
         const queryParams = queryString.stringify({ jobId: event.rowData.jobId });
-        this.apiService.delJobInfo(queryParams).subscribe(results => {
+        this.apiService.delJobInfo(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa Chuyên môn thành công' });
             this.load();
@@ -309,7 +319,9 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
     delete params.offSet;
     delete params.pageSize;
     // empId: this.detailInfo.empId
-    this.apiService.setJobExport(queryString.stringify({ ...params })).subscribe(results => {
+    this.apiService.setJobExport(queryString.stringify({ ...params }))
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.type === 'application/json') {
         this.spinner.hide();
       } else if (results.type === 'application/octet-stream') {
@@ -321,7 +333,9 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
   }
 
   getEmpFilter() {
-    this.apiService.getFilter('/api/v1/jobs/GetJobFilter').subscribe(results => {
+    this.apiService.getFilter('/api/v1/jobs/GetJobFilter')
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
@@ -371,7 +385,9 @@ showFilter() {
           this.query = { ...this.query, ...event.data };
           this.load();
         } else if (event.type === 'CauHinh') {
-          this.apiService.getFilter('/api/v1/recruitment/GetJobFilter').subscribe(results => {
+          this.apiService.getFilter('/api/v1/recruitment/GetJobFilter')
+          .pipe(takeUntil(this.unsubscribe$))
+          .subscribe(results => {
             if (results.status === 'success') {
               const listViews = cloneDeep(results.data.group_fields);
               this.listViewsFilter = [...listViews];

@@ -3,10 +3,10 @@ import * as queryString from 'querystring';
 import { ActivatedRoute, Router } from '@angular/router';
 import { cloneDeep } from 'lodash';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { ApiService } from 'src/app/services/api.service';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { CheckHideAction } from 'src/app/common/function-common/common';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-cap-nhat-trang-thai-nghi-viec',
@@ -41,8 +41,13 @@ export class CapNhatTrangThaiNghiViecComponent implements OnInit, OnChanges {
   @Input() terminateId = null
   @Output() back = new EventEmitter<any>();
 
-  ngOnChanges() {
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
+
+  ngOnChanges() {}
   items = [];
   ngOnInit(): void {
     this.getTerminateStatus()
@@ -53,7 +58,9 @@ export class CapNhatTrangThaiNghiViecComponent implements OnInit, OnChanges {
   getTerminateStatus() {
     this.listViews = [];
     const queryParams = queryString.stringify({terminateId: this.terminateId	});
-    this.apiService.getTerminateStatus(queryParams).subscribe(results => {
+    this.apiService.getTerminateStatus(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listViews = cloneDeep(results.data.group_fields);
         this.detailInfo = results.data;
@@ -69,7 +76,9 @@ export class CapNhatTrangThaiNghiViecComponent implements OnInit, OnChanges {
     const params = {
       ...this.detailInfo, group_fields: data
     };
-    this.apiService.setTerminateStatus(params).subscribe((results: any) => {
+    this.apiService.setTerminateStatus(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
       if (results.status === 'success') {
         this.displayUserInfo = false;
         this.goBack()

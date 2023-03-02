@@ -9,12 +9,10 @@ import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
-import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { cloneDeep } from 'lodash';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
 import { DialogService } from 'primeng/dynamicdialog';
-import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import * as FileSaver from 'file-saver';
 @Component({
   selector: 'app-chuc-danh',
@@ -88,6 +86,12 @@ export class ChucDanhComponent implements OnInit, AfterViewChecked {
   loading = false;
   paramsObject = null
 
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+  
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
@@ -132,7 +136,9 @@ export class ChucDanhComponent implements OnInit, AfterViewChecked {
     this.columnDefs = []
     this.spinner.show();
     const queryParams = queryString.stringify(this.query);
-    this.apiService.getPositionTitlePage(queryParams).subscribe(
+    this.apiService.getPositionTitlePage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         this.gridKey = results.data.dataList.gridKey
@@ -206,7 +212,9 @@ export class ChucDanhComponent implements OnInit, AfterViewChecked {
       message: 'Bạn có chắc chắn muốn thực hiện xóa chức danh?',
       accept: () => {
         const queryParams = queryString.stringify({ positionTitleId: event.rowData.positionTitleId });
-        this.apiService.delPositionTitleInfo(queryParams).subscribe(results => {
+        this.apiService.delPositionTitleInfo(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Xóa chức danh thành công' });
             this.load();
@@ -291,7 +299,9 @@ export class ChucDanhComponent implements OnInit, AfterViewChecked {
     this.query.pageSize = 1000000;
     const query = { ...this.query };
     const queryParams = queryString.stringify(query);
-    this.apiService.setPositionTitleExport(queryParams).subscribe(
+    this.apiService.setPositionTitleExport(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
 
         if (results.type === 'application/json') {
@@ -319,7 +329,9 @@ export class ChucDanhComponent implements OnInit, AfterViewChecked {
   getFilter() {
     // value === 1 ? '' : ''
     this.load();
-    this.apiService.getFilter('/api/v2/position/GetPositionTitleFilter').subscribe(results => {
+    this.apiService.getFilter('/api/v2/position/GetPositionTitleFilter')
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);

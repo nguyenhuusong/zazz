@@ -4,7 +4,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as queryString from 'querystring';
 import { AgGridFn } from 'src/app/common/function-common/common';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
 import { cloneDeep } from 'lodash';
 @Component({
   selector: 'app-chuyen-mon-orgid',
@@ -30,6 +30,12 @@ export class ChuyenMonComponent implements OnInit {
 
   ngAfterViewInit(): void {
     this.FnEvent();
+  }
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   FnEvent() {
@@ -61,7 +67,9 @@ export class ChuyenMonComponent implements OnInit {
   listJobs = [];
   selectedJobs = [];
   getJobTitles() {
-    this.apiService.getJobTitles().subscribe(results => {
+    this.apiService.getJobTitles()
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
           this.listJobs = results.data;
           if(this.listsData.length === 0) {
@@ -88,7 +96,9 @@ export class ChuyenMonComponent implements OnInit {
     this.spinner.show();
     this.columnDefs = [];
     const queryParams = queryString.stringify({ orgId: this.orgId, offSet: 0, pageSize: 10000 });
-    this.apiService.getOrgJobPage(queryParams).subscribe(repo => {
+    this.apiService.getOrgJobPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(repo => {
       if (repo.status === 'success') {
         if (repo.data.dataList.gridKey) {
           this.gridKey = repo.data.dataList.gridKey;
@@ -161,7 +171,9 @@ export class ChuyenMonComponent implements OnInit {
           jobIds: this.listTargets.map(d => d.value)
         }
         this.spinner.show();
-        this.apiService.setOrgJob(params).subscribe(results => {
+        this.apiService.setOrgJob(params)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(results => {
           if(results.status === 'success') {
               this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : results.message });
               this.getOrgJobPage();

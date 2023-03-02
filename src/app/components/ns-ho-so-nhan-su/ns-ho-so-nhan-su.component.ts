@@ -2,10 +2,9 @@ import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import * as queryString from 'querystring';
 import { ConfirmationService, MessageService, TreeNode } from 'primeng/api';
-import { ApiService } from 'src/app/services/api.service';
 import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { AgGridFn, CheckHideAction, getActionByPathMenu } from 'src/app/common/function-common/common';
+import { AgGridFn, getActionByPathMenu } from 'src/app/common/function-common/common';
 import { CustomTooltipComponent } from 'src/app/common/ag-component/customtooltip.component';
 import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
 import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.component';
@@ -16,9 +15,9 @@ import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { getParamString, searchTree } from 'src/app/common/function-common/objects.helper';
-import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { DialogService } from 'primeng/dynamicdialog';
 import * as FileSaver from 'file-saver';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-ns-ho-so-nhan-su',
   templateUrl: './ns-ho-so-nhan-su.component.html',
@@ -168,6 +167,13 @@ export class NsHoSoNhanSuComponent implements OnInit {
   onmouseenter(event) {
     console.log(event)
   }
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   cancel() {
     this.query = {
       filter: '',
@@ -232,7 +238,9 @@ export class NsHoSoNhanSuComponent implements OnInit {
     this.spinner.show();
     const params: any = { ...this.query };
     const queryParams = queryString.stringify(params);
-    this.apiService.getEmployeePage(queryParams).subscribe(
+    this.apiService.getEmployeePage(queryParams)
+     .pipe(takeUntil(this.unsubscribe$))
+     .subscribe(
       (results: any) => {
         this.isShow = true;
         this.listsData = results.data.dataList.data;
@@ -425,7 +433,9 @@ export class NsHoSoNhanSuComponent implements OnInit {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa nhân viên?',
       accept: () => {
-        this.apiService.deleteEmployee(event.rowData.empId).subscribe((results: any) => {
+        this.apiService.deleteEmployee(event.rowData.empId)
+         .pipe(takeUntil(this.unsubscribe$))
+         .subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Xóa nhân viên thành công' });
             this.load();
@@ -461,7 +471,9 @@ export class NsHoSoNhanSuComponent implements OnInit {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn khóa  hồ sơ nhân viên ?',
       accept: () => {
-        this.apiService.lockEmployeeV2({empId :event.rowData.empId}).subscribe((results: any) => {
+        this.apiService.lockEmployeeV2({empId :event.rowData.empId})
+         .pipe(takeUntil(this.unsubscribe$))
+         .subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Xóa nhân viên thành công' });
             this.load();
@@ -477,7 +489,9 @@ export class NsHoSoNhanSuComponent implements OnInit {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn mở khóa hồ sơ nhân viên ?',
       accept: () => {
-        this.apiService.unLockEmployeeV2({empId :event.rowData.empId}).subscribe((results: any) => {
+        this.apiService.unLockEmployeeV2({empId :event.rowData.empId})
+         .pipe(takeUntil(this.unsubscribe$))
+         .subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Xóa nhân viên thành công' });
             this.load();
@@ -513,7 +527,9 @@ export class NsHoSoNhanSuComponent implements OnInit {
   }
 
   unLockEmployee(params) {
-    this.apiService.setEmployeeOpenhrm(params).subscribe(results => {
+    this.apiService.setEmployeeOpenhrm(params)
+     .pipe(takeUntil(this.unsubscribe$))
+     .subscribe(results => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Xác nhận làm việc thành công' });
         this.load();
@@ -524,7 +540,9 @@ export class NsHoSoNhanSuComponent implements OnInit {
   }
 
   setEmployeeClose(params) {
-    this.apiService.setEmployeeClose(params).subscribe(results => {
+    this.apiService.setEmployeeClose(params)
+     .pipe(takeUntil(this.unsubscribe$))
+     .subscribe(results => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Xác nhận nghỉ việc thành công' });
         this.load();
@@ -561,7 +579,9 @@ export class NsHoSoNhanSuComponent implements OnInit {
   }
 
   setAccountStatus(params) {
-    this.apiService.setEmployeeApprovehrm(params).subscribe(results => {
+    this.apiService.setEmployeeApprovehrm(params)
+     .pipe(takeUntil(this.unsubscribe$))
+     .subscribe(results => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: params.status ? 'Phê duyệt thành công' : 'Hủy phê duyệt thành công' });
         this.load();
@@ -617,7 +637,9 @@ export class NsHoSoNhanSuComponent implements OnInit {
   employeeStatus = []
   getEmployeeStatus() {
     // let empId = this
-    this.apiService.getEmployeeStatus().subscribe(results => {
+    this.apiService.getEmployeeStatus()
+     .pipe(takeUntil(this.unsubscribe$))
+     .subscribe(results => {
       if (results.status === 'success') {
         this.employeeStatus = []
         if (results.data) {
@@ -671,7 +693,9 @@ export class NsHoSoNhanSuComponent implements OnInit {
     this.query.pageSize = 1000000;
     const query = { ...this.query };
     const queryParams = queryString.stringify(query);
-    this.apiService.setEmployeeExport(queryParams).subscribe(
+    this.apiService.setEmployeeExport(queryParams)
+     .pipe(takeUntil(this.unsubscribe$))
+     .subscribe(
       (results: any) => {
 
         if (results.type === 'application/json') {
@@ -774,7 +798,9 @@ export class NsHoSoNhanSuComponent implements OnInit {
 
   getOrgan() {
     const queryParams = queryString.stringify({ filter: '' });
-    this.apiService.getOrganizations(queryParams).subscribe(results => {
+    this.apiService.getOrganizations(queryParams)
+     .pipe(takeUntil(this.unsubscribe$))
+     .subscribe(results => {
       if (results.status === 'success') {
         this.organs = results.data.map(d => {
           return {
@@ -850,7 +876,9 @@ export class NsHoSoNhanSuComponent implements OnInit {
           code: o.code
         }
       })
-      this.apiService.setListEmployeeChange(this.queryStaffToMove).subscribe(results => {
+      this.apiService.setListEmployeeChange(this.queryStaffToMove)
+       .pipe(takeUntil(this.unsubscribe$))
+       .subscribe(results => {
         if (results.status === 'success') {
           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Cập nhật thành công' });
           this.load();
@@ -873,7 +901,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
 
   getCompany() {
     // const query = { organizeIds: this.query.organizeIds}
-    // this.apiService.getUserCompanies(queryString.stringify(query)).subscribe(
+    // this.apiService.getUserCompanies(queryString.stringify(query))
     //   (results: any) => {
     //     if(results.status === "success"){
     //       this.companies = results.data
@@ -934,7 +962,9 @@ export class NsHoSoNhanSuComponent implements OnInit {
   ];
 
   getEmpFilter() {
-    this.apiService.getEmpFilter().subscribe(results => {
+    this.apiService.getEmpFilter()
+     .pipe(takeUntil(this.unsubscribe$))
+     .subscribe(results => {
       if (results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
@@ -964,52 +994,6 @@ export class NsHoSoNhanSuComponent implements OnInit {
     }
   }
 
-
-
-showFilter() {
-    // const ref = this.dialogService.open(FormFilterComponent, {
-    //   header: 'Tìm kiếm nâng cao',
-    //   width: '40%',
-    //   contentStyle: "",
-    //   data: {
-    //     listViews: this.listViewsFilter,
-    //     detailInfoFilter: this.detailInfoFilter,
-    //     buttons: this.optionsButonFilter
-    //   }
-    // });
-
-    // ref.onClose.subscribe((event: any) => {
-    //   if (event) {
-    //     this.listViewsFilter = cloneDeep(event.listViewsFilter);
-    //     if (event.type === 'Search') {
-    //       this.query = { ...this.query, ...event.data };
-    //       console.log('this.query', this.query)
-    //       this.load();
-    //     } else if (event.type === 'CauHinh') {
-    //       this.apiService.getEmpFilter().subscribe(results => {
-    //         if (results.status === 'success') {
-    //           const listViews = cloneDeep(results.data.group_fields);
-    //           this.cloneListViewsFilter = cloneDeep(listViews);
-    //           this.listViewsFilter = [...listViews];
-    //           const params = getParamString(listViews)
-    //           this.query = { ...this.query, ...params };
-    //           this.load();
-    //           this.detailInfoFilter = results.data;
-    //           this.showFilter()
-    //         }
-    //       });
-
-    //     } else if (event.type === 'Reset') {
-    //       const listViews = cloneDeep(this.cloneListViewsFilter);
-    //       this.listViewsFilter = cloneDeep(listViews);
-    //      const params =  getParamString(listViews)
-    //     this.query = { ...this.query, ...params};
-    //     this.load();
-    //     }
-    //   }
-    // });
-  }
-
   displayApproveContract = false;
   modelBlockAndOpen = {
     empId: null,
@@ -1022,7 +1006,9 @@ showFilter() {
     let params = {...this.modelBlockAndOpen};
     delete params.type
     if(this.modelBlockAndOpen.type === 'open') {
-      this.apiService.setEmployeeOpenV2(params).subscribe((results: any) => {
+      this.apiService.setEmployeeOpenV2(params)
+       .pipe(takeUntil(this.unsubscribe$))
+       .subscribe((results: any) => {
         if (results.status === 'success') {
           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Mở chặn thành công' });
           this.load();
@@ -1032,7 +1018,9 @@ showFilter() {
         }
       });
     }else {
-      this.apiService.setEmployeeBlockV2(params).subscribe((results: any) => {
+      this.apiService.setEmployeeBlockV2(params)
+       .pipe(takeUntil(this.unsubscribe$))
+       .subscribe((results: any) => {
         if (results.status === 'success') {
           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Chặn thành công' });
           this.load();

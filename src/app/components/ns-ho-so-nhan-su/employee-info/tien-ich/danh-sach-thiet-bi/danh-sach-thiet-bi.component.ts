@@ -5,9 +5,8 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as queryString from 'querystring';
 import { cloneDeep } from 'lodash';
-import * as moment from 'moment';
 import { AgGridFn } from 'src/app/common/function-common/common';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-danh-sach-thiet-bi',
   templateUrl: './danh-sach-thiet-bi.component.html',
@@ -32,6 +31,12 @@ export class DanhSachThietBiComponent implements OnInit {
 
   ngAfterViewInit(): void {
     this.FnEvent();
+  }
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   FnEvent() {
@@ -65,7 +70,9 @@ export class DanhSachThietBiComponent implements OnInit {
   getEmpWorking() {
     const queryParams = queryString.stringify({ empId: this.empId, id: this.message });
     this.listViewsDetail = [];
-    this.apiService.getEmpWorking(queryParams).subscribe(results => {
+    this.apiService.getEmpWorking(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listViewsDetail = cloneDeep(results.data.group_fields);
         this.dataDetailInfo = results.data;
@@ -78,7 +85,9 @@ export class DanhSachThietBiComponent implements OnInit {
     const param = {
       ...this.dataDetailInfo, group_fields: data
     }
-    this.apiService.setEmpWorking(param).subscribe(results => {
+    this.apiService.setEmpWorking(param)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thêm mới thành công' });
         this.displayFormEditDetail = false;
@@ -97,7 +106,9 @@ export class DanhSachThietBiComponent implements OnInit {
     this.spinner.show();
     this.columnDefs = [];
     const queryParams = queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 });
-    this.apiService.getEmpDeviceByEmp(queryParams).subscribe(repo => {
+    this.apiService.getEmpDeviceByEmp(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(repo => {
       if (repo.status === 'success') {
         if (repo.data.dataList.gridKey) {
           this.gridKey = repo.data.dataList.gridKey;
@@ -183,7 +194,9 @@ export class DanhSachThietBiComponent implements OnInit {
       message: 'Bạn có chắc chắn muốn xóa?',
       accept: () => {
         const queryParams = queryString.stringify({device_id: event.rowData.device_id});
-        this.apiService.delEmpDevices(queryParams).subscribe((results: any) => {
+        this.apiService.delEmpDevices(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Xóa thành công' });
             this.getEmpDeviceByEmp();
@@ -200,7 +213,9 @@ export class DanhSachThietBiComponent implements OnInit {
     this.confirmationService.confirm({
       message: 'Bạn chắc chắn muốn phê duyệt bản ghi này?',
       accept: () => {
-        this.apiService.setEmpDeviceStatus({device_id: event.rowData.device_id, request_st: 1}).subscribe((results: any) => {
+        this.apiService.setEmpDeviceStatus({device_id: event.rowData.device_id, request_st: 1})
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Duyệt thành công' });
             this.getEmpDeviceByEmp();

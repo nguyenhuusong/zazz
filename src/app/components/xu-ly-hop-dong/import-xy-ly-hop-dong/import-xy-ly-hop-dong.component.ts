@@ -163,7 +163,9 @@ export class ImportXyLyHopDongComponent implements OnInit {
   }
 
   getTemfileImport() {
-    this.apiService.exportReportLocalhost('assets/tpl-import-file/HopDongLaoDong_Import.xlsx').subscribe((data: any) => {
+    this.apiService.exportReportLocalhost('assets/tpl-import-file/HopDongLaoDong_Import.xlsx')
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((data: any) => {
       this.createImageFromBlob(data)
     });
   }
@@ -184,7 +186,9 @@ export class ImportXyLyHopDongComponent implements OnInit {
       accept: true,
       imports: this.listsData
     }
-    this.apiService.setContractExportDraft(query).subscribe(
+    this.apiService.setContractExportDraft(query)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
 
         if (results.type === 'application/json') {

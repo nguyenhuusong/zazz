@@ -11,6 +11,7 @@ import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { cloneDeep } from 'lodash';
 import * as FileSaver from 'file-saver';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-eating-list',
   templateUrl: './eating-list.component.html',
@@ -78,7 +79,14 @@ export class EatingListComponent implements OnInit, AfterViewChecked {
   optionsButon = [
     { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
     { label: 'Lưu lại', value: 'Update',  icon: 'pi pi-check'  }
-  ]
+  ];
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+  
   ngOnInit() {
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
@@ -90,7 +98,9 @@ export class EatingListComponent implements OnInit, AfterViewChecked {
   }
 
   handleParams() {
-    this.activatedRoute.queryParamMap.subscribe((params) => {
+    this.activatedRoute.queryParamMap
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.query.empId = this.paramsObject.params.cusId;
       this.query.fromDate = this.paramsObject.params.fromDate;
@@ -122,13 +132,10 @@ export class EatingListComponent implements OnInit, AfterViewChecked {
     this.columnDefs = []
     this.spinner.show();
     let params: any = {... this.query};
-    // delete params.fromdate
-    // delete params.todate
-    // params.fromDate = moment(new Date(this.query.fromdate)).format('MM-DD-YYYY')
-    // params.toDate = moment(new Date(this.query.todate)).format('MM-DD-YYYY');
     const queryParams = queryString.stringify(params);
-
-    this.apiService.getEatingList(queryParams).subscribe(
+    this.apiService.getEatingList(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.listsData = results.data.result.dataList.data;
         this.gridKey= results.data.result.dataList.gridKey;
@@ -175,7 +182,9 @@ export class EatingListComponent implements OnInit, AfterViewChecked {
       message: 'Bạn có chắc chắn muốn xóa?',
       accept: () => {
         const queryParams = queryString.stringify({ EatingId: event.rowData.id });
-        this.apiService.delEatingInfo(queryParams).subscribe(results => {
+        this.apiService.delEatingInfo(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
             this.load();
@@ -251,7 +260,9 @@ export class EatingListComponent implements OnInit, AfterViewChecked {
     this.listViews = []
     this.isDetail = true;
     const params = { cusId: null }
-    this.apiService.getEatingForCreateInfo(queryString.stringify(params)).subscribe( results => {
+    this.apiService.getEatingForCreateInfo(queryString.stringify(params))
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe( results => {
       if (results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.listViews = [...listViews];
@@ -264,7 +275,9 @@ export class EatingListComponent implements OnInit, AfterViewChecked {
     const params = {
       ...this.detailInfo, group_fields: data
     };
-    this.apiService.setEatingInfo(params).subscribe((results: any) => {
+    this.apiService.setEatingInfo(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
       if (results.status === 'success') {
         this.isDetail = false;
         this.load();
@@ -286,8 +299,9 @@ export class EatingListComponent implements OnInit, AfterViewChecked {
     params.FromDate = moment(new Date(this.query.fromDate)).format('YYYY-MM-DD')
     params.ToDate = moment(new Date(this.query.toDate)).format('YYYY-MM-DD');
     const queryParams = queryString.stringify(params);
-
-      this.apiService.exportEatingInfo(queryParams).subscribe(results => {
+      this.apiService.exportEatingInfo(queryParams)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(results => {
         if (results.type === 'application/json') {
           this.spinner.hide();
         } else {

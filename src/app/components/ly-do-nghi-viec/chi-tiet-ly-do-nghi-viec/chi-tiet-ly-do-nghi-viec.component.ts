@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { cloneDeep } from 'lodash';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { Subject } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { CheckHideAction } from 'src/app/common/function-common/common';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
@@ -28,8 +28,6 @@ export class ChiTietLyDoNghiViecComponent implements OnInit, OnDestroy {
     private apiService: ApiHrmService,
     private activatedRoute: ActivatedRoute,
     private messageService: MessageService,
-    private confirmationService: ConfirmationService,
-    private spinner: NgxSpinnerService,
     private router: Router
   ) { }
   displayScreemForm = false;
@@ -71,7 +69,9 @@ export class ChiTietLyDoNghiViecComponent implements OnInit, OnDestroy {
   }
 
   handleParams() {
-    this.activatedRoute.queryParamMap.subscribe((params) => {
+    this.activatedRoute.queryParamMap
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.dataRouter = this.paramsObject.params;
       this.reason_code = this.paramsObject.params.reason_code;
@@ -83,7 +83,9 @@ export class ChiTietLyDoNghiViecComponent implements OnInit, OnDestroy {
     this.listViews = [];
     this.listsData = [];
     const queryParams = queryString.stringify(this.paramsObject.params);
-    this.apiService.getLeaveReason(queryParams).subscribe(results => {
+    this.apiService.getLeaveReason(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listViews = cloneDeep(results.data.group_fields);
         this.detailInfo = results.data;
@@ -99,7 +101,9 @@ export class ChiTietLyDoNghiViecComponent implements OnInit, OnDestroy {
     const params = {
       ...this.detailInfo, group_fields: data
     };
-    this.apiService.setLeaveReason(params).subscribe((results: any) => {
+    this.apiService.setLeaveReason(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
       if (results.status === 'success') {
         this.displayUserInfo = false;
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Cập nhật thông tin thành công' });

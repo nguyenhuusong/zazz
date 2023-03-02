@@ -5,9 +5,8 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as queryString from 'querystring';
 import { cloneDeep } from 'lodash';
-import * as moment from 'moment';
 import { AgGridFn } from 'src/app/common/function-common/common';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-giay-to-tuy-than',
   templateUrl: './giay-to-tuy-than.component.html',
@@ -29,6 +28,12 @@ export class GiayToTuyThanComponent implements OnInit {
   listsData = [];
   columnDefs = [];
   gridKey = ''
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
 
   ngAfterViewInit(): void {
     this.FnEvent();
@@ -65,7 +70,9 @@ export class GiayToTuyThanComponent implements OnInit {
   getEmpWorking() {
     const queryParams = queryString.stringify({ empId: this.empId, id: this.workingId });
     this.listViewsDetail = [];
-    this.apiService.getEmpWorking(queryParams).subscribe(results => {
+    this.apiService.getEmpWorking(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listViewsDetail = cloneDeep(results.data.group_fields);
         this.dataDetailInfo = results.data;
@@ -78,7 +85,9 @@ export class GiayToTuyThanComponent implements OnInit {
     const param = {
       ...this.dataDetailInfo, group_fields: data
     }
-    this.apiService.setEmpWorking(param).subscribe(results => {
+    this.apiService.setEmpWorking(param)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thêm mới thành công' });
         this.displayFormEditDetail = false;
@@ -97,7 +106,9 @@ export class GiayToTuyThanComponent implements OnInit {
     this.spinner.show();
     this.columnDefs = [];
     const queryParams = queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 });
-    this.apiService.getEmpIdcardPage(queryParams).subscribe(repo => {
+    this.apiService.getEmpIdcardPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(repo => {
       if (repo.status === 'success') {
         if (repo.data.dataList.gridKey) {
           this.gridKey = repo.data.dataList.gridKey;
@@ -175,7 +186,9 @@ export class GiayToTuyThanComponent implements OnInit {
       message: 'Bạn có chắc chắn muốn xóa?',
       accept: () => {
         const queryParams = queryString.stringify({id: event.rowData.id});
-        this.apiService.delEmpWorking(queryParams).subscribe((results: any) => {
+        this.apiService.delEmpWorking(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
             this.getEmpIdcardPage();

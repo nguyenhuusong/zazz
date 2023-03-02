@@ -70,7 +70,6 @@ export class PageNotifyComponent implements OnInit, OnDestroy {
   colsDetail;
   objectActionDetail
   dataNotifi
-  destroy$: Subject<boolean> = new Subject<boolean>();
   columnDefs = [];
   detailRowHeight;
   defaultColDef;
@@ -176,7 +175,9 @@ detailInfoFilter = null;
 
   notifyTempList = [];
   getNotifyTempList() {
-    this.apiService.getNotifyTempList().subscribe(results => {
+    this.apiService.getNotifyTempList()
+     .pipe(takeUntil(this.unsubscribe$))
+     .subscribe(results => {
       if (results.status === 'success') {
         this.notifyTempList = results.data.map(res => {
           return {
@@ -186,6 +187,12 @@ detailInfoFilter = null;
         });
       }
     });
+  }
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   paginate(event) {
@@ -207,7 +214,9 @@ detailInfoFilter = null;
     this.columnDefs = []
     this.spinner.show();
     const queryParams = queryString.stringify(this.query);
-    this.apiService.getAppNotifyPage(queryParams).subscribe(
+    this.apiService.getAppNotifyPage(queryParams)
+     .pipe(takeUntil(this.unsubscribe$))
+     .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         this.gridKey= results.data.dataList.gridKey;
@@ -306,7 +315,9 @@ detailInfoFilter = null;
       message: 'Bạn có chắc chắn muốn thực hiện hành động này?',
       accept: () => {
         this.spinner.show();
-        this.apiService.setNotifyStatus({ n_id: e.rowData.n_id, status: !e.rowData.isPublish }).subscribe(results => {
+        this.apiService.setNotifyStatus({ n_id: e.rowData.n_id, status: !e.rowData.isPublish })
+         .pipe(takeUntil(this.unsubscribe$))
+         .subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data });
             this.spinner.hide();
@@ -326,7 +337,9 @@ detailInfoFilter = null;
       accept: () => {
         this.spinner.show();
         const queryParams = queryString.stringify({ n_id: e.rowData.n_id });
-        this.apiService.delNotifyInfo(queryParams).subscribe(results => {
+        this.apiService.delNotifyInfo(queryParams)
+         .pipe(takeUntil(this.unsubscribe$))
+         .subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
             this.spinner.hide();
@@ -365,12 +378,6 @@ detailInfoFilter = null;
 
   createNotify() {
 
-  }
-
-
-  ngOnDestroy() {
-    this.destroy$.next(true);
-    this.destroy$.unsubscribe();
   }
 
   handleFilter() {
@@ -424,7 +431,9 @@ detailInfoFilter = null;
 
   //filter 
   getFilter() {
-    this.apiService.getFilter('/api/v1/notify/GetNotifyFilter').subscribe(results => {
+    this.apiService.getFilter('/api/v1/notify/GetNotifyFilter')
+     .pipe(takeUntil(this.unsubscribe$))
+     .subscribe(results => {
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
@@ -474,7 +483,9 @@ showFilter() {
           this.query = { ...this.query, ...event.data };
           this.load();
         } else if (event.type === 'CauHinh') {
-          this.apiService.getFilter('/api/v1/notify/GetNotifyFilter').subscribe(results => {
+          this.apiService.getFilter('/api/v1/notify/GetNotifyFilter')
+           .pipe(takeUntil(this.unsubscribe$))
+           .subscribe(results => {
             if (results.status === 'success') {
               const listViews = cloneDeep(results.data.group_fields);
               this.listViewsFilter = [...listViews];

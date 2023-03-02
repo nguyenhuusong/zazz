@@ -4,9 +4,8 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as queryString from 'querystring';
 import { cloneDeep } from 'lodash';
-import * as moment from 'moment';
 import { AgGridFn } from 'src/app/common/function-common/common';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-danh-sach-xe',
@@ -33,6 +32,12 @@ export class DanhSachXeComponent implements OnInit {
 
   ngAfterViewInit(): void {
     this.FnEvent();
+  }
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   FnEvent() {
@@ -66,7 +71,9 @@ export class DanhSachXeComponent implements OnInit {
   getEmpVehicleInfo() {
     const queryParams = queryString.stringify({ empId: this.empId, cardVehicleId: this.cardVehicleId });
     this.listViewsDetail = [];
-    this.apiService.getEmpVehicleInfo(queryParams).subscribe(results => {
+    this.apiService.getEmpVehicleInfo(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listViewsDetail = cloneDeep(results.data.group_fields);
         this.dataDetailInfo = results.data;
@@ -79,7 +86,9 @@ export class DanhSachXeComponent implements OnInit {
     const param = {
       ...this.dataDetailInfo, group_fields: data
     }
-    this.apiService.setEmployeeVehicleInfo(param).subscribe(results => {
+    this.apiService.setEmployeeVehicleInfo(param)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thêm mới thành công' });
         this.displayFormEditDetail = false;
@@ -98,7 +107,9 @@ export class DanhSachXeComponent implements OnInit {
     this.spinner.show();
     this.columnDefs = [];
     const queryParams = queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000, status: -1 });
-    this.apiService.getEmpVehiclePageByEmp(queryParams).subscribe(repo => {
+    this.apiService.getEmpVehiclePageByEmp(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(repo => {
       if (repo.status === 'success') {
         if (repo.data.dataList.gridKey) {
           this.gridKey = repo.data.dataList.gridKey;
@@ -204,8 +215,9 @@ export class DanhSachXeComponent implements OnInit {
     if (this.show) {
       dataSave.endTime = this.datetostring(this.modelApprove.endTime);
     }
-    this.apiService.setVehicleApprove(dataSave).
-      subscribe((response: any) => {
+    this.apiService.setVehicleApprove(dataSave)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((response: any) => {
         if (response.status === 'success') {
           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Phê duyệt vé xe thành công' });
           this.displayVehicleApprove = false;
@@ -224,6 +236,7 @@ export class DanhSachXeComponent implements OnInit {
       message: 'Bạn có chắc chắn muốn thực hiện Khóa dịch vụ gửi xe này?',
       accept: () => {
         this.apiService.lockCardVehicle(event.rowData.cardVehicleId)
+          .pipe(takeUntil(this.unsubscribe$))
           .subscribe((results : any) => {
             if(results.status === 'success') {
               this.getEmpVehiclePageByEmp();
@@ -252,6 +265,7 @@ export class DanhSachXeComponent implements OnInit {
       message: 'Bạn có chắc chắn muốn thực hiện Mở khóa dịch vụ gửi xe này?',
       accept: () => {
         this.apiService.unlockCardVehicle(event.rowData.cardVehicleId)
+          .pipe(takeUntil(this.unsubscribe$))
           .subscribe((results: any) => {
             if(results.status === 'success') {
               this.getEmpVehiclePageByEmp();
@@ -271,6 +285,7 @@ export class DanhSachXeComponent implements OnInit {
       message: 'Bạn có chắc chắn muốn thực hiện xóa dịch vụ gửi xe này?',
       accept: () => {
         this.apiService.setVehicleRemove({ cardVehicleId: event.rowData.cardVehicleId })
+          .pipe(takeUntil(this.unsubscribe$))
           .subscribe(response => {
             if (response.status === 'success') {
               this.getEmpVehiclePageByEmp();

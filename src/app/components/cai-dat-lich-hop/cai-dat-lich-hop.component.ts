@@ -1,7 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
 import * as queryString from 'querystring';
-import { ApiService } from 'src/app/services/api.service';
 import { Router } from '@angular/router';
 import { ConfirmationService, MessageService, TreeNode } from 'primeng/api';
 import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
@@ -9,14 +8,12 @@ import { CustomTooltipComponent } from 'src/app/common/ag-component/customtoolti
 import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import * as moment from 'moment';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { cloneDeep } from 'lodash';
 import { DialogService } from 'primeng/dynamicdialog';
-import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-cai-dat-lich-hop',
   templateUrl: './cai-dat-lich-hop.component.html',
@@ -108,6 +105,13 @@ export class CaiDatLichHopComponent implements OnInit {
     };
     this.initFilter();
   }
+  
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   items = [];
   ngOnInit(): void {
     this.items = [
@@ -160,7 +164,9 @@ export class CaiDatLichHopComponent implements OnInit {
     this.spinner.show();
     let params: any = { ... this.model };
     const queryParams = queryString.stringify(params);
-    this.apiService.getMeetingPage(queryParams).subscribe(
+    this.apiService.getMeetingPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         this.gridKey= results.data.dataList.gridKey;
@@ -269,7 +275,9 @@ export class CaiDatLichHopComponent implements OnInit {
 
   floors = []
   getFloor() {
-    this.apiService.getFloorNo().subscribe(results => {
+    this.apiService.getFloorNo()
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.floors = (results.data).map(d => {
           return { 
@@ -300,6 +308,7 @@ export class CaiDatLichHopComponent implements OnInit {
       message: 'Bạn có chắc chắn muốn hủy lịch họp không?',
       accept: () => {
         this.apiService.delMeetingInfo(queryString.stringify(this.queryDeleteLichHop))
+        .pipe(takeUntil(this.unsubscribe$))
           .subscribe(response => {
             if (response.status === 'success') {
               this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: `Hủy lịch họp thành công` });
@@ -319,7 +328,9 @@ export class CaiDatLichHopComponent implements OnInit {
 
   getOrgan() {
     const queryParams = queryString.stringify({ filter: '' });
-    this.apiService.getOrganizations(queryParams).subscribe(results => {
+    this.apiService.getOrganizations(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.organs = results.data.map(d => {
           return {
@@ -468,7 +479,9 @@ detailInfoFilter = null;
   ];
   //filter 
   getFilter() {
-    this.apiService.getFilter('/api/v2/meeting/GetMeetingFilter').subscribe(results => {
+    this.apiService.getFilter('/api/v2/meeting/GetMeetingFilter')
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
@@ -497,48 +510,6 @@ detailInfoFilter = null;
     }else {
       this.listViewsFilter =  cloneDeep(datas);
     }
-  }
-
-showFilter() {
-    const ref = this.dialogService.open(FormFilterComponent, {
-      header: 'Tìm kiếm nâng cao',
-      width: '40%',
-      contentStyle: "",
-      data: {
-        listViews: this.listViewsFilter,
-        detailInfoFilter: this.detailInfoFilter,
-        buttons: this.optionsButonFilter
-      }
-    });
-
-    ref.onClose.subscribe((event: any) => {
-      if (event) {
-        this.listViewsFilter = cloneDeep(event.listViewsFilter);
-        if (event.type === 'Search') {
-          this.model = { ...this.model, ...event.data };
-          this.load();
-        } else if (event.type === 'CauHinh') {
-          this.apiService.getFilter('/api/v2/meeting/GetLeaveFilter').subscribe(results => {
-            if (results.status === 'success') {
-              const listViews = cloneDeep(results.data.group_fields);
-              this.listViewsFilter = [...listViews];
-              const params =  getParamString(listViews)
-              this.model = { ...this.model, ...params};
-              this.load();
-              this.detailInfoFilter = results.data;
-              this.showFilter()
-            }
-          });
-
-        } else if (event.type === 'Reset') {
-          const listViews = cloneDeep(this.cloneListViewsFilter);
-          this.listViewsFilter = cloneDeep(listViews);
-         const params =  getParamString(listViews)
-        this.model = { ...this.model, ...params};
-        this.load();
-        }
-      }
-    });
   }
 
   ngAfterViewInit(): void {

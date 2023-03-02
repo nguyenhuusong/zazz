@@ -13,7 +13,7 @@ import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
 import { cloneDeep } from 'lodash';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
 import { DialogService } from 'primeng/dynamicdialog';
@@ -55,6 +55,12 @@ export class ThietLapWifiComponent implements OnInit, AfterViewChecked {
   }
   pagingComponent = {
     total: 0
+  }
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   public modules: Module[] = AllModules;
@@ -134,7 +140,9 @@ export class ThietLapWifiComponent implements OnInit, AfterViewChecked {
     this.columnDefs = []
     this.spinner.show();
     const queryParams = queryString.stringify(this.query);
-    this.apiService.getTimekeepingWifiPage(queryParams).subscribe(
+    this.apiService.getTimekeepingWifiPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         this.gridKey= results.data.dataList.gridKey
@@ -208,7 +216,9 @@ export class ThietLapWifiComponent implements OnInit, AfterViewChecked {
       message: 'Bạn có chắc chắn muốn xóa thiết lập wifi?',
       accept: () => {
         const queryParams = queryString.stringify({ id: event.rowData.id });
-        this.apiService.delTimekeepingWifiInfo(queryParams).subscribe(results => {
+        this.apiService.delTimekeepingWifiInfo(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
             this.load();
@@ -294,7 +304,9 @@ export class ThietLapWifiComponent implements OnInit, AfterViewChecked {
     delete params.offSet;
     delete params.pageSize;
     // empId: this.detailInfo.empId
-    this.apiService.setTimekeepingWifiExport(queryString.stringify({ ...params })).subscribe(results => {
+    this.apiService.setTimekeepingWifiExport(queryString.stringify({ ...params }))
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.type === 'application/json') {
         this.spinner.hide();
       } else if (results.type === 'application/octet-stream') {
@@ -334,7 +346,9 @@ export class ThietLapWifiComponent implements OnInit, AfterViewChecked {
   ];
 
   getEmpFilter() {
-    this.apiService.getFilter('/api/v1/timekeepingwifi/GetTimekeepingWifiFilter').subscribe(results => {
+    this.apiService.getFilter('/api/v1/timekeepingwifi/GetTimekeepingWifiFilter')
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);

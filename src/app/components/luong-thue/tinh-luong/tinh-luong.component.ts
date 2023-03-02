@@ -111,7 +111,9 @@ export class TinhLuongComponent implements OnInit {
   ExportExcel() {
     this.spinner.show();
     let params = {...this.query};
-    this.apiService.setPayrollBaseExport(queryString.stringify({ ...params })).subscribe(results => {
+    this.apiService.setPayrollBaseExport(queryString.stringify({ ...params }))
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.type === 'application/json') {
         this.spinner.hide();
       } else if (results.type === 'application/octet-stream') {
@@ -202,7 +204,9 @@ export class TinhLuongComponent implements OnInit {
   }
 
   getAgencyOrganizeMap(type = false) {
-    this.apiService.getAgencyOrganizeMap().subscribe(results => {
+    this.apiService.getAgencyOrganizeMap()
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listAgencyMap = [...results.data.root];
         if (localStorage.getItem("organize") === null) {
@@ -241,7 +245,9 @@ export class TinhLuongComponent implements OnInit {
 
   getOrgan() {
     const queryParams = queryString.stringify({ filter: '' });
-    this.apiService.getOrganizations(queryParams).subscribe(results => {
+    this.apiService.getOrganizations(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.organs = results.data.map(d => {
           return {
@@ -284,7 +290,9 @@ export class TinhLuongComponent implements OnInit {
   // thanh phan luong
   getHrmPayrollAttributeInfo(id = null) {
     const queryParams = queryString.stringify({ Id: id })
-    this.apiService.getHrmPayrollAttributeInfo(queryParams).subscribe(results => {
+    this.apiService.getHrmPayrollAttributeInfo(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.listViews = cloneDeep(listViews);
@@ -292,71 +300,12 @@ export class TinhLuongComponent implements OnInit {
       }
     })
   }
-
-  // loai bang luong
-  // getHrmPayrollTypeInfo(id = null) {
-  //   const queryParams = queryString.stringify({ Id: id })
-  //   this.apiService.getHrmPayrollTypeInfo(queryParams).subscribe( results => {
-  //     if (results.status === 'success') {
-  //       const listViews = cloneDeep(results.data.group_fields);
-  //       this.listViews = cloneDeep(listViews);
-  //       this.detailInfo = results.data;
-  //       this.ngOnInit();
-  //     }
-  //   })
-  // }
-
+  
   ngOnDestroy() {
     if (this.unsubscribe$) {
       this.unsubscribe$.unsubscribe();
     }
   }
-
-  // handleSave(event) {
-  //   if(this.tabIndex === 0){
-  //   }else if(this.tabIndex === 1){
-  //   }else if(this.tabIndex === 2){
-  //     this.getHrmPayrollTypeInfo();
-  //   }else if(this.tabIndex === 3){
-  //     this.setHrmPayrollTypeInfo(event);
-  //   }
-  // }
-
-  // // loai bang luong
-  // setHrmPayrollTypeInfo(data) {
-  //   const params = {
-  //     ...this.detailInfo, group_fields: data
-  //   };
-  //   this.spinner.show();
-  //   this.apiService.setHrmPayrollTypeInfo(params)
-  //     .pipe(takeUntil(this.unsubscribe$))
-  //     .subscribe((results: any) => {
-  //       if (results.status === 'success') {
-  //         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
-  //         this.spinner.hide();
-  //         this.isNew = false;
-  //         this.tabIndex = this.tabIndex;
-  //       } else {
-  //         this.messageService.add({
-  //           severity: 'error', summary: 'Thông báo',
-  //           detail: results.message
-  //         });
-  //         this.spinner.hide();
-  //       }
-  //     }), error => {
-  //       console.error('Error:', error);
-  //       this.spinner.hide();
-  //     }; 
-  // }
-
-  // quaylai(event){
-  //   this.isNew = false
-  // }
-
-  // getIsNewPopup(event){
-  //   this.isNew = event
-  // }
-
 
   // from detail
   theEventDetail(event) {

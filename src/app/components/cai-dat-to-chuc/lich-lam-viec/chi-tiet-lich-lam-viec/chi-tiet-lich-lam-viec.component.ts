@@ -7,6 +7,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-chi-tiet-lich-lam-viec',
   templateUrl: './chi-tiet-lich-lam-viec.component.html',
@@ -48,7 +49,12 @@ export class ChiTietLichLamViecComponent implements OnInit, OnChanges {
   @Input() dataRouter = null
   @Output() back = new EventEmitter<any>();
   items = [];
-
+  
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
   ngOnChanges() {
 
   }
@@ -67,7 +73,9 @@ export class ChiTietLichLamViecComponent implements OnInit, OnChanges {
     this.handleParams();
   }
   handleParams() {
-    this.activatedRoute.queryParamMap.subscribe((params) => {
+    this.activatedRoute.queryParamMap
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.dataRouter = this.paramsObject.params;
       this.work_cd = this.paramsObject.params.work_cd || 0;
@@ -80,7 +88,9 @@ export class ChiTietLichLamViecComponent implements OnInit, OnChanges {
     this.listViews = [];
     this.columnDefs = [];
     const queryParams = queryString.stringify({ work_cd: this.work_cd });
-    this.apiService.getWorktimeInfo(queryParams).subscribe(results => {
+    this.apiService.getWorktimeInfo(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listViews = cloneDeep(results.data.group_fields);
         this.detailInfo = results.data;
@@ -107,7 +117,9 @@ export class ChiTietLichLamViecComponent implements OnInit, OnChanges {
     const params = {
       ...this.detailInfo, group_fields: data
     };
-    this.apiService.setWorktimeInfo(params).subscribe((results: any) => {
+    this.apiService.setWorktimeInfo(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
       if (results.status === 'success') {
         this.displayUserInfo = false;
         this.goBack()

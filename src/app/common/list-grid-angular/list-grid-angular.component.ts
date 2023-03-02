@@ -9,7 +9,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { cloneDeep } from 'lodash';
 import { MessageService } from 'primeng/api';
-import { spawn } from 'child_process';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-list-grid-angular',
   templateUrl: './list-grid-angular.component.html',
@@ -292,7 +292,9 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
 
   setGridViewInfo() {
     this.spinner.show();
-    this.apiService.setGridViewInfo(this.typeConfig === 'FormInfo' ? 'SetFormViewInfo' : 'SetGridViewInfo', this.dataChange).subscribe(results => {
+    this.apiService.setGridViewInfo(this.typeConfig === 'FormInfo' ? 'SetFormViewInfo' : 'SetGridViewInfo', this.dataChange)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listsDataCloone = [];
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Cập nhật thành công' });
@@ -370,7 +372,6 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
 
   getDataAsExcel(event) {
     console.log(event)
-
   }
 
   autoSizeAll() {
@@ -440,6 +441,12 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
       }
     }
 
+  }
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   addRow() {

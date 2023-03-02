@@ -12,7 +12,7 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
-import * as moment from 'moment';
+import { Subject, takeUntil } from 'rxjs';
 const MAX_SIZE = 100000000;
 @Component({
   selector: 'app-mail-tuyen-dung',
@@ -49,6 +49,12 @@ export class MailTuyenDungComponent implements OnInit, AfterViewChecked {
       buttonAgGridComponent: ButtonAgGridComponent,
       avatarRendererFull: AvatarFullComponent,
     };
+  }
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   public modules: Module[] = AllModules;
@@ -138,7 +144,9 @@ export class MailTuyenDungComponent implements OnInit, AfterViewChecked {
     this.spinner.show();
 
     const queryParams = queryString.stringify(this.query);
-    this.apiService.getRecruitMailPage(queryParams).subscribe(
+    this.apiService.getRecruitMailPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         this.gridKey= results.data.dataList.gridKey;
@@ -212,7 +220,9 @@ export class MailTuyenDungComponent implements OnInit, AfterViewChecked {
       message: 'Bạn có chắc chắn muốn xóa?',
       accept: () => {
         const queryParams = queryString.stringify({ mail_Id: event.rowData.mail_Id });
-        this.apiService.delRecruitMailInfo(queryParams).subscribe(results => {
+        this.apiService.delRecruitMailInfo(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
             this.load();

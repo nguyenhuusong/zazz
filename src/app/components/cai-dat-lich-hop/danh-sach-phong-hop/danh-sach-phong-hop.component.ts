@@ -1,5 +1,4 @@
 import { Router } from '@angular/router';
-import { ApiService } from './../../../services/api.service';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import * as queryString from 'querystring';
 import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
@@ -13,9 +12,8 @@ import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { cloneDeep } from 'lodash';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
 import { DialogService } from 'primeng/dynamicdialog';
-import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 
 @Component({
   selector: 'app-danh-sach-phong-hop',
@@ -100,14 +98,21 @@ export class DanhSachPhongHopComponent implements OnInit {
     };
     this.initFilter();
   }
-  items = []
+  items = [];
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
+
   ngOnInit(): void {
     this.getFilter();
     this.items = [
-      { label: 'Trang chủ' , routerLink: '/home' },
+      { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Hoạt động' },
       { label: 'Lịch họp', routerLink: '/hoat-dong/lich-hop' },
-      { label: 'Quản lý phòng họp'},
+      { label: 'Quản lý phòng họp' },
     ];
     this.getFloor();
   }
@@ -121,7 +126,7 @@ export class DanhSachPhongHopComponent implements OnInit {
     };
   }
 
-  
+
   loadjs = 0;
   heightGrid = 0
   ngAfterViewChecked(): void {
@@ -129,13 +134,13 @@ export class DanhSachPhongHopComponent implements OnInit {
     const b: any = document.querySelector(".sidebarBody");
     const d: any = document.querySelector(".bread-crumb");
     const e: any = document.querySelector(".paginator");
-    this.loadjs ++ 
+    this.loadjs++
     if (this.loadjs === 5) {
-      if(b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight +10;
+      if (b && b.clientHeight) {
+        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight + 10;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
-      }else {
+      } else {
         this.loadjs = 0;
       }
     }
@@ -147,29 +152,32 @@ export class DanhSachPhongHopComponent implements OnInit {
     this.displaySetting = true;
   }
 
+
   listsData = [];
   load() {
     this.columnDefs = []
     this.spinner.show();
     const queryParams = queryString.stringify(this.model);
-    this.apiService.getMeetRoomPage(queryParams).subscribe(
+    this.apiService.getMeetRoomPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
-        this.gridKey= results.data.dataList.gridKey;
+        this.gridKey = results.data.dataList.gridKey;
         if (this.model.offSet === 0) {
           this.gridflexs = results.data.gridflexs;
         }
         this.initGrid();
         this.countRecord.totalRecord = results.data.dataList.recordsTotal;
         this.countRecord.totalRecord = results.data.dataList.recordsTotal;
-        this.countRecord.currentRecordStart = results.data.dataList.recordsTotal === 0 ? this.model.offSet = 0 :  this.model.offSet + 1;
+        this.countRecord.currentRecordStart = results.data.dataList.recordsTotal === 0 ? this.model.offSet = 0 : this.model.offSet + 1;
         if ((results.data.dataList.recordsTotal - this.model.offSet) > this.model.pageSize) {
           this.countRecord.currentRecordEnd = this.model.offSet + Number(this.model.pageSize);
         } else {
           this.countRecord.currentRecordEnd = results.data.dataList.recordsTotal;
           setTimeout(() => {
             const noData = document.querySelector('.ag-overlay-no-rows-center');
-            if (noData) { noData.innerHTML = 'Không có kết quả phù hợp'}
+            if (noData) { noData.innerHTML = 'Không có kết quả phù hợp' }
           }, 100);
         }
         this.spinner.hide();
@@ -177,17 +185,19 @@ export class DanhSachPhongHopComponent implements OnInit {
       },
       error => {
         this.spinner.hide();
-       });
+      });
   }
 
   floors = []
   getFloor() {
-    this.apiService.getFloorNo().subscribe(results => {
+    this.apiService.getFloorNo()
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.floors = (results.data).map(d => {
-          return { 
-            label: 'Tầng' + ' ' + d.name, 
-            value: d.value 
+          return {
+            label: 'Tầng' + ' ' + d.name,
+            value: d.value
           }
         });
       }
@@ -200,25 +210,26 @@ export class DanhSachPhongHopComponent implements OnInit {
 
   rooms = []
   getRooms() {
-    const queryParams = queryString.stringify( { filter: '', floor_No: this.model.floor_No })
+    const queryParams = queryString.stringify({ filter: '', floor_No: this.model.floor_No })
     this.apiService.getMeetRooms(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {
         if (results.status === 'success') {
-          if(this.model.floor_No){
+          if (this.model.floor_No) {
             this.rooms = results.data.map(d => {
               return {
                 label: d.name,
                 value: d.value,
               }
-            })  
-          }else{
+            })
+          } else {
             this.rooms = []
           }
           this.load();
         }
       });
   }
-  
+
   showButtons(event: any) {
     return {
       buttons: [
@@ -241,23 +252,23 @@ export class DanhSachPhongHopComponent implements OnInit {
   }
 
   CheckHideXem(event) {
-    if(CheckHideAction(MENUACTIONROLEAPI.GetMeetRoomPage.url, ACTIONS.VIEW)) {
+    if (CheckHideAction(MENUACTIONROLEAPI.GetMeetRoomPage.url, ACTIONS.VIEW)) {
       return true;
-    }else {
-      if(event.data.status === 3) {
+    } else {
+      if (event.data.status === 3) {
         return true;
-      }else {
+      } else {
         return false;
       }
     }
   }
   CheckHideXoa(event) {
-    if(CheckHideAction(MENUACTIONROLEAPI.GetMeetRoomPage.url, ACTIONS.DELETE)) {
+    if (CheckHideAction(MENUACTIONROLEAPI.GetMeetRoomPage.url, ACTIONS.DELETE)) {
       return true;
-    }else {
-      if(event.data.status === 3) {
+    } else {
+      if (event.data.status === 3) {
         return true;
-      }else {
+      } else {
         return false;
       }
     }
@@ -281,7 +292,7 @@ export class DanhSachPhongHopComponent implements OnInit {
       {
         headerComponentParams: {
           template:
-          `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
+            `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
         },
         filter: '',
         width: 70,
@@ -300,6 +311,7 @@ export class DanhSachPhongHopComponent implements OnInit {
       message: 'Bạn có chắc chắn muốn xóa không?',
       accept: () => {
         this.apiService.delMeetRoomInfo(e.rowData.roomId)
+        .pipe(takeUntil(this.unsubscribe$))
           .subscribe(response => {
             if (response.status === 'success') {
               this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: `Xóa thành công` });
@@ -370,76 +382,36 @@ export class DanhSachPhongHopComponent implements OnInit {
   ];
   getFilter() {
     // value === 1 ? '' : ''
-    this.apiService.getFilter('/api/v1/eating/GetEatingFilter').subscribe(results => {
-      if(results.status === 'success') {
+    this.apiService.getFilter('/api/v1/eating/GetEatingFilter')
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
+      if (results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
         this.listViewsFilter = [...listViews];
-        const params =  getParamString(listViews)
-        this.model = { ...this.model, ...params};
+        const params = getParamString(listViews)
+        this.model = { ...this.model, ...params };
         this.load();
         this.detailInfoFilter = results.data;
       }
     });
   }
 
-   filterLoad(event) {
+  filterLoad(event) {
     this.model = { ...this.model, ...event.data };
     this.load();
   }
-  
-close({event, datas}) {
-  if(event !== 'Close') {
-    const listViews = cloneDeep(this.cloneListViewsFilter);
-    this.listViewsFilter = cloneDeep(listViews);
-    const params =  getParamString(listViews)
-    this.model = { ...this.model, ...params};
-    this.load();
-  }else {
-    this.listViewsFilter =  cloneDeep(datas);
-  }
-}
 
-showFilter() {
-    const ref = this.dialogService.open(FormFilterComponent, {
-      header: 'Tìm kiếm nâng cao',
-      width: '40%',
-      contentStyle: "",
-      data: {
-        listViews: this.listViewsFilter,
-        detailInfoFilter: this.detailInfoFilter,
-        buttons: this.optionsButonFilter
-      }
-    });
-
-    ref.onClose.subscribe((event: any) => {
-      if (event) {
-        this.listViewsFilter = cloneDeep(event.listViewsFilter);
-        if (event.type === 'Search') {
-          this.model = { ...this.model, ...event.data };
-          this.load();
-        } else if (event.type === 'CauHinh') {
-        this.apiService.getEmpFilter().subscribe(results => {
-            if (results.status === 'success') {
-              const listViews = cloneDeep(results.data.group_fields);
-              this.listViewsFilter = [...listViews];
-              const params =  getParamString(listViews)
-              this.model = { ...this.model, ...params};
-              this.load();
-              this.detailInfoFilter = results.data;
-              this.showFilter()
-            }
-          });
-
-        } else if (event.type === 'Reset') {
-          const listViews = cloneDeep(this.cloneListViewsFilter);
-          this.listViewsFilter = cloneDeep(listViews);
-         const params =  getParamString(listViews)
-        this.model = { ...this.model, ...params};
-        this.load();
-        }
-      }
-    });
+  close({ event, datas }) {
+    if (event !== 'Close') {
+      const listViews = cloneDeep(this.cloneListViewsFilter);
+      this.listViewsFilter = cloneDeep(listViews);
+      const params = getParamString(listViews)
+      this.model = { ...this.model, ...params };
+      this.load();
+    } else {
+      this.listViewsFilter = cloneDeep(datas);
+    }
   }
 
   ngAfterViewInit(): void {
@@ -450,7 +422,7 @@ showFilter() {
     setTimeout(() => {
       var dragTarget = document.getElementById(this.gridKey);
       console.log('dragTarget', dragTarget)
-      if(dragTarget) {
+      if (dragTarget) {
         const click$ = fromEvent(dragTarget, 'click');
         click$.subscribe(event => {
           this.handleAdd()

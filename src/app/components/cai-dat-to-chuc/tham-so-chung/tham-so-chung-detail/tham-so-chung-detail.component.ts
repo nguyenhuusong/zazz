@@ -6,6 +6,7 @@ import { MessageService } from 'primeng/api';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { CheckHideAction } from 'src/app/common/function-common/common';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-tham-so-chung-detail',
   templateUrl: './tham-so-chung-detail.component.html',
@@ -35,6 +36,12 @@ export class ThamSoChungDetailComponent implements OnInit, OnChanges {
   ngOnChanges() {
   }
 
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   ngOnInit(): void {
     this.titlePage = this.activatedRoute.data['_value'].title;
     this.items = [
@@ -49,7 +56,9 @@ export class ThamSoChungDetailComponent implements OnInit, OnChanges {
   }
 
   handleParams() {
-    this.activatedRoute.params.subscribe(params => {
+    this.activatedRoute.params
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(params => {
       this.id = params.id === 'null' ? '' : params.id;
       this.getInvParameter();
     });
@@ -57,7 +66,9 @@ export class ThamSoChungDetailComponent implements OnInit, OnChanges {
   getInvParameter() {
     this.listViews = [];
     const queryParams = queryString.stringify({ id: this.id });
-    this.apiService.getInvParameter(queryParams).subscribe(results => {
+    this.apiService.getInvParameter(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listViews = cloneDeep(results.data.group_fields);
         this.detailInfo = results.data;
@@ -70,6 +81,7 @@ export class ThamSoChungDetailComponent implements OnInit, OnChanges {
       ...this.detailInfo, group_fields: data
     };
     this.apiService.setInvParameter(params)
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe((results: any) => {
         if (results.status === 'success') {
           this.goBack()

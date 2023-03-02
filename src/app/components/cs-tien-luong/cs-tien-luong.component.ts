@@ -1,8 +1,7 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router, Params } from '@angular/router';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import * as queryString from 'querystring';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { ApiService } from 'src/app/services/api.service';
 import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { CustomTooltipComponent } from 'src/app/common/ag-component/customtooltip.component';
@@ -11,12 +10,10 @@ import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.comp
 import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
-import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { cloneDeep } from 'lodash';
 import { DialogService } from 'primeng/dynamicdialog';
-import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-cs-tien-luong',
   templateUrl: './cs-tien-luong.component.html',
@@ -30,11 +27,9 @@ export class CsTienLuongComponent implements OnInit {
   constructor(
     private spinner: NgxSpinnerService,
     private apiService: ApiHrmService,
-    private route: ActivatedRoute,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private changeDetector: ChangeDetectorRef,
-    private organizeInfoService: OrganizeInfoService,
     public dialogService: DialogService,
     private router: Router) {
 
@@ -67,6 +62,12 @@ export class CsTienLuongComponent implements OnInit {
   titleForm = {
     label: 'Thêm mới tài khoản',
     value: 'Add'
+  }
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   public modules: Module[] = AllModules;
@@ -126,7 +127,9 @@ export class CsTienLuongComponent implements OnInit {
     this.columnDefs = []
     this.spinner.show();
     const queryParams = queryString.stringify(this.query);
-    this.apiService.getSalaryRecordPage(queryParams).subscribe(
+    this.apiService.getSalaryRecordPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         this.gridKey= results.data.dataList.gridKey;
@@ -186,7 +189,9 @@ export class CsTienLuongComponent implements OnInit {
       this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn thực hiện phê duyệt?',
       accept: () => {
-        this.apiService.setSalaryRecordApprove({ recordId: event.rowData.recordId }).subscribe(results => {
+        this.apiService.setSalaryRecordApprove({ recordId: event.rowData.recordId })
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa công ty thành công' });
             this.load();
@@ -318,7 +323,9 @@ export class CsTienLuongComponent implements OnInit {
   }
 
   getOrgRoots() {
-    this.apiService.getOrgRoots().subscribe(results => {
+    this.apiService.getOrgRoots()
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listOrgRoots = results.data.map(d => {
           return {
@@ -345,7 +352,9 @@ detailInfoFilter = null;
 
   //filter 
   getFilter() {
-    this.apiService.getFilter('/api/v1/salary/GetSalaryFilter').subscribe(results => {
+    this.apiService.getFilter('/api/v1/salary/GetSalaryFilter')
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
@@ -374,49 +383,6 @@ detailInfoFilter = null;
     }else {
       this.listViewsFilter =  cloneDeep(datas);
     }
-  }
-
-
-showFilter() {
-    const ref = this.dialogService.open(FormFilterComponent, {
-      header: 'Tìm kiếm nâng cao',
-      width: '40%',
-      contentStyle: "",
-      data: {
-        listViews: this.listViewsFilter,
-        detailInfoFilter: this.detailInfoFilter,
-        buttons: this.optionsButonFilter
-      }
-    });
-
-    ref.onClose.subscribe((event: any) => {
-      if (event) {
-        this.listViewsFilter = cloneDeep(event.listViewsFilter);
-        if (event.type === 'Search') {
-          this.query = { ...this.query, ...event.data };
-          this.load();
-        } else if (event.type === 'CauHinh') {
-          this.apiService.getFilter('/api/v1/salary/GetSalaryFilter').subscribe(results => {
-            if (results.status === 'success') {
-              const listViews = cloneDeep(results.data.group_fields);
-              this.listViewsFilter = [...listViews];
-              const params =  getParamString(listViews)
-              this.query = { ...this.query, ...params};
-              this.load();
-              this.detailInfoFilter = results.data;
-              this.showFilter()
-            }
-          });
-
-        } else if (event.type === 'Reset') {
-          const listViews = cloneDeep(this.cloneListViewsFilter);
-          this.listViewsFilter = cloneDeep(listViews);
-         const params =  getParamString(listViews)
-        this.query = { ...this.query, ...params};
-        this.load();
-        }
-      }
-    });
   }
 
   ngAfterViewInit(): void {

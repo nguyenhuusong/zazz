@@ -69,6 +69,7 @@ export class PqThangMayComponent implements OnInit {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
+  
 
   ngOnInit() {
     this.itemsBreadcrumb = [
@@ -126,7 +127,9 @@ export class PqThangMayComponent implements OnInit {
 
 
   find() {
-    this.apiService.getCardInfo(this.searchInfo.cardCode, this.searchInfo.phoneNumber, this.searchInfo.hardwareId).subscribe(
+    this.apiService.getCardInfo(this.searchInfo.cardCode, this.searchInfo.phoneNumber, this.searchInfo.hardwareId)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (res: any) => {
         if (res) {
           this.cardinfo = res.data;
@@ -137,7 +140,9 @@ export class PqThangMayComponent implements OnInit {
   }
 
   getBuidingsSearch() {
-    this.apiService.getBuildCdByProjectCd(this.modelElevator.projectCd).subscribe(
+    this.apiService.getBuildCdByProjectCd(this.modelElevator.projectCd)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (res: any) => {
         if (res) {
           this.builds = res.data;
@@ -155,7 +160,9 @@ export class PqThangMayComponent implements OnInit {
   load() {
     if (this.detailcar.cardCd) {
       this.loading = true;
-      this.apiService.getMasElevatorCards(this.detailcar.cardCd, 0, 100000).subscribe(
+      this.apiService.getMasElevatorCards(this.detailcar.cardCd, 0, 100000)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
         (results: any) => {
           this.rowData = results.data;
           // this.gridApi.setRowData(this.items);
@@ -168,7 +175,9 @@ export class PqThangMayComponent implements OnInit {
   }
 
   getFloors(event) {
-    this.apiService.GetBuildFloorByProjectCdBuildCd(event.target.value, this.modelElevator.projectCd, this.modelElevator.buildCd).subscribe((results: any) => {
+    this.apiService.GetBuildFloorByProjectCdBuildCd(event.target.value, this.modelElevator.projectCd, this.modelElevator.buildCd)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
       this.floors = results.data;
       this.devices = [];
       this.modelElevator.floorNumber = null;
@@ -177,7 +186,9 @@ export class PqThangMayComponent implements OnInit {
   }
 
   getHardware() {
-    this.apiService.getElevatorDevicePage('', null, null, this.modelElevator.projectCd, this.modelElevator.buildZone, this.modelElevator.buildCd, this.modelElevator.floorNumber).subscribe((results: any) => {
+    this.apiService.getElevatorDevicePage('', null, null, this.modelElevator.projectCd, this.modelElevator.buildZone, this.modelElevator.buildCd, this.modelElevator.floorNumber)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
       this.devices = results.data;
       this.modelElevator.hardwareId = null;
     }, error => { });
@@ -186,7 +197,9 @@ export class PqThangMayComponent implements OnInit {
   load1() {
     this.loading = true;
     if (this.detailcar.cardCd) {
-      this.apiService.getFoorInfoGo(this.detailcar.cardCd, this.modelElevator.projectCd, this.modelElevator.buildZone, this.modelElevator.buildCd, this.modelElevator.hardwareId, null, null).subscribe(
+      this.apiService.getFoorInfoGo(this.detailcar.cardCd, this.modelElevator.projectCd, this.modelElevator.buildZone, this.modelElevator.buildCd, this.modelElevator.hardwareId, null, null)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
         (results: any) => {
           this.rowData1 = results.data;
           // this.autoSizeAll1()
@@ -229,7 +242,9 @@ export class PqThangMayComponent implements OnInit {
 
   SaveRoleCard(type) {
     this.cardinfo.cardId = this.modelcar.cardId;
-    this.apiService.addRoleCard(this.cardinfo).subscribe(
+    this.apiService.addRoleCard(this.cardinfo)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         if (results.status === 'error') {
           this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Có lỗi!' });
@@ -277,7 +292,9 @@ export class PqThangMayComponent implements OnInit {
   }
 
   loadCardType() {
-    this.apiService.getCardTypeList().subscribe(
+    this.apiService.getCardTypeList()
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (res: any) => {
         if (res) {
           this.modelCardType = res.data;
@@ -287,7 +304,9 @@ export class PqThangMayComponent implements OnInit {
   }
 
   loadGetProjects() {
-    this.apiService.getProjects().subscribe(
+    this.apiService.getProjects()
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (res: any) => {
         if (res) {
           this.modelProject = res.data;
@@ -296,7 +315,9 @@ export class PqThangMayComponent implements OnInit {
   }
 
   loadGetBuildings() {
-    this.apiService.getBuildCdByProjectCd(this.cardinfo.projectCd).subscribe(
+    this.apiService.getBuildCdByProjectCd(this.cardinfo.projectCd)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (res: any) => {
         if (res) {
           this.modelBuilding = res.data;
@@ -308,7 +329,9 @@ export class PqThangMayComponent implements OnInit {
 
   loadGetFloors() {
     this.modelFloor = [];
-    this.apiService.getElevatorFloors(this.cardinfo.buildCd).subscribe(
+    this.apiService.getElevatorFloors(this.cardinfo.buildCd)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (res: any) => {
         if (res) {
           this.modelFloor = res.data;
@@ -335,7 +358,9 @@ export class PqThangMayComponent implements OnInit {
 
   onDeleteRoleCard(id: number) {
     if (confirm('Bạn có chắc chắn muốn xóa quyền của thẻ này không?')) {
-      this.apiService.deleteRoleCard(id).subscribe(
+      this.apiService.deleteRoleCard(id)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
         results => {
           this.load();
         },
@@ -361,14 +386,18 @@ export class PqThangMayComponent implements OnInit {
   }
   projects = [];
   getProjectCd() {
-    this.apiService.getProjects().subscribe((results: any) => {
+    this.apiService.getProjects()
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
       this.projects = results.data;
     })
   }
 
   buildingZones = [];
   getBuildingZones(e) {
-    this.apiService.getBuildZoneByBuildCd(this.modelElevator.projectCd, this.modelElevator.buildCd).subscribe((results: any) => {
+    this.apiService.getBuildZoneByBuildCd(this.modelElevator.projectCd, this.modelElevator.buildCd)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
       this.buildingZones = results.data;
       this.floors = [];
       this.devices = [];

@@ -9,6 +9,7 @@ import { CustomTooltipComponent } from 'src/app/common/ag-component/customtoolti
 import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-cai-dat-phong-hop-theo-tang',
@@ -45,6 +46,13 @@ export class CaiDatPhongHopTheoTangComponent implements OnInit {
   };
   showDeleteTax = false;
   showImportExcel = false;
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   constructor(
     private apiService: ApiHrmService,
     private router: Router,
@@ -75,7 +83,6 @@ export class CaiDatPhongHopTheoTangComponent implements OnInit {
       { label: 'Cài đặt' },
       { label: 'Danh sách tầng của phòng họp và lịch họp' },
     ];
-    // this.getOrrginiaztions();
     this.load();
   }
 
@@ -119,7 +126,9 @@ export class CaiDatPhongHopTheoTangComponent implements OnInit {
     this.columnDefs = []
     this.spinner.show();
     const queryParams = queryString.stringify(this.model);
-    this.apiService.getMeetingFloorPage(queryParams).subscribe(
+    this.apiService.getMeetingFloorPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         this.gridKey= results.data.dataList.gridKey;
@@ -189,6 +198,7 @@ export class CaiDatPhongHopTheoTangComponent implements OnInit {
       message: 'Bạn có chắc chắn muốn xóa không?',
       accept: () => {
         this.apiService.delMeetingFloorInfo(e.rowData.floorId)
+          .pipe(takeUntil(this.unsubscribe$))
           .subscribe(response => {
             if (response.status === 'success') {
               this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: `Xóa thành công` });

@@ -1,16 +1,14 @@
-import { Component, EventEmitter, Input, OnInit, Output, OnChanges, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import * as queryString from 'querystring';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { cloneDeep } from 'lodash';
-import { ConfirmationService, MessageService } from 'primeng/api';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { Subject } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { AgGridFn } from 'src/app/common/function-common/common';
 import * as moment from 'moment';
 import * as FileSaver from 'file-saver';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
-import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 @Component({
   selector: 'app-xem-cong',
   templateUrl: './xem-cong.component.html',
@@ -27,12 +25,8 @@ export class XemCongComponent implements OnInit, OnDestroy {
   constructor(
     private apiService: ApiHrmService,
     private activatedRoute: ActivatedRoute,
-    private messageService: MessageService,
-    private confirmationService: ConfirmationService,
     private spinner: NgxSpinnerService,
-    private router: Router,
-    private changeDetector: ChangeDetectorRef,
-    private organizeInfoService: OrganizeInfoService,
+    private changeDetector: ChangeDetectorRef
   ) { }
   listViews = []
   paramsObject = null
@@ -66,6 +60,7 @@ export class XemCongComponent implements OnInit, OnDestroy {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
+
   items = [];
   ngOnInit(): void {
     this.titlePage = this.activatedRoute.data['_value'].title;
@@ -79,12 +74,12 @@ export class XemCongComponent implements OnInit, OnDestroy {
     ];
     this.url = this.activatedRoute.data['_value'].url;
     this.manhinh = 'Edit';
-    // this.getOrgRoots();
-      // this.handleParams()
   }
 
   handleParams() {
-    this.activatedRoute.queryParamMap.subscribe((params) => {
+    this.activatedRoute.queryParamMap
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.getXemCongInfo();
     });
@@ -101,7 +96,9 @@ export class XemCongComponent implements OnInit, OnDestroy {
     params.ToDate = moment(new Date(this.query.todate)).format('YYYY-MM-DD')
     const queryParams = queryString.stringify(params);
     this.spinner.show();
-    this.apiService.getTimekeepingDetail(queryParams).subscribe(results => {
+    this.apiService.getTimekeepingDetail(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.gridKey= results.data.dataList.gridKey;
         this.spinner.hide();
@@ -128,20 +125,10 @@ export class XemCongComponent implements OnInit, OnDestroy {
 
   listOrgRoots = []
   getOrgRoots() {
-    // this.apiService.getOrgRoots().subscribe(results => {
-    //   if (results.status === 'success') {
-    //     this.listOrgRoots = results.data.map(d => {
-    //       return {
-    //         label: d.org_name,
-    //         value: `${d.orgId}`
-    //       }
-    //     });
-    //     this.query.orgId = this.listOrgRoots[0].value
-    //     this.getXemCongInfo();
-    //   }
-    // })
+    
     const queryParams = queryString.stringify({ filter: ''});
     this.apiService.getOrganizations(queryParams)
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         (results: any) => {
           this.listOrgRoots = results.data
@@ -158,15 +145,14 @@ export class XemCongComponent implements OnInit, OnDestroy {
   }
 
   changeOrgani() {
-    // this.getXemCongInfo();
     this.getOrganizeTree();
   }
   onChangeTree() {
-    // this.getXemCongInfo();
   }
   getOrganizeTree(): void {
     const queryParams = queryString.stringify({ parentId: this.query.organizeIds});
     this.apiService.getOrganizeTree(queryParams)
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe((results: any) => {
         if (results && results.status === 'success') {
           this.departmentFiltes = results.data;
@@ -223,36 +209,10 @@ export class XemCongComponent implements OnInit, OnDestroy {
   setCompanyInfo(data) {
   }
 
-  // listOrgRoots = []
-  // getOrgRoots() {
-  //   this.apiService.getOrgRoots().subscribe(results => {
-  //     if (results.status === 'success') {
-  //       this.listOrgRoots = results.data.map(d => {
-  //         return {
-  //           label: d.org_name,
-  //           value: `${d.orgId}`
-  //         }
-  //       });
-  //       this.query.orgId = this.listOrgRoots[0].value
-  //       this.getXemCongInfo();
-  //     }
-  //   })
-  // }
-
   initGrid() {
     this.columnDefs = [
       ...AgGridFn(this.columnDefs.filter((d: any) => !d.isHide)),
-      // {
-      //   headerName: 'Thao tác',
-      //   filter: '',
-      //   maxWidth: 90,
-      //   pinned: 'right',
-      //   cellRenderer: 'buttonAgGridComponent',
-      //   cellClass: ['border-right', 'no-auto'],
-      //   // cellRendererParams: (params: any) => this.showButtons(params),
-      //   checkboxSelection: false,
-      //   field: 'checkbox'
-      // }
+     
     ]
   }
 
@@ -265,7 +225,9 @@ export class XemCongComponent implements OnInit, OnDestroy {
     params.ToDate = moment(new Date(this.query.todate)).format('YYYY-MM-DD')
     const queryParams = queryString.stringify(params);
     this.spinner.show();
-    this.apiService.exportTimekeeping(queryParams).subscribe(results => {
+    this.apiService.exportTimekeeping(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.type === 'application/json') {
         this.spinner.hide();
       } else {

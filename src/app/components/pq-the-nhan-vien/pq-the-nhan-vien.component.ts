@@ -18,7 +18,7 @@ import { cloneDeep } from 'lodash';
 import { DialogService } from 'primeng/dynamicdialog';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-pq-the-nhan-vien',
@@ -103,6 +103,13 @@ export class PqTheNhanVienComponent implements OnInit {
     };
     this.initFilter();
   }
+
+  
+    private readonly unsubscribe$: Subject<void> = new Subject();
+    ngOnDestroy() {
+      this.unsubscribe$.next();
+      this.unsubscribe$.complete();
+    }
 
   items = []
   ngOnInit(): void {
@@ -195,7 +202,9 @@ export class PqTheNhanVienComponent implements OnInit {
     this.spinner.show();
     const query: any = { ...this.model };
     const queryParams = queryString.stringify(query);
-    this.apiService.getEmployeeCardPage(queryParams).subscribe(
+    this.apiService.getEmployeeCardPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         this.gridKey= results.data.dataList.gridKey;
@@ -352,7 +361,9 @@ export class PqTheNhanVienComponent implements OnInit {
   dataPositionList = []
   getPositionList() {
     const queryParams = queryString.stringify({ objKey: 'positiontype_group' });
-    this.apiService.getCustObjectListNew(false, queryParams).subscribe(results => {
+    this.apiService.getCustObjectListNew(false, queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.dataPositionList = results.data.map(d => {
           return {
@@ -366,7 +377,9 @@ export class PqTheNhanVienComponent implements OnInit {
 
   workplaceOptions = []
   getWorkplaces() {
-    this.apiService.getWorkplaces().subscribe(results => {
+    this.apiService.getWorkplaces()
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.workplaceOptions = results.data.map(d => {
           return {
@@ -495,7 +508,9 @@ export class PqTheNhanVienComponent implements OnInit {
 
   //filter 
   getFilter() {
-    this.apiService.getFilter('/api/v2/cardvehicle/GetEmpCardFilter').subscribe(results => {
+    this.apiService.getFilter('/api/v2/cardvehicle/GetEmpCardFilter')
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
@@ -544,7 +559,9 @@ showFilter() {
           this.model = { ...this.model, ...event.data };
           this.load();
         } else if (event.type === 'CauHinh') {
-          this.apiService.getFilter('/api/v2/cardvehicle/GetEmpCardFilter').subscribe(results => {
+          this.apiService.getFilter('/api/v2/cardvehicle/GetEmpCardFilter')
+          .pipe(takeUntil(this.unsubscribe$))
+          .subscribe(results => {
             if (results.status === 'success') {
               const listViews = cloneDeep(results.data.group_fields);
               this.listViewsFilter = [...listViews];

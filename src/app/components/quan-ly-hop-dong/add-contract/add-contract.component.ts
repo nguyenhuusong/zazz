@@ -4,9 +4,8 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as queryString from 'querystring';
 import { cloneDeep } from 'lodash';
-import * as moment from 'moment';
 import { AgGridFn } from 'src/app/common/function-common/common';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-add-contract',
   templateUrl: './add-contract.component.html',
@@ -33,6 +32,11 @@ export class AddContractComponent implements OnInit {
     this.FnEvent();
   }
 
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
 
   FnEvent() {
     setTimeout(() => {
@@ -64,7 +68,9 @@ export class AddContractComponent implements OnInit {
   getContractTypeTemplate() {
     const queryParams = queryString.stringify({ contractTypeId: this.contractTypeId, tempId: this.tempId });
     this.listViewsDetail = [];
-    this.apiService.getContractTypeTemplate(queryParams).subscribe(results => {
+    this.apiService.getContractTypeTemplate(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listViewsDetail = cloneDeep(results.data.group_fields);
         this.dataDetailInfo = results.data;
@@ -89,7 +95,9 @@ export class AddContractComponent implements OnInit {
     const param = {
       ...this.dataDetailInfo, group_fields: data
     }
-    this.apiService.setContractTypeTemplate(param).subscribe(results => {
+    this.apiService.setContractTypeTemplate(param)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thêm mới thành công' });
         this.displayFormEditDetail = false;
@@ -108,7 +116,9 @@ export class AddContractComponent implements OnInit {
     this.spinner.show();
     this.columnDefs = [];
     const queryParams = queryString.stringify({ contractTypeId: this.contractTypeId, offSet: 0, pageSize: 10000 });
-    this.apiService.getContractTypeTemplatePage(queryParams).subscribe(repo => {
+    this.apiService.getContractTypeTemplatePage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(repo => {
       if (repo.status === 'success') {
         if (repo.data.dataList.gridKey) {
           this.gridKey = repo.data.dataList.gridKey;
@@ -213,7 +223,9 @@ export class AddContractComponent implements OnInit {
       message: 'Bạn có chắc chắn muốn xóa bản ghi này?',
       accept: () => {
         const queryParams = queryString.stringify({ tempId: event.rowData.tempId });
-        this.apiService.delContractTypeTemplate(queryParams).subscribe((results: any) => {
+        this.apiService.delContractTypeTemplate(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
             this.getContractTypeTemplatePage();
@@ -240,7 +252,9 @@ export class AddContractComponent implements OnInit {
     fomrData.append('formFile', event[0].file);
     fomrData.append('tempId', this.tempId);
     fomrData.append('tpl_url', this.detailRow.tpl_url);
-    this.apiService.uploadFileContract(fomrData).subscribe(results => {
+    this.apiService.uploadFileContract(fomrData)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'upload thành công' });
         this.getContractTypeTemplatePage();

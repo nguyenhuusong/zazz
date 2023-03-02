@@ -4,6 +4,7 @@ import * as queryString from 'querystring';
 import { cloneDeep } from 'lodash';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-edit-vi-tri-cong-viec',
   templateUrl: './edit-vi-tri-cong-viec.component.html',
@@ -27,13 +28,22 @@ export class EditViTriCongViecComponent implements OnInit {
   ngOnInit(): void {
     this.getDetail();
   }
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   activeIndex = 0;
   steps = [];
   getDetail() {
     this.spinner.show();
     this.detailInfo = null;
     const query = { empId: this.empId, edit_is: true }
-    this.apiService.getEmpWorkJob(queryString.stringify(query)).subscribe(results => {
+    this.apiService.getEmpWorkJob(queryString.stringify(query))
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.spinner.hide();
         this.listViews = cloneDeep(results.data.group_fields || []);
@@ -113,7 +123,9 @@ export class EditViTriCongViecComponent implements OnInit {
 
   callApiInfo(params) {
     this.spinner.show();
-    this.apiService.setEmpWorkJob(params).subscribe((results: any) => {
+    this.apiService.setEmpWorkJob(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
       if (results.status === 'success') {
         // this.listViews = cloneDeep(results.data.group_fields || []);
         // this.detailInfo = results.data;

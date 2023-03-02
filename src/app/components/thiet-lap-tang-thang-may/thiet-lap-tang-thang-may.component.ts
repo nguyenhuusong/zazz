@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit,ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Subject, takeUntil } from 'rxjs';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { CheckHideAction } from 'src/app/common/function-common/common';
 import { ElevatorFloor } from 'src/app/models/elevatorfloor.model';
@@ -11,6 +12,11 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
   styleUrls: ['./thiet-lap-tang-thang-may.component.scss']
 })
 export class ThietLapTangThangMayComponent implements OnInit {
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
 
   constructor(private apiService: ApiHrmService,
     private route: ActivatedRoute,
@@ -87,7 +93,9 @@ export class ThietLapTangThangMayComponent implements OnInit {
       this.model.offset,this.model.pageSize,
       this.model.projectCd,
       this.model.buildCd,
-      this.model.buildZone).subscribe(
+      this.model.buildZone)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
       (results: any) => {
         this.listsData = results.data;
         if (this.model.offset === 0) {
@@ -184,7 +192,9 @@ export class ThietLapTangThangMayComponent implements OnInit {
   findproject(projectCd, type) {
     this.builds = [];
     this.buildzones = [];
-    this.apiService.getBuildByProjectCd(projectCd).subscribe((results: any) => {
+    this.apiService.getBuildByProjectCd(projectCd)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
       this.builds = results.data;
     },
     error => { });
@@ -192,14 +202,18 @@ export class ThietLapTangThangMayComponent implements OnInit {
 
   findbuild(buildCd, type){
     this.buildzones = [];
-    this.apiService.getBuildZoneByBuildCd('', buildCd).subscribe((results: any) => {
+    this.apiService.getBuildZoneByBuildCd('', buildCd)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
       this.buildzones = results.data;
     },error => { });
   }
 
    //api create
   getBuilding(projectCd) {
-    this.apiService.getBuildByProjectCd(projectCd).subscribe((results: any) => {
+    this.apiService.getBuildByProjectCd(projectCd)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
       this.buidings = results.data;
     },
     error => { });
@@ -208,14 +222,20 @@ export class ThietLapTangThangMayComponent implements OnInit {
   //api create
   getBuildingzonesAndFloors(buildCd){
     this.buildingZones = [];
-    this.apiService.getBuildZoneByBuildCd('', buildCd).subscribe((results: any) => {
+    this.apiService.getBuildZoneByBuildCd('', buildCd)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
       this.buildingZones = results.data;
     },error => { });
 
-    this.apiService.GetBuildFloorByProjectCdBuildCd('', this.elevatorfloorModel.projectCd, buildCd).subscribe((results: any) => {
+    this.apiService.GetBuildFloorByProjectCdBuildCd('', this.elevatorfloorModel.projectCd, buildCd)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
       this.floorsCreate = results.data;
     },error => { });
-    this.apiService.getFloorTypeByBuildCd(buildCd).subscribe((results: any) => {
+    this.apiService.getFloorTypeByBuildCd(buildCd)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
       this.floorsTypes = results.data;
     },error => { });
   }
@@ -237,7 +257,9 @@ export class ThietLapTangThangMayComponent implements OnInit {
         floorType: this.elevatorfloorModel.floorType,
         sysDate: this.elevatorfloorModel.sysDate
     }
-    this.apiService.setMasElevatorFloor(params).subscribe((result: any) => {
+    this.apiService.setMasElevatorFloor(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((result: any) => {
       if(result.status === 'success') {
       this.isDialog =false;
         this.load();

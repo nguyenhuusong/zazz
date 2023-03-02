@@ -15,6 +15,7 @@ import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { addUser } from 'src/app/types/addUser';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { ExportFileService } from 'src/app/services/export-file.service';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-pq-quyen-nguoi-dung',
   templateUrl: './pq-quyen-nguoi-dung.component.html',
@@ -106,6 +107,12 @@ export class PqQuyenNguoiDungComponent implements OnInit {
     this.gridColumnApi = params.columnApi;
   }
 
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   cancel() {
     this.query = {
       filter: '',
@@ -127,7 +134,9 @@ export class PqQuyenNguoiDungComponent implements OnInit {
     this.columnDefs = []
     this.spinner.show();
     const queryParams = queryString.stringify(this.query);
-    this.apiService.getUserPage(queryParams).subscribe(
+    this.apiService.getUserPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         this.gridKey= results.data.dataList.gridKey;
@@ -204,7 +213,9 @@ export class PqQuyenNguoiDungComponent implements OnInit {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn khóa người dùng?',
       accept: () => {
-        this.apiService.lockUser(event.rowData.userId).subscribe((results: any) => {
+        this.apiService.lockUser(event.rowData.userId)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Đã khóa người dùng!' });
             this.load();
@@ -220,7 +231,9 @@ export class PqQuyenNguoiDungComponent implements OnInit {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn mở khóa khóa người dùng?',
       accept: () => {
-        this.apiService.unLockUser(event.rowData.userId).subscribe((results: any) => {
+        this.apiService.unLockUser(event.rowData.userId)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Mở khóa thành công!' });
             this.load();
@@ -261,7 +274,9 @@ export class PqQuyenNguoiDungComponent implements OnInit {
     }
     const params = { ... this.modelPass };
     delete params.userPassCf
-    this.api.setResetPassword(params).subscribe(results => {
+    this.api.setResetPassword(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Sửa thông tin tài khoản thành công !' });
         this.isShowChangePassword = false;
@@ -314,7 +329,9 @@ export class PqQuyenNguoiDungComponent implements OnInit {
       message: 'Bạn có chắc chắn muốn xóa?',
       accept: () => {
         const queryParams = queryString.stringify({ userId: event.rowData.userId });
-        this.apiService.removeUser(queryParams).subscribe(results => {
+        this.apiService.removeUser(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công quyền người dùng' });
             this.load();
@@ -407,7 +424,9 @@ export class PqQuyenNguoiDungComponent implements OnInit {
   }
   listJobTitles = []
   getJobTitles() {
-    this.apiService.getJobTitles().subscribe(results => {
+    this.apiService.getJobTitles()
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listJobTitles = results.data.map(d => {
           return {
@@ -437,7 +456,9 @@ export class PqQuyenNguoiDungComponent implements OnInit {
   managerLists: any = null;
   getManagerList() {
     const queryParams = queryString.stringify({ userRole: 1, byReport: 1 });
-    this.apiService.getManagerList(queryParams).subscribe(results => {
+    this.apiService.getManagerList(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.managerLists = results.data.map(d => {
           return {
@@ -457,7 +478,9 @@ export class PqQuyenNguoiDungComponent implements OnInit {
       oriID = this.orgId;
     }
     const queryParams = queryString.stringify({ filter: '', orgId: oriID });
-    this.apiService.getPositionList(queryParams).subscribe(results => {
+    this.apiService.getPositionList(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.dataPositionList = results.data.map(d => {
           return {
@@ -480,7 +503,9 @@ export class PqQuyenNguoiDungComponent implements OnInit {
 
   callApi(custId) {
     this.spinner.show();
-    this.apiService.getUserSearchPage(custId).subscribe((result: any) => {
+    this.apiService.getUserSearchPage(custId)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((result: any) => {
       if (result.status === 'success') {
         // this.gridApi1.setRowData(result.data.dataList.data);
         // this.managerInfoList = result.data.dataList.data;
@@ -516,7 +541,9 @@ export class PqQuyenNguoiDungComponent implements OnInit {
 
   orgId = null;
   getListUserMaster(event) {
-    this.apiService.getEmployeeSearch(  queryString.stringify({ filter: event.query, orgId: this.orgId })).subscribe((result: any) => {
+    this.apiService.getEmployeeSearch(  queryString.stringify({ filter: event.query, orgId: this.orgId }))
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((result: any) => {
       this.listUserDetail = result.data;
       this.listUser = this.listUserDetail.map(res => {
         return {
@@ -555,7 +582,9 @@ export class PqQuyenNguoiDungComponent implements OnInit {
         filter: '',
         organizeIds: organizeIds
     })
-    this.api.getRolePage(query).subscribe(
+    this.api.getRolePage(query)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         if(results.status === "success")
           this.roles = results.data.dataList.data
@@ -581,7 +610,9 @@ export class PqQuyenNguoiDungComponent implements OnInit {
         organizeId: organizeIds
     })
 
-    this.apiService.getCompaniesByUserOrganize(query).subscribe(
+    this.apiService.getCompaniesByUserOrganize(query)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         if(results.status === "success"){
           this.companies = results.data
@@ -616,7 +647,9 @@ export class PqQuyenNguoiDungComponent implements OnInit {
 
   detailOrganizes = []
   getOrganizes() {
-    this.apiService.getUserOrganizeRole().subscribe(
+    this.apiService.getUserOrganizeRole()
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         if(results.status === "success"){
           if(results.data){
@@ -742,7 +775,9 @@ export class PqQuyenNguoiDungComponent implements OnInit {
     //   })
     // }
     this.spinner.show();
-    this.apiService.setUserAdd(params).subscribe(results => {
+    this.apiService.setUserAdd(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Thêm mới thành công' });
         this.load();
@@ -771,7 +806,9 @@ export class PqQuyenNguoiDungComponent implements OnInit {
     this.query.pageSize = 1000000;
     const query = { ...this.query };
     const queryParams = queryString.stringify(query);
-    this.apiService.getUserPage(queryParams).subscribe(
+    this.apiService.getUserPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         const dataExport = [];
         let gridflexs = results.data.gridflexs;

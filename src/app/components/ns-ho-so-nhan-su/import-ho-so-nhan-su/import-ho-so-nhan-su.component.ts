@@ -166,7 +166,9 @@ export class ImportHoSoNhanSuComponent implements OnInit {
   }
 
   getTemfileImport() {
-    this.apiService.exportReportLocalhost('assets/tpl-import-file/HoSoNhanSu_Import.xlsx').subscribe((data: any) => {
+    this.apiService.exportReportLocalhost('assets/tpl-import-file/HoSoNhanSu_Import.xlsx')
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((data: any) => {
       this.createImageFromBlob(data)
     });
   }
@@ -196,7 +198,9 @@ export class ImportHoSoNhanSuComponent implements OnInit {
       accept: true,
       imports: this.dataImported
     }
-    this.apiService.setEmployeeExportDraft(query).subscribe(
+    this.apiService.setEmployeeExportDraft(query)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
 
         if (results.type === 'application/json') {

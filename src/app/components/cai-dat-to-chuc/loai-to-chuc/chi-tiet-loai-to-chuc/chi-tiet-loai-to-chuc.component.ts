@@ -6,6 +6,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { CheckHideAction } from 'src/app/common/function-common/common';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-chi-tiet-loai-to-chuc',
@@ -25,7 +26,12 @@ export class ChiTietLoaiToChucComponent implements OnInit, OnChanges {
     private confirmationService: ConfirmationService,
     private router: Router
   ) { }
-  org_level = null
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+  org_level_cd = null
   listViews = []
   imagesUrl = []
   paramsObject = null
@@ -60,10 +66,12 @@ export class ChiTietLoaiToChucComponent implements OnInit, OnChanges {
   }
 
   handleParams() {
-    this.activatedRoute.queryParamMap.subscribe((params) => {
+    this.activatedRoute.queryParamMap
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.dataRouter = this.paramsObject.params;
-      this.org_level = this.paramsObject.params.org_level || 0;
+      this.org_level_cd = this.paramsObject.params.org_level_cd || 0;
       this.getOrgLevelInfo();
     });
   };
@@ -71,8 +79,10 @@ export class ChiTietLoaiToChucComponent implements OnInit, OnChanges {
   detailInfo = null;
   getOrgLevelInfo() {
     this.listViews = [];
-    const queryParams = queryString.stringify({org_level: this.org_level});
-    this.apiService.getOrgLevelInfo(queryParams).subscribe(results => {
+    const queryParams = queryString.stringify({org_level_cd: this.org_level_cd});
+    this.apiService.getOrgLevelInfo(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listViews = cloneDeep(results.data.group_fields);
         this.detailInfo = results.data;
@@ -88,7 +98,9 @@ export class ChiTietLoaiToChucComponent implements OnInit, OnChanges {
     const params = {
       ...this.detailInfo, group_fields: data
     };
-    this.apiService.setOrgLevelInfo(params).subscribe((results: any) => {
+    this.apiService.setOrgLevelInfo(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
       if (results.status === 'success') {
         this.displayUserInfo = false;
         this.goBack()

@@ -62,6 +62,10 @@ import { ApiHrmV2Service } from './services/api-hrm/apihrmv2.service';
 import { OrganizeInfoService } from './services/organize-info.service';
 import { UniNotFoundComponent } from './components/uni-not-found/uni-not-found.component';
 import { DialogService } from 'primeng/dynamicdialog';
+import {
+    IconControlSvgModule,
+    IconControlModule
+  } from 'uni-control';
 const APP_CONTAINERS = [DefaultLayoutComponent];
 @NgModule({
     declarations: [
@@ -102,6 +106,8 @@ const APP_CONTAINERS = [DefaultLayoutComponent];
         BreadcrumbModule,
         OrganizationChartModule,
         MultiSelectModule,
+        IconControlSvgModule,
+        IconControlModule,
         // AgGridModule.withComponents([
         //     ButtonRendererComponent1,
         //     NumberCellRenderer,

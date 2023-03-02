@@ -12,6 +12,7 @@ import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.comp
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { ExportFileService } from 'src/app/services/export-file.service';
 import { cloneDeep } from 'lodash';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-cong-thuc-luong',
   templateUrl: './cong-thuc-luong.component.html',
@@ -114,8 +115,6 @@ export class CongThucLuongComponent implements OnInit {
       buttonAgGridComponent: ButtonAgGridComponent,
       avatarRendererFull: AvatarFullComponent,
     };
-
-
   }
   query = {
     filter: '',
@@ -140,7 +139,12 @@ export class CongThucLuongComponent implements OnInit {
   departments = [];
 
   isHrDiagram: boolean = false
-
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+  
   onmouseenter(event) {
     console.log(event)
   }
@@ -164,7 +168,9 @@ export class CongThucLuongComponent implements OnInit {
   }
 
   getAgencyOrganizeMap(type = false) {
-    this.apiService.getAgencyOrganizeMap().subscribe(results => {
+    this.apiService.getAgencyOrganizeMap()
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listAgencyMap = [...results.data.root];
         if (localStorage.getItem("organize") === null) {
@@ -235,7 +241,9 @@ export class CongThucLuongComponent implements OnInit {
     this.columnDefs = []
     this.spinner.show();
     const queryParams = queryString.stringify(this.query);
-    this.apiService.getEmployeePage(queryParams).subscribe(
+    this.apiService.getEmployeePage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         this.gridKey= results.data.dataList.gridKey;
@@ -367,7 +375,9 @@ export class CongThucLuongComponent implements OnInit {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa nhân viên?',
       accept: () => {
-        this.apiService.deleteEmployee(event.rowData.empId).subscribe((results: any) => {
+        this.apiService.deleteEmployee(event.rowData.empId)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa nhân viên thành công' });
             this.load();
@@ -403,7 +413,9 @@ export class CongThucLuongComponent implements OnInit {
   }
 
   unLockEmployee(params) {
-    this.apiService.setEmployeeOpenhrm(params).subscribe(results => {
+    this.apiService.setEmployeeOpenhrm(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Xác nhận làm việc thành công' });
         this.load();
@@ -414,7 +426,9 @@ export class CongThucLuongComponent implements OnInit {
   }
 
   setEmployeeClose(params) {
-    this.apiService.setEmployeeClose(params).subscribe(results => {
+    this.apiService.setEmployeeClose(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Xác nhận nghỉ việc thành công' });
         this.load();
@@ -451,7 +465,9 @@ export class CongThucLuongComponent implements OnInit {
   }
 
   setAccountStatus(params) {
-    this.apiService.setEmployeeApprovehrm(params).subscribe(results => {
+    this.apiService.setEmployeeApprovehrm(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: params.status ? 'Phê duyệt thành công' : 'Hủy phê duyệt thành công' });
         this.load();
@@ -522,7 +538,9 @@ export class CongThucLuongComponent implements OnInit {
   }
   employeeStatus = []
   getEmployeeStatus() {
-    this.apiService.getEmployeeStatus().subscribe(results => {
+    this.apiService.getEmployeeStatus()
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.employeeStatus = []
         results.data.forEach(s => {
@@ -588,7 +606,9 @@ export class CongThucLuongComponent implements OnInit {
     this.query.pageSize = 1000000;
     const query = { ...this.query };
     const queryParams = queryString.stringify(query);
-    this.apiService.getEmployeePage(queryParams).subscribe(
+    this.apiService.getEmployeePage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         const dataExport = [];
         let gridflexs = results.data.gridflexs;
@@ -706,7 +726,9 @@ export class CongThucLuongComponent implements OnInit {
 
   getOrgan() {
     const queryParams = queryString.stringify({ filter: '' });
-    this.apiService.getOrganizations(queryParams).subscribe(results => {
+    this.apiService.getOrganizations(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.organs = results.data.map(d => {
           return {
@@ -722,6 +744,7 @@ export class CongThucLuongComponent implements OnInit {
   getOrganizeTree(): void {
     const queryParams = queryString.stringify({ parentId: this.organizeId });
     this.apiService.getOrganizeTree(queryParams)
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe((results: any) => {
         if (results && results.status === 'success') {
           this.departmentFiltes = results.data;
@@ -762,7 +785,9 @@ export class CongThucLuongComponent implements OnInit {
           code: o.code
         }
       })
-      this.apiService.setListEmployeeChange(this.queryStaffToMove).subscribe(results => {
+      this.apiService.setListEmployeeChange(this.queryStaffToMove)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(results => {
         if (results.status === 'success') {
           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Cập nhật thành công' });
           this.load();

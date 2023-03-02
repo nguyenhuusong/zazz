@@ -1,11 +1,9 @@
-import { AfterViewChecked, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router, Params } from '@angular/router';
+import { AfterViewChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as queryString from 'querystring';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { ApiService } from 'src/app/services/api.service';
 import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
 import { NgxSpinnerService } from 'ngx-spinner';
-import * as moment from 'moment';
 import { CustomTooltipComponent } from 'src/app/common/ag-component/customtooltip.component';
 import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
 import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.component';
@@ -16,9 +14,8 @@ import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { cloneDeep } from 'lodash';
 import * as FileSaver from 'file-saver';
 import { DialogService } from 'primeng/dynamicdialog';
-import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-cs-an-ca',
   templateUrl: './cs-an-ca.component.html',
@@ -33,11 +30,8 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
   constructor(
     private spinner: NgxSpinnerService,
     private apiService: ApiHrmService,
-    private route: ActivatedRoute,
     private changeDetector: ChangeDetectorRef,
-    private confirmationService: ConfirmationService,
     private messageService: MessageService,
-    private organizeInfoService: OrganizeInfoService,
     public dialogService: DialogService,
     private router: Router) {
 
@@ -113,6 +107,12 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
   }
   companies = []
 
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
@@ -161,7 +161,9 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
     this.spinner.show();
     let params: any = { ... this.query };
     const queryParams = queryString.stringify(params);
-    this.apiService.getEatingPage(queryParams).subscribe(
+    this.apiService.getEatingPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.listsData = results.data.result.dataList.data;
         this.gridKey = results.data.result.dataList.gridKey;
@@ -320,7 +322,9 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
   }
 
   getOrgRoots() {
-    this.apiService.getOrgRoots().subscribe(results => {
+    this.apiService.getOrgRoots()
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.listOrgRoots = results.data.map(d => {
           return {
@@ -338,6 +342,7 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
   getOrganizeTree(): void {
     const queryParams = queryString.stringify({ parentId: this.query.organizeIds });
     this.apiService.getOrganizeTree(queryParams)
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe((results: any) => {
         if (results && results.status === 'success') {
           this.departmentFiltes = results.data;
@@ -415,7 +420,9 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
     this.detailInfo = []
     this.listViews = []
     this.isDetail = true;
-    this.apiService.getEatingForCreateInfo(queryString.stringify(this.modelAddEating)).subscribe(results => {
+    this.apiService.getEatingForCreateInfo(queryString.stringify(this.modelAddEating))
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.listViews = [...listViews];
@@ -428,7 +435,9 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
   getOrgPositions() {
     this.positions = [];
     const queryParams = queryString.stringify({ orgId: this.selectedValue.data });
-    this.apiService.getOrgPositions(queryParams).subscribe(results => {
+    this.apiService.getOrgPositions(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.positions = results.data.map(d => {
           return { label: d.positionName, value: d.positionCd }
@@ -441,7 +450,9 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
 
   getCompany() {
     const query = { organizeIds: this.query.organizeIds }
-    this.apiService.getUserCompanies(queryString.stringify(query)).subscribe(
+    this.apiService.getUserCompanies(queryString.stringify(query))
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         if (results.status === "success") {
           this.companies = results.data
@@ -464,7 +475,9 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
     const params = {
       ...this.detailInfo, group_fields: data
     };
-    this.apiService.setEatingInfo(params).subscribe((results: any) => {
+    this.apiService.setEatingInfo(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
       if (results.status === 'success') {
         this.isDetail = false;
         this.load();
@@ -490,7 +503,9 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
     params.orgId = this.selectedValue ? this.selectedValue.orgId : null
 
     const queryParams = queryString.stringify(params);
-    this.apiService.gxportEatingPage(queryParams).subscribe(results => {
+    this.apiService.gxportEatingPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.type === 'application/json') {
         this.spinner.hide();
       } else {
@@ -503,7 +518,9 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
 
   //filter 
   getFilter() {
-    this.apiService.getFilter('/api/v1/eating/GetEatingFilter').subscribe(results => {
+    this.apiService.getFilter('/api/v1/eating/GetEatingFilter')
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
@@ -533,48 +550,6 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
     }else {
       this.listViewsFilter =  cloneDeep(datas);
     }
-  }
-
-  showFilter() {
-    const ref = this.dialogService.open(FormFilterComponent, {
-      header: 'Tìm kiếm nâng cao',
-      width: '40%',
-      contentStyle: "",
-      data: {
-        listViews: this.listViewsFilter,
-        detailInfoFilter: this.detailInfoFilter,
-        buttons: this.optionsButonFilter
-      }
-    });
-
-    ref.onClose.subscribe((event: any) => {
-      if (event) {
-        this.listViewsFilter = cloneDeep(event.listViewsFilter);
-        if (event.type === 'Search') {
-          this.query = { ...this.query, ...event.data };
-          this.load();
-        } else if (event.type === 'CauHinh') {
-          this.apiService.getFilter('/api/v1/eating/GetEatingFilter').subscribe(results => {
-            if (results.status === 'success') {
-              const listViews = cloneDeep(results.data.group_fields);
-              this.listViewsFilter = [...listViews];
-              const params = getParamString(listViews)
-              this.query = { ...this.query, ...params };
-              this.load();
-              this.detailInfoFilter = results.data;
-              this.showFilter()
-            }
-          });
-
-        } else if (event.type === 'Reset') {
-          const listViews = cloneDeep(this.cloneListViewsFilter);
-          this.listViewsFilter = cloneDeep(listViews);
-          const params = getParamString(listViews)
-          this.query = { ...this.query, ...params };
-          this.load();
-        }
-      }
-    });
   }
 
   isSearchEmp = false;

@@ -3,10 +3,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as queryString from 'querystring';
-import { cloneDeep } from 'lodash';
-import * as moment from 'moment';
 import { AgGridFn } from 'src/app/common/function-common/common';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-thong-tin-ho-so-ca-nhan',
@@ -38,6 +36,11 @@ export class ThongTinHoSoCaNhanComponent implements OnInit {
     this.FnEvent();
   }
 
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
   
   FnEvent() {
     setTimeout(() => {
@@ -70,7 +73,9 @@ export class ThongTinHoSoCaNhanComponent implements OnInit {
     this.columnDefsRecord = [];
     const queryParams = queryString.stringify({ empId: this.empId});
     this.listViewsDetail = [];
-    this.apiService.getEmpRecord(queryParams).subscribe(results => {
+    this.apiService.getEmpRecord(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         // if (results.data.dataList.gridKey) {
         //   this.gridKeyRecord = results.data.dataList.gridKey;
@@ -99,7 +104,9 @@ export class ThongTinHoSoCaNhanComponent implements OnInit {
       records: this.listsDataRecord,
       is_full_submit: this.is_full_submit,
     }
-    this.apiService.setEmpRecord(params).subscribe(results => {
+    this.apiService.setEmpRecord(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thêm mới thành công' });
         this.displayFormEditDetail = false;
@@ -125,7 +132,9 @@ export class ThongTinHoSoCaNhanComponent implements OnInit {
     const param = {
       ...this.dataDetailInfo, group_fields: newData
     }
-    this.apiService.empproFileSetEmpAttach(param).subscribe(results => {
+    this.apiService.empproFileSetEmpAttach(param)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thêm mới thành công' });
         this.displayFormEditDetail = false;
@@ -144,7 +153,9 @@ export class ThongTinHoSoCaNhanComponent implements OnInit {
     this.spinner.show();
     this.columnDefs = [];
     const queryParams = queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 });
-    this.apiService.getEmpRecordPage(queryParams).subscribe(repo => {
+    this.apiService.getEmpRecordPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(repo => {
       if (repo.status === 'success') {
         if (repo.data.dataList.gridKey) {
           this.gridKey = repo.data.dataList.gridKey;
@@ -301,7 +312,9 @@ export class ThongTinHoSoCaNhanComponent implements OnInit {
       message: 'Bạn có chắc chắn muốn xóa bản ghi này này?',
       accept: () => {
         const queryParams = queryString.stringify({metaId: event.rowData.metaId});
-        this.apiService.empproFileDelEmpAttach(queryParams).subscribe((results: any) => {
+        this.apiService.empproFileDelEmpAttach(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Xóa thành công' });
             this.getEmpRecordPage();

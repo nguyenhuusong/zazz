@@ -11,7 +11,7 @@ import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { DialogService } from 'primeng/dynamicdialog';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-ly-do-nghi-viec',
   templateUrl: './ly-do-nghi-viec.component.html',
@@ -52,6 +52,13 @@ export class LyDoNghiViecComponent implements OnInit {
     private organizeInfoService: OrganizeInfoService,
     private router: Router) {
   }
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   query = {
     filter: '',
     offSet: 0,
@@ -80,7 +87,9 @@ export class LyDoNghiViecComponent implements OnInit {
     this.spinner.show();
     let params: any = { ... this.query };
     const queryParams = queryString.stringify(params);
-    this.apiService.getTerminateReasonPage(queryParams).subscribe(
+    this.apiService.getTerminateReasonPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         this.gridKey = results.data.dataList.gridKey;
@@ -193,7 +202,9 @@ export class LyDoNghiViecComponent implements OnInit {
       accept: () => {
         this.spinner.show();
         const queryParams = queryString.stringify({ reasonId: event.rowData.reasonId });
-        this.apiService.delTerminateReasonInfo(queryParams).subscribe(results => {
+        this.apiService.delTerminateReasonInfo(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa hồ sơ thành công' });
             this.load();
@@ -260,7 +271,9 @@ export class LyDoNghiViecComponent implements OnInit {
   ];
 
   getTerminateReasonFilter() {
-    this.apiService.getTerminateReasonFilter().subscribe(results => {
+    this.apiService.getTerminateReasonFilter()
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);

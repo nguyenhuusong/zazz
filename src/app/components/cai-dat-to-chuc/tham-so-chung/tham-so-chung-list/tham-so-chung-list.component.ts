@@ -14,9 +14,8 @@ import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { DialogService } from 'primeng/dynamicdialog';
 import { cloneDeep } from 'lodash';
-import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-tham-so-chung-list',
@@ -98,7 +97,7 @@ export class ThamSoChungListComponent implements OnInit {
   objectTypes = [];
   listViewsFilter = [];
   cloneListViewsFilter = [];
-detailInfoFilter = null;
+  detailInfoFilter = null;
   optionsButonFilter = [
     { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm height-56 addNew', icon: 'pi pi-search' },
     { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger height-56 addNew', icon: 'pi pi-times' },
@@ -107,6 +106,13 @@ detailInfoFilter = null;
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
   }
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   cancel() {
     this.query = {
       filter: '',
@@ -131,7 +137,9 @@ detailInfoFilter = null;
 
   getObjectTypes(): void {
     const opts1 = { params: new HttpParams({ fromString: `objKey=object_type` }) };
-    this.apiService.getCustObjectListNew(true, opts1.params.toString()).subscribe(results => {
+    this.apiService.getCustObjectListNew(true, opts1.params.toString())
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       this.objectTypes = results.data.map(d => {
         return {
           label: d.objName,
@@ -143,7 +151,9 @@ detailInfoFilter = null;
 
   getModuleTypes(): void {
     const opts1 = { params: new HttpParams({ fromString: `objKey=module_type` }) };
-    this.apiService.getCustObjectListNew(true, opts1.params.toString()).subscribe(results => {
+    this.apiService.getCustObjectListNew(true, opts1.params.toString())
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       this.moduleTypes = results.data.map(d => {
         return {
           label: d.objName,
@@ -181,6 +191,7 @@ detailInfoFilter = null;
     this.spinner.show();
     const queryParams = queryString.stringify(this.query);
     this.apiService.getParameterPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
     .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
@@ -332,7 +343,9 @@ detailInfoFilter = null;
 
   //filter 
   getFilter() {
-    this.apiService.getFilter('/api/v1/eating/GetEatingFilter').subscribe(results => {
+    this.apiService.getFilter('/api/v1/eating/GetEatingFilter')
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
@@ -360,47 +373,6 @@ detailInfoFilter = null;
     }else {
       this.listViewsFilter =  cloneDeep(datas);
     }
-  }
-showFilter() {
-    const ref = this.dialogService.open(FormFilterComponent, {
-      header: 'Tìm kiếm nâng cao',
-      width: '40%',
-      contentStyle: "",
-      data: {
-        listViews: this.listViewsFilter,
-        detailInfoFilter: this.detailInfoFilter,
-        buttons: this.optionsButonFilter
-      }
-    });
-
-    ref.onClose.subscribe((event: any) => {
-      if (event) {
-        this.listViewsFilter = cloneDeep(event.listViewsFilter);
-        if (event.type === 'Search') {
-          this.query = { ...this.query, ...event.data };
-          this.load();
-        } else if (event.type === 'CauHinh') {
-        this.apiService.getEmpFilter().subscribe(results => {
-            if (results.status === 'success') {
-              const listViews = cloneDeep(results.data.group_fields);
-              this.listViewsFilter = [...listViews];
-              const params =  getParamString(listViews)
-              this.query = { ...this.query, ...params};
-              this.load();
-              this.detailInfoFilter = results.data;
-              this.showFilter()
-            }
-          });
-
-        } else if (event.type === 'Reset') {
-          const listViews = cloneDeep(this.cloneListViewsFilter);
-          this.listViewsFilter = cloneDeep(listViews);
-         const params =  getParamString(listViews)
-        this.query = { ...this.query, ...params};
-        this.load();
-        }
-      }
-    });
   }
 
   ngAfterViewInit(): void {

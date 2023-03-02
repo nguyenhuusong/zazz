@@ -2,9 +2,7 @@ import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import * as queryString from 'querystring';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { ApiService } from 'src/app/services/api.service';
 import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
-import { HttpParams } from '@angular/common/http';
 import { CustomTooltipComponent } from 'src/app/common/ag-component/customtooltip.component';
 import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
 import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.component';
@@ -13,7 +11,7 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
 import { cloneDeep } from 'lodash';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
 import * as FileSaver from 'file-saver';
@@ -96,6 +94,12 @@ export class NoiLamViecComponent implements OnInit {
     this.gridColumnApi = params.columnApi;
   }
 
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   cancel() {
     this.query = {
       filter: '',
@@ -136,7 +140,9 @@ export class NoiLamViecComponent implements OnInit {
     this.columnDefs = []
     this.spinner.show();
     const queryParams = queryString.stringify(this.query);
-    this.apiService.getWorkplacePage(queryParams).subscribe(
+    this.apiService.getWorkplacePage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
         this.gridKey = results.data.dataList.gridKey;
@@ -174,7 +180,9 @@ export class NoiLamViecComponent implements OnInit {
   ];
   //filter 
   getFilter() {
-    this.apiService.getFilter('/api/v2/workplace/GetWorkplaceFilter').subscribe(results => {
+    this.apiService.getFilter('/api/v2/workplace/GetWorkplaceFilter')
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
       if (results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
@@ -253,7 +261,9 @@ export class NoiLamViecComponent implements OnInit {
       message: 'Bạn có chắc chắn muốn xóa nơi làm việc?',
       accept: () => {
         const queryParams = queryString.stringify({ workplaceId: event.rowData.workplaceId });
-        this.apiService.delWorkplaceInfo(queryParams).subscribe(results => {
+        this.apiService.delWorkplaceInfo(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Đã xóa nơi làm việc' });
             this.load();
@@ -324,9 +334,21 @@ export class NoiLamViecComponent implements OnInit {
           this.exportExel();
         }
       },
+      {
+        label: 'Tỉnh thành',
+        code: 'Import',
+        icon: 'pi pi-server',
+        command: () => {
+          this.loadProvince();
+        }
+      },
     ]
     this.getFilter();
 
+  }
+
+  loadProvince() {
+    this.router.navigate(['/cai-dat/tinh-thanh']);
   }
 
   importFileExel() {
@@ -338,7 +360,9 @@ export class NoiLamViecComponent implements OnInit {
     this.query.pageSize = 1000000;
     const query = { ...this.query };
     const queryParams = queryString.stringify(query);
-    this.apiService.setWorkplaceExport(queryParams).subscribe(
+    this.apiService.setWorkplaceExport(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
       (results: any) => {
 
         if (results.type === 'application/json') {
