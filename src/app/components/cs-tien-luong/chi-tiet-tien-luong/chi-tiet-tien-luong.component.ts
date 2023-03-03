@@ -39,7 +39,6 @@ export class ChiTietTienLuongComponent implements OnInit {
   url = '';
   itemsMenu = [];
   modelEdit = {
-    terminateId: null,
     recordId: null
   };
   private readonly unsubscribe$: Subject<void> = new Subject();
@@ -65,7 +64,6 @@ export class ChiTietTienLuongComponent implements OnInit {
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
-      this.modelEdit.terminateId = this.paramsObject.params.terminateId || null
       this.modelEdit.recordId = this.paramsObject.params.recordId || null
       this.getSalaryRecordInfo();
     });
@@ -146,7 +144,7 @@ export class ChiTietTienLuongComponent implements OnInit {
       if (results.status === 'success') {
         this.activeIndex = results.data.flow_st;
         this.flowCurrent = results.data.flow_cur;
-        this.modelEdit.terminateId = results.data.terminateId;
+        this.modelEdit.recordId = results.data.recordId;
         this.listViews = cloneDeep(results.data.group_fields);
         setTimeout(() => {
           this.stepActivated();
@@ -187,14 +185,14 @@ export class ChiTietTienLuongComponent implements OnInit {
     this.detailInfo = null;
     this.listViews = [];
     this.spinner.show();
-    const queryParams = queryString.stringify({ terminateId: this.modelEdit.terminateId, flow_cur: flow_cur, recordId: this.modelEdit.recordId });
+    const queryParams = queryString.stringify({  flow_cur: flow_cur, recordId: this.modelEdit.recordId });
     this.apiService.getSalaryRecordInfo(queryParams)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(results => {
       if (results.status === 'success') {
         this.activeIndex = results.data.flow_st;
         this.flowCurrent = results.data.flow_cur;
-        this.modelEdit.terminateId = results.data.terminateId;
+        this.modelEdit.recordId = results.data.recordId;
         this.steps = results.data.flowStatuses.map(d => {
           return {
             label: d.flow_name,
