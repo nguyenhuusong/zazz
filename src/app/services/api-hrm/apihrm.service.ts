@@ -789,6 +789,15 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v2/contract/GetPrintFiles`,queryParams, this.options)
   }
 
+  getContractImportTemp(): Observable<any> {
+    return this.http.get(`${apiHrmServer}/api/v2/contract/GetContractImportTemp`, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
+  }
+
   // Thai sản
 
   getMaternityPage(queryParams): Observable<any> {
@@ -2095,6 +2104,15 @@ export class ApiHrmService {
   delSalaryInfoNew(queryParams): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v1/salaryInfo/DelSalaryInfo?${queryParams}`, this.options)
   }
+  
+  getSalaryInfoImportTemp(): Observable<any> {
+    return this.http.get(`${apiHrmServer}/api/v1/salaryInfo/GetSalaryInfoImportTemp`, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
+  }
 
   // loai bang luong
   getHrmPayrollTypePage(queryParams): Observable<any> {
@@ -2631,6 +2649,16 @@ export class ApiHrmService {
   getEmpByInsurance(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/empinsurance/GetEmpByInsurance?` + queryParams, this.options);
   }
+  getInsuranceImportTemp(): Observable<any> {
+    return this.http.get(`${apiHrmServer}/api/v2/empinsurance/GetInsuranceImportTemp`, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
+  }
+
+
   // SetEmpByInsuranceInfo --> SetEmpByInsurance
   setEmpByInsuranceInfo(queryParams): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/empinsurance/SetEmpByInsurance` ,  queryParams, this.options)

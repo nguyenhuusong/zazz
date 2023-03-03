@@ -336,7 +336,9 @@ const routes: Routes = [
     api: 'setInsuranceImport',
     apiAccept: 'setInsuranceAccept',
     fileDoc: 'bien_dong_bhxh_import.xlsx',
-    apiExport: 'setInsuranceExportDraft'
+    apiExport: 'setInsuranceExportDraft',
+    apiTemImport: 'getInsuranceImportTemp',
+    fileNameTemImport: 'file_mau_bien_dong_xa_hoi',
   },
 },
   
