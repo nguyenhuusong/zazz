@@ -2,7 +2,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { ButtonAgGridComponent } from '../ag-component/button-renderermutibuttons.component';
 import { CustomTooltipComponent } from '../ag-component/customtooltip.component';
-import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
+import { AllModules, Module, RowDragEndEvent } from '@ag-grid-enterprise/all-modules';
 import { AvatarFullComponent } from '../ag-component/avatarFull.component';
 import { ActivatedRoute } from '@angular/router';
 import { ButtonRendererComponent } from 'src/app/utils/common/button-renderer.component';
@@ -466,6 +466,31 @@ export class ListGridAngularTreeComponent implements OnInit, OnChanges {
       },
     }, ...athleteMenuItems]
     return athleteMenuItems;
+  }
+
+
+  onRowDragMove(event: RowDragEndEvent) {
+    var movingNode = event.node!;
+    var overNode = event.overNode!;
+    // find out what country group we are hovering over
+    var groupCountry;
+    if (overNode.group) {
+      // if over a group, we take the group key (which will be the
+      // country as we are grouping by country)
+      groupCountry = overNode.key;
+    } else {
+      // if over a non-group, we take the country directly
+      groupCountry = overNode.data.country;
+    }
+    var needToChangeParent = movingNode.data.country !== groupCountry;
+    if (needToChangeParent) {
+      var movingData = movingNode.data;
+      movingData.country = groupCountry;
+      this.gridApi.applyTransaction({
+        update: [movingData],
+      });
+      this.gridApi.clearFocusedCell();
+    }
   }
 }
 

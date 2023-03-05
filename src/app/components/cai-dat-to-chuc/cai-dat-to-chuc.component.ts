@@ -380,6 +380,15 @@ export class CaiDatToChucComponent implements OnInit {
       return data.orgHierarchy;
     };
     this.columnDefs = [
+      // {
+      //   filter: '',
+      //   width: 70,
+      //   rowDrag: true,
+      //   cellRenderer: 'buttonAgGridComponent',
+      //   cellClass: ['border-right', 'no-auto'],
+      //   checkboxSelection: false,
+      //   field: 'rowid'
+      // },
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       {
         headerComponentParams: {
