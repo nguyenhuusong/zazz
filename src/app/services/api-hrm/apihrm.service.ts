@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { from, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -12,10 +12,8 @@ const apiCore = environment.apiCoreBase;
 const apiShome = environment.apiShomeBase;
 @Injectable()
 export class ApiHrmService {
-  constructor(
-    private http: HttpClient,
-    private authService: AuthService) { }
-
+  private http = inject(HttpClient);
+  private authService = inject(AuthService)
   options = {
     headers: new HttpHeaders({
       Authorization: this.authService.getAuthorizationHeaderValue(),
