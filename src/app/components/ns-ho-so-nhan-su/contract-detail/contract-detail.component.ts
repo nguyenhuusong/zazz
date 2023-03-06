@@ -182,7 +182,6 @@ export class ContractDetailComponent implements OnInit {
       this.listViews = [];
       this.setContractDraft(params);
     } else {
-
       if(this.flowCurrent >= this.activeIndex) {
         const params = {
           ...this.detailInfo, group_fields: event.data
