@@ -529,7 +529,6 @@ detailInfoFilter = null;
           this.imageLinksCard[2].cardVehicleId = this.modelTM.cardVehicleId;
           this.modelTM.cusId = rowData.custId;
           // this.modelTM.cardId = results.data.cardId;
-          this.getImageUrl(results.data.imageLinks)
           this.getUserByPush();
           this.GetHrmCardByCustId();
           // this.search({ query: results.data.fullName }, 'edit');
@@ -823,6 +822,7 @@ onCellClicked(event) {
       if (results.status === 'success') {
         this.listViews = [...results.data.group_fields];
         this.detailInfo = results.data;
+        this.getImageUrl(results.data.imageVehicle)
       }
     })
   }
