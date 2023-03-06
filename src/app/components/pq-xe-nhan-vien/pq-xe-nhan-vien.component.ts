@@ -503,42 +503,12 @@ detailInfoFilter = null;
     this.isNew = false;
     this.getEmpVehicleInfo(rowData.cardVehicleId);
     const cardVehicleId = rowData.cardVehicleId;
-    this.modelTM.imageLinks = cloneDeep(this.imageLinksCard);
     if (cardVehicleId === null || cardVehicleId === 0) {
       alert('Cần phê duyệt');
     } else {
-      this.apiService.getDetailEmployeeVehicleInfo(cardVehicleId)
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        (results: any) => {
-          this.modelTM.type = 2;
-          this.modelTM.cardVehicleId = results.data.cardVehicleId;
-          this.modelTM.vehicleNoTM = results.data.vehicleNo;
-          this.modelTM.organizeId = rowData.organizeId;
-          this.modelTM.vehicleNameTM = results.data.vehicleName;
-          this.modelTM.vehicleTypeIdTM = results.data.vehicleTypeId;
-          this.modelTM.vehiclecardCd = results.data.cardId;
-          this.modelTM.startTimeTM = stringtodate(results.data.startTime);
-          this.modelTM.endTimeTM = results.data.endTime ? stringtodate(results.data.endTime) : '';
-          this.showVehicleCard = this.modelTM.endTimeTM ? true : false;
-          this.displayCreateVehicleCard = true;
-          this.modelTM.noteTM = results.data.note;
-          this.modelTM.vehicleColorTM = results.data.vehicleColor;
-          this.imageLinksCard[0].cardVehicleId = this.modelTM.cardVehicleId;
-          this.imageLinksCard[1].cardVehicleId = this.modelTM.cardVehicleId;
-          this.imageLinksCard[2].cardVehicleId = this.modelTM.cardVehicleId;
-          this.modelTM.cusId = rowData.custId;
-          // this.modelTM.cardId = results.data.cardId;
-          this.getImageUrl(results.data.imageLinks)
-          this.getUserByPush();
-          this.GetHrmCardByCustId();
-          // this.search({ query: results.data.fullName }, 'edit');
-          // this.show_dialogcreate = true;
-        }, error => this.handlerError(error));
     }
 
   }
-
 
 onCellClicked(event) {
   if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
@@ -547,20 +517,22 @@ onCellClicked(event) {
 }
 
   getImageUrl(datas) {
-    if(datas[0]){
+    this.modelTM.imageLinks = cloneDeep(this.imageLinksCard);
+    let dataClone = cloneDeep(this.imageLinksCard)
+    if(datas && datas[0]){
       this.modelTM.imageLinks[0] = datas[0]
     }else{
-      this.modelTM.imageLinks[0] = this.imageLinksCard[0]
+      this.modelTM.imageLinks[0] = dataClone[0]
     }
-    if(datas[1]){
+    if(datas && datas[1]){
       this.modelTM.imageLinks[1] = datas[1]
     }else{
-      this.modelTM.imageLinks[1] = this.imageLinksCard[1]
+      this.modelTM.imageLinks[1] = dataClone[1]
     }
-    if(datas[2]){
+    if(datas && datas[2]){
       this.modelTM.imageLinks[2] = datas[2]
     }else{
-      this.modelTM.imageLinks[2] = this.imageLinksCard[2]
+      this.modelTM.imageLinks[2] = dataClone[2]
     }
   }
 
@@ -594,13 +566,6 @@ onCellClicked(event) {
             this.load();
           }
         }, error => { });
-        // if(this.imageLinksCard[0].url && this.imageLinksCard[1].url && this.imageLinksCard[2].url) {
-      // }
-      // else{
-      // this.displayCreateVehicleCard = false;
-      //   this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Vui lòng cập nhật ảnh' });
-      // }
-    // this.loadCardVip(this.model.custId);
 
   }
 
@@ -816,6 +781,7 @@ onCellClicked(event) {
   }
 
   getEmpVehicleInfo(cardVehicleId = null, empId = null) {
+    this.listViews = []
     this.isDetailVehic = true;
     this.apiService.getEmpVehicleInfo(stringify({cardVehicleId: cardVehicleId, empId: empId}))
     .pipe(takeUntil(this.unsubscribe$))
@@ -823,6 +789,7 @@ onCellClicked(event) {
       if (results.status === 'success') {
         this.listViews = [...results.data.group_fields];
         this.detailInfo = results.data;
+        this.getImageUrl(results.data.imageVehicle);
       }
     })
   }
@@ -830,7 +797,7 @@ onCellClicked(event) {
   setEmpVehicleInfo(data) {
     this.spinner.show();
     const params = {
-      ...this.detailInfo, group_fields: data
+      ...this.detailInfo, group_fields: data, imageVehicle: this.modelTM.imageLinks
     }
     this.apiService.setEmployeeVehicleInfo(params)
     .pipe(takeUntil(this.unsubscribe$))
@@ -842,7 +809,7 @@ onCellClicked(event) {
         } else {
           this.messageService.add({
             severity: 'error', summary: 'Thông báo',
-            detail: results.message
+            detail: results.message ? results.message : 'Không thành công'
           });
           this.spinner.hide();
         }

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { from, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -12,10 +12,8 @@ const apiCore = environment.apiCoreBase;
 const apiShome = environment.apiShomeBase;
 @Injectable()
 export class ApiHrmService {
-  constructor(
-    private http: HttpClient,
-    private authService: AuthService) { }
-
+  private http = inject(HttpClient);
+  private authService = inject(AuthService)
   options = {
     headers: new HttpHeaders({
       Authorization: this.authService.getAuthorizationHeaderValue(),
@@ -296,11 +294,11 @@ export class ApiHrmService {
   }
 
   getSalaryEatingPage(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/salary/GetSalaryEatingPage?` + queryParams, this.options)
+    return this.http.get<any>(`${apiHrmServer}/api/v1/eating/GetSalaryEatingPage?` + queryParams, this.options)
   }
-  
+
   getSalarySupportPage(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/salary/GetSalarySupportPage?` + queryParams, this.options)
+    return this.http.get<any>(`${apiHrmServer}/api/v1/salaryevaluate/GetSalarySupportPage?` + queryParams, this.options)
   }
 
   getSalaryDeductPage(queryParams): Observable<any> {
@@ -308,11 +306,11 @@ export class ApiHrmService {
   }
 
   getSalaryPartimePage(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/salary/GetSalaryPartimePage?` + queryParams, this.options)
+    return this.http.get<any>(`${apiHrmServer}/api/v1/salarypartime/GetSalaryPartimePage?` + queryParams, this.options)
   }
 
-  getSalaryPrerformancePage(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/salary/GetSalaryPrerformancePage?` + queryParams, this.options)
+  getSalaryEvaluatePage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/salaryevaluate/GetSalaryEvaluatePage?` + queryParams, this.options)
   }
   
   getSalaryRecordInfo(queryParams): Observable<any> {
@@ -1823,6 +1821,16 @@ export class ApiHrmService {
       responseType: "blob"
     })
   }
+  setTerminateExportTemp(queryParams): Observable<Blob> {
+    return this.http.post(`${apiHrmServer}/api/v2/terminate/SetTerminateExportTemp`, queryParams, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    })
+  }
+
+  
 
   // Holiday
 
@@ -3145,5 +3153,45 @@ export class ApiHrmService {
     };
     return this.http.post<any>(`${apiHrmServer}/api/v2/empinsurance/SetInsuranceImport`, params, customOptions);
   }
+
+  // SchemeInfo
+
+  getSchemeInfoPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/schemeInfo/GetSchemeInfoPage?` + queryParams, this.options);
+  }
+
+  getSchemeOpenPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/schemeInfo/GetSchemeOpenPage?` + queryParams, this.options);
+  }
+
+  getSchemeOpen(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/schemeInfo/GetSchemeOpen?` + queryParams, this.options);
+  }
+
+  getSchemeInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/schemeInfo/GetSchemeInfo?` + queryParams, this.options);
+  }
+
+  delSchemeInfo(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v1/schemeInfo/DelSchemeInfo?` + queryParams, this.options);
+  }
+
+  setSchemeInfo(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/schemeInfo/SetSchemeInfo` ,  queryParams, this.options);
+  }
+
+  setSchemeOpen(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/schemeInfo/SetSchemeOpen` ,  queryParams, this.options);
+  }
+  // SalaryTrans
+  getSalaryTransPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/salaryevaluate/GetSalaryTransPage?` + queryParams, this.options);
+  }
+
+  getSalaryTrans(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/salaryevaluate/GetSalaryTrans?` + queryParams, this.options);
+  }
+
+
 
 }

@@ -375,6 +375,23 @@ styleClass="menu-option-right" #menuButton></p-menu>
   [optionsButtonsEdit]="optionsButon" 
   [dataView]="listViews"
   (callback)="setEmpVehicleInfo($event)" (callbackcancel)="quaylai($event)"></app-edit-detail>
+  <div class="d-flex">
+    <div class="col-md-4 image-vehicle" *ngFor="let imgUrl of modelTM.imageLinks; let indexImg = index">
+      <h4>{{ indexImg === 0 || indexImg === 1 ? 'Ảnh giấy chứng nhận đăng ký xe' : 'Ảnh biển số xe' }}</h4>
+      <div class="img">
+        <p-image src="{{ imgUrl?.url ? imgUrl?.url : '/../../../../assets/images/file.png' }}" [preview]="true" alt="Image" ></p-image>
+         <p-fileUpload 
+           mode="basic" 
+           name="demo[]" 
+           [chooseIcon]="'pi pi-upload'"
+           accept="image/*" 
+           [maxFileSize]="10000000" 
+           (onSelect)="uploadImageVehicle($event, indexImg)">
+         </p-fileUpload>
+         <span class="pi pi-times delete-image" *ngIf="imgUrl?.url" (click)="deleteImg(indexImg)"></span>
+       </div>
+     </div>
+  </div>
 </p-dialog>
 
 <app-hrm-search-emp 

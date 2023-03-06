@@ -74,7 +74,7 @@ import { AnCaComponent } from 'src/app/components/cs-tien-luong/chi-tiet-tien-lu
 import { HieuSuatLaoDongComponent } from 'src/app/components/cs-tien-luong/chi-tiet-tien-luong/hieu-suat-lao-dong/hieu-suat-lao-dong.component';
 import { LamNgoaiGioComponent } from 'src/app/components/cs-tien-luong/chi-tiet-tien-luong/lam-ngoai-gio/lam-ngoai-gio.component';
 import { HoTroComponent } from 'src/app/components/cs-tien-luong/chi-tiet-tien-luong/ho-tro/ho-tro.component';
-import { GiamTruThueComponent } from 'src/app/components/cs-tien-luong/chi-tiet-tien-luong/giam-tru-thue/giam-tru-thue.component';
+import { TangGiamComponent } from 'src/app/components/cs-tien-luong/chi-tiet-tien-luong/giam-tru-thue/tang-giam.component';
 
 @NgModule({
   imports: [
@@ -158,7 +158,7 @@ import { GiamTruThueComponent } from 'src/app/components/cs-tien-luong/chi-tiet-
     HieuSuatLaoDongComponent,
     LamNgoaiGioComponent,
     HoTroComponent,
-    GiamTruThueComponent,
+    TangGiamComponent,
   ],
   providers: [],
 })
