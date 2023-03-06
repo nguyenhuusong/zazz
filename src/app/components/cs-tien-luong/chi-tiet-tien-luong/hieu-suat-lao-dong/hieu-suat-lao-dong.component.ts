@@ -32,7 +32,7 @@ export class HieuSuatLaoDongComponent implements OnInit {
   detailCellRendererParams = null;
   listDataNew = [];
   ngOnInit(): void {
-    this.getSalaryPrerformancePage();
+    this.getSalaryEvaluatePage();
   }
 
   private readonly unsubscribe$: Subject<void> = new Subject();
@@ -45,11 +45,11 @@ export class HieuSuatLaoDongComponent implements OnInit {
     this.displaySetting = true;
   }
   
-  getSalaryPrerformancePage() {
+  getSalaryEvaluatePage() {
     this.spinner.show();
     this.columnDefs = [];
     const queryParams = queryString.stringify({ recordId: this.recordId, offSet: 0, pageSize: 10000 });
-    this.apiService.getSalaryPrerformancePage(queryParams)
+    this.apiService.getSalaryEvaluatePage(queryParams)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(repo => {
       if (repo.status === 'success') {

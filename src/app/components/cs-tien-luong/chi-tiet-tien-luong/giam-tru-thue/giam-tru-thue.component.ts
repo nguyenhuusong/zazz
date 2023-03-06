@@ -33,7 +33,7 @@ export class GiamTruThueComponent implements OnInit {
   detailCellRendererParams = null;
   listDataNew = [];
   ngOnInit(): void {
-    this.getSalaryDeductPage();
+    this.getSalaryTransPage();
   }
 
   cauhinh() {
@@ -46,11 +46,11 @@ export class GiamTruThueComponent implements OnInit {
     this.unsubscribe$.complete();
   }
     
-  getSalaryDeductPage() {
+  getSalaryTransPage() {
     this.spinner.show();
     this.columnDefs = [];
     const queryParams = queryString.stringify({ recordId: this.recordId, offSet: 0, pageSize: 10000 });
-    this.apiService.getSalaryDeductPage(queryParams)
+    this.apiService.getSalaryTransPage(queryParams)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(repo => {
       if (repo.status === 'success') {
