@@ -163,11 +163,17 @@ export class ImportXyLyHopDongComponent implements OnInit {
   }
 
   getTemfileImport() {
-    this.apiService.exportReportLocalhost('assets/tpl-import-file/HopDongLaoDong_Import.xlsx')
+    this.apiService.getContractImportTemp()
     .pipe(takeUntil(this.unsubscribe$))
-    .subscribe((data: any) => {
-      this.createImageFromBlob(data)
-    });
+    .subscribe(results => {
+      if (results.type === 'application/json') {
+        this.spinner.hide();
+      } else {
+        var blob = new Blob([results], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        FileSaver.saveAs(blob, `file_mau_hop_dong` +".xlsx");
+        this.spinner.hide();
+      }
+    })
   }
 
   createImageFromBlob(image: Blob) {

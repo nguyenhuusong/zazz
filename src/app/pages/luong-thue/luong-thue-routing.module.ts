@@ -8,6 +8,8 @@ import { CauTrucBangLuongComponent } from 'src/app/components/luong-thue/bang-lu
 import { CongThucLuongComponent } from 'src/app/components/luong-thue/bang-luong/cong-thuc-luong/cong-thuc-luong.component';
 import { ImportCapBacLuongComponent } from 'src/app/components/luong-thue/tinh-luong/import-cap-bac-luong/import-cap-bac-luong.component';
 import { ImportExcelComponent } from 'src/app/common/import-excel/import-excel.component';
+import { ChinhSachLuongComponent } from 'src/app/components/chinh-sach-luong/chinh-sach-luong.component';
+import { ChiTietChinhSachLuongComponent } from 'src/app/components/chinh-sach-luong/chi-tiet-chinh-sach-luong/chi-tiet-chinh-sach-luong.component';
 
 const routes: Routes = [
   {
@@ -86,9 +88,31 @@ const routes: Routes = [
     },
   },
 
-  
-  ,
-
+  // CHính sách
+  {
+    path: 'chinh-sach',
+    component: ChinhSachLuongComponent,
+    data: {
+      title: 'Danh sách chính sách lương',
+      url: 'chinh-sach',
+    },
+  },
+  {
+    path: 'chinh-sach/them-moi-chinh-sach',
+    component: ChiTietChinhSachLuongComponent,
+    data: {
+      title: 'Thêm mới chính sách lương',
+      url: 'them-moi-chinh-sach',
+    },
+  },
+  {
+    path: 'chinh-sach/chi-tiet-chinh-sach',
+    component: ChiTietChinhSachLuongComponent,
+    data: {
+      title: 'Chi tiết chính sách lương',
+      url: 'chi-tiet-chinh-sach',
+    },
+  },
   
 ];
 

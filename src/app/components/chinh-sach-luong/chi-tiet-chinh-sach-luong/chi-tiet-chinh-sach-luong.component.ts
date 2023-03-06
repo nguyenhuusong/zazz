@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -7,11 +7,15 @@ import * as queryString from 'querystring';
 import { cloneDeep } from 'lodash';
 import { Subject, takeUntil } from 'rxjs';
 @Component({
-  selector: 'app-chi-tiet-tien-luong',
-  templateUrl: './chi-tiet-tien-luong.component.html',
-  styleUrls: ['./chi-tiet-tien-luong.component.scss']
+  selector: 'app-chi-tiet-chinh-sach-luong',
+  templateUrl: './chi-tiet-chinh-sach-luong.component.html',
+  styleUrls: ['./chi-tiet-chinh-sach-luong.component.scss']
 })
-export class ChiTietTienLuongComponent implements OnInit {
+export class ChiTietChinhSachLuongComponent implements OnInit {
+  @Output() callback = new EventEmitter<any>();
+  @Output() back = new EventEmitter<any>();
+  @Input() isDialog = false;
+  @Input() id = null;
   constructor(
     private apiService: ApiHrmService,
     private messageService: MessageService,
@@ -39,23 +43,27 @@ export class ChiTietTienLuongComponent implements OnInit {
   url = '';
   itemsMenu = [];
   modelEdit = {
-    recordId: null
-  };
+    schemeId: null,
+  }
   private readonly unsubscribe$: Subject<void> = new Subject();
   ngOnDestroy() {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
-
   ngOnInit(): void {
     this.titlePage = this.activatedRoute.data['_value'].title;
     this.url = this.activatedRoute.data['_value'].url;
     this.itemsMenu =  [
       { label: 'Trang chủ' , routerLink: '/home' },
-      { label: 'Danh sách tiền lương', routerLink: '/chinh-sach/tien-luong' },
+      { label: 'Danh sách chính sách lương', routerLink: '/luong-thue/chinh-sach' },
       { label: `${this.titlePage}` },
     ]
-    this.handleParams();
+    if(this.isDialog) {
+      this.modelEdit.schemeId = this.id
+      this.getSchemeInfo();
+    }else {
+      this.handleParams();
+    }
   }
   paramsObject = null;
 
@@ -64,8 +72,8 @@ export class ChiTietTienLuongComponent implements OnInit {
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
-      this.modelEdit.recordId = this.paramsObject.params.recordId || null
-      this.getSalaryRecordInfo();
+      this.modelEdit.schemeId = this.paramsObject.params.schemeId || null
+      this.getSchemeInfo();
     });
   }
   indexTab = 0;
@@ -87,16 +95,16 @@ export class ChiTietTienLuongComponent implements OnInit {
   }
   cancel(data) {
     if (data === 'CauHinh') {
-      this.getSalaryRecordInfo() 
+      this.getSchemeInfo() 
     } else if (data === 'BackPage') {
       this.listViews = [];
-      this.getSalaryRecordInfo(this.flowCurrent === 1 ? this.flowCurrent: this.flowCurrent -1)
+      this.getSchemeInfo(this.flowCurrent === 1 ? this.flowCurrent: this.flowCurrent -1)
     } else {
-      this.router.navigate(['/chinh-sach/tien-luong'])
+     this.isDialog ? this.callback.emit() : this.router.navigate(['/luong-thue/chinh-sach']);
     }
   }
 
-  setTerminateInfo(data) {
+  setSchemeInfo(data) {
     if(this.flowCurrent >= this.activeIndex) {
       this.listViews = [];
       const params = {
@@ -106,7 +114,7 @@ export class ChiTietTienLuongComponent implements OnInit {
       this.listViews = [];
       this.callApiInfo(params)
     }else {
-      this.getSalaryRecordInfo(this.flowCurrent + 1);
+      this.getSchemeInfo(this.flowCurrent + 1);
     }
    
   }
@@ -138,13 +146,13 @@ export class ChiTietTienLuongComponent implements OnInit {
   flowCurrent = 0
   callApiInfo(params, type = 'Update') {
     this.spinner.show();
-    this.apiService.setSalaryRecordInfo(params)
+    this.apiService.setSchemeInfo(params)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(results => {
       if (results.status === 'success') {
         this.activeIndex = results.data.flow_st;
         this.flowCurrent = results.data.flow_cur;
-        this.modelEdit.recordId = results.data.recordId;
+        this.modelEdit.schemeId = results.data.schemeId;
         this.listViews = cloneDeep(results.data.group_fields);
         setTimeout(() => {
           this.stepActivated();
@@ -162,7 +170,7 @@ export class ChiTietTienLuongComponent implements OnInit {
 
         if(type === 'Submit' || type === 'SaveNhap') {
           setTimeout(() => {
-            this.router.navigate(['/chinh-sach/tien-luong'])
+            this.isDialog ? this.callback.emit() : this.router.navigate(['/luong-thue/chinh-sach'])
           }, 200);
         }
       } else {
@@ -181,18 +189,18 @@ export class ChiTietTienLuongComponent implements OnInit {
     })
   }
 
-  getSalaryRecordInfo(flow_cur = null) {
+  getSchemeInfo(flow_cur = null) {
     this.detailInfo = null;
     this.listViews = [];
     this.spinner.show();
-    const queryParams = queryString.stringify({  flow_cur: flow_cur, recordId: this.modelEdit.recordId });
-    this.apiService.getSalaryRecordInfo(queryParams)
+    const queryParams = queryString.stringify({ schemeId: this.modelEdit.schemeId, flow_cur: flow_cur });
+    this.apiService.getSchemeInfo(queryParams)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(results => {
       if (results.status === 'success') {
         this.activeIndex = results.data.flow_st;
         this.flowCurrent = results.data.flow_cur;
-        this.modelEdit.recordId = results.data.recordId;
+        this.modelEdit.schemeId = results.data.schemeId;
         this.steps = results.data.flowStatuses.map(d => {
           return {
             label: d.flow_name,
@@ -217,12 +225,12 @@ export class ChiTietTienLuongComponent implements OnInit {
         this.messageService.add({
           severity: 'error', summary: 'Thông báo', detail: results.message
         });
-        this.router.navigate(['/chinh-sach/tien-luong'])
+        this.isDialog ? this.callback.emit() : this.router.navigate(['/luong-thue/chinh-sach'])
       }
     })
   }
 
-
+  
 }
 
   

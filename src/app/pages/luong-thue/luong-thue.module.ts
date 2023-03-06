@@ -61,6 +61,8 @@ import { DividerModule } from 'primeng/divider';
 import { ImportCapBacLuongComponent } from 'src/app/components/luong-thue/tinh-luong/import-cap-bac-luong/import-cap-bac-luong.component';
 import { ImportExcelModule } from 'src/app/common/import-excel/import-excel.module';
 import { ImportThanhPhanLuongComponent } from 'src/app/components/luong-thue/tinh-luong/import-thanh-phan-luong/import-thanh-phan-luong.component';
+import { ChinhSachLuongComponent } from 'src/app/components/chinh-sach-luong/chinh-sach-luong.component';
+import { ChiTietChinhSachLuongComponent } from 'src/app/components/chinh-sach-luong/chi-tiet-chinh-sach-luong/chi-tiet-chinh-sach-luong.component';
 
 @NgModule({
   imports: [
@@ -132,6 +134,11 @@ import { ImportThanhPhanLuongComponent } from 'src/app/components/luong-thue/tin
     MucLuongComponent,
     ImportCapBacLuongComponent,
     ImportThanhPhanLuongComponent,
+    ChinhSachLuongComponent,
+    ChiTietChinhSachLuongComponent
+    
+
+
    
 
   ],

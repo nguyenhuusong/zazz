@@ -161,11 +161,23 @@ export class ImportTerminateComponent implements OnInit {
   }
 
   getTemfileImport() {
-    this.apiService.exportReportLocalhost('assets/tpl-import-file/HSNS_NghiViec_Import.xlsx')
+    this.spinner.show();
+    this.apiService.setTerminateExportTemp(null)
     .pipe(takeUntil(this.unsubscribe$))
-    .subscribe((data: any) => {
-      this.createImageFromBlob(data)
-    });
+    .subscribe(
+      (results: any) => {
+
+        if (results.type === 'application/json') {
+          this.spinner.hide();
+        } else if (results.type === 'application/octet-stream') {
+          var blob = new Blob([results], { type: 'application/msword' });
+          FileSaver.saveAs(blob, `file_mau_danh_sach_nghi_viec` + ".xlsx");
+          this.spinner.hide();
+        }
+      },
+      error => {
+        this.spinner.hide();
+      });
   }
 
   createImageFromBlob(image: Blob) {

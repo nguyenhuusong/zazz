@@ -341,10 +341,11 @@ export class CaiDatToChucComponent implements OnInit {
   }
 
   delOrgin(event) {
-    this.spinner.show();
+    
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn thực hiện hành động này?',
       accept: () => {
+        this.spinner.show();
         const queryParams = queryString.stringify({ orgId: event.rowData.orgId });
         this.apiService.delOrganize(queryParams)
         .pipe(takeUntil(this.unsubscribe$))
@@ -355,10 +356,11 @@ export class CaiDatToChucComponent implements OnInit {
             this.getAgencyOrganizeMap();
             this.spinner.hide();
           } else {
+            this.spinner.hide();
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
           }
         });
-      }
+      },
     });
   }
   autoGroupColumnDef = null;
@@ -378,6 +380,15 @@ export class CaiDatToChucComponent implements OnInit {
       return data.orgHierarchy;
     };
     this.columnDefs = [
+      // {
+      //   filter: '',
+      //   width: 70,
+      //   rowDrag: true,
+      //   cellRenderer: 'buttonAgGridComponent',
+      //   cellClass: ['border-right', 'no-auto'],
+      //   checkboxSelection: false,
+      //   field: 'rowid'
+      // },
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       {
         headerComponentParams: {

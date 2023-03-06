@@ -161,11 +161,17 @@ export class ImportQtThayDoiLuongComponent implements OnInit {
   }
 
   getTemfileImport() {
-    this.apiService.exportReportLocalhost('assets/tpl-import-file/HSNS-QuaTrinhLuong_Import.xlsx')
+    this.apiService.getSalaryInfoImportTemp()
     .pipe(takeUntil(this.unsubscribe$))
-    .subscribe((data: any) => {
-      this.createImageFromBlob(data)
-    });
+    .subscribe(results => {
+      if (results.type === 'application/json') {
+        this.spinner.hide();
+      } else {
+        var blob = new Blob([results], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        FileSaver.saveAs(blob, `file_mau_qua_trinh_luong` +".xlsx");
+        this.spinner.hide();
+      }
+    })
   }
 
   createImageFromBlob(image: Blob) {
