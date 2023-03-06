@@ -7,11 +7,11 @@ import { AgGridFn, TextFormatter } from 'src/app/common/function-common/common';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
-  selector: 'app-giam-tru-thue',
-  templateUrl: './giam-tru-thue.component.html',
-  styleUrls: ['./giam-tru-thue.component.scss']
+  selector: 'tang-giam',
+  templateUrl: './tang-giam.component.html',
+  styleUrls: ['./tang-giam.component.scss']
 })
-export class GiamTruThueComponent implements OnInit {
+export class TangGiamComponent implements OnInit {
   @Input() recordId = null;
   @Input() detailInfo = null;
   optionsButtonsPopup = [

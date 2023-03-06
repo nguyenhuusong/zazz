@@ -44,7 +44,7 @@
             <app-ho-tro [recordId]="modelEdit.recordId" *ngIf="indexTab === 5 && modelEdit.recordId"></app-ho-tro>
         </p-tabPanel>
         <p-tabPanel header="Tăng/Giảm" *ngIf="detailInfo && detailInfo.approved_st">
-            <app-giam-tru-thue [recordId]="modelEdit.recordId" *ngIf="indexTab === 6 && modelEdit.recordId"></app-giam-tru-thue>
+            <tang-giam [recordId]="modelEdit.recordId" *ngIf="indexTab === 6 && modelEdit.recordId"></tang-giam>
         </p-tabPanel>
     </p-tabView>
     <div>
