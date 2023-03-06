@@ -1823,6 +1823,16 @@ export class ApiHrmService {
       responseType: "blob"
     })
   }
+  setTerminateExportTemp(queryParams): Observable<Blob> {
+    return this.http.post(`${apiHrmServer}/api/v2/terminate/SetTerminateExportTemp`, queryParams, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    })
+  }
+
+  
 
   // Holiday
 
