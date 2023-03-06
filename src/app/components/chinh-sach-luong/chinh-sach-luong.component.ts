@@ -230,7 +230,7 @@ export class ChinhSachLuongComponent implements OnInit, AfterViewChecked {
     const params = {
       schemeId: rowData.schemeId,
     }
-    this.router.navigate(['/cai-dat/chuc-danh/chi-tiet-chuc-danh'], { queryParams: params });
+    this.router.navigate(['/luong-thue/chinh-sach/chi-tiet-chinh-sach'], { queryParams: params });
   }
 
   onCellClicked(event) {
@@ -244,7 +244,7 @@ export class ChinhSachLuongComponent implements OnInit, AfterViewChecked {
     const params = {
       schemeId: null
     }
-    this.router.navigate(['/cai-dat/chuc-danh/them-moi-chuc-danh'], { queryParams: params });
+    this.router.navigate(['/luong-thue/chinh-sach/them-moi-chinh-sach'], { queryParams: params });
   }
 
   find() {
