@@ -25,11 +25,13 @@
             </div>
         </div>
     </div>
+
     <div class="content page-detail" style="padding: 0;">
         <p-panel styleClass="no-header">
             <div class="">
                 <div class="row col-md-12">
                     <div class="page-detail-edit-detail" >
+                       
                         <app-edit-detail *ngIf="listViews.length> 0" 
                             [isShowAvatar] = true
                             [detail]="detailInfo" 

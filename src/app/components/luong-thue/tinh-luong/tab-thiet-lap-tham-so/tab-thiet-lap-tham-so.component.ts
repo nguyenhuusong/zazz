@@ -35,7 +35,7 @@ export class TabThietLapThamSoComponent implements OnInit {
   objectAction: any;
   objectActionDetail: any;
   gridflexs: any;
-  listsData = null;
+  listsData = [];
   totalRecord = 0;
   first = 0;
   displaySetting = false

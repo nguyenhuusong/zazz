@@ -90,9 +90,9 @@
     </section> -->
     <p-menu [model]="itemsToolOfGrid" [appendTo]="'body'" [popup]="true" styleClass="menu-option-right" #menuButton></p-menu>
     <section class="content pb-0">
-        <div class="grid-default" #container>
-            <app-list-grid-angular *ngIf="columnDefs.length > 0" 
-                [listsData]="listsData" 
+        <div class="grid-default" #container  >
+            <app-list-grid-angular 
+                [listsData]="listsData" *ngIf="columnDefs.length > 0"
                 [height]="heightGrid"
                 [columnDefs]="columnDefs"
                 [rowSelection]="'multiple'"
@@ -102,12 +102,15 @@
                 (showConfig)="cauhinh()"
                 >
             </app-list-grid-angular>
-            <div class="paginator">
-                <span>Từ {{ countRecord.currentRecordStart }} đến
+
+            <app-loading-grid *ngIf="columnDefs.length === 0"></app-loading-grid>
+
+            <div class="paginator" >
+                <span >Từ {{ countRecord.currentRecordStart }} đến
                     {{ countRecord.currentRecordEnd }}
                     trên tổng số
                     {{ countRecord.totalRecord }} kết quả</span>
-                <p-paginator [rows]="query.pageSize" [totalRecords]="countRecord.totalRecord" [first]="first"
+                <p-paginator  [rows]="query.pageSize" [totalRecords]="countRecord.totalRecord" [first]="first"
                     (onPageChange)="paginate($event)" [rowsPerPageOptions]="[20,40,60,100,200,{ showAll: 'ALL' }]">
                 </p-paginator>
             </div>

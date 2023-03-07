@@ -44,7 +44,7 @@ export class NsCauHinhMailComponent implements OnInit {
   objectActionDetail: any;
   gridflexs: any;
   getRowHeight;
-  listsData = null;
+  listsData = [];
   selectedNode
   totalRecord = 0;
   first = 0;

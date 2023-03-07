@@ -122,6 +122,8 @@ import { ImportQtThayDoiLuongComponent } from 'src/app/components/qt-thay-doi-lu
 import { ChiTietThueBaoHiemComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/thue-bao-hiem/chi-tiet-thue-bao-hiem/chi-tiet-thue-bao-hiem.component';
 import { BienDongBHXHComponent } from 'src/app/components/bien-dong-bhxh/bien-dong-bhxh.component';
 import { ChiTietBienDongBHXHComponent } from 'src/app/components/bien-dong-bhxh/chi-tiet-bien-dong-bhxh/chi-tiet-bien-dong-bhxh.component';
+import {SkeletonModule} from 'primeng/skeleton';
+import { LoadingGridModule } from 'src/app/common/loading-grid/loading-grid.module';
 @NgModule({
   imports: [
     MessagesModule,
@@ -175,6 +177,8 @@ import { ChiTietBienDongBHXHComponent } from 'src/app/components/bien-dong-bhxh/
     FormFilterModule,
     DynamicDialogModule,
     HrmSearchEmpModule,
+    LoadingGridModule,
+    SkeletonModule,
     CheckHideActionsDirectiveModule,
     AgGridModule.withComponents([
       ButtonRendererComponent,

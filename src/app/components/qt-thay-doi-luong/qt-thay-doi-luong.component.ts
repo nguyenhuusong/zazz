@@ -64,7 +64,7 @@ export class QtThayDoiLuongComponent implements OnInit {
   objectActionDetail: any;
   gridflexs: any;
   getRowHeight;
-  listsData = null;
+  listsData = [];
   selectedNode
   capaStatus = [
     { label: 'Tất cả', value: -1 },

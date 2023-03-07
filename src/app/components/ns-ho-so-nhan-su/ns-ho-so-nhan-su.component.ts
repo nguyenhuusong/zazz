@@ -63,7 +63,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
   objectActionDetail: any;
   gridflexs: any;
   getRowHeight;
-  listsData = null;
+  listsData = [];
   selectedNode
   capaStatus = [
     { label: 'Tất cả', value: -1 },
@@ -235,7 +235,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
 
   load() {
     this.columnDefs = []
-    this.spinner.show();
+    // this.spinner.show();
     const params: any = { ...this.query };
     const queryParams = queryString.stringify(params);
     this.apiService.getEmployeePage(queryParams)
