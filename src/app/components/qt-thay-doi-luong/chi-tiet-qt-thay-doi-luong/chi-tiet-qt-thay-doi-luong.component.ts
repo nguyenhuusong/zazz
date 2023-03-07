@@ -154,7 +154,6 @@ export class ChiTietQTThayDoiLuongComponent implements OnInit {
         this.listViews = [];
         this.callApiInfo(params, event.type);
       }
-    
     }
   }
 

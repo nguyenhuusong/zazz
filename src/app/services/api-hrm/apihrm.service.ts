@@ -2702,6 +2702,11 @@ export class ApiHrmService {
   setInsuranceInfo(queryParams): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/empinsurance/SetInsuranceInfo` ,  queryParams, this.options)
   }
+
+  setInsuranceDraft(data): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/empinsurance/SetInsuranceDraft`, data , this.options)
+  }
+  
   setEmpInsuranceInfo(queryParams): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/empinsurance/SetEmpInsuranceInfo` ,  queryParams, this.options)
   }

@@ -120,27 +120,101 @@ export class ChiTietBienDongBHXHComponent implements OnInit {
   }
   cloneListViews = []
   callBackForm(event) {
-    if (this.flowCurrent >= this.activeIndex) {
+    if (event.type === 'IsSpecial') {
       const params = {
-        ...this.detailInfo
-        , group_fields: event.data
-        , flow_cur: event.type === 'Submit' ? this.flowCurrent : this.flowCurrent
-        , action: event.type === 'Submit' ? 'submit' : 'save'
+        ...this.detailInfo, group_fields: event.data
       }
       this.cloneListViews = cloneDeep(event.data);
       this.listViews = [];
-      this.callApiInfo(params, event.type);
+      this.setInsuranceDraft(params);
     } else {
-      const params = {
-        ...this.detailInfo
-        , group_fields: event.data
-        , flow_st: this.detailInfo.flow_cur
-        , action: event.type === 'Submit' ? 'submit' : 'save'
+      if(this.flowCurrent >= this.activeIndex) {
+        const params = {
+          ...this.detailInfo
+          , group_fields: event.data
+          , flow_cur: event.type === 'Submit' ? this.flowCurrent : this.flowCurrent
+          , action: event.type === 'Submit' ? 'submit' : 'save'
+        }
+        this.cloneListViews = cloneDeep(event.data);
+        this.listViews = [];
+        this.callApiInfo(params, event.type);
+      }else {
+        const params = {
+          ...this.detailInfo
+          , group_fields: event.data
+          , flow_st: this.detailInfo.flow_cur
+          , action: event.type === 'Submit' ? 'submit' : 'save'
+        }
+        this.cloneListViews = cloneDeep(event.data);
+        this.listViews = [];
+        this.callApiInfo(params, event.type);
       }
-      this.cloneListViews = cloneDeep(event.data);
-      this.listViews = [];
-      this.callApiInfo(params, event.type);
     }
+
+
+
+
+
+
+    // if (this.flowCurrent >= this.activeIndex) {
+    //   const params = {
+    //     ...this.detailInfo
+    //     , group_fields: event.data
+    //     , flow_cur: event.type === 'Submit' ? this.flowCurrent : this.flowCurrent
+    //     , action: event.type === 'Submit' ? 'submit' : 'save'
+    //   }
+    //   this.cloneListViews = cloneDeep(event.data);
+    //   this.listViews = [];
+    //   this.callApiInfo(params, event.type);
+    // } else {
+    //   const params = {
+    //     ...this.detailInfo
+    //     , group_fields: event.data
+    //     , flow_st: this.detailInfo.flow_cur
+    //     , action: event.type === 'Submit' ? 'submit' : 'save'
+    //   }
+    //   this.cloneListViews = cloneDeep(event.data);
+    //   this.listViews = [];
+    //   this.callApiInfo(params, event.type);
+    // }
+  }
+
+
+  setInsuranceDraft(params) {
+    this.spinner.show();
+    this.apiService.setInsuranceDraft(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
+      if (results.status === 'success') {
+        this.activeIndex = results.data.flow_st;
+        this.listViews = cloneDeep(results.data.group_fields);
+        setTimeout(() => {
+          this.stepActivated();
+        }, 100);
+        this.detailInfo = results.data;
+        this.modelEdit.insuranceId = results.data.insuranceId
+        this.flowCurrent = results.data.flow_cur;
+        this.optionsButtonsView =[
+          { label: 'Quay lại', value: 'BackPage', class: `p-button-secondary ${results.data.prev_st ? '' : 'hidden'}`, icon: 'pi pi-caret-left', },
+          { label: 'Tiếp tục', value: 'Update', class: `btn-accept ${results.data.next_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-caret-right' },
+          { label: 'Lưu tạm', value: 'SaveNhap', class: `btn-accept ${results.data.save_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
+          { label: 'Xác nhận', value: 'Submit', class: `btn-accept ${results.data.submit_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
+          { label: 'Đóng', value: 'Close', class: `p-button-danger ml-1`, icon: 'pi pi-times' }
+        ]
+        this.spinner.hide();
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
+      } else {
+        this.listViews = cloneDeep(this.cloneListViews);
+        setTimeout(() => {
+          this.stepActivated();
+         }, 100);
+        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
+        this.spinner.hide();
+      }
+    }, error => {
+      this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: error });
+      this.spinner.hide();
+    })
   }
 
   flowCurrent = 0
