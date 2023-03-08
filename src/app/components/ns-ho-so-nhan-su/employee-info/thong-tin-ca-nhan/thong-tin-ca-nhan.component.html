@@ -43,8 +43,12 @@
                             (callback)="setEmployeeInfo($event)" 
                             (callbackcancel)="cancelUpdate($event)">
                         </app-edit-detail>
+                        <app-loading-detail [id]="'employee-info-01'" *ngIf="listViews.length === 0"></app-loading-detail>
+                        
                         <p-divider></p-divider>
+
                         <app-giay-to-tuy-than [empId]="empId"></app-giay-to-tuy-than>
+
                         <app-thong-tin-nguoi-lien-he [empId]="empId"></app-thong-tin-nguoi-lien-he>
                         <app-thong-tin-ho-so-ca-nhan [empId]="empId"></app-thong-tin-ho-so-ca-nhan>
                         <app-danh-sach-dinh-kem [empId]="empId"></app-danh-sach-dinh-kem>

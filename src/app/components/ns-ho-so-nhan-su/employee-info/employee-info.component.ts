@@ -64,6 +64,7 @@ export class EmployeeInfoComponent implements OnInit {
   }
   tabIndex = 0
   handleChange(index) {
+    // this.dataEmployeeStatus = null;
     this.tabIndex = index
   }
   dataEmployeeStatus = null;
@@ -81,6 +82,7 @@ export class EmployeeInfoComponent implements OnInit {
   }
   
   reloadEdit() {
+    console.log('rieload')
     this.dataEmployeeStatus = null;
     this.getEmployeeStatus();
   }

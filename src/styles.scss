@@ -6455,6 +6455,15 @@ app-type-linkurl-drag{
         padding-bottom: 0 !important;
         box-shadow: 1px 1px 5px #cccccc47;
     }
+    .row 
+    {
+        margin-left: -8px;
+        margin-right: -8px;
+        & > div{
+            padding-left: 8px;
+            padding-right: 8px;
+        }
+    }
 }
 .fields-lazy{
     margin-bottom: 15px;

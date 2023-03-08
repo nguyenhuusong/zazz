@@ -7,7 +7,6 @@
         <p-tabView (onChange)="handleChange($event.index)" [(activeIndex)]="tabIndex">
             <p-tabPanel header="Thông tin cá nhân" leftIcon="{{dataEmployeeStatus?.profile_st ? 'pi pi-check-circle' : ''}} ">
                 <app-thong-tin-ca-nhan [empId]="empId" *ngIf="tabIndex ===0 && dataEmployeeStatus" [dataEmployeeStatus]="dataEmployeeStatus" (reloadEdit)="reloadEdit()"></app-thong-tin-ca-nhan>
-                <app-loading-detail [id]="'employee-info-01'"></app-loading-detail>
             </p-tabPanel>
              <p-tabPanel header="Vị trí công việc" leftIcon="{{dataEmployeeStatus?.working_st ? 'pi pi-check-circle' : ''}} ">
                 <app-vi-tri-cong-viec [empId]="empId" *ngIf="tabIndex ===1 && dataEmployeeStatus" [dataEmployeeStatus]="dataEmployeeStatus" (reloadEdit)="reloadEdit()"></app-vi-tri-cong-viec>
