@@ -91,7 +91,7 @@ export class NguonTuyenDungComponent implements OnInit {
 
   load() {
     this.columnDefs = [];
-    this.spinner.show();
+    // this.spinner.show();
     const queryParams = queryString.stringify(this.query);
     this.apiService.getRecruitSourcePage(queryParams)
     .pipe(takeUntil(this.unsubscribe$))
