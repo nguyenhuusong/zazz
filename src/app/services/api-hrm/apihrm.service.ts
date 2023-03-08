@@ -2582,6 +2582,15 @@ export class ApiHrmService {
       responseType: "blob"
     });
   }
+  
+  getEmployeeImportTemp(): Observable<any> {
+    return this.http.get(`${apiHrmServer}/api/v2/employee/GetEmployeeImportTemp`, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
+  }
 
   // EmpWorking
   

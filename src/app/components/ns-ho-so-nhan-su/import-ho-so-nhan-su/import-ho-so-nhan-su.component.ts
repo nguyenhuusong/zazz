@@ -166,11 +166,17 @@ export class ImportHoSoNhanSuComponent implements OnInit {
   }
 
   getTemfileImport() {
-    this.apiService.exportReportLocalhost('assets/tpl-import-file/HoSoNhanSu_Import.xlsx')
+    this.apiService.getEmployeeImportTemp()
     .pipe(takeUntil(this.unsubscribe$))
-    .subscribe((data: any) => {
-      this.createImageFromBlob(data)
-    });
+    .subscribe(results => {
+      if (results.type === 'application/json') {
+        this.spinner.hide();
+      } else {
+        var blob = new Blob([results], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        FileSaver.saveAs(blob, `file_mau_ho_so_nhan_su` +".xlsx");
+        this.spinner.hide();
+      }
+    })
   }
 
   createImageFromBlob(image: Blob) {
