@@ -55,7 +55,12 @@
                             [dataView]="listViews" (callback)="setEmployeeInfo($event)"
                             (callbackcancel)="cancelUpdate($event)">
                         </app-edit-detail>
+                        <app-loading-detail 
+                            [id]="'employee-info-02'" 
+                            *ngIf="listViews.length === 0">
+                        </app-loading-detail>
                         <p-divider></p-divider>
+
                         <app-qua-trinh-cong-tac [empId]="empId" (cancelSave)="cancelSave()"></app-qua-trinh-cong-tac>
                         <app-thoi-gian-lam-viec [empId]="empId"></app-thoi-gian-lam-viec>
                     </div>
