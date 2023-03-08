@@ -53,6 +53,7 @@
                 (showConfig)="cauhinh()"
                 (onCellClicked)="onCellClicked($event)"
                 [columnDefs]="columnDefs"></app-list-grid-angular>
+                <app-loading-grid  [gridtype]="'hsnv'" *ngIf="columnDefs.length === 0" [columnNumber]="14"></app-loading-grid>
             <div class="paginator">
                 <span>Từ {{ countRecord.currentRecordStart }} đến
                     {{ countRecord.currentRecordEnd }}

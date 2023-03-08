@@ -162,7 +162,7 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
   listsData = [];
   load() {
     this.columnDefs = []
-    this.spinner.show();
+    // this.spinner.show();
     const queryParams: any = { ...this.query };
     const queryStrings = queryString.stringify(queryParams);
     this.apiService.getLeavePage(queryStrings)
