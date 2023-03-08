@@ -18,7 +18,12 @@
                         [idGrid]="gridKey + '_45dfs'"
                         [columnDefs]="columnDefs">
                     </app-list-grid-angular>
-
+                    <app-loading-grid 
+                    [columnNumber]="9" 
+                    gridtype="''" 
+                    [value]="[1,2]" 
+                    *ngIf="columnDefs.length === 0">
+                </app-loading-grid>
                 </div>
             </div>
         </p-panel>
@@ -34,13 +39,29 @@
         [gridKey]="gridKey"></app-config-grid-table-form>
 </p-dialog>
 
-
-<p-dialog styleClass="popup-btngroup-edit-detail"  [(visible)]="displayFormEditDetail" [draggable]="false"  [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '1400px', height: 'auto'}">
+<p-dialog styleClass="popup-btngroup-edit-detail"  [(visible)]="displayAddSchemeByEmpId" [draggable]="false"  [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '1400px', height: 'auto'}">
     <p-header>
-        {{salaryInfoId ? 'Chỉnh sửa quá trình lương' : 'Thêm mới quá trình lương'}}
+        Thêm nhân viên áp dụng chính sách
     </p-header>
-
-    <app-chi-tiet-qt-thay-doi-luong [empId]="empId" *ngIf="displayFormEditDetail" [salaryInfoId]="salaryInfoId" (callback)="callbackForm()" [isDialog] =  "true"></app-chi-tiet-qt-thay-doi-luong>
+    <app-list-grid-angular 
+    [domLayout]="'autoHeight'" 
+    *ngIf="columnDefs2.length > 0" 
+    [idGrid]="gridKey + '_45dfs34343'"
+    [title]="'Chứng chỉ'"
+    [listsData]="listsData2" 
+    (showConfig)="CauHinh()"
+    (onCellClicked)="onCellClicked($event)"
+    (callback)="rowSelected($event)"
+    [columnDefs]="columnDefs2">
+</app-list-grid-angular>
+<!-- <app-loading-grid [columnNumber]="10" *ngIf="columnDefs2.length === 0"  [gridtype]="'hsnv'" [value]="[1,2,3,4,5,6,7,8,9,1,2,3,4,5,6,7]"></app-loading-grid> -->
+<p-footer>
+    <button type="button" pButton icon="pi pi-check" label="Lưu lại" (click)="save()"></button>
+    <button type="button" class="p-button-secondary btn-cancel" pButton icon="pi pi-times" label="Hủy bỏ" (click)="displayAddSchemeByEmpId = !displayAddSchemeByEmpId"></button>
+</p-footer>
 </p-dialog>
+
+
+
 
 

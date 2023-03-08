@@ -43,7 +43,7 @@ export class ChinhSachNvComponent implements OnInit, AfterViewInit {
       if (dragTarget) {
         const click$ = fromEvent(dragTarget, 'click');
         click$.subscribe(event => {
-          this.addTienLuong()
+          this.addSchemeByEmpid()
         });
       }
     }, 300);
@@ -56,6 +56,7 @@ export class ChinhSachNvComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.getSchemeEmpPage();
+    this.getSchemeEmp();
   }
   columnDefs = [];
   gridKey = '';
@@ -297,6 +298,92 @@ export class ChinhSachNvComponent implements OnInit, AfterViewInit {
       }
     });
   }
+
+  displayAddSchemeByEmpId = false;
+  columnDefs2 = [];
+  listsData2 = [];
+  listSelects = [];
+  rowSelected(data) {
+    this.listSelects = data;
+  }
+
+  getSchemeEmp() {
+    this.columnDefs2 = [];
+    const queryParams = queryString.stringify({empId: this.empId,filter: '' });
+    this.apiService.getSchemeEmp(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(repo => {
+      if (repo.status === 'success') {
+        // if (repo.data.gridKey) {
+        //   this.gridKey = repo.data.gridKey;
+        // }
+        this.spinner.hide();
+        this.listsData2 = repo.data.dataList.data || [];
+        this.initGrid2(repo.data.gridflexs);
+        this.FnEvent();
+      } else {
+        this.spinner.hide();
+      }
+    })
+  }
+
+  initGrid2(gridflexs) {
+    this.columnDefs2 = [
+      {
+        headerName: '',
+        filter: false,
+        maxWidth: 50,
+        pinned: 'left',
+        cellRenderer: params => {
+          return params.rowIndex + 1
+        },
+        cellClass: ['border-right', 'no-auto'],
+        headerCheckboxSelection: true,
+        headerCheckboxSelectionFilteredOnly: false,
+        field: 'checkbox2',
+        suppressSizeToFit: false,
+        suppressColumnsToolPanel: false,
+        // checkboxSelection: (params) => {
+        //   return !!params.data && params.data.emp_st === 0;
+        // },
+        showDisabledCheckboxes: true,
+      },
+      ...AgGridFn(gridflexs || []),
+    ];
+  }
+
+  addSchemeByEmpid() {
+    this.displayAddSchemeByEmpId = true;
+  }
+
+  save() {
+    this.spinner.show();
+    const params = {
+      empId: this.empId,
+      from_date: null,
+      to_date: null,
+      schemeIds: this.listSelects
+    }
+    this.apiService.setSchemeOpen(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
+      if (results.status === 'success') {
+        this.messageService.add({
+          severity: 'success', summary: 'Thông báo', detail: results.message
+        });
+        this.displayAddSchemeByEmpId = false;
+        this.getSchemeEmpPage();
+        this.spinner.hide();
+      }else {
+        this.spinner.hide();
+        this.messageService.add({
+          severity: 'error', summary: 'Thông báo', detail: results.message
+        });
+      }
+    })
+  }
+
+
 }
 
 
