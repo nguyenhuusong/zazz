@@ -2938,6 +2938,14 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v2/empother/GetEmployeeByUtility?` + queryParams, this.options);
   }
 
+  getEmpDeviceFilter(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/empother/GetEmpDeviceFilter?` + queryParams, this.options);
+  }
+
+  getEmpDevicePage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/empother/GetEmpDevicePage?` + queryParams, this.options);
+  }
+
   getEmpUserInfo(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/empother/GetEmpUserInfo?` + queryParams, this.options);
   }

@@ -134,7 +134,7 @@ export class ChinhSachLuongComponent implements OnInit, AfterViewChecked {
   listsData = [];
   load() {
     this.columnDefs = []
-    this.spinner.show();
+    // this.spinner.show();
     const queryParams = queryString.stringify(this.query);
     this.apiService.getSchemeInfoPage(queryParams)
     .pipe(takeUntil(this.unsubscribe$))

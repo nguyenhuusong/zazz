@@ -212,7 +212,7 @@ export class QtThayDoiLuongComponent implements OnInit {
 
   load() {
     this.columnDefs = []
-    this.spinner.show();
+    // this.spinner.show();
     const queryParams = queryString.stringify(this.query);
     this.apiService.getSalaryInfoPageNew(queryParams)
     .pipe(takeUntil(this.unsubscribe$))

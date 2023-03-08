@@ -100,7 +100,7 @@ export class TabBangLuongComponent implements OnInit {
 
   load() {
     this.columnDefs = [];
-    this.spinner.show();
+    // this.spinner.show();
     const queryParams = queryString.stringify(this.query);
     this.apiService.getPayrollInfoPage(queryParams)
     .pipe(takeUntil(this.unsubscribe$))
