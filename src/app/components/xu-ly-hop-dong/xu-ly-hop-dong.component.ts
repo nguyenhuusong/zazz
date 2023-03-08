@@ -176,7 +176,7 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
   
   load() {
     this.columnDefs = []
-    this.spinner.show();
+    // this.spinner.show();
     let params: any = { ... this.query };
     const queryParams = queryString.stringify(params);
     this.apiService.getContractPage(queryParams)
