@@ -64,6 +64,7 @@ import { ImportThanhPhanLuongComponent } from 'src/app/components/luong-thue/tin
 import { ChinhSachLuongComponent } from 'src/app/components/chinh-sach-luong/chinh-sach-luong.component';
 import { ChiTietChinhSachLuongComponent } from 'src/app/components/chinh-sach-luong/chi-tiet-chinh-sach-luong/chi-tiet-chinh-sach-luong.component';
 import { LoadingGridModule } from 'src/app/common/loading-grid/loading-grid.module';
+import { ApDungCsComponent } from 'src/app/components/chinh-sach-luong/ap-dung-cs/ap-dung-cs.component';
 
 @NgModule({
   imports: [
@@ -137,8 +138,8 @@ import { LoadingGridModule } from 'src/app/common/loading-grid/loading-grid.modu
     ImportCapBacLuongComponent,
     ImportThanhPhanLuongComponent,
     ChinhSachLuongComponent,
-    ChiTietChinhSachLuongComponent
-    
+    ChiTietChinhSachLuongComponent,
+    ApDungCsComponent
 
 
    

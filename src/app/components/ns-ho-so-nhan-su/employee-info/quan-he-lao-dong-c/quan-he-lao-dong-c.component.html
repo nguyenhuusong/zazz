@@ -52,6 +52,10 @@
                         </app-loading-grid>
 
                         <app-thong-tin-nguoi-phu-thuoc  *ngIf="empId" [empId]="empId" (cancelSave)="getEmployeeInfo()"></app-thong-tin-nguoi-phu-thuoc> 
+
+                        <app-thong-tin-nguoi-phu-thuoc  *ngIf="empId" [empId]="empId" (cancelSave)="getEmployeeInfo()"></app-thong-tin-nguoi-phu-thuoc> 
+
+                        <app-chinh-sach-nv  *ngIf="empId" [empId]="empId" (cancelSave)="getEmployeeInfo()"></app-chinh-sach-nv> 
                             
 
                     </div>

@@ -13,11 +13,19 @@
 </p-card>
 <p-divider></p-divider>
 <p-card>
-    <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'"
-        [optionsButtonsEdit]="optionsButtonsView" [dataView]="listViews" (callback)="setSchemeInfo($event)" (callBackForm)="callBackForm($event)"
-        (callbackcancel)="cancel($event)"></app-edit-detail>
-    <div>
-    </div>
+    
+    
+
+        <p-tabView [(activeIndex)]="indexTab" (onChange)="handleChange($event.index)">
+            <p-tabPanel header="Thông tin chung">
+                    <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'"
+                        [optionsButtonsEdit]="optionsButtonsView" [dataView]="listViews" (callback)="setSchemeInfo($event)" (callBackForm)="callBackForm($event)"
+                        (callbackcancel)="cancel($event)"></app-edit-detail>
+            </p-tabPanel>
+            <p-tabPanel header="Áp dụng chính sách" *ngIf="modelEdit.schemeId">
+                <app-ap-dung-cs *ngIf="indexTab === 1" [schemeId]="modelEdit.schemeId"></app-ap-dung-cs>
+            </p-tabPanel>
+          </p-tabView>
        
 </p-card>
 

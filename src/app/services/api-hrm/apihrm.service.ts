@@ -3181,6 +3181,14 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v1/schemeInfo/GetSchemeOpenPage?` + queryParams, this.options);
   }
 
+  getSchemeEmpPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/schemeInfo/GetSchemeEmpPage?` + queryParams, this.options);
+  }
+
+  getSchemeEmp(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/schemeInfo/GetSchemeEmp?` + queryParams, this.options);
+  }
+
   getSchemeOpen(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/schemeInfo/GetSchemeOpen?` + queryParams, this.options);
   }
@@ -3193,8 +3201,20 @@ export class ApiHrmService {
     return this.http.delete<any>(`${apiHrmServer}/api/v1/schemeInfo/DelSchemeInfo?` + queryParams, this.options);
   }
 
+  delSchemeOpen(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v1/schemeInfo/DelSchemeOpen?` + queryParams, this.options);
+  }
+
   setSchemeInfo(queryParams): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v1/schemeInfo/SetSchemeInfo` ,  queryParams, this.options);
+  }
+
+  setSchemeEmp(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/schemeInfo/SetSchemeEmp` ,  queryParams, this.options);
+  }
+
+  setSchemeStatus(queryParams): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v1/schemeInfo/SetSchemeStatus` ,  queryParams, this.options);
   }
 
   setSchemeOpen(queryParams): Observable<any> {
