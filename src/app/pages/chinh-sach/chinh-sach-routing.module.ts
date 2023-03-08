@@ -22,6 +22,7 @@ import { XemCongComponent } from 'src/app/components/cs-cham-cong/xem-cong/xem-c
 import { EatingListComponent } from 'src/app/components/cs-an-ca/eating-list/eating-list.component';
 import { ImportPhepBuComponent } from 'src/app/components/phep-bu/import-phep-bu/import-phep-bu.component';
 import { CsChamCongOverviewComponent } from 'src/app/components/cs-cham-cong/cs-cham-cong-overview/cs-cham-cong-overview.component';
+import { ThietBiWifiChamCongComponent } from 'src/app/components/cs-cham-cong/thiet-bi-wifi-cham-cong/thiet-bi-wifi-cham-cong.component';
 
 const routes: Routes = [
   {
@@ -36,6 +37,14 @@ const routes: Routes = [
     data: {
       title: 'Phép năm',
       url: 'phep-nam',
+    },
+  },
+  {
+    path: 'thiet-bi-wifi',
+    component: ThietBiWifiChamCongComponent,
+    data: {
+      title: 'Thiết bị wifi chấm công',
+      url: 'thiet-bi-wifi',
     },
   },
   // phép bù

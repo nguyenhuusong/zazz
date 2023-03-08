@@ -75,6 +75,8 @@ import { HieuSuatLaoDongComponent } from 'src/app/components/cs-tien-luong/chi-t
 import { LamNgoaiGioComponent } from 'src/app/components/cs-tien-luong/chi-tiet-tien-luong/lam-ngoai-gio/lam-ngoai-gio.component';
 import { HoTroComponent } from 'src/app/components/cs-tien-luong/chi-tiet-tien-luong/ho-tro/ho-tro.component';
 import { TangGiamComponent } from 'src/app/components/cs-tien-luong/chi-tiet-tien-luong/giam-tru-thue/tang-giam.component';
+import { ThietBiWifiChamCongComponent } from 'src/app/components/cs-cham-cong/thiet-bi-wifi-cham-cong/thiet-bi-wifi-cham-cong.component';
+import { LoadingGridModule } from 'src/app/common/loading-grid/loading-grid.module';
 
 @NgModule({
   imports: [
@@ -124,7 +126,8 @@ import { TangGiamComponent } from 'src/app/components/cs-tien-luong/chi-tiet-tie
     ]),
     FormFilterModule,
     DynamicDialogModule,
-    ListGridAngularTreeModule
+    ListGridAngularTreeModule,
+    LoadingGridModule
   ],
 
   declarations: [
@@ -159,6 +162,8 @@ import { TangGiamComponent } from 'src/app/components/cs-tien-luong/chi-tiet-tie
     LamNgoaiGioComponent,
     HoTroComponent,
     TangGiamComponent,
+    ThietBiWifiChamCongComponent,
+
   ],
   providers: [],
 })
