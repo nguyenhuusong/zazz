@@ -142,7 +142,7 @@ export class CaiDatCongTyComponent implements OnInit, AfterViewChecked {
   listsData = [];
   load() {
     this.columnDefs = []
-    this.spinner.show();
+    // this.spinner.show();
     const queryParams = queryString.stringify(this.query);
     this.apiService.getCompanyPage(queryParams)
     .pipe(takeUntil(this.unsubscribe$))

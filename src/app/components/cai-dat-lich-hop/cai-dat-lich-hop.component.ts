@@ -161,7 +161,7 @@ export class CaiDatLichHopComponent implements OnInit {
   listsData = [];
   load() {
     this.columnDefs = []
-    this.spinner.show();
+    // this.spinner.show();
     let params: any = { ... this.model };
     const queryParams = queryString.stringify(params);
     this.apiService.getMeetingPage(queryParams)

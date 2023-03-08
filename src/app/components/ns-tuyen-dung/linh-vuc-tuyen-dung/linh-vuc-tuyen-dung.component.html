@@ -53,10 +53,11 @@
 </p-overlayPanel>
     <section class="content pb-0">
         <div class="grid-default" #container>
-            <app-list-grid-angular  *ngIf="columnDefs.length > 0"
+            <!-- <app-list-grid-angular  *ngIf="columnDefs.length > 0"
                 [listsData]="listsData" [height]="heightGrid" (onCellClicked)="onCellClicked($event)"
                 (showConfig)="cauhinh()" [idGrid]="gridKey + '_45dfs'"
-                [columnDefs]="columnDefs"></app-list-grid-angular>
+                [columnDefs]="columnDefs"></app-list-grid-angular> -->
+                <app-loading-grid  [gridtype]="'lhd'" [columnNumber]="11"></app-loading-grid>
             <div class="paginator">
                 <span>Từ {{ countRecord.currentRecordStart }} đến
                     {{ countRecord.currentRecordEnd }}

@@ -30,6 +30,7 @@ import { ConfigGridTableFormModule } from 'src/app/common/config-grid-table-form
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { CheckHideActionsDirectiveModule } from 'src/app/directive/check-action.module';
 import { FormFilterModule } from 'src/app/common/form-filter/form-filter.module';
+import { LoadingGridModule } from 'src/app/common/loading-grid/loading-grid.module';
 @NgModule({
   declarations: [
     PageNotifyComponent,
@@ -63,6 +64,7 @@ import { FormFilterModule } from 'src/app/common/form-filter/form-filter.module'
     ConfigGridTableFormModule,
     OverlayPanelModule,
     FormFilterModule,
+    LoadingGridModule,
     CheckHideActionsDirectiveModule
   ],
   exports: [PageNotifyComponent],

@@ -159,7 +159,7 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
 
   load() {
     this.columnDefs = []
-    this.spinner.show();
+    // this.spinner.show();
     const queryParams = queryString.stringify(this.query);
     this.apiService.getJobPage(queryParams)
     .pipe(takeUntil(this.unsubscribe$))
