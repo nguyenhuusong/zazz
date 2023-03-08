@@ -35,11 +35,20 @@
                             [dataView]="listViews" (callback)="setEmpQualification($event)"
                             (callbackcancel)="cancelUpdate($event)">
                         </app-edit-detail>
+                        <app-loading-detail 
+                            [id]="'employee-info-05'" 
+                            *ngIf="listViews.length === 0">
+                        </app-loading-detail>
                         <p-divider></p-divider>
+
                         <app-qua-trinh-lam-viec [empId]="empId"></app-qua-trinh-lam-viec>
+
                         <app-qua-trinh-hoc-van [empId]="empId"></app-qua-trinh-hoc-van>
+
                         <app-ky-nang [empId]="empId"></app-ky-nang>
+
                         <app-chung-chi [empId]="empId"></app-chung-chi>
+                        
                     </div>
 
                 </div>

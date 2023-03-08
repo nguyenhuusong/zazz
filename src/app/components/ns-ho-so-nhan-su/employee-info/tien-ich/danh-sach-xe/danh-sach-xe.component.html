@@ -9,16 +9,23 @@
             <div class="row" style="flex-wrap: wrap">
                 <div class="grid-default border">
                     <app-list-grid-angular 
-                    [domLayout]="'autoHeight'"
-                    [idGrid]="gridKey + '_45dfs'" 
-                    *ngIf="columnDefs.length > 0" 
-                    [heightRow]="50"
-                    [title]="'Chứng chỉ'"
-                    [listsData]="listsData" 
-                    (showConfig)="CauHinh()"
-                    (onCellClicked)="onCellClicked($event)"
-                    [columnDefs]="columnDefs">
-                </app-list-grid-angular>
+                      [domLayout]="'autoHeight'"
+                      [idGrid]="gridKey + '_45dfs'" 
+                      *ngIf="columnDefs.length > 0" 
+                      [heightRow]="50"
+                      [title]="'Chứng chỉ'"
+                      [listsData]="listsData" 
+                      (showConfig)="CauHinh()"
+                      (onCellClicked)="onCellClicked($event)"
+                      [columnDefs]="columnDefs">
+                  </app-list-grid-angular>
+                  <app-loading-grid 
+                        [columnNumber]="9" 
+                        gridtype="''" 
+                        [value]="[1,2]" 
+                        *ngIf="columnDefs.length === 0">
+                    </app-loading-grid>
+
                 </div>
             </div>
         </p-panel>
