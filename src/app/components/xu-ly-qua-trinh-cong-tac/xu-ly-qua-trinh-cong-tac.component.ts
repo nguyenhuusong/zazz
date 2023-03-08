@@ -69,7 +69,7 @@ export class XuLyQuaTrinhCongTacComponent implements OnInit {
   cols: any[];
   colsDetail: any[];
   items = [];
-  columnDefs;
+  columnDefs = [];
   detailRowHeight;
   defaultColDef;
   frameworkComponents;
@@ -139,7 +139,7 @@ export class XuLyQuaTrinhCongTacComponent implements OnInit {
 
   load() {
     this.columnDefs = []
-    this.spinner.show();
+    // this.spinner.show();
     const queryParams = queryString.stringify(this.query);
     this.apiService.getEmpProcessPage(queryParams)
     .pipe(takeUntil(this.unsubscribe$))

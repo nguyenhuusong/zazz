@@ -172,7 +172,7 @@ export class NsHoSoNghiViecComponent implements OnInit {
   listsData = []
   load() {
     this.columnDefs = []
-    this.spinner.show();
+    // this.spinner.show();
     let params: any = {... this.query};
     const queryParams = queryString.stringify(params);
     this.apiService.getTerminatePage(queryParams)
