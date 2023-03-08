@@ -124,6 +124,7 @@ import { BienDongBHXHComponent } from 'src/app/components/bien-dong-bhxh/bien-do
 import { ChiTietBienDongBHXHComponent } from 'src/app/components/bien-dong-bhxh/chi-tiet-bien-dong-bhxh/chi-tiet-bien-dong-bhxh.component';
 import {SkeletonModule} from 'primeng/skeleton';
 import { LoadingGridModule } from 'src/app/common/loading-grid/loading-grid.module';
+import { LoadingDetailModule } from 'src/app/common/loading-detail/loading-detail.module';
 @NgModule({
   imports: [
     MessagesModule,
@@ -180,6 +181,7 @@ import { LoadingGridModule } from 'src/app/common/loading-grid/loading-grid.modu
     LoadingGridModule,
     SkeletonModule,
     CheckHideActionsDirectiveModule,
+    LoadingDetailModule,
     AgGridModule.withComponents([
       ButtonRendererComponent,
       ButtonRendererComponent1
