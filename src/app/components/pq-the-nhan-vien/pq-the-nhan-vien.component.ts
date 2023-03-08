@@ -199,7 +199,7 @@ export class PqTheNhanVienComponent implements OnInit {
   listsData = [];
   load() {
     this.columnDefs = []
-    this.spinner.show();
+    // this.spinner.show();
     const query: any = { ...this.model };
     const queryParams = queryString.stringify(query);
     this.apiService.getEmployeeCardPage(queryParams)

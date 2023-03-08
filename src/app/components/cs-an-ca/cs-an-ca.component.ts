@@ -158,7 +158,7 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
 
   load() {
     this.columnDefs = []
-    this.spinner.show();
+    // this.spinner.show();
     let params: any = { ... this.query };
     const queryParams = queryString.stringify(params);
     this.apiService.getEatingPage(queryParams)

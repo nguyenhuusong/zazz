@@ -57,6 +57,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { CheckHideActionsDirectiveModule } from 'src/app/directive/check-action.module';
 import { FormFilterModule } from 'src/app/common/form-filter/form-filter.module';
 import { HrmSearchEmpModule } from 'src/app/common/hrm-search-emp/hrm-search-emp.module';
+import { LoadingGridModule } from 'src/app/common/loading-grid/loading-grid.module';
 @NgModule({
   imports: [
     MessagesModule,
@@ -95,6 +96,7 @@ import { HrmSearchEmpModule } from 'src/app/common/hrm-search-emp/hrm-search-emp
     ConfirmDialogModule,
     OverlayPanelModule,
     HrmBreadCrumbModule,
+    LoadingGridModule,
     ImageModule,
     PickListModule,
     CheckboxModule,

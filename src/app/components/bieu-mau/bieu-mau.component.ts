@@ -252,7 +252,7 @@ export class BieuMauComponent implements OnInit, OnDestroy {
     this.listDataSelect = []
     this.columnDefs = [];
     this.columnDefs2 = [];
-    this.spinner.show();
+    // this.spinner.show();
     const query = {...this.query};
     const queryParams = queryString.stringify(query);
     this.apiService.getFormGeneral(queryParams, this.indexTab === 0 ? 'GetFormGeneral' : 'GetFormPersonal')

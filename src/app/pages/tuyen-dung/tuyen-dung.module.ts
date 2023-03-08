@@ -74,6 +74,7 @@ import { DividerModule } from 'primeng/divider';
 import { StepsModule } from 'primeng/steps';
 import { ImportLinhVucTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/linh-vuc-tuyen-dung/import-linh-vuc-tuyen-dung/import-linh-vuc-tuyen-dung.component';
 import { ImportExcelModule } from 'src/app/common/import-excel/import-excel.module';
+import { LoadingGridModule } from 'src/app/common/loading-grid/loading-grid.module';
 @NgModule({
   imports: [
     MessagesModule,
@@ -119,6 +120,7 @@ import { ImportExcelModule } from 'src/app/common/import-excel/import-excel.modu
     UploadFileModule,
     EmpAttachFileModule,
     HrmBreadCrumbModule,
+    LoadingGridModule,
     CheckHideActionsDirectiveModule,
     TreeSelectModule,
     RadioButtonModule,

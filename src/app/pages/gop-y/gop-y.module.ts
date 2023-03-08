@@ -42,6 +42,7 @@ import { HrmBreadCrumbModule } from 'src/app/common/hrm-breadcrumb/hrm-breadcrum
 import { ConfigGridTableFormModule } from 'src/app/common/config-grid-table-form/config-grid-table-form.module';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { FormFilterModule } from 'src/app/common/form-filter/form-filter.module';
+import { LoadingGridModule } from 'src/app/common/loading-grid/loading-grid.module';
 
 @NgModule({
   imports: [
@@ -84,6 +85,7 @@ import { FormFilterModule } from 'src/app/common/form-filter/form-filter.module'
     ConfirmDialogModule,
     OverlayPanelModule,
     HrmBreadCrumbModule,
+    LoadingGridModule,
     AgGridModule.withComponents([
       ButtonRendererComponent,
       ButtonRendererComponent1
