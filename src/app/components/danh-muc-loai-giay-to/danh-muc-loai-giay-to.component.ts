@@ -133,7 +133,7 @@ export class DanhMucLoaiGiayToComponent implements OnInit, AfterViewChecked {
   listsData = [];
   load() {
     this.columnDefs = []
-    this.spinner.show();
+    // this.spinner.show();
     const queryParams = queryString.stringify(this.query);
     this.apiService.getEmpRecordTypePage(queryParams)
     .pipe(takeUntil(this.unsubscribe$))

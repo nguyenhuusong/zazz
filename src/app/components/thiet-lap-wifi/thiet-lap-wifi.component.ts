@@ -138,7 +138,7 @@ export class ThietLapWifiComponent implements OnInit, AfterViewChecked {
   listsData = [];
   load() {
     this.columnDefs = []
-    this.spinner.show();
+    // this.spinner.show();
     const queryParams = queryString.stringify(this.query);
     this.apiService.getTimekeepingWifiPage(queryParams)
     .pipe(takeUntil(this.unsubscribe$))

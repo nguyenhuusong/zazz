@@ -92,7 +92,7 @@ import { fromEvent, Subject, takeUntil } from 'rxjs';
   
     load() {
       this.columnDefs = [];
-      this.spinner.show();
+      // this.spinner.show();
       const queryParams = queryString.stringify(this.query);
       this.apiService.getRecruitRoundPage(queryParams)
       .pipe(takeUntil(this.unsubscribe$))
