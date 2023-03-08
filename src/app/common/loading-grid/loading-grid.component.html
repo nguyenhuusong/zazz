@@ -1,6 +1,15 @@
-<p-table [value]="[1,2,3,4,5,6,7,84,4,3,4,5,6,7,45,67]" responsiveLayout="scroll">
+<p-table [value]="[1,2,3,4,5,6,7,84,4,3,4,5,6,7,45,67,7,45,67,67,67]" responsiveLayout="scroll">
   <ng-template pTemplate="header">
     <tr>
+      <th>
+        <p-skeleton></p-skeleton>
+      </th>
+      <th style="width: 155px">
+        <p-skeleton></p-skeleton>
+      </th>
+      <th>
+        <p-skeleton></p-skeleton>
+      </th>
       <th>
         <p-skeleton></p-skeleton>
       </th>
@@ -32,6 +41,16 @@
   </ng-template>
   <ng-template pTemplate="body" let-product>
     <tr>
+      <td>
+        <p-skeleton></p-skeleton>
+      </td>
+      <td  style="width: 155px">
+        <p-skeleton shape="circle" size="2rem" styleClass="m-auto"></p-skeleton>
+        <!-- <p-skeleton></p-skeleton> -->
+      </td>
+      <td>
+        <p-skeleton></p-skeleton>
+      </td>
       <td>
         <p-skeleton></p-skeleton>
       </td>
