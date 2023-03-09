@@ -6,6 +6,7 @@ import * as queryString from 'querystring';
 import { cloneDeep } from 'lodash';
 import { AgGridFn } from 'src/app/common/function-common/common';
 import { fromEvent, Subject, takeUntil } from 'rxjs';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-ap-dung-cs',
@@ -47,12 +48,24 @@ export class ApDungCsComponent implements OnInit {
 
   addUser() {
     this.displayAddUserByUser = true;
+    this.query.to_date = null;
+    this.query.from_date = null;
+    this.listDataSelect = [];
+    this.listsData2 = [];
+    this.columnDefs2 = [];
+  }
+  searchEmp() {
+    this.query.schemeId = this.schemeId;
+    this.getSchemeOpen();
   }
   columnDefs2 = [];
   listsData2 = [];
   getSchemeOpen() {
+    const params = {...this.query};
+    delete params.to_date;
+    delete params.from_date;
     this.columnDefs2 = [];
-    const queryParams = queryString.stringify({ schemeId: this.schemeId,filter: '' });
+    const queryParams = queryString.stringify({...params});
     this.apiService.getSchemeOpen(queryParams)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(repo => {
@@ -72,8 +85,32 @@ export class ApDungCsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getSchemeOpenPage();
-    this.getSchemeOpen();
+    this.getCompanies();
   }
+  listCompanies = []
+  getCompanies() {
+    const queryParams = queryString.stringify({ filter: '' });
+    this.apiService.getCompanies(queryParams).subscribe(results => {
+      if(results.status === 'success') {
+        this.listCompanies = results.data.map(d => {
+          return {
+            label: d.name,
+            value: d.value
+          }
+        });
+      }
+    })
+  }
+
+  query = {
+    schemeId: null,
+    orgId: null,
+    companyId: null,
+    filter: null,
+    from_date: null,
+    to_date: null,
+  }
+
   displaySetting = false;
   CauHinh() {
     this.displaySetting = true;
@@ -119,21 +156,18 @@ export class ApDungCsComponent implements OnInit {
     this.columnDefs2 = [
       {
         headerName: '',
-        filter: false,
-        maxWidth: 50,
+        filter: '',
+        maxWidth: 90,
         pinned: 'left',
         cellRenderer: params => {
           return params.rowIndex + 1
         },
         cellClass: ['border-right', 'no-auto'],
+        checkboxSelection: true,
         headerCheckboxSelection: true,
-        headerCheckboxSelectionFilteredOnly: false,
-        field: 'checkbox2',
+        headerCheckboxSelectionFilteredOnly: true,
         suppressSizeToFit: false,
-        suppressColumnsToolPanel: false,
-        // checkboxSelection: (params) => {
-        //   return !!params.data && params.data.emp_st === 0;
-        // },
+        field: 'checkbox',
         showDisabledCheckboxes: true,
       },
       ...AgGridFn(gridflexs || []),
@@ -145,12 +179,22 @@ export class ApDungCsComponent implements OnInit {
   }
 
   save() {
+    if(this.listDataSelect.length === 0) {
+      this.messageService.add({
+        severity: 'error', summary: 'Thông báo', detail: 'Bạn chưa chọn bản ghi nào !. Vui lòng chọn 1 bản ghi.'
+      });
+      return
+    }
     this.spinner.show();
     const params = {
       schemeId: this.schemeId,
-      from_date: null,
-      to_date: null,
-      empIds: this.listDataSelect
+      from_date: this.query.from_date ? moment(this.query.from_date).format('DD/MM/YYYY') : null,
+      to_date: this.query.to_date ? moment(this.query.to_date).format('DD/MM/YYYY') : null,
+      empIds: this.listDataSelect.map(d => {
+        return {
+          gd: d.empId
+        }
+      })
     }
     this.apiService.setSchemeOpen(params)
     .pipe(takeUntil(this.unsubscribe$))
@@ -186,22 +230,22 @@ export class ApDungCsComponent implements OnInit {
         cellRenderer: 'buttonAgGridComponent',
         cellRendererParams: params => {
           return {
-            buttons: [
-              {
-                onClick: this.delRow.bind(this),
-                label: 'Xóa',
-                icon: 'pi pi-trash',
-                key: 'delete-qua-trinh-hop-dong',
-                class: 'btn-danger',
-              },
-              {
-                onClick: this.defaultAuth.bind(this),
-                label: 'Người ký mặc định',
-                icon: 'fa fa-edit editing',
-                key: 'view-job-detail',
-                class: 'btn-primary mr5',
-              }
-            ]
+            // buttons: [
+            //   {
+            //     onClick: this.delRow.bind(this),
+            //     label: 'Xóa',
+            //     icon: 'pi pi-trash',
+            //     key: 'delete-qua-trinh-hop-dong',
+            //     class: 'btn-danger',
+            //   },
+            //   {
+            //     onClick: this.defaultAuth.bind(this),
+            //     label: 'Người ký mặc định',
+            //     icon: 'fa fa-edit editing',
+            //     key: 'view-job-detail',
+            //     class: 'btn-primary mr5',
+            //   }
+            // ]
           };
         },
       }
