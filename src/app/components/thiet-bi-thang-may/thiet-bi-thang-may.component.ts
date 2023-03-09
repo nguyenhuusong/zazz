@@ -7,7 +7,7 @@ import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { fromEvent, Subject, takeUntil } from 'rxjs';
-
+const queryString = require('query-string');
 declare var jQuery: any;
 
 @Component({
@@ -90,7 +90,8 @@ export class ThietBiThangMayComponent implements OnInit {
   }
 
   getBuidingsSearch() {
-    this.apiService.getBuildCdByProjectCd(this.model.projectCd)
+    const queryParams = queryString.stringify({ projectCd: this.model.projectCd });
+    this.apiService.getBuildCdByProjectCd(queryParams)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(
       (res: any) => {
@@ -234,7 +235,8 @@ export class ThietBiThangMayComponent implements OnInit {
   }
 
   loadGetBuildings() {
-    this.apiService.getBuildCdByProjectCd(this.modelElevator.projectCd)
+    const queryParams = queryString.stringify({ projectCd: this.modelElevator.projectCd });
+    this.apiService.getBuildCdByProjectCd(queryParams)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(
      (res: any) => {
@@ -246,7 +248,8 @@ export class ThietBiThangMayComponent implements OnInit {
 
   loadGetFloors() {
     this.floorsCreate = [];
-    this.apiService.getElevatorFloors(this.modelElevator.buildCd)
+    const queryParams = queryString.stringify({ buildCd: this.modelElevator.buildCd });
+    this.apiService.getElevatorFloors(queryParams)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(
     (res: any) => {
@@ -258,7 +261,8 @@ export class ThietBiThangMayComponent implements OnInit {
 
   findFloors() {
     this.searchFloors = [];
-    this.apiService.getElevatorFloors(this.model.buildCd)
+    const queryParams = queryString.stringify({ buildCd: this.model.buildCd });
+    this.apiService.getElevatorFloors(queryParams)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(
     (res: any) => {

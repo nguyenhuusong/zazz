@@ -77,6 +77,7 @@ import { HoTroComponent } from 'src/app/components/cs-tien-luong/chi-tiet-tien-l
 import { TangGiamComponent } from 'src/app/components/cs-tien-luong/chi-tiet-tien-luong/giam-tru-thue/tang-giam.component';
 import { ThietBiWifiChamCongComponent } from 'src/app/components/cs-cham-cong/thiet-bi-wifi-cham-cong/thiet-bi-wifi-cham-cong.component';
 import { LoadingGridModule } from 'src/app/common/loading-grid/loading-grid.module';
+import { LoadingDetailModule } from 'src/app/common/loading-detail/loading-detail.module';
 
 @NgModule({
   imports: [
@@ -127,7 +128,8 @@ import { LoadingGridModule } from 'src/app/common/loading-grid/loading-grid.modu
     FormFilterModule,
     DynamicDialogModule,
     ListGridAngularTreeModule,
-    LoadingGridModule
+    LoadingGridModule,
+    LoadingDetailModule
   ],
 
   declarations: [

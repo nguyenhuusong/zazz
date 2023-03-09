@@ -9,4 +9,10 @@
         (callback)="handleSave($event)"
         (callbackcancel)="quaylai($event)"
     ></app-edit-detail>
+    <app-loading-detail 
+        [id]="'sections-2qnt'" 
+        *ngIf="listViews.length === 0">
+    </app-loading-detail>
+
+
 </div>

@@ -9,4 +9,10 @@
         (callbackcancel)="quaylai($event)"
         [formTypeId]="formTypeId"
     ></app-edit-detail>
+    <app-loading-detail 
+        [id]="'sections-3qnt'" 
+        *ngIf="listViews.length === 0">
+    </app-loading-detail>
+
+
 </div>

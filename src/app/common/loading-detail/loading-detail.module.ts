@@ -5,9 +5,11 @@ import { LoadingDetailComponent } from './loading-detail.component';
 import {SkeletonModule} from 'primeng/skeleton';
 import { TableModule } from 'primeng/table';
 import { LoadingGridModule } from '../loading-grid/loading-grid.module';
+import { LoadingFieldComponent } from './loading-field/loading-field.component';
 @NgModule({
     declarations: [
         LoadingDetailComponent,
+        LoadingFieldComponent
     ],
     imports: [
         CommonModule,
@@ -19,6 +21,7 @@ import { LoadingGridModule } from '../loading-grid/loading-grid.module';
     entryComponents: [],
     exports: [
         LoadingDetailComponent,
+        LoadingFieldComponent
     ],
     providers: []
 })

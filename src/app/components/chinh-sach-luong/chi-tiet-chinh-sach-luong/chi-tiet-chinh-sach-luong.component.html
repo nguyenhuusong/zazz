@@ -21,6 +21,11 @@
                     <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'"
                         [optionsButtonsEdit]="optionsButtonsView" [dataView]="listViews" (callback)="setSchemeInfo($event)" (callBackForm)="callBackForm($event)"
                         (callbackcancel)="cancel($event)"></app-edit-detail>
+                    <app-loading-detail 
+                        [id]="'markdown'" 
+                        *ngIf="listViews.length === 0">
+                    </app-loading-detail>
+
             </p-tabPanel>
             <p-tabPanel header="Áp dụng chính sách" *ngIf="modelEdit.schemeId">
                 <app-ap-dung-cs *ngIf="indexTab === 1" [schemeId]="modelEdit.schemeId"></app-ap-dung-cs>

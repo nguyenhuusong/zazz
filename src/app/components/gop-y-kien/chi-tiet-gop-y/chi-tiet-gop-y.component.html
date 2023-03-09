@@ -6,6 +6,10 @@
    <div class="content">
     <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'"  [dataView]="listViews"
         (callback)="setCompanyInfo($event)" [optionsButtonsEdit]="optionsButon" (callbackcancel)="cancelUpdate($event)"></app-edit-detail>
+    <app-loading-detail 
+        [id]="'phong-hop'" 
+        *ngIf="listViews.length === 0">
+        </app-loading-detail>
    </div>
    
 </div>

@@ -7,6 +7,11 @@
     <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'" [dataView]="listViews"
         [optionsButtonsEdit]="optionsButtonsView" 
         (callback)="setWorkTimeInfo($event)" (callbackcancel)="cancelUpdate($event)"></app-edit-detail>
+        <app-loading-detail 
+                [id]="'area'" 
+                *ngIf="listViews.length === 0">
+            </app-loading-detail>
+
         <p-card styleClass="mt-1"
         >
          <ng-template pTemplate="header">
@@ -27,6 +32,13 @@
                 <app-list-grid-angular [domLayout]="'autoHeight'" *ngIf="columnDefs && columnDefs.length > 0" [heightRow]="40" [title]="'Danh sách liên hệ'" [defaultColDef]="defaultColDef" [floatingFilter]="false" 
                     [listsData]="detailInfo?.weekdays"  (FnClick)="OnClick($event)"
                     [columnDefs]="columnDefs"></app-list-grid-angular>
+                    <app-loading-grid 
+                            [columnNumber]="9" 
+                            gridtype="''" 
+                            [value]="[1,2]" 
+                            *ngIf="columnDefs.length === 0">
+                        </app-loading-grid>
+
                 </div>
             </section>
      </p-card>

@@ -76,6 +76,13 @@
       *ngIf="columnDefs.length > 0" [rowSelection]="'multiple'" [heightRow]="60" 
         [listsData]="listsData" [idGrid]="'myGridStoreNoti1'" (callback)="selectRow($event)"
         [columnDefs]="columnDefs"></app-list-grid-angular>
+        <app-loading-grid 
+            [columnNumber]="9" 
+            gridtype="''" 
+            [value]="[1,2]" 
+            *ngIf="columnDefs.length === 0">
+        </app-loading-grid>
+
       </div>
   </div>
 </div>

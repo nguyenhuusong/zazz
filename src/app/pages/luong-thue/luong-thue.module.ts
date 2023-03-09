@@ -65,6 +65,7 @@ import { ChinhSachLuongComponent } from 'src/app/components/chinh-sach-luong/chi
 import { ChiTietChinhSachLuongComponent } from 'src/app/components/chinh-sach-luong/chi-tiet-chinh-sach-luong/chi-tiet-chinh-sach-luong.component';
 import { LoadingGridModule } from 'src/app/common/loading-grid/loading-grid.module';
 import { ApDungCsComponent } from 'src/app/components/chinh-sach-luong/ap-dung-cs/ap-dung-cs.component';
+import { LoadingDetailModule } from 'src/app/common/loading-detail/loading-detail.module';
 
 @NgModule({
   imports: [
@@ -117,6 +118,7 @@ import { ApDungCsComponent } from 'src/app/components/chinh-sach-luong/ap-dung-c
       ButtonRendererComponent,
       ButtonRendererComponent1
     ]),
+    LoadingDetailModule
   ],
 
   declarations: [

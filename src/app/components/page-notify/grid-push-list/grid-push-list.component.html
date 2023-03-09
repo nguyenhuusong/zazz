@@ -69,6 +69,12 @@
       [rowSelection]="'multiple'" 
       [idGrid]="'myGridList'" 
       (callback)="selectRow($event)"></app-list-grid-angular>
+      <app-loading-grid 
+        [columnNumber]="9" 
+        gridtype="''" 
+        *ngIf="columnDefs.length === 0">
+    </app-loading-grid>
+
     </div>
 <div class="paginator">
     <span>Từ {{ countRecord.currentRecordStart }} đến

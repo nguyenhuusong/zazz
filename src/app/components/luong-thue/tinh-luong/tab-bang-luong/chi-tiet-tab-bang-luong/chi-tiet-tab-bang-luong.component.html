@@ -12,6 +12,12 @@
                 (callback)="handleSave($event)"
                 (callbackcancel)="quaylai($event)"
             ></app-edit-detail>
+            <app-loading-detail 
+                [id]="'area'" 
+                *ngIf="listViews.length === 0">
+            </app-loading-detail>
+
+            
         </div>
     </p-tabPanel>
     <p-tabPanel header="Thành phần lương">
@@ -28,6 +34,13 @@
             [listsData]="listsData"
             >
         </app-list-grid-angular>
+        <app-loading-grid 
+                [columnNumber]="9" 
+                gridtype="''" 
+                [value]="[1,2]" 
+                *ngIf="columnDefs.length === 0">
+            </app-loading-grid>
+
     </p-tabPanel>
 </p-tabView>
 
@@ -36,14 +49,18 @@
         [modal]="true" [style]="{width: '600px'}"
         [draggable]="false" [resizable]="false" [focusTrap]="false" >
         <app-edit-detail
-        *ngIf="listViewsDetail.length> 0"
-        [detail]="detailInfoDetail"
-        [manhinh]="'Edit'"
-        [optionsButtonsEdit]="optionsButon"
-        [dataView]="listViewsDetail"
-        (callback)="handleSaveTab1($event)"
-        (callbackcancel)="quaylaiDetail($event)"
-    ></app-edit-detail>
+            *ngIf="listViewsDetail.length> 0"
+            [detail]="detailInfoDetail"
+            [manhinh]="'Edit'"
+            [optionsButtonsEdit]="optionsButon"
+            [dataView]="listViewsDetail"
+            (callback)="handleSaveTab1($event)"
+            (callbackcancel)="quaylaiDetail($event)"
+        ></app-edit-detail>
+        <app-loading-detail 
+            [id]="'long-field'" 
+            *ngIf="listViewsDetail.length === 0">
+        </app-loading-detail>
 </p-dialog>
 
 <p-dialog header="Cài đặt cấu hình" [(visible)]="displaySetting" [appendTo]="'body'" (onHide)="getPayrollComponentPage()" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
