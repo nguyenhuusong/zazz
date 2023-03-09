@@ -9,6 +9,10 @@
                     (callback)="handleSave($event)" 
                     (callback1)="getChipsValue($event)"
                     (callbackcancel)="quaylai($event)"></app-edit-detail>
+                    <app-loading-detail 
+                            [id]="'chi-tiet-ns-cau-hinh-mail'" 
+                            *ngIf="listViews.length === 0">
+                        </app-loading-detail>
             </div>
             <div class="col-2">
                 <div class="sidebar-config">

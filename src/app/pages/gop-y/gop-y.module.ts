@@ -43,6 +43,7 @@ import { ConfigGridTableFormModule } from 'src/app/common/config-grid-table-form
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { FormFilterModule } from 'src/app/common/form-filter/form-filter.module';
 import { LoadingGridModule } from 'src/app/common/loading-grid/loading-grid.module';
+import { LoadingDetailModule } from 'src/app/common/loading-detail/loading-detail.module';
 
 @NgModule({
   imports: [
@@ -86,6 +87,7 @@ import { LoadingGridModule } from 'src/app/common/loading-grid/loading-grid.modu
     OverlayPanelModule,
     HrmBreadCrumbModule,
     LoadingGridModule,
+    LoadingDetailModule,
     AgGridModule.withComponents([
       ButtonRendererComponent,
       ButtonRendererComponent1

@@ -15,6 +15,10 @@
                     [optionsButtonsEdit]="optionsButtonsView" 
                     (callback)="setCompanyInfo($event)" (callbackcancel)="cancelUpdate($event)"></app-edit-detail>
               </div>
+              <app-loading-detail 
+                  [id]="'area'" 
+                  *ngIf="listViews.length === 0">
+              </app-loading-detail>
         </p-tabPanel>
         <p-tabPanel header="Đăng ký người duyệt">
             <app-nguoi-duyet [companyId]="companyId" *ngIf="indexTab === 1"></app-nguoi-duyet>

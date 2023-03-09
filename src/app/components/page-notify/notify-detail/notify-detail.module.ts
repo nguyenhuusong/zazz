@@ -29,6 +29,7 @@ import { AgGridModule } from '@ag-grid-community/angular';
 import { ListGridAngularModule } from 'src/app/common/list-grid-angular/list-grid-angular.module';
 import { EditDetailModule } from 'src/app/common/edit-detail/edit-detail.module';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { LoadingDetailModule } from 'src/app/common/loading-detail/loading-detail.module';
 
 @NgModule({
     declarations: [NotifyDetailComponent],
@@ -62,6 +63,7 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
         StoreNotifyModule,
         SendNotifyModule,
         DialogModule,
+        LoadingDetailModule,
       AgGridModule.withComponents([
         // ButtonRendererComponent,
         // ButtonRendererComponent1,

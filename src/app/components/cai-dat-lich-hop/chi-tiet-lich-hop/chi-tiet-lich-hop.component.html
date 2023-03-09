@@ -10,6 +10,11 @@
                 (callbackcancel)="quaylai($event)"
                 (callback)="setMeetRoomInfo($event)" (callback1)="getValueElemetn($event)" (callbackDataInfo)="getDataInfo($event)">
             </app-edit-detail>
+            <app-loading-detail 
+                [id]="'sections-3qnt'" 
+                *ngIf="listViews.length === 0">
+            </app-loading-detail>
+
         </div>
         <!-- <div class="members mt-2">
         <div class="row">

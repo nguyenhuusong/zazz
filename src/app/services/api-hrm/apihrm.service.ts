@@ -1479,11 +1479,24 @@ export class ApiHrmService {
     });
   }
 
+  setContractTypeImport(params): Observable<Blob> {
+    return this.http.post(`${apiHrmServer}/api/v2/contracttype/SetContractTypeImport`, params, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
+  }
+
 
   // api cũ
-  getCardCustomers<T>(filter): Observable<T> {
-    return this.http
-      .get<T>(`${apiShome}/api/v1/shome/GetCardCustomers?${filter}`, this.options);
+  // getCardCustomers<T>(filter): Observable<T> {
+  //   return this.http
+  //     .get<T>(`${apiShome}/api/v1/shome/GetCardCustomers?${filter}`, this.options);
+  // }
+
+  getCardCustomers(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/elevator/GetCardCustomers?` + queryParams, this.options)
   }
 
   getCardInfo<T>(cardNum: string, customerPhoneNumber: string, HardwareId: string): Observable<T> {
@@ -1494,18 +1507,26 @@ export class ApiHrmService {
         `hardwareId=${HardwareId}`, this.options);
   }
 
-  getBuildCdByProjectCd<T>(projectCd: string): Observable<T> {
-    return this.http
-      .get<T>(`${apiShome}/api/v1/shome/GetBuildCdByProjectCd?` +
-        `projectCd=${projectCd}`, this.options);
+  // getBuildCdByProjectCd<T>(projectCd: string): Observable<T> {
+  //   return this.http
+  //     .get<T>(`${apiShome}/api/v1/shome/GetBuildCdByProjectCd?` +
+  //       `projectCd=${projectCd}`, this.options);
+  // }
+
+  getBuildCdByProjectCd(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/elevator/GetBuildCdByProjectCd?` + queryParams, this.options);
   }
 
-  getMasElevatorCards(filter, offset, pagesize): Observable<CardInfo[]> {
-    return this.http
-      .get<CardInfo[]>(`${apiShome}/api/v1/shome/GetMasElevatorCards?` +
-        `filter=${filter}&` +
-        `offSet=${offset}&` +
-        `pageSize=${pagesize}`, this.options);
+  // getMasElevatorCards(filter, offset, pagesize): Observable<CardInfo[]> {
+  //   return this.http
+  //     .get<CardInfo[]>(`${apiShome}/api/v1/shome/GetMasElevatorCards?` +
+  //       `filter=${filter}&` +
+  //       `offSet=${offset}&` +
+  //       `pageSize=${pagesize}`, this.options);
+  // }
+
+  getMasElevatorCards(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/elevator/GetMasElevatorCards?` + queryParams, this.options)
   }
 
   GetBuildFloorByProjectCdBuildCd(buildZone, projectCd, buildCd): Observable<BuildZone[]> {
@@ -1673,8 +1694,12 @@ export class ApiHrmService {
         `pageSize=${pagesize}`, this.options);
   }
 
-  addRoleCard(mEcard: CardInfo): Observable<any> {
-    return this.http.post<any>(`${apiShome}/api/v1/shome/SetMasElevatorCard`, mEcard, this.options);
+  // addRoleCard(mEcard: CardInfo): Observable<any> {
+  //   return this.http.post<any>(`${apiShome}/api/v1/shome/SetMasElevatorCard`, mEcard, this.options);
+  // }
+
+  setMasElevatorCard(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/elevator/SetMasElevatorCard`, queryParams, this.options)
   }
 
   getElevatorCardRole<T>(): Observable<T> {
@@ -1682,20 +1707,33 @@ export class ApiHrmService {
       .get<T>(`${apiShome}/api/v1/shome/GetElevatorCardRole`, this.options);
   }
   
-  getCardTypeList(): Observable<TypeCard[]> {
-    return this.http.get<TypeCard[]>(`${apiBaseUrl}/api/v2/customer/GetCardTypeList`, this.options);
+  // getCardTypeList(): Observable<TypeCard[]> {
+  //   return this.http.get<TypeCard[]>(`${apiBaseUrl}/api/v2/elevator/GetCardTypeList`, this.options);
+  // }
+
+  getCardTypeList(): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/elevator/GetCardTypeList`, this.options)
   }
 
-  getProjects(): Observable<Project[]> {
-    return this.http
-      .get<Project[]>(`${apiBaseUrl}/api/v1/shome/GetProjects`, this.options);
+  // getProjects(): Observable<Project[]> {
+  //   return this.http
+  //     .get<Project[]>(`${apiBaseUrl}/api/v1/shome/GetProjects`, this.options);
+  // }
+
+  getProjects(): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/elevator/GetProjects`, this.options)
   }
 
-  getElevatorFloors<T>(buildCd: string): Observable<T> {
-    return this.http
-      .get<T>(`${apiShome}/api/v1/shome/GetElevatorFloors?` +
-        `buildCd=${buildCd}`, this.options);
+  // getElevatorFloors<T>(buildCd: string): Observable<T> {
+  //   return this.http
+  //     .get<T>(`${apiShome}/api/v1/shome/GetElevatorFloors?` +
+  //       `buildCd=${buildCd}`, this.options);
+  // }
+
+  getElevatorFloors(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/elevator/GetElevatorFloors?` + queryParams, this.options)
   }
+  
 
   deleteRoleCard(MasECid): Observable<string> {
     return this.http
@@ -3229,6 +3267,8 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v1/salaryevaluate/GetSalaryTrans?` + queryParams, this.options);
   }
 
-
+  // elevator
+  
+  
 
 }

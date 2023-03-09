@@ -92,6 +92,11 @@
 <p-dialog header="Chi tiết" [(visible)]="isDetail" [modal]="true" [style]="{width: '50vw'}" >
     <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'" [dataView]="listViews"
         (callback)="setChitiet($event)"></app-edit-detail>
+    <app-loading-detail 
+        [id]="'sections-1qnt'" 
+        *ngIf="listViews.length === 0">
+    </app-loading-detail>
+
 </p-dialog>
 <p-overlayPanel #op [dismissable]="false" [style]="{width: '40rem'}" appendTo="body" >
     <ng-template pTemplate>

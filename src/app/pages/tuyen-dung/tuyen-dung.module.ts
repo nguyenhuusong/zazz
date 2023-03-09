@@ -75,6 +75,7 @@ import { StepsModule } from 'primeng/steps';
 import { ImportLinhVucTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/linh-vuc-tuyen-dung/import-linh-vuc-tuyen-dung/import-linh-vuc-tuyen-dung.component';
 import { ImportExcelModule } from 'src/app/common/import-excel/import-excel.module';
 import { LoadingGridModule } from 'src/app/common/loading-grid/loading-grid.module';
+import { LoadingDetailModule } from 'src/app/common/loading-detail/loading-detail.module';
 @NgModule({
   imports: [
     MessagesModule,
@@ -131,7 +132,8 @@ import { LoadingGridModule } from 'src/app/common/loading-grid/loading-grid.modu
     HrmStepModule,
     DividerModule,
     StepsModule,
-    ImportExcelModule
+    ImportExcelModule,
+    LoadingDetailModule
   ],
 
   declarations: [

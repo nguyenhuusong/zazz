@@ -31,17 +31,22 @@
             [manhinh]="manhinh" [modelMarkdow]="modelMarkdow" [dataView]="listViews" 
             [optionsButtonsEdit]="optionsButon"
             (callback)="saveNotifyInfo($event)" (callbackcancel)="cancelUpload()"></app-edit-detail>
+            <app-loading-detail 
+                [id]="'markdown'" 
+                *ngIf="listViews.length === 0">
+            </app-loading-detail>
+
           <app-notify-comments [notify]="dataInfo"></app-notify-comments>
         </p-tabPanel>
         <p-tabPanel header="Danh sách gửi thông báo" *ngIf="notiId" leftIcon="pi pi-calendar">
             <app-grid-push-list 
-            [notify]="dataInfo" 
-            *ngIf="indexTab === 1" 
-            [indexTab]="indexTab" 
-            (send)="displayDsThongBao($event)" 
-            [loadForm]="loadForm" 
-            (saveStore)="displayDsCaiDatDS($event)" 
-            (deleteRooms)="deleteRooms($event)"></app-grid-push-list>
+              [notify]="dataInfo" 
+              *ngIf="indexTab === 1" 
+              [indexTab]="indexTab" 
+              (send)="displayDsThongBao($event)" 
+              [loadForm]="loadForm" 
+              (saveStore)="displayDsCaiDatDS($event)" 
+              (deleteRooms)="deleteRooms($event)"></app-grid-push-list>
           </p-tabPanel>
       </p-tabView>
     </div>
