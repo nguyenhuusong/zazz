@@ -15,7 +15,7 @@ import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { cloneDeep } from 'lodash';
 import { DialogService } from 'primeng/dynamicdialog';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
-import { fromEvent, Subject, takeUntil } from 'rxjs';
+import { forkJoin, fromEvent, Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-thiet-bi-wifi-cham-cong',
   templateUrl: './thiet-bi-wifi-cham-cong.component.html',
@@ -172,13 +172,13 @@ export class ThietBiWifiChamCongComponent implements OnInit {
   showButtons(event: any) {
     return {
       buttons: [
-        {
-          onClick: this.editRow.bind(this),
-          label: 'Xem chi tiết',
-          icon: 'fa fa-eye',
-          class: 'btn-primary mr5',
-          // hide: CheckHideAction(MENUACTIONROLEAPI.GetContractTypePage.url, ACTIONS.VIEW)
-        },
+        // {
+        //   onClick: this.editRow.bind(this),
+        //   label: 'Xem chi tiết',
+        //   icon: 'fa fa-eye',
+        //   class: 'btn-primary mr5',
+        //   // hide: CheckHideAction(MENUACTIONROLEAPI.GetContractTypePage.url, ACTIONS.VIEW)
+        // },
         {
           onClick: this.delRow.bind(this),
           label: 'Xóa',
@@ -190,36 +190,84 @@ export class ThietBiWifiChamCongComponent implements OnInit {
       ]
     };
   }
+  listDataSelect = [];
+  rowSelected(data) {
+    this.listDataSelect = data
+  }
+
+  saveApproved() {
+    if(this.listDataSelect.length === 0) {
+      this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Bạn chưa chọn bản ghi nào !' });
+      return;
+    }
+    let listAPis = []
+      for (let item of this.listDataSelect) {
+        const dataSave = {
+          device_id: item.device_id,
+          request_st: 1,
+        };
+        listAPis.push(this.apiService.setEmpDeviceStatus(dataSave))
+      }
+      this.spinner.show()
+      forkJoin(listAPis)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((results: any) => {
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Duyệt thành công' });
+        this.spinner.hide();
+        this.load();
+      })
+  }
 
   initGrid() {
     this.columnDefs = [
-      ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       {
-        headerComponentParams: {
-          template:
-            `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
-        },
+        headerName: '',
         filter: '',
-        width: 100,
-        pinned: 'right',
-        cellRenderer: 'buttonAgGridComponent',
+        maxWidth: 90,
+        pinned: 'left',
+        cellRenderer: params => {
+          return params.rowIndex + 1
+        },
         cellClass: ['border-right', 'no-auto'],
-        cellRendererParams: (params: any) => this.showButtons(params),
-        checkboxSelection: false,
-        field: 'checkbox'
-      }]
+        checkboxSelection: true,
+        headerCheckboxSelection: true,
+        headerCheckboxSelectionFilteredOnly: true,
+        suppressSizeToFit: false,
+        field: 'checkbox2',
+        showDisabledCheckboxes: true,
+      },
+      ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
+      // {
+      //   headerComponentParams: {
+      //     template:
+      //       `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
+      //   },
+      //   filter: '',
+      //   width: 100,
+      //   pinned: 'right',
+      //   cellRenderer: 'buttonAgGridComponent',
+      //   cellClass: ['border-right', 'no-auto'],
+      //   cellRendererParams: (params: any) => this.showButtons(params),
+      //   checkboxSelection: false,
+      //   field: 'checkbox'
+      // }
+    ]
   }
 
-  delRow(event) {
+  delRow() {
+    if(this.listDataSelect.length === 0) {
+      this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Bạn chưa chọn bản ghi nào !' });
+      return;
+    }
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa bản ghi này?',
       accept: () => {
-        const queryParams = queryString.stringify({ processId: event.rowData.processId });
-        this.apiService.delEmpProcessInfo(queryParams)
+        const queryParams = queryString.stringify({ devices: this.listDataSelect.map(d => d.device_id) });
+        this.apiService.delEmpDevices(queryParams)
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe((results: any) => {
           if (results.status === 'success') {
-            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Xóa thành công' });
             this.load();
             this.FnEvent();
           } else {

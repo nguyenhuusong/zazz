@@ -31,6 +31,12 @@
                             </svg> &nbsp;&nbsp;
                             Bộ Lọc
                         </p-button>
+                        <p-button 
+                        styleClass="p-button-sm height-56 ml-1" label="Phê duyệt" (click)="saveApproved()" icon="pi pi-check">
+                        </p-button>
+                        <p-button 
+                        styleClass="p-button-sm p-button-danger height-56 ml-1" label="Xóa" (click)="delRow()" icon="pi pi-trash">
+                        </p-button>
 
                         <!-- <p-button (click)="menuButton.toggle($event)" 
                         styleClass="p-button-sm height-56 ">
@@ -66,9 +72,9 @@
     </section>
     <section class="content pb-0">
         <div class="grid-default" #container>
-            <app-list-grid-angular  *ngIf="columnDefs.length > 0"
+            <app-list-grid-angular  *ngIf="columnDefs.length > 0" [rowSelection]="'multiple'"
                 [listsData]="listsData" [height]="heightGrid" (onCellClicked)="onCellClicked($event)"
-                (showConfig)="cauhinh()" [idGrid]="gridKey + '_45dfs'"
+                (showConfig)="cauhinh()" [idGrid]="gridKey + '_45dfs'" (callback)="rowSelected($event)"
                 [columnDefs]="columnDefs"></app-list-grid-angular>
 
                 <app-loading-grid  [gridtype]="'lhd'" *ngIf="columnDefs.length === 0" [columnNumber]="11"></app-loading-grid>
