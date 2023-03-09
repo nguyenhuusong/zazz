@@ -2579,6 +2579,7 @@ div.p-organizationchart {
     }
     input{
         width: 100%;
+        height: 34px;
         -webkit-border-radius: 3px;
         -moz-border-radius: 3px;
         background: none;
@@ -3086,7 +3087,7 @@ div.p-organizationchart {
         //     position: absolute;
         //     bottom: 8px;
         // }
-        min-height: 56px;
+        min-height: 55.98px;
         .p-checkbox-label{
             color: rgba(0, 0, 0, 0.87);
             font-size: 16px;
