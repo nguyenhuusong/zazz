@@ -153,7 +153,7 @@ export class NghiViecComponent implements OnInit, AfterViewChecked {
     this.columnDefs = []
     // this.spinner.show();
     const queryParams = queryString.stringify(this.query);
-    this.apiService.getTerminatePage(queryParams)
+    this.apiService.getTerminateHiringePage(queryParams)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(
       (results: any) => {

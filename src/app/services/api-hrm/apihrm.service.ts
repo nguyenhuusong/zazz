@@ -1014,6 +1014,10 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v2/terminate/GetTerminatePage?` + queryParams, this.options);
   }
 
+  getTerminateHiringePage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/terminate/GetTerminateHiringePage?` + queryParams, this.options);
+  }
+
   getTerminateFilter(): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/terminate/GetTerminateFilter`, this.options);
   }
