@@ -12,6 +12,11 @@
     </div> -->
     <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButon"  [dataView]="listViews"
     (callback)="setWorkApprove($event)" (callbackcancel)="quaylai($event)"></app-edit-detail>
+    <app-loading-detail 
+        [id]="'sections-2qnt'" 
+        *ngIf="listViews.length === 0">
+    </app-loading-detail>
+
    </div>
    <p-dialog header="Phê duyệt" [(visible)]="displayPheDuyet" [style]="{width: '50vw'}">
        <div class="row">

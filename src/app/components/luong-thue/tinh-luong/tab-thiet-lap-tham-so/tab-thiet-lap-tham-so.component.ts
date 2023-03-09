@@ -35,7 +35,7 @@ export class TabThietLapThamSoComponent implements OnInit {
   objectAction: any;
   objectActionDetail: any;
   gridflexs: any;
-  listsData = null;
+  listsData = [];
   totalRecord = 0;
   first = 0;
   displaySetting = false
@@ -109,7 +109,7 @@ export class TabThietLapThamSoComponent implements OnInit {
 
   load() {
     this.columnDefs = [];
-    this.spinner.show();
+    // this.spinner.show();
     const queryParams = queryString.stringify(this.query);
     this.apiService.getPayrollParamPage(queryParams)
     .pipe(takeUntil(this.unsubscribe$))

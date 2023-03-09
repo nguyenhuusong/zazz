@@ -21,6 +21,11 @@
             <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'"
                 [optionsButtonsEdit]="optionsButtonsView" [dataView]="listViews" (callback)="setTerminateInfo($event)" (callBackForm)="callBackForm($event)"
                 (callbackcancel)="cancel($event)"></app-edit-detail>
+            <app-loading-detail 
+                [id]="'sections-3qnt'" 
+                *ngIf="listViews.length === 0">
+            </app-loading-detail>
+
         </p-tabPanel>
         <p-tabPanel header="Lịch làm việc" *ngIf="this.flowCurrent > 1 && !detailInfo.approved_st">
             <app-tab-ngay-cong [recordId]="modelEdit.recordId" *ngIf="indexTab === 1 && modelEdit.recordId" [detailInfo]="detailInfo"></app-tab-ngay-cong>

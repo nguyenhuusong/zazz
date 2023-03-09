@@ -134,7 +134,7 @@ export class ChinhSachLuongComponent implements OnInit, AfterViewChecked {
   listsData = [];
   load() {
     this.columnDefs = []
-    this.spinner.show();
+    // this.spinner.show();
     const queryParams = queryString.stringify(this.query);
     this.apiService.getSchemeInfoPage(queryParams)
     .pipe(takeUntil(this.unsubscribe$))
@@ -266,7 +266,7 @@ export class ChinhSachLuongComponent implements OnInit, AfterViewChecked {
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Lương-Thuế' },
-      { label: 'Danh sách Chính sách lương' },
+      { label: 'Danh sách chính sách lương' },
     ];
     this.itemsToolOfGrid = [
       {

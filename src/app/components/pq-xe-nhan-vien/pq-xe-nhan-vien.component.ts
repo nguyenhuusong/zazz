@@ -241,7 +241,7 @@ detailInfoFilter = null;
   listsData = [];
   load() {
     this.columnDefs = []
-    this.spinner.show();
+    // this.spinner.show();
     const query = { ...this.query };
     const queryParams = queryString.stringify(query);
     this.apiService.getEmployeeVehiclePage(queryParams)

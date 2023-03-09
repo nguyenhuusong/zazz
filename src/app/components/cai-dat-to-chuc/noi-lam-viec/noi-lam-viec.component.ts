@@ -138,7 +138,7 @@ export class NoiLamViecComponent implements OnInit {
   listsData = [];
   load() {
     this.columnDefs = []
-    this.spinner.show();
+    // this.spinner.show();
     const queryParams = queryString.stringify(this.query);
     this.apiService.getWorkplacePage(queryParams)
     .pipe(takeUntil(this.unsubscribe$))

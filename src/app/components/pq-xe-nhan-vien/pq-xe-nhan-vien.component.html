@@ -66,6 +66,7 @@
         <app-list-grid-angular *ngIf="columnDefs && columnDefs?.length > 0" [listsData]="listsData" [height]="heightGrid"
           (showConfig)="cauhinh()" [idGrid]="gridKey + '_45dfs'" (onCellClicked)="onCellClicked($event)"
           [columnDefs]="columnDefs"></app-list-grid-angular>
+          <app-loading-grid  [gridtype]="'lhd'" *ngIf="columnDefs.length === 0" [columnNumber]="15"></app-loading-grid>
           <div class="paginator">
               <span>Từ {{ countRecord.currentRecordStart }} đến
                   {{ countRecord.currentRecordEnd }}
@@ -375,6 +376,11 @@ styleClass="menu-option-right" #menuButton></p-menu>
   [optionsButtonsEdit]="optionsButon" 
   [dataView]="listViews"
   (callback)="setEmpVehicleInfo($event)" (callbackcancel)="quaylai($event)"></app-edit-detail>
+  <app-loading-detail 
+      [id]="'sections-2qnt'" 
+      *ngIf="listViews.length === 0">
+  </app-loading-detail>
+
   <div class="d-flex">
     <div class="col-md-4 image-vehicle" *ngFor="let imgUrl of modelTM.imageLinks; let indexImg = index">
       <h4>{{ indexImg === 0 || indexImg === 1 ? 'Ảnh giấy chứng nhận đăng ký xe' : 'Ảnh biển số xe' }}</h4>

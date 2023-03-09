@@ -149,7 +149,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   load() {
     this.dataRowSelected = [];
     this.columnDefs = []
-    this.spinner.show();
+    // this.spinner.show();
     const queryParams = queryString.stringify(this.query);
     this.apiService.getCandidatePage(queryParams)
     .pipe(takeUntil(this.unsubscribe$))

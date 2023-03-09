@@ -18,6 +18,7 @@ import { DialogImageModule } from 'src/app/common/dialogimage/dialogimage.module
 import { ManageMediaModule } from 'src/app/common/manage-media-module/manage-media.module';
 import { ListGridAngularModule } from 'src/app/common/list-grid-angular/list-grid-angular.module';
 import { CheckHideActionsDirectiveModule } from 'src/app/directive/check-action.module';
+import { LoadingGridModule } from 'src/app/common/loading-grid/loading-grid.module';
 @NgModule({
   declarations: [
     GridPushListComponent
@@ -38,6 +39,7 @@ import { CheckHideActionsDirectiveModule } from 'src/app/directive/check-action.
     PageMarkdownModule,
     DialogModule,
     ListGridAngularModule,
+    LoadingGridModule,
     TabViewModule,
     ManageMediaModule],
   exports: [GridPushListComponent],

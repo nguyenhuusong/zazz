@@ -53,6 +53,7 @@
                 (onCellClicked)="onCellClicked($event)"
                 (showConfig)="cauhinh()"
                 [columnDefs]="columnDefs"></app-list-grid-angular>
+                <app-loading-grid *ngIf="columnDefs.length === 0" [columnNumber]="17"></app-loading-grid>
             <div class="paginator">
                 <span>Từ {{ countRecord.currentRecordStart }} đến
                     {{ countRecord.currentRecordEnd }}
@@ -110,6 +111,10 @@
     <p-header>
         Chỉnh sửa lịch làm việc
     </p-header>
+    <app-loading-detail 
+        [id]="'sections-1qnt'" 
+        *ngIf="listViewsDependent.length === 0">
+    </app-loading-detail>
     <app-edit-detail *ngIf="listViewsDependent.length> 0 && detailDependentInfo"
         [detail]="detailDependentInfo" [manhinh]="'Edit'" [thongtinnhanvienNew]="true"
         [optionsButtonsEdit]="optionsButon"

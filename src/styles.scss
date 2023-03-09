@@ -2579,6 +2579,7 @@ div.p-organizationchart {
     }
     input{
         width: 100%;
+        height: 34px;
         -webkit-border-radius: 3px;
         -moz-border-radius: 3px;
         background: none;
@@ -3086,7 +3087,7 @@ div.p-organizationchart {
         //     position: absolute;
         //     bottom: 8px;
         // }
-        min-height: 56px;
+        min-height: 55.98px;
         .p-checkbox-label{
             color: rgba(0, 0, 0, 0.87);
             font-size: 16px;
@@ -6417,4 +6418,59 @@ app-type-linkurl-drag{
 }
 .text-bold{
     font-weight: bold;
+}
+.table-lzay{
+    .p-datatable-wrapper{
+        table{
+            &>thead.p-datatable-thead{
+                &>tr{
+                    &>th{
+                        padding-top: 10px !important;
+                        padding-bottom: 10px !important;
+                    }
+                }
+            }
+            tr{
+                td{
+                    padding-top: 11px !important;
+                    padding-bottom: 11px !important;
+                }
+            }
+        }
+    }
+}
+.loading-detail{
+    p-skeleton{
+        .p-skeleton{
+            margin-bottom: 10px;
+            &.mb2{
+                margin-bottom: 7px;
+            }
+        }
+    }
+    .box{
+        padding: 15px !important;
+        border: 1px solid #dfdfdf;
+        border-radius: 4px;
+        margin-bottom: 15px;
+        padding-bottom: 0 !important;
+        box-shadow: 1px 1px 5px #cccccc47;
+    }
+    .row 
+    {
+        margin-left: -8px;
+        margin-right: -8px;
+        & > div{
+            padding-left: 8px;
+            padding-right: 8px;
+        }
+    }
+}
+.fields-lazy{
+    margin-bottom: 15px;
+}
+hr{
+    border-top: 1px rgba(0, 0, 0, 0.12);
+    margin-top: 20px;
+    margin-bottom: 20px;
 }

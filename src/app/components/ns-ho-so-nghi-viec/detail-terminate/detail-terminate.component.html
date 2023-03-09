@@ -19,6 +19,11 @@
             <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'"
                 [optionsButtonsEdit]="optionsButtonsView" [dataView]="listViews" (callback)="setTerminateInfo($event)" (callBackForm)="callBackForm($event)"
                 (callbackcancel)="cancel($event)"></app-edit-detail>
+                <app-loading-detail 
+                            [id]="'app-detail-terminate'" 
+                            *ngIf="listViews.length === 0">
+                        </app-loading-detail>
+
             
         </p-tabPanel>
         <p-tabPanel header="Danh sách hồ sơ">

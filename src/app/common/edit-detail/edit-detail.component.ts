@@ -133,7 +133,6 @@ export class EditDetailComponent implements OnInit, OnChanges {
  
   callApiDrop() {
     const promissall = [];
-    const source = timer(50);
     this.dataViewNew = cloneDeep(this.dataView);
     this.dataView = [];
     this.dataViewNew.forEach(element => {

@@ -56,7 +56,7 @@ export class NgayNghiLeComponent implements OnInit {
   objectActionDetail: any;
   gridflexs: any;
   getRowHeight;
-  listsData = null;
+  listsData = [];
   selectedNode
   totalRecord = 0;
   first = 0;
@@ -162,7 +162,7 @@ export class NgayNghiLeComponent implements OnInit {
 
   load() {
     this.columnDefs = []
-    this.spinner.show();
+    // this.spinner.show();
     const queryParams = queryString.stringify(this.query);
     this.apiService.holidayPage(queryParams)
     .pipe(takeUntil(this.unsubscribe$))

@@ -35,7 +35,7 @@ import { fromEvent, Subject, takeUntil } from 'rxjs';
     objectAction: any;
     objectActionDetail: any;
     gridflexs: any;
-    listsData = null;
+    listsData = [];
     totalRecord = 0;
     first = 0;
     gridKey = ''
@@ -110,7 +110,7 @@ import { fromEvent, Subject, takeUntil } from 'rxjs';
   
     load() {
       this.columnDefs = [];
-      this.spinner.show();
+      // this.spinner.show();
       const queryParams = queryString.stringify(this.query);
       this.apiService.getPayrollBasePage(queryParams)
       .pipe(takeUntil(this.unsubscribe$))

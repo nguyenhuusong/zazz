@@ -16,6 +16,7 @@ import { AgGridModule } from '@ag-grid-community/angular';
 import { BadgeModule } from 'primeng/badge';
 import { ListGridAngularModule } from 'src/app/common/list-grid-angular/list-grid-angular.module';
 import { CheckHideActionsDirectiveModule } from 'src/app/directive/check-action.module';
+import { LoadingGridModule } from 'src/app/common/loading-grid/loading-grid.module';
 @NgModule({
   declarations: [
     StoreNotifyComponent
@@ -36,6 +37,7 @@ import { CheckHideActionsDirectiveModule } from 'src/app/directive/check-action.
     PageMarkdownModule,
     ListGridAngularModule,
     DropdownModule,
+    LoadingGridModule,
     CheckHideActionsDirectiveModule,
     TabViewModule,],
   exports: [StoreNotifyComponent],

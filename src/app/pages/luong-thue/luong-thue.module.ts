@@ -63,6 +63,9 @@ import { ImportExcelModule } from 'src/app/common/import-excel/import-excel.modu
 import { ImportThanhPhanLuongComponent } from 'src/app/components/luong-thue/tinh-luong/import-thanh-phan-luong/import-thanh-phan-luong.component';
 import { ChinhSachLuongComponent } from 'src/app/components/chinh-sach-luong/chinh-sach-luong.component';
 import { ChiTietChinhSachLuongComponent } from 'src/app/components/chinh-sach-luong/chi-tiet-chinh-sach-luong/chi-tiet-chinh-sach-luong.component';
+import { LoadingGridModule } from 'src/app/common/loading-grid/loading-grid.module';
+import { ApDungCsComponent } from 'src/app/components/chinh-sach-luong/ap-dung-cs/ap-dung-cs.component';
+import { LoadingDetailModule } from 'src/app/common/loading-detail/loading-detail.module';
 
 @NgModule({
   imports: [
@@ -109,11 +112,13 @@ import { ChiTietChinhSachLuongComponent } from 'src/app/components/chinh-sach-lu
     StepsModule,
     DividerModule,
     ListboxModule,
+    LoadingGridModule,
     ImportExcelModule,
     AgGridModule.withComponents([
       ButtonRendererComponent,
       ButtonRendererComponent1
     ]),
+    LoadingDetailModule
   ],
 
   declarations: [
@@ -135,8 +140,8 @@ import { ChiTietChinhSachLuongComponent } from 'src/app/components/chinh-sach-lu
     ImportCapBacLuongComponent,
     ImportThanhPhanLuongComponent,
     ChinhSachLuongComponent,
-    ChiTietChinhSachLuongComponent
-    
+    ChiTietChinhSachLuongComponent,
+    ApDungCsComponent
 
 
    

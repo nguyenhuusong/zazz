@@ -9,5 +9,9 @@
     <section>
         <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'"  [dataView]="listViews"
         (callback)="setAccountInfo($event)" (callbackcancel)="cancelUpdate($event)" [optionsButtonsEdit]="optionsButtonsView"></app-edit-detail>
+        <app-loading-detail 
+            [id]="'short-field'" 
+            *ngIf="listViews.length === 0">
+        </app-loading-detail>
     </section>
 </div>

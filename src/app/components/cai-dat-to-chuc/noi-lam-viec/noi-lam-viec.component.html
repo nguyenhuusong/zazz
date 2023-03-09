@@ -50,6 +50,7 @@
                 [listsData]="listsData" [height]="heightGrid" (onCellClicked)="onCellClicked($event)"
                 (showConfig)="cauhinh()" [idGrid]="gridKey + '_45dfs'"
                 [columnDefs]="columnDefs"></app-list-grid-angular>
+                <app-loading-grid  [gridtype]="'lhd'" *ngIf="columnDefs.length === 0" [columnNumber]="10"></app-loading-grid>
             <div class="paginator">
                 <span>Từ {{ countRecord.currentRecordStart }} đến
                     {{ countRecord.currentRecordEnd }}

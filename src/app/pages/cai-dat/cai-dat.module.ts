@@ -98,6 +98,8 @@ import { ChiTietLoaiGiayToComponent } from 'src/app/components/danh-muc-loai-gia
 import { ImportExcelModule } from 'src/app/common/import-excel/import-excel.module';
 import { ProvinceComponent } from 'src/app/components/province/province.component';
 import { DetailProvinceComponent } from 'src/app/components/province/detail-province/detail-province.component';
+import { LoadingGridModule } from 'src/app/common/loading-grid/loading-grid.module';
+import { LoadingDetailModule } from 'src/app/common/loading-detail/loading-detail.module';
 
 FullCalendarModule.registerPlugins([
   // register FullCalendar plugins
@@ -153,7 +155,9 @@ FullCalendarModule.registerPlugins([
     CheckboxModule,
     UploadFileModule,
     HrmSearchEmpModule,
+    LoadingGridModule,
     CheckHideActionsDirectiveModule,
+    LoadingDetailModule,
     AgGridModule.withComponents([
       ButtonRendererComponent,
       ButtonRendererComponent1

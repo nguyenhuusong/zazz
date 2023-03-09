@@ -7,7 +7,11 @@
     <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'" [dataView]="listViews"
         [optionsButtonsEdit]="optionsButtonsView" 
         (callback)="setPositionInfo($event)" (callbackcancel)="cancelUpdate($event)"></app-edit-detail>
-        
+    <app-loading-detail 
+            [id]="'area'" 
+            *ngIf="listViews.length === 0">
+        </app-loading-detail>
+
    </div>
    
 </div>

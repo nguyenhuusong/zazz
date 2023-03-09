@@ -524,7 +524,7 @@ const routes: Routes = [
       url: 'import-hop-dong-mau',
       titleDad : 'Danh sách quản lý hợp đồng mẫu',
       urlDad: '/cai-dat/quan-ly-hop-dong',
-      api: 'setLeaveReasonImport',
+      api: 'setContractTypeImport',
       apiAccept: 'setLeaveReasonAccept',
       fileDoc: 'DM_HopDongMau_Import.xls',
       apiExport: 'setLeaveReasonExportDraft',

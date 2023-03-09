@@ -137,7 +137,7 @@ export class ThaiSanComponent implements OnInit, AfterViewChecked {
 
   load() {
     this.columnDefs = []
-    this.spinner.show();
+    // this.spinner.show();
     const params: any = { ...this.query };
     const queryParams = queryString.stringify(params);
     this.apiService.getMaternityPage(queryParams)

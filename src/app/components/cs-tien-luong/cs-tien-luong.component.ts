@@ -125,7 +125,7 @@ export class CsTienLuongComponent implements OnInit {
   listsData = []
   load() {
     this.columnDefs = []
-    this.spinner.show();
+    // this.spinner.show();
     const queryParams = queryString.stringify(this.query);
     this.apiService.getSalaryRecordPage(queryParams)
     .pipe(takeUntil(this.unsubscribe$))

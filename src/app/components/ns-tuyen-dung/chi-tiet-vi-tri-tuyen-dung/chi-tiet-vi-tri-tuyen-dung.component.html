@@ -11,6 +11,10 @@
     </div>
     <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButon"  [dataView]="listViews"
         (callback)="setVacancyInfo($event)" (callbackcancel)="quaylai($event)"></app-edit-detail>
+        <app-loading-detail 
+            [id]="'chi-tiet-vi-tri-tuyen-dung'" 
+            *ngIf="listViews.length === 0">
+        </app-loading-detail>
    </div>
    
 </div>

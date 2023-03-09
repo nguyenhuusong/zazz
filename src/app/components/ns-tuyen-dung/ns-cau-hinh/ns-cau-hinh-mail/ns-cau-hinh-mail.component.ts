@@ -44,7 +44,7 @@ export class NsCauHinhMailComponent implements OnInit {
   objectActionDetail: any;
   gridflexs: any;
   getRowHeight;
-  listsData = null;
+  listsData = [];
   selectedNode
   totalRecord = 0;
   first = 0;
@@ -99,7 +99,7 @@ export class NsCauHinhMailComponent implements OnInit {
 
   load() {
     this.columnDefs = [];
-    this.spinner.show();
+    // this.spinner.show();
     const queryParams = queryString.stringify(this.query);
     this.apiService.getRecruitMailPage(queryParams)
     .pipe(takeUntil(this.unsubscribe$))

@@ -140,7 +140,8 @@ export class PqThangMayComponent implements OnInit {
   }
 
   getBuidingsSearch() {
-    this.apiService.getBuildCdByProjectCd(this.modelElevator.projectCd)
+    const queryParams = queryString.stringify({ projectCd: this.modelElevator.projectCd });
+    this.apiService.getBuildCdByProjectCd(queryParams)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(
       (res: any) => {
@@ -160,7 +161,15 @@ export class PqThangMayComponent implements OnInit {
   load() {
     if (this.detailcar.cardCd) {
       this.loading = true;
-      this.apiService.getMasElevatorCards(this.detailcar.cardCd, 0, 100000)
+      const queryParams = queryString.stringify(
+        { 
+          filter: '',
+          projectCd: this.modelElevator.projectCd,
+          buildCd: this.modelElevator.buildCd,
+          offSet: 0,
+          pageSize: 100000
+      });
+      this.apiService.getMasElevatorCards(queryParams)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         (results: any) => {
@@ -242,7 +251,7 @@ export class PqThangMayComponent implements OnInit {
 
   SaveRoleCard(type) {
     this.cardinfo.cardId = this.modelcar.cardId;
-    this.apiService.addRoleCard(this.cardinfo)
+    this.apiService.setMasElevatorCard(this.cardinfo)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(
       (results: any) => {
@@ -315,7 +324,8 @@ export class PqThangMayComponent implements OnInit {
   }
 
   loadGetBuildings() {
-    this.apiService.getBuildCdByProjectCd(this.cardinfo.projectCd)
+    const queryParams = queryString.stringify({ projectCd: this.cardinfo.projectCd });
+    this.apiService.getBuildCdByProjectCd(queryParams)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(
       (res: any) => {
@@ -329,7 +339,8 @@ export class PqThangMayComponent implements OnInit {
 
   loadGetFloors() {
     this.modelFloor = [];
-    this.apiService.getElevatorFloors(this.cardinfo.buildCd)
+    const queryParams = queryString.stringify({ buildCd: this.cardinfo.buildCd });
+    this.apiService.getElevatorFloors(queryParams)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(
       (res: any) => {

@@ -10,6 +10,10 @@
             (callback)="handleSave($event)"
             (callbackcancel)="quaylai($event)"
         ></app-edit-detail>
+        <app-loading-detail 
+            [id]="'area'" 
+            *ngIf="listViews.length === 0">
+        </app-loading-detail>
         </div>
     </p-tabPanel>
     <p-tabPanel header="Mức lương">

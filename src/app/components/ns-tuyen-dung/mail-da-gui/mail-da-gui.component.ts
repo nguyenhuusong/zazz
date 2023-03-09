@@ -145,7 +145,7 @@ export class MailDaGuiComponent implements OnInit, AfterViewChecked {
 
   load() {
     this.columnDefs = []
-    this.spinner.show();
+    // this.spinner.show();
     let params: any = {... this.query};
     delete params.fromDate
     delete params.toDate

@@ -78,6 +78,12 @@
                 [listsData]="listsData" 
                 [height]="heightGrid"
                 [columnDefs]="columnDefs"></app-list-grid-angular>
+                <app-loading-grid 
+                    [columnNumber]="9" 
+                    gridtype="''" 
+                    *ngIf="columnDefs.length === 0">
+                </app-loading-grid>
+
             <div class="paginator">
                 <span>Từ {{ countRecord.currentRecordStart }} đến
                     {{ countRecord.currentRecordEnd }}
