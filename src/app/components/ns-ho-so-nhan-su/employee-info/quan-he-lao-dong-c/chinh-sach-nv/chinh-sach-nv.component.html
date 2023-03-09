@@ -50,13 +50,15 @@
     [title]="'Chứng chỉ'"
     [listsData]="listsData2" 
     (showConfig)="CauHinh()"
+    [rowSelection]="'multiple'"
     (onCellClicked)="onCellClicked($event)"
     (callback)="rowSelected($event)"
     [columnDefs]="columnDefs2">
 </app-list-grid-angular>
 <!-- <app-loading-grid [columnNumber]="10" *ngIf="columnDefs2.length === 0"  [gridtype]="'hsnv'" [value]="[1,2,3,4,5,6,7,8,9,1,2,3,4,5,6,7]"></app-loading-grid> -->
 <p-footer>
-    <button type="button" pButton icon="pi pi-check" label="Lưu lại" (click)="save()"></button>
+    <button type="button" pButton class="p-button-primary mr-1 p-button-text"  label="{{listsData2.length}} kết quả"></button>
+    <button type="button" pButton icon="pi pi-check" label="Lưu lại ({{listSelects.length}})" (click)="save()"></button>
     <button type="button" class="p-button-secondary btn-cancel" pButton icon="pi pi-times" label="Hủy bỏ" (click)="displayAddSchemeByEmpId = !displayAddSchemeByEmpId"></button>
 </p-footer>
 </p-dialog>

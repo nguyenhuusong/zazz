@@ -314,11 +314,11 @@ export class ChinhSachNvComponent implements OnInit, AfterViewInit {
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(repo => {
       if (repo.status === 'success') {
-        // if (repo.data.gridKey) {
-        //   this.gridKey = repo.data.gridKey;
-        // }
+        if (repo.data.gridKey) {
+          this.gridKey = repo.data.gridKey;
+        }
         this.spinner.hide();
-        this.listsData2 = repo.data.dataList.data || [];
+        this.listsData2 = repo.data.dataList || [];
         this.initGrid2(repo.data.gridflexs);
         this.FnEvent();
       } else {
@@ -331,21 +331,18 @@ export class ChinhSachNvComponent implements OnInit, AfterViewInit {
     this.columnDefs2 = [
       {
         headerName: '',
-        filter: false,
-        maxWidth: 50,
+        filter: '',
+        maxWidth: 90,
         pinned: 'left',
         cellRenderer: params => {
           return params.rowIndex + 1
         },
         cellClass: ['border-right', 'no-auto'],
+        checkboxSelection: true,
         headerCheckboxSelection: true,
-        headerCheckboxSelectionFilteredOnly: false,
-        field: 'checkbox2',
+        headerCheckboxSelectionFilteredOnly: true,
         suppressSizeToFit: false,
-        suppressColumnsToolPanel: false,
-        // checkboxSelection: (params) => {
-        //   return !!params.data && params.data.emp_st === 0;
-        // },
+        field: 'checkbox',
         showDisabledCheckboxes: true,
       },
       ...AgGridFn(gridflexs || []),

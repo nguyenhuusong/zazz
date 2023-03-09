@@ -13,9 +13,6 @@
 </p-card>
 <p-divider></p-divider>
 <p-card>
-    
-    
-
         <p-tabView [(activeIndex)]="indexTab" (onChange)="handleChange($event.index)">
             <p-tabPanel header="Thông tin chung">
                     <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'"
@@ -26,6 +23,5 @@
                 <app-ap-dung-cs *ngIf="indexTab === 1" [schemeId]="modelEdit.schemeId"></app-ap-dung-cs>
             </p-tabPanel>
           </p-tabView>
-       
 </p-card>
 
