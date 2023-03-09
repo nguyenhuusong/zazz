@@ -6,6 +6,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { AgGridFn } from 'src/app/common/function-common/common';
 import { fromEvent, Subject, takeUntil } from 'rxjs';
+import * as moment from 'moment';
 @Component({
   selector: 'app-chinh-sach-nv',
   templateUrl: './chinh-sach-nv.component.html',
@@ -100,7 +101,7 @@ export class ChinhSachNvComponent implements OnInit, AfterViewInit {
             buttons: [
               {
                 onClick: this.editRow.bind(this),
-                label: 'Xem chi tiết',
+                label: 'Thay đổi trạng thái',
                 icon: 'fa fa-edit editing',
                 key: 'view-job-detail',
                 class: 'btn-primary mr5',
@@ -121,8 +122,11 @@ export class ChinhSachNvComponent implements OnInit, AfterViewInit {
   }
   salaryInfoId = null;
   editRow({ rowData }) {
-    this.salaryInfoId = rowData.salaryInfoId;
-    this.displayFormEditDetail = true;
+    this.displayChangeStatus= true;
+    this.query.from_date = null;
+    this.query.to_date = null;
+    this.query.schemeOpenId = rowData.schemeOpenId;
+    this.query.app_st = rowData.app_st
     // this.getDetail();
   }
 
@@ -283,8 +287,8 @@ export class ChinhSachNvComponent implements OnInit, AfterViewInit {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa bản ghi này?',
       accept: () => {
-        const queryParams = queryString.stringify({ salaryInfoId: event.rowData.salaryInfoId });
-        this.apiService.delSalaryInfoNew(queryParams)
+        const queryParams = queryString.stringify({ schemeOpenId: event.rowData.schemeOpenId });
+        this.apiService.delSchemeOpen(queryParams)
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe((results: any) => {
           if (results.status === 'success') {
@@ -351,15 +355,26 @@ export class ChinhSachNvComponent implements OnInit, AfterViewInit {
 
   addSchemeByEmpid() {
     this.displayAddSchemeByEmpId = true;
+    this.query.from_date = null;
+    this.query.to_date = null;
+    this.listSelects = [];
+    this.listsData2 = [];
+    this.columnDefs2 = [];
   }
 
   save() {
+    if(this.listSelects.length === 0) {
+      this.messageService.add({
+        severity: 'error', summary: 'Thông báo', detail: 'Bạn chưa chọn bản ghi nào.Vui lòng chọn 1 bản ghi'
+      });
+      return; 
+    }
     this.spinner.show();
     const params = {
       empId: this.empId,
-      from_date: null,
-      to_date: null,
-      schemeIds: this.listSelects
+      from_date: this.query.from_date ? moment(this.query.from_date).format('DD/MM/YYYY') : null,
+      to_date: this.query.from_date ? moment(this.query.to_date).format('DD/MM/YYYY') : null,
+      schemeIds: this.listSelects.map(d => d.schemeId)
     }
     this.apiService.setSchemeOpen(params)
     .pipe(takeUntil(this.unsubscribe$))
@@ -380,6 +395,47 @@ export class ChinhSachNvComponent implements OnInit, AfterViewInit {
     })
   }
 
+  query = {
+    from_date: null,
+    to_date: null,
+    schemeOpenId : null,
+    app_st : 0
+  }
+
+  listStatus = [
+    {label: 'Áp dụng', value: 1},
+    {label: 'Hủy áp dụng', value: 0},
+  ]
+
+  displayChangeStatus = false;
+
+
+  saveStatus() {
+    this.spinner.show();
+    const params = {
+      schemeOpenId: this.query.schemeOpenId,
+      // from_date: this.query.from_date ? moment(this.query.from_date).format('DD/MM/YYYY') : null,
+      to_date: this.query.to_date ? moment(this.query.to_date).format('DD/MM/YYYY') : null,
+      status: this.query.app_st
+    }
+    this.apiService.setSchemeStatus(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
+      if (results.status === 'success') {
+        this.messageService.add({
+          severity: 'success', summary: 'Thông báo', detail: results.message
+        });
+        this.displayChangeStatus = false;
+        this.getSchemeEmpPage();
+        this.spinner.hide();
+      }else {
+        this.spinner.hide();
+        this.messageService.add({
+          severity: 'error', summary: 'Thông báo', detail: results.message
+        });
+      }
+    })
+  }
 
 }
 

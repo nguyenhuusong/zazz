@@ -192,7 +192,7 @@ export class ApDungCsComponent implements OnInit {
       to_date: this.query.to_date ? moment(this.query.to_date).format('DD/MM/YYYY') : null,
       empIds: this.listDataSelect.map(d => {
         return {
-          gd: d.userId
+          gd: d.empId
         }
       })
     }
@@ -230,22 +230,22 @@ export class ApDungCsComponent implements OnInit {
         cellRenderer: 'buttonAgGridComponent',
         cellRendererParams: params => {
           return {
-            buttons: [
-              {
-                onClick: this.delRow.bind(this),
-                label: 'Xóa',
-                icon: 'pi pi-trash',
-                key: 'delete-qua-trinh-hop-dong',
-                class: 'btn-danger',
-              },
-              {
-                onClick: this.defaultAuth.bind(this),
-                label: 'Người ký mặc định',
-                icon: 'fa fa-edit editing',
-                key: 'view-job-detail',
-                class: 'btn-primary mr5',
-              }
-            ]
+            // buttons: [
+            //   {
+            //     onClick: this.delRow.bind(this),
+            //     label: 'Xóa',
+            //     icon: 'pi pi-trash',
+            //     key: 'delete-qua-trinh-hop-dong',
+            //     class: 'btn-danger',
+            //   },
+            //   {
+            //     onClick: this.defaultAuth.bind(this),
+            //     label: 'Người ký mặc định',
+            //     icon: 'fa fa-edit editing',
+            //     key: 'view-job-detail',
+            //     class: 'btn-primary mr5',
+            //   }
+            // ]
           };
         },
       }
