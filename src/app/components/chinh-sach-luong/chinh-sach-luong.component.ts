@@ -266,7 +266,7 @@ export class ChinhSachLuongComponent implements OnInit, AfterViewChecked {
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Lương-Thuế' },
-      { label: 'Danh sách Chính sách lương' },
+      { label: 'Danh sách chính sách lương' },
     ];
     this.itemsToolOfGrid = [
       {
