@@ -242,7 +242,8 @@ export class CsTienLuongComponent implements OnInit {
 
   editRow({rowData}) {
     const params = {
-      recordId: rowData.recordId
+      recordId: rowData.recordId,
+      record_st: rowData.record_st
     }
     this.router.navigate(['/chinh-sach/tien-luong/chi-tiet-tien-luong'], { queryParams: params });
   }

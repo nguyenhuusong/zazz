@@ -78,6 +78,9 @@ import { TangGiamComponent } from 'src/app/components/cs-tien-luong/chi-tiet-tie
 import { ThietBiWifiChamCongComponent } from 'src/app/components/cs-cham-cong/thiet-bi-wifi-cham-cong/thiet-bi-wifi-cham-cong.component';
 import { LoadingGridModule } from 'src/app/common/loading-grid/loading-grid.module';
 import { LoadingDetailModule } from 'src/app/common/loading-detail/loading-detail.module';
+import { StepInfoComponent } from 'src/app/components/cs-tien-luong/chi-tiet-tien-luong/step-info/step-info.component';
+import { TongHopLuongComponent } from 'src/app/components/cs-tien-luong/tong-hop-luong/tong-hop-luong.component';
+import { ChiTietTongHopLuongComponent } from 'src/app/components/cs-tien-luong/tong-hop-luong/chi-tiet-tong-hop-luong/chi-tiet-tong-hop-luong.component';
 
 @NgModule({
   imports: [
@@ -165,6 +168,10 @@ import { LoadingDetailModule } from 'src/app/common/loading-detail/loading-detai
     HoTroComponent,
     TangGiamComponent,
     ThietBiWifiChamCongComponent,
+    StepInfoComponent,
+    TongHopLuongComponent,
+    ChiTietTongHopLuongComponent,
+    
 
   ],
   providers: [],

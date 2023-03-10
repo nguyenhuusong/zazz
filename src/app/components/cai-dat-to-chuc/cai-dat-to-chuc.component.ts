@@ -254,7 +254,7 @@ export class CaiDatToChucComponent implements OnInit {
   listsData = [];
   load() {
     this.columnDefs = []
-    this.spinner.show();
+    // this.spinner.show();
     let params: any = { ... this.query };
     const queryParams = queryString.stringify(params);
     this.apiService.getOrganizePage(queryParams)
@@ -850,10 +850,14 @@ export class CaiDatToChucComponent implements OnInit {
   }
 
   hrDiagram() {
-    this.selectedNode = null;
-    this.listAgencyMap = []
-    this.isHrDiagram = true;
-    this.getAgencyOrganizeMap(true);
+    this.isHrDiagram = !this.isHrDiagram;
+    if(this.isHrDiagram) {
+      this.selectedNode = null;
+      this.listAgencyMap = [];
+      this.getAgencyOrganizeMap(true);
+    }else {
+      this.load();
+    }
   }
 
   loadjs = 0;

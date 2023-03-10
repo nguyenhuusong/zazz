@@ -39,7 +39,8 @@ export class ChiTietTienLuongComponent implements OnInit {
   url = '';
   itemsMenu = [];
   modelEdit = {
-    recordId: null
+    recordId: null,
+    record_st: 0
   };
   private readonly unsubscribe$: Subject<void> = new Subject();
   ngOnDestroy() {
@@ -65,6 +66,7 @@ export class ChiTietTienLuongComponent implements OnInit {
     .subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.modelEdit.recordId = this.paramsObject.params.recordId || null
+      this.modelEdit.record_st = this.paramsObject.params.record_st || 0;
       this.getSalaryRecordInfo();
     });
   }
@@ -181,45 +183,65 @@ export class ChiTietTienLuongComponent implements OnInit {
     })
   }
 
-  getSalaryRecordInfo(flow_cur = null) {
-    this.detailInfo = null;
-    this.listViews = [];
-    this.spinner.show();
-    const queryParams = queryString.stringify({  flow_cur: flow_cur, recordId: this.modelEdit.recordId });
-    this.apiService.getSalaryRecordInfo(queryParams)
+  getSalaryWorkStatus() {
+    const queryParams = queryString.stringify({ recordId: this.modelEdit.recordId });
+    this.apiService.getSalaryWorkStatus(queryParams)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(results => {
       if (results.status === 'success') {
-        this.activeIndex = results.data.flow_st;
-        this.flowCurrent = results.data.flow_cur;
-        this.modelEdit.recordId = results.data.recordId;
-        this.steps = results.data.flowStatuses.map(d => {
-          return {
-            label: d.flow_name,
-            value: d.flow_st
-          }
-        });
-        this.detailInfo = results.data;
-        this.listViews = cloneDeep(results.data.group_fields);
-        setTimeout(() => {
-          this.stepActivated();
-        }, 100);
-        this.optionsButtonsView =[
-          { label: 'Quay lại', value: 'BackPage', class: `p-button-secondary ${results.data.prev_st ? '' : 'hidden'}`, icon: 'pi pi-caret-left',  },
-          { label: 'Tiếp tục', value: 'Update', class: `btn-accept ${results.data.next_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-caret-right' },
-          { label: 'Lưu tạm', value: 'SaveNhap', class: `btn-accept ${results.data.save_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
-          { label: 'Xác nhận', value: 'Submit', class: `btn-accept ${results.data.submit_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
-          { label: 'Đóng', value: 'Close', class: `p-button-danger ml-1`, icon: 'pi pi-times' }
-        ]
-        this.spinner.hide();
+        this.detailInfo.workStatuses = results.data.workStatuses;
       }else {
         this.spinner.hide();
         this.messageService.add({
           severity: 'error', summary: 'Thông báo', detail: results.message
         });
-        this.router.navigate(['/chinh-sach/tien-luong'])
       }
     })
+  }
+
+  getSalaryRecordInfo(flow_cur = null) {
+    this.detailInfo = null;
+      this.listViews = [];
+      this.spinner.show();
+      const queryParams = queryString.stringify({  flow_cur: flow_cur, recordId: this.modelEdit.recordId });
+      this.apiService.getSalaryRecordInfo(queryParams)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(results => {
+        if (results.status === 'success') {
+          this.activeIndex = results.data.flow_st;
+          this.flowCurrent = results.data.flow_cur;
+          this.modelEdit.recordId = results.data.recordId;
+          this.steps = results.data.flowStatuses.map(d => {
+            return {
+              label: d.flow_name,
+              value: d.flow_st
+            }
+          });
+          this.detailInfo = results.data;
+          this.listViews = cloneDeep(results.data.group_fields);
+          if(this.detailInfo.approved_st) {
+            this.getSalaryWorkStatus();
+          }
+          setTimeout(() => {
+            this.stepActivated();
+          }, 100);
+          this.optionsButtonsView =[
+            { label: 'Quay lại', value: 'BackPage', class: `p-button-secondary ${results.data.prev_st ? '' : 'hidden'}`, icon: 'pi pi-caret-left',  },
+            { label: 'Tiếp tục', value: 'Update', class: `btn-accept ${results.data.next_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-caret-right' },
+            { label: 'Lưu tạm', value: 'SaveNhap', class: `btn-accept ${results.data.save_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
+            { label: 'Xác nhận', value: 'Submit', class: `btn-accept ${results.data.submit_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
+            { label: 'Đóng', value: 'Close', class: `p-button-danger ml-1`, icon: 'pi pi-times' }
+          ]
+          this.spinner.hide();
+        }else {
+          this.spinner.hide();
+          this.messageService.add({
+            severity: 'error', summary: 'Thông báo', detail: results.message
+          });
+          this.router.navigate(['/chinh-sach/tien-luong'])
+        }
+      })
+   
   }
 
 

@@ -64,7 +64,7 @@
     </p-organizationChart>
   </section> -->
   <section class="content pb-0">
-      <div class="grid-default" #container>
+      <div class="grid-default" #container *ngIf="!this.isHrDiagram">
             <app-list-grid-tree-angular 
             *ngIf="columnDefs.length > 0 && autoGroupColumnDef && getDataPath"  
             (callback)="rowSelected($event)"  
@@ -74,7 +74,7 @@
               [height]="heightGrid" 
               [getDataPath]="getDataPath" [autoGroupColumnDef]="autoGroupColumnDef"
               [columnDefs]="columnDefs"></app-list-grid-tree-angular>
-          
+              <app-loading-grid  [gridtype]="'lhd'" *ngIf="columnDefs.length === 0" [columnNumber]="11"></app-loading-grid>
             <div class="paginator">
             <span>Từ {{ countRecord.currentRecordStart }} đến
                 {{ countRecord.currentRecordEnd }}
@@ -85,6 +85,34 @@
             </p-paginator>
         </div>
       </div>
+      <div *ngIf="this.isHrDiagram">
+        <p-organizationChart 
+        [value]="listAgencyMap" #mydiv  
+        [preserveSpace]="false" 
+        selectionMode="single" 
+        [(selection)]="selectedNode" 
+        (onNodeSelect)="onNodeSelect($event)"
+                styleClass="company">
+                <ng-template let-node pTemplate="person">
+                    <div class="node-header p-corner-top">{{node.data.position ? node.data.position : 'No position'}}</div>
+                    <div class="node-content">
+                        <img src="{{node.data.avatarUrl ? node.data.avatarUrl : '../../../../../assets/images/img_avatar.png'}}" width="32">
+                        <div>{{node.data.full_name ? node.data.full_name : 'No name'}}</div>
+                    </div>
+                </ng-template>
+                <ng-template let-node pTemplate="department" >
+                    {{node.label}}
+                </ng-template>
+            </p-organizationChart>
+    
+            <p-footer >
+               <div class="grid d-flex mt-2 justify-content-end">
+                <p-button label="Thêm mới" styleClass="p-button-sm mr-1 " icon="pi pi-plus" (click)="addNew()"></p-button>
+               <p-button label="Chỉnh sửa" styleClass="p-button-sm p-button-success" icon="pi pi-check" (click)="chinhSua()"></p-button>
+               </div>
+            </p-footer>
+      </div>
+
     </section>
 </div>
 
@@ -122,7 +150,7 @@
 
 <p-menu [model]="menuItem" [appendTo]="'body'"  [popup]="true" #menuButton></p-menu>
 
-<p-dialog  [maximizable]="true"
+<!-- <p-dialog  [maximizable]="true"
     header="Sơ đồ tổ chức"
   styleClass="hr-diagram" 
   [appendTo]="'body'" 
@@ -131,27 +159,5 @@
   [modal]="true" 
   [breakpoints]="{'1024': '95vw', '640px': '100vw'}" 
   [style]="{width: '98vw'}">
-  <p-organizationChart 
-    [value]="listAgencyMap" #mydiv  
-    [preserveSpace]="false" 
-    selectionMode="single" 
-    [(selection)]="selectedNode" 
-    (onNodeSelect)="onNodeSelect($event)"
-            styleClass="company">
-            <ng-template let-node pTemplate="person">
-                <div class="node-header p-corner-top">{{node.data.position ? node.data.position : 'No position'}}</div>
-                <div class="node-content">
-                    <img src="{{node.data.avatarUrl ? node.data.avatarUrl : '../../../../../assets/images/img_avatar.png'}}" width="32">
-                    <div>{{node.data.full_name ? node.data.full_name : 'No name'}}</div>
-                </div>
-            </ng-template>
-            <ng-template let-node pTemplate="department" >
-                {{node.label}}
-            </ng-template>
-        </p-organizationChart>
-
-        <p-footer>
-           <p-button label="Thêm mới" styleClass="p-button-sm mr-1" icon="pi pi-plus" (click)="addNew()"></p-button>
-           <p-button label="Chỉnh sửa" styleClass="p-button-sm p-button-success" icon="pi pi-check" (click)="chinhSua()"></p-button>
-        </p-footer>
-</p-dialog>
+ 
+</p-dialog> -->

@@ -8,7 +8,8 @@
 </div>
 <p-card styleClass="chi-tiet-tien-luong">
     <section>
-        <div class="status-line steps-contract col-12 m-auto">
+        <app-step-info *ngIf="detailInfo?.workStatuses?.length > 0 && detailInfo.approved_st" [detailInfo]="detailInfo"></app-step-info>
+        <div class="status-line steps-contract col-12 m-auto" *ngIf="listViews.length> 0 && !detailInfo.approved_st">
             <p-steps [model]="steps" *ngIf="listViews.length> 0" [(activeIndex)]="activeIndex" [readonly]="false"></p-steps>
         </div>
     </section>
@@ -50,6 +51,9 @@
         </p-tabPanel>
         <p-tabPanel header="Tăng/Giảm" *ngIf="detailInfo && detailInfo.approved_st">
             <tang-giam [recordId]="modelEdit.recordId" *ngIf="indexTab === 6 && modelEdit.recordId"></tang-giam>
+        </p-tabPanel>
+        <p-tabPanel header="Tổng hợp lương" *ngIf="detailInfo && detailInfo.approved_st">
+            <app-tong-hop-luong [recordId]="modelEdit.recordId" *ngIf="indexTab === 7 && modelEdit.recordId"></app-tong-hop-luong>
         </p-tabPanel>
     </p-tabView>
     <div>

@@ -141,18 +141,14 @@ import { LoadingDetailModule } from 'src/app/common/loading-detail/loading-detai
     ImportThanhPhanLuongComponent,
     ChinhSachLuongComponent,
     ChiTietChinhSachLuongComponent,
-    ApDungCsComponent
-
-
-   
-
+    ApDungCsComponent,
   ],
   exports: [
     TabBangLuongComponent,
     TabThietLapThamSoComponent,
     TabThanhPhanLuongComponent,
     TabCapBacLuongComponent,
-    ChiTietThanhPhanLuongComponent
+    ChiTietThanhPhanLuongComponent,
   ],
   providers: []
 })
