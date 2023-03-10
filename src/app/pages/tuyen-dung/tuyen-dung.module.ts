@@ -76,6 +76,7 @@ import { ImportLinhVucTuyenDungComponent } from 'src/app/components/ns-tuyen-dun
 import { ImportExcelModule } from 'src/app/common/import-excel/import-excel.module';
 import { LoadingGridModule } from 'src/app/common/loading-grid/loading-grid.module';
 import { LoadingDetailModule } from 'src/app/common/loading-detail/loading-detail.module';
+import { ChiTietTuyenDungLaiComponent } from 'src/app/components/ns-tuyen-dung/nghi-viec/chi-tiet-tuyen-dung-lai/chi-tiet-tuyen-dung-lai.component';
 @NgModule({
   imports: [
     MessagesModule,
@@ -159,7 +160,9 @@ import { LoadingDetailModule } from 'src/app/common/loading-detail/loading-detai
     KeHoachTuyenDungComponent,
     ChiTietKeHoachTuyenDungComponent,
     ImportKeHoachComponent,
-    ImportLinhVucTuyenDungComponent
+    ImportLinhVucTuyenDungComponent,
+    ChiTietTuyenDungLaiComponent,
+
   ],
   providers: [ ]
 })

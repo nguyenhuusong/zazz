@@ -188,66 +188,48 @@ export class NghiViecComponent implements OnInit, AfterViewChecked {
 
   showButtons(event: any) {
     return {
-      // buttons: [
-      //   {
-      //     onClick: this.tuyenDungLai.bind(this),
-      //     label: 'Tuyển dụng lại',
-      //     icon: 'fa fa-eye',
-      //     class: 'btn-primary mr5',
-      //     hide: CheckHideAction(MENUACTIONROLEAPI.GetTerminatePage.url, ACTIONS.TUYEN_DUNG_LAI)
-      //   },
-      // ]
+      buttons: [
+        {
+          onClick: this.tuyenDungLai.bind(this),
+          label: 'Tuyển dụng lại',
+          icon: 'fa fa-eye',
+          class: 'btn-primary mr5',
+          hide: CheckHideAction(MENUACTIONROLEAPI.GetTerminatePage.url, ACTIONS.TUYEN_DUNG_LAI)
+        },
+      ]
     };
   }
+  empId = null;
+  displayAdd = false;
+  tuyenDungLai({rowData}) {
+    this.empId = rowData.empId;
+    this.displayAdd = true;
+  }
 
-  tuyenDungLai() {
-    if(this.listDataSelect.length > 0){
-      let userIds = String(this.listDataSelect)
-      const params = queryString.stringify({UserId: userIds})
-        this.confirmationService.confirm({
-          message: 'Bạn có chắc chắn muốn tuyển dụng lại?',
-          accept: () => {
-            this.apiService.recruitAgain(params)
-            .pipe(takeUntil(this.unsubscribe$))
-            .subscribe((results: any) => {
-              if (results.status === 'success') {
-                this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
-                this.spinner.hide();
-              } else {
-                this.messageService.add({
-                  severity: 'error', summary: 'Thông báo',
-                  detail: results.message
-                });
-                this.spinner.hide();
-              }
-            }), error => {
-              console.error('Error:', error);
-              this.spinner.hide();
-            };
-          }
-        });  
-      }  
+  callbackSave() {
+    this.displayAdd = false;
+    this.load();
   }
 
   initGrid() {
     this.columnDefs = [
-      {
-        field: '',
-        checkboxSelection: true,
-        showDisabledCheckboxes: true,
-      },
-      ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       // {
-      //   headerName: 'Thao tác',
-      //   filter: '',
-      //   width: 100,
-      //   pinned: 'right',
-      //   cellRenderer: 'buttonAgGridComponent',
-      //   cellClass: ['border-right', 'no-auto'],
-      //   cellRendererParams: (params: any) => this.showButtons(params),
-      //   checkboxSelection: false,
-      //   field: 'checkbox'
-      // }
+      //   field: '',
+      //   checkboxSelection: true,
+      //   showDisabledCheckboxes: true,
+      // },
+      ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
+      {
+        headerName: 'Thao tác',
+        filter: '',
+        width: 100,
+        pinned: 'right',
+        cellRenderer: 'buttonAgGridComponent',
+        cellClass: ['border-right', 'no-auto'],
+        cellRendererParams: (params: any) => this.showButtons(params),
+        checkboxSelection: false,
+        field: 'checkbox'
+      }
     ]
 
   }

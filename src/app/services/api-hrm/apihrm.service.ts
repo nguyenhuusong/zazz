@@ -2435,6 +2435,10 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v1/recruitcandidate/UpdateCandidatesPotential?${queryParams}`, data , this.options)
   }
 
+  getCandidateAgain(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitcandidate/GetCandidateAgain?${queryParams}`, this.options)
+  }
+  
   // vong tuyen dung
   
   getRecruitRoundPage(queryParams): Observable<any> {

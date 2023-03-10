@@ -90,7 +90,12 @@
               </div>
         </p-card>
         <!-- //grid1 -->
-        <p-button label="Thêm mới" [disabled]="!detailcar" styleClass="p-button-sm" (onClick)="AddNew();" icon="pi pi-plus"></p-button>
+        <p-button 
+          label="Thêm mới" 
+          [disabled]="!detailcar" 
+          styleClass="p-button-sm" 
+          (onClick)="AddNew();" 
+          icon="pi pi-plus"></p-button>
         <div class="grid-default border" #container> 
             <app-list-grid-angular *ngIf="columnDefs.length > 0" [listsData]="rowData" [height]="500"
                 [domLayout]="'autoHeight'" [columnDefs]="columnDefs"></app-list-grid-angular>

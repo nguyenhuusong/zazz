@@ -298,6 +298,14 @@ export class PqThangMayComponent implements OnInit {
     //       this.cardinfo.cardRole = this.modelCR[0]['cardRole'];
     //     }
     //   });
+    const queryParams = queryString.stringify({ objKey: 'elvator_permission' });
+    this.apiService.getObjects(queryParams).subscribe(
+      (res: any) => {
+        if (res) {
+          this.modelCR = res.data;
+        }
+      });
+    
   }
 
   loadCardType() {
