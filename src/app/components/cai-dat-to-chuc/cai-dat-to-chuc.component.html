@@ -89,11 +89,11 @@
 </div>
 
 
-<p-dialog [(visible)]="displayOrganize" [draggable]="false" [resizable]="false"  [modal]="true" [style]="{width: '700px', height: 'auto'}">
+<p-dialog [(visible)]="displayOrganize" [draggable]="false" [resizable]="false"  [modal]="true" [style]="{width: modelOrganize.orgId ? '1400px' : '700px', height: 'auto'}">
     <p-header>
-        Thêm mới tổ chức
+        {{modelOrganize.orgId ? 'Thông tin chi tiết tổ chức' : 'Thêm mới tổ chức'}}
     </p-header>
-    <app-chi-tiet-to-chuc [orgId]="" *ngIf="displayOrganize" (back)="backPage()"></app-chi-tiet-to-chuc>
+    <app-chi-tiet-to-chuc [orgId]="modelOrganize.orgId" [parentId]="modelOrganize.parentId" [isDialog]="true" *ngIf="displayOrganize" (back)="backPage()"></app-chi-tiet-to-chuc>
 </p-dialog>
 
 <p-dialog header="Chức năng"  [autoZIndex]="true"  [modal]="true" [draggable]="false" [resizable]="false" [(visible)]="displayButton">
@@ -149,4 +149,9 @@
                 {{node.label}}
             </ng-template>
         </p-organizationChart>
+
+        <p-footer>
+           <p-button label="Thêm mới" styleClass="p-button-sm mr-1" icon="pi pi-plus" (click)="addNew()"></p-button>
+           <p-button label="Chỉnh sửa" styleClass="p-button-sm p-button-success" icon="pi pi-check" (click)="chinhSua()"></p-button>
+        </p-footer>
 </p-dialog>

@@ -25,7 +25,9 @@ export class ChiTietToChucComponent implements OnInit, OnChanges {
     private confirmationService: ConfirmationService,
     private router: Router
   ) { }
-  @Input() orgId = null;
+  @Input() orgId: string = null;
+  @Input() isDialog: boolean = false;
+  @Input() parentId: string = null;
   listViews = [];
   imagesUrl = [];
   paramsObject = null;
@@ -59,7 +61,11 @@ export class ChiTietToChucComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.handleParams();
+    if(this.isDialog) {
+      this.getOrganizeInfo();
+    }else {
+      this.handleParams();
+    }
   }
 
   handleParams() {
@@ -85,7 +91,7 @@ export class ChiTietToChucComponent implements OnInit, OnChanges {
 
   getOrganizeInfo() {
     this.listViews = [];
-    const queryParams = queryString.stringify({ orgId: this.orgId });
+    const queryParams = queryString.stringify({ orgId: this.orgId, parentId: this.parentId });
     this.apiService.getOrganizeInfo(queryParams)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(results => {
@@ -125,7 +131,7 @@ export class ChiTietToChucComponent implements OnInit, OnChanges {
     .subscribe((results: any) => {
       if (results.status === 'success') {
         this.displayUserInfo = false;
-        if(this.orgId) {
+        if(this.orgId && !this.isDialog) {
           this.router.navigate(['/cai-dat/cai-dat-to-chuc']);
         }else {
           this.back.emit();
@@ -160,7 +166,7 @@ export class ChiTietToChucComponent implements OnInit, OnChanges {
     if(data === 'CauHinh') {
       this.getOrganizeInfo();
     }else {
-      if(this.orgId) {
+      if(this.orgId && !this.isDialog) {
         this.router.navigate(['/cai-dat/cai-dat-to-chuc']);
       }else {
         this.back.emit();
