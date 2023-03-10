@@ -318,18 +318,15 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
 
   rowSelected(event) {
     this.dataRowSelected = event;
-    this.recruitmentStatusSelected = this.dataRowSelected.map( d => d.can_st)
-    .pipe(takeUntil(this.unsubscribe$))
-    .toString();
+    this.recruitmentStatusSelected = this.dataRowSelected.map( d => d.can_st).toString();
     this.canSttValue = this.dataRowSelected.sort((a,b)=>a.can_st-b.can_st)[this.dataRowSelected.length - 1];
     // check role for set tiem nang && check for tuy chon
-    this.buttonTiemNang[1].disabled = CheckHideAction(MENUACTIONROLEAPI.GetCandidatePage.url, ACTIONS.TIEM_NANG) && this.dataRowSelected.length > 0;
+    this.buttonTiemNang[1].disabled = this.dataRowSelected.length > 0 ? false : true;
     // chuyen vong
-    this.optionsButtonDB[0].disabled = CheckHideAction(MENUACTIONROLEAPI.GetCandidatePage.url, ACTIONS.CHUYEN_VONG) && this.dataRowSelected.length > 0;
-    this.optionsButtonDB[1].disabled = CheckHideAction(MENUACTIONROLEAPI.GetCandidatePage.url, ACTIONS.SEND_EMAIL);
+    this.optionsButtonDB[0].disabled = this.dataRowSelected.length > 0 ? false : true;
+    // this.optionsButtonDB[1].disabled = CheckHideAction(MENUACTIONROLEAPI.GetCandidatePage.url, ACTIONS.SEND_EMAIL);
     let checkCreateAccount = this.dataRowSelected.some( d => d.can_st !== 10 || d.status_account === 1 );
     this.optionsButtonDB[2].disabled = checkCreateAccount ? true : this.dataRowSelected.length < 1 ? true : false;
-    
   }
 
   delRow(event) {
@@ -433,7 +430,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
         label: 'Chuyển vòng',
         code: 'chuyenVong',
         icon: 'pi pi-reply',
-        disabled: true,
+        disabled: false,
         command: () => {
           this.chuyenVong();
         }
@@ -442,7 +439,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
         label: 'Gửi email',
         code: 'guiemail',
         icon: 'pi pi-envelope',
-        disabled: true,
+        disabled: false,
         command: () => {
           this.getRecruitMailInput();
         }
