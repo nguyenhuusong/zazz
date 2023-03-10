@@ -26,7 +26,7 @@
                         </svg>
                     </p-button>
                 </div> -->
-                <p-button 
+                <!-- <p-button 
                 [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetTerminatePage2.url, action: ACTIONS.TUYEN_DUNG_LAI}"
                 [ngClass]="{ 'active' : listDataSelect.length > 0  }" styleClass="height-56 btn-active-on-off" (click)="tuyenDungLai()">
                     <svg width="14" height="20" viewBox="0 0 14 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -34,7 +34,7 @@
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M4.49982 15.3097C4.49982 14.9083 4.82181 14.583 5.219 14.583H8.78064C9.17783 14.583 9.49982 14.9083 9.49982 15.3097C9.49982 15.711 9.17783 16.0364 8.78064 16.0364H5.219C4.82181 16.0364 4.49982 15.711 4.49982 15.3097Z" fill="#F6FBFF"/>
                     </svg>&nbsp;&nbsp;
                     Tuyển dụng lại
-                </p-button>
+                </p-button> -->
                 
                 <!-- <p-button styleClass="p-button-sm height-56" (click)="cauhinh()">
                     <svg width="20" height="17" viewBox="0 0 20 17" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -71,6 +71,11 @@
 <p-dialog header="Cài đặt cấu hình" [(visible)]="displaySetting" (onHide)="find()" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
     [draggable]="false" [resizable]="false" [focusTrap]="false" styleClass="popup-setting">
     <app-config-grid-table-form *ngIf="displaySetting && gridKey" [typeConfig]="'TableInfo'"   [gridKey]="gridKey"></app-config-grid-table-form>
+</p-dialog>
+
+<p-dialog header="Tuyển dụng lại nhân viên" [(visible)]="displayAdd" (onHide)="find()" [modal]="true" [style]="{width: '70vw'}" [maximizable]="true"
+    [draggable]="false" [resizable]="false" [focusTrap]="false" styleClass="popup-setting">
+    <app-chi-tiet-tuyen-dung-lai [empId]="empId" *ngIf="displayAdd" (callback)="callbackSave()"></app-chi-tiet-tuyen-dung-lai>
 </p-dialog>
 
 
