@@ -120,9 +120,10 @@
   </ng-template>
 </p-overlayPanel>
 
-<p-menu [model]="menuItem" [appendTo]="'body'" [popup]="true" #menuButton></p-menu>
+<p-menu [model]="menuItem" [appendTo]="'body'"  [popup]="true" #menuButton></p-menu>
 
-<p-dialog 
+<p-dialog  [maximizable]="true"
+    header="Sơ đồ tổ chức"
   styleClass="hr-diagram" 
   [appendTo]="'body'" 
   [autoZIndex]="true" 
@@ -147,6 +148,5 @@
             <ng-template let-node pTemplate="department" >
                 {{node.label}}
             </ng-template>
-         
         </p-organizationChart>
 </p-dialog>
