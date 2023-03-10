@@ -526,11 +526,6 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v2/contract/GetContractPageByEmpId?` + queryParams, this.options)
   }
 
-  setEmpDependent(params): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v2/contract/SetEmpDependent`, params, this.options)
-  }
-  
-
   setContractStatus(params): Observable<any> {
     return this.http.put<any>(`${apiHrmServer}/api/v2/contract/SetContractStatus`, params, this.options)
   }
@@ -578,18 +573,6 @@ export class ApiHrmService {
 
   setRecordInfo(params): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/contract/SetRecordInfo`, params, this.options)
-  }
-
-  getEmpDependentPage(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v2/contract/GetEmpDependentPage?` + queryParams, this.options)
-  }
-  
-  getEmpDependent(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v2/contract/GetEmpDependent?` + queryParams, this.options)
-  }
-
-  delEmpDependent(queryParams): Observable<any> {
-    return this.http.delete<any>(`${apiHrmServer}/api/v2/contract/DelEmpDependent?` + queryParams, this.options)
   }
 
   setIncomeTaxStatus(id): Observable<any> {
@@ -3287,7 +3270,52 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v1/salaryevaluate/GetSalaryTrans?` + queryParams, this.options);
   }
 
-  // elevator
+  // Người phụ thuộc
+
+  getEmpDependentFilter(): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/empdependent/GetEmpDependentFilter`, this.options);
+  }
+
+  getEmpDependentPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/empdependent/GetEmpDependentPage?` + queryParams, this.options);
+  }
+
+  getEmpDependentPageById(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/empdependent/GetEmpDependentPageById?` + queryParams, this.options);
+  }
+
+  getEmpDependent(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/empdependent/GetEmpDependent?` + queryParams, this.options);
+  }
+  
+  setEmpDependent(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/empdependent/SetEmpDependent` , queryParams, this.options);
+  }
+
+  setEmpDependentImport(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/empdependent/SetEmpDependentImport` , queryParams, this.options);
+  }
+
+  setEmpDependentAccept(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/empdependent/SetEmpDependentAccept` , queryParams, this.options);
+  }
+
+  setEmpDependentExportDraft(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/empdependent/SetEmpDependentExportDraft` , queryParams, this.options);
+  }
+  
+  delEmpDependent(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/empdependent/DelEmpDependent?` +  queryParams, this.options);
+  }
+
+  getEmpDependentImportTemp(): Observable<any> {
+    return this.http.get(`${apiHrmServer}/api/v2/empdependent/GetEmpDependentImportTemp`, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
+  }
   
   
 

@@ -66,6 +66,9 @@ import { ChiTietChinhSachLuongComponent } from 'src/app/components/chinh-sach-lu
 import { LoadingGridModule } from 'src/app/common/loading-grid/loading-grid.module';
 import { ApDungCsComponent } from 'src/app/components/chinh-sach-luong/ap-dung-cs/ap-dung-cs.component';
 import { LoadingDetailModule } from 'src/app/common/loading-detail/loading-detail.module';
+import { DsNguoiPhuThuocComponent } from 'src/app/components/luong-thue/ds-nguoi-phu-thuoc/ds-nguoi-phu-thuoc.component';
+import { ChiTietNguoiPhuThuocComponent } from 'src/app/components/luong-thue/ds-nguoi-phu-thuoc/chi-tiet-nguoi-phu-thuoc/chi-tiet-nguoi-phu-thuoc.component';
+import { HrmSearchEmpModule } from 'src/app/common/hrm-search-emp/hrm-search-emp.module';
 
 @NgModule({
   imports: [
@@ -114,6 +117,7 @@ import { LoadingDetailModule } from 'src/app/common/loading-detail/loading-detai
     ListboxModule,
     LoadingGridModule,
     ImportExcelModule,
+    HrmSearchEmpModule,
     AgGridModule.withComponents([
       ButtonRendererComponent,
       ButtonRendererComponent1
@@ -142,6 +146,8 @@ import { LoadingDetailModule } from 'src/app/common/loading-detail/loading-detai
     ChinhSachLuongComponent,
     ChiTietChinhSachLuongComponent,
     ApDungCsComponent,
+    DsNguoiPhuThuocComponent,
+    ChiTietNguoiPhuThuocComponent,
   ],
   exports: [
     TabBangLuongComponent,

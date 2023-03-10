@@ -10,6 +10,8 @@ import { ImportCapBacLuongComponent } from 'src/app/components/luong-thue/tinh-l
 import { ImportExcelComponent } from 'src/app/common/import-excel/import-excel.component';
 import { ChinhSachLuongComponent } from 'src/app/components/chinh-sach-luong/chinh-sach-luong.component';
 import { ChiTietChinhSachLuongComponent } from 'src/app/components/chinh-sach-luong/chi-tiet-chinh-sach-luong/chi-tiet-chinh-sach-luong.component';
+import { DsNguoiPhuThuocComponent } from 'src/app/components/luong-thue/ds-nguoi-phu-thuoc/ds-nguoi-phu-thuoc.component';
+import { ChiTietNguoiPhuThuocComponent } from 'src/app/components/luong-thue/ds-nguoi-phu-thuoc/chi-tiet-nguoi-phu-thuoc/chi-tiet-nguoi-phu-thuoc.component';
 
 const routes: Routes = [
   {
@@ -111,6 +113,47 @@ const routes: Routes = [
     data: {
       title: 'Chi tiết chính sách lương',
       url: 'chi-tiet-chinh-sach',
+    },
+  },
+  // Danh sách người phụ thuộc
+  {
+    path: 'danh-sach-nguoi-phu-thuoc',
+    component: DsNguoiPhuThuocComponent,
+    data: {
+      title: 'Danh sách người phụ thuộc',
+      url: 'danh-sach-nguoi-phu-thuoc',
+    },
+  },
+  {
+    path: 'danh-sach-nguoi-phu-thuoc/them-moi-nguoi-phu-thuoc',
+    component: ChiTietNguoiPhuThuocComponent,
+    data: {
+      title: 'Thêm mới người phụ thuộc',
+      url: 'them-moi-nguoi-phu-thuoc',
+    },
+  },
+  {
+    path: 'danh-sach-nguoi-phu-thuoc/chi-tiet-nguoi-phu-thuoc',
+    component: ChiTietNguoiPhuThuocComponent,
+    data: {
+      title: 'Chi tiết người phụ thuộc',
+      url: 'chi-tiet-nguoi-phu-thuoc',
+    },
+  },
+  {
+    path: 'danh-sach-nguoi-phu-thuoc/import-nguoi-phu-thuoc',
+    component: ImportExcelComponent,
+    data: {
+      title: 'Import người phụ thuộc',
+      url: 'import-cap-bac-luong',
+      titleDad : 'Danh sách người phụ thuộc',
+      urlDad: '/luong-thue/danh-sach-nguoi-phu-thuoc',
+      api: 'setEmpDependentImport',
+      apiAccept: 'setEmpDependentAccept',
+      fileDoc: 'DM_CapBacLuong_Import.xls',
+      apiExport: 'setEmpDependentExportDraft',
+      apiTemImport: 'getEmpDependentImportTemp',
+      fileNameTemImport: 'file_mau_danh_muc_nguoi_phu_thuoc',
     },
   },
   
