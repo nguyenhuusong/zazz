@@ -292,19 +292,19 @@ export class CaiDatToChucComponent implements OnInit {
     return {
       buttons: [
         {
+          onClick: this.addOrganizeByParentId.bind(this),
+          label: 'Thêm tổ chức con',
+          icon: 'fa fa-edit',
+          class: 'btn-primary mr5',
+          hide: CheckHideAction(MENUACTIONROLEAPI.GetOrganizePage.url, ACTIONS.EDIT)
+        },
+        {
           onClick: this.thongtinphongban.bind(this),
           label: 'Thông tin tổ chức',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
           hide: CheckHideAction(MENUACTIONROLEAPI.GetOrganizePage.url, ACTIONS.VIEW)
         },
-        // {
-        //   onClick: this.editRow.bind(this),
-        //   label: 'Sửa tổ chức',
-        //   icon: 'fa fa-edit',
-        //   class: 'btn-primary mr5',
-        //   hide: CheckHideAction(MENUACTIONROLEAPI.GetOrganizePage.url, ACTIONS.EDIT)
-        // },
         {
           onClick: this.delOrgin.bind(this),
           label: 'Xóa tổ chức',
@@ -580,9 +580,6 @@ export class CaiDatToChucComponent implements OnInit {
   organizeList = []
   onNodeSelect(event) {
     this.detailOrganizeMap = event.node;
-    this.isHrDiagram = false;
-    this.getlistnv();
-    // this.displayButton = true;
   }
 
   getlistnv() {
@@ -639,50 +636,46 @@ export class CaiDatToChucComponent implements OnInit {
   backPage() {
     this.load();
     this.displayOrganize = false;
+    this.isHrDiagram = false;
+  }
+
+  modelOrganize = {
+    parentId: null,
+    orgId: null,
   }
 
   Add() {
     this.displayOrganize = true;
-
-    // const params = {
-    //   orgId: null
-    // }
-    // this.router.navigate(['/cai-dat/cai-dat-to-chuc/chi-tiet-to-chuc'], { queryParams: params })
-    // this.titleForm = {
-    //   label: 'Thêm mới phòng ban',
-    //   value: 'Add'
-    // }
-
-    // // if (this.detailOrganizeMap.parentId) {
-    // //   // this.getOrganizeTree(this.detailOrganizeMap.organizeId);
-    // //   this.getOrganizeLevelList(this.detailOrganizeMap.organizeId);
-    // //   this.modeAgencyOrganize = {
-    // //     orgId: null,
-    // //     organizeId: this.query.organizeIds,
-    // //     org_name: '',
-    // //     org_level: this.detailOrganizeMap.org_level + 1,
-    // //     parentId: this.detailOrganizeMap.orgId,
-    // //     org_type: '',
-    // //     isChild: false,
-    // //     de_cd: null,
-    // //   }
-    // // } else {
-
-    // // }
-    // this.modeAgencyOrganize = {
-    //   orgId: null,
-    //   organizeId: this.listAgencyMap.length > 0 ? this.detailOrganizeMap.organizeId : null,
-    //   org_name: '',
-    //   org_level: this.listAgencyMap.length > 0 ? 1 : 0,
-    //   parentId: null,
-    //   org_type: '',
-    //   isChild: false,
-    //   de_cd: null,
-    // }
-    // this.displayOrganize = true;
-    // this.displayButton = false;
-    // this.getOrganizeTreeByOr();
+    this.modelOrganize.orgId = null;
+    this.modelOrganize.parentId = null;
   }
+
+  addOrganizeByParentId({rowData}) {
+    this.displayOrganize = true;
+    this.modelOrganize.orgId = null;
+    this.modelOrganize.parentId = rowData.orgId;
+  }
+
+  addNew() {
+    if(!this.detailOrganizeMap || this.detailOrganizeMap === null) {
+      this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Bạn chưa chọn tổ chức cha nào !' });
+      return;
+    }
+    this.modelOrganize.orgId = null;
+    this.modelOrganize.parentId = this.detailOrganizeMap.orgId;
+    this.displayOrganize = true;
+  }
+  
+  chinhSua() {
+    if(!this.detailOrganizeMap || this.detailOrganizeMap === null) {
+      this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Bạn chưa chọn tổ chức nào !' });
+      return;
+    }
+    this.modelOrganize.orgId = this.detailOrganizeMap.orgId;
+    this.modelOrganize.parentId = this.detailOrganizeMap.parentId;
+    this.displayOrganize = true;
+  }
+  
   listOrganizeTreeByOr = []
   getOrganizeTreeByOr() {
     this.selectedNodeTree = null

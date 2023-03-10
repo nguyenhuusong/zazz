@@ -202,8 +202,8 @@
           <div class="form-row field-group select" *ngIf="modelCR" style="margin:10px 0px;">
             <label class=" control-label">Quyền của thẻ</label>
             <select class="form-control" name="cardRole" [(ngModel)]="cardinfo.cardRole">
-              <option *ngFor="let objcardRole of modelCR" value={{objcardRole.id}}>
-                {{objcardRole.roleName}}
+              <option *ngFor="let objcardRole of modelCR" value={{objcardRole.value}}>
+                {{objcardRole.name}}
               </option>
             </select>
           </div>
