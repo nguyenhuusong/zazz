@@ -578,10 +578,8 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
       message: 'Bạn có chắc chắn muốn chuyển vòng?',
       accept: () => {
         let dataUpdateStatus = this.dataRowSelected.map( d => d.canId)
-        .pipe(takeUntil(this.unsubscribe$))
         .toString();
         let vacancyId = this.dataRowSelected.map( d => d.vacancyId)
-        .pipe(takeUntil(this.unsubscribe$))
         .toString();
         const query = {
           canId: dataUpdateStatus,
@@ -652,9 +650,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
       this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Chưa chọn nội dung gửi' });
       return
     }
-    let canId = this.dataRowSelected.map( d => d.canId)
-    .pipe(takeUntil(this.unsubscribe$))
-    .toString()
+    let canId = this.dataRowSelected.map( d => d.canId).toString()
     const data = {
       mail_Id: this.mailInputValue,
       can_Id: canId
@@ -692,9 +688,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
 
   tiemNang() {
     this.isTiemNang = true;
-    this.queryTiemNang.canId = this.dataRowSelected.map( d => d.canId)
-    .pipe(takeUntil(this.unsubscribe$))
-    .toString();
+    this.queryTiemNang.canId = this.dataRowSelected.map( d => d.canId).toString();
   }
 
   setTiemNang() {
