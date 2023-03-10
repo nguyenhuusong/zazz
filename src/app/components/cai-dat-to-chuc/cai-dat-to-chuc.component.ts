@@ -73,7 +73,7 @@ export class CaiDatToChucComponent implements OnInit {
   menuItem = []
   organizeLevelList = []
   isHrDiagram: boolean = false
-  organizeIdSelected = ''
+  organizeIdSelected = '';
   constructor(
     private apiService: ApiHrmService,
     private spinner: NgxSpinnerService,
@@ -158,25 +158,20 @@ export class CaiDatToChucComponent implements OnInit {
           this.selectedNode = this.listAgencyMap[0];
           this.detailOrganizeMap = this.selectedNode
           localStorage.setItem('organize', JSON.stringify(this.listAgencyMap[0]));
-          // this.query.orgId = this.selectedNode.orgId;
-          // this.query.org_level = this.selectedNode.org_level;
-          // this.load();
         } else {
           this.selectedNode = JSON.parse(localStorage.getItem("organize"));
-          // this.query.orgId = this.selectedNode.orgId;
           this.parseObjectProperties(this.listAgencyMap, this.selectedNode.organizeId);
           this.detailOrganizeMap = this.selectedNode
           this.selected(this.listAgencyMap, this.query.orgId);
-          // this.query.org_level = this.selectedNode.org_level;
           if (type) {
             this.isHrDiagram = true;
           }
-          // this.load();
         }
         this.spinner.hide();
       }
     })
   }
+
 
   addPosition() {
     const params = {

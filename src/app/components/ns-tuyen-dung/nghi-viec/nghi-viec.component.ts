@@ -202,17 +202,19 @@ export class NghiViecComponent implements OnInit, AfterViewChecked {
 
   tuyenDungLai() {
     if(this.listDataSelect.length > 0){
-      let userIds = String(this.listDataSelect)
-      const params = queryString.stringify({UserId: userIds})
+      let userIds = String(this.listDataSelect);
+      let empId = this.listDataSelect.toString();
+      const params = queryString.stringify({empId: empId})
         this.confirmationService.confirm({
           message: 'Bạn có chắc chắn muốn tuyển dụng lại?',
           accept: () => {
-            this.apiService.recruitAgain(params)
+            this.apiService.getCandidateAgain(params)
             .pipe(takeUntil(this.unsubscribe$))
             .subscribe((results: any) => {
               if (results.status === 'success') {
                 this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
                 this.spinner.hide();
+                this.load();
               } else {
                 this.messageService.add({
                   severity: 'error', summary: 'Thông báo',
