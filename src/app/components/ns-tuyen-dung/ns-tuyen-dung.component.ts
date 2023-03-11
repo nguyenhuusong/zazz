@@ -403,7 +403,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
       { label: 'Nhân sự' },
       { label: 'Danh sách tuyển dụng' },
     ];
-    this.getJobTitles();
+    // this.getJobTitles();
     this.getVacancyPage();
     this.getReRound();
     this.buttonTiemNang = [
