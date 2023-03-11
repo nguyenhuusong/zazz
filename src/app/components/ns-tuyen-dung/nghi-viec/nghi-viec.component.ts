@@ -11,7 +11,7 @@ import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
-import { OrganizeInfoService } from 'src/app/services/organize-info.service';
+
 import { Subject, takeUntil } from 'rxjs';
 const MAX_SIZE = 100000000;
 @Component({
@@ -36,7 +36,7 @@ export class NghiViecComponent implements OnInit, AfterViewChecked {
     private messageService: MessageService,
     private spinner: NgxSpinnerService,
     private changeDetector: ChangeDetectorRef,
-    private organizeInfoService: OrganizeInfoService,
+    
     private router: Router) {
 
     this.defaultColDef = {

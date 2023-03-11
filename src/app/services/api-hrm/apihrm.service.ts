@@ -936,11 +936,11 @@ export class ApiHrmService {
   }
 
   getRecruitMailInput(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitcandidate/GetRecruitMailInput?` + queryParams, this.options)
+    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitemail/GetRecruitMailInput?` + queryParams, this.options)
   }
 
   sendRecruitMail(data = null): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v1/recruitcandidate/SendRecruitMail`, data, this.options)
+    return this.http.post<any>(`${apiHrmServer}/api/v1/recruitemail/SendRecruitMail`, data, this.options)
   }
 
   updateInterviewResult(query, data = null): Observable<any> {
@@ -2411,19 +2411,19 @@ export class ApiHrmService {
   // tuye dung -> mail
   
   getRecruitSendMailPage(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitcandidate/GetRecruitSendMailPage?` + queryParams, this.options)
+    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitemail/GetRecruitSendMailPage?` + queryParams, this.options)
   }
   getRecruitMailPage(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitcandidate/GetRecruitMailPage?` + queryParams, this.options)
+    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitemail/GetRecruitMailPage?` + queryParams, this.options)
   }
   getRecruitMailInfo(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitcandidate/GetRecruitMailInfo?${queryParams}`, this.options)
+    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitemail/GetRecruitMailInfo?${queryParams}`, this.options)
   }
   setRecruitMailInfo(data): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v1/recruitcandidate/SetRecruitMailInfo`, data , this.options)
+    return this.http.post<any>(`${apiHrmServer}/api/v1/recruitemail/SetRecruitMailInfo`, data , this.options)
   }
   delRecruitMailInfo(queryParams): Observable<any> {
-    return this.http.delete<any>(`${apiHrmServer}/api/v1/recruitcandidate/DelRecruitMailInfo?${queryParams}`, this.options)
+    return this.http.delete<any>(`${apiHrmServer}/api/v1/recruitemail/DelRecruitMailInfo?${queryParams}`, this.options)
   }
 
   updateCandidatesPotential(queryParams, data = null): Observable<any> {

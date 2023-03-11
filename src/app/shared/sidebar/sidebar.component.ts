@@ -6,7 +6,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { environment } from 'src/environments/environment';
 import {Event, RouterEvent, Router, NavigationEnd} from '@angular/router';
 import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
-import { OrganizeInfoService } from 'src/app/services/organize-info.service';
+
 import * as queryString from 'querystring';
 import { MessageService } from 'primeng/api';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -27,7 +27,7 @@ export class SidebarComponent implements OnInit {
         private authService: AuthService,
         private apiService: ApiService,
         private firebaseAuthService: FirebaseAuthService,
-        private organizeInfoService: OrganizeInfoService,
+        
         private messageService: MessageService,
         private spinner: NgxSpinnerService,
     ) {

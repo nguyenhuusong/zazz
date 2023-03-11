@@ -12,7 +12,6 @@ import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common
 import * as moment from 'moment';
 import * as FileSaver from 'file-saver';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
-import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { cloneDeep } from 'lodash';
 import { DialogService } from 'primeng/dynamicdialog';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
@@ -34,7 +33,6 @@ export class CsChamCongComponent implements OnInit {
     private changeDetector: ChangeDetectorRef,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
-    private organizeInfoService: OrganizeInfoService,
     public dialogService: DialogService,
     private router: Router) {
 

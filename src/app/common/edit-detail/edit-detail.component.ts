@@ -14,7 +14,6 @@ import { delay, forkJoin, lastValueFrom, of, Subject, takeUntil, tap, timer } fr
 import { findNodeInTree, setCheckboxradiolistValue, setMembers, setMultiSelectValue, setSelectTreeValue, setValueAndOptions, setValueAndOptionsAutocomplete } from '../function-common/objects.helper';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ApiHrmV2Service } from 'src/app/services/api-hrm/apihrmv2.service';
-import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-edit-detail',
@@ -28,7 +27,6 @@ export class EditDetailComponent implements OnInit, OnChanges {
     private apiServiceCore: ApiService,
     private apiHrmV2Service: ApiHrmV2Service,
     private changeDetech: ChangeDetectorRef,
-    private organizeInfoService: OrganizeInfoService,
     private spinner: NgxSpinnerService,
     private router: Router,
     

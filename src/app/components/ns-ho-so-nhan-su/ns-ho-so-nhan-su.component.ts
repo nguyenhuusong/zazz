@@ -12,7 +12,7 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { ExportFileService } from 'src/app/services/export-file.service';
 import { cloneDeep } from 'lodash';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
-import { OrganizeInfoService } from 'src/app/services/organize-info.service';
+
 import { AuthService } from 'src/app/services/auth.service';
 import { getParamString, searchTree } from 'src/app/common/function-common/objects.helper';
 import { DialogService } from 'primeng/dynamicdialog';
@@ -110,7 +110,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
     private fileService: ExportFileService,
     private changeDetector: ChangeDetectorRef,
     public dialogService: DialogService,
-    private organizeInfoService: OrganizeInfoService,
+    
     private authService: AuthService,
     private router: Router) {
     this.defaultColDef = {

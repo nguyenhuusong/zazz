@@ -13,7 +13,7 @@ import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-render
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
-import { OrganizeInfoService } from 'src/app/services/organize-info.service';
+
 import { cloneDeep } from 'lodash';
 import { DialogService } from 'primeng/dynamicdialog';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
@@ -83,7 +83,7 @@ export class PqTheNhanVienComponent implements OnInit {
     private changeDetector: ChangeDetectorRef,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
-    private organizeInfoService: OrganizeInfoService,
+    
     private router: Router,
     private notificationService: NotificationService,
     public dialogService: DialogService,

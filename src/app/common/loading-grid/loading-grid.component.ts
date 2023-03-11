@@ -1,4 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpRequest } from '@angular/common/http';
+import { Component, inject, Input, OnInit } from '@angular/core';
+import { ErrorService } from 'src/app/services/error.service';
 
 @Component({
   selector: 'app-loading-grid',
@@ -6,12 +8,26 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./loading-grid.component.css']
 })
 export class LoadingGridComponent implements OnInit {
+  constructor(
+    private errorService: ErrorService
+  ) {
+
+  }
   @Input() gridtype = 'hsns';
   @Input() columnNumber = 17;
-  @Input() value = [1,2,3,4,5,6,7,84,4,3,4,5,6,7,45,67,7,45,67,67,67];
+  @Input() value = [1, 2, 3, 4, 5, 6, 7, 84, 4, 3, 4, 5, 6, 7, 45, 67, 7, 45, 67, 67, 67];
   listThs = [];
-  ngOnInit(): void {
-    this.listThs = Array(this.columnNumber).fill(1).map((x,i)=>i)
-    
+  isLoad = true;
+ async ngOnInit() {
+    this.listThs = Array(this.columnNumber).fill(1).map((x, i) => i);
+     this.errorService.fetchAll().subscribe(res => {
+        if(res === 404 || res === 500) {
+          this.isLoad = false;
+        }
+      })
+
   }
 }
+
+
+

@@ -10,7 +10,6 @@ import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.comp
 import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
-import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { cloneDeep } from 'lodash';
 import * as FileSaver from 'file-saver';
 import { DialogService } from 'primeng/dynamicdialog';

@@ -7,7 +7,7 @@ import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { ExportFileService } from 'src/app/services/export-file.service';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
-import { OrganizeInfoService } from 'src/app/services/organize-info.service';
+
 import { fromEvent, Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-tab-thiet-lap-tham-so',
@@ -52,7 +52,7 @@ export class TabThietLapThamSoComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private fileService: ExportFileService,
-    private organizeInfoService: OrganizeInfoService,
+    
     private changeDetector: ChangeDetectorRef,) {
 
     }

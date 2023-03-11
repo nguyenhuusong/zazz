@@ -9,7 +9,6 @@ import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
-import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { cloneDeep } from 'lodash';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
 import { fromEvent, Subject, takeUntil } from 'rxjs';
@@ -31,7 +30,6 @@ export class ChucVuComponent implements OnInit, AfterViewChecked {
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private changeDetector: ChangeDetectorRef,
-    private organizeInfoService: OrganizeInfoService,
     public dialogService: DialogService,
     private router: Router) {
 

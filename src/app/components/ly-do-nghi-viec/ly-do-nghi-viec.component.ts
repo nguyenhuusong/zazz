@@ -10,7 +10,7 @@ import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-render
 import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.component';
 import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
-import { OrganizeInfoService } from 'src/app/services/organize-info.service';
+
 import { fromEvent, Subject, takeUntil } from 'rxjs';
 import { cloneDeep } from 'lodash';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
@@ -32,7 +32,7 @@ export class LyDoNghiViecComponent implements OnInit {
     private changeDetector: ChangeDetectorRef,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
-    private organizeInfoService: OrganizeInfoService,
+    
     private router: Router) {
 
     this.defaultColDef = {

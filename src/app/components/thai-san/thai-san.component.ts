@@ -9,7 +9,7 @@ import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
-import { OrganizeInfoService } from 'src/app/services/organize-info.service';
+
 const MAX_SIZE = 100000000;
 import { cloneDeep } from 'lodash';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
@@ -36,7 +36,7 @@ export class ThaiSanComponent implements OnInit, AfterViewChecked {
     private spinner: NgxSpinnerService,
     private dialogService: DialogService,
     private changeDetector: ChangeDetectorRef,
-    private organizeInfoService: OrganizeInfoService,
+    
     private router: Router) {
 
     this.defaultColDef = {

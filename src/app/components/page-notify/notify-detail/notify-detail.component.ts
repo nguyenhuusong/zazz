@@ -10,7 +10,7 @@ declare var ace:any;
 import showdown from 'showdown';
 import { CheckHideAction } from 'src/app/common/function-common/common';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
-import { OrganizeInfoService } from 'src/app/services/organize-info.service';
+
 import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-notify-detail',
@@ -63,7 +63,7 @@ export class NotifyDetailComponent implements OnInit {
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
     private spinner: NgxSpinnerService,
-    private organizeInfoService: OrganizeInfoService,
+    
   ) { }
   items = [];
   titlePage = ''

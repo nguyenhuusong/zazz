@@ -18,7 +18,7 @@ import { finalize } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import * as moment from 'moment';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
-import { OrganizeInfoService } from 'src/app/services/organize-info.service';
+
 import { DialogService } from 'primeng/dynamicdialog';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
@@ -40,7 +40,7 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
     private spinner: NgxSpinnerService,
     private changeDetector: ChangeDetectorRef,
     private webSocketService: WebsocketService2,
-    private organizeInfoService: OrganizeInfoService,
+    
     private router: Router) {
     this.webSocketService.connect(environment.socketServer);
     this.webSocketService.emit("action", 'PRINT_LIST_PRINTERS')

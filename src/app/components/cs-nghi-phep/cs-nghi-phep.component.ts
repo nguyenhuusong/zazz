@@ -13,7 +13,6 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { Subject, takeUntil } from 'rxjs';
 import { cloneDeep } from 'lodash';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
-import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { DialogService } from 'primeng/dynamicdialog';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
@@ -46,7 +45,6 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
     private confirmationService: ConfirmationService,
     private changeDetector: ChangeDetectorRef,
     private messageService: MessageService,
-    private organizeInfoService: OrganizeInfoService,
     private router: Router,
     public dialogService: DialogService,
     private fileService: ExportFileService,

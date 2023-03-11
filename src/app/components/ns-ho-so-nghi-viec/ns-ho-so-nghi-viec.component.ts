@@ -13,7 +13,7 @@ import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-render
 import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.component';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
-import { OrganizeInfoService } from 'src/app/services/organize-info.service';
+
 import { DialogService } from 'primeng/dynamicdialog';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
 import { Subject, takeUntil } from 'rxjs';
@@ -68,7 +68,7 @@ export class NsHoSoNghiViecComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private changeDetector: ChangeDetectorRef,
-    private organizeInfoService: OrganizeInfoService,
+    
     private router: Router) {
     this.defaultColDef = {
       tooltipComponent: 'customTooltip',

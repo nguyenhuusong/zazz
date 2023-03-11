@@ -3,9 +3,7 @@ import * as queryString from 'querystring';
 import { ActivatedRoute, Router } from '@angular/router';
 import { cloneDeep } from 'lodash';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { ApiService } from 'src/app/services/api.service';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
-import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-cai-dat-tham-so',
@@ -21,7 +19,6 @@ export class CaiDatThamSoComponent implements OnInit, OnChanges {
     private activatedRoute: ActivatedRoute,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
-    private organizeInfoService: OrganizeInfoService,
     private router: Router
   ) { }
   organizeId = null

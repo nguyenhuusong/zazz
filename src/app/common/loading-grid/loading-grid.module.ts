@@ -6,13 +6,15 @@ import {SkeletonModule} from 'primeng/skeleton';
 import { TableModule } from 'primeng/table';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'primeng/api';
+import { CardModule } from 'primeng/card';
 @NgModule({
     declarations: [LoadingGridComponent],
     imports: [
         CommonModule,
         RouterModule,
         SkeletonModule,
-        TableModule
+        TableModule,
+        CardModule
     ],
     entryComponents: [],
     exports: [

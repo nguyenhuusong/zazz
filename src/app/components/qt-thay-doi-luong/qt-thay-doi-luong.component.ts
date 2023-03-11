@@ -14,7 +14,7 @@ import { ExportFileService } from 'src/app/services/export-file.service';
 import { cloneDeep } from 'lodash';
 import { flatten } from '@angular/compiler';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
-import { OrganizeInfoService } from 'src/app/services/organize-info.service';
+
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { DialogService } from 'primeng/dynamicdialog';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
@@ -109,7 +109,7 @@ export class QtThayDoiLuongComponent implements OnInit {
     private messageService: MessageService,
     private fileService: ExportFileService,
     private changeDetector: ChangeDetectorRef,
-    private organizeInfoService: OrganizeInfoService,
+    
     private router: Router) {
     this.defaultColDef = {
       tooltipComponent: 'customTooltip',

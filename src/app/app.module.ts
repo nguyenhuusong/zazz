@@ -66,6 +66,7 @@ import {
     IconControlSvgModule,
     IconControlModule
   } from 'uni-control';
+import { ErrorService } from './services/error.service';
 const APP_CONTAINERS = [DefaultLayoutComponent];
 @NgModule({
     declarations: [
@@ -145,6 +146,7 @@ const APP_CONTAINERS = [DefaultLayoutComponent];
         ConfirmationService,
         MessageService,
         OrganizeInfoService,
+        ErrorService,
         DialogService,
         ApiHrmV2Service,
         { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

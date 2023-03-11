@@ -8,7 +8,6 @@ import * as moment from 'moment';
 import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
-import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { cloneDeep } from 'lodash';
 import * as FileSaver from 'file-saver';
 import { Subject, takeUntil } from 'rxjs';
@@ -32,7 +31,6 @@ export class EatingListComponent implements OnInit, AfterViewChecked {
     private changeDetector: ChangeDetectorRef,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
-    private organizeInfoService: OrganizeInfoService,
     private router: Router) {
   }
   listStatus = [];

@@ -9,7 +9,7 @@ import { AgGridFn } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
-import { OrganizeInfoService } from 'src/app/services/organize-info.service';
+
 import { ExportFileService } from 'src/app/services/export-file.service';
 import * as FileSaver from 'file-saver';
 const MAX_SIZE = 100000000;
@@ -36,7 +36,7 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
     private messageService: MessageService,
     private spinner: NgxSpinnerService,
     private changeDetector: ChangeDetectorRef,
-    private organizeInfoService: OrganizeInfoService,
+    
     private fileService: ExportFileService,
     public dialogService: DialogService,
     private router: Router) {

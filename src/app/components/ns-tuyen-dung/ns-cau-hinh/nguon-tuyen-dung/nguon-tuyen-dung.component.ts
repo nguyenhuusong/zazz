@@ -8,7 +8,7 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { ExportFileService } from 'src/app/services/export-file.service';
 import { cloneDeep } from 'lodash';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
-import { OrganizeInfoService } from 'src/app/services/organize-info.service';
+
 import { fromEvent, Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-nguon-tuyen-dung',
@@ -59,7 +59,7 @@ export class NguonTuyenDungComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private fileService: ExportFileService,
-    private organizeInfoService: OrganizeInfoService,
+    
     private changeDetector: ChangeDetectorRef,) {
 
     }

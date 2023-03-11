@@ -8,7 +8,7 @@ import { cloneDeep } from 'lodash';
 import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
-import { OrganizeInfoService } from 'src/app/services/organize-info.service';
+
 import { DialogService } from 'primeng/dynamicdialog';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
 import { fromEvent, Subject, takeUntil } from 'rxjs';
@@ -49,7 +49,7 @@ export class LyDoNghiViecComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private changeDetector: ChangeDetectorRef,
-    private organizeInfoService: OrganizeInfoService,
+    
     private router: Router) {
   }
 

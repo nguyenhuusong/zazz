@@ -9,7 +9,7 @@ import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-render
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { AgGridFn } from 'src/app/common/function-common/common';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
-import { OrganizeInfoService } from 'src/app/services/organize-info.service';
+
 import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-store-notify',
@@ -138,7 +138,7 @@ export class StoreNotifyComponent implements OnInit, OnChanges {
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
     private spinner: NgxSpinnerService,
-    private organizeInfoService: OrganizeInfoService,
+    
     private router: Router) {
     this.defaultColDef = {
       resizable: true,

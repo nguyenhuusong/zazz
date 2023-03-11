@@ -8,7 +8,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
-import { OrganizeInfoService } from 'src/app/services/organize-info.service';
+
 import { getValueOfField, setOrganizeId } from 'src/app/utils/common/function-common';
 
 @Component({
@@ -52,7 +52,7 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
     private spinner: NgxSpinnerService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
-    private organizeInfoService: OrganizeInfoService,
+    
     private router: Router
   ) { }
   private readonly unsubscribe$: Subject<void> = new Subject();
@@ -70,7 +70,6 @@ export class ChiTietThaiSanComponent implements OnInit, OnDestroy {
       { label: `${this.titlePage}` },
     ];
     this.handleParams();
-    this.organizeInfoService.fetchAll();
   }
  
   handleParams() {

@@ -9,7 +9,6 @@ import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-render
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
-import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { cloneDeep } from 'lodash';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
 import { fromEvent, Subject, takeUntil } from 'rxjs';
@@ -80,7 +79,6 @@ export class DanhSachPhongHopComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private confirmationService: ConfirmationService,
     private changeDetector: ChangeDetectorRef,
-    private organizeInfoService: OrganizeInfoService,
     public dialogService: DialogService,
   ) {
     this.defaultColDef = {

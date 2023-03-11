@@ -13,7 +13,7 @@ import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { VongTuyenDungComponent } from './vong-tuyen-dung/vong-tuyen-dung.component';
 import { NsCauHinhMailComponent } from './ns-cau-hinh-mail/ns-cau-hinh-mail.component';
 import { NguonTuyenDungComponent } from './nguon-tuyen-dung/nguon-tuyen-dung.component';
-import { OrganizeInfoService } from 'src/app/services/organize-info.service';
+
 @Component({
   selector: 'app-ns-cau-hinh',
   templateUrl: './ns-cau-hinh.component.html',
@@ -49,7 +49,7 @@ export class NsCauHinhComponent implements OnInit {
     private messageService: MessageService,
     private fileService: ExportFileService,
     private changeDetector: ChangeDetectorRef,
-    private organizeInfoService: OrganizeInfoService,
+    
     private router: Router) {
     }
     private readonly unsubscribe$: Subject<void> = new Subject();

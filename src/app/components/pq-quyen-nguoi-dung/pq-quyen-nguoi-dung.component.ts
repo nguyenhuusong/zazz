@@ -13,7 +13,7 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { addUser } from 'src/app/types/addUser';
-import { OrganizeInfoService } from 'src/app/services/organize-info.service';
+
 import { ExportFileService } from 'src/app/services/export-file.service';
 import { Subject, takeUntil } from 'rxjs';
 @Component({
@@ -44,7 +44,7 @@ export class PqQuyenNguoiDungComponent implements OnInit {
     private messageService: MessageService,
     private changeDetector: ChangeDetectorRef,
     private spinner: NgxSpinnerService,
-    private organizeInfoService: OrganizeInfoService,
+    
     private fileService: ExportFileService,
     private router: Router) {
 

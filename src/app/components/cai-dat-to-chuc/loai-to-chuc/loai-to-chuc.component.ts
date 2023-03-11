@@ -12,7 +12,6 @@ import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
-import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { fromEvent, Subject, takeUntil } from 'rxjs';
 import { cloneDeep } from 'lodash';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
@@ -37,7 +36,6 @@ export class LoaiToChucComponent implements OnInit {
     private messageService: MessageService,
     private changeDetector: ChangeDetectorRef,
     private spinner: NgxSpinnerService,
-    private organizeInfoService: OrganizeInfoService,
     private router: Router) {
 
     this.defaultColDef = {

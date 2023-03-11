@@ -5,7 +5,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
-import { OrganizeInfoService } from 'src/app/services/organize-info.service';
+
 import { fromEvent, Subject, takeUntil } from 'rxjs';
 const queryString = require('query-string');
 declare var jQuery: any;
@@ -21,7 +21,7 @@ export class ThietBiThangMayComponent implements OnInit {
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
     private changeDetector: ChangeDetectorRef,
-    private organizeInfoService: OrganizeInfoService,
+    
     private router: Router) {
       this.titleModal = 'Thêm thiết Lập';
      }

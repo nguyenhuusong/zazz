@@ -13,7 +13,7 @@ import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common
 import { NgxSpinnerService } from 'ngx-spinner';
 import * as FileSaver from 'file-saver';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
-import { OrganizeInfoService } from 'src/app/services/organize-info.service';
+
 import { cloneDeep, uniqBy } from 'lodash';
 import { DialogService } from 'primeng/dynamicdialog';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
@@ -80,7 +80,7 @@ detailInfoFilter = null;
     private notificationService: NotificationService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
-    private organizeInfoService: OrganizeInfoService,
+    
     public dialogService: DialogService,
   ) {
     this.defaultColDef = {

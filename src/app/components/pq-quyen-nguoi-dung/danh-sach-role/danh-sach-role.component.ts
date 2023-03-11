@@ -6,7 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { OrganizeInfoService } from 'src/app/services/organize-info.service';
+
 import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-danh-sach-role',
@@ -26,7 +26,7 @@ export class DanhSachRoleComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
-    private organizeInfoService: OrganizeInfoService,
+    
     private router: Router
   ) { }
   columnDefs = [];

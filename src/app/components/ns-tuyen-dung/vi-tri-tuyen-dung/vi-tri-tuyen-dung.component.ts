@@ -11,7 +11,7 @@ import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
-import { OrganizeInfoService } from 'src/app/services/organize-info.service';
+
 import * as moment from 'moment';
 import * as FileSaver from 'file-saver';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
@@ -40,7 +40,7 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
     private spinner: NgxSpinnerService,
     private changeDetector: ChangeDetectorRef,
     private dialogService: DialogService,
-    private organizeInfoService: OrganizeInfoService,
+    
     private router: Router) {
 
     this.defaultColDef = {

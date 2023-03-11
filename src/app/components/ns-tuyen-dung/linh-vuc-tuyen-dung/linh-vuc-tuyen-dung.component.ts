@@ -9,7 +9,7 @@ import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
-import { OrganizeInfoService } from 'src/app/services/organize-info.service';
+
 import { cloneDeep } from 'lodash';
 const MAX_SIZE = 100000000;
 import { getParamString } from 'src/app/common/function-common/objects.helper';
@@ -34,7 +34,7 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
     private spinner: NgxSpinnerService,
     private changeDetector: ChangeDetectorRef,
     private messageService: MessageService,
-    private organizeInfoService: OrganizeInfoService,
+    
     private dialogService: DialogService,
     private router: Router) {
 

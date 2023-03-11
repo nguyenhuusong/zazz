@@ -7,7 +7,7 @@
   import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
   import { ExportFileService } from 'src/app/services/export-file.service';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
-import { OrganizeInfoService } from 'src/app/services/organize-info.service';
+
 import { fromEvent, Subject, takeUntil } from 'rxjs';
   @Component({
     selector: 'app-tab-cap-bac-bang-luong',
@@ -53,7 +53,7 @@ import { fromEvent, Subject, takeUntil } from 'rxjs';
       private confirmationService: ConfirmationService,
       private messageService: MessageService,
       private fileService: ExportFileService,
-      private organizeInfoService: OrganizeInfoService,
+      
       private changeDetector: ChangeDetectorRef,) {
   
       }

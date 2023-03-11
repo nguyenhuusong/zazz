@@ -11,7 +11,6 @@ import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-render
 import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.component';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
-import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
 import { fromEvent, Subject, takeUntil } from 'rxjs';
 import { cloneDeep } from 'lodash';
@@ -82,7 +81,6 @@ export class CaiDatToChucComponent implements OnInit {
     private messageService: MessageService,
     private activatedRoute: ActivatedRoute,
     private changeDetector: ChangeDetectorRef,
-    private organizeInfoService: OrganizeInfoService,
     private router: Router) {
 
     this.defaultColDef = {

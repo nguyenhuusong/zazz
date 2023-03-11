@@ -7,16 +7,10 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { Component, OnInit, ChangeDetectorRef, AfterViewChecked, OnDestroy } from '@angular/core';
 import * as queryString from 'querystring';
 import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
-import * as moment from 'moment';
 import { Subject, takeUntil } from 'rxjs';
 import { cloneDeep } from 'lodash';
-import {
-  FirstDataRenderedEvent,
-} from '@ag-grid-community/core';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
-import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { DialogService } from 'primeng/dynamicdialog';
-import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
 import { fromEvent } from 'rxjs';
 @Component({
@@ -74,10 +68,9 @@ export class BieuMauComponent implements OnInit, OnDestroy {
     private messageService: MessageService,
     private fileService: ExportFileService,
     private changeDetector: ChangeDetectorRef,
-    private organizeInfoService: OrganizeInfoService,
-    private router: Router,
     public dialogService: DialogService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     this.dataRouter = this.route.data['_value'];
    }

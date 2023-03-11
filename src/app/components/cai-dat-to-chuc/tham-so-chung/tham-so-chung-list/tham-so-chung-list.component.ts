@@ -11,7 +11,6 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as queryString from 'querystring';
 import { HttpParams } from '@angular/common/http';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
-import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { DialogService } from 'primeng/dynamicdialog';
 import { cloneDeep } from 'lodash';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
@@ -33,7 +32,6 @@ export class ThamSoChungListComponent implements OnInit {
     private messageService: MessageService,
     private spinner: NgxSpinnerService,
     private changeDetector: ChangeDetectorRef,
-    private organizeInfoService: OrganizeInfoService,
     public dialogService: DialogService,
     private router: Router) {
 

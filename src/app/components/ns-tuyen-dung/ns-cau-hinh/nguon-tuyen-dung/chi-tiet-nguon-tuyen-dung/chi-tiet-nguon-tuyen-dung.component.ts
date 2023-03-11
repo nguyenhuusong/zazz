@@ -8,7 +8,7 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as queryString from 'querystring';
 import { CheckHideAction } from 'src/app/common/function-common/common';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
-import { OrganizeInfoService } from 'src/app/services/organize-info.service';
+
 import { setOrganizeId } from 'src/app/utils/common/function-common';
 @Component({
   selector: 'app-chi-tiet-nguon-tuyen-dung',
@@ -33,7 +33,7 @@ export class ChiTietNguonTuyenDungComponent implements OnInit, OnDestroy {
     private apiService: ApiHrmService,
     private spinner: NgxSpinnerService,
     private messageService: MessageService,
-    private organizeInfoService: OrganizeInfoService,
+    
     private router: Router
   ) { }
   private readonly unsubscribe$: Subject<void> = new Subject();

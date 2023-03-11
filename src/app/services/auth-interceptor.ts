@@ -6,11 +6,13 @@ import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
+import { ErrorService } from './error.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
     constructor(private auth: AuthService, private router: Router,
+        private errorService: ErrorService,
         private messageService: MessageService,
         private spinner: NgxSpinnerService) { }
 
@@ -23,15 +25,16 @@ export class AuthInterceptor implements HttpInterceptor {
                 retry(1),
                 catchError((returnedError) => {
                     let errorMessage = null;
+                    this.errorService.setStocks(returnedError);
 
                     if (returnedError.error instanceof ErrorEvent) {
+                        this.errorService.setStocks(returnedError.error.message);
                         errorMessage = `Error: ${returnedError.error.message}`;
                         this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: `Error: ${returnedError.error.message}` });
                     } else if (returnedError instanceof HttpErrorResponse) {
                         //   errorMessage = `Error Status ${returnedError.status}: ${returnedError.error.error} - ${returnedError.error.message}`;
                         handled = this.handleServerSideError(returnedError);
                     }
-
                     console.error(errorMessage ? errorMessage : returnedError);
 
                     if (!handled) {
@@ -49,12 +52,13 @@ export class AuthInterceptor implements HttpInterceptor {
 
     private handleServerSideError(error: HttpErrorResponse): boolean {
         let handled: boolean = false;
+        this.errorService.setStocks(error.status);
         switch (error.status) {
             case 401:
                 // this.auth.signout();
                 if (this.auth.isExpired()) {
                     location.reload();
-                  }
+                }
                 this.spinner.hide();
                 handled = true;
                 break;
@@ -65,6 +69,11 @@ export class AuthInterceptor implements HttpInterceptor {
                 break;
             case 500:
                 // this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: `Error: Lỗi 500 !` });
+                this.spinner.hide();
+                handled = true;
+                break;
+            case 404:
+                this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: `Error: Lỗi 404 !` });
                 this.spinner.hide();
                 handled = true;
                 break;

@@ -24,7 +24,7 @@ export class CheckHideActionsDirective implements OnInit, AfterViewInit, AfterCo
     private el: ElementRef,
     private authService: AuthService,
     private apiService: ApiService,
-    private organizeInfoService: OrganizeInfoService,
+    
   ) {
     // this.accountAPI = this.authService.getPermissions();
 

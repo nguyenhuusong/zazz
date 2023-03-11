@@ -9,7 +9,6 @@ import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-render
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
-import { OrganizeInfoService } from 'src/app/services/organize-info.service';
 import { cloneDeep } from 'lodash';
 import { DialogService } from 'primeng/dynamicdialog';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
@@ -87,7 +86,6 @@ export class CaiDatLichHopComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private spinner: NgxSpinnerService,
     private changeDetector: ChangeDetectorRef,
-    private organizeInfoService: OrganizeInfoService,
     public dialogService: DialogService,
   ) {
     this.defaultColDef = {

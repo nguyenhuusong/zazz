@@ -10,7 +10,7 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import * as moment from 'moment';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
-import { OrganizeInfoService } from 'src/app/services/organize-info.service';
+
 const MAX_SIZE = 100000000;
 import { cloneDeep } from 'lodash';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
@@ -34,7 +34,7 @@ export class PhepBuComponent implements OnInit, AfterViewChecked {
     private messageService: MessageService,
     private spinner: NgxSpinnerService,
     private changeDetector: ChangeDetectorRef,
-    private organizeInfoService: OrganizeInfoService,
+    
     private dialogService: DialogService,
     private router: Router) {
 
