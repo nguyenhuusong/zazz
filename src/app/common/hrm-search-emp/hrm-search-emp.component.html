@@ -59,6 +59,7 @@ styleClass="search-em-in {{ dataSearched?.length > 0 ? 'search-em-result' : '' }
                             <th>Họ tên</th>
                             <th>Mã nhân viên</th>
                             <th>Số điện thoại</th>
+                            <th>Giới tính</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -67,6 +68,7 @@ styleClass="search-em-in {{ dataSearched?.length > 0 ? 'search-em-result' : '' }
                                 <td><b>{{ emInfo?.full_name }}</b></td>
                                 <td>{{ emInfo?.code }}</td>
                                 <td>{{ emInfo?.phone1 }}</td>
+                                <td>{{ emInfo?.sexName }}</td>
                             </tr>
                         </ng-container>
                     </tbody>
