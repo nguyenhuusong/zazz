@@ -501,6 +501,10 @@ export class ApiHrmService {
   setCandidateRegisters<T>(data): Observable<T> {
     return this.http.post<T>(`${apiHrmServer}/api/v1/user/SetCandidateRegisters`, data, this.options);
   }
+
+  setCandidateRegister<T>(data): Observable<T> {
+    return this.http.post<T>(`${apiHrmServer}/api/v1/user/SetCandidateRegister`, data, this.options);
+  }
   
   setEmployeeCancel(params): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/employee/SetEmployeeCancel`, params, this.options)

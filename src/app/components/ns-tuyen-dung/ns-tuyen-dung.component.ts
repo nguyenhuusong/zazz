@@ -203,6 +203,12 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
           hide: CheckHideAction(MENUACTIONROLEAPI.GetCandidatePage.url, ACTIONS.VIEW)
         },
         {
+          onClick: this.addAccount.bind(this),
+          label: 'Tạo tài khoản ứng viên',
+          icon: 'pi pi-star-fill',
+          class: 'btn-primary mr5',
+        },
+        {
           onClick: this.rateRecui.bind(this),
           label: 'Đánh giá kết quả',
           icon: 'pi pi-star-fill',
@@ -216,6 +222,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
           class: 'btn-primary mr5',
           hide: CheckHideAction(MENUACTIONROLEAPI.GetCandidatePage.url, ACTIONS.DELETE) || event.data.can_st === 10
         },
+       
       ]
     };
   }
@@ -468,6 +475,37 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   isChuyenVong = false;
   chuyenVong() {
     this.isChuyenVong = true;
+  }
+
+  addAccount({rowData}) {
+    const params = {
+      "fullName": rowData.fullName,
+        "phone": rowData.phone,
+        "email": rowData.email,
+        "loginName": rowData.phone,
+        "verifyType": 0,
+        "referral_by": rowData.canId
+    }
+
+    this.confirmationService.confirm({
+      message: 'Bạn có chắc chắn muốn tạo tài khoản?',
+      accept: () => {
+        this.spinner.show();
+        this.apiService.setCandidateRegister(params)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((results: any) => {
+          if (results.status === 'success') {
+              this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Cập nhật thành công' });
+              this.isSendMail = true;
+              this.getRecruitMailInput();
+              this.spinner.hide();
+            } else {
+              this.spinner.hide();
+              this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message ? results.message : 'Không thành công' });
+            }
+        })
+      }
+    })
   }
 
   setCandidateRegisters() {
