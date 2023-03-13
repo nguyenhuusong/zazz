@@ -1570,7 +1570,7 @@ export class ApiHrmService {
   }
 
   setVehicleRemove(params): Observable<any> {
-    return this.http.put<any>(`${apiHrmServer}/api/v2/cardvehicle/SetVehicleRemove`, params, this.options);
+    return this.http.post<any>(`${apiHrmServer}/api/v2/cardvehicle/SetVehicleRemove`, params, this.options);
   }
 
   lockCardVehicle<T>(cardVehicleId) {
