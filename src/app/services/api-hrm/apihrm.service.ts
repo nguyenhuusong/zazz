@@ -968,8 +968,13 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v2/employee/GetEmployeePage?` + queryParams, this.options);
   }
 
-  getEmployeeSearchPopup(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v2/employee/GetEmployeeSearchPopup?` + queryParams, this.options);
+  /* 
+    @ apiUrl: api search for result
+    0: search employee 
+    1: Search vehicle
+  */
+  getEmployeeSearchPopup(apiUrl, queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}${ apiUrl }?` + queryParams, this.options);
   }
 
   deleteEmployee(employeeId): Observable<string> {
@@ -2635,6 +2640,10 @@ export class ApiHrmService {
       }),
       responseType: "blob"
     });
+  }
+
+  getEmployeeSearchPopupVehicle(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/employee/GetEmployeeSearchPopupVehicle?` +  queryParams, this.options)
   }
 
   // EmpWorking

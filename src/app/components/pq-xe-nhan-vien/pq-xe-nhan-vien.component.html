@@ -66,7 +66,7 @@
         <app-list-grid-angular *ngIf="columnDefs && columnDefs?.length > 0" [listsData]="listsData" [height]="heightGrid"
           (showConfig)="cauhinh()" [idGrid]="gridKey + '_45dfs'" (onCellClicked)="onCellClicked($event)"
           [columnDefs]="columnDefs"></app-list-grid-angular>
-          <app-loading-grid  [gridtype]="'lhd'" *ngIf="columnDefs.length === 0" [columnNumber]="15"></app-loading-grid>
+          <app-loading-grid  [gridtype]="'lhd'" *ngIf="columnDefs && columnDefs.length === 0" [columnNumber]="15"></app-loading-grid>
           <div class="paginator">
               <span>Từ {{ countRecord.currentRecordStart }} đến
                   {{ countRecord.currentRecordEnd }}
@@ -403,5 +403,6 @@ styleClass="menu-option-right" #menuButton></p-menu>
 <app-hrm-search-emp 
     *ngIf="isSearchEmp" 
     [isSearch]="isSearchEmp" 
+    [apiSearchFor]="'/api/v2/employee/GetEmployeeSearchPopupVehicle'"
     (seachEmValue)="seachEmValue($event)">
 </app-hrm-search-emp>

@@ -11,6 +11,7 @@ import { getFieldValueAggrid } from 'src/app/utils/common/function-common';
 export class HrmSearchEmpComponent {
   @Input() isSearch: any = false;
   @Input() sex: any = null;
+  @Input() apiSearchFor = '/api/v2/employee/GetEmployeeSearchPopup';
   @Output() seachEmValue = new EventEmitter<any>();
   constructor(
     private apiService: ApiHrmService,
@@ -96,14 +97,19 @@ export class HrmSearchEmpComponent {
     this.isLoading = true;
     this.isSearching = true;
     this.dataInfo = null;
-    this.apiService.getEmployeeSearchPopup(queryString.stringify({ 
+    const queryParams = queryString.stringify({  
         filter: this.query.filter, 
         searchType: this.searchBy,
         sex: this.sex,
-        pageSize: 30})).subscribe((results: any) => {
+        pageSize: 30
+      }
+    )
+    this.apiService.getEmployeeSearchPopup(this.apiSearchFor, queryParams).subscribe((results: any) => {
       this.isLoading = false;
       this.dataSearched = results.data.dataList.data;
     })
+
+
   }
 
   getItem() {
