@@ -1574,7 +1574,7 @@ export class ApiHrmService {
   }
 
   lockCardVehicle<T>(cardVehicleId) {
-    const card = { status: 1, cardVehicleId };
+    const card = { statusLock: 1, cardVehicleId };
     return this.http.put<T>(`${apiHrmServer}/api/v2/cardvehicle/SetVehicleLock`, card, this.options);
   }
 
@@ -1608,7 +1608,7 @@ export class ApiHrmService {
   }
 
   unlockCardVehicle<T>(cardVehicleId) {
-    const card = { status: 0, cardVehicleId };
+    const card = { statusLock: 0, cardVehicleId };
     return this.http.put<T>(`${apiHrmServer}/api/v2/cardvehicle/SetVehicleLock`, card, this.options);
   }
 
