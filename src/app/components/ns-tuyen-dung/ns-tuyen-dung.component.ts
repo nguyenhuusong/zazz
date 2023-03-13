@@ -16,7 +16,7 @@ import { cloneDeep } from 'lodash';
 import { DialogService } from 'primeng/dynamicdialog';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
-import { fromEvent, Subject, takeUntil } from 'rxjs';
+import { forkJoin, fromEvent, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-ns-tuyen-dung',
@@ -479,13 +479,8 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
 
   addAccount({rowData}) {
     const params = {
-      "fullName": rowData.fullName,
-        "phone": rowData.phone,
-        "email": rowData.email,
-        "loginName": rowData.phone,
-        "verifyType": 0,
-        "referral_by": rowData.canId
-    }
+      canId : rowData.canId
+     }
 
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn tạo tài khoản?',
@@ -509,31 +504,27 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   }
 
   setCandidateRegisters() {
-    const data = this.dataRowSelected.map( d => { 
-      return {
-        "fullName": d.fullName,
-        "phone": d.phone,
-        "email": d.email,
-        "loginName": d.phone,
-        "verifyType": 0,
-        "referral_by": d.canId
-      }
-    })
+  
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn tạo tài khoản?',
       accept: () => {
-        this.apiService.setCandidateRegisters(data)
+        let listApi = [];
+        for(let item of this.dataRowSelected) {
+          const param = {
+            canId: item.canId
+          }
+          listApi.push(this.apiService.setCandidateRegister(param).subscribe(error => error))
+        }
+    
+        this.spinner.show();
+        forkJoin(listApi)
         .pipe(takeUntil(this.unsubscribe$))
-        .subscribe((results: any) => {
-          if (results.status === 'success') {
-              this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Cập nhật thành công' });
-              this.isSendMail = true;
-              this.getRecruitMailInput();
-              this.spinner.hide();
-            } else {
-              this.spinner.hide();
-              this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message ? results.message : 'Không thành công' });
-            }
+        .subscribe(result => {
+          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Cập nhật thành công' });
+          this.getRecruitMailInput();
+          this.spinner.hide();
+        }, error => {
+          this.spinner.hide();
         })
       }
     })

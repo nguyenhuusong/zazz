@@ -503,7 +503,7 @@ export class ApiHrmService {
   }
 
   setCandidateRegister<T>(data): Observable<T> {
-    return this.http.post<T>(`${apiHrmServer}/api/v1/user/SetCandidateRegister`, data, this.options);
+    return this.http.post<T>(`${apiHrmServer}/api/v1/recruitcandidate/SetCandidateRegUser`, data, this.options);
   }
   
   setEmployeeCancel(params): Observable<any> {
@@ -950,6 +950,8 @@ export class ApiHrmService {
   updateInterviewResult(query, data = null): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v1/recruitcandidate/UpdateInterviewResult?` + query, data, this.options)
   }
+
+
 
   exportVacancy(queryParams): Observable<any> {
     return this.http.get(`${apiHrmServer}/api/v1/recruitvacancy/ExportVacancy/?${queryParams}`, {
