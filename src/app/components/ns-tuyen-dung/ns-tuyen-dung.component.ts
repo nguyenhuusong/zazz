@@ -205,7 +205,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
         {
           onClick: this.addAccount.bind(this),
           label: 'Tạo tài khoản ứng viên',
-          icon: 'pi pi-star-fill',
+          icon: 'pi pi-plus',
           class: 'btn-primary mr5',
         },
         {
@@ -522,6 +522,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
         .subscribe(result => {
           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Cập nhật thành công' });
           this.getRecruitMailInput();
+          this.load();
           this.spinner.hide();
         }, error => {
           this.spinner.hide();
