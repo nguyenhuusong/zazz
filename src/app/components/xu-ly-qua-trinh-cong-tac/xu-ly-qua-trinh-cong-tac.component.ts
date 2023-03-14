@@ -270,8 +270,8 @@ export class XuLyQuaTrinhCongTacComponent implements OnInit {
     this.getFilter();
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
-      { label: 'Cài đặt' },
-      { label: 'Danh sách xử lý quá trình công tác' },
+      { label: 'Quan hệ lao động' },
+      { label: 'Xử lý quá trình công tác' },
     ];
     this.menuItemUtil = [
       {

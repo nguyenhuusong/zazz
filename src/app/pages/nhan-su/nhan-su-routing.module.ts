@@ -348,7 +348,7 @@ const routes: Routes = [
   data: {
     title: 'Import xử lý quá trình công tác',
     url: 'import-xu-ly-qua-trinh-cong-tac',
-    titleDad : 'Danh sách nơi làm việc',
+    titleDad : 'Xử lý quá trình công tác',
     urlDad: '/nhan-su/xu-ly-qua-trinh-cong-tac',
     api: 'setWorkplaceImport',
     apiAccept: 'setEmpProcessAccept',
