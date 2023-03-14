@@ -3344,6 +3344,10 @@ export class ApiHrmService {
   setEmpDependentExportDraft(queryParams): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/empdependent/SetEmpDependentExportDraft` , queryParams, this.options);
   }
+
+  setEmpDependentExport(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/empdependent/SetEmpDependentExport` , queryParams, this.options);
+  }
   
   delEmpDependent(queryParams): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v2/empdependent/DelEmpDependent?` +  queryParams, this.options);

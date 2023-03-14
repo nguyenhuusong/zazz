@@ -145,7 +145,7 @@ const routes: Routes = [
     component: ImportExcelComponent,
     data: {
       title: 'Import người phụ thuộc',
-      url: 'import-cap-bac-luong',
+      url: 'import-nguoi-phu-thuoc',
       titleDad : 'Danh sách người phụ thuộc',
       urlDad: '/luong-thue/danh-sach-nguoi-phu-thuoc',
       api: 'setEmpDependentImport',

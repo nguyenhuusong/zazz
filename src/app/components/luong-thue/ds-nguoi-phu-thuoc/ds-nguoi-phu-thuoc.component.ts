@@ -294,39 +294,39 @@ export class DsNguoiPhuThuocComponent implements OnInit, AfterViewChecked {
         icon: 'fa fa-download',
         // disabled: CheckHideAction(MENUACTIONROLEAPI.getRecruitPlanPage.url, ACTIONS.EXPORT),
         command: () => {
-          this.import();
+          this.importFileExel();
         }
       },
-      // {
-      //   label: 'Export',
-      //   code: 'export',
-      //   icon: 'fa fa-download',
-      //   // disabled: CheckHideAction(MENUACTIONROLEAPI.getRecruitPlanPage.url, ACTIONS.EXPORT),
-      //   command: () => {
-      //     this.export();
-      //   }
-      // },
+      {
+        label: 'Export',
+        code: 'export',
+        icon: 'fa fa-download',
+        // disabled: CheckHideAction(MENUACTIONROLEAPI.getRecruitPlanPage.url, ACTIONS.EXPORT),
+        command: () => {
+          this.exportExel();
+        }
+      },
       
     ]
   }
 
-  import() {
-    this.router.navigate(['/luong-thue/danh-sach-nguoi-phu-thuoc/import']);
+  importFileExel() {
+    this.router.navigate(['/luong-thue/danh-sach-nguoi-phu-thuoc/import-nguoi-phu-thuoc']);
   }
 
 
 
-  export() {
+  exportExel() {
     let params: any = { ... this.query };
     const queryParams = queryString.stringify(params);
-    this.apiService.setRecruitPlanExport(queryParams)
+    this.apiService.setEmpDependentExport(queryParams)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(results => {
       if (results.type === 'application/json') {
         this.spinner.hide();
       } else {
         var blob = new Blob([results], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-        FileSaver.saveAs(blob, `Danh sách vị trí tuyển dụng ${params.FromDate} - ${params.ToDate}` + ".xlsx");
+        FileSaver.saveAs(blob, `Danh sách người phụ thuộc` + ".xlsx");
         this.spinner.hide();
       }
     })

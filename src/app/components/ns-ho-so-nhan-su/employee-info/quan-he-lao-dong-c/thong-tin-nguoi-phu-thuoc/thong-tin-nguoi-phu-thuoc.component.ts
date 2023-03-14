@@ -109,7 +109,7 @@ export class ThongTinNguoiPhuThuocComponent implements OnInit {
     this.spinner.show();
     this.columnDefs = [];
     const queryParams = queryString.stringify({ empId: this.empId, offSet: 0, pageSize: 10000 });
-    this.apiService.getEmpDependentPage(queryParams)
+    this.apiService.getEmpDependentPageById(queryParams)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(repo => {
       if (repo.status === 'success') {
