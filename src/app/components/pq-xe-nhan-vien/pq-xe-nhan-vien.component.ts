@@ -501,7 +501,7 @@ detailInfoFilter = null;
 
   editRow({rowData}): void {
     this.isNew = false;
-    this.getEmpVehicleInfo(rowData.cardVehicleId);
+    this.getEmpVehicleInfo(rowData.cardVehicleId, rowData.empId);
     const cardVehicleId = rowData.cardVehicleId;
     if (cardVehicleId === null || cardVehicleId === 0) {
       alert('Cần phê duyệt');
