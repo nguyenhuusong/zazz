@@ -163,7 +163,7 @@ export class PqThangMayComponent implements OnInit {
       this.loading = true;
       const queryParams = queryString.stringify(
         { 
-          filter: '',
+          filter: this.detailcar.cardCd,
           projectCd: this.modelElevator.projectCd,
           buildCd: this.modelElevator.buildCd,
           offSet: 0,
