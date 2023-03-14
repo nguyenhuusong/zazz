@@ -2705,6 +2705,32 @@ export class ApiHrmService {
   getEmpWorkingFilter(): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/working/GetEmpWorkingFilter`  , this.options)
   }
+
+  setEmpProcessImport(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/working/SetEmpProcessImport`,  queryParams, this.options);
+  }
+
+  setEmpProcessAccept(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/working/SetEmpProcessAccept`,  queryParams, this.options);
+  }
+
+  setEmpProcessExportDraft(data): Observable<Blob> {
+    return this.http.post(`${apiHrmServer}/api/v2/working/SetEmpProcessExportDraft`, data,  {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
+  }
+
+  getEmpProcessImportTemp(): Observable<any> {
+    return this.http.get(`${apiHrmServer}/api/v2/working/GetEmpProcessImportTemp`, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
+  }
  
   // contract
   getEmpByContract(query): Observable<any> {

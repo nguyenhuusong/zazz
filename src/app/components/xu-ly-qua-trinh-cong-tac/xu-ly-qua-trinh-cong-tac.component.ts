@@ -273,22 +273,15 @@ export class XuLyQuaTrinhCongTacComponent implements OnInit {
       { label: 'Cài đặt' },
       { label: 'Danh sách xử lý quá trình công tác' },
     ];
-    // this.menuItemUtil = [
-    //   {
-    //     label: 'Import lý do',
-    //     icon: 'pi pi-refresh',
-    //     command: () => {
-    //       this.ImportReason();
-    //     }
-    //   },
-    //   {
-    //     label: 'Export mẫu hợp đồng',
-    //     icon: 'pi pi-refresh',
-    //     command: () => {
-    //       this.ExportContractType();
-    //     }
-    //   },
-    // ]
+    this.menuItemUtil = [
+      {
+        label: 'Import',
+        icon: 'pi pi-upload',
+        command: () => {
+          this.importFileExel();
+        }
+      },
+    ]
     // this.handleParams();
   }
 
@@ -364,6 +357,10 @@ export class XuLyQuaTrinhCongTacComponent implements OnInit {
     }else{
       this.isSearchEmp = false;
     }
+  }
+
+  importFileExel() {
+    this.router.navigate(['/nhan-su/xu-ly-qua-trinh-cong-tac/import-xu-ly-qua-trinh-cong-tac']);
   }
 
 }

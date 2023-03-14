@@ -341,6 +341,23 @@ const routes: Routes = [
     fileNameTemImport: 'file_mau_bien_dong_xa_hoi',
   },
 },
+
+{
+  path: 'xu-ly-qua-trinh-cong-tac/import-xu-ly-qua-trinh-cong-tac',
+  component: ImportExcelComponent,
+  data: {
+    title: 'Import xử lý quá trình công tác',
+    url: 'import-xu-ly-qua-trinh-cong-tac',
+    titleDad : 'Danh sách nơi làm việc',
+    urlDad: '/nhan-su/xu-ly-qua-trinh-cong-tac',
+    api: 'setWorkplaceImport',
+    apiAccept: 'setEmpProcessAccept',
+    fileDoc: 'temp.xls',
+    apiExport: 'setEmpProcessExportDraft',
+    apiTemImport: 'getEmpProcessImportTemp',
+    fileNameTemImport: 'file_mau_xu_ly_qua_trinh_cong_tac',
+  },
+},
   
 ];
 
