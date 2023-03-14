@@ -218,7 +218,9 @@ export class AppTypeSelectComponent implements OnInit {
   selector: 'app-type-selectTree',
   template: `  
      <div class="field-group select treeselect" [ngClass]="'valid'" > 
-     <label class="text-nowrap label-tex" >{{element.columnLabel}}  <span *ngIf="element.columnValue">- [ {{element?.columnValue?.orgPath}} ]</span>  <span  style="color:red" *ngIf="element.isRequire">*</span></label>
+     <label class="text-nowrap label-tex" pTooltip="{{element?.columnValue?.orgPath}}" 
+      tooltipPosition="top">{{element.columnLabel}}  
+      <span *ngIf="element.columnValue" style="text-overflow: ellipsis;overflow: hidden; width: calc(100% - 80px); line-height: 1; white-space: nowrap;display: inline-block;">- [ {{element?.columnValue?.orgPath}} </span> ] <span  style="color:red" *ngIf="element.isRequire">*</span></label>
       <p-treeSelect [appendTo]="'body'" 
       [name]="element.field_name" 
       [filter]="true" [options]="element.options || []" [(ngModel)]="element.columnValue"
