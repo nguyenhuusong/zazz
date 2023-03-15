@@ -257,7 +257,7 @@ export class KeHoachTuyenDungComponent implements OnInit, AfterViewChecked {
 
   editRow({rowData}) {
     const params = {
-      vacancyId: rowData.vacancyId
+      recruitPlanId: rowData.recruitPlanId	
     }
     this.router.navigate(['/tuyen-dung/ke-hoach-tuyen-dung/chi-tiet-ke-hoach-tuyen-dung'], { queryParams: params });
   }
@@ -270,7 +270,7 @@ export class KeHoachTuyenDungComponent implements OnInit, AfterViewChecked {
 
   create() {
     const params = {
-      vacancyId: null
+      recruitPlanId	: null
     }
     this.router.navigate(['/tuyen-dung/ke-hoach-tuyen-dung/them-moi-ke-hoach-tuyen-dung'], { queryParams: params });
   }
@@ -316,8 +316,6 @@ export class KeHoachTuyenDungComponent implements OnInit, AfterViewChecked {
   import() {
     this.router.navigate(['/tuyen-dung/ke-hoach-tuyen-dung/import']);
   }
-
-
 
   export() {
     let params: any = { ... this.query };
