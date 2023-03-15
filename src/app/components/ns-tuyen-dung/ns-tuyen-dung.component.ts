@@ -14,9 +14,9 @@ import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 const MAX_SIZE = 100000000;
 import { cloneDeep } from 'lodash';
 import { DialogService } from 'primeng/dynamicdialog';
-import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
-import { forkJoin, fromEvent, Subject, takeUntil } from 'rxjs';
+import { catchError, forkJoin, fromEvent, Subject, takeUntil, switchMap, tap  } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-ns-tuyen-dung',
@@ -32,6 +32,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   constructor(
     private apiService: ApiHrmService,
     private route: ActivatedRoute,
+    private http: HttpClient,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private spinner: NgxSpinnerService,
@@ -404,7 +405,35 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   }
   organizeIdSelected = '';
 
+  getIPAddress2()
+  {
+    this.http.get('https://jsonip.com')
+.pipe(
+  switchMap((value:any) => {
+	const userIP = value.ip;
+  console.log("userIP", userIP)
+	let url = `http://api.ipstack.com/${value.ip.split(',')[0]}?access_key=b1e8a9e4d386d64504f4668e12fc1f68`
+	return this.http.get(url);
+  })
+).subscribe(
+  (value:any) => {
+	console.log(value);
+  },
+  err => {
+	console.log(err);
+  }
+);
+  }
+  getIPAddress()
+  {
+    this.http.get("http://api.ipify.org/?format=json").subscribe((res:any)=>{
+      console.log( res.ip)
+    });
+  }
+
   ngOnInit() {
+    this.getIPAddress2()
+    this.getIPAddress()
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Nhân sự' },
