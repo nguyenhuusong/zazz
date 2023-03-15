@@ -3333,8 +3333,13 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v2/empdependent/SetEmpDependent` , queryParams, this.options);
   }
 
-  setEmpDependentImport(queryParams): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v2/empdependent/SetEmpDependentImport` , queryParams, this.options);
+  setEmpDependentImport(data): Observable<any> {
+    const customOptions = {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue()
+      })
+    };
+    return this.http.post<any>(`${apiHrmServer}/api/v2/empdependent/SetEmpDependentImport`, data, customOptions);
   }
 
   setEmpDependentAccept(queryParams): Observable<any> {
