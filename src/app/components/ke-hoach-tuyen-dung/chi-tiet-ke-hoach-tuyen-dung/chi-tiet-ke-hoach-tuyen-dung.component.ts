@@ -16,8 +16,7 @@ export class ChiTietKeHoachTuyenDungComponent implements OnInit {
   @Output() callback = new EventEmitter<any>();
   @Output() back = new EventEmitter<any>();
   @Input() isDialog = false;
-  @Input() empId = null;
-  @Input() vacancyId = null;
+  @Input() recruitPlanId = null;
   constructor(
     private apiService: ApiHrmService,
     private messageService: MessageService,
@@ -30,13 +29,9 @@ export class ChiTietKeHoachTuyenDungComponent implements OnInit {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
-
   optionsButtonsView = [
-    { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-caret-left' },
-    { label: 'Tiếp tục', value: 'Update', class: 'btn-accept', icon: 'pi pi-caret-right' },
-    { label: 'Lưu tạm', value: 'SaveNhap', class: 'btn-accept', icon: 'pi pi-caret-right' },
-    { label: 'Xác nhận', value: 'Submit', class: 'btn-accept', icon: 'pi pi-check' },
-    { label: 'Đóng', value: 'Close', class: 'btn-accept', icon: 'pi pi-times' }
+    { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
+    { label: 'Lưu lại', value: 'Update', class:  '', icon: 'pi pi-check'  }
   ]
   displayuploadcontract = false;
   metafile = null;
@@ -50,8 +45,7 @@ export class ChiTietKeHoachTuyenDungComponent implements OnInit {
   url = '';
   itemsMenu = [];
   modelEdit = {
-    vacancyId: null,
-    empId: null
+    recruitPlanId: null,
   }
   ngOnInit(): void {
     this.titlePage = this.activatedRoute.data['_value'].title;
@@ -62,8 +56,7 @@ export class ChiTietKeHoachTuyenDungComponent implements OnInit {
       { label: `${this.titlePage}` },
     ]
     if(this.isDialog) {
-      this.modelEdit.vacancyId = this.vacancyId
-      this.modelEdit.empId = this.empId;
+      this.modelEdit.recruitPlanId = this.recruitPlanId
       this.getRecruitPlan();
     }else {
       this.handleParams();
@@ -74,114 +67,38 @@ export class ChiTietKeHoachTuyenDungComponent implements OnInit {
   handleParams(): void {
     this.activatedRoute.queryParamMap.subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
-      this.modelEdit.vacancyId = this.paramsObject.params.vacancyId || null
-      this.modelEdit.empId = this.paramsObject.params.empId || null
+      this.modelEdit.recruitPlanId = this.paramsObject.params.recruitPlanId || null
       this.getRecruitPlan();
     });
   }
-  indexTab = 0;
-  handleChange(index) {
-    this.indexTab = index;
-  }
-
-  stepActivated(): void {
-    const stepS = document.querySelectorAll('.steps-contract .p-steps-item');
-    if (stepS.length > 0) {
-      for (let i = 0; i < this.steps.length; i++) {
-        if (i <= this.flowCurrent) {
-          stepS[i].className +=  ` p-highlight ${i< this.activeIndex ? 'active' : 'remove-active'} ${i< this.flowCurrent && this.flowCurrent !== 1 ? 'active-confirm' : 'remove-active-confirm'}`;
-        } else {
-          stepS[i].className +=  ` p-highlight ${i< this.activeIndex ? 'active' : 'remove-active'} ${i< this.flowCurrent && this.flowCurrent !== 1 ? 'active-confirm' : 'remove-active-confirm'}`;
-        }
-      }
-    }
-  }
+ 
   cancel(data) {
     if (data === 'CauHinh') {
       this.getRecruitPlan() 
-    } else if (data === 'BackPage') {
-      this.listViews = [];
-      this.getRecruitPlan(this.flowCurrent === 1 ? this.flowCurrent: this.flowCurrent -1)
-    } else {
-     this.isDialog ? this.callback.emit() : this.router.navigate(['/tuyen-dung/ke-hoach-tuyen-dun']);
+    }  else {
+     this.isDialog ? this.callback.emit() : this.router.navigate(['/tuyen-dung/ke-hoach-tuyen-dung']);
     }
   }
 
   setDetail(data) {
-    if(this.flowCurrent >= this.activeIndex) {
-      this.listViews = [];
-      const params = {
-        ...this.detailInfo, group_fields: data, flow_cur: this.flowCurrent, action: 'next'
-      }
-      this.cloneListViews = cloneDeep(data); 
-      this.listViews = [];
-      this.callApiInfo(params)
-    }else {
-      this.getRecruitPlan(this.flowCurrent + 1);
+    const params = {
+      ...this.detailInfo, group_fields: data
     }
-   
-  }
-  cloneListViews = []
-  callBackForm(event) {
-    if(this.flowCurrent >= this.activeIndex) {
-      const params = {
-        ...this.detailInfo
-        , group_fields: event.data
-        , flow_cur: event.type === 'Submit' ?  this.flowCurrent : this.flowCurrent
-        , action: event.type === 'Submit' ? 'submit' : 'save'
-      }
-      this.cloneListViews = cloneDeep(event.data);
-      this.listViews = []
-      this.callApiInfo(params, event.type)
-      }else {
-        const params = {
-          ...this.detailInfo
-          , group_fields: event.data
-          , flow_st: this.detailInfo.flow_cur
-          , action: event.type === 'Submit' ? 'submit' : 'save'
-        }
-        this.cloneListViews = cloneDeep(event.data);
-        this.listViews = []
-        this.callApiInfo(params, event.type)
-      }
-
+    this.callApiInfo(params)
   }
 
-  flowCurrent = 0
-  callApiInfo(params, type = 'Update') {
+  callApiInfo(params) {
     this.spinner.show();
     this.apiService.setRecruitPlan(params)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(results => {
       if (results.status === 'success') {
-        this.activeIndex = results.data.flow_st;
-        this.flowCurrent = results.data.flow_cur;
-        this.modelEdit.vacancyId = results.data.vacancyId;
         this.listViews = cloneDeep(results.data.group_fields);
-        setTimeout(() => {
-          this.stepActivated();
-        }, 100);
         this.detailInfo = results.data;
-        this.optionsButtonsView =[
-          { label: 'Quay lại', value: 'BackPage', class: `p-button-secondary ${results.data.prev_st ? '' : 'hidden'}`, icon: 'pi pi-caret-left',  },
-          { label: 'Tiếp tục', value: 'Update', class: `btn-accept ${results.data.next_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-caret-right' },
-          { label: 'Lưu tạm', value: 'SaveNhap', class: `btn-accept ${results.data.save_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
-          { label: 'Xác nhận', value: 'Submit', class: `btn-accept ${results.data.submit_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
-          { label: 'Đóng', value: 'Close', class: `p-button-danger ml-1`, icon: 'pi pi-times' }
-        ]
         this.spinner.hide();
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
-
-        if(type === 'Submit' || type === 'SaveNhap') {
-          setTimeout(() => {
-            this.isDialog ? this.callback.emit() : this.router.navigate(['/tuyen-dung/ke-hoach-tuyen-dun'])
-          }, 200);
-        }
+        this.isDialog ? this.callback.emit() : this.router.navigate(['/tuyen-dung/ke-hoach-tuyen-dung'])
       } else {
-        this.listViews = cloneDeep(this.cloneListViews);
-        setTimeout(() => {
-          this.stepActivated();
-         }, 100);
         this.spinner.hide();
         this.messageService.add({
           severity: 'error', summary: 'Thông báo', detail: results.message
@@ -193,43 +110,24 @@ export class ChiTietKeHoachTuyenDungComponent implements OnInit {
     })
   }
 
-  getRecruitPlan(flow_cur = null) {
+  getRecruitPlan() {
     this.detailInfo = null;
     this.listViews = [];
     this.spinner.show();
-    const queryParams = queryString.stringify({ vacancyId: this.modelEdit.vacancyId, flow_cur: flow_cur, empId: this.modelEdit.empId });
+    const queryParams = queryString.stringify({ recruitPlanId: this.modelEdit.recruitPlanId});
     this.apiService.getRecruitPlan(queryParams)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(results => {
       if (results.status === 'success') {
-        this.activeIndex = results.data.flow_st;
-        this.flowCurrent = results.data.flow_cur;
-        this.modelEdit.vacancyId = results.data.vacancyId;
-        this.steps = results.data.flowStatuses.map(d => {
-          return {
-            label: d.flow_name,
-            value: d.flow_st
-          }
-        });
         this.detailInfo = results.data;
         this.listViews = cloneDeep(results.data.group_fields);
-        setTimeout(() => {
-          this.stepActivated();
-        }, 100);
-        this.optionsButtonsView =[
-          { label: 'Quay lại', value: 'BackPage', class: `p-button-secondary ${results.data.prev_st ? '' : 'hidden'}`, icon: 'pi pi-caret-left',  },
-          { label: 'Tiếp tục', value: 'Update', class: `btn-accept ${results.data.next_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-caret-right' },
-          { label: 'Lưu tạm', value: 'SaveNhap', class: `btn-accept ${results.data.save_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
-          { label: 'Xác nhận', value: 'Submit', class: `btn-accept ${results.data.submit_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
-          { label: 'Đóng', value: 'Close', class: `p-button-danger ml-1`, icon: 'pi pi-times' }
-        ]
         this.spinner.hide();
       }else {
         this.spinner.hide();
         this.messageService.add({
           severity: 'error', summary: 'Thông báo', detail: results.message
         });
-        this.isDialog ? this.callback.emit() : this.router.navigate(['/tuyen-dung/ke-hoach-tuyen-dun'])
+        // this.isDialog ? this.callback.emit() : this.router.navigate(['/tuyen-dung/ke-hoach-tuyen-dung'])
       }
     })
   }

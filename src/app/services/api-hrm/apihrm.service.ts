@@ -2838,7 +2838,7 @@ export class ApiHrmService {
   }
 
   getJobTitles(): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/jobs/GetJobTitles`, this.options);
+    return this.http.get<any>(`${apiHrmServer}/api/v1/jobs/GetJobs`, this.options);
   }
   
   setJobExport (queryParams): Observable<Blob> {
