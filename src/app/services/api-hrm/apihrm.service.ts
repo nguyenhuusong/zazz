@@ -3074,11 +3074,11 @@ export class ApiHrmService {
   }
 
   delRecruitPlan(queryParams): Observable<any> {
-    return this.http.delete<any>(`${apiHrmServer}/api/v2/recruitplan/DelRecruitPlan?` + queryParams, this.options);
+    return this.http.delete<any>(`${apiHrmServer}/api/v1/recruitplan/DelRecruitPlan?` + queryParams, this.options);
   }
 
   setRecruitPlan(queryParams): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v2/recruitplan/SetRecruitPlan` , queryParams, this.options);
+    return this.http.post<any>(`${apiHrmServer}/api/v1/recruitplan/SetRecruitPlan` , queryParams, this.options);
   }
 
   setRecruitPlanImport(data): Observable<any> {
@@ -3087,7 +3087,7 @@ export class ApiHrmService {
         Authorization: this.authService.getAuthorizationHeaderValue()
       })
     };
-    return this.http.post<any>(`${apiHrmServer}/api/v2/recruitplan/SetRecruitPlanImport`, data, customOptions);
+    return this.http.post<any>(`${apiHrmServer}/api/v1/recruitplan/SetRecruitPlanImport`, data, customOptions);
   }
 
   setPositionTitleImport(data): Observable<any> {
