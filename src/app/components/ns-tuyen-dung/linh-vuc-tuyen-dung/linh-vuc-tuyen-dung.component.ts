@@ -326,7 +326,7 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
         this.spinner.hide();
       } else if (results.type === 'application/octet-stream') {
         var blob = new Blob([results], { type: 'application/msword' });
-        FileSaver.saveAs(blob, `Danh sách thiết lập wifi` + ".xlsx");
+        FileSaver.saveAs(blob, `Danh sách chuyên môn` + ".xlsx");
         this.spinner.hide();
       }
     })
