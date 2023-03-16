@@ -159,6 +159,20 @@ export class TaiKhoanComponent implements OnInit {
                 key: 'delete-qua-trinh-hop-dong',
                 class: 'btn-danger',
               },
+              {
+                onClick: this.lockUser.bind(this),
+                label: 'Khóa người dùng',
+                icon: 'pi pi-lock',
+                class: 'btn-primary mr5',
+                hide: (params.data.lock_st === true || params.data.lock_st)
+              },
+              {
+                onClick: this.unLockUser.bind(this),
+                label: 'Mở khóa người dùng',
+                icon: 'pi pi-lock-open',
+                class: 'btn-primary mr5',
+                hide: (params.data.lock_st === false || !params.data.lock_st)
+              },
             ]
           };
         },
@@ -190,6 +204,42 @@ export class TaiKhoanComponent implements OnInit {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
             this.getEmpUserPage();
             this.FnEvent();
+          } else {
+            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+          }
+        });
+      }
+    });
+  }
+
+  lockUser(event) {
+    this.confirmationService.confirm({
+      message: 'Bạn có chắc chắn muốn khóa người dùng?',
+      accept: () => {
+        this.apiService.lockUser(event.rowData.userId)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((results: any) => {
+          if (results.status === 'success') {
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Đã khóa người dùng!' });
+            this.getEmpUserPage();
+          } else {
+            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+          }
+        });
+      }
+    });
+  }
+
+  unLockUser(event) {
+    this.confirmationService.confirm({
+      message: 'Bạn có chắc chắn muốn mở khóa khóa người dùng?',
+      accept: () => {
+        this.apiService.unLockUser(event.rowData.userId)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((results: any) => {
+          if (results.status === 'success') {
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Mở khóa thành công!' });
+            this.getEmpUserPage();
           } else {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
           }
