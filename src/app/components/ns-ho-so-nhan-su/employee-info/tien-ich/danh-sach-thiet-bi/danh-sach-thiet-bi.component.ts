@@ -14,10 +14,7 @@ import { fromEvent, Subject, takeUntil } from 'rxjs';
 })
 export class DanhSachThietBiComponent implements OnInit {
   @Input() empId = null;
-  optionsButtonsPopup = [
-    { label: 'Bỏ qua', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
-    { label: 'Xác nhận', value: 'Update', class: 'btn-accept' }
-  ]
+  optionsButtonsPopup = []
   @Output() cancelSave = new EventEmitter<any>();
   constructor(
     private apiService: ApiHrmService,
@@ -58,19 +55,19 @@ export class DanhSachThietBiComponent implements OnInit {
   CauHinh() {
     this.displaySetting = true;
   }
-  message = null
+  device_id = null
   addTimeWork() {
-    this.message = null
-    this.getEmpWorking();
+    this.device_id = null
+    this.getEmpDevice();
   }
 
   listViewsDetail = [];
   dataDetailInfo = null;
   displayFormEditDetail = false
-  getEmpWorking() {
-    const queryParams = queryString.stringify({ empId: this.empId, id: this.message });
+  getEmpDevice() {
+    const queryParams = queryString.stringify({ empId: this.empId, Id: this.device_id });
     this.listViewsDetail = [];
-    this.apiService.getEmpWorking(queryParams)
+    this.apiService.getEmpDevice(queryParams)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(results => {
       if (results.status === 'success') {
@@ -125,7 +122,7 @@ export class DanhSachThietBiComponent implements OnInit {
 
   cancelDetailInfo(event) {
     if(event === 'CauHinh') {
-      this.getEmpWorking();
+      this.getEmpDevice();
     }else {
       this.displayFormEditDetail = false;
       this.getEmpDeviceByEmp();
@@ -136,10 +133,10 @@ export class DanhSachThietBiComponent implements OnInit {
     this.columnDefs = [
       ...AgGridFn(gridflexs || []),
       {
-        headerComponentParams: {
-          template:
-          `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
-        },
+        // headerComponentParams: {
+        //   template:
+        //   `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
+        // },
         field: 'gridflexdetails1',
         cellClass: ['border-right', 'no-auto'],
         pinned: 'right',
@@ -178,8 +175,8 @@ export class DanhSachThietBiComponent implements OnInit {
 
   editRow({rowData}) {
     this.messageService.add({ severity: 'war', summary: 'Thông báo', detail: 'Chức năng đang phát triển' });
-    // this.message = rowData.message;
-    // this.getEmpWorking();
+    this.device_id = rowData.device_id;
+    this.getEmpDevice();
   }
 
   onCellClicked(event) {

@@ -3036,6 +3036,10 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v2/empother/GetEmpDeviceByEmp?` + queryParams, this.options);
   }
 
+  getEmpDevice(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/empother/GetEmpDevice?` + queryParams, this.options);
+  }
+
   delEmpDevices(queryParams): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v2/empother/DelEmpDevices?` + queryParams, this.options);
   }
