@@ -44,6 +44,7 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
     private router: Router) {
     this.webSocketService.connect(environment.socketServer);
     this.webSocketService.emit("action", 'PRINT_LIST_PRINTERS')
+    this.webSocketService.emit("action", 'DEVICE_INFO')
     this.defaultColDef = {
       tooltipComponent: 'customTooltip',
       resizable: true,
@@ -137,7 +138,7 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
   }
 
   DowloadPlugin() {
-    this.downloadButtonClicked('https://firebasestorage.googleapis.com/v0/b/sunshine-app-production.appspot.com/o/s_hrm%2Fhrm-plugin%2FUniPlugin.zip?alt=media&token=838880e5-f2e2-4044-8d5f-21e57a5f3335')
+    this.downloadButtonClicked('https://firebasestorage.googleapis.com/v0/b/sunshine-app-production.appspot.com/o/s_hrm%2Fhrm-plugin%2FUniplugin%20(1).zip?alt=media&token=73d771d0-fb31-496e-a957-c34d023fcae3')
   }
 
   downloadButtonClicked(urlLink) {

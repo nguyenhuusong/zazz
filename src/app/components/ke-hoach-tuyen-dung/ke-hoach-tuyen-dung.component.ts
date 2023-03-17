@@ -240,7 +240,7 @@ export class KeHoachTuyenDungComponent implements OnInit, AfterViewChecked {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa vị trí tuyển dụng?',
       accept: () => {
-        const queryParams = queryString.stringify({ vacancyId: event.rowData.vacancyId });
+        const queryParams = queryString.stringify({ recruitPlanId: event.rowData.recruitPlanId });
         this.apiService.delRecruitPlan(queryParams)
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe(results => {
