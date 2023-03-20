@@ -155,7 +155,7 @@ export class DanhSachThietBiComponent implements OnInit {
               {
                 onClick: this.SetEmpDeviceStatus.bind(this),
                 label: 'Phê duyệt',
-                icon: 'fa fa-edit editing',
+                icon: 'pi pi-check',
                 key: 'view-job-detail',
                 class: 'btn-primary mr5',
               },
