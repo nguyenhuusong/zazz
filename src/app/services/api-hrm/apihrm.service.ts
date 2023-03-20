@@ -3356,8 +3356,13 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v2/empdependent/SetEmpDependentAccept` , queryParams, this.options);
   }
 
-  setEmpDependentExportDraft(queryParams): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v2/empdependent/SetEmpDependentExportDraft` , queryParams, this.options);
+  setEmpDependentExportDraft(data): Observable<Blob> {
+    return this.http.post(`${apiHrmServer}/api/v2/empdependent/SetEmpDependentExportDraft`, data,  {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
   }
 
   setEmpDependentExport(queryParams): Observable<any> {
