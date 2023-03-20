@@ -2707,8 +2707,14 @@ export class ApiHrmService {
   }
 
   setEmpProcessImport(queryParams): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v2/working/SetEmpProcessImport`,  queryParams, this.options);
+    const customOptions = {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue()
+      })
+    };
+    return this.http.post<any>(`${apiHrmServer}/api/v2/working/SetEmpProcessImport`,  queryParams, customOptions);
   }
+  
 
   setEmpProcessAccept(queryParams): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/working/SetEmpProcessAccept`,  queryParams, this.options);

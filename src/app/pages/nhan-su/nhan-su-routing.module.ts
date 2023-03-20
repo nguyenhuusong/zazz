@@ -350,7 +350,7 @@ const routes: Routes = [
     url: 'import-xu-ly-qua-trinh-cong-tac',
     titleDad : 'Xử lý quá trình công tác',
     urlDad: '/nhan-su/xu-ly-qua-trinh-cong-tac',
-    api: 'setWorkplaceImport',
+    api: 'setEmpProcessImport',
     apiAccept: 'setEmpProcessAccept',
     fileDoc: 'temp.xls',
     apiExport: 'setEmpProcessExportDraft',
