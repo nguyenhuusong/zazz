@@ -201,7 +201,7 @@ export class ThietBiWifiChamCongComponent implements OnInit {
     let listAPis = []
       for (let item of this.listDataSelect) {
         const dataSave = {
-          device_id: item.id,
+          device_id: item.device_id,
           request_st: 1,
         };
         listAPis.push(this.apiService.setEmpDeviceStatus(dataSave))
