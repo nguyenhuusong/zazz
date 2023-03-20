@@ -153,7 +153,7 @@ export class DsNguoiPhuThuocComponent implements OnInit, AfterViewChecked {
         this.gridKey = results.data.dataList.gridKey;
         if (this.query.offSet === 0) {
           this.cols = results.data.gridflexs;
-          this.colsDetail = results.data.gridflexdetails ? results.data.gridflexdetails : [];
+          this.colsDetail = results.data.childgridflexs ? results.data.childgridflexs : [];
         }
         this.initGrid();
         this.countRecord.totalRecord = results.data.dataList.recordsTotal;
@@ -232,7 +232,53 @@ export class DsNguoiPhuThuocComponent implements OnInit, AfterViewChecked {
         cellRendererParams: (params: any) => this.showButtons(params),
         checkboxSelection: false,
         field: 'checkbox'
-      }]
+      }];
+      this.detailCellRendererParams = {
+        detailGridOptions: {
+          frameworkComponents: {},
+          getRowHeight: (params) => {
+            return 40;
+          },
+          columnDefs: [
+            ...AgGridFn(this.colsDetail),
+          ],
+  
+          enableCellTextSelection: true,
+          onFirstDataRendered(params) {
+            let allColumnIds: any = [];
+            params.columnApi.getAllColumns()
+              .forEach((column: any) => {
+                if (column.colDef.cellClass.indexOf('auto') < 0) {
+                  allColumnIds.push(column)
+                } else {
+                  column.colDef.suppressSizeToFit = true;
+                  allColumnIds.push(column)
+                }
+              });
+            params.api.sizeColumnsToFit(allColumnIds);
+          },
+        },
+        getDetailRowData(params) {
+          params.successCallback(params.data.dependents);
+        },
+        excelStyles: [
+          {
+            id: 'stringType',
+            dataType: 'string'
+          }
+        ],
+        template: function (params) {
+          var personName = params.data.full_name;
+          return (
+            '<div style="height: 100%; background-color: #EDF6FF; padding: 20px; box-sizing: border-box;">' +
+            `  <div style="height: 10%; padding: 2px; font-weight: bold;">###### Danh sách (${params.data.dependents.length}) : [` +
+            personName + ']' +
+            '</div>' +
+            '  <div ref="eDetailGrid" style="height: 90%;"></div>' +
+            '</div>'
+          );
+        },
+      };
 
   }
 
