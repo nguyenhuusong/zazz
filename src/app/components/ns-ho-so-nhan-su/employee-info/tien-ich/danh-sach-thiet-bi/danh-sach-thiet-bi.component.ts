@@ -190,7 +190,7 @@ export class DanhSachThietBiComponent implements OnInit {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa?',
       accept: () => {
-        const queryParams = queryString.stringify({id: event.rowData.id});
+        const queryParams = queryString.stringify({device_id: event.rowData.device_id});
         this.apiService.delEmpDevices(queryParams)
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe((results: any) => {
@@ -210,7 +210,7 @@ export class DanhSachThietBiComponent implements OnInit {
     this.confirmationService.confirm({
       message: 'Bạn chắc chắn muốn phê duyệt bản ghi này?',
       accept: () => {
-        this.apiService.setEmpDeviceStatus({id: event.rowData.id, request_st: 1})
+        this.apiService.setEmpDeviceStatus({device_id: event.rowData.device_id, request_st: 1})
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe((results: any) => {
           if (results.status === 'success') {
