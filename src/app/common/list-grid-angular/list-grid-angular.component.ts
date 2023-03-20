@@ -325,6 +325,8 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
   onCellValueChanged(event) {
     if (event.value != event.oldValue) {
       this.isChange = true;
+      if(!this.isConfig) this.rowDoubleClicked.emit(event);
+      console.log(event)
     } else {
       this.isChange = false;
     }
@@ -332,7 +334,6 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
 
 
   onGridReady(params: any) {
-    console.log( this.gridColumnApi)
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
     let allColumnIds: any = [];

@@ -30,7 +30,7 @@
          <section>
             <div class="grid-default border">
                 <app-list-grid-angular [domLayout]="'autoHeight'" *ngIf="columnDefs && columnDefs.length > 0" [heightRow]="40" [title]="'Danh sách liên hệ'" [defaultColDef]="defaultColDef" [floatingFilter]="false" 
-                    [listsData]="detailInfo?.weekdays"  (FnClick)="OnClick($event)"
+                    [listsData]="detailInfo?.weekdays" [isConfig]="false" (rowDoubleClicked)="callback($event)"
                     [columnDefs]="columnDefs"></app-list-grid-angular>
                     <app-loading-grid 
                             [columnNumber]="9" 
