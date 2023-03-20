@@ -3238,7 +3238,12 @@ export class ApiHrmService {
   }
 
   setInsuranceExportDraft(queryParams): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v2/empinsurance/SetInsuranceExportDraft`,  queryParams, this.options);
+    return this.http.post(`${apiHrmServer}/api/v2/empinsurance/SetInsuranceExportDraft`, queryParams, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
   }
 
   setPositionAccept(queryParams): Observable<any> {
