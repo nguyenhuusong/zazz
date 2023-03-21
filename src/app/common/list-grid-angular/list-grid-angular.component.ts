@@ -131,6 +131,8 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
           return dataItem && dataItem.organizes ? dataItem.organizes.length > 0 : false;
         }else if (dataItem.workdays) {
           return dataItem && dataItem.workdays ? dataItem.workdays.length > 0 : false;
+        }else if (dataItem.dependents) {
+          return dataItem && dataItem.dependents ? dataItem.dependents.length > 0 : false;
         }  else {
           return false
         }
@@ -325,6 +327,8 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
   onCellValueChanged(event) {
     if (event.value != event.oldValue) {
       this.isChange = true;
+      if(!this.isConfig) this.rowDoubleClicked.emit(event);
+      console.log(event)
     } else {
       this.isChange = false;
     }
@@ -332,7 +336,6 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
 
 
   onGridReady(params: any) {
-    console.log( this.gridColumnApi)
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
     let allColumnIds: any = [];

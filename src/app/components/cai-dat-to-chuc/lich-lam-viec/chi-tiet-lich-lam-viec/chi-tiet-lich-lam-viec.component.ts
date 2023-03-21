@@ -157,7 +157,24 @@ export class ChiTietLichLamViecComponent implements OnInit, OnChanges {
     }
   }
 
-  OnClick(e) {
+  callback(e) {
+    if(e.type === "cellValueChanged") {
+      const params = {
+        ...this.detailInfo, weekdays: this.detailInfo?.weekdays
+      };
+      this.apiService.setWorktimeInfo(params)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((results: any) => {
+        if (results.status === 'success') {
+          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Cập nhật thông tin thành công' });
+        } else {
+          this.messageService.add({
+            severity: 'error', summary: 'Thông báo', detail: results.message
+          });
+        }
+      }, error => {
+      });
+    }
   }
   cancelUpdate(data) {
     if(data === 'CauHinh') {
