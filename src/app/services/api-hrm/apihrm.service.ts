@@ -3392,6 +3392,13 @@ export class ApiHrmService {
     });
   }
   
+  // userrole
+  getUserroleOrganizations(): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/userrole/GetOrganizations`, this.options);
+  }
+  getEmpSearch(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/userrole/GetEmpSearch?` + queryParams, this.options);
+  }
   
 
 }

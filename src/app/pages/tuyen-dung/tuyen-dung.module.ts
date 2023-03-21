@@ -77,6 +77,7 @@ import { ImportExcelModule } from 'src/app/common/import-excel/import-excel.modu
 import { LoadingGridModule } from 'src/app/common/loading-grid/loading-grid.module';
 import { LoadingDetailModule } from 'src/app/common/loading-detail/loading-detail.module';
 import { ChiTietTuyenDungLaiComponent } from 'src/app/components/ns-tuyen-dung/nghi-viec/chi-tiet-tuyen-dung-lai/chi-tiet-tuyen-dung-lai.component';
+import { HrmSearchEmpModule } from 'src/app/common/hrm-search-emp/hrm-search-emp.module';
 @NgModule({
   imports: [
     MessagesModule,
@@ -134,7 +135,8 @@ import { ChiTietTuyenDungLaiComponent } from 'src/app/components/ns-tuyen-dung/n
     DividerModule,
     StepsModule,
     ImportExcelModule,
-    LoadingDetailModule
+    LoadingDetailModule,
+    HrmSearchEmpModule
   ],
 
   declarations: [

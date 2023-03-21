@@ -13,7 +13,7 @@ styleClass="search-em-in {{ dataSearched?.length > 0 ? 'search-em-result' : '' }
 </ng-template>
     <div class="search-in" [ngClass]="{'res': dataSearched.length > 0}">
         <div class="search-group field-group select d-flex" style="display: flex">
-            <div class="col-3 pd-0" style="padding-right: 10px !important;border-right: 1px solid #ebe8e8;">
+            <div class="col-3 pd-0" style="padding-right: 10px !important;border-right: 1px solid #ebe8e8;" *ngIf="!searchByOrgan">
                 <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" placeholder="Tìm kiếm theo" 
                 [options]="searchBys" [(ngModel)]="searchBy" name="searchBy">
                 <ng-template let-item pTemplate="selectedItem">
@@ -25,6 +25,30 @@ styleClass="search-em-in {{ dataSearched?.length > 0 ? 'search-em-result' : '' }
                     </div>
                 </ng-template>
                 </p-dropdown>
+            </div>
+            <div *ngIf="searchByOrgan" class="col-3 pd-0" 
+                style="padding-right: 10px !important;border-right: 1px solid #ebe8e8; position: relative;">
+                <p-dropdown appendTo="body" [baseZIndex]="100" 
+                    [autoDisplayFirst]="false" placeholder="Chọn tổ chức *" 
+                [options]="organs" [(ngModel)]="organSelect" name="searchBy">
+                <ng-template let-item pTemplate="selectedItem">
+                    <span>{{item.name}}</span>
+                </ng-template>
+                <ng-template let-car pTemplate="item">
+                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                        <div>{{car.name}}</div>
+                    </div>
+                </ng-template>
+                </p-dropdown>
+                <span class="error" *ngIf="isSearching && !organSelect" 
+                    style="
+                    position: absolute;
+                    bottom: 0;
+                    left: 6px;
+                    font-size: 10px;
+                    color: red;">
+                    Vui Lòng chọn tổ chức
+                </span>
             </div>
             <div class="col-9 pd-0">
                 <!-- <p-button styleClass="p-button-sm " icon=" pi pi-search" (click)="getStaffsAtStore()"></p-button> -->
@@ -51,7 +75,7 @@ styleClass="search-em-in {{ dataSearched?.length > 0 ? 'search-em-result' : '' }
         </div>
     </div>
     <div class="search-content grid" *ngIf="dataSearched && dataSearched.length > 0">
-        <div [ngClass]="dataInfo ? 'col-4' : 'col-12'">
+        <div [ngClass]="dataInfo ? 'col-4' : 'col-12 pl-0 pr-0'">
             <div class="list-em">
                 <table class="table" cellspacing="0">
                     <thead>
