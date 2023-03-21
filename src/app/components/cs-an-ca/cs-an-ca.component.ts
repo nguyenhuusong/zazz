@@ -390,16 +390,24 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
   chiTietAnCa(event = null) {
     // this.modelAddEating.empId = event ? event.rowData.empId : null
     this.modelAddEating.empId =  null;
-    this.modelAddEating.fromDate = this.query.fromDate;
-    this.modelAddEating.toDate = this.query.toDate;
-    this.router.navigate(['/chinh-sach/an-ca/chi-tiet-danh-sach-an-ca'], { queryParams: this.modelAddEating });
+    const params = {
+      empId: null,
+      recordId: this.query.recordId,
+      companyId: this.query.companyId
+    }
+    this.router.navigate(['/chinh-sach/an-ca/chi-tiet-danh-sach-an-ca'], { queryParams: params });
   }
 
   editRow(event = null) {
     this.modelAddEating.empId = event.rowData.empId
     this.modelAddEating.fromDate = this.query.fromDate;
     this.modelAddEating.toDate = this.query.toDate;
-    this.router.navigate(['/chinh-sach/an-ca/chi-tiet-danh-sach-an-ca'], { queryParams: this.modelAddEating });
+    const params = {
+      empId: event.rowData.empId,
+      recordId: event.rowData.recordId,
+      companyId: this.query.companyId
+    }
+    this.router.navigate(['/chinh-sach/an-ca/chi-tiet-danh-sach-an-ca'], { queryParams: params });
   }
 
   onCellClicked(event) {
@@ -418,7 +426,6 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
   handAddNew() {
     this.detailInfo = []
     this.listViews = []
-    this.isDetail = true;
     this.apiService.getEatingForCreateInfo(queryString.stringify(this.modelAddEating))
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(results => {
@@ -426,6 +433,7 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
         const listViews = cloneDeep(results.data.group_fields);
         this.listViews = [...listViews];
         this.detailInfo = results.data;
+         this.isDetail = true;
       }
     })
   }

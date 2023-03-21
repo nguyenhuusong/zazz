@@ -59,8 +59,8 @@ export class EatingListComponent implements OnInit, AfterViewChecked {
     empId: null,
     offSet: 0,
     pageSize: 20,
-    fromDate: null,
-    toDate: null,
+    companyId: null,
+    recordId: null,
   }
   totalRecord = 0;
   DriverId = 0;
@@ -100,9 +100,9 @@ export class EatingListComponent implements OnInit, AfterViewChecked {
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
-      this.query.empId = this.paramsObject.params.cusId;
-      this.query.fromDate = this.paramsObject.params.fromDate;
-      this.query.toDate = this.paramsObject.params.toDate;
+      this.query.empId = this.paramsObject.params.empId || null;
+      this.query.recordId = this.paramsObject.params.recordId || null;
+      this.query.companyId = this.paramsObject.params.companyId || null;
       this.load();
     });
   };
@@ -117,8 +117,8 @@ export class EatingListComponent implements OnInit, AfterViewChecked {
       empId: this.query.empId,
       offSet: 0,
       pageSize: 20,
-      fromDate: this.query.fromDate,
-      toDate: this.query.toDate,
+      recordId: this.query.recordId,
+      companyId: this.query.companyId,
     }
     this.load();
   }
@@ -292,12 +292,8 @@ export class EatingListComponent implements OnInit, AfterViewChecked {
   exportData() {
     this.spinner.show();
     let params: any = {... this.query};
-    delete params.fromDate
-    delete params.toDate
-    params.FromDate = moment(new Date(this.query.fromDate)).format('YYYY-MM-DD')
-    params.ToDate = moment(new Date(this.query.toDate)).format('YYYY-MM-DD');
     const queryParams = queryString.stringify(params);
-      this.apiService.exportEatingInfo(queryParams)
+      this.apiService.exportEatingList(queryParams)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {
         if (results.type === 'application/json') {
