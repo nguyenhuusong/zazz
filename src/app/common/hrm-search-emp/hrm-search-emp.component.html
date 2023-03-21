@@ -75,7 +75,7 @@ styleClass="search-em-in {{ dataSearched?.length > 0 ? 'search-em-result' : '' }
         </div>
     </div>
     <div class="search-content grid" *ngIf="dataSearched && dataSearched.length > 0">
-        <div [ngClass]="dataInfo ? 'col-4' : 'col-12 pl-0 pr-0'">
+        <div [ngClass]="dataInfo ? 'col-5' : 'col-12 pl-0 pr-0'">
             <div class="list-em">
                 <table class="table" cellspacing="0">
                     <thead>
@@ -99,7 +99,7 @@ styleClass="search-em-in {{ dataSearched?.length > 0 ? 'search-em-result' : '' }
                 </table>
             </div>
         </div>
-        <div class="col-8">
+        <div class="col-7">
             <div class="d-flex search-res emInfo" *ngIf="dataInfo">
                 <div class="uni-load " [ngClass]="isLoadingInfo ? 'loading' : ''"></div>
                 <div class="col-3 text-center">
@@ -127,7 +127,7 @@ styleClass="search-em-in {{ dataSearched?.length > 0 ? 'search-em-result' : '' }
                         <label class="col-3">Địa chỉ</label>
                         <span class="col-9"><b>{{ dataInfo?.address }}</b></span>
                     </div>
-                    <div class="grid">
+                    <div class="grid" *ngIf="dataInfo.organization">
                         <label class="col-3">Đơn vị</label>
                         <span class="col-9"><b>{{ dataInfo?.organization }}</b></span>
                         
