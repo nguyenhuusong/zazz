@@ -12,7 +12,7 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, takeUntil, fromEvent } from 'rxjs';
 const MAX_SIZE = 100000000;
 @Component({
   selector: 'app-nghi-viec',
@@ -180,6 +180,7 @@ export class NghiViecComponent implements OnInit, AfterViewChecked {
           }, 100);
         }
         this.spinner.hide();
+        this.FnEvent();
       },
       error => {
         this.spinner.hide();
@@ -220,9 +221,12 @@ export class NghiViecComponent implements OnInit, AfterViewChecked {
       // },
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       {
-        headerName: 'Thao tác',
+        headerComponentParams: {
+          template:
+          `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
+        },
         filter: '',
-        width: 100,
+        width: 70,
         pinned: 'right',
         cellRenderer: 'buttonAgGridComponent',
         cellClass: ['border-right', 'no-auto'],
@@ -318,5 +322,35 @@ export class NghiViecComponent implements OnInit, AfterViewChecked {
       });
 
     }
+
+  ngAfterViewInit(): void {
+    this.FnEvent();
+  }
+
+  FnEvent() {
+    setTimeout(() => {
+      var dragTarget = document.getElementById(this.gridKey);
+      if(dragTarget) {
+        const click$ = fromEvent(dragTarget, 'click');
+        click$.subscribe(event => {
+          this.addItem()
+        });
+      }
+    }, 300);
+  }
+
+  isSearchEmp = false;
+  addItem() {
+    this.isSearchEmp = true;
+  }
+
+  seachEmValue(event) {
+    if(event.value) {
+      this.empId = event.value;
+      this.displayAdd = true;
+    }else{
+      this.isSearchEmp = false;
+    }
+  }
 
 }

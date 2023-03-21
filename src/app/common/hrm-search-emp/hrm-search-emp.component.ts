@@ -12,7 +12,11 @@ export class HrmSearchEmpComponent {
   @Input() isSearch: any = false;
   @Input() sex: any = null;
   @Input() apiSearchFor = '/api/v2/employee/GetEmployeeSearchPopup';
+  @Input() searchByOrgan: any = false;
   @Output() seachEmValue = new EventEmitter<any>();
+
+  organs = [];
+  organSelect = '';
   constructor(
     private apiService: ApiHrmService,
     private messageService: MessageService,
@@ -45,7 +49,7 @@ export class HrmSearchEmpComponent {
   dataInfoCallback: any = []
   isSearching = false
   ngOnInit(): void {
-
+    this.getOrgans();
   }
 
   clearEvent(event) {
@@ -97,18 +101,42 @@ export class HrmSearchEmpComponent {
     this.isLoading = true;
     this.isSearching = true;
     this.dataInfo = null;
-    const queryParams = queryString.stringify({  
-        filter: this.query.filter, 
-        searchType: this.searchBy,
-        sex: this.sex,
-        pageSize: 30
+    
+    // search data by organ
+    if(this.searchByOrgan) {
+      const querySearchByOrgan = {
+        orgId: this.organSelect,
+        filter: this.query.filter,
+        isLeaved: true
       }
-    )
-    this.apiService.getEmployeeSearchPopup(this.apiSearchFor, queryParams).subscribe((results: any) => {
-      this.isLoading = false;
-      this.dataSearched = results.data.dataList.data;
-    })
-
+      this.apiService.getEmpSearch(queryString.stringify(querySearchByOrgan)).subscribe((results: any) => {
+        if (results.status === 'success') {
+          this.isLoading = false;
+          this.dataSearched = results.data.map( d => {
+            return {
+              full_name: d.fullName,
+              phone1: d.phone,
+              empId: d.userId,
+              email1: d.email,
+              ...d
+            }
+          });
+        }
+      })
+    }else{
+      const queryParams = queryString.stringify({  
+          filter: this.query.filter, 
+          searchType: this.searchBy,
+          sex: this.sex,
+          pageSize: 30
+        })
+      this.apiService.getEmployeeSearchPopup(this.apiSearchFor, queryParams).subscribe((results: any) => {
+        if (results.status === 'success') {
+          this.isLoading = false;
+          this.dataSearched = results.data.dataList.data;
+        }
+      })
+    }
 
   }
 
@@ -142,6 +170,15 @@ export class HrmSearchEmpComponent {
         }
       }
     } )
+  }
+
+  getOrgans() {
+    this.apiService.getUserroleOrganizations().subscribe((results: any) => {
+      if (results.status === 'success') {
+        this.organs = results.data;
+      }
+    })
+    
   }
 
 
