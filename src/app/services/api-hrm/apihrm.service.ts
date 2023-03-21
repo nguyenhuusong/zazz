@@ -1363,6 +1363,15 @@ export class ApiHrmService {
       responseType: "blob"
     });
   }
+  
+  exportEatingList(queryParams: any): Observable<Blob> {
+    return this.http.get(`${apiHrmServer}/api/v1/eating/ExportEatingList?${queryParams}`, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
+  }
 
   delCompanyInfo(queryParams): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v2/compay/DelCompanyInfo?` + queryParams, this.options)
