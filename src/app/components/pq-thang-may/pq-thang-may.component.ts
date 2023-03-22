@@ -55,6 +55,16 @@ export class PqThangMayComponent implements OnInit {
   loading = false;
   menuItem = [];
   itemsBreadcrumb = [];
+
+  elevatorQuery = {
+    filter: '',
+    offSet: 0,
+    pageSize: 1000,
+    projectCd: '',
+    buildCd: '',
+    buildZone: '',
+    floorNumber: null
+  }
   constructor(
     private apiService: ApiHrmService,
     private messageService: MessageService,
@@ -195,7 +205,12 @@ export class PqThangMayComponent implements OnInit {
   }
 
   getHardware() {
-    this.apiService.getElevatorDevicePage('', null, null, this.modelElevator.projectCd, this.modelElevator.buildZone, this.modelElevator.buildCd, this.modelElevator.floorNumber)
+    this.elevatorQuery.projectCd = this.modelElevator.projectCd;
+    this.elevatorQuery.buildCd = this.modelElevator.buildCd;
+    this.elevatorQuery.buildZone = this.modelElevator.buildZone;
+    this.elevatorQuery.floorNumber = this.modelElevator.floorNumber;
+
+    this.apiService.getElevatorDevicePage(queryString.stringify(this.elevatorQuery))
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe((results: any) => {
       this.devices = results.data;

@@ -6,6 +6,7 @@ import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { CheckHideAction } from 'src/app/common/function-common/common';
 import { ElevatorFloor } from 'src/app/models/elevatorfloor.model';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
+const queryString = require('query-string');
 @Component({
   selector: 'app-thiet-lap-tang-thang-may',
   templateUrl: './thiet-lap-tang-thang-may.component.html',
@@ -87,13 +88,9 @@ export class ThietLapTangThangMayComponent implements OnInit {
     offset: 0
   };
   load() {
-    this.columnDefs = []
+    this.columnDefs = [];
     this.spinner.show();
-    this.apiService.GetElevatorFloorPage(this.model.filter,
-      this.model.offset,this.model.pageSize,
-      this.model.projectCd,
-      this.model.buildCd,
-      this.model.buildZone)
+    this.apiService.getElevatorFloorPage(queryString.stringify(this.model))
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
       (results: any) => {

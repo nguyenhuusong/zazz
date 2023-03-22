@@ -26,7 +26,13 @@ export class TaiKhoanComponent implements OnInit {
   ) { }
   listsData = [];
   columnDefs = [];
-  gridKey = ''
+  gridKey = '';
+
+  resetPasswordOtp = {
+    loginName: "",
+    otp_type: 0
+  }
+
   private readonly unsubscribe$: Subject<void> = new Subject();
   ngOnDestroy() {
     this.unsubscribe$.next();
@@ -173,6 +179,12 @@ export class TaiKhoanComponent implements OnInit {
                 class: 'btn-primary mr5',
                 hide: (params.data.lock_st === false || !params.data.lock_st)
               },
+              {
+                onClick: this.getNewPassword.bind(this),
+                label: 'Khởi tạo mật khẩu',
+                icon: 'pi pi-user-edit',
+                class: 'btn-primary mr5',
+              },
             ]
           };
         },
@@ -244,6 +256,27 @@ export class TaiKhoanComponent implements OnInit {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
           }
         });
+      }
+    });
+  }
+
+  getNewPassword(event) {
+    this.resetPasswordOtp.loginName = event.rowData.loginName;
+    this.sendResetPasswordOtp();
+  }
+
+  sendResetPasswordOtp() {
+    this.confirmationService.confirm({
+      message: 'Bạn có chắc chắn khởi tạo mật khẩu?',
+      accept: () => {
+        this.apiService.resetPasswordOtp(this.resetPasswordOtp).subscribe(results => {
+          if (results.status === 'success') {
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Đã gửi mật khẩu về điện thoại!' });
+          }
+          if(results.status === 'error'){
+            this.messageService.add({ severity: 'error', summary: results.message, detail: results.data });
+          }
+        })
       }
     });
   }

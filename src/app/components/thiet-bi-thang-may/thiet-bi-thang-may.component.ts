@@ -115,10 +115,17 @@ export class ThietBiThangMayComponent implements OnInit {
   load() {
     this.columnDefs = []
     this.spinner.show();
-    this.apiService.getElevatorDevicePage(this.model.filter,
-      this.model.offset,this.model.pageSize,
-      this.model.projectCd,
-      this.model.buildZone, this.model.buildCd, this.model.floorNumber)
+    const elevatorQuery = {
+      filter: this.model.filter,
+      offSet: this.model.offset,
+      pageSize: this.model.pageSize,
+      projectCd: this.model.projectCd,
+      buildCd: this.model.buildCd,
+      buildZone: this.model.buildZone,
+      floorNumber: this.model.floorNumber
+    }
+
+    this.apiService.getElevatorDevicePage(queryString.stringify(elevatorQuery))
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
       (results: any) => {
