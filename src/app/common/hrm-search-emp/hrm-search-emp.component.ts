@@ -145,7 +145,8 @@ export class HrmSearchEmpComponent {
       status: 'ok',
       value: this.empId,
       custId: this.dataInfo.CustId,
-      dataInfo: this.dataInfo.empId
+      dataInfo: this.dataInfo.empId,
+      data: this.dataInfo
     }
     if(this.empId) {
       this.seachEmValue.emit(callbackValue);

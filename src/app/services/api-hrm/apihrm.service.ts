@@ -1671,6 +1671,10 @@ export class ApiHrmService {
     return this.http.delete<any>(`${apiHrmServer}/api/v2/cardvehicle/DeleteCard?` + queryParams, this.options)
   }
 
+  setCustomerResident(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/cardvehicle/SetCustomerResident`, params, this.options)
+  }
+
   getFloorTypeByBuildCd(buildCd): Observable<BuildZone[]> {
     return this.http
       .get<BuildZone[]>(`${apiShome}/api/v1/shome/GetFloorTypeByBuildCd?` +

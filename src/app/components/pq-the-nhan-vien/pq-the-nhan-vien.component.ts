@@ -491,15 +491,45 @@ export class PqTheNhanVienComponent implements OnInit {
   }
 
   seachEmValue(event) {
+    this.spinner.show();
     const params = {
       canId: null,
       empId: event.value
     }
-    if(event.value) {
-      this.router.navigate(['/phan-quyen/the-nhan-vien/them-moi-the-nhan-vien'], { queryParams: params });
-    }else{
-      this.isSearchEmp = false;
+    if(event.data) {
+      let queryParams = {
+        custId: event.data.CustId,
+        avatar_url: event.data.avatar_url,
+        birthday: event.data.birthday,
+        email1: event.data.email1,
+        full_name: event.data.full_name,
+        phone1: event.data.phone1,
+        sex: event.data.sex,
+        userId: event.data.userId,
+        cif_no: event.data.cif_no,
+        idcard_no: event.data.idcard_no,
+        idcard_issue_dt: event.data.idcard_issue_dt,
+        idcard_issue_plc: event.data.idcard_issue_plc,
+        res_add: event.data.res_add,
+        res_cntry: event.data.res_cntry
+      }
+      this.apiService.setCustomerResident(queryParams).pipe(takeUntil(this.unsubscribe$))
+      .subscribe(results => {
+        if (results.status === 'success') {
+          this.spinner.hide();
+          this.router.navigate(['/phan-quyen/the-nhan-vien/them-moi-the-nhan-vien'], { queryParams: params });
+        }else{
+
+        }
+      }, error => {
+        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'error' });
+        this.spinner.hide();
+      })
     }
+    // if(event.value) {
+    // }else{
+    //   this.isSearchEmp = false;
+    // }
   }
 
   onChangeTree(a): void {
