@@ -35,6 +35,8 @@ import { ChiTietLoaiGiayToComponent } from 'src/app/components/danh-muc-loai-gia
 import { ImportExcelComponent } from 'src/app/common/import-excel/import-excel.component';
 import { ProvinceComponent } from 'src/app/components/province/province.component';
 import { DetailProvinceComponent } from 'src/app/components/province/detail-province/detail-province.component';
+import { DanhSachCapBacComponent } from 'src/app/components/cai-dat-to-chuc/danh-sach-cap-bac/danh-sach-cap-bac.component';
+import { ChiTietCapBacComponent } from 'src/app/components/cai-dat-to-chuc/danh-sach-cap-bac/chi-tiet-cap-bac/chi-tiet-cap-bac.component';
 
 const routes: Routes = [
   {
@@ -649,6 +651,50 @@ const routes: Routes = [
       url: 'chi-tiet-thiet-lap-wifi',
     },
   },
+
+  
+  // danh sách cấp bậc
+  {
+    path: 'danh-sach-cap-bac',
+    component: DanhSachCapBacComponent,
+    data: {
+      title: 'Danh sách cấp bậc',
+      url: 'danh-sach-cap-bac',
+    },
+  },
+  {
+    path: 'danh-sach-cap-bac/import-cap-bac',
+    component: ImportExcelComponent,
+    data: {
+      title: 'Import cấp bậc',
+      url: 'import-cap-bac',
+      titleDad : 'Danh sách cấp bậc',
+      urlDad: '/cai-dat/danh-sach-cap-bac',
+      api: 'setCompanyImport',
+      apiAccept: 'setCompanyAccept',
+      fileDoc: 'DM_CongTy_Import.xls',
+      apiExport: 'setCompanyExportDraft',
+      apiTemImport: 'getCompanyImportTemp',
+      fileNameTemImport: 'file_mau_danh_muc_cong_ty',
+    },
+  },
+  {
+    path: 'danh-sach-cap-bac/them-moi-cap-bac',
+    component: ChiTietCapBacComponent,
+    data: {
+      title: 'Thêm mới cấp bậc',
+      url: 'them-moi-cap-bac',
+    },
+  },
+  {
+    path: 'danh-sach-cap-bac/chi-tiet-cap-bac',
+    component: ChiTietCapBacComponent,
+    data: {
+      title: 'Chi tiết cấp bậc',
+      url: 'chi-tiet-cap-bac',
+    },
+  },
+
 ];
 
 @NgModule({

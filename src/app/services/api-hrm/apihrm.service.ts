@@ -2912,6 +2912,22 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v1/organize/GetOrgPositionTitlePage?` + queryParams, this.options);
   }
 
+  getPositionTypePage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/position/GetPositionTypePage?` + queryParams, this.options);
+  }
+
+  getPositionTypeInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/position/GetPositionTypeInfo?` + queryParams, this.options);
+  }
+
+  setPositionTypeInfo(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/position/SetPositionTypeInfo`, queryParams, this.options);
+  }
+
+  delPositionTypeInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/position/DelPositionTypeInfo?` + queryParams, this.options);
+  }
+
   getOrgPosition(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/position/GetPositionTitles?` + queryParams, this.options);
   }

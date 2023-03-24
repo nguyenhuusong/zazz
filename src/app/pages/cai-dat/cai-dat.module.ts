@@ -100,6 +100,8 @@ import { ProvinceComponent } from 'src/app/components/province/province.componen
 import { DetailProvinceComponent } from 'src/app/components/province/detail-province/detail-province.component';
 import { LoadingGridModule } from 'src/app/common/loading-grid/loading-grid.module';
 import { LoadingDetailModule } from 'src/app/common/loading-detail/loading-detail.module';
+import { DanhSachCapBacComponent } from 'src/app/components/cai-dat-to-chuc/danh-sach-cap-bac/danh-sach-cap-bac.component';
+import { ChiTietCapBacComponent } from 'src/app/components/cai-dat-to-chuc/danh-sach-cap-bac/chi-tiet-cap-bac/chi-tiet-cap-bac.component';
 
 FullCalendarModule.registerPlugins([
   // register FullCalendar plugins
@@ -211,7 +213,9 @@ FullCalendarModule.registerPlugins([
     DanhMucLoaiGiayToComponent,
     ChiTietLoaiGiayToComponent,
     ProvinceComponent,
-    DetailProvinceComponent
+    DetailProvinceComponent,
+    DanhSachCapBacComponent,
+    ChiTietCapBacComponent,
 
 
   ],
