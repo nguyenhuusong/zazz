@@ -25,8 +25,6 @@ import { stringify } from 'query-string';
 })
 export class PqXeNhanVienComponent implements OnInit {
 
-  @ViewChild('imgFile') imgFile: any;
-
   public modules: Module[] = AllModules;
   MENUACTIONROLEAPI = MENUACTIONROLEAPI;
   ACTIONS = ACTIONS;
