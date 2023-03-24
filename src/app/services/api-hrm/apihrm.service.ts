@@ -2925,7 +2925,7 @@ export class ApiHrmService {
   }
 
   delPositionTypeInfo(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v2/position/DelPositionTypeInfo?` + queryParams, this.options);
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/position/DelPositionTypeInfo?` + queryParams, this.options);
   }
 
   getOrgPosition(queryParams): Observable<any> {
