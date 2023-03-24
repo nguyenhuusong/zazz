@@ -222,7 +222,7 @@ export class DanhSachCapBacComponent implements OnInit {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa lịch làm việc?',
       accept: () => {
-        const queryParams = queryString.stringify({ positionType: event.rowData.positiontype });
+        const queryParams = queryString.stringify({ positionType: event.rowData.positionType });
         this.apiService.delPositionTypeInfo(queryParams)
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe(results => {
@@ -239,7 +239,7 @@ export class DanhSachCapBacComponent implements OnInit {
 
   displayPositionType = false;
   editRow({ rowData }) {
-    this.positionType = rowData.positiontype
+    this.positionType = rowData.positionType
     this.displayPositionType= true;
   }
 
