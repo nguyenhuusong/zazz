@@ -1,5 +1,5 @@
 import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as queryString from 'querystring';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -24,6 +24,9 @@ import { stringify } from 'query-string';
   styleUrls: ['./pq-xe-nhan-vien.component.scss']
 })
 export class PqXeNhanVienComponent implements OnInit {
+
+  @ViewChild('imgFile') imgFile: any;
+
   public modules: Module[] = AllModules;
   MENUACTIONROLEAPI = MENUACTIONROLEAPI;
   ACTIONS = ACTIONS;
@@ -599,6 +602,7 @@ onCellClicked(event) {
               this.spinner.hide();
               if(this.modelTM.imageLinks[index]){
                 this.modelTM.imageLinks[index].url = downloadURL;
+               
               }
             }
           });
@@ -611,7 +615,12 @@ onCellClicked(event) {
   }
 
   deleteImg(index){
-    this.modelTM.imageLinks[index].url = '';
+    // this.imgFile.el.nativeElement.value = null;
+    this.modelTM.imageLinks[index].url = null;
+  }
+
+  clearFile(event) {
+    console.log('event', event)
   }
 
   addVehicleApprove(event): void {

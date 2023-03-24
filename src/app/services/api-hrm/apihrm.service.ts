@@ -547,7 +547,7 @@ export class ApiHrmService {
   }
 
   resetPasswordOtp(params): Observable<any> {
-    return this.http.put<any>(`${apiCore}/api/v1/coreuser/ResetPasswordOtp`, params, this.options);
+    return this.http.put<any>(`${apiHrmServer}/api/v1/user/ResetPasswordOtp`, params, this.options);
   }
 
   hrmDelEmpWorking(queryParams): Observable<any> {

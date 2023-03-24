@@ -387,12 +387,13 @@ styleClass="menu-option-right" #menuButton></p-menu>
       <div class="img">
         <p-image src="{{ imgUrl?.url ? imgUrl?.url : '/../../../../assets/images/file.png' }}" [preview]="true" alt="Image" ></p-image>
          <p-fileUpload 
-           mode="basic" 
-           name="demo[]" 
-           [chooseIcon]="'pi pi-upload'"
-           accept="image/*" 
-           [maxFileSize]="10000000" 
-           (onSelect)="uploadImageVehicle($event, indexImg)">
+            *ngIf="!modelTM.imageLinks[indexImg]?.url"
+            mode="basic" 
+            name="demo[]" 
+            [chooseIcon]="'pi pi-upload'"
+            accept="image/*" 
+            [maxFileSize]="10000000" 
+            (onSelect)="uploadImageVehicle($event, indexImg)">
          </p-fileUpload>
          <span class="pi pi-times delete-image" *ngIf="imgUrl?.url" (click)="deleteImg(indexImg)"></span>
        </div>

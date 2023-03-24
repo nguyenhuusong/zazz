@@ -260,9 +260,20 @@ export class TaiKhoanComponent implements OnInit {
     });
   }
 
+  isSendPass = false;
+  dataPassType = [
+    {
+      label: 'Gửi qua SĐT',
+      value: 0
+    },
+    {
+      label: 'Gửi qua email',
+      value: 1
+    }
+  ]
   getNewPassword(event) {
+    this.isSendPass = true;
     this.resetPasswordOtp.loginName = event.rowData.loginName;
-    this.sendResetPasswordOtp();
   }
 
   sendResetPasswordOtp() {
@@ -271,10 +282,12 @@ export class TaiKhoanComponent implements OnInit {
       accept: () => {
         this.apiService.resetPasswordOtp(this.resetPasswordOtp).subscribe(results => {
           if (results.status === 'success') {
-            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Đã gửi mật khẩu về điện thoại!' });
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: this.resetPasswordOtp.otp_type === 0 ? 'Đã gửi mật khẩu về điện thoại!' : 'Đã gửi mật khẩu về email!'});
+            this.isSendPass = false;
           }
           if(results.status === 'error'){
             this.messageService.add({ severity: 'error', summary: results.message, detail: results.data });
+            this.isSendPass = false;
           }
         })
       }
