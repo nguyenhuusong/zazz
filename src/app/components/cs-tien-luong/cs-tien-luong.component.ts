@@ -243,7 +243,23 @@ export class CsTienLuongComponent implements OnInit {
   }
 
   Delete(event) {
-
+    this.confirmationService.confirm({
+      message: 'Bạn có chắc chắn muốn thực hiện xóa bản ghi?',
+      accept: () => {
+        const queryParams = queryString.stringify({ recordId: event.rowData.recordId });
+        this.apiService.delSalaryRecord(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(results => {
+          if (results.status === 'success') {
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa công ty thành công' });
+            this.load();
+            this.FnEvent();
+          } else {
+            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+          }
+        });
+      }
+    });
   }
 
   pheDuyet(event) {
