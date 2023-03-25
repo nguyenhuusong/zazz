@@ -277,6 +277,14 @@ export class ApiHrmService {
     return this.http.put<any>(`${apiHrmServer}/api/v1/salary/SetSalaryRecordApprove`, queryParams, this.options)
   }
 
+  setSalaryRecordFinal(queryParams): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v1/salary/SetSalaryRecordFinal`, queryParams, this.options)
+  }
+
+  setSalaryRecordClose(queryParams): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v1/salary/SetSalaryRecordClose`, queryParams, this.options)
+  }
+
   getEatingPage(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/eating/GetEatingPage?` + queryParams, this.options)
   }
