@@ -166,26 +166,26 @@ export class CsTienLuongComponent implements OnInit {
           label: 'Xem chi tiết',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
-          hide: this.checkHideDetail
+          hide: this.checkHideDetail(event)
         },
         {
           onClick: this.ChiTietLuong.bind(this),
           label: 'Chi tiết lương',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
-          hide: this.checkHideChotLuong
+          hide: this.checkHideChotLuong(event)
         },
         {
           onClick: this.pheDuyet.bind(this),
           label: 'Chốt lương',
-          icon: 'pi pi-trash',
+          icon: 'pi pi-check',
           class: 'btn-primary mr5',
           hide: event.data.record_st !== 1
         },
         {
           onClick: this.HoanThanh.bind(this),
-          label: 'Chốt lương',
-          icon: 'pi pi-trash',
+          label: 'Hoàn thành',
+          icon: 'pi pi-check',
           class: 'btn-primary mr5',
           hide: event.data.record_st !== 2
         },
@@ -193,7 +193,7 @@ export class CsTienLuongComponent implements OnInit {
           onClick: this.Delete.bind(this),
           label: 'Xóa',
           icon: 'pi pi-trash',
-          class: event.data.record_st !== 0
+          hide: event.data.record_st !== 0
         },
       ]
     };
@@ -235,8 +235,11 @@ export class CsTienLuongComponent implements OnInit {
   }
 
 
-  ChiTietLuong(event) {
-
+  ChiTietLuong({rowData}) {
+    const params = {
+      recordId: rowData.recordId,
+    }
+    this.router.navigate(['/chinh-sach/tien-luong/chi-tiet-thong-tin-luong'], { queryParams: params });
   }
 
   Delete(event) {
