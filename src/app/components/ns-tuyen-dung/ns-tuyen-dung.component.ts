@@ -205,9 +205,10 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
         },
         {
           onClick: this.addAccount.bind(this),
-          label: 'Tạo tài khoản ứng viên',
+          label: 'Chuyển hồ sơ',
           icon: 'pi pi-plus',
           class: 'btn-primary mr5',
+          hide: this.checkHideAddAccount(event)
         },
         {
           onClick: this.rateRecui.bind(this),
@@ -226,6 +227,13 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
        
       ]
     };
+  }
+
+  checkHideAddAccount(params) {
+    if((params.data.can_st === 8 || params.data.can_st === 10) && (params.data.status_account === 0)) {
+      return false;
+    }
+    return true;
   }
 
   ngAfterViewInit(): void {
