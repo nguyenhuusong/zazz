@@ -181,8 +181,8 @@ detailInfoFilter = null;
       if (results.status === 'success') {
         this.notifyTempList = results.data.map(res => {
           return {
-            label: `${res.tempName}`,
-            value: res.tempId
+            label: `${res.name}`,
+            value: res.value
           }
         });
       }
