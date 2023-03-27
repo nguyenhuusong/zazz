@@ -13,6 +13,7 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
 import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.component';
 import { AgGridFn } from 'src/app/common/function-common/common';
+import { getParamString } from 'src/app/common/function-common/objects.helper';
 @Component({
   selector: 'app-page-mau-thong-bao',
   templateUrl: './page-mau-thong-bao.component.html',
@@ -47,7 +48,6 @@ export class PageMauThongBaoComponent implements OnInit, OnDestroy, AfterViewChe
   totalRecord = 0;
   projects = [];
   query = {
-    organizeId: '',
     filter: '',
     gridWidth: 0,
     offSet: 0,
@@ -80,10 +80,19 @@ export class PageMauThongBaoComponent implements OnInit, OnDestroy, AfterViewChe
     total: 0
   }
   first = 0;
+
+  listViewsFilter = [];
+  cloneListViewsFilter = [];
+  detailInfoFilter = null;
+  optionsButonFilter = [
+    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm height-56 addNew', icon: 'pi pi-search' },
+    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger height-56 addNew', icon: 'pi pi-times' },
+  ];
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
   
   handleReset() {
     this.query = {
-      organizeId: '',
       filter: '',
       gridWidth: 0,
       offSet: 0,
@@ -103,9 +112,42 @@ export class PageMauThongBaoComponent implements OnInit, OnDestroy, AfterViewChe
       { label: 'Danh sách mẫu thông báo' },
     ];
     this.model.filter = '';
+    this.getFilter();
+  }
+
+  //filter 
+  getFilter() {
+    this.apiService.getFilter('/api/v1/notify/GetNotifyTempFilter')
+     .pipe(takeUntil(this.unsubscribe$))
+     .subscribe(results => {
+      if(results.status === 'success') {
+        const listViews = cloneDeep(results.data.group_fields);
+        this.cloneListViewsFilter = cloneDeep(listViews);
+        this.listViewsFilter = [...listViews];
+        const params =  getParamString(listViews)
+        this.query = { ...this.query, ...params};
+        this.load();
+        this.detailInfoFilter = results.data;
+      }
+    });
+  }
+
+  filterLoad(event) {
+    this.query = { ...this.query, ...event.data };
     this.load();
   }
 
+  close({event, datas}) {
+    if(event !== 'Close') {
+      const listViews = cloneDeep(this.cloneListViewsFilter);
+      this.listViewsFilter = cloneDeep(listViews);
+      const params =  getParamString(listViews)
+      this.query = { ...this.query, ...params};
+      this.load();
+    }else {
+      this.listViewsFilter =  cloneDeep(datas);
+    }
+  }
 
   paginate(event) {
     this.query.offSet = event.first;
