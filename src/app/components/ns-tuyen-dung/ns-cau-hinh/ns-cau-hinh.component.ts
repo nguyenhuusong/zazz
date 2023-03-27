@@ -95,7 +95,7 @@ export class NsCauHinhComponent implements OnInit {
     }else if(this.tabIndex === 1){
       this.idForm = rowData.Id
     }else if(this.tabIndex === 2){
-      this.idForm = rowData.source_Id
+      this.idForm = rowData.sourceId
     }
     this.isFormDetail = true;
     
