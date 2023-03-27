@@ -23,6 +23,7 @@ import { EatingListComponent } from 'src/app/components/cs-an-ca/eating-list/eat
 import { ImportPhepBuComponent } from 'src/app/components/phep-bu/import-phep-bu/import-phep-bu.component';
 import { CsChamCongOverviewComponent } from 'src/app/components/cs-cham-cong/cs-cham-cong-overview/cs-cham-cong-overview.component';
 import { ThietBiWifiChamCongComponent } from 'src/app/components/cs-cham-cong/thiet-bi-wifi-cham-cong/thiet-bi-wifi-cham-cong.component';
+import { DsChiTietLuongComponent } from 'src/app/components/cs-tien-luong/ds-chi-tiet-luong/ds-chi-tiet-luong.component';
 
 const routes: Routes = [
   {
@@ -183,6 +184,14 @@ const routes: Routes = [
   data: {
     title: 'Chi tiết tiền lương',
     url: 'chi-tiet-tien-luong',
+  },
+},
+{
+  path: 'tien-luong/chi-tiet-thong-tin-luong',
+  component: DsChiTietLuongComponent,
+  data: {
+    title: 'Chi tiết thông tin lương',
+    url: 'chi-tiet-thong-tin-luong',
   },
 },
  //Thuế thu nhập

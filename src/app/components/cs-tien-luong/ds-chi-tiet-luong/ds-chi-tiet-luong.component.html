@@ -1,0 +1,60 @@
+<div class="main-grid product-detail">
+    <section>
+        <div class="breadcrumb">
+            <p-breadcrumb [model]="itemsMenu"></p-breadcrumb>
+            <h3>{{titlePage}}</h3>
+        </div>
+    </section>
+</div>
+<p-card styleClass="chi-tiet-tien-luong">
+    <section>
+        <app-step-info *ngIf="detailInfo?.workStatuses?.length > 0" [detailInfo]="detailInfo"></app-step-info>
+    </section>
+</p-card>
+<p-divider></p-divider>
+<p-card>
+
+    <p-tabView [(activeIndex)]="indexTab" (onChange)="handleChange($event.index)">
+        <p-tabPanel header="Thông tin chung">
+            <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'"
+                [optionsButtonsEdit]="optionsButtonsView" [dataView]="listViews" (callback)="setTerminateInfo($event)" (callBackForm)="callBackForm($event)"
+                (callbackcancel)="cancel($event)"></app-edit-detail>
+            <app-loading-detail 
+                [id]="'sections-3qnt'" 
+                *ngIf="listViews.length === 0">
+            </app-loading-detail>
+
+        </p-tabPanel>
+        <p-tabPanel header="Chấm công" *ngIf="detailInfo">
+            <app-cham-cong [recordId]="modelEdit.recordId" *ngIf="indexTab === 1 && modelEdit.recordId" [detailInfo]="detailInfo"></app-cham-cong>
+        </p-tabPanel>
+        <p-tabPanel header="Ăn ca" *ngIf="detailInfo">
+            <app-an-ca [recordId]="modelEdit.recordId" *ngIf="indexTab === 2 && modelEdit.recordId"></app-an-ca>
+        </p-tabPanel>
+        <p-tabPanel header="Làm ngoài giờ" *ngIf="detailInfo">
+            <app-lam-ngoai-gio [recordId]="modelEdit.recordId" *ngIf="indexTab === 3 && modelEdit.recordId"></app-lam-ngoai-gio>
+        </p-tabPanel>
+        <p-tabPanel header="Hiệu suất công việc" *ngIf="detailInfo">
+            <app-hieu-suat-lao-dong [recordId]="modelEdit.recordId" *ngIf="indexTab === 4 && modelEdit.recordId"></app-hieu-suat-lao-dong>
+        </p-tabPanel>
+        <p-tabPanel header="Hỗ trợ" *ngIf="detailInfo">
+            <app-ho-tro [recordId]="modelEdit.recordId" *ngIf="indexTab === 5 && modelEdit.recordId"></app-ho-tro>
+        </p-tabPanel>
+        <p-tabPanel header="Tăng/Giảm" *ngIf="detailInfo">
+            <tang-giam [recordId]="modelEdit.recordId" *ngIf="indexTab === 6 && modelEdit.recordId"></tang-giam>
+        </p-tabPanel>
+        <p-tabPanel header="Tổng hợp lương" *ngIf="detailInfo">
+            <app-tong-hop-luong [recordId]="modelEdit.recordId" *ngIf="indexTab === 7 && modelEdit.recordId"></app-tong-hop-luong>
+        </p-tabPanel>
+    </p-tabView>
+    <div>
+    </div>
+       
+</p-card>
+
+
+
+<!-- <p-dialog header="Xử lý bàn giao" [(visible)]="displayChangeStatus" [modal]="true" [style]="{width: '1300px'}"
+    [draggable]="false" [resizable]="false">
+    <app-cap-nhat-trang-thai-nghi-viec [terminateId]="modelPheDuyet.id" (back)="xacnhan()" *ngIf="displayChangeStatus"></app-cap-nhat-trang-thai-nghi-viec>
+</p-dialog> -->

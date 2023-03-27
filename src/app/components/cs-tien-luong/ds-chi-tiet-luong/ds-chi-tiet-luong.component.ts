@@ -7,11 +7,11 @@ import * as queryString from 'querystring';
 import { cloneDeep } from 'lodash';
 import { Subject, takeUntil } from 'rxjs';
 @Component({
-  selector: 'app-chi-tiet-tien-luong',
-  templateUrl: './chi-tiet-tien-luong.component.html',
-  styleUrls: ['./chi-tiet-tien-luong.component.scss']
+  selector: 'app-ds-chi-tiet-luong',
+  templateUrl: './ds-chi-tiet-luong.component.html',
+  styleUrls: ['./ds-chi-tiet-luong.component.scss']
 })
-export class ChiTietTienLuongComponent implements OnInit {
+export class DsChiTietLuongComponent implements OnInit {
   constructor(
     private apiService: ApiHrmService,
     private messageService: MessageService,
@@ -66,7 +66,6 @@ export class ChiTietTienLuongComponent implements OnInit {
     .subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.modelEdit.recordId = this.paramsObject.params.recordId || null
-      this.modelEdit.record_st = this.paramsObject.params.record_st || 0;
       this.getSalaryRecordInfo();
     });
   }
@@ -144,13 +143,9 @@ export class ChiTietTienLuongComponent implements OnInit {
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(results => {
       if (results.status === 'success') {
-        this.activeIndex = results.data.flow_st;
-        this.flowCurrent = results.data.flow_cur;
+        this.detailInfo.workStatuses = results.data.workStatuses;
         this.modelEdit.recordId = results.data.recordId;
         this.listViews = cloneDeep(results.data.group_fields);
-        setTimeout(() => {
-          this.stepActivated();
-        }, 100);
         this.detailInfo = results.data;
         this.optionsButtonsView =[
           { label: 'Quay lại', value: 'BackPage', class: `p-button-secondary ${results.data.prev_st ? '' : 'hidden'}`, icon: 'pi pi-caret-left',  },
@@ -169,9 +164,6 @@ export class ChiTietTienLuongComponent implements OnInit {
         }
       } else {
         this.listViews = cloneDeep(this.cloneListViews);
-        setTimeout(() => {
-          this.stepActivated();
-         }, 100);
         this.spinner.hide();
         this.messageService.add({
           severity: 'error', summary: 'Thông báo', detail: results.message
@@ -187,25 +179,16 @@ export class ChiTietTienLuongComponent implements OnInit {
     this.detailInfo = null;
       this.listViews = [];
       this.spinner.show();
-      const queryParams = queryString.stringify({  flow_cur: flow_cur, recordId: this.modelEdit.recordId });
-      this.apiService.getSalaryRecordInfo(queryParams)
+      const queryParams = queryString.stringify({ recordId: this.modelEdit.recordId });
+      this.apiService.getSalaryWorkStatus(queryParams)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {
         if (results.status === 'success') {
-          this.activeIndex = results.data.flow_st;
-          this.flowCurrent = results.data.flow_cur;
           this.modelEdit.recordId = results.data.recordId;
-          this.steps = results.data.flowStatuses.map(d => {
-            return {
-              label: d.flow_name,
-              value: d.flow_st
-            }
-          });
           this.detailInfo = results.data;
+          this.detailInfo.workStatuses = results.data.workStatuses;
+
           this.listViews = cloneDeep(results.data.group_fields);
-          setTimeout(() => {
-            this.stepActivated();
-          }, 100);
           this.optionsButtonsView =[
             { label: 'Quay lại', value: 'BackPage', class: `p-button-secondary ${results.data.prev_st ? '' : 'hidden'}`, icon: 'pi pi-caret-left',  },
             { label: 'Tiếp tục', value: 'Update', class: `btn-accept ${results.data.next_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-caret-right' },

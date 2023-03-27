@@ -8,8 +8,7 @@
 </div>
 <p-card styleClass="chi-tiet-tien-luong">
     <section>
-        <app-step-info *ngIf="detailInfo?.workStatuses?.length > 0 && detailInfo.approved_st" [detailInfo]="detailInfo"></app-step-info>
-        <div class="status-line steps-contract col-12 m-auto" *ngIf="listViews.length> 0 && !detailInfo.approved_st">
+        <div class="status-line steps-contract col-12 m-auto" *ngIf="listViews.length> 0 ">
             <p-steps [model]="steps" *ngIf="listViews.length> 0" [(activeIndex)]="activeIndex" [readonly]="false"></p-steps>
         </div>
     </section>
@@ -28,33 +27,13 @@
             </app-loading-detail>
 
         </p-tabPanel>
-        <p-tabPanel header="Lịch làm việc" *ngIf="this.flowCurrent > 1 && !detailInfo.approved_st">
+        <p-tabPanel header="Lịch làm việc" *ngIf="this.flowCurrent > 1">
             <app-tab-ngay-cong [recordId]="modelEdit.recordId" *ngIf="indexTab === 1 && modelEdit.recordId" [detailInfo]="detailInfo"></app-tab-ngay-cong>
         </p-tabPanel>
-        <p-tabPanel header="Nhân sự" *ngIf="this.flowCurrent > 1 && !detailInfo.approved_st">
+        <p-tabPanel header="Nhân sự" *ngIf="this.flowCurrent > 1">
             <app-tab-nhan-vien [recordId]="modelEdit.recordId" *ngIf="indexTab === 2 && modelEdit.recordId"></app-tab-nhan-vien>
         </p-tabPanel>
-        <p-tabPanel header="Chấm công" *ngIf="detailInfo && detailInfo.approved_st">
-            <app-cham-cong [recordId]="modelEdit.recordId" *ngIf="indexTab === 1 && modelEdit.recordId" [detailInfo]="detailInfo"></app-cham-cong>
-        </p-tabPanel>
-        <p-tabPanel header="Ăn ca" *ngIf="detailInfo && detailInfo.approved_st">
-            <app-an-ca [recordId]="modelEdit.recordId" *ngIf="indexTab === 2 && modelEdit.recordId"></app-an-ca>
-        </p-tabPanel>
-        <p-tabPanel header="Làm ngoài giờ" *ngIf="detailInfo && detailInfo.approved_st">
-            <app-lam-ngoai-gio [recordId]="modelEdit.recordId" *ngIf="indexTab === 3 && modelEdit.recordId"></app-lam-ngoai-gio>
-        </p-tabPanel>
-        <p-tabPanel header="Hiệu suất công việc" *ngIf="detailInfo && detailInfo.approved_st">
-            <app-hieu-suat-lao-dong [recordId]="modelEdit.recordId" *ngIf="indexTab === 4 && modelEdit.recordId"></app-hieu-suat-lao-dong>
-        </p-tabPanel>
-        <p-tabPanel header="Hỗ trợ" *ngIf="detailInfo && detailInfo.approved_st">
-            <app-ho-tro [recordId]="modelEdit.recordId" *ngIf="indexTab === 5 && modelEdit.recordId"></app-ho-tro>
-        </p-tabPanel>
-        <p-tabPanel header="Tăng/Giảm" *ngIf="detailInfo && detailInfo.approved_st">
-            <tang-giam [recordId]="modelEdit.recordId" *ngIf="indexTab === 6 && modelEdit.recordId"></tang-giam>
-        </p-tabPanel>
-        <p-tabPanel header="Tổng hợp lương" *ngIf="detailInfo && detailInfo.approved_st">
-            <app-tong-hop-luong [recordId]="modelEdit.recordId" *ngIf="indexTab === 7 && modelEdit.recordId"></app-tong-hop-luong>
-        </p-tabPanel>
+       
     </p-tabView>
     <div>
     </div>

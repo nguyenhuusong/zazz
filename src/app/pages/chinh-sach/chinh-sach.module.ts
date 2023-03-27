@@ -81,6 +81,7 @@ import { LoadingDetailModule } from 'src/app/common/loading-detail/loading-detai
 import { StepInfoComponent } from 'src/app/components/cs-tien-luong/chi-tiet-tien-luong/step-info/step-info.component';
 import { TongHopLuongComponent } from 'src/app/components/cs-tien-luong/tong-hop-luong/tong-hop-luong.component';
 import { ChiTietTongHopLuongComponent } from 'src/app/components/cs-tien-luong/tong-hop-luong/chi-tiet-tong-hop-luong/chi-tiet-tong-hop-luong.component';
+import { DsChiTietLuongComponent } from 'src/app/components/cs-tien-luong/ds-chi-tiet-luong/ds-chi-tiet-luong.component';
 
 @NgModule({
   imports: [
@@ -171,6 +172,7 @@ import { ChiTietTongHopLuongComponent } from 'src/app/components/cs-tien-luong/t
     StepInfoComponent,
     TongHopLuongComponent,
     ChiTietTongHopLuongComponent,
+    DsChiTietLuongComponent,
     
 
   ],

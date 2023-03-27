@@ -166,30 +166,107 @@ export class CsTienLuongComponent implements OnInit {
           label: 'Xem chi tiết',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
-          hide: CheckHideAction(MENUACTIONROLEAPI.GetSalaryRecordPage.url, ACTIONS.VIEW)
+          hide: this.checkHideDetail(event)
+        },
+        {
+          onClick: this.ChiTietLuong.bind(this),
+          label: 'Chi tiết lương',
+          icon: 'fa fa-eye',
+          class: 'btn-primary mr5',
+          hide: this.checkHideChotLuong(event)
         },
         {
           onClick: this.pheDuyet.bind(this),
-          label: 'Phê duyệt',
-          icon: 'pi pi-trash',
+          label: 'Chốt lương',
+          icon: 'pi pi-check',
           class: 'btn-primary mr5',
-          hide: CheckHideAction(MENUACTIONROLEAPI.GetSalaryRecordPage.url, ACTIONS.PHE_DUYET)
+          hide: event.data.record_st !== 1
         },
-        // {
-        //   onClick: this.CloseAccount.bind(this),
-        //   label: 'Đóng tài khoản',
-        //   icon: 'pi pi-trash',
-        //   class: 'btn-primary mr5',
-        // },
+        {
+          onClick: this.HoanThanh.bind(this),
+          label: 'Hoàn thành',
+          icon: 'pi pi-check',
+          class: 'btn-primary mr5',
+          hide: event.data.record_st !== 2
+        },
+        {
+          onClick: this.Delete.bind(this),
+          label: 'Xóa',
+          icon: 'pi pi-trash',
+          hide: event.data.record_st !== 0
+        },
       ]
     };
   }
 
+  checkHideDetail(params) {
+    if(params.data.record_st >3) {
+      return true;
+    }
+    return false;
+  }
+
+  checkHideChotLuong(params) {
+    if(params.data.record_st ===1
+      || params.data.record_st ===2
+      || params.data.record_st ===3) {
+      return false;
+    }
+    return true;
+  }
+
+  HoanThanh(event) {
+    this.confirmationService.confirm({
+      message: 'Bạn có chắc chắn muốn xác nhận hoàn thành?',
+      accept: () => {
+        this.apiService.setSalaryRecordFinal({ recordId: event.rowData.recordId })
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(results => {
+          if (results.status === 'success') {
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa công ty thành công' });
+            this.load();
+            this.FnEvent();
+          } else {
+            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+          }
+        });
+      }
+    });
+  }
+
+
+  ChiTietLuong({rowData}) {
+    const params = {
+      recordId: rowData.recordId,
+    }
+    this.router.navigate(['/chinh-sach/tien-luong/chi-tiet-thong-tin-luong'], { queryParams: params });
+  }
+
+  Delete(event) {
+    this.confirmationService.confirm({
+      message: 'Bạn có chắc chắn muốn thực hiện xóa bản ghi?',
+      accept: () => {
+        const queryParams = queryString.stringify({ recordId: event.rowData.recordId });
+        this.apiService.delSalaryRecord(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(results => {
+          if (results.status === 'success') {
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa công ty thành công' });
+            this.load();
+            this.FnEvent();
+          } else {
+            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+          }
+        });
+      }
+    });
+  }
+
   pheDuyet(event) {
       this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn thực hiện phê duyệt?',
+      message: 'Bạn có chắc chắn muốn thực hiện chốt lương?',
       accept: () => {
-        this.apiService.setSalaryRecordApprove({ recordId: event.rowData.recordId })
+        this.apiService.setSalaryRecordClose({ recordId: event.rowData.recordId })
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe(results => {
           if (results.status === 'success') {

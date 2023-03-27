@@ -1,0 +1,25 @@
+:host::ng-deep .p-tabview .p-tabview-panels{
+    padding-left: 0px;
+    padding-right: 0px
+}
+:host::ng-deep {
+    .steps-contract {
+        width: 75% !important
+    }
+    .max-h-600{
+        max-height: 600px;
+        overflow: auto;
+    }
+    .status-line .p-steps-item {
+        width: 10%
+    }
+
+    .chi-tiet-tien-luong {
+        .p-card-body {
+            padding: 0;
+            .p-card-content {
+                padding: 0;
+            }
+        }
+    }
+}
