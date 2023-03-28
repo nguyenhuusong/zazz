@@ -6,6 +6,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { AgGridFn } from 'src/app/common/function-common/common';
+import * as FileSaver from 'file-saver';
 @Component({
   selector: 'app-import-ke-hoach',
   templateUrl: './import-ke-hoach.component.html',
@@ -32,8 +33,8 @@ export class ImportKeHoachComponent implements OnInit {
   ngOnInit(): void {
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
-      { label: 'Danh sách lý do nghỉ', routerLink: '/cai-dat/ly-do-nghi' },
-      { label: 'Import lý do nghỉ' },
+      { label: 'Danh sách kế hoạch tuyển dụng', routerLink: '/tuyen-dung/ke-hoach-tuyen-dung' },
+      { label: 'Import kế hoạch tuyển dụng' },
     ];
   }
   
@@ -113,11 +114,25 @@ export class ImportKeHoachComponent implements OnInit {
   }
 
   getTemfileImport() {
-    this.apiService.exportReportLocalhost('assets/tpl-import-file/Import_HSNS_NghiViec.xlsx')
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe((data: any) => {
-      this.createImageFromBlob(data)
-    });
+    // this.apiService.exportReportLocalhost('assets/tpl-import-file/Import_HSNS_NghiViec.xlsx')
+    // .pipe(takeUntil(this.unsubscribe$))
+    // .subscribe((data: any) => {
+    //   this.createImageFromBlob(data)
+    // });
+
+    this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Coming soon' });
+    // 3118
+    // this.apiService.getEmployeeImportTemp()
+    // .pipe(takeUntil(this.unsubscribe$))
+    // .subscribe(results => {
+    //   if (results.type === 'application/json') {
+    //     this.spinner.hide();
+    //   } else {
+    //     var blob = new Blob([results], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    //     FileSaver.saveAs(blob, `file_mau_ke_hoach_tuyen_dung...` +".xlsx");
+    //     this.spinner.hide();
+    //   }
+    // })
   }
 
   createImageFromBlob(image: Blob) {

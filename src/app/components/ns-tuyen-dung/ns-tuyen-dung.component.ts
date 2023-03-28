@@ -340,7 +340,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     this.buttonTiemNang[1].disabled = this.dataRowSelected.length > 0 ? false : true;
     // chuyen vong
     this.optionsButtonDB[0].disabled = this.dataRowSelected.length > 0 ? false : true;
-    // this.optionsButtonDB[1].disabled = CheckHideAction(MENUACTIONROLEAPI.GetCandidatePage.url, ACTIONS.SEND_EMAIL);
+    this.optionsButtonDB[1].disabled = this.dataRowSelected.length > 0 ? false : true;
     let checkCreateAccount = this.dataRowSelected.some( d => d.can_st !== 10 || d.status_account === 1 );
     this.optionsButtonDB[2].disabled = checkCreateAccount ? true : this.dataRowSelected.length < 1 ? true : false;
   }
@@ -483,7 +483,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
         label: 'Gửi email',
         code: 'guiemail',
         icon: 'pi pi-envelope',
-        disabled: false,
+        disabled: true,
         command: () => {
           this.getRecruitMailInput();
         }
@@ -630,10 +630,10 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(results => {
       if (results.status === 'success') {
-        this.mailsInput = results.data.recruitmentMail.map(d => {
+        this.mailsInput = results.data.map(d => {
           return {
-            label: d.mail_name,
-            value: d.mail_Id
+            label: d.name,
+            value: d.value
           }
         })
       }

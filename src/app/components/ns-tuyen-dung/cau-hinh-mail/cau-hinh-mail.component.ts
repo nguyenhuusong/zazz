@@ -12,11 +12,11 @@ import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 
 import { fromEvent, Subject, takeUntil } from 'rxjs';
 @Component({
-  selector: 'app-ns-cau-hinh-mail',
-  templateUrl: './ns-cau-hinh-mail.component.html',
-  styleUrls: ['./ns-cau-hinh-mail.component.scss']
+  selector: 'app-cau-hinh-mail',
+  templateUrl: './cau-hinh-mail.component.html',
+  styleUrls: ['./cau-hinh-mail.component.scss']
 })
-export class NsCauHinhMailComponent implements OnInit {
+export class CauHinhMailComponent implements OnInit {
   @Output() idOutPut = new EventEmitter<any>();
   @Output() add = new EventEmitter<any>();
   pagingComponent = {
@@ -148,9 +148,16 @@ export class NsCauHinhMailComponent implements OnInit {
       ]
     };
   }
-
+  isFormDetail = false;
+  idForm = null;
   editRow({rowData}) {
-    this.idOutPut.emit(rowData)
+    this.idForm = rowData.tempId;
+    this.isFormDetail = true;
+  }
+
+  theEventDetail(event){
+    this.isFormDetail = false;
+    this.load();
   }
 
   onCellClicked(event) {
@@ -176,7 +183,8 @@ export class NsCauHinhMailComponent implements OnInit {
   }
 
   create() {
-    this.add.emit();
+    this.isFormDetail = true;
+    this.idForm = null
   }
 
   initGrid() {
@@ -202,7 +210,7 @@ export class NsCauHinhMailComponent implements OnInit {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa?',
       accept: () => {
-        const queryParams = queryString.stringify({ Id: event.rowData.Id });
+        const queryParams = queryString.stringify({ tempId: event.rowData.tempId });
         this.apiService.delRecruitMailInfo(queryParams)
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe(results => {
@@ -238,7 +246,7 @@ export class NsCauHinhMailComponent implements OnInit {
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Tuyển dụng' },
-      { label: 'Cấu hình' },
+      { label: 'Cấu hình mail' },
     ];
     
   }
@@ -311,19 +319,22 @@ export class NsCauHinhMailComponent implements OnInit {
   ngAfterViewChecked(): void {
     const a: any = document.querySelector(".header");
     const b: any = document.querySelector(".sidebarBody");
-    const c: any = document.querySelector(".bread-filter");
     const d: any = document.querySelector(".bread-crumb");
     const e: any = document.querySelector(".paginator");
     this.loadjs++
     if (this.loadjs === 5) {
       if (b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + d.clientHeight + e.clientHeight + 62;
+        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight + 10;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       } else {
         this.loadjs = 0;
       }
     }
+  }
+
+  backTo() {
+    this.router.navigate(['/tuyen-dung/vi-tri-tuyen-dung']);
   }
 
   cauhinh() {

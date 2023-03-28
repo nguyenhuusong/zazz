@@ -58,12 +58,7 @@ import { ChiTietMailTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/
 import { ImportTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/import-tuyen-dung/import-tuyen-dung.component';
 import { DsTiemNangComponent } from 'src/app/components/ns-tuyen-dung/ds-tiem-nang/ds-tiem-nang.component';
 import { MailDaGuiComponent } from 'src/app/components/ns-tuyen-dung/mail-da-gui/mail-da-gui.component';
-import { NsCauHinhComponent } from 'src/app/components/ns-tuyen-dung/ns-cau-hinh/ns-cau-hinh.component';
-import { VongTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/ns-cau-hinh/vong-tuyen-dung/vong-tuyen-dung.component';
-import { ChiTietVongTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/ns-cau-hinh/vong-tuyen-dung/chi-tiet-vong-tuyen-dung/chi-tiet-vong-tuyen-dung.component';
 import { NsCauHinhMailComponent } from 'src/app/components/ns-tuyen-dung/ns-cau-hinh/ns-cau-hinh-mail/ns-cau-hinh-mail.component';
-import { NguonTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/ns-cau-hinh/nguon-tuyen-dung/nguon-tuyen-dung.component';
-import { ChiTietNguonTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/ns-cau-hinh/nguon-tuyen-dung/chi-tiet-nguon-tuyen-dung/chi-tiet-nguon-tuyen-dung.component';
 import { NsChiTietCauHinhMailComponent } from 'src/app/components/ns-tuyen-dung/ns-cau-hinh/ns-cau-hinh-mail/chi-tiet-cau-hinh-mail/chi-tiet-ns-cau-hinh-mail.component';
 import { HrmStepModule } from 'src/app/common/hrm-steps/hrm-step.module';
 import { FormFilterModule } from 'src/app/common/form-filter/form-filter.module';
@@ -78,6 +73,12 @@ import { LoadingGridModule } from 'src/app/common/loading-grid/loading-grid.modu
 import { LoadingDetailModule } from 'src/app/common/loading-detail/loading-detail.module';
 import { ChiTietTuyenDungLaiComponent } from 'src/app/components/ns-tuyen-dung/nghi-viec/chi-tiet-tuyen-dung-lai/chi-tiet-tuyen-dung-lai.component';
 import { HrmSearchEmpModule } from 'src/app/common/hrm-search-emp/hrm-search-emp.module';
+import { CauHinhMailComponent } from 'src/app/components/ns-tuyen-dung/cau-hinh-mail/cau-hinh-mail.component';
+import { ChiTietCauHinhMailComponent } from 'src/app/components/ns-tuyen-dung/cau-hinh-mail/chi-tiet-cau-hinh-mail/chi-tiet-cau-hinh-mail.component';
+import { ChiTietVongTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/vong-tuyen-dung/chi-tiet-vong-tuyen-dung/chi-tiet-vong-tuyen-dung.component';
+import { VongTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/vong-tuyen-dung/vong-tuyen-dung.component';
+import { ChiTietNguonTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/nguon-tuyen-dung/chi-tiet-nguon-tuyen-dung/chi-tiet-nguon-tuyen-dung.component';
+import { NguonTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/nguon-tuyen-dung/nguon-tuyen-dung.component';
 @NgModule({
   imports: [
     MessagesModule,
@@ -152,19 +153,19 @@ import { HrmSearchEmpModule } from 'src/app/common/hrm-search-emp/hrm-search-emp
     ImportTuyenDungComponent,
     DsTiemNangComponent,
     MailDaGuiComponent,
-    NsCauHinhComponent,
-    VongTuyenDungComponent,
-    ChiTietVongTuyenDungComponent,
     NsCauHinhMailComponent,
-    NguonTuyenDungComponent,
-    ChiTietNguonTuyenDungComponent,
     NsChiTietCauHinhMailComponent,
     KeHoachTuyenDungComponent,
     ChiTietKeHoachTuyenDungComponent,
     ImportKeHoachComponent,
     ImportLinhVucTuyenDungComponent,
     ChiTietTuyenDungLaiComponent,
-
+    CauHinhMailComponent,
+    ChiTietCauHinhMailComponent,
+    VongTuyenDungComponent,
+    ChiTietVongTuyenDungComponent,
+    ChiTietNguonTuyenDungComponent,
+    NguonTuyenDungComponent
   ],
   providers: [ ]
 })

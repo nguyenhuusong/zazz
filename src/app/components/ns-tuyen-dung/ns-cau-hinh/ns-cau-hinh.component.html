@@ -15,7 +15,7 @@
             </div>
         </section>
     <section class="pb-0">
-        <p-tabView (onChange)="handleChange($event.index)" [(activeIndex)]="tabIndex">
+        <!-- <p-tabView (onChange)="handleChange($event.index)" [(activeIndex)]="tabIndex">
             <p-tabPanel header="Cấu hình mail" >
                 <app-ns-cau-hinh-mail 
                     #nsCauHinhMail 
@@ -40,14 +40,14 @@
                *ngIf="tabIndex === 2">
                 </app-nguon-tuyen-dung>
             </p-tabPanel>
-        </p-tabView>
+        </p-tabView> -->
     </section>
 </div>
 
 <!-- <p-menu [model]="itemsToolOfGrid" [appendTo]="'body'" [popup]="true"
 styleClass="menu-option-right" #menuButton></p-menu> -->
 
-<p-dialog header="{{ titleAddnew }}" 
+<!-- <p-dialog header="{{ titleAddnew }}" 
         [(visible)]="isFormDetail" 
         [modal]="true" [style]="{width: popupWidth + 'px'}"
         [draggable]="false" [resizable]="false" [focusTrap]="false" >
@@ -66,4 +66,4 @@ styleClass="menu-option-right" #menuButton></p-menu> -->
         *ngIf="isFormDetail && tabIndex ===2" 
         [idForm]="idForm">
     </app-chi-tiet-nguon-tuyen-dung>
-</p-dialog>
+</p-dialog> -->

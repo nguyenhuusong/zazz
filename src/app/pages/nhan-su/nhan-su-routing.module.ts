@@ -273,14 +273,14 @@ const routes: Routes = [
      url: 'qua-trinh-thay-doi-luong',
    },
  },
-  {
-   path: 'qua-trinh-thay-doi-luong/import-salary',
-   component: ImportQtThayDoiLuongComponent,
-   data: {
-     title: 'Import quá trình thay đổi lương',
-     url: 'import-salary',
-   },
- },
+//   {
+//    path: 'qua-trinh-thay-doi-luong/import-salary',
+//    component: ImportQtThayDoiLuongComponent,
+//    data: {
+//      title: 'Import quá trình thay đổi lương',
+//      url: 'import-salary',
+//    },
+//  },
  {
   path: 'qua-trinh-thay-doi-luong/them-moi-qua-trinh-thay-doi-luong',
   component: ChiTietQTThayDoiLuongComponent,
@@ -295,6 +295,23 @@ const routes: Routes = [
   data: {
     title: 'Chi tiết quá trình thay đổi lương',
     url: 'chi-tiet-qua-trinh-thay-doi-luong',
+  },
+},
+
+{
+  path: 'qua-trinh-thay-doi-luong/import-salary',
+  component: ImportExcelComponent,
+  data: {
+    title: 'Import quá trình thay đổi lương',
+    url: 'import-qua-trinh-thay-doi-luong',
+    titleDad : 'Danh sách quá trình thay đổi lương',
+    urlDad: '/nhan-su/qua-trinh-thay-doi-luong',
+    api: 'setSalaryInfoImport',
+    apiAccept: 'setSalaryInfoAccept',
+    fileDoc: 'Qua_trinh_luong_Import.xls',
+    apiExport: 'setSalaryInfoExportDraft',
+    apiTemImport: 'getSalaryInfoImportTemp',
+    fileNameTemImport: 'file_mau_qua_trinh_thay_doi_luong',
   },
 },
 

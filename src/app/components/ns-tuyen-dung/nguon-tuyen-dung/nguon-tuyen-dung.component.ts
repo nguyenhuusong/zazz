@@ -1,5 +1,4 @@
 import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router, Params } from '@angular/router';
 import * as queryString from 'querystring';
 import { ConfirmationService, MessageService, TreeNode } from 'primeng/api';
 import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
@@ -11,20 +10,18 @@ import { cloneDeep } from 'lodash';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 
 import { fromEvent, Subject, takeUntil } from 'rxjs';
+import { Router } from '@angular/router';
 @Component({
-  selector: 'app-ns-cau-hinh-mail',
-  templateUrl: './ns-cau-hinh-mail.component.html',
-  styleUrls: ['./ns-cau-hinh-mail.component.scss']
+  selector: 'app-nguon-tuyen-dung',
+  templateUrl: './nguon-tuyen-dung.component.html',
+  styleUrls: ['./nguon-tuyen-dung.component.scss']
 })
-export class NsCauHinhMailComponent implements OnInit {
+export class NguonTuyenDungComponent implements OnInit {
   @Output() idOutPut = new EventEmitter<any>();
   @Output() add = new EventEmitter<any>();
   pagingComponent = {
     total: 0
   };
-  gridKey = ''
-  displaySetting = false
-
   projects = []
   public modules: Module[] = AllModules;
   public agGridFn = AgGridFn;
@@ -34,60 +31,58 @@ export class NsCauHinhMailComponent implements OnInit {
   columnDefs = [];
   detailRowHeight;
   defaultColDef;
-  frameworkComponents;
-  groupDefaultExpanded;
-  detailCellRendererParams;
   gridApi: any;
   clientWidth: any;
   gridColumnApi: any;
   objectAction: any;
   objectActionDetail: any;
   gridflexs: any;
-  getRowHeight;
   listsData = [];
-  selectedNode
   totalRecord = 0;
   first = 0;
+  gridKey = ''
+  displaySetting = false
+  MENUACTIONROLEAPI = MENUACTIONROLEAPI;
+  ACTIONS = ACTIONS
   countRecord: any = {
     totalRecord: 0,
     currentRecordStart: 0,
     currentRecordEnd: 0
   }
-  modelTM: any = {};
-  itemsToolOfGrid: any[] = [];
-  MENUACTIONROLEAPI = MENUACTIONROLEAPI;
-  ACTIONS = ACTIONS
-  constructor(
-    private apiService: ApiHrmService,
-    private spinner: NgxSpinnerService,
-    private route: ActivatedRoute,
-    private confirmationService: ConfirmationService,
-    private messageService: MessageService,
-    private fileService: ExportFileService,
-    private changeDetector: ChangeDetectorRef,
-    
-    private router: Router) {
-
-    }
-    query = {
-      filter: '',
-      offSet: 0,
-      pageSize: 20,
-    }
-
-  cancel() {
-    this.query = {
-      filter: '',
-      offSet: 0,
-      pageSize: 20,
-    }
-    this.load();
-  }
-
   private readonly unsubscribe$: Subject<void> = new Subject();
   ngOnDestroy() {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
+  }
+  constructor(
+    private apiService: ApiHrmService,
+    private spinner: NgxSpinnerService,
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService,
+    private fileService: ExportFileService,
+    private router: Router,
+    private changeDetector: ChangeDetectorRef,) {
+
+    }
+  query = {
+    organizeId: '',
+    filter: '',
+    gridWidth: 0,
+    offSet: 0,
+    pageSize: 20,
+    organizeIds: '',
+  }
+
+  cancel() {
+    this.query = {
+      filter: '',
+      gridWidth: 0,
+      offSet: 0,
+      pageSize: 20,
+      organizeId: this.query.organizeIds,
+      organizeIds: this.query.organizeIds
+    }
+    this.load();
   }
 
   onGridReady(params) {
@@ -99,24 +94,23 @@ export class NsCauHinhMailComponent implements OnInit {
     this.columnDefs = [];
     // this.spinner.show();
     const queryParams = queryString.stringify(this.query);
-    this.apiService.getRecruitMailPage(queryParams)
+    this.apiService.getRecruitSourcePage(queryParams)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(
       (results: any) => {
-        this.listsData = results?.data?.dataList?.data;
-        this.gridKey= results?.data?.dataList?.gridKey;
-
+        this.listsData = results.data.dataList.data;
+        this.gridKey= results.data.dataList.gridKey;
         if (this.query.offSet === 0) {
           this.cols = results.data.gridflexs;
         }
         this.initGrid();
-        this.countRecord.totalRecord = results?.data?.dataList?.recordsTotal;
-        this.countRecord.totalRecord = results?.data?.dataList?.recordsTotal;
-        this.countRecord.currentRecordStart = results?.data?.dataList?.recordsTotal === 0 ? this.query.offSet = 0 : this.query.offSet + 1;
+        this.countRecord.totalRecord = results.data.dataList.recordsTotal;
+        this.countRecord.totalRecord = results.data.dataList.recordsTotal;
+        this.countRecord.currentRecordStart = results.data.dataList.recordsTotal === 0 ? this.query.offSet = 0 : this.query.offSet + 1;
         if ((results.data.dataList.recordsTotal - this.query.offSet) > this.query.pageSize) {
           this.countRecord.currentRecordEnd = this.query.offSet + Number(this.query.pageSize);
         } else {
-          this.countRecord.currentRecordEnd = results?.data?.dataList?.recordsTotal;
+          this.countRecord.currentRecordEnd = results.data.dataList.recordsTotal;
           setTimeout(() => {
             const noData = document.querySelector('.ag-overlay-no-rows-center');
             if (noData) { noData.innerHTML = 'Không có kết quả phù hợp' }
@@ -136,21 +130,19 @@ export class NsCauHinhMailComponent implements OnInit {
         {
           onClick: this.editRow.bind(this),
           label: 'Xem chi tiết',
-          icon: 'pi pi-tablet',
+          icon: 'fa fa-eye',
           class: 'btn-primary mr5',
+          // hide: CheckHideAction(MENUACTIONROLEAPI.GetPayrollAppInfoPage.url, ACTIONS.VIEW_TINH_LUONG_THANH_PHAN_LUONG)
         },
         {
           onClick: this.delRow.bind(this),
           label: 'Xóa',
           icon: 'fa fa-trash',
           class: 'btn-primary mr5',
+          // hide: CheckHideAction(MENUACTIONROLEAPI.GetPayrollAppInfoPage.url, ACTIONS.DELETE_TINH_LUONG_THANH_PHAN_LUONG)
         },
       ]
     };
-  }
-
-  editRow({rowData}) {
-    this.idOutPut.emit(rowData)
   }
 
   onCellClicked(event) {
@@ -158,6 +150,7 @@ export class NsCauHinhMailComponent implements OnInit {
       this.editRow(event = {rowData: event.data})
     }
   }
+
 
   ngAfterViewInit(): void {
     this.FnEvent();
@@ -176,7 +169,8 @@ export class NsCauHinhMailComponent implements OnInit {
   }
 
   create() {
-    this.add.emit();
+    this.isFormDetail = true;
+    this.idForm = null
   }
 
   initGrid() {
@@ -202,10 +196,10 @@ export class NsCauHinhMailComponent implements OnInit {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa?',
       accept: () => {
-        const queryParams = queryString.stringify({ Id: event.rowData.Id });
-        this.apiService.delRecruitMailInfo(queryParams)
+        const query = queryString.stringify({sourceId: event.rowData.sourceId})
+        this.apiService.delRecruitSourceInfo(query)
         .pipe(takeUntil(this.unsubscribe$))
-        .subscribe(results => {
+        .subscribe((results: any) => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
             this.load();
@@ -233,73 +227,12 @@ export class NsCauHinhMailComponent implements OnInit {
   }
 
   ngOnInit() {
-     
     this.load();
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Tuyển dụng' },
-      { label: 'Cấu hình' },
+      { label: 'Nguồn tuyển dụng' },
     ];
-    
-  }
-  employeeStatus = []
-  getEmployeeStatus() {
-    this.apiService.getEmployeeStatus()
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(results => {
-      if (results.status === 'success') {
-        this.employeeStatus = []
-        results.data.forEach(s => {
-          if (s.value != "3") {
-            this.employeeStatus.push({
-              label: s.name,
-              value: s.value
-            })
-          }
-        }
-        )
-        this.employeeStatus = [{ label: '---Chọn mã chỉ tiêu---', value: -1 }, ...this.employeeStatus];
-      }
-    })
-  }
- 
-
-  exportExel() {
-    this.spinner.show();
-    this.query.pageSize = 1000000;
-    const query = { ...this.query };
-    const queryParams = queryString.stringify(query);
-    this.apiService.getEmployeePage(queryParams)
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(
-      (results: any) => {
-        const dataExport = [];
-        let gridflexs = results.data.gridflexs;
-        let arrKey = gridflexs.map(elementName => elementName.columnField);
-
-        let dataList = results.data.dataList.data;
-        for (let elementValue of dataList) {
-          const data: any = {};
-          for (let elementName of gridflexs) {
-            if (arrKey.indexOf(elementName.columnField) > -1 && !elementName.isHide && elementName.columnField !== 'statusName') {
-              let valueColumn = elementValue[elementName.columnField];
-              if (elementName.columnField == 'status_name' || elementName.columnField == 'isContacted' || elementName.columnField == 'isProfileFull' || elementName.columnField == 'lockName') {
-                valueColumn = this.replaceHtmlToText(valueColumn);
-              }
-              data[elementName.columnCaption] = valueColumn || '';
-            }
-
-          }
-
-          dataExport.push(data);
-        }
-        this.fileService.exportAsExcelFile(dataExport, 'Danh sách hồ sơ nhân sự ' + new Date());
-
-        this.spinner.hide();
-      },
-      error => {
-        this.spinner.hide();
-      });
   }
 
   replaceHtmlToText(string) {
@@ -311,13 +244,12 @@ export class NsCauHinhMailComponent implements OnInit {
   ngAfterViewChecked(): void {
     const a: any = document.querySelector(".header");
     const b: any = document.querySelector(".sidebarBody");
-    const c: any = document.querySelector(".bread-filter");
     const d: any = document.querySelector(".bread-crumb");
     const e: any = document.querySelector(".paginator");
     this.loadjs++
     if (this.loadjs === 5) {
       if (b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + d.clientHeight + e.clientHeight + 62;
+        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight + 10;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       } else {
@@ -330,5 +262,21 @@ export class NsCauHinhMailComponent implements OnInit {
     this.displaySetting = true;
   }
 
+  isFormDetail = false;
+  idForm = null;
+
+  editRow({rowData}) {
+    this.idForm = rowData.sourceId;
+    this.isFormDetail = true;
+  }
+
+  theEventDetail(event){
+    this.isFormDetail = false;
+    this.load();
+  }
+
+  backTo() {
+    this.router.navigate(['/tuyen-dung/vi-tri-tuyen-dung']);
+  }
 
 }

@@ -10,9 +10,9 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { ExportFileService } from 'src/app/services/export-file.service';
 import { cloneDeep } from 'lodash';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
-import { VongTuyenDungComponent } from './vong-tuyen-dung/vong-tuyen-dung.component';
+// import { VongTuyenDungComponent } from './vong-tuyen-dung/vong-tuyen-dung.component';
 import { NsCauHinhMailComponent } from './ns-cau-hinh-mail/ns-cau-hinh-mail.component';
-import { NguonTuyenDungComponent } from './nguon-tuyen-dung/nguon-tuyen-dung.component';
+// import { NguonTuyenDungComponent } from './nguon-tuyen-dung/nguon-tuyen-dung.component';
 
 @Component({
   selector: 'app-ns-cau-hinh',
@@ -21,8 +21,8 @@ import { NguonTuyenDungComponent } from './nguon-tuyen-dung/nguon-tuyen-dung.com
 })
 export class NsCauHinhComponent implements OnInit {
   @ViewChild('nsCauHinhMail') tabNsCauHinhMail: NsCauHinhMailComponent;
-  @ViewChild('vongTuyenDung') tabVongTuyenDung: VongTuyenDungComponent;
-  @ViewChild('nguonTuyenDung') tabNguonTuyenDung: NguonTuyenDungComponent;
+  // @ViewChild('vongTuyenDung') tabVongTuyenDung: VongTuyenDungComponent;
+  // @ViewChild('nguonTuyenDung') tabNguonTuyenDung: NguonTuyenDungComponent;
   
   tabsItem = []
   pagingComponent = {
@@ -91,7 +91,7 @@ export class NsCauHinhComponent implements OnInit {
   editEvent(rowData) {
     let id = null;
     if(this.tabIndex === 0){
-      this.idForm = rowData.mail_Id
+      this.idForm = rowData.tempId
     }else if(this.tabIndex === 1){
       this.idForm = rowData.Id
     }else if(this.tabIndex === 2){
@@ -191,10 +191,10 @@ export class NsCauHinhComponent implements OnInit {
       this.tabNsCauHinhMail.load();
      }
      if(this.tabIndex === 1) {
-      this.tabVongTuyenDung.load();
+      // this.tabVongTuyenDung.load();
      }
      if(this.tabIndex === 2) {
-      this.tabNguonTuyenDung.load();
+      // this.tabNguonTuyenDung.load();
      }
      
   }

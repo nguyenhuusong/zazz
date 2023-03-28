@@ -11,11 +11,11 @@ import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 
 import { setOrganizeId } from 'src/app/utils/common/function-common';
 @Component({
-  selector: 'app-chi-tiet-ns-cau-hinh-mail',
-  templateUrl: './chi-tiet-ns-cau-hinh-mail.component.html',
-  styleUrls: ['./chi-tiet-ns-cau-hinh-mail.component.scss']
+  selector: 'app-chi-tiet-cau-hinh-mail',
+  templateUrl: './chi-tiet-cau-hinh-mail.component.html',
+  styleUrls: ['./chi-tiet-cau-hinh-mail.component.scss']
 })
-export class NsChiTietCauHinhMailComponent implements OnInit, OnDestroy {
+export class ChiTietCauHinhMailComponent implements OnInit, OnDestroy {
   items: MenuItem[] = [];
   paramsObject = null;
   detailInfo = null
