@@ -49,7 +49,7 @@ export class NsChiTietCauHinhMailComponent implements OnInit, OnDestroy {
 
   getDetail() {
     this.listViews = []
-    const queryParams = queryString.stringify({mail_Id: this.idForm});
+    const queryParams = queryString.stringify({tempId: this.idForm});
     this.apiService.getRecruitMailInfo(queryParams)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {

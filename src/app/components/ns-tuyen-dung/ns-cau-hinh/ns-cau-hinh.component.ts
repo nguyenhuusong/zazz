@@ -91,7 +91,7 @@ export class NsCauHinhComponent implements OnInit {
   editEvent(rowData) {
     let id = null;
     if(this.tabIndex === 0){
-      this.idForm = rowData.mail_Id
+      this.idForm = rowData.tempId
     }else if(this.tabIndex === 1){
       this.idForm = rowData.Id
     }else if(this.tabIndex === 2){
