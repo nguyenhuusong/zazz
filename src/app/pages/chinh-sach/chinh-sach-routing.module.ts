@@ -24,6 +24,8 @@ import { ImportPhepBuComponent } from 'src/app/components/phep-bu/import-phep-bu
 import { CsChamCongOverviewComponent } from 'src/app/components/cs-cham-cong/cs-cham-cong-overview/cs-cham-cong-overview.component';
 import { ThietBiWifiChamCongComponent } from 'src/app/components/cs-cham-cong/thiet-bi-wifi-cham-cong/thiet-bi-wifi-cham-cong.component';
 import { DsChiTietLuongComponent } from 'src/app/components/cs-tien-luong/ds-chi-tiet-luong/ds-chi-tiet-luong.component';
+import { ChuyenVienTinhLuongComponent } from 'src/app/components/cs-tien-luong/chuyen-vien-tinh-luong/chuyen-vien-tinh-luong.component';
+import { ChiTietChuyenVienTinhLuongComponent } from 'src/app/components/cs-tien-luong/chuyen-vien-tinh-luong/chi-tiet-chuyen-vien-tinh-luong/chi-tiet-chuyen-vien-tinh-luong.component';
 
 const routes: Routes = [
   {
@@ -250,6 +252,31 @@ const routes: Routes = [
   data: {
     title: 'Loại Tài liệu',
     url: 'loai-tai-lieu',
+  },
+},
+
+{
+  path: 'chuyen-vien-tinh-luong',
+  component: ChuyenVienTinhLuongComponent,
+  data: {
+    title: 'Danh sách chuyên viên tính lương',
+    url: 'chuyen-vien-tinh-luong',
+  },
+},
+{
+  path: 'chinh-sach/them-moi-chuyen-vien-tinh-luong',
+  component: ChiTietChuyenVienTinhLuongComponent,
+  data: {
+    title: 'Thêm mới chuyên viên tính lương',
+    url: 'them-moi-chuyen-vien-tinh-luong',
+  },
+},
+{
+  path: 'chuyen-vien-tinh-luong/chi-tiet-chuyen-vien-tinh-luong',
+  component: ChiTietChuyenVienTinhLuongComponent,
+  data: {
+    title: 'Chi tiết chuyên viên tính lương',
+    url: 'chi-tiet-chuyen-vien-tinh-luong',
   },
 },
 ];

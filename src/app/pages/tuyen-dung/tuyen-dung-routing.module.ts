@@ -21,6 +21,8 @@ import { ImportExcelComponent } from 'src/app/common/import-excel/import-excel.c
 import { CauHinhMailComponent } from 'src/app/components/ns-tuyen-dung/cau-hinh-mail/cau-hinh-mail.component';
 import { VongTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/vong-tuyen-dung/vong-tuyen-dung.component';
 import { NguonTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/nguon-tuyen-dung/nguon-tuyen-dung.component';
+import { ChuyenVienTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/chuyen-vien-tuyen-dung/chuyen-vien-tuyen-dung.component';
+import { ChiTietChuyenVienTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/chuyen-vien-tuyen-dung/chi-tiet-chuyen-vien-tuyen-dung/chi-tiet-chuyen-vien-tuyen-dung.component';
 
 const routes: Routes = [
   {
@@ -251,7 +253,31 @@ const routes: Routes = [
   },
 },
 
-  
+{
+  path: 'chuyen-vien-tuyen-dung',
+  component: ChuyenVienTuyenDungComponent,
+  data: {
+    title: 'Danh sách tuyển dụng',
+    url: 'chuyen-vien-tuyen-dung',
+  },
+},
+
+{
+  path: 'chuyen-vien-tuyen-dung/them-moi-chuyen-vien-tuyen-dung',
+  component: ChiTietChuyenVienTuyenDungComponent,
+  data: {
+    title: 'Thêm mới chuyên viên tuyển dụng',
+    url: 'them-moi-chuyen-vien-tuyen-dung',
+  },
+},
+{
+  path: 'chuyen-vien-tuyen-dung/chi-tiet-chuyen-vien-tuyen-dung',
+  component: ChiTietChuyenVienTuyenDungComponent,
+  data: {
+    title: 'Chi tiết chuyên viên tuyển dụng ',
+    url: 'chi-tiet-chuyen-vien-tuyen-dung',
+  },
+},
 
 ];
 

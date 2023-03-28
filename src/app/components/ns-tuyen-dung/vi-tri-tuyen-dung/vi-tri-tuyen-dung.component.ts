@@ -320,7 +320,7 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
       {
         label: 'Cấu hình mail',
         code: '',
-        icon: 'pi pi-external-link',
+        icon: 'pi pi-envelope',
         disabled: false,
         command: () => {
           this.cauHinhMail();
@@ -329,7 +329,7 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
       {
         label: 'Vòng tuyển dụng',
         code: '',
-        icon: 'pi pi-external-link',
+        icon: 'pi pi-clock',
         disabled: false,
         command: () => {
           this.vongTuyenDung();
@@ -338,10 +338,19 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
       {
         label: 'Nguồn tuyển dụng',
         code: '',
-        icon: 'pi pi-external-link',
+        icon: 'pi pi-android',
         disabled: false,
         command: () => {
           this.nguonTuyenDung();
+        }
+      },
+      {
+        label: 'Chuyên viên tuyển dụng',
+        code: '',
+        icon: 'pi pi-user',
+        disabled: false,
+        command: () => {
+          this.router.navigate(['/tuyen-dung/chuyen-vien-tuyen-dung']);
         }
       },
     ]

@@ -3416,9 +3416,65 @@ export class ApiHrmService {
   getUserroleOrganizations(): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/userrole/GetOrganizations`, this.options);
   }
+  
   getEmpSearch(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/userrole/GetEmpSearch?` + queryParams, this.options);
   }
+
+  getUserHiringPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/userrole/GetUserHiringPage?` + queryParams, this.options);
+  }
   
+  getUserHiringInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/userrole/GetUserHiringInfo?` + queryParams, this.options);
+  }
+
+  delUserHiring(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/userrole/DelUserHiring?` + queryParams, this.options);
+  }
+
+  setUserHiringInfo(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/userrole/SetUserHiringInfo`, queryParams , this.options);
+  }
+  
+  setUserHiringSubmit(queryParams): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v2/userrole/SetUserHiringSubmit`, queryParams , this.options);
+  }
+
+  setUserHiringClose(queryParams): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v2/userrole/SetUserHiringClose`, queryParams , this.options);
+  }
+
+  setUserSalarySubmit(queryParams): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v2/userrole/SetUserSalarySubmit`, queryParams , this.options);
+  }
+
+  setUserSalaryClose(queryParams): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v2/userrole/SetUserSalaryClose`, queryParams , this.options);
+  }
+
+  setUserSalaryActivate(queryParams): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v2/userrole/SetUserSalaryActivate`, queryParams , this.options);
+  }
+
+  setUserSalaryVerify(queryParams): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v2/userrole/SetUserSalaryVerify`, queryParams , this.options);
+  }
+
+  setUserSalaryInfo(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/userrole/SetUserSalaryInfo`, queryParams , this.options);
+  }
+  
+  getUserSalaryPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/userrole/GetUserSalaryPage?` + queryParams, this.options);
+  }
+
+  getUserSalaryInfo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/userrole/GetUserSalaryInfo?` + queryParams, this.options);
+  }
+
+  delUserSalary(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/userrole/DelUserSalary?` + queryParams, this.options);
+  }
 
 }

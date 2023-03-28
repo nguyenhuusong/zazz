@@ -15,11 +15,11 @@ import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { Subject, takeUntil, fromEvent } from 'rxjs';
 const MAX_SIZE = 100000000;
 @Component({
-  selector: 'app-chuyen-vien-tuyen-dung',
-  templateUrl: './chuyen-vien-tuyen-dung.component.html',
-  styleUrls: ['./chuyen-vien-tuyen-dung.component.scss']
+  selector: 'app-chuyen-vien-tinh-luong',
+  templateUrl: './chuyen-vien-tinh-luong.component.html',
+  styleUrls: ['./chuyen-vien-tinh-luong.component.scss']
 })
-export class ChuyenVienTuyenDungComponent implements OnInit, AfterViewChecked {
+export class ChuyenVienTinhLuongComponent implements OnInit, AfterViewChecked {
 
   listsData: any[] = [];
   MENUACTIONROLEAPI = MENUACTIONROLEAPI;
@@ -145,7 +145,7 @@ export class ChuyenVienTuyenDungComponent implements OnInit, AfterViewChecked {
     this.columnDefs = []
     // this.spinner.show();
     const queryParams = queryString.stringify(this.query);
-    this.apiService.getUserHiringPage(queryParams)
+    this.apiService.getUserSalaryPage(queryParams)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(
       (results: any) => {
@@ -209,14 +209,14 @@ export class ChuyenVienTuyenDungComponent implements OnInit, AfterViewChecked {
 
   delRow(event) {
     this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn xóa chuyên viên tuyển dụng?',
+      message: 'Bạn có chắc chắn muốn xóa chuyên viên tính lương?',
       accept: () => {
         const queryParams = queryString.stringify({ Id: event.rowData.id });
-        this.apiService.delUserHiring(queryParams)
+        this.apiService.delUserSalary(queryParams)
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe(results => {
           if (results.status === 'success') {
-            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa chuyên viên tuyển dụng thành công' });
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Chuyên viên tính lương thành công' });
             this.load();
           } else {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
@@ -230,7 +230,7 @@ export class ChuyenVienTuyenDungComponent implements OnInit, AfterViewChecked {
     const params = {
       id:rowData.id
     }
-    this.router.navigate(['/tuyen-dung/chuyen-vien-tuyen-dung/chi-tiet-chuyen-vien-tuyen-dung'], { queryParams: params });
+    this.router.navigate(['/chinh-sach/chuyen-vien-tinh-luong/chi-tiet-chuyen-vien-tinh-luong'], { queryParams: params });
   }
 
 
@@ -270,9 +270,9 @@ export class ChuyenVienTuyenDungComponent implements OnInit, AfterViewChecked {
   ngOnInit() {
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
-      { label: 'Tuyển dụng'},
-      { label: 'Vị trí tuyển dụng',  routerLink: '/tuyen-dung/vi-tri-tuyen-dung'},
-      { label: 'Chuyên viên tuyển dụng' },
+      { label: 'Lương-Thuế'},
+      { label: 'Tiền lương',  routerLink: '/chinh-sach/tien-luong'},
+      { label: 'Chuyên viên tính lương' },
     ];
     this.load();
   }
@@ -305,7 +305,7 @@ export class ChuyenVienTuyenDungComponent implements OnInit, AfterViewChecked {
         userId:event.value,
         id: null
       }
-      this.router.navigate(['/tuyen-dung/chuyen-vien-tuyen-dung/them-moi-chuyen-vien-tuyen-dung'], { queryParams: params });
+      this.router.navigate(['/chinh-sach/chuyen-vien-tinh-luong/them-moi-chuyen-vien-tinh-luong'], { queryParams: params });
     }else{
       this.isSearchEmp = false;
     }

@@ -69,6 +69,8 @@ import { LoadingDetailModule } from 'src/app/common/loading-detail/loading-detai
 import { DsNguoiPhuThuocComponent } from 'src/app/components/luong-thue/ds-nguoi-phu-thuoc/ds-nguoi-phu-thuoc.component';
 import { ChiTietNguoiPhuThuocComponent } from 'src/app/components/luong-thue/ds-nguoi-phu-thuoc/chi-tiet-nguoi-phu-thuoc/chi-tiet-nguoi-phu-thuoc.component';
 import { HrmSearchEmpModule } from 'src/app/common/hrm-search-emp/hrm-search-emp.module';
+import { ChuyenVienTinhLuongComponent } from 'src/app/components/cs-tien-luong/chuyen-vien-tinh-luong/chuyen-vien-tinh-luong.component';
+import { ChiTietChuyenVienTinhLuongComponent } from 'src/app/components/cs-tien-luong/chuyen-vien-tinh-luong/chi-tiet-chuyen-vien-tinh-luong/chi-tiet-chuyen-vien-tinh-luong.component';
 
 @NgModule({
   imports: [

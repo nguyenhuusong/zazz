@@ -82,6 +82,8 @@ import { StepInfoComponent } from 'src/app/components/cs-tien-luong/chi-tiet-tie
 import { TongHopLuongComponent } from 'src/app/components/cs-tien-luong/tong-hop-luong/tong-hop-luong.component';
 import { ChiTietTongHopLuongComponent } from 'src/app/components/cs-tien-luong/tong-hop-luong/chi-tiet-tong-hop-luong/chi-tiet-tong-hop-luong.component';
 import { DsChiTietLuongComponent } from 'src/app/components/cs-tien-luong/ds-chi-tiet-luong/ds-chi-tiet-luong.component';
+import { ChuyenVienTinhLuongComponent } from 'src/app/components/cs-tien-luong/chuyen-vien-tinh-luong/chuyen-vien-tinh-luong.component';
+import { ChiTietChuyenVienTinhLuongComponent } from 'src/app/components/cs-tien-luong/chuyen-vien-tinh-luong/chi-tiet-chuyen-vien-tinh-luong/chi-tiet-chuyen-vien-tinh-luong.component';
 
 @NgModule({
   imports: [
@@ -173,7 +175,8 @@ import { DsChiTietLuongComponent } from 'src/app/components/cs-tien-luong/ds-chi
     TongHopLuongComponent,
     ChiTietTongHopLuongComponent,
     DsChiTietLuongComponent,
-    
+    ChuyenVienTinhLuongComponent,
+    ChiTietChuyenVienTinhLuongComponent,
 
   ],
   providers: [],

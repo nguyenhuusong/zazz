@@ -370,13 +370,25 @@ export class CsTienLuongComponent implements OnInit {
     this.load();
     this.FnEvent();
   }
-
+  optionsButtonDB = [];
   ngOnInit() {
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Chính sách' },
       { label: 'Danh sách tiền lương' },
     ];
+
+    this.optionsButtonDB = [
+      {
+        label: 'Chuyên viên tính lương',
+        code: '',
+        icon: 'pi pi-user',
+        disabled: false,
+        command: () => {
+          this.router.navigate(['/chinh-sach/chuyen-vien-tinh-luong']);
+        }
+      },
+    ]
     // this.getOrgRoots();
     this.getFilter();
   }
