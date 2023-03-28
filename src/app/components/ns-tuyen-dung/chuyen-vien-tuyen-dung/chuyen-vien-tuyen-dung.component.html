@@ -1,0 +1,98 @@
+
+<div class="main-grid">
+    <section class="bread-crumb">
+        <div class="d-flex bet bottom middle">
+            <div class="col-3 pd-0">
+                <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
+            </div>
+            <div class="d-flex gap12 col-9 pd-0 end">
+                <!-- [disable]="listDataSelect.length < 0 ? true : false" -->
+                <div class="filter filter-search col-2 pd-0">
+                    <div class="field-group text search mb-0" [ngClass]=" query.filter ? 'valid' : 'invalid' ">
+                        <input placeholder="Vị trí, chuyển môn ..." class="input-default" type="text" autocomplete="off" id="filter"
+                             (keydown.enter)="query.offSet = 0; first = 0;load()"
+                            [(ngModel)]="query.filter">
+                        <span class="placeholder-icon" (click)="query.offSet = 0; first = 0; load()">
+                            <svg width="19" height="20" viewBox="0 0 19 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M9.02893 0.850098C4.51087 0.850098 0.849609 4.51552 0.849609 9.03539C0.849609 13.5553 4.51087 17.2207 9.02893 17.2207C10.8456 17.2207 12.5254 16.6271 13.8828 15.6241L17.1276 18.8716C17.4984 19.2427 18.0999 19.243 18.4711 18.8721C18.8422 18.5013 18.8425 17.8998 18.4716 17.5286L15.2709 14.3252C16.4787 12.8991 17.2083 11.0518 17.2083 9.03539C17.2083 4.51552 13.547 0.850098 9.02893 0.850098ZM2.74961 9.03539C2.74961 5.56338 5.56169 2.7501 9.02893 2.7501C12.4962 2.7501 15.3083 5.56338 15.3083 9.03539C15.3083 10.8568 14.5355 12.496 13.2976 13.645C12.1765 14.6858 10.6778 15.3207 9.02893 15.3207C5.56169 15.3207 2.74961 12.5074 2.74961 9.03539Z" fill="#2B2F33" fill-opacity="0.6"/>
+                                </svg>
+                        </span>
+                    </div>
+                </div>
+                <!-- <div class="d-flex align-items-center gap-16">
+                    <p-button styleClass="reloadBtn hidden height-56" (click)="cancel()">
+                        <svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M8.89128 1.80952C5.00096 1.80952 1.81817 5.01267 1.81817 9C1.81817 12.9873 5.00096 16.1905 8.89128 16.1905C11.1061 16.1905 13.087 15.1561 14.3877 13.526C14.7 13.1346 15.2718 13.0693 15.665 13.3801C16.0582 13.6908 16.1238 14.2599 15.8116 14.6513C14.1855 16.6891 11.6915 18 8.89128 18C3.9647 18 0 13.9544 0 9C0 4.04557 3.9647 0 8.89128 0C12.8587 0 16.2024 2.62369 17.3539 6.23284L18.2926 4.51929C18.5329 4.08057 19.0851 3.91882 19.5259 4.15801C19.9667 4.39719 20.1292 4.94675 19.8889 5.38547L17.6716 9.43309C17.5446 9.66497 17.3221 9.83003 17.0626 9.88497C16.803 9.93991 16.5323 9.87923 16.3215 9.71886L12.7738 7.02045C12.3749 6.71703 12.2987 6.14921 12.6035 5.75219C12.9084 5.35518 13.4789 5.2793 13.8778 5.58273L15.6726 6.94784C14.8021 3.96847 12.0851 1.80952 8.89128 1.80952Z" fill="#BDC4D8"/>
+                        </svg>
+                    </p-button>
+                </div> -->
+                <!-- <p-button 
+                [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetTerminatePage2.url, action: ACTIONS.TUYEN_DUNG_LAI}"
+                [ngClass]="{ 'active' : listDataSelect.length > 0  }" styleClass="height-56 btn-active-on-off" (click)="tuyenDungLai()">
+                    <svg width="14" height="20" viewBox="0 0 14 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0.333008 18.333C0.333008 18.7932 0.706104 19.1663 1.16634 19.1663H12.833C13.2932 19.1663 13.6663 18.7932 13.6663 18.333V1.66634C13.6663 1.2061 13.2932 0.833008 12.833 0.833008H1.16634C0.706104 0.833008 0.333008 1.2061 0.333008 1.66634V18.333ZM1.99967 2.49967H11.9997V17.4997H1.99967V2.49967Z" fill="#F6FBFF"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M4.49982 15.3097C4.49982 14.9083 4.82181 14.583 5.219 14.583H8.78064C9.17783 14.583 9.49982 14.9083 9.49982 15.3097C9.49982 15.711 9.17783 16.0364 8.78064 16.0364H5.219C4.82181 16.0364 4.49982 15.711 4.49982 15.3097Z" fill="#F6FBFF"/>
+                    </svg>&nbsp;&nbsp;
+                    Tuyển dụng lại
+                </p-button> -->
+                
+                <!-- <p-button styleClass="p-button-sm height-56" (click)="cauhinh()">
+                    <svg width="20" height="17" viewBox="0 0 20 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M19.5 17V0H0.50855L0.5 17H19.5ZM6.675 15.3187H2.21V6.81868H6.675V15.3187ZM8.575 15.3187V6.81868H17.79V15.3187H8.575ZM2.21 1.68132V5.13736H17.79V1.68132H2.21Z" fill="#F3F8FF"/>
+                    </svg>
+                    &nbsp;
+                    Cấu hình
+                </p-button> -->
+            </div>
+        </div>
+    </section>
+    <section class="content pb-0">
+        <div class="grid-default" #container>
+            <app-list-grid-angular  *ngIf="columnDefs.length > 0"
+                [listsData]="listsData" [height]="heightGrid"
+                (showConfig)="cauhinh()"
+                [columnDefs]="columnDefs"></app-list-grid-angular>
+                <app-loading-grid  [gridtype]="'hsns'" *ngIf="columnDefs.length === 0" [columnNumber]="15"></app-loading-grid>
+            <div class="paginator">
+                <span>Từ {{ countRecord.currentRecordStart }} đến
+                    {{ countRecord.currentRecordEnd }}
+                    trên tổng số
+                    {{ countRecord.totalRecord }} kết quả</span>
+                <p-paginator [rows]="query.pageSize" [totalRecords]="countRecord.totalRecord" [first]="first"
+                    (onPageChange)="paginate($event)" [rowsPerPageOptions]="[20,40,60,100,200,{ showAll: 'ALL' }]">
+                </p-paginator>
+            </div>
+        </div>
+    </section>
+</div>
+
+<p-dialog header="Cài đặt cấu hình" [(visible)]="displaySetting" (onHide)="find()" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
+    [draggable]="false" [resizable]="false" [focusTrap]="false" styleClass="popup-setting">
+    <app-config-grid-table-form *ngIf="displaySetting && gridKey" [typeConfig]="'TableInfo'"   [gridKey]="gridKey"></app-config-grid-table-form>
+</p-dialog>
+
+<p-overlayPanel #op [style]="{'width': '40rem'}" [style]="{width: '700px'}" styleClass="advance-seach">
+    <ng-template pTemplate>
+        <div class="header-filter-search  grid">
+            <h3>Tìm kiếm nâng cao</h3>
+        </div>
+        <div class="header-filter-search grid mt-1">
+            <div class="input-group icon col-12 select-default text-right">
+                <label for="" style="visibility: hidden;">Classid <span class="pi pi-info-circle"
+                        style="font-size: 13px;color: orange;"></span></label>
+                <p-button label="Tìm kiếm" styleClass="mr-1" icon="pi pi-search" (click)="load()">
+                </p-button>
+                <p-button label="Làm mới" icon="pi pi-times" (click)="cancel()"
+                    styleClass="p-button-secondary">
+                </p-button>
+            </div>
+        </div>
+    </ng-template>
+</p-overlayPanel>
+
+<app-hrm-search-emp 
+    *ngIf="isSearchEmp" 
+    [isSearch]="isSearchEmp"
+    [searchByOrgan]="true"
+    (seachEmValue)="seachEmValue($event)">
+</app-hrm-search-emp>
