@@ -198,7 +198,7 @@ export class NguonTuyenDungComponent implements OnInit {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa?',
       accept: () => {
-        const query = queryString.stringify({Id: event.rowData.Id})
+        const query = queryString.stringify({sourceId: event.rowData.sourceId})
         this.apiService.delRecruitSourceInfo(query)
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe((results: any) => {

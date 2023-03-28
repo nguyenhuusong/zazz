@@ -219,16 +219,7 @@ export class DsNguoiPhuThuocComponent implements OnInit, AfterViewChecked {
   initGrid() {
     this.columnDefs = [
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
-      {
-        filter: '',
-        width: 60,
-        pinned: 'right',
-        cellRenderer: 'buttonAgGridComponent',
-        cellClass: ['border-right', 'no-auto'],
-        cellRendererParams: (params: any) => this.showButtons(params),
-        checkboxSelection: false,
-        field: 'checkbox'
-      }];
+     ];
       this.detailCellRendererParams = {
         detailGridOptions: {
           frameworkComponents: {
