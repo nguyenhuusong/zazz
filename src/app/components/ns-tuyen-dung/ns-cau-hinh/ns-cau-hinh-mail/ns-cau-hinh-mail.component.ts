@@ -73,7 +73,6 @@ export class NsCauHinhMailComponent implements OnInit {
       filter: '',
       offSet: 0,
       pageSize: 20,
-      organizeIds: '',
     }
 
   cancel() {
@@ -81,7 +80,6 @@ export class NsCauHinhMailComponent implements OnInit {
       filter: '',
       offSet: 0,
       pageSize: 20,
-      organizeIds: this.query.organizeIds
     }
     this.load();
   }
