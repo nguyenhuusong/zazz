@@ -59,6 +59,7 @@ export class NsChiTietCauHinhMailComponent implements OnInit, OnDestroy {
           this.detailInfo = results.data;
           this.getConfigData();
           this.listViews = setOrganizeId(this.listViews, 'organizeId', this.organIdSelected );
+          this.setItemByActionList();
         }
       });
   }
@@ -121,6 +122,63 @@ export class NsChiTietCauHinhMailComponent implements OnInit, OnDestroy {
       console.error('Async: Could not copy text: ', err);
     });
   }
+
+  // type noti binding 
+  setItemByActionList() {
+    let actionlistValue = this.getValueField(this.listViews, 'actionlist');
+    let actionlistValueKey: any = {}
+    if(actionlistValue) {
+      let actionlistValueArr = actionlistValue.split(',');
+      if(actionlistValueArr && actionlistValueArr.length > 0 ){
+        for(let i = 0; i < actionlistValueArr.length; i ++) {
+          actionlistValueKey[actionlistValueArr[i]] = actionlistValueArr[i]
+        }
+      }
+    }
+    this.listViews.forEach( group => {
+      group.fields.forEach(field => {
+        if(field.field_name === 'content_notify') {
+          if(actionlistValueKey["push"]){
+            field.isVisiable = true;
+          }else{
+            field.isVisiable = false;
+          }
+        }else if(field.field_name === 'content_sms') { 
+          if(actionlistValueKey["sms"]){
+            field.isVisiable = true;
+          }else{
+            field.isVisiable = false;
+          }
+        }else if(field.field_name === 'content_email') { 
+          if(actionlistValueKey["email"]){
+            field.isVisiable = true;
+          }else{
+            field.isVisiable = false;
+          }
+        }
+        else if(field.field_name === 'isPublish' || field.field_name === 'content_type'  || field.field_name === 'content_markdown') { 
+          if(actionlistValueKey["email"] || actionlistValueKey["push"]){
+            field.isVisiable = true;
+          }else{
+            field.isVisiable = false;
+          }
+        }
+      });
+    }); 
+  }
+
+  getValueField(datas, field_name) {
+    let value = ''
+    datas.forEach( group => {
+      group.fields.forEach(field => {
+        if(field.field_name === field_name) {
+          value = field.columnValue;
+        }
+      });
+    }); 
+    return value;
+  }
+
 }
 
 
