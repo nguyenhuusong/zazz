@@ -28,6 +28,7 @@
                     [preRender]="preRender"
                     [postRender]="postRender"
                     [upload]="doUpload"
+                    #aceEditor
                     [(ngModel)]="content"
                     [mode]="mode"
                     [options]="options"
@@ -36,9 +37,21 @@
                     height="250px"
                     class="md-editor-binh-luan"
                   >
-                    <div custom-btns>
+                    <div custom-btns class="d-flex">
                       <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
                       [options]="contentTypes" [(ngModel)]="modelMarkdow.type" 
+                      name="type" [filter]="true">
+                      <ng-template let-item pTemplate="selectedItem">
+                          <span>{{item.label}}</span>
+                      </ng-template>
+                      <ng-template let-car pTemplate="item">
+                          <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                              <div style="font-size:14px;margin-top:4px">{{car.label}}</div>
+                          </div>
+                      </ng-template>
+                  </p-dropdown>
+                      <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"  placeholder="Cấu hình Field" (onChange)="onChangedFieldItem()"
+                      [options]="listNotifyFields" [(ngModel)]="FieldItem" 
                       name="type" [filter]="true">
                       <ng-template let-item pTemplate="selectedItem">
                           <span>{{item.label}}</span>

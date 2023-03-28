@@ -734,6 +734,10 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v1/notify/GetNotifyRefList`, this.options)
   }
 
+  getNotifyFields(): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/notify/GetNotifyFields`, this.options)
+  }
+
   getVacancyPage(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/recruitvacancy/GetVacancyPage?` + queryParams, this.options)
   }

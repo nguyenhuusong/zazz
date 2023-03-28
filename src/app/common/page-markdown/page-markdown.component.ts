@@ -5,6 +5,9 @@ import { ApiService } from 'src/app/services/api.service';
 import * as queryString from 'querystring';
 import showdown from 'showdown';
 import { MdEditorOption, UploadResult } from 'ngx-markdown-editor';
+import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
+import { parseHtmlToMarkdown } from '../function-common/common';
+declare let ace: any;
 @Component({
   selector: 'app-page-markdown',
   templateUrl: './page-markdown.component.html',
@@ -36,13 +39,14 @@ export class PageMarkdownComponent implements OnInit {
     private notifyService: ApiService,
     private messageService: MessageService,
     private apiService: ApiService,
+    private apiServiceHrm: ApiHrmService,
   ) {
     this.preRender = this.preRender.bind(this);
     this.postRender = this.postRender.bind(this);
-   }
-  contentTypes = [{label: 'HTML',value: 1}, {label: 'Markdown',value: 2}];
+  }
+  contentTypes = [{ label: 'HTML', value: 1 }, { label: 'Markdown', value: 2 }];
 
-  contentArr = ['# Hello, Markdown Editor!'];
+  contentArr = [];
   public content: string = '';
   public mode: string = 'editor';
   options: MdEditorOption = {
@@ -58,14 +62,17 @@ export class PageMarkdownComponent implements OnInit {
         console.log(this);
         // out += (<any>this.options).xhtml ? '/>' : '>';
         return out;
-      },
+      }
     },
   };
   ngOnInit(): void {
-    if(this.modelMarkdow.type == 2) {
-      this.content = this.converter.markdown(this.element.columnValue);
-    }else {
-      this.content = this.element.columnValue ? this.element.columnValue : this.contentArr.join('\r\n');
+    this.GetNotifyFields()
+    if (this.modelMarkdow.type == 2) {
+      // this.content = this.converter.markdown(this.element.columnValue);
+      this.content = parseHtmlToMarkdown(this.element.columnValue);// dùng thử
+    } else {
+      this.contentArr.push(this.element.columnValue)
+      this.content = this.contentArr.join('\r\n');
     }
 
   }
@@ -87,17 +94,18 @@ export class PageMarkdownComponent implements OnInit {
   }
 
   preRender(mdContent: any) {
-    console.log(`preRender fired`);
+
     // return new Promise((resolve) => {
     //   setTimeout(() => {
     //     resolve(mdContent);
     //   }, 4000);
     // })
+
     return mdContent;
   }
 
   onEditorLoaded(editor: any) {
-    console.log(`ACE Editor Ins: `, editor);
+    this._editor = editor;
     // editor.setOption('showLineNumbers', false);
 
     // setTimeout(() => {
@@ -108,17 +116,18 @@ export class PageMarkdownComponent implements OnInit {
   onPreviewDomChanged(dom: HTMLElement) {
     // console.log(dom);
     // console.log(dom.innerHTML);
+    //   this.contentArr = dom.innerHTML.split('<p></p>')
 
-    if(this.modelMarkdow.type == 1) {
-      this.element.columnValue =dom.innerHTML 
-    }else {
+    if (this.modelMarkdow.type == 1) {
+      this.element.columnValue = dom.innerHTML
+    } else {
       this.element.columnValue = this.content;
     }
   }
 
   postRender(html: any) {
-    console.log(`postRender fired`);
-    // return '<h1>Test</h1>';
+
+    this.contentArr = this._editor.selection.doc.$lines
     return html;
   }
 
@@ -129,9 +138,6 @@ export class PageMarkdownComponent implements OnInit {
     this.dinhkem = 'markdown'
     this.imageType = 2;
     this.showMedia = true;
-
-    // this.loadImage();
-    // this.showDialogimage = true;
   }
 
   paginate(event) {
@@ -158,19 +164,19 @@ export class PageMarkdownComponent implements OnInit {
   }
 
   submitMedia(data) {
-    if(this.dinhkem === 'attack') {
-      if(data && data.length > 0) {
+    if (this.dinhkem === 'attack') {
+      if (data && data.length > 0) {
         data.forEach(item => {
           if (item.file_type === 'file') {
             (this.modelMarkdow.attachs as any[]).push({
-              id:null,
+              id: null,
               attach_name: item.name,
               attach_url: item.link,
               attach_type: item.file_type
             });
           } else {
             (this.modelMarkdow.attachs as any[]).push({
-              id:null,
+              id: null,
               attach_name: item.name,
               attach_url: item.image,
               attach_type: item.file_type
@@ -178,19 +184,19 @@ export class PageMarkdownComponent implements OnInit {
           }
         });
       }
-    }else {
-      if(data && data.length > 0) {
+    } else {
+      if (data && data.length > 0) {
         data.forEach(item => {
-          if(item.is_file) {
+          if (item.is_file) {
             this.chooseImage(item.thumbs.medium, item)
-          }else {
+          } else {
             this.chooseImage(item.link, item)
           }
         })
       }
-     
+
     }
-   
+
     this.showMedia = false;
   }
 
@@ -200,11 +206,11 @@ export class PageMarkdownComponent implements OnInit {
     if (this.imageType === '1') {
       // this.modelMarkdow.imgUrl = documentUrl;
     } else {
-      if(item.file_type === 'image') {
-        this.element.columnValue += `\r\n![](${documentUrl})` 
+      if (item.file_type === 'image') {
+        this.element.columnValue += `\r\n![](${documentUrl})`
         // this.element.columnValue = this.element.columnValue.replace('null', '')
         this.modelMarkdow.content = this.element.columnValue;
-      }else if(item.file_type === 'video'){
+      } else if (item.file_type === 'video') {
         this.element.columnValue += `<video controls
         src="${item.link}"
         poster="${item.thumbs.medium}"
@@ -225,17 +231,51 @@ export class PageMarkdownComponent implements OnInit {
       uploadTask.on('state_changed', (snapshot) => {
       }, (error) => {
       }, () => {
-          uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-              if (downloadURL) {
-                  // this.notificationService.showNotification('Upload ảnh thành công', 1);
-                  // this.notifyService.setDocumentUrl(downloadURL).then(results => {
-                  //   this.loadImage();
-                  //   this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Upload thành công' });
-                  // }, error => console.log(error));
-              }
-          });
+        uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+          if (downloadURL) {
+            // this.notificationService.showNotification('Upload ảnh thành công', 1);
+            // this.notifyService.setDocumentUrl(downloadURL).then(results => {
+            //   this.loadImage();
+            //   this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Upload thành công' });
+            // }, error => console.log(error));
+          }
+        });
       });
+    }
   }
+  FieldItem = null
+  listNotifyFields = []
+  GetNotifyFields() {
+    this.apiServiceHrm.getNotifyFields().subscribe(results => {
+      this.listNotifyFields = results.data.map(d => {
+        return {
+          label: d.name,
+          value: d.value
+        }
+      })
+
+    })
   }
+  @ViewChild('aceEditor') editorElement;
+
+  onChangedFieldItem() {
+    const rowObject = this._editor.selection.getCursor();
+    if (rowObject.column > 0) {
+      const item = this.contentArr[rowObject.row].split('');
+      var arrString = [...item.slice(0, rowObject.column), ...this.FieldItem.split(''), ...item.slice(rowObject.column)];
+      let str = '';
+      for (let i in arrString) {
+        str += arrString[i];
+      }
+      this.contentArr[rowObject.row] = str;
+    } else {
+      this.contentArr.splice(rowObject.row, 0, this.FieldItem);
+    }
+    this.content = this.contentArr.join('\r\n');
+    setTimeout(() => {
+      this.FieldItem = null;
+    }, 50);
+  }
+  _editor
 
 }

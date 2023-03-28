@@ -527,3 +527,99 @@ export function isSaturDay(date = new Date()) {
 export function isSunday(date = new Date()) {
     return date.getDay() === 0;
 }
+
+export function parseAll(html: string, htmlTag: string, markdownEquivalent: string) {
+    const regEx = new RegExp(`<\/?${htmlTag}>`, "g");
+    return html.replace(regEx, markdownEquivalent);
+  }
+
+  //parseHtmlToMarkdown
+
+export function parseHtmlToMarkdown(html: string): string {
+    if (!html) {
+      return "";
+    }
+
+    let markdown = html;
+
+    markdown = markdown.replace(/<h1>/g, "# ").replace(/<\/h1>/g, "");
+    markdown = markdown.replace(/<h2>/g, "## ").replace(/<\/h1>/g, "");
+    markdown = markdown.replace(/<h3>/g, "### ").replace(/<\/h1>/g, "");
+    markdown = markdown.replace(/<h4>/g, "#### ").replace(/<\/h1>/g, "");
+    markdown = parseAll(markdown, "strong", "**");
+    markdown = parseAll(markdown, "em", "__");
+    markdown = parseAll(markdown, "s", "~~");
+    markdown = markdown.replace(/<p><br><\/p>/g, "\n");
+    markdown = markdown.replace(/<p>/g, "").replace(/<\/p>/g, "  \n");
+    markdown = markdown
+      .replace(/<blockquote>/g, "> ")
+      .replace(/<\/blockquote>/g, "");
+
+    markdown = parseList(markdown, "ol", "1.");
+    markdown = parseList(markdown, "ul", "-");
+
+    // todo: Umbrüche optimieren
+    // todo: alle überflüssigen tags rausschmeißen
+    // todo: links parsen
+    // const allATags = markdown.match(/<a.+?<\/a>/g) || [];
+
+    console.log(markdown);
+    return markdown;
+  }
+
+
+  export function parseList(
+    html: string,
+    listType: "ol" | "ul",
+    identifier: string
+  ): string {
+    let parsedHtml = html;
+
+    const getNextListRegEx = new RegExp(`<${listType}>.+?<\/${listType}>`);
+
+    while (parsedHtml.match(getNextListRegEx) !== null) {
+      const matchedList = parsedHtml.match(getNextListRegEx);
+
+      console.log("matchedList", matchedList);
+
+      const elements = htmlToElements(matchedList);
+      const listItems = [];
+
+      elements[0].childNodes.forEach(listItem => {
+        let parsedListItem = `${identifier} ${listItem.textContent}`;
+
+        // get level of item to add spaces
+        // @ts-ignore
+        const className = listItem.className;
+        if (className) {
+          const splittedClassName = className.split("-");
+          const numberOfLevel = parseInt(
+            splittedClassName[splittedClassName.length - 1] || 0
+          );
+
+          for (let i = 0; i < numberOfLevel; i++) {
+            parsedListItem = `   ${parsedListItem}`;
+          }
+        }
+
+        listItems.push(parsedListItem);
+      });
+
+      parsedHtml = parsedHtml.replace(
+        getNextListRegEx,
+        listItems.join("\n") + "\n\n"
+      );
+
+      console.log("after parsing one list => ", parsedHtml);
+    }
+
+    return parsedHtml;
+  }
+
+  export function htmlToElements(html) {
+    var template = document.createElement("template");
+    template.innerHTML = html;
+    return template.content.childNodes;
+  }
+
+  // end parseHtmlToMarkdown
