@@ -1,0 +1,33 @@
+<div class="main-grid product-detail">
+    <app-edit-detail *ngIf="listViews.length> 0" 
+    [detail]="detailInfo" [manhinh]="'Edit'" 
+    [optionsButtonsEdit]="optionsButon"  
+    [dataView]="listViews"
+    (callback)="handleSave($event)" 
+    (callback1)="getChipsValue($event)"
+    (callbackcancel)="quaylai($event)"></app-edit-detail>
+    <app-loading-detail 
+            [id]="'chi-tiet-ns-cau-hinh-mail'" 
+            *ngIf="listViews.length === 0">
+        </app-loading-detail>
+   <!-- <div class="content">
+        <div class="grid">
+            <div class="col-12">
+               
+            </div> -->
+            <!-- <div class="col-2">
+                <div class="sidebar-config">
+                    <ul *ngIf="configData" class="d-flex wrap configs gap-16">
+                        <li *ngFor="let config of configData">
+                            <span pTooltip="Copy" tooltipPosition="top" (click)="getTextConfig(config)">
+                                <span style="color: #4C97E4">[</span>{{ config }}
+                                <span style="color: #4C97E4">]</span>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div> -->
+            
+        <!-- </div>
+    </div> -->
+</div>

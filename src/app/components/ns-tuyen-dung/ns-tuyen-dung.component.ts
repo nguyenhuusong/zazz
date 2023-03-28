@@ -630,10 +630,10 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(results => {
       if (results.status === 'success') {
-        this.mailsInput = results.data.recruitmentMail.map(d => {
+        this.mailsInput = results.data.map(d => {
           return {
-            label: d.mail_name,
-            value: d.mail_Id
+            label: d.name,
+            value: d.value
           }
         })
       }

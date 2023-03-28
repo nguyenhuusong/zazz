@@ -13,12 +13,14 @@ import { ChiTietMailTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/
 import { ImportTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/import-tuyen-dung/import-tuyen-dung.component';
 import { DsTiemNangComponent } from 'src/app/components/ns-tuyen-dung/ds-tiem-nang/ds-tiem-nang.component';
 import { MailDaGuiComponent } from 'src/app/components/ns-tuyen-dung/mail-da-gui/mail-da-gui.component';
-import { NsCauHinhComponent } from 'src/app/components/ns-tuyen-dung/ns-cau-hinh/ns-cau-hinh.component';
 import { KeHoachTuyenDungComponent } from 'src/app/components/ke-hoach-tuyen-dung/ke-hoach-tuyen-dung.component';
 import { ImportKeHoachComponent } from 'src/app/components/ke-hoach-tuyen-dung/import-ke-hoach/import-ke-hoach.component';
 import { ChiTietKeHoachTuyenDungComponent } from 'src/app/components/ke-hoach-tuyen-dung/chi-tiet-ke-hoach-tuyen-dung/chi-tiet-ke-hoach-tuyen-dung.component';
 import { ImportLinhVucTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/linh-vuc-tuyen-dung/import-linh-vuc-tuyen-dung/import-linh-vuc-tuyen-dung.component';
 import { ImportExcelComponent } from 'src/app/common/import-excel/import-excel.component';
+import { CauHinhMailComponent } from 'src/app/components/ns-tuyen-dung/cau-hinh-mail/cau-hinh-mail.component';
+import { VongTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/vong-tuyen-dung/vong-tuyen-dung.component';
+import { NguonTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/nguon-tuyen-dung/nguon-tuyen-dung.component';
 
 const routes: Routes = [
   {
@@ -212,16 +214,44 @@ const routes: Routes = [
   },
 
   // cau hinh
+  // {
+  //   path: 'cau-hinh',
+  //   component: NsCauHinhComponent,
+  //   data: {
+  //     title: 'Cấu hình',
+  //     url: 'cau-hinh',
+  //   },
+  // },
+  
+  // cau hinh mail
   {
-    path: 'cau-hinh',
-    component: NsCauHinhComponent,
+    path: 'cau-hinh-mail',
+    component: CauHinhMailComponent,
     data: {
-      title: 'Cấu hình',
-      url: 'cau-hinh',
+      title: 'Cấu hình mail',
+      url: 'cau-hinh mail',
     },
   },
-  
+// Vòng tuyển dụng
+{
+  path: 'vong-tuyen-dung',
+  component: VongTuyenDungComponent,
+  data: {
+    title: 'Vòng tuyển dụng',
+    url: 'vong-tuyen-dung',
+  },
+},
+// nguon tuyen dung
+{
+  path: 'nguon-tuyen-dung',
+  component: NguonTuyenDungComponent,
+  data: {
+    title: 'Nguồn tuyển dụng',
+    url: 'nguon-tuyen-dung',
+  },
+},
 
+  
 
 ];
 

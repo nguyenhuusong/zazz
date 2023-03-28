@@ -317,7 +317,46 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
           this.copyRequi();
         }
       },
+      {
+        label: 'Cấu hình mail',
+        code: '',
+        icon: 'pi pi-external-link',
+        disabled: false,
+        command: () => {
+          this.cauHinhMail();
+        }
+      },
+      {
+        label: 'Vòng tuyển dụng',
+        code: '',
+        icon: 'pi pi-external-link',
+        disabled: false,
+        command: () => {
+          this.vongTuyenDung();
+        }
+      },
+      {
+        label: 'Nguồn tuyển dụng',
+        code: '',
+        icon: 'pi pi-external-link',
+        disabled: false,
+        command: () => {
+          this.nguonTuyenDung();
+        }
+      },
     ]
+  }
+
+  cauHinhMail() {
+    this.router.navigate(['/tuyen-dung/cau-hinh-mail']);
+  }
+
+  vongTuyenDung() {
+    this.router.navigate(['/tuyen-dung/vong-tuyen-dung']);
+  }
+
+  nguonTuyenDung() {
+    this.router.navigate(['/tuyen-dung/nguon-tuyen-dung']);
   }
 
   departmentFiltes = [];
