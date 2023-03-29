@@ -314,7 +314,7 @@ export class KeHoachTuyenDungComponent implements OnInit, AfterViewChecked {
   }
 
   import() {
-    this.router.navigate(['/tuyen-dung/ke-hoach-tuyen-dung/import']);
+    this.router.navigate(['/tuyen-dung/ke-hoach-tuyen-dung/import-ke-hoach-tuyen-dung']);
   }
 
   export() {

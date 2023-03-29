@@ -3120,6 +3120,19 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v1/recruitplan/SetRecruitPlanImport`, data, customOptions);
   }
 
+  setRecruitPlanAccept(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/recruitplan/SetRecruitPlanAccept`,  queryParams, this.options);
+  }
+
+  getRecruitPlanImportTemp(): Observable<any> {
+    return this.http.get(`${apiHrmServer}/api/v1/recruitplan/GetRecruitPlanImportTemp`, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
+  }
+
   setPositionTitleImport(data): Observable<any> {
     const customOptions = {
       headers: new HttpHeaders({
