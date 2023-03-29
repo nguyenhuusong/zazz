@@ -230,8 +230,8 @@ export class ChuyenVienTinhLuongComponent implements OnInit, AfterViewChecked {
       if (results.status === 'success') {
         this.managerLists = results.data.map(d => {
           return {
-            label: d.fullName + '-' + d.loginName,
-            value: d.userId
+            label: d.name,
+            value: d.value
           }
         });
       }
