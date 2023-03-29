@@ -917,6 +917,38 @@ export class ApiHrmService {
     };
     return this.http.post<any>(`${apiHrmServer}/api/v1/recruitcandidate/ImportCandidates`, data, customOptions);
   }
+  setCandidatesImport(queryParams): Observable<any> {
+    const customOptions = {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue()
+      })
+    };
+    return this.http.post<any>(`${apiHrmServer}/api/v1/recruitcandidate/SetCandidatesImport`,  queryParams, customOptions);
+  }
+
+  setCandidatesAccept(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/recruitcandidate/SetCandidatesAccept`, queryParams, this.options)
+  }
+
+  setCandidateExportDraft(params): Observable<Blob> {
+    return this.http.post(`${apiHrmServer}/api/v1/recruitcandidate/SetCandidateExportDraft`, params, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
+  }
+  
+  getCandidateImportTemp(): Observable<any> {
+    return this.http.get(`${apiHrmServer}/api/v1/recruitcandidate/GetCandidateImportTemp`, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
+  }
+  
+  
 
   delVacancyInfo(queryParams): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v1/recruitvacancy/DelVacancyInfo?` + queryParams, this.options)
@@ -1456,6 +1488,7 @@ export class ApiHrmService {
   setCompanyAccept(params): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/compay/SetCompanyAccept`, params, this.options)
   }
+  
 
   getComAuthorizePage(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/compay/GetComAuthorizePage?` + queryParams, this.options)

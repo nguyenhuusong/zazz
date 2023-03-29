@@ -819,7 +819,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     } )
   }
   importFileExel() {
-    this.router.navigate(['/tuyen-dung/ds-tuyen-dung/import']);
+    this.router.navigate(['/tuyen-dung/ds-tuyen-dung/import-tuyen-dung']);
   }
 
   listViewsFilter = [];

@@ -34,6 +34,7 @@ export class ImportPhepBuComponent implements OnInit {
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Chính sách' },
       { label: 'Phép bù', routerLink: '/chinh-sach/phep-bu' },
+      { label: 'Import phép bù'},
     ];
   }
   

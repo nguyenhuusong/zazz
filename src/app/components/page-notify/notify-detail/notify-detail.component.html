@@ -56,14 +56,14 @@
         <p-header>
           Gửi thông báo
         </p-header>
-       <app-send-notify [notify]="dataInfo" [moduleLists]="moduleLists" *ngIf="displaySend" (reload)="backpageSend()"></app-send-notify>
+       <app-send-notify [notify]="dataInfo" *ngIf="displaySend" (reload)="backpageSend()"></app-send-notify>
       </p-dialog>
       
       <p-dialog [(visible)]="displayStore" [autoZIndex]="true" [modal]="true" [style]="{width: '1300px', height: 'auto'}">
         <p-header>
           Gửi thông báo
         </p-header>
-       <app-store-notify [notify]="dataInfo" [isNotifi]="true" [moduleLists]="moduleLists" *ngIf="displayStore"  (reload)="backpagestore()"></app-store-notify>
+       <app-store-notify [notify]="dataInfo" [isNotifi]="true" *ngIf="displayStore"  (reload)="backpagestore()"></app-store-notify>
       </p-dialog>
       
   
