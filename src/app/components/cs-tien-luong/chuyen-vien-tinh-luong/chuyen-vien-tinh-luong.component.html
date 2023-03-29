@@ -106,7 +106,7 @@
             <textarea [(ngModel)]="modelApprove.comment" name="comment" cols="30" rows="10" class="form-control"></textarea>
         </div>
     </div>
-    <div class="field-group select row valid">
+    <div class="field-group select row col-md-12 valid">
         <label for="">Người quản lý</label>
         <p-dropdown appendTo="body" [filter]="true" [baseZIndex]="100" [autoDisplayFirst]="false"
             [options]="managerLists" [(ngModel)]="modelApprove.reportTo" name="reportTo">
