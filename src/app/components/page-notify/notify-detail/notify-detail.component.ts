@@ -228,7 +228,6 @@ export class NotifyDetailComponent implements OnInit {
       // this.save.emit()
       this.router.navigate(['/cai-dat/thong-bao'])
     } else {
-      this.getModuleList()
       this.displayStore = true;
       this.loadForm = false;
     }
@@ -238,24 +237,6 @@ export class NotifyDetailComponent implements OnInit {
   backpagestore() {
     this.displayStore = false;
     this.loadForm = true;
-  }
-  moduleLists = []
-  getModuleList() {
-    const queryParams = queryString.stringify({ filter: ''});
-    this.apiService.getOrganizations(queryParams)
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(results => {
-      if (results.status === 'success') {
-        const moduleLists = results.data.map(d => {
-          return {
-            label: `${d.organizationName}`,
-            value: d.organizeId,
-            // code: d.organizeId,
-          }
-        });
-        this.moduleLists = moduleLists
-      }
-    })
   }
 
   deleteRooms(data) {

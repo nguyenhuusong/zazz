@@ -48,11 +48,19 @@ const routes: Routes = [
     },
   },
   {
-    path: 'ds-tuyen-dung/import',
-    component: ImportTuyenDungComponent,
+    path: 'ds-tuyen-dung/import-tuyen-dung',
+    component: ImportExcelComponent,
     data: {
       title: 'Import tuyển dụng',
       url: 'import-tuyen-dung',
+      titleDad : 'Danh sách tuyển dụng',
+      urlDad: '/tuyen-dung/ds-tuyen-dung',
+      api: 'setCandidatesImport',
+      apiAccept: 'setRecruitPlanAccept',
+      fileDoc: 'tuyen_dung_import.xls',
+      apiExport: 'setCandidateExportDraft',
+      apiTemImport: 'getCandidateImportTemp',
+      fileNameTemImport: 'file_mau_tuyen_dung',
     },
   },
   {

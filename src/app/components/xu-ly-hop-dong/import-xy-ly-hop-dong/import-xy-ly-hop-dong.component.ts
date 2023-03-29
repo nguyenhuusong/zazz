@@ -43,9 +43,9 @@ export class ImportXyLyHopDongComponent implements OnInit {
   ngOnInit(): void {
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
-      { label: 'Cài đặt' },
-      { label: 'Danh sách loại hợp đồng', routerLink: '/nhan-su/xu-ly-hop-dong' },
-      { label: 'Import loại hợp đồng' },
+      { label: 'Quan hệ lao động' },
+      { label: 'Xử lý hợp đồng', routerLink: '/nhan-su/xu-ly-hop-dong' },
+      { label: 'Import xử lý hợp đồng' },
     ];
   }
   
