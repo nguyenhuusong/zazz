@@ -283,7 +283,7 @@ export class ChuyenVienTuyenDungComponent implements OnInit, AfterViewChecked {
       }
     });
   }
-  
+
   delRow(event) {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa chuyên viên tuyển dụng?',
