@@ -121,11 +121,9 @@ export class ChiTietChuyenVienTinhLuongComponent implements OnInit, OnDestroy {
   }
 
 
-  setUserSalaryDraft(data: any) {
+  setUserSalaryDraft(params: any) {
     this.spinner.show();
-    const params = {
-      ...this.detailInfo, group_fields: data
-    }
+  
     this.apiService.setUserSalaryDraft(params)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((results: any) => {

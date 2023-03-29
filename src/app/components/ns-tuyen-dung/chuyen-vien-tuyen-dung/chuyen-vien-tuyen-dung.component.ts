@@ -190,6 +190,22 @@ export class ChuyenVienTuyenDungComponent implements OnInit, AfterViewChecked {
           // hide: CheckHideAction(MENUACTIONROLEAPI.GetPayrollAppInfoPage.url, ACTIONS.VIEW_TINH_LUONG_THANH_PHAN_LUONG)
         },
         {
+          onClick: this.trinhDuyet.bind(this),
+          label: 'Trình duyệt',
+          icon: 'fa fa-check',
+          class: 'btn-primary mr5',
+          hide: event.data.role_st !== 0
+          // hide: CheckHideAction(MENUACTIONROLEAPI.GetPayrollAppInfoPage.url, ACTIONS.DELETE_TINH_LUONG_THANH_PHAN_LUONG)
+        },
+        {
+          onClick: this.CloseRow.bind(this),
+          label: 'Đóng',
+          icon: 'fa fa-check',
+          class: 'btn-primary mr5',
+          hide: event.data.role_st !== 1
+          // hide: CheckHideAction(MENUACTIONROLEAPI.GetPayrollAppInfoPage.url, ACTIONS.DELETE_TINH_LUONG_THANH_PHAN_LUONG)
+        },
+        {
           onClick: this.delRow.bind(this),
           label: 'Xóa',
           icon: 'fa fa-trash',
@@ -200,13 +216,74 @@ export class ChuyenVienTuyenDungComponent implements OnInit, AfterViewChecked {
     };
   }
 
-
   onCellClicked(event) {
     if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
       this.editRow(event = {rowData: event.data})
     }
   }
 
+  displayApprove = false;
+  modelApprove = {
+    id: '',
+    comment: '',
+    reportTo: null
+  }
+
+  managerLists: any = null;
+  getManagerList() {
+    const queryParams = queryString.stringify({ admin_st: 1 });
+    this.apiService.getUsersByAdmin(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
+      if (results.status === 'success') {
+        this.managerLists = results.data.map(d => {
+          return {
+            label: d.fullName + '-' + d.loginName,
+            value: d.userId
+          }
+        });
+      }
+    })
+  }
+
+  trinhDuyet(event) {
+    this.modelApprove.id =  event.rowData.id;
+    this.displayApprove = true;
+  }
+
+  saveApprove() {
+    this.apiService.setUserHiringSubmit({...this.modelApprove})
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
+      if (results.status === 'success') {
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Trình duyệt thành công' });
+        this.load();
+        this.displayApprove = false;
+      } else {
+        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+      }
+    });
+  }
+
+  CloseRow(event) {
+    this.confirmationService.confirm({
+      message: 'Bạn có chắc chắn muốn đóng chuyên viên tuyển dụng?',
+      accept: () => {
+        const queryParams = queryString.stringify({ Id: event.rowData.id });
+        this.apiService.setUserHiringClose(queryParams)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(results => {
+          if (results.status === 'success') {
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa chuyên viên tuyển dụng thành công' });
+            this.load();
+          } else {
+            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+          }
+        });
+      }
+    });
+  }
+  
   delRow(event) {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa chuyên viên tuyển dụng?',
@@ -274,6 +351,7 @@ export class ChuyenVienTuyenDungComponent implements OnInit, AfterViewChecked {
       { label: 'Vị trí tuyển dụng',  routerLink: '/tuyen-dung/vi-tri-tuyen-dung'},
       { label: 'Chuyên viên tuyển dụng' },
     ];
+    this.getManagerList();
     this.load();
   }
  

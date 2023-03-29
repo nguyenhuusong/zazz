@@ -264,7 +264,7 @@ const routes: Routes = [
   },
 },
 {
-  path: 'chinh-sach/them-moi-chuyen-vien-tinh-luong',
+  path: 'chuyen-vien-tinh-luong/them-moi-chuyen-vien-tinh-luong',
   component: ChiTietChuyenVienTinhLuongComponent,
   data: {
     title: 'Thêm mới chuyên viên tính lương',

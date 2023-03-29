@@ -719,7 +719,7 @@ export class ApiHrmService {
   }
 
   getUsersByAdmin(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/user/getUsersByAdmin?` + queryParams, this.options)
+    return this.http.get<any>(`${apiHrmServer}/api/v2/userrole/getUsersByAdmin?` + queryParams, this.options)
   }
 
   getEducations(): Observable<any> {
