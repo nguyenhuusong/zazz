@@ -44,7 +44,6 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
     private router: Router) {
     this.webSocketService.connect(environment.socketServer);
     this.webSocketService.emit("action", 'PRINT_LIST_PRINTERS')
-    this.webSocketService.emit("action", 'DEVICE_INFO')
     this.defaultColDef = {
       tooltipComponent: 'customTooltip',
       resizable: true,

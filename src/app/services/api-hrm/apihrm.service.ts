@@ -1084,6 +1084,10 @@ export class ApiHrmService {
     return this.http.put<any>(`${apiHrmServer}/api/v2/terminate/SetTerminateStatus`, params, this.options)
   }
 
+  setTerminateApproves(params): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v2/terminate/SetTerminateApproves`, params, this.options)
+  }
+
   delTerminateInfo(queryParams): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v2/terminate/DelTerminateInfo?` + queryParams, this.options)
   }
@@ -3519,13 +3523,17 @@ export class ApiHrmService {
   setUserSalaryVerify(queryParams): Observable<any> {
     return this.http.put<any>(`${apiHrmServer}/api/v2/userrole/SetUserSalaryVerify`, queryParams , this.options);
   }
-
+ 
   setUserSalaryInfo(queryParams): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/userrole/SetUserSalaryInfo`, queryParams , this.options);
   }
   
   getUserSalaryPage(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/userrole/GetUserSalaryPage?` + queryParams, this.options);
+  }
+
+  getUserSalary(): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/userrole/GetUserSalary`, this.options);
   }
 
   getUserSalaryInfo(queryParams): Observable<any> {

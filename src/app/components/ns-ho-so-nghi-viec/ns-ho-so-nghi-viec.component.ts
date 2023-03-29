@@ -302,6 +302,16 @@ export class NsHoSoNghiViecComponent implements OnInit {
 
   initGrid() {
     this.columnDefs = [
+      {
+        maxWidth: 50,
+        pinned: 'left',
+        cellClass: ['border-right', 'no-auto'],
+        checkboxSelection: true,
+        headerCheckboxSelection: true,
+        headerCheckboxSelectionFilteredOnly: true,
+        field: 'checkbox2',
+        suppressSizeToFit: true,
+      },
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       {
         headerName: 'Thao tác',
@@ -314,6 +324,42 @@ export class NsHoSoNghiViecComponent implements OnInit {
         checkboxSelection: false,
         field: 'checkbox'
       }]
+  }
+
+  listDataSelect = [];
+  rowSelected(data) {
+    this.listDataSelect = data
+  }
+
+  approved() {
+    if(this.listDataSelect.length === 0) {
+      this.messageService.add({
+        severity: 'error', summary: 'Thông báo', detail: 'Bạn chưa chọn bản ghi nào !. Vui lòng chọn 1 bản ghi.'
+      });
+      return
+    }
+    const params = {
+      gIds: this.listDataSelect.map(d => {
+        return {
+          gd: d.terminateId
+        }
+      }),
+      status: 1,
+      comment: ''
+    }
+    this.apiService.setTerminateApproves(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
+      if (results.status === 'success') {
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thay đổi trạng thái thành công' });
+        this.load();
+        this.spinner.hide();
+      } else {
+        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+        this.spinner.hide();
+      }
+    });
+
   }
 
   editRow({rowData}) {

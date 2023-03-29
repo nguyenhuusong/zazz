@@ -6,6 +6,8 @@ import { NgForm } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
+import { WebsocketService2 } from 'src/app/services/websocket.service';
+import { environment } from 'src/environments/environment';
 
 const queryString = require('query-string');
 
@@ -14,7 +16,6 @@ const queryString = require('query-string');
     templateUrl: './navbar.component.html',
     styleUrls: ['./navbar.component.scss']
 })
-
 export class NavbarComponent implements OnInit {
     userName = '';
     avatarUrl = '';
@@ -37,6 +38,7 @@ export class NavbarComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private router: Router,
+        private webSocketService: WebsocketService2,
         private authService: AuthService,
         private apiService: ApiService,
         private apiHrm: ApiHrmService,
@@ -45,13 +47,37 @@ export class NavbarComponent implements OnInit {
         private changeDetector: ChangeDetectorRef,
         // private themeService: ThemeService
     ) {
+      this.webSocketService.connect(environment.socketServer);
+      this.webSocketService.emit("action", 'DEVICE_INFO')
+      this.getWebSocketService();
       this.router.events.subscribe((val) => {
         if (val instanceof NavigationStart) {
           this.checkDisableOrgan(val.url);
       }
       this.checkDisableOrgan(this.router.url);
     });
-        this.items = [
+       this.initMenu();
+    }
+    detailWebSocketService = null;
+    getWebSocketService() {
+      this.webSocketService.myWebSocket
+      .subscribe(
+        repon => {
+          repon = JSON.parse(repon)
+          if(repon.result) {
+            this.detailWebSocketService = repon.data;
+          }else {
+            this.detailWebSocketService  = null;
+          }
+         
+        },
+        err => {
+          console.log(err)
+        },
+      )
+    }
+    initMenu() {
+      this.items = [
         {
             label: 'Thay đổi mật khẩu',
             icon: 'pi pi-user-edit',
@@ -59,6 +85,15 @@ export class NavbarComponent implements OnInit {
                 this.changePassword();
             }
         },
+        this.detailUserSalary && this.detailUserSalary.activated === false ?
+        {
+          label: 'Kích hoạt tài khoản',
+          icon: 'pi pi-check',
+
+          command: () => {
+              this.activeAccount();
+          }
+        }: null,
         {
           label: 'Logout',
           icon: 'pi pi-refresh',
@@ -79,6 +114,7 @@ export class NavbarComponent implements OnInit {
       },
     ];
     }
+    
 
     checkPasswordcf() {
         if (this.modelPass.userPassword === this.modelPass.userPassCf) {
@@ -122,6 +158,7 @@ export class NavbarComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.getUserSalary();
         this.userName = this.authService.getUserName();
     }
 
@@ -241,4 +278,43 @@ export class NavbarComponent implements OnInit {
     let url = currentUrl.split('?');
     this.chooseOrga = this.urlsForDisableOrgan.some( d => d === url[0])
   }
+
+  displayActive = false;
+  detailUserSalary = null;
+  getUserSalary() {
+    this.apiHrm.getUserSalary()
+      .subscribe(results => {
+        if (results.status === 'success') {
+          this.detailUserSalary = results.data;
+          this.initMenu();
+        }else {
+          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
+        }
+      });
+  }
+
+  activeAccount() {
+    if(this.detailWebSocketService) {
+      const params = {
+        id: this.detailUserSalary.id,
+        roleToken: this.detailUserSalary.roleToken,
+        systemId: this.detailWebSocketService.systemInfo.machineName,
+        mainBoardId: this.detailWebSocketService.mainBoard.serialNumber,
+        processorId: this.detailWebSocketService.processor.processorId,
+        networkId: null
+      }
+      this.apiHrm.setUserSalaryActivate(params)
+        .subscribe(results => {
+          if (results.status === 'success') {
+              console.log(results)
+          }else {
+            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
+          }
+        })
+    }else {
+      this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Bạn chưa cài đặt plugin' });
+    }
+   ;
+  }
+
 }
