@@ -96,3 +96,34 @@
     [searchByOrgan]="true"
     (seachEmValue)="seachEmValue($event)">
 </app-hrm-search-emp>
+
+
+<p-dialog header="Trình duyệt chuyên viên tính lương" [(visible)]="displayApprove" [modal]="true" [draggable]="false"
+    [resizable]="false" [style]="{width: '40vw'}" [autoZIndex]=true [draggable]="false" [resizable]="false">
+    <div class="row col-md-12 mt-1" style="margin-top: 5px;">
+        <div class="field-group textarea ">
+            <label for="">Ghi chú</label>
+            <textarea [(ngModel)]="modelApprove.comment" name="comment" cols="30" rows="10" class="form-control"></textarea>
+        </div>
+    </div>
+    <div class="field-group select row col-md-12 valid">
+        <label for="">Người quản lý</label>
+        <p-dropdown appendTo="body" [filter]="true" [baseZIndex]="100" [autoDisplayFirst]="false"
+            [options]="managerLists" [(ngModel)]="modelApprove.reportTo" name="reportTo">
+            <ng-template let-item pTemplate="selectedItem">
+                <span>{{item.label}}</span>
+            </ng-template>
+            <ng-template let-car pTemplate="item">
+                <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                    <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                </div>
+            </ng-template>
+        </p-dropdown>
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="saveApprove()" label="Xác nhận" styleClass=" p-button-sm mr-1">
+        </p-button>
+        <p-button icon="pi pi-times" (click)="displayApprove= !displayApprove" label="Hủy"
+            styleClass="p-button-secondary p-button-sm"></p-button>
+    </ng-template>
+</p-dialog>
