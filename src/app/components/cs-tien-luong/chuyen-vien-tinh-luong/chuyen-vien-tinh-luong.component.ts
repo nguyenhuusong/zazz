@@ -187,31 +187,37 @@ export class ChuyenVienTinhLuongComponent implements OnInit, AfterViewChecked {
           label: 'Xem chi tiết',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
-          // hide: CheckHideAction(MENUACTIONROLEAPI.GetPayrollAppInfoPage.url, ACTIONS.VIEW_TINH_LUONG_THANH_PHAN_LUONG)
         },
         {
           onClick: this.trinhDuyet.bind(this),
           label: 'Trình duyệt',
           icon: 'fa fa-check',
           class: 'btn-primary mr5',
-          // hide: CheckHideAction(MENUACTIONROLEAPI.GetPayrollAppInfoPage.url, ACTIONS.DELETE_TINH_LUONG_THANH_PHAN_LUONG)
+          hide: this.checkActionTrinhDuyet(event)
         },
         {
           onClick: this.CloseRow.bind(this),
           label: 'Đóng',
           icon: 'fa fa-times',
           class: 'btn-primary mr5',
-          // hide: CheckHideAction(MENUACTIONROLEAPI.GetPayrollAppInfoPage.url, ACTIONS.DELETE_TINH_LUONG_THANH_PHAN_LUONG)
+          hide: event.data.role_st !== 1
         },
         {
           onClick: this.delRow.bind(this),
           label: 'Xóa',
           icon: 'fa fa-trash',
           class: 'btn-primary mr5',
-          // hide: CheckHideAction(MENUACTIONROLEAPI.GetPayrollAppInfoPage.url, ACTIONS.DELETE_TINH_LUONG_THANH_PHAN_LUONG)
+          hide: event.data.role_st !== 0
         },
       ]
     };
+  }
+
+  checkActionTrinhDuyet(params) {
+    if(params.data.role_st === 0 || params.data.role_st === 2) {
+      return false;
+    }
+    return true;
   }
 
   displayApprove = false;
