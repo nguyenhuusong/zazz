@@ -109,6 +109,44 @@ export class ChiTietChuyenVienTuyenDungComponent implements OnInit, OnDestroy {
       this.router.navigate(['/tuyen-dung/chuyen-vien-tuyen-dung']);
     }
   }
+  
+  cloneListViews = []
+  callBackForm(event) {
+    if (event.type === 'IsSpecial') {
+      const params = {
+        ...this.detailInfo, group_fields: event.data
+      }
+      this.cloneListViews = cloneDeep(event.data);
+      this.listViews = [];
+      this.setUserHiringDraft(params);
+    } 
+  }
+
+
+  setUserHiringDraft(data: any) {
+    this.spinner.show();
+    const params = {
+      ...this.detailInfo, group_fields: data
+    }
+    this.apiService.setUserHiringDraft(params)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((results: any) => {
+        if (results.status === 'success') {
+          const listViews = cloneDeep(results.data.group_fields);
+          this.listViews = [...listViews];
+          this.detailInfo = results.data;
+          this.spinner.hide();
+        } else {
+          this.messageService.add({
+            severity: 'error', summary: 'Thông báo',
+            detail: results.message
+          });
+          this.spinner.hide();
+        }
+      }), error => {
+        this.spinner.hide();
+      };
+  }
 
 }
 

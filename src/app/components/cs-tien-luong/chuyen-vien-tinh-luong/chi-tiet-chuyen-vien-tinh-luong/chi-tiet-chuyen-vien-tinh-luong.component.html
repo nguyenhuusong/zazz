@@ -5,7 +5,7 @@
     </section>
    <div class="content">
     <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButon"  [dataView]="listViews"
-        (callback)="setUserSalaryInfo($event)" (callbackcancel)="quaylai($event)"></app-edit-detail>
+        (callback)="setUserSalaryInfo($event)" (callBackForm)="callBackForm($event)" (callbackcancel)="quaylai($event)"></app-edit-detail>
     <app-loading-detail 
         [id]="'sections-1qnt-col-2'" 
         *ngIf="listViews.length === 0">

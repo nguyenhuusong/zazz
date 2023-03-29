@@ -110,5 +110,43 @@ export class ChiTietChuyenVienTinhLuongComponent implements OnInit, OnDestroy {
     }
   }
 
+  cloneListViews = []
+  callBackForm(event) {
+    if (event.type === 'IsSpecial') {
+      const params = {
+        ...this.detailInfo, group_fields: event.data
+      }
+      this.cloneListViews = cloneDeep(event.data);
+      this.listViews = [];
+      this.setUserSalaryDraft(params);
+    } 
+  }
+
+
+  setUserSalaryDraft(data: any) {
+    this.spinner.show();
+    const params = {
+      ...this.detailInfo, group_fields: data
+    }
+    this.apiService.setUserSalaryDraft(params)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((results: any) => {
+        if (results.status === 'success') {
+          const listViews = cloneDeep(results.data.group_fields);
+          this.listViews = [...listViews];
+          this.detailInfo = results.data;
+          this.spinner.hide();
+        } else {
+          this.messageService.add({
+            severity: 'error', summary: 'Thông báo',
+            detail: results.message
+          });
+          this.spinner.hide();
+        }
+      }), error => {
+        this.spinner.hide();
+      };
+  }
+
 }
 

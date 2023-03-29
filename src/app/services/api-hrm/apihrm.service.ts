@@ -3441,6 +3441,14 @@ export class ApiHrmService {
     return this.http.put<any>(`${apiHrmServer}/api/v2/userrole/SetUserHiringSubmit`, queryParams , this.options);
   }
 
+  setUserHiringDraft(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/userrole/SetUserHiringDraft`, queryParams , this.options);
+  }
+
+  setUserSalaryDraft(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/userrole/SetUserSalaryDraft`, queryParams , this.options);
+  }
+
   setUserHiringClose(queryParams): Observable<any> {
     return this.http.put<any>(`${apiHrmServer}/api/v2/userrole/SetUserHiringClose`, queryParams , this.options);
   }
