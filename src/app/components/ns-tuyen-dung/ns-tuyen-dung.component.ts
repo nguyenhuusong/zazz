@@ -719,8 +719,8 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     }
     let canId = this.dataRowSelected.map( d => d.canId).toString()
     const data = {
-      mail_Id: this.mailInputValue,
-      can_Id: canId
+      tempId: this.mailInputValue,
+      canIds: canId
     }
     this.spinner.show();
     this.apiService.sendRecruitMail(data)
