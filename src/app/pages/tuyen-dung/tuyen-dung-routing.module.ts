@@ -106,11 +106,19 @@ const routes: Routes = [
     },
   },
   {
-    path: 'ke-hoach-tuyen-dung/import',
-    component: ImportKeHoachComponent,
+    path: 'ke-hoach-tuyen-dung/import-ke-hoach-tuyen-dung',
+    component: ImportExcelComponent,
     data: {
       title: 'Import kế hoạch tuyển dụng',
-      url: 'import',
+      url: 'import-ke-hoach-tuyen-dung',
+      titleDad : 'Danh sách kế hoạch tuyển dụng',
+      urlDad: '/tuyen-dung/ke-hoach-tuyen-dung',
+      api: 'setRecruitPlanImport',
+      apiAccept: 'setRecruitPlanAccept',
+      fileDoc: 'ke_hoach_tuyen_dung_import.xls',
+      apiExport: 'setJobExportDraft chua co',
+      apiTemImport: 'getRecruitPlanImportTemp',
+      fileNameTemImport: 'file_mau_ke_hoach_tuyen_dung',
     },
   },
   {

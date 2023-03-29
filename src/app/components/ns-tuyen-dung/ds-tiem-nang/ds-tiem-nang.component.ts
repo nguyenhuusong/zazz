@@ -263,21 +263,21 @@ export class DsTiemNangComponent implements OnInit {
     // check role for set tiem nang
   }
 
-  getOrgPositions() {
-    this.positions = [];
-    let items = this.listOrgRoots.filter(d => d.value === this.query.organizeId)
-    const queryParams = queryString.stringify({ orgId: items[0].code });
-    this.apiService.getOrgPositions(queryParams)
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(results => {
-      if (results.status === 'success') {
-        this.positions = results.data.map(d => {
-          return { label: d.positionName, value: d.positionCd }
-        });
-        this.positions = [{ label: 'Tất cả', value: '' }, ...this.positions]
-      }
-    })
-  }
+  // getOrgPositions() {
+  //   this.positions = [];
+  //   let items = this.listOrgRoots.filter(d => d.value === this.query.organizeId)
+  //   const queryParams = queryString.stringify({ orgId: items[0].code });
+  //   this.apiService.getOrgPositions(queryParams)
+  //   .pipe(takeUntil(this.unsubscribe$))
+  //   .subscribe(results => {
+  //     if (results.status === 'success') {
+  //       this.positions = results.data.map(d => {
+  //         return { label: d.positionName, value: d.positionCd }
+  //       });
+  //       this.positions = [{ label: 'Tất cả', value: '' }, ...this.positions]
+  //     }
+  //   })
+  // }
 
   find() {
     this.load();
@@ -302,48 +302,48 @@ export class DsTiemNangComponent implements OnInit {
       { label: 'Danh sách tuyển dụng', routerLink: '/tuyen-dung/ds-tuyen-dung' },
       { label: 'Danh sách tiềm năng' },
     ];
-    this.getJobTitles();
-    this.getOrgRoots();
+    // this.getJobTitles();
+    // this.getOrgRoots();
     this.getVacancyPage();
   }
 
-  getOrgRoots() {
-    this.apiService.getOrgRoots()
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(results => {
-      if (results.status === 'success') {
-        this.listOrgRoots = results.data.map(d => {
-          return {
-            label: d.org_name + '-' + d.org_cd,
-            value: `${d.orgId}`,
-            code: `${d.orgId}`,
-          }
-        });
+  // getOrgRoots() {
+  //   this.apiService.getOrgRoots()
+  //   .pipe(takeUntil(this.unsubscribe$))
+  //   .subscribe(results => {
+  //     if (results.status === 'success') {
+  //       this.listOrgRoots = results.data.map(d => {
+  //         return {
+  //           label: d.org_name + '-' + d.org_cd,
+  //           value: `${d.orgId}`,
+  //           code: `${d.orgId}`,
+  //         }
+  //       });
 
-        this.listOrgRoots = [{ label: 'Tất cả', value: null }, ...this.listOrgRoots];
-      }
-    })
-  }
+  //       this.listOrgRoots = [{ label: 'Tất cả', value: null }, ...this.listOrgRoots];
+  //     }
+  //   })
+  // }
 
   listOrgRoots = [];
   positiontypes = [];
-  listJobTitles = [];
-  positions = [{ label: 'Tất cả', value: null }];
-  getJobTitles() {
-    this.apiService.getJobTitles()
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(results => {
-      if (results.status === 'success') {
-        this.listJobTitles = results.data.map(d => {
-          return {
-            label: d.job_name,
-            value: d.jobId
-          }
-        });
-        this.listJobTitles = [{ label: 'Tất cả', value: null }, ...this.listJobTitles]
-      }
-    })
-  }
+  // listJobTitles = [];
+  // positions = [{ label: 'Tất cả', value: null }];
+  // getJobTitles() {
+  //   this.apiService.getJobTitles()
+  //   .pipe(takeUntil(this.unsubscribe$))
+  //   .subscribe(results => {
+  //     if (results.status === 'success') {
+  //       this.listJobTitles = results.data.map(d => {
+  //         return {
+  //           label: d.job_name,
+  //           value: d.jobId
+  //         }
+  //       });
+  //       this.listJobTitles = [{ label: 'Tất cả', value: null }, ...this.listJobTitles]
+  //     }
+  //   })
+  // }
 
   getReRound() {
     this.recruitmentStatus = []
@@ -419,9 +419,10 @@ export class DsTiemNangComponent implements OnInit {
     { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm height-56 addNew', icon: 'pi pi-search' },
     { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger height-56 addNew', icon: 'pi pi-times' },
   ];
+
   //filter 
   getFilter() {
-    this.apiService.getFilter('/api/v1/recruitment/GetCandidateFilter')
+    this.apiService.getFilter('/api/v1/recruitcandidate/GetCandidateFilter')
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(results => {
       if (results.status === 'success') {
