@@ -3533,7 +3533,7 @@ export class ApiHrmService {
   }
 
   delUserSalary(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v2/userrole/DelUserSalary?` + queryParams, this.options);
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/userrole/DelUserSalary?` + queryParams, this.options);
   }
 
 }
