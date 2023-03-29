@@ -296,16 +296,15 @@ export class ChuyenVienTuyenDungComponent implements OnInit, AfterViewChecked {
 
   isSearchEmp = false;
   addItem() {
-    this.isSearchEmp = true;
+    const params = {
+      id: null
+    }
+    this.router.navigate(['/tuyen-dung/chuyen-vien-tuyen-dung/them-moi-chuyen-vien-tuyen-dung'], { queryParams: params });
   }
 
   seachEmValue(event) {
     if(event.value) {
-      const params = {
-        userId:event.value,
-        id: null
-      }
-      this.router.navigate(['/tuyen-dung/chuyen-vien-tuyen-dung/them-moi-chuyen-vien-tuyen-dung'], { queryParams: params });
+      
     }else{
       this.isSearchEmp = false;
     }

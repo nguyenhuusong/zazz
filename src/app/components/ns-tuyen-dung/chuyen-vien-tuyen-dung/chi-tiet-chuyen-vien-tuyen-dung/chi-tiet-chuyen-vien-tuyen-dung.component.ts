@@ -51,7 +51,6 @@ export class ChiTietChuyenVienTuyenDungComponent implements OnInit, OnDestroy {
   }
   modelEdit = {
     id: "",
-    userId: null
   }
   titlePage = ''
   handleParams() {
@@ -60,7 +59,6 @@ export class ChiTietChuyenVienTuyenDungComponent implements OnInit, OnDestroy {
       .subscribe((params) => {
         this.paramsObject = { ...params.keys, ...params };
         this.modelEdit.id = this.paramsObject.params.id || ""
-        this.modelEdit.userId = this.paramsObject.params.userId || ""
         this.getUserHiringInfo();
       });
   };
@@ -109,7 +107,7 @@ export class ChiTietChuyenVienTuyenDungComponent implements OnInit, OnDestroy {
       this.router.navigate(['/tuyen-dung/chuyen-vien-tuyen-dung']);
     }
   }
-  
+
   cloneListViews = []
   callBackForm(event) {
     if (event.type === 'IsSpecial') {

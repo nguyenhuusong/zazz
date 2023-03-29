@@ -51,7 +51,6 @@ export class ChiTietChuyenVienTinhLuongComponent implements OnInit, OnDestroy {
   }
   modelEdit = {
     id: "",
-    userId: null
   }
   titlePage = ''
   handleParams() {
@@ -60,7 +59,6 @@ export class ChiTietChuyenVienTinhLuongComponent implements OnInit, OnDestroy {
       .subscribe((params) => {
         this.paramsObject = { ...params.keys, ...params };
         this.modelEdit.id = this.paramsObject.params.id || ""
-        this.modelEdit.userId = this.paramsObject.params.userId || ""
         this.getUserSalaryInfo();
       });
   };
