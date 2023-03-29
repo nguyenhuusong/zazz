@@ -124,7 +124,7 @@ const routes: Routes = [
       api: 'setRecruitPlanImport',
       apiAccept: 'setRecruitPlanAccept',
       fileDoc: 'ke_hoach_tuyen_dung_import.xls',
-      apiExport: 'setJobExportDraft chua co',
+      apiExport: 'setRecruitPlanExportDraft',
       apiTemImport: 'getRecruitPlanImportTemp',
       fileNameTemImport: 'file_mau_ke_hoach_tuyen_dung',
     },
