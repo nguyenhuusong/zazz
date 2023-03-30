@@ -242,6 +242,9 @@ export class MailDaGuiComponent implements OnInit, AfterViewChecked {
         this.listViewsFilter = [...listViews];
         const params = getParamString(listViews)
         this.query = { ...this.query, ...params };
+        if(!this.query.offSet) {
+          this.query.offSet = 0;
+        }
         this.load();
         this.detailInfoFilter = results.data;
       }
