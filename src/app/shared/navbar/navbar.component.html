@@ -111,3 +111,19 @@
 
   </form>
 </p-dialog>
+
+<p-dialog header="Kích hoạt tài khoản" [(visible)]="displayActive" [modal]="true" [draggable]="false"
+    [resizable]="false" [style]="{width: '40vw'}" [autoZIndex]=true [draggable]="false" [resizable]="false">
+
+    <div class="row col-md-12">
+      <div class="field-group text valid">
+        <label for="">Nhập mã code</label>
+        <input type="text" ([ngModel])="modelOTP.code" name="code"  class="form-control">
+    </div>
+    </div>
+
+  <div class="login_form-button gap2">
+    <p-button label="Kích hoạt" styleClass="p-button-sm mr-2" (onClick)="handleFillEvent()" icon="pi pi-check"></p-button>
+    <p-button label="Gửi lại OTP" styleClass="p-button-sm" (onClick)="activeAccount()" icon="pi pi-reload"></p-button>
+  </div>
+</p-dialog>

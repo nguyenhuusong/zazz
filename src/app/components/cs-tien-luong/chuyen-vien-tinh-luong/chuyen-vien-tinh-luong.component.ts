@@ -203,6 +203,13 @@ export class ChuyenVienTinhLuongComponent implements OnInit, AfterViewChecked {
           hide: event.data.role_st !== 1
         },
         {
+          onClick: this.activeAccount.bind(this),
+          label: 'Kích hoạt tài khoản',
+          icon: 'fa fa-check',
+          class: 'btn-primary mr5',
+          // hide: event.data.role_st !== 1
+        },
+        {
           onClick: this.delRow.bind(this),
           label: 'Xóa',
           icon: 'fa fa-trash',
@@ -211,6 +218,11 @@ export class ChuyenVienTinhLuongComponent implements OnInit, AfterViewChecked {
         },
       ]
     };
+  }
+  displayActive = false;
+  activeAccount({rowData}) {
+    this.modelApprove.id =rowData.id;
+    this.displayActive = true;
   }
 
   checkActionTrinhDuyet(params) {

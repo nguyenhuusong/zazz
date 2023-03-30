@@ -68,7 +68,7 @@ export class NsHoSoNghiViecComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private changeDetector: ChangeDetectorRef,
-    
+
     private router: Router) {
     this.defaultColDef = {
       tooltipComponent: 'customTooltip',
@@ -173,36 +173,36 @@ export class NsHoSoNghiViecComponent implements OnInit {
   load() {
     this.columnDefs = []
     // this.spinner.show();
-    let params: any = {... this.query};
+    let params: any = { ... this.query };
     const queryParams = queryString.stringify(params);
     this.apiService.getTerminatePage(queryParams)
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(
-      (results: any) => {
-        this.listsData = results.data.dataList.data;
-        this.gridKey= results.data.dataList.gridKey;
-        if (this.query.offSet === 0) {
-          this.cols = results.data.gridflexs;
-          this.colsDetail = results.data.gridflexdetails ? results.data.gridflexdetails : [];
-        }
-        this.initGrid();
-        this.countRecord.totalRecord = results.data.dataList.recordsTotal;
-        this.countRecord.totalRecord = results.data.dataList.recordsTotal;
-        this.countRecord.currentRecordStart = results.data.dataList.recordsTotal === 0 ? this.query.offSet = 0 : this.query.offSet + 1;
-        if ((results.data.dataList.recordsTotal - this.query.offSet) > this.query.pageSize) {
-          this.countRecord.currentRecordEnd = this.query.offSet + Number(this.query.pageSize);
-        } else {
-          this.countRecord.currentRecordEnd = results.data.dataList.recordsTotal;
-          setTimeout(() => {
-            const noData = document.querySelector('.ag-overlay-no-rows-center');
-            if (noData) { noData.innerHTML = 'Không có kết quả phù hợp'}
-          }, 100);
-        }
-        this.spinner.hide();
-      },
-      error => {
-        this.spinner.hide();
-      });
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        (results: any) => {
+          this.listsData = results.data.dataList.data;
+          this.gridKey = results.data.dataList.gridKey;
+          if (this.query.offSet === 0) {
+            this.cols = results.data.gridflexs;
+            this.colsDetail = results.data.gridflexdetails ? results.data.gridflexdetails : [];
+          }
+          this.initGrid();
+          this.countRecord.totalRecord = results.data.dataList.recordsTotal;
+          this.countRecord.totalRecord = results.data.dataList.recordsTotal;
+          this.countRecord.currentRecordStart = results.data.dataList.recordsTotal === 0 ? this.query.offSet = 0 : this.query.offSet + 1;
+          if ((results.data.dataList.recordsTotal - this.query.offSet) > this.query.pageSize) {
+            this.countRecord.currentRecordEnd = this.query.offSet + Number(this.query.pageSize);
+          } else {
+            this.countRecord.currentRecordEnd = results.data.dataList.recordsTotal;
+            setTimeout(() => {
+              const noData = document.querySelector('.ag-overlay-no-rows-center');
+              if (noData) { noData.innerHTML = 'Không có kết quả phù hợp' }
+            }, 100);
+          }
+          this.spinner.hide();
+        },
+        error => {
+          this.spinner.hide();
+        });
   }
 
   getOrganizeTree(): void {
@@ -258,21 +258,21 @@ export class NsHoSoNghiViecComponent implements OnInit {
   tuyenDungLai(event) {
     const queryParams = queryString.stringify({ empId: event.rowData.empId });
     this.apiService.getEmployeeData('GetEmployeeByJob', queryParams)
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(results => {
-      if (results.status === 'success') {
-        this.listViews = cloneDeep(results.data.group_fields || []);
-        this.detailInfoEmployee = results.data;
-        this.displayDialog = true;
-        this.modelDuyet = {
-          workDt: new Date(),
-          comments: "",
-          full_name: event.rowData.full_name,
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(results => {
+        if (results.status === 'success') {
+          this.listViews = cloneDeep(results.data.group_fields || []);
+          this.detailInfoEmployee = results.data;
+          this.displayDialog = true;
+          this.modelDuyet = {
+            workDt: new Date(),
+            comments: "",
+            full_name: event.rowData.full_name,
+          }
         }
-      }
-    }), error => {
-      this.spinner.hide();
-    };
+      }), error => {
+        this.spinner.hide();
+      };
   }
   modelDuyet = {
     workDt: new Date(),
@@ -282,26 +282,36 @@ export class NsHoSoNghiViecComponent implements OnInit {
 
   xacNhanTuyenDungLai(data) {
     let params = {
-      ...this.detailInfoEmployee, group_fields: data, workDt: moment(new Date(this.modelDuyet.workDt)).format('DD/MM/YYYY'),comments: this.modelDuyet.comments
+      ...this.detailInfoEmployee, group_fields: data, workDt: moment(new Date(this.modelDuyet.workDt)).format('DD/MM/YYYY'), comments: this.modelDuyet.comments
     }
     this.apiService.setEmployeeRehired(params)
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe((results: any) => {
-      if (results.status === 'success') {
-        this.displayDialog = false;
-        this.load();
-        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Xác nhận tuyển dụng lại thành công' });
-      } else {
-        this.messageService.add({
-          severity: 'error', summary: 'Thông báo', detail: results.message
-        });
-      }
-    }), error => {
-    };
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((results: any) => {
+        if (results.status === 'success') {
+          this.displayDialog = false;
+          this.load();
+          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Xác nhận tuyển dụng lại thành công' });
+        } else {
+          this.messageService.add({
+            severity: 'error', summary: 'Thông báo', detail: results.message
+          });
+        }
+      }), error => {
+      };
   }
 
   initGrid() {
     this.columnDefs = [
+      {
+        maxWidth: 50,
+        pinned: 'left',
+        cellClass: ['border-right', 'no-auto'],
+        checkboxSelection: true,
+        headerCheckboxSelection: true,
+        headerCheckboxSelectionFilteredOnly: true,
+        field: 'checkbox2',
+        suppressSizeToFit: true,
+      },
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       {
         headerName: 'Thao tác',
@@ -316,7 +326,49 @@ export class NsHoSoNghiViecComponent implements OnInit {
       }]
   }
 
-  editRow({rowData}) {
+  listDataSelect = [];
+  rowSelected(data) {
+    this.listDataSelect = data
+  }
+
+  approved() {
+    if (this.listDataSelect.length === 0) {
+      this.messageService.add({
+        severity: 'error', summary: 'Thông báo', detail: 'Bạn chưa chọn bản ghi nào !. Vui lòng chọn 1 bản ghi.'
+      });
+      return
+    }
+
+    this.confirmationService.confirm({
+      message: 'Bạn có chắc chắn muốn thực hiện thao tác?',
+      accept: () => {
+
+        const params = {
+          gIds: this.listDataSelect.map(d => {
+            return {
+              gd: d.terminateId
+            }
+          }),
+          status: 1,
+          comment: ''
+        }
+        this.apiService.setTerminateApproves(params)
+          .pipe(takeUntil(this.unsubscribe$))
+          .subscribe(results => {
+            if (results.status === 'success') {
+              this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thay đổi trạng thái thành công' });
+              this.load();
+              this.spinner.hide();
+            } else {
+              this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+              this.spinner.hide();
+            }
+          });
+      }
+    });
+  }
+
+  editRow({ rowData }) {
     const params = {
       empId: rowData.empId,
       terminateId: rowData.terminateId
@@ -328,12 +380,12 @@ export class NsHoSoNghiViecComponent implements OnInit {
     if (event.column.colId == "avatar_url") {
       this.isShowAvatar = true;
       this.imgAvatar = event.value;
-    }else {
-      if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
-        this.editRow(event = {rowData: event.data})
+    } else {
+      if (event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
+        this.editRow(event = { rowData: event.data })
       }
     }
-    
+
   }
 
   displayChangeStatus = false;
@@ -364,25 +416,25 @@ export class NsHoSoNghiViecComponent implements OnInit {
     this.spinner.show();
     const params: any = { ...this.modelPheDuyet };
     params.lst_status_key = [];
-    if(typeof params.status_key === 'object'){
+    if (typeof params.status_key === 'object') {
       params.lst_status_key = params.status_key.map(d => d.code);
     }
     delete params.status;
     delete params.status_key;
     params.status_dt = moment(new Date(this.modelPheDuyet.status_dt)).format('DD/MM/YYYY');
     this.apiService.setTerminateStatus(params)
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(results => {
-      if (results.status === 'success') {
-        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Thay đổi trạng thái thành công' });
-        this.load();
-        this.displayChangeStatus = false;
-        this.spinner.hide();
-      } else {
-        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
-        this.spinner.hide();
-      }
-    });
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(results => {
+        if (results.status === 'success') {
+          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Thay đổi trạng thái thành công' });
+          this.load();
+          this.displayChangeStatus = false;
+          this.spinner.hide();
+        } else {
+          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+          this.spinner.hide();
+        }
+      });
   }
 
 
@@ -393,17 +445,17 @@ export class NsHoSoNghiViecComponent implements OnInit {
         this.spinner.show();
         const queryParams = queryString.stringify({ terminateId: event.rowData.terminateId });
         this.apiService.delTerminateInfo(queryParams)
-        .pipe(takeUntil(this.unsubscribe$))
-        .subscribe(results => {
-          if (results.status === 'success') {
-            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa hồ sơ thành công' });
-            this.load();
-            this.spinner.hide();
-          } else {
-            this.spinner.hide();
-            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
-          }
-        });
+          .pipe(takeUntil(this.unsubscribe$))
+          .subscribe(results => {
+            if (results.status === 'success') {
+              this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa hồ sơ thành công' });
+              this.load();
+              this.spinner.hide();
+            } else {
+              this.spinner.hide();
+              this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+            }
+          });
       }
     });
   }
@@ -412,17 +464,17 @@ export class NsHoSoNghiViecComponent implements OnInit {
   getCustObjectListNew() {
     const opts1 = { params: new HttpParams({ fromString: `objKey=terminate_key` }) };
     this.apiService.getObjectGroup(opts1.params.toString())
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(results => {
-      this.listTerminateKey = results.data.map(d => {
-        return {
-          name: d.name,
-          code: d.value
-        }
-      });
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(results => {
+        this.listTerminateKey = results.data.map(d => {
+          return {
+            name: d.name,
+            code: d.value
+          }
+        });
 
-      this.listTerminateKey = [...this.listTerminateKey]
-    });
+        this.listTerminateKey = [...this.listTerminateKey]
+      });
   }
 
 
@@ -443,7 +495,7 @@ export class NsHoSoNghiViecComponent implements OnInit {
 
   ngOnInit() {
     this.items = [
-      { label: 'Trang chủ' , routerLink: '/home' },
+      { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Quan hệ lao động' },
       { label: 'Danh sách hồ sơ nghỉ việc' },
     ];
@@ -479,23 +531,23 @@ export class NsHoSoNghiViecComponent implements OnInit {
 
   getEmployeeStatus() {
     this.apiService.getEmployeeStatus()
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(results => {
-      if (results.status === 'success') {
-        console.log(results, 'results results results ')
-        this.employeeStatus = []
-        results.data.forEach( s => {
-            if(s.value == "3" || s.value == "4"){
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(results => {
+        if (results.status === 'success') {
+          console.log(results, 'results results results ')
+          this.employeeStatus = []
+          results.data.forEach(s => {
+            if (s.value == "3" || s.value == "4") {
               this.employeeStatus.push({
                 label: s.name,
                 value: s.value
               })
             }
           }
-        )
-        this.employeeStatus = [{ label: 'Tất cả', value: -1 }, ...this.employeeStatus];
-      }
-    })
+          )
+          this.employeeStatus = [{ label: 'Tất cả', value: -1 }, ...this.employeeStatus];
+        }
+      })
   }
 
   companies = []
@@ -528,7 +580,7 @@ export class NsHoSoNghiViecComponent implements OnInit {
 
   listViewsFilter = [];
   cloneListViewsFilter = [];
-detailInfoFilter = null;
+  detailInfoFilter = null;
   optionsButonFilter = [
     { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm ml-2 height-56 addNew', icon: 'pi pi-plus' },
     { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger ml-2 height-56 addNew', icon: 'pi pi-times' },
@@ -536,34 +588,34 @@ detailInfoFilter = null;
 
   getTerminateFilter() {
     this.apiService.getTerminateFilter()
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(results => {
-      if(results.status === 'success') {
-        const listViews = cloneDeep(results.data.group_fields);
-        this.cloneListViewsFilter = cloneDeep(listViews);
-        this.listViewsFilter = [...listViews];
-        const params =  getParamString(listViews)
-        this.query = { ...this.query, ...params};
-        this.load();
-        this.detailInfoFilter = results.data;
-      }
-    });
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(results => {
+        if (results.status === 'success') {
+          const listViews = cloneDeep(results.data.group_fields);
+          this.cloneListViewsFilter = cloneDeep(listViews);
+          this.listViewsFilter = [...listViews];
+          const params = getParamString(listViews)
+          this.query = { ...this.query, ...params };
+          this.load();
+          this.detailInfoFilter = results.data;
+        }
+      });
   }
 
-   filterLoad(event) {
+  filterLoad(event) {
     this.query = { ...this.query, ...event.data };
     this.load();
   }
 
-  close({event, datas}) {
-    if(event !== 'Close') {
+  close({ event, datas }) {
+    if (event !== 'Close') {
       const listViews = cloneDeep(this.cloneListViewsFilter);
       this.listViewsFilter = cloneDeep(listViews);
-      const params =  getParamString(listViews)
-      this.query = { ...this.query, ...params};
+      const params = getParamString(listViews)
+      this.query = { ...this.query, ...params };
       this.load();
-    }else {
-      this.listViewsFilter =  cloneDeep(datas);
+    } else {
+      this.listViewsFilter = cloneDeep(datas);
     }
   }
 

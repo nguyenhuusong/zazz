@@ -84,6 +84,7 @@ import { ChiTietTongHopLuongComponent } from 'src/app/components/cs-tien-luong/t
 import { DsChiTietLuongComponent } from 'src/app/components/cs-tien-luong/ds-chi-tiet-luong/ds-chi-tiet-luong.component';
 import { ChuyenVienTinhLuongComponent } from 'src/app/components/cs-tien-luong/chuyen-vien-tinh-luong/chuyen-vien-tinh-luong.component';
 import { ChiTietChuyenVienTinhLuongComponent } from 'src/app/components/cs-tien-luong/chuyen-vien-tinh-luong/chi-tiet-chuyen-vien-tinh-luong/chi-tiet-chuyen-vien-tinh-luong.component';
+import { FormActiveComponent } from 'src/app/components/cs-tien-luong/chuyen-vien-tinh-luong/form-active/form-active.component';
 
 @NgModule({
   imports: [
@@ -177,6 +178,7 @@ import { ChiTietChuyenVienTinhLuongComponent } from 'src/app/components/cs-tien-
     DsChiTietLuongComponent,
     ChuyenVienTinhLuongComponent,
     ChiTietChuyenVienTinhLuongComponent,
+    FormActiveComponent,
 
   ],
   providers: [],
