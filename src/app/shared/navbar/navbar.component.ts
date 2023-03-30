@@ -1,4 +1,5 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ChangeDetectorRef, Component, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { Router, ActivatedRoute, NavigationStart } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { AuthService } from 'src/app/services/auth.service';
@@ -8,6 +9,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { WebsocketService2 } from 'src/app/services/websocket.service';
 import { environment } from 'src/environments/environment';
+import { Subscription, timer } from 'rxjs';
 
 const queryString = require('query-string');
 
@@ -41,6 +43,7 @@ export class NavbarComponent implements OnInit {
         private webSocketService: WebsocketService2,
         private authService: AuthService,
         private apiService: ApiService,
+        private spinner: NgxSpinnerService,
         private apiHrm: ApiHrmService,
         private messageService: MessageService,
         
@@ -293,6 +296,9 @@ export class NavbarComponent implements OnInit {
       });
   }
 
+  ngOnDestroy(){
+  }
+
   activeAccount() {
     if(this.detailWebSocketService) {
       const params = {
@@ -306,15 +312,67 @@ export class NavbarComponent implements OnInit {
       this.apiHrm.setUserSalaryActivate(params)
         .subscribe(results => {
           if (results.status === 'success') {
-              console.log(results)
+              this.modelOTP.secret_cd = results.data && results.data.secret_cd ? results.data.secret_cd : null;
+              this.modelOTP.id = this.detailUserSalary.id;
+              this.displayActive = true;
           }else {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
           }
         })
     }else {
       this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Bạn chưa cài đặt plugin' });
-    }
-   ;
+    };
   }
 
+  handeOtpChange(value: string[]): void {
+    console.log(value);
+  }
+  modelOTP = {
+    id: null,
+    code: null,
+    secret_cd: null
+  }
+  handleFillEvent(): void {
+    if(!this.modelOTP.code) {
+      this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Chưa nhập mã code' });
+      return;
+    }
+    this.spinner.show();
+    const params: any = {...this.modelOTP}
+    this.apiHrm.setUserSalaryVerify(params)
+    .subscribe({
+      next: async response => {
+        if (response.error) {
+          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: response.message ? response.message: 'Kích hoạt thất bại' });
+          this.displayActive = false;
+          this.spinner.hide();
+        } else {
+          this.displayActive = false;
+          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: response.message || 'Gửi OTP thành công' });
+          this.spinner.hide();
+        }
+      },
+      error: err => {
+        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Thất bại!' });
+        this.displayActive = false;
+        this.spinner.hide();
+        console.error(err);
+      }
+    });
+  }
+}
+
+
+@Pipe({
+  name: "formatTime"
+})
+export class FormatTimePipe implements PipeTransform {
+  transform(value: number): string {
+    const minutes: number = Math.floor(value / 60);
+    return (
+      ("00" + minutes).slice(-2) +
+      ":" +
+      ("00" + Math.floor(value - minutes * 60)).slice(-2)
+    );
+  }
 }

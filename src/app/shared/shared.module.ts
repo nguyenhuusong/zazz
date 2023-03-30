@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FooterComponent } from './footer/footer.component';
-import { NavbarComponent } from './navbar/navbar.component';
+import { FormatTimePipe, NavbarComponent } from './navbar/navbar.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { ToggleFullscreenDirective } from './directives/toggle-fullscreen.directive';
 import { ButtonRendererComponent } from '../utils/common/button-renderer.component';
@@ -10,7 +10,7 @@ import { NormalButtonRendererComponent } from '../utils/common/normal-button-ren
 import { ButtonRendererComponent1 } from '../utils/common/button-renderer.component-1';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { ButtonRendererMutiComponent } from '../utils/common/button-renderermutibuttons.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
 import { CurrencyFormatPipe } from './currency-format.pipe';
 import { MarginPipe } from './margin.pipe';
@@ -46,6 +46,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
         MarginRoundPipe,
         NumericEditor,
         ButtonAgGridComponent,
+
     ],
     imports: [
         RouterModule,
@@ -62,6 +63,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
         MenuModule,
         DialogModule,
         MultiSelectModule,
+
         AgGridModule.withComponents([
             ButtonRendererComponent,
             CustomTooltipComponent,
@@ -84,6 +86,8 @@ import { MultiSelectModule } from 'primeng/multiselect';
         MarginRoundPipe,
         NumericEditor,
         ButtonAgGridComponent,
+        FormatTimePipe
+
 
     ],
     entryComponents: [
