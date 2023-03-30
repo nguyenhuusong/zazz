@@ -327,7 +327,7 @@ export class KeHoachTuyenDungComponent implements OnInit, AfterViewChecked {
         this.spinner.hide();
       } else {
         var blob = new Blob([results], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-        FileSaver.saveAs(blob, `Danh sách vị trí tuyển dụng ${params.FromDate} - ${params.ToDate}` + ".xlsx");
+        FileSaver.saveAs(blob, `Danh sách kế hoạch tuyển dụng`+ ".xlsx");
         this.spinner.hide();
       }
     })
