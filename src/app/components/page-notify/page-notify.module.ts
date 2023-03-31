@@ -31,6 +31,8 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { CheckHideActionsDirectiveModule } from 'src/app/directive/check-action.module';
 import { FormFilterModule } from 'src/app/common/form-filter/form-filter.module';
 import { LoadingGridModule } from 'src/app/common/loading-grid/loading-grid.module';
+import { GetNotifyToComponent } from './get-notify-to/get-notify-to.component';
+import { EditDetailModule } from 'src/app/common/edit-detail/edit-detail.module';
 @NgModule({
   declarations: [
     PageNotifyComponent,

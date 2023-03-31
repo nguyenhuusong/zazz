@@ -29,7 +29,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
     private changeDetech: ChangeDetectorRef,
     private spinner: NgxSpinnerService,
     private router: Router,
-    
+
   ) { }
   @Output() avatarUrl = new EventEmitter<any>();
   @Output() callback = new EventEmitter<any>();
@@ -52,7 +52,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
   @Input() menus = [];
   @Input() noDisableInput: boolean = false;
   @Input() isShowAvatar = false;
-  
+
   buttonSave = 'Update';
   @Input() formTypeId: string = '';
   @Input() optionsButtonsEdit: any = [
@@ -124,17 +124,17 @@ export class EditDetailComponent implements OnInit, OnChanges {
 
   submit = false
   dataViewNew = [];
-  
+
   getOrganizeInfoService() {
-    
+
   }
- 
+
   callApiDrop() {
     const promissall = [];
     this.dataViewNew = cloneDeep(this.dataView);
     this.dataView = [];
     this.dataViewNew.forEach(element => {
-      element.fields.forEach( element1 => {
+      element.fields.forEach(element1 => {
         if ((element1.columnType === 'markdown') || (element1.columnType === 'chips') || (element1.columnType === 'linkUrl') || (element1.columnType === 'linkUrlDrag')) {
           const dataValidation = {
             key: element1.field_name,
@@ -154,60 +154,60 @@ export class EditDetailComponent implements OnInit, OnChanges {
         }
         if (element1.columnType === 'select' || element1.columnType === 'members' || element1.columnType === 'dropdown' || element1.columnType === 'selectTree' || element1.columnType === 'selectTrees'
           || element1.columnType === 'checkboxList' || element1.columnType === 'checkboxradiolist'
-          || element1.columnType === 'multiSelect' || element1.columnType === 'autocomplete' ) {
-            if(element1.columnObject) {
-              if(element1.columnType === 'selectTree' || element1.columnType === 'selectTrees') {
-                promissall.push(this.apiHrmV2Service.getCustObjectListTreeV2(element1.columnObject, element1.field_name));
-              }else if(element1.columnType === 'autocomplete'){
-                promissall.push(this.apiHrmV2Service.getAutocompleteLinkApiV2(element1.columnObject, element1.field_name));
-              }else {
-                promissall.push(this.apiHrmV2Service.getCustObjectListV2(element1.columnObject, element1.field_name));
-              }
-            }else {
-              if(element1.columnType === 'members') {
-                const queryParams = queryString.stringify({ftUserId: element1.columnValue });
-                promissall.push(this.apiHrmV2Service.getEmployeeSearchGetUserIdV2(queryParams, element1.field_name));
-              }
+          || element1.columnType === 'multiSelect' || element1.columnType === 'autocomplete') {
+          if (element1.columnObject) {
+            if (element1.columnType === 'selectTree' || element1.columnType === 'selectTrees') {
+              promissall.push(this.apiHrmV2Service.getCustObjectListTreeV2(element1.columnObject, element1.field_name));
+            } else if (element1.columnType === 'autocomplete') {
+              promissall.push(this.apiHrmV2Service.getAutocompleteLinkApiV2(element1.columnObject, element1.field_name));
+            } else {
+              promissall.push(this.apiHrmV2Service.getCustObjectListV2(element1.columnObject, element1.field_name));
+            }
+          } else {
+            if (element1.columnType === 'members') {
+              const queryParams = queryString.stringify({ ftUserId: element1.columnValue });
+              promissall.push(this.apiHrmV2Service.getEmployeeSearchGetUserIdV2(queryParams, element1.field_name));
             }
           }
+        }
       });
     });
     if (promissall.length > 0) {
-    this.spinner.show();
+      this.spinner.show();
       forkJoin(promissall.filter(d => d !== undefined))
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((results: any) => {
-        const responses = results.filter(d => d !== undefined);
-        this.spinner.hide();
-        this.dataViewNew.forEach(element => {
-          element.fields.forEach(element1 => {
-            if (responses.map(d => d.key).indexOf(element1.field_name) > -1) {
-              if (element1.columnType === 'autocomplete') {
-                const datas = responses.filter(d => d.key === element1.field_name);
-                setValueAndOptionsAutocomplete(element1, datas[0].result);
-              } else if (element1.columnType === 'checkboxradiolist') {
-                const datas = responses.filter(d => d.key === element1.field_name);
-                setCheckboxradiolistValue(element1, datas[0].result)
-              } else if ((element1.columnType === 'selectTree') || (element1.columnType === 'selectTrees')) {
-                const datas = responses.filter(d => d.key === element1.field_name);
-                setSelectTreeValue(element1, datas[0].result);
-              } else if (element1.columnType === 'multiSelect') {
-                const datas = responses.filter(d => d.key === element1.field_name);
-                setMultiSelectValue(element1, datas[0].result)
-              } else if (element1.columnType === 'members') {
-                const datas = responses.filter(d => d.key === element1.field_name);
-                // element1.columnValue = datas[0].result
-                // this.changeDetech.detectChanges();
-                setMembers(element1, datas[0].result)
-              } else {
-                const datas = responses.filter(d => d.key === element1.field_name);
-                setValueAndOptions(element1, datas[0].result);
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((results: any) => {
+          const responses = results.filter(d => d !== undefined);
+          this.spinner.hide();
+          this.dataViewNew.forEach(element => {
+            element.fields.forEach(element1 => {
+              if (responses.map(d => d.key).indexOf(element1.field_name) > -1) {
+                if (element1.columnType === 'autocomplete') {
+                  const datas = responses.filter(d => d.key === element1.field_name);
+                  setValueAndOptionsAutocomplete(element1, datas[0].result);
+                } else if (element1.columnType === 'checkboxradiolist') {
+                  const datas = responses.filter(d => d.key === element1.field_name);
+                  setCheckboxradiolistValue(element1, datas[0].result)
+                } else if ((element1.columnType === 'selectTree') || (element1.columnType === 'selectTrees')) {
+                  const datas = responses.filter(d => d.key === element1.field_name);
+                  setSelectTreeValue(element1, datas[0].result);
+                } else if (element1.columnType === 'multiSelect') {
+                  const datas = responses.filter(d => d.key === element1.field_name);
+                  setMultiSelectValue(element1, datas[0].result)
+                } else if (element1.columnType === 'members') {
+                  const datas = responses.filter(d => d.key === element1.field_name);
+                  // element1.columnValue = datas[0].result
+                  // this.changeDetech.detectChanges();
+                  setMembers(element1, datas[0].result)
+                } else {
+                  const datas = responses.filter(d => d.key === element1.field_name);
+                  setValueAndOptions(element1, datas[0].result);
+                }
               }
-            }
+            })
           })
-        })
-        this.dataView = [...this.dataViewNew];
-      });
+          this.dataView = [...this.dataViewNew];
+        });
     } else {
       this.spinner.hide();
       this.dataView = [...this.dataViewNew];
@@ -241,7 +241,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
 
 
   onChangeButtonEdit(event) {
-    if (event === 'Update' || event === 'SaveNhap' ||  event === 'Submit') {
+    if (event === 'Update' || event === 'SaveNhap' || event === 'Submit') {
       this.submit = true;
       for (let item in this.modelFields) {
         if (this.modelFields[item].error) {
@@ -265,6 +265,9 @@ export class EditDetailComponent implements OnInit, OnChanges {
       this.callbackform(group_fields, 'TamTinh')
     } else if (event === 'ReHire') {
       this.callbackButton.emit({ type: 'rehire', data: null });
+    } else if (event === 'ADDROW') {
+      let group_fields = cloneDeep(this.dataView)
+      this.callbackform(group_fields, 'ADDROW');
     } else {
       this.cancel(event);
     }
@@ -292,19 +295,19 @@ export class EditDetailComponent implements OnInit, OnChanges {
             data.columnValue = data.columnValue;
           }
         } else if (data.columnType === 'timeonly') {
-          data.columnValue = typeof data.columnValue === 'string' ?  `${data.columnValue}:00` : moment(data.columnValue).format('HH:mm');
+          data.columnValue = typeof data.columnValue === 'string' ? `${data.columnValue}:00` : moment(data.columnValue).format('HH:mm');
           // data.columnValue = typeof data.columnValue === 'string' ? `${data.columnValue}:00` : null;
         } else if (data.columnType === 'selectTree') {
           data.columnValue = data.columnValue ? data.columnValue.orgId : null;
           delete data.options;
-        }else if (data.columnType === 'selectTrees') {
+        } else if (data.columnType === 'selectTrees') {
           data.columnValue = data.columnValue && data.columnValue.length > 0 ? data.columnValue.map(d => d.orgId).toString() : null;
           delete data.options;
         } else if (data.columnType === 'currency') {
           data.columnValue = numeral(data.columnValue).value()
         } else if (data.columnType === 'members') {
           delete data.options;
-        }else if (data.columnType === 'linkUrlDrag' || data.columnType === 'listMch') {
+        } else if (data.columnType === 'linkUrlDrag' || data.columnType === 'listMch') {
           data.columnValue = (data.columnValue && data.columnValue.length) > 0 ? data.columnValue.toString() : '';
         } else if ((data.columnType === 'select' || data.columnType === 'multiSelect' || data.columnType === 'dropdown' || data.columnType === 'checkboxList') && data.options) {
           if (data.columnType === 'multiSelect') {
@@ -326,9 +329,9 @@ export class EditDetailComponent implements OnInit, OnChanges {
             delete data.options;
 
           }
-        }else if( data.columnType === 'chips') {
-          data.columnValue = data.columnValue ? data.columnValue.toString() : '' ;
-        }else if(data.columnType === 'onOff'){
+        } else if (data.columnType === 'chips') {
+          data.columnValue = data.columnValue ? data.columnValue.toString() : '';
+        } else if (data.columnType === 'onOff') {
           data.columnValue = data.columnValue ? "1" : "0"
         } else {
           data.columnValue = data.columnValue;
@@ -342,8 +345,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
     });
     if (type === 'Update') {
       this.callback.emit(group_fields);
-    }else if( type === 'SaveNhap' ||  type === 'Submit' || 'IsSpecial') {
-      this.callBackForm.emit({data : group_fields, type: type})
+    } else if (type === 'SaveNhap' || type === 'Submit' || 'IsSpecial' || 'ADDROW') {
+      this.callBackForm.emit({ data: group_fields, type: type })
     } else {
       this.callback1.emit(group_fields);
     }
@@ -367,7 +370,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
     this.group_cd = event;
     this.getGroupInfo();
   }
-  
+
   getGroupInfo() {
     const queryParams = queryString.stringify({ group_key: this.detail.groupKey, group_cd: this.group_cd });
     this.apiServiceCore.getGroupInfo(queryParams)

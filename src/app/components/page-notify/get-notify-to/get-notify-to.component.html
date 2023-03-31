@@ -1,0 +1,12 @@
+<div class="content">
+    <app-edit-detail
+        *ngIf="listViews.length> 0"
+        [detail]="detailInfo"
+        [manhinh]="'Edit'"
+        (callBackForm)="callBackForm($event)"
+        [optionsButtonsEdit]="optionsButon"
+        [dataView]="listViews"
+        (callback)="handleSave($event)"
+        (callbackcancel)="quaylai($event)"
+    ></app-edit-detail>
+</div>

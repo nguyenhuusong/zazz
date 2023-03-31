@@ -30,9 +30,9 @@ import { ListGridAngularModule } from 'src/app/common/list-grid-angular/list-gri
 import { EditDetailModule } from 'src/app/common/edit-detail/edit-detail.module';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { LoadingDetailModule } from 'src/app/common/loading-detail/loading-detail.module';
-
+import { GetNotifyToComponent } from '../get-notify-to/get-notify-to.component';
 @NgModule({
-    declarations: [NotifyDetailComponent],
+    declarations: [NotifyDetailComponent, GetNotifyToComponent],
     imports: [
         FormsModule,
         ReactiveFormsModule,

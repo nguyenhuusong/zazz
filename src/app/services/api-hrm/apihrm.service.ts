@@ -159,6 +159,10 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v1/notify/GetNotifyRef?` + queryParams, this.options);
   }
 
+  setNotifyTo(queryParams): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v1/notify/SetNotifyTo`, queryParams, this.options);
+  }
+
   getUserByPush(queryParams): Observable<any> {
     return this.http.put<any>(`${apiHrmServer}/api/v1/notify/GetUserByPush` , queryParams, this.options);
   }
@@ -230,6 +234,14 @@ export class ApiHrmService {
 
   getNotifyToPushs(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/notify/GetNotifyToPushs?` + queryParams, this.options);
+  }
+
+  getNotifyTo(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/notify/GetNotifyTo?` + queryParams, this.options);
+  }
+
+  getNotifyToDraft(queryParams): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v1/notify/GetNotifyToDraft`, queryParams, this.options);
   }
   
   getNotifyCommentChilds(queryParams): Observable<any> {

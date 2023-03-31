@@ -39,14 +39,15 @@
           <app-notify-comments [notify]="dataInfo"></app-notify-comments>
         </p-tabPanel>
         <p-tabPanel header="Danh sách gửi thông báo" *ngIf="notiId" leftIcon="pi pi-calendar">
-            <app-grid-push-list 
+          <app-get-notify-to  *ngIf="indexTab === 1 && dataInfo"  [notify]="dataInfo" ></app-get-notify-to>
+            <!-- <app-grid-push-list 
               [notify]="dataInfo" 
               *ngIf="indexTab === 1" 
               [indexTab]="indexTab" 
               (send)="displayDsThongBao($event)" 
               [loadForm]="loadForm" 
               (saveStore)="displayDsCaiDatDS($event)" 
-              (deleteRooms)="deleteRooms($event)"></app-grid-push-list>
+              (deleteRooms)="deleteRooms($event)"></app-grid-push-list> -->
           </p-tabPanel>
       </p-tabView>
     </div>
