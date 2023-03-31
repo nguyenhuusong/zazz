@@ -39,7 +39,7 @@ import {
   , AppTypeonOff
   , AppTyperoomImg
   , AppTypeSelectAutocompleteComponent
-  , AppTypeSelectComponent
+  , AppTypeSelectAutocompletesComponent, AppTypeSelectComponent
   , AppTypeSelectTreeComponent
   , AppTypeSelectTreesComponent
   , AppTypeTextareaComponent
@@ -131,7 +131,8 @@ import { ChipModule } from 'primeng/chip';
     AppTyperoomImg,
     AppTypeonOff,
     AppLabel,
-    AppTypeImageComponent
+    AppTypeImageComponent,
+    AppTypeSelectAutocompletesComponent
     // AppTypeTextComponent
   ],
   exports: [

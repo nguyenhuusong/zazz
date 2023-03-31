@@ -240,8 +240,8 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v1/notify/GetNotifyTo?` + queryParams, this.options);
   }
 
-  getNotifyToDraft(queryParams): Observable<any> {
-    return this.http.put<any>(`${apiHrmServer}/api/v1/notify/GetNotifyToDraft`, queryParams, this.options);
+  setNotifyToDraft(queryParams): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v1/notify/SetNotifyToDraft`, queryParams, this.options);
   }
   
   getNotifyCommentChilds(queryParams): Observable<any> {

@@ -86,15 +86,15 @@ export class GetNotifyToComponent implements OnInit, OnDestroy {
   callBackForm(event) {
     if (event.type === 'IsSpecial' || event.type === 'ADDROW') {
       const params = {
-        ...this.detailInfo, group_fields: event, to_count: event.type === 'ADDROW' ? this.detailInfo.to_count + 1 : this.detailInfo.to_count
+        ...this.detailInfo, group_fields: event.data, to_count: event.type === 'ADDROW' ? this.detailInfo.to_count + 1 : this.detailInfo.to_count
       };
-      this.getNotifyToDraft(params)
+      this.setNotifyToDraft(params)
     } 
   }
 
-  getNotifyToDraft(params) {
+  setNotifyToDraft(params) {
     this.listViews = []
-    this.apiService.getNotifyToDraft(params)
+    this.apiService.setNotifyToDraft(params)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {
         if (results.status === 'success') {

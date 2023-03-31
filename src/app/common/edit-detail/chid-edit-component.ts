@@ -2386,6 +2386,98 @@ export class AppTypeSelectAutocompleteComponent implements OnInit, OnChanges {
   }
 }
 
+
+// autocomplete multiple
+
+
+@Component({
+  selector: 'app-type-autocompletes',
+  template: ` 
+  <div class="field-group">  
+  <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
+  <div> 
+  <p-autoComplete [(ngModel)]="element.columnValue" [disabled]="element.isDisable" [multiple]="true" name="cusId" [baseZIndex]="100" [appendTo]="'body'" [style]="{width: '100%'}"
+  [suggestions]="element.options" placeholder="Nhập Tìm kiếm theo tên" (onSelect)="onSelectCus($event, element.field_name)"
+  (completeMethod)="search($event)" field="name" [required]="element.isRequire && element.isVisiable && !element.isEmpty"></p-autoComplete>
+          <div *ngIf="modelFields[element.field_name]?.isRequire && submit && modelFields[element.field_name]?.error"
+                class="alert-validation alert-danger">
+                <div [hidden]="!modelFields[element.field_name]?.error">
+                {{modelFields[element.field_name].message}}
+                </div>
+             </div>
+</div></div>
+                `,
+})
+export class AppTypeSelectAutocompletesComponent implements OnInit, OnChanges {
+  @Input() element;
+  @Input() dataView;
+  @Input() modelFields;
+  @Input() submit = false;
+  isSearchEmp = false;
+  constructor(
+    private apiHrmV2Service: ApiHrmV2Service,
+    private spinner: NgxSpinnerService
+  ) { }
+  ngOnInit(): void {
+  }
+
+  seachEmValue(event) {
+    if(!event.value) {
+      this.isSearchEmp = false;
+    }else{
+      this.element.columnValue = {
+        name: event.dataInfo.full_name,
+        code: event.dataInfo.empId
+      }
+    }
+  }
+  ngOnChanges(event) {
+    if (event && event.element) {
+      this.element = event.element.currentValue
+    }
+  }
+
+  search(event) {
+    this.getObjectList(this.element, event.query)
+  }
+
+  onSelectCus(e, field_name) {
+    this.modelFields[field_name].error = false;
+  }
+
+  
+  getValueByKey(key) {
+    if (this.dataView && this.dataView.length > 0) {
+      let value = ''
+      for (let i = 0; i < this.dataView.length; i++) {
+        for (let j = 0; j < this.dataView[i].fields.length; j++) {
+          if (this.dataView[i].fields[j].field_name === key) {
+            value = this.dataView[i].fields[j].columnValue;
+            break;
+          }
+        }
+      }
+      return value
+    }
+  }
+
+   getObjectList(element1, filter) {
+    const organizeId =  this.getValueByKey('org_cds');
+    if(element1.columnObject) {
+      const apis = element1.columnObject.split("?");
+      element1.columnObject = apis[0].toString() + `?filter=${filter}&organizeId=${organizeId}`;
+      this.apiHrmV2Service.getAutocompleteLinkApiV2(element1.columnObject, element1.field_name).subscribe(results => {
+        if (results.result.length > 0) {
+          element1.options = results.result;
+        }
+      })
+    }
+   
+  }
+}
+
+//end
+
 @Component({
   selector: 'app-type-label',
   template: `
