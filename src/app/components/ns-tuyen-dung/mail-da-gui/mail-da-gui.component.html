@@ -66,7 +66,7 @@
     [draggable]="false" [resizable]="false" [focusTrap]="false" styleClass="popup-setting">
     <app-config-grid-table-form *ngIf="displaySetting && gridKey" [typeConfig]="'TableInfo'"   [gridKey]="gridKey"></app-config-grid-table-form>
 </p-dialog>
-
+<!-- 
 <p-overlayPanel #op [style]="{'width': '40rem'}" [style]="{width: '700px'}" styleClass="advance-seach">
     <ng-template pTemplate>
         <div class="header-filter-search  grid">
@@ -100,5 +100,11 @@
                 </p-button>
             </div>
         </div>
+    </ng-template>
+</p-overlayPanel> -->
+
+<p-overlayPanel #op [style]="{'width': '40rem'}" [dismissable]="false" appendTo="body" >
+    <ng-template pTemplate>
+        <app-form-filter *ngIf="listViewsFilter.length > 0" [listFields]="listViewsFilter" [detailInfoFilter]="detailInfoFilter" [buttonsFilters] ="optionsButonFilter" (callback)="filterLoad($event)" (close)="close($event);op.hide()"></app-form-filter>
     </ng-template>
 </p-overlayPanel>

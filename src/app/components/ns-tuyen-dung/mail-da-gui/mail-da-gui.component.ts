@@ -11,6 +11,8 @@ import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import { cloneDeep } from 'lodash';
+import { getParamString } from 'src/app/common/function-common/objects.helper';
 
 import * as moment from 'moment';
 import { Subject, takeUntil } from 'rxjs';
@@ -50,6 +52,7 @@ export class MailDaGuiComponent implements OnInit, AfterViewChecked {
       buttonAgGridComponent: ButtonAgGridComponent,
       avatarRendererFull: AvatarFullComponent,
     };
+    this.getFilter();
   }
 
   private readonly unsubscribe$: Subject<void> = new Subject();
@@ -77,13 +80,9 @@ export class MailDaGuiComponent implements OnInit, AfterViewChecked {
   gridflexs: any;
   getRowHeight;
   query = {
-    organizeId: '',
-    fromDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).add(-1,'months').format()),
-    toDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).format()),
     filter: '',
     offSet: 0,
     pageSize: 20,
-    organizeIds: '',
   }
   totalRecord = 0;
   first = 0;
@@ -119,13 +118,9 @@ export class MailDaGuiComponent implements OnInit, AfterViewChecked {
 
   cancel() {
     this.query = {
-      organizeId: '',
-      fromDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 25)).add(-1,'months').format()),
-      toDate: new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth(), 24)).format()),
       filter: '',
       offSet: 0,
       pageSize: 20,
-      organizeIds: this.query.organizeIds,
     }
     this.load();
   }
@@ -147,10 +142,6 @@ export class MailDaGuiComponent implements OnInit, AfterViewChecked {
     this.columnDefs = []
     // this.spinner.show();
     let params: any = {... this.query};
-    delete params.fromDate
-    delete params.toDate
-    params.FromDate = moment(new Date(this.query.fromDate)).format('YYYY-MM-DD')
-    params.ToDate = moment(new Date(this.query.toDate)).format('YYYY-MM-DD');
     const queryParams = queryString.stringify(params);
     this.apiService.getRecruitSendMailPage(queryParams)
     .pipe(takeUntil(this.unsubscribe$))
@@ -221,12 +212,55 @@ export class MailDaGuiComponent implements OnInit, AfterViewChecked {
 
 
   ngOnInit() {
-    this.load();
     this.items = [
       { label: 'Trang chủ' , routerLink: '/home' },
       { label: 'Tuyển dụng'},
       { label: 'Mail đã gửi' },
     ];
+  }
+
+  filterLoad(event) {
+    this.query = { ...this.query, ...event.data };
+    this.load();
+  }
+
+  //filter 
+  listViewsFilter = [];
+  cloneListViewsFilter = [];
+  detailInfoFilter = null;
+  optionsButonFilter = [
+    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm height-56 addNew', icon: 'pi pi-search' },
+    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger height-56 addNew', icon: 'pi pi-times' },
+  ];
+  getFilter() {
+    this.apiService.getFilter('/api/v1/recruitemail/GetConfigRecuitFilter')
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
+      if (results.status === 'success') {
+        const listViews = cloneDeep(results.data.group_fields);
+        this.cloneListViewsFilter = cloneDeep(listViews);
+        this.listViewsFilter = [...listViews];
+        const params = getParamString(listViews)
+        this.query = { ...this.query, ...params };
+        if(!this.query.offSet) {
+          this.query.offSet = 0;
+        }
+        this.load();
+        this.detailInfoFilter = results.data;
+      }
+    });
+  }
+
+  close({event, datas}) {
+    if(event !== 'Close') {
+      const listViews = cloneDeep(this.cloneListViewsFilter);
+      this.listViewsFilter = cloneDeep(listViews);
+      const params =  getParamString(listViews)
+      this.query = { ...this.query, ...params};
+      this.load();
+    }else {
+      this.listViewsFilter =  cloneDeep(datas);
+    }
   }
   
 
