@@ -11,7 +11,7 @@ import { AgGridFn } from 'src/app/utils/common/function-common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as numeral from 'numeral';
 import { delay, forkJoin, lastValueFrom, of, Subject, takeUntil, tap, timer } from 'rxjs';
-import { findNodeInTree, setCheckboxradiolistValue, setMembers, setMultiSelectValue, setSelectTreeValue, setValueAndOptions, setValueAndOptionsAutocomplete } from '../function-common/objects.helper';
+import { findNodeInTree, setCheckboxradiolistValue, setMembers, setMultiSelectValue, setSelectTreeValue, setValueAndOptions, setValueAndOptionsAutocomplete, setValueAndOptionsAutocompletes } from '../function-common/objects.helper';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ApiHrmV2Service } from 'src/app/services/api-hrm/apihrmv2.service';
 import { Router } from '@angular/router';
@@ -154,12 +154,14 @@ export class EditDetailComponent implements OnInit, OnChanges {
         }
         if (element1.columnType === 'select' || element1.columnType === 'members' || element1.columnType === 'dropdown' || element1.columnType === 'selectTree' || element1.columnType === 'selectTrees'
           || element1.columnType === 'checkboxList' || element1.columnType === 'checkboxradiolist'
-          || element1.columnType === 'multiSelect' || element1.columnType === 'autocomplete') {
+          || element1.columnType === 'multiSelect' || element1.columnType === 'autocomplete' || element1.columnType === 'autoCompletes') {
           if (element1.columnObject) {
             if (element1.columnType === 'selectTree' || element1.columnType === 'selectTrees') {
               promissall.push(this.apiHrmV2Service.getCustObjectListTreeV2(element1.columnObject, element1.field_name));
             } else if (element1.columnType === 'autocomplete') {
               promissall.push(this.apiHrmV2Service.getAutocompleteLinkApiV2(element1.columnObject, element1.field_name));
+            }else if (element1.columnType === 'autoCompletes') {
+              promissall.push(this.apiHrmV2Service.getAutocompleteLinkApiV2s(element1.columnObject, element1.field_name));
             } else {
               promissall.push(this.apiHrmV2Service.getCustObjectListV2(element1.columnObject, element1.field_name));
             }
@@ -182,10 +184,13 @@ export class EditDetailComponent implements OnInit, OnChanges {
           this.dataViewNew.forEach(element => {
             element.fields.forEach(element1 => {
               if (responses.map(d => d.key).indexOf(element1.field_name) > -1) {
-                if (element1.columnType === 'autocomplete') {
+                if (element1.columnType === 'autocomplete' ) {
                   const datas = responses.filter(d => d.key === element1.field_name);
                   setValueAndOptionsAutocomplete(element1, datas[0].result);
-                } else if (element1.columnType === 'checkboxradiolist') {
+                }else if (element1.columnType === 'autoCompletes') {
+                  const datas = responses.filter(d => d.key === element1.field_name);
+                  setValueAndOptionsAutocompletes(element1, datas[0].result);
+                }  else if (element1.columnType === 'checkboxradiolist') {
                   const datas = responses.filter(d => d.key === element1.field_name);
                   setCheckboxradiolistValue(element1, datas[0].result)
                 } else if ((element1.columnType === 'selectTree') || (element1.columnType === 'selectTrees')) {
@@ -299,6 +304,9 @@ export class EditDetailComponent implements OnInit, OnChanges {
           // data.columnValue = typeof data.columnValue === 'string' ? `${data.columnValue}:00` : null;
         } else if (data.columnType === 'selectTree') {
           data.columnValue = data.columnValue ? data.columnValue.orgId : null;
+          delete data.options;
+        }  else if (data.columnType === 'autoCompletes') {
+          data.columnValue = data.columnValue &&  data.columnValue.length > 0 ? data.columnValue.map(d => d.code).toString() : null;
           delete data.options;
         } else if (data.columnType === 'selectTrees') {
           data.columnValue = data.columnValue && data.columnValue.length > 0 ? data.columnValue.map(d => d.orgId).toString() : null;

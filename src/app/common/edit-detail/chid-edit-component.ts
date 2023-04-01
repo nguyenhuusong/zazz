@@ -2396,7 +2396,7 @@ export class AppTypeSelectAutocompleteComponent implements OnInit, OnChanges {
   <div class="field-group">  
   <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
   <div> 
-  <p-autoComplete [(ngModel)]="element.columnValue" [disabled]="element.isDisable" [multiple]="true" name="cusId" [baseZIndex]="100" [appendTo]="'body'" [style]="{width: '100%'}"
+  <p-autoComplete [(ngModel)]="element.columnValue" [disabled]="element.isDisable" [multiple]="true"  [baseZIndex]="100" [appendTo]="'body'" [style]="{width: '100%'}"
   [suggestions]="element.options" placeholder="Nhập Tìm kiếm theo tên" (onSelect)="onSelectCus($event, element.field_name)"
   (completeMethod)="search($event)" field="name" [required]="element.isRequire && element.isVisiable && !element.isEmpty"></p-autoComplete>
           <div *ngIf="modelFields[element.field_name]?.isRequire && submit && modelFields[element.field_name]?.error"
@@ -2419,6 +2419,7 @@ export class AppTypeSelectAutocompletesComponent implements OnInit, OnChanges {
     private spinner: NgxSpinnerService
   ) { }
   ngOnInit(): void {
+    console.log(this.element)
   }
 
   seachEmValue(event) {
@@ -2462,13 +2463,12 @@ export class AppTypeSelectAutocompletesComponent implements OnInit, OnChanges {
   }
 
    getObjectList(element1, filter) {
-    const organizeId =  this.getValueByKey('org_cds');
     if(element1.columnObject) {
       const apis = element1.columnObject.split("?");
-      element1.columnObject = apis[0].toString() + `?filter=${filter}&organizeId=${organizeId}`;
-      this.apiHrmV2Service.getAutocompleteLinkApiV2(element1.columnObject, element1.field_name).subscribe(results => {
+      element1.columnObject = apis[0].toString() + `?filter=${filter}&userIds=${element1.columnValue}`;
+      this.apiHrmV2Service.getAutocompleteLinkApiV2s(element1.columnObject, element1.field_name).subscribe(results => {
         if (results.result.length > 0) {
-          element1.options = results.result;
+          element1.options = results.result
         }
       })
     }

@@ -253,6 +253,11 @@ export function setMembers(element1, datas) {
     element1.columnValue = element1.columnValue ? element1.options[0] : ''
   }
 
+  export function setValueAndOptionsAutocompletes(element1, results) {
+    element1.options = results
+    element1.columnValue = results && results.length > 0 ? results : []
+  }
+
   export function getParamString(lists) {
     const params: any = {};
     lists.forEach(results => {

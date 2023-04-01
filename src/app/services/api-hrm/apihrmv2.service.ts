@@ -763,6 +763,21 @@ export class ApiHrmV2Service {
     )
   }
 
+  getAutocompleteLinkApiV2s(url, field_name): Observable<any> {
+    return this.httpClient.get(`${apiHrmServer}` + url, this.options).pipe(
+      map((repon: any) => {
+        return { key: field_name, result: repon.data.map(d => {
+          return {
+            name: d.name,
+            code: d.value
+          }
+        }) };
+      }), catchError(error => {
+        return of(error.error);
+      })
+    )
+  }
+
 
   // danh sách cty trả lương
   getUserCompanies(queryParams, field_name) {
