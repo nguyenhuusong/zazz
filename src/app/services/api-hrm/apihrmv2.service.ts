@@ -14,7 +14,7 @@ export class ApiHrmV2Service {
   constructor(
     private httpClient: HttpClient,
     private authService: AuthService) { }
-
+  
   options = {
     headers: new HttpHeaders({
       Authorization: this.authService.getAuthorizationHeaderValue(),

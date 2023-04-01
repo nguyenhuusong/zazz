@@ -14,6 +14,8 @@ const apiShome = environment.apiShomeBase;
 export class ApiHrmService {
   private http = inject(HttpClient);
   private authService = inject(AuthService)
+  constructor() {
+  }
   options = {
     headers: new HttpHeaders({
       Authorization: this.authService.getAuthorizationHeaderValue(),
