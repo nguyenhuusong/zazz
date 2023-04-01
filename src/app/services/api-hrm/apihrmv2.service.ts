@@ -19,6 +19,7 @@ export class ApiHrmV2Service {
     headers: new HttpHeaders({
       Authorization: this.authService.getAuthorizationHeaderValue(),
       'Content-Type': 'application/json',
+      'X-Role-Token': localStorage.hasOwnProperty('md5') && localStorage.getItem('md5') ? localStorage.getItem('md5') : ''
     })
   };
 

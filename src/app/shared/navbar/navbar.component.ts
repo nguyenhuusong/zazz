@@ -9,7 +9,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { WebsocketService2 } from 'src/app/services/websocket.service';
 import { environment } from 'src/environments/environment';
-import { Subscription, timer } from 'rxjs';
+import * as CryptoJS from "crypto-js";
 
 const queryString = require('query-string');
 
@@ -63,7 +63,6 @@ export class NavbarComponent implements OnInit {
       }
       this.checkDisableOrgan(this.router.url);
     });
-    this.initMenu();
   }
 
   detailWebSocketService = null;
@@ -102,7 +101,7 @@ export class NavbarComponent implements OnInit {
           command: () => {
             this.activeAccount();
           }
-        } : null,
+        } : {},
       {
         label: 'Logout',
         icon: 'pi pi-refresh',
@@ -167,8 +166,9 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getUserSalary();
     this.userName = this.authService.getUserName();
+    this.getUserSalary()
+  
   }
 
   update() {
@@ -295,6 +295,11 @@ export class NavbarComponent implements OnInit {
       .subscribe(results => {
         if (results.status === 'success') {
           this.detailUserSalary = results.data;
+          if(this.detailUserSalary && this.detailUserSalary.activated && this.detailUserSalary.roleToken) {
+            const hash = CryptoJS.MD5(CryptoJS.enc.Latin1.parse(this.detailUserSalary.roleToken));
+            const md5 = hash.toString(CryptoJS.enc.Hex)
+            localStorage.setItem("md5", md5)
+          }
           this.initMenu();
         } else {
           this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });

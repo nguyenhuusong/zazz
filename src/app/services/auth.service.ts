@@ -4,14 +4,16 @@ import { environment } from '../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FirebaseAuthService } from './firebase-auth.service';
 import { map } from 'rxjs';
+import { ApiHrmService } from './api-hrm/apihrm.service';
+import { MessageService } from 'primeng/api';
 
 @Injectable()
 export class AuthService {
   private manager: UserManager = new UserManager(environment.authenSettings);
   private user: User = null;
-
   constructor(private http: HttpClient,
     private firebaseAuthService: FirebaseAuthService,
+    private messageService: MessageService,
     ) {
       this.manager.getUser().then(async user => {
         this.user = user;
@@ -23,6 +25,7 @@ export class AuthService {
               this.firebaseAuthService.customLogin(customToken);
             }
           }
+          
         }
 
       });
@@ -44,6 +47,7 @@ export class AuthService {
   getClaims(): any {
     return this.user.profile;
   }
+
 
   getAuthorizationHeaderValue(): string {
     return `Bearer ${this.user.access_token}`;
@@ -86,15 +90,7 @@ export class AuthService {
 
  async getEmpDetail() {
     // if (localStorage.getItem("employeeId") === null) {
-    //   const headers = new HttpHeaders({ Authorization: this.getAuthorizationHeaderValue() });
-    //   return this.http.get(environment.apiBase + '/api/v2/employee/GetEmployeeSearch?ftUserId=', { headers }).toPromise()
-    //     .then((emp: any) => {
-    //       if (emp && emp.data) {
-    //         localStorage.setItem('avatarUrl', emp.data.avatarUrl);
-    //         localStorage.setItem('employeeId', emp.data.employeeId);
-    //       }
-    //     });
-    // }
+     
     
   }
 
