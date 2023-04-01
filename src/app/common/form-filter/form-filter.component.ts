@@ -136,24 +136,24 @@ export class FormFilterComponent implements OnInit, OnChanges {
           this.spinner.hide();
           dataView.forEach(element => {
             element.fields.forEach(element1 => {
-              if (responses.map(d => d.key).indexOf(element1.field_name) > -1) {
+              if (responses.map(d => d.key).indexOf(`${element1.field_name}${element1.group_cd}`) > -1) {
                 if (element1.columnType === 'autocomplete') {
-                  const datas = responses.filter(d => d.key === element1.field_name);
+                  const datas = responses.filter(d => d.key === `${element1.field_name}${element1.group_cd}`);
                   setValueAndOptionsAutocomplete(element1, datas[0].result);
                 } else if (element1.columnType === 'checkboxradiolist') {
-                  const datas = responses.filter(d => d.key === element1.field_name);
+                  const datas = responses.filter(d => d.key === `${element1.field_name}${element1.group_cd}`);
                   setCheckboxradiolistValue(element1, datas[0].result)
                 } else if ((element1.columnType === 'selectTree') || (element1.columnType === 'selectTrees')) {
-                  const datas = responses.filter(d => d.key === element1.field_name);
+                  const datas = responses.filter(d => d.key === `${element1.field_name}${element1.group_cd}`);
                   setSelectTreeValue(element1, datas[0].result)
                 } else if (element1.columnType === 'multiSelect') {
-                  const datas = responses.filter(d => d.key === element1.field_name);
+                  const datas = responses.filter(d => d.key === `${element1.field_name}${element1.group_cd}`);
                   setMultiSelectValue(element1, datas[0].result)
                 } else if (element1.columnType === 'members') {
-                  const datas = responses.filter(d => d.key === element1.field_name);
+                  const datas = responses.filter(d => d.key === `${element1.field_name}${element1.group_cd}`);
                   setMembers(element1, datas[0].result)
                 } else {
-                  const datas = responses.filter(d => d.key === element1.field_name);
+                  const datas = responses.filter(d => d.key === `${element1.field_name}${element1.group_cd}`);
                   setValueAndOptions(element1, datas[0].result);
                 }
               }

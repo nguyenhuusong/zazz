@@ -718,13 +718,14 @@ export class ApiHrmV2Service {
     return this.httpClient.get(`${apiHrmServer}` + url, this.options).pipe(
       map((repon: any) => {
         if (repon.status === 'success' && repon.data && repon.data.length > 0) {
+          console.log(field_name)
           return {
             key: field_name, result: repon.data.map(item => {
               return {
+                ...item,
                 label: item.name,
                 name: item.name,
                 code: item.value,
-                ...item
               }
             })
           };
@@ -751,6 +752,7 @@ export class ApiHrmV2Service {
   getAutocompleteLinkApiV2(url, field_name): Observable<any> {
     return this.httpClient.get(`${apiHrmServer}` + url, this.options).pipe(
       map((repon: any) => {
+        console.log("field_name", field_name)
         return { key: field_name, result: repon.data.map(d => {
           return {
             name: d.fullName + '-' +d.code + '-' + d.phone,

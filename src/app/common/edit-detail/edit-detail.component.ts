@@ -157,18 +157,18 @@ export class EditDetailComponent implements OnInit, OnChanges {
           || element1.columnType === 'multiSelect' || element1.columnType === 'autocomplete' || element1.columnType === 'autoCompletes') {
           if (element1.columnObject) {
             if (element1.columnType === 'selectTree' || element1.columnType === 'selectTrees') {
-              promissall.push(this.apiHrmV2Service.getCustObjectListTreeV2(element1.columnObject, element1.field_name));
+              promissall.push(this.apiHrmV2Service.getCustObjectListTreeV2(element1.columnObject, `${element1.field_name}${element1.group_cd}`));
             } else if (element1.columnType === 'autocomplete') {
-              promissall.push(this.apiHrmV2Service.getAutocompleteLinkApiV2(element1.columnObject, element1.field_name));
+              promissall.push(this.apiHrmV2Service.getAutocompleteLinkApiV2(element1.columnObject, `${element1.field_name}${element1.group_cd}`));
             }else if (element1.columnType === 'autoCompletes') {
-              promissall.push(this.apiHrmV2Service.getAutocompleteLinkApiV2s(element1.columnObject, element1.field_name));
+              promissall.push(this.apiHrmV2Service.getAutocompleteLinkApiV2s(element1.columnObject, `${element1.field_name}${element1.group_cd}`));
             } else {
-              promissall.push(this.apiHrmV2Service.getCustObjectListV2(element1.columnObject, element1.field_name));
+              promissall.push(this.apiHrmV2Service.getCustObjectListV2(element1.columnObject, `${element1.field_name}${element1.group_cd}`));
             }
           } else {
             if (element1.columnType === 'members') {
               const queryParams = queryString.stringify({ ftUserId: element1.columnValue });
-              promissall.push(this.apiHrmV2Service.getEmployeeSearchGetUserIdV2(queryParams, element1.field_name));
+              promissall.push(this.apiHrmV2Service.getEmployeeSearchGetUserIdV2(queryParams, `${element1.field_name}${element1.group_cd}`));
             }
           }
         }
@@ -183,29 +183,31 @@ export class EditDetailComponent implements OnInit, OnChanges {
           this.spinner.hide();
           this.dataViewNew.forEach(element => {
             element.fields.forEach(element1 => {
-              if (responses.map(d => d.key).indexOf(element1.field_name) > -1) {
+              if (responses.map(d => d.key).indexOf(`${element1.field_name}${element1.group_cd}`) > -1) {
                 if (element1.columnType === 'autocomplete' ) {
-                  const datas = responses.filter(d => d.key === element1.field_name);
+                  const datas = responses.filter(d => d.key === `${element1.field_name}${element1.group_cd}`);
                   setValueAndOptionsAutocomplete(element1, datas[0].result);
                 }else if (element1.columnType === 'autoCompletes') {
-                  const datas = responses.filter(d => d.key === element1.field_name);
+                  const datas = responses.filter(d => d.key === `${element1.field_name}${element1.group_cd}`);
                   setValueAndOptionsAutocompletes(element1, datas[0].result);
                 }  else if (element1.columnType === 'checkboxradiolist') {
-                  const datas = responses.filter(d => d.key === element1.field_name);
+                  const datas = responses.filter(d => d.key === `${element1.field_name}${element1.group_cd}`);
                   setCheckboxradiolistValue(element1, datas[0].result)
                 } else if ((element1.columnType === 'selectTree') || (element1.columnType === 'selectTrees')) {
-                  const datas = responses.filter(d => d.key === element1.field_name);
+                  const datas = responses.filter(d => d.key === `${element1.field_name}${element1.group_cd}`);
                   setSelectTreeValue(element1, datas[0].result);
                 } else if (element1.columnType === 'multiSelect') {
-                  const datas = responses.filter(d => d.key === element1.field_name);
+                  const datas = responses.filter(d => d.key === `${element1.field_name}${element1.group_cd}`);
+                  console.log(datas[0].result)
                   setMultiSelectValue(element1, datas[0].result)
                 } else if (element1.columnType === 'members') {
-                  const datas = responses.filter(d => d.key === element1.field_name);
+                  const datas = responses.filter(d => d.key === `${element1.field_name}${element1.group_cd}`);
                   // element1.columnValue = datas[0].result
                   // this.changeDetech.detectChanges();
                   setMembers(element1, datas[0].result)
                 } else {
-                  const datas = responses.filter(d => d.key === element1.field_name);
+                  console.log(responses)
+                  const datas = responses.filter(d => d.key === `${element1.field_name}${element1.group_cd}`);
                   setValueAndOptions(element1, datas[0].result);
                 }
               }
