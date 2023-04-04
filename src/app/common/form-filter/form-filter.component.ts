@@ -116,11 +116,11 @@ export class FormFilterComponent implements OnInit, OnChanges {
           || element1.columnType === 'checkboxList' || element1.columnType === 'checkboxradiolist' || element1.columnType === 'autocomplete') {
             if(element1.columnObject) {
               if(element1.columnType === 'selectTree' || element1.columnType === 'selectTrees') {
-                promissall.push(this.apiHrmV2Service.getCustObjectListTreeV2(element1.columnObject, element1.field_name));
+                promissall.push(this.apiHrmV2Service.getCustObjectListTreeV2(element1.columnObject, `${element1.field_name}${element1.group_cd}`));
               }else if(element1.columnType === 'autocomplete'){
-                promissall.push(this.apiHrmV2Service.getAutocompleteLinkApiV2(element1.columnObject, element1.field_name));
+                promissall.push(this.apiHrmV2Service.getAutocompleteLinkApiV2(element1.columnObject, `${element1.field_name}${element1.group_cd}`));
               }else {
-                promissall.push(this.apiHrmV2Service.getCustObjectListV2(element1.columnObject, element1.field_name));
+                promissall.push(this.apiHrmV2Service.getCustObjectListV2(element1.columnObject, `${element1.field_name}${element1.group_cd}`));
               }
             }
         } else if(element1.columnType === 'datetime' && element1.columnValue == 0) {

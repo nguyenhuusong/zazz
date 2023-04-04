@@ -358,7 +358,7 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
      <div class="field-group select treeselect" [ngClass]="'valid'" > 
      <label class="text-nowrap label-tex" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
      <p-treeSelect [appendTo]="'body'"
-       [options]="element.options || []" [(ngModel)]="element.columnValue"  [filterInputAutoFocus]="true" [filter]="true" [metaKeySelection]="false" selectionMode="checkbox"
+       [options]="element.options || []" [(ngModel)]="element.columnValue" [metaKeySelection]="false" selectionMode="multiple"
         [disabled]="element.isDisable" placeholder="Select Item" (onNodeSelect)="selectNode($event)" (onHide)="changeValue($event)"
         ></p-treeSelect>
       <div *ngIf="element.isRequire && submit && !element.columnValue"
@@ -380,7 +380,8 @@ export class AppTypeSelectTreesComponent implements OnInit, OnChanges {
     private apiService: ApiHrmService
   ) { }
   ngOnInit(): void {
-    checkIsObject
+    console.log(this.element.columnValue)
+    // checkIsObject
   }
 
   checkIsObject(data: any): boolean {
@@ -412,7 +413,7 @@ export class AppTypeSelectTreesComponent implements OnInit, OnChanges {
         }
       });
     });
-    this.emitTreeValue.emit(this.dataView);
+    // this.emitTreeValue.emit(this.dataView); tạm comment
   }
 }
 
@@ -2069,7 +2070,8 @@ export class AppTypeChips implements OnInit {
   ) { }
   ngOnInit(): void {
     // this.modelFields[this.element?.field_name].error = false;
-    this.element.columnValue = this.element.columnValue && this.element.columnValue.length > 0 ? this.element.columnValue.split(',') : []
+    console.log(this.element.columnValue)
+    // this.element.columnValue = this.element.columnValue && typeof this.element.columnValue === 'object' ? this.element.columnValue.split(',') : []
   }
 
   luau() {

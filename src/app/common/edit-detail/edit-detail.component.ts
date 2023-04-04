@@ -171,6 +171,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
               promissall.push(this.apiHrmV2Service.getEmployeeSearchGetUserIdV2(queryParams, `${element1.field_name}${element1.group_cd}`));
             }
           }
+        }else if(element1.columnType === 'chips') {
+          element1.columnValue = element1.columnValue && typeof element1.columnValue === 'string' ? element1.columnValue.split(',') : []
         }
       });
     });
@@ -198,7 +200,6 @@ export class EditDetailComponent implements OnInit, OnChanges {
                   setSelectTreeValue(element1, datas[0].result);
                 } else if (element1.columnType === 'multiSelect') {
                   const datas = responses.filter(d => d.key === `${element1.field_name}${element1.group_cd}`);
-                  console.log(datas[0].result)
                   setMultiSelectValue(element1, datas[0].result)
                 } else if (element1.columnType === 'members') {
                   const datas = responses.filter(d => d.key === `${element1.field_name}${element1.group_cd}`);
@@ -206,7 +207,6 @@ export class EditDetailComponent implements OnInit, OnChanges {
                   // this.changeDetech.detectChanges();
                   setMembers(element1, datas[0].result)
                 } else {
-                  console.log(responses)
                   const datas = responses.filter(d => d.key === `${element1.field_name}${element1.group_cd}`);
                   setValueAndOptions(element1, datas[0].result);
                 }
@@ -311,7 +311,9 @@ export class EditDetailComponent implements OnInit, OnChanges {
           data.columnValue = data.columnValue &&  data.columnValue.length > 0 ? data.columnValue.map(d => d.code).toString() : null;
           delete data.options;
         } else if (data.columnType === 'selectTrees') {
-          data.columnValue = data.columnValue && data.columnValue.length > 0 ? data.columnValue.map(d => d.orgId).toString() : null;
+          console.log(" data.columnValue",  data.columnValue);
+
+          data.columnValue = data.columnValue && data.columnValue.length > 0 ? data.columnValue.map(d => d.orgDepId).toString() : null;
           delete data.options;
         } else if (data.columnType === 'currency') {
           data.columnValue = numeral(data.columnValue).value()

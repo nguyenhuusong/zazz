@@ -1,4 +1,7 @@
-<div class="d-flex">
+<div class="d-flex" style="position: absolute;
+z-index: 9999;
+top: 0;
+right: 0;">
   <p-toolbar styleClass="new-toolbar-style d-flex p-0 middle">
     <div class="p-toolbar-group-left">
       <!-- <div class="field-group mr-2">
@@ -37,9 +40,9 @@
     <div class="p-toolbar-group-right" [hidden]="hideAction">
       <div class="group-btns text-right">
         <!-- <label style="visibility: hidden;">Buttons</label> -->
-        <p-button label="Cài đặt danh sách gửi" 
+        <!-- <p-button label="Cài đặt danh sách gửi" 
         [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetAppNotifyPage.url, action: ACTIONS.CAI_DAT_DANH_SACH_GUI}"
-        (click)="storeNotify()" icon="fa fa-save" styleClass="p-button-sm mr-1"></p-button>
+        (click)="storeNotify()" icon="fa fa-save" styleClass="p-button-sm mr-1"></p-button> -->
         <p-button label="Gửi thông báo" (click)="sendNotify()" icon="fa fa-paper-plane" styleClass="p-button-sm mr-1"
         [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetAppNotifyPage.url, action: ACTIONS.GUI_THONG_BAO}"
         ></p-button>

@@ -8,7 +8,7 @@
     </div>
   </section>
   <section>
-    <div class="content">
+    <div class="content" style="position: relative;">
       <p-tabView [(activeIndex)]="indexTab" (onChange)="handleChange($event.index)">
         <p-tabPanel header="Thông tin chung">
           <div class="field-group select col-3" *ngIf="!notiId">
@@ -38,7 +38,7 @@
 
           <app-notify-comments [notify]="dataInfo"></app-notify-comments>
         </p-tabPanel>
-        <p-tabPanel header="Danh sách gửi thông báo" *ngIf="notiId" leftIcon="pi pi-calendar">
+        <p-tabPanel header="Cài đặt gửi thông báo" *ngIf="notiId" leftIcon="pi pi-calendar">
           <app-get-notify-to  *ngIf="indexTab === 1 && dataInfo"  [notify]="dataInfo" ></app-get-notify-to>
             <!-- <app-grid-push-list 
               [notify]="dataInfo" 
@@ -49,6 +49,16 @@
               (saveStore)="displayDsCaiDatDS($event)" 
               (deleteRooms)="deleteRooms($event)"></app-grid-push-list> -->
           </p-tabPanel>
+          <p-tabPanel header="Danh sách gửi thông báo" *ngIf="notiId" leftIcon="pi pi-bell">
+              <app-grid-push-list 
+                [notify]="dataInfo" 
+                *ngIf="indexTab === 2" 
+                [indexTab]="indexTab" 
+                (send)="displayDsThongBao($event)" 
+                [loadForm]="loadForm" 
+                (saveStore)="displayDsCaiDatDS($event)" 
+                (deleteRooms)="deleteRooms($event)"></app-grid-push-list>
+            </p-tabPanel>
       </p-tabView>
     </div>
   </section>

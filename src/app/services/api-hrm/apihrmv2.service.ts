@@ -719,7 +719,6 @@ export class ApiHrmV2Service {
     return this.httpClient.get(`${apiHrmServer}` + url, this.options).pipe(
       map((repon: any) => {
         if (repon.status === 'success' && repon.data && repon.data.length > 0) {
-          console.log(field_name)
           return {
             key: field_name, result: repon.data.map(item => {
               return {
