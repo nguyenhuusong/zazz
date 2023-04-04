@@ -3555,8 +3555,8 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v2/userrole/GetUserSalaryPage?` + queryParams, this.options);
   }
 
-  getUserSalary(): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v2/userrole/GetUserSalary`, this.options);
+  getUserSalary(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/userrole/GetUserSalary?` + queryParams, this.options);
   }
 
   getUserSalaryInfo(queryParams): Observable<any> {

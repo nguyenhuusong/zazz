@@ -93,15 +93,15 @@ export class NavbarComponent implements OnInit {
           this.changePassword();
         }
       },
-      this.detailUserSalary && this.detailUserSalary.activated === false ?
-        {
-          label: 'Kích hoạt tài khoản',
-          icon: 'pi pi-check',
+      !this.detailUserSalary.roleToken || this.detailUserSalary.roleToken == "" ?
+      {
+        label: 'Kích hoạt tài khoản',
+        icon: 'pi pi-check',
 
-          command: () => {
-            this.activeAccount();
-          }
-        } : {},
+        command: () => {
+          this.activeAccount();
+        }
+      } : {},
       {
         label: 'Logout',
         icon: 'pi pi-refresh',
@@ -291,16 +291,23 @@ export class NavbarComponent implements OnInit {
   displayActive = false;
   detailUserSalary = null;
   getUserSalary() {
-    this.apiHrm.getUserSalary()
+    const queryParams = queryString.stringify({
+      systemId: this.detailWebSocketService.systemInfo.machineName,
+      mainBoardId: this.detailWebSocketService.mainBoard.serialNumber,
+      processorId: this.detailWebSocketService.processor.processorId,
+    });
+    this.apiHrm.getUserSalary(queryParams)
       .subscribe(results => {
         if (results.status === 'success') {
           this.detailUserSalary = results.data;
-          if(this.detailUserSalary && this.detailUserSalary.activated && this.detailUserSalary.roleToken) {
+          if(this.detailUserSalary && this.detailUserSalary.valid && this.detailUserSalary.activated && this.detailUserSalary.roleToken) {
             const hash = CryptoJS.MD5(CryptoJS.enc.Latin1.parse(this.detailUserSalary.roleToken));
             const md5 = hash.toString(CryptoJS.enc.Hex)
             localStorage.setItem("md5", md5)
+          }else {
+            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: this.detailUserSalary.messages });
           }
-          this.initMenu();
+           this.initMenu();
         } else {
           this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
         }
@@ -310,11 +317,32 @@ export class NavbarComponent implements OnInit {
   ngOnDestroy() {
   }
 
+  displayActiveAccount = false;
   activeAccount() {
     if (this.detailWebSocketService) {
-      const params = {
+        this.displayActiveAccount = true;
+        this.modelPass.userPassword = '';
+        this.modelPass.userPassCf = '';
+     
+    } else {
+      this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Bạn chưa cài đặt plugin' });
+    };
+  }
+
+  saveActive() {
+        var format = /^-?\d+$/;
+        if ((this.modelPass.userPassword && !this.modelPass.userPassCf) || this.confimPassword) {
+          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: "Mật khẩu không khớp !" });
+          return;
+        }
+        if(!format.test(this.modelPass.userPassword)){
+          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: "Nhập mật khẩu không hợp lệ !" });
+          return
+        }
+        const params = {
         id: this.detailUserSalary.id,
-        roleToken: this.detailUserSalary.roleToken,
+        roleToken: this.modelPass.userPassword,
+        reRoleToken: this.modelPass.userPassCf,
         systemId: this.detailWebSocketService.systemInfo.machineName,
         mainBoardId: this.detailWebSocketService.mainBoard.serialNumber,
         processorId: this.detailWebSocketService.processor.processorId,
@@ -325,14 +353,12 @@ export class NavbarComponent implements OnInit {
           if (results.status === 'success') {
             this.modelOTP.secret_cd = results.data && results.data.secret_cd ? results.data.secret_cd : null;
             this.modelOTP.id = this.detailUserSalary.id;
+            this.displayActiveAccount =false;
             this.displayActive = true;
           } else {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
           }
         })
-    } else {
-      this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Bạn chưa cài đặt plugin' });
-    };
   }
 
   handeOtpChange(value: string[]): void {

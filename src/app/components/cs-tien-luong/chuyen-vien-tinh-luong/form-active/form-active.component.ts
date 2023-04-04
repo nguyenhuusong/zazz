@@ -46,17 +46,17 @@ export class FormActiveComponent implements OnInit, OnDestroy {
   }
 
   getUserSalary() {
-    this.apiService.getUserSalary()
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(results => {
-        if (results.status === 'success') {
-          const listViews = cloneDeep(results.data.group_fields);
-          this.listViews = [...listViews];
-          this.detailInfo = results.data;
-        }else {
-          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
-        }
-      });
+    // this.apiService.getUserSalary()
+    //   .pipe(takeUntil(this.unsubscribe$))
+    //   .subscribe(results => {
+    //     if (results.status === 'success') {
+    //       const listViews = cloneDeep(results.data.group_fields);
+    //       this.listViews = [...listViews];
+    //       this.detailInfo = results.data;
+    //     }else {
+    //       this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
+    //     }
+    //   });
   }
 
   setUserSalaryInfo(data) {
