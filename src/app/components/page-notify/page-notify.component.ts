@@ -18,6 +18,7 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
 import { fromEvent } from 'rxjs';
+import { EmployeeSaveService } from 'src/app/services/employee-save.service';
 @Component({
   selector: 'app-page-notify',
   templateUrl: './page-notify.component.html',
@@ -40,6 +41,7 @@ export class PageNotifyComponent implements OnInit, OnDestroy {
     private changeDetector: ChangeDetectorRef,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
+    private employeeSaveService: EmployeeSaveService,
     private spinner: NgxSpinnerService,
     
     public dialogService: DialogService,
@@ -175,7 +177,8 @@ detailInfoFilter = null;
 
   notifyTempList = [];
   getNotifyTempList() {
-    this.apiService.getNotifyTempList()
+    const queryParams = queryString.stringify({source_key : ''});
+    this.apiService.getNotifyTempList(queryParams)
      .pipe(takeUntil(this.unsubscribe$))
      .subscribe(results => {
       if (results.status === 'success') {
@@ -363,6 +366,7 @@ detailInfoFilter = null;
   }
 
   editRow({rowData}) {
+    this.employeeSaveService.setStocks(null);
     this.modelAddNotifi.notiId = rowData.n_id
     this.Actions.value = 'Info';
     this.Actions.label = 'Sửa thông báo';
@@ -386,6 +390,7 @@ detailInfoFilter = null;
 
   displayNotify = false;
   AddNotify() {
+    this.employeeSaveService.setStocks(null);
     this.router.navigate(['cai-dat/thong-bao/them-moi-thong-bao'], 
     { queryParams: { 
       notiId: null, 
@@ -396,6 +401,7 @@ detailInfoFilter = null;
   }
 
   addNotifytoProject() {
+    this.employeeSaveService.setStocks(null);
     this.displayNotify = false;
     this.displaySelectRoom = false;
     // let items = this.moduleList.filter(d => d.value === this.modelAddNotifi.external_sub);

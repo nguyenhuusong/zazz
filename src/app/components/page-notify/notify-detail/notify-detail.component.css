@@ -13,3 +13,8 @@
 :host::ng-deep .border-section {
     padding-left: 0;
 }
+
+:host::ng-deep .wrap-edit-detail .btn-group-edit-detail {
+    position: relative !important;
+    top: -10px !important;
+}

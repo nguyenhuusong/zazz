@@ -27,32 +27,25 @@
                 </ng-template>
             </p-dropdown>
           </div>
-          <app-edit-detail *ngIf="listViews.length> 0 && manhinh === 'Edit'"  
-            [manhinh]="manhinh" [modelMarkdow]="modelMarkdow" [dataView]="listViews" 
-            [optionsButtonsEdit]="optionsButon"
-            (callback)="saveNotifyInfo($event)" (callbackcancel)="cancelUpload()"></app-edit-detail>
+          <app-edit-detail *ngIf="listViews.length> 0 && manhinh === 'Edit'"  [detail]="dataInfo"
+            [manhinh]="manhinh" [modelMarkdow]="modelMarkdow" [dataView]="listViews" [optionsButtonsEdit]="optionsButon"
+            (callback)="saveNotifyInfo($event)" (callbackcancel)="cancelUpload($event)"></app-edit-detail>
             <app-loading-detail 
                 [id]="'markdown'" 
                 *ngIf="listViews.length === 0">
             </app-loading-detail>
 
           <app-notify-comments [notify]="dataInfo"></app-notify-comments>
+          <p-divider align="center" *ngIf="notiId">
+            <span class="p-tag">Cấu hình email</span>
+        </p-divider>
+        {{notiId}}
+          <app-get-notify-to  *ngIf="notiId && listViews.length > 0" [notify]="dataInfo"  [n_id]="notiId" ></app-get-notify-to>
         </p-tabPanel>
-        <p-tabPanel header="Cài đặt gửi thông báo" *ngIf="notiId" leftIcon="pi pi-calendar">
-          <app-get-notify-to  *ngIf="indexTab === 1 && dataInfo"  [notify]="dataInfo" ></app-get-notify-to>
-            <!-- <app-grid-push-list 
-              [notify]="dataInfo" 
-              *ngIf="indexTab === 1" 
-              [indexTab]="indexTab" 
-              (send)="displayDsThongBao($event)" 
-              [loadForm]="loadForm" 
-              (saveStore)="displayDsCaiDatDS($event)" 
-              (deleteRooms)="deleteRooms($event)"></app-grid-push-list> -->
-          </p-tabPanel>
           <p-tabPanel header="Danh sách gửi thông báo" *ngIf="notiId" leftIcon="pi pi-bell">
               <app-grid-push-list 
                 [notify]="dataInfo" 
-                *ngIf="indexTab === 2" 
+                *ngIf="indexTab === 1" 
                 [indexTab]="indexTab" 
                 (send)="displayDsThongBao($event)" 
                 [loadForm]="loadForm" 

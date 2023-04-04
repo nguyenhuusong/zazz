@@ -12,6 +12,7 @@ import { CheckHideAction } from 'src/app/common/function-common/common';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 
 import { Subject, takeUntil } from 'rxjs';
+import { EmployeeSaveService } from 'src/app/services/employee-save.service';
 @Component({
   selector: 'app-notify-detail',
   templateUrl: './notify-detail.component.html',
@@ -24,8 +25,8 @@ export class NotifyDetailComponent implements OnInit {
 
   @Output() save = new EventEmitter<any>();
   optionsButon: any = [
-    { label: 'Bỏ qua', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times-circle' },
-    { label: 'Lưu lại', value: 'Update', 
+    // { label: 'Bỏ qua', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times-circle' },
+    { label: 'Lưu thông tin chung', value: 'Update', icon: 'pi pi-send',
     class: CheckHideAction(MENUACTIONROLEAPI.GetAppNotifyPage.url, ACTIONS.EDIT) ? 'hidden' : ''
     }
   ];
@@ -60,6 +61,7 @@ export class NotifyDetailComponent implements OnInit {
     private apiService: ApiHrmService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
+    private employeeSaveService: EmployeeSaveService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
     private spinner: NgxSpinnerService,
@@ -76,8 +78,22 @@ export class NotifyDetailComponent implements OnInit {
       { label: 'Danh sách thông báo', routerLink: '/cai-dat/thong-bao/danh-sach-thong-bao' },
       { label: `${this.titlePage}` },
     ];
-    this.handleParams();
-    this.getNotifyTempList();
+    this.employeeSaveService.fetchAll().subscribe((results: any) => {
+      console.log(results)
+      if(results) {
+        this.external_name = null;
+        this.organSeleted = null;
+        this.notiId = null;
+        this.tempId = results.tempId;
+        this.notifyTempId = results.tempId;
+        this.getNotifyTempList('oRecruitment')
+        this.getAppNotifyInfo();
+      }else {
+        this.getNotifyTempList();
+        this.handleParams();
+      }
+    })
+
   }
 
   private readonly unsubscribe$: Subject<void> = new Subject();
@@ -119,6 +135,7 @@ export class NotifyDetailComponent implements OnInit {
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(results => {
       if (results.status === 'success') {
+        this.notiId = results.data.n_id;
         this.listViews = cloneDeep(results.data.group_fields);
         this.setItemByActionList();
         this.dataInfo = results.data;
@@ -204,8 +221,13 @@ export class NotifyDetailComponent implements OnInit {
     this.getAppNotifyInfo();
   }
 
-  cancelUpload() {
-    this.router.navigate(['/cai-dat/thong-bao/danh-sach-thong-bao'])
+  cancelUpload(event) {
+    if(event === 'CauHinh') {
+      this.getAppNotifyInfo();
+    }else {
+      this.router.navigate(['/cai-dat/thong-bao/danh-sach-thong-bao'])
+
+    }
   }
 
   displayDsThongBao(data) {
@@ -327,8 +349,9 @@ export class NotifyDetailComponent implements OnInit {
     })
   }
 
-  getNotifyTempList() {
-    this.apiService.getNotifyTempList()
+  getNotifyTempList(source_key = null) {
+    const queryParams = queryString.stringify( {source_key: source_key });
+    this.apiService.getNotifyTempList(queryParams)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(results => {
       if (results.status === 'success') {

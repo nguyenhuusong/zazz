@@ -31,7 +31,7 @@ import { EditDetailModule } from 'src/app/common/edit-detail/edit-detail.module'
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { LoadingDetailModule } from 'src/app/common/loading-detail/loading-detail.module';
 import { GetNotifyToComponent } from '../get-notify-to/get-notify-to.component';
-@NgModule({
+import { DividerModule } from 'primeng/divider';@NgModule({
     declarations: [NotifyDetailComponent, GetNotifyToComponent],
     imports: [
         FormsModule,
@@ -48,6 +48,7 @@ import { GetNotifyToComponent } from '../get-notify-to/get-notify-to.component';
         ToolbarModule,
         SharedModule,
         CheckboxModule,
+        DividerModule,
         ListGridAngularModule,
         AutoCompleteModule,
         FileUploadModule,

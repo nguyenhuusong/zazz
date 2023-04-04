@@ -67,6 +67,7 @@ import {
     IconControlModule
   } from 'uni-control';
 import { ErrorService } from './services/error.service';
+import { EmployeeSaveService } from './services/employee-save.service';
 const APP_CONTAINERS = [DefaultLayoutComponent];
 @NgModule({
     declarations: [
@@ -146,6 +147,7 @@ const APP_CONTAINERS = [DefaultLayoutComponent];
         ConfirmationService,
         MessageService,
         OrganizeInfoService,
+        EmployeeSaveService,
         ErrorService,
         DialogService,
         ApiHrmV2Service,

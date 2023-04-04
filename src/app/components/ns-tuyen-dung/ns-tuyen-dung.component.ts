@@ -17,6 +17,7 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
 import { catchError, forkJoin, fromEvent, Subject, takeUntil, switchMap, tap  } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { EmployeeSaveService } from 'src/app/services/employee-save.service';
 
 @Component({
   selector: 'app-ns-tuyen-dung',
@@ -37,6 +38,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     private messageService: MessageService,
     private spinner: NgxSpinnerService,
     private dialogService: DialogService,
+    private  employeeSaveService: EmployeeSaveService,
     private changeDetector: ChangeDetectorRef,
     
     private router: Router) {
@@ -720,23 +722,27 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     let canId = this.dataRowSelected.map( d => d.canId).toString()
     const data = {
       tempId: this.mailInputValue,
-      canIds: canId
+      canIds: canId,
     }
-    this.spinner.show();
-    this.apiService.sendRecruitMail(data)
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(results => {
-      if (results.status === 'success') {
-        this.sentEmail = true;
-        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Gửi thành công' });
-        this.mailInputValue = '';
-        this.dataRowSelected = [];
+
+    this.employeeSaveService.setStocks(data);
+    this.router.navigate(['/cai-dat/thong-bao/them-moi-thong-bao'], { queryParams: {external_name: ''} })
+
+    // this.spinner.show();
+    // this.apiService.sendRecruitMail(data)
+    // .pipe(takeUntil(this.unsubscribe$))
+    // .subscribe(results => {
+    //   if (results.status === 'success') {
+    //     this.sentEmail = true;
+    //     this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Gửi thành công' });
+    //     this.mailInputValue = '';
+    //     this.dataRowSelected = [];
         
-        this.spinner.hide();
-      } else {
-        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.data : null });
-      }
-    })
+    //     this.spinner.hide();
+    //   } else {
+    //     this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.data : null });
+    //   }
+    // })
   }
 
   themLichHop() {

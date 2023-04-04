@@ -146,8 +146,8 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v1/notify/GetNotifyPage?` + queryParams, this.options);
   }
 
-  getNotifyTempList(): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/notify/GetNotifyTempList`, this.options);
+  getNotifyTempList(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/notify/GetNotifyTempList?` + queryParams, this.options);
   }
 
   getNotifyRefPage(queryParams): Observable<any> {

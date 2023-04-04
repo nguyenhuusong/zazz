@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { cloneDeep } from 'lodash';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -15,15 +15,15 @@ import { setOrganizeId } from 'src/app/utils/common/function-common';
   templateUrl: './get-notify-to.component.html',
   styleUrls: ['./get-notify-to.component.scss']
 })
-export class GetNotifyToComponent implements OnInit, OnDestroy {
+export class GetNotifyToComponent implements OnInit, OnDestroy, OnChanges {
   items: MenuItem[] = [];
   paramsObject = null;
   detailInfo = null
   listViews = [];
   optionsButon = [
     { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
-    { label: 'Lưu lại', value: 'Update', class: CheckHideAction(MENUACTIONROLEAPI.GetPayrollAppInfoPage.url, ACTIONS.EDIT_TINH_LUONG_THANH_PHAN_LUONG) ? 'hidden' : '', icon: 'pi pi-check' },
-    { label: 'Thêm dòng', value: 'ADDROW', icon: 'pi pi-plus' }
+    { label: 'Lưu thông tin cài đặt', value: 'Update', class: CheckHideAction(MENUACTIONROLEAPI.GetPayrollAppInfoPage.url, ACTIONS.EDIT_TINH_LUONG_THANH_PHAN_LUONG) ? 'hidden' : '', icon: 'pi pi-check' },
+    { label: 'Thêm dòng', value: 'ADDROW', icon: 'pi pi-plus', class: 'p-button-success' }
   ];
   titlePage = '';
   organIdSelected = '';
@@ -46,13 +46,18 @@ export class GetNotifyToComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+
+  }
+
   ngOnInit(): void {
+    console.log("sada",this.n_id)
     this.getDetail();
   }
 
   getDetail() {
     const params = {
-      n_id: this.notify.n_id,
+      n_id: this.n_id,
       to_row: this.to_row || null,
       to_level: this.to_level || null
     }

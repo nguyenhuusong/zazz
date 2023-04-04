@@ -18,6 +18,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { FileUploadModule } from 'primeng/fileupload';
 import { TooltipModule } from 'primeng/tooltip';
+import { DividerModule } from 'primeng/divider';
 import {
   AppLabel
   , AppTypeCheckboxComponent
@@ -95,6 +96,7 @@ import { ChipModule } from 'primeng/chip';
     ButtonModule,
     TooltipModule,
     ChipsModule,
+    DividerModule,
     InputSwitchModule,
     HrmSearchEmpModule,
     ConfigGridTableFormModule,
