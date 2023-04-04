@@ -343,8 +343,8 @@ export class NotifyDetailComponent implements OnInit {
         this.spinner.hide();
         this.notiId = results.data.id;
         this.router.navigate(['/cai-dat/thong-bao/chi-tiet-thong-bao'], { queryParams: { notiId: results.data.id } });
-        this.indexTab = 1;
-        // this.getAppNotifyInfo();
+        // this.indexTab = 1;
+        this.getAppNotifyInfo();
       }
     })
   }
