@@ -166,6 +166,7 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.initMenu();
     this.userName = this.authService.getUserName();
     this.getUserSalary()
   
