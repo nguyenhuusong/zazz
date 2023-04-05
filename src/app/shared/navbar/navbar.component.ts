@@ -93,7 +93,7 @@ export class NavbarComponent implements OnInit {
           this.changePassword();
         }
       },
-      !this.detailUserSalary.roleToken || this.detailUserSalary.roleToken == "" ?
+      this.detailUserSalary && (!this.detailUserSalary.roleToken || this.detailUserSalary.roleToken == "") ?
       {
         label: 'Kích hoạt tài khoản',
         icon: 'pi pi-check',
@@ -293,26 +293,28 @@ export class NavbarComponent implements OnInit {
   detailUserSalary = null;
   getUserSalary() {
     const queryParams = queryString.stringify({
-      systemId: this.detailWebSocketService.systemInfo.machineName,
-      mainBoardId: this.detailWebSocketService.mainBoard.serialNumber,
-      processorId: this.detailWebSocketService.processor.processorId,
+      systemId: this.detailWebSocketService ? this.detailWebSocketService.systemInfo.machineName : null,
+      mainBoardId: this.detailWebSocketService?  this.detailWebSocketService.mainBoard.serialNumber : null,
+      processorId: this.detailWebSocketService ? this.detailWebSocketService.processor.processorId : null,
     });
     this.apiHrm.getUserSalary(queryParams)
       .subscribe(results => {
         if (results.status === 'success') {
           this.detailUserSalary = results.data;
           if(this.detailUserSalary && this.detailUserSalary.valid && this.detailUserSalary.activated && this.detailUserSalary.roleToken) {
-            const hash = CryptoJS.MD5(CryptoJS.enc.Latin1.parse(this.detailUserSalary.roleToken));
-            const md5 = hash.toString(CryptoJS.enc.Hex)
-            localStorage.setItem("md5", md5)
+            // const hash = CryptoJS.MD5(CryptoJS.enc.Latin1.parse(this.detailUserSalary.roleToken));
+            const base64 = btoa(this.detailUserSalary.roleToken)
+            localStorage.setItem("md5", base64)
           }else {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: this.detailUserSalary.messages });
+            localStorage.removeItem("md5")
           }
            this.initMenu();
         } else {
           this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
         }
       });
+    
   }
 
   ngOnDestroy() {
