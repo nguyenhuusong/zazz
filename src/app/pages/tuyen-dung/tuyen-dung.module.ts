@@ -81,6 +81,7 @@ import { ChiTietNguonTuyenDungComponent } from 'src/app/components/ns-tuyen-dung
 import { NguonTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/nguon-tuyen-dung/nguon-tuyen-dung.component';
 import { ChuyenVienTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/chuyen-vien-tuyen-dung/chuyen-vien-tuyen-dung.component';
 import { ChiTietChuyenVienTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/chuyen-vien-tuyen-dung/chi-tiet-chuyen-vien-tuyen-dung/chi-tiet-chuyen-vien-tuyen-dung.component';
+import { PlanDetailComponent } from 'src/app/components/ke-hoach-tuyen-dung/plan-detail/plan-detail.component';
 @NgModule({
   imports: [
     MessagesModule,
@@ -169,7 +170,8 @@ import { ChiTietChuyenVienTuyenDungComponent } from 'src/app/components/ns-tuyen
     ChiTietNguonTuyenDungComponent,
     NguonTuyenDungComponent,
     ChuyenVienTuyenDungComponent,
-    ChiTietChuyenVienTuyenDungComponent
+    ChiTietChuyenVienTuyenDungComponent,
+    PlanDetailComponent
   ],
   providers: [ ]
 })

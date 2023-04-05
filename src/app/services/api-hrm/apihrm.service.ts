@@ -3147,6 +3147,22 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v1/recruitplan/GetRecruitPlanPage?` + queryParams, this.options);
   }
 
+  getRecruitPlanDetail(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitplan/GetRecruitPlanDetail?` + queryParams, this.options);
+  }
+
+  delRecruitPlanDetail(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v1/recruitplan/DelRecruitPlanDetail?` + queryParams, this.options);
+  }
+
+  setRecruitPlanDetail(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/recruitplan/SetRecruitPlanDetail`,  queryParams, this.options);
+  }
+
+  getRecruitPlanDetailPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitplan/GetRecruitPlanDetailPage?` + queryParams, this.options);
+  }
+
   setRecruitPlanExport(queryParams): Observable<Blob> {
     return this.http.get(`${apiHrmServer}/api/v1/recruitplan/SetRecruitPlanExport?` + queryParams, {
       headers: new HttpHeaders({

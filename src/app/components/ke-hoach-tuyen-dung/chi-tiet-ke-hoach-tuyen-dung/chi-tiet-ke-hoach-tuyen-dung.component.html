@@ -14,9 +14,10 @@
             [id]="'chi-tiet-tuyen-dung'" 
             *ngIf="listViews.length === 0">
         </app-loading-detail>
-    <div>
-    </div>
-       
+        <p-divider align="center">
+            <span class="p-tag">Danh sách kế hoạch</span>
+        </p-divider>
+        <app-plan-detail *ngIf="modelEdit.recruitPlanId" [recruitPlantId]="recruitPlanId"></app-plan-detail>
 </p-card>
 
 
