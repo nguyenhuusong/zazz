@@ -33,7 +33,7 @@
 
 <p-dialog styleClass="popup-btngroup-edit-detail"  [(visible)]="displayFormEditDetail" [draggable]="false"  [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '50vw', height: 'auto'}">
     <p-header>
-      {{idDetail ? 'Thêm mới chi tiết kế hoạch' : 'Chi tiết kế hoạch'}} 
+      {{idDetail ? 'Chi tiết kế hoạch' : 'Thêm mới chi tiết kế hoạch'}} 
     </p-header>
     <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'"
         [optionsButtonsEdit]="optionsButtonsPopup" [dataView]="listViews" (callback)="setRecruitPlanDetail($event)" 

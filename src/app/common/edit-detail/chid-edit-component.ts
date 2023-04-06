@@ -220,7 +220,15 @@ export class AppTypeSelectComponent implements OnInit {
      <div class="field-group select treeselect" [ngClass]="'valid'" > 
      <label class="text-nowrap label-tex" pTooltip="{{element?.columnValue?.orgPath}}" 
       tooltipPosition="top">{{element.columnLabel}}  
-      <span *ngIf="element.columnValue" style="text-overflow: ellipsis;overflow: hidden; max-width: calc(100% - 80px); line-height: 1; white-space: nowrap;display: inline-block;">- [ {{element?.columnValue?.orgPath}} </span> <span style="display: inline-block;line-height: 1; overflow: hidden;padding-left: 3px;"> ] </span> <span  style="color:red" *ngIf="element.isRequire">*</span></label>
+      <span *ngIf="element.columnValue" 
+        style="text-overflow: ellipsis;
+        overflow: hidden; 
+        max-width: calc(100% - 80px); 
+        line-height: 1; 
+        white-space: nowrap;
+        display: inline-block;">
+        - [ {{element?.columnValue?.orgPath}} </span>
+        <span *ngIf="element.columnValue" style="display: inline-block;line-height: 1; overflow: hidden;padding-left: 3px;"> ] </span> <span  style="color:red" *ngIf="element.isRequire">*</span></label>
       <p-treeSelect [appendTo]="'body'" 
       [name]="element.field_name" 
       [filter]="true" [options]="element.options || []" [(ngModel)]="element.columnValue"
