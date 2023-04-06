@@ -44,6 +44,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
   @Input() manhinh;
   @Input() dataView = [];
   @Input() projects = [];
+  @Input() idDetail = 'detail1';
   includeImage = false;
   @Input() paramsObject;
   @Input() detailInfo = null;

@@ -6,7 +6,7 @@ import { MenuItem, MessageService } from 'primeng/api';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as queryString from 'querystring';
-import { CheckHideAction } from 'src/app/common/function-common/common';
+import { CheckHideAction, setGroupFields } from 'src/app/common/function-common/common';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 
 import { setOrganizeId } from 'src/app/utils/common/function-common';
@@ -22,8 +22,8 @@ export class GetNotifyToComponent implements OnInit, OnDestroy, OnChanges {
   detailInfo = null
   listViews = [];
   optionsButon = [
+    { label: 'Lưu thông tin cài đặt', value: 'Update', class: CheckHideAction(MENUACTIONROLEAPI.GetPayrollAppInfoPage.url, ACTIONS.EDIT_TINH_LUONG_THANH_PHAN_LUONG) ? 'hidden' : 'isEmpty thongtincaiDat', icon: 'pi pi-check' },
     { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
-    { label: 'Lưu thông tin cài đặt', value: 'Update', class: CheckHideAction(MENUACTIONROLEAPI.GetPayrollAppInfoPage.url, ACTIONS.EDIT_TINH_LUONG_THANH_PHAN_LUONG) ? 'hidden' : '', icon: 'pi pi-check' },
     { label: 'Thêm dòng', value: 'ADDROW', icon: 'pi pi-plus', class: 'p-button-success' }
   ];
   titlePage = '';
@@ -41,7 +41,9 @@ export class GetNotifyToComponent implements OnInit, OnDestroy, OnChanges {
   private readonly unsubscribe$: Subject<void> = new Subject();
   @Input() n_id;
   @Input() modelNotifyTo;
+  @Input() modelMarkdow;
   @Input() notify;
+  @Input() listViewsMaster;
   ngOnDestroy() {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
@@ -52,23 +54,13 @@ export class GetNotifyToComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnInit(): void {
-    if(this.n_id) {
-      this.optionsButon = [
-        { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
-        { label: 'Lưu thông tin cài đặt', value: 'Update', class: CheckHideAction(MENUACTIONROLEAPI.GetPayrollAppInfoPage.url, ACTIONS.EDIT_TINH_LUONG_THANH_PHAN_LUONG) ? 'hidden' : '', icon: 'pi pi-check' },
-        { label: 'Thêm dòng', value: 'ADDROW', icon: 'pi pi-plus', class: 'p-button-success' }
-      ]
-    }else {
-      this.optionsButon = [
-        { label: 'Thêm dòng', value: 'ADDROW', icon: 'pi pi-plus', class: 'p-button-success' }
-      ]
-    }
     this.getDetail();
   }
 
 
 
   getDetail() {
+    this.detailInfo = null;
     const params = {
       n_id: this.n_id,
       to_groups: this.modelNotifyTo.to_groups,
@@ -111,13 +103,13 @@ export class GetNotifyToComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   setNotifyToDraft(params) {
-    this.listViews = []
     this.apiService.setNotifyToDraft(params)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {
         if (results.status === 'success') {
-          const listViews = cloneDeep(results.data.group_fields);
-          this.listViews = cloneDeep(listViews);
+         
+          this.listViews = cloneDeep(results.data.group_fields);
+          console.log(this.listViews)
           this.detailInfo = results.data;
         }
       });
@@ -147,29 +139,69 @@ export class GetNotifyToComponent implements OnInit, OnDestroy, OnChanges {
       };
   }
 
+  setNotifyTo(id) {
+    
+  }
+
   handleSave(event) {
     this.spinner.show();
     const params = {
-      ...this.detailInfo, group_fields: event
+      ...this.detailInfo, group_fields: event, sourceId: this.n_id
     };
     this.apiService.setNotifyTo(params)
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((results: any) => {
-        if (results.status === 'success') {
-          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
-          this.spinner.hide();
-          this.getDetail();
-        } else {
-          this.messageService.add({
-            severity: 'error', summary: 'Thông báo',
-            detail: results.message
-          });
-          this.spinner.hide();
-        }
-      }), error => {
-        console.error('Error:', error);
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
+      if (results.status === 'success') {
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
         this.spinner.hide();
-      };
+        this.employeeSaveService.setStocks(null);
+        this.router.navigate(['/cai-dat/thong-bao/chi-tiet-thong-bao'], { queryParams: { notiId: this.n_id } });
+      } else {
+        this.messageService.add({
+          severity: 'error', summary: 'Thông báo',
+          detail: results.message
+        });
+        this.spinner.hide();
+      }
+    }), error => {
+      console.error('Error:', error);
+      this.spinner.hide();
+    };
+  }
+
+  saveNotifyMaster() {
+    const group_fields= setGroupFields(this.notify.group_fields);
+    debugger
+    const params = {
+      ...this.notify, group_fields: group_fields,
+      attachs: this.modelMarkdow.attachs.map(data1 => {
+        return {
+          attach_name: data1.attach_name,
+          attach_url: data1.attach_url,
+          id: data1.id,
+          notiId: this.notify.notiId,
+          attach_type: data1.attach_type
+        }
+      }),
+    };
+    this.apiService.setNotifyInfo(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
+      if (results.status === 'success') {
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data.messages ? results.data.messages : 'Thành công' });
+        this.setNotifyTo(results.data.id)
+        this.router.navigate(['/cai-dat/thong-bao/chi-tiet-thong-bao'], { queryParams: { notiId: results.data.id } });
+        this.employeeSaveService.setStocks(null);
+      }else {
+        this.messageService.add({
+          severity: 'error', summary: 'Thông báo',
+          detail: results.message
+        });
+        this.spinner.hide();
+      }
+    })
+
+
   }
 
   getValueByKey(key, dataViewNew) {

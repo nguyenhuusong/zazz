@@ -1,7 +1,7 @@
 import * as moment from "moment";
 import * as numeral from "numeral";
 import { searchTree } from "./objects.helper";
-
+import showdown from 'showdown';
 export function AgGridFn(lists: Array<any>) {
     let arrAgGrids = [];
     for (let value of lists) {
@@ -531,13 +531,13 @@ export function isSunday(date = new Date()) {
 export function parseAll(html: string, htmlTag: string, markdownEquivalent: string) {
     const regEx = new RegExp(`<\/?${htmlTag}>`, "g");
     return html.replace(regEx, markdownEquivalent);
-  }
+}
 
-  //parseHtmlToMarkdown
+//parseHtmlToMarkdown
 
 export function parseHtmlToMarkdown(html: string): string {
     if (!html) {
-      return "";
+        return "";
     }
 
     let markdown = html;
@@ -552,8 +552,8 @@ export function parseHtmlToMarkdown(html: string): string {
     markdown = markdown.replace(/<p><br><\/p>/g, "\n");
     markdown = markdown.replace(/<p>/g, "").replace(/<\/p>/g, "  \n");
     markdown = markdown
-      .replace(/<blockquote>/g, "> ")
-      .replace(/<\/blockquote>/g, "");
+        .replace(/<blockquote>/g, "> ")
+        .replace(/<\/blockquote>/g, "");
 
     markdown = parseList(markdown, "ol", "1.");
     markdown = parseList(markdown, "ul", "-");
@@ -565,61 +565,165 @@ export function parseHtmlToMarkdown(html: string): string {
 
     console.log(markdown);
     return markdown;
-  }
+}
 
 
-  export function parseList(
+export function parseList(
     html: string,
     listType: "ol" | "ul",
     identifier: string
-  ): string {
+): string {
     let parsedHtml = html;
 
     const getNextListRegEx = new RegExp(`<${listType}>.+?<\/${listType}>`);
 
     while (parsedHtml.match(getNextListRegEx) !== null) {
-      const matchedList = parsedHtml.match(getNextListRegEx);
+        const matchedList = parsedHtml.match(getNextListRegEx);
 
-      console.log("matchedList", matchedList);
+        console.log("matchedList", matchedList);
 
-      const elements = htmlToElements(matchedList);
-      const listItems = [];
+        const elements = htmlToElements(matchedList);
+        const listItems = [];
 
-      elements[0].childNodes.forEach(listItem => {
-        let parsedListItem = `${identifier} ${listItem.textContent}`;
+        elements[0].childNodes.forEach(listItem => {
+            let parsedListItem = `${identifier} ${listItem.textContent}`;
 
-        // get level of item to add spaces
-        // @ts-ignore
-        const className = listItem.className;
-        if (className) {
-          const splittedClassName = className.split("-");
-          const numberOfLevel = parseInt(
-            splittedClassName[splittedClassName.length - 1] || 0
-          );
+            // get level of item to add spaces
+            // @ts-ignore
+            const className = listItem.className;
+            if (className) {
+                const splittedClassName = className.split("-");
+                const numberOfLevel = parseInt(
+                    splittedClassName[splittedClassName.length - 1] || 0
+                );
 
-          for (let i = 0; i < numberOfLevel; i++) {
-            parsedListItem = `   ${parsedListItem}`;
-          }
-        }
+                for (let i = 0; i < numberOfLevel; i++) {
+                    parsedListItem = `   ${parsedListItem}`;
+                }
+            }
 
-        listItems.push(parsedListItem);
-      });
+            listItems.push(parsedListItem);
+        });
 
-      parsedHtml = parsedHtml.replace(
-        getNextListRegEx,
-        listItems.join("\n") + "\n\n"
-      );
+        parsedHtml = parsedHtml.replace(
+            getNextListRegEx,
+            listItems.join("\n") + "\n\n"
+        );
 
-      console.log("after parsing one list => ", parsedHtml);
+        console.log("after parsing one list => ", parsedHtml);
     }
 
     return parsedHtml;
-  }
+}
 
-  export function htmlToElements(html) {
+export function htmlToElements(html) {
     var template = document.createElement("template");
     template.innerHTML = html;
     return template.content.childNodes;
-  }
+}
+
+
+
+
+
+
+
+export function setGroupFields(group_fields) {
+    const converter = new showdown.Converter();
+    group_fields.forEach(results => {
+        results.fields.forEach(data => {
+            if (data.columnType === 'datetime' && data.isVisiable) {
+                if (data.columnValue) {
+                    data.columnValue = typeof data.columnValue === 'string' ? data.columnValue : moment(data.columnValue).format('DD/MM/YYYY');
+                } else {
+                    data.columnValue = data.columnValue;
+                }
+            } else if (data.columnType === 'datefulltime' && data.isVisiable) {
+                if (data.columnValue) {
+                    data.columnValue = typeof data.columnValue === 'string' ? data.columnValue : moment(data.columnValue).format('DD/MM/YYYY HH:mm:ss');
+                } else {
+                    data.columnValue = data.columnValue;
+                }
+            } else if (data.columnType === 'timeonly') {
+                data.columnValue = typeof data.columnValue === 'string' ? `${data.columnValue}:00` : moment(data.columnValue).format('HH:mm');
+                // data.columnValue = typeof data.columnValue === 'string' ? `${data.columnValue}:00` : null;
+            } else if (data.columnType === 'selectTree') {
+                data.columnValue = data.columnValue ? data.columnValue.orgId : null;
+                delete data.options;
+            } else if (data.columnType === 'autoCompletes') {
+                data.columnValue = data.columnValue && data.columnValue.length > 0 ? data.columnValue.map(d => d.code).toString() : null;
+                delete data.options;
+            } else if (data.columnType === 'selectTrees') {
+                console.log(" data.columnValue", data.columnValue);
+
+                data.columnValue = data.columnValue && data.columnValue.length > 0 ? data.columnValue.map(d => d.orgDepId).toString() : null;
+                delete data.options;
+            } else if (data.columnType === 'currency') {
+                data.columnValue = numeral(data.columnValue).value()
+            } else if (data.columnType === 'members') {
+                delete data.options;
+            } else if (data.columnType === 'linkUrlDrag' || data.columnType === 'listMch') {
+                data.columnValue = (data.columnValue && data.columnValue.length) > 0 ? data.columnValue.toString() : '';
+            } else if ((data.columnType === 'select' || data.columnType === 'multiSelect' || data.columnType === 'dropdown' || data.columnType === 'checkboxList') && data.options) {
+                if (data.columnType === 'multiSelect') {
+                    if (data.columnValue && data.columnValue.length > 0) {
+                        // data.columnValue = data.columnValue.map(d => d.code);
+                        data.columnValue = data.columnValue.toString()
+                    } else {
+                        data.columnValue = null;
+                    }
+                    delete data.options;
+
+                } else if (data.columnType === 'checkboxList') {
+                    if (data.columnValue && data.columnValue.length > 0) {
+                        data.columnValue = data.columnValue.toString();
+                    }
+                    delete data.options;
+                } else {
+                    data.columnValue = data.columnValue;
+                    delete data.options;
+
+                }
+            } else if (data.columnType === 'chips') {
+                data.columnValue = data.columnValue ? data.columnValue.toString() : '';
+            } else if (data.columnType === 'onOff') {
+                data.columnValue = data.columnValue ? "1" : "0"
+            } else if (data.field_name === 'content_type') {
+                group_fields.forEach(a => {
+                    a.fields.forEach(b => {
+                        if (b.field_name === 'content_markdown') {
+                            if (data.columnValue == 2) {
+                                b.columnValue = b.columnValue ? converter.makeHtml(b.columnValue) : '';
+                            } else {
+                                b.columnValue = b.columnValue;
+                            }
+                        }
+                    });
+                });
+            } else if (data.field_name === 'content_email') {
+                group_fields.forEach(a => {
+                    a.fields.forEach(b => {
+                        if (b.field_name === 'content_markdown') {
+                            data.columnValue = b.columnValue ? converter.makeHtml(b.columnValue) : '';
+                        }
+                    });
+                });
+            } else {
+                data.columnValue = data.columnValue;
+                if (data.columnType === 'number' && data.data_type === 'int') {
+                    data.columnValue = data.columnValue ? formatNumber(+data.columnValue) : 0;
+                    data.columnValue = numeral(data.columnValue).value();
+                }
+            }
+
+        })
+    });
+
+    return group_fields;
+}
+
+export function formatNumber(value) {
+    return numeral(value).format('0,0[.][00]');
+}
 
   // end parseHtmlToMarkdown
