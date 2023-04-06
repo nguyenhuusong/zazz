@@ -26,7 +26,7 @@ export class NotifyDetailComponent implements OnInit {
   @Output() save = new EventEmitter<any>();
   optionsButon: any = [
     // { label: 'Bỏ qua', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times-circle' },
-    { label: 'Lưu thông tin chung', value: 'Update', icon: 'pi pi-send',
+    { label: 'Lưu thông báo', value: 'Update', icon: 'pi pi-send',
     class: CheckHideAction(MENUACTIONROLEAPI.GetAppNotifyPage.url, ACTIONS.EDIT) ? 'hidden' : ''
     }
   ];
