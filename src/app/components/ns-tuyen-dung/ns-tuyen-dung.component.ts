@@ -82,6 +82,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     filter: '',
     offSet: 0,
     pageSize: 20,
+    can_st: -1
   }
   totalRecord = 0;
   DriverId = 0;
@@ -139,6 +140,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
       filter: '',
       offSet: 0,
       pageSize: 20,
+      can_st: -1
     }
     this.load();
   }
@@ -415,35 +417,35 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   }
   organizeIdSelected = '';
 
-  getIPAddress2()
-  {
-    this.http.get('https://jsonip.com')
-.pipe(
-  switchMap((value:any) => {
-	const userIP = value.ip;
-  console.log("userIP", userIP)
-	let url = `http://api.ipstack.com/${value.ip.split(',')[0]}?access_key=b1e8a9e4d386d64504f4668e12fc1f68`
-	return this.http.get(url);
-  })
-).subscribe(
-  (value:any) => {
-	console.log(value);
-  },
-  err => {
-	console.log(err);
-  }
-);
-  }
-  getIPAddress()
-  {
-    this.http.get("http://api.ipify.org/?format=json").subscribe((res:any)=>{
-      console.log( res.ip)
-    });
-  }
+//   getIPAddress2()
+//   {
+//     this.http.get('https://jsonip.com')
+// .pipe(
+//   switchMap((value:any) => {
+// 	const userIP = value.ip;
+//   console.log("userIP", userIP)
+// 	let url = `http://api.ipstack.com/${value.ip.split(',')[0]}?access_key=b1e8a9e4d386d64504f4668e12fc1f68`
+// 	return this.http.get(url);
+//   })
+// ).subscribe(
+//   (value:any) => {
+// 	console.log(value);
+//   },
+//   err => {
+// 	console.log(err);
+//   }
+// );
+//   }
+//   getIPAddress()
+//   {
+//     this.http.get("http://api.ipify.org/?format=json").subscribe((res:any)=>{
+//       console.log( res.ip)
+//     });
+//   }
 
   ngOnInit() {
-    this.getIPAddress2()
-    this.getIPAddress()
+    // this.getIPAddress2()
+    // this.getIPAddress()
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Nhân sự' },
@@ -723,6 +725,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     const data = {
       tempId: this.mailInputValue,
       canIds: canId,
+      can_st: this.query.can_st
     }
 
     this.employeeSaveService.setStocks(data);

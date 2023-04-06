@@ -70,6 +70,11 @@ export class NotifyDetailComponent implements OnInit {
   items = [];
   titlePage = ''
   organSeleted = '';
+  modelNotifyTo = {
+    to_level: 0,
+    to_groups: '',
+    to_type: 0
+  }
   ngOnInit(): void {
     this.titlePage = this.activatedRoute.data['_value'].title;
     this.items = [
@@ -79,16 +84,21 @@ export class NotifyDetailComponent implements OnInit {
       { label: `${this.titlePage}` },
     ];
     this.employeeSaveService.fetchAll().subscribe((results: any) => {
-      console.log(results)
       if(results) {
         this.external_name = null;
         this.organSeleted = null;
-        this.notiId = null;
+        this.notiId = this.notiId;
         this.tempId = results.tempId;
         this.notifyTempId = results.tempId;
+        this.modelNotifyTo.to_level = results.can_st,
+        this.modelNotifyTo.to_groups = results.canIds,
+        this.modelNotifyTo.to_type = 1
         this.getNotifyTempList('oRecruitment')
         this.getAppNotifyInfo();
       }else {
+        this.modelNotifyTo.to_level = null,
+        this.modelNotifyTo.to_groups = null,
+        this.modelNotifyTo.to_type = 0;
         this.getNotifyTempList();
         this.handleParams();
       }
@@ -125,6 +135,7 @@ export class NotifyDetailComponent implements OnInit {
     if(this.notiId){
       this.indexTab = 1;
     }
+    console.log(this.notiId)
     const queryParams = queryString.stringify(
       { n_id: this.notiId, 
         external_sub: this.organSeleted, 
@@ -135,7 +146,6 @@ export class NotifyDetailComponent implements OnInit {
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(results => {
       if (results.status === 'success') {
-        this.notiId = results.data.n_id;
         this.listViews = cloneDeep(results.data.group_fields);
         this.setItemByActionList();
         this.dataInfo = results.data;
@@ -342,7 +352,7 @@ export class NotifyDetailComponent implements OnInit {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data.messages ? results.data.messages : 'Thành công' });
         this.spinner.hide();
         this.notiId = results.data.id;
-        this.router.navigate(['/cai-dat/thong-bao/chi-tiet-thong-bao'], { queryParams: { notiId: results.data.id } });
+        // this.router.navigate(['/cai-dat/thong-bao/chi-tiet-thong-bao'], { queryParams: { notiId: results.data.id } });
         // this.indexTab = 1;
         this.getAppNotifyInfo();
       }

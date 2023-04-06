@@ -10,6 +10,7 @@ import { CheckHideAction } from 'src/app/common/function-common/common';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 
 import { setOrganizeId } from 'src/app/utils/common/function-common';
+import { EmployeeSaveService } from 'src/app/services/employee-save.service';
 @Component({
   selector: 'app-get-notify-to',
   templateUrl: './get-notify-to.component.html',
@@ -33,13 +34,13 @@ export class GetNotifyToComponent implements OnInit, OnDestroy, OnChanges {
     private apiService: ApiHrmService,
     private spinner: NgxSpinnerService,
     private messageService: MessageService,
+    private employeeSaveService: EmployeeSaveService,
     
     private router: Router
   ) { }
   private readonly unsubscribe$: Subject<void> = new Subject();
   @Input() n_id;
-  @Input() to_row;
-  @Input() to_level;
+  @Input() modelNotifyTo;
   @Input() notify;
   ngOnDestroy() {
     this.unsubscribe$.next();
@@ -51,15 +52,28 @@ export class GetNotifyToComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnInit(): void {
-    console.log("sada",this.n_id)
+    if(this.n_id) {
+      this.optionsButon = [
+        { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
+        { label: 'Lưu thông tin cài đặt', value: 'Update', class: CheckHideAction(MENUACTIONROLEAPI.GetPayrollAppInfoPage.url, ACTIONS.EDIT_TINH_LUONG_THANH_PHAN_LUONG) ? 'hidden' : '', icon: 'pi pi-check' },
+        { label: 'Thêm dòng', value: 'ADDROW', icon: 'pi pi-plus', class: 'p-button-success' }
+      ]
+    }else {
+      this.optionsButon = [
+        { label: 'Thêm dòng', value: 'ADDROW', icon: 'pi pi-plus', class: 'p-button-success' }
+      ]
+    }
     this.getDetail();
   }
+
+
 
   getDetail() {
     const params = {
       n_id: this.n_id,
-      to_row: this.to_row || null,
-      to_level: this.to_level || null
+      to_groups: this.modelNotifyTo.to_groups,
+      to_type: this.modelNotifyTo.to_type,
+      to_level: this.modelNotifyTo.to_level
     }
     this.listViews = []
     const queryParams = queryString.stringify(params);
@@ -83,8 +97,7 @@ export class GetNotifyToComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   addRow() {
-    this.to_row = this.detailInfo.to_count + 1;
-    // this.getNotifyToDraft(params)
+   
   }
 
   cloneListViews = []
@@ -119,7 +132,7 @@ export class GetNotifyToComponent implements OnInit, OnDestroy, OnChanges {
           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
           this.spinner.hide();
           const to_level = this.getValueByKey('to_level',params.group_fields);
-          this.to_level = to_level
+          this.modelNotifyTo.to_level = to_level
           this.getDetail();
         } else {
           this.messageService.add({
