@@ -1570,13 +1570,13 @@ export class ApiHrmService {
     });
   }
 
-  setContractTypeImport(params): Observable<Blob> {
-    return this.http.post(`${apiHrmServer}/api/v2/contracttype/SetContractTypeImport`, params, {
+  setContractTypeImport(data): Observable<Blob> {
+    const customOptions = {
       headers: new HttpHeaders({
-        Authorization: this.authService.getAuthorizationHeaderValue(),
-      }),
-      responseType: "blob"
-    });
+        Authorization: this.authService.getAuthorizationHeaderValue()
+      })
+    };
+    return this.http.post<any>(`${apiHrmServer}/api/v2/contracttype/SetContractTypeImport`, data, customOptions);
   }
 
 
