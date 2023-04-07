@@ -1579,6 +1579,19 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v2/contracttype/SetContractTypeImport`, data, customOptions);
   }
 
+  setContractTypeAccept(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/contracttype/SetContractTypeAccept`,  queryParams, this.options);
+  }
+
+  setContractTypeExportDraft(params): Observable<Blob> {
+    return this.http.post(`${apiHrmServer}/api/v2/contracttype/SetContractTypeExportDraft`, params, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
+  }
+
 
   // api cũ
   // getCardCustomers<T>(filter): Observable<T> {
