@@ -163,6 +163,7 @@ export class NavbarComponent implements OnInit {
   logout() {
     this.authService.signout();
     localStorage.removeItem('organizes');
+    localStorage.removeItem('md5');
   }
 
   ngOnInit() {

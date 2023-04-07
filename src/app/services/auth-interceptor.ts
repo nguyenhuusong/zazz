@@ -17,9 +17,10 @@ export class AuthInterceptor implements HttpInterceptor {
         private spinner: NgxSpinnerService) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
         let handled: boolean = false;
-
+        request = request.clone({
+            setHeaders: {'X-Role-Token': localStorage.hasOwnProperty('md5') && localStorage.getItem('md5') ? localStorage.getItem('md5') : ''}
+         });
         return next.handle(request)
             .pipe(
                 retry(1),
@@ -59,6 +60,7 @@ export class AuthInterceptor implements HttpInterceptor {
                 if (this.auth.isExpired()) {
                     location.reload();
                 }
+                localStorage.removeItem('md5');
                 this.spinner.hide();
                 handled = true;
                 break;
