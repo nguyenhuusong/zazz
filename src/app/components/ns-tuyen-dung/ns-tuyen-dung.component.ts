@@ -630,7 +630,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
 
   getRecruitMailInput() {
     this.isSendMail = true;
-    this.apiService.getRecruitMailInput(queryString.stringify({organizeIds: this.organizeIdSelected}))
+    this.apiService.getRecruitMailInput(queryString.stringify({ can_st: this.query.can_st }))
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(results => {
       if (results.status === 'success') {
