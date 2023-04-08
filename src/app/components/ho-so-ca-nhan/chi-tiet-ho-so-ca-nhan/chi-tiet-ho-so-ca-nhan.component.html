@@ -1,0 +1,24 @@
+<div class="main-grid product-detail" *ngIf="!isDialog">
+    <section>
+        <div class="breadcrumb">
+            <p-breadcrumb [model]="itemsMenu"></p-breadcrumb>
+            <h3>{{titlePage}}</h3>
+        </div>
+    </section>
+</div>
+<p-card styleClass="chi-tiet-tien-luong">
+    <div class="status-line steps-contract col-12 m-auto">
+        <p-steps [model]="steps" *ngIf="listViews.length> 0" [(activeIndex)]="activeIndex" [readonly]="false"></p-steps>
+    </div>
+</p-card>
+<p-divider></p-divider>
+<p-card>
+    <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'"
+        [optionsButtonsEdit]="optionsButtonsView" [dataView]="listViews" (callback)="setSchemeInfo($event)" (callBackForm)="callBackForm($event)"
+        (callbackcancel)="cancel($event)"></app-edit-detail>
+    <app-loading-detail 
+        [id]="'markdown'" 
+        *ngIf="listViews.length === 0">
+    </app-loading-detail>
+</p-card>
+

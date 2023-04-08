@@ -3595,5 +3595,18 @@ export class ApiHrmService {
   delUserSalary(queryParams): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v2/userrole/DelUserSalary?` + queryParams, this.options);
   }
+  //Customer
+  getCustFields(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/customer/GetCustFields?` + queryParams, this.options);
+  }
+
+  setCustFromCanId(queryParams): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v1/customer/SetCustFromCanId` , queryParams, this.options);
+  }
+
+  setCustFields(queryParams): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v1/customer/SetCustFields` , queryParams, this.options);
+  }
+
 
 }

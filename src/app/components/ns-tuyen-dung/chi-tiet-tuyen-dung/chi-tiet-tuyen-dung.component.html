@@ -30,3 +30,8 @@
         </div>
    </section>
 </div>
+
+<p-dialog header="Chi tiết hồ sơ cá nhân" [(visible)]="displayCustomerProfile" [modal]="true" [draggable]="false"
+    [resizable]="false" [style]="{width: '70vw'}" [autoZIndex]=true [draggable]="false" [resizable]="false">
+    <app-chi-tiet-ho-so-ca-nhan *ngIf="displayCustomerProfile" [isDialog]="true" [custId]="custId" [canId]="modelEdit.canId"></app-chi-tiet-ho-so-ca-nhan>
+</p-dialog>

@@ -21,6 +21,7 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
   listViews = [];
   optionsButon = [
     { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
+    { label: 'Tạo hồ sơ cá nhân', value: 'CreateProfile', class: 'p-button-success', icon: 'pi pi-send' },
     { label: 'Lưu lại', value: 'Update', class: CheckHideAction(MENUACTIONROLEAPI.GetCandidatePage.url, ACTIONS.EDIT) ? 'hidden' : '', icon: 'pi pi-check'  }
   ]
   constructor(
@@ -50,6 +51,8 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
   modelEdit = {
     canId: null,
   }
+  displayCustomerProfile = false;
+  custId = null;
   titlePage = '';
   isView = false;
   columnDefs = [];
@@ -83,6 +86,7 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
           const listViews = cloneDeep(results.data.group_fields);
           this.listViews = [...listViews];
           this.detailInfo = results.data;
+          this.custId = results.data.custId;
           this.detailEdit = results.data
         }
       });
@@ -98,6 +102,7 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
       if (results.status === 'success') {
         this.cols = results.data.gridflexdetails1;
         this.listData = results.data.recruitCandidates;
+        this.custId = results.data.custId;
         const listViews = cloneDeep(results.data.group_fields);
         this.listViews = [...listViews];
         this.detailInfo = results.data;
@@ -147,6 +152,8 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
   quaylai(data) {
     if(data === 'CauHinh') {
       this.getCandidateInfo();
+    }else if(data === 'CreateProfile') {
+      this.displayCustomerProfile = true;
     }else {
        this.router.navigate(['/tuyen-dung/ds-tuyen-dung']);
     }
