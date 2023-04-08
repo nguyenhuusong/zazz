@@ -222,6 +222,7 @@ export class ChiTietHoSoCaNhanComponent implements OnInit {
       if (results.status === 'success') {
           // this.setValueData(results);
           this.modelEdit.custId = results.data.custId;
+          this.custId = results.data.custId;
           this.getCustFields();
           this.spinner.hide();
       }else {

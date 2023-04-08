@@ -159,6 +159,11 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
     }
   }
 
+  callbackSaveProfile() {
+    this.displayCustomerProfile = false;
+    this.getCandidateInfo();
+  }
+
 
 }
 
