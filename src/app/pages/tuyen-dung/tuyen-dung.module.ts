@@ -1,3 +1,4 @@
+import { HoSoCaNhanComponent } from './../../components/ho-so-ca-nhan/ho-so-ca-nhan.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -83,6 +84,8 @@ import { ChuyenVienTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/c
 import { ChiTietChuyenVienTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/chuyen-vien-tuyen-dung/chi-tiet-chuyen-vien-tuyen-dung/chi-tiet-chuyen-vien-tuyen-dung.component';
 import { PlanDetailComponent } from 'src/app/components/ke-hoach-tuyen-dung/plan-detail/plan-detail.component';
 import { ChiTietHoSoCaNhanComponent } from 'src/app/components/ho-so-ca-nhan/chi-tiet-ho-so-ca-nhan/chi-tiet-ho-so-ca-nhan.component';
+import { HrmSearchCustomerModule } from 'src/app/common/hrm-search-customer/hrm-search-customer.module';
+import { BlockUIModule } from 'primeng/blockui';
 @NgModule({
   imports: [
     MessagesModule,
@@ -111,6 +114,7 @@ import { ChiTietHoSoCaNhanComponent } from 'src/app/components/ho-so-ca-nhan/chi
     EditDetailModule,
     FormFilterModule,
     FileUploadModule,
+    BlockUIModule,
     MenuModule,
     CardModule,
     OrganizationChartModule,
@@ -141,7 +145,8 @@ import { ChiTietHoSoCaNhanComponent } from 'src/app/components/ho-so-ca-nhan/chi
     StepsModule,
     ImportExcelModule,
     LoadingDetailModule,
-    HrmSearchEmpModule
+    HrmSearchEmpModule,
+    HrmSearchCustomerModule
   ],
 
   declarations: [
@@ -173,7 +178,8 @@ import { ChiTietHoSoCaNhanComponent } from 'src/app/components/ho-so-ca-nhan/chi
     ChuyenVienTuyenDungComponent,
     ChiTietChuyenVienTuyenDungComponent,
     PlanDetailComponent,
-    ChiTietHoSoCaNhanComponent
+    ChiTietHoSoCaNhanComponent,
+    HoSoCaNhanComponent
   ],
   providers: [ ]
 })

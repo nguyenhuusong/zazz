@@ -1,3 +1,5 @@
+import { ChiTietHoSoCaNhanComponent } from './../../components/ho-so-ca-nhan/chi-tiet-ho-so-ca-nhan/chi-tiet-ho-so-ca-nhan.component';
+import { HoSoCaNhanComponent } from './../../components/ho-so-ca-nhan/ho-so-ca-nhan.component';
 import { Routes } from '@angular/router';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
@@ -10,13 +12,10 @@ import { LinhVucTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/linh
 import { NghiViecComponent } from 'src/app/components/ns-tuyen-dung/nghi-viec/nghi-viec.component';
 import { MailTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/mail-tuyen-dung/mail-tuyen-dung.component';
 import { ChiTietMailTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/mail-tuyen-dung/chi-tiet-mail-tuyen-dung/chi-tiet-mail-tuyen-dung.component';
-import { ImportTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/import-tuyen-dung/import-tuyen-dung.component';
 import { DsTiemNangComponent } from 'src/app/components/ns-tuyen-dung/ds-tiem-nang/ds-tiem-nang.component';
 import { MailDaGuiComponent } from 'src/app/components/ns-tuyen-dung/mail-da-gui/mail-da-gui.component';
 import { KeHoachTuyenDungComponent } from 'src/app/components/ke-hoach-tuyen-dung/ke-hoach-tuyen-dung.component';
-import { ImportKeHoachComponent } from 'src/app/components/ke-hoach-tuyen-dung/import-ke-hoach/import-ke-hoach.component';
 import { ChiTietKeHoachTuyenDungComponent } from 'src/app/components/ke-hoach-tuyen-dung/chi-tiet-ke-hoach-tuyen-dung/chi-tiet-ke-hoach-tuyen-dung.component';
-import { ImportLinhVucTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/linh-vuc-tuyen-dung/import-linh-vuc-tuyen-dung/import-linh-vuc-tuyen-dung.component';
 import { ImportExcelComponent } from 'src/app/common/import-excel/import-excel.component';
 import { CauHinhMailComponent } from 'src/app/components/ns-tuyen-dung/cau-hinh-mail/cau-hinh-mail.component';
 import { VongTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/vong-tuyen-dung/vong-tuyen-dung.component';
@@ -292,6 +291,33 @@ const routes: Routes = [
   data: {
     title: 'Chi tiết chuyên viên tuyển dụng ',
     url: 'chi-tiet-chuyen-vien-tuyen-dung',
+  },
+},
+
+// Hồ sơ cá nhân
+
+{
+  path: 'ho-so-ca-nhan',
+  component: HoSoCaNhanComponent,
+  data: {
+    title: 'Danh sách vị trí tuyển dụng',
+    url: 'ho-so-ca-nhan',
+  },
+},
+{
+  path: 'ho-so-ca-nhan/them-moi-ho-so-ca-nhan',
+  component: ChiTietHoSoCaNhanComponent,
+  data: {
+    title: 'Thêm mới hồ sơ cá nhân',
+    url: 'them-moi-ho-so-ca-nhan',
+  },
+},
+{
+  path: 'ho-so-ca-nhan/chi-tiet-ho-so-ca-nhan',
+  component: ChiTietHoSoCaNhanComponent,
+  data: {
+    title: 'Chi tiết hồ sơ cá nhân',
+    url: 'chi-tiet-ho-so-ca-nhan',
   },
 },
 

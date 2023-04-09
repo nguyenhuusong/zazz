@@ -87,9 +87,18 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
           this.listViews = [...listViews];
           this.detailInfo = results.data;
           this.custId = results.data.custId;
+          this.optionsButon = [
+            { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
+            { label: 'Tạo hồ sơ cá nhân', value: 'CreateProfile', class: `p-button-success ${this.custId ? 'hidden' : ''}`, icon: 'pi pi-send' },
+            { label: 'Lưu lại', value: 'Update', class: CheckHideAction(MENUACTIONROLEAPI.GetCandidatePage.url, ACTIONS.EDIT) ? 'hidden' : '', icon: 'pi pi-check'  }
+          ]
           this.detailEdit = results.data
         }
       });
+  }
+  tabIndex:number = 0;
+  handleChange(index) {
+    this.tabIndex = index;
   }
 
   getCandidatesViewInfo() {

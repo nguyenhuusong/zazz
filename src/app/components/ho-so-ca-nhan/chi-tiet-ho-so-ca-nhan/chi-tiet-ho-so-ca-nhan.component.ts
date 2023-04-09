@@ -18,6 +18,7 @@ export class ChiTietHoSoCaNhanComponent implements OnInit {
   @Input() isDialog = false;
   @Input() custId = null;
   @Input() canId = null;
+  @Input() hideButton: boolean = false;
   constructor(
     private apiService: ApiHrmService,
     private messageService: MessageService,
@@ -46,6 +47,7 @@ export class ChiTietHoSoCaNhanComponent implements OnInit {
   itemsMenu = [];
   modelEdit = {
     custId: null,
+    edit_is: false
   }
   private readonly unsubscribe$: Subject<void> = new Subject();
   ngOnDestroy() {
@@ -57,7 +59,7 @@ export class ChiTietHoSoCaNhanComponent implements OnInit {
     this.url = this.activatedRoute.data['_value'].url;
     this.itemsMenu =  [
       { label: 'Trang chủ' , routerLink: '/home' },
-      { label: 'Danh sách chính sách lương', routerLink: '/luong-thue/chinh-sach' },
+      { label: 'Danh sách chính sách lương', routerLink: '/tuyen-dung/ho-so-ca-nhan' },
       { label: `${this.titlePage}` },
     ]
     if(this.isDialog) {
@@ -78,6 +80,7 @@ export class ChiTietHoSoCaNhanComponent implements OnInit {
     .subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.modelEdit.custId = this.paramsObject.params.custId || null
+      this.modelEdit.edit_is = this.paramsObject.params.type || null
       this.getCustFields();
     });
   }
@@ -105,7 +108,7 @@ export class ChiTietHoSoCaNhanComponent implements OnInit {
       this.listViews = [];
       this.getCustFields(this.flowCurrent === 1 ? this.flowCurrent: this.flowCurrent -1)
     } else {
-     this.isDialog ? this.callback.emit() : this.router.navigate(['/luong-thue/chinh-sach']);
+     this.isDialog ? this.callback.emit() : this.router.navigate(['/tuyen-dung/ho-so-ca-nhan']);
     }
   }
 
@@ -175,7 +178,7 @@ export class ChiTietHoSoCaNhanComponent implements OnInit {
 
         if(type === 'Submit' || type === 'SaveNhap') {
           setTimeout(() => {
-            this.isDialog ? this.callback.emit() : this.router.navigate(['/luong-thue/chinh-sach'])
+            this.isDialog ? this.callback.emit() : this.router.navigate(['/tuyen-dung/ho-so-ca-nhan'])
           }, 200);
         }
       } else {
@@ -198,7 +201,7 @@ export class ChiTietHoSoCaNhanComponent implements OnInit {
     this.detailInfo = null;
     this.listViews = [];
     this.spinner.show();
-    const queryParams = queryString.stringify({ custId: this.modelEdit.custId, flow_cur: flow_cur });
+    const queryParams = queryString.stringify({ custId: this.modelEdit.custId, flow_cur: flow_cur, edit_is: this.modelEdit.edit_is });
     this.apiService.getCustFields(queryParams)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(results => {
@@ -209,7 +212,7 @@ export class ChiTietHoSoCaNhanComponent implements OnInit {
         this.messageService.add({
           severity: 'error', summary: 'Thông báo', detail: results.message
         });
-        this.isDialog ? this.callback.emit() : this.router.navigate(['/luong-thue/chinh-sach'])
+        this.isDialog ? this.callback.emit() : this.router.navigate(['/tuyen-dung/ho-so-ca-nhan'])
       }
     })
   }
@@ -230,7 +233,7 @@ export class ChiTietHoSoCaNhanComponent implements OnInit {
         this.messageService.add({
           severity: 'error', summary: 'Thông báo', detail: results.message
         });
-        this.isDialog ? this.callback.emit() : this.router.navigate(['/luong-thue/chinh-sach'])
+        this.isDialog ? this.callback.emit() : this.router.navigate(['/tuyen-dung/ho-so-ca-nhan'])
       }
     })
   }

@@ -3608,5 +3608,17 @@ export class ApiHrmService {
     return this.http.put<any>(`${apiHrmServer}/api/v1/customer/SetCustFields` , queryParams, this.options);
   }
 
+  setCustProfileVerified(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/customer/SetCustProfileVerified` , queryParams, this.options);
+  }
+
+  setCustPhoneChanged(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/customer/SetCustPhoneChanged` , queryParams, this.options);
+  }
+  
+  setCustEmailChanged(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/customer/SetCustEmailChanged` , queryParams, this.options);
+  }
+
 
 }

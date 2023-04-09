@@ -14,7 +14,7 @@
 <p-divider></p-divider>
 <p-card>
     <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'"
-        [optionsButtonsEdit]="optionsButtonsView" [dataView]="listViews" (callback)="setSchemeInfo($event)" (callBackForm)="callBackForm($event)"
+        [optionsButtonsEdit]="hideButton ? [] : optionsButtonsView" [dataView]="listViews" (callback)="setSchemeInfo($event)" (callBackForm)="callBackForm($event)"
         (callbackcancel)="cancel($event)"></app-edit-detail>
     <app-loading-detail 
         [id]="'markdown'" 
