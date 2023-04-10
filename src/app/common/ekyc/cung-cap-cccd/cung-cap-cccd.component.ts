@@ -1,9 +1,7 @@
-import { getMessageError } from 'src/app/utils/function-common';
 import { Component, OnInit, Output, EventEmitter, OnDestroy, Input } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
 import { Subject } from 'rxjs';
-import { ConfirmCard } from 'src/app/models/price/ks.module';
 import { ApiService } from 'src/app/services/api.service';
 @Component({
   selector: 'app-cung-cap-cccd',
@@ -126,3 +124,18 @@ export class CungCapCccdComponent implements OnInit, OnDestroy {
     }
   }
 }
+
+export interface ConfirmCard {
+  idCardType: string,
+  idCardNumber: string,
+  fullName: string,
+  birthday: string,
+  sex: string,
+  nationality: number,
+  address: string,
+  contactAddress: string,
+  expiry: string,
+  issueDate: string,
+  issueBy: string
+}
+

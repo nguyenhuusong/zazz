@@ -253,6 +253,12 @@ export class ApiService {
     return this.http.get(`${apiHrmBase}/api/v2/userrole/GetRoleTypes`, this.options);
   }
 
+  detectByidCard(params: any): Observable<any> {
+
+    return this.http.get(`${apiHrmBase}/api/v2/userrole/GetRoleTypes`, this.options);
+    // return this.http.post(environment.BASE_URL + `/api/v1.0/ekyc/id-card/detect`, params, this.options_card);
+  }
+
   
 }
 
