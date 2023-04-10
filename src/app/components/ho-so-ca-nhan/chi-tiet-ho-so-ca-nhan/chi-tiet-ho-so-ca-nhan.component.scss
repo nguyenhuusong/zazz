@@ -1,0 +1,11 @@
+:host::ng-deep{
+    .horizontal {
+        .p-image {
+            & > img{
+                object-fit: contain !important;
+                top: 0px !important;
+                height: 100% !important;
+            }
+        }
+    }
+}

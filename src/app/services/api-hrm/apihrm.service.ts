@@ -700,6 +700,15 @@ export class ApiHrmService {
     });
   }
 
+  getOrganizeImportTemp(): Observable<any> {
+    return this.http.get(`${apiHrmServer}/api/v1/organize/GetOrganizeImportTemp`, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
+  }
+
   setOrganizeImport(queryParams): Observable<any> {
     const customOptions = {
       headers: new HttpHeaders({

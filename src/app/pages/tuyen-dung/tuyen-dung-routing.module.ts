@@ -55,7 +55,7 @@ const routes: Routes = [
       titleDad : 'Danh sách tuyển dụng',
       urlDad: '/tuyen-dung/ds-tuyen-dung',
       api: 'setCandidatesImport',
-      apiAccept: 'setRecruitPlanAccept',
+      apiAccept: 'setCandidatesAccept',
       fileDoc: 'tuyen_dung_import.xls',
       apiExport: 'setCandidateExportDraft',
       apiTemImport: 'getCandidateImportTemp',
