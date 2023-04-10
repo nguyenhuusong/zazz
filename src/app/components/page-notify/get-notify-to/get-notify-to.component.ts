@@ -103,13 +103,12 @@ export class GetNotifyToComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   setNotifyToDraft(params) {
+    this.listViews = []
     this.apiService.setNotifyToDraft(params)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {
         if (results.status === 'success') {
-         
           this.listViews = cloneDeep(results.data.group_fields);
-          console.log(this.listViews)
           this.detailInfo = results.data;
         }
       });
