@@ -86,6 +86,7 @@ import { PlanDetailComponent } from 'src/app/components/ke-hoach-tuyen-dung/plan
 import { ChiTietHoSoCaNhanComponent } from 'src/app/components/ho-so-ca-nhan/chi-tiet-ho-so-ca-nhan/chi-tiet-ho-so-ca-nhan.component';
 import { HrmSearchCustomerModule } from 'src/app/common/hrm-search-customer/hrm-search-customer.module';
 import { BlockUIModule } from 'primeng/blockui';
+import { CungCapCccdComponent } from 'src/app/common/ekyc/cung-cap-cccd/cung-cap-cccd.component';
 @NgModule({
   imports: [
     MessagesModule,
@@ -146,7 +147,7 @@ import { BlockUIModule } from 'primeng/blockui';
     ImportExcelModule,
     LoadingDetailModule,
     HrmSearchEmpModule,
-    HrmSearchCustomerModule
+    HrmSearchCustomerModule,
   ],
 
   declarations: [
@@ -179,7 +180,8 @@ import { BlockUIModule } from 'primeng/blockui';
     ChiTietChuyenVienTuyenDungComponent,
     PlanDetailComponent,
     ChiTietHoSoCaNhanComponent,
-    HoSoCaNhanComponent
+    HoSoCaNhanComponent,
+    CungCapCccdComponent
   ],
   providers: [ ]
 })

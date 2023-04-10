@@ -1,7 +1,8 @@
+import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { Component, OnInit, Output, EventEmitter, OnDestroy, Input } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
-import { Subject } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
 @Component({
   selector: 'app-cung-cap-cccd',
@@ -14,18 +15,27 @@ export class CungCapCccdComponent implements OnInit, OnDestroy {
   @Output() stepActive = new EventEmitter<any>();
   @Output() callback = new EventEmitter<any>();
   @Input() information = null;
+  @Input() canId = null;
   identityImage = {
     back: null,
-    front: null
+    front: null,
+    canId: null,
+    idcard_type: 1
   };
   private readonly unsubscribe$: Subject<void> = new Subject();
-  imgDefault = '../../../assets/images/account/dang-ky/image-cmnd.svg';
-  imgDefaultMs = '../../../assets/images/account/dang-ky/image-cmnd-sau.svg';
+  imgDefault = '/assets/images/account/image-cmnd/svg';
+  imgDefaultMs = '../../../assets/images/account/image-cmnd-sau.svg';
   imageMt = null;
   imageMs = null;
-
+  typeCards = [{
+    name: 'CMND/CCCD',
+    value: 1
+  }, {
+    name: 'Hộ chiếu',
+    value: 2
+  }]
   constructor(
-    private apiService: ApiService,
+    private apiService: ApiHrmService,
     private messageService: MessageService,
     private spinner: NgxSpinnerService,
   ) { }
@@ -38,45 +48,43 @@ export class CungCapCccdComponent implements OnInit, OnDestroy {
   }
 
   stepNext(): void {
-    if (!this.imageMt || !this.imageMs) {
+    if ((this.identityImage.idcard_type === 1) && (!this.imageMt || !this.imageMs)) {
       this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Vui lòng chọn ảnh chứng minh/ CCCD!' });
       return;
     }
+
+    if ((this.identityImage.idcard_type === 2) && (!this.imageMt)) {
+      this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Vui Lòng tải lên hộ chiếu' });
+      return;
+    }
+
+    const formData =new FormData();
+    formData.append('formFile1', this.identityImage.front)
+    formData.append('formFile2', this.identityImage.back)
+    formData.append('idcard_type', this.identityImage.idcard_type.toString())
+    formData.append('canId', this.canId);
     this.spinner.show();
-    this.apiService.detectByidCard({
-      frontImage: this.imageMt.split(',')[1], backImage: this.imageMs.split(',')[1]
-    }).subscribe(results => {
-      if (results.status === 200) {
-        const params: ConfirmCard = {
-          idCardType: this.DoccumentCCCD.indexOf(results.data.document) ? 'CITIZEN_ID_CARD' : 'ID_CARD',
-          idCardNumber: results.data.no,
-          fullName: results.data.name,
-          birthday: results.data.birthday,
-          sex: results.data.sex === 'Nam' ? 'MALE' : 'FEMALE',
-          nationality: 234,
-          address: results.data.address,
-          contactAddress: results.data.hometown,
-          expiry: results.data.expiry,
-          issueDate: results.data.issueDate,
-          issueBy: results.data.issueBy
-        };
-        this.stepActive.emit({
-          key: 2, data: {
-            thongtinEKYC: params,
-            identityImage: this.identityImage
-          }
+    this.apiService.setCustFromCanId(formData)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
+      console.log(results)
+      if (results.status === 'success') {
+          this.callback.emit(results.data.custId);
+          this.messageService.add({
+            severity: 'success', summary: 'Thông báo', detail: results.data.messages
+          });
+          this.spinner.hide();
+      }else {
+        this.spinner.hide();
+        this.messageService.add({
+          severity: 'error', summary: 'Thông báo', detail: results.message
         });
-        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Cập nhật CMND/CCCD thành công' });
-      } else {
-        this.messageService.add({ severity: 'error', icon: 'pi-file', summary: 'Thông báo', detail: 'Ảnh không hợp lệ'});
       }
-      this.spinner.hide();
-    }, error => {
-      console.error(error);
-      this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Cập nhật CMND/CCCD không hợp lệ' });
-      this.spinner.hide();
-    });
+    })
+
+
   }
+
 
   uploadMtCm(event, type): void {
     if (event.target.files && event.target.files[0]) {
@@ -99,13 +107,24 @@ export class CungCapCccdComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
+    // this.unsubscribe$.next();
+    // this.unsubscribe$.complete();
   }
 
+    // if (event.currentFiles[0] && event.currentFiles[0].size > 0) {
+    //   const getDAte = new Date();
+    //   const getTime = getDAte.getTime();
+    //   const storageRef = firebase.storage().ref();
+    //   const uploadTask = storageRef.child(`s-hrm/file-attach/${getTime}-${event.currentFiles[0].name})`).put(event.currentFiles[0]);
+    //   uploadTask.on('state_changed', (snapshot) => {
+    //   }, (error) => {
+    //     this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: error.message });
+    //     this.spinner.hide();
+
+
   onUploadMt(event) {
-    if (event.files && event.files[0]) {
-      const file = event.files[0];
+    if (event.currentFiles[0] && event.currentFiles[0].size > 0) {
+      const file = event.currentFiles[0];
       const reader = new FileReader();
       reader.onload = e => this.imageMt = reader.result;
       console.log(this.imageMt);
@@ -114,13 +133,12 @@ export class CungCapCccdComponent implements OnInit, OnDestroy {
     }
   }
   onUploadMs(event) {
-    if (event.files && event.files[0]) {
-      const file = event.files[0];
+    if (event.currentFiles[0] && event.currentFiles[0].size > 0) {
+      const file = event.currentFiles[0];
       const reader = new FileReader();
       reader.onload = e => this.imageMs = reader.result;
-      console.log(this.imageMs);
       reader.readAsDataURL(file);
-      this.identityImage.front = file;
+      this.identityImage.back = file;
     }
   }
 }

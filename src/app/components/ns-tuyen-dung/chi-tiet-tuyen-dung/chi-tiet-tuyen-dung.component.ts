@@ -19,6 +19,7 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
   paramsObject = null;
   detailInfo = null
   listViews = [];
+  displayAddCCCD= false;
   optionsButon = [
     { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
     { label: 'Tạo hồ sơ cá nhân', value: 'CreateProfile', class: 'p-button-success', icon: 'pi pi-send' },
@@ -162,7 +163,7 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
     if(data === 'CauHinh') {
       this.getCandidateInfo();
     }else if(data === 'CreateProfile') {
-      this.displayCustomerProfile = true;
+      this.displayAddCCCD = true;
     }else {
        this.router.navigate(['/tuyen-dung/ds-tuyen-dung']);
     }
@@ -171,6 +172,15 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
   callbackSaveProfile() {
     this.displayCustomerProfile = false;
     this.getCandidateInfo();
+  }
+
+  saveCCCD(event) {
+    this.custId =event;
+   setTimeout(() => {
+    this.tabIndex = 1
+    this.modelEdit.canId = event
+    this.displayAddCCCD = false;
+   }, 100);
   }
 
 

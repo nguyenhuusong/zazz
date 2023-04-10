@@ -42,3 +42,8 @@
     <app-chi-tiet-ho-so-ca-nhan *ngIf="displayCustomerProfile" [isDialog]="true" [custId]="custId"
         [canId]="modelEdit.canId" (callback)="callbackSaveProfile()"></app-chi-tiet-ho-so-ca-nhan>
 </p-dialog>
+
+<p-dialog header="  Tải lên CCCD,  Hộ chiếu" [(visible)]="displayAddCCCD" [modal]="true" [draggable]="false"
+    [resizable]="false" [style]="{width: '50vw'}" [autoZIndex]=true [draggable]="false" [resizable]="false">
+    <app-cung-cap-cccd *ngIf="displayAddCCCD" [canId]="modelEdit.canId" (callback)="saveCCCD($event)"></app-cung-cap-cccd>
+</p-dialog>

@@ -218,24 +218,24 @@ export class ChiTietHoSoCaNhanComponent implements OnInit {
   }
 
   setCustFromCanId() {
-    this.spinner.show();
-    this.apiService.setCustFromCanId({canId: this.canId})
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(results => {
-      if (results.status === 'success') {
-          // this.setValueData(results);
-          this.modelEdit.custId = results.data.custId;
-          this.custId = results.data.custId;
-          this.getCustFields();
-          this.spinner.hide();
-      }else {
-        this.spinner.hide();
-        this.messageService.add({
-          severity: 'error', summary: 'Thông báo', detail: results.message
-        });
-        this.isDialog ? this.callback.emit() : this.router.navigate(['/tuyen-dung/ho-so-ca-nhan'])
-      }
-    })
+    // this.spinner.show();
+    // this.apiService.setCustFromCanId({canId: this.canId})
+    // .pipe(takeUntil(this.unsubscribe$))
+    // .subscribe(results => {
+    //   if (results.status === 'success') {
+    //       // this.setValueData(results);
+    //       this.modelEdit.custId = results.data.custId;
+    //       this.custId = results.data.custId;
+    //       this.getCustFields();
+    //       this.spinner.hide();
+    //   }else {
+    //     this.spinner.hide();
+    //     this.messageService.add({
+    //       severity: 'error', summary: 'Thông báo', detail: results.message
+    //     });
+    //     this.isDialog ? this.callback.emit() : this.router.navigate(['/tuyen-dung/ho-so-ca-nhan'])
+    //   }
+    // })
   }
 
   setValueData(results) {

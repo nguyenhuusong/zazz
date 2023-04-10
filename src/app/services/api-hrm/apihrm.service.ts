@@ -3609,9 +3609,16 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v1/customer/GetCustFields?` + queryParams, this.options);
   }
 
-  setCustFromCanId(queryParams): Observable<any> {
-    return this.http.put<any>(`${apiHrmServer}/api/v1/customer/SetCustFromCanId` , queryParams, this.options);
+  setCustFromCanId(data): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/customer/SetCustFromCanId`, data, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      // responseType: "blob"
+    });
   }
+
+  
 
   setCustFields(queryParams): Observable<any> {
     return this.http.put<any>(`${apiHrmServer}/api/v1/customer/SetCustFields` , queryParams, this.options);
