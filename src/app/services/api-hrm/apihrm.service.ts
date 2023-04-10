@@ -3624,6 +3624,10 @@ export class ApiHrmService {
     return this.http.put<any>(`${apiHrmServer}/api/v1/customer/SetCustFields` , queryParams, this.options);
   }
 
+  delCustIdentity(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v1/customer/DelCustIdentity?` +queryParams, this.options);
+  }
+
   setCustProfileVerified(queryParams): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v1/customer/SetCustProfileVerified` , queryParams, this.options);
   }

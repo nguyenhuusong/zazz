@@ -225,6 +225,12 @@ export class HoSoCaNhanComponent implements OnInit, AfterViewChecked {
           icon: 'pi pi-inbox',
           class: 'btn-primary mr5',
         },
+        {
+          onClick: this.delRow.bind(this),
+          label: 'Xóa giấy tờ',
+          icon: 'pi pi-trash',
+          class: 'btn-primary mr5',
+        },
       ]
     };
   }
@@ -353,16 +359,16 @@ export class HoSoCaNhanComponent implements OnInit, AfterViewChecked {
 
   }
 
-  delRow(event) {
+  delRow({rowData}) {
     this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn xóa vị trí tuyển dụng?',
+      message: 'Bạn có chắc chắn muốn xóa giấy tờ cá nhân?',
       accept: () => {
-        const queryParams = queryString.stringify({ recruitPlanId: event.rowData.recruitPlanId });
-        this.apiService.delRecruitPlan(queryParams)
+        const queryParams = queryString.stringify({ custId: rowData.custId,  idcard_no: rowData.idcard_No});
+        this.apiService.delCustIdentity(queryParams)
           .pipe(takeUntil(this.unsubscribe$))
           .subscribe(results => {
             if (results.status === 'success') {
-              this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa vị trí tuyển dụng thành công' });
+              this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Xóa giấy tờ thành công' });
               this.load();
             } else {
               this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
