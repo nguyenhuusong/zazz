@@ -1993,7 +1993,7 @@ export class ApiHrmService {
         Authorization: this.authService.getAuthorizationHeaderValue()
       })
     };
-    return this.http.post<any>(`${apiHrmServer}/api/v2/contract/Import`, data, customOptions);
+    return this.http.post<any>(`${apiHrmServer}/api/v2/contract/SetContractImport`, data, customOptions);
   }
 
   setContractExportDraft(data): Observable<Blob> {
