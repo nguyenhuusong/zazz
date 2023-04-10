@@ -123,7 +123,8 @@ const routes: Routes = [
       api: 'setOrganizeImport',
       apiAccept: 'setOrganizeAccept',
       fileDoc: 'file_mau_import_danh_muc_to_chuc.xlsx',
-      apiTemImport: 'getCompanyImportTemp',
+      fileNameTemImport: 'file_mau_import_to_chuc',
+      apiTemImport: 'getOrganizeImportTemp',
       apiExport: 'setOrganizeExportDraft'
     },
   },
