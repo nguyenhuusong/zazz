@@ -30,9 +30,9 @@
     
     <!-- row 1 -->
     <div class="grid boxs">
-      <div class="col-9 pr-0">
+      <div class="col-9 pr-0 md:col-12 lg:col-9 xl:col-9">
         <div class="grid">
-            <div class="col-3 pt-0" *ngFor="let tongQuanNhanSu of dashboardData?.tongquan">
+            <div class="col-12 md:col-6 lg:col-4 xl:col-3 pt-0" *ngFor="let tongQuanNhanSu of dashboardData?.tongquan">
               <div class="card">
                 <div class="card-content">
                   <div class="icon d-flex middle center">
@@ -48,16 +48,16 @@
                   <div class="media align-items-stretch">
                       <p>{{ tongQuanNhanSu?.name }}</p>
 
-                      <div class="per-50 d-flex bottom bet">
-                        <div class="qan d-flex bet">
-                            <div class="">
-                              <h1>{{ tongQuanNhanSu?.tongnv }}</h1>
+                      <div class="">
+                        <div class="qan d-flex gap-12 middle">
+                            <div class="d-flex gap-12">
+                              <h1 class="mb-0">{{ tongQuanNhanSu?.tongnv }}</h1>
                               <label>Người</label>
                             </div>
                             <div class="per"> <span>-10% </span></div>
                         </div>
                         
-                        <div class="the-month">
+                        <div class="the-month d-flex end">
                           <div class="select-noborder">
                             <p-dropdown [(ngModel)]="selectedMonth" name="selectedMonth" [options]="months" (onChange)="changeMonths($event)" optionLabel="name"></p-dropdown>
                           </div>
@@ -108,7 +108,7 @@
             </div>
         </div>
       </div>
-      <div class="col-3">
+      <div class="col-3 md:col-12 lg:col-3 xl:col-3">
         <div class="sidebar col-12 pt-0 pl-0">
           <div class="box">
             <h3>Thống kê hợp đồng theo loại hợp đồng</h3>
