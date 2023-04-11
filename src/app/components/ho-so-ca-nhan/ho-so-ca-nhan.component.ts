@@ -72,7 +72,7 @@ export class HoSoCaNhanComponent implements OnInit, AfterViewChecked {
   getRowHeight;
   query = {
     filter: '',
-    is_worked: true,
+    is_worked: 1,
     keyType: '',
     keyName: '',
     offSet: 0,
@@ -125,7 +125,7 @@ export class HoSoCaNhanComponent implements OnInit, AfterViewChecked {
   cancel() {
     this.query = {
       filter: '',
-      is_worked: true,
+      is_worked: this.query.is_worked,
       keyType: '',
       keyName: '',
       offSet: 0,
@@ -149,7 +149,7 @@ export class HoSoCaNhanComponent implements OnInit, AfterViewChecked {
 
   handleChange(index) {
     this.tabIndex = index;
-    this.query.is_worked = this.tabIndex === 0 ? true : false;
+    this.query.is_worked = this.tabIndex === 0 ? 1 : 2;
     this.load()
   }
 
@@ -363,8 +363,8 @@ export class HoSoCaNhanComponent implements OnInit, AfterViewChecked {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa giấy tờ cá nhân?',
       accept: () => {
-        const queryParams = queryString.stringify({ custId: rowData.custId,  idcard_no: rowData.idcard_No});
-        this.apiService.delCustIdentity(queryParams)
+        const queryParams = queryString.stringify({ custId: rowData.custId});
+        this.apiService.delCustProfile(queryParams)
           .pipe(takeUntil(this.unsubscribe$))
           .subscribe(results => {
             if (results.status === 'success') {

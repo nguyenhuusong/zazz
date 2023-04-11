@@ -19,6 +19,7 @@ export class ChiTietHoSoCaNhanComponent implements OnInit {
   @Input() custId = null;
   @Input() canId = null;
   @Input() hideButton: boolean = false;
+  tabIndex: number = 0;
   constructor(
     private apiService: ApiHrmService,
     private messageService: MessageService,
@@ -83,10 +84,6 @@ export class ChiTietHoSoCaNhanComponent implements OnInit {
       this.modelEdit.edit_is = this.paramsObject.params.type || null
       this.getCustFields();
     });
-  }
-  indexTab = 0;
-  handleChange(index) {
-    this.indexTab = index;
   }
 
   stepActivated(): void {
@@ -261,6 +258,10 @@ export class ChiTietHoSoCaNhanComponent implements OnInit {
           { label: 'Đóng', value: 'Close', class: `p-button-danger ml-1`, icon: 'pi pi-times' }
         ]
         this.spinner.hide();
+  }
+
+  handleChange(index) {
+    this.tabIndex = index;
   }
 
   

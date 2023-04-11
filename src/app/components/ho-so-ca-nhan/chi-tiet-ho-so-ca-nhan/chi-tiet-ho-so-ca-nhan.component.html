@@ -6,19 +6,26 @@
         </div>
     </section>
 </div>
-<p-card styleClass="chi-tiet-tien-luong">
+<p-card styleClass="chi-tiet-tien-luong" *ngIf="tabIndex === 0">
     <div class="status-line steps-contract col-12 m-auto">
         <p-steps [model]="steps" *ngIf="listViews.length> 0" [(activeIndex)]="activeIndex" [readonly]="false"></p-steps>
     </div>
 </p-card>
 <p-divider></p-divider>
 <p-card>
-    <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'"
-        [optionsButtonsEdit]="hideButton ? [] : optionsButtonsView" [dataView]="listViews" (callback)="setSchemeInfo($event)" (callBackForm)="callBackForm($event)"
-        (callbackcancel)="cancel($event)"></app-edit-detail>
-    <app-loading-detail 
-        [id]="'markdown'" 
-        *ngIf="listViews.length === 0">
-    </app-loading-detail>
-</p-card>
+    <p-tabView (onChange)="handleChange($event.index)" [(activeIndex)]="tabIndex">
+        <p-tabPanel header="Thông tin chung">
+            <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'"
+                [optionsButtonsEdit]="hideButton ? [] : optionsButtonsView" [dataView]="listViews"
+                (callback)="setSchemeInfo($event)" (callBackForm)="callBackForm($event)"
+                (callbackcancel)="cancel($event)"></app-edit-detail>
 
+            <app-loading-detail [id]="'markdown'" *ngIf="listViews.length === 0">
+            </app-loading-detail>
+        </p-tabPanel>
+        <p-tabPanel header="Danh sách giấy tờ" *ngIf="modelEdit.custId"> 
+            <app-list-cccd *ngIf="tabIndex === 1" [custId]="modelEdit.custId"></app-list-cccd>
+        </p-tabPanel>
+    </p-tabView>
+
+</p-card>

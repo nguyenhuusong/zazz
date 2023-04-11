@@ -87,6 +87,7 @@ import { ChiTietHoSoCaNhanComponent } from 'src/app/components/ho-so-ca-nhan/chi
 import { HrmSearchCustomerModule } from 'src/app/common/hrm-search-customer/hrm-search-customer.module';
 import { BlockUIModule } from 'primeng/blockui';
 import { CungCapCccdComponent } from 'src/app/common/ekyc/cung-cap-cccd/cung-cap-cccd.component';
+import { ListCccdComponent } from 'src/app/components/ho-so-ca-nhan/list-cccd/list-cccd.component';
 @NgModule({
   imports: [
     MessagesModule,
@@ -181,7 +182,9 @@ import { CungCapCccdComponent } from 'src/app/common/ekyc/cung-cap-cccd/cung-cap
     PlanDetailComponent,
     ChiTietHoSoCaNhanComponent,
     HoSoCaNhanComponent,
-    CungCapCccdComponent
+    CungCapCccdComponent,
+    ListCccdComponent,
+
   ],
   providers: [ ]
 })

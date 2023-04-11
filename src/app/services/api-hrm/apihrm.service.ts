@@ -3618,14 +3618,35 @@ export class ApiHrmService {
     });
   }
 
+  setCustFromId(data): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/customer/SetCustFromId`, data, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      // responseType: "blob"
+    });
+  }
+
   
 
   setCustFields(queryParams): Observable<any> {
     return this.http.put<any>(`${apiHrmServer}/api/v1/customer/SetCustFields` , queryParams, this.options);
   }
 
+  setCustIdentityDefault(queryParams): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v1/customer/SetCustIdentityDefault` , queryParams, this.options);
+  }
+
+  getCustIdentity(queryParams): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v1/customer/GetCustIdentity?` + queryParams, this.options);
+  }
+
   delCustIdentity(queryParams): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v1/customer/DelCustIdentity?` +queryParams, this.options);
+  }
+
+  delCustProfile(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v1/customer/DelCustProfile?` +queryParams, this.options);
   }
 
   setCustProfileVerified(queryParams): Observable<any> {

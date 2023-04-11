@@ -16,12 +16,15 @@ export class CungCapCccdComponent implements OnInit, OnDestroy {
   @Output() callback = new EventEmitter<any>();
   @Input() information = null;
   @Input() canId = null;
+  @Input() custId = null;
+  @Input() isCanId: boolean = true;
   identityImage = {
     back: null,
     front: null,
     canId: null,
     idcard_type: 1
   };
+
   private readonly unsubscribe$: Subject<void> = new Subject();
   imgDefault = '/assets/images/account/image-cmnd/svg';
   imgDefaultMs = '../../../assets/images/account/image-cmnd-sau.svg';
@@ -60,30 +63,56 @@ export class CungCapCccdComponent implements OnInit, OnDestroy {
       this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Vui Lòng tải lên hộ chiếu' });
       return;
     }
-
-    const formData =new FormData();
-    formData.append('formFile1', this.identityImage.front)
-    formData.append('formFile2', this.identityImage.back)
-    formData.append('idcard_type', this.identityImage.idcard_type.toString())
-    formData.append('canId', this.canId);
-    this.spinner.show();
-    this.apiService.setCustFromCanId(formData)
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe((results: any) => {
-      console.log(results)
-      if (results.status === 'success') {
-          this.callback.emit(results.data.custId);
-          this.messageService.add({
-            severity: 'success', summary: 'Thông báo', detail: results.data.messages
-          });
+    if(this.isCanId) {
+      const formData =new FormData();
+      formData.append('formFile1', this.identityImage.front)
+      formData.append('formFile2', this.identityImage.back)
+      formData.append('idcard_type', this.identityImage.idcard_type.toString())
+      formData.append('canId', this.canId);
+      this.spinner.show();
+      this.apiService.setCustFromCanId(formData)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((results: any) => {
+        console.log(results)
+        if (results.status === 'success') {
+            this.callback.emit(results.data.custId);
+            this.messageService.add({
+              severity: 'success', summary: 'Thông báo', detail: results.data.messages
+            });
+            this.spinner.hide();
+        }else {
           this.spinner.hide();
-      }else {
-        this.spinner.hide();
-        this.messageService.add({
-          severity: 'error', summary: 'Thông báo', detail: results.message
-        });
-      }
-    })
+          this.messageService.add({
+            severity: 'error', summary: 'Thông báo', detail: results.message
+          });
+        }
+      })
+    }else {
+      const formData =new FormData();
+      formData.append('formFile1', this.identityImage.front)
+      formData.append('formFile2', this.identityImage.back)
+      formData.append('idcard_type', this.identityImage.idcard_type.toString())
+      formData.append('custId', this.custId);
+      this.spinner.show();
+      this.apiService.setCustFromId(formData)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((results: any) => {
+        console.log(results)
+        if (results.status === 'success') {
+            this.callback.emit(results.data.custId);
+            this.messageService.add({
+              severity: 'success', summary: 'Thông báo', detail: results.data.messages
+            });
+            this.spinner.hide();
+        }else {
+          this.spinner.hide();
+          this.messageService.add({
+            severity: 'error', summary: 'Thông báo', detail: results.message
+          });
+        }
+      })
+    }
+    
 
 
   }

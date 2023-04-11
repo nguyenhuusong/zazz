@@ -92,7 +92,7 @@ export class HrmSearchCustomerComponent {
     this.isLoading = true;
     this.isSearching = true;
     this.dataInfo = null;
-    this.apiService.getCustSearch(queryString.stringify({ keyName: this.query.keyName, keyType: this.query.keyType, offSet: 0, pageSize: 50 })).subscribe((results: any) => {
+    this.apiService.getCustSearch(queryString.stringify({ keyName: this.query.keyName,is_worked: 0, keyType: this.query.keyType, offSet: 0, pageSize: 50 })).subscribe((results: any) => {
       this.isLoading = false;
       this.dataSearched = results.data.dataList.data;
     })
