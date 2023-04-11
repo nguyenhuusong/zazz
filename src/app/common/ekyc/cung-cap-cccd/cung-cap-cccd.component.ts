@@ -3,7 +3,7 @@ import { Component, OnInit, Output, EventEmitter, OnDestroy, Input } from '@angu
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
 import { Subject, takeUntil } from 'rxjs';
-import { ApiService } from 'src/app/services/api.service';
+import * as queryString from 'querystring';
 @Component({
   selector: 'app-cung-cap-cccd',
   templateUrl: './cung-cap-cccd.component.html',
@@ -27,13 +27,7 @@ export class CungCapCccdComponent implements OnInit, OnDestroy {
   imgDefaultMs = '../../../assets/images/account/image-cmnd-sau.svg';
   imageMt = null;
   imageMs = null;
-  typeCards = [{
-    name: 'CMND/CCCD',
-    value: 1
-  }, {
-    name: 'Hộ chiếu',
-    value: 2
-  }]
+  typeCards = [];
   constructor(
     private apiService: ApiHrmService,
     private messageService: MessageService,
@@ -41,6 +35,15 @@ export class CungCapCccdComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.getObjectsIdCard()
+  }
+
+  getObjectsIdCard() {
+    this.apiService.getObjects(queryString.stringify({ objKey: 'idCard_type_group' })).subscribe(results => {
+      if(results.status === 'success') {
+          this.typeCards = results.data;
+      }
+    })
   }
 
   stepBack(): void {
