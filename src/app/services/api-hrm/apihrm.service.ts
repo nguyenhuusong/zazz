@@ -3637,8 +3637,12 @@ export class ApiHrmService {
     return this.http.put<any>(`${apiHrmServer}/api/v1/customer/SetCustIdentityDefault` , queryParams, this.options);
   }
 
+  setCustMerge(queryParams): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v1/customer/SetCustMerge` , queryParams, this.options);
+  }
+
   getCustIdentity(queryParams): Observable<any> {
-    return this.http.put<any>(`${apiHrmServer}/api/v1/customer/GetCustIdentity?` + queryParams, this.options);
+    return this.http.get<any>(`${apiHrmServer}/api/v1/customer/GetCustIdentity?` + queryParams, this.options);
   }
 
   delCustIdentity(queryParams): Observable<any> {

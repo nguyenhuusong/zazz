@@ -113,6 +113,60 @@ styleClass="search-em-in {{ dataSearched?.length > 0 ? 'search-em-result' : '' }
                 (click)="getItem()">
             Xác nhận
             </p-button>
+            <p-button 
+                styleClass="p-button-sm mr-1 height-56" *ngIf="dataSearched.length > 1"
+                (click)="xacnhan()">
+            Gộp tài khoản
+            </p-button>
         </div>
     </ng-template>
+</p-dialog>
+
+
+<p-dialog header="Xác nhận gộp 2 tài khoản" [(visible)]="displayGop" [position]="'top-right'" [modal]="true" [style]="{width: '40vw'}"
+    [draggable]="false" [resizable]="false">
+   
+    <div class="col-md-12">
+        <p class="mb-1">{{modelXacnhan.message}}</p>
+        <label for="">Tài khoản được giữ lại</label>
+            <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" [options]="listTargets_s"
+            [required]="true"  [(ngModel)]="modelXacnhan.keep_cif_no" name="keep_cif_no" (onChange)="changeCifNo($event, 'keep_cif_no')">
+            <ng-template let-item pTemplate="selectedItem">
+
+                <span style="vertical-align:middle; margin-left: .5em">{{item.label}} </span>
+            </ng-template>
+            <ng-template let-car pTemplate="item">
+                <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+
+                    <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                </div>
+            </ng-template>
+        </p-dropdown>
+    </div>
+    <div class="col-md-12 mt-1">
+        <label for="">Tài khoản sẽ hủy</label>
+            <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" (onChange)="changeCifNo($event, 'remove_cif_no')" [options]="listTargets_s"
+            [required]="true"  [(ngModel)]="modelXacnhan.remove_cif_no" name="remove_cif_no" >
+            <ng-template let-item pTemplate="selectedItem">
+                <span style="vertical-align:middle; margin-left: .5em">{{item.label}} </span>
+            </ng-template>
+            <ng-template let-car pTemplate="item">
+                <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+
+                    <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                </div>
+            </ng-template>
+        </p-dropdown>
+    </div>
+
+    <div class="col-md-12 mt-1">
+        <div class="p-field-checkbox">
+            <p-checkbox [(ngModel)]="modelXacnhan.overite" [binary]="true" inputId="binary" label="Thông tin tài khoản giữ lại sẽ tự động cập nhật vào tất cả hợp đồng của khách hàng ."></p-checkbox>
+        </div>
+    </div>
+    
+
+        <ng-template pTemplate="footer">
+            <p-button icon="pi pi-check" (click)="xacnhangop()" label="Đồng ý" styleClass="p-button-text"></p-button>
+        </ng-template>
 </p-dialog>

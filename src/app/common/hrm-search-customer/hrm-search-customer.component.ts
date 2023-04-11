@@ -130,5 +130,66 @@ export class HrmSearchCustomerComponent {
     // })
   }
 
+  displayGop = false;
+  listTargets_s = [];
+  xacnhan() {
+    this.modelXacnhan = {
+      message: 'Sẽ có một tài khoản bị xóa khỏi danh sách !. Vui lòng xác nhận tài khoản giữ lại.',
+      overite: false,
+      keep_cif_no: '',
+      remove_cif_no: ''
+    }
+    const selectedRowData = this.dataSearched;
+    if (selectedRowData.length === 2) {
+      this.listTargets_s = selectedRowData.map(d => {
+        return { label: d.full_Name + '-' + d.phone1 + '-' + d.idcard_No + '-' + d.cif_No, value: d.cif_No };
+      })
+      this.modelXacnhan.keep_cif_no = this.listTargets_s[0].value;
+      this.modelXacnhan.remove_cif_no = this.listTargets_s[1].value;
+      this.displayGop = true;
+    } else {
+      this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Vui lòng chọn 2 tài khoản để gộp' });
+      return;
+    }
+  }
+  modelXacnhan = {
+    message: 'Sẽ có một tài khoản bị xóa khỏi danh sách !. Vui lòng xác nhận tài khoản sử dụng',
+    overite: false,
+    keep_cif_no: '',
+    remove_cif_no: ''
+  }
+
+  xacnhangop(overite = false) {
+    let params = { ...this.modelXacnhan };
+    delete params.message
+    this.apiService.setCustMerge(params).subscribe(results => {
+      if (results.status === 'success') {
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Gộp tài khoản thành công' });
+        this.searchEmp();
+        this.displayGop = false;
+      } else {
+        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
+        if (results.statusCode === 3) {
+          this.modelXacnhan = {
+            message: results.message,
+            overite: true,
+            keep_cif_no: this.modelXacnhan.keep_cif_no,
+            remove_cif_no: this.modelXacnhan.remove_cif_no
+          }
+        }
+      }
+    })
+  }
+
+  changeCifNo(event, type) {
+    if (type === 'keep_cif_no') {
+      const items = this.listTargets_s.filter(d => d.value !== this.modelXacnhan.keep_cif_no);
+      this.modelXacnhan.remove_cif_no = items[0].value;
+    } else {
+      const items = this.listTargets_s.filter(d => d.value !== this.modelXacnhan.remove_cif_no);
+      this.modelXacnhan.keep_cif_no = items[0].value;
+    }
+  }
+
 
 }
