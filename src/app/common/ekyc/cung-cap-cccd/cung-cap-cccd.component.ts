@@ -51,12 +51,12 @@ export class CungCapCccdComponent implements OnInit, OnDestroy {
   }
 
   stepNext(): void {
-    if ((this.identityImage.idcard_type === 1 || this.identityImage.idcard_type === 2) && (!this.imageMt || !this.imageMs)) {
+    if ((this.identityImage.idcard_type == 1 || this.identityImage.idcard_type == 2) && (!this.imageMt || !this.imageMs)) {
       this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Vui lòng chọn ảnh chứng minh/ CCCD!' });
       return;
     }
 
-    if ((this.identityImage.idcard_type === 3) && (!this.imageMt)) {
+    if ((this.identityImage.idcard_type == 3) && (!this.imageMt)) {
       this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Vui Lòng tải lên hộ chiếu' });
       return;
     }

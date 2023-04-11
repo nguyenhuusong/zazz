@@ -19,7 +19,7 @@
     <div class="note"><span class="red-color">Lưu ý:</span> Chỉ chấp nhận file định dạng JPG, PNG và dung lượng dưới 5 MB</div>
     <div class="images">
         <div class="wrap_image left">
-            <h3>{{identityImage.idcard_type === 3 ? 'Hộ chiếu' : 'Mặt trước CMND/CCCD'}}</h3>
+            <h3>{{identityImage.idcard_type == 3 ? 'Hộ chiếu' : 'Mặt trước CMND/CCCD'}}</h3>
             <div class="image" >
                 <!-- <img src="../../../assets/images/account/dang-ky/image-cmnd.svg"> -->
                 <img [src]="imageMt || imgDefault">
@@ -75,7 +75,7 @@
                 </p-fileUpload>
             </div>
         </div>
-        <div class="wrap_image right" [style.visibility]="identityImage.idcard_type ===3 ? 'hidden' : ''" >
+        <div class="wrap_image right" [style.visibility]="identityImage.idcard_type ==3 ? 'hidden' : ''" >
             <h3>Mặt sau CMND/CCCD</h3>
             <div class="image">
                 <img [src]="imageMs || imgDefaultMs">
