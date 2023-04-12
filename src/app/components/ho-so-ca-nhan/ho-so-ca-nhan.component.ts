@@ -155,8 +155,6 @@ export class HoSoCaNhanComponent implements OnInit, AfterViewChecked {
 
   load() {
     this.columnDefs = []
-    // this.spinner.show();
-    console.log(this.query)
     let params: any = { ... this.query };
     const queryParams = queryString.stringify(params);
     this.apiService.getCustSearch(queryParams)
@@ -203,28 +201,25 @@ export class HoSoCaNhanComponent implements OnInit, AfterViewChecked {
           class: 'btn-primary mr5',
         },
         {
-          onClick: this.editRow.bind(this),
-          label: 'Chỉnh sửa',
-          icon: 'pi pi-user-edit',
-          class: 'btn-primary mr5',
-        },
-        {
           onClick: this.approved.bind(this),
           label: 'Xác minh tài khoản',
           icon: 'pi pi-check',
           class: 'btn-primary mr5',
+          hide: this.tabIndex === 0
         },
         {
           onClick: this.ChangePhone.bind(this),
           label: 'Thay đổi số điện thoại',
           icon: 'pi pi-phone',
           class: 'btn-primary mr5',
+          hide: this.tabIndex === 0
         },
         {
           onClick: this.ChangeEmail.bind(this),
           label: 'Thay đổi tài khoản email',
           icon: 'pi pi-inbox',
           class: 'btn-primary mr5',
+          hide: this.tabIndex === 0
         },
         {
           onClick: this.delRow.bind(this),

@@ -277,8 +277,3 @@ export class ChiTietHoSoCaNhanComponent implements OnInit {
 
   
 }
-
-  
-  
-
-
