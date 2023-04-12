@@ -629,19 +629,34 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   }
 
   getRecruitMailInput() {
-    this.isSendMail = true;
-    this.apiService.getRecruitMailInput(queryString.stringify({ can_st: this.query.can_st }))
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(results => {
-      if (results.status === 'success') {
-        this.mailsInput = results.data.map(d => {
-          return {
-            label: d.name,
-            value: d.value
+    if(this.dataRowSelected.length > 0) {
+      let checkAsynCanId = false;
+      // check người dùng chọn theo 1 can_st
+      // checkAsynCanId false: theo 1 id, true: có 1 can_st là khác
+      let firstCanSt = this.dataRowSelected[0].can_st;
+      checkAsynCanId = this.dataRowSelected.some( d => d.can_st !== firstCanSt);
+
+      if(!checkAsynCanId) {
+        this.isSendMail = true;
+        this.apiService.getRecruitMailInput(queryString.stringify({ can_st: firstCanSt }))
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(results => {
+          if (results.status === 'success') {
+            this.mailsInput = results.data.map(d => {
+              return {
+                label: d.name,
+                value: d.value
+              }
+            })
           }
         })
+      }else{
+        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Vui lòng chọn cùng loại vòng tuyển dụng' });
       }
-    })
+
+    }
+
+
   }
 
   changeRecruStatus() {
@@ -805,9 +820,10 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   // }
 
   onHideSendEmail(event) {
+    // this.optionsButtonDB[1].disabled = true;
     this.isSendMail = false;
-    this.dataRowSelected = [];
-    this.load();
+    // this.dataRowSelected = [];
+    // this.load();
     this.FnEvent();
   }
 

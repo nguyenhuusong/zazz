@@ -26,8 +26,8 @@ export class CungCapCccdComponent implements OnInit, OnDestroy {
   };
 
   private readonly unsubscribe$: Subject<void> = new Subject();
-  imgDefault = '/assets/images/account/image-cmnd/svg';
-  imgDefaultMs = '../../../assets/images/account/image-cmnd-sau.svg';
+  imgDefault = '../../../../assets/images/image-cmnd.svg'
+  imgDefaultMs = '../../../../assets/images/image-cmnd-sau.svg';
   imageMt = null;
   imageMs = null;
   typeCards = [];
@@ -44,7 +44,12 @@ export class CungCapCccdComponent implements OnInit, OnDestroy {
   getObjectsIdCard() {
     this.apiService.getObjects(queryString.stringify({ objKey: 'idCard_type_group' })).subscribe(results => {
       if(results.status === 'success') {
-          this.typeCards = results.data;
+          this.typeCards = results.data.map( d => {
+            return {
+              name: d.name,
+              value: parseInt(d.value)
+            }
+          });
       }
     })
   }
@@ -54,6 +59,7 @@ export class CungCapCccdComponent implements OnInit, OnDestroy {
   }
 
   stepNext(): void {
+    
     if ((this.identityImage.idcard_type == 1 || this.identityImage.idcard_type == 2) && (!this.imageMt || !this.imageMs)) {
       this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Vui lòng chọn ảnh chứng minh/ CCCD!' });
       return;
@@ -73,7 +79,6 @@ export class CungCapCccdComponent implements OnInit, OnDestroy {
       this.apiService.setCustFromCanId(formData)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((results: any) => {
-        console.log(results)
         if (results.status === 'success') {
             this.callback.emit(results.data.custId);
             this.messageService.add({
@@ -97,7 +102,6 @@ export class CungCapCccdComponent implements OnInit, OnDestroy {
       this.apiService.setCustFromId(formData)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((results: any) => {
-        console.log(results)
         if (results.status === 'success') {
             this.callback.emit(results.data.custId);
             this.messageService.add({
@@ -159,7 +163,6 @@ export class CungCapCccdComponent implements OnInit, OnDestroy {
       const file = event.currentFiles[0];
       const reader = new FileReader();
       reader.onload = e => this.imageMt = reader.result;
-      console.log(this.imageMt);
       reader.readAsDataURL(file);
       this.identityImage.front = file;
     }
