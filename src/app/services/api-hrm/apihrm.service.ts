@@ -3645,6 +3645,10 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v1/customer/GetCustIdentity?` + queryParams, this.options);
   }
 
+  getCustIdentityPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/customer/GetCustIdentityPage?` + queryParams, this.options);
+  }
+
   delCustIdentity(queryParams): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v1/customer/DelCustIdentity?` +queryParams, this.options);
   }

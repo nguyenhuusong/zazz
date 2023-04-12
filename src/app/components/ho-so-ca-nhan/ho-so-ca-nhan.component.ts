@@ -156,6 +156,7 @@ export class HoSoCaNhanComponent implements OnInit, AfterViewChecked {
   load() {
     this.columnDefs = []
     // this.spinner.show();
+    console.log(this.query)
     let params: any = { ... this.query };
     const queryParams = queryString.stringify(params);
     this.apiService.getCustSearch(queryParams)

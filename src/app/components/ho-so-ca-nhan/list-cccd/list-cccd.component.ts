@@ -58,11 +58,11 @@ export class ListCccdComponent implements OnInit {
 
   saveCCCD(event) {
     this.displayAddCCCD =false;
-    this.getEmpIdcardPage();
+    this.getCustIdentityPage();
   }
 
   ngOnInit(): void {
-    this.getEmpIdcardPage();
+    this.getCustIdentityPage();
   }
   displaySetting = false;
   CauHinh() {
@@ -96,7 +96,7 @@ export class ListCccdComponent implements OnInit {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thêm mới thành công' });
         this.displayFormEditDetail = false;
-        this.getEmpIdcardPage();
+        this.getCustIdentityPage();
         this.FnEvent();
         this.spinner.hide();
       } else {
@@ -107,25 +107,25 @@ export class ListCccdComponent implements OnInit {
   
   }
 
-  getEmpIdcardPage() {
-    // this.spinner.show();
-    // this.columnDefs = [];
-    // const queryParams = queryString.stringify({ custId: this.custId, offSet: 0, pageSize: 10000 });
-    // this.apiService.getEmpIdcardPage(queryParams)
-    // .pipe(takeUntil(this.unsubscribe$))
-    // .subscribe(repo => {
-    //   if (repo.status === 'success') {
-    //     if (repo.data.dataList.gridKey) {
-    //       this.gridKey = repo.data.dataList.gridKey;
-    //     }
-    //     this.spinner.hide();
-    //     this.listsData = repo.data.dataList.data || [];
-    //     this.initGrid(repo.data.gridflexs);
-    //     this.FnEvent();
-    //   } else {
-    //     this.spinner.hide();
-    //   }
-    // })
+  getCustIdentityPage() {
+    this.spinner.show();
+    this.columnDefs = [];
+    const queryParams = queryString.stringify({ custId: this.custId });
+    this.apiService.getCustIdentityPage(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(repo => {
+      if (repo.status === 'success') {
+        if (repo.data.dataList.gridKey) {
+          this.gridKey = repo.data.dataList.gridKey;
+        }
+        this.spinner.hide();
+        this.listsData = repo.data.dataList.data || [];
+        this.initGrid(repo.data.gridflexs);
+        this.FnEvent();
+      } else {
+        this.spinner.hide();
+      }
+    })
   }
 
   cancelDetailInfo(event) {
@@ -133,7 +133,7 @@ export class ListCccdComponent implements OnInit {
       this.getCustIdentity();
     }else {
       this.displayFormEditDetail = false;
-      this.getEmpIdcardPage();
+      this.getCustIdentityPage();
     }
   }
 
@@ -184,7 +184,7 @@ export class ListCccdComponent implements OnInit {
           .subscribe(results => {
             if (results.status === 'success') {
               this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Xóa giấy tờ thành công' });
-              this.getEmpIdcardPage();
+              this.getCustIdentityPage();
             } else {
               this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
             }
