@@ -6,6 +6,7 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as queryString from 'querystring';
 import { cloneDeep } from 'lodash';
 import { Subject, takeUntil } from 'rxjs';
+import { getValueOfField } from 'src/app/utils/common/function-common';
 
 @Component({
   selector: 'app-chi-tiet-ho-so-ca-nhan',
@@ -262,6 +263,16 @@ export class ChiTietHoSoCaNhanComponent implements OnInit {
 
   handleChange(index) {
     this.tabIndex = index;
+  }
+
+  displayAddCCCD = false;
+  detailPopup() {
+    this.displayAddCCCD = true;
+  }
+
+  saveCCCD(event) {
+    this.displayAddCCCD =false;
+    this.getCustFields();
   }
 
   

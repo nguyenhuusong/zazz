@@ -105,7 +105,7 @@ export class CungCapCccdComponent implements OnInit, OnDestroy {
         if (results.status === 'success') {
             this.callback.emit(results.data.custId);
             this.messageService.add({
-              severity: 'success', summary: 'Thông báo', detail: results.data.messages
+              severity: 'success', summary: 'Thông báo', detail: results.message
             });
             this.spinner.hide();
         }else {

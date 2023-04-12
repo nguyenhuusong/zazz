@@ -13,6 +13,14 @@
 </p-card>
 <p-divider></p-divider>
 <p-card>
+    <div *ngIf="tabIndex === 0" style="position: absolute;right: 20px;top: auto;z-index: 9;">
+        <p-button 
+            styleClass="p-button-sm" 
+            (click)="detailPopup()" 
+            icon="pi pi-user-edit" 
+            label="Sửa giấy tờ" >
+        </p-button>
+    </div>
     <p-tabView (onChange)="handleChange($event.index)" [(activeIndex)]="tabIndex">
         <p-tabPanel header="Thông tin chung">
             <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'"
@@ -28,3 +36,10 @@
         </p-tabPanel>
     </p-tabView>
 </p-card>
+
+
+
+<p-dialog header="  Tải lên CCCD,  Hộ chiếu" [(visible)]="displayAddCCCD" [modal]="true" [draggable]="false"
+    [resizable]="false" [style]="{width: '50vw'}" [autoZIndex]=true [draggable]="false" [resizable]="false">
+    <app-cung-cap-cccd *ngIf="displayAddCCCD" [custId]="this.modelEdit.custId" [isCanId] = "false" (callback)="saveCCCD($event)"></app-cung-cap-cccd>
+</p-dialog>
