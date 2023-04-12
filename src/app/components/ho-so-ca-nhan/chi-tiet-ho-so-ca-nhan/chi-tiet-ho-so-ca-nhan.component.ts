@@ -61,7 +61,7 @@ export class ChiTietHoSoCaNhanComponent implements OnInit {
     this.url = this.activatedRoute.data['_value'].url;
     this.itemsMenu =  [
       { label: 'Trang chủ' , routerLink: '/home' },
-      { label: 'Danh sách chính sách lương', routerLink: '/tuyen-dung/ho-so-ca-nhan' },
+      { label: 'Danh sách hồ sơ cá nhân', routerLink: '/tuyen-dung/ho-so-ca-nhan' },
       { label: `${this.titlePage}` },
     ]
     if(this.isDialog) {
