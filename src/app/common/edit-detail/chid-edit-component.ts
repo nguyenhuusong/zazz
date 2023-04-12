@@ -289,9 +289,9 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
               indexparams1.push(`${field_name}=${event.node.data}`);
               element1.columnObject = params[0]  + `?${indexparams1.join("&")}`
               if(element1.columnType === 'selectTree' || element1.columnType === 'selectTrees') {
-                promissall.push(this.apiHrmV2Service.getCustObjectListTreeV2(element1.columnObject, element1.field_name));
+                promissall.push(this.apiHrmV2Service.getCustObjectListTreeV2(element1.columnObject, `${element1.field_name}${element1.group_cd}`));
               }else {
-                promissall.push(this.apiHrmV2Service.getCustObjectListV2(element1.columnObject, element1.field_name));
+                promissall.push(this.apiHrmV2Service.getCustObjectListV2(element1.columnObject, `${element1.field_name}${element1.group_cd}`));
               }
             }
           }
@@ -644,9 +644,9 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
                 indexparams1.push(`${field_name}=${value}`);
                 element1.columnObject = params[0]  + `?${indexparams1.join("&")}`
                 if(element1.columnType === 'selectTree' || element1.columnType === 'selectTrees') {
-                  promissall.push(this.apiHrmV2Service.getCustObjectListTreeV2(element1.columnObject, element1.field_name));
+                  promissall.push(this.apiHrmV2Service.getCustObjectListTreeV2(element1.columnObject, `${element1.field_name}${element1.group_cd}`));
                 }else {
-                  promissall.push(this.apiHrmV2Service.getCustObjectListV2(element1.columnObject, element1.field_name));
+                  promissall.push(this.apiHrmV2Service.getCustObjectListV2(element1.columnObject, `${element1.field_name}${element1.group_cd}`));
                 }
               }
             }
