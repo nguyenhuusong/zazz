@@ -1,12 +1,12 @@
 
 <div class="main-grid">
     <section class="bread-crumb">
-        <div class="d-flex bet bottom">
-            <div class="col-3 pd-0">
+        <div class="d-flex bet bottom wrap">
+            <div class="col-12 pd-0 md:col-12 lg:col-3 xl:col-3">
                 <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
             </div>
-            <div class="d-flex gap-16 col-9 end pd-0">
-                <div class="filter filter-search col-2 pd-0">
+            <div class="d-flex wrap col-12 md:col-12 lg:col-9 xl:col-9 gap-12 end pd-0">
+                <div class="filter filter-search pd-0 col-4 md:col-4 lg:col-3 xl:col-3">
                     <div class="field-group text search mb-0" [ngClass]=" query.filter ? 'valid' : 'invalid' ">
                         <input placeholder="Vị trí, chuyển môn ..." class="input-default" type="text" autocomplete="off" id="filter"
                             (keydown.enter)="query.offSet = 0; first = 0;load()"

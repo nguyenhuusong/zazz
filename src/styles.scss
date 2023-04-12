@@ -3427,7 +3427,6 @@ div.p-organizationchart {
     // margin-bottom: 20px;
 }
 
-
 .paginator-bottom{
     position: relative;
     .p-dialog-content{
@@ -6476,6 +6475,16 @@ hr{
 }
 
 
+@media screen and (max-width: 1179px) {
+    .p-menubar-root-list {
+        .p-menuitem {
+            .p-menuitem-link{
+                padding: 12px 8px 12px !important;
+            }
+        }
+    }
+}
+
 @media screen and (max-width: 960px) {
     .p-menubar {
         .p-menubar-button{
@@ -6487,4 +6496,13 @@ hr{
             }
         }
     }
+}
+
+@media screen and (max-width: 767px) {
+    .status-line{
+        .p-steps-item{
+            min-width: 0px;
+        }
+    }
+    
 }

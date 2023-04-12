@@ -132,6 +132,8 @@ export class HrmSearchCustomerComponent {
 
   displayGop = false;
   listTargets_s = [];
+  custIdChoosed = [];
+  dataCusIdChoosed = [];
   xacnhan() {
     this.modelXacnhan = {
       message: 'Sẽ có một tài khoản bị xóa khỏi danh sách !. Vui lòng xác nhận tài khoản giữ lại.',
@@ -139,7 +141,7 @@ export class HrmSearchCustomerComponent {
       keep_cif_no: '',
       remove_cif_no: ''
     }
-    const selectedRowData = this.dataSearched;
+    const selectedRowData = this.dataCusIdChoosed;
     if (selectedRowData.length === 2) {
       this.listTargets_s = selectedRowData.map(d => {
         return { label: d.full_Name + '-' + d.phone1 + '-' + d.idcard_No + '-' + d.cif_No, value: d.cif_No };
@@ -157,6 +159,19 @@ export class HrmSearchCustomerComponent {
     overite: false,
     keep_cif_no: '',
     remove_cif_no: ''
+  }
+
+  checkValue(event, data) {
+    this.dataCusIdChoosed = []
+    if(event.checked.length > 0){
+      this.custIdChoosed.forEach( item => {
+        this.dataSearched.forEach(element => {
+          if(item === element.custId) {
+            this.dataCusIdChoosed.push(element);
+          }
+        });
+      } )
+    }
   }
 
   xacnhangop(overite = false) {
