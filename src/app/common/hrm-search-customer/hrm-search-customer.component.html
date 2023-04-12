@@ -51,6 +51,7 @@ styleClass="search-em-in {{ dataSearched?.length > 0 ? 'search-em-result' : '' }
                 <table class="table" cellspacing="0">
                     <thead>
                         <tr>
+                            <th></th>
                             <th>Họ tên</th>
                             <th>Mã nhân viên</th>
                             <th>Số điện thoại</th>
@@ -59,6 +60,15 @@ styleClass="search-em-in {{ dataSearched?.length > 0 ? 'search-em-result' : '' }
                     <tbody>
                         <ng-container *ngFor="let emInfo of dataSearched">
                             <tr (click)="getEmpInfo(emInfo)" [ngClass]="emInfo.custId === custId ? 'active' : ''">
+                                <td>
+                                    <p-checkbox 
+                                        name="customerName" 
+                                        value="{{ emInfo.custId }}"
+                                        [(ngModel)]="custIdChoosed" 
+                                        inputId="customerName-{{ emInfo.custId }}"
+                                        (onChange)="checkValue($event, emInfo)"
+                                    ></p-checkbox>
+                                </td>
                                 <td><b>{{ emInfo?.full_Name }}</b></td>
                                 <td>{{ emInfo?.cif_No }}</td>
                                 <td>{{ emInfo?.phone1 }}</td>
@@ -113,12 +123,12 @@ styleClass="search-em-in {{ dataSearched?.length > 0 ? 'search-em-result' : '' }
                 (click)="getItem()">
             Xác nhận
             </p-button>
-            <p-button 
-                styleClass="p-button-sm mr-1 height-56" *ngIf="dataSearched.length > 1"
-                (click)="xacnhan()">
-            Gộp tài khoản
-            </p-button>
         </div>
+        <p-button 
+            styleClass="p-button-sm mr-1 height-56" *ngIf="dataSearched.length > 1"
+            (click)="xacnhan()">
+        Gộp tài khoản
+        </p-button>
     </ng-template>
 </p-dialog>
 
@@ -128,35 +138,39 @@ styleClass="search-em-in {{ dataSearched?.length > 0 ? 'search-em-result' : '' }
    
     <div class="col-md-12">
         <p class="mb-1">{{modelXacnhan.message}}</p>
-        <label for="">Tài khoản được giữ lại</label>
+        <div class="fields">
+            <label for="">Tài khoản được giữ lại</label>
             <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" [options]="listTargets_s"
-            [required]="true"  [(ngModel)]="modelXacnhan.keep_cif_no" name="keep_cif_no" (onChange)="changeCifNo($event, 'keep_cif_no')">
-            <ng-template let-item pTemplate="selectedItem">
+                [required]="true"  [(ngModel)]="modelXacnhan.keep_cif_no" name="keep_cif_no" (onChange)="changeCifNo($event, 'keep_cif_no')">
+                <ng-template let-item pTemplate="selectedItem">
 
-                <span style="vertical-align:middle; margin-left: .5em">{{item.label}} </span>
-            </ng-template>
-            <ng-template let-car pTemplate="item">
-                <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                    <span style="vertical-align:middle; margin-left: .5em">{{item.label}} </span>
+                </ng-template>
+                <ng-template let-car pTemplate="item">
+                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
 
-                    <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
-                </div>
-            </ng-template>
-        </p-dropdown>
+                        <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                    </div>
+                </ng-template>
+            </p-dropdown>
+        </div>
     </div>
     <div class="col-md-12 mt-1">
-        <label for="">Tài khoản sẽ hủy</label>
+        <div class="fields">
+            <label for="">Tài khoản sẽ hủy</label>
             <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" (onChange)="changeCifNo($event, 'remove_cif_no')" [options]="listTargets_s"
-            [required]="true"  [(ngModel)]="modelXacnhan.remove_cif_no" name="remove_cif_no" >
-            <ng-template let-item pTemplate="selectedItem">
-                <span style="vertical-align:middle; margin-left: .5em">{{item.label}} </span>
-            </ng-template>
-            <ng-template let-car pTemplate="item">
-                <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                [required]="true"  [(ngModel)]="modelXacnhan.remove_cif_no" name="remove_cif_no" >
+                <ng-template let-item pTemplate="selectedItem">
+                    <span style="vertical-align:middle; margin-left: .5em">{{item.label}} </span>
+                </ng-template>
+                <ng-template let-car pTemplate="item">
+                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
 
-                    <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
-                </div>
-            </ng-template>
-        </p-dropdown>
+                        <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                    </div>
+                </ng-template>
+            </p-dropdown>
+        </div>
     </div>
 
     <div class="col-md-12 mt-1">
