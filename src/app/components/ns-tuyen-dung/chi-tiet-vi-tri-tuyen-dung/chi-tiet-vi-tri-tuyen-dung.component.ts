@@ -71,7 +71,17 @@ export class ChiTietViTriTuyenDungComponent implements OnInit, OnDestroy {
         }
       });
   };
-
+  cloneListViews = []
+  callBackForm(event) {
+    if (event.type === 'IsSpecial') {
+      const params = {
+        ...this.detailInfo, group_fields: event.data
+      }
+      this.cloneListViews = cloneDeep(event.data);
+      this.listViews = [];
+      this.setVacancyDraft(params);
+    }
+  }
   getVacancyReplicationInfo() {
     const queryParams = queryString.stringify(this.modelEdit);
     this.apiService.getVacancyReplicationInfo(queryParams)
@@ -81,7 +91,6 @@ export class ChiTietViTriTuyenDungComponent implements OnInit, OnDestroy {
           const listViews = cloneDeep(results.data.group_fields);
           this.listViews = [...listViews];
           this.detailInfo = results.data;
-          this.setValueByCurrencyType();
         }
       });
   }
@@ -113,7 +122,6 @@ export class ChiTietViTriTuyenDungComponent implements OnInit, OnDestroy {
     }); 
   }
 
-
   getVacancyInfo() {
     this.listViews = [];
     const queryParams = queryString.stringify(this.modelEdit);
@@ -123,9 +131,20 @@ export class ChiTietViTriTuyenDungComponent implements OnInit, OnDestroy {
         if (results.status === 'success') {
           const listViews = cloneDeep(results.data.group_fields);
           this.listViews = [...listViews];
-          this.listViews = setOrganizeId(this.listViews, 'organizeId', this.organIdSelected);
           this.detailInfo = results.data;
-          this.setValueByCurrencyType();
+        }
+      });
+  }
+
+  setVacancyDraft(params) {
+    this.listViews = [];
+    this.apiService.setVacancyDraft(params)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(results => {
+        if (results.status === 'success') {
+          const listViews = cloneDeep(results.data.group_fields);
+          this.listViews = [...listViews];
+          this.detailInfo = results.data;
         }
       });
   }

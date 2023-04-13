@@ -983,6 +983,10 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v1/recruitvacancy/GetVacancyInfo?` + queryParams, this.options)
   }
 
+  setVacancyDraft(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/recruitvacancy/SetVacancyDraft`, queryParams, this.options)
+  }
+
   getVacancyReplicationInfo(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/recruitvacancy/GetVacancyReplicationInfo?` + queryParams, this.options)
   }
