@@ -13,7 +13,7 @@
             <p-tabPanel header="Thông tin tuyển dụng">
                 <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'" [isNested]="true"
                     [optionsButtonsEdit]="optionsButon" [dataView]="listViews" (callback)="setCandidateInfo($event)"
-                    (callbackcancel)="quaylai($event)"></app-edit-detail>
+                    (callbackcancel)="quaylai($event)" (callBackForm)="callBackForm($event)"></app-edit-detail>
                 <app-loading-detail [id]="'chi-tiet-tuyen-dung'" *ngIf="listViews.length === 0">
                 </app-loading-detail>
             </p-tabPanel>

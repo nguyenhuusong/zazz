@@ -78,6 +78,37 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
       });
   };
 
+  cloneListViews = []
+  callBackForm(event) {
+    if (event.type === 'IsSpecial') {
+      const params = {
+        ...this.detailInfo, group_fields: event.data
+      }
+      this.cloneListViews = cloneDeep(event.data);
+      this.listViews = [];
+      this.setCandidateDraft(params);
+    }
+  }
+
+  setCandidateDraft(params) {
+    this.apiService.setCandidateDraft(params)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(results => {
+        if (results.status === 'success') {
+          const listViews = cloneDeep(results.data.group_fields);
+          this.listViews = [...listViews];
+          this.detailInfo = results.data;
+          this.custId = results.data.custId;
+          this.optionsButon = [
+            { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
+            { label: 'Tạo hồ sơ cá nhân', value: 'CreateProfile', class: `p-button-success ${this.custId ? 'hidden' : ''}`, icon: 'pi pi-send' },
+            { label: 'Lưu lại', value: 'Update', class: CheckHideAction(MENUACTIONROLEAPI.GetCandidatePage.url, ACTIONS.EDIT) ? 'hidden' : '', icon: 'pi pi-check'  }
+          ]
+          this.detailEdit = results.data
+        }
+      });
+  }
+
   getCandidateInfo() {
     const queryParams = queryString.stringify(this.modelEdit);
     this.apiService.getCandidateInfo(queryParams)

@@ -999,6 +999,10 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v1/recruitcandidate/GetCandidateInfo?` + queryParams, this.options)
   }
 
+  setCandidateDraft(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/recruitcandidate/SetCandidateDraft` , queryParams, this.options)
+  }
+
   getCandidatesViewInfo(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/recruitcandidate/GetCandidatesViewInfo?` + queryParams, this.options)
   }
