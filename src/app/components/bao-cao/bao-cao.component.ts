@@ -219,20 +219,26 @@ export class BaoCaoComponent implements OnInit {
     const api = this.listReports.filter(t => t.value === this.query.report_type)[0].api;
     if (api) {
       const queryParams = queryString.stringify(params);
-      this.apiService.getReport(api, queryParams)
+      this.apiService.getReport(api, queryParams, params)
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(response => {
-        if (response.type === 'application/json') {
+      .subscribe((response: any) => {
+        if (response && response.type === 'application/json') {
           this.spinner.hide();
-        } else {
+        } else if(response.data && response.data.webViewLink){
+          window.open(response.data.webViewLink);
+          this.spinner.hide();
+        }
+        else {
           var blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
           FileSaver.saveAs(blob, name + ".xlsx");
           this.spinner.hide();
         }
       }, error => {
+        this.spinner.hide();
         this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Xuất báo cáo bị lỗi' });
       });
     }
+    
   }
 
   exportExcel(type): void {
