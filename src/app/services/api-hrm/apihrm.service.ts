@@ -93,7 +93,7 @@ export class ApiHrmService {
 
   getReport(api, params, paramsOrgin = null): Observable<Blob> {
     
-    if(paramsOrgin.type && paramsOrgin.type === 'view') {
+    if(paramsOrgin && paramsOrgin.type && paramsOrgin.type === 'view') {
       return this.http.get<any>(`${apiHrmServer}${api}?${params}`, this.options);
     }
     else{
