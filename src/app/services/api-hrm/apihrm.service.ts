@@ -91,13 +91,23 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v2/employee/GetEmployeeSearch?` + queryParams, this.options);
   }
 
-  getReport(api, params): Observable<Blob> {
-    return this.http.get(`${apiHrmServer}${api}?${params}`, {
-      headers: new HttpHeaders({
-        Authorization: this.authService.getAuthorizationHeaderValue(),
-      }),
-      responseType: "blob"
-    });
+  getReport(api, params, paramsOrgin = null): Observable<Blob> {
+    
+    if(paramsOrgin.type && paramsOrgin.type === 'view') {
+      return this.http.get<any>(`${apiHrmServer}${api}?${params}`, this.options);
+    }
+    else{
+      return this.http.get(`${apiHrmServer}${api}?${params}`, {
+        headers: new HttpHeaders({
+          Authorization: this.authService.getAuthorizationHeaderValue(),
+        }),
+        responseType: "blob"
+      });
+    }
+  }
+
+  exportRPStatisticNumberEmployees(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/report/Export_RP_StatisticNumberEmployees?` + queryParams, this.options);
   }
 
   setIncomTaxImport(data, datect): Observable<any> {

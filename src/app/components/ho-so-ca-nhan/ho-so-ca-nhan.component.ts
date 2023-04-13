@@ -226,6 +226,7 @@ export class HoSoCaNhanComponent implements OnInit, AfterViewChecked {
           label: 'Xóa giấy tờ',
           icon: 'pi pi-trash',
           class: 'btn-primary mr5',
+          hide: this.tabIndex === 1
         },
       ]
     };
