@@ -206,7 +206,7 @@ export class DsNguoiPhuThuocComponent implements OnInit, AfterViewChecked {
 
   FnEvent() {
     setTimeout(() => {
-      var dragTarget = document.getElementById(this.gridKey);
+      var dragTarget = document.getElementById(this.gridKey + '-child');
       if (dragTarget) {
         const click$ = fromEvent(dragTarget, 'click');
         click$.subscribe(event => {
@@ -234,7 +234,7 @@ export class DsNguoiPhuThuocComponent implements OnInit, AfterViewChecked {
             {
               headerComponentParams: {
                 template:
-                  `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
+                  `<button  class="btn-button" id="${this.gridKey}-child"> <span class="pi pi-plus action-grid-add" ></span></button>`,
               },
               filter: '',
               width: 60,
@@ -248,7 +248,8 @@ export class DsNguoiPhuThuocComponent implements OnInit, AfterViewChecked {
           ],
   
           enableCellTextSelection: true,
-          onFirstDataRendered(params) {
+          onFirstDataRendered :(params) =>  {
+            this.FnEvent();
             let allColumnIds: any = [];
             params.columnApi.getAllColumns()
               .forEach((column: any) => {

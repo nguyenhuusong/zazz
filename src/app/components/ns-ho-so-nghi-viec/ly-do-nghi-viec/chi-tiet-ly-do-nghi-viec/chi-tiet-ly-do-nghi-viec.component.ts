@@ -84,7 +84,8 @@ export class ChiTietLyDoNghiViecComponent implements OnInit, OnDestroy {
       if (results.status === 'success') {
         this.displayUserInfo = false;
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Cập nhật thông tin thành công' });
-        this.router.navigate(['/nhan-su/ly-do-nghi-viec']);
+        this.back.emit();
+        // this.router.navigate(['/nhan-su/ly-do-nghi-viec']);
       } else {
         this.messageService.add({
           severity: 'error', summary: 'Thông báo', detail: results.message
