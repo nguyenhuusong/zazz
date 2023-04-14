@@ -97,6 +97,30 @@ export class ChiTietTuyenDungLaiComponent implements OnInit, OnDestroy {
       };
   }
 
+  cloneListViews = []
+  callBackForm(event) {
+    if (event.type === 'IsSpecial') {
+      const params = {
+        ...this.detailInfo, group_fields: event.data
+      }
+      this.cloneListViews = cloneDeep(event.data);
+      this.listViews = [];
+      this.setCandidateDraft(params);
+    }
+  }
+
+  setCandidateDraft(params) {
+    this.apiService.setCandidateDraft(params)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(results => {
+        if (results.status === 'success') {
+          const listViews = cloneDeep(results.data.group_fields);
+          this.listViews = [...listViews];
+          this.detailInfo = results.data;
+        }
+      });
+  }
+
   quaylai(data) {
     if(data === 'CauHinh') {
       this.getCandidateAgain();

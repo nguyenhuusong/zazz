@@ -274,7 +274,7 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
     }
     this.modelFields[field_name].error = this.modelFields[field_name].isRequire && !this.element.columnValue ? true : false;
     this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : '';
-    if(element.columnDisplay) {
+    if(element.columnDisplay && !element.isSpecial) {
       const fields = element.columnDisplay.split(",");
       const promissall = [];
         this.dataView.forEach(element => {
@@ -629,7 +629,7 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
     //   })
     // } 
     else {
-      if(element.columnDisplay) {
+      if(element.columnDisplay && !element.isSpecial) {
         const fields = element.columnDisplay.split(",");
         const promissall = [];
           this.dataView.forEach(element => {
