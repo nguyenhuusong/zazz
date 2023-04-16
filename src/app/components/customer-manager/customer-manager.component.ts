@@ -275,7 +275,7 @@ export class CustomerManagerComponent implements OnInit, AfterViewChecked {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn thực hiện xóa bản ghi này?',
       accept: () => {
-        const queryParams = queryString.stringify({ ManagerId: event.rowData.managerId });
+        const queryParams = queryString.stringify({ id: event.rowData.id });
         this.apiService.delInsuranceInfo(queryParams)
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe(results => {
@@ -293,9 +293,10 @@ export class CustomerManagerComponent implements OnInit, AfterViewChecked {
 
   editRow({rowData}) {
     const params = {
-      ManagerId: rowData.managerId
+      id: rowData.id,
+      empId: rowData.empId
     }
-    this.router.navigate(['/nhan-su/employee-manager/view-employee-manager'], { queryParams: params });
+    this.router.navigate(['/nhan-su/nguoi-quan-ly/view-nguoi-quan-ly'], { queryParams: params });
   }
 
   onCellClicked(event) {
@@ -422,18 +423,18 @@ export class CustomerManagerComponent implements OnInit, AfterViewChecked {
 
   seachEmValue(event) {
     const params = {
-      ManagerId: null,
+      id: null,
       empId: event.value
     }
     if(event.value) {
-      this.router.navigate(['/nhan-su/employee-manager/add-employee-manager'], { queryParams: params });
+      this.router.navigate(['/nhan-su/nguoi-quan-ly/add-nguoi-quan-ly'], { queryParams: params });
     }else{
       this.isSearchEmp = false;
     }
   }
 
   importFileExel() {
-    this.router.navigate(['/nhan-su/employee-manager/import-employee-manager']);
+    this.router.navigate(['/nhan-su/nguoi-quan-ly/import-nguoi-quan-ly']);
   }
 
 }

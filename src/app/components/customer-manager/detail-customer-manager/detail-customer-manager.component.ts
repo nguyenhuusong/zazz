@@ -1,317 +1,154 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { ConfirmationService, MessageService } from 'primeng/api';
-import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
+
+  import { Component, EventEmitter, Input, OnInit, Output, OnChanges, OnDestroy } from '@angular/core';
 import * as queryString from 'querystring';
+import { ActivatedRoute, Router } from '@angular/router';
 import { cloneDeep } from 'lodash';
-import { Subject, takeUntil } from 'rxjs';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { ApiService } from 'src/app/services/api.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
+import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
+import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 @Component({
   selector: 'app-detail-customer-manager',
   templateUrl: './detail-customer-manager.component.html',
   styleUrls: ['./detail-customer-manager.component.scss']
 })
-export class DetailCustomerManagerComponent implements OnInit {
-  @Output() callback = new EventEmitter<any>();
-  @Output() back = new EventEmitter<any>();
-  @Input() isDialog = false;
-  @Input() empId = null;
-  @Input() ManagerId = null;
+export class DetailCustomerManagerComponent implements OnInit, OnChanges, OnDestroy {
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  manhinh = 'View';
+  indexTab = 0;
+  optionsButtonsView = [
+    { label: 'Lưu', value: 'Update', class: CheckHideAction(MENUACTIONROLEAPI.GetCompanyPage.url, ACTIONS.EDIT) ? 'hidden' : '' },
+    { label: 'Quay lại', value: 'Back', class: 'p-button-secondary' }
+  ];
   constructor(
     private apiService: ApiHrmService,
-    private messageService: MessageService,
     private activatedRoute: ActivatedRoute,
+    private messageService: MessageService,
     private confirmationService: ConfirmationService,
     private spinner: NgxSpinnerService,
     private router: Router
   ) { }
-  optionsButtonsView = [
-    { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-caret-left' },
-    { label: 'Tiếp tục', value: 'Update', class: 'btn-accept', icon: 'pi pi-caret-right' },
-    { label: 'Lưu tạm', value: 'SaveNhap', class: 'btn-accept', icon: 'pi pi-caret-right' },
-    { label: 'Xác nhận', value: 'Submit', class: 'btn-accept', icon: 'pi pi-check' },
-    { label: 'Đóng', value: 'Close', class: 'btn-accept', icon: 'pi pi-times' }
-  ]
-  displayuploadcontract = false;
-  metafile = null;
-  displaySetting = false;
-  gridKeyForm = '';
-  detailInfo = null;
-  listViews = [];
-  steps = [];
-  activeIndex = 0;
-  titlePage = '';
-  url = '';
-  itemsMenu = [];
-  modelEdit = {
-    ManagerId: null,
-    empId: null
+  displayScreemForm = false;
+  displaysearchUserMaster = false;
+  listViewsForm = [];
+  detailComAuthorizeInfo = null;
+  id = null;
+  empId = null;
+  listViews = []
+  imagesUrl = []
+  paramsObject = null
+  displayUserInfo = false
+  titleForm = {
+    label: 'Cập nhật thông tin khách hàng',
+    value: 'Edit'
   }
-  ngOnInit(): void {
-    this.titlePage = this.activatedRoute.data['_value'].title;
-    this.url = this.activatedRoute.data['_value'].url;
-    this.itemsMenu = [
-      { label: 'Trang chủ', routerLink: '/home' },
-      { label: 'Danh sách người quản lý', routerLink: '/nhan-su/employee-manager' },
-      { label: `${this.titlePage}` },
-    ]
-    if (this.isDialog) {
-      this.modelEdit.ManagerId = this.ManagerId
-      this.modelEdit.empId = this.empId;
-      this.getEmpManager();
-    } else {
-      this.handleParams();
-    }
-  }
-  paramsObject = null;
+  titlePage: string = '';
+  url: string = '';
 
-  handleParams(): void {
-    this.activatedRoute.queryParamMap
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe((params) => {
-      this.paramsObject = { ...params.keys, ...params };
-      this.modelEdit.ManagerId = this.paramsObject.params.ManagerId || null
-      this.modelEdit.empId = this.paramsObject.params.empId || null
-      this.getEmpManager();
-    });
-  }
-  indexTab = 0;
-  handleChange(index) {
-    this.indexTab = index;
-  }
+  @Input() dataRouter = null
+  @Output() back = new EventEmitter<any>();
 
-  stepActivated(): void {
-    const stepS = document.querySelectorAll('.steps-contract .p-steps-item');
-    if (stepS.length > 0) {
-      for (let i = 0; i < this.steps.length; i++) {
-        if (i <= this.flowCurrent) {
-          stepS[i].className += ` p-highlight ${i < this.activeIndex ? 'active' : 'remove-active'} ${i < this.flowCurrent && this.flowCurrent !== 1 ? 'active-confirm' : 'remove-active-confirm'}`;
-        } else {
-          stepS[i].className += ` p-highlight ${i < this.activeIndex ? 'active' : 'remove-active'} ${i < this.flowCurrent && this.flowCurrent !== 1 ? 'active-confirm' : 'remove-active-confirm'}`;
-        }
-      }
-    }
-  }
-  cancel(data) {
-    if (data === 'CauHinh') {
-      this.getEmpManager()
-    } else if (data === 'BackPage') {
-      this.listViews = [];
-      this.getEmpManager(this.flowCurrent === 1 ? this.flowCurrent : this.flowCurrent - 1)
-    } else if (data === 'NghiViec') {
-    } else {
-      this.isDialog ? this.callback.emit() : this.router.navigate(['/nhan-su/bien-dong-bhxh']);
-    }
-  }
-
-  setEmpManager(data) {
-    if (this.flowCurrent >= this.activeIndex) {
-      this.listViews = [];
-      const params = {
-        ...this.detailInfo, group_fields: data, flow_cur: this.flowCurrent, action: 'next'
-      }
-      this.cloneListViews = cloneDeep(data);
-      this.listViews = [];
-      this.callApiInfo(params)
-    } else {
-      this.getEmpManager(this.flowCurrent + 1);
-    }
-
-  }
-  cloneListViews = []
-  callBackForm(event) {
-    if (event.type === 'IsSpecial') {
-      const params = {
-        ...this.detailInfo, group_fields: event.data
-      }
-      this.cloneListViews = cloneDeep(event.data);
-      this.listViews = [];
-      this.setEmpManager(params);
-    } else {
-      if(this.flowCurrent >= this.activeIndex) {
-        const params = {
-          ...this.detailInfo
-          , group_fields: event.data
-          , flow_cur: event.type === 'Submit' ? this.flowCurrent : this.flowCurrent
-          , action: event.type === 'Submit' ? 'submit' : 'save'
-        }
-        this.cloneListViews = cloneDeep(event.data);
-        this.listViews = [];
-        this.callApiInfo(params, event.type);
-      }else {
-        const params = {
-          ...this.detailInfo
-          , group_fields: event.data
-          , flow_st: this.detailInfo.flow_cur
-          , action: event.type === 'Submit' ? 'submit' : 'save'
-        }
-        this.cloneListViews = cloneDeep(event.data);
-        this.listViews = [];
-        this.callApiInfo(params, event.type);
-      }
-    }
-
-
-
-
-
-
-    // if (this.flowCurrent >= this.activeIndex) {
-    //   const params = {
-    //     ...this.detailInfo
-    //     , group_fields: event.data
-    //     , flow_cur: event.type === 'Submit' ? this.flowCurrent : this.flowCurrent
-    //     , action: event.type === 'Submit' ? 'submit' : 'save'
-    //   }
-    //   this.cloneListViews = cloneDeep(event.data);
-    //   this.listViews = [];
-    //   this.callApiInfo(params, event.type);
-    // } else {
-    //   const params = {
-    //     ...this.detailInfo
-    //     , group_fields: event.data
-    //     , flow_st: this.detailInfo.flow_cur
-    //     , action: event.type === 'Submit' ? 'submit' : 'save'
-    //   }
-    //   this.cloneListViews = cloneDeep(event.data);
-    //   this.listViews = [];
-    //   this.callApiInfo(params, event.type);
-    // }
-  }
-
-
-  setInsuranceDraft(params) {
-    this.spinner.show();
-    this.apiService.setInsuranceDraft(params)
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(results => {
-      if (results.status === 'success') {
-        this.activeIndex = results.data.flow_st;
-        this.listViews = cloneDeep(results.data.group_fields);
-        setTimeout(() => {
-          this.stepActivated();
-        }, 100);
-        this.detailInfo = results.data;
-        this.modelEdit.ManagerId = results.data.ManagerId
-        this.flowCurrent = results.data.flow_cur;
-        this.optionsButtonsView =[
-          { label: 'Quay lại', value: 'BackPage', class: `p-button-secondary ${results.data.prev_st ? '' : 'hidden'}`, icon: 'pi pi-caret-left', },
-          { label: 'Tiếp tục', value: 'Update', class: `btn-accept ${results.data.next_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-caret-right' },
-          { label: 'Lưu tạm', value: 'SaveNhap', class: `btn-accept ${results.data.save_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
-          { label: 'Xác nhận', value: 'Submit', class: `btn-accept ${results.data.submit_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
-          { label: 'Đóng', value: 'Close', class: `p-button-danger ml-1`, icon: 'pi pi-times' }
-        ]
-        this.spinner.hide();
-        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
-      } else {
-        this.listViews = cloneDeep(this.cloneListViews);
-        setTimeout(() => {
-          this.stepActivated();
-         }, 100);
-        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
-        this.spinner.hide();
-      }
-    }, error => {
-      this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: error });
-      this.spinner.hide();
-    })
-  }
-
-  flowCurrent = 0
-  callApiInfo(params, type = 'Update') {
-    this.spinner.show();
-    this.apiService.setEmpManager(params)
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(results => {
-      if (results.status === 'success') {
-        this.activeIndex = results.data.flow_st;
-        this.flowCurrent = results.data.flow_cur;
-        this.modelEdit.ManagerId = results.data.ManagerId;
-        this.listViews = cloneDeep(results.data.group_fields);
-        setTimeout(() => {
-          this.stepActivated();
-        }, 100);
-        this.detailInfo = results.data;
-        this.optionsButtonsView = [
-          { label: 'Quay lại', value: 'BackPage', class: `p-button-secondary ${results.data.prev_st ? '' : 'hidden'}`, icon: 'pi pi-caret-left', },
-          { label: 'Tiếp tục', value: 'Update', class: `btn-accept ${results.data.next_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-caret-right' },
-          { label: 'Lưu tạm', value: 'SaveNhap', class: `btn-accept ${results.data.save_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
-          { label: 'Xác nhận', value: 'Submit', class: `btn-accept ${results.data.submit_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
-          { label: 'Đóng', value: 'Close', class: `p-button-danger ml-1`, icon: 'pi pi-times' }
-        ]
-        this.spinner.hide();
-        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
-
-        if (type === 'Submit' || type === 'SaveNhap') {
-          setTimeout(() => {
-            this.isDialog ? this.callback.emit() : this.router.navigate(['/nhan-su/bien-dong-bhxh'])
-          }, 200);
-        }
-      } else {
-        this.listViews = cloneDeep(this.cloneListViews);
-        setTimeout(() => {
-          this.stepActivated();
-        }, 100);
-        this.spinner.hide();
-        this.messageService.add({
-          severity: 'error', summary: 'Thông báo', detail: results.message
-        });
-      }
-    }, error => {
-      this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: error });
-      this.spinner.hide();
-    })
-  }
-
-  getEmpManager(flow_cur = null) {
-    this.detailInfo = null;
-    this.listViews = [];
-    this.spinner.show();
-    const queryParams = queryString.stringify({ insuranceId: this.modelEdit.ManagerId, flow_cur: flow_cur, empId: this.modelEdit.empId });
-    this.apiService.getEmpManager(queryParams)
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(results => {
-      if (results.status === 'success') {
-        this.activeIndex = results.data.flow_st;
-        this.flowCurrent = results.data.flow_cur;
-        this.modelEdit.ManagerId = results.data.insuranceId;
-        this.steps = results.data.flowStatuses.map(d => {
-          return {
-            label: d.flow_name,
-            value: d.flow_st
-          }
-        });
-        this.detailInfo = results.data;
-        this.listViews = cloneDeep(results.data.group_fields);
-        setTimeout(() => {
-          this.stepActivated();
-        }, 100);
-        this.optionsButtonsView = [
-          { label: 'Quay lại', value: 'BackPage', class: `p-button-secondary ${results.data.prev_st ? '' : 'hidden'}`, icon: 'pi pi-caret-left', },
-          { label: 'Tiếp tục', value: 'Update', class: `btn-accept ${results.data.next_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-caret-right' },
-          { label: 'Lưu tạm', value: 'SaveNhap', class: `btn-accept ${results.data.save_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
-          { label: 'Xác nhận', value: 'Submit', class: `btn-accept ${results.data.submit_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
-          { label: 'Đóng', value: 'Close', class: `p-button-danger ml-1`, icon: 'pi pi-times' }
-        ]
-        this.spinner.hide();
-      } else {
-        this.spinner.hide();
-        this.messageService.add({
-          severity: 'error', summary: 'Thông báo', detail: results.message
-        });
-        this.isDialog ? this.callback.emit() : this.router.navigate(['/nhan-su/bien-dong-bhxh'])
-      }
-    })
-  }
-
-  private readonly unsubscribe$: Subject<void> = new Subject();
   ngOnDestroy() {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
+
+  ngOnChanges() {
+
+  }
+  items = []
+  ngOnInit(): void {
+    this.titlePage = this.activatedRoute.data['_value'].title;
+    this.items = [
+      { label: 'Trang chủ' , routerLink: '/home' },
+      { label: 'nhân sự' },
+      { label: 'Người quản lý', routerLink: '/nhan-su/nguoi-quan-ly' },
+      { label: this.titlePage },
+    ];
+    this.url = this.activatedRoute.data['_value'].url;
+    this.manhinh = 'Edit';
+    this.handleParams();
+  }
+
+  handleParams() {
+    this.activatedRoute.queryParamMap
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((params) => {
+      this.paramsObject = { ...params.keys, ...params };
+      this.dataRouter = this.paramsObject.params;
+      this.id = this.paramsObject.params.id;
+      this.empId = this.paramsObject.params.empId;
+      this.getEmpManager();
+    });
+  };
+  detailInfo = null;
+  listsData = []
+  columnDefs
+  getEmpManager() {
+    this.listViews = [];
+    this.listsData = [];
+    const queryParams = queryString.stringify({ id: this.id,empId:  this.empId });
+    this.apiService.getEmpManager(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
+      if (results.status === 'success') {
+        this.listViews = cloneDeep(results.data.group_fields);
+        this.detailInfo = results.data;
+      }
+    })
+  }
+
+  setEmpManager(data) {
+    const params = {
+      ...this.detailInfo, group_fields: data
+    };
+    this.apiService.setEmpManager(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
+      if (results.status === 'success') {
+        this.displayUserInfo = false;
+        this.goBack()
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Cập nhật thông tin thành công' });
+      } else {
+        this.messageService.add({
+          severity: 'error', summary: 'Thông báo', detail: results.message
+        });
+      }
+    }, error => {
+    });
+  }
+
+  onChangeButtonView(event) {
+    this.manhinh = event.value;
+    if (event.value === 'Back') {
+      this.goBack();
+    }
+  }
+
+  callBackForm(event) {
+
+  }
+
+  goBack() {
+    if (this.titlePage) {
+      this.router.navigate(['/nhan-su/nguoi-quan-ly']);
+    } else {
+      this.back.emit();
+    }
+  }
+
+  cancelUpdate(data) {
+    if(data === 'CauHinh') {
+      this.getEmpManager();
+    }else {
+      this.goBack();
+    }
+  }
+
 }
-
-
-
 
 

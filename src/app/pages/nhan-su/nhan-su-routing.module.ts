@@ -30,6 +30,8 @@ import { ImportQtThayDoiLuongComponent } from 'src/app/components/qt-thay-doi-lu
 import { ChiTietBienDongBHXHComponent } from 'src/app/components/bien-dong-bhxh/chi-tiet-bien-dong-bhxh/chi-tiet-bien-dong-bhxh.component';
 import { BienDongBHXHComponent } from 'src/app/components/bien-dong-bhxh/bien-dong-bhxh.component';
 import { ImportExcelComponent } from 'src/app/common/import-excel/import-excel.component';
+import { CustomerManagerComponent } from 'src/app/components/customer-manager/customer-manager.component';
+import { DetailCustomerManagerComponent } from 'src/app/components/customer-manager/detail-customer-manager/detail-customer-manager.component';
 
 const routes: Routes = [
   {
@@ -378,40 +380,39 @@ const routes: Routes = [
 
 
 // Người quản lý
-
 {
-  path: 'employee-manager',
-  component: BienDongBHXHComponent,
+  path: 'nguoi-quan-ly',
+  component: CustomerManagerComponent,
   data: {
     title: 'Danh sách người quản lý',
-    url: 'employee-manager',
+    url: 'nguoi-quan-ly',
   },
 },
 {
-  path: 'employee-manager/add-employee-manager',
-  component: ChiTietBienDongBHXHComponent,
+  path: 'nguoi-quan-ly/add-nguoi-quan-ly',
+  component: DetailCustomerManagerComponent,
   data: {
     title: 'Thêm mới người quản lý',
-    url: 'employee-manager/add-employee-manager',
+    url: 'nguoi-quan-ly/add-nguoi-quan-ly',
   },
 },
 {
-  path: 'employee-manager/view-employee-manager',
-  component: ChiTietBienDongBHXHComponent,
+  path: 'nguoi-quan-ly/view-nguoi-quan-ly',
+  component: DetailCustomerManagerComponent,
   data: {
     title: 'Chi tiết người quản lý',
-    url: 'employee-manager/view-employee-manager',
+    url: 'nguoi-quan-ly/view-nguoi-quan-ly',
   },
 },
 
 {
-  path: 'employee-manager/import-employee-manager',
+  path: 'nguoi-quan-ly/import-nguoi-quan-ly',
   component: ImportExcelComponent,
   data: {
     title: 'Import người quản lý',
-    url: 'import-employee-manager',
+    url: 'import-nguoi-quan-ly',
     titleDad : 'Danh sách người quản lý',
-    urlDad: '/nhan-su/employee-manager',
+    urlDad: '/nhan-su/nguoi-quan-ly',
     api: 'setEmpManagerImport',
     apiAccept: 'setEmpManagerAccept',
     fileDoc: 'nguoi_quan_ly_import.xlsx',
