@@ -277,7 +277,7 @@ export class CustomerManagerComponent implements OnInit, AfterViewChecked {
       message: 'Bạn có chắc chắn muốn thực hiện xóa bản ghi này?',
       accept: () => {
         const queryParams = queryString.stringify({ id: event.rowData.id });
-        this.apiService.delInsuranceInfo(queryParams)
+        this.apiService.delEmpManager(queryParams)
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe(results => {
           if (results.status === 'success') {
