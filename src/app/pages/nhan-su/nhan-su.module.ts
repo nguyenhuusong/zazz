@@ -126,6 +126,8 @@ import {SkeletonModule} from 'primeng/skeleton';
 import { LoadingGridModule } from 'src/app/common/loading-grid/loading-grid.module';
 import { LoadingDetailModule } from 'src/app/common/loading-detail/loading-detail.module';
 import { ChinhSachNvComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/quan-he-lao-dong-c/chinh-sach-nv/chinh-sach-nv.component';
+import { CustomerManagerComponent } from 'src/app/components/customer-manager/customer-manager.component';
+import { DetailCustomerManagerComponent } from 'src/app/components/customer-manager/detail-customer-manager/detail-customer-manager.component';
 @NgModule({
   imports: [
     MessagesModule,
@@ -260,7 +262,8 @@ import { ChinhSachNvComponent } from 'src/app/components/ns-ho-so-nhan-su/employ
     BienDongBHXHComponent,
     ChiTietBienDongBHXHComponent,
     ChinhSachNvComponent,
-
+    CustomerManagerComponent,
+    DetailCustomerManagerComponent,
 
   ],
   providers: [ ]

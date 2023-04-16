@@ -375,6 +375,51 @@ const routes: Routes = [
     fileNameTemImport: 'file_mau_xu_ly_qua_trinh_cong_tac',
   },
 },
+
+
+// Người quản lý
+
+{
+  path: 'employee-manager',
+  component: BienDongBHXHComponent,
+  data: {
+    title: 'Danh sách người quản lý',
+    url: 'employee-manager',
+  },
+},
+{
+  path: 'employee-manager/add-employee-manager',
+  component: ChiTietBienDongBHXHComponent,
+  data: {
+    title: 'Thêm mới người quản lý',
+    url: 'employee-manager/add-employee-manager',
+  },
+},
+{
+  path: 'employee-manager/view-employee-manager',
+  component: ChiTietBienDongBHXHComponent,
+  data: {
+    title: 'Chi tiết người quản lý',
+    url: 'employee-manager/view-employee-manager',
+  },
+},
+
+{
+  path: 'employee-manager/import-employee-manager',
+  component: ImportExcelComponent,
+  data: {
+    title: 'Import người quản lý',
+    url: 'import-employee-manager',
+    titleDad : 'Danh sách người quản lý',
+    urlDad: '/nhan-su/employee-manager',
+    api: 'setEmpManagerImport',
+    apiAccept: 'setEmpManagerAccept',
+    fileDoc: 'nguoi_quan_ly_import.xlsx',
+    apiExport: 'setEmpManagerExportDraft',
+    apiTemImport: 'getEmpManagerImportTemp',
+    fileNameTemImport: 'file_mau_bien_dong_xa_hoi',
+  },
+},
   
 ];
 
