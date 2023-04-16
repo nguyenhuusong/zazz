@@ -3710,6 +3710,10 @@ export class ApiHrmService {
   getEmpManager(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/empManager/GetEmpManager?` + queryParams, this.options);
   }
+
+  getEmpManagerCreate(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/empManager/GetEmpManagerCreate?` + queryParams, this.options);
+  }
   
   setEmpManager(queryParams): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/empManager/SetEmpManager` , queryParams, this.options);

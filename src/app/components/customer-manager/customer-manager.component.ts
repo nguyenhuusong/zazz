@@ -184,6 +184,7 @@ export class CustomerManagerComponent implements OnInit, AfterViewChecked {
           label: 'Xóa ',
           icon: 'pi pi-trash',
           class: 'btn-primary mr5',
+          hide: event.data.id === null || !event.data.id
         },
       ]
     };

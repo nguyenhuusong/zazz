@@ -1,5 +1,5 @@
 
-  import { Component, EventEmitter, Input, OnInit, Output, OnChanges, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, OnChanges, OnDestroy } from '@angular/core';
 import * as queryString from 'querystring';
 import { ActivatedRoute, Router } from '@angular/router';
 import { cloneDeep } from 'lodash';
@@ -64,7 +64,7 @@ export class DetailCustomerManagerComponent implements OnInit, OnChanges, OnDest
   ngOnInit(): void {
     this.titlePage = this.activatedRoute.data['_value'].title;
     this.items = [
-      { label: 'Trang chủ' , routerLink: '/home' },
+      { label: 'Trang chủ', routerLink: '/home' },
       { label: 'nhân sự' },
       { label: 'Người quản lý', routerLink: '/nhan-su/nguoi-quan-ly' },
       { label: this.titlePage },
@@ -76,14 +76,14 @@ export class DetailCustomerManagerComponent implements OnInit, OnChanges, OnDest
 
   handleParams() {
     this.activatedRoute.queryParamMap
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe((params) => {
-      this.paramsObject = { ...params.keys, ...params };
-      this.dataRouter = this.paramsObject.params;
-      this.id = this.paramsObject.params.id;
-      this.empId = this.paramsObject.params.empId;
-      this.getEmpManager();
-    });
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((params) => {
+        this.paramsObject = { ...params.keys, ...params };
+        this.dataRouter = this.paramsObject.params;
+        this.id = this.paramsObject.params.id;
+        this.empId = this.paramsObject.params.empId;
+        this.getEmpManager();
+      });
   };
   detailInfo = null;
   listsData = []
@@ -91,15 +91,37 @@ export class DetailCustomerManagerComponent implements OnInit, OnChanges, OnDest
   getEmpManager() {
     this.listViews = [];
     this.listsData = [];
-    const queryParams = queryString.stringify({ id: this.id,empId:  this.empId });
+    if (this.id) {
+      this.getManagerById();
+    } else {
+      this.getManagerByEmpId();
+    }
+
+
+  }
+
+  getManagerById() {
+    const queryParams = queryString.stringify({ id: this.id, empId: this.empId });
     this.apiService.getEmpManager(queryParams)
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(results => {
-      if (results.status === 'success') {
-        this.listViews = cloneDeep(results.data.group_fields);
-        this.detailInfo = results.data;
-      }
-    })
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(results => {
+        if (results.status === 'success') {
+          this.listViews = cloneDeep(results.data.group_fields);
+          this.detailInfo = results.data;
+        }
+      })
+  }
+
+  getManagerByEmpId() {
+    const queryParams = queryString.stringify({ empId: this.empId });
+    this.apiService.getEmpManagerCreate(queryParams)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(results => {
+        if (results.status === 'success') {
+          this.listViews = cloneDeep(results.data.group_fields);
+          this.detailInfo = results.data;
+        }
+      })
   }
 
   setEmpManager(data) {
@@ -107,19 +129,18 @@ export class DetailCustomerManagerComponent implements OnInit, OnChanges, OnDest
       ...this.detailInfo, group_fields: data
     };
     this.apiService.setEmpManager(params)
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe((results: any) => {
-      if (results.status === 'success') {
-        this.displayUserInfo = false;
-        this.goBack()
-        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Cập nhật thông tin thành công' });
-      } else {
-        this.messageService.add({
-          severity: 'error', summary: 'Thông báo', detail: results.message
-        });
-      }
-    }, error => {
-    });
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((results: any) => {
+        if (results.status === 'success') {
+          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message:  'Cập nhật thông tin thành công' });
+          this.router.navigate(['/nhan-su/nguoi-quan-ly']);
+        } else {
+          this.messageService.add({
+            severity: 'error', summary: 'Thông báo', detail: results.message
+          });
+        }
+      }, error => {
+      });
   }
 
   onChangeButtonView(event) {
@@ -142,9 +163,9 @@ export class DetailCustomerManagerComponent implements OnInit, OnChanges, OnDest
   }
 
   cancelUpdate(data) {
-    if(data === 'CauHinh') {
+    if (data === 'CauHinh') {
       this.getEmpManager();
-    }else {
+    } else {
       this.goBack();
     }
   }
