@@ -92,6 +92,10 @@ export class HrmSearchCustomerComponent {
     this.isLoading = true;
     this.isSearching = true;
     this.dataInfo = null;
+    this.dataSearched = [];
+    this.dataCusIdChoosed = [];
+    this.custIdChoosed = [];
+    this.custId = '';
     this.apiService.getCustSearch(queryString.stringify({ keyName: this.query.keyName,is_worked: 0, keyType: this.query.keyType, offSet: 0, pageSize: 50 })).subscribe((results: any) => {
       this.isLoading = false;
       this.dataSearched = results.data.dataList.data;
@@ -115,6 +119,7 @@ export class HrmSearchCustomerComponent {
   getEmpInfo(info) {
     this.isLoadingInfo = true;
     this.dataInfo = info;
+    this.custId = info.custId;
     // const queryParams = queryString.stringify({ custId: info.custId });
     // this.custId = info.custId;
     // // this.dataInfo = null;
