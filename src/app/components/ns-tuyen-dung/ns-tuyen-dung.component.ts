@@ -265,7 +265,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
         pinned: 'left',
         cellClass: ['border-right', 'no-auto'],
         field: 'checkbox2',
-        headerCheckboxSelection: false,
+        headerCheckboxSelection: true,
         suppressSizeToFit: true,
         suppressRowClickSelection: true,
         showDisabledCheckboxes: true,
@@ -344,7 +344,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     this.buttonTiemNang[1].disabled = this.dataRowSelected.length > 0 ? false : true;
     // chuyen vong
     this.optionsButtonDB[0].disabled = this.dataRowSelected.length > 0 ? false : true;
-    this.optionsButtonDB[1].disabled = this.dataRowSelected.length > 0 ? false : true;
+    this.optionsButtonDB[1].disabled = this.dataRowSelected.length > 0 && this.query.can_st > -1 ? false : true;
     let checkCreateAccount = this.dataRowSelected.some( d => d.can_st !== 10 || d.status_account === 1 );
     this.optionsButtonDB[2].disabled = checkCreateAccount ? true : this.dataRowSelected.length < 1 ? true : false;
   }
@@ -496,6 +496,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
         label: 'Tạo tài khoản',
         code: 'guiemail',
         icon: 'pi pi-plus',
+        class: 'hidden',
         disabled: true,
         command: () => {
           this.setCandidateRegisters();
@@ -743,7 +744,8 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
       can_st: this.query.can_st
     }
 
-    this.employeeSaveService.setStocks(data);
+    // this.employeeSaveService.setStocks(data);
+    localStorage.setItem('RecruitMail', JSON.stringify(data))
     this.router.navigate(['/cai-dat/thong-bao/them-moi-thong-bao'], { queryParams: {external_name: ''} })
 
     // this.spinner.show();

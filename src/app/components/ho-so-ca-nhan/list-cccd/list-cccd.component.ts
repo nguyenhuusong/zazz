@@ -178,7 +178,7 @@ export class ListCccdComponent implements OnInit {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn sử dụng giấy tờ cá nhân này?',
       accept: () => {
-        const queryParams = queryString.stringify({ custId: rowData.custId,  idcard_no: rowData.idcard_No, overite: true});
+        const queryParams = queryString.stringify({ custId: rowData.custId,  idcard_no: rowData.idcard_no, overite: true});
         this.apiService.setCustIdentityDefault(queryParams)
           .pipe(takeUntil(this.unsubscribe$))
           .subscribe(results => {
@@ -195,7 +195,7 @@ export class ListCccdComponent implements OnInit {
 
   editRow({rowData}) {
     this.custId = rowData.custId;
-    this.idcard_no = rowData.idcard_No;
+    this.idcard_no = rowData.idcard_no;
     this.getCustIdentity();
   }
 

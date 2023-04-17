@@ -154,7 +154,7 @@ export class GetNotifyToComponent implements OnInit, OnDestroy, OnChanges {
       if (results.status === 'success') {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
         this.spinner.hide();
-        this.employeeSaveService.setStocks(null);
+        localStorage.removeItem('RecruitMail');
         this.router.navigate(['/cai-dat/thong-bao/chi-tiet-thong-bao'], { queryParams: { notiId: this.n_id } });
       } else {
         this.messageService.add({
@@ -171,7 +171,6 @@ export class GetNotifyToComponent implements OnInit, OnDestroy, OnChanges {
 
   saveNotifyMaster() {
     const group_fields= setGroupFields(this.notify.group_fields);
-    debugger
     const params = {
       ...this.notify, group_fields: group_fields,
       attachs: this.modelMarkdow.attachs.map(data1 => {
@@ -191,7 +190,7 @@ export class GetNotifyToComponent implements OnInit, OnDestroy, OnChanges {
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data.messages ? results.data.messages : 'Thành công' });
         this.setNotifyTo(results.data.id)
         this.router.navigate(['/cai-dat/thong-bao/chi-tiet-thong-bao'], { queryParams: { notiId: results.data.id } });
-        this.employeeSaveService.setStocks(null);
+        localStorage.removeItem('RecruitMail');
       }else {
         this.messageService.add({
           severity: 'error', summary: 'Thông báo',

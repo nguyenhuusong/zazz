@@ -83,8 +83,9 @@ export class NotifyDetailComponent implements OnInit {
       { label: 'Danh sách thông báo', routerLink: '/cai-dat/thong-bao/danh-sach-thong-bao' },
       { label: `${this.titlePage}` },
     ];
-    this.employeeSaveService.fetchAll().subscribe((results: any) => {
-      if(results) {
+
+    if(localStorage.hasOwnProperty('RecruitMail') && localStorage.getItem('RecruitMail')) {
+        const results = JSON.parse(localStorage.getItem('RecruitMail'));
         this.external_name = null;
         this.organSeleted = null;
         this.notiId = this.notiId;
@@ -95,14 +96,35 @@ export class NotifyDetailComponent implements OnInit {
         this.modelNotifyTo.to_type = 1
         this.getNotifyTempList('oRecruitment')
         this.getAppNotifyInfo();
-      }else {
-        this.modelNotifyTo.to_level = null,
-        this.modelNotifyTo.to_groups = null,
-        this.modelNotifyTo.to_type = 0;
-        this.getNotifyTempList();
-        this.handleParams();
-      }
-    })
+    }else {
+      this.modelNotifyTo.to_level = null,
+      this.modelNotifyTo.to_groups = null,
+      this.modelNotifyTo.to_type = 0;
+      this.getNotifyTempList();
+      this.handleParams();
+    }
+
+
+
+
+
+
+    // this.employeeSaveService.fetchAll().subscribe((results: any) => {
+    //   if(results) {
+    //     this.external_name = null;
+    //     this.organSeleted = null;
+    //     this.notiId = this.notiId;
+    //     this.tempId = results.tempId;
+    //     this.notifyTempId = results.tempId;
+    //     this.modelNotifyTo.to_level = results.can_st,
+    //     this.modelNotifyTo.to_groups = results.canIds,
+    //     this.modelNotifyTo.to_type = 1
+    //     this.getNotifyTempList('oRecruitment')
+    //     this.getAppNotifyInfo();
+    //   }else {
+       
+    //   }
+    // })
 
   }
 
