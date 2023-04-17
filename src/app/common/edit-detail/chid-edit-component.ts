@@ -2407,7 +2407,7 @@ export class AppTypeSelectAutocompleteComponent implements OnInit, OnChanges {
 @Component({
   selector: 'app-type-autocompletes',
   template: ` 
-  <div class="field-group">  
+  <div class="fields">  
   <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
   <div> 
   <p-autoComplete [(ngModel)]="element.columnValue" [disabled]="element.isDisable" [multiple]="true"  [baseZIndex]="100" [appendTo]="'body'" [style]="{width: '100%'}"

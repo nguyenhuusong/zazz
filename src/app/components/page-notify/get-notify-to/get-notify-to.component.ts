@@ -104,6 +104,7 @@ export class GetNotifyToComponent implements OnInit, OnDestroy, OnChanges {
 
   setNotifyToDraft(params) {
     this.listViews = []
+    this.detailInfo = []
     this.apiService.setNotifyToDraft(params)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {
