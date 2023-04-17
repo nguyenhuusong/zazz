@@ -295,7 +295,8 @@ export class CustomerManagerComponent implements OnInit, AfterViewChecked {
   editRow({rowData}) {
     const params = {
       id: rowData.id,
-      empId: rowData.empId
+      empId: rowData.empId,
+      isDetail: true
     }
     this.router.navigate(['/nhan-su/nguoi-quan-ly/view-nguoi-quan-ly'], { queryParams: params });
   }

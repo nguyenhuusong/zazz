@@ -38,6 +38,7 @@ export class DetailCustomerManagerComponent implements OnInit, OnChanges, OnDest
   detailComAuthorizeInfo = null;
   id = null;
   empId = null;
+  isDetail = false;
   listViews = []
   imagesUrl = []
   paramsObject = null
@@ -81,6 +82,7 @@ export class DetailCustomerManagerComponent implements OnInit, OnChanges, OnDest
         this.paramsObject = { ...params.keys, ...params };
         this.dataRouter = this.paramsObject.params;
         this.id = this.paramsObject.params.id;
+        this.isDetail = this.paramsObject.params.isDetail
         this.empId = this.paramsObject.params.empId;
         this.getEmpManager();
       });
@@ -91,7 +93,7 @@ export class DetailCustomerManagerComponent implements OnInit, OnChanges, OnDest
   getEmpManager() {
     this.listViews = [];
     this.listsData = [];
-    if (this.id) {
+    if (this.isDetail) {
       this.getManagerById();
     } else {
       this.getManagerByEmpId();
