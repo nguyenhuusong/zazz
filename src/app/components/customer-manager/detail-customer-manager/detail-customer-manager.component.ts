@@ -11,6 +11,7 @@ import { Subject } from 'rxjs';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import { getFieldOfItems, getFieldValueAggrid } from 'src/app/utils/common/function-common';
 @Component({
   selector: 'app-detail-customer-manager',
   templateUrl: './detail-customer-manager.component.html',
@@ -24,6 +25,14 @@ export class DetailCustomerManagerComponent implements OnInit, OnChanges, OnDest
     { label: 'Lưu', value: 'Update', class: CheckHideAction(MENUACTIONROLEAPI.GetCompanyPage.url, ACTIONS.EDIT) ? 'hidden' : '' },
     { label: 'Quay lại', value: 'Back', class: 'p-button-secondary' }
   ];
+  optionsButtonsViewEmChange = [
+    { label: 'Lưu', value: 'Update',  },
+    { label: 'Quay lại', value: 'Back', class: 'p-button-secondary' }
+  ];
+  
+
+  isEditMgChange = false;
+  
   constructor(
     private apiService: ApiHrmService,
     private activatedRoute: ActivatedRoute,
@@ -49,6 +58,14 @@ export class DetailCustomerManagerComponent implements OnInit, OnChanges, OnDest
   }
   titlePage: string = '';
   url: string = '';
+
+  // tab 2
+  listViewsEmMgChange = [];
+  detailInfoEmMgChange = null;
+
+  columnDefs = [];
+  columnDefsMgChange = [];
+  listData = [];
 
   @Input() dataRouter = null
   @Output() back = new EventEmitter<any>();
@@ -88,8 +105,9 @@ export class DetailCustomerManagerComponent implements OnInit, OnChanges, OnDest
       });
   };
   detailInfo = null;
-  listsData = []
-  columnDefs
+  listsData = [];
+  heightGrid = 600;
+
   getEmpManager() {
     this.listViews = [];
     this.listsData = [];
@@ -171,6 +189,138 @@ export class DetailCustomerManagerComponent implements OnInit, OnChanges, OnDest
       this.goBack();
     }
   }
+
+  tabIndex = 0;
+  handleChange(e){
+    if(this.indexTab === 1) {
+      this.getEmployeePageByManager(false);
+    }
+  }
+
+  getEmpManagerChange(empId) {
+    const queryParams = queryString.stringify({ empId: empId });
+    this.apiService.getEmpManagerChange(queryParams)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(results => {
+        if (results.status === 'success') {
+          this.listViewsEmMgChange = cloneDeep(results.data.group_fields);
+          this.detailInfoEmMgChange = results.data;
+        }
+      })
+  }
+
+  setEmpManagerChange(data) {
+
+      let reportTo = getFieldOfItems(data, 'reportTo')
+      if(this.empSeleted.length > 0) {
+        let gd = this.empSeleted.map( d => {
+          return {
+            gd: d.empId
+          }
+        });
+        const queryParam:any = {
+          reportTo: reportTo,
+          empIds: gd
+        }
+        this.apiService.setEmpManagerChange(queryParam)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((results: any) => {
+          if (results.status === 'success') {
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message:  'Cập nhật thông tin thành công' });
+            this.isEditMgChange = false
+          } else {
+            this.messageService.add({
+              severity: 'error', summary: 'Thông báo', detail: results.message
+            });
+          }
+        }, error => {
+        });
+      }else{
+        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Chưa chọn nhân viên' });
+      }
+    
+  }
+
+  cols: any[];
+  getEmployeePageByManager(isChangeMg) {
+    this.columnDefs = [];
+    this.listData = []
+    this.apiService.getEmployeePageByManager(queryString.stringify({ reportTo: this.empId }))
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
+      if (results.status === 'success') {
+        this.cols = results.data.gridflexs;
+        this.listData = results.data.dataList.data;
+        this.detailInfo = results.data;
+        this.initGrid(isChangeMg);
+      }
+    });
+  }
+
+  initGrid(isChangeMg) {
+    if(isChangeMg) {
+      this.columnDefsMgChange = [
+        {
+          headerName: '',
+          filter: '',
+          width: 60,
+          pinned: 'left',
+          cellClass: ['border-right', 'no-auto'],
+          field: 'checkbox2',
+          headerCheckboxSelection: true,
+          suppressSizeToFit: true,
+          suppressRowClickSelection: true,
+          showDisabledCheckboxes: true,
+          checkboxSelection: true,
+          // rowSelection: 'single'
+        },
+        ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
+      ]
+    }else{
+      this.columnDefs = [
+        ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
+      ]
+    }
+  }
+
+  showButtons(event: any) {
+    return {
+      buttons: [
+        {
+          onClick: this.editRow.bind(this),
+          label: 'Xem chi tiết',
+          icon: 'fa fa-edit',
+          class: 'btn-primary mr5',
+        },
+      ]
+    }
+  }
+
+  editRow(event) {
+    this.isEditMgChange = true;
+    this.getEmpManagerChange(event.rowData.empId)
+  }
+
+  empSeleted = []
+  rowSelected(event) {
+    this.empSeleted = event;
+  }
+
+  changeManagerInfo() {
+    this.getEmployeePageByManager(true);
+    this.isEditMgChange = true;
+    this.getEmpManagerChange(this.empId)
+  }
+
+  closeChangeMa() {
+    this.getEmployeePageByManager(false);
+  }
+
+  cancelUpdatChangeMg(event) {
+    this.isEditMgChange = false;
+  }
+
+
 
 }
 

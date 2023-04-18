@@ -559,6 +559,10 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v2/employee/setEmployeeChange`, params, this.options)
   }
 
+  getEmployeePageByManager(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/employee/GetEmployeePageByManager?` + queryParams, this.options)
+  }
+
   getRecordInfo(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/contract/GetRecordInfo?` + queryParams, this.options)
   }
@@ -3722,7 +3726,14 @@ export class ApiHrmService {
   setEmpManagerExport(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/empManager/SetEmpManagerExport?` + queryParams, this.options);
   }
-  
+
+  getEmpManagerChange(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/empmanager/GetEmpManagerChange?` + queryParams, this.options);
+  }
+
+  setEmpManagerChange(queryParams): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v2/empmanager/SetEmpManagerChange` , queryParams, this.options);
+  }
   
   setEmpManagerExportDraft(queryParams): Observable<any> {
     return this.http.post(`${apiHrmServer}/api/v2/empManager/SetEmpManagerExportDraft`, queryParams, {
