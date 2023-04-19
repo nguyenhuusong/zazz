@@ -29,10 +29,9 @@
                     [height]="heightGrid"
                     [columnDefs]="columnDefs">
                 </app-list-grid-angular>
-                    <app-loading-detail 
-                        [id]="'sections-3qnt'" 
-                        *ngIf="listViewsEmMgChange.length === 0">
-                    </app-loading-detail>
+                <app-loading-grid  
+                *ngIf="columnDefs.length === 0" 
+                [columnNumber]="11"></app-loading-grid>
             </p-tabPanel>
         </p-tabView>
        
