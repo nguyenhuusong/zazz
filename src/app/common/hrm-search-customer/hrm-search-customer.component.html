@@ -143,7 +143,7 @@ styleClass="search-em-in {{ dataSearched?.length > 0 ? 'search-em-result' : '' }
         <div class="fields">
             <label for="">Tài khoản được giữ lại</label>
             <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" [options]="listTargets_s"
-                [required]="true"  [(ngModel)]="modelXacnhan.keep_cif_no" name="keep_cif_no" (onChange)="changeCifNo($event, 'keep_cif_no')">
+                [required]="true"  [(ngModel)]="modelXacnhan.keep_custId" name="keep_custId" (onChange)="changeCifNo($event, 'keep_custId')">
                 <ng-template let-item pTemplate="selectedItem">
 
                     <span style="vertical-align:middle; margin-left: .5em">{{item.label}} </span>
@@ -160,8 +160,8 @@ styleClass="search-em-in {{ dataSearched?.length > 0 ? 'search-em-result' : '' }
     <div class="col-md-12 mt-1">
         <div class="fields">
             <label for="">Tài khoản sẽ hủy</label>
-            <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" (onChange)="changeCifNo($event, 'remove_cif_no')" [options]="listTargets_s"
-                [required]="true"  [(ngModel)]="modelXacnhan.remove_cif_no" name="remove_cif_no" >
+            <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" (onChange)="changeCifNo($event, 'remove_custId')" [options]="listTargets_s"
+                [required]="true"  [(ngModel)]="modelXacnhan.remove_custId" name="remove_custId" >
                 <ng-template let-item pTemplate="selectedItem">
                     <span style="vertical-align:middle; margin-left: .5em">{{item.label}} </span>
                 </ng-template>
