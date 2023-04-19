@@ -31,25 +31,13 @@
                     </svg> &nbsp;&nbsp;
                     Bộ Lọc
                 </p-button>
-                <p-button 
-                    [disabled]="dataRowSelected.length > 0 ? false : true"
-                    styleClass="p-button-sm height-56" label="Chuyển vòng" 
-                    (onClick)="recru.toggle($event)" 
-                    [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetCandidatePage.url, action: ACTIONS.ADD}">
-                </p-button>
-                <p-button styleClass="p-button-sm height-56" (click)="cauhinh()">
-                    <svg width="20" height="17" viewBox="0 0 20 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M19.5 17V0H0.50855L0.5 17H19.5ZM6.675 15.3187H2.21V6.81868H6.675V15.3187ZM8.575 15.3187V6.81868H17.79V15.3187H8.575ZM2.21 1.68132V5.13736H17.79V1.68132H2.21Z" fill="#F3F8FF"/>
-                    </svg>
-                    &nbsp;
-                    Cấu hình
-                </p-button>
            </div>
         </div>
     </section>
     <section class="content pb-0">
         <div class="grid-default" #container>
-            <app-list-grid-angular *ngIf="columnDefs.length > 0" [listsData]="listsData" [height]="heightGrid"
+            <app-list-grid-angular *
+                ngIf="columnDefs.length > 0" [listsData]="listsData" [height]="heightGrid"
                 (callback)="rowSelected($event)"
                 [rowSelection]="'multiple'"
                 [columnDefs]="columnDefs"></app-list-grid-angular>
@@ -70,38 +58,6 @@
     [draggable]="false" [resizable]="false" [focusTrap]="false" styleClass="popup-setting">
     <app-config-grid-table-form *ngIf="displaySetting && gridKey" [typeConfig]="'TableInfo'"   [gridKey]="gridKey"></app-config-grid-table-form>
 </p-dialog>
-
-<p-overlayPanel #recru [style]="{width: '400px'}" styleClass="advance-seach">
-    <ng-template pTemplate>
-        <div class="header-filter-search  grid">
-            <h3>Chuyển vòng tuyển</h3>
-        </div>
-        <div class="header-filter-search  mt-1">
-            <div class="icon col-12 pl-0">
-                <div class="radios grid" *ngIf="recruitmentStatus.length > 0">
-                    <div [ngClass]="recrui.code === 1 ? '' : 'op6'" class="p-field-radiobutton col-6" style="margin-bottom: 5px;" *ngFor="let recrui of recruitmentStatus">
-                        <p-radioButton
-                            [disabled]="recrui.code !== 1"
-                            name="recrui" value="{{ recrui.code }}" 
-                            [(ngModel)]="recruitmentStatusSelected" 
-                            inputId="recrui{{ recrui.code }}"></p-radioButton>
-	                    <label style="margin-left: 5px;" for="recrui{{ recrui.code }}">{{ recrui.label }}</label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="input-group icon col-12 select-default text-right">
-            <p-button label="Hủy" icon="pi pi-times" (click)="recru.hide()" 
-                styleClass="p-button-secondary">
-            </p-button>
-            &nbsp;
-            <p-button label="Chuyển" [disabled]="recruitmentStatusSelected ? false : true" 
-            icon="pi pi-times" (click)="changeRecruStatus()"
-                styleClass="">
-            </p-button>
-        </div>
-    </ng-template>
-</p-overlayPanel>
 
 <p-overlayPanel #op [style]="{'width': '40rem'}" [dismissable]="false" appendTo="body" >
     <ng-template pTemplate>

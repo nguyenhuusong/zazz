@@ -6564,3 +6564,21 @@ hr{
     }
     
 }
+
+.p-menu-group{
+    border-right: none !important;
+    ul{
+        &>li{
+            &.p-submenu-header{
+                padding: 5px 0;
+                border-bottom: 1px solid #ccc;
+                margin-bottom: 10px;
+                &:first-child{
+                    border-bottom: none;
+                    padding: 0px 0;
+                    margin-bottom: 0px;
+                }
+            }
+        }
+    }
+}

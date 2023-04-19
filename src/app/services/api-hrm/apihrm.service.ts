@@ -939,6 +939,10 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v1/recruitcandidate/GetCandidatePotentialPage?` + queryParams, this.options)
   }
 
+  getCandidateHistoryPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitcandidate/GetCandidateHistoryPage?` + queryParams, this.options)
+  }
+
   delCandidateInfo(queryParams): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v1/recruitcandidate/DelCandidateInfo?` + queryParams, this.options)
   }
