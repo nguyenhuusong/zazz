@@ -97,7 +97,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   recruitmentStatus = [
     
   ]
-  recruitmentStatusSelected = '1';
+  recruitmentStatusSelected = null;
   dataRowSelected: any = []
   isSendMail = false;
   mailsInput = [];
@@ -338,7 +338,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
 
   rowSelected(event) {
     this.dataRowSelected = event;
-    this.recruitmentStatusSelected = this.dataRowSelected.map( d => d.can_st).toString();
+    // this.recruitmentStatusSelected = this.dataRowSelected.map( d => d.can_st).toString();
     this.canSttValue = this.dataRowSelected.sort((a,b)=>a.can_st-b.can_st)[this.dataRowSelected.length - 1];
     // check role for set tiem nang && check for tuy chon
     this.buttonTiemNang[1].disabled = this.dataRowSelected.length > 0 ? false : true;
@@ -661,6 +661,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   }
 
   changeRecruStatus() {
+
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn chuyển vòng?',
       accept: () => {
@@ -679,7 +680,6 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
           if (results.status === 'success') {
             this.getRecruitMailInput();
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Chuyển thành công!' });
-            this.recruitmentStatusSelected = null;
             this.isSendMail = true;
             this.isChuyenVong = false;
           } else {
@@ -741,7 +741,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     const data = {
       tempId: this.mailInputValue,
       canIds: canId,
-      can_st: this.query.can_st
+      can_st: this.query.can_st !== -1 ? this.query.can_st : this.recruitmentStatusSelected
     }
 
     // this.employeeSaveService.setStocks(data);
