@@ -27,6 +27,7 @@ export class ViTriCongViecComponent implements OnInit, AfterViewInit {
     private apiService: ApiHrmService,
     private messageService: MessageService,
     private spinner: NgxSpinnerService,
+    private router: Router
   ) { }
   ngAfterViewInit(): void {
 
@@ -41,8 +42,8 @@ export class ViTriCongViecComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.getTerminateReasons();
     this.getEmployeeInfo();
+    this.getEmployeeStatus();
     this.initMenuPopup();
- 
   }
 
   itemsMenuPopup = []
@@ -61,6 +62,14 @@ export class ViTriCongViecComponent implements OnInit, AfterViewInit {
         command: () => {
           this.fnNghiViec();
         }
+      },
+      {
+        label: 'Đổi người quản lý',
+        icon: 'pi pi-arrow-left',
+        command: () => {
+          this.changeMg();
+        },
+        visible: false
       },
    
     ]
@@ -189,7 +198,20 @@ export class ViTriCongViecComponent implements OnInit, AfterViewInit {
     this.titleForm.type = 'NghiViec';
     this.displayFormTerminate = true;
     this.noDisableInput = false;
+    if(this.checkIsChangeMg) {
+      this.messageService.add(
+        { severity: 'warn', 
+          summary: 'Thông báo', 
+          detail: 'Vui lòng đổi người quản lý' 
+        });
+    }
   }
+
+  changeMg() {
+    this.router.navigate(['/nhan-su/nguoi-quan-ly/']);
+    // , { queryParams: params }
+  }
+
   modelDuyet = {
     empId: "",
     workDt: new Date(),
@@ -286,6 +308,19 @@ export class ViTriCongViecComponent implements OnInit, AfterViewInit {
     this.isEditDetail = true;
   }
 
+  checkIsChangeMg = false;
+  getEmployeeStatus() {
+    this.apiService.getEmployeeStatus()
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
+      if (results.status === 'success') {
+        this.checkIsChangeMg = results.statusCode;
+        if(results.statusCode) {
+          this.itemsMenuPopup[1].visible = true;
+        }
+      }
+    })
+  }
 
 }
 
