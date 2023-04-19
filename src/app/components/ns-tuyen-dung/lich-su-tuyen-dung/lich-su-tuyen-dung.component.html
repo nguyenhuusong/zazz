@@ -36,8 +36,7 @@
     </section>
     <section class="content pb-0">
         <div class="grid-default" #container>
-            <app-list-grid-angular *
-                ngIf="columnDefs.length > 0" [listsData]="listsData" [height]="heightGrid"
+            <app-list-grid-angular *ngIf="columnDefs.length > 0" [listsData]="listsData" [height]="heightGrid"
                 (callback)="rowSelected($event)"
                 [rowSelection]="'multiple'"
                 [columnDefs]="columnDefs"></app-list-grid-angular>
