@@ -332,7 +332,7 @@ export class NotifyDetailComponent implements OnInit {
     data.forEach(element => {
       element.fields.forEach(element1 => {
         if(element1.field_name === 'content_type') {
-          
+          element1.columnValue = this.modelMarkdow.type;
           data.forEach(a => {
             a.fields.forEach(b => {
               if (b.field_name === 'content_markdown') {
