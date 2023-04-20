@@ -19,6 +19,7 @@ export class ThongTinHoSoCaNhanComponent implements OnInit {
   ]
   is_full_submit = false;
   @Output() cancelSave = new EventEmitter<any>();
+  @Output() dataChaged = new EventEmitter<any>();
   constructor(
     private apiService: ApiHrmService,
     private spinner: NgxSpinnerService,
@@ -113,6 +114,7 @@ export class ThongTinHoSoCaNhanComponent implements OnInit {
         this.getEmpRecordPage();
         this.FnEvent()
         this.spinner.hide();
+        this.dataChaged.emit('dataSubmited')
       } else {
         this.spinner.hide();
         this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
