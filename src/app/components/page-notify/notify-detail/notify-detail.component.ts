@@ -345,7 +345,7 @@ export class NotifyDetailComponent implements OnInit {
             a.fields.forEach(b => {
               if (b.field_name === 'content_markdown') {
                 if(this.modelMarkdow.type == 2) {
-                  element1.columnValue =b.columnValue ? parseHtmlToMarkdown(element1.columnValue) : '';
+                  element1.columnValue =b.columnValue ? this.converter.makeHtml(element1.columnValue) : '';
                 }else {
                   element1.columnValue =b.columnValue
                 }
