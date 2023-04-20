@@ -1,5 +1,5 @@
 
-import { Component, EventEmitter, Input, OnInit, Output, OnChanges, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, OnChanges, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import * as queryString from 'querystring';
 import { ActivatedRoute, Router } from '@angular/router';
 import { cloneDeep } from 'lodash';
@@ -29,7 +29,19 @@ export class DetailCustomerManagerComponent implements OnInit, OnChanges, OnDest
     { label: 'Lưu', value: 'Update',  },
     { label: 'Quay lại', value: 'Back', class: 'p-button-secondary' }
   ];
-  
+  first = 0;
+  query = {
+    filter: '',
+    offSet: 0,
+    pageSize: 20,
+    reportTo: '',
+  }
+  countRecord: any = {
+    totalRecord: 0,
+    currentRecordStart: 0,
+    currentRecordEnd: 0
+  }
+  cols: any[];
 
   isEditMgChange = false;
   
@@ -39,7 +51,8 @@ export class DetailCustomerManagerComponent implements OnInit, OnChanges, OnDest
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
     private spinner: NgxSpinnerService,
-    private router: Router
+    private router: Router,
+    private changeDetector: ChangeDetectorRef,
   ) { }
   displayScreemForm = false;
   displaysearchUserMaster = false;
@@ -107,6 +120,7 @@ export class DetailCustomerManagerComponent implements OnInit, OnChanges, OnDest
   detailInfo = null;
   listsData = [];
   heightGrid = 600;
+  loadjs = 0;
 
   getEmpManager() {
     this.listViews = [];
@@ -241,23 +255,39 @@ export class DetailCustomerManagerComponent implements OnInit, OnChanges, OnDest
     
   }
 
-  cols: any[];
+  // danh sách nhân viên theo người quản lý
   getEmployeePageByManager(isChangeMg) {
+    this.query.reportTo = this.empId;
     this.columnDefs = [];
     this.listData = []
-    this.apiService.getEmployeePageByManager(queryString.stringify({ reportTo: this.empId }))
+    this.apiService.getEmployeePageByManager(queryString.stringify(this.query))
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(results => {
       if (results.status === 'success') {
-        this.cols = results.data.gridflexs;
+        if (this.query.offSet === 0) {
+          this.cols = results.data.gridflexs;
+        }
         this.listData = results.data.dataList.data;
         this.detailInfo = results.data;
         this.initGrid(isChangeMg);
+        this.countRecord.totalRecord = results.data.dataList.recordsTotal;
+        this.countRecord.totalRecord = results.data.dataList.recordsTotal;
+        this.countRecord.currentRecordStart = results.data.dataList.recordsTotal === 0 ? this.query.offSet = 0 : this.query.offSet + 1;
+        if ((results.data.dataList.recordsTotal - this.query.offSet) > this.query.pageSize) {
+          this.countRecord.currentRecordEnd = this.query.offSet + Number(this.query.pageSize);
+        } else {
+          this.countRecord.currentRecordEnd = results.data.dataList.recordsTotal;
+          setTimeout(() => {
+            const noData = document.querySelector('.ag-overlay-no-rows-center');
+            if (noData) { noData.innerHTML = 'Không có kết quả phù hợp' }
+          }, 100);
+        }
       }
     });
   }
 
   initGrid(isChangeMg) {
+    // if isChangeMg: true, is the columnDef for popup
     if(isChangeMg) {
       this.columnDefsMgChange = [
         {
@@ -307,6 +337,7 @@ export class DetailCustomerManagerComponent implements OnInit, OnChanges, OnDest
   }
 
   changeManagerInfo() {
+    this.heightGrid = 400;
     this.getEmployeePageByManager(true);
     this.isEditMgChange = true;
     this.getEmpManagerChange(this.empId)
@@ -318,6 +349,30 @@ export class DetailCustomerManagerComponent implements OnInit, OnChanges, OnDest
 
   cancelUpdatChangeMg(event) {
     this.isEditMgChange = false;
+  }
+
+  paginate(event: any, theGrid) {
+    this.query.offSet = event.first;
+    this.first = event.first;
+    this.query.pageSize = event.rows === 4 ? 100000000 : event.rows;
+    this.getEmployeePageByManager(theGrid);
+  }
+
+  ngAfterViewChecked(): void {
+    const a: any = document.querySelector(".header");
+    const b: any = document.querySelector(".sidebarBody");
+    const d: any = document.querySelector(".breadcrumb");
+    const e: any = document.querySelector(".paginator");
+    this.loadjs++
+    if (this.loadjs === 5) {
+      if (b && b.clientHeight) {
+        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight + 110;
+        this.heightGrid = window.innerHeight - totalHeight
+        this.changeDetector.detectChanges();
+      } else {
+        this.loadjs = 0;
+      }
+    }
   }
 
 

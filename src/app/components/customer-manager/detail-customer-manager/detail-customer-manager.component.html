@@ -22,13 +22,22 @@
             <p-tabPanel header="Đổi người quản lý">
                 <p-button label="Đổi người quản lý" [styleClass]="'ptBtPoup'"
                 (click)="changeManagerInfo()"></p-button>
-                <app-list-grid-angular 
-                    [rowSelection]="'multiple'"
-                    *ngIf="columnDefs.length > 0" 
-                    [listsData]="listData" 
-                    [height]="heightGrid"
-                    [columnDefs]="columnDefs">
-                </app-list-grid-angular>
+                    <app-list-grid-angular
+                        [rowSelection]="'multiple'"
+                        *ngIf="columnDefs.length > 0" 
+                        [listsData]="listData" 
+                        [height]="heightGrid"
+                        [columnDefs]="columnDefs">
+                    </app-list-grid-angular>
+                    <div class="paginator">
+                        <span>Từ {{ countRecord.currentRecordStart }} đến
+                            {{ countRecord.currentRecordEnd }}
+                            trên tổng số
+                            {{ countRecord.totalRecord }} kết quả</span>
+                        <p-paginator [rows]="query.pageSize" [totalRecords]="countRecord.totalRecord" [first]="first"
+                            (onPageChange)="paginate($event, false)" [rowsPerPageOptions]="[20,40,60,100,200,{ showAll: 'ALL' }]">
+                        </p-paginator>
+                    </div>
                 <app-loading-grid  
                 *ngIf="columnDefs.length === 0" 
                 [columnNumber]="11"></app-loading-grid>
@@ -63,4 +72,13 @@
             [height]="heightGrid"
             [columnDefs]="columnDefsMgChange">
         </app-list-grid-angular>
+        <div class="paginator">
+            <span>Từ {{ countRecord.currentRecordStart }} đến
+                {{ countRecord.currentRecordEnd }}
+                trên tổng số
+                {{ countRecord.totalRecord }} kết quả</span>
+            <p-paginator [rows]="query.pageSize" [totalRecords]="countRecord.totalRecord" [first]="first"
+                (onPageChange)="paginate($event, true)" [rowsPerPageOptions]="[20,40,60,100,200,{ showAll: 'ALL' }]">
+            </p-paginator>
+        </div>
 </p-dialog>
