@@ -44,7 +44,7 @@ export class PageMarkdownComponent implements OnInit {
     this.preRender = this.preRender.bind(this);
     this.postRender = this.postRender.bind(this);
   }
-  contentTypes = [{ label: 'HTML', value: 1 }, { label: 'Markdown', value: 2 }];
+  contentTypes = [{ label: 'HTML', value: "1" }, { label: 'Markdown', value: "2" }];
 
   contentArr = [];
   public content: string = '';
@@ -66,7 +66,8 @@ export class PageMarkdownComponent implements OnInit {
     },
   };
   ngOnInit(): void {
-    this.GetNotifyFields()
+    this.GetNotifyFields();
+    console.log("this.modelMarkdow.type", this.modelMarkdow.type)
     if (this.modelMarkdow.type == 2) {
       // this.content = this.converter.markdown(this.element.columnValue);
       this.content = parseHtmlToMarkdown(this.element.columnValue);// dùng thử

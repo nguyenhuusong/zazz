@@ -44,7 +44,7 @@ export class NotifyDetailComponent implements OnInit {
   converter = new showdown.Converter();
   projectListSelects = [];
   modelMarkdow = {
-    type: 1,
+    type: 2,
     content: '',
     attachs: [],
     attack: true,
@@ -157,7 +157,6 @@ export class NotifyDetailComponent implements OnInit {
     if(this.notiId){
       this.indexTab = 1;
     }
-    console.log(this.notiId)
     const queryParams = queryString.stringify(
       { n_id: this.notiId, 
         external_sub: this.organSeleted, 
@@ -218,12 +217,14 @@ export class NotifyDetailComponent implements OnInit {
               field.isVisiable = false;
             }
           }
-          else if(field.field_name === 'isPublish' || field.field_name === 'content_type'  || field.field_name === 'content_markdown') { 
+          else if(field.field_name === 'isPublish' || field.field_name === 'content_type'  || field.field_name === 'content_markdown') {
+
             if(actionlistValueKey["email"] || actionlistValueKey["push"]){
               field.isVisiable = true;
             }else{
               field.isVisiable = false;
             }
+            if(field.field_name === 'content_type') this.modelMarkdow.type = field.columnValue
           }
         });
       }); 
@@ -331,6 +332,7 @@ export class NotifyDetailComponent implements OnInit {
     data.forEach(element => {
       element.fields.forEach(element1 => {
         if(element1.field_name === 'content_type') {
+          
           data.forEach(a => {
             a.fields.forEach(b => {
               if (b.field_name === 'content_markdown') {
@@ -339,17 +341,11 @@ export class NotifyDetailComponent implements OnInit {
                 }else {
                   b.columnValue = b.columnValue;
                 }
+              }else if (b.field_name === 'content_email'){
+                b.columnValue =b.columnValue ? this.converter.makeHtml(b.columnValue) : '';
               }
             });
           });
-      }else  if (element1.field_name === 'content_email') {
-        data.forEach(a => {
-          a.fields.forEach(b => {
-            if (b.field_name === 'content_markdown') {
-              element1.columnValue =b.columnValue ? this.converter.makeHtml(b.columnValue) : '';
-            }
-          });
-        });
       }
       });
     });

@@ -1278,12 +1278,31 @@ export class AppTypeMultiSelectComponent implements OnInit {
 export class AppTypeMarkdownComponent implements OnInit {
   @Input() element;
   @Input() modelMarkdow
+  @Input() dataView
   @Input() submit = false;
   constructor(
     private apiService: ApiHrmService
   ) { }
   ngOnInit(): void {
+    const content_type = this.getValueByKey('content_type');
+    console.log("content_type",content_type)
   }
+
+  getValueByKey(key) {
+    if (this.dataView && this.dataView.length > 0) {
+      let value = ''
+      for (let i = 0; i < this.dataView.length; i++) {
+        for (let j = 0; j < this.dataView[i].fields.length; j++) {
+          if (this.dataView[i].fields[j].field_name === key) {
+            value = this.dataView[i].fields[j].columnValue;
+            break;
+          }
+        }
+      }
+      return value
+    }
+  }
+
 
 }
 

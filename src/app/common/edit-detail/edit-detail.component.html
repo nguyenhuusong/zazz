@@ -47,7 +47,7 @@
                             <app-type-datefulltime [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'datefulltime'"></app-type-datefulltime>
                             <app-type-timeonly [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'timeonly'"></app-type-timeonly>
                             <app-type-multiSelect  [element]="element" *ngIf="element.columnType === 'multiSelect'" [modelFields]="modelFields" [submit]="submit" [dataView]="dataView"></app-type-multiSelect>
-                            <app-type-markdown [element]="element" [modelMarkdow]="modelMarkdow" *ngIf="element.columnType === 'markdown'"></app-type-markdown>
+                            <app-type-markdown [element]="element" [modelMarkdow]="modelMarkdow" [dataView]="dataView" *ngIf="element.columnType === 'markdown'"></app-type-markdown>
                             <app-type-checkboxList [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'checkboxList'"></app-type-checkboxList>
                             <app-type-checkboxradiolist [submit]="submit" [modelFields]="modelFields" [element]="element" *ngIf="element.columnType === 'checkboxradiolist'"></app-type-checkboxradiolist>
                             <app-type-linkurl [element]="element" *ngIf="element.columnType === 'linkUrl'" [dataView]="dataView"></app-type-linkurl>

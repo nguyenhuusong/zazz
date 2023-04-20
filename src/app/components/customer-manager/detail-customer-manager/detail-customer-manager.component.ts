@@ -120,6 +120,7 @@ export class DetailCustomerManagerComponent implements OnInit, OnChanges, OnDest
   detailInfo = null;
   listsData = [];
   heightGrid = 600;
+  heightGridPopup = 600;
   loadjs = 0;
 
   getEmpManager() {
@@ -337,7 +338,7 @@ export class DetailCustomerManagerComponent implements OnInit, OnChanges, OnDest
   }
 
   changeManagerInfo() {
-    this.heightGrid = 400;
+    this.heightGridPopup = 400;
     this.getEmployeePageByManager(true);
     this.isEditMgChange = true;
     this.getEmpManagerChange(this.empId)
