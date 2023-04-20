@@ -135,6 +135,12 @@ export class ThongTinCaNhanComponent implements OnInit {
     this.getEmployeeInfo();
   }
 
+  theFileChanged(event) {
+    if(event === 'dataSubmited') {
+      this.getEmployeeInfo();
+    }
+  }
+
 
 }
 
