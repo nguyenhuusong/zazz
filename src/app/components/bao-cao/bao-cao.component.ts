@@ -222,15 +222,14 @@ export class BaoCaoComponent implements OnInit {
       this.apiService.getReport(api, queryParams, params)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((response: any) => {
-        if (response && response.type === 'application/json') {
+        if (response && !response.data) {
+          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: response.message });
           this.spinner.hide();
         } else if(response.data && response.data.webViewLink){
           window.open(response.data.webViewLink);
           this.spinner.hide();
-        }
-        else {
-          var blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-          FileSaver.saveAs(blob, name + ".xlsx");
+        }else{
+          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Xuất báo cáo bị lỗi' });
           this.spinner.hide();
         }
       }, error => {
