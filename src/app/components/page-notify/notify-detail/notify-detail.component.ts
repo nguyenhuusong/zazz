@@ -8,7 +8,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 declare var ace:any;
 import showdown from 'showdown';
-import { CheckHideAction } from 'src/app/common/function-common/common';
+import { CheckHideAction, parseHtmlToMarkdown } from 'src/app/common/function-common/common';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 
 import { Subject, takeUntil } from 'rxjs';
@@ -333,19 +333,27 @@ export class NotifyDetailComponent implements OnInit {
       element.fields.forEach(element1 => {
         if(element1.field_name === 'content_type') {
           element1.columnValue = this.modelMarkdow.type;
+        
+      }else if (element1.field_name === 'content_markdown') {
+        if(this.modelMarkdow.type == 1) {
+          element1.columnValue =element1.columnValue ? parseHtmlToMarkdown(element1.columnValue) : '';
+        }else {
+          element1.columnValue =element1.columnValue
+        }
+      }else if (element1.field_name === 'content_email'){
           data.forEach(a => {
             a.fields.forEach(b => {
               if (b.field_name === 'content_markdown') {
-                if(element1.columnValue == 2) {
-                  b.columnValue =b.columnValue ? this.converter.makeHtml(b.columnValue) : '';
+                if(this.modelMarkdow.type == 2) {
+                  element1.columnValue =b.columnValue ? parseHtmlToMarkdown(element1.columnValue) : '';
                 }else {
-                  b.columnValue = b.columnValue;
+                  element1.columnValue =b.columnValue
                 }
-              }else if (b.field_name === 'content_email'){
-                b.columnValue =b.columnValue ? this.converter.makeHtml(b.columnValue) : '';
               }
             });
           });
+        
+       
       }
       });
     });

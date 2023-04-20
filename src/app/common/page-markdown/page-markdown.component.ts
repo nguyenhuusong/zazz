@@ -67,9 +67,7 @@ export class PageMarkdownComponent implements OnInit {
   };
   ngOnInit(): void {
     this.GetNotifyFields();
-    console.log("this.modelMarkdow.type", this.modelMarkdow.type)
-    if (this.modelMarkdow.type == 2) {
-      // this.content = this.converter.markdown(this.element.columnValue);
+    if (this.modelMarkdow.type == 1) {
       this.content = parseHtmlToMarkdown(this.element.columnValue);// dùng thử
     } else {
       this.contentArr.push(this.element.columnValue)
