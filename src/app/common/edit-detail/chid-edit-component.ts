@@ -28,10 +28,10 @@ import { ApiService } from 'src/app/services/api.service';
                <input (change)="onUploadOutput($event, element.field_name)"
                 accept="image/jpeg,image/png,image/jpg,image/gif" type="file" style="display: none" id="myfiless1-{{ element.field_name }}" name="myfiless1-{{ element.field_name }}" class="myfile1">
               </div>
-              <div *ngIf="modelFields[element.field_name]?.isRequire && submit && modelFields[element.field_name].error"
+              <div *ngIf="modelFields[element.field_name+element.group_cd]?.isRequire && submit && modelFields[element.field_name+element.group_cd].error"
                 class="alert-validation alert-danger">
-                <div [hidden]="!modelFields[element.field_name].error">
-                  {{modelFields[element.field_name].message}}
+                <div [hidden]="!modelFields[element.field_name+element.group_cd].error">
+                  {{modelFields[element.field_name+element.group_cd].message}}
                   </div>
                   </div>
                 `,
@@ -103,16 +103,16 @@ export class AppTypeImageComponent implements OnInit {
 @Component({
   selector: 'app-type-text',
   template: ` <div class="field-group text" [ngClass]=" element.columnValue ? 'valid' : 'invalid' ">
-  <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="modelFields[element.field_name] && modelFields[element.field_name].isRequire">*</span></label>
+  <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="modelFields[element.field_name+element.group_cd] && modelFields[element.field_name+element.group_cd].isRequire">*</span></label>
                   <input type="text" class="form-control" [(ngModel)]="element.columnValue" (change)="onChangeValue($event.target, element.field_name, element)"
                   name={{element.field_name}} [disabled]="element.isDisable"
                   (focus)="foucusIn($event)"
                   (focusout)="foucusOut($event)"
                   [required]="element.isRequire && element.isVisiable && !element.isEmpty">
-                  <div *ngIf="modelFields[element.field_name] && modelFields[element.field_name].isRequire && submit && modelFields[element.field_name].error"
+                  <div *ngIf="modelFields[element.field_name+element.group_cd] && modelFields[element.field_name+element.group_cd].isRequire && submit && modelFields[element.field_name+element.group_cd].error"
                       class="alert-validation alert-danger">
-                      <div [hidden]="!modelFields[element.field_name].error">
-                        {{modelFields[element.field_name].message}}
+                      <div [hidden]="!modelFields[element.field_name+element.group_cd].error">
+                        {{modelFields[element.field_name+element.group_cd].message}}
                       </div>
                   </div>
                 </div>
@@ -133,18 +133,18 @@ export class AppTypeTextComponent implements OnInit {
         this.special.emit(value)
     }else {
       if (element.columnValue === '') {
-        this.modelFields[field_name].error = this.modelFields[field_name].isRequire && !this.element.columnValue ? true : false
-        this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
+        this.modelFields[`${element.field_name}${element.group_cd}`].error = this.modelFields[`${element.field_name}${element.group_cd}`].isRequire && !this.element.columnValue ? true : false
+        this.modelFields[`${element.field_name}${element.group_cd}`].message = this.modelFields[`${element.field_name}${element.group_cd}`].error ? 'Trường bắt buộc nhập !' : ''
         let numberDay = moment().daysInMonth();
         if (field_name === 'annualAdd')
           if (this.element.columnValue > numberDay) {
-            this.modelFields[field_name].error = true;
-            this.modelFields[field_name].message = "Phép bù đã nhập lớn hơn số ngày trong tháng này";
+            this.modelFields[`${element.field_name}${element.group_cd}`].error = true;
+            this.modelFields[`${element.field_name}${element.group_cd}`].message = "Phép bù đã nhập lớn hơn số ngày trong tháng này";
           }
         return;
       }else {
-        this.modelFields[field_name].error =false;
-        this.modelFields[field_name].message = ''
+        this.modelFields[`${element.field_name}${element.group_cd}`].error =false;
+        this.modelFields[`${element.field_name}${element.group_cd}`].message = ''
       }
     }
     
@@ -205,8 +205,8 @@ export class AppTypeSelectComponent implements OnInit {
   }
 
   onChangeValue(value, field_name, element) {
-    this.modelFields[field_name].error = this.modelFields[field_name].isRequire && !this.element.columnValue ? true : false;
-    this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
+    this.modelFields[`${element.field_name}${element.group_cd}`].error = this.modelFields[`${element.field_name}${element.group_cd}`].isRequire && !this.element.columnValue ? true : false;
+    this.modelFields[`${element.field_name}${element.group_cd}`].message = this.modelFields[`${element.field_name}${element.group_cd}`].error ? 'Trường bắt buộc nhập !' : ''
   }
 
 }
@@ -272,8 +272,8 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
     if(this.element.field_name === "org_Id"){
       this.setValue('', 'User_Id')
     }
-    this.modelFields[field_name].error = this.modelFields[field_name].isRequire && !this.element.columnValue ? true : false;
-    this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : '';
+    this.modelFields[`${element.field_name}${element.group_cd}`].error = this.modelFields[`${element.field_name}${element.group_cd}`].isRequire && !this.element.columnValue ? true : false;
+    this.modelFields[`${element.field_name}${element.group_cd}`].message = this.modelFields[`${element.field_name}${element.group_cd}`].error ? 'Trường bắt buộc nhập !' : '';
     if(element.columnDisplay) {
       const fields = element.columnDisplay.split(",");
       const promissall = [];
@@ -343,8 +343,8 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
       element.fields.forEach(element1 => {
         if (element1.field_name === field_name) {
           element1.columnValue = value;
-          this.modelFields[field_name].error = this.modelFields[field_name].isRequire && !element1.columnValue ? true : false;
-          this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
+          this.modelFields[`${element.field_name}${element.group_cd}`].error = this.modelFields[`${element.field_name}${element.group_cd}`].isRequire && !element1.columnValue ? true : false;
+          this.modelFields[`${element.field_name}${element.group_cd}`].message = this.modelFields[`${element.field_name}${element.group_cd}`].error ? 'Trường bắt buộc nhập !' : ''
         }
       });
     });
@@ -417,8 +417,8 @@ export class AppTypeSelectTreesComponent implements OnInit, OnChanges {
       element.fields.forEach(element1 => {
         if (element1.field_name === field_name) {
           element1.columnValue = value;
-          this.modelFields[field_name].error = this.modelFields[field_name].isRequire && !element1.columnValue ? true : false;
-          this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
+          this.modelFields[`${element.field_name}${element.group_cd}`].error = this.modelFields[`${element.field_name}${element.group_cd}`].isRequire && !element1.columnValue ? true : false;
+          this.modelFields[`${element.field_name}${element.group_cd}`].message = this.modelFields[`${element.field_name}${element.group_cd}`].error ? 'Trường bắt buộc nhập !' : ''
         }
       });
     });
@@ -455,10 +455,10 @@ export class AppTypeSelectTreesComponent implements OnInit, OnChanges {
                   ">
                   <p-button [disabled]="element.columnValue ? false : true " (onClick)="chonLichHop()" styleClass="p-button-sm " label="Chọn lịch họp" icon="pi pi-clock"></p-button>&nbsp;
                 </div>
-                <div *ngIf="modelFields[element.field_name] && modelFields[element.field_name].isRequire && submit && modelFields[element.field_name].error"
+                <div *ngIf="modelFields[element.field_name+element.group_cd] && modelFields[element.field_name+element.group_cd].isRequire && submit && modelFields[element.field_name+element.group_cd].error"
                   class="alert-validation alert-danger">
-                  <div [hidden]="!modelFields[element.field_name].error">
-                  {{modelFields[element.field_name].message}}
+                  <div [hidden]="!modelFields[element.field_name+element.group_cd].error">
+                  {{modelFields[element.field_name+element.group_cd].message}}
                 </div>
             </div>
                 `,
@@ -530,8 +530,8 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
     if(element.isSpecial) {
       this.special.emit(value)
     }
-    this.modelFields[field_name].error = this.modelFields[field_name].isRequire && !this.element.columnValue ? true : false;
-    this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
+    this.modelFields[`${element.field_name}${element.group_cd}`].error = this.modelFields[`${element.field_name}${element.group_cd}`].isRequire && !this.element.columnValue ? true : false;
+    this.modelFields[`${element.field_name}${element.group_cd}`].message = this.modelFields[`${element.field_name}${element.group_cd}`].error ? 'Trường bắt buộc nhập !' : ''
 
    if (field_name === 'type_salary') {
       this.dataView.forEach(element => {
@@ -769,8 +769,8 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
       element.fields.forEach(element1 => {
         if (element1.field_name === field_name) {
           element1.columnValue = value;
-          this.modelFields[field_name].error = this.modelFields[field_name].isRequire && !element1.columnValue ? true : false;
-          this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
+          this.modelFields[`${element.field_name}${element.group_cd}`].error = this.modelFields[`${element.field_name}${element.group_cd}`].isRequire && !element1.columnValue ? true : false;
+          this.modelFields[`${element.field_name}${element.group_cd}`].message = this.modelFields[`${element.field_name}${element.group_cd}`].error ? 'Trường bắt buộc nhập !' : ''
         }
       });
     });
@@ -804,9 +804,9 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
                   <input type="number" oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : 0" class="form-control" [(ngModel)]="element.columnValue" [min]=0
                     name={{element.field_name}} [disabled]="element.isDisable" (change)="onChangeValue($event.target, element.field_name, element)"
                     [required]="element.isRequire && element.isVisiable && !element.isEmpty">
-                  <div *ngIf="submit && modelFields[element.field_name].error" class="alert-validation alert-danger"> 
-                    <div [hidden]="!modelFields[element.field_name].error">
-                      {{modelFields[element.field_name].message}}
+                  <div *ngIf="submit && modelFields[element.field_name+element.group_cd].error" class="alert-validation alert-danger"> 
+                    <div [hidden]="!modelFields[element.field_name+element.group_cd].error">
+                      {{modelFields[element.field_name+element.group_cd].message}}
                     </div>
                   </div>
                 </div>
@@ -831,28 +831,28 @@ export class AppTypeNumberComponent implements OnInit {
     // if(field_name === 'from_day' || field_name === 'to_day'){
 
     // }else{
-    //   this.modelFields[field_name].error = this.modelFields[field_name].isRequire ? this.element.columnValue ? false : true : false
-    //   this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
+    //   this.modelFields[`${element.field_name}${element.group_cd}`].error = this.modelFields[`${element.field_name}${element.group_cd}`].isRequire ? this.element.columnValue ? false : true : false
+    //   this.modelFields[`${element.field_name}${element.group_cd}`].message = this.modelFields[`${element.field_name}${element.group_cd}`].error ? 'Trường bắt buộc nhập !' : ''
     // }
     // if(element.isRequire) {
-    //   this.modelFields[field_name] = {...this.modelFields[field_name], ...ValidationNumberDayInMonth(event.value)}
+    //   this.modelFields[`${element.field_name}${element.group_cd}`] = {...this.modelFields[`${element.field_name}${element.group_cd}`], ...ValidationNumberDayInMonth(event.value)}
     // }else{
-    //     this.modelFields[field_name] = {...this.modelFields[field_name], ...ValidationNumberDayInMonthEmpty(event.value)}
+    //     this.modelFields[`${element.field_name}${element.group_cd}`] = {...this.modelFields[`${element.field_name}${element.group_cd}`], ...ValidationNumberDayInMonthEmpty(event.value)}
     // }
     if(this.element.columnValue < 0){
       this.element.columnValue = 0;
     }
     if (field_name === 'from_day' || field_name === 'to_day') {
       if (element.isRequire) {
-        this.modelFields[field_name] = { ...this.modelFields[field_name], ...ValidationNumberDayInMonth(event.value) }
+        this.modelFields[`${element.field_name}${element.group_cd}`] = { ...this.modelFields[`${element.field_name}${element.group_cd}`], ...ValidationNumberDayInMonth(event.value) }
       } else {
-        this.modelFields[field_name] = { ...this.modelFields[field_name], ...ValidationNumberDayInMonthEmpty(event.value) }
+        this.modelFields[`${element.field_name}${element.group_cd}`] = { ...this.modelFields[`${element.field_name}${element.group_cd}`], ...ValidationNumberDayInMonthEmpty(event.value) }
       }
     } else {
       if (element.isRequire) {
-        this.modelFields[field_name] = { ...this.modelFields[field_name], ...ValidationNumber(event.value) }
+        this.modelFields[`${element.field_name}${element.group_cd}`] = { ...this.modelFields[`${element.field_name}${element.group_cd}`], ...ValidationNumber(event.value) }
       } else {
-        this.modelFields[field_name] = { ...this.modelFields[field_name], ...ValidationNumberEmpty(event.value) }
+        this.modelFields[`${element.field_name}${element.group_cd}`] = { ...this.modelFields[`${element.field_name}${element.group_cd}`], ...ValidationNumberEmpty(event.value) }
       }
     }
 
@@ -900,8 +900,8 @@ export class AppTypeCurrencyComponent implements OnInit {
     if(element.isSpecial) {
       this.special.emit(event.target.value)
     }
-    this.modelFields[field_name].error = this.modelFields[field_name].isRequire && !this.element.columnValue ? true : false;
-    this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
+    this.modelFields[`${element.field_name}${element.group_cd}`].error = this.modelFields[`${element.field_name}${element.group_cd}`].isRequire && !this.element.columnValue ? true : false;
+    this.modelFields[`${element.field_name}${element.group_cd}`].message = this.modelFields[`${element.field_name}${element.group_cd}`].error ? 'Trường bắt buộc nhập !' : ''
   }
 }
 
@@ -982,7 +982,7 @@ export class AppTypeCheckboxComponent implements OnInit {
     if (field_name === 'isCardVehicle') {
       this.setRequired(element.columnValue)
     }
-    this.modelFields[field_name].error = false
+    this.modelFields[`${element.field_name}${element.group_cd}`].error = false
   }
 
 }
@@ -1022,8 +1022,8 @@ export class AppTypeTextareaComponent implements OnInit {
 
   }
   onChangeValue(value, field_name, element) {
-    this.modelFields[field_name].error = this.modelFields[field_name].isRequire && !this.element.columnValue ? true : false;
-    this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
+    this.modelFields[`${element.field_name}${element.group_cd}`].error = this.modelFields[`${element.field_name}${element.group_cd}`].isRequire && !this.element.columnValue ? true : false;
+    this.modelFields[`${element.field_name}${element.group_cd}`].message = this.modelFields[`${element.field_name}${element.group_cd}`].error ? 'Trường bắt buộc nhập !' : ''
 
   }
 }
@@ -1072,8 +1072,8 @@ export class AppTypeDatetimeComponent implements OnInit, OnChanges {
   }
 
   onChangeValue(value, field_name) {
-    this.modelFields[field_name].error = this.modelFields[field_name].isRequire && !this.element.columnValue ? true : false;
-    this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập' : '';
+    this.modelFields[`${this.element.field_name}${this.element.group_cd}`].error = this.modelFields[`${this.element.field_name}${this.element.group_cd}`].isRequire && !this.element.columnValue ? true : false;
+    this.modelFields[`${this.element.field_name}${this.element.group_cd}`].message = this.modelFields[`${this.element.field_name}${this.element.group_cd}`].error ? 'Trường bắt buộc nhập' : '';
   }
 
 
@@ -1170,10 +1170,10 @@ export class AppTypeTimeonlyComponent implements OnInit {
                   name={{element.field_name}} defaultLabel="Select a option" display="chip">
                 </p-multiSelect>
 
-                <div *ngIf="modelFields[element.field_name]?.isRequire && submit && modelFields[element.field_name]?.error"
+                <div *ngIf="modelFields[element.field_name+element.group_cd]?.isRequire && submit && modelFields[element.field_name+element.group_cd]?.error"
                     class="alert-validation alert-danger">
-                      <div [hidden]="!modelFields[element.field_name].error">
-                        {{modelFields[element.field_name].message}}
+                      <div [hidden]="!modelFields[element.field_name+element.group_cd].error">
+                        {{modelFields[element.field_name+element.group_cd].message}}
                       </div>
                 </div>
             </div>
@@ -1195,7 +1195,7 @@ export class AppTypeMultiSelectComponent implements OnInit {
   }
 
   onChangeValue(value, field_name) {
-    this.modelFields[field_name].error = false;
+    this.modelFields[`${this.element.field_name}${this.element.group_cd}`].error = false;
 
     // filed by list action
     let actionlistValueKey: any = {}
@@ -1744,8 +1744,8 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
       element.fields.forEach(element1 => {
         if (element1.field_name === field_name) {
           element1.columnValue = value;
-          this.modelFields[field_name].error = this.modelFields[field_name].isRequire && !element1.columnValue ? true : false;
-          this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
+          this.modelFields[`${element.field_name}${element.group_cd}`].error = this.modelFields[`${element.field_name}${element.group_cd}`].isRequire && !element1.columnValue ? true : false;
+          this.modelFields[`${element.field_name}${element.group_cd}`].message = this.modelFields[`${element.field_name}${element.group_cd}`].error ? 'Trường bắt buộc nhập !' : ''
         }
       });
     });
@@ -2042,8 +2042,8 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
         element.fields.forEach(element1 => {
           if (element1.field_name === field_name) {
             element1.columnValue = value;
-            this.modelFields[field_name].error = this.modelFields[field_name].isRequire && !element1.columnValue ? true : false;
-            this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : ''
+            this.modelFields[`${element.field_name}${element.group_cd}`].error = this.modelFields[`${element.field_name}${element.group_cd}`].isRequire && !element1.columnValue ? true : false;
+            this.modelFields[`${element.field_name}${element.group_cd}`].message = this.modelFields[`${element.field_name}${element.group_cd}`].error ? 'Trường bắt buộc nhập !' : ''
           }
         });
       });
@@ -2323,10 +2323,10 @@ export class AppTypeonOff implements OnInit {
   (completeMethod)="search($event)" field="name" [required]="element.isRequire && element.isVisiable && !element.isEmpty"></p-autoComplete>
   <span class="pi pi-search child-search-emp" (click)="isSearchEmp = true" *ngIf="element.field_name==='empId'"></span>
   <app-hrm-search-emp [isSearch]="isSearchEmp" (seachEmValue)="seachEmValue($event)"></app-hrm-search-emp>
-          <div *ngIf="modelFields[element.field_name]?.isRequire && submit && modelFields[element.field_name]?.error"
+          <div *ngIf="modelFields[element.field_name+element.group_cd]?.isRequire && submit && modelFields[element.field_name+element.group_cd]?.error"
                 class="alert-validation alert-danger">
-                <div [hidden]="!modelFields[element.field_name]?.error">
-                {{modelFields[element.field_name].message}}
+                <div [hidden]="!modelFields[element.field_name+element.group_cd]?.error">
+                {{modelFields[element.field_name+element.group_cd].message}}
                 </div>
              </div>
 </div></div>
@@ -2366,7 +2366,7 @@ export class AppTypeSelectAutocompleteComponent implements OnInit, OnChanges {
   }
 
   onSelectCus(e, field_name) {
-    this.modelFields[field_name].error = false;
+    this.modelFields[`${this.element.field_name}${this.element.group_cd}`].error = false;
   }
 
   
@@ -2413,10 +2413,10 @@ export class AppTypeSelectAutocompleteComponent implements OnInit, OnChanges {
   <p-autoComplete [(ngModel)]="element.columnValue" [disabled]="element.isDisable" [multiple]="true"  [baseZIndex]="100" [appendTo]="'body'" [style]="{width: '100%'}"
   [suggestions]="element.options" placeholder="Nhập Tìm kiếm theo tên" (onSelect)="onSelectCus($event, element.field_name)"
   (completeMethod)="search($event)" field="name" [required]="element.isRequire && element.isVisiable && !element.isEmpty"></p-autoComplete>
-          <div *ngIf="modelFields[element.field_name]?.isRequire && submit && modelFields[element.field_name]?.error"
+          <div *ngIf="modelFields[element.field_name+element.group_cd]?.isRequire && submit && modelFields[element.field_name+element.group_cd]?.error"
                 class="alert-validation alert-danger">
-                <div [hidden]="!modelFields[element.field_name]?.error">
-                {{modelFields[element.field_name].message}}
+                <div [hidden]="!modelFields[element.field_name+element.group_cd]?.error">
+                {{modelFields[element.field_name+element.group_cd].message}}
                 </div>
              </div>
 </div></div>
@@ -2457,7 +2457,7 @@ export class AppTypeSelectAutocompletesComponent implements OnInit, OnChanges {
   }
 
   onSelectCus(e, field_name) {
-    this.modelFields[field_name].error = false;
+    this.modelFields[`${this.element.field_name}${this.element.group_cd}`].error = false;
   }
 
   

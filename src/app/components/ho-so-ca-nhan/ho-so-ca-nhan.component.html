@@ -123,6 +123,14 @@
     </section>
 </div>
 
+<p-dialog header="Cài đặt cấu hình " [appendTo]="'body'" [focusTrap]="false" styleClass="popup-setting"
+    (onHide)="find()" [(visible)]="displaySetting" [modal]="true" [style]="{width: '50vw'}"
+    [maximizable]="true" [draggable]="false" [resizable]="false">
+    <app-config-grid-table-form *ngIf="displaySetting && gridKey" [typeConfig]="'TableInfo'"
+        [gridKey]="gridKey"></app-config-grid-table-form>
+</p-dialog>
+
+
 <p-dialog header="Xác minh hồ sơ khách hàng {{modelApproved.name}}" [(visible)]="displayApprovedProfile" [modal]="true"
     [draggable]="false" [resizable]="false" [style]="{width: '70vw'}" [autoZIndex]=true [draggable]="false"
     [resizable]="false">

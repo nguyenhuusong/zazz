@@ -138,20 +138,20 @@ export class EditDetailComponent implements OnInit, OnChanges {
       element.fields.forEach(element1 => {
         if ((element1.columnType === 'markdown') || (element1.columnType === 'chips') || (element1.columnType === 'linkUrl') || (element1.columnType === 'linkUrlDrag')) {
           const dataValidation = {
-            key: element1.field_name,
+            key: `${element1.field_name}${element1.group_cd}`,
             isRequire: false,
             error: false,
             message: ''
           }
-          this.modelFields[element1.field_name] = dataValidation
+          this.modelFields[`${element1.field_name}${element1.group_cd}`] = dataValidation
         } else {
           const dataValidation = {
-            key: element1.field_name,
+            key: `${element1.field_name}${element1.group_cd}`,
             isRequire: element1.isVisiable && !element1.isEmpty && element1.isRequire ? true : false,
             error: element1.isVisiable && !element1.isDisable && !element1.isEmpty && element1.isRequire && (element1.columnValue === null || element1.columnValue === "") ? true : false,
             message: element1.isVisiable && !element1.isDisable && !element1.isEmpty && element1.isRequire && (element1.columnValue === null || element1.columnValue === "") ? 'Trường bắt buộc nhập !' : ''
           }
-          this.modelFields[element1.field_name] = dataValidation
+          this.modelFields[`${element1.field_name}${element1.group_cd}`] = dataValidation
         }
         if (element1.columnType === 'select' || element1.columnType === 'members' || element1.columnType === 'dropdown' || element1.columnType === 'selectTree' || element1.columnType === 'selectTrees'
           || element1.columnType === 'checkboxList' || element1.columnType === 'checkboxradiolist'
