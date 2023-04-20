@@ -303,7 +303,6 @@ export class NotifyDetailComponent implements OnInit {
   }
 
   saveNotifyInfo(data) {
-    console.log(this.modelMarkdow.type)
     this.spinner.show();
     data.forEach(element => {
       element.fields.forEach(element1 => {
@@ -312,8 +311,6 @@ export class NotifyDetailComponent implements OnInit {
         
       }else if (element1.field_name === 'content_email') {
         const values: any = this.getValueByKey(data, 'content_markdown');
-    console.log(values)
-
         if(this.modelMarkdow.type == 2) {
           element1.columnValue =values.columnValue ? this.converter.makeHtml(values.columnValue) : '';
         }else {
