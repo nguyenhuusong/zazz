@@ -180,11 +180,19 @@ const routes: Routes = [
     },
   },
   {
-    path: 'ho-so-nghi-viec/import',
-    component: ImportTerminateComponent,
+    path: 'ho-so-nghi-viec/import-ho-so-nghi-viec',
+    component: ImportExcelComponent,
     data: {
-      title: 'Import hồ sơ nghỉ việc',
-      url: 'ho-so-nghi-viec/import',
+      title: 'Import hồ sơ nhân sự nghỉ việc',
+      url: 'import-ho-so-nghi-viec',
+      titleDad : 'Danh sách hồ sơ nhân sự nghỉ việc',
+      urlDad: '/nhan-su/ho-so-nghi-viec',
+      api: 'setTerminateImport',
+      apiAccept: 'setTerminateAccept',
+      fileDoc: 'ho-so-nhan-su-nghi-viec.xls',
+      apiExport: 'setTerminateExportDraft',
+      apiTemImport: 'setTerminateExportTemp',
+      fileNameTemImport: 'file_mau_ho_so_nhan_su_nghi_viec',
     },
   },
   // Thai sản
