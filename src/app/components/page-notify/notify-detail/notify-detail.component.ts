@@ -198,32 +198,7 @@ export class NotifyDetailComponent implements OnInit {
       }
       this.listViews.forEach( group => {
         group.fields.forEach(field => {
-          if(field.field_name === 'content_notify') {
-            if(actionlistValueKey["push"]){
-              field.isVisiable = true;
-            }else{
-              field.isVisiable = false;
-            }
-          }else if(field.field_name === 'content_sms') { 
-            if(actionlistValueKey["sms"]){
-              field.isVisiable = true;
-            }else{
-              field.isVisiable = false;
-            }
-          }else if(field.field_name === 'content_email') { 
-            if(actionlistValueKey["email"]){
-              field.isVisiable = true;
-            }else{
-              field.isVisiable = false;
-            }
-          }else if(field.field_name === 'isPublish'  || field.field_name === 'content_markdown') {
-
-            if(actionlistValueKey["email"] || actionlistValueKey["push"]){
-              field.isVisiable = true;
-            }else{
-              field.isVisiable = false;
-            }
-          }else if(field.field_name === 'content_type') {
+          if(field.field_name === 'content_type') {
             this.modelMarkdow.type = field.columnValue
           }
         });
@@ -328,36 +303,25 @@ export class NotifyDetailComponent implements OnInit {
   }
 
   saveNotifyInfo(data) {
+    console.log(this.modelMarkdow.type)
     this.spinner.show();
     data.forEach(element => {
       element.fields.forEach(element1 => {
         if(element1.field_name === 'content_type') {
           element1.columnValue = this.modelMarkdow.type;
         
-      }else if (element1.field_name === 'content_markdown') {
-        if(this.modelMarkdow.type == 1) {
-          element1.columnValue =element1.columnValue ? parseHtmlToMarkdown(element1.columnValue) : '';
+      }else if (element1.field_name === 'content_email') {
+        const values: any = this.getValueByKey(data, 'content_markdown');
+    console.log(values)
+
+        if(this.modelMarkdow.type == 2) {
+          element1.columnValue =values.columnValue ? this.converter.makeHtml(values.columnValue) : '';
         }else {
-          element1.columnValue =element1.columnValue
+          element1.columnValue =values.columnValue
         }
-      }else if (element1.field_name === 'content_email'){
-          data.forEach(a => {
-            a.fields.forEach(b => {
-              if (b.field_name === 'content_markdown') {
-                if(this.modelMarkdow.type == 2) {
-                  element1.columnValue =b.columnValue ? this.converter.makeHtml(element1.columnValue) : '';
-                }else {
-                  element1.columnValue =b.columnValue
-                }
-              }
-            });
-          });
-        
-       
       }
       });
     });
-    console.log(this.modelMarkdow.attachs)
     const params = {
       ...this.dataInfo,
       group_fields: data,
@@ -386,6 +350,22 @@ export class NotifyDetailComponent implements OnInit {
       }
     })
   }
+
+  getValueByKey(datas, key) {
+    if (datas && datas.length > 0) {
+      let value = ''
+      for (let i = 0; i < datas.length; i++) {
+        for (let j = 0; j < datas[i].fields.length; j++) {
+          if (datas[i].fields[j].field_name === key) {
+            value = datas[i].fields[j];
+            break;
+          }
+        }
+      }
+      return value
+    }
+  }
+
 
   getNotifyTempList(source_key = null) {
     const queryParams = queryString.stringify( {source_key: source_key });
