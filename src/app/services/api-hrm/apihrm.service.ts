@@ -2022,7 +2022,7 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v1/holiday/SetHolidayCreate`, params , this.options)
   }
   
-  contractImport(data): Observable<any> {
+  setContractImport(data): Observable<any> {
     const customOptions = {
       headers: new HttpHeaders({
         Authorization: this.authService.getAuthorizationHeaderValue()

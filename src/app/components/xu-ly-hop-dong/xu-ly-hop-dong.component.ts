@@ -664,7 +664,7 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
 
 
   importFileExel() {
-    this.router.navigate(['/nhan-su/xu-ly-hop-dong/import']);
+    this.router.navigate(['/nhan-su/xu-ly-hop-dong/import-xu-ly-hop-dong']);
   }
 
   displayApproveContract = false

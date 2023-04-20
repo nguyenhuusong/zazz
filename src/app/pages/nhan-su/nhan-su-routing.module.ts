@@ -59,6 +59,24 @@ const routes: Routes = [
       url: 'xu-ly-hop-dong',
     },
   },
+
+  {
+    path: 'xu-ly-hop-dong/import-xu-ly-hop-dong',
+    component: ImportExcelComponent,
+    data: {
+      title: 'Import xử lý hợp đồng',
+      url: 'import-xu-ly-hop-dong',
+      titleDad : 'Xử lý hợp đồng',
+      urlDad: '/nhan-su/xu-ly-hop-dong',
+      api: 'setContractImport',
+      apiAccept: 'setContractAccept',
+      fileDoc: 'xu-ly-hop-dong.xls',
+      apiExport: 'setContractExportDraft',
+      apiTemImport: 'getContractImportTemp',
+      fileNameTemImport: 'file_mau_xu_ly_hop_dong',
+    },
+  },
+
   {
     path: 'xu-ly-hop-dong/chi-tiet-xu-ly-hop-dong',
     component: ContractDetailComponent,
@@ -255,14 +273,6 @@ const routes: Routes = [
     data: {
       title: 'Chi tiết phê duyệt',
       url: 'chi-tiet-phe-duyet',
-    },
-  },
-  {
-    path: 'xu-ly-hop-dong/import',
-    component: ImportXyLyHopDongComponent,
-    data: {
-      title: 'Import loại hợp đồng',
-      url: 'import-loai-hop-dong',
     },
   },
 
