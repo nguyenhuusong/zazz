@@ -216,15 +216,15 @@ export class NotifyDetailComponent implements OnInit {
             }else{
               field.isVisiable = false;
             }
-          }
-          else if(field.field_name === 'isPublish' || field.field_name === 'content_type'  || field.field_name === 'content_markdown') {
+          }else if(field.field_name === 'isPublish'  || field.field_name === 'content_markdown') {
 
             if(actionlistValueKey["email"] || actionlistValueKey["push"]){
               field.isVisiable = true;
             }else{
               field.isVisiable = false;
             }
-            if(field.field_name === 'content_type') this.modelMarkdow.type = field.columnValue
+          }else if(field.field_name === 'content_type') {
+            this.modelMarkdow.type = field.columnValue
           }
         });
       }); 
