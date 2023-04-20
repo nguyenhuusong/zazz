@@ -258,8 +258,12 @@ export class BaoCaoComponent implements OnInit {
       const queryParams = queryString.stringify(params);
       this.apiService.getReport(api, queryParams)
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(response => {
-        if (response && response.type === 'application/json') {
+      .subscribe((response: any) => {
+        if(response.data && response.data.webContentLink){
+          window.open(response.data.webContentLink);
+          this.spinner.hide();
+        } else if(!response.data) {
+          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Xuất báo cáo bị lỗi' });
           this.spinner.hide();
         } else {
           var blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
