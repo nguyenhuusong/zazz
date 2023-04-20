@@ -18,8 +18,12 @@
                 </app-loading-detail>
             </p-tabPanel>
             <p-tabPanel header="Thông tin hồ sơ cá nhân" *ngIf="custId">
-                <app-chi-tiet-ho-so-ca-nhan *ngIf="tabIndex === 1" [isDialog]="true" [custId]="custId"
-                [canId]="modelEdit.canId" (callback)="callbackSaveProfile()"></app-chi-tiet-ho-so-ca-nhan>
+                <app-chi-tiet-ho-so-ca-nhan 
+                    *ngIf="tabIndex === 1" 
+                    [isDialog]="true" [custId]="custId"
+                    [canId]="modelEdit.canId" 
+                    (callback)="callbackSaveProfile()">
+                </app-chi-tiet-ho-so-ca-nhan>
             </p-tabPanel>
         </p-tabView>
 
