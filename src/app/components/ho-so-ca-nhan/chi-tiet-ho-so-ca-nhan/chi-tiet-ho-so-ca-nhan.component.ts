@@ -105,6 +105,8 @@ export class ChiTietHoSoCaNhanComponent implements OnInit {
     } else if (data === 'BackPage') {
       this.listViews = [];
       this.getCustFields(this.flowCurrent === 1 ? this.flowCurrent: this.flowCurrent -1)
+    } else if( data === 'Close') {
+      this.router.navigate(['/tuyen-dung/ds-tuyen-dung'])
     } else {
      this.isDialog ? this.callback.emit() : this.router.navigate(['/tuyen-dung/ho-so-ca-nhan']);
     }

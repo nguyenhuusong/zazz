@@ -276,6 +276,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
     } else if (event === 'ADDROW') {
       let group_fields = cloneDeep(this.dataView)
       this.callbackform(group_fields, 'ADDROW');
+    } else if(event === 'Close') {
+      this.callbackcancel.emit('Close')
     } else {
       this.cancel(event);
     }

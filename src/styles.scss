@@ -4816,20 +4816,22 @@ p-chips{
         width: 100%;
     }
     .p-chips-multiple-container{
-        border: 1px solid rgba(43, 47, 51, 0.1) !important;
-        border-radius: 2px;
+        border: 1px solid #D1D4DC !important;
+        border-radius: 4px;
+        padding-top: 4px !important;
+        padding-bottom: 0px !important;
         width: 100%;
         li{
-            padding: 6px 16px !important;
+            padding: 5px 16px !important;
             margin-right: 12px !important;
             border: 1px solid #E2E9FC !important;
             border-radius: 53px !important;
-            margin-bottom: 5px;
-            margin-top: 5px;
+            margin-bottom: 4px;
+            margin-top: 0px;
             .p-chips-token-label{
                 font-weight: 500;
-                font-size: 16px;
-                line-height: 20px;
+                font-size: 13px;
+                line-height: 1;
                 font-family: $fontMmedium;
                 color: #59637E;
             }
@@ -4851,6 +4853,51 @@ p-chips{
             }
             &:last-child{
                 opacity: 0;
+            }
+        }
+        
+        .p-chips-input-token{
+            input{
+                height: 27px;
+            }
+            padding: 0px !important;
+        }
+    }
+}
+
+p-autocomplete{
+    .p-autocomplete {
+        .p-autocomplete-multiple-container{
+            padding-top: 4px;
+            padding-bottom: 0px;
+            padding-left: 7px;
+            border: 1px solid #D1D4DC;
+            &.p-focus{
+                box-shadow: none;
+            }
+            li{
+                padding: 3px !important;
+                margin-bottom: 3px;
+                span{
+                    font-size: 13px;
+                }
+                &.p-autocomplete-input-token{
+                    input{
+                        height: 19px;
+                        border: none;
+                        &::-webkit-input-placeholder { /* Edge */
+                            font-size: 12px;
+                          }
+                          
+                          &:-ms-input-placeholder { /* Internet Explorer 10-11 */
+                            font-size: 12px;
+                          }
+                          
+                          &::placeholder {
+                            font-size: 12px;
+                          }
+                    }
+                }
             }
         }
     }
@@ -6336,7 +6383,18 @@ app-form-filter{
 }
 .fields{
     font-size: 12px;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
+    label{
+        color: #465373;
+        font-size: 12px;
+        left: 12px;
+        transition: 300ms ease all;
+        font-family: "Arial", "Apple SD Gothic Neo", "Gulim";
+        font-weight: 500;
+        line-height: 20px;
+        margin-bottom: 2px;
+        display: block;
+    }
     &.no-border{
         .p-dropdown{
             border: none;
@@ -6507,4 +6565,22 @@ hr{
         }
     }
     
+}
+
+.p-menu-group{
+    border-right: none !important;
+    ul{
+        &>li{
+            &.p-submenu-header{
+                padding: 5px 0;
+                border-bottom: 1px solid #ccc;
+                margin-bottom: 10px;
+                &:first-child{
+                    border-bottom: none;
+                    padding: 0px 0;
+                    margin-bottom: 0px;
+                }
+            }
+        }
+    }
 }

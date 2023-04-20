@@ -23,7 +23,8 @@
     </div>
     <p-tabView (onChange)="handleChange($event.index)" [(activeIndex)]="tabIndex">
         <p-tabPanel header="Thông tin chung">
-            <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'"
+            <app-edit-detail 
+                *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'"
                 [optionsButtonsEdit]="hideButton ? [] : optionsButtonsView" [dataView]="listViews"
                 (callback)="setSchemeInfo($event)" (callBackForm)="callBackForm($event)"
                 (callbackcancel)="cancel($event)"></app-edit-detail>

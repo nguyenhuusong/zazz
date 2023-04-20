@@ -1,37 +1,39 @@
 import { AfterViewChecked, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router, Params } from '@angular/router';
 import * as queryString from 'querystring';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
 import { CustomTooltipComponent } from 'src/app/common/ag-component/customtooltip.component';
 import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
 import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.component';
-import { AgGridFn } from 'src/app/common/function-common/common';
+import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import * as FileSaver from 'file-saver';
+import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 const MAX_SIZE = 100000000;
 import { cloneDeep } from 'lodash';
+import { DialogService } from 'primeng/dynamicdialog';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
 import { fromEvent, Subject, takeUntil } from 'rxjs';
-
 @Component({
-  selector: 'app-ds-nguoi-phu-thuoc',
-  templateUrl: './ds-nguoi-phu-thuoc.component.html',
-  styleUrls: ['./ds-nguoi-phu-thuoc.component.scss']
+  selector: 'app-customer-manager',
+  templateUrl: './customer-manager.component.html',
+  styleUrls: ['./customer-manager.component.scss']
 })
-export class DsNguoiPhuThuocComponent implements OnInit, AfterViewChecked {
+export class CustomerManagerComponent implements OnInit, AfterViewChecked {
 
   listsData: any[] = [];
+  items = []
   MENUACTIONROLEAPI = MENUACTIONROLEAPI;
   ACTIONS = ACTIONS
 
   constructor(
     private apiService: ApiHrmService,
+    private route: ActivatedRoute,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private spinner: NgxSpinnerService,
+    private dialogService: DialogService,
     private changeDetector: ChangeDetectorRef,
     private router: Router) {
 
@@ -49,15 +51,13 @@ export class DsNguoiPhuThuocComponent implements OnInit, AfterViewChecked {
       buttonAgGridComponent: ButtonAgGridComponent,
       avatarRendererFull: AvatarFullComponent,
     };
-
-    this.getEmpDependentFilter();
   }
-
-  public modules: Module[] = AllModules;
+  pagingComponent = {
+    total: 0
+  }
   public agGridFn = AgGridFn;
   cols: any[];
   colsDetail: any[];
-  items = [];
   columnDefs = [];
   detailRowHeight;
   defaultColDef;
@@ -85,22 +85,16 @@ export class DsNguoiPhuThuocComponent implements OnInit, AfterViewChecked {
     currentRecordEnd: 0
   }
   loading = false;
-  selectedValue: any = '';
+  listVacancy = []
+  itemsToolOfGrid = [];
+
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
   }
 
-  private readonly unsubscribe$: Subject<void> = new Subject();
-  ngOnDestroy() {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
-  }
-
   loadjs = 0;
-  heightGrid = 0;
-  dataRowSelected: any = [];
-  optionsButtonDB: any = [];
+  heightGrid = 0
   ngAfterViewChecked(): void {
     const a: any = document.querySelector(".header");
     const b: any = document.querySelector(".sidebarBody");
@@ -127,41 +121,37 @@ export class DsNguoiPhuThuocComponent implements OnInit, AfterViewChecked {
     this.load();
   }
 
-  paginate(event: any) {
-    this.query.offSet = event.first;
-    this.first = event.first;
-    this.query.pageSize = event.rows === 4 ? 100000000 : event.rows;
-    this.load();
-  }
-
   displaySetting = false;
   gridKey = ''
   cauhinh() {
     this.displaySetting = true;
   }
 
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   load() {
     this.columnDefs = []
-    // this.spinner.show();
-    let params: any = { ... this.query };
+    this.spinner.show();
+    const params: any = { ...this.query };
     const queryParams = queryString.stringify(params);
-    this.apiService.getEmpDependentPage(queryParams)
+    this.apiService.getEmpManagerPage(queryParams)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList.data;
-        this.gridKey = results.data.dataList.gridKey;
+        this.gridKey= results.data.dataList.gridKey;
         if (this.query.offSet === 0) {
           this.cols = results.data.gridflexs;
-          this.colsDetail = results.data.childgridflexs ? results.data.childgridflexs : [];
+          this.colsDetail = results.data.gridflexdetails ? results.data.gridflexdetails : [];
         }
         this.initGrid();
         this.countRecord.totalRecord = results.data.dataList.recordsTotal;
-        if (this.query.pageSize === MAX_SIZE) {
-          this.query.pageSize = this.countRecord.totalRecord;
-        }
         this.countRecord.totalRecord = results.data.dataList.recordsTotal;
-        this.countRecord.currentRecordStart = this.query.offSet + 1;
+        this.countRecord.currentRecordStart = results.data.dataList.recordsTotal === 0 ? this.query.offSet = 0 : this.query.offSet + 1;
         if ((results.data.dataList.recordsTotal - this.query.offSet) > this.query.pageSize) {
           this.countRecord.currentRecordEnd = this.query.offSet + Number(this.query.pageSize);
         } else {
@@ -187,30 +177,30 @@ export class DsNguoiPhuThuocComponent implements OnInit, AfterViewChecked {
           label: 'Xem chi tiết',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
-          // hide: CheckHideAction(MENUACTIONROLEAPI.getRecruitPlanPage.url, ACTIONS.VIEW)
+          // hide: CheckHideAction(MENUACTIONROLEAPI.GetMaternityPage.url, ACTIONS.VIEW)
         },
         {
           onClick: this.delRow.bind(this),
-          label: 'Xóa',
+          label: 'Xóa ',
           icon: 'pi pi-trash',
           class: 'btn-primary mr5',
-          // hide: CheckHideAction(MENUACTIONROLEAPI.getRecruitPlanPage.url, ACTIONS.DELETE)
+          hide: event.data.id === null || !event.data.id
         },
       ]
     };
   }
-
+  
   ngAfterViewInit(): void {
     this.FnEvent();
   }
 
   FnEvent() {
     setTimeout(() => {
-      var dragTarget = document.getElementById(this.gridKey + '-child');
-      if (dragTarget) {
+      var dragTarget = document.getElementById(this.gridKey);
+      if(dragTarget) {
         const click$ = fromEvent(dragTarget, 'click');
         click$.subscribe(event => {
-          this.create()
+          this.addNew()
         });
       }
     }, 300);
@@ -219,85 +209,81 @@ export class DsNguoiPhuThuocComponent implements OnInit, AfterViewChecked {
   initGrid() {
     this.columnDefs = [
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
-     ];
-      this.detailCellRendererParams = {
-        detailGridOptions: {
-          frameworkComponents: {
-            buttonAgGridComponent: ButtonAgGridComponent,
-            customTooltip: CustomTooltipComponent,
-          },
-          getRowHeight: (params) => {
-            return 40;
-          },
-          columnDefs: [
-            ...AgGridFn(this.colsDetail),
-            {
-              headerComponentParams: {
-                template:
-                  `<button  class="btn-button" id="${this.gridKey}-child"> <span class="pi pi-plus action-grid-add" ></span></button>`,
-              },
-              filter: '',
-              width: 60,
-              pinned: 'right',
-              cellRenderer: 'buttonAgGridComponent',
-              cellClass: ['border-right', 'no-auto'],
-              cellRendererParams: (params: any) => this.showButtons(params),
-              checkboxSelection: false,
-              field: 'checkbox'
-            }
-          ],
-  
-          enableCellTextSelection: true,
-          onFirstDataRendered :(params) =>  {
-            this.FnEvent();
-            let allColumnIds: any = [];
-            params.columnApi.getAllColumns()
-              .forEach((column: any) => {
-                if (column.colDef.cellClass.indexOf('auto') < 0) {
-                  allColumnIds.push(column)
-                } else {
-                  column.colDef.suppressSizeToFit = true;
-                  allColumnIds.push(column)
-                }
-              });
-            params.api.sizeColumnsToFit(allColumnIds);
-          },
+      {
+        headerComponentParams: {
+          template:
+          `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
         },
-        getDetailRowData(params) {
-          params.successCallback(params.data.dependents);
-        },
-        excelStyles: [
-          {
-            id: 'stringType',
-            dataType: 'string'
-          }
-        ],
-        template: function (params) {
-          var personName = params.data.full_name;
-          return (
-            '<div style="height: 100%; background-color: #EDF6FF; padding: 20px; box-sizing: border-box;">' +
-            `  <div style="height: 10%; padding: 2px; font-weight: bold;">###### Danh sách (${params.data.dependents.length}) : [` +
-            personName + ']' +
-            '</div>' +
-            '  <div ref="eDetailGrid" style="height: 90%;"></div>' +
-            '</div>'
-          );
-        },
-      };
+        filter: '',
+        width: 70,
+        pinned: 'right',
+        cellRenderer: 'buttonAgGridComponent',
+        cellClass: ['border-right', 'no-auto'],
+        cellRendererParams: (params: any) => this.showButtons(params),
+        checkboxSelection: false,
+        field: 'checkbox'
+      }]
 
+    this.detailCellRendererParams = {
+      detailGridOptions: {
+        frameworkComponents: {},
+        getRowHeight: (params) => {
+          return 40;
+        },
+        columnDefs: [
+          ...AgGridFn(this.colsDetail),
+        ],
+
+        enableCellTextSelection: true,
+        onFirstDataRendered(params) {
+          let allColumnIds: any = [];
+          params.columnApi.getAllColumns()
+            .forEach((column: any) => {
+              if (column.colDef.cellClass.indexOf('auto') < 0) {
+                allColumnIds.push(column)
+              } else {
+                column.colDef.suppressSizeToFit = true;
+                allColumnIds.push(column)
+              }
+            });
+          params.api.sizeColumnsToFit(allColumnIds);
+        },
+      },
+      getDetailRowData(params) {
+        params.successCallback(params.data.Owns);
+      },
+      excelStyles: [
+        {
+          id: 'stringType',
+          dataType: 'string'
+        }
+      ],
+      template: function (params) {
+        var personName = params.data.theme;
+        return (
+          '<div style="height: 100%; background-color: #EDF6FF; padding: 20px; box-sizing: border-box;">' +
+          `  <div style="height: 10%; padding: 2px; font-weight: bold;">###### Danh sách (${params.data.Owns.length}) : [` +
+          personName + ']' +
+          '</div>' +
+          '  <div ref="eDetailGrid" style="height: 90%;"></div>' +
+          '</div>'
+        );
+      },
+    };
   }
 
   delRow(event) {
     this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn xóa vị trí tuyển dụng?',
+      message: 'Bạn có chắc chắn muốn thực hiện xóa bản ghi này?',
       accept: () => {
-        const queryParams = queryString.stringify({ dependentId: event.rowData.dependentId });
-        this.apiService.delEmpDependent(queryParams)
+        const queryParams = queryString.stringify({ id: event.rowData.id });
+        this.apiService.delEmpManager(queryParams)
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe(results => {
           if (results.status === 'success') {
-            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa vị trí tuyển dụng thành công' });
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
             this.load();
+            this.FnEvent();
           } else {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
           }
@@ -308,9 +294,11 @@ export class DsNguoiPhuThuocComponent implements OnInit, AfterViewChecked {
 
   editRow({rowData}) {
     const params = {
-      dependentId: rowData.dependentId
+      id: rowData.id,
+      empId: rowData.empId,
+      isDetail: true
     }
-    this.router.navigate(['/luong-thue/danh-sach-nguoi-phu-thuoc/chi-tiet-nguoi-phu-thuoc'], { queryParams: params });
+    this.router.navigate(['/nhan-su/nguoi-quan-ly/view-nguoi-quan-ly'], { queryParams: params });
   }
 
   onCellClicked(event) {
@@ -319,71 +307,79 @@ export class DsNguoiPhuThuocComponent implements OnInit, AfterViewChecked {
     }
   }
 
-  create() {
-   this.isSearchEmp = true;
+  isSearchEmp = false;
+  addNew() {
+    this.isSearchEmp = true;
   }
 
   find() {
     this.load();
+    this.FnEvent();
   }
 
   changePageSize() {
     this.load();
+    this.FnEvent();
   }
 
+  paginate(event: any) {
+    this.query.offSet = event.first;
+    this.first = event.first;
+    this.query.pageSize = event.rows === 4 ? 100000000 : event.rows;
+    this.find();
+  }
 
   ngOnInit() {
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
-      { label: 'Lương thuế' },
-      { label: 'Danh sách người phụ thuộc' },
+      { label: 'Nhân sự' },
+      { label: 'Danh sách người quản lý' },
     ];
-    this.optionsButtonDB = [
+    this.itemsToolOfGrid = [
       {
-        label: 'Import người phụ thuộc',
-        code: 'import',
-        icon: 'fa fa-download',
-        // disabled: CheckHideAction(MENUACTIONROLEAPI.getRecruitPlanPage.url, ACTIONS.EXPORT),
+        label: 'Import file',
+        code: 'Import',
+        icon: 'pi pi-upload',
         command: () => {
           this.importFileExel();
         }
       },
       {
-        label: 'Export',
-        code: 'export',
-        icon: 'fa fa-download',
-        // disabled: CheckHideAction(MENUACTIONROLEAPI.getRecruitPlanPage.url, ACTIONS.EXPORT),
+        label: 'Export file',
+        code: 'Import',
+        icon: 'pi pi-download',
         command: () => {
           this.exportExel();
         }
       },
-      
     ]
+    this.geFilter()
+
   }
-
-  importFileExel() {
-    this.router.navigate(['/luong-thue/danh-sach-nguoi-phu-thuoc/import-nguoi-phu-thuoc']);
-  }
-
-
 
   exportExel() {
-    let params: any = { ... this.query };
-    const queryParams = queryString.stringify(params);
-    this.apiService.setEmpDependentExport(queryParams)
+    this.spinner.show();
+    this.query.pageSize = 1000000;
+    const query = { ...this.query };
+    const queryParams = queryString.stringify(query);
+    this.apiService.setEmpManagerExport(queryParams)
     .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(results => {
-      if (results.type === 'application/json') {
-        this.spinner.hide();
-      } else {
-        var blob = new Blob([results], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-        FileSaver.saveAs(blob, `Danh sách người phụ thuộc` + ".xlsx");
-        this.spinner.hide();
-      }
-    })
+    .subscribe(
+      (results: any) => {
 
+        if (results.type === 'application/json') {
+          this.spinner.hide();
+        } else if (results.type === 'application/octet-stream') {
+          var blob = new Blob([results], { type: 'application/msword' });
+          FileSaver.saveAs(blob, `Danh sách người quản lý` + ".xlsx");
+          this.spinner.hide();
+        }
+      },
+      error => {
+        this.spinner.hide();
+      });
   }
-  
+
 
   listViewsFilter = [];
   cloneListViewsFilter = [];
@@ -393,25 +389,25 @@ export class DsNguoiPhuThuocComponent implements OnInit, AfterViewChecked {
     { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger ml-2 height-56 addNew', icon: 'pi pi-times' },
   ];
 
-  getEmpDependentFilter() {
-    this.apiService.getEmpDependentFilter()
+  geFilter() {
+    this.apiService.getFilter('/api/v2/empManager/GetEmpManagerFilter')
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(results => {
-      if (results.status === 'success') {
+      if(results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
         this.listViewsFilter = [...listViews];
-        const params = getParamString(listViews)
-        this.query = { ...this.query, ...params };
+        const params =  getParamString(listViews)
+        this.query = { ...this.query, ...params};
         this.load();
         this.detailInfoFilter = results.data;
       }
     });
   }
-
-  filterLoad(event) {
+   filterLoad(event) {
     this.query = { ...this.query, ...event.data };
     this.load();
+    this.FnEvent();
   }
 
   close({event, datas}) {
@@ -425,18 +421,24 @@ export class DsNguoiPhuThuocComponent implements OnInit, AfterViewChecked {
       this.listViewsFilter =  cloneDeep(datas);
     }
   }
-  isSearchEmp = false
+
+
   seachEmValue(event) {
     const params = {
-      dependentId: null,
+      id: null,
       empId: event.value
     }
     if(event.value) {
-      this.router.navigate(['/luong-thue/danh-sach-nguoi-phu-thuoc/them-moi-nguoi-phu-thuoc'], { queryParams: params });
+      this.router.navigate(['/nhan-su/nguoi-quan-ly/add-nguoi-quan-ly'], { queryParams: params });
     }else{
       this.isSearchEmp = false;
     }
   }
 
+  importFileExel() {
+    this.router.navigate(['/nhan-su/nguoi-quan-ly/import-nguoi-quan-ly']);
+  }
 
 }
+
+

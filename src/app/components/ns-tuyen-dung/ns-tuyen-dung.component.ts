@@ -97,7 +97,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   recruitmentStatus = [
     
   ]
-  recruitmentStatusSelected = '1';
+  recruitmentStatusSelected = null;
   dataRowSelected: any = []
   isSendMail = false;
   mailsInput = [];
@@ -265,7 +265,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
         pinned: 'left',
         cellClass: ['border-right', 'no-auto'],
         field: 'checkbox2',
-        headerCheckboxSelection: false,
+        headerCheckboxSelection: true,
         suppressSizeToFit: true,
         suppressRowClickSelection: true,
         showDisabledCheckboxes: true,
@@ -338,15 +338,18 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
 
   rowSelected(event) {
     this.dataRowSelected = event;
-    this.recruitmentStatusSelected = this.dataRowSelected.map( d => d.can_st).toString();
+    // this.recruitmentStatusSelected = this.dataRowSelected.map( d => d.can_st).toString();
     this.canSttValue = this.dataRowSelected.sort((a,b)=>a.can_st-b.can_st)[this.dataRowSelected.length - 1];
-    // check role for set tiem nang && check for tuy chon
-    this.buttonTiemNang[1].disabled = this.dataRowSelected.length > 0 ? false : true;
     // chuyen vong
-    this.optionsButtonDB[0].disabled = this.dataRowSelected.length > 0 ? false : true;
-    this.optionsButtonDB[1].disabled = this.dataRowSelected.length > 0 ? false : true;
+    this.optionsButtonDB[0].items[0].disabled = this.dataRowSelected.length > 0 ? false : true;
+    this.optionsButtonDB[0].items[1].disabled = this.dataRowSelected.length > 0 && this.query.can_st > -1 ? false : true;
+
+    // tao tai khoan
     let checkCreateAccount = this.dataRowSelected.some( d => d.can_st !== 10 || d.status_account === 1 );
-    this.optionsButtonDB[2].disabled = checkCreateAccount ? true : this.dataRowSelected.length < 1 ? true : false;
+    this.optionsButtonDB[0].items[2].disabled = checkCreateAccount ? true : this.dataRowSelected.length < 1 ? true : false;
+
+    // check role for set tiem nang && check for tuy chon
+    this.optionsButtonDB[0].items[3].disabled = this.dataRowSelected.length > 0 ? false : true;
   }
 
   delRow(event) {
@@ -475,40 +478,75 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     ];
     this.optionsButtonDB = [
       {
-        label: 'Chuyển vòng',
-        code: 'chuyenVong',
-        icon: 'pi pi-reply',
-        disabled: false,
-        command: () => {
-          this.chuyenVong();
-        }
+        badgeStyleClass: 'fffffffffff',
+        items: [
+          {
+            label: 'Chuyển vòng',
+            code: 'chuyenVong',
+            icon: 'pi pi-reply',
+            disabled: false,
+            command: () => {
+              this.chuyenVong();
+            }
+          },
+          {
+            label: 'Gửi email',
+            code: 'guiemail',
+            icon: 'pi pi-envelope',
+            disabled: true,
+            command: () => {
+              this.getRecruitMailInput();
+            }
+          },
+          {
+            label: 'Tạo tài khoản',
+            code: 'guiemail',
+            icon: 'pi pi-plus',
+            class: 'hidden',
+            disabled: true,
+            command: () => {
+              this.setCandidateRegisters();
+            }
+          },
+          {
+            label: 'Tiềm năng',
+            code: 'tiemnang',
+            icon: 'pi pi-send',
+            disabled: true,
+            command: () => {
+              this.tiemNang();
+            }
+          },
+        ]
       },
       {
-        label: 'Gửi email',
-        code: 'guiemail',
-        icon: 'pi pi-envelope',
-        disabled: true,
-        command: () => {
-          this.getRecruitMailInput();
-        }
-      },
-      {
-        label: 'Tạo tài khoản',
-        code: 'guiemail',
-        icon: 'pi pi-plus',
-        disabled: true,
-        command: () => {
-          this.setCandidateRegisters();
-        }
-      },
-      {
-        label: 'Import',
-        code: 'import',
-        icon: 'pi pi-file-excel',
-        disabled: CheckHideAction(MENUACTIONROLEAPI.GetCandidatePage.url, ACTIONS.IMPORT),
-        command: () => {
-          this.importFileExel();
-        }
+        items: [
+          {
+            label: 'Import',
+            code: 'import',
+            icon: 'pi pi-file-excel',
+            disabled: CheckHideAction(MENUACTIONROLEAPI.GetCandidatePage.url, ACTIONS.IMPORT),
+            command: () => {
+              this.importFileExel();
+            }
+          },
+          {
+            label: 'Danh sách tiềm năng',
+            code: 'Import',
+            icon: 'pi pi-list',
+            command: () => {
+              this.dsTiemNang();
+            }
+          },
+          {
+            label: 'Lịch sử tuyển dụng',
+            code: 'Import',
+            icon: 'pi pi-list',
+            command: () => {
+              this.lsTuyenDung();
+            }
+          },
+        ]
       },
     ]
 
@@ -660,6 +698,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   }
 
   changeRecruStatus() {
+
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn chuyển vòng?',
       accept: () => {
@@ -678,7 +717,6 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
           if (results.status === 'success') {
             this.getRecruitMailInput();
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Chuyển thành công!' });
-            this.recruitmentStatusSelected = null;
             this.isSendMail = true;
             this.isChuyenVong = false;
           } else {
@@ -740,10 +778,11 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     const data = {
       tempId: this.mailInputValue,
       canIds: canId,
-      can_st: this.query.can_st
+      can_st: this.query.can_st !== -1 ? this.query.can_st : this.recruitmentStatusSelected
     }
 
-    this.employeeSaveService.setStocks(data);
+    // this.employeeSaveService.setStocks(data);
+    localStorage.setItem('RecruitMail', JSON.stringify(data))
     this.router.navigate(['/cai-dat/thong-bao/them-moi-thong-bao'], { queryParams: {external_name: ''} })
 
     // this.spinner.show();
@@ -808,7 +847,11 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   }
 
   dsTiemNang() {
-    this.router.navigate(['/tuyen-dung/ds-tuyen-dung//ds-tiem-nang']);
+    this.router.navigate(['/tuyen-dung/ds-tuyen-dung/ds-tiem-nang']);
+  }
+
+  lsTuyenDung() {
+    this.router.navigate(['/tuyen-dung/ds-tuyen-dung/lich-su-tuyen-dung']);
   }
 
   // vitrituyendung() {

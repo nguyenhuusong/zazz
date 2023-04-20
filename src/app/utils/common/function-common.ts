@@ -628,6 +628,18 @@ export function getFieldValueAggrid(form, fieldName, fieldValue = ''): any {
   return result;
 }
 
+export function getFieldOfItems(form, fieldName, fieldValue = ''): any {
+  let result = '';
+  form.forEach(results => {
+    results.fields.forEach(data => {
+      if (data.field_name === fieldName) {
+        result = data[fieldValue || 'columnValue'];
+      }
+    });
+  });
+  return result;
+}
+
 // gán tổ chức khi thêm mới từ tổ chức đang được chọn
 export function setOrganizeId(groupFields, field_name, organId) {
   let datas: any = groupFields

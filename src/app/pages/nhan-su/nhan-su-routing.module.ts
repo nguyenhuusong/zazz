@@ -30,6 +30,8 @@ import { ImportQtThayDoiLuongComponent } from 'src/app/components/qt-thay-doi-lu
 import { ChiTietBienDongBHXHComponent } from 'src/app/components/bien-dong-bhxh/chi-tiet-bien-dong-bhxh/chi-tiet-bien-dong-bhxh.component';
 import { BienDongBHXHComponent } from 'src/app/components/bien-dong-bhxh/bien-dong-bhxh.component';
 import { ImportExcelComponent } from 'src/app/common/import-excel/import-excel.component';
+import { CustomerManagerComponent } from 'src/app/components/customer-manager/customer-manager.component';
+import { DetailCustomerManagerComponent } from 'src/app/components/customer-manager/detail-customer-manager/detail-customer-manager.component';
 
 const routes: Routes = [
   {
@@ -57,6 +59,24 @@ const routes: Routes = [
       url: 'xu-ly-hop-dong',
     },
   },
+
+  {
+    path: 'xu-ly-hop-dong/import-xu-ly-hop-dong',
+    component: ImportExcelComponent,
+    data: {
+      title: 'Import xử lý hợp đồng',
+      url: 'import-xu-ly-hop-dong',
+      titleDad : 'Xử lý hợp đồng',
+      urlDad: '/nhan-su/xu-ly-hop-dong',
+      api: 'setContractImport',
+      apiAccept: 'setContractAccept',
+      fileDoc: 'xu-ly-hop-dong.xls',
+      apiExport: 'setContractExportDraft',
+      apiTemImport: 'getContractImportTemp',
+      fileNameTemImport: 'file_mau_xu_ly_hop_dong',
+    },
+  },
+
   {
     path: 'xu-ly-hop-dong/chi-tiet-xu-ly-hop-dong',
     component: ContractDetailComponent,
@@ -160,11 +180,19 @@ const routes: Routes = [
     },
   },
   {
-    path: 'ho-so-nghi-viec/import',
-    component: ImportTerminateComponent,
+    path: 'ho-so-nghi-viec/import-ho-so-nghi-viec',
+    component: ImportExcelComponent,
     data: {
-      title: 'Import hồ sơ nghỉ việc',
-      url: 'ho-so-nghi-viec/import',
+      title: 'Import hồ sơ nhân sự nghỉ việc',
+      url: 'import-ho-so-nghi-viec',
+      titleDad : 'Danh sách hồ sơ nhân sự nghỉ việc',
+      urlDad: '/nhan-su/ho-so-nghi-viec',
+      api: 'setTerminateImport',
+      apiAccept: 'setTerminateAccept',
+      fileDoc: 'ho-so-nhan-su-nghi-viec.xls',
+      apiExport: 'setTerminateExportDraft',
+      apiTemImport: 'setTerminateExportTemp',
+      fileNameTemImport: 'file_mau_ho_so_nhan_su_nghi_viec',
     },
   },
   // Thai sản
@@ -253,14 +281,6 @@ const routes: Routes = [
     data: {
       title: 'Chi tiết phê duyệt',
       url: 'chi-tiet-phe-duyet',
-    },
-  },
-  {
-    path: 'xu-ly-hop-dong/import',
-    component: ImportXyLyHopDongComponent,
-    data: {
-      title: 'Import loại hợp đồng',
-      url: 'import-loai-hop-dong',
     },
   },
 
@@ -373,6 +393,50 @@ const routes: Routes = [
     apiExport: 'setEmpProcessExportDraft',
     apiTemImport: 'getEmpProcessImportTemp',
     fileNameTemImport: 'file_mau_xu_ly_qua_trinh_cong_tac',
+  },
+},
+
+
+// Người quản lý
+{
+  path: 'nguoi-quan-ly',
+  component: CustomerManagerComponent,
+  data: {
+    title: 'Danh sách người quản lý',
+    url: 'nguoi-quan-ly',
+  },
+},
+{
+  path: 'nguoi-quan-ly/add-nguoi-quan-ly',
+  component: DetailCustomerManagerComponent,
+  data: {
+    title: 'Thêm mới người quản lý',
+    url: 'nguoi-quan-ly/add-nguoi-quan-ly',
+  },
+},
+{
+  path: 'nguoi-quan-ly/view-nguoi-quan-ly',
+  component: DetailCustomerManagerComponent,
+  data: {
+    title: 'Chi tiết người quản lý',
+    url: 'nguoi-quan-ly/view-nguoi-quan-ly',
+  },
+},
+
+{
+  path: 'nguoi-quan-ly/import-nguoi-quan-ly',
+  component: ImportExcelComponent,
+  data: {
+    title: 'Import người quản lý',
+    url: 'import-nguoi-quan-ly',
+    titleDad : 'Danh sách người quản lý',
+    urlDad: '/nhan-su/nguoi-quan-ly',
+    api: 'setEmpManagerImport',
+    apiAccept: 'setEmpManagerAccept',
+    fileDoc: 'nguoi_quan_ly_import.xlsx',
+    apiExport: 'setEmpManagerExportDraft',
+    apiTemImport: 'getEmpManagerImportTemp',
+    fileNameTemImport: 'file_mau_bien_dong_xa_hoi',
   },
 },
   

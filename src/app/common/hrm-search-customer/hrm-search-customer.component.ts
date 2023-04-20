@@ -92,6 +92,10 @@ export class HrmSearchCustomerComponent {
     this.isLoading = true;
     this.isSearching = true;
     this.dataInfo = null;
+    this.dataSearched = [];
+    this.dataCusIdChoosed = [];
+    this.custIdChoosed = [];
+    this.custId = '';
     this.apiService.getCustSearch(queryString.stringify({ keyName: this.query.keyName,is_worked: 0, keyType: this.query.keyType, offSet: 0, pageSize: 50 })).subscribe((results: any) => {
       this.isLoading = false;
       this.dataSearched = results.data.dataList.data;
@@ -115,6 +119,7 @@ export class HrmSearchCustomerComponent {
   getEmpInfo(info) {
     this.isLoadingInfo = true;
     this.dataInfo = info;
+    this.custId = info.custId;
     // const queryParams = queryString.stringify({ custId: info.custId });
     // this.custId = info.custId;
     // // this.dataInfo = null;
@@ -137,17 +142,17 @@ export class HrmSearchCustomerComponent {
   xacnhan() {
     this.modelXacnhan = {
       message: 'Sẽ có một tài khoản bị xóa khỏi danh sách !. Vui lòng xác nhận tài khoản giữ lại.',
-      overite: false,
-      keep_cif_no: '',
-      remove_cif_no: ''
+      keep_custId: '',
+      remove_custId: '',
+      overite: true
     }
     const selectedRowData = this.dataCusIdChoosed;
     if (selectedRowData.length === 2) {
       this.listTargets_s = selectedRowData.map(d => {
         return { label: d.full_Name + '-' + d.phone1 + '-' + d.idcard_No + '-' + d.cif_No, value: d.cif_No };
       })
-      this.modelXacnhan.keep_cif_no = this.listTargets_s[0].value;
-      this.modelXacnhan.remove_cif_no = this.listTargets_s[1].value;
+      this.modelXacnhan.keep_custId = this.listTargets_s[0].value;
+      this.modelXacnhan.remove_custId = this.listTargets_s[1].value;
       this.displayGop = true;
     } else {
       this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Vui lòng chọn 2 tài khoản để gộp' });
@@ -156,9 +161,12 @@ export class HrmSearchCustomerComponent {
   }
   modelXacnhan = {
     message: 'Sẽ có một tài khoản bị xóa khỏi danh sách !. Vui lòng xác nhận tài khoản sử dụng',
-    overite: false,
-    keep_cif_no: '',
-    remove_cif_no: ''
+    // overite: false,
+    // keep_cif_no: '',
+    // remove_cif_no: ''
+    keep_custId: '',
+    remove_custId: '',
+    overite: true
   }
 
   checkValue(event, data) {
@@ -188,8 +196,8 @@ export class HrmSearchCustomerComponent {
           this.modelXacnhan = {
             message: results.message,
             overite: true,
-            keep_cif_no: this.modelXacnhan.keep_cif_no,
-            remove_cif_no: this.modelXacnhan.remove_cif_no
+            keep_custId: this.modelXacnhan.keep_custId,
+            remove_custId: this.modelXacnhan.remove_custId
           }
         }
       }
@@ -198,11 +206,11 @@ export class HrmSearchCustomerComponent {
 
   changeCifNo(event, type) {
     if (type === 'keep_cif_no') {
-      const items = this.listTargets_s.filter(d => d.value !== this.modelXacnhan.keep_cif_no);
-      this.modelXacnhan.remove_cif_no = items[0].value;
+      const items = this.listTargets_s.filter(d => d.value !== this.modelXacnhan.keep_custId);
+      this.modelXacnhan.remove_custId = items[0].value;
     } else {
-      const items = this.listTargets_s.filter(d => d.value !== this.modelXacnhan.remove_cif_no);
-      this.modelXacnhan.keep_cif_no = items[0].value;
+      const items = this.listTargets_s.filter(d => d.value !== this.modelXacnhan.remove_custId);
+      this.modelXacnhan.keep_custId = items[0].value;
     }
   }
 

@@ -523,7 +523,7 @@ export class NsHoSoNghiViecComponent implements OnInit {
         label: 'Import nghỉ việc',
         icon: 'pi pi-refresh',
         command: () => {
-          this.router.navigate(['/nhan-su/ho-so-nghi-viec/import']);
+          this.router.navigate(['/nhan-su/ho-so-nghi-viec/import-ho-so-nghi-viec']);
         }
       },
     ]

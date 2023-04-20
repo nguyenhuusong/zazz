@@ -366,7 +366,8 @@ detailInfoFilter = null;
   }
 
   editRow({rowData}) {
-    this.employeeSaveService.setStocks(null);
+    // this.employeeSaveService.setStocks(null);
+    localStorage.removeItem('RecruitMail');
     this.modelAddNotifi.notiId = rowData.n_id
     this.Actions.value = 'Info';
     this.Actions.label = 'Sửa thông báo';
@@ -390,7 +391,8 @@ detailInfoFilter = null;
 
   displayNotify = false;
   AddNotify() {
-    this.employeeSaveService.setStocks(null);
+    // this.employeeSaveService.setStocks(null);
+    localStorage.removeItem('RecruitMail');
     this.router.navigate(['cai-dat/thong-bao/them-moi-thong-bao'], 
     { queryParams: { 
       notiId: null, 
@@ -401,7 +403,8 @@ detailInfoFilter = null;
   }
 
   addNotifytoProject() {
-    this.employeeSaveService.setStocks(null);
+    // this.employeeSaveService.setStocks(null);
+    localStorage.removeItem('RecruitMail');
     this.displayNotify = false;
     this.displaySelectRoom = false;
     // let items = this.moduleList.filter(d => d.value === this.modelAddNotifi.external_sub);

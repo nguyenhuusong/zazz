@@ -65,7 +65,7 @@ export class ImportXyLyHopDongComponent implements OnInit {
       this.isShowUpload = false;
       let fomrData = new FormData();
       fomrData.append('file', event.currentFiles[0]);
-      this.apiService.contractImport(fomrData)
+      this.apiService.setContractImport(fomrData)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {
         this.dataSet(results)

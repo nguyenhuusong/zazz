@@ -22,6 +22,7 @@ import { VongTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/vong-tu
 import { NguonTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/nguon-tuyen-dung/nguon-tuyen-dung.component';
 import { ChuyenVienTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/chuyen-vien-tuyen-dung/chuyen-vien-tuyen-dung.component';
 import { ChiTietChuyenVienTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/chuyen-vien-tuyen-dung/chi-tiet-chuyen-vien-tuyen-dung/chi-tiet-chuyen-vien-tuyen-dung.component';
+import { LichSuTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/lich-su-tuyen-dung/lich-su-tuyen-dung.component';
 
 const routes: Routes = [
   {
@@ -44,6 +45,14 @@ const routes: Routes = [
     data: {
       title: 'Danh sách tiềm năng',
       url: 'ds-tiem-nang',
+    },
+  },
+  {
+    path: 'ds-tuyen-dung/lich-su-tuyen-dung',
+    component: LichSuTuyenDungComponent,
+    data: {
+      title: 'Danh sách lịch sử tuyển dụng',
+      url: 'lich-su-tuyen-dung',
     },
   },
   {

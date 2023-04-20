@@ -1,30 +1,23 @@
+
 import { Component, EventEmitter, Input, OnInit, Output, OnChanges, OnDestroy } from '@angular/core';
 import * as queryString from 'querystring';
 import { ActivatedRoute, Router } from '@angular/router';
 import { cloneDeep } from 'lodash';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { ApiService } from 'src/app/services/api.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subject } from 'rxjs';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
-import { CheckHideAction } from 'src/app/common/function-common/common';
-import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 @Component({
-  selector: 'app-chi-tiet-ly-do-nghi-viec',
-  templateUrl: './chi-tiet-ly-do-nghi-viec.component.html',
-  styleUrls: ['./chi-tiet-ly-do-nghi-viec.component.scss']
+  selector: 'app-chi-tiet-nguoi-phu-thuoc',
+  templateUrl: './chi-tiet-nguoi-phu-thuoc.component.html',
+  styleUrls: ['./chi-tiet-nguoi-phu-thuoc.component.scss']
 })
-export class ChiTietLyDoNghiViecComponent implements OnInit, OnDestroy {
+export class ChiTietNguoiPhuThuocComponent implements OnInit, OnDestroy {
   private readonly unsubscribe$: Subject<void> = new Subject();
   manhinh = 'Edit';
   indexTab = 0;
-  optionsButon = [
-    { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
-    {
-      label: 'Lưu lại', value: 'Update',
-      icon: 'pi pi-check', class: ''
-    },
-  ];
-  @Input() reasonId: any = null;
+  optionsButon = [{ label: 'Lưu lại', value: 'Update', class: 'p-button-sm', icon: 'pi pi-check' },{ label: 'Hủy', value: 'Cancel', class: 'p-button-secondary p-button-sm', icon: 'pi pi-times' },];
   constructor(
     private apiService: ApiHrmService,
     private activatedRoute: ActivatedRoute,
@@ -37,6 +30,7 @@ export class ChiTietLyDoNghiViecComponent implements OnInit, OnDestroy {
   displaysearchUserMaster = false;
   listViewsForm = [];
   detailComAuthorizeInfo = null;
+  dependentId = null
   listViews = []
   imagesUrl = []
   paramsObject = null
@@ -52,22 +46,39 @@ export class ChiTietLyDoNghiViecComponent implements OnInit, OnDestroy {
   columnDefs
   @Input() dataRouter = null
   @Output() back = new EventEmitter<any>();
-
+  empId = null;
   ngOnDestroy() {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
   items = [];
   ngOnInit(): void {
+    this.titlePage = this.activatedRoute.data['_value'].title;
+    this.items = [
+      { label: 'Trang chủ' , routerLink: '/home' },
+      { label: 'Danh sách người phụ thuộc', routerLink: '/luong-thue/danh-sach-nguoi-phu-thuoc' },
+      { label: this.titlePage },
+    ];
+    this.url = this.activatedRoute.data['_value'].url;
     this.manhinh = 'Edit';
-    this.getTerminateReasonInfo();
+      this.handleParams()
   }
 
-  getTerminateReasonInfo() {
+  handleParams() {
+    this.activatedRoute.queryParamMap.subscribe((params) => {
+      this.paramsObject = { ...params.keys, ...params };
+      this.dataRouter = this.paramsObject.params;
+      this.dependentId = this.paramsObject.params.dependentId;
+      this.empId = this.paramsObject.params.empId;
+        this.getEmpDependent();
+    });
+  };
+
+  getEmpDependent() {
     this.listViews = [];
     this.listsData = [];
-    const queryParams = queryString.stringify({reasonId: this.reasonId});
-    this.apiService.getTerminateReasonInfo(queryParams).subscribe(results => {
+    const queryParams = queryString.stringify(this.paramsObject.params);
+    this.apiService.getEmpDependent(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.listViews = cloneDeep(results.data.group_fields);
         this.detailInfo = results.data;
@@ -75,17 +86,18 @@ export class ChiTietLyDoNghiViecComponent implements OnInit, OnDestroy {
     })
   }
 
+  handleChange(index) {
+    this.indexTab = index;
+  }
 
-  setTerminateReasonInfo(data) {
+  setEmpDependent(data) {
     const params = {
       ...this.detailInfo, group_fields: data
     };
-    this.apiService.setTerminateReasonInfo(params).subscribe((results: any) => {
+    this.apiService.setEmpDependent(params).subscribe((results: any) => {
       if (results.status === 'success') {
-        this.displayUserInfo = false;
-        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Cập nhật thông tin thành công' });
-        this.back.emit();
-        // this.router.navigate(['/nhan-su/ly-do-nghi-viec']);
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
+        this.router.navigate(['/luong-thue/danh-sach-nguoi-phu-thuoc']);
       } else {
         this.messageService.add({
           severity: 'error', summary: 'Thông báo', detail: results.message
@@ -104,14 +116,18 @@ export class ChiTietLyDoNghiViecComponent implements OnInit, OnDestroy {
   }
 
   goBack() {
-    this.back.emit();
+    if (this.titlePage) {
+      this.router.navigate(['/luong-thue/danh-sach-nguoi-phu-thuoc']);
+    } else {
+      this.back.emit();
+    }
   }
 
   cancelUpdate(data) {
-    if (data === 'CauHinh') {
-      this.getTerminateReasonInfo();
-    } else {
-      this.back.emit();
+    if(data === 'CauHinh') {
+      this.getEmpDependent();
+    }else {
+      this.router.navigate(['/luong-thue/danh-sach-nguoi-phu-thuoc']);
     }
   }
 

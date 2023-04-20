@@ -260,7 +260,7 @@ export class BaoCaoComponent implements OnInit {
       this.apiService.getReport(api, queryParams)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(response => {
-        if (response.type === 'application/json') {
+        if (response && response.type === 'application/json') {
           this.spinner.hide();
         } else {
           var blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });

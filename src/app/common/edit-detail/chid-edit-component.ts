@@ -272,9 +272,10 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
     if(this.element.field_name === "org_Id"){
       this.setValue('', 'User_Id')
     }
-    this.modelFields[`${element.field_name}${element.group_cd}`].error = this.modelFields[`${element.field_name}${element.group_cd}`].isRequire && !this.element.columnValue ? true : false;
-    this.modelFields[`${element.field_name}${element.group_cd}`].message = this.modelFields[`${element.field_name}${element.group_cd}`].error ? 'Trường bắt buộc nhập !' : '';
-    if(element.columnDisplay) {
+
+    this.modelFields[field_name].error = this.modelFields[field_name].isRequire && !this.element.columnValue ? true : false;
+    this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : '';
+    if(element.columnDisplay && !element.isSpecial) {
       const fields = element.columnDisplay.split(",");
       const promissall = [];
         this.dataView.forEach(element => {
@@ -629,7 +630,7 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
     //   })
     // } 
     else {
-      if(element.columnDisplay) {
+      if(element.columnDisplay && !element.isSpecial) {
         const fields = element.columnDisplay.split(",");
         const promissall = [];
           this.dataView.forEach(element => {
@@ -2407,7 +2408,7 @@ export class AppTypeSelectAutocompleteComponent implements OnInit, OnChanges {
 @Component({
   selector: 'app-type-autocompletes',
   template: ` 
-  <div class="field-group">  
+  <div class="fields">  
   <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
   <div> 
   <p-autoComplete [(ngModel)]="element.columnValue" [disabled]="element.isDisable" [multiple]="true"  [baseZIndex]="100" [appendTo]="'body'" [style]="{width: '100%'}"

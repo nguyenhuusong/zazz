@@ -1,0 +1,66 @@
+<div class="main-grid product-detail">
+    <section>
+        <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
+    </section>
+    <div class="content">
+        <p-tabView [(activeIndex)]="indexTab" (onChange)="handleChange($event)">
+            <p-tabPanel header="Thông tin quản lý">
+                    <app-edit-detail 
+                        [optionsButtonsEdit]="optionsButtonsView"   
+                        *ngIf="listViews.length> 0" 
+                        [detail]="detailInfo" 
+                        [manhinh]="'Edit'"  
+                        [dataView]="listViews"
+                        (callback)="setEmpManager($event)" 
+                        (callbackcancel)="cancelUpdate($event)">
+                    </app-edit-detail>
+                    <app-loading-detail 
+                        [id]="'sections-3qnt'" 
+                        *ngIf="listViews.length === 0">
+                    </app-loading-detail>
+            </p-tabPanel>
+            <p-tabPanel header="Đổi người quản lý">
+                <p-button label="Đổi người quản lý" [styleClass]="'ptBtPoup'"
+                (click)="changeManagerInfo()"></p-button>
+                <app-list-grid-angular 
+                    [rowSelection]="'multiple'"
+                    *ngIf="columnDefs.length > 0" 
+                    [listsData]="listData" 
+                    [height]="heightGrid"
+                    [columnDefs]="columnDefs">
+                </app-list-grid-angular>
+                <app-loading-grid  
+                *ngIf="columnDefs.length === 0" 
+                [columnNumber]="11"></app-loading-grid>
+            </p-tabPanel>
+        </p-tabView>
+       
+    </div>
+  
+</div>
+
+
+<p-dialog  header="Thông tin nhân viên"
+    [(visible)]="isEditMgChange" 
+    [modal]="true" [style]="{width: '1600px'}"
+    [draggable]="false" [resizable]="false" [focusTrap]="false" 
+    (onHide)="closeChangeMa()"
+    >
+        <app-edit-detail 
+            [optionsButtonsEdit]="optionsButtonsViewEmChange"   
+            *ngIf="listViewsEmMgChange.length> 0" 
+            [detail]="detailInfo" 
+            [manhinh]="'Edit'"  
+            [dataView]="listViewsEmMgChange"
+            (callback)="setEmpManagerChange($event)" 
+            (callbackcancel)="cancelUpdatChangeMg($event)">
+        </app-edit-detail>
+        <app-list-grid-angular 
+            (callback)="rowSelected($event)"
+            [rowSelection]="'multiple'"
+            *ngIf="columnDefsMgChange.length > 0" 
+            [listsData]="listData" 
+            [height]="heightGrid"
+            [columnDefs]="columnDefsMgChange">
+        </app-list-grid-angular>
+</p-dialog>

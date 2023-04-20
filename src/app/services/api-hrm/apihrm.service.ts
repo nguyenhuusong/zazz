@@ -559,6 +559,10 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v2/employee/setEmployeeChange`, params, this.options)
   }
 
+  getEmployeePageByManager(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/employee/GetEmployeePageByManager?` + queryParams, this.options)
+  }
+
   getRecordInfo(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/contract/GetRecordInfo?` + queryParams, this.options)
   }
@@ -933,6 +937,10 @@ export class ApiHrmService {
   
   getCandidatePotentialPage(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/recruitcandidate/GetCandidatePotentialPage?` + queryParams, this.options)
+  }
+
+  getCandidateHistoryPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitcandidate/GetCandidateHistoryPage?` + queryParams, this.options)
   }
 
   delCandidateInfo(queryParams): Observable<any> {
@@ -2014,7 +2022,7 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v1/holiday/SetHolidayCreate`, params , this.options)
   }
   
-  contractImport(data): Observable<any> {
+  setContractImport(data): Observable<any> {
     const customOptions = {
       headers: new HttpHeaders({
         Authorization: this.authService.getAuthorizationHeaderValue()
@@ -3685,6 +3693,81 @@ export class ApiHrmService {
   
   setCustEmailChanged(queryParams): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v1/customer/SetCustEmailChanged` , queryParams, this.options);
+  }
+
+
+  // người quản lý
+
+
+  getEmpManagerFilter(): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/empManager/GetEmpManagerFilter`, this.options);
+  }
+
+  delEmpManager(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/empManager/DelEmpManager?` + queryParams, this.options);
+  }
+
+  getEmpManagerPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/empManager/GetEmpManagerPage?` + queryParams, this.options);
+  }
+
+  getEmpManagerMap(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/empManager/GetEmpManagerMap?` +  queryParams, this.options);
+  }
+  
+  getEmpManager(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/empManager/GetEmpManager?` + queryParams, this.options);
+  }
+
+  getEmpManagerCreate(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/empManager/GetEmpManagerCreate?` + queryParams, this.options);
+  }
+  
+  setEmpManager(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/empManager/SetEmpManager` , queryParams, this.options);
+  }
+  
+  setEmpManagerExport(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/empManager/SetEmpManagerExport?` + queryParams, this.options);
+  }
+
+  getEmpManagerChange(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/empmanager/GetEmpManagerChange?` + queryParams, this.options);
+  }
+
+  setEmpManagerChange(queryParams): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v2/empmanager/SetEmpManagerChange` , queryParams, this.options);
+  }
+  
+  setEmpManagerExportDraft(queryParams): Observable<any> {
+    return this.http.post(`${apiHrmServer}/api/v2/empManager/SetEmpManagerExportDraft`, queryParams, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
+  }
+
+  setEmpManagerImport(queryParams): Observable<any> {
+    return this.http.post(`${apiHrmServer}/api/v2/empManager/SetEmpManagerImport`, queryParams, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
+  }
+
+  setEmpManagerAccept(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/empManager/SetEmpManagerAccept`,  queryParams, this.options);
+  }
+
+  getEmpManagerImportTemp(): Observable<any> {
+    return this.http.get(`${apiHrmServer}/api/v2/empManager/GetEmpManagerImportTemp`, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
   }
 
 
