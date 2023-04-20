@@ -494,7 +494,7 @@ export class QtThayDoiLuongComponent implements OnInit {
 
           dataExport.push(data);
         }
-        this.fileService.exportAsExcelFile(dataExport, 'Danh sách hồ sơ nhân sự ' + new Date());
+        this.fileService.exportAsExcelFile(dataExport, 'Danh sách Quá trình thay đổi lương');
 
         this.spinner.hide();
       },
