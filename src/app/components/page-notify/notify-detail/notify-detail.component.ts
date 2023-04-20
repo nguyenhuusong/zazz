@@ -311,11 +311,12 @@ export class NotifyDetailComponent implements OnInit {
         
       }else if (element1.field_name === 'content_email') {
         const values: any = this.getValueByKey(data, 'content_markdown');
-        if(this.modelMarkdow.type == 2) {
-          element1.columnValue =values.columnValue ? this.converter.makeHtml(values.columnValue) : '';
-        }else {
-          element1.columnValue =values.columnValue
-        }
+        element1.columnValue =values.columnValue
+        // if(this.modelMarkdow.type == 2) {
+        //   element1.columnValue =values.columnValue ? this.converter.makeHtml(values.columnValue) : '';
+        // }else {
+          
+        // }
       }
       });
     });
