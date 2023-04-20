@@ -149,7 +149,7 @@ export class HrmSearchCustomerComponent {
     const selectedRowData = this.dataCusIdChoosed;
     if (selectedRowData.length === 2) {
       this.listTargets_s = selectedRowData.map(d => {
-        return { label: d.full_Name + '-' + d.phone1 + '-' + d.idcard_No + '-' + d.cif_No, value: d.cif_No };
+        return { label: d.full_Name + '-' + d.phone1 + '-' + d.idcard_No + '-' + d.cif_No, value: d.custId.toLowerCase() };
       })
       this.modelXacnhan.keep_custId = this.listTargets_s[0].value;
       this.modelXacnhan.remove_custId = this.listTargets_s[1].value;
