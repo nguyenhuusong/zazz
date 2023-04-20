@@ -97,12 +97,14 @@ export class ApiHrmService {
       return this.http.get<any>(`${apiHrmServer}${api}?${params}`, this.options);
     }
     else{
-      return this.http.get(`${apiHrmServer}${api}?${params}`, {
-        headers: new HttpHeaders({
-          Authorization: this.authService.getAuthorizationHeaderValue(),
-        }),
-        responseType: "blob"
-      });
+      return this.http.get<any>(`${apiHrmServer}${api}?${params}`, this.options
+      // {
+      //   headers: new HttpHeaders({
+      //     Authorization: this.authService.getAuthorizationHeaderValue(),
+      //   }),
+      //   responseType: "blob"
+      // }
+      );
     }
   }
 
