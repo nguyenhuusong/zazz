@@ -208,7 +208,7 @@ export function setMembers(element1, datas) {
       if (list[i].children && list[i].children.length) {
         findNodeInTree1(list[i].children, ids, element1, results);
       }
-      if (ids.includes(list[i].orgDepId)) {
+      if (ids.includes(list[i].orgId)) {
         results.push(list[i]);
       }
     }

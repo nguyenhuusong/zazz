@@ -314,9 +314,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
           data.columnValue = data.columnValue &&  data.columnValue.length > 0 ? data.columnValue.map(d => d.code).toString() : null;
           delete data.options;
         } else if (data.columnType === 'selectTrees') {
-          console.log(" data.columnValue",  data.columnValue);
-
-          data.columnValue = data.columnValue && data.columnValue.length > 0 ? data.columnValue.map(d => d.orgDepId).toString() : null;
+          data.columnValue = data.columnValue && data.columnValue.length > 0 ? data.columnValue.map(d => d.orgId).toString() : null;
           delete data.options;
         } else if (data.columnType === 'currency') {
           data.columnValue = numeral(data.columnValue).value()
