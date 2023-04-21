@@ -1,11 +1,11 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { from, Observable } from 'rxjs';
+import { catchError, from, Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AuthService } from '../auth.service';
 import { CardInfo, Project, TypeCard, Vehicle } from 'src/app/models/cardinfo.model';
 import { BuildZone } from 'src/app/models/buildzone.model';
-import { ElevatorFloor } from 'src/app/models/elevatorfloor.model';
+import { MessageService } from 'primeng/api';
 const apiBaseUrl = environment.apiBase;
 const apiHrmServer = environment.apiHrmBase;
 const apiCore = environment.apiCoreBase;
@@ -14,12 +14,19 @@ const apiShome = environment.apiShomeBase;
 export class ApiHrmService {
   private http = inject(HttpClient);
   private authService = inject(AuthService)
+  private _messageService = inject(MessageService)
   constructor() {
   }
   options = {
     headers: new HttpHeaders({
       Authorization: this.authService.getAuthorizationHeaderValue(),
       'Content-Type': 'application/json',
+      'X-Role-Token': localStorage.hasOwnProperty('md5') && localStorage.getItem('md5') ? localStorage.getItem('md5') : ''
+    })
+  };
+  optionsUpload = {
+    headers: new HttpHeaders({
+      Authorization: this.authService.getAuthorizationHeaderValue(),
       'X-Role-Token': localStorage.hasOwnProperty('md5') && localStorage.getItem('md5') ? localStorage.getItem('md5') : ''
     })
   };
@@ -475,7 +482,7 @@ export class ApiHrmService {
   }
 
   setContractRecordUpload(queryParams): Observable<any> {
-    return this.http.post(`${apiHrmServer}/api/v2/contract/SetContractRecordUpload` , queryParams, this.optionsExport)
+    return this.http.post(`${apiHrmServer}/api/v2/contract/SetContractRecordUpload` , queryParams, this.optionsUpload)
   }
 
   setContractSigned(queryParams): Observable<any> {
@@ -2236,7 +2243,7 @@ export class ApiHrmService {
   }
 
   setSalaryRecordUpload(queryParams): Observable<any> {
-    return this.http.post(`${apiHrmServer}/api/v1/salaryInfo/SetSalaryRecordUpload` , queryParams, this.optionsExport)
+    return this.http.post(`${apiHrmServer}/api/v1/salaryInfo/SetSalaryRecordUpload` , queryParams, this.optionsUpload)
   }
 
   setSalaryInfoNew(data): Observable<any> {
@@ -3781,6 +3788,5 @@ export class ApiHrmService {
       responseType: "blob"
     });
   }
-
 
 }

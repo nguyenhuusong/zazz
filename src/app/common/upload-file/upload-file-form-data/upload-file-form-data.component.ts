@@ -27,7 +27,6 @@ export class UploadFileFormDataComponent implements OnInit {
   }
   listAttach = [];
   uploadFn(event) {
-    this.listAttach = event.currentFiles
     this.handleUpload(event.currentFiles)
     
     // thêm chức danh
@@ -85,6 +84,7 @@ export class UploadFileFormDataComponent implements OnInit {
 }
 
   onSubmitUpload() {
+    console.log("this.listAttach",this.listAttach)
     if(this.listAttach.length > 0) {
       this.callback.emit(this.listAttach);
     }else {

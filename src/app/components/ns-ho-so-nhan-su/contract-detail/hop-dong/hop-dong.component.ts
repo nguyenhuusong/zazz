@@ -271,13 +271,14 @@ export class HopDongComponent implements OnInit {
 
   
   handleUpload(event) {
+    console.log(event)
     let params = {...this.metafile}
     const formData= new FormData();
     formData.append('sourceId', this.contractId);
     formData.append('metaId', params.metaId);
     formData.append('empId', this.empId);
     formData.append('formFile', event.length >0 ? event[0].file: null);
-    this.apiService.setContractRecordUpload(params)
+    this.apiService.setContractRecordUpload(formData)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(results => {
       if (results.status === 'success') {
@@ -286,6 +287,7 @@ export class HopDongComponent implements OnInit {
         this.getContractMetaPage();
         this.spinner.hide();
       } else {
+        console.log(results)
         this.spinner.hide();
         this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
       }

@@ -13,7 +13,7 @@
             <div>Custom UI to display a file</div>
             {{file | json}}
         </ng-template> -->
-        <ng-template pTemplate="content" let-files>
+        <!-- <ng-template pTemplate="content" let-files>
             <div class="files-content">Drag and drop files here, Max size file: {{maxFileSize}} bytes</div>
             <ul *ngIf="listAttach.length" class="hscn-each-upload">
                 <li *ngFor="let file of listAttach" class="d-flex">
@@ -23,10 +23,9 @@
                             <p-image src="{{file.url}}" alt="Image" [preview]="true" width="100"></p-image>
                         </ng-template>
                         <span class="ml-2">{{ file.name }}</span>
-                    <!-- {{file.name}} - {{file.size}} bytes -->
                 </li>
             </ul>
-        </ng-template>
+        </ng-template> -->
 </p-fileUpload>
 <div class="col-md-12 text-right mt-1">
     <p-button styleClass="p-button-sm" label="Xác nhận" (click)="onSubmitUpload()"></p-button>
