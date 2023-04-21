@@ -12,6 +12,7 @@ import { fromEvent, Subject, takeUntil } from 'rxjs';
 })
 export class HopDongComponent implements OnInit {
   @Input() contractId = null;
+  @Input() empId = null;
   optionsButtonsPopup = [
     { label: 'Bỏ qua', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
     { label: 'Xác nhận', value: 'Update', class: 'btn-accept' }
@@ -270,19 +271,43 @@ export class HopDongComponent implements OnInit {
 
   
   handleUpload(event) {
-    if(event && event.length > 0) {
-      this.columnDefsRecord = [];
-      let params = {...this.metafile}
-      params.meta_upload_url = event[0].url;
-      params.meta_file_name = event[0].name;
-      params.meta_file_type = event[0].type;
-      params.meta_file_size = event[0].size;
-      const indexObj = this.listsDataRecord.findIndex(d => d.sourceId === params.sourceId);
-      this.listsDataRecord[indexObj] = params;
-      this.listsDataRecord = [...this.listsDataRecord];
-      this.initGrid('columnDefsRecord',this.dataDetailInfo.gridflexdetails1);
-      this.displayuploadcontract = false;
-    }
+    let params = {...this.metafile}
+    const formData= new FormData();
+    formData.append('sourceId', this.contractId);
+    formData.append('metaId', params.metaId);
+    formData.append('empId', this.empId);
+    formData.append('formFile', event.length >0 ? event[0]: null);
+    this.apiService.setContractRecordUpload(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
+      if (results.status === 'success') {
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thêm mới thành công' });
+        this.displayuploadcontract = false;
+        this.getContractMetaPage();
+        this.spinner.hide();
+      } else {
+        this.spinner.hide();
+        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
+      }
+    })
+
+
+
+
+
+    // if(event && event.length > 0) {
+    //   this.columnDefsRecord = [];
+
+    //   params.meta_upload_url = event[0].url;
+    //   params.meta_file_name = event[0].name;
+    //   params.meta_file_type = event[0].type;
+    //   params.meta_file_size = event[0].size;
+    //   const indexObj = this.listsDataRecord.findIndex(d => d.sourceId === params.sourceId);
+    //   this.listsDataRecord[indexObj] = params;
+    //   this.listsDataRecord = [...this.listsDataRecord];
+    //   this.initGrid('columnDefsRecord',this.dataDetailInfo.gridflexdetails1);
+    //   this.displayuploadcontract = false;
+    // }
   }
 
   getFilesDetail(event) {

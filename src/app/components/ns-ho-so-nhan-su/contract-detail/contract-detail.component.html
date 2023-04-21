@@ -49,7 +49,7 @@
                 </p-panel>
             </div>
         </div>  
-        <app-hop-dong [contractId]="detailInfo?.contractId" *ngIf="this.detailInfo?.flow_st > 1" (cancelSave)="getContractInfo()" ></app-hop-dong>
+        <app-hop-dong [contractId]="detailInfo?.contractId" [empId]="modelContractInfo.empId" *ngIf="this.detailInfo?.flow_st > 1" (cancelSave)="getContractInfo()" ></app-hop-dong>
         <!-- <div class="grid wrap-edit-detail">
             <div class="col-12 border-section " *ngIf="this.detailInfo?.flow_st > 2">
                 <p-panel>

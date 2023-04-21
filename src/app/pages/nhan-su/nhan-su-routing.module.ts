@@ -3,8 +3,6 @@ import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { NsHoSoNghiViecComponent } from 'src/app/components/ns-ho-so-nghi-viec/ns-ho-so-nghi-viec.component';
 import { NsHoSoNhanSuComponent } from 'src/app/components/ns-ho-so-nhan-su/ns-ho-so-nhan-su.component';
-import { ChiTietHoSoNhanSuComponent } from 'src/app/components/ns-ho-so-nhan-su/chi-tiet-ho-so-nhan-su/chi-tiet-ho-so-nhan-su.component';
-import { ChiTietHoSoNghiViecComponent } from 'src/app/components/ns-ho-so-nghi-viec/chi-tiet-ho-so-nghi-viec/chi-tiet-ho-so-nghi-viec.component';
 import { ThaiSanComponent } from 'src/app/components/thai-san/thai-san.component';
 import { ChiTietThaiSanComponent } from 'src/app/components/thai-san/chi-tiet-thai-san/chi-tiet-thai-san.component';
 import { DangKyLichLamViecComponent } from 'src/app/components/dang-ky-lich-lam-viec/dang-ky-lich-lam-viec.component';
@@ -12,9 +10,7 @@ import { ChiTietDangKyLichLamViecComponent } from 'src/app/components/dang-ky-li
 import { XuLyHopDongComponent } from 'src/app/components/xu-ly-hop-dong/xu-ly-hop-dong.component';
 import { PheDuyetComponent } from 'src/app/components/phe-duyet/phe-duyet.component';
 import { ChiTietPheDuyetComponent } from 'src/app/components/phe-duyet/chi-tiet-phe-duyet/chi-tiet-phe-duyet.component';
-import { CreateContractInfoComponent } from 'src/app/components/ns-ho-so-nhan-su/create-contract-info/create-contract-info.component';
 import { QuyetDinhLuongComponent } from 'src/app/components/quyet-dinh-luong/quyet-dinh-luong.component';
-import { ImportXyLyHopDongComponent } from 'src/app/components/xu-ly-hop-dong/import-xy-ly-hop-dong/import-xy-ly-hop-dong.component';
 import { ImportHoSoNhanSuComponent } from 'src/app/components/ns-ho-so-nhan-su/import-ho-so-nhan-su/import-ho-so-nhan-su.component';
 import { QtThayDoiLuongComponent } from 'src/app/components/qt-thay-doi-luong/qt-thay-doi-luong.component';
 import { ChiTietQTThayDoiLuongComponent } from 'src/app/components/qt-thay-doi-luong/chi-tiet-qt-thay-doi-luong/chi-tiet-qt-thay-doi-luong.component';
@@ -23,10 +19,8 @@ import { ContractDetailComponent } from 'src/app/components/ns-ho-so-nhan-su/con
 import { LyDoNghiViecComponent } from 'src/app/components/ns-ho-so-nghi-viec/ly-do-nghi-viec/ly-do-nghi-viec.component';
 import { ChiTietLyDoNghiViecComponent } from 'src/app/components/ns-ho-so-nghi-viec/ly-do-nghi-viec/chi-tiet-ly-do-nghi-viec/chi-tiet-ly-do-nghi-viec.component';
 import { DetailTerminateComponent } from 'src/app/components/ns-ho-so-nghi-viec/detail-terminate/detail-terminate.component';
-import { ImportTerminateComponent } from 'src/app/components/ns-ho-so-nghi-viec/import-terminate/import-terminate.component';
 import { XuLyQuaTrinhCongTacComponent } from 'src/app/components/xu-ly-qua-trinh-cong-tac/xu-ly-qua-trinh-cong-tac.component';
 import { ChiTietXuLyQtCongTacComponent } from 'src/app/components/xu-ly-qua-trinh-cong-tac/chi-tiet-xu-ly-qt-cong-tac/chi-tiet-xu-ly-qt-cong-tac.component';
-import { ImportQtThayDoiLuongComponent } from 'src/app/components/qt-thay-doi-luong/import-qt-thay-doi-luong/import-qt-thay-doi-luong.component';
 import { ChiTietBienDongBHXHComponent } from 'src/app/components/bien-dong-bhxh/chi-tiet-bien-dong-bhxh/chi-tiet-bien-dong-bhxh.component';
 import { BienDongBHXHComponent } from 'src/app/components/bien-dong-bhxh/bien-dong-bhxh.component';
 import { ImportExcelComponent } from 'src/app/common/import-excel/import-excel.component';
@@ -81,7 +75,7 @@ const routes: Routes = [
     path: 'xu-ly-hop-dong/chi-tiet-xu-ly-hop-dong',
     component: ContractDetailComponent,
     data: {
-      title: 'Danh sách xử lý hợp đồng',
+      title: 'Chi tiết xử lý hợp đồng',
       url: 'chi-tiet-xu-ly-hop-dong',
     },
   },

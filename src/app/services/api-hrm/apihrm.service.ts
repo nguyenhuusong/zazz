@@ -23,9 +23,11 @@ export class ApiHrmService {
       'X-Role-Token': localStorage.hasOwnProperty('md5') && localStorage.getItem('md5') ? localStorage.getItem('md5') : ''
     })
   };
-  optionsExport = {
+ 
+  optionsExport: any = {
     headers: new HttpHeaders({
       Authorization: this.authService.getAuthorizationHeaderValue(),
+      'X-Role-Token': localStorage.hasOwnProperty('md5') && localStorage.getItem('md5') ? localStorage.getItem('md5') : ''
     }),
     responseType: "blob"
   };
@@ -470,6 +472,10 @@ export class ApiHrmService {
 
   setContractRecord(queryParams): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/contract/SetContractRecord` , queryParams, this.options)
+  }
+
+  setContractRecordUpload(queryParams): Observable<any> {
+    return this.http.post(`${apiHrmServer}/api/v2/contract/SetContractRecordUpload` , queryParams, this.optionsExport)
   }
 
   setContractSigned(queryParams): Observable<any> {
@@ -2227,6 +2233,10 @@ export class ApiHrmService {
 
   getSalaryRecord(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/salaryInfo/GetSalaryRecord?` + queryParams, this.options)
+  }
+
+  setSalaryRecordUpload(queryParams): Observable<any> {
+    return this.http.post(`${apiHrmServer}/api/v1/salaryInfo/SetSalaryRecordUpload` , queryParams, this.optionsExport)
   }
 
   setSalaryInfoNew(data): Observable<any> {

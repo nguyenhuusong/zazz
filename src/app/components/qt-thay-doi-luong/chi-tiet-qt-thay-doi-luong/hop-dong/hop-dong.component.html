@@ -45,7 +45,7 @@
     <p-header>
         Tải lên hợp đồng [{{metafile?.meta_title}}]
     </p-header>
-    <app-upload-file [multiple]="" (callback)="handleUpload($event)" *ngIf="displayuploadcontract"></app-upload-file>
+    <app-upload-file-form-data [multiple]="" (callback)="handleUpload($event)" *ngIf="displayuploadcontract"></app-upload-file-form-data>
 </p-dialog>
 
 <p-dialog styleClass="popup-btngroup-edit-detail"  [(visible)]="displayFormEditDetail" [draggable]="false"  [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '1400px', height: 'auto'}">

@@ -9,9 +9,11 @@ import { UploadFileComponent } from './upload-file.component';
 import {FileUploadModule} from 'primeng/fileupload';
 import {ImageModule} from 'primeng/image';
 import { AgGridModule } from '@ag-grid-community/angular';
+import { UploadFileFormDataComponent } from './upload-file-form-data/upload-file-form-data.component';
 @NgModule({
   declarations: [
-    UploadFileComponent
+    UploadFileComponent,
+    UploadFileFormDataComponent
    ],
   imports: [
     FormsModule,
@@ -25,7 +27,7 @@ import { AgGridModule } from '@ag-grid-community/angular';
     FileUploadModule,
     ImageModule
     ],
-  exports: [UploadFileComponent],
+  exports: [UploadFileComponent, UploadFileFormDataComponent],
   entryComponents: [],
   providers: []
 })
