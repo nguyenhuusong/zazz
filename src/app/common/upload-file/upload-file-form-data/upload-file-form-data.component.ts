@@ -27,39 +27,9 @@ export class UploadFileFormDataComponent implements OnInit {
   }
   listAttach = [];
   uploadFn(event) {
-    this.spinner.show();
-    this.listAttach = event.currentFiles[0];
-    // if (event.currentFiles.length > 0) {
-    //   for (let file of event.currentFiles) {
-    //     const getDAte = new Date();
-    //     const getTime = getDAte.getTime();
-    //     const storageRef = firebase.storage().ref();
-    //     const uploadTask = storageRef.child(`s-hrm/file-attach/${getTime}-${file.name}`).put(file);
-    //     uploadTask.on('state_changed', (snapshot) => {
-    //     }, (error) => {
-    //       this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: error.message });
-    //       this.spinner.hide();
-    //     }, () => {
-    //       uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-    //         if (downloadURL) {
-    //           const params = {
-    //             type: file.type,
-    //             size: file.size,
-    //             name: file.name,
-    //             url: downloadURL,
-    //             file: file
-    //           }
-    //           this.listAttach.push(params);
-    //           this.spinner.hide();
-    //         }
-    //       });
-    //     });
-    //   }
-    // }
-    // else{
-    //   this.spinner.hide();
-    // }
-
+    this.listAttach = event.currentFiles
+    this.handleUpload(event.currentFiles)
+    
     // thêm chức danh
 
 
@@ -98,8 +68,28 @@ export class UploadFileFormDataComponent implements OnInit {
     // }
   }
 
+  handleUpload(event) {
+    const file = event[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+        const params = {
+          type: event.type,
+          size: event.size,
+          name: event.name,
+          url: reader.result,
+          file: event[0]
+        }
+        this.listAttach.push(params);
+    };
+}
+
   onSubmitUpload() {
-    this.callback.emit(this.listAttach);
+    if(this.listAttach.length > 0) {
+      this.callback.emit(this.listAttach);
+    }else {
+      this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Bạn chưa tải file lên. Vui lòng chọn file cần tải!' });
+    }
     // this.c
   }
 

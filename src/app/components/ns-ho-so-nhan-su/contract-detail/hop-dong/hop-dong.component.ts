@@ -276,7 +276,7 @@ export class HopDongComponent implements OnInit {
     formData.append('sourceId', this.contractId);
     formData.append('metaId', params.metaId);
     formData.append('empId', this.empId);
-    formData.append('formFile', event.length >0 ? event[0]: null);
+    formData.append('formFile', event.length >0 ? event[0].file: null);
     this.apiService.setContractRecordUpload(params)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(results => {
