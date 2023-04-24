@@ -213,6 +213,7 @@ export class DetailCustomerManagerComponent implements OnInit, OnChanges, OnDest
   }
 
   getEmpManagerChange(empId) {
+    this.listViewsEmMgChange = [];
     const queryParams = queryString.stringify({ empId: empId });
     this.apiService.getEmpManagerChange(queryParams)
       .pipe(takeUntil(this.unsubscribe$))
