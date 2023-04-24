@@ -184,10 +184,21 @@ export class CustomerManagerComponent implements OnInit, AfterViewChecked {
           label: 'Xóa ',
           icon: 'pi pi-trash',
           class: 'btn-primary mr5',
-          hide: event.data.id === null || !event.data.id
+          hide: this.checkActionDelete(event)
         },
       ]
     };
+  }
+
+  checkActionDelete(event) {
+    if(event.data.id === null) {
+      return true;
+    }else {
+      if(event.data.app_st === 0) {
+        return false;
+      }
+      return true;
+    }
   }
   
   ngAfterViewInit(): void {
