@@ -16,6 +16,7 @@ import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 })
 export class ChiTietTuyenDungLaiComponent implements OnInit, OnDestroy {
   @Input() empId = null;
+  @Input() terminateId = null;
   @Output() callback = new EventEmitter<any>();
   items: MenuItem[] = [];
   paramsObject = null;
@@ -61,7 +62,7 @@ export class ChiTietTuyenDungLaiComponent implements OnInit, OnDestroy {
   };
 
   getCandidateAgain() {
-    const queryParams = queryString.stringify({empId: this.empId});
+    const queryParams = queryString.stringify({terminateId: this.terminateId});
     this.apiService.getCandidateAgain(queryParams)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {

@@ -1153,6 +1153,10 @@ export class ApiHrmService {
     return this.http.put<any>(`${apiHrmServer}/api/v2/terminate/SetTerminateApproves`, params, this.options)
   }
 
+  setTerminateLockStatus(params): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v2/terminate/SetTerminateLockStatus`, params, this.options)
+  }
+
   delTerminateInfo(queryParams): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v2/terminate/DelTerminateInfo?` + queryParams, this.options)
   }

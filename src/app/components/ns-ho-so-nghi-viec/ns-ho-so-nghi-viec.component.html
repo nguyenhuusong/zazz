@@ -164,3 +164,18 @@
         <app-form-filter *ngIf="listViewsFilter.length > 0" [listFields]="listViewsFilter" [detailInfoFilter]="detailInfoFilter" [buttonsFilters] ="optionsButonFilter" (callback)="filterLoad($event)" (close)="close($event);op.hide()"></app-form-filter>
     </ng-template>
 </p-overlayPanel>
+
+
+<p-dialog styleClass="popup-btngroup-edit-detail" header="{{modelLock.app_lock_st ? 'Đóng ứng dụng': 'Mở khóa ứng dụng'}} [{{modelLock.employeeName}}]" [(visible)]="displayLock" [modal]="true" [draggable]="false"
+[resizable]="false" [style]="{width: '60vw'}" [autoZIndex]=true [draggable]="false" [resizable]="false">
+     <div class="col-md-12 mt-1">
+            <div class="field-group textarea">
+                <label for="">Ghi chú</label>
+                <textarea [(ngModel)]="modelLock.comment" name="comments" cols="30" rows="10" class="form-control"></textarea>
+            </div>
+        </div>
+        <ng-template pTemplate="footer">
+            <p-button styleClass="p-button-sm" label="Gửi" icon="pi pi-send" (click)="saveOnLock()"></p-button>
+            <p-button styleClass="p-button-sm ml-1 p-button-secondary" icon="pi pi-times" label="Đóng" (click)="displayLock = false"></p-button>
+        </ng-template> 
+</p-dialog>

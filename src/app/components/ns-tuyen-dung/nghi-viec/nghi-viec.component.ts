@@ -201,9 +201,11 @@ export class NghiViecComponent implements OnInit, AfterViewChecked {
     };
   }
   empId = null;
+  terminateId = null;
   displayAdd = false;
   tuyenDungLai({rowData}) {
     this.empId = rowData.empId;
+    this.terminateId = rowData.terminateId;
     this.displayAdd = true;
   }
 

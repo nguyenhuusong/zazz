@@ -75,7 +75,7 @@
 
 <p-dialog header="Tuyển dụng lại nhân viên" [(visible)]="displayAdd" (onHide)="find()" [modal]="true" [style]="{width: '70vw'}" [maximizable]="true"
     [draggable]="false" [resizable]="false" [focusTrap]="false" styleClass="popup-setting">
-    <app-chi-tiet-tuyen-dung-lai [empId]="empId" *ngIf="displayAdd" (callback)="callbackSave()"></app-chi-tiet-tuyen-dung-lai>
+    <app-chi-tiet-tuyen-dung-lai [empId]="empId" [terminateId]="terminateId" *ngIf="displayAdd" (callback)="callbackSave()"></app-chi-tiet-tuyen-dung-lai>
 </p-dialog>
 
 

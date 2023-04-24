@@ -228,12 +228,29 @@ export class NsHoSoNghiViecComponent implements OnInit {
 
         },
         {
+          onClick: this.lock.bind(this),
+          label: 'Đóng ứng dụng',
+          icon: 'pi pi-lock',
+          class: 'btn-primary mr5',
+          hide: event.data.app_lock_st
+
+        },
+        {
+          onClick: this.lockOpen.bind(this),
+          label: 'Mở ứng dụng',
+          icon: 'pi pi-lock-open',
+          class: 'btn-primary mr5',
+          hide: !event.data.app_lock_st
+
+        },
+        {
           onClick: this.delRow.bind(this),
           label: 'Xóa',
           icon: 'fa fa-edit',
           class: 'btn-primary mr5',
           hide: CheckHideAction(MENUACTIONROLEAPI.GetTerminatePage.url, ACTIONS.DELETE)
         },
+
         // {
         //   onClick: this.tuyenDungLai.bind(this),
         //   label: 'Tuyển dụng lại',
@@ -250,6 +267,66 @@ export class NsHoSoNghiViecComponent implements OnInit {
         // },
       ]
     };
+  }
+  modelLock = {
+    terminateId: '',
+    app_lock_st: true,
+    comment: '',
+    employeeName: ''
+  }
+  displayLock = false;
+  lock(event) {
+    this.modelLock.terminateId = event.rowData.terminateId;
+    this.modelLock.employeeName = event.rowData.employeeName;
+    this.modelLock.app_lock_st = true;
+    this.modelLock.comment = '';
+    this.displayLock = true;
+
+    // this.confirmationService.confirm({
+    //   message: 'Bạn có chắc chắn muốn thực hiện đóng ứng dụng?',
+    //   accept: () => {
+    //     this.spinner.show();
+    //     const queryParams = queryString.stringify({ terminateId: event.rowData.terminateId });
+    //     this.apiService.setTerminateLockStatus(queryParams)
+    //       .pipe(takeUntil(this.unsubscribe$))
+    //       .subscribe(results => {
+    //         if (results.status === 'success') {
+    //           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa hồ sơ thành công' });
+    //           this.load();
+    //           this.spinner.hide();
+    //         } else {
+    //           this.spinner.hide();
+    //           this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+    //         }
+    //       });
+    //   }
+    // });
+  }
+
+  saveOnLock() {
+    this.spinner.show();
+    this.apiService.setTerminateLockStatus({ ...this.modelLock })
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(results => {
+        if (results.status === 'success') {
+          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa hồ sơ thành công' });
+          this.load();
+          this.spinner.hide();
+          this.displayLock = false;
+        } else {
+          this.spinner.hide();
+          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+        }
+      });
+  }
+
+
+  lockOpen(event) {
+    this.modelLock.terminateId = event.rowData.terminateId;
+    this.modelLock.employeeName = event.rowData.employeeName;
+    this.modelLock.app_lock_st = false;
+    this.modelLock.comment = '';
+    this.displayLock = true;
   }
 
   listViews = [];
