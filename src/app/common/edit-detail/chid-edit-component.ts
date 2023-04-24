@@ -770,8 +770,8 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
       element.fields.forEach(element1 => {
         if (element1.field_name === field_name) {
           element1.columnValue = value;
-          this.modelFields[`${element.field_name}${element.group_cd}`].error = this.modelFields[`${element.field_name}${element.group_cd}`].isRequire && !element1.columnValue ? true : false;
-          this.modelFields[`${element.field_name}${element.group_cd}`].message = this.modelFields[`${element.field_name}${element.group_cd}`].error ? 'Trường bắt buộc nhập !' : ''
+          this.modelFields[`${element1.field_name}${element1.group_cd}`].error = this.modelFields[`${element1.field_name}${element1.group_cd}`]?.isRequire && !element1.columnValue ? true : false;
+          this.modelFields[`${element1.field_name}${element1.group_cd}`].message = this.modelFields[`${element1.field_name}${element1.group_cd}`]?.error ? 'Trường bắt buộc nhập !' : ''
         }
       });
     });

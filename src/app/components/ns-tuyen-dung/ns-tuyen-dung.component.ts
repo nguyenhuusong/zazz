@@ -711,6 +711,13 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
           can_st: this.recruitmentStatusSelected,
           vacancyId: vacancyId
         }
+        const data = {
+          tempId: null,
+          canIds: dataUpdateStatus,
+          can_st: this.recruitmentStatusSelected
+        }
+    
+        localStorage.setItem('RecruitMail', JSON.stringify(data))
         this.apiService.recruiUpdateStatus(queryString.stringify(query))
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe((results: any) => {
@@ -769,7 +776,6 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   }
 
   sendEmail() {
-    this.sentEmail = false;
     if(!this.mailInputValue) {
       this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Chưa chọn nội dung gửi' });
       return
@@ -778,12 +784,12 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     const data = {
       tempId: this.mailInputValue,
       canIds: canId,
-      can_st: this.query.can_st !== -1 ? this.query.can_st : this.recruitmentStatusSelected
+      can_st: this.sentEmail ? this.query.can_st : this.recruitmentStatusSelected
     }
-
     // this.employeeSaveService.setStocks(data);
     localStorage.setItem('RecruitMail', JSON.stringify(data))
     this.router.navigate(['/cai-dat/thong-bao/them-moi-thong-bao'], { queryParams: {external_name: ''} })
+    this.sentEmail = false;
 
     // this.spinner.show();
     // this.apiService.sendRecruitMail(data)
