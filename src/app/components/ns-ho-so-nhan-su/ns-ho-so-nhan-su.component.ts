@@ -313,6 +313,13 @@ export class NsHoSoNhanSuComponent implements OnInit {
           class: 'btn-primary mr5',
           hide: this.checkUnLockEmployee(event)
         },
+        {
+          onClick: this.ApprovedEmail.bind(this),
+          label: 'Xác nhận qua email',
+          icon: 'pi pi-inbox',
+          class: 'btn-primary mr5',
+          // hide: this.checkUnLockEmployee(event)
+        },
       ]
     };
   }
@@ -434,6 +441,24 @@ export class NsHoSoNhanSuComponent implements OnInit {
       message: 'Bạn có chắc chắn muốn xóa nhân viên?',
       accept: () => {
         this.apiService.deleteEmployee(event.rowData.empId)
+         .pipe(takeUntil(this.unsubscribe$))
+         .subscribe((results: any) => {
+          if (results.status === 'success') {
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Xóa nhân viên thành công' });
+            this.load();
+          } else {
+            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+          }
+        });
+      }
+    });
+  }
+
+  ApprovedEmail(event) {
+    this.confirmationService.confirm({
+      message: 'Bạn có chắc chắn gửi email nhân viên?',
+      accept: () => {
+        this.apiService.takeConfirmEmail({userId: event.rowData.userId})
          .pipe(takeUntil(this.unsubscribe$))
          .subscribe((results: any) => {
           if (results.status === 'success') {

@@ -606,6 +606,10 @@ export class ApiHrmService {
     return this.http.put<any>(`${apiHrmServer}/api/v1/user/ResetPasswordOtp`, params, this.options);
   }
 
+  takeConfirmEmail(params): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v1/user/TakeConfirmEmail`, params, this.options);
+  }
+
   hrmDelEmpWorking(queryParams): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v2/working/DelEmpWorking?` + queryParams, this.options);
   }
