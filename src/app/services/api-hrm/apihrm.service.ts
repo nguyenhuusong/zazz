@@ -322,7 +322,7 @@ export class ApiHrmService {
   }
 
   delSalaryRecord(queryParams): Observable<any> {
-    return this.http.delete<any>(`${apiHrmServer}/api/v1/salary/DelSalaryRecord`+ queryParams, this.options)
+    return this.http.delete<any>(`${apiHrmServer}/api/v1/salary/DelSalaryRecord?`+ queryParams, this.options)
   }
 
   getEatingPage(queryParams): Observable<any> {
