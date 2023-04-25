@@ -676,7 +676,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
 
       if(!checkAsynCanId) {
         this.isSendMail = true;
-        this.apiService.getRecruitMailInput(queryString.stringify({ can_st: firstCanSt }))
+        this.apiService.getRecruitMailInput(queryString.stringify({ can_st: this.recruitmentStatusSelected }))
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe(results => {
           if (results.status === 'success') {
