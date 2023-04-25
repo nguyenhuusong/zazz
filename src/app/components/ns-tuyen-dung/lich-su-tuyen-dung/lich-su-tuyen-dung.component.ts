@@ -179,20 +179,18 @@ export class LichSuTuyenDungComponent implements OnInit {
   showButtons(event: any) {
     return {
       buttons: [
-        // {
-        //   onClick: this.viewRow.bind(this),
-        //   label: 'Xem chi tiết',
-        //   icon: 'fa fa-eye',
-        //   class: 'btn-primary mr5',
-        //   hide: CheckHideAction(MENUACTIONROLEAPI.GetCandidatePage.url, ACTIONS.VIEW)
-        // },
-        // {
-        //   onClick: this.xoatuyendung.bind(this),
-        //   label: 'Xóa ',
-        //   icon: 'pi pi-trash',
-        //   class: 'btn-primary mr5',
-        //   hide: CheckHideAction(MENUACTIONROLEAPI.GetCandidatePage.url, ACTIONS.DELETE)
-        // },
+        {
+          onClick: this.viewRow.bind(this),
+          label: 'Xem chi tiết',
+          icon: 'fa fa-eye',
+          class: 'btn-primary mr5',
+        },
+        {
+          onClick: this.tiemNang.bind(this),
+          label: 'Tiềm năng',
+          icon: 'pi pi-send',
+          class: 'btn-primary mr5',
+        },
       ]
     };
   }
@@ -203,6 +201,18 @@ export class LichSuTuyenDungComponent implements OnInit {
       view: true
     }
     this.router.navigate(['/tuyen-dung/ds-tuyen-dung/chi-tiet-tuyen-dung'], { queryParams: params });
+  }
+
+  isSubmitTiemNang = false;
+  isTiemNang = false;
+  queryTiemNang = {
+    canId: '',
+    reason_rejiect: '',
+  }
+
+  tiemNang(event) {
+    this.isTiemNang = true;
+    this.queryTiemNang.canId = this.dataRowSelected.map( d => d.canId).toString();
   }
 
   xoatuyendung(event) {
@@ -226,32 +236,32 @@ export class LichSuTuyenDungComponent implements OnInit {
 
   initGrid() {
     this.columnDefs = [
-      // {
-      //   headerName: '',
-      //   filter: '',
-      //   width: 60,
-      //   pinned: 'left',
-      //   cellClass: ['border-right', 'no-auto'],
-      //   field: 'checkbox2',
-      //   headerCheckboxSelection: false,
-      //   suppressSizeToFit: true,
-      //   suppressRowClickSelection: true,
-      //   showDisabledCheckboxes: true,
-      //   checkboxSelection: true,
-      //   // rowSelection: 'single'
-      // },
+      {
+        headerName: '',
+        filter: '',
+        width: 60,
+        pinned: 'left',
+        cellClass: ['border-right', 'no-auto'],
+        field: 'checkbox2',
+        headerCheckboxSelection: false,
+        suppressSizeToFit: true,
+        suppressRowClickSelection: true,
+        showDisabledCheckboxes: true,
+        checkboxSelection: true,
+        // rowSelection: 'single'
+      },
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
-      // {
-      //   headerName: 'Thao tác',
-      //   filter: '',
-      //   width: 100,
-      //   pinned: 'right',
-      //   cellRenderer: 'buttonAgGridComponent',
-      //   cellClass: ['border-right', 'no-auto'],
-      //   cellRendererParams: (params: any) => this.showButtons(params),
-      //   checkboxSelection: false,
-      //   field: 'checkbox'
-      // }
+      {
+        headerName: '...',
+        filter: '',
+        width: 100,
+        pinned: 'right',
+        cellRenderer: 'buttonAgGridComponent',
+        cellClass: ['border-right', 'no-auto'],
+        cellRendererParams: (params: any) => this.showButtons(params),
+        checkboxSelection: false,
+        field: 'checkbox'
+      }
     ]
       
   }
@@ -347,6 +357,30 @@ export class LichSuTuyenDungComponent implements OnInit {
     }else {
       this.listViewsFilter =  cloneDeep(datas);
     }
+  }
+
+  canSetTiemNang() {
+    this.isTiemNang = false;
+  }
+
+  setTiemNang() {
+    this.isSubmitTiemNang = true;
+    if(!this.queryTiemNang.reason_rejiect){
+      return;
+    }
+    this.apiService.updateCandidatesPotential(queryString.stringify(this.queryTiemNang), null)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
+      if (results.status === 'success') {
+          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Cập nhật thành công' });
+          this.load();
+          this.isTiemNang = false;
+          this.spinner.hide();
+        } else {
+          this.spinner.hide();
+          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.data : null });
+        }
+    })
   }
 
 }

@@ -40,7 +40,7 @@ const routes: Routes = [
     },
   },
   {
-    path: 'ds-tuyen-dung/ds-tiem-nang',
+    path: 'ds-tiem-nang',
     component: DsTiemNangComponent,
     data: {
       title: 'Danh sách tiềm năng',
@@ -48,7 +48,7 @@ const routes: Routes = [
     },
   },
   {
-    path: 'ds-tuyen-dung/lich-su-tuyen-dung',
+    path: 'lich-su-tuyen-dung',
     component: LichSuTuyenDungComponent,
     data: {
       title: 'Danh sách lịch sử tuyển dụng',

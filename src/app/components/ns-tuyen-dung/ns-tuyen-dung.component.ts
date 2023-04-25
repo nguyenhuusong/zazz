@@ -201,16 +201,21 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
           hide: CheckHideAction(MENUACTIONROLEAPI.GetCandidatePage.url, ACTIONS.EDIT)
         },
         {
-          onClick: this.viewRow.bind(this),
-          label: 'Xem chi tiết',
-          icon: 'fa fa-eye',
+          onClick: this.chuyenVong.bind(this),
+          label: 'Chuyển vòng',
+          icon: 'pi pi-reply',
           class: 'btn-primary mr5',
-          hide: CheckHideAction(MENUACTIONROLEAPI.GetCandidatePage.url, ACTIONS.VIEW)
+        },
+        {
+          onClick: this.getRecruitMailInput.bind(this),
+          label: 'Gửi email',
+          icon: 'pi pi-envelope',
+          class: 'btn-primary mr5',
         },
         {
           onClick: this.addAccount.bind(this),
           label: 'Chuyển hồ sơ',
-          icon: 'pi pi-plus',
+          icon: 'pi pi-reply',
           class: 'btn-primary mr5',
           hide: this.checkHideAddAccount(event)
         },
@@ -349,7 +354,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     this.optionsButtonDB[0].items[2].disabled = checkCreateAccount ? true : this.dataRowSelected.length < 1 ? true : false;
 
     // check role for set tiem nang && check for tuy chon
-    this.optionsButtonDB[0].items[3].disabled = this.dataRowSelected.length > 0 ? false : true;
+    // this.optionsButtonDB[0].items[3].disabled = this.dataRowSelected.length > 0 ? false : true;
   }
 
   delRow(event) {
@@ -499,24 +504,24 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
             }
           },
           {
-            label: 'Tạo tài khoản',
+            label: 'Chuyển hồ sơ',
             code: 'guiemail',
-            icon: 'pi pi-plus',
+            icon: 'pi pi-reply',
             class: 'hidden',
             disabled: true,
             command: () => {
               this.setCandidateRegisters();
             }
           },
-          {
-            label: 'Tiềm năng',
-            code: 'tiemnang',
-            icon: 'pi pi-send',
-            disabled: true,
-            command: () => {
-              this.tiemNang();
-            }
-          },
+          // {
+          //   label: 'Tiềm năng',
+          //   code: 'tiemnang',
+          //   icon: 'pi pi-send',
+          //   disabled: true,
+          //   command: () => {
+          //     this.tiemNang();
+          //   }
+          // },
         ]
       },
       {
@@ -530,22 +535,22 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
               this.importFileExel();
             }
           },
-          {
-            label: 'Danh sách tiềm năng',
-            code: 'Import',
-            icon: 'pi pi-list',
-            command: () => {
-              this.dsTiemNang();
-            }
-          },
-          {
-            label: 'Lịch sử tuyển dụng',
-            code: 'Import',
-            icon: 'pi pi-list',
-            command: () => {
-              this.lsTuyenDung();
-            }
-          },
+          // {
+          //   label: 'Danh sách tiềm năng',
+          //   code: 'Import',
+          //   icon: 'pi pi-list',
+          //   command: () => {
+          //     this.dsTiemNang();
+          //   }
+          // },
+          // {
+          //   label: 'Lịch sử tuyển dụng',
+          //   code: 'Import',
+          //   icon: 'pi pi-list',
+          //   command: () => {
+          //     this.lsTuyenDung();
+          //   }
+          // },
         ]
       },
     ]
@@ -666,7 +671,11 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     
   }
 
-  getRecruitMailInput() {
+  getRecruitMailInput(event = null) {
+    let canStatus = this.recruitmentStatusSelected
+    if(event && event.rowData && event.rowData.can_st) {
+      canStatus = event.rowData.can_st
+    }
     if(this.dataRowSelected.length > 0) {
       let checkAsynCanId = false;
       // check người dùng chọn theo 1 can_st
@@ -676,10 +685,11 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
 
       if(!checkAsynCanId) {
         this.isSendMail = true;
-        this.apiService.getRecruitMailInput(queryString.stringify({ can_st: firstCanSt }))
+        this.apiService.getRecruitMailInput(queryString.stringify({ can_st: canStatus ? canStatus : firstCanSt }))
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe(results => {
           if (results.status === 'success') {
+            this.recruitmentStatusSelected = canStatus ? canStatus : firstCanSt
             this.mailsInput = results.data.map(d => {
               return {
                 label: d.name,
@@ -689,7 +699,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
           }
         })
       }else{
-        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Vui lòng chọn cùng loại vòng tuyển dụng' });
+        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Vui lòng chuyển vòng trước khi gửi mail' });
       }
 
     }
