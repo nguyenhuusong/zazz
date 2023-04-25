@@ -1391,14 +1391,14 @@ export class AppTypeCheckboxRadioListComponent implements OnInit {
             <div class="field-group attach-file">
             <label  class="text-nowrap label-text" >{{element.columnLabel}}</label>
                     <div class="control-image" style="display: flex" *ngIf="this.element.columnValue">
-                      <input type="text" class="form-control" (change)="setvalueImage($event)" [value]="this.element.columnValue">
-                      <button pButton pRipple type="button" (click)="removeAttach()" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-text"></button>
+                      <input type="text" [disabled]="element.isDisable"  class="form-control" (change)="setvalueImage($event)" [value]="this.element.columnValue">
+                      <button pButton pRipple type="button" [hidden]="element.isDisable" (click)="removeAttach()" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-text"></button>
                       <div *ngIf="imagesUpload && (fileType ==='image/jpeg' || fileType ==='image/png' || fileType ==='image/jpg' || fileType ==='image/gif') else otherFile" >
                         <p-image  src="{{imagesUpload}}" alt="Image" width="250" height="250" ></p-image>
                       </div>
                     </div>
                     <div *ngIf="!this.element.columnValue" class="upload_file">
-                    <input class="" type="file"  
+                    <input class="" type="file"  [disabled]="element.isDisable" 
                     accept="{{ fileAccept }}" (change)="onUploadOutputImage($event)" ></div>
                     <input type="file" style="display: none" id="sign_second" name="sign_second"  accept="image/jpeg,image/png,image/jpg,image/gif" (change)="onUploadOutputImage($event)">
                     <div *ngIf="element.isRequire && submit && !element.columnValue"
