@@ -63,3 +63,24 @@
         <app-form-filter *ngIf="listViewsFilter.length > 0" [listFields]="listViewsFilter" [detailInfoFilter]="detailInfoFilter" [buttonsFilters] ="optionsButonFilter" (callback)="filterLoad($event)" (close)="close($event);op.hide()"></app-form-filter>
     </ng-template>
 </p-overlayPanel>
+
+
+<p-dialog styleClass="hideHeaderForm" header="Tiềm năng"
+    [(visible)]="isTiemNang" 
+    [modal]="true" [style]="{width: '600px'}"
+    [draggable]="false" [resizable]="false" [focusTrap]="false" >
+    <div class="field-group textarea">
+        <textarea placeholder="Nhập lý do" [(ngModel)]="queryTiemNang.reason_rejiect" required></textarea>
+    </div>
+       <div class="field-group">
+            <div class="alert-validation alert-danger" *ngIf="!queryTiemNang.reason_rejiect && isSubmitTiemNang"> 
+                Vui lòng nhập lý do
+            </div>
+        </div>
+        <ng-template pTemplate="footer">
+            <div class="d-flex end">
+              <p-button (click)="canSetTiemNang()" styleClass="p-button-sm p-button-secondary" label="Bỏ qua" icon="pi pi-times-circle"></p-button>&nbsp;
+              <p-button (click)="setTiemNang()">Gửi</p-button>
+            </div>
+        </ng-template>
+</p-dialog>
