@@ -2,7 +2,7 @@
     <section>
         <app-hrm-breadcrumb [items]="items"></app-hrm-breadcrumb>
     </section>
-    <div class="content">
+    <section class="content">
         <div class="d-flex center" *ngIf="tabIndex === 0">
             <div class="col-12 lg:col-8 xl:col-8">
                 <app-hrm-step [steps]="detailEdit?.flowStatuses" [flowSt]="detailEdit?.flow_st"
@@ -28,7 +28,7 @@
         </p-tabView>
 
 
-    </div>
+    </section>
     <section *ngIf="isView">
         <div class="d-flex bet middle">
             <h4>Lịch sử</h4>
