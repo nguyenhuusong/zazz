@@ -15,6 +15,7 @@ import { findNodeInTree, setCheckboxradiolistValue, setMembers, setMultiSelectVa
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ApiHrmV2Service } from 'src/app/services/api-hrm/apihrmv2.service';
 import { Router } from '@angular/router';
+import { TYPESDATETIME } from './columnTypes';
 @Component({
   selector: 'app-edit-detail',
   templateUrl: './edit-detail.component.html',
@@ -174,6 +175,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
           }
         }else if(element1.columnType === 'chips') {
           element1.columnValue = element1.columnValue && typeof element1.columnValue === 'string' ? element1.columnValue.split(',') : []
+        }else if (TYPESDATETIME.indexOf(element1.columnType) > -1) {
+          element1.columnValue = element1.columnValue ? new Date(this.convesrtDate(element1.columnValue)) : ''
         }
       });
     });
@@ -219,6 +222,16 @@ export class EditDetailComponent implements OnInit, OnChanges {
     } else {
       this.spinner.hide();
       this.dataView = [...this.dataViewNew];
+    }
+  }
+
+  convesrtDate(value: string) {
+    const cutString = value.split(' ');
+    const stringDate = cutString[0].split('/');
+    if(cutString.length > 1) {
+      return `${stringDate[2]}-${stringDate[1]}-${stringDate[0]} ${cutString[1]}`
+    }else {
+      return `${stringDate[2]}-${stringDate[1]}-${stringDate[0]}`
     }
   }
 
