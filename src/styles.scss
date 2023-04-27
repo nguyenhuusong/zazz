@@ -2561,6 +2561,7 @@ div.p-organizationchart {
 .field-group{
     margin-bottom: 10px;
     position: relative;
+    min-height: 56px;
     label{
         color: #465373;
         font-size: 12px;
@@ -2571,6 +2572,9 @@ div.p-organizationchart {
         line-height: 20px;
         margin-bottom: 2px;
         display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
     .icon-date{
         position: absolute;
