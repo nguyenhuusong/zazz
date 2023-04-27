@@ -255,12 +255,12 @@ export class DsTiemNangComponent implements OnInit {
   }
 
   rowSelected(event) {
-    this.dataRowSelected = event;
-    this.recruitmentStatusSelected = this.dataRowSelected.map( d => d.can_st)
-    .pipe(takeUntil(this.unsubscribe$))
-    .toString();
-    this.canSttValue = this.dataRowSelected.sort((a,b)=>a.can_st-b.can_st)[this.dataRowSelected.length - 1];
-    // check role for set tiem nang
+    if(event.length > 0) {
+      this.dataRowSelected = event;
+      // this.recruitmentStatusSelected = this.dataRowSelected.map( d => d.can_st).toString();
+      this.canSttValue = this.dataRowSelected.sort((a,b)=>a.can_st-b.can_st)[this.dataRowSelected.length - 1];
+      // check role for set tiem nang
+    }
   }
 
   // getOrgPositions() {
@@ -381,15 +381,12 @@ export class DsTiemNangComponent implements OnInit {
   }
 
   changeRecruStatus() {
+    console.log('fjdosfjodsjifoj')
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn chuyển vòng?',
       accept: () => {
-        let dataUpdateStatus = this.dataRowSelected.map( d => d.canId)
-        .pipe(takeUntil(this.unsubscribe$))
-        .toString();
-        let vacancyId = this.dataRowSelected.map( d => d.vacancyId)
-        .pipe(takeUntil(this.unsubscribe$))
-        .toString();
+        let dataUpdateStatus = this.dataRowSelected.map( d => d.canId).toString();
+        let vacancyId = this.dataRowSelected.map( d => d.vacancyId).toString();
         const query = {
           canId: dataUpdateStatus,
           can_st: this.recruitmentStatusSelected,
@@ -402,7 +399,6 @@ export class DsTiemNangComponent implements OnInit {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Chuyển thành công!' });
             this.dataRowSelected = [];
             this.load();
-            this.recruitmentStatusSelected = null;
             this.isSendMail = true;
           } else {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
