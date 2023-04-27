@@ -695,7 +695,11 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
                 label: d.name,
                 value: d.value
               }
-            })
+            });
+            if(this.mailsInput.length === 0) {
+              this.isSendMail = false;
+              this.isChuyenVong = false;
+            }
           }
         })
       }else{
