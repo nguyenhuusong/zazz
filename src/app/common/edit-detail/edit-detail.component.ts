@@ -227,6 +227,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
 
   convesrtDate(value: string) {
     const cutString = value.split(' ');
+    console.log(cutString)
     const stringDate = cutString[0].split('/');
     if(cutString.length > 1) {
       return `${stringDate[2]}-${stringDate[1]}-${stringDate[0]} ${cutString[1]}`

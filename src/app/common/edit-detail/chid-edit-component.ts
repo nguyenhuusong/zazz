@@ -1063,11 +1063,11 @@ export class AppTypeDatetimeComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.element && this.element && this.element.columnValue) {
-      if (typeof this.element.columnValue === 'string') {
-        this.element.columnValue = stringtodate(this.element.columnValue);
-      }
-    }
+    // if (changes.element && this.element && this.element.columnValue) {
+    //   if (typeof this.element.columnValue === 'string') {
+    //     this.element.columnValue = stringtodate(this.element.columnValue);
+    //   }
+    // }
   }
   ngOnInit(): void {
   }
