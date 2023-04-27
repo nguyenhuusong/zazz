@@ -1153,6 +1153,10 @@ export class ApiHrmService {
     return this.http.put<any>(`${apiHrmServer}/api/v2/terminate/SetTerminateStatus`, params, this.options)
   }
 
+  setTerminateStatusDraft(params): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v2/terminate/SetTerminateStatusDraft`, params, this.options)
+  }
+
   setTerminateApproves(params): Observable<any> {
     return this.http.put<any>(`${apiHrmServer}/api/v2/terminate/SetTerminateApproves`, params, this.options)
   }
