@@ -3109,6 +3109,12 @@ div.p-organizationchart {
         }
     }
 }
+
+app-edit-detail{
+    .field-group{
+        min-height: 56px;
+    }
+}
     div{
         p-dropdown{
             .p-dropdown-label.p-placeholder{
@@ -5840,9 +5846,6 @@ p-button{
         button{
             white-space: nowrap;
         }
-    }
-    .field-group{
-        min-height: 0px;
     }
 }
 .chi-tiet-ho-so-nhan-su{

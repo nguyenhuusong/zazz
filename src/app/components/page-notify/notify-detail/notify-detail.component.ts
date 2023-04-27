@@ -346,7 +346,6 @@ export class NotifyDetailComponent implements OnInit {
       });
     });
     let abc = getFieldOfItems(data, 'to_groups' );
-    console.log('abc', abc)
     const params = {
       ...this.dataInfo,
       group_fields: data,
@@ -359,7 +358,7 @@ export class NotifyDetailComponent implements OnInit {
           attach_type: data1.attach_type
         }
       }),
-      can_id: this.modelNotifyTo.to_level
+      can_id: this.modelNotifyTo.to_groups
     }
     this.apiService.setNotifyInfo(params)
     .pipe(takeUntil(this.unsubscribe$))
