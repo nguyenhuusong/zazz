@@ -567,7 +567,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
      }
 
     this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn tạo tài khoản?',
+      message: 'Bạn có chắc chắn muốn chuyển hồ sơ?',
       accept: () => {
         this.spinner.show();
         this.apiService.setCandidateRegister(params)
@@ -575,8 +575,8 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
         .subscribe((results: any) => {
           if (results.status === 'success') {
               this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Cập nhật thành công' });
-              this.isSendMail = true;
-              this.getRecruitMailInput();
+              // this.isSendMail = true;
+              // this.getRecruitMailInput();
               this.spinner.hide();
             } else {
               this.spinner.hide();
