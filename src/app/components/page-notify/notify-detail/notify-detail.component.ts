@@ -13,6 +13,7 @@ import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 
 import { Subject, takeUntil } from 'rxjs';
 import { EmployeeSaveService } from 'src/app/services/employee-save.service';
+import { getFieldOfItems, getFieldValueAggrid } from 'src/app/utils/common/function-common';
 @Component({
   selector: 'app-notify-detail',
   templateUrl: './notify-detail.component.html',
@@ -198,11 +199,35 @@ export class NotifyDetailComponent implements OnInit {
       }
       this.listViews.forEach( group => {
         group.fields.forEach(field => {
-          if(field.field_name === 'content_type') {
-            this.modelMarkdow.type = field.columnValue
+          
+          if(field.field_name === 'content_notify') {
+            if(actionlistValueKey["push"]){
+              field.isVisiable = true;
+            }else{
+              field.isVisiable = false;
+            }
+          }else if(field.field_name === 'content_sms') { 
+            if(actionlistValueKey["sms"]){
+              field.isVisiable = true;
+            }else{
+              field.isVisiable = false;
+            }
+          }else if(field.field_name === 'content_email') { 
+            if(actionlistValueKey["email"]){
+              field.isVisiable = true;
+            }else{
+              field.isVisiable = false;
+            }
+          }else if(field.field_name === 'isPublish' || field.field_name === 'content_type'  || field.field_name === 'content_markdown') { 
+            if(actionlistValueKey["email"] || actionlistValueKey["push"]){
+              field.isVisiable = true;
+            }else{
+              field.isVisiable = false;
+            }
           }
         });
       }); 
+      
   }
 
   getValueField(datas, field_name) {
@@ -320,6 +345,8 @@ export class NotifyDetailComponent implements OnInit {
       }
       });
     });
+    let abc = getFieldOfItems(data, 'to_groups' );
+    console.log('abc', abc)
     const params = {
       ...this.dataInfo,
       group_fields: data,
@@ -332,6 +359,7 @@ export class NotifyDetailComponent implements OnInit {
           attach_type: data1.attach_type
         }
       }),
+      can_id: this.modelNotifyTo.to_level
     }
     this.apiService.setNotifyInfo(params)
     .pipe(takeUntil(this.unsubscribe$))
