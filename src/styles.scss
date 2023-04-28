@@ -2571,6 +2571,9 @@ div.p-organizationchart {
         line-height: 20px;
         margin-bottom: 2px;
         display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
     .icon-date{
         position: absolute;
@@ -3103,6 +3106,12 @@ div.p-organizationchart {
             top: 6px;
             left: 0;
         }
+    }
+}
+
+app-edit-detail{
+    .field-group{
+        min-height: 56px;
     }
 }
     div{

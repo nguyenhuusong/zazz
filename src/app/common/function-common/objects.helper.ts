@@ -315,3 +315,13 @@ export function setMembers(element1, datas) {
     }
     return null;
 }
+
+export function replaceQueryReport(query: any) {
+  if(query && query.fromDate){
+    query.fromDate = query.fromDate ? moment(query.fromDate, 'DD/MM/YYYY').format('DD/MM/YYYY') : null;
+  }
+  if(query && query.toDate){
+    query.toDate = query.toDate ? moment(query.toDate, 'DD/MM/YYYY').format('DD/MM/YYYY') : null;
+  }
+  return query;
+}

@@ -190,6 +190,8 @@ export class LichSuTuyenDungComponent implements OnInit {
           label: 'Tiềm năng',
           icon: 'pi pi-send',
           class: 'btn-primary mr5',
+          hide: event.data.can_st === 10
+          // hide: event.data.can_st === parseInt(this.recruitmentStatus[this.recruitmentStatus.length - 1])
         },
       ]
     };
@@ -266,11 +268,21 @@ export class LichSuTuyenDungComponent implements OnInit {
       
   }
 
+  getReRound() {
+    this.recruitmentStatus = []
+    this.apiService.getRecruitRoundTitles(queryString.stringify({ organizeIds: this.organizeIdSelected }))
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
+      if (results.status === 'success') {
+        this.recruitmentStatus = results.data.map(d => (d.value));
+      }
+    })
+
+  }
+
   rowSelected(event) {
     this.dataRowSelected = event;
-    this.recruitmentStatusSelected = this.dataRowSelected.map( d => d.can_st)
-    .pipe(takeUntil(this.unsubscribe$))
-    .toString();
+    this.recruitmentStatusSelected = this.dataRowSelected.map( d => d.can_st).toString();
     this.canSttValue = this.dataRowSelected.sort((a,b)=>a.can_st-b.can_st)[this.dataRowSelected.length - 1];
     // check role for set tiem nang
   }
@@ -313,6 +325,7 @@ export class LichSuTuyenDungComponent implements OnInit {
       { label: 'Danh sách tuyển dụng', routerLink: '/tuyen-dung/ds-tuyen-dung' },
       { label: 'Danh sách lịch sử tuyển dụng' },
     ];
+    this.getReRound();
     this.load();
   }
 

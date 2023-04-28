@@ -7,6 +7,7 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { CheckHideAction } from 'src/app/common/function-common/common';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { Subject, takeUntil } from 'rxjs';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-cap-nhat-trang-thai-nghi-viec',
@@ -21,6 +22,7 @@ export class CapNhatTrangThaiNghiViecComponent implements OnInit, OnChanges {
   constructor(
     private apiService: ApiHrmService,
     private activatedRoute: ActivatedRoute,
+    private spinner: NgxSpinnerService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
     private router: Router
@@ -57,6 +59,7 @@ export class CapNhatTrangThaiNghiViecComponent implements OnInit, OnChanges {
   detailInfo = null;
   getTerminateStatus() {
     this.listViews = [];
+    this.spinner.show();
     const queryParams = queryString.stringify({terminateId: this.terminateId	});
     this.apiService.getTerminateStatus(queryParams)
     .pipe(takeUntil(this.unsubscribe$))
@@ -64,6 +67,9 @@ export class CapNhatTrangThaiNghiViecComponent implements OnInit, OnChanges {
       if (results.status === 'success') {
         this.listViews = cloneDeep(results.data.group_fields);
         this.detailInfo = results.data;
+        this.spinner.hide();
+      }else {
+        this.spinner.hide();
       }
     })
   }
@@ -73,6 +79,7 @@ export class CapNhatTrangThaiNghiViecComponent implements OnInit, OnChanges {
   }
 
   setTerminateStatus(data) {
+    this.spinner.show();
     const params = {
       ...this.detailInfo, group_fields: data
     };
@@ -82,15 +89,52 @@ export class CapNhatTrangThaiNghiViecComponent implements OnInit, OnChanges {
       if (results.status === 'success') {
         this.displayUserInfo = false;
         this.goBack()
+        this.spinner.hide();
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Cập nhật thông tin thành công' });
       } else {
         this.messageService.add({
           severity: 'error', summary: 'Thông báo', detail: results.message
         });
+        this.spinner.hide();
       }
     }, error => {
     });
   }
+
+  cloneListViews = []
+  callBackForm(event) {
+    if (event.type === 'IsSpecial') {
+      const params = {
+        ...this.detailInfo, group_fields: event.data
+      }
+      this.cloneListViews = cloneDeep(event.data);
+      this.listViews = [];
+      this.setTerminateStatusDraft(params);
+    } 
+  }
+
+  
+  setTerminateStatusDraft(params: any) {
+    this.spinner.show();
+    this.apiService.setTerminateStatusDraft(params)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((results: any) => {
+        if (results.status === 'success') {
+          const listViews = cloneDeep(results.data.group_fields);
+          this.listViews = [...listViews];
+          this.detailInfo = results.data;
+          this.spinner.hide();
+        } else {
+          this.messageService.add({
+            severity: 'error', summary: 'Thông báo',
+            detail: results.message
+          });
+            this.spinner.hide();
+        }
+      }), error => {
+      };
+  }
+
 
 
   onChangeButtonView(event) {
