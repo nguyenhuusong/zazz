@@ -381,7 +381,6 @@ export class DsTiemNangComponent implements OnInit {
   }
 
   changeRecruStatus() {
-    console.log('fjdosfjodsjifoj')
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn chuyển vòng?',
       accept: () => {

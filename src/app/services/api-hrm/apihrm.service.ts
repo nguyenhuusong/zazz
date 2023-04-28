@@ -1347,6 +1347,10 @@ export class ApiHrmService {
   getReportList(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/report/GetReportList?` + queryParams, this.options)
   }
+
+  getDataReport(apiUrl, queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}${apiUrl}?` + queryParams, this.options)
+  }
   
   setUserAdd(params): Observable<any> {
     return this.http.put<any>(`${apiHrmServer}/api/v1/user/SetUserAdd`, params, this.options)

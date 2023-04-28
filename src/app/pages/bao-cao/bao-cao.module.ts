@@ -49,6 +49,9 @@ import { ConfigGridTableFormModule } from 'src/app/common/config-grid-table-form
 import { CheckHideActionsDirectiveModule } from 'src/app/directive/check-action.module';
 import { BaoCaoComponent } from 'src/app/components/bao-cao/bao-cao.component';
 import { BaoCaoRoutingModule } from './bao-cao-routing.module';
+import { BaoCaoTuyenDungComponent } from 'src/app/components/bao-cao/bao-cao-tuyen-dung/lich-su-tuyen-dung/bao-cao-tuyen-dung.component';
+import { FormFilterModule } from 'src/app/common/form-filter/form-filter.module';
+import { HrmFilterReportModule } from 'src/app/common/hrm-filter-report/hrm-filter-report.module';
 @NgModule({
   imports: [
     MessagesModule,
@@ -97,6 +100,8 @@ import { BaoCaoRoutingModule } from './bao-cao-routing.module';
     HrmBreadCrumbModule,
     BaoCaoRoutingModule,
     ExcelModule,
+    FormFilterModule,
+    HrmFilterReportModule,
     CheckHideActionsDirectiveModule,
     AgGridModule.withComponents([
       ButtonRendererComponent,
@@ -105,7 +110,8 @@ import { BaoCaoRoutingModule } from './bao-cao-routing.module';
   ],
 
   declarations: [
-    BaoCaoComponent
+    BaoCaoComponent,
+    BaoCaoTuyenDungComponent
   ],
   providers: [ ]
 })
