@@ -14,7 +14,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ApiService } from './services/api.service';
 import { FeedBaseService } from './services/firebase.service';
 import { NotificationService } from './services/notification.service';
-import { AgGridModule } from '@ag-grid-community/angular';
 import { BrowserModule } from '@angular/platform-browser';
 import { ButtonModule } from 'primeng/button';
 import { FirebaseAuthService } from './services/firebase-auth.service';
@@ -32,7 +31,6 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ExcelComponent } from './shared/components/excel/excel.component';
 import { ApiCoreService } from './services/api-core/apicore.service';
 import {ToastModule} from 'primeng/toast';
-// 
 import { ChartModule } from 'primeng/chart';
 import {DropdownModule} from 'primeng/dropdown';
 import { NumberCellRenderer } from './utils/common/number-renderer.component';
