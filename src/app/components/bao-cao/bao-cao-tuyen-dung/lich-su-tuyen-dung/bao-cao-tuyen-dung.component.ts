@@ -34,7 +34,7 @@ export class BaoCaoTuyenDungComponent implements OnInit {
     private changeDetector: ChangeDetectorRef,
     public dialogService: DialogService,
     private router: Router) {
-    
+
   }
   pagingComponent = {
     total: 0
@@ -69,35 +69,35 @@ export class BaoCaoTuyenDungComponent implements OnInit {
 
   loadjs = 0;
   heightGrid = 450;
-  
+
   displaySetting = false;
   gridKey = ''
   cauhinh() {
     this.displaySetting = true;
   }
-  reportTypeValue= null;
+  reportTypeValue = null;
   dataReportTypeValue = [];
   reportTypeValues = [];
   getReportList() {
     const queryParams = queryString.stringify(this.query);
     this.apiService.getReportList(queryParams)
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(
-      (results: any) => {
-        if(results.status === 'success'){
-          this.dataReportTypeValue = cloneDeep(results.data);
-          this.reportTypeValues = results.data.map( d => {
-            return {
-              label: d.report_name,
-              value: d.report_id
-            }
-          })
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        (results: any) => {
+          if (results.status === 'success') {
+            this.dataReportTypeValue = cloneDeep(results.data);
+            this.reportTypeValues = results.data.map(d => {
+              return {
+                label: d.report_name,
+                value: d.report_id
+              }
+            })
+          }
         }
-      }
-    ,
-    error => {
-      this.spinner.hide();
-    });
+        ,
+        error => {
+          this.spinner.hide();
+        });
   }
   detailInfoReport = null;
   listViewsReport = [];
@@ -108,8 +108,8 @@ export class BaoCaoTuyenDungComponent implements OnInit {
 
   changeReportTypeValue(event) {
     this.listViewsReport = [];
-    let dataSelected = this.dataReportTypeValue.filter( d => parseInt(d.report_id) === parseInt(this.reportTypeValue))
-    if(dataSelected.length > 0) {
+    let dataSelected = this.dataReportTypeValue.filter(d => parseInt(d.report_id) === parseInt(this.reportTypeValue))
+    if (dataSelected.length > 0) {
       this.detailInfoReport = dataSelected[0];
       this.listViewsReport = dataSelected[0].group_fields;
     }
@@ -117,60 +117,55 @@ export class BaoCaoTuyenDungComponent implements OnInit {
 
   geFilter() {
     this.apiService.getFilter('/api/v2/empinsurance/GetInsuranceFilter')
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(results => {
-      if(results.status === 'success') {
-        const listViews = cloneDeep(results.data.group_fields);
-        this.listViewsReport = [...listViews];
-        this.detailInfoReport = results.data;
-      }
-    });
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(results => {
+        if (results.status === 'success') {
+          const listViews = cloneDeep(results.data.group_fields);
+          this.listViewsReport = [...listViews];
+          this.detailInfoReport = results.data;
+        }
+      });
   }
 
-  goToLink(url: string){
+  goToLink(url: string) {
     window.open(url, "_blank");
-}
+  }
 
   load(queryParams) {
     this.columnDefs = []
     this.spinner.show();
     this.apiService.getReportAll(this.detailInfoReport.api_url_dowload, queryParams)
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(
-      (results: any) => {
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        (results: any) => {
 
-        if(results.status === 'success') {
           this.goToLink(results.webViewLink);
           this.spinner.hide();
           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Thành công!' });
-        }else {
-          this.spinner.hide();
-          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Thất bại !' });
-        }
-        // this.listsData = results.data.dataList.data;
-        // this.gridKey= results.data.dataList.gridKey;
-        // if (this.query.offSet === 0) {
-        //   this.cols = results.data.gridflexs;
-        //   this.colsDetail = results.data.gridflexdetails ? results.data.gridflexdetails : [];
-        // }
-        // this.initGrid();
-        // this.countRecord.totalRecord = results.data.dataList.recordsTotal;
-        // this.countRecord.totalRecord = results.data.dataList.recordsTotal;
-        // this.countRecord.currentRecordStart = results.data.dataList.recordsTotal === 0 ? this.query.offSet = 0 : this.query.offSet + 1;
-        // if ((results.data.dataList.recordsTotal - this.query.offSet) > this.query.pageSize) {
-        //   this.countRecord.currentRecordEnd = this.query.offSet + Number(this.query.pageSize);
-        // } else {
-        //   this.countRecord.currentRecordEnd = results.data.dataList.recordsTotal;
-        //   setTimeout(() => {
-        //     const noData = document.querySelector('.ag-overlay-no-rows-center');
-        //     if (noData) { noData.innerHTML = 'Không có kết quả phù hợp' }
-        //   }, 100);
-        // }
-        // this.spinner.hide();
-      },
-      error => {
-        // this.spinner.hide();
-      });
+          // this.listsData = results.data.dataList.data;
+          // this.gridKey= results.data.dataList.gridKey;
+          // if (this.query.offSet === 0) {
+          //   this.cols = results.data.gridflexs;
+          //   this.colsDetail = results.data.gridflexdetails ? results.data.gridflexdetails : [];
+          // }
+          // this.initGrid();
+          // this.countRecord.totalRecord = results.data.dataList.recordsTotal;
+          // this.countRecord.totalRecord = results.data.dataList.recordsTotal;
+          // this.countRecord.currentRecordStart = results.data.dataList.recordsTotal === 0 ? this.query.offSet = 0 : this.query.offSet + 1;
+          // if ((results.data.dataList.recordsTotal - this.query.offSet) > this.query.pageSize) {
+          //   this.countRecord.currentRecordEnd = this.query.offSet + Number(this.query.pageSize);
+          // } else {
+          //   this.countRecord.currentRecordEnd = results.data.dataList.recordsTotal;
+          //   setTimeout(() => {
+          //     const noData = document.querySelector('.ag-overlay-no-rows-center');
+          //     if (noData) { noData.innerHTML = 'Không có kết quả phù hợp' }
+          //   }, 100);
+          // }
+          // this.spinner.hide();
+        },
+        error => {
+          // this.spinner.hide();
+        });
   }
 
   initGrid() {
@@ -195,7 +190,7 @@ export class BaoCaoTuyenDungComponent implements OnInit {
   }
 
   getReport(event) {
-    const queryParams = queryString.stringify({...event.data});
+    const queryParams = queryString.stringify({ ...event.data });
     this.load(queryParams);
   }
 

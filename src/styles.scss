@@ -1352,6 +1352,39 @@ div{
         }
     }
 }
+app-form-filter {
+    .multi-select{
+        .p-multiselect{
+            padding: 0px 12px 0px 11px;
+            border: 1px solid #D1D4DC;
+            transition: all 0.4s;
+            &:hover{
+                border: 1px solid #0979FD;
+                transition: all 0.4s;
+            }
+        }
+        label{
+            top: -23px;
+            position: absolute;
+            
+        }
+        .p-multiselect-label{
+            padding-left: 0px !important;
+            padding-top: 5px !important;
+            padding-bottom: 7px !important;
+            min-height: 32px;
+            font-family: $fontRegular;
+            .p-multiselect-token{
+                padding: 0px 6px;
+                font-size: 10px;
+                .p-multiselect-token-icon{
+                    font-size: 12px;
+                }
+            }
+        }
+    }
+}
+
 .product-detail{
     // padding-top: 15px;
     .p-card-body{
