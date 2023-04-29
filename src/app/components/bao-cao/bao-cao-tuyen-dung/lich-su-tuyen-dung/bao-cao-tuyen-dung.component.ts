@@ -76,6 +76,7 @@ export class BaoCaoTuyenDungComponent implements OnInit {
     this.displaySetting = true;
   }
   reportTypeValue= null;
+  dataReportTypeValue = [];
   reportTypeValues = [];
   getReportList() {
     const queryParams = queryString.stringify(this.query);
@@ -84,6 +85,7 @@ export class BaoCaoTuyenDungComponent implements OnInit {
     .subscribe(
       (results: any) => {
         if(results.status === 'success'){
+          this.dataReportTypeValue = cloneDeep(results.data);
           this.reportTypeValues = results.data.map( d => {
             return {
               label: d.report_name,
@@ -106,12 +108,11 @@ export class BaoCaoTuyenDungComponent implements OnInit {
 
   changeReportTypeValue(event) {
     this.listViewsReport = [];
-    // let dataSelected = this.dataReportTypeValue.filter( d => parseInt(d.report_id) === parseInt(this.reportTypeValue))
-    // if(dataSelected.length > 0) {
-    //   this.detailInfoReport = dataSelected[0];
-    //   this.listViewsReport = dataSelected[0].group_fields;
-    // }
-    this.geFilter();
+    let dataSelected = this.dataReportTypeValue.filter( d => parseInt(d.report_id) === parseInt(this.reportTypeValue))
+    if(dataSelected.length > 0) {
+      this.detailInfoReport = dataSelected[0];
+      this.listViewsReport = dataSelected[0].group_fields;
+    }
   }
 
   geFilter() {
