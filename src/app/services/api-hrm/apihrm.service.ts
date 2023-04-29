@@ -1348,6 +1348,10 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v1/report/GetReportList?` + queryParams, this.options)
   }
 
+  getReportAll(linkurl,queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}${linkurl}?` + queryParams, this.options);
+  }
+
   getDataReport(apiUrl, queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}${apiUrl}?` + queryParams, this.options)
   }

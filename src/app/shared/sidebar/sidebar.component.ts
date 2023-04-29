@@ -248,10 +248,10 @@ export class SidebarComponent implements OnInit {
                     columnValue: ''
                 };
                 this.findNodeInTree2(obj, pathname,element1);
-                if (k.path  && k.classs === 'navigation-header' && element1.columnValue && k.path === element1.columnValue) {
-                    k.styleClass = k.classs + " parent_active" + ' ' + k.classs
+                if (k.badgeClass && pathname && pathname.split('/').indexOf(k.badgeClass) > -1 && k.classs === 'navigation-header') {
+                    k.styleClass ="parent_active" + ' ' + k.classs
                 } else {
-                    k.styleClass = k.classs + " parent_no_active" + ' ' + k.classs
+                    k.styleClass ="parent_no_active" + ' ' + k.classs
                 }
             }
 

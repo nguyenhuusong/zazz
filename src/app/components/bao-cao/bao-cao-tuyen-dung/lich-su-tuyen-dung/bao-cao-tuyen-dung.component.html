@@ -22,7 +22,15 @@
                   </div>
             </div>
             <div class="col-8">
-                <app-hrm-filter-report [fields]="dataFilter" (queryData)="theQueryUpdated($event)"></app-hrm-filter-report>
+                <app-form-filter 
+                *ngIf="listViewsReport.length > 0" 
+                [listFields]="listViewsReport" 
+                [detailInfoFilter]="detailInfoReport" 
+                [buttonsFilters] ="optionsButonReport" 
+                (callback)="getReport($event)" 
+                (close)="close($event)">
+            </app-form-filter>
+                <!-- <app-hrm-filter-report [fields]="dataFilter" (queryData)="theQueryUpdated($event)"></app-hrm-filter-report> -->
             </div>
         </div>
     </section>
