@@ -34,23 +34,23 @@
             </div>
         </div>
     </section>
-    <!-- <section class="content pb-0">
+    <section class="content pb-0" *ngIf="isShowLists">
         <div class="grid-default" #container>
-            <app-list-grid-angular *ngIf="columnDefs.length > 0" [listsData]="listsData" [height]="heightGrid"
-                (callback)="rowSelected($event)"
-                [rowSelection]="'multiple'"
+            <app-list-grid-angular *ngIf="columnDefs.length > 0 && isShowLists" [listsData]="listsData" [height]="heightGrid"
+                (showConfig)="cauhinh()" [idGrid]="gridKey + '_45dfs'" 
                 [columnDefs]="columnDefs"></app-list-grid-angular>
+                <!-- <app-loading-grid  [gridtype]="'lhd'" *ngIf="columnDefs.length === 0" [columnNumber]="11"></app-loading-grid> -->
             <div class="paginator">
                 <span>Từ {{ countRecord.currentRecordStart }} đến
                     {{ countRecord.currentRecordEnd }}
                     trên tổng số
                     {{ countRecord.totalRecord }} kết quả</span>
-                <p-paginator [rows]="query.pageSize" [totalRecords]="countRecord.totalRecord" [first]="first"
+                <!-- <p-paginator [rows]="query.pageSize" [totalRecords]="countRecord.totalRecord" [first]="first"
                     (onPageChange)="paginate($event)" [rowsPerPageOptions]="[20,40,60,100,200,{ showAll: 'ALL' }]">
-                </p-paginator>
+                </p-paginator> -->
             </div>
         </div>
-    </section> -->
+    </section>
 </div>
 
 <!-- <p-dialog header="Cài đặt cấu hình" [(visible)]="displaySetting" (onHide)="find()" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"

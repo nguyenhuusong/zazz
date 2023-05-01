@@ -135,37 +135,33 @@ export class BaoCaoTuyenDungComponent implements OnInit {
     this.columnDefs = []
     this.spinner.show();
     this.apiService.getReportAll(this.detailInfoReport.api_url_dowload, queryParams)
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        (results: any) => {
-
-          this.goToLink(results.webViewLink);
-          this.spinner.hide();
-          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Thành công!' });
-          // this.listsData = results.data.dataList.data;
-          // this.gridKey= results.data.dataList.gridKey;
-          // if (this.query.offSet === 0) {
-          //   this.cols = results.data.gridflexs;
-          //   this.colsDetail = results.data.gridflexdetails ? results.data.gridflexdetails : [];
-          // }
-          // this.initGrid();
-          // this.countRecord.totalRecord = results.data.dataList.recordsTotal;
-          // this.countRecord.totalRecord = results.data.dataList.recordsTotal;
-          // this.countRecord.currentRecordStart = results.data.dataList.recordsTotal === 0 ? this.query.offSet = 0 : this.query.offSet + 1;
-          // if ((results.data.dataList.recordsTotal - this.query.offSet) > this.query.pageSize) {
-          //   this.countRecord.currentRecordEnd = this.query.offSet + Number(this.query.pageSize);
-          // } else {
-          //   this.countRecord.currentRecordEnd = results.data.dataList.recordsTotal;
-          //   setTimeout(() => {
-          //     const noData = document.querySelector('.ag-overlay-no-rows-center');
-          //     if (noData) { noData.innerHTML = 'Không có kết quả phù hợp' }
-          //   }, 100);
-          // }
-          // this.spinner.hide();
-        },
-        error => {
-          // this.spinner.hide();
-        });
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
+      (results: any) => {
+        this.listsData = results.data.dataList.data;
+        this.gridKey= results.data.dataList.gridKey;
+        if (this.query.offSet === 0) {
+          this.cols = results.data.gridflexs;
+          this.colsDetail = results.data.gridflexdetails ? results.data.gridflexdetails : [];
+        }
+        this.initGrid();
+        this.countRecord.totalRecord = results.data.dataList.recordsTotal;
+        this.countRecord.totalRecord = results.data.dataList.recordsTotal;
+        this.countRecord.currentRecordStart = results.data.dataList.recordsTotal === 0 ? this.query.offSet = 0 : this.query.offSet + 1;
+        if ((results.data.dataList.recordsTotal - this.query.offSet) > this.query.pageSize) {
+          this.countRecord.currentRecordEnd = this.query.offSet + Number(this.query.pageSize);
+        } else {
+          this.countRecord.currentRecordEnd = results.data.dataList.recordsTotal;
+          setTimeout(() => {
+            const noData = document.querySelector('.ag-overlay-no-rows-center');
+            if (noData) { noData.innerHTML = 'Không có kết quả phù hợp' }
+          }, 100);
+        }
+        this.spinner.hide();
+      },
+      error => {
+        this.spinner.hide();
+      });
   }
 
   initGrid() {
@@ -186,12 +182,19 @@ export class BaoCaoTuyenDungComponent implements OnInit {
   }
 
   close(event) {
-
+    console.log(event)
   }
-
+  isShowLists: boolean = false;
   getReport(event) {
-    const queryParams = queryString.stringify({ ...event.data });
-    this.load(queryParams);
+    console.log(event)
+    if(event.type === "ViewReport") {
+      this.isShowLists = true;
+      const queryParams = queryString.stringify({ ...event.data });
+      this.load(queryParams);
+    }else {
+      this.isShowLists = false;
+    }
+  
   }
 
 
