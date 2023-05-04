@@ -196,9 +196,10 @@ export class FormFilterComponent implements OnInit, OnChanges {
       return value
     }
   }
+  
   submit = false;
   onChangeButtonEdit(event) {
-    if (event === 'Search') {
+    if (event === 'Search' || event === 'ViewReport' || event === 'OpenReport' || event === 'DowloadReport' ) {
       this.submit = false;
       let group_fields = cloneDeep(this.dataView)
       this.callbackform(group_fields, event)

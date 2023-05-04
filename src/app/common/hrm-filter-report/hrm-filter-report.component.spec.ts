@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { HrmFilterCrumbComponent } from './hrm-filter.component';
+import { HrmFilterReportComponent } from './hrm-filter-report.component';
 
-describe('HrmFilterCrumbComponent', () => {
-  let component: HrmFilterCrumbComponent;
-  let fixture: ComponentFixture<HrmFilterCrumbComponent>;
+describe('HrmFilterReportComponent', () => {
+  let component: HrmFilterReportComponent;
+  let fixture: ComponentFixture<HrmFilterReportComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HrmFilterCrumbComponent ]
+      declarations: [ HrmFilterReportComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HrmFilterCrumbComponent);
+    fixture = TestBed.createComponent(HrmFilterReportComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

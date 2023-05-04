@@ -85,6 +85,9 @@ import { DsChiTietLuongComponent } from 'src/app/components/cs-tien-luong/ds-chi
 import { ChuyenVienTinhLuongComponent } from 'src/app/components/cs-tien-luong/chuyen-vien-tinh-luong/chuyen-vien-tinh-luong.component';
 import { ChiTietChuyenVienTinhLuongComponent } from 'src/app/components/cs-tien-luong/chuyen-vien-tinh-luong/chi-tiet-chuyen-vien-tinh-luong/chi-tiet-chuyen-vien-tinh-luong.component';
 import { FormActiveComponent } from 'src/app/components/cs-tien-luong/chuyen-vien-tinh-luong/form-active/form-active.component';
+import { NghiKhongLuongComponent } from 'src/app/components/nghi-khong-luong/nghi-khong-luong.component';
+import { ChiTietNghiKhongLuongComponent } from 'src/app/components/nghi-khong-luong/chi-tiet-nghi-khong-luong/chi-tiet-nghi-khong-luong.component';
+import { ImportExcelModule } from 'src/app/common/import-excel/import-excel.module';
 
 @NgModule({
   imports: [
@@ -136,7 +139,9 @@ import { FormActiveComponent } from 'src/app/components/cs-tien-luong/chuyen-vie
     DynamicDialogModule,
     ListGridAngularTreeModule,
     LoadingGridModule,
-    LoadingDetailModule
+    LoadingDetailModule,
+    ImportExcelModule,
+
   ],
 
   declarations: [
@@ -179,6 +184,8 @@ import { FormActiveComponent } from 'src/app/components/cs-tien-luong/chuyen-vie
     ChuyenVienTinhLuongComponent,
     ChiTietChuyenVienTinhLuongComponent,
     FormActiveComponent,
+    NghiKhongLuongComponent,
+    ChiTietNghiKhongLuongComponent
 
   ],
   providers: [],

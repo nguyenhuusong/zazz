@@ -318,7 +318,6 @@ export class NsHoSoNhanSuComponent implements OnInit {
           label: 'Xác nhận qua email',
           icon: 'pi pi-inbox',
           class: 'btn-primary mr5',
-          // hide: this.checkUnLockEmployee(event)
         },
       ]
     };

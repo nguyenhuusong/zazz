@@ -38,7 +38,7 @@
                 <p-button label="{{button.label}}" (onClick)="onChangeButtonEdit(button.value)" [disabled]="button?.disabled" icon="{{button?.icon ? button?.icon : 'pi pi-plus'}}" styleClass="p-button-sm {{button?.class ? button?.class : ''}}"></p-button>
             </ng-container>
             <!-- <p-button label="Cấu hình" styleClass="p-button-sm height-56 addNew" icon="pi pi-cog" (click)="CauHinh()"></p-button> -->
-            <p-button label="Đóng" styleClass="p-button-sm p-button-secondary bg-secondary height-56 addNew ml-1" icon="pi pi-times" (click)="cancel('Close')"></p-button>
+            <p-button label="Đóng" styleClass="p-button-sm p-button-secondary bg-secondary height-56 addNew ml-1 close" icon="pi pi-times" (click)="cancel('Close')"></p-button>
         </div>
     </form>
 

@@ -26,6 +26,9 @@ import { ThietBiWifiChamCongComponent } from 'src/app/components/cs-cham-cong/th
 import { DsChiTietLuongComponent } from 'src/app/components/cs-tien-luong/ds-chi-tiet-luong/ds-chi-tiet-luong.component';
 import { ChuyenVienTinhLuongComponent } from 'src/app/components/cs-tien-luong/chuyen-vien-tinh-luong/chuyen-vien-tinh-luong.component';
 import { ChiTietChuyenVienTinhLuongComponent } from 'src/app/components/cs-tien-luong/chuyen-vien-tinh-luong/chi-tiet-chuyen-vien-tinh-luong/chi-tiet-chuyen-vien-tinh-luong.component';
+import { NghiKhongLuongComponent } from 'src/app/components/nghi-khong-luong/nghi-khong-luong.component';
+import { ChiTietNghiKhongLuongComponent } from 'src/app/components/nghi-khong-luong/chi-tiet-nghi-khong-luong/chi-tiet-nghi-khong-luong.component';
+import { ImportExcelComponent } from 'src/app/common/import-excel/import-excel.component';
 
 const routes: Routes = [
   {
@@ -277,6 +280,50 @@ const routes: Routes = [
   data: {
     title: 'Chi tiết chuyên viên tính lương',
     url: 'chi-tiet-chuyen-vien-tinh-luong',
+  },
+},
+
+// nghỉ không lương
+
+
+{
+  path: 'nghi-khong-luong',
+  component: NghiKhongLuongComponent,
+  data: {
+    title: 'Danh sách nghỉ không lương',
+    url: 'nghi-khong-luong',
+  },
+},
+{
+  path: 'nghi-khong-luong/them-moi-nghi-khong-luong',
+  component: ChiTietNghiKhongLuongComponent,
+  data: {
+    title: 'Thêm mới chuyên viên tính lương',
+    url: 'them-moi-nghi-khong-luong',
+  },
+},
+{
+  path: 'nghi-khong-luong/chi-tiet-nghi-khong-luong',
+  component: ChiTietNghiKhongLuongComponent,
+  data: {
+    title: 'Chi tiết chuyên viên tính lương',
+    url: 'chi-tiet-nghi-khong-luong',
+  },
+},
+{
+  path: 'nghi-khong-luong/import-nghi-khong-luong',
+  component: ImportExcelComponent,
+  data: {
+    title: 'Import danh sách nghỉ không lương',
+    url: 'import-nghi-khong-luong',
+    titleDad : 'Danh sách danh sách nghỉ không lương',
+    urlDad: '/luong-thue/nghi-khong-luong',
+    api: 'setLeaveLackImport',
+    apiAccept: 'setLeaveLackAccept',
+    fileDoc: 'DM_CapBacLuong_Import.xls',
+    apiExport: 'setLeaveLackExportDraft',
+    apiTemImport: 'getLeaveLackImportTemp',
+    fileNameTemImport: 'file_mau_danh_sach_nghi_khong_luong',
   },
 },
 ];

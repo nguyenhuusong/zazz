@@ -1,0 +1,64 @@
+<div class="form-filter-report" *ngIf="fields && fields.length > 0">
+    <div class="row">
+        <ng-container *ngFor="let field of fields">
+            <div class="{{ field.param_class }}">
+                <div class="fields field-group text" *ngIf="field.param_type === 'input'">
+                    <label>{{ field.param_name }}</label>
+                    <!-- input -->
+                        <input type="text" [(ngModel)]="field.param_default">
+                </div>
+                <!-- autocomplete -->
+                <div class="fields field-group" *ngIf="field.param_type === 'autocomplete'">
+                    <label>{{ field.param_name }}</label>
+                        <p-autoComplete [(ngModel)]="field.param_default" [suggestions]="field.options">
+                        </p-autoComplete>
+                </div>
+                    
+                <!-- treeSelect -->
+                <div class="fields field-group select treeselect" *ngIf="field.param_type === 'selectTrees'">
+                    <label>{{ field.param_name }}</label>
+                        <p-treeSelect [appendTo]="'body'"
+                            [options]="field.options || []" [(ngModel)]="field.param_default"
+                            >
+                        </p-treeSelect>
+                </div>
+
+                <!-- dropdown -->
+                <div class="fields field-group select" *ngIf="field.param_type === 'dropdown' || field.param_type === 'select'">
+                    <label>{{ field.param_name }}</label>
+                        <p-dropdown appendTo="body" [baseZIndex]="100"
+                            [(ngModel)]="field.param_default"
+                            placeholder="{{field.param_name}}"  [options]="field.options">
+                        </p-dropdown>
+                </div>
+
+                <!-- number -->
+                <div class="fields field-group" *ngIf="field.param_type === 'number'">
+                    <label>{{ field.param_name }}</label>
+                        <input type="number"
+                            [(ngModel)]="field.param_default">
+                </div>
+                    
+                <!-- checkbox -->
+                <div class="field-group checkbox" *ngIf="field.param_type === 'checkbox'">
+                    <label>{{ field.param_name }}</label>
+                        <p-checkbox inputId="{{ field.param_cd }}" name={{field.param_cd}}
+                            [(ngModel)]="field.param_default"
+                        ></p-checkbox>
+                </div>
+                    <!-- datetime -->
+                <div class="fields field-group date" *ngIf="field.param_type === 'datetime'">
+                    <label>{{ field.param_name }}</label>
+                        <p-calendar placeholder="DD/MM/YYYY" appendTo="body" 
+                        [(ngModel)]="field.param_default" 
+                        [monthNavigator]="true" [yearNavigator]="true" inputId="navigators" 
+                    dateFormat="dd/mm/yy" name={{field.param_cd}}></p-calendar>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+    <div class="d-flex gap-16">
+        <p-button icon="fa fa-eye" (click)="find('view')" label="Xem trước"></p-button>
+        <p-button icon="fa fa-download" (click)="find('export')" label="Xuất file"></p-button>
+    </div>
+</div>

@@ -1153,6 +1153,10 @@ export class ApiHrmService {
     return this.http.put<any>(`${apiHrmServer}/api/v2/terminate/SetTerminateStatus`, params, this.options)
   }
 
+  setTerminateStatusDraft(params): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v2/terminate/SetTerminateStatusDraft`, params, this.options)
+  }
+
   setTerminateApproves(params): Observable<any> {
     return this.http.put<any>(`${apiHrmServer}/api/v2/terminate/SetTerminateApproves`, params, this.options)
   }
@@ -1342,6 +1346,14 @@ export class ApiHrmService {
 
   getReportList(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/report/GetReportList?` + queryParams, this.options)
+  }
+
+  getReportAll(linkurl,queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}${linkurl}?` + queryParams, this.options);
+  }
+
+  getDataReport(apiUrl, queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}${apiUrl}?` + queryParams, this.options)
   }
   
   setUserAdd(params): Observable<any> {
@@ -3796,5 +3808,58 @@ export class ApiHrmService {
       responseType: "blob"
     });
   }
+
+  // LeaveLack
+  getLeaveLackFilter(): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/leavelack/GetLeaveLackFilter`, this.options);
+  }
+
+  getLeaveLackPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/leavelack/GetLeaveLackPage?` + queryParams, this.options);
+  }
+
+  getLeaveLack(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/leavelack/GetLeaveLack?` +queryParams, this.options);
+  }
+
+  setLeaveLackExport(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/leavelack/SetLeaveLackExport?` +queryParams, this.options);
+  }
+
+  delLeaveLack(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/leavelack/DelLeaveLack?` +queryParams, this.options);
+  }
+
+  setLeaveLack(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/leavelack/SetLeaveLack` , queryParams, this.options);
+  }
+
+  setLeaveLackImport(queryParams): Observable<any> {
+    return this.http.post(`${apiHrmServer}/api/v2/leavelack/setLeaveLackImport`, queryParams, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
+  }
+
+  setLeaveLackExportDraft(queryParams): Observable<any> {
+    return this.http.post(`${apiHrmServer}/api/v2/leavelack/SetLeaveLackExportDraft`, queryParams, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
+  }
+
+  getLeaveLackImportTemp(): Observable<any> {
+    return this.http.get(`${apiHrmServer}/api/v2/leavelack/GetLeaveLackImportTemp`, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
+  }
+
 
 }
