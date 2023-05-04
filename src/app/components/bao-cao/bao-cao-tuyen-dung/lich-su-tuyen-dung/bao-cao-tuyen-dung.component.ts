@@ -102,9 +102,9 @@ export class BaoCaoTuyenDungComponent implements OnInit {
   detailInfoReport = null;
   listViewsReport = [];
   optionsButonReport = [
-    { label: 'Table', value: 'ViewReport', class: 'p-button-sm ml-2 height-56 addNew', icon: 'pi pi-plus' },
-    { label: 'Open file', value: 'OpenReport', class: 'p-button-sm p-button-success ml-2 height-56 addNew', icon: 'pi pi-clone' },
-    { label: 'Dowload file', value: 'DowloadReport', class: 'p-button-sm p-button-success ml-2 height-56 addNew', icon: 'pi pi-cloud-download' },
+    { label: 'Hiển thị', value: 'ViewReport', class: 'p-button-sm ml-2 height-56 addNew', icon: 'pi pi-plus' },
+    { label: 'Mở tệp', value: 'OpenReport', class: 'p-button-sm p-button-success ml-2 height-56 addNew', icon: 'pi pi-clone' },
+    { label: 'Lưu tệp', value: 'DowloadReport', class: 'p-button-sm p-button-success ml-2 height-56 addNew', icon: 'pi pi-cloud-download' },
   ];
 
   changeReportTypeValue(event) {
@@ -128,29 +128,39 @@ export class BaoCaoTuyenDungComponent implements OnInit {
       });
   }
 
+  paginate(event): void {
+    this.query.offSet = event.first;
+    this.first = event.first;
+    this.query.pageSize = event.rows;
+    this.load();
+  }
+
   goToLink(url: string) {
     window.open(url, "_blank");
   }
 
 
-  load(queryParams: any) {
+  load() {
     this.columnDefs = []
     this.spinner.show();
+    const params: any = { ... this.query };
+    delete params.type;
+    const queryParams = queryString.stringify(params);
     this.apiService.getReportAll(this.detailInfoReport.api_url_view, queryParams)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList;
-        this.gridKey= results.data.dataList.gridKey;
+        this.gridKey= results.data.gridKey;
         if (this.query.offSet === 0) {
           this.cols = results.data.gridflexs;
           this.colsDetail = results.data.gridflexdetails ? results.data.gridflexdetails : [];
         }
         this.initGrid();
-        this.countRecord.totalRecord = results.data.dataList.recordsTotal;
-        this.countRecord.totalRecord = results.data.dataList.recordsTotal;
-        this.countRecord.currentRecordStart = results.data.dataList.recordsTotal === 0 ? this.query.offSet = 0 : this.query.offSet + 1;
-        if ((results.data.dataList.recordsTotal - this.query.offSet) > this.query.pageSize) {
+        this.countRecord.totalRecord = results.data.recordsTotal;
+        this.countRecord.totalRecord = results.data.recordsTotal;
+        this.countRecord.currentRecordStart = results.data.recordsTotal === 0 ? this.query.offSet = 0 : this.query.offSet + 1;
+        if ((results.data.recordsTotal - this.query.offSet) > this.query.pageSize) {
           this.countRecord.currentRecordEnd = this.query.offSet + Number(this.query.pageSize);
         } else {
           this.countRecord.currentRecordEnd = results.data.dataList.recordsTotal;
@@ -220,8 +230,8 @@ export class BaoCaoTuyenDungComponent implements OnInit {
   getReport(event) {
     if(event.type === "ViewReport") {
       this.isShowLists = true;
-      const queryParams = queryString.stringify({ ...event.data });
-      this.load(queryParams);
+      this.query = {...this.query, ...event.data}
+      this.load();
     }else if(event.type === "OpenReport") {
       this.isShowLists = true;
       const queryParams = queryString.stringify({ ...event.data });
