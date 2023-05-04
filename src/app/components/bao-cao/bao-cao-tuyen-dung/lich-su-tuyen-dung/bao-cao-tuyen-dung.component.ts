@@ -110,6 +110,8 @@ export class BaoCaoTuyenDungComponent implements OnInit {
 
   changeReportTypeValue(event) {
     this.listViewsReport = [];
+    this.columnDefs = [];
+    this.isShowLists = false;
     let dataSelected = this.dataReportTypeValue.filter(d => parseInt(d.int_order) === parseInt(this.reportTypeValue))
     if (dataSelected.length > 0) {
       this.detailInfoReport = dataSelected[0];
