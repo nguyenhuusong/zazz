@@ -104,7 +104,7 @@ export class ListGridAngularTreeComponent implements OnInit, OnChanges {
   ) {
    
     this.isRowSelectable = (rowNode) => {
-      return rowNode.data.tontai ? false : true;
+      return rowNode.data && rowNode.data.tontai ? false : true;
     };
     this.titlePage = this.activatedRoute.data['_value'].title;
     this.excelExportParams = {
@@ -124,27 +124,8 @@ export class ListGridAngularTreeComponent implements OnInit, OnChanges {
       fileName: this.titlePage ? this.titlePage : 'export'
     };
     this.isRowMaster = (dataItem) => {
-      if (dataItem) {
-        if (dataItem.Details) {
-          return dataItem && dataItem.Details ? dataItem.Details.length > 0 : false;
-        } else if (dataItem.orderDetails) {
-          return dataItem && dataItem.orderDetails ? dataItem.orderDetails.length > 0 : false;
-        } else if (dataItem.details) {
-          return dataItem && dataItem.details ? dataItem.details.length > 0 : false;
-        } else if (dataItem.submenus) {
-          return dataItem && dataItem.submenus ? dataItem.submenus.length > 0 : false;
-        } else if (dataItem.stockDiaryDetails) {
-          return dataItem && dataItem.stockDiaryDetails ? dataItem.stockDiaryDetails.length > 0 : false;
-        }else if (dataItem.contractFiles) {
-          return dataItem && dataItem.contractFiles ? dataItem.contractFiles.length > 0 : false;
-        }else if (dataItem.organizes) {
-          return dataItem && dataItem.organizes ? dataItem.organizes.length > 0 : false;
-        }  else {
-          return false
-        }
-      } else {
-        return false
-      }
+      console.log(dataItem)
+      return false
 
     };
 
@@ -206,8 +187,6 @@ export class ListGridAngularTreeComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    console.log(this.getDataPath)
-    console.log(this.autoGroupColumnDef)
     this.listsDataCloone = cloneDeep(this.listsData);
     var pivotModeOn = document.getElementById(`${this.idGrid}`);
     pivotModeOn?.addEventListener('change', (event: any) => {
@@ -340,7 +319,6 @@ export class ListGridAngularTreeComponent implements OnInit, OnChanges {
 
 
   onGridReady(params: any) {
-    console.log( this.gridColumnApi)
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
     let allColumnIds: any = [];

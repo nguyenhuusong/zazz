@@ -52,6 +52,8 @@ import { BaoCaoRoutingModule } from './bao-cao-routing.module';
 import { BaoCaoTuyenDungComponent } from 'src/app/components/bao-cao/bao-cao-tuyen-dung/lich-su-tuyen-dung/bao-cao-tuyen-dung.component';
 import { FormFilterModule } from 'src/app/common/form-filter/form-filter.module';
 import { HrmFilterReportModule } from 'src/app/common/hrm-filter-report/hrm-filter-report.module';
+import { ListGridAngularTreeModule } from 'src/app/common/list-grid-tree-angular/list-grid-angular.module';
+import { DetailReportComponent } from 'src/app/components/bao-cao/detail-report/detail-report.component';
 @NgModule({
   imports: [
     MessagesModule,
@@ -103,6 +105,7 @@ import { HrmFilterReportModule } from 'src/app/common/hrm-filter-report/hrm-filt
     FormFilterModule,
     HrmFilterReportModule,
     CheckHideActionsDirectiveModule,
+    ListGridAngularTreeModule,
     AgGridModule.withComponents([
       ButtonRendererComponent,
       ButtonRendererComponent1
@@ -111,7 +114,8 @@ import { HrmFilterReportModule } from 'src/app/common/hrm-filter-report/hrm-filt
 
   declarations: [
     BaoCaoComponent,
-    BaoCaoTuyenDungComponent
+    BaoCaoTuyenDungComponent,
+    DetailReportComponent
   ],
   providers: [ ]
 })

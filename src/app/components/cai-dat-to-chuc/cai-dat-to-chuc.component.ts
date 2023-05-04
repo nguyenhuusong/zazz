@@ -437,7 +437,8 @@ export class CaiDatToChucComponent implements OnInit {
         },
       },
       getDetailRowData(params) {
-        params.successCallback(params.data.organizes);
+        console.log("params.data", params.data)
+        params.successCallback(params.data.organizesssss);
       },
       excelStyles: [
         {

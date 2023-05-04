@@ -73,6 +73,7 @@ export class BaoCaoTuyenDungComponent implements OnInit {
   displaySetting = false;
   gridKey = ''
   cauhinh() {
+    console.log("ádasdasd")
     this.displaySetting = true;
   }
   reportTypeValue = null;
@@ -152,11 +153,16 @@ export class BaoCaoTuyenDungComponent implements OnInit {
       (results: any) => {
         this.listsData = results.data.dataList;
         this.gridKey= results.data.gridKey;
+        this.isGridTree = results.data.gridType === 1 ? true : false;
         if (this.query.offSet === 0) {
           this.cols = results.data.gridflexs;
-          this.colsDetail = results.data.gridflexdetails ? results.data.gridflexdetails : [];
+          this.colsDetail = results.data.childgridflexs ? results.data.childgridflexs : [];
         }
-        this.initGrid();
+        if(this.isGridTree) {
+          this.initGridTree(results.data.treeName);
+        }else {
+          this.initGrid();
+        }
         this.countRecord.totalRecord = results.data.recordsTotal;
         this.countRecord.totalRecord = results.data.recordsTotal;
         this.countRecord.currentRecordStart = results.data.recordsTotal === 0 ? this.query.offSet = 0 : this.query.offSet + 1;
@@ -207,10 +213,45 @@ export class BaoCaoTuyenDungComponent implements OnInit {
   }
 
   initGrid() {
+    console.log("sddddddđ")
     this.columnDefs = [
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide))
     ]
   }
+
+  autoGroupColumnDef:any = null;
+  getDataPath: any = null;
+  isGridTree = false;
+  initGridTree(treeName: string) {
+ 
+    this.autoGroupColumnDef = {
+      headerName: treeName,
+      cellClass: [ 'no-auto'],
+      // cellClass: parmas => parmas.node.level > 0  ?  ['hidden'] : [''],
+     minWidth: 400,
+      cellRendererParams: {
+        suppressCount: true,
+      },
+    }
+    this.getDataPath = (data) => {
+      return data.orgHierarchy;
+    };
+    this.columnDefs = [
+      ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
+    ];
+  }
+  listsDataChilren = [];
+  org_name = [];
+  displaydetailChilren = false;
+  onCellClicked(event) {
+    console.log(event)
+    if (event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
+      this.listsDataChilren = event.data.children;
+      this.org_name = event.data.org_name;
+      this.displaydetailChilren = true;
+    } 
+  }
+
   dataRouter: any = null;
   ngOnInit() {
     this.dataRouter = this.route.data['_value'];
