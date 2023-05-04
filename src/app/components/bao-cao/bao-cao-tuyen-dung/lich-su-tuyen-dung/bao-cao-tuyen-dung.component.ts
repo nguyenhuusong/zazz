@@ -102,8 +102,9 @@ export class BaoCaoTuyenDungComponent implements OnInit {
   detailInfoReport = null;
   listViewsReport = [];
   optionsButonReport = [
-    { label: 'Xem trước', value: 'ViewReport', class: 'p-button-sm ml-2 height-56 addNew', icon: 'pi pi-plus' },
-    { label: 'Export', value: 'ExportReport', class: 'p-button-sm p-button-danger ml-2 height-56 addNew', icon: 'pi pi-times' },
+    { label: 'Table', value: 'ViewReport', class: 'p-button-sm ml-2 height-56 addNew', icon: 'pi pi-plus' },
+    { label: 'Open file', value: 'OpenReport', class: 'p-button-sm p-button-success ml-2 height-56 addNew', icon: 'pi pi-clone' },
+    { label: 'Dowload file', value: 'DowloadReport', class: 'p-button-sm p-button-success ml-2 height-56 addNew', icon: 'pi pi-cloud-download' },
   ];
 
   changeReportTypeValue(event) {
@@ -165,14 +166,30 @@ export class BaoCaoTuyenDungComponent implements OnInit {
       });
   }
 
-  loadExport(queryParams: any) {
+  loadExport(queryParams: any, type: string) {
     this.spinner.show();
     this.apiService.getDataReport(this.detailInfoReport.api_url_dowload, queryParams)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(
       (results: any) => {
-        console.log(results)
-        this.spinner.hide();
+        if(type === 'open') {
+          if(results.data && results.data.webViewLink){
+            window.open(results.data.webViewLink);
+            this.spinner.hide();
+          }else{
+            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Xuất báo cáo bị lỗi' });
+            this.spinner.hide();
+          }
+        }else {
+          if(results.data && results.data.webContentLink){
+            window.open(results.data.webContentLink);
+            this.spinner.hide();
+          }else{
+            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Xuất báo cáo bị lỗi' });
+            this.spinner.hide();
+          }
+        }
+      
       },
       error => {
         this.spinner.hide();
@@ -197,7 +214,7 @@ export class BaoCaoTuyenDungComponent implements OnInit {
   }
 
   close(event) {
-    console.log(event)
+    this.getReportList();
   }
   isShowLists: boolean = false;
   getReport(event) {
@@ -205,10 +222,14 @@ export class BaoCaoTuyenDungComponent implements OnInit {
       this.isShowLists = true;
       const queryParams = queryString.stringify({ ...event.data });
       this.load(queryParams);
+    }else if(event.type === "OpenReport") {
+      this.isShowLists = true;
+      const queryParams = queryString.stringify({ ...event.data });
+      this.loadExport(queryParams, 'open');
     }else {
       // this.isShowLists = false;
       const queryParams = queryString.stringify({ ...event.data });
-      this.loadExport(queryParams);
+      this.loadExport(queryParams, 'dowload');
     }
   
   }

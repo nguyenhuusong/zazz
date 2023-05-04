@@ -1,0 +1,29 @@
+
+
+:host::ng-deep{
+    .main-grid {
+        .grid {
+            app-form-filter {
+                .hrm-filter {
+                    .pi-cog {
+                        position: absolute;
+                        right: 100px;
+                        border: 1px solid #ccc;
+                        padding: 5px !important;
+                        border-radius: 5px;
+                    }
+
+                    .border-section {
+                        padding-top: 0 !important;
+                    }
+
+                    .p-card {
+                        .p-card-body {
+                                 padding-top: 0px !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
