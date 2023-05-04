@@ -1,16 +1,12 @@
 <div class="main-grid">
     <section class="bread-crumb">
-        <div class="d-flex bet bottom">
-            <div class="col-12 pd-0">
+        <div class="d-flex grid bet ">
+            <div class="col-9 pd-0">
                 <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
             </div>
-        </div>
-    </section>
-    <section>
-        <div class="grid">
-            <div class="col-2">
+            <div class="col-3">
                 <div class="field-group select" >
-                    <label for="">Báo cáo</label>
+                    <label for="">Chọn loại báo cáo</label>
                     <p-dropdown appendTo="body" placeholder="Chọn báo cáo"
                         (onChange)="changeReportTypeValue($event)" 
                         [baseZIndex]="100" 
@@ -21,17 +17,19 @@
                     </p-dropdown>
                   </div>
             </div>
-            <div class="col-8">
-                <app-form-filter 
-                *ngIf="listViewsReport.length > 0" 
-                [listFields]="listViewsReport" 
-                [detailInfoFilter]="detailInfoReport" 
-                [buttonsFilters] ="optionsButonReport" 
-                (callback)="getReport($event)" 
-                (close)="close($event)">
-            </app-form-filter>
-                <!-- <app-hrm-filter-report [fields]="dataFilter" (queryData)="theQueryUpdated($event)"></app-hrm-filter-report> -->
-            </div>
+        </div>
+    </section>
+    <section>
+        <div class="col-12">
+            <app-form-filter 
+            *ngIf="listViewsReport.length > 0" 
+            [listFields]="listViewsReport" 
+            [detailInfoFilter]="detailInfoReport" 
+            [buttonsFilters] ="optionsButonReport" 
+            (callback)="getReport($event)" 
+            (close)="close($event)">
+        </app-form-filter>
+            <!-- <app-hrm-filter-report [fields]="dataFilter" (queryData)="theQueryUpdated($event)"></app-hrm-filter-report> -->
         </div>
     </section>
     <section class="content pb-0" *ngIf="isShowLists && !isGridTree">

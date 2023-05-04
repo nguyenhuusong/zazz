@@ -3,7 +3,6 @@
     
     <form  #myForm="ngForm" class="hrm-filter"> 
         <div class="grid" style="justify-content: start;" *ngIf="dataView.length > 0">
-            <span  class="pi pi-cog cursor-pointer" (click)="CauHinh()"></span>
             <ng-container *ngFor="let group of dataView; let idx = index">
                 <div class="{{group.group_column ? group.group_column : 'col-12'}} border-section">
                     <p-card [style]="{'margin-bottom': '15px'}">
@@ -36,9 +35,9 @@
         <div class="button-filter text-right d-flex gap-12">
             <ng-container *ngFor="let button of buttonsFilters">
                 <p-button label="{{button.label}}" (onClick)="onChangeButtonEdit(button.value)" [disabled]="button?.disabled" icon="{{button?.icon ? button?.icon : 'pi pi-plus'}}" styleClass="p-button-sm {{button?.class ? button?.class : ''}}"></p-button>
-            </ng-container>
-            <!-- <p-button label="Cấu hình" styleClass="p-button-sm height-56 addNew" icon="pi pi-cog" (click)="CauHinh()"></p-button> -->
-            <p-button label="Đóng" styleClass="p-button-sm p-button-secondary bg-secondary height-56 addNew ml-1 close" icon="pi pi-times" (click)="cancel('Close')"></p-button>
+        </ng-container>
+            <p-button label="Cấu hình" styleClass="p-button-sm addNew" icon="pi pi-cog" (click)="CauHinh()"></p-button>
+            <p-button label="Đóng" styleClass="p-button-sm p-button-secondary bg-secondary height-56 addNew close" icon="pi pi-times" (click)="cancel('Close')"></p-button>
         </div>
     </form>
 
