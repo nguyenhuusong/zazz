@@ -89,7 +89,7 @@ export class BaoCaoTuyenDungComponent implements OnInit {
             this.reportTypeValues = results.data.map(d => {
               return {
                 label: d.report_name,
-                value: d.report_id
+                value: d.int_order
               }
             })
           }
@@ -108,7 +108,7 @@ export class BaoCaoTuyenDungComponent implements OnInit {
 
   changeReportTypeValue(event) {
     this.listViewsReport = [];
-    let dataSelected = this.dataReportTypeValue.filter(d => parseInt(d.report_id) === parseInt(this.reportTypeValue))
+    let dataSelected = this.dataReportTypeValue.filter(d => parseInt(d.int_order) === parseInt(this.reportTypeValue))
     if (dataSelected.length > 0) {
       this.detailInfoReport = dataSelected[0];
       this.listViewsReport = dataSelected[0].group_fields;
@@ -131,10 +131,11 @@ export class BaoCaoTuyenDungComponent implements OnInit {
     window.open(url, "_blank");
   }
 
-  load(queryParams) {
+
+  load(queryParams: any) {
     this.columnDefs = []
     this.spinner.show();
-    this.apiService.getReportAll(this.detailInfoReport.api_url_dowload, queryParams)
+    this.apiService.getReportAll(this.detailInfoReport.api_url_view, queryParams)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(
       (results: any) => {
@@ -164,6 +165,20 @@ export class BaoCaoTuyenDungComponent implements OnInit {
       });
   }
 
+  loadExport(queryParams: any) {
+    this.spinner.show();
+    this.apiService.getDataReport(this.detailInfoReport.api_url_dowload, queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
+      (results: any) => {
+        console.log(results)
+        this.spinner.hide();
+      },
+      error => {
+        this.spinner.hide();
+      });
+  }
+
   initGrid() {
     this.columnDefs = [
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide))
@@ -186,13 +201,14 @@ export class BaoCaoTuyenDungComponent implements OnInit {
   }
   isShowLists: boolean = false;
   getReport(event) {
-    console.log(event)
     if(event.type === "ViewReport") {
       this.isShowLists = true;
       const queryParams = queryString.stringify({ ...event.data });
       this.load(queryParams);
     }else {
-      this.isShowLists = false;
+      // this.isShowLists = false;
+      const queryParams = queryString.stringify({ ...event.data });
+      this.loadExport(queryParams);
     }
   
   }
