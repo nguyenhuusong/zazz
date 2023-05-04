@@ -68,7 +68,7 @@ export class BaoCaoTuyenDungComponent implements OnInit {
   }
 
   loadjs = 0;
-  heightGrid = 450;
+  heightGrid = 550;
 
   displaySetting = false;
   gridKey = ''
@@ -139,7 +139,7 @@ export class BaoCaoTuyenDungComponent implements OnInit {
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(
       (results: any) => {
-        this.listsData = results.data.dataList.data;
+        this.listsData = results.data.dataList;
         this.gridKey= results.data.dataList.gridKey;
         if (this.query.offSet === 0) {
           this.cols = results.data.gridflexs;
