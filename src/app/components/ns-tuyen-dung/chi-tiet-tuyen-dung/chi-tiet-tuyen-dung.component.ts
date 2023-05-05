@@ -61,7 +61,8 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
   heightGrid = 300;
   gridKey = '';
   cols = [];
-  detailEdit = null
+  detailEdit = null;
+  fromHistory: boolean = false;
   handleParams() {
     this.activatedRoute.queryParamMap
       .pipe(takeUntil(this.unsubscribe$))
@@ -69,7 +70,10 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
         this.paramsObject = { ...params.keys, ...params };
         this.modelEdit.canId = this.paramsObject.params.canId || null;
         this.isView = this.paramsObject.params.view
-        
+        this.fromHistory = this.paramsObject.params.fromHistory;
+        if(this.fromHistory) {
+          this.removeBtn('CreateProfile')
+        }
         if(!this.isView) {
           this.getCandidateInfo();
         }else{
@@ -77,6 +81,12 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
         }
       });
   };
+
+  removeBtn(value) {
+    if(value) {
+      this.optionsButon = this.optionsButon.filter( d => d.value !== value)
+    }
+  }
 
   cloneListViews = []
   callBackForm(event) {
