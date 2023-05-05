@@ -239,7 +239,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   }
 
   checkHideAddAccount(params) {
-    if((params.data.can_st === 8 || params.data.can_st === 10) && (params.data.status_account === 0)) {
+    if((params.data.round_result === 2) && (params.data.status_account === 0)) {
       return false;
     }
     return true;
@@ -348,10 +348,6 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     // chuyen vong
     this.optionsButtonDB[0].items[0].disabled = this.dataRowSelected.length > 0 ? false : true;
     this.optionsButtonDB[0].items[1].disabled = this.dataRowSelected.length > 0 && this.query.can_st > -1 ? false : true;
-
-    // tao tai khoan
-    let checkCreateAccount = this.dataRowSelected.some( d => d.can_st !== 10 || d.status_account === 1 );
-    this.optionsButtonDB[0].items[2].disabled = checkCreateAccount ? true : this.dataRowSelected.length < 1 ? true : false;
 
     // check role for set tiem nang && check for tuy chon
     // this.optionsButtonDB[0].items[3].disabled = this.dataRowSelected.length > 0 ? false : true;
@@ -508,7 +504,6 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
             code: 'guiemail',
             icon: 'pi pi-reply',
             class: 'hidden',
-            disabled: true,
             command: () => {
               this.setCandidateRegisters();
             }
@@ -588,31 +583,38 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   }
 
   setCandidateRegisters() {
-  
-    this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn tạo tài khoản?',
-      accept: () => {
-        let listApi = [];
-        for(let item of this.dataRowSelected) {
-          const param = {
-            canId: item.canId
+    const checks = this.dataRowSelected.filter(d => ((d.round_result === 2) && (d.status_account === 0)));
+    if(checks.length > 0) {
+      this.confirmationService.confirm({
+        message: 'Bạn có chắc chắn muốn tạo tài khoản?',
+        accept: () => {
+          let listApi = [];
+          for(let item of checks) {
+            const param = {
+              canId: item.canId
+            }
+            listApi.push(this.apiService.setCandidateRegister(param).subscribe(error => error))
           }
-          listApi.push(this.apiService.setCandidateRegister(param).subscribe(error => error))
+      
+          this.spinner.show();
+          forkJoin(listApi)
+          .pipe(takeUntil(this.unsubscribe$))
+          .subscribe(result => {
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Cập nhật thành công' });
+            this.getRecruitMailInput();
+            this.load();
+            this.spinner.hide();
+          }, error => {
+            this.spinner.hide();
+          })
         }
-    
-        this.spinner.show();
-        forkJoin(listApi)
-        .pipe(takeUntil(this.unsubscribe$))
-        .subscribe(result => {
-          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Cập nhật thành công' });
-          this.getRecruitMailInput();
-          this.load();
-          this.spinner.hide();
-        }, error => {
-          this.spinner.hide();
-        })
-      }
-    })
+      })
+    }else {
+      const stringName = this.dataRowSelected.length > 0 ? this.dataRowSelected.map(d => d.fullName).toString() : ''
+      this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: `[${stringName}] bản ghi chưa đủ điều kiện để chuyển hồ sơ ! ` });
+    }
+
+   
   }
 
   listJobTitles = [];

@@ -1,32 +1,25 @@
-
-
-:host::ng-deep{
+:host::ng-deep {
     .main-grid {
-        .grid {
-            app-form-filter {
-                .hrm-filter {
-                    .pi-cog {
-                        position: absolute;
-                        right: 100px;
-                        border: 1px solid #ccc;
-                        padding: 5px !important;
-                        border-radius: 5px;
+        .bread-crumb {
+            padding-bottom: 0px;
+            .col-3 {
+                padding-bottom: 0px;
+                padding-top: 0;
+            }
+        }
+
+        app-form-filter {
+            .hrm-filter {
+                .border-section {
+                    padding: 0;
+                }
+
+                .button-filter {
+                    .close {
+                        display: none;
                     }
 
-                    .border-section {
-                        padding-top: 0 !important;
-                    }
-
-                    .p-card {
-                        .p-card-body {
-                                 padding-top: 0px !important;
-                        }
-                    }
-                    .button-filter {
-                        .close {
-                            display: none;
-                        }
-                    }
+                    // padding-left: 15px
                 }
             }
         }

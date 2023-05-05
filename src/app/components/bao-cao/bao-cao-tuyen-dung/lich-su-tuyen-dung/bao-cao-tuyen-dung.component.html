@@ -1,16 +1,14 @@
 <div class="main-grid">
     <section class="bread-crumb">
-        <div class="d-flex bet bottom">
-            <div class="col-12 pd-0">
+        <div class="d-flex grid bet ">
+            <div class="col-9 pd-0">
                 <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
             </div>
-        </div>
-    </section>
-    <section>
-        <div class="grid">
-            <div class="col-2">
+            <div class="col-3">
                 <div class="field-group select" >
-                    <label for="">Báo cáo</label>
+                    <label for="" style="color: #000;
+                    font-weight: 600;
+                    opacity: 0.9;">Chọn loại báo cáo  <span style="color:red">*</span></label>
                     <p-dropdown appendTo="body" placeholder="Chọn báo cáo"
                         (onChange)="changeReportTypeValue($event)" 
                         [baseZIndex]="100" 
@@ -21,20 +19,22 @@
                     </p-dropdown>
                   </div>
             </div>
-            <div class="col-8">
-                <app-form-filter 
-                *ngIf="listViewsReport.length > 0" 
-                [listFields]="listViewsReport" 
-                [detailInfoFilter]="detailInfoReport" 
-                [buttonsFilters] ="optionsButonReport" 
-                (callback)="getReport($event)" 
-                (close)="close($event)">
-            </app-form-filter>
-                <!-- <app-hrm-filter-report [fields]="dataFilter" (queryData)="theQueryUpdated($event)"></app-hrm-filter-report> -->
-            </div>
         </div>
     </section>
-    <section class="content pb-0" *ngIf="isShowLists">
+    <section>
+        <div class="col-12">
+            <app-form-filter 
+            *ngIf="listViewsReport.length > 0" 
+            [listFields]="listViewsReport" 
+            [detailInfoFilter]="detailInfoReport" 
+            [buttonsFilters] ="optionsButonReport" 
+            (callback)="getReport($event)" 
+            (close)="close($event)">
+        </app-form-filter>
+            <!-- <app-hrm-filter-report [fields]="dataFilter" (queryData)="theQueryUpdated($event)"></app-hrm-filter-report> -->
+        </div>
+    </section>
+    <section class="content pb-0" *ngIf="isShowLists && !isGridTree">
         <div class="grid-default" #container>
             <app-list-grid-angular *ngIf="columnDefs.length > 0 && isShowLists" [listsData]="listsData" [domLayout]="'autoHeight'"
                 (showConfig)="cauhinh()" [idGrid]="gridKey + '_45dfs'" 
@@ -51,9 +51,36 @@
             </div>
         </div>
     </section>
+    <section class="content pb-0" *ngIf="isShowLists && isGridTree">
+        <div class="grid-default" #container>
+            <app-list-grid-tree-angular 
+            *ngIf="columnDefs.length > 0  && autoGroupColumnDef && getDataPath"  
+                (showConfig)="cauhinh()"
+                (onCellClicked)="onCellClicked($event)"
+              [listsData]="listsData" 
+              [height]="heightGrid" 
+              [getDataPath]="getDataPath" [autoGroupColumnDef]="autoGroupColumnDef"
+              [columnDefs]="columnDefs"></app-list-grid-tree-angular>
+                <!-- <app-loading-grid  [gridtype]="'lhd'" *ngIf="columnDefs.length === 0" [columnNumber]="11"></app-loading-grid> -->
+            <div class="paginator">
+                <!-- <span>Từ {{ countRecord.currentRecordStart }} đến
+                    {{ countRecord.currentRecordEnd }}
+                    trên tổng số
+                    {{ countRecord.totalRecord }} kết quả</span>
+                <p-paginator [rows]="query.pageSize" [totalRecords]="countRecord.totalRecord" [first]="first"
+                    (onPageChange)="paginate($event)" [rowsPerPageOptions]="[20,40,60,100,200,{ showAll: 'ALL' }]">
+                </p-paginator> -->
+            </div>
+        </div>
+    </section>
 </div>
 
-<!-- <p-dialog header="Cài đặt cấu hình" [(visible)]="displaySetting" (onHide)="find()" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
+<p-dialog header="Cài đặt cấu hình" [(visible)]="displaySetting" (onHide)="load()" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
     [draggable]="false" [resizable]="false" [focusTrap]="false" styleClass="popup-setting">
     <app-config-grid-table-form *ngIf="displaySetting && gridKey" [typeConfig]="'TableInfo'"   [gridKey]="gridKey"></app-config-grid-table-form>
-</p-dialog> -->
+</p-dialog>
+
+<p-dialog header="Chi tiết {{org_name}}" [(visible)]="displaydetailChilren"  [modal]="true" [style]="{width: '60vw'}" [maximizable]="true"
+    [draggable]="false" [resizable]="false" [focusTrap]="false" styleClass="popup-setting">
+    <app-detail-report [listsData]="listsDataChilren" *ngIf="displaydetailChilren" [cols]="colsDetail"></app-detail-report>
+</p-dialog>
