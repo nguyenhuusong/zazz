@@ -200,7 +200,8 @@ export class LichSuTuyenDungComponent implements OnInit {
   viewRow(event) {
     const params = {
       canId: event.rowData.canId,
-      view: true
+      view: true,
+      fromHistory: true,
     }
     this.router.navigate(['/tuyen-dung/ds-tuyen-dung/chi-tiet-tuyen-dung'], { queryParams: params });
   }
