@@ -348,7 +348,8 @@ export class NghiViecComponent implements OnInit, AfterViewChecked {
 
   seachEmValue(event) {
     if(event.value) {
-      this.empId = event.value;
+      const template = event.dataSearched.filter((d: any) => d.empId === event.value);
+      this.terminateId = template.length > 0 ? template[0].terminateId : '';
       this.displayAdd = true;
     }else{
       this.isSearchEmp = false;
