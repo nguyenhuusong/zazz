@@ -66,9 +66,11 @@
         </ng-container>
     </div>
     
-    <div class="main-grid text-right btn-group-edit-detail" *ngIf = "isViewButtonTop">
+    <div class="main-grid text-right btn-group-edit-detail" [style]="{'visibility': isHideButton ? 'hidden' : ''}" *ngIf = "isViewButtonTop">
         <ng-container *ngFor="let button of optionsButtonsEdit">
-            <p-button icon="{{ button.icon }}" label="{{button.label}}" (onClick)="onChangeButtonEdit(button.value)" styleClass="p-button-sm {{button?.class ? button?.class : ''}} mr-1"></p-button>
+            <button [id]="button.value" (click)="onChangeButtonEdit(button.value)" class="p-button-sm {{button.class ? button.class : ''}} mr-1">
+                <span class="button.icon"></span>{{button.label}}
+            </button>
         </ng-container>
         <!-- <p-button styleClass="p-button-sm" (click)="CauHinh()">
             <svg width="20" height="14px" viewBox="0 0 20 17" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -43,6 +43,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
   @Input() isUploadMultiple: boolean = true;
   @Input() isNested: boolean = false;
   @Input() manhinh;
+  @Input() isHideButton: boolean = false;
   @Input() dataView = [];
   @Input() projects = [];
   @Input() idDetail = 'detail1';
@@ -263,7 +264,8 @@ export class EditDetailComponent implements OnInit, OnChanges {
 
 
   onChangeButtonEdit(event) {
-    if (event === 'Update' || event === 'SaveNhap' || event === 'Submit') {
+    console.log(event)
+    if (event === 'Update' || event === 'SaveNhap' || event === 'Submit' || event === 'newUpdate') {
       this.submit = true;
       for (let item in this.modelFields) {
         if (this.modelFields[item].error) {
@@ -370,7 +372,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
 
       })
     });
-    if (type === 'Update') {
+    if (type === 'Update' || type ==='newUpdate') {
       this.callback.emit(group_fields);
     } else if (type === 'SaveNhap' || type === 'Submit' || 'IsSpecial' || 'ADDROW') {
       this.callBackForm.emit({ data: group_fields, type: type })
