@@ -2606,6 +2606,22 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetRecruitRoundTitles?` + queryParams, this.options)
   }
 
+  getRecruitStatusPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetRecruitStatusPage?` + queryParams, this.options)
+  }
+  
+  getRecruitStatus(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetRecruitStatus?` + queryParams, this.options)
+  }
+
+  delRecruitStatus(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v1/recruitment/DelRecruitStatus?` + queryParams, this.options)
+  }
+
+  setRecruitStatus(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/recruitment/SetRecruitStatus` , queryParams, this.options)
+  }
+
   // nguon tuyen dung
   getRecruitSourcePage(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetRecruitSourcePage?` + queryParams, this.options)

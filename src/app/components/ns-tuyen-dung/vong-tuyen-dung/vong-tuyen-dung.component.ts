@@ -277,6 +277,10 @@ import { Router } from '@angular/router';
   backTo() {
     this.router.navigate(['/tuyen-dung/vi-tri-tuyen-dung']);
   }
+  tabIndex = 0
+  handleChange(index) {
+    this.tabIndex = index;
+  }
   
   
   }

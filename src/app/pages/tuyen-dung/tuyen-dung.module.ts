@@ -89,6 +89,8 @@ import { BlockUIModule } from 'primeng/blockui';
 import { CungCapCccdComponent } from 'src/app/common/ekyc/cung-cap-cccd/cung-cap-cccd.component';
 import { ListCccdComponent } from 'src/app/components/ho-so-ca-nhan/list-cccd/list-cccd.component';
 import { LichSuTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/lich-su-tuyen-dung/lich-su-tuyen-dung.component';
+import { SettingStatusComponent } from 'src/app/components/ns-tuyen-dung/vong-tuyen-dung/setting-status/setting-status.component';
+import { DetailSettingStatusComponent } from 'src/app/components/ns-tuyen-dung/vong-tuyen-dung/setting-status/detail-setting-status/detail-setting-status.component';
 @NgModule({
   imports: [
     MessagesModule,
@@ -185,7 +187,9 @@ import { LichSuTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/lich-
     HoSoCaNhanComponent,
     CungCapCccdComponent,
     ListCccdComponent,
-    LichSuTuyenDungComponent
+    LichSuTuyenDungComponent,
+    SettingStatusComponent,
+    DetailSettingStatusComponent
   ],
   providers: [ ]
 })

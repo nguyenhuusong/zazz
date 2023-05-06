@@ -28,35 +28,27 @@
 
 <section class="pt-0 pb-0">
 
-    <p-tabView (onChange)="handleChange($event.index)" [(activeIndex)]="tabIndex">
-        <p-tabPanel header="Danh sách vòng tuyển dụng" >
-            <app-list-grid-angular *ngIf="columnDefs.length > 0" 
-                [height]="heightGrid"
-                [columnDefs]="columnDefs"
-                [idGrid]="gridKey + '_45dfs'"
-                [rowSelection]="'multiple'"
-                [listsData]="listsData"
-                [height]="heightGrid"
-                (showConfig)="cauhinh()"
-                (onCellClicked)="onCellClicked($event)"
-                >
-            </app-list-grid-angular>
-            <app-loading-grid  [gridtype]="'lhd'" *ngIf="columnDefs.length === 0" [columnNumber]="11"></app-loading-grid>
-            <div class="paginator">
-                <span>Từ {{ countRecord.currentRecordStart }} đến
-                    {{ countRecord.currentRecordEnd }}
-                    trên tổng số
-                    {{ countRecord.totalRecord }} kết quả</span>
-                <p-paginator [rows]="query.pageSize" [totalRecords]="countRecord.totalRecord" [first]="first"
-                    (onPageChange)="paginate($event)" [rowsPerPageOptions]="[20,40,60,100,200,{ showAll: 'ALL' }]">
-                </p-paginator>
-            </div>
-        </p-tabPanel>
-        <p-tabPanel header="Thiết lâp trạng thái">
-            <app-setting-status></app-setting-status>
-        </p-tabPanel>
-        
-    </p-tabView>
+    <app-list-grid-angular *ngIf="columnDefs.length > 0" 
+        [height]="heightGrid"
+        [columnDefs]="columnDefs"
+        [idGrid]="gridKey + '_45dfs'"
+        [rowSelection]="'multiple'"
+        [listsData]="listsData"
+        [height]="heightGrid"
+        (showConfig)="cauhinh()"
+        (onCellClicked)="onCellClicked($event)"
+        >
+    </app-list-grid-angular>
+    <app-loading-grid  [gridtype]="'lhd'" *ngIf="columnDefs.length === 0" [columnNumber]="11"></app-loading-grid>
+    <div class="paginator">
+        <span>Từ {{ countRecord.currentRecordStart }} đến
+            {{ countRecord.currentRecordEnd }}
+            trên tổng số
+            {{ countRecord.totalRecord }} kết quả</span>
+        <p-paginator [rows]="query.pageSize" [totalRecords]="countRecord.totalRecord" [first]="first"
+            (onPageChange)="paginate($event)" [rowsPerPageOptions]="[20,40,60,100,200,{ showAll: 'ALL' }]">
+        </p-paginator>
+    </div>
    
 </section>
 <p-dialog header="Cài đặt cấu hình" [(visible)]="displaySetting" (onHide)="find()" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
@@ -64,12 +56,13 @@
     <app-config-grid-table-form *ngIf="displaySetting && gridKey" [typeConfig]="'TableInfo'" [gridKey]="gridKey"></app-config-grid-table-form>
 </p-dialog>
 
+
 <p-dialog 
         [(visible)]="isFormDetail" 
         [modal]="true" [style]="{width: 1600 + 'px'}"
         [draggable]="false" [resizable]="false" [focusTrap]="false" >
-    <app-chi-tiet-vong-tuyen-dung *ngIf="isFormDetail"
+    <app-detail-setting-status *ngIf="isFormDetail"
         (detailOut)="theEventDetail($event)" 
         [idForm]="idForm">
-    </app-chi-tiet-vong-tuyen-dung>
+    </app-detail-setting-status>
 </p-dialog>
