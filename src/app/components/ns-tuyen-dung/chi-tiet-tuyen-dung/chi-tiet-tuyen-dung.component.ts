@@ -17,7 +17,7 @@ import { stringify } from 'querystring';
 export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
   items: MenuItem[] = [];
   selectedCountry = null;
-  countries = [
+  status = [
     {
       name : 'IN PROGRESS',
       placeholder: 'Doing',
@@ -190,6 +190,7 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
           this.listViews = [...listViews];
           this.detailInfo = results.data;
           this.custId = results.data.custId;
+          this.status = results.data.flowStatuses;
           this.optionsButon = [
             { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
             { label: 'Tạo hồ sơ cá nhân', value: 'CreateProfile', class: `p-button-success ${this.custId ? 'hidden' : ''}`, icon: 'pi pi-send' },

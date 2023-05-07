@@ -12,7 +12,7 @@
 
         <div class="col-3 gap-2 flex justify-content-end" style="position: absolute;right: 0 ">
         <div class="field-group select ">
-            <p-dropdown [options]="countries" [(ngModel)]="selectedCountry" [styleClass]="selectedCountry?.bgcolor"  [style]="{'width': '180px'}" optionLabel="name"  placeholder="Select a Country">
+            <p-dropdown [options]="status" [(ngModel)]="selectedCountry" [styleClass]="selectedCountry?.bgcolor"  [style]="{'width': '180px'}" optionLabel="name"  placeholder="Select a Country">
                 <ng-template pTemplate="selectedItem" >
                     <div class="flex align-items-center gap-2" *ngIf="selectedCountry" >
                         <div>{{ selectedCountry.name}}</div>

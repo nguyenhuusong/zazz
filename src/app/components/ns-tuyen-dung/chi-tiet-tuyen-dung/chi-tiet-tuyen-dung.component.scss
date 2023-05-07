@@ -33,6 +33,11 @@
         color: var(--surface-0) !important;
     }
 
+    .bgDone {
+        background-color: var(--primary-500) !important;
+        color: var(--surface-0) !important;
+    }
+
     .todo {
         background-color: var(--primary-color-text);
         color: var(--surface-500);
@@ -43,9 +48,14 @@
         color: var(--green-500);
     }
 
+    .done {
+        background-color: var(--primary-color-text);
+        color: var(--green-500);
+    }
+
     .inprogress{
         background-color: var(--primary-color-text);
-        color: var(--blue-500);
+        color: var(--primary-500);
     }
 
     .field-group.select {
