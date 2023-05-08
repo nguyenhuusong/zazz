@@ -1,0 +1,134 @@
+$colorIcon: rgb(82, 91, 115);
+$IconHover: rgb(0, 82, 204);
+$orangerColor: rgb(255, 124, 89);
+.uni-icon{
+    position: relative;
+    line-height: 1;
+    display: inline-block;
+    &:hover{
+        cursor: pointer;
+    }
+    &::after{
+        width: 18px;
+        height: 18px;
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+        content: '';
+        display: block;
+    }
+    &.uni-tongquan{
+        &::after { background-image: getTongQuan($colorIcon); }
+        &:hover{ &::after{ background-image: getTongQuan($IconHover); } }
+    }
+    &.uni-nhansu{
+        &::after { background-image: getNhanSu($colorIcon); }
+        &:hover{ &::after{ background-image: getNhanSu($IconHover); } }
+    }
+    &.uni-chamcong{
+        &::after { background-image: getChamCong($colorIcon); }
+        &:hover{ &::after{ background-image: getChamCong($IconHover); } }
+    }
+    &.uni-tinhluong{
+        &::after { background-image: getTinhLuong($colorIcon); }
+        &:hover{ &::after{ background-image: getTinhLuong($IconHover); } }
+    }
+    &.uni-quantri{
+        &::after { background-image: getQuanTri($colorIcon); }
+        &:hover{ &::after{ background-image: getQuanTri($IconHover); } }
+    }
+    &.uni-thongtinchung{
+        &::after { background-image: getTtc($colorIcon); }
+        &:hover{ &::after{ background-image: getTtc($IconHover); } }
+    }
+    &.uni-qhgd{
+        &::after { background-image: getQhgd($colorIcon); }
+        &:hover{ &::after{ background-image: getQhgd($IconHover); } }
+    }
+    &.uni-hopdong{
+        &::after { background-image: getHopdong($colorIcon); }
+        &:hover{ &::after{ background-image: getHopdong($IconHover); } }
+    }
+    &.uni-qtbonhiem{
+        &::after { background-image: getQtbnhiem($colorIcon); }
+        &:hover{ &::after{ background-image: getQtbnhiem($IconHover); } }
+    }
+    &.uni-qtdaotao{
+        &::after { background-image: getQtDaotao($colorIcon); }
+        &:hover{ &::after{ background-image: getQtDaotao($IconHover); } }
+    }
+    &.uni-dienbienluong{
+        &::after { background-image: getDienBienLuong($colorIcon); }
+        &:hover{ &::after{ background-image: getDienBienLuong($IconHover); } }
+    }
+    &.uni-qtlamviec{
+        &::after { background-image: getQtLamviec($colorIcon); }
+        &:hover{ &::after{ background-image: getQtLamviec($IconHover); } }
+    }
+    &.uni-user-group{
+        &::after { background-image: getUserGroup($colorIcon); }
+        &:hover{ &::after{ background-image: getUserGroup($IconHover); } }
+    }
+    &.uni-user-plus{
+        &::after { background-image: getUserPlus($colorIcon); }
+        &:hover{ &::after{ background-image: getUserPlus($IconHover); } }
+    }
+    &.uni-user-ban{
+        &::after { background-image: getUserBan($colorIcon); }
+        &:hover{ &::after{ background-image: getUserBan($IconHover); } }
+    }
+    &.uni-setting{
+        &::after { background-image: getSetting($colorIcon); }
+        &:hover{ &::after{ background-image: getSetting($IconHover); } }
+    }
+    &.uni-full-screen{
+        &::after { background-image: getFullScreen($colorIcon); }
+        &:hover{ &::after{ background-image: getFullScreen($IconHover); } }
+    }
+    
+}
+.p-highlight, a:hover{
+    .uni-icon{
+        &.uni-tongquan{ &::after { background-image: getTongQuan($IconHover); } }
+        &.uni-nhansu{ &::after { background-image: getNhanSu($IconHover); } }
+        &.uni-chamcong{ &::after { background-image: getChamCong($IconHover); } }
+        &.uni-tinhluong{ &::after { background-image: getTinhLuong($IconHover); } }
+        &.uni-quantri{ &::after { background-image: getQuanTri($IconHover); } }
+        &.uni-thongtinchung{ &::after { background-image: getTtc($IconHover); } }
+        &.uni-qhgd{ &::after { background-image: getQhgd($IconHover); } }
+        &.uni-hopdong{ &::after { background-image: getHopdong($IconHover); } }
+        &.uni-qtbonhiem{ &::after { background-image: getQtbnhiem($IconHover); } }
+        &.uni-qtdaotao{ &::after { background-image: getQtDaotao($IconHover); } }
+        &.uni-dienbienluong{ &::after { background-image: getDienBienLuong($IconHover); } }
+        &.uni-qtlamviec{ &::after { background-image: getQtLamviec($IconHover); } }
+        &.uni-user-group{ &::after { background-image: getUserGroup($IconHover); } }
+        &.uni-user-plus{ &::after { background-image: getUserPlus($IconHover); } }
+        &.uni-user-ban{ &::after { background-image: getUserBan($IconHover); } }
+        &.uni-setting{ &::after { background-image: getSetting($IconHover); } }
+        &.uni-full-screen{ &::after { background-image: getFullScreen($IconHover); } }
+        
+    }
+}
+
+.uni-icon{
+    &.uni-orange-color{
+        &.uni-tongquan{ &::after { background-image: getTongQuan($orangerColor); } }
+        &.uni-nhansu{ &::after { background-image: getNhanSu($orangerColor); } }
+        &.uni-chamcong{ &::after { background-image: getChamCong($orangerColor); } }
+        &.uni-tinhluong{ &::after { background-image: getTinhLuong($orangerColor); } }
+        &.uni-quantri{ &::after { background-image: getQuanTri($orangerColor); } }
+        &.uni-thongtinchung{ &::after { background-image: getTtc($orangerColor); } }
+        &.uni-qhgd{ &::after { background-image: getQhgd($orangerColor); } }
+        &.uni-hopdong{ &::after { background-image: getHopdong($orangerColor); } }
+        &.uni-qtbonhiem{ &::after { background-image: getQtbnhiem($orangerColor); } }
+        &.uni-qtdaotao{ &::after { background-image: getQtDaotao($orangerColor); } }
+        &.uni-dienbienluong{ &::after { background-image: getDienBienLuong($orangerColor); } }
+        &.uni-qtlamviec{ &::after { background-image: getQtLamviec($orangerColor); } }
+        &.uni-user-group{ &::after { background-image: getUserGroup($orangerColor); } }
+        &.uni-user-plus{ &::after { background-image: getUserPlus($orangerColor); } }
+        &.uni-user-ban{ &::after { background-image: getUserBan($orangerColor); } }
+        &.uni-setting{ &::after { background-image: getSetting($orangerColor); } }
+        &.uni-full-screen{ &::after { background-image: getFullScreen($orangerColor); } }
+        
+    }
+}
