@@ -1635,8 +1635,8 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
       element.fields.forEach(async element1 => {
         if (((element1.field_name === 'AttachName') || (element1.field_name === 'attached_name') || (element1.field_name === 'attachName')) && element1.columnValue ) {
           this.uploadedFiles = element1.columnValue.split(',');
-        }else if(element1.field_name === 'meta_file_name'){
-          this.uploadedFiles.push(element1.columnValue);
+        }else if(element1.field_name === 'meta_file_name' && element1.columnValue){
+           this.uploadedFiles.push(element1.columnValue);
         }
         // else if(element1.field_name === 'link_view'){
         //   console.log('link view', element1.columnValue)

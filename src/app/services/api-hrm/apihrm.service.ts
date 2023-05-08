@@ -912,7 +912,7 @@ export class ApiHrmService {
   }
 
   setMaternityPregnancyInfo(params): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v2/maternity/SetMaternityPregnancyInfo`, params, this.options)
+    return this.http.post<any>(`${apiHrmServer}/api/v2/maternity/SetMaternityPregnancyInfo`, params, this.optionsUpload)
   }
 
   delMaternityInfo(queryParams): Observable<any> {
@@ -2693,7 +2693,7 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v2/employeetrain/GetTrainFile?` + queryParams, this.options)
   }
   setTrainFile(queryParams): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v2/employeetrain/SetTrainFile`, queryParams, this.options)
+    return this.http.post<any>(`${apiHrmServer}/api/v2/employeetrain/SetTrainFile`, queryParams, this.optionsUpload)
   }
   delTrainFile(queryParams): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v2/employeetrain/DelTrainFile?` + queryParams, this.options)

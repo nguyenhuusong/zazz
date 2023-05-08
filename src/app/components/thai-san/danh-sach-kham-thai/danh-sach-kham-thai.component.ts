@@ -85,7 +85,13 @@ export class DanhSachKhamThaiComponent implements OnInit {
     const param = {
       ...this.dataDetailInfo, group_fields: data
     }
-    this.apiService.setMaternityPregnancyInfo(param)
+
+    const formData = new FormData();
+    formData.append('maternityId', `${this.maternityId}`);
+    formData.append('pregnancyId', this.pregnancyId ? `${this.pregnancyId}`: '');
+    formData.append('group_fields',  `${JSON.stringify(data)}`);
+    formData.append('formFile',  this.dataDetailInfo.formFile[0]);
+    this.apiService.setMaternityPregnancyInfo(formData)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(results => {
       if (results.status === 'success') {

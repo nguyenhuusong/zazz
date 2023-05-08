@@ -81,10 +81,13 @@ export class ChungChiComponent implements OnInit {
   }
 
   setDetailInfo(data) {
-    const param = {
-      ...this.dataDetailInfo, group_fields: data
-    }
-    this.apiService.setTrainFile(param)
+    const formData = new FormData();
+    formData.append('trainId', this.trainId ? `${this.trainId}` : '');
+    formData.append('empId', `${this.dataDetailInfo.empId}`);
+    formData.append('train_type', `${this.dataDetailInfo.train_type}`);
+    formData.append('group_fields', `${JSON.stringify(data)}`);
+    formData.append('formFile', this.dataDetailInfo.formFile[0]);
+    this.apiService.setTrainFile(formData)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(results => {
       if (results.status === 'success') {
