@@ -452,7 +452,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     // this.getIPAddress()
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
-      { label: 'Nhân sự' },
+      { label: 'Tuyển dụng' },
       { label: 'Danh sách tuyển dụng' },
     ];
     // this.getJobTitles();

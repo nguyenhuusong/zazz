@@ -298,8 +298,7 @@ export class DsTiemNangComponent implements OnInit {
 
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
-      { label: 'Nhân sự' },
-      { label: 'Danh sách tuyển dụng', routerLink: '/tuyen-dung/ds-tuyen-dung' },
+      { label: 'Tuyển dụng' },
       { label: 'Danh sách tiềm năng' },
     ];
     // this.getJobTitles();
