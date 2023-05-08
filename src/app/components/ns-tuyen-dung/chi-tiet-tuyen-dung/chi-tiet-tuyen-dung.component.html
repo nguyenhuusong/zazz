@@ -12,17 +12,25 @@
         {{selectedCountry | json}}
         <div class="col-3 gap-2 flex justify-content-end" style="position: absolute;right: 0 ">
         <div class="field-group select ">
-            <p-dropdown *ngIf="listViews.length> 0" [options]="status" [(ngModel)]="selectedCountry" [styleClass]="selectedCountry?.bgColor"  [style]="{'width': '180px'}" optionLabel="name"  placeholder="Select a Country">
+            <p-dropdown 
+                *ngIf="listViews.length> 0" 
+                [options]="status" 
+                [(ngModel)]="selectedCountry" 
+                [styleClass]="selectedCountry?.bgColor"  
+                [style]="{'width': '180px'}" 
+                optionLabel="name"  
+                placeholder="Select a Country">
                 <ng-template pTemplate="selectedItem" >
                     <div class="flex align-items-center gap-2" *ngIf="selectedCountry" >
-                        <div>{{ selectedCountry.name}}</div>
+                        <div style="color: #fff">{{ selectedCountry.name}}</div>
                     </div>
                 </ng-template>
                 <ng-template let-country pTemplate="item">
                     <div class="flex align-items-center gap-2" *ngIf="country.value != selectedCountry.value">
-                        <div style="display: flex;width: 100%;justify-content: space-between;font-size: 13px;">
-                            <p>{{ country.placeholder }} </p>
-                            <p><span class="pi pi-arrow-right"></span><span [class]="country.textColor">{{ country.name }}</span></p>
+                        <div class="pb-2 pt-2" style="display: flex; align-items: center; width: 100%;justify-content: space-around;font-size: 13px;">
+                            <span>{{ country.placeholder }} </span>
+                            <span class="pi pi-arrow-right" style="font-size: 12px;"></span>
+                            <span [class]="country.textColor" class="pl-2 pr-2">{{ country.name }}</span>
                         </div>
                     </div>
                 </ng-template>
