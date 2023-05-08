@@ -3580,6 +3580,15 @@ app-edit-detail{
                     }
                 }
             }
+            &[aria-selected="true"]{
+                .ag-cell{
+                    &:first-child{
+                        .ag-selection-checkbox{
+                            opacity: 1 !important;
+                        }
+                    }
+                }
+            }
         }
         .ag-row-hover{
             background: #eee !important;
