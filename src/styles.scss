@@ -3567,6 +3567,33 @@ app-edit-detail{
             background-color: rgba(186, 191, 199, 0.5);
         }
     }
+    
+    .ag-row-hover{
+        background: #eee !important;
+    }
+    .ag-pinned-left-cols-container{
+        .ag-row{
+            .ag-cell{
+                &:first-child{
+                    .ag-selection-checkbox{
+                        opacity: 0;
+                    }
+                }
+            }
+        }
+        .ag-row-hover{
+            background: #eee !important;
+            &.ag-row{
+                .ag-cell{
+                    &:first-child{
+                        .ag-selection-checkbox{
+                            opacity: 1;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 .p-menubar {
