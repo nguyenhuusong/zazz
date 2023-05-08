@@ -196,8 +196,9 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
           this.listViews = [...listViews];
           this.detailInfo = results.data;
           this.custId = results.data.custId;
-          this.status = results.data.flowStatuses
-          this.selectedCountry = this.status[0];
+          this.status = results.data.flowStatuses;
+          this.status.push(results.data.status);
+          this.selectedCountry = results.data.status;
           this.optionsButon = [
             { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
             { label: 'Tạo hồ sơ cá nhân', value: 'CreateProfile', class: `p-button-success ${this.custId ? 'hidden' : ''}`, icon: 'pi pi-send' },
