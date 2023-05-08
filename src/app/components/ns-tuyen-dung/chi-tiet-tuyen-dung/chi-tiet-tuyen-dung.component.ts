@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 const queryString = require('query-string');
@@ -16,39 +16,39 @@ import { stringify } from 'querystring';
 })
 export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
   items: MenuItem[] = [];
-  selectedCountry = null;
+  selectedCountry: any = {};
   status = [
     {
-      name : 'IN PROGRESS',
+      name: 'IN PROGRESS',
       placeholder: 'Doing',
       value: 1,
       textColor: 'inprogress',
       bgcolor: 'bgInprogress'
     },
     {
-      name : 'TO DO',
+      name: 'TO DO',
       placeholder: 'To do',
       value: 1,
       textColor: 'todo',
       bgcolor: 'bgTodo'
     },
     {
-      name : 'UN-DO',
+      name: 'UN-DO',
       placeholder: 'Transiton to',
       value: 2,
       textColor: 'undo',
       bgcolor: 'bgUndo'
     },
-    
+
   ]
   paramsObject = null;
   detailInfo = null
   listViews = [];
-  displayAddCCCD= false;
+  displayAddCCCD = false;
   optionsButon = [
     { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
     { label: 'Tạo hồ sơ cá nhân', value: 'CreateProfile', class: 'p-button-success', icon: 'pi pi-send' },
-    { label: 'Lưu lại', value: 'newUpdate', class: 'newUpdate', icon: 'pi pi-check'  }
+    { label: 'Lưu lại', value: 'newUpdate', class: 'newUpdate', icon: 'pi pi-check' }
   ]
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -56,7 +56,9 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
     private spinner: NgxSpinnerService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
-    private router: Router
+    private router: Router,
+    private changeDetech: ChangeDetectorRef,
+
   ) { }
   private readonly unsubscribe$: Subject<void> = new Subject();
   ngOnDestroy() {
@@ -64,12 +66,16 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
   }
 
+  ngAfterViewInit() {
+  }
+
+
   ngOnInit(): void {
     this.initMenu();
     this.titlePage = this.activatedRoute.data['_value'].title;
     this.items = [
-      { label: 'Trang chủ' , routerLink: '/home' },
-      { label: 'Tuyển dụng'},
+      { label: 'Trang chủ', routerLink: '/home' },
+      { label: 'Tuyển dụng' },
       { label: 'Danh sách tuyển dụng', routerLink: '/tuyen-dung/ds-tuyen-dung' },
       { label: `${this.titlePage}` },
     ];
@@ -82,16 +88,16 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
         label: 'Lưu lại',
         icon: 'pi pi-check',
         command: () => {
-            this.fnSave('newUpdate');
+          this.fnSave('newUpdate');
         }
-    },
-    {
+      },
+      {
         label: 'Tạo hồ sơ cá nhân',
         icon: 'pi pi-send',
         command: () => {
-            this.fnSaveProfile();
+          this.fnSaveProfile();
         }
-    },
+      },
     ]
   };
 
@@ -99,14 +105,14 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       const s: HTMLElement = document.getElementById('newUpdate');
       s.click();
-     }, 500);
+    }, 500);
   }
 
   fnSaveProfile() {
     setTimeout(() => {
       const s: HTMLElement = document.getElementById('CreateProfile');
       s.click();
-     }, 500);
+    }, 500);
   }
 
   menuActions = [];
@@ -132,20 +138,20 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
         this.modelEdit.canId = this.paramsObject.params.canId || null;
         this.isView = this.paramsObject.params.view
         this.fromHistory = this.paramsObject.params.fromHistory;
-        if(this.fromHistory) {
+        if (this.fromHistory) {
           this.removeBtn('CreateProfile')
         }
-        if(!this.isView) {
+        if (!this.isView) {
           this.getCandidateInfo();
-        }else{
+        } else {
           this.getCandidatesViewInfo();
         }
       });
   };
 
   removeBtn(value) {
-    if(value) {
-      this.optionsButon = this.optionsButon.filter( d => d.value !== value)
+    if (value) {
+      this.optionsButon = this.optionsButon.filter(d => d.value !== value)
     }
   }
 
@@ -173,7 +179,7 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
           this.optionsButon = [
             { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
             { label: 'Tạo hồ sơ cá nhân', value: 'CreateProfile', class: `p-button-success ${this.custId ? 'hidden' : ''}`, icon: 'pi pi-send' },
-            { label: 'Lưu lại', value: 'newUpdate', class: 'newUpdate', icon: 'pi pi-check'  }
+            { label: 'Lưu lại', value: 'newUpdate', class: 'newUpdate', icon: 'pi pi-check' }
           ]
           this.detailEdit = results.data
         }
@@ -190,17 +196,18 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
           this.listViews = [...listViews];
           this.detailInfo = results.data;
           this.custId = results.data.custId;
-          this.status = results.data.flowStatuses;
+          this.status = results.data.flowStatuses
+          this.selectedCountry = this.status[0];
           this.optionsButon = [
             { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
             { label: 'Tạo hồ sơ cá nhân', value: 'CreateProfile', class: `p-button-success ${this.custId ? 'hidden' : ''}`, icon: 'pi pi-send' },
-            { label: 'Lưu lại', value: 'newUpdate', class: 'newUpdate', icon: 'pi pi-check'  }
+            { label: 'Lưu lại', value: 'newUpdate', class: 'newUpdate', icon: 'pi pi-check' }
           ]
           this.detailEdit = results.data
         }
       });
   }
-  tabIndex:number = 0;
+  tabIndex: number = 0;
   handleChange(index) {
     this.tabIndex = index;
   }
@@ -210,18 +217,18 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
     this.listData = []
     const query = { canId: this.modelEdit.canId }
     this.apiService.getCandidatesViewInfo(stringify(query))
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(results => {
-      if (results.status === 'success') {
-        this.cols = results.data.gridflexdetails1;
-        this.listData = results.data.recruitCandidates;
-        this.custId = results.data.custId;
-        const listViews = cloneDeep(results.data.group_fields);
-        this.listViews = [...listViews];
-        this.detailInfo = results.data;
-        this.initGrid();
-      }
-    });
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(results => {
+        if (results.status === 'success') {
+          this.cols = results.data.gridflexdetails1;
+          this.listData = results.data.recruitCandidates;
+          this.custId = results.data.custId;
+          const listViews = cloneDeep(results.data.group_fields);
+          this.listViews = [...listViews];
+          this.detailInfo = results.data;
+          this.initGrid();
+        }
+      });
 
     const queryParams = queryString.stringify(this.modelEdit);
     this.apiService.getCandidateInfo(queryParams)
@@ -263,12 +270,12 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
   }
 
   quaylai(data) {
-    if(data === 'CauHinh') {
+    if (data === 'CauHinh') {
       this.getCandidateInfo();
-    }else if(data === 'CreateProfile') {
+    } else if (data === 'CreateProfile') {
       this.displayAddCCCD = true;
-    }else {
-       this.router.navigate(['/tuyen-dung/ds-tuyen-dung']);
+    } else {
+      this.router.navigate(['/tuyen-dung/ds-tuyen-dung']);
     }
   }
 
@@ -278,12 +285,12 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
   }
 
   saveCCCD(event) {
-    this.custId =event;
-   setTimeout(() => {
-    this.tabIndex = 1
-    this.modelEdit.canId = event
-    this.displayAddCCCD = false;
-   }, 100);
+    this.custId = event;
+    setTimeout(() => {
+      this.tabIndex = 1
+      this.modelEdit.canId = event
+      this.displayAddCCCD = false;
+    }, 100);
   }
 
 
