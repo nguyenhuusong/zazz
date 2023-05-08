@@ -29,7 +29,7 @@ export function AgGridFn(lists: Array<any>) {
                     headerName: value.columnCaption,
                     field: value.columnField,
                     headerClass: 'BGE8E9ED',
-                    // cellClass: value.cellClass,
+                    cellClass: value.cellClass,
                     filter: value.isFilter ? 'agTextColumnFilter' : '',
                     sortable: false,
                     width: value.columnWidth,
@@ -38,7 +38,7 @@ export function AgGridFn(lists: Array<any>) {
                     cellRenderer: "avatarRendererFull",
                     headerTooltip: value.columnCaption,
                     tooltipField: value.columnField,
-                    cellClass: ['text-center', 'text-right', 'border-right', 'd-flex', 'align-items-center', 'justify-content-center'],
+                    // cellClass: ['text-center', 'text-right', 'border-right', 'd-flex', 'align-items-center', 'justify-content-center'],
                     // valueFormatter: value.fieldType == 'decimal' ? ""
                 }
             } else if (value.fieldType === 'check') {

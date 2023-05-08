@@ -14,6 +14,7 @@
             <p-dropdown 
                 *ngIf="listViews.length> 0" 
                 [options]="status" 
+                (onChange)="recruiUpdateStatus()"
                 [(ngModel)]="selectedCountry" 
                 [styleClass]="selectedCountry?.bgColor"  
                 [style]="{'width': '180px'}" 

@@ -186,7 +186,27 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
       });
   }
 
+  recruiUpdateStatus() {
+    const params = {
+      canId: this.detailInfo.canId,
+      can_st: this.selectedCountry.value,
+      vacancyId: this.detailInfo.vacancyId
+    }
+    this.apiService.recruiUpdateStatus(params)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
+      if (results.status === 'success') {
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Chuyển thành công!' });
+        this.getCandidateInfo();
+      } else {
+        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+      }
+    });
+  }
+
   getCandidateInfo() {
+    this.listViews = [];
+    this.status = [];
     const queryParams = queryString.stringify(this.modelEdit);
     this.apiService.getCandidateInfo(queryParams)
       .pipe(takeUntil(this.unsubscribe$))

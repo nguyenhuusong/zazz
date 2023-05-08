@@ -1057,7 +1057,7 @@ export class ApiHrmService {
   }
 
   recruiUpdateStatus(queryParams, params = null): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v1/recruitcandidate/UpdateStatus?`+ queryParams, params, this.options)
+    return this.http.post<any>(`${apiHrmServer}/api/v1/recruitcandidate/UpdateStatus`, queryParams, this.options)
   }
 
   getRecruitMailInput(queryParams): Observable<any> {
