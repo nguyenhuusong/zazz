@@ -27,7 +27,6 @@ export class UploadFileComponent implements OnInit {
   }
   listAttach = [];
   uploadFn(event) {
-    this.spinner.show();
     this.listAttach = [];
     if (event.currentFiles.length > 0) {
       for (let file of event.currentFiles) {

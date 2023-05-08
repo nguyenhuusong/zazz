@@ -358,8 +358,8 @@ export class ChinhSachNvComponent implements OnInit, AfterViewInit {
     this.query.from_date = null;
     this.query.to_date = null;
     this.listSelects = [];
-    this.listsData2 = [];
-    this.columnDefs2 = [];
+    // this.listsData2 = [];
+    // this.columnDefs2 = [];
   }
 
   save() {
