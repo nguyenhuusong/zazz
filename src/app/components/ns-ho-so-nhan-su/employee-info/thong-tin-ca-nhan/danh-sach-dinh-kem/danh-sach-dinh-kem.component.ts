@@ -83,7 +83,12 @@ export class DanhSachDinhKemComponent implements OnInit {
     const param = {
       ...this.dataDetailInfo, group_fields: data
     }
-    this.apiService.empproFileSetEmpAttach(param)
+
+    const formData = new FormData();
+    formData.append('grd_fields', `${JSON.stringify(data)}`)
+    formData.append('formFile', this.dataDetailInfo.formFile[0])
+    console.log(JSON.stringify(data))
+    this.apiService.empproFileSetEmpAttach(formData)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(results => {
       if (results.status === 'success') {

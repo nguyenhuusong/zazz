@@ -1614,6 +1614,7 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
   @Input() element;
   @Input() dataView;
   @Input() modelFields;
+  @Input() detailInfo;
   @Input() submit = false;
   @Output() callback = new EventEmitter<any>();
   uploadedFiles: any[] = [];
@@ -1673,6 +1674,7 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
       this.isUpload = true;
       this.spinner.show();
       if(event.currentFiles.length > 0){
+        this.detailInfo.formFile = event.currentFiles;
         for(let index in event.currentFiles) {
           const getDAte = new Date();
           const getTime = getDAte.getTime();

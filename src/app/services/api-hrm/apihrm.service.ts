@@ -2741,7 +2741,7 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v2/employeeprofile/GetEmpAttach?` +  queryParams, this.options)
   }
   empproFileSetEmpAttach(queryParams): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v2/employeeprofile/SetEmpAttach` ,  queryParams, this.options)
+    return this.http.post<any>(`${apiHrmServer}/api/v2/employeeprofile/SetEmpAttach1` ,  queryParams, this.optionsUpload)
   }
   empproFileDelEmpAttach(queryParams): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v2/employeeprofile/DelEmpAttach?` + queryParams, this.options)
