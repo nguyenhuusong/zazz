@@ -336,14 +336,12 @@ export class ThongTinHoSoCaNhanComponent implements OnInit {
   metafile = null;
   displayuploadcontract = false;
   handleUpload(event) {
-    this.columnDefsRecord = [];
     let params = {...this.metafile}
     const formData = new FormData();
     formData.append('sourceId', `${params.sourceId}`);
     formData.append('metaId', params.metaId ? `${params.metaId}`: '');
     formData.append('empId', `${this.empId}`);
-    formData.append('formFile', `${event[0].formFile}`);
-
+    formData.append('formFile', event[0].file);
     this.apiService.setEmpRecordUpload(formData)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe((results: any) => {

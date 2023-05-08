@@ -2735,7 +2735,7 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v2/employeeprofile/SetEmpRecord` , queryParams, this.options)
   }
   setEmpRecordUpload(queryParams): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v2/employeeprofile/SetEmpRecordUpload` , queryParams, this.options)
+    return this.http.post<any>(`${apiHrmServer}/api/v2/employeeprofile/SetEmpRecordUpload` , queryParams, this.optionsUpload)
   }
   addEmpRecord(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/employeeprofile/AddEmpRecord?` +  queryParams, this.options)
