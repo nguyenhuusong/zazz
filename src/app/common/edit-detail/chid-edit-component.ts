@@ -1575,7 +1575,7 @@ export class AppTypeLinkUrlRadioListComponent implements OnInit {
                     <div class="file-uploaded" *ngIf="element.columnValue && element.columnValue.length > 0">
                       <h3 class="uploaded-title">Đã upload xong {{ element.columnValue.length }} file</h3>
                       
-                      <ul *ngIf="uploadedFiles.length > 0">
+                      <!-- <ul *ngIf="uploadedFiles.length > 0">
                           <li class="d-flex middle bet" *ngFor="let file of uploadedFiles; let i=index">
                           <a [href]="element.columnValue[i]" target="_blank">{{ file }} </a>
                             <span (click)="removeImage(i)">
@@ -1586,13 +1586,12 @@ export class AppTypeLinkUrlRadioListComponent implements OnInit {
                                 </svg>
                             </span>
                           </li>
-                      </ul>
+                      </ul> -->
                     </div>
-                    <div class="file-uploaded" *ngIf="element.columnValue && (element.columnValue.length > 0) && (uploadedFiles.length === 0)">
-
+                    <div class="file-uploaded" *ngIf="uploadedFiles.length > 0">
                     <ul>
-                        <li class="d-flex middle bet" *ngFor="let file of element.columnValue; let i=index">
-                        <a [href]="file" target="_blank">{{ theFileName(file) }} </a>
+                        <li class="d-flex middle bet" *ngFor="let file of uploadedFiles; let i=index">
+                        <a [href]="file" target="_blank">{{ file }} </a>
                           <span (click)="removeImage1(i)">
                               <svg width="12" height="14" viewBox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M9.33366 5.33341V12.0001H2.66699V5.33341H9.33366ZM8.33366 0.666748H3.66699L3.00033 1.33341H0.666992V2.66675H11.3337V1.33341H9.00033L8.33366 0.666748ZM10.667 4.00008H1.33366V12.0001C1.33366 12.7334 1.93366 13.3334 2.66699 13.3334H9.33366C10.067 13.3334 10.667 12.7334 10.667 12.0001V4.00008Z" fill="#FF3B49"/>
@@ -1636,6 +1635,8 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
       element.fields.forEach(async element1 => {
         if (((element1.field_name === 'AttachName') || (element1.field_name === 'attached_name') || (element1.field_name === 'attachName')) && element1.columnValue ) {
           this.uploadedFiles = element1.columnValue.split(',');
+        }else if(element1.field_name === 'meta_file_name'){
+          this.uploadedFiles.push(element1.columnValue);
         }
         // else if(element1.field_name === 'link_view'){
         //   console.log('link view', element1.columnValue)
@@ -1672,89 +1673,24 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
   uploadHandler(event) {
       //  this.uploadedFiles = []
       this.isUpload = true;
-      this.spinner.show();
+      // this.spinner.show();
       if(event.currentFiles.length > 0){
         this.detailInfo.formFile = event.currentFiles;
         for(let index in event.currentFiles) {
-          const getDAte = new Date();
-          const getTime = getDAte.getTime();
-          const storageRef = firebase.storage().ref();
-          const uploadTask = storageRef.child(`s-hrm/images/${getTime}-uninini-${event.currentFiles[index].name}`).put(event.currentFiles[index]);
-          uploadTask.on('state_changed', (snapshot) => {
-          }, (error) => {
-            console.log('error', error)
-          }, () => {
-            uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-              if(!this.isUploadMultiple){
-                this.element.columnValue = []
-              }
-              this.element.columnValue.push(downloadURL)
-              // this.spinner.hide();
-              this.dataView.forEach(element => {
-                element.fields.forEach( element1 => {
-                  if ((element1.field_name === 'AttachName') || (element1.field_name === 'attached_name') || (element1.field_name === 'attachName')) {
-                    if(!this.isUploadMultiple){
-                      this.uploadedFiles = []
-                    }
-                    this.uploadedFiles.push(event.currentFiles[index].name);
-                    element1.columnValue = this.uploadedFiles.toString();
-                  } else if (this.element.field_name === 'meta_file_url') {
-                    //   // danh sach file dinh kem, ct ns
-                     this.setValue(event.currentFiles[index].name,'meta_file_name')
-                     this.setValue(event.currentFiles[index].size,'meta_file_size')
-                     this.setValue(event.currentFiles[index].type,'meta_file_type')
-                      this.callback.emit(event.currentFiles);
-                     }
-                });
-              });
-            }).catch(error => {
-              this.spinner.hide();
-            });
-          });
-          if (this.element.field_name === 'file_attach') {
-            this.spinner.show();
-            let fomrData = new FormData();
-            fomrData.append('file', event.currentFiles[index]);
-            this.apiService.uploadDrives(fomrData)
-              .subscribe(results => {
-                if (results.status === 'success') {
-                  this.dataView.forEach(element => {
-                    element.fields.forEach(element1 => {
-                      if (element1.field_name === 'link_view') {
-                        if(!this.isUploadMultiple){
-                          element1.columnValue = []
-                        }
-                        element1.columnValue.push(results.data);
-                      }
-                    });
-                  });
-                  this.spinner.hide();
-                } else {
-                  this.spinner.hide();
-                }
-      
-              })
-          }else{
-            this.spinner.hide();
-          }
-          
+            this.uploadedFiles.push(event.currentFiles[index].name);
         }
-        // if (this.element.field_name === 'meta_file_url') {
-        //   // danh sach file dinh kem, ct ns
-        //   // this.setValue(event.currentFiles[index].name,'meta_file_name')
-        //   this.callback.emit(event.currentFiles);
-        // }
       }else{
-        this.spinner.hide();
-        if(event.files.length > 0){
-          for( let i = 0; i < event.files.length; i ++){
-            if(event.files[i].size > 10000000) {
-              this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Kích thước file lớn hơn 20 MB' });
-            }
-          }
-        }else{
-          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Không hỗ trợ định dạng file' });
-        }
+        // this.spinner.hide();
+        // if(event.files.length > 0){
+        //   for( let i = 0; i < event.files.length; i ++){
+        //     if(event.files[i].size > 10000000) {
+        //       this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Kích thước file lớn hơn 20 MB' });
+        //     }
+        //   }
+        // }else{
+        //   this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Không hỗ trợ định dạng file' });
+        // }
+        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Không hỗ trợ định dạng file' });
       }
       setTimeout(() => {
         this.isUpload = false;

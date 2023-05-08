@@ -2734,6 +2734,9 @@ export class ApiHrmService {
   setEmpRecord(queryParams): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/employeeprofile/SetEmpRecord` , queryParams, this.options)
   }
+  setEmpRecordUpload(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/employeeprofile/SetEmpRecordUpload` , queryParams, this.options)
+  }
   addEmpRecord(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/employeeprofile/AddEmpRecord?` +  queryParams, this.options)
   }
@@ -2741,7 +2744,7 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v2/employeeprofile/GetEmpAttach?` +  queryParams, this.options)
   }
   empproFileSetEmpAttach(queryParams): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v2/employeeprofile/SetEmpAttach1` ,  queryParams, this.optionsUpload)
+    return this.http.post<any>(`${apiHrmServer}/api/v2/employeeprofile/SetEmpAttach` ,  queryParams, this.optionsUpload)
   }
   empproFileDelEmpAttach(queryParams): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v2/employeeprofile/DelEmpAttach?` + queryParams, this.options)
@@ -2934,7 +2937,7 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v2/empinsurance/GetEmpAttach?` + queryParams, this.options);
   }
   setEmpAttachInsur(queryParams): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v2/empinsurance/SetEmpAttach` ,  queryParams, this.options)
+    return this.http.post<any>(`${apiHrmServer}/api/v2/empinsurance/SetEmpAttach` ,  queryParams, this.optionsUpload)
   }
   delEmpAttachInsur(queryParams): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v2/empinsurance/DelEmpAttach?` + queryParams  , this.options)
@@ -2956,7 +2959,7 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v2/empinsurance/GetInsuranceInfo?` + queryParams, this.options);
   }
   setInsuranceInfo(queryParams): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v2/empinsurance/SetInsuranceInfo` ,  queryParams, this.options)
+    return this.http.post<any>(`${apiHrmServer}/api/v2/empinsurance/SetInsuranceInfo` ,  queryParams, this.optionsUpload)
   }
 
   setInsuranceDraft(data): Observable<any> {

@@ -31,29 +31,14 @@ export class UploadFileComponent implements OnInit {
     this.listAttach = [];
     if (event.currentFiles.length > 0) {
       for (let file of event.currentFiles) {
-        const getDAte = new Date();
-        const getTime = getDAte.getTime();
-        const storageRef = firebase.storage().ref();
-        const uploadTask = storageRef.child(`s-hrm/file-attach/${getTime}-${file.name}`).put(file);
-        uploadTask.on('state_changed', (snapshot) => {
-        }, (error) => {
-          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: error.message });
-          this.spinner.hide();
-        }, () => {
-          uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-            if (downloadURL) {
-              const params = {
-                type: file.type,
-                size: file.size,
-                name: file.name,
-                url: downloadURL,
-                file: file
-              }
-              this.listAttach.push(params);
-              this.spinner.hide();
-            }
-          });
-        });
+        const params = {
+          type: file.type,
+          size: file.size,
+          name: file.name,
+          url: '',
+          file: file
+        }
+        this.listAttach.push(params);
       }
     }
     else{

@@ -78,16 +78,29 @@ export class DanhSachDinhKemComponent implements OnInit {
       }
     })
   }
+  metaId = null;
+  getEmpAttach() {
+    const queryParams = queryString.stringify({ metaId: this.metaId});
+    this.listViewsDetail = [];
+    this.apiService.getEmpAttach(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
+      if (results.status === 'success') {
+        this.listViewsDetail = cloneDeep(results.data.group_fields);
+        this.dataDetailInfo = results.data;
+        this.displayFormEditDetail = true;
+      }
+    })
+  }
+
 
   setDetailInfo(data) {
-    const param = {
-      ...this.dataDetailInfo, group_fields: data
-    }
-
     const formData = new FormData();
-    formData.append('grd_fields', `${JSON.stringify(data)}`)
+    formData.append('group_fields', `${JSON.stringify(data)}`)
+    formData.append('metaId', this.dataDetailInfo.metaId ? `${this.dataDetailInfo.metaId}` : '')
+    formData.append('empId', `${this.dataDetailInfo.empId}`)
+    formData.append('meta_type', `${this.dataDetailInfo.meta_type}`)
     formData.append('formFile', this.dataDetailInfo.formFile[0])
-    console.log(JSON.stringify(data))
     this.apiService.empproFileSetEmpAttach(formData)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(results => {
@@ -117,7 +130,6 @@ export class DanhSachDinhKemComponent implements OnInit {
       return fileName;
     }
   }
-
 
   getEmpPersonalPage() {
     this.spinner.show();
@@ -212,8 +224,8 @@ export class DanhSachDinhKemComponent implements OnInit {
   }
 
   editRow(event) {
-    this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Chức năng đang phát triển'});
-    // this.addEmpPersonal();
+    this.metaId = event.rowData.metaId;
+    this.getEmpAttach() 
   }
 
   onCellClicked(event) {
