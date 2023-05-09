@@ -51,7 +51,7 @@ export class LichSuTuyenDungComponent implements OnInit {
       buttonAgGridComponent: ButtonAgGridComponent,
       avatarRendererFull: AvatarFullComponent,
     };
-    // this.getFilter();
+    this.getFilter();
   }
   pagingComponent = {
     total: 0
@@ -322,12 +322,11 @@ export class LichSuTuyenDungComponent implements OnInit {
 
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
-      { label: 'Nhân sự' },
-      { label: 'Danh sách tuyển dụng', routerLink: '/tuyen-dung/ds-tuyen-dung' },
+      { label: 'Tuyển dụng' },
       { label: 'Danh sách lịch sử tuyển dụng' },
     ];
     this.getReRound();
-    this.load();
+    // this.load();
   }
 
 

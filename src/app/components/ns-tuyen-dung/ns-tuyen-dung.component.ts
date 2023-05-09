@@ -452,11 +452,10 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     // this.getIPAddress()
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
-      { label: 'Nhân sự' },
+      { label: 'Tuyển dụng' },
       { label: 'Danh sách tuyển dụng' },
     ];
     // this.getJobTitles();
-    this.getVacancyPage();
     this.getReRound();
     this.buttonTiemNang = [
       {
@@ -668,10 +667,6 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
       }
     })
   }
-    
-  getVacancyPage() {
-    
-  }
 
   getRecruitMailInput(event = null) {
     let canStatus = this.recruitmentStatusSelected
@@ -742,6 +737,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Chuyển thành công!' });
             this.isSendMail = true;
             this.isChuyenVong = false;
+            this.load();
           } else {
             this.isChuyenVong = false;
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
