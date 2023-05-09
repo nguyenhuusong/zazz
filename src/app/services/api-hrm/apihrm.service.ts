@@ -966,6 +966,10 @@ export class ApiHrmService {
     return this.http.delete<any>(`${apiHrmServer}/api/v1/recruitcandidate/DelCandidateInfo?` + queryParams, this.options)
   }
 
+  getRecruitActions(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitcandidate/GetRecruitActions?` + queryParams, this.options)
+  }
+
   getCandidateStatus(): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/recruitcandidate/GetCandidateStatus?`, this.options)
   }
@@ -1150,7 +1154,7 @@ export class ApiHrmService {
   }
 
   setTerminateStatus(params): Observable<any> {
-    return this.http.put<any>(`${apiHrmServer}/api/v2/terminate/SetTerminateStatus`, params, this.options)
+    return this.http.put<any>(`${apiHrmServer}/api/v2/terminate/SetTerminateStatus`, params, this.optionsUpload)
   }
 
   setTerminateStatusDraft(params): Observable<any> {

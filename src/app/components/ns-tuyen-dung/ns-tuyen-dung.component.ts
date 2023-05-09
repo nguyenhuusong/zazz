@@ -150,7 +150,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   cauhinh() {
     this.displaySetting = true;
   }
-
+  listActions = [];
   load() {
     this.dataRowSelected = [];
     this.columnDefs = []
@@ -160,20 +160,21 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(
       (results: any) => {
-        this.listsData = results.data.dataList.data;
-        this.gridKey= results.data.dataList.gridKey;
+        this.listsData = results.data.dataList;
+        this.gridKey= results.data.gridKey;
         if (this.query.offSet === 0) {
           this.cols = results.data.gridflexs;
+          this.listActions = results.data.can_actions;
           this.colsDetail = results.data.gridflexdetails ? results.data.gridflexdetails : [];
         }
         this.initGrid();
-        this.countRecord.totalRecord = results.data.dataList.recordsTotal;
-        this.countRecord.totalRecord = results.data.dataList.recordsTotal;
-        this.countRecord.currentRecordStart = results.data.dataList.recordsTotal === 0 ? this.query.offSet = 0 : this.query.offSet + 1;
-        if ((results.data.dataList.recordsTotal - this.query.offSet) > this.query.pageSize) {
+        this.countRecord.totalRecord = results.data.recordsTotal;
+        this.countRecord.totalRecord = results.data.recordsTotal;
+        this.countRecord.currentRecordStart = results.data.recordsTotal === 0 ? this.query.offSet = 0 : this.query.offSet + 1;
+        if ((results.data.recordsTotal - this.query.offSet) > this.query.pageSize) {
           this.countRecord.currentRecordEnd = this.query.offSet + Number(this.query.pageSize);
         } else {
-          this.countRecord.currentRecordEnd = results.data.dataList.recordsTotal;
+          this.countRecord.currentRecordEnd = results.data.recordsTotal;
           setTimeout(() => {
             const noData = document.querySelector('.ag-overlay-no-rows-center');
             if (noData) { noData.innerHTML = 'Không có kết quả phù hợp' }
@@ -190,52 +191,74 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
       });
   }
 
+  actAddProfile() {
+    this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Chức năng chờ xử lý' });
+  }
+
+  actRegEmpUser() {
+    this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Chức năng chờ xử lý' });
+  }
+
   showButtons(event: any) {
+    const actions = this.listActions.filter(d => d.canId === event.data.canId)[0].actions;
     return {
-      buttons: [
-        {
-          onClick: this.editRow.bind(this),
-          label: 'Chỉnh sửa',
-          icon: 'fa fa-edit',
-          class: 'btn-primary mr5',
-          hide: CheckHideAction(MENUACTIONROLEAPI.GetCandidatePage.url, ACTIONS.EDIT)
-        },
-        {
-          onClick: this.chuyenVong.bind(this),
-          label: 'Chuyển vòng',
-          icon: 'pi pi-reply',
-          class: 'btn-primary mr5',
-        },
-        {
-          onClick: this.getRecruitMailInput.bind(this),
-          label: 'Gửi email',
-          icon: 'pi pi-envelope',
-          class: 'btn-primary mr5',
-        },
-        {
-          onClick: this.addAccount.bind(this),
-          label: 'Chuyển hồ sơ',
-          icon: 'pi pi-reply',
-          class: 'btn-primary mr5',
-          hide: this.checkHideAddAccount(event)
-        },
-        {
-          onClick: this.rateRecui.bind(this),
-          label: 'Đánh giá kết quả',
-          icon: 'pi pi-star-fill',
-          class: 'btn-primary mr5',
-          hide: CheckHideAction(MENUACTIONROLEAPI.GetCandidatePage.url, ACTIONS.DANH_GIA_KET_QUA)
-        },
-        {
-          onClick: this.delRow.bind(this),
-          label: 'Xóa ',
-          icon: 'pi pi-trash',
-          class: 'btn-primary mr5',
-          hide: CheckHideAction(MENUACTIONROLEAPI.GetCandidatePage.url, ACTIONS.DELETE) || event.data.can_st === 10
-        },
+      buttons: actions.map(item => {
+        console.log(item.code)
+        return {
+          onClick: this[item.code]?.bind(this),
+                label: item.name,
+                icon: item.icon,
+                action_url: item.action_url,
+                tick: item.tick
+        }
+      })
+    }
+
+    // return {
+    //   buttons: [
+    //     {
+    //       onClick: this.editRow.bind(this),
+    //       label: 'Chỉnh sửa',
+    //       icon: 'fa fa-edit',
+    //       class: 'btn-primary mr5',
+    //       hide: CheckHideAction(MENUACTIONROLEAPI.GetCandidatePage.url, ACTIONS.EDIT)
+    //     },
+    //     {
+    //       onClick: this.chuyenVong.bind(this),
+    //       label: 'Chuyển vòng',
+    //       icon: 'pi pi-reply',
+    //       class: 'btn-primary mr5',
+    //     },
+    //     {
+    //       onClick: this.getRecruitMailInput.bind(this),
+    //       label: 'Gửi email',
+    //       icon: 'pi pi-envelope',
+    //       class: 'btn-primary mr5',
+    //     },
+    //     {
+    //       onClick: this.addAccount.bind(this),
+    //       label: 'Chuyển hồ sơ',
+    //       icon: 'pi pi-reply',
+    //       class: 'btn-primary mr5',
+    //       hide: this.checkHideAddAccount(event)
+    //     },
+    //     {
+    //       onClick: this.rateRecui.bind(this),
+    //       label: 'Đánh giá kết quả',
+    //       icon: 'pi pi-star-fill',
+    //       class: 'btn-primary mr5',
+    //       hide: CheckHideAction(MENUACTIONROLEAPI.GetCandidatePage.url, ACTIONS.DANH_GIA_KET_QUA)
+    //     },
+    //     {
+    //       onClick: this.delRow.bind(this),
+    //       label: 'Xóa ',
+    //       icon: 'pi pi-trash',
+    //       class: 'btn-primary mr5',
+    //       hide: CheckHideAction(MENUACTIONROLEAPI.GetCandidatePage.url, ACTIONS.DELETE) || event.data.can_st === 10
+    //     },
        
-      ]
-    };
+    //   ]
+    // };
   }
 
   checkHideAddAccount(params) {
@@ -373,7 +396,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  editRow({rowData}) {
+  actEdit({rowData}) {
     const params = {
       canId: rowData.canId
     }
@@ -382,7 +405,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
 
   onCellClicked(event) {
     if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
-      this.editRow(event = {rowData: event.data})
+      this.actEdit(event = {rowData: event.data})
     }
   }
 
@@ -495,7 +518,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
             icon: 'pi pi-envelope',
             disabled: true,
             command: () => {
-              this.getRecruitMailInput();
+              this.actSendMail();
             }
           },
           {
@@ -600,7 +623,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
           .pipe(takeUntil(this.unsubscribe$))
           .subscribe(result => {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Cập nhật thành công' });
-            this.getRecruitMailInput();
+            this.actSendMail();
             this.load();
             this.spinner.hide();
           }, error => {
@@ -668,7 +691,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     })
   }
 
-  getRecruitMailInput(event = null) {
+  actSendMail(event = null) {
     let canStatus = this.recruitmentStatusSelected
     if(event && event.rowData && event.rowData.can_st) {
       canStatus = event.rowData.can_st
@@ -733,7 +756,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe((results: any) => {
           if (results.status === 'success') {
-            this.getRecruitMailInput();
+            this.actSendMail();
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Chuyển thành công!' });
             this.isSendMail = true;
             this.isChuyenVong = false;

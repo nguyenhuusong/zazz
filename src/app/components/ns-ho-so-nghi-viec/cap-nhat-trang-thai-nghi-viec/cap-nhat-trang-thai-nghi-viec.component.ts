@@ -80,10 +80,11 @@ export class CapNhatTrangThaiNghiViecComponent implements OnInit, OnChanges {
 
   setTerminateStatus(data) {
     this.spinner.show();
-    const params = {
-      ...this.detailInfo, group_fields: data
-    };
-    this.apiService.setTerminateStatus(params)
+    const formData = new FormData();
+    formData.append('terminateId',this.terminateId ? `${this.terminateId}` : '');
+    formData.append('group_fields', `${JSON.stringify(data)}`);
+    formData.append('formFile', this.detailInfo.formFile.length > 0 ? this.detailInfo.formFile[0] : '');
+    this.apiService.setTerminateStatus(formData)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe((results: any) => {
       if (results.status === 'success') {
