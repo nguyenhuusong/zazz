@@ -404,8 +404,13 @@ export class NsHoSoNghiViecComponent implements OnInit {
   }
 
   listDataSelect = [];
+  isShowButtonApprove = false;
   rowSelected(data) {
-    this.listDataSelect = data
+    this.listDataSelect = data;
+    if(data.length > 0) {
+      this.isShowButtonApprove = !data.some( d => !d.asset_confirm);
+      console.log('isShowButtonApprove', this.isShowButtonApprove)
+    }
   }
 
   approved() {

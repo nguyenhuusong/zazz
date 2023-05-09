@@ -151,3 +151,55 @@
     <app-detail-terminate *ngIf="displayFormTerminate && empId" [isDialog]="true" [id]="" [empId]="empId" (callback)="cancelSetDetail($event)"></app-detail-terminate>
 
 </p-dialog>
+
+<!-- <p-dialog styleClass="popup-btngroup-edit-detail" 
+    header="Thông tin người quản lý" 
+    [(visible)]="isShowInfoMg" 
+    [modal]="true" 
+    [draggable]="false"
+    [resizable]="false" [style]="{width: '1300px'}" 
+    [autoZIndex]=true 
+    [draggable]="false" 
+    [resizable]="false">
+            <app-edit-detail
+                *ngIf="listViewsFormMgInfo.length> 0 "
+                [detail]="detailMgInfo"
+                [optionsButtonsEdit]="btnMgInfoDetail"
+                [thongtinnhanvienNew]="true" [dataView]="listViewsFormMgInfo"
+                (callback)="saveInfoDetail($event)" (callbackcancel)="cancelViewMgInfo($event)"
+                ></app-edit-detail>
+</p-dialog> -->
+
+<p-dialog  header="Đổi người quản lý"
+    [(visible)]="isShowInfoMg" 
+    [modal]="true" [style]="{width: '1600px'}"
+    [draggable]="false" [resizable]="false" [focusTrap]="false" 
+    (onHide)="closeChangeMa()"
+    >
+        <app-edit-detail 
+            [optionsButtonsEdit]="btnMgInfoDetail"   
+            *ngIf="listViewsFormMgInfo.length> 0" 
+            [detail]="detailMgInfo" 
+            [manhinh]="'Edit'"  
+            [dataView]="listViewsFormMgInfo"
+            (callback)="setEmpManagerChange($event)" 
+            (callbackcancel)="cancelViewMgInfo($event)">
+        </app-edit-detail>
+        <app-list-grid-angular 
+            (callback)="rowSelected($event)"
+            [rowSelection]="'multiple'"
+            *ngIf="columnDefsMgChange.length > 0" 
+            [listsData]="listData" 
+            [height]="heightGridPopup"
+            [columnDefs]="columnDefsMgChange">
+        </app-list-grid-angular>
+        <div class="paginator">
+            <span>Từ {{ countRecord.currentRecordStart }} đến
+                {{ countRecord.currentRecordEnd }}
+                trên tổng số
+                {{ countRecord.totalRecord }} kết quả</span>
+            <p-paginator [rows]="query.pageSize" [totalRecords]="countRecord.totalRecord" [first]="first"
+                (onPageChange)="paginate($event)" [rowsPerPageOptions]="[20,40,60,100,200,{ showAll: 'ALL' }]">
+            </p-paginator>
+        </div>
+</p-dialog>

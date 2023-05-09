@@ -32,7 +32,7 @@
                     </svg> &nbsp;&nbsp;
                     Bộ Lọc
                 </p-button>
-                <p-button (click)="approved()" label="Phê duyệt" 
+                <p-button (click)="approved()" label="Phê duyệt" *ngIf="isShowButtonApprove"
                     styleClass="p-button-sm height-56 p-button-success" icon="pi pi-check">
                 </p-button>
                 <p-button  (click)="menuButton.toggle($event)" label="Cài đặt" icon="pi pi-cog" styleClass="p-button-sm height-56"></p-button>

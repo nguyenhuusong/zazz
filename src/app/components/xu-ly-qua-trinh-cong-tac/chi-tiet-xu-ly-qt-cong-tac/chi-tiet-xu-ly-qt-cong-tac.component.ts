@@ -110,6 +110,7 @@ export class ChiTietXuLyQtCongTacComponent implements OnInit {
       }
       this.cloneListViews = cloneDeep(data); 
       this.listViews = [];
+      console.log('this.activeIndex', params)
       this.callApiInfo(params)
     }else {
       this.getEmpProcessInfo(this.flowCurrent + 1);
