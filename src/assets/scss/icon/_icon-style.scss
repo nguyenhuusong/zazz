@@ -17,53 +17,49 @@ $orangerColor: rgb(255, 124, 89);
         content: '';
         display: block;
     }
-    &.uni-tongquan{
-        &::after { background-image: getTongQuan($colorIcon); }
-        &:hover{ &::after{ background-image: getTongQuan($IconHover); } }
+    &.uni-overview{
+        &::after { background-image: overview($colorIcon); }
+        &:hover{ &::after{ background-image: overview($IconHover); } }
     }
-    &.uni-nhansu{
-        &::after { background-image: getNhanSu($colorIcon); }
-        &:hover{ &::after{ background-image: getNhanSu($IconHover); } }
+    &.uni-users{
+        &::after { background-image: users($colorIcon); }
+        &:hover{ &::after{ background-image: users($IconHover); } }
     }
-    &.uni-chamcong{
-        &::after { background-image: getChamCong($colorIcon); }
-        &:hover{ &::after{ background-image: getChamCong($IconHover); } }
+    &.uni-calendar{
+        &::after { background-image: calendar($colorIcon); }
+        &:hover{ &::after{ background-image: calendar($IconHover); } }
     }
-    &.uni-tinhluong{
-        &::after { background-image: getTinhLuong($colorIcon); }
-        &:hover{ &::after{ background-image: getTinhLuong($IconHover); } }
+    &.uni-note-money{
+        &::after { background-image: noteMoney($colorIcon); }
+        &:hover{ &::after{ background-image: noteMoney($IconHover); } }
     }
-    &.uni-quantri{
-        &::after { background-image: getQuanTri($colorIcon); }
-        &:hover{ &::after{ background-image: getQuanTri($IconHover); } }
+    &.uni-setting{
+        &::after { background-image: setting($colorIcon); }
+        &:hover{ &::after{ background-image: setting($IconHover); } }
     }
-    &.uni-thongtinchung{
-        &::after { background-image: getTtc($colorIcon); }
-        &:hover{ &::after{ background-image: getTtc($IconHover); } }
+    &.uni-user-rate{
+        &::after { background-image: userRate($colorIcon); }
+        &:hover{ &::after{ background-image: userRate($IconHover); } }
     }
-    &.uni-qhgd{
-        &::after { background-image: getQhgd($colorIcon); }
-        &:hover{ &::after{ background-image: getQhgd($IconHover); } }
+    &.uni-home-building{
+        &::after { background-image: homeBuilding($colorIcon); }
+        &:hover{ &::after{ background-image: homeBuilding($IconHover); } }
     }
-    &.uni-hopdong{
-        &::after { background-image: getHopdong($colorIcon); }
-        &:hover{ &::after{ background-image: getHopdong($IconHover); } }
+    &.uni-note{
+        &::after { background-image: note($colorIcon); }
+        &:hover{ &::after{ background-image: note($IconHover); } }
     }
-    &.uni-qtbonhiem{
-        &::after { background-image: getQtbnhiem($colorIcon); }
-        &:hover{ &::after{ background-image: getQtbnhiem($IconHover); } }
+    &.uni-note-user{
+        &::after { background-image: noteUser($colorIcon); }
+        &:hover{ &::after{ background-image: noteUser($IconHover); } }
     }
-    &.uni-qtdaotao{
-        &::after { background-image: getQtDaotao($colorIcon); }
-        &:hover{ &::after{ background-image: getQtDaotao($IconHover); } }
+    &.uni-learning-tools{
+        &::after { background-image: learningTools($colorIcon); }
+        &:hover{ &::after{ background-image: learningTools($IconHover); } }
     }
-    &.uni-dienbienluong{
-        &::after { background-image: getDienBienLuong($colorIcon); }
-        &:hover{ &::after{ background-image: getDienBienLuong($IconHover); } }
-    }
-    &.uni-qtlamviec{
-        &::after { background-image: getQtLamviec($colorIcon); }
-        &:hover{ &::after{ background-image: getQtLamviec($IconHover); } }
+    &.uni-money{
+        &::after { background-image: money($colorIcon); }
+        &:hover{ &::after{ background-image: money($IconHover); } }
     }
     &.uni-user-group{
         &::after { background-image: getUserGroup($colorIcon); }
@@ -89,18 +85,17 @@ $orangerColor: rgb(255, 124, 89);
 }
 .p-highlight, a:hover{
     .uni-icon{
-        &.uni-tongquan{ &::after { background-image: getTongQuan($IconHover); } }
-        &.uni-nhansu{ &::after { background-image: getNhanSu($IconHover); } }
-        &.uni-chamcong{ &::after { background-image: getChamCong($IconHover); } }
-        &.uni-tinhluong{ &::after { background-image: getTinhLuong($IconHover); } }
-        &.uni-quantri{ &::after { background-image: getQuanTri($IconHover); } }
-        &.uni-thongtinchung{ &::after { background-image: getTtc($IconHover); } }
-        &.uni-qhgd{ &::after { background-image: getQhgd($IconHover); } }
-        &.uni-hopdong{ &::after { background-image: getHopdong($IconHover); } }
-        &.uni-qtbonhiem{ &::after { background-image: getQtbnhiem($IconHover); } }
-        &.uni-qtdaotao{ &::after { background-image: getQtDaotao($IconHover); } }
-        &.uni-dienbienluong{ &::after { background-image: getDienBienLuong($IconHover); } }
-        &.uni-qtlamviec{ &::after { background-image: getQtLamviec($IconHover); } }
+        &.uni-tongquan{ &::after { background-image: overview($IconHover); } }
+        &.uni-nhansu{ &::after { background-image: users($IconHover); } }
+        &.uni-chamcong{ &::after { background-image: calendar($IconHover); } }
+        &.uni-tinhluong{ &::after { background-image: noteMoney($IconHover); } }
+        &.uni-quantri{ &::after { background-image: setting($IconHover); } }
+        &.uni-thongtinchung{ &::after { background-image: userRate($IconHover); } }
+        &.uni-qhgd{ &::after { background-image: homeBuilding($IconHover); } }
+        &.uni-hopdong{ &::after { background-image: note($IconHover); } }
+        &.uni-qtbonhiem{ &::after { background-image: noteUser($IconHover); } }
+        &.uni-qtdaotao{ &::after { background-image: learningTools($IconHover); } }
+        &.uni-dienbienluong{ &::after { background-image: money($IconHover); } }
         &.uni-user-group{ &::after { background-image: getUserGroup($IconHover); } }
         &.uni-user-plus{ &::after { background-image: getUserPlus($IconHover); } }
         &.uni-user-ban{ &::after { background-image: getUserBan($IconHover); } }
@@ -112,18 +107,17 @@ $orangerColor: rgb(255, 124, 89);
 
 .uni-icon{
     &.uni-orange-color{
-        &.uni-tongquan{ &::after { background-image: getTongQuan($orangerColor); } }
-        &.uni-nhansu{ &::after { background-image: getNhanSu($orangerColor); } }
-        &.uni-chamcong{ &::after { background-image: getChamCong($orangerColor); } }
-        &.uni-tinhluong{ &::after { background-image: getTinhLuong($orangerColor); } }
-        &.uni-quantri{ &::after { background-image: getQuanTri($orangerColor); } }
-        &.uni-thongtinchung{ &::after { background-image: getTtc($orangerColor); } }
-        &.uni-qhgd{ &::after { background-image: getQhgd($orangerColor); } }
-        &.uni-hopdong{ &::after { background-image: getHopdong($orangerColor); } }
-        &.uni-qtbonhiem{ &::after { background-image: getQtbnhiem($orangerColor); } }
-        &.uni-qtdaotao{ &::after { background-image: getQtDaotao($orangerColor); } }
-        &.uni-dienbienluong{ &::after { background-image: getDienBienLuong($orangerColor); } }
-        &.uni-qtlamviec{ &::after { background-image: getQtLamviec($orangerColor); } }
+        &.uni-tongquan{ &::after { background-image: overview($orangerColor); } }
+        &.uni-nhansu{ &::after { background-image: users($orangerColor); } }
+        &.uni-chamcong{ &::after { background-image: calendar($orangerColor); } }
+        &.uni-tinhluong{ &::after { background-image: noteMoney($orangerColor); } }
+        &.uni-quantri{ &::after { background-image: setting($orangerColor); } }
+        &.uni-thongtinchung{ &::after { background-image: userRate($orangerColor); } }
+        &.uni-qhgd{ &::after { background-image: homeBuilding($orangerColor); } }
+        &.uni-hopdong{ &::after { background-image: note($orangerColor); } }
+        &.uni-qtbonhiem{ &::after { background-image: noteUser($orangerColor); } }
+        &.uni-qtdaotao{ &::after { background-image: learningTools($orangerColor); } }
+        &.uni-dienbienluong{ &::after { background-image: money($orangerColor); } }
         &.uni-user-group{ &::after { background-image: getUserGroup($orangerColor); } }
         &.uni-user-plus{ &::after { background-image: getUserPlus($orangerColor); } }
         &.uni-user-ban{ &::after { background-image: getUserBan($orangerColor); } }
