@@ -10,12 +10,13 @@ import { MessageService } from 'primeng/api';
 import { AgGridFn } from 'src/app/utils/common/function-common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as numeral from 'numeral';
-import { delay, forkJoin, lastValueFrom, of, Subject, takeUntil, tap, timer } from 'rxjs';
-import { findNodeInTree, setCheckboxradiolistValue, setMembers, setMultiSelectValue, setSelectTreeValue, setValueAndOptions, setValueAndOptionsAutocomplete, setValueAndOptionsAutocompletes } from '../function-common/objects.helper';
+import { delay, forkJoin,Subject, takeUntil, tap, timer } from 'rxjs';
+import { setCheckboxradiolistValue, setMembers, setMultiSelectValue, setSelectTreeValue, setValueAndOptions, setValueAndOptionsAutocomplete, setValueAndOptionsAutocompletes } from '../function-common/objects.helper';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ApiHrmV2Service } from 'src/app/services/api-hrm/apihrmv2.service';
 import { Router } from '@angular/router';
 import { TYPESDATETIME } from './columnTypes';
+import { ActionsNotSave, ActionsSave } from './action-types';
 @Component({
   selector: 'app-edit-detail',
   templateUrl: './edit-detail.component.html',
@@ -264,8 +265,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
 
 
   onChangeButtonEdit(event) {
-    console.log(event)
-    if (event === 'Update' || event === 'SaveNhap' || event === 'Submit' || event === 'newUpdate') {
+    if (ActionsSave.indexOf(event) > -1) {
       this.submit = true;
       for (let item in this.modelFields) {
         if (this.modelFields[item].error) {
@@ -273,7 +273,9 @@ export class EditDetailComponent implements OnInit, OnChanges {
           return
         }
       }
-      // this.submit = false;
+      let group_fields = cloneDeep(this.dataView)
+      this.callbackform(group_fields, event)
+    }else if(ActionsNotSave.indexOf(event) > -1) {
       let group_fields = cloneDeep(this.dataView)
       this.callbackform(group_fields, event)
     } else if (event === 'TamTinh') {
@@ -372,8 +374,20 @@ export class EditDetailComponent implements OnInit, OnChanges {
 
       })
     });
-    if (type === 'Update' || type ==='newUpdate') {
-      this.callback.emit(group_fields);
+    if (ActionsSave.indexOf(type) > -1) {
+      if(type === 'Update' || type ==='newUpdate') {
+        this.callback.emit(group_fields);
+      }else {
+        this.callback.emit({
+          datas: group_fields,
+          event: type
+        });
+      }
+    }else if(ActionsNotSave.indexOf(type) > -1) {
+      this.callback.emit({
+        datas: group_fields,
+        event: type
+      });
     } else if (type === 'SaveNhap' || type === 'Submit' || 'IsSpecial' || 'ADDROW') {
       this.callBackForm.emit({ data: group_fields, type: type })
     } else {

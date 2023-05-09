@@ -71,7 +71,6 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    this.initMenu();
     this.titlePage = this.activatedRoute.data['_value'].title;
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
@@ -82,39 +81,7 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
     this.handleParams();
   }
 
-  initMenu() {
-    this.menuActions = [
-      {
-        label: 'Lưu lại',
-        icon: 'pi pi-check',
-        command: () => {
-          this.fnSave('newUpdate');
-        }
-      },
-      {
-        label: 'Tạo hồ sơ cá nhân',
-        icon: 'pi pi-send',
-        command: () => {
-          this.fnSaveProfile();
-        }
-      },
-    ]
-  };
-
-  fnSave(id) {
-    setTimeout(() => {
-      const s: HTMLElement = document.getElementById('newUpdate');
-      s.click();
-    }, 500);
-  }
-
-  fnSaveProfile() {
-    setTimeout(() => {
-      const s: HTMLElement = document.getElementById('CreateProfile');
-      s.click();
-    }, 500);
-  }
-
+  
   menuActions = [];
   modelEdit = {
     canId: null,
@@ -219,15 +186,41 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
           this.status = results.data.flowStatuses;
           this.status.push(results.data.status);
           this.selectedCountry = results.data.status;
-          this.optionsButon = [
-            { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
-            { label: 'Tạo hồ sơ cá nhân', value: 'CreateProfile', class: `p-button-success ${this.custId ? 'hidden' : ''}`, icon: 'pi pi-send' },
-            { label: 'Lưu lại', value: 'newUpdate', class: 'newUpdate', icon: 'pi pi-check' }
-          ]
+         this.initButton();
           this.detailEdit = results.data
         }
       });
   }
+
+  initButton() {
+    this.optionsButon = this.detailInfo.actions.map(item=> {
+      return {
+        label: item.name,
+        value: item.code,
+        icon: item.icon
+      }
+    });
+
+    this.menuActions = this.detailInfo.actions.map((item, index)=> {
+      return {
+        label: item.name,
+        value: item.code,
+        styleClass: index === 0 ? 'hidden': '',
+        icon: item.icon,
+        command: () => {
+          this.callActions(item.code);
+        }
+      }
+    });
+  }
+
+  callActions(code) {
+    setTimeout(() => {
+      const s: HTMLElement = document.getElementById(code);
+      s.click();
+    }, 400);
+  }
+
   tabIndex: number = 0;
   handleChange(index) {
     this.tabIndex = index;
@@ -266,10 +259,31 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide))
     ]
   }
-  setCandidateInfo(data) {
+
+  setCandidateInfo(e) {
+    if(e.event === 'actSave') {
+      this.saveInfo(e)
+    }else if(e.event === 'actSendMail') {
+      this.sendEmail();
+    }else if(e.event === 'actAddProfile') {
+      this.displayAddCCCD = true;
+    }else if(e.event === 'actRegEmpUser') {
+      this.regEmpUser();
+    }
+  }
+
+  sendEmail() {
+    this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Chức năng đang phát triển !' });
+  }
+
+  regEmpUser() {
+    this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Chức năng đang phát triển !' });
+  }
+
+  saveInfo(event) {
     this.spinner.show();
     const params = {
-      ...this.detailInfo, group_fields: data
+      ...this.detailInfo, group_fields: event.datas
     }
     this.apiService.setCandidateInfo(params)
       .pipe(takeUntil(this.unsubscribe$))
@@ -289,6 +303,10 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
         this.spinner.hide();
       };
   }
+
+
+
+
 
   quaylai(data) {
     if (data === 'CauHinh') {
