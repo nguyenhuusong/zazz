@@ -102,6 +102,10 @@ import { LoadingGridModule } from 'src/app/common/loading-grid/loading-grid.modu
 import { LoadingDetailModule } from 'src/app/common/loading-detail/loading-detail.module';
 import { DanhSachCapBacComponent } from 'src/app/components/cai-dat-to-chuc/danh-sach-cap-bac/danh-sach-cap-bac.component';
 import { ChiTietCapBacComponent } from 'src/app/components/cai-dat-to-chuc/danh-sach-cap-bac/chi-tiet-cap-bac/chi-tiet-cap-bac.component';
+import { CaiDatTienTrinhComponent } from 'src/app/components/cai-dat-tien-trinh/cai-dat-tien-trinh.component';
+import { ChiTietCaiDatTienTrinhComponent } from 'src/app/components/cai-dat-tien-trinh/chi-tiet-cai-dat-tien-trinh/chi-tiet-cai-dat-tien-trinh.component';
+import { CaiDatTrangThaiComponent } from 'src/app/components/cai-dat-tien-trinh/cai-dat-trang-thai/cai-dat-trang-thai.component';
+import { ChiTietCaiDatTrangThaiComponent } from 'src/app/components/cai-dat-tien-trinh/chi-tiet-cai-dat-trang-thai/chi-tiet-cai-dat-trang-thai.component';
 
 FullCalendarModule.registerPlugins([
   // register FullCalendar plugins
@@ -216,6 +220,10 @@ FullCalendarModule.registerPlugins([
     DetailProvinceComponent,
     DanhSachCapBacComponent,
     ChiTietCapBacComponent,
+    CaiDatTienTrinhComponent,
+    ChiTietCaiDatTienTrinhComponent,
+    CaiDatTrangThaiComponent,
+    ChiTietCaiDatTrangThaiComponent
 
 
   ],

@@ -3883,6 +3883,60 @@ export class ApiHrmService {
       responseType: "blob"
     });
   }
+  // WorkflowType
+  getflowTypeFilter(): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/workflowtype/GetflowTypeFilter`, this.options);
+  }
+
+  getFlowTypePage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/workflowtype/GetFlowTypePage?` + queryParams, this.options);
+  }
+
+  getFlowType(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/workflowtype/GetFlowType?` + queryParams, this.options);
+  }
+
+  setFlowType(queryParams): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v2/workflowtype/SetFlowType` , queryParams, this.options);
+  }
+  
+  delFlowType(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/workflowtype/DelFlowType?` + queryParams, this.options);
+  }
+
+  getFlowTypeStatus(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/workflowtype/GetFlowTypeStatus?` + queryParams, this.options);
+  }
+
+  getWorkflowTypes(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/workflowtype/GetWorkflowTypes?` + queryParams, this.options);
+  }
+
+  getWorkStatus(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/workflowtype/GetWorkStatus?` + queryParams, this.options);
+  }
+
+  getFlowStatusPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/workflowtype/GetFlowStatusPage?` + queryParams, this.options);
+  }
+
+  getFlowStatus(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/workflowtype/GetFlowStatus?` + queryParams, this.options);
+  }
+
+  setFlowStatus(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/workflowtype/SetFlowStatus` , queryParams, this.options);
+  }
+
+  delFlowStatus(queryParams): Observable<any> {
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/workflowtype/DelFlowStatus?` + queryParams, this.options);
+  }
+
+
+
+
+
+
 
 
 }
