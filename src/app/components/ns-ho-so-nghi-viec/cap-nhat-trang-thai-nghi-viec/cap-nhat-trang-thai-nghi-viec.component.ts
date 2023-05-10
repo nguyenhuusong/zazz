@@ -83,7 +83,8 @@ export class CapNhatTrangThaiNghiViecComponent implements OnInit, OnChanges {
     const formData = new FormData();
     formData.append('terminateId',this.terminateId ? `${this.terminateId}` : '');
     formData.append('group_fields', `${JSON.stringify(data)}`);
-    formData.append('formFile', this.detailInfo.formFile.length > 0 ? this.detailInfo.formFile[0] : '');
+    console.log('this.detailInfo.formFile', this.detailInfo.formFile)
+    formData.append('formFile', (this.detailInfo.formFile && this.detailInfo.formFile.length > 0) ? this.detailInfo.formFile[0] : '');
     this.apiService.setTerminateStatus(formData)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe((results: any) => {

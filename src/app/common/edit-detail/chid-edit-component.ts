@@ -1647,6 +1647,7 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
   }
   removeImage1(i) {
     this.element.columnValue.splice(i, 1);
+    this.uploadedFiles = this.element.columnValue
   }
   
   theFileName(file){
