@@ -126,7 +126,7 @@ export class ThongTinCaNhanEditDetailComponent implements OnInit {
   setDetail(data) {
     if(this.flowCurrent >= this.activeIndex) {
       const params = {
-        ...this.detailInfo, group_fields: data, flow_cur: this.flowCurrent, action: 'next'
+        ...this.detailInfo, group_fields: data.datas, flow_cur: this.flowCurrent, action: 'next'
       };
       this.cloneListViews = cloneDeep(data);
       this.listViews = [];
