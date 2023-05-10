@@ -1675,7 +1675,9 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
       this.isUpload = true;
       // this.spinner.show();
       if(event.currentFiles.length > 0){
-        this.detailInfo.formFile = event.currentFiles;
+        if(this.detailInfo && this.detailInfo.formFile) {
+          this.detailInfo.formFile = event.currentFiles;
+        }
         for(let index in event.currentFiles) {
             this.uploadedFiles.push(event.currentFiles[index].name);
         }

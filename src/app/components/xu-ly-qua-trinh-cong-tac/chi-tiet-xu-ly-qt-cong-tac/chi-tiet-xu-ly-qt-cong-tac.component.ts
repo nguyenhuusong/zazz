@@ -101,12 +101,12 @@ export class ChiTietXuLyQtCongTacComponent implements OnInit {
   }
 
   setDetail(data) {
-    console.log(this.flowCurrent)
+    console.log('this.flowCurrent', data)
     console.log(this.activeIndex)
     if(this.flowCurrent >= this.activeIndex) {
       this.listViews = [];
       const params = {
-        ...this.detailInfo, group_fields: data, flow_cur: this.flowCurrent, action: 'next'
+        ...this.detailInfo, group_fields: data.datas, flow_cur: this.flowCurrent, action: 'next'
       }
       this.cloneListViews = cloneDeep(data); 
       this.listViews = [];
