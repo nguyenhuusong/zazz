@@ -6,8 +6,6 @@ export const ActionsNotSave = [
 
 export const ActionsSave = [
     'actSave',
-    'Update',
     'SaveNhap',
     'Submit',
-    'newUpdate',
 ]

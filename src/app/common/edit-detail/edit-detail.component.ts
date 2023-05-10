@@ -263,7 +263,11 @@ export class EditDetailComponent implements OnInit, OnChanges {
     }
   }
 
-
+  // { label: 'Quay lại', value: 'BackPage', class: `p-button-secondary ${results.data.prev_st ? '' : 'hidden'}`, icon: 'pi pi-caret-left', },
+  //         { label: 'Tiếp tục', value: 'Update', class: `btn-accept ${results.data.next_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-caret-right' },
+  //         { label: 'Lưu tạm', value: 'SaveNhap', class: `btn-accept ${results.data.save_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
+  //         { label: 'Xác nhận', value: 'Submit', class: `btn-accept ${results.data.submit_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
+  //         { label: 'Đóng', value: 'Close', class: `p-button-danger ml-1`, icon: 'pi pi-times' }
   onChangeButtonEdit(event) {
     if (ActionsSave.indexOf(event) > -1) {
       this.submit = true;
@@ -276,6 +280,9 @@ export class EditDetailComponent implements OnInit, OnChanges {
       let group_fields = cloneDeep(this.dataView)
       this.callbackform(group_fields, event)
     }else if(ActionsNotSave.indexOf(event) > -1) {
+      let group_fields = cloneDeep(this.dataView)
+      this.callbackform(group_fields, event)
+    }else if(event === 'Update' || event ==='newUpdate') {
       let group_fields = cloneDeep(this.dataView)
       this.callbackform(group_fields, event)
     } else if (event === 'TamTinh') {
@@ -375,19 +382,17 @@ export class EditDetailComponent implements OnInit, OnChanges {
       })
     });
     if (ActionsSave.indexOf(type) > -1) {
-      if(type === 'Update' || type ==='newUpdate') {
-        this.callback.emit(group_fields);
-      }else {
-        this.callback.emit({
-          datas: group_fields,
-          event: type
-        });
-      }
+      this.callback.emit({
+        datas: group_fields,
+        event: type
+      });
     }else if(ActionsNotSave.indexOf(type) > -1) {
       this.callback.emit({
         datas: group_fields,
         event: type
       });
+    }else if(type === 'Update' || type ==='newUpdate') {
+      this.callback.emit(group_fields);
     } else if (type === 'SaveNhap' || type === 'Submit' || 'IsSpecial' || 'ADDROW') {
       this.callBackForm.emit({ data: group_fields, type: type })
     } else {

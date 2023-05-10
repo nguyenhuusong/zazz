@@ -15,7 +15,7 @@ const MAX_SIZE = 100000000;
 import { cloneDeep } from 'lodash';
 import { DialogService } from 'primeng/dynamicdialog';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
-import { catchError, forkJoin, fromEvent, Subject, takeUntil, switchMap, tap  } from 'rxjs';
+import { catchError, forkJoin, fromEvent, Subject, takeUntil, switchMap, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { EmployeeSaveService } from 'src/app/services/employee-save.service';
 
@@ -38,9 +38,9 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     private messageService: MessageService,
     private spinner: NgxSpinnerService,
     private dialogService: DialogService,
-    private  employeeSaveService: EmployeeSaveService,
+    private employeeSaveService: EmployeeSaveService,
     private changeDetector: ChangeDetectorRef,
-    
+
     private router: Router) {
 
     this.defaultColDef = {
@@ -95,7 +95,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   loading = false;
   listVacancy = [];
   recruitmentStatus = [
-    
+
   ]
   recruitmentStatusSelected = null;
   dataRowSelected: any = []
@@ -157,112 +157,72 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     // this.spinner.show();
     const queryParams = queryString.stringify(this.query);
     this.apiService.getCandidatePage(queryParams)
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(
-      (results: any) => {
-        this.listsData = results.data.dataList;
-        this.gridKey= results.data.gridKey;
-        if (this.query.offSet === 0) {
-          this.cols = results.data.gridflexs;
-          this.listActions = results.data.can_actions;
-          this.colsDetail = results.data.gridflexdetails ? results.data.gridflexdetails : [];
-        }
-        this.initGrid();
-        this.countRecord.totalRecord = results.data.recordsTotal;
-        this.countRecord.totalRecord = results.data.recordsTotal;
-        this.countRecord.currentRecordStart = results.data.recordsTotal === 0 ? this.query.offSet = 0 : this.query.offSet + 1;
-        if ((results.data.recordsTotal - this.query.offSet) > this.query.pageSize) {
-          this.countRecord.currentRecordEnd = this.query.offSet + Number(this.query.pageSize);
-        } else {
-          this.countRecord.currentRecordEnd = results.data.recordsTotal;
-          setTimeout(() => {
-            const noData = document.querySelector('.ag-overlay-no-rows-center');
-            if (noData) { noData.innerHTML = 'Không có kết quả phù hợp' }
-          }, 100);
-        }
-        this.spinner.hide();
-        var dragTarget = document.getElementById(this.gridKey);
-        if(dragTarget) {
-          this.FnEvent();
-        }
-      },
-      error => {
-        this.spinner.hide();
-      });
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        (results: any) => {
+          this.listsData = results.data.dataList;
+          this.gridKey = results.data.gridKey;
+          if (this.query.offSet === 0) {
+            this.cols = results.data.gridflexs;
+            this.listActions = results.data.can_actions;
+            this.colsDetail = results.data.gridflexdetails ? results.data.gridflexdetails : [];
+          }
+          this.initGrid();
+          this.countRecord.totalRecord = results.data.recordsTotal;
+          this.countRecord.totalRecord = results.data.recordsTotal;
+          this.countRecord.currentRecordStart = results.data.recordsTotal === 0 ? this.query.offSet = 0 : this.query.offSet + 1;
+          if ((results.data.recordsTotal - this.query.offSet) > this.query.pageSize) {
+            this.countRecord.currentRecordEnd = this.query.offSet + Number(this.query.pageSize);
+          } else {
+            this.countRecord.currentRecordEnd = results.data.recordsTotal;
+            setTimeout(() => {
+              const noData = document.querySelector('.ag-overlay-no-rows-center');
+              if (noData) { noData.innerHTML = 'Không có kết quả phù hợp' }
+            }, 100);
+          }
+          this.spinner.hide();
+          var dragTarget = document.getElementById(this.gridKey);
+          if (dragTarget) {
+            this.FnEvent();
+          }
+        },
+        error => {
+          this.spinner.hide();
+        });
+  }
+  displayAddCCCD = false;
+  canId: string = '';
+  saveCCCD() {
+    this.displayAddCCCD = false;
+    this.find();
   }
 
-  actAddProfile() {
-    this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Chức năng chờ xử lý' });
-  }
-
-  actRegEmpUser() {
-    this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Chức năng chờ xử lý' });
+  actAddProfile(event) {
+    if (event) {
+      this.dataRowSelected = [];
+      this.dataRowSelected.push(event.rowData);
+    }
+    this.canId = this.dataRowSelected[0].canId
+    this.displayAddCCCD = true;
   }
 
   showButtons(event: any) {
     const actions = this.listActions.filter(d => d.canId === event.data.canId)[0].actions;
     return {
       buttons: actions.map(item => {
-        console.log(item.code)
         return {
           onClick: this[item.code]?.bind(this),
-                label: item.name,
-                icon: item.icon,
-                action_url: item.action_url,
-                tick: item.tick
+          label: item.name,
+          icon: item.icon,
+          action_url: item.action_url,
+          tick: item.tick
         }
       })
     }
-
-    // return {
-    //   buttons: [
-    //     {
-    //       onClick: this.editRow.bind(this),
-    //       label: 'Chỉnh sửa',
-    //       icon: 'fa fa-edit',
-    //       class: 'btn-primary mr5',
-    //       hide: CheckHideAction(MENUACTIONROLEAPI.GetCandidatePage.url, ACTIONS.EDIT)
-    //     },
-    //     {
-    //       onClick: this.chuyenVong.bind(this),
-    //       label: 'Chuyển vòng',
-    //       icon: 'pi pi-reply',
-    //       class: 'btn-primary mr5',
-    //     },
-    //     {
-    //       onClick: this.getRecruitMailInput.bind(this),
-    //       label: 'Gửi email',
-    //       icon: 'pi pi-envelope',
-    //       class: 'btn-primary mr5',
-    //     },
-    //     {
-    //       onClick: this.addAccount.bind(this),
-    //       label: 'Chuyển hồ sơ',
-    //       icon: 'pi pi-reply',
-    //       class: 'btn-primary mr5',
-    //       hide: this.checkHideAddAccount(event)
-    //     },
-    //     {
-    //       onClick: this.rateRecui.bind(this),
-    //       label: 'Đánh giá kết quả',
-    //       icon: 'pi pi-star-fill',
-    //       class: 'btn-primary mr5',
-    //       hide: CheckHideAction(MENUACTIONROLEAPI.GetCandidatePage.url, ACTIONS.DANH_GIA_KET_QUA)
-    //     },
-    //     {
-    //       onClick: this.delRow.bind(this),
-    //       label: 'Xóa ',
-    //       icon: 'pi pi-trash',
-    //       class: 'btn-primary mr5',
-    //       hide: CheckHideAction(MENUACTIONROLEAPI.GetCandidatePage.url, ACTIONS.DELETE) || event.data.can_st === 10
-    //     },
-       
-    //   ]
-    // };
   }
 
   checkHideAddAccount(params) {
-    if((params.data.round_result === 2) && (params.data.status_account === 0)) {
+    if ((params.data.round_result === 2) && (params.data.status_account === 0)) {
       return false;
     }
     return true;
@@ -275,7 +235,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   FnEvent() {
     setTimeout(() => {
       var dragTarget = document.getElementById(this.gridKey);
-      if(dragTarget) {
+      if (dragTarget) {
         const click$ = fromEvent(dragTarget, 'click');
         click$.subscribe(event => {
           this.addTuyenDung()
@@ -304,7 +264,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
       {
         headerComponentParams: {
           template:
-          `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
+            `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
         },
         filter: '',
         width: 70,
@@ -366,14 +326,6 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
 
   rowSelected(event) {
     this.dataRowSelected = event;
-    // this.recruitmentStatusSelected = this.dataRowSelected.map( d => d.can_st).toString();
-    this.canSttValue = this.dataRowSelected.sort((a,b)=>a.can_st-b.can_st)[this.dataRowSelected.length - 1];
-    // chuyen vong
-    this.optionsButtonDB[0].items[0].disabled = this.dataRowSelected.length > 0 ? false : true;
-    this.optionsButtonDB[0].items[1].disabled = this.dataRowSelected.length > 0 && this.query.can_st > -1 ? false : true;
-
-    // check role for set tiem nang && check for tuy chon
-    // this.optionsButtonDB[0].items[3].disabled = this.dataRowSelected.length > 0 ? false : true;
   }
 
   delRow(event) {
@@ -382,39 +334,35 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
       accept: () => {
         const queryParams = queryString.stringify({ canId: event.rowData.canId });
         this.apiService.delCandidateInfo(queryParams)
-        .pipe(takeUntil(this.unsubscribe$))
-        .subscribe(results => {
-          if (results.status === 'success') {
-            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa tuyển dụng thành công' });
-            this.load();
-            this.FnEvent();
-          } else {
-            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
-          }
-        });
+          .pipe(takeUntil(this.unsubscribe$))
+          .subscribe(results => {
+            if (results.status === 'success') {
+              this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa tuyển dụng thành công' });
+              this.load();
+              this.FnEvent();
+            } else {
+              this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+            }
+          });
       }
     });
   }
 
-  actEdit({rowData}) {
+  actEdit(event) {
+    if (event) {
+      this.dataRowSelected = [];
+      this.dataRowSelected.push(event.rowData);
+    }
     const params = {
-      canId: rowData.canId
+      canId: this.dataRowSelected[0].canId
     }
     this.router.navigate(['/tuyen-dung/ds-tuyen-dung/chi-tiet-tuyen-dung'], { queryParams: params });
   }
 
   onCellClicked(event) {
-    if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
-      this.actEdit(event = {rowData: event.data})
+    if (event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
+      this.actEdit(event = { rowData: event.data })
     }
-  }
-
-  viewRow(event) {
-    const params = {
-      canId: event.rowData.canId,
-      view: true
-    }
-    this.router.navigate(['/tuyen-dung/ds-tuyen-dung/chi-tiet-tuyen-dung'], { queryParams: params });
   }
 
   addTuyenDung() {
@@ -422,10 +370,6 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
       canId: null
     }
     this.router.navigate(['/tuyen-dung/ds-tuyen-dung/them-moi-tuyen-dung'], { queryParams: params });
-  }
-
-  getOrgPositions() {
-   
   }
 
   find() {
@@ -444,41 +388,13 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   }
   organizeIdSelected = '';
 
-//   getIPAddress2()
-//   {
-//     this.http.get('https://jsonip.com')
-// .pipe(
-//   switchMap((value:any) => {
-// 	const userIP = value.ip;
-//   console.log("userIP", userIP)
-// 	let url = `http://api.ipstack.com/${value.ip.split(',')[0]}?access_key=b1e8a9e4d386d64504f4668e12fc1f68`
-// 	return this.http.get(url);
-//   })
-// ).subscribe(
-//   (value:any) => {
-// 	console.log(value);
-//   },
-//   err => {
-// 	console.log(err);
-//   }
-// );
-//   }
-//   getIPAddress()
-//   {
-//     this.http.get("http://api.ipify.org/?format=json").subscribe((res:any)=>{
-//       console.log( res.ip)
-//     });
-//   }
 
   ngOnInit() {
-    // this.getIPAddress2()
-    // this.getIPAddress()
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Tuyển dụng' },
       { label: 'Danh sách tuyển dụng' },
     ];
-    // this.getJobTitles();
     this.getReRound();
     this.buttonTiemNang = [
       {
@@ -499,48 +415,8 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
         }
       },
     ];
+
     this.optionsButtonDB = [
-      {
-        badgeStyleClass: 'fffffffffff',
-        items: [
-          {
-            label: 'Chuyển vòng',
-            code: 'chuyenVong',
-            icon: 'pi pi-reply',
-            disabled: false,
-            command: () => {
-              this.chuyenVong();
-            }
-          },
-          {
-            label: 'Gửi email',
-            code: 'guiemail',
-            icon: 'pi pi-envelope',
-            disabled: true,
-            command: () => {
-              this.actSendMail();
-            }
-          },
-          {
-            label: 'Chuyển hồ sơ',
-            code: 'guiemail',
-            icon: 'pi pi-reply',
-            class: 'hidden',
-            command: () => {
-              this.setCandidateRegisters();
-            }
-          },
-          // {
-          //   label: 'Tiềm năng',
-          //   code: 'tiemnang',
-          //   icon: 'pi pi-send',
-          //   disabled: true,
-          //   command: () => {
-          //     this.tiemNang();
-          //   }
-          // },
-        ]
-      },
       {
         items: [
           {
@@ -552,22 +428,6 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
               this.importFileExel();
             }
           },
-          // {
-          //   label: 'Danh sách tiềm năng',
-          //   code: 'Import',
-          //   icon: 'pi pi-list',
-          //   command: () => {
-          //     this.dsTiemNang();
-          //   }
-          // },
-          // {
-          //   label: 'Lịch sử tuyển dụng',
-          //   code: 'Import',
-          //   icon: 'pi pi-list',
-          //   command: () => {
-          //     this.lsTuyenDung();
-          //   }
-          // },
         ]
       },
     ]
@@ -578,168 +438,175 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     this.isChuyenVong = true;
   }
 
-  addAccount({rowData}) {
-    const params = {
-      canId : rowData.canId
-     }
-
-    this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn chuyển hồ sơ?',
-      accept: () => {
-        this.spinner.show();
-        this.apiService.setCandidateRegister(params)
-        .pipe(takeUntil(this.unsubscribe$))
-        .subscribe((results: any) => {
-          if (results.status === 'success') {
-              this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Cập nhật thành công' });
-              // this.isSendMail = true;
-              // this.getRecruitMailInput();
-              this.spinner.hide();
-            } else {
-              this.spinner.hide();
-              this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message ? results.message : 'Không thành công' });
-            }
-        })
-      }
-    })
+  actRegEmpUser(event) {
+    if (event) {
+      this.dataRowSelected = [];
+      this.dataRowSelected.push(event.rowData)
+    }
+    this.setCandidateRegisters();
   }
 
   setCandidateRegisters() {
     const checks = this.dataRowSelected.filter(d => ((d.round_result === 2) && (d.status_account === 0)));
-    if(checks.length > 0) {
+    if (checks.length > 0) {
       this.confirmationService.confirm({
         message: 'Bạn có chắc chắn muốn tạo tài khoản?',
         accept: () => {
           let listApi = [];
-          for(let item of checks) {
+          for (let item of checks) {
             const param = {
               canId: item.canId
             }
             listApi.push(this.apiService.setCandidateRegister(param).subscribe(error => error))
           }
-      
+
           this.spinner.show();
           forkJoin(listApi)
-          .pipe(takeUntil(this.unsubscribe$))
-          .subscribe(result => {
-            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Cập nhật thành công' });
-            this.actSendMail();
-            this.load();
-            this.spinner.hide();
-          }, error => {
-            this.spinner.hide();
-          })
+            .pipe(takeUntil(this.unsubscribe$))
+            .subscribe(result => {
+              this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Cập nhật thành công' });
+              this.actSendMail();
+              this.load();
+              this.spinner.hide();
+            }, error => {
+              this.spinner.hide();
+            })
         }
       })
-    }else {
+    } else {
       const stringName = this.dataRowSelected.length > 0 ? this.dataRowSelected.map(d => d.fullName).toString() : ''
       this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: `[${stringName}] bản ghi chưa đủ điều kiện để chuyển hồ sơ ! ` });
     }
-
-   
   }
 
   listJobTitles = [];
   positions = [{ label: 'Tất cả', value: null }];
   getJobTitles() {
     this.apiService.getJobTitles()
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(results => {
-      if (results.status === 'success') {
-        this.listJobTitles = results.data.map(d => {
-          return {
-            label: d.job_name,
-            value: d.jobId
-          }
-        });
-        this.listJobTitles = [{ label: 'Tất cả', value: null }, ...this.listJobTitles]
-      }
-    })
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(results => {
+        if (results.status === 'success') {
+          this.listJobTitles = results.data.map(d => {
+            return {
+              label: d.job_name,
+              value: d.jobId
+            }
+          });
+          this.listJobTitles = [{ label: 'Tất cả', value: null }, ...this.listJobTitles]
+        }
+      })
   }
 
   listStatus = []
   getStatus() {
     const queryParams = queryString.stringify({ objKey: 'recruitment_round' });
     this.apiService.getCustObjectListNew(false, queryParams)
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(results => {
-      if (results.status === 'success') {
-        this.listStatus = results.data.map(d => {
-          return {
-            label: d.objName,
-            value: d.objValue
-          }
-        });
-        this.listStatus = [{ label: 'Tất cả', value: null }, ...this.listStatus];
-      }
-    })
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(results => {
+        if (results.status === 'success') {
+          this.listStatus = results.data.map(d => {
+            return {
+              label: d.objName,
+              value: d.objValue
+            }
+          });
+          this.listStatus = [{ label: 'Tất cả', value: null }, ...this.listStatus];
+        }
+      })
   }
 
   getReRound() {
     this.recruitmentStatus = []
     this.apiService.getRecruitRoundTitles(queryString.stringify({ organizeIds: this.organizeIdSelected }))
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(results => {
-      if (results.status === 'success') {
-        this.recruitmentStatus = results.data.map(d => {
-          return {
-            label: d.name,
-            code: d.value
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(results => {
+        if (results.status === 'success') {
+          this.recruitmentStatus = results.data.map(d => {
+            return {
+              label: d.name,
+              code: d.value
+            }
+          });
+        }
+      })
+  }
+
+  getRecruitActions() {
+    if (this.dataRowSelected.length > 0) {
+      const canIds = this.dataRowSelected.map(item => item.canId);
+      this.apiService.getRecruitActions(queryString.stringify({ canIds: canIds }))
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(results => {
+          if (results.status === 'success' && results.data.length > 0) {
+            this.optionsButtonDB = this.optionsButtonDB.length > 1 ? this.optionsButtonDB.splice(0, 1) : this.optionsButtonDB;
+            const menuActions = results.data.map(item => {
+              return {
+                label: item.name,
+                code: item.code,
+                icon: item.icon,
+                disabled: false,
+                command: () => {
+                  this[item.code]();
+                }
+              }
+            })
+            this.optionsButtonDB.push({
+              badgeStyleClass: 'fffffffffff',
+              items: menuActions
+            })
+
           }
-        });
-      }
-    })
+        })
+    } else {
+    }
+
   }
 
   actSendMail(event = null) {
     let canStatus = this.recruitmentStatusSelected
-    if(event && event.rowData && event.rowData.can_st) {
+    if (event && event.rowData && event.rowData.can_st) {
       canStatus = event.rowData.can_st
     }
-    if(this.dataRowSelected.length > 0) {
+    if (this.dataRowSelected.length > 0) {
       let checkAsynCanId = false;
       // check người dùng chọn theo 1 can_st
       // checkAsynCanId false: theo 1 id, true: có 1 can_st là khác
       let firstCanSt = this.dataRowSelected[0].can_st;
-      checkAsynCanId = this.dataRowSelected.some( d => d.can_st !== firstCanSt);
+      checkAsynCanId = this.dataRowSelected.some(d => d.can_st !== firstCanSt);
 
-      if(!checkAsynCanId) {
+      if (!checkAsynCanId) {
         this.isSendMail = true;
         this.apiService.getRecruitMailInput(queryString.stringify({ can_st: canStatus ? canStatus : firstCanSt }))
-        .pipe(takeUntil(this.unsubscribe$))
-        .subscribe(results => {
-          if (results.status === 'success') {
-            this.recruitmentStatusSelected = canStatus ? canStatus : firstCanSt
-            this.mailsInput = results.data.map(d => {
-              return {
-                label: d.name,
-                value: d.value
+          .pipe(takeUntil(this.unsubscribe$))
+          .subscribe(results => {
+            if (results.status === 'success') {
+              this.recruitmentStatusSelected = canStatus ? canStatus : firstCanSt
+              this.mailsInput = results.data.map(d => {
+                return {
+                  label: d.name,
+                  value: d.value
+                }
+              });
+              if (this.mailsInput.length === 0) {
+                this.isSendMail = false;
+                this.isChuyenVong = false;
               }
-            });
-            if(this.mailsInput.length === 0) {
-              this.isSendMail = false;
-              this.isChuyenVong = false;
             }
-          }
-        })
-      }else{
+          })
+      } else {
         this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Vui lòng chuyển vòng trước khi gửi mail' });
       }
-
     }
-
-
   }
 
   changeRecruStatus() {
-
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn chuyển vòng?',
       accept: () => {
-        let dataUpdateStatus = this.dataRowSelected.map( d => d.canId)
-        .toString();
-        let vacancyId = this.dataRowSelected.map( d => d.vacancyId)
-        .toString();
+        let dataUpdateStatus = this.dataRowSelected.map(d => d.canId)
+          .toString();
+        let vacancyId = this.dataRowSelected.map(d => d.vacancyId)
+          .toString();
         const query = {
           canId: dataUpdateStatus,
           can_st: this.recruitmentStatusSelected,
@@ -750,22 +617,22 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
           canIds: dataUpdateStatus,
           can_st: this.recruitmentStatusSelected
         }
-    
+
         localStorage.setItem('RecruitMail', JSON.stringify(data))
         this.apiService.recruiUpdateStatus(queryString.stringify(query))
-        .pipe(takeUntil(this.unsubscribe$))
-        .subscribe((results: any) => {
-          if (results.status === 'success') {
-            this.actSendMail();
-            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Chuyển thành công!' });
-            this.isSendMail = true;
-            this.isChuyenVong = false;
-            this.load();
-          } else {
-            this.isChuyenVong = false;
-            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
-          }
-        });
+          .pipe(takeUntil(this.unsubscribe$))
+          .subscribe((results: any) => {
+            if (results.status === 'success') {
+              this.actSendMail();
+              this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Chuyển thành công!' });
+              this.isSendMail = true;
+              this.isChuyenVong = false;
+              this.load();
+            } else {
+              this.isChuyenVong = false;
+              this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+            }
+          });
       },
     });
   }
@@ -787,8 +654,8 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
 
   sendRate() {
     this.isSubmitRate = true;
-    if(this.queryRate.canId && this.queryRate.InterviewResult) { 
-        this.apiService.updateInterviewResult(queryString.stringify(this.queryRate), null)
+    if (this.queryRate.canId && this.queryRate.InterviewResult) {
+      this.apiService.updateInterviewResult(queryString.stringify(this.queryRate), null)
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe(results => {
           if (results.status === 'success') {
@@ -799,8 +666,8 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
           } else {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.data : null });
           }
-      })
-    }else if(!this.queryRate.InterviewResult) {
+        })
+    } else if (!this.queryRate.InterviewResult) {
       return;
     }
   }
@@ -811,36 +678,19 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   }
 
   sendEmail() {
-    if(!this.mailInputValue) {
+    if (!this.mailInputValue) {
       this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Chưa chọn nội dung gửi' });
       return
     }
-    let canId = this.dataRowSelected.map( d => d.canId).toString()
+    let canId = this.dataRowSelected.map(d => d.canId).toString()
     const data = {
       tempId: this.mailInputValue,
       canIds: canId,
       can_st: this.sentEmail ? this.query.can_st : this.recruitmentStatusSelected
     }
-    // this.employeeSaveService.setStocks(data);
     localStorage.setItem('RecruitMail', JSON.stringify(data))
-    this.router.navigate(['/cai-dat/thong-bao/them-moi-thong-bao'], { queryParams: {external_name: ''} })
+    this.router.navigate(['/cai-dat/thong-bao/them-moi-thong-bao'], { queryParams: { external_name: '' } })
     this.sentEmail = false;
-
-    // this.spinner.show();
-    // this.apiService.sendRecruitMail(data)
-    // .pipe(takeUntil(this.unsubscribe$))
-    // .subscribe(results => {
-    //   if (results.status === 'success') {
-    //     this.sentEmail = true;
-    //     this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Gửi thành công' });
-    //     this.mailInputValue = '';
-    //     this.dataRowSelected = [];
-        
-    //     this.spinner.hide();
-    //   } else {
-    //     this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.data : null });
-    //   }
-    // })
   }
 
   themLichHop() {
@@ -859,18 +709,18 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
 
   tiemNang() {
     this.isTiemNang = true;
-    this.queryTiemNang.canId = this.dataRowSelected.map( d => d.canId).toString();
+    this.queryTiemNang.canId = this.dataRowSelected.map(d => d.canId).toString();
   }
 
   setTiemNang() {
     this.isSubmitTiemNang = true;
-    if(!this.queryTiemNang.reason_rejiect){
+    if (!this.queryTiemNang.reason_rejiect) {
       return;
     }
     this.apiService.updateCandidatesPotential(queryString.stringify(this.queryTiemNang), null)
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(results => {
-      if (results.status === 'success') {
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(results => {
+        if (results.status === 'success') {
           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Cập nhật thành công' });
           this.load();
           this.FnEvent();
@@ -880,7 +730,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
           this.spinner.hide();
           this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.data : null });
         }
-    })
+      })
   }
 
   canSetTiemNang() {
@@ -904,28 +754,25 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   // }
 
   onHideSendEmail(event) {
-    // this.optionsButtonDB[1].disabled = true;
     this.isSendMail = false;
-    // this.dataRowSelected = [];
-    // this.load();
     this.FnEvent();
   }
 
   isUploadImage = false;
   formData = new FormData();
   onSelectFile(event, type) {
-    if(type === 1) {
+    if (type === 1) {
       this.formData.append('front_file', event.currentFiles[0]);
-    }else{
+    } else {
       this.formData.append('back_file', event.currentFiles[0]);
     }
-    
+
   }
   sendImages() {
     this.apiService.imgaetest(this.formData)
-    .subscribe(results => {
-      console.log('results', results)
-    } )
+      .subscribe(results => {
+        console.log('results', results)
+      })
   }
   importFileExel() {
     this.router.navigate(['/tuyen-dung/ds-tuyen-dung/import-tuyen-dung']);
@@ -933,7 +780,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
 
   listViewsFilter = [];
   cloneListViewsFilter = [];
-detailInfoFilter = null;
+  detailInfoFilter = null;
   optionsButonFilter = [
     { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm ml-2 height-56 addNew', icon: 'pi pi-plus' },
     { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger ml-2 height-56 addNew', icon: 'pi pi-times' },
@@ -941,37 +788,37 @@ detailInfoFilter = null;
 
   getCandidateFilter() {
     this.apiService.getCandidateFilter()
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(results => {
-      if(results.status === 'success') {
-        const listViews = cloneDeep(results.data.group_fields);
-        this.cloneListViewsFilter = cloneDeep(listViews);
-        this.listViewsFilter = [...listViews];
-        const params =  getParamString(listViews)
-        this.query = { ...this.query, ...params};
-        this.load();
-        this.FnEvent();
-        this.detailInfoFilter = results.data;
-      }
-    });
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(results => {
+        if (results.status === 'success') {
+          const listViews = cloneDeep(results.data.group_fields);
+          this.cloneListViewsFilter = cloneDeep(listViews);
+          this.listViewsFilter = [...listViews];
+          const params = getParamString(listViews)
+          this.query = { ...this.query, ...params };
+          this.load();
+          this.FnEvent();
+          this.detailInfoFilter = results.data;
+        }
+      });
   }
-  
-   filterLoad(event) {
+
+  filterLoad(event) {
     this.query = { ...this.query, ...event.data };
     this.load();
     this.FnEvent();
   }
 
-  close({event, datas}) {
-    if(event !== 'Close') {
+  close({ event, datas }) {
+    if (event !== 'Close') {
       const listViews = cloneDeep(this.cloneListViewsFilter);
       this.listViewsFilter = cloneDeep(listViews);
-      const params =  getParamString(listViews)
-      this.query = { ...this.query, ...params};
+      const params = getParamString(listViews)
+      this.query = { ...this.query, ...params };
       this.load();
       this.FnEvent();
-    }else {
-      this.listViewsFilter =  cloneDeep(datas);
+    } else {
+      this.listViewsFilter = cloneDeep(datas);
     }
   }
 
