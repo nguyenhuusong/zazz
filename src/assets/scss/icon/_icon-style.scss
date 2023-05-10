@@ -81,6 +81,117 @@ $orangerColor: rgb(255, 124, 89);
         &::after { background-image: getFullScreen($colorIcon); }
         &:hover{ &::after{ background-image: getFullScreen($IconHover); } }
     }
+    &.uni-home{
+        &::after { background-image: home($colorIcon); }
+        &:hover{ &::after{ background-image: home($IconHover); } }
+    }
+    &.uni-user{
+        &::after { background-image: user($colorIcon); }
+        &:hover{ &::after{ background-image: user($IconHover); } }
+    }
+    &.uni-noti{
+        &::after { background-image: noti($colorIcon); }
+        &:hover{ &::after{ background-image: noti($IconHover); } }
+    }
+    &.uni-note-checked{
+        &::after { background-image: noteChecked($colorIcon); }
+        &:hover{ &::after{ background-image: noteChecked($IconHover); } }
+    }
+    &.uni-money-cicle{
+        &::after { background-image: moneyCicle($colorIcon); }
+        &:hover{ &::after{ background-image: moneyCicle($IconHover); } }
+    }
+    &.uni-protect{
+        &::after { background-image: protect($colorIcon); }
+        &:hover{ &::after{ background-image: protect($IconHover); } }
+    }
+    &.uni-setting-transparent{
+        &::after { background-image: settingTransparent($colorIcon); }
+        &:hover{ &::after{ background-image: settingTransparent($IconHover); } }
+    }
+    &.uni-narrow-down{
+        &::after { background-image: narrowDown($colorIcon); }
+        &:hover{ &::after{ background-image: narrowDown($IconHover); } }
+    }
+    &.uni-delete{
+        &::after { background-image: delete($colorIcon); }
+        &:hover{ &::after{ background-image: delete($IconHover); } }
+    }
+    &.uni-edit{
+        &::after { background-image: edit($colorIcon); }
+        &:hover{ &::after{ background-image: edit($IconHover); } }
+    }
+    &.uni-plus-cicle{
+        &::after { background-image: plusCicle($colorIcon); }
+        &:hover{ &::after{ background-image: plusCicle($IconHover); } }
+    }
+    &.uni-plus{
+        &::after { background-image: plus($colorIcon); }
+        &:hover{ &::after{ background-image: plus($IconHover); } }
+    }
+    &.uni-upload{
+        &::after { background-image: upload($colorIcon); }
+        &:hover{ &::after{ background-image: upload($IconHover); } }
+    }
+    &.uni-calendar{
+        &::after { background-image: calendar($colorIcon); }
+        &:hover{ &::after{ background-image: calendar($IconHover); } }
+    }
+    &.uni-config{
+        &::after { background-image: config($colorIcon); }
+        &:hover{ &::after{ background-image: config($IconHover); } }
+    }
+    &.uni-cancel-cicle{
+        &::after { background-image: cancelCicle($colorIcon); }
+        &:hover{ &::after{ background-image: cancelCicle($IconHover); } }
+    }
+    &.uni-checked-cicle{
+        &::after { background-image: checkedCicle($colorIcon); }
+        &:hover{ &::after{ background-image: checkedCicle($IconHover); } }
+    }
+    &.uni-close{
+        &::after { background-image: close($colorIcon); }
+        &:hover{ &::after{ background-image: close($IconHover); } }
+    }
+    &.uni-narrow-long-left{
+        &::after { background-image: narrowLongLeft($colorIcon); }
+        &:hover{ &::after{ background-image: narrowLongLeft($IconHover); } }
+    }
+    &.uni-file-attach{
+        &::after { background-image: fileAttach($colorIcon); }
+        &:hover{ &::after{ background-image: fileAttach($IconHover); } }
+    }
+    &.uni-envelope{
+        &::after { background-image: envelope($colorIcon); }
+        &:hover{ &::after{ background-image: envelope($IconHover); } }
+    }
+    &.uni-reload{
+        &::after { background-image: reload($colorIcon); }
+        &:hover{ &::after{ background-image: reload($IconHover); } }
+    }
+    &.uni-config-table{
+        &::after { background-image: configTable($colorIcon); }
+        &:hover{ &::after{ background-image: configTable($IconHover); } }
+    }
+    &.uni-warning-cicle{
+        &::after { background-image: warningCicle($colorIcon); }
+        &:hover{ &::after{ background-image: warningCicle($IconHover); } }
+    }
+    &.uni-options{
+        &::after { background-image: options($colorIcon); }
+        &:hover{ &::after{ background-image: options($IconHover); } }
+    }
+    &.uni-search{
+        &::after { background-image: search($colorIcon); }
+        &:hover{ &::after{ background-image: search($IconHover); } }
+    }
+    &.uni-save{
+        &::after { background-image: save($colorIcon); }
+        &:hover{ &::after{ background-image: save($IconHover); } }
+    }
+    
+    
+    
     
 }
 .p-highlight, a:hover{
@@ -101,6 +212,33 @@ $orangerColor: rgb(255, 124, 89);
         &.uni-user-ban{ &::after { background-image: getUserBan($IconHover); } }
         &.uni-setting{ &::after { background-image: getSetting($IconHover); } }
         &.uni-full-screen{ &::after { background-image: getFullScreen($IconHover); } }
+        &.uni-home{ &::after { background-image: home($IconHover); } }
+        &.uni-user{ &::after { background-image: user($IconHover); } }
+        &.uni-noti{ &::after { background-image: noti($IconHover); } }
+        &.note-checked{ &::after { background-image: noteChecked($IconHover); } }
+        &.uni-money-cicle{ &::after { background-image: moneyCicle($IconHover); } }
+        &.uni-protect{ &::after { background-image: protect($IconHover); } }
+        &.uni-setting-transparent{ &::after { background-image: settingTransparent($IconHover); } }
+        &.uni-narrow-down{ &::after { background-image: narrowDown($IconHover); } }
+        &.uni-delete{ &::after { background-image: delete($IconHover); } }
+        &.uni-edit{ &::after { background-image: edit($IconHover); } }
+        &.uni-plus-cicle{ &::after { background-image: plusCicle($IconHover); } }
+        &.uni-plus{ &::after { background-image: plus($IconHover); } }
+        &.uni-upload{ &::after { background-image: upload($IconHover); } }
+        &.uni-calendar{ &::after { background-image: calendar($IconHover); } }
+        &.uni-config{ &::after { background-image: config($IconHover); } }
+        &.uni-cancel-cicle{ &::after { background-image: cancelCicle($IconHover); } }
+        &.uni-checked-cicle{ &::after { background-image: checkedCicle($IconHover); } }
+        &.uni-close{ &::after { background-image: close($IconHover); } }
+        &.uni-narrow-long-left{ &::after { background-image: narrowLongLeft($IconHover); } }
+        &.uni-file-attach{ &::after { background-image: fileAttach($IconHover); } }
+        &.uni-envelope{ &::after { background-image: envelope($IconHover); } }
+        &.uni-reload{ &::after { background-image: reload($IconHover); } }
+        &.uni-config-table{ &::after { background-image: configTable($IconHover); } }
+        &.uni-warning-cicle{ &::after { background-image: warningCicle($IconHover); } }
+        &.uni-options{ &::after { background-image: options($IconHover); } }
+        &.uni-search{ &::after { background-image: search($IconHover); } }
+        &.uni-save{ &::after { background-image: save($IconHover); } }
         
     }
 }
@@ -123,6 +261,33 @@ $orangerColor: rgb(255, 124, 89);
         &.uni-user-ban{ &::after { background-image: getUserBan($orangerColor); } }
         &.uni-setting{ &::after { background-image: getSetting($orangerColor); } }
         &.uni-full-screen{ &::after { background-image: getFullScreen($orangerColor); } }
+        &.uni-home{ &::after { background-image: home($orangerColor); } }
+        &.uni-user{ &::after { background-image: user($orangerColor); } }
+        &.uni-noti{ &::after { background-image: noti($orangerColor); } }
+        &.note-checked{ &::after { background-image: noteChecked($orangerColor); } }
+        &.uni-money-cicle{ &::after { background-image: moneyCicle($orangerColor); } }
+        &.uni-protect{ &::after { background-image: protect($orangerColor); } }
+        &.uni-setting-transparent{ &::after { background-image: settingTransparent($orangerColor); } }
+        &.uni-narrow-down{ &::after { background-image: narrowDown($orangerColor); } }
+        &.uni-delete{ &::after { background-image: delete($orangerColor); } }
+        &.uni-edit{ &::after { background-image: edit($orangerColor); } }
+        &.uni-plus-cicle{ &::after { background-image: plusCicle($orangerColor); } }
+        &.uni-plus{ &::after { background-image: plus($orangerColor); } }
+        &.uni-upload{ &::after { background-image: upload($orangerColor); } }
+        &.uni-calendar{ &::after { background-image: calendar($orangerColor); } }
+        &.uni-config{ &::after { background-image: config($orangerColor); } }
+        &.uni-cancel-cicle{ &::after { background-image: cancelCicle($orangerColor); } }
+        &.uni-checked-cicle{ &::after { background-image: checkedCicle($orangerColor); } }
+        &.uni-close{ &::after { background-image: close($orangerColor); } }
+        &.uni-narrow-long-left{ &::after { background-image: narrowLongLeft($orangerColor); } }
+        &.uni-file-attach{ &::after { background-image: fileAttach($orangerColor); } }
+        &.uni-envelope{ &::after { background-image: envelope($orangerColor); } }
+        &.uni-reload{ &::after { background-image: reload($orangerColor); } }
+        &.uni-config-table{ &::after { background-image: configTable($orangerColor); } }
+        &.uni-warning-cicle{ &::after { background-image: warningCicle($orangerColor); } }
+        &.uni-options{ &::after { background-image: options($orangerColor); } }
+        &.uni-search{ &::after { background-image: search($orangerColor); } }
+        &.uni-save{ &::after { background-image: save($orangerColor); } }
         
     }
 }

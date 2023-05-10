@@ -1669,8 +1669,8 @@ div.menu-agrid{
 #myGrid{
     .ag-floating-filter-input{
         .ag-input-field-input{
-            height: 30px;
-            border-radius: 4px;
+            height: 22px;
+            border-radius: 2px;
         }
     }
 }
@@ -3541,8 +3541,9 @@ app-edit-detail{
     }
     .ag-header-row{
         border-bottom: 1px solid #e2e2e2;
+        box-shadow: 1px 1px 1px #b9b9b9f0;
         &:first-child{
-            border-bottom: 1px solid #babfc7;
+            // border-bottom: 1px solid #babfc7;
             .ag-header-cell-text{
                 color: #212633;
                 font-size: 13.5px;
@@ -3601,6 +3602,90 @@ app-edit-detail{
                     }
                 }
             }
+        }
+    }
+}
+
+ag-grid-angular{
+    .ag-root-wrapper{
+        .ag-root{
+            .ag-header{
+                background: none;
+                .ag-header-cell-label {
+                    .ag-header-cell-text{
+                        font-family: "SFProTextRegular";
+                        font-weight: 600;
+                        font-size: 14px;
+                        line-height: 14px;
+                        color: #212633;
+                    }
+                }
+                .ag-floating-filter{
+                    .ag-input-wrapper{
+                        input{
+                            border: 1px solid #E2E6F2;
+                            border-radius: 4px;
+                        }
+                    }
+                    .ag-floating-filter-button-button{
+                        padding: 0px !important;
+                    }
+                }
+            }
+            .ag-header-cell{
+                padding-left: 11px;
+                padding-right: 11px;
+                border-right: 1px solid #d9dcde;
+                &:first-child{
+                    border-left: 1px solid #d9dcde;
+                }
+            }
+            .ag-cell{
+                padding-left: 11px;
+                padding-right: 11px;
+                .ag-cell-wrapper{
+                    .ag-cell-value{
+                        font-family: 'SFProTextRegular';
+                        font-weight: 400;
+                        font-size: 14px;
+                        color: #212633;
+                    }
+                }
+            }
+            .ag-row-focus{
+                .ag-cell{
+                    background: #fff !important;
+                    &.ag-cell-range-selected{
+                        background: #fff !important;
+                    }
+                }
+                
+            }
+            .ag-cell-range-selected{
+                background: #fff !important;
+            }
+            .ag-cell{
+                &.ag-cell-range-selected{
+                    background: #fff !important;
+                }
+            }
+            .ag-row{
+                border-bottom: 1px solid #d9dcde;
+            }
+        }
+        .ag-row-hover{
+            .ag-cell {
+                background: #eee;
+                cursor: pointer;
+            }
+        }
+        .ag-floating-filter{
+            .ag-floating-filter-button-button{
+                display: none;
+            }
+        }
+        .ag-body-viewport{
+            border-left: 1px solid #d9dcde;
         }
     }
 }
@@ -4619,6 +4704,7 @@ div.p-dropdown-panel{
     }
 }
 .ag-pinned-right-cols-container{
+    border-left: 1px solid #d9dcde;
     .ag-row-last{
         .ag-cell{
             // border-bottom: none !important;
@@ -5934,19 +6020,19 @@ section:after {
     color: #2f3e62;
     font-family: "SFProTextMedium";
     position: relative;
-    padding-left: 16px;
+    padding-left: 0;
     line-height: 28px;
     display: block;
     margin-top: 0px;
     &:after {
         content: "";
-        width: 4px;
-        height: 24px;
+        width: 60px;
+        height: 3px;
         background: #4C97E4;
-        display: block!important;
+        display: block !important;
         position: absolute;
         left: 0px;
-        top: 2px;
+        top: 100%;
     }
 }
 .icons-detail-config{
