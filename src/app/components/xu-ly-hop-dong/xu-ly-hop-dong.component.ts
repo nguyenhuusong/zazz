@@ -359,6 +359,16 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
   columnDefsPrint = []
   initGrid() {
     this.columnDefs = [
+      {
+        filter: '',
+        width: 70,
+        pinned: 'left',
+        cellClass: ['border-right', 'no-auto'],
+        checkboxSelection: true,
+        headerCheckboxSelection: true,
+        headerCheckboxSelectionFilteredOnly: true,
+        field: ''
+      },
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       {
         headerComponentParams: {
@@ -371,10 +381,9 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
         cellRenderer: 'buttonAgGridComponent',
         cellClass: ['border-right', 'no-auto'],
         cellRendererParams: (params: any) => this.showButtons(params),
-        checkboxSelection: true,
-        headerCheckboxSelection: true,
-        headerCheckboxSelectionFilteredOnly: true,
-        field: 'checkbox'
+        checkboxSelection: false,
+        headerCheckboxSelection: false,
+        headerCheckboxSelectionFilteredOnly: false,
       }
     ]
 
