@@ -192,14 +192,13 @@
     [draggable]="false" [resizable]="false" [focusTrap]="false" >
     <div class="header-filter-search  mt-1">
         <div class="icon col-12 pl-0">
-            <div class="radios grid" *ngIf="recruitmentStatus.length > 0 && canSttValue">
-                <div [ngClass]="canSttValue.can_st >= recrui.code ? 'op6' : ''" class="p-field-radiobutton col-6" style="margin-bottom: 5px;" *ngFor="let recrui of recruitmentStatus">
+            <div class="radios grid">
+                <div class="p-field-radiobutton col-6" style="margin-bottom: 5px;" *ngFor="let recrui of recruitmentStatus">
                     <p-radioButton
-                        [disabled]="canSttValue.can_st >= recrui.code"
-                        name="recrui" value="{{ recrui.code }}" 
+                        name="recrui" value="{{ recrui.value }}" 
                         [(ngModel)]="recruitmentStatusSelected" 
-                        inputId="recrui{{ recrui.code }}"></p-radioButton>
-                    <label style="margin-left: 5px;" for="recrui{{ recrui.code }}">{{ recrui.label }}</label>
+                        inputId="recrui{{ recrui.value }}"></p-radioButton>
+                    <label style="margin-left: 5px;" for="recrui{{ recrui.value }}">{{ recrui.name }}</label>
                 </div>
             </div>
         </div>

@@ -81,7 +81,7 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
     this.handleParams();
   }
 
-  
+
   menuActions = [];
   modelEdit = {
     canId: null,
@@ -160,15 +160,15 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
       vacancyId: this.detailInfo.vacancyId
     }
     this.apiService.recruiUpdateStatus(params)
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe((results: any) => {
-      if (results.status === 'success') {
-        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Chuyển thành công!' });
-        this.getCandidateInfo();
-      } else {
-        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
-      }
-    });
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((results: any) => {
+        if (results.status === 'success') {
+          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Chuyển thành công!' });
+          this.getCandidateInfo();
+        } else {
+          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+        }
+      });
   }
 
   getCandidateInfo() {
@@ -186,14 +186,14 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
           this.status = results.data.flowStatuses;
           this.status.push(results.data.status);
           this.selectedCountry = results.data.status;
-         this.initButton();
+          this.initButton();
           this.detailEdit = results.data
         }
       });
   }
 
   initButton() {
-    this.optionsButon = this.detailInfo.actions.map(item=> {
+    this.optionsButon = this.detailInfo.actions.map(item => {
       return {
         label: item.name,
         value: item.code,
@@ -201,11 +201,11 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.menuActions = this.detailInfo.actions.map((item, index)=> {
+    this.menuActions = this.detailInfo.actions.map((item, index) => {
       return {
         label: item.name,
         value: item.code,
-        styleClass: index === 0 ? 'hidden': '',
+        styleClass: index === 0 ? 'hidden' : '',
         icon: item.icon,
         command: () => {
           this.callActions(item.code);
@@ -215,6 +215,7 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
   }
 
   callActions(code) {
+    console.log(code)
     setTimeout(() => {
       const s: HTMLElement = document.getElementById(code);
       s.click();
@@ -261,26 +262,74 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
   }
 
   setCandidateInfo(e) {
-    if(e.event === 'actSave') {
-      this.saveInfo(e)
-    }else if(e.event === 'actSendMail') {
-      this.sendEmail();
-    }else if(e.event === 'actAddProfile') {
-      this.displayAddCCCD = true;
-    }else if(e.event === 'actRegEmpUser') {
-      this.regEmpUser();
-    }
+    // tạo hàm từ code api trả ra
+    this[e.event](e)
+  }
+
+  actAddProfile(e) {
+    this.displayAddCCCD = true;
+  }
+
+  // actSendMail(e) {
+  //   this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Chức năng đang phát triển !' });
+  // }
+  isSendMail = false;
+  mailsInput = [];
+  mailInputValue = null;
+  actSendMail(e) {
+    this.apiService.getRecruitMailInput(queryString.stringify({ can_st: this.detailInfo.flow_st }))
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(results => {
+        if (results.status === 'success') {
+          this.mailsInput = results.data.map(d => {
+            return {
+              label: d.name,
+              value: d.value
+            }
+          });
+          if (this.mailsInput.length > 0) {
+            this.isSendMail = true;
+          }
+        }
+      })
   }
 
   sendEmail() {
-    this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Chức năng đang phát triển !' });
+    if (!this.mailInputValue) {
+      this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Chưa chọn nội dung gửi' });
+      return
+    }
+    const data = {
+      tempId: this.mailInputValue,
+      canIds: this.detailInfo.canId,
+      can_st: this.detailInfo.flow_st
+    }
+    localStorage.setItem('RecruitMail', JSON.stringify(data))
+    this.router.navigate(['/cai-dat/thong-bao/them-moi-thong-bao'], { queryParams: { external_name: '' } })
+    this.isSendMail = false;
   }
 
-  regEmpUser() {
-    this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Chức năng đang phát triển !' });
+
+  actRegEmpUser(e) {
+    this.confirmationService.confirm({
+      message: 'Bạn có chắc chắn muốn tạo tài khoản?',
+      accept: () => {
+        this.spinner.show();
+        const param = {
+          canId: this.detailInfo.canId
+        }
+        this.apiService.setCandidateRegister(param).subscribe((result: any) => {
+          if(result.status === 'success') {
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: result.message ? result.message : 'Tạo tài khoản thành công ' });
+          }else {
+            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: result.message ? result.message : 'Thất bại' });
+          }
+        })
+      }
+    })
   }
 
-  saveInfo(event) {
+  actSave(event) {
     this.spinner.show();
     const params = {
       ...this.detailInfo, group_fields: event.datas

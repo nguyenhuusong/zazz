@@ -2609,6 +2609,9 @@ export class ApiHrmService {
   getRecruitRoundTitles(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetRecruitRoundTitles?` + queryParams, this.options)
   }
+  getRecruitRoundStatus(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetRecruitRoundStatus?` + queryParams, this.options)
+  }
 
   getRecruitStatusPage(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/recruitment/GetRecruitStatusPage?` + queryParams, this.options)

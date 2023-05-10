@@ -328,11 +328,15 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
     this.dataRowSelected = event;
   }
 
-  delRow(event) {
+  actDelete(event) {
+    if(event) {
+      this.dataRowSelected = [];
+      this.dataRowSelected.push(event.rowData)
+    }
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa tuyển dụng?',
       accept: () => {
-        const queryParams = queryString.stringify({ canId: event.rowData.canId });
+        const queryParams = queryString.stringify({ canId: this.dataRowSelected[0].canId });
         this.apiService.delCandidateInfo(queryParams)
           .pipe(takeUntil(this.unsubscribe$))
           .subscribe(results => {
@@ -395,7 +399,6 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
       { label: 'Tuyển dụng' },
       { label: 'Danh sách tuyển dụng' },
     ];
-    this.getReRound();
     this.buttonTiemNang = [
       {
         label: 'Danh sách tiềm năng',
@@ -434,8 +437,12 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
 
   }
   isChuyenVong = false;
-  chuyenVong() {
-    this.isChuyenVong = true;
+  actStatus(event) {
+    if (event) {
+      this.dataRowSelected = [];
+      this.dataRowSelected.push(event.rowData)
+    }
+    this.getReRound(event.rowData.can_st);
   }
 
   actRegEmpUser(event) {
@@ -447,13 +454,12 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   }
 
   setCandidateRegisters() {
-    const checks = this.dataRowSelected.filter(d => ((d.round_result === 2) && (d.status_account === 0)));
-    if (checks.length > 0) {
+    if (this.dataRowSelected.length > 0) {
       this.confirmationService.confirm({
         message: 'Bạn có chắc chắn muốn tạo tài khoản?',
         accept: () => {
           let listApi = [];
-          for (let item of checks) {
+          for (let item of this.dataRowSelected) {
             const param = {
               canId: item.canId
             }
@@ -474,8 +480,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
         }
       })
     } else {
-      const stringName = this.dataRowSelected.length > 0 ? this.dataRowSelected.map(d => d.fullName).toString() : ''
-      this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: `[${stringName}] bản ghi chưa đủ điều kiện để chuyển hồ sơ ! ` });
+      this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: `Chưa chọn bản ghi nào` });
     }
   }
 
@@ -515,18 +520,18 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
       })
   }
 
-  getReRound() {
+  getReRound(round_value) {
     this.recruitmentStatus = []
-    this.apiService.getRecruitRoundTitles(queryString.stringify({ organizeIds: this.organizeIdSelected }))
+    this.apiService.getRecruitRoundStatus(queryString.stringify({ round_value: round_value }))
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {
         if (results.status === 'success') {
-          this.recruitmentStatus = results.data.map(d => {
-            return {
-              label: d.name,
-              code: d.value
-            }
-          });
+          this.recruitmentStatus = results.data;
+          if(this.recruitmentStatus.length > 0) {
+            this.isChuyenVong = true;
+          }else {
+            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: `Bản ghi đang ở trạng thái chưa chuyển được vòng` });
+          }
         }
       })
   }
