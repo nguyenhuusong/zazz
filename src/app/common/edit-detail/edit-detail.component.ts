@@ -282,7 +282,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
     }else if(ActionsNotSave.indexOf(event) > -1) {
       let group_fields = cloneDeep(this.dataView)
       this.callbackform(group_fields, event)
-    }else if(event === 'Update' || event ==='newUpdate') {
+    }else if(event === 'Update' || event ==='newUpdate' || event ==='Submit') {
       let group_fields = cloneDeep(this.dataView)
       this.callbackform(group_fields, event)
     } else if (event === 'TamTinh') {
