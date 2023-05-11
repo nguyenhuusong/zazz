@@ -139,7 +139,7 @@ export class ViTriCongViecComponent implements OnInit, AfterViewInit {
         // }
 
         this.status = results.data.flowStatuses;
-        if(results.data.status && results.data.status.length > 0) {
+        if(results.data.status) {
           this.status.push(results.data.status);
         }
         this.selectedStatus = results.data.status;

@@ -6772,3 +6772,53 @@ hr{
         order: 3 !important;
     }
 }
+
+//trạng thái
+
+.bgInprogress {
+    background-color: var(--blue-500) !important;
+    color: var(--surface-0) !important;
+}
+
+.bgTodo {
+    background-color: var(--surface-500) !important;
+    color: var(--surface-0) ;
+}
+
+.bgUndo {
+    background-color: var(--green-500) !important;
+    color: var(--surface-0) !important;
+}
+
+.bgDone {
+    background-color: var(--primary-500) !important;
+    color: var(--surface-0) !important;
+}
+
+.todo {
+    background-color: var(--primary-color-text);
+    color: var(--surface-500);
+}
+
+.undo {
+    background-color: var(--primary-color-text);
+    color: var(--green-500);
+}
+
+.done {
+    background-color: var(--primary-color-text);
+    color: var(--green-500);
+}
+
+.inprogress{
+    background-color: var(--primary-color-text);
+    color: var(--primary-500);
+}
+
+.field-group.select {
+    .p-dropdown-item {
+        padding-bottom: 0;
+        padding-top: 0;
+    }
+}
+

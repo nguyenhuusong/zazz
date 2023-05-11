@@ -82,7 +82,6 @@ export class EmployeeInfoComponent implements OnInit {
   }
   
   reloadEdit() {
-    console.log('rieload')
     this.dataEmployeeStatus = null;
     this.getEmployeeStatus();
   }

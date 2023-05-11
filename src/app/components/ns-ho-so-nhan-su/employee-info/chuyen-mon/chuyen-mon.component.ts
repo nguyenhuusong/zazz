@@ -60,7 +60,7 @@ export class ChuyenMonComponent implements OnInit {
         //   this.codeStaff = getFieldValueAggrid(results.data, 'code');
         // }
         this.status = results.data.flowStatuses;
-        if(results.data.status && results.data.status.length > 0) {
+        if(results.data.status) {
           this.status.push(results.data.status);
         }
         this.selectedStatus = results.data.status;
