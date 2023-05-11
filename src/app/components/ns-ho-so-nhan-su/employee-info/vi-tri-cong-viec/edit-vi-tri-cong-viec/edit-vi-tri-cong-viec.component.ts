@@ -12,6 +12,7 @@ import { Subject, takeUntil } from 'rxjs';
 })
 export class EditViTriCongViecComponent implements OnInit {
   @Input() empId = null;
+  @Input() isEditDetail: boolean = false;
   @Output() cancelSave = new EventEmitter<any>();
   detailInfo = null;
   listViews = [];
@@ -34,7 +35,8 @@ export class EditViTriCongViecComponent implements OnInit {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
-
+  status = [];
+  selectedStatus = null;
   activeIndex = 0;
   steps = [];
   getDetail() {
@@ -48,40 +50,51 @@ export class EditViTriCongViecComponent implements OnInit {
         this.spinner.hide();
         this.listViews = cloneDeep(results.data.group_fields || []);
         this.detailInfo = results.data;
-        // this.activeIndex = results.data.flow_st;
-        // this.steps = results.data.flowStatuses.map(d => {
-        //   return {
-        //     label: d.flow_name,
-        //     value: d.flow_st
-        //   }
-        // });
-        // setTimeout(() => {
-        //   this.stepActivated();
-        // }, 100);
-        // if(results.data.submit_st) {
-        //   this.optionsButtonsView = [
-        //     { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
-        //     { label: 'Trình duyệt', value: 'Submit', class: 'btn-accept' }
-        //   ]
-        // }else {
-        //   if(results.data.save_st) {
-        //     this.optionsButtonsView = [
-        //       { label: results.data.flow_st === 0 ? 'Hủy' : 'Quay lại', value: results.data.flow_st === 0 ? 'Cancel': 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
-        //       { label: 'Lưu tạm', value: 'SaveNhap', class: 'btn-accept' },
-        //       { label: 'Tiếp tục', value: 'Update', class: 'btn-accept' }
-        //     ]
-        //   }else {
-        //     this.optionsButtonsView = [
-        //       { label: results.data.flow_st === 0 ? 'Hủy' : 'Quay lại', value: results.data.flow_st === 0 ? 'Cancel': 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
-        //       { label: 'Tiếp tục', value: 'Update', class: 'btn-accept' }
-        //     ]
-        //   }
-       
-        // }
+        this.status = results.data.flowStatuses;
+        if(results.data.status) {
+          this.status.push(results.data.status);
+        }
+        this.selectedStatus = results.data.status;
+        this.initButton();
       };
     }, error => {
       this.spinner.hide();
       console.log('error', error);
+    });
+  }
+
+  UpdateStatus() {
+    this.getDetail(); 
+
+    // check lại xem cần gửi lên trạng thái không
+  }
+  
+  callActions(code) {
+    setTimeout(() => {
+      const s: HTMLElement = document.getElementById(code);
+      s.click();
+    }, 400);
+  }
+  menuActions = [];
+  initButton() {
+    this.optionsButtonsView = this.detailInfo.actions.map(item => {
+      return {
+        label: item.name,
+        value: item.code,
+        icon: item.icon
+      }
+    });
+
+    this.menuActions = this.detailInfo.actions.map((item, index) => {
+      return {
+        label: item.name,
+        value: item.code,
+        styleClass: index === 0 ? 'hidden' : '',
+        icon: item.icon,
+        command: () => {
+          this[item.code]();
+        }
+      }
     });
   }
 

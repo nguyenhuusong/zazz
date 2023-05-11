@@ -158,13 +158,9 @@
 
 
 
-<p-dialog [(visible)]="isEditDetail" [autoZIndex]="true" [modal]="true"  appendTo="body"
-    [style]="{width: '1300px', height: 'auto'}">
-    <p-header>
-       Chỉnh sửa vị trí công việc
-    </p-header>
-        <app-edit-vi-tri-cong-viec *ngIf="isEditDetail" [empId]="empId" (cancelSave)="cancelSetDetail($event)"></app-edit-vi-tri-cong-viec>
-</p-dialog>
+
+<app-edit-vi-tri-cong-viec *ngIf="isEditDetail" [isEditDetail]="isEditDetail" [empId]="empId" (cancelSave)="cancelSetDetail($event)"></app-edit-vi-tri-cong-viec>
+
 
 <p-dialog styleClass="popup-btngroup-edit-detail" [maximizable]="true" header=" Xác nhận nhân viên nghỉ việc" [(visible)]="displayFormTerminate" [modal]="true"  [draggable]="false" [resizable]="false"
     [style]="{width: '80vw'}" [autoZIndex]=true [draggable]="false" [resizable]="false">
