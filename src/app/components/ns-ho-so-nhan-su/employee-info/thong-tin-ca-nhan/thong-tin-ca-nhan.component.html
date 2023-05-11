@@ -42,7 +42,7 @@
             </ng-template>
         </p-dropdown>
     </div>
-    <p-splitButton icon="pi pi-send" *ngIf="menuActions.length > 0" styleClass="p-button-sm ml-2" [appendTo]="'body'" (onClick)="callActions(menuActions[0].value)" [label]="menuActions[0].label" [model]="menuActions"></p-splitButton>
+    <p-splitButton icon="pi pi-send" *ngIf="menuActions.length > 0" styleClass="p-button-sm ml-2" [appendTo]="'body'" (onClick)="actViewEdit(menuActions[0].value)" [label]="menuActions[0].label" [model]="menuActions"></p-splitButton>
     <p-button label="Quay lại" styleClass="p-button-secondary p-button-sm ml-2" [style]="{'z-index': 9}" icon="pi pi-directions-alt"></p-button>
       </div>
   
@@ -90,12 +90,4 @@
     <!-- <app-upload-file [multiple]="" (callback)="handleUpload($event)" *ngIf="displayuploadcontract"></app-upload-file> -->
 </p-dialog>
 
-
-
-<p-dialog [(visible)]="isEditDetail" [autoZIndex]="true" [modal]="true"  appendTo="body"
-    [style]="{width: '1300px', height: 'auto'}">
-    <p-header>
-        Sửa thông tin cá nhân
-    </p-header>
-        <app-thong-tin-ca-nhan-edit-detail *ngIf="isEditDetail" [empId]="empId" (cancelSave)="cancelSetDetail($event)"></app-thong-tin-ca-nhan-edit-detail>
-</p-dialog>
+<app-thong-tin-ca-nhan-edit-detail *ngIf="isEditDetail" [isEditDetail]="isEditDetail" [empId]="empId" (cancelSave)="cancelSetDetail($event)"></app-thong-tin-ca-nhan-edit-detail>

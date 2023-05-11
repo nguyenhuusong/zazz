@@ -68,10 +68,10 @@ export class ThongTinCaNhanComponent implements OnInit {
           this.status.push(results.data.status);
         }
         this.selectedStatus = results.data.status;
-
         this.listViews = cloneDeep(results.data.group_fields || []);
         this.listViewsForm = cloneDeep(results.data.group_fields || []);
         this.detailInfo = results.data;
+        this.initButton();
         this.spinner.hide();
       }
     }, error => {
@@ -85,31 +85,31 @@ export class ThongTinCaNhanComponent implements OnInit {
   }
   
   callActions(e) {
-
+    
   }
 
   optionsButon = [];
   menuActions = [];
   initButton() {
-    this.optionsButon = this.detailInfo.actions.map(item => {
-      return {
-        label: item.name,
-        value: item.code,
-        icon: item.icon
-      }
-    });
-
-    // this.menuActions = this.detailInfo.actions.map((item, index) => {
+    // this.optionsButon = this.detailInfo.actions.map(item => {
     //   return {
     //     label: item.name,
     //     value: item.code,
-    //     styleClass: index === 0 ? 'hidden' : '',
-    //     icon: item.icon,
-    //     command: () => {
-    //       this.callActions(item.code);
-    //     }
+    //     icon: item.icon
     //   }
     // });
+
+    this.menuActions = this.detailInfo.actions.map((item, index) => {
+      return {
+        label: item.name,
+        value: item.code,
+        styleClass: index === 0 ? 'hidden' : '',
+        icon: item.icon,
+        command: () => {
+          this[item.code]();
+        }
+      }
+    });
   }
 
   displayuploadcontract = false;
@@ -166,7 +166,7 @@ export class ThongTinCaNhanComponent implements OnInit {
  
 
   isEditDetail = false;
-  editDetail() {
+  actViewEdit(code) {
     this.isEditDetail = true;
   }
 
