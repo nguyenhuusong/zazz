@@ -53,31 +53,12 @@ export class ThongTinCaNhanEditDetailComponent implements OnInit {
         this.spinner.hide();
         this.listViews = cloneDeep(results.data.group_fields || []);
         this.detailInfo = results.data;
-        this.activeIndex = results.data.flow_st;
         this.status = results.data.flowStatuses;
         if(results.data.status) {
           this.status.push(results.data.status);
         }
         this.selectedStatus = results.data.status;
-        this.flowCurrent = results.data.flow_cur + 1;
         this.initButton();
-        this.steps = results.data.flowStatuses.map(d => {
-          return {
-            label: d.flow_name,
-            value: d.flow_st
-          }
-        });
-        setTimeout(() => {
-          this.stepActivated();
-        }, 100);
-
-        // this.optionsButtonsView = [
-        //   { label: 'Quay lại', value: 'BackPage', class: `p-button-secondary ${results.data.prev_st ? '' : 'hidden'}`, icon: 'pi pi-caret-left',  },
-        //   { label: 'Tiếp tục', value: 'Update', class: `btn-accept ${results.data.next_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-caret-right' },
-        //   { label: 'Lưu tạm', value: 'SaveNhap', class: `btn-accept ${results.data.save_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
-        //   { label: 'Xác nhận', value: 'Submit', class: `btn-accept ${results.data.submit_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
-        //   { label: 'Đóng', value: 'Close', class: `p-button-danger ml-1`, icon: 'pi pi-times' }
-        // ]
       };
     }, error => {
       this.spinner.hide();
@@ -86,8 +67,8 @@ export class ThongTinCaNhanEditDetailComponent implements OnInit {
   }
 
   
-  recruiUpdateStatus() {
-
+  UpdateStatus() {
+    this.getDetail(this.selectedStatus.value);
   }
   
   callActions(code) {
