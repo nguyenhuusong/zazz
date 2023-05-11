@@ -44,6 +44,8 @@ export class ThueBaoHiemComponent implements OnInit {
   codeStaff = ''
   listViews = [];
   listViewsForm = [];
+  status = [];
+  selectedStatus = null;
   getEmpByInsurance(): void {
     this.spinner.show();
     this.listViews = [];
@@ -53,9 +55,14 @@ export class ThueBaoHiemComponent implements OnInit {
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(results => {
       if (results.status === 'success') {
-        if (!this.codeStaff) {
-          this.codeStaff = getFieldValueAggrid(results.data, 'code');
+        // if (!this.codeStaff) { //không hiểu thêm vào làm gì 
+        //   this.codeStaff = getFieldValueAggrid(results.data, 'code');
+        // }
+        this.status = results.data.flowStatuses;
+        if(results.data.status) {
+          this.status.push(results.data.status);
         }
+        this.selectedStatus = results.data.status;
         this.listViews = cloneDeep(results.data.group_fields || []);
         this.detailInfo = results.data;
         this.spinner.hide();
@@ -65,6 +72,41 @@ export class ThueBaoHiemComponent implements OnInit {
     });
     // this.gridApi.sizeColumnsToFit();
   }
+
+  
+  recruiUpdateStatus() {
+
+  }
+  
+  callActions(e) {
+
+  }
+
+  optionsButon = [];
+  menuActions = [];
+  initButton() {
+    this.optionsButon = this.detailInfo.actions.map(item => {
+      return {
+        label: item.name,
+        value: item.code,
+        icon: item.icon
+      }
+    });
+
+    // this.menuActions = this.detailInfo.actions.map((item, index) => {
+    //   return {
+    //     label: item.name,
+    //     value: item.code,
+    //     styleClass: index === 0 ? 'hidden' : '',
+    //     icon: item.icon,
+    //     command: () => {
+    //       this.callActions(item.code);
+    //     }
+    //   }
+    // });
+  }
+ 
+
  
   displayuploadcontract = false;
   record = null;

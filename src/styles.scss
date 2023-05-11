@@ -587,9 +587,10 @@ body {
              min-width: 58px;
              .ag-header-cell-label{
                  .ag-header-cell-text{
+                    font-family: "SFProTextRegular";
                     white-space: break-spaces;
-                    color: #212633;
-                    font-size: 13.5px;
+                    color: rgba(0,0,0,0.9);
+                    font-size:.875rem;
                  }
              }
              &:first-child{
@@ -4200,8 +4201,14 @@ p-button{
 .ag-theme-alpine .ag-cell.ag-cell-first-right-pinned:not(.ag-cell-range-left):not(.ag-cell-range-single-cell){
     border-left-color: #E5E5E5;
 }
-.ag-theme-alpine .ag-pinned-left-header{
+.ag-theme-balham .ag-pinned-left-header{
     border-right-color: #E5E5E5;
+    border-right: none !important;
+}
+.ag-theme-balham .ag-pinned-right-header{
+    border-right-color: #E5E5E5;
+    border-right: none !important;
+    border-left: none !important;
 }
 
 .popup-setting{
@@ -4220,7 +4227,9 @@ p-button{
         &> .p-menuitem {
             &> .p-menuitem-link {
                     .p-menuitem-text{
-                        font-family: $fontMmedium;
+                        font-family: "SFProTextRegular";
+                        white-space: nowrap !important ;
+                        font-size: .875rem;
                     }
             }
         }
@@ -6024,7 +6033,7 @@ section:after {
     margin-top: 0px;
     &:after {
         content: "";
-        width: 60px;
+        width: 34px;
         height: 3px;
         background: #4C97E4;
         display: block !important;
@@ -6750,3 +6759,66 @@ hr{
 .hidden {
     display: none !important;
 }
+
+.ag-tabs-header {
+    display: flex;
+    [aria-label="general"] {
+        order: 2 !important;
+    }
+    [aria-label="filter"] {
+        order: 1 !important;
+    }
+    [aria-label="columns"] {
+        order: 3 !important;
+    }
+}
+
+//trạng thái
+
+.bgInprogress {
+    background-color: var(--blue-500) !important;
+    color: var(--surface-0) !important;
+}
+
+.bgTodo {
+    background-color: var(--surface-500) !important;
+    color: var(--surface-0) ;
+}
+
+.bgUndo {
+    background-color: var(--green-500) !important;
+    color: var(--surface-0) !important;
+}
+
+.bgDone {
+    background-color: var(--primary-500) !important;
+    color: var(--surface-0) !important;
+}
+
+.todo {
+    background-color: var(--primary-color-text);
+    color: var(--surface-500);
+}
+
+.undo {
+    background-color: var(--primary-color-text);
+    color: var(--green-500);
+}
+
+.done {
+    background-color: var(--primary-color-text);
+    color: var(--green-500);
+}
+
+.inprogress{
+    background-color: var(--primary-color-text);
+    color: var(--primary-500);
+}
+
+.field-group.select {
+    .p-dropdown-item {
+        padding-bottom: 0;
+        padding-top: 0;
+    }
+}
+

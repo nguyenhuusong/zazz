@@ -12,7 +12,11 @@ export function AgGridFn(lists: Array<any>) {
                 field: value.columnField,
                 cellClass: value.cellClass,
                 headerClass: 'BGE8E9ED',
-                filter: value.isFilter ? 'agTextColumnFilter' : '',
+                filter: value.isFilter,
+                menuTabs: ['filterMenuTab', 'generalMenuTab'],
+                columnsMenuParams: {
+                    suppressColumnFilter: true,
+                  },
                 sortable: false,
                 width: value.columnWidth,
                 cellRenderer: (params: any) => {
@@ -30,7 +34,11 @@ export function AgGridFn(lists: Array<any>) {
                     field: value.columnField,
                     headerClass: 'BGE8E9ED',
                     cellClass: value.cellClass,
-                    filter: value.isFilter ? 'agTextColumnFilter' : '',
+                    filter: value.isFilter,
+                    menuTabs: ['filterMenuTab', 'generalMenuTab'],
+                    columnsMenuParams: {
+                        suppressColumnFilter: true,
+                      },
                     sortable: false,
                     width: value.columnWidth,
                     hide: value.isHide ? true : false,
@@ -47,7 +55,11 @@ export function AgGridFn(lists: Array<any>) {
                     field: value.columnField,
                     cellClass: value.cellClass,
                     headerClass: 'BGE8E9ED',
-                    filter: value.isFilter ? 'agTextColumnFilter' : '',
+                    filter: value.isFilter,
+                    menuTabs: ['filterMenuTab', 'generalMenuTab'],
+                    columnsMenuParams: {
+                        suppressColumnFilter: true,
+                      },
                     sortable: false,
                     width: value.columnWidth,
                     cellRenderer: (params: any) => {
@@ -70,7 +82,11 @@ export function AgGridFn(lists: Array<any>) {
                     headerClass: value.headerClass ? value.headerClass : 'BGE8E9ED',
                     cellStyle: value.cellStyle,
                     cellClassRules: value.conditionClass,
-                    filter: value.isFilter ? 'agTextColumnFilter' : '',
+                    filter: value.isFilter,
+                    menuTabs: ['filterMenuTab', 'generalMenuTab'],
+                    columnsMenuParams: {
+                        suppressColumnFilter: true,
+                      },
                     sortable: false,
                     width: value.columnWidth,
                     cellRenderer: value.isMasterDetail ? 'agGroupCellRenderer' : '',
@@ -90,7 +106,11 @@ export function AgGridFn(lists: Array<any>) {
                     headerClass: value.headerClass ? value.headerClass : 'BGE8E9ED',
                     cellStyle: value.cellStyle,
                     cellClassRules: value.conditionClass,
-                    filter: value.isFilter ? 'agTextColumnFilter' : '',
+                    filter: value.isFilter,
+                    menuTabs: ['filterMenuTab', 'generalMenuTab'],
+                    columnsMenuParams: {
+                        suppressColumnFilter: true,
+                      },
                     sortable: false,
                     width: value.columnWidth,
                     cellRenderer: (params: any) => {
@@ -110,7 +130,11 @@ export function AgGridFn(lists: Array<any>) {
                     headerName: value.columnCaption,
                     field: value.columnField,
                     cellClass: value.cellClass,
-                    filter: value.isFilter ? 'agTextColumnFilter' : '',
+                    filter: value.isFilter,
+                    menuTabs: ['filterMenuTab', 'generalMenuTab'],
+                    columnsMenuParams: {
+                        suppressColumnFilter: true,
+                      },
                     sortable: false,
                     width: value.columnWidth,
                     cellRenderer: (params: any) => {
@@ -137,11 +161,9 @@ export function AgGridFn(lists: Array<any>) {
                     // pinned: value.pinned,
                     // tooltipField: value.columnField,
                     // headerTooltip: value.
-                    headerClass: 'BGE8E9ED',
                     headerName: value.columnCaption,
                     field: value.columnField,
                     cellClass: value.cellClass ? value.cellClass : ["border-right", "d-flex", "align-items-center"],
-                    filter: value.isFilter ? 'agSetColumnFilter' : '',
                     sortable: false,
                     editable: value.editable ? value.editable : false,
                     filterParams: {
@@ -153,7 +175,12 @@ export function AgGridFn(lists: Array<any>) {
                     hide: value.isHide ? true : false,
                     pinned: value.pinned,
                     tooltipField: value.columnField,
-                    headerTooltip: value.columnCaption
+                    headerTooltip: value.columnCaption,
+                    filter: value.isFilter,
+                    menuTabs: ['filterMenuTab', 'generalMenuTab'],
+                    columnsMenuParams: {
+                        suppressColumnFilter: true,
+                      },
                 }
             }
         }

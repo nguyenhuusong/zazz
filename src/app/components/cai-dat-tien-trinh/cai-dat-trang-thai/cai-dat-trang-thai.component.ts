@@ -349,6 +349,7 @@ export class CaiDatTrangThaiComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit() {
+    this.load()
   }
 }
 
