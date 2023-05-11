@@ -586,9 +586,10 @@ body {
              min-width: 58px;
              .ag-header-cell-label{
                  .ag-header-cell-text{
+                    font-family: "SFProTextRegular";
                     white-space: break-spaces;
                     color: rgba(0,0,0,0.9);
-                    font-size:.875rem;
+                    font-size:.75rem;
                  }
              }
              &:first-child{
@@ -4228,7 +4229,8 @@ p-button{
         &> .p-menuitem {
             &> .p-menuitem-link {
                     .p-menuitem-text{
-                        font-family: $fontMmedium;
+                        font-family: "SFProTextRegular";
+                        white-space: nowrap !important ;
                         font-size: .875rem;
                     }
             }
