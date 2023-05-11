@@ -34,7 +34,7 @@
             <!-- <app-hrm-filter-report [fields]="dataFilter" (queryData)="theQueryUpdated($event)"></app-hrm-filter-report> -->
         </div>
     </section>
-    <section class="content pb-0" *ngIf="isShowLists && !isGridTree">
+    <section class="content" *ngIf="isShowLists && !isGridTree">
         <div class="grid-default" #container>
             <app-list-grid-angular *ngIf="columnDefs.length > 0 && isShowLists" [listsData]="listsData" [domLayout]="'autoHeight'"
                 (showConfig)="cauhinh()" [idGrid]="gridKey + '_45dfs'" 
@@ -51,7 +51,7 @@
             </div>
         </div>
     </section>
-    <section class="content pb-0" *ngIf="isShowLists && isGridTree">
+    <section class="content" *ngIf="isShowLists && isGridTree">
         <div class="grid-default" #container>
             <app-list-grid-tree-angular 
             *ngIf="columnDefs.length > 0  && autoGroupColumnDef && getDataPath"  

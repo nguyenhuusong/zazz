@@ -54,7 +54,7 @@
 <section>
     <p-tabView [(activeIndex)]="indexTab" (onChange)="handleChange($event)">
         <p-tabPanel header="Tài liệu chung">
-            <section class="content pb-0">
+            <section class="content">
                 <div class="grid-default" #container>
                     <app-list-grid-angular *ngIf="columnDefs?.length > 0"
                         [listsData]="listsData" 
@@ -80,7 +80,7 @@
             </section>
         </p-tabPanel>
         <p-tabPanel header="Tài liệu cá nhân">
-            <section class="content pb-0">
+            <section class="content">
                 <div class="grid-default" #container>
                     <app-list-grid-angular *ngIf="columnDefs2?.length > 0"
                         [listsData]="listsData" 

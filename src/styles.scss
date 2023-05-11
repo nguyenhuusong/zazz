@@ -63,6 +63,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
     font-size: var(--font-size);
+    background: #EDF1FA;
     .p-component{
         font-size: var(--font-size);
     }
@@ -72,7 +73,6 @@ body {
     &>.main{
         height: 100%;
         padding-top: 46px;
-        background: #F6FBFF;
         &>.grid{
             height: calc(100% - 63px);
         }
@@ -474,11 +474,11 @@ body {
     align-items: center;
     justify-content: start;
     font-size: 14px;
-    padding-top: 2px;
-    padding-bottom: 2px;
+    padding: 2px 10px;
     border-radius: 0px 0px 4px 4px;
     color: #525B73;
     font-family: var(--font-family);
+    background: #FFFFFF;
     .p-paginator-element{
         width: 24px;
         height: 24px;
@@ -581,6 +581,7 @@ body {
     .ag-root-wrapper{
         border-color: transparent;
         border-radius: 3px;
+        background: #fff;
         .ag-header-row{
          .ag-header-cell{
              min-width: 58px;
@@ -1450,7 +1451,9 @@ app-form-filter {
             }
         }
     }
-
+    .content{
+        width: 100%;
+    }
 }
 
 .checkbox-default{
@@ -3635,10 +3638,6 @@ ag-grid-angular{
             .ag-header-cell{
                 padding-left: 11px;
                 padding-right: 11px;
-                border-right: 1px solid #d9dcde;
-                &:first-child{
-                    border-left: 1px solid #d9dcde;
-                }
             }
             .ag-cell{
                 padding-left: 11px;
@@ -3683,9 +3682,6 @@ ag-grid-angular{
             .ag-floating-filter-button-button{
                 display: none;
             }
-        }
-        .ag-body-viewport{
-            border-left: 1px solid #d9dcde;
         }
     }
 }
@@ -4477,6 +4473,15 @@ section{
     &.bread-crumb{
         padding-top: 10px;
         padding-bottom: 10px;
+        background: #fff;
+        border-bottom: 3px solid #F6FBFF;
+        margin-bottom: 10px;
+    }
+    &.content{
+        background: none;
+        width: calc(100% - 30px);
+        margin: auto;
+        padding: 0px
     }
 }
 .cell-action{
@@ -4595,13 +4600,6 @@ section{
             }
 
         }
-    }
-}
-.main{
-    .content{
-        background: #fff;
-        // background-color: #fbfbfb;
-        padding-top: 0px;
     }
 }
 

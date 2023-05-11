@@ -89,14 +89,13 @@
         </div>
     </section> -->
     <p-menu [model]="itemsToolOfGrid" [appendTo]="'body'" [popup]="true" styleClass="menu-option-right" #menuButton></p-menu>
-    <section class="content pb-0">
+    <section class="content">
         <div class="grid-default" #container  >
             <app-list-grid-angular 
                 [listsData]="listsData" *ngIf="columnDefs.length > 0"
                 [height]="heightGrid"
                 [columnDefs]="columnDefs"
                 [rowSelection]="'multiple'"
-                [floatingFilter]="true"
                 (onCellClicked)="onCellClicked($event)"
                 (callback)="rowSelected($event)"
                 (showConfig)="cauhinh()"

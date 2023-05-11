@@ -110,7 +110,7 @@ export class ChuyenVienTuyenDungComponent implements OnInit, AfterViewChecked {
     this.loadjs ++ 
     if (this.loadjs === 5) {
       if(b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight +10;
+        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight +20;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       }else {
