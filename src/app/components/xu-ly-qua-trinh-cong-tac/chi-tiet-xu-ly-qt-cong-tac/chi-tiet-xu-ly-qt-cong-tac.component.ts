@@ -102,8 +102,6 @@ export class ChiTietXuLyQtCongTacComponent implements OnInit {
   }
 
   setDetail(data) {
-    console.log(this.flowCurrent)
-    console.log(this.activeIndex)
     if(this.flowCurrent >= this.activeIndex) {
       this.listViews = [];
       const params = {
