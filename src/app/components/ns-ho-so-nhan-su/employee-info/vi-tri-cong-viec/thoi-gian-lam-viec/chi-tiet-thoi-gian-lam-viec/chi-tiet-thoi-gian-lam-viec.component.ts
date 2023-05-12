@@ -6,13 +6,14 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
 import { Subject, takeUntil } from 'rxjs';
 @Component({
-  selector: 'app-edit-vi-tri-cong-viec',
-  templateUrl: './edit-vi-tri-cong-viec.component.html',
-  styleUrls: ['./edit-vi-tri-cong-viec.component.scss']
+  selector: 'app-chi-tiet-thoi-gian-lam-viec',
+  templateUrl: './chi-tiet-thoi-gian-lam-viec.component.html',
+  styleUrls: ['./chi-tiet-thoi-gian-lam-viec.component.scss']
 })
-export class EditViTriCongViecComponent implements OnInit {
+export class ChiTietThoiGianLamViecComponent implements OnInit {
   @Input() empId = null;
-  @Input() isEditDetail: boolean = false;
+  @Input() workingId = null;
+  @Input() displayFormEditDetail: boolean = false;
   @Output() cancelSave = new EventEmitter<any>();
   detailInfo = null;
   listViews = [];
@@ -35,15 +36,17 @@ export class EditViTriCongViecComponent implements OnInit {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
-  status = [];
-  selectedStatus = null;
+
   activeIndex = 0;
   steps = [];
-  getDetail() {
+  selectedStatus = null;
+  status = [];
+  getDetail(flow_st = null) {
     this.spinner.show();
     this.detailInfo = null;
-    const query = { empId: this.empId, edit_is: true }
-    this.apiService.getEmpWorkJob(queryString.stringify(query))
+    this.listViews = [];
+    const query = { empId: this.empId, id: this.workingId, flow_st: flow_st }
+    this.apiService.getEmpWorking(queryString.stringify(query))
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(results => {
       if (results.status === 'success') {
@@ -55,7 +58,9 @@ export class EditViTriCongViecComponent implements OnInit {
           this.status.push(results.data.status);
         }
         this.selectedStatus = results.data.status;
-        this.initButton();
+        if(this.detailInfo.actions &&this.detailInfo.actions.length > 0) {
+          this.initButton();
+        }
       };
     }, error => {
       this.spinner.hide();
@@ -64,9 +69,7 @@ export class EditViTriCongViecComponent implements OnInit {
   }
 
   UpdateStatus() {
-    this.getDetail(); 
-
-    // check lại xem cần gửi lên trạng thái không
+    this.getDetail(this.selectedStatus.value);
   }
   
   callActions(code) {
@@ -75,6 +78,7 @@ export class EditViTriCongViecComponent implements OnInit {
       s.click();
     }, 400);
   }
+
   menuActions = [];
   initButton() {
     this.optionsButtonsView = this.detailInfo.actions.map(item => {
@@ -98,83 +102,33 @@ export class EditViTriCongViecComponent implements OnInit {
     });
   }
 
-
-  callBackForm(event) {
+  cloneListViewsDetail = [];
+  callBackForm(event: any) {
     const params = {
-      ...this.detailInfo, group_fields: event.data, flow_st: event.type === 'Submit' ?  this.activeIndex + 1 : this.activeIndex
+      ...this.detailInfo
+      , group_fields: event.data
     }
-    this.callApiInfo(params)
-    if(event.type === 'Submit' || event.type === 'SaveNhap') {
-      setTimeout(() => {
-        this.cancelSave.emit();
-      }, 200);
-    }
+    this.cloneListViewsDetail = cloneDeep(event.data)
+    this.listViews = [];
+    this.callApiInfo(params, event.type)
   }
-
-  stepActivated(): void {
-    const stepS = document.querySelectorAll('.steps-contract .p-steps-item');
-    if (stepS.length > 0) {
-      for (let i = 0; i < this.steps.length; i++) {
-        if (i <= this.activeIndex) {
-          stepS[i].className += ' active';
-        } else {
-          stepS[i].classList.value = `p-steps-item icon-${i}`;
-        }
-      }
-    }
-  }
-
-  
 
   setDetail(data) {
     const  params = {
       ...this.detailInfo, group_fields: data
     };
     this.callApiInfo(params)
-  
   }
 
-  callApiInfo(params) {
+  callApiInfo(params, type = 'Update') {
     this.spinner.show();
-    this.apiService.setEmpWorkJob(params)
+    this.apiService.setEmpWorking(params)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe((results: any) => {
       if (results.status === 'success') {
-        // this.listViews = cloneDeep(results.data.group_fields || []);
-        // this.detailInfo = results.data;
-        // this.activeIndex = results.data.flow_st;
-        // this.steps = results.data.flowStatuses.map(d => {
-        //   return {
-        //     label: d.flow_name,
-        //     value: d.flow_st
-        //   }
-        // });
-        // setTimeout(() => {
-        //   this.stepActivated();
-        // }, 100);
-        // if(results.data.submit_st) {
-        //   this.optionsButtonsView = [
-        //     { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
-        //     { label: 'Trình duyệt', value: 'Submit', class: 'btn-accept' }
-        //   ]
-        // }else {
-        //   if(results.data.save_st) {
-        //     this.optionsButtonsView = [
-        //       { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
-        //       { label: 'Lưu tạm', value: 'Update', class: 'btn-accept' },
-        //       { label: 'Tiếp tục', value: 'Update', class: 'btn-accept' }
-        //     ]
-        //   }else {
-        //     this.optionsButtonsView = [
-        //       { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
-        //       { label: 'Tiếp tục', value: 'Update', class: 'btn-accept' }
-        //     ]
-        //   }
-       
-        // }
         this.spinner.hide();
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.damessageta ? results.message : 'Cập nhật thông tin thành công' });
         this.cancelSave.emit();
-        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Cập nhật thông tin thành công' });
       } else {
         this.spinner.hide();
         this.messageService.add({

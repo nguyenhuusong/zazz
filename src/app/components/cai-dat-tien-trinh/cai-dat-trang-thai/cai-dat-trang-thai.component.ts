@@ -1,4 +1,4 @@
-import { AfterViewChecked, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewChecked, ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import * as queryString from 'querystring';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -20,8 +20,12 @@ import { fromEvent, Subject, takeUntil } from 'rxjs';
   templateUrl: './cai-dat-trang-thai.component.html',
   styleUrls: ['./cai-dat-trang-thai.component.scss']
 })
-export class CaiDatTrangThaiComponent implements OnInit, AfterViewChecked {
-
+export class CaiDatTrangThaiComponent implements OnInit, AfterViewChecked, OnChanges {
+  @Input() query = {
+    filter: '',
+    offSet: 0,
+    pageSize: 20,
+  }
   listsData: any[] = [];
   items = []
   MENUACTIONROLEAPI = MENUACTIONROLEAPI;
@@ -71,11 +75,6 @@ export class CaiDatTrangThaiComponent implements OnInit, AfterViewChecked {
   objectActionDetail: any;
   gridflexs: any;
   getRowHeight;
-  query = {
-    filter: '',
-    offSet: 0,
-    pageSize: 20,
-  }
   totalRecord = 0;
   DriverId = 0;
   first = 0;
@@ -139,34 +138,34 @@ export class CaiDatTrangThaiComponent implements OnInit, AfterViewChecked {
     const params: any = { ...this.query };
     const queryParams = queryString.stringify(params);
     this.apiService.getFlowStatusPage(queryParams)
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(
-      (results: any) => {
-        this.listsData = results.data.dataList.data;
-        this.gridKey= results.data.dataList.gridKey;
-        if (this.query.offSet === 0) {
-          this.cols = results.data.gridflexs;
-          this.colsDetail = results.data.gridflexdetails ? results.data.gridflexdetails : [];
-        }
-        this.initGrid();
-        this.countRecord.totalRecord = results.data.dataList.recordsTotal;
-        this.countRecord.totalRecord = results.data.dataList.recordsTotal;
-        this.countRecord.currentRecordStart = results.data.dataList.recordsTotal === 0 ? this.query.offSet = 0 : this.query.offSet + 1;
-        if ((results.data.dataList.recordsTotal - this.query.offSet) > this.query.pageSize) {
-          this.countRecord.currentRecordEnd = this.query.offSet + Number(this.query.pageSize);
-        } else {
-          this.countRecord.currentRecordEnd = results.data.dataList.recordsTotal;
-          setTimeout(() => {
-            const noData = document.querySelector('.ag-overlay-no-rows-center');
-            if (noData) { noData.innerHTML = 'Không có kết quả phù hợp' }
-          }, 100);
-        }
-        this.spinner.hide();
-        this.FnEvent();
-      },
-      error => {
-        this.spinner.hide();
-      });
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        (results: any) => {
+          this.listsData = results.data.dataList.data;
+          this.gridKey = results.data.dataList.gridKey;
+          if (this.query.offSet === 0) {
+            this.cols = results.data.gridflexs;
+            this.colsDetail = results.data.gridflexdetails ? results.data.gridflexdetails : [];
+          }
+          this.initGrid();
+          this.countRecord.totalRecord = results.data.dataList.recordsTotal;
+          this.countRecord.totalRecord = results.data.dataList.recordsTotal;
+          this.countRecord.currentRecordStart = results.data.dataList.recordsTotal === 0 ? this.query.offSet = 0 : this.query.offSet + 1;
+          if ((results.data.dataList.recordsTotal - this.query.offSet) > this.query.pageSize) {
+            this.countRecord.currentRecordEnd = this.query.offSet + Number(this.query.pageSize);
+          } else {
+            this.countRecord.currentRecordEnd = results.data.dataList.recordsTotal;
+            setTimeout(() => {
+              const noData = document.querySelector('.ag-overlay-no-rows-center');
+              if (noData) { noData.innerHTML = 'Không có kết quả phù hợp' }
+            }, 100);
+          }
+          this.spinner.hide();
+          this.FnEvent();
+        },
+        error => {
+          this.spinner.hide();
+        });
   }
 
   showButtons(event: any) {
@@ -191,16 +190,16 @@ export class CaiDatTrangThaiComponent implements OnInit, AfterViewChecked {
   }
 
   checkActionDelete(event) {
-    if(event.data.id === null) {
+    if (event.data.id === null) {
       return true;
-    }else {
-      if(event.data.app_st === 0) {
+    } else {
+      if (event.data.app_st === 0) {
         return false;
       }
       return true;
     }
   }
-  
+
   ngAfterViewInit(): void {
     this.FnEvent();
   }
@@ -208,7 +207,7 @@ export class CaiDatTrangThaiComponent implements OnInit, AfterViewChecked {
   FnEvent() {
     setTimeout(() => {
       var dragTarget = document.getElementById(this.gridKey);
-      if(dragTarget) {
+      if (dragTarget) {
         const click$ = fromEvent(dragTarget, 'click');
         click$.subscribe(event => {
           this.addNew()
@@ -223,7 +222,7 @@ export class CaiDatTrangThaiComponent implements OnInit, AfterViewChecked {
       {
         headerComponentParams: {
           template:
-          `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
+            `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
         },
         filter: '',
         width: 70,
@@ -293,38 +292,38 @@ export class CaiDatTrangThaiComponent implements OnInit, AfterViewChecked {
       accept: () => {
         const queryParams = queryString.stringify({ id: event.rowData.id });
         this.apiService.delFlowStatus(queryParams)
-        .pipe(takeUntil(this.unsubscribe$))
-        .subscribe(results => {
-          if (results.status === 'success') {
-            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
-            this.load();
-            this.FnEvent();
-          } else {
-            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
-          }
-        });
+          .pipe(takeUntil(this.unsubscribe$))
+          .subscribe(results => {
+            if (results.status === 'success') {
+              this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
+              this.load();
+              this.FnEvent();
+            } else {
+              this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+            }
+          });
       }
     });
   }
 
-  editRow({rowData}) {
+  editRow({ rowData }) {
     this.flowId = rowData.flowId;
     this.isFormDetail = true;
   }
 
   onCellClicked(event) {
-    if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
-      this.editRow(event = {rowData: event.data})
+    if (event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
+      this.editRow(event = { rowData: event.data })
     }
   }
 
   handleChange(index) {
-    this.tabIndex =index ;
+    this.tabIndex = index;
   }
 
   isSearchEmp = false;
   flowId = null;
-  isFormDetail:boolean = false;
+  isFormDetail: boolean = false;
   tabIndex = 0;
   addNew() {
     this.flowId = null;
@@ -350,6 +349,12 @@ export class CaiDatTrangThaiComponent implements OnInit, AfterViewChecked {
 
   ngOnInit() {
     this.load()
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes)
+    this.query = {...changes.query.currentValue};
+    this.load();
   }
 }
 
