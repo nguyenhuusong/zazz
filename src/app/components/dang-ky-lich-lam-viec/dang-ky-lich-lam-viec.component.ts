@@ -12,9 +12,7 @@ import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common
 import * as moment from 'moment';
 import { cloneDeep } from 'lodash';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
-
 import { ApiService } from 'src/app/services/api.service';
-import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { DialogService } from 'primeng/dynamicdialog';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
 import { Subject, takeUntil } from 'rxjs';
@@ -29,7 +27,7 @@ export class DangKyLichLamViecComponent implements OnInit {
   ACTIONS = ACTIONS
   optionsButon = [
     { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
-    { label: 'Lưu lại', value: 'Update', class: CheckHideAction(MENUACTIONROLEAPI.GetEmpWorkingPage.url, ACTIONS.EDIT) ? 'hidden' : '', icon: 'pi pi-check'  }
+    { label: 'Lưu lại', value: 'Update', class: CheckHideAction(MENUACTIONROLEAPI.GetEmpWorkingPage.url, ACTIONS.EDIT) ? 'hidden' : '', icon: 'pi pi-check' }
   ]
   constructor(
     private spinner: NgxSpinnerService,
@@ -40,7 +38,7 @@ export class DangKyLichLamViecComponent implements OnInit {
     private changeDetector: ChangeDetectorRef,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
-    
+
     private router: Router) {
 
     this.defaultColDef = {
@@ -120,7 +118,7 @@ export class DangKyLichLamViecComponent implements OnInit {
     this.loadjs++
     if (this.loadjs === 5) {
       if (b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight +20;
+        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight + 20;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       } else {
@@ -175,45 +173,45 @@ export class DangKyLichLamViecComponent implements OnInit {
   cauhinh() {
     this.displaySetting = true;
   }
-  
+
   load() {
     this.columnDefs = []
     // this.spinner.show();
     let params: any = { ... this.query };
     const queryParams = queryString.stringify(params);
     this.apiService.getEmpWorkingPage(queryParams)
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(
-      (results: any) => {
-        this.listsData = results.data.dataList.data;
-        this.gridKey= results.data.dataList.gridKey;
-        if (this.query.offSet === 0) {
-          this.cols = results.data.gridflexs;
-          this.colsDetail = results.data.gridflexdetails ? results.data.gridflexdetails : [];
-        }
-        // if(!this.query.organizeId && results.data && results.data.dataList.data.length > 0) {
-        //   this.query.organizeId = results.data.dataList.data[0].organizeId;
-        //   this.getOrganizeTree();
-        //   this.getWorkTime();
-        // }
-        this.initGrid();
-        this.countRecord.totalRecord = results.data.dataList.recordsTotal;
-        this.countRecord.totalRecord = results.data.dataList.recordsTotal;
-        this.countRecord.currentRecordStart = this.query.offSet + 1;
-        if ((results.data.dataList.recordsTotal - this.query.offSet) > this.query.pageSize) {
-          this.countRecord.currentRecordEnd = this.query.offSet + Number(this.query.pageSize);
-        } else {
-          this.countRecord.currentRecordEnd = results.data.dataList.recordsTotal;
-          setTimeout(() => {
-            const noData = document.querySelector('.ag-overlay-no-rows-center');
-            if (noData) { noData.innerHTML = 'Không có kết quả phù hợp'}
-          }, 100);
-        }
-        this.spinner.hide();
-      },
-      error => {
-        this.spinner.hide();
-      });
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        (results: any) => {
+          this.listsData = results.data.dataList.data;
+          this.gridKey = results.data.dataList.gridKey;
+          if (this.query.offSet === 0) {
+            this.cols = results.data.gridflexs;
+            this.colsDetail = results.data.gridflexdetails ? results.data.gridflexdetails : [];
+          }
+          // if(!this.query.organizeId && results.data && results.data.dataList.data.length > 0) {
+          //   this.query.organizeId = results.data.dataList.data[0].organizeId;
+          //   this.getOrganizeTree();
+          //   this.getWorkTime();
+          // }
+          this.initGrid();
+          this.countRecord.totalRecord = results.data.dataList.recordsTotal;
+          this.countRecord.totalRecord = results.data.dataList.recordsTotal;
+          this.countRecord.currentRecordStart = this.query.offSet + 1;
+          if ((results.data.dataList.recordsTotal - this.query.offSet) > this.query.pageSize) {
+            this.countRecord.currentRecordEnd = this.query.offSet + Number(this.query.pageSize);
+          } else {
+            this.countRecord.currentRecordEnd = results.data.dataList.recordsTotal;
+            setTimeout(() => {
+              const noData = document.querySelector('.ag-overlay-no-rows-center');
+              if (noData) { noData.innerHTML = 'Không có kết quả phù hợp' }
+            }, 100);
+          }
+          this.spinner.hide();
+        },
+        error => {
+          this.spinner.hide();
+        });
   }
 
   showButtons(event: any) {
@@ -236,52 +234,21 @@ export class DangKyLichLamViecComponent implements OnInit {
       ]
     };
   }
-
-  editRow({rowData}) {
-    const queryParams = queryString.stringify({ empId: rowData.empId, gd: rowData.gd });
-    this.getEmpWorking(queryParams);
+  modelEdit = {
+    empId: null,
+    gd: null
+  }
+  displayFormEditDetail = false
+  editRow({ rowData }) {
+    this.modelEdit.empId = rowData.empId;
+    this.modelEdit.gd = rowData.gd;
+    this.displayFormEditDetail = true;
   }
 
   onCellClicked(event) {
-    if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
-      this.editRow(event = {rowData: event.data})
+    if (event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
+      this.editRow(event = { rowData: event.data })
     }
-  }
-
-
-  listViewsDependent = [];
-  detailDependentInfo = null;
-  displayFormEditDetail = false;
-  getEmpWorking(query) {
-    this.listViewsDependent = [];
-    this.apiService.getEmpWorking(query)
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(results => {
-      if (results.status === 'success') {
-        this.listViewsDependent = cloneDeep(results.data.group_fields);
-        this.detailDependentInfo = results.data;
-        this.displayFormEditDetail = true;
-      }
-    })
-  }
-
-  setEmpDependen(data) {
-    const param = {
-      ...this.detailDependentInfo, group_fields: data
-    }
-    this.apiService.setEmpWorking(param)
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(results => {
-      if (results.status === 'success') {
-        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thêm mới thành công' });
-        this.displayFormEditDetail = false;
-        this.spinner.hide();
-        this.load();
-      } else {
-        this.spinner.hide();
-        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
-      }
-    })
   }
 
   doiLichLamViec(event) {
@@ -298,40 +265,40 @@ export class DangKyLichLamViecComponent implements OnInit {
       timekeeping_special_is: true,
       timekeeping_special_code: ""
     }
-    this.listUsers = [{empId : event.rowData.empId}]
+    this.listUsers = [{ empId: event.rowData.empId }]
     this.displayChangeStatus = true;
   }
 
   timekeepingSpecials = [];
-  getTimekeepingSpecials () {
+  getTimekeepingSpecials() {
     this.apiServiceCore.getObjectList('object_refer_st')
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(response => {
-      if(response.status === 'success'){
-        this.timekeepingSpecials = response.data.map( d => {
-          return {
-            name: d.objName,
-            code: d.objCode
-          }
-        });
-      }
-    })
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(response => {
+        if (response.status === 'success') {
+          this.timekeepingSpecials = response.data.map(d => {
+            return {
+              name: d.objName,
+              code: d.objCode
+            }
+          });
+        }
+      })
   }
 
   timekeepingSpecialCode = [];
-  getTimekeepingSpecialCode () {
+  getTimekeepingSpecialCode() {
     this.apiServiceCore.getObjectList('timekeeping_special')
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(response => {
-      if(response.status === 'success'){
-        this.timekeepingSpecialCode = response.data.map( d => {
-          return {
-            name: d.objName,
-            code: d.objCode
-          }
-        });
-      }
-    })
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(response => {
+        if (response.status === 'success') {
+          this.timekeepingSpecialCode = response.data.map(d => {
+            return {
+              name: d.objName,
+              code: d.objCode
+            }
+          });
+        }
+      })
   }
 
   getModuleList() {
@@ -374,28 +341,28 @@ export class DangKyLichLamViecComponent implements OnInit {
 
   getWorkTime() {
     this.apiService.getWorktimeList()
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(results => {
-      if (results.status === 'success') {
-        this.listWorkCds = results.data.map(d => {
-          return { label: d.name, value: d.value }
-        });
-      }
-    })
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(results => {
+        if (results.status === 'success') {
+          this.listWorkCds = results.data.map(d => {
+            return { label: d.name, value: d.value }
+          });
+        }
+      })
   }
 
   saveForm() {
-    if(!this.modelChangeStatus.work_cd) {
-      this.messageService.add({ severity: 'error', summary: 'Thông báo', detail:  'Chọn lịch làm việc'});
+    if (!this.modelChangeStatus.work_cd) {
+      this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Chọn lịch làm việc' });
       return;
     }
-    if(this.listUsers.length === 0) {
-      this.messageService.add({ severity: 'error', summary: 'Thông báo', detail:  'Chưa có bản ghi nào được cài đặt'});
+    if (this.listUsers.length === 0) {
+      this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Chưa có bản ghi nào được cài đặt' });
       return;
     }
     let params = { ...this.modelChangeStatus };
-    params.timekeeping_special_code  = this.modelChangeStatus.timekeeping_special_code.code
-    params.timekeeping_special_is  = this.modelChangeStatus.timekeeping_special_is.code ? true : false;
+    params.timekeeping_special_code = this.modelChangeStatus.timekeeping_special_code.code
+    params.timekeeping_special_is = this.modelChangeStatus.timekeeping_special_is.code ? true : false;
     delete params.organizeId;
     delete params.full_name;
     params.start_dt = typeof params.start_dt === 'object' ? moment(new Date(params.start_dt)).format('DD/MM/YYYY') : params.start_dt;
@@ -405,42 +372,42 @@ export class DangKyLichLamViecComponent implements OnInit {
       }
     });
     this.apiService.setEmpWorkingChanges(params)
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(results => {
-      if (results.status === 'success') {
-        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Đổi lịch công việc thành công' });
-        this.load();
-        this.displayChangeStatus = false;
-        this.isTheOrganToMove = false;
-      } else if(results.status === 'error'){
-        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message ? results.message : 'Đổi lịch công việc thất bại' });
-      }
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(results => {
+        if (results.status === 'success') {
+          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Đổi lịch công việc thành công' });
+          this.load();
+          this.displayChangeStatus = false;
+          this.isTheOrganToMove = false;
+        } else if (results.status === 'error') {
+          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message ? results.message : 'Đổi lịch công việc thất bại' });
+        }
 
-    })
+      })
   }
 
   getCustObjectListNew(params) {
     const queryParams = queryString.stringify({ objKey: params });
     this.apiService.getCustObjectListNew(true, queryParams)
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(results => {
-      if (params === 'empworking_app_st') {
-        this.listAppSt = results.data.map(d => {
-          return {
-            label: d.objName,
-            value: d.objValue
-          }
-        });
-      } else {
-        this.listIsFlexible = results.data.map(d => {
-          return {
-            label: d.objName,
-            value: d.objValue
-          }
-        });
-      }
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(results => {
+        if (params === 'empworking_app_st') {
+          this.listAppSt = results.data.map(d => {
+            return {
+              label: d.objName,
+              value: d.objValue
+            }
+          });
+        } else {
+          this.listIsFlexible = results.data.map(d => {
+            return {
+              label: d.objName,
+              value: d.objValue
+            }
+          });
+        }
 
-    });
+      });
   }
 
   initGrid() {
@@ -504,18 +471,18 @@ export class DangKyLichLamViecComponent implements OnInit {
 
   getFeedbackType() {
     this.apiService.getFeedbackType()
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(results => {
-      if (results.status === 'success') {
-        this.typeFeedBacks = results.data.map(d => {
-          return {
-            label: d.feedbackTypeName,
-            value: d.feedbackTypeId
-          }
-        });
-        this.typeFeedBacks = [{ label: 'Tất cả', value: null }, ...this.typeFeedBacks]
-      }
-    })
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(results => {
+        if (results.status === 'success') {
+          this.typeFeedBacks = results.data.map(d => {
+            return {
+              label: d.feedbackTypeName,
+              value: d.feedbackTypeId
+            }
+          });
+          this.typeFeedBacks = [{ label: 'Tất cả', value: null }, ...this.typeFeedBacks]
+        }
+      })
   }
 
   changeStatus(event) {
@@ -526,14 +493,14 @@ export class DangKyLichLamViecComponent implements OnInit {
       }
     });
     this.apiService.setEmpWorkingChanges(params)
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(results => {
-      if (results.status === 'success') {
-        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Đổi lịch công việc thành công' });
-        this.load();
-        this.displayChangeStatus = true;
-      }
-    })
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(results => {
+        if (results.status === 'success') {
+          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Đổi lịch công việc thành công' });
+          this.load();
+          this.displayChangeStatus = true;
+        }
+      })
 
   }
 
@@ -633,7 +600,6 @@ export class DangKyLichLamViecComponent implements OnInit {
     this.listDataSelect = data
   }
 
-  
   companies = []
 
   getCompany() {
@@ -659,7 +625,7 @@ export class DangKyLichLamViecComponent implements OnInit {
 
   listViewsFilter = [];
   cloneListViewsFilter = [];
-detailInfoFilter = null;
+  detailInfoFilter = null;
   optionsButonFilter = [
     { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm ml-2 height-56 addNew', icon: 'pi pi-plus' },
     { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger ml-2 height-56 addNew', icon: 'pi pi-times' },
@@ -667,34 +633,39 @@ detailInfoFilter = null;
 
   getEmpWorkingFilter() {
     this.apiService.getEmpWorkingFilter()
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(results => {
-      if(results.status === 'success') {
-        const listViews = cloneDeep(results.data.group_fields);
-        this.cloneListViewsFilter = cloneDeep(listViews);
-        this.listViewsFilter = [...listViews];
-        const params =  getParamString(listViews)
-        this.query = { ...this.query, ...params};
-        this.load();
-        this.detailInfoFilter = results.data;
-      }
-    });
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(results => {
+        if (results.status === 'success') {
+          const listViews = cloneDeep(results.data.group_fields);
+          this.cloneListViewsFilter = cloneDeep(listViews);
+          this.listViewsFilter = [...listViews];
+          const params = getParamString(listViews)
+          this.query = { ...this.query, ...params };
+          this.load();
+          this.detailInfoFilter = results.data;
+        }
+      });
   }
-   filterLoad(event) {
+  filterLoad(event) {
     this.query = { ...this.query, ...event.data };
     this.load();
   }
 
-  close({event, datas}) {
-    if(event !== 'Close') {
+  close({ event, datas }) {
+    if (event !== 'Close') {
       const listViews = cloneDeep(this.cloneListViewsFilter);
       this.listViewsFilter = cloneDeep(listViews);
-      const params =  getParamString(listViews)
-      this.query = { ...this.query, ...params};
+      const params = getParamString(listViews)
+      this.query = { ...this.query, ...params };
       this.load();
-    }else {
-      this.listViewsFilter =  cloneDeep(datas);
+    } else {
+      this.listViewsFilter = cloneDeep(datas);
     }
+  }
+
+  saveWoking() {
+    this.displayFormEditDetail = false;
+    this.load();
   }
 
 }

@@ -59,9 +59,10 @@ export class QuanHeLaoDongCComponent implements OnInit {
         }
         this.selectedStatus = results.data.status;
         this.listViews = cloneDeep(results.data.group_fields || []);
-        // this.listViewsForm = cloneDeep(results.data.group_fields || []);
         this.detailInfo = results.data;
-        this.initButton();
+        if(this.detailInfo.actions && this.detailInfo.actions.length > 0) {
+          this.initButton();
+        }
         this.spinner.hide();
       }
     }, error => {
