@@ -3,7 +3,7 @@
     <p-header>
         Sửa thông tin cá nhân
     </p-header>
-    <p-card>
+    <section>
         <app-edit-detail *ngIf="listViews.length> 0" 
             [detail]="detailInfo" 
             [manhinh]="'Edit'" 
@@ -14,7 +14,7 @@
             (callBackForm)="callBackForm($event)"
             (callbackcancel)="canceDetail($event)">
         </app-edit-detail>
-    </p-card>
+    </section>
 
     <ng-template pTemplate="footer" >
         <div class="col-12  flex justify-content-end align-items-center" >

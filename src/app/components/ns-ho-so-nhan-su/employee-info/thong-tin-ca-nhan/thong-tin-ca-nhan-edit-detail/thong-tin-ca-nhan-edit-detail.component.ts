@@ -100,75 +100,15 @@ export class ThongTinCaNhanEditDetailComponent implements OnInit {
     });
   }
 
-
   cloneListViews = [];
   callBackForm(event) {
-    if(this.flowCurrent >= this.activeIndex) {
-      const params = {
-        ...this.detailInfo, group_fields: event.data
-        , flow_cur: event.type === 'Submit' ? this.flowCurrent : this.flowCurrent
-        , action: event.type === 'Submit' ? 'submit' : 'save'
-      }
-      this.cloneListViews = cloneDeep(event.data);
-      this.listViews = [];
-      this.callApiInfo(params, event.type);
-    }else {
-      const params = {
-        ...this.detailInfo, group_fields: event.data
-        , flow_st: this.detailInfo.flow_cur
-        , action: event.type === 'Submit' ? 'submit' : 'save'
-      }
-      this.cloneListViews = cloneDeep(event.data);
-      this.listViews = [];
-      this.callApiInfo(params, event.type);
-    }
-
-    // const params = {
-    //   ...this.detailInfo, group_fields: event.data, flow_cur: event.type === 'Submit' ?  this.flowCurrent : this.flowCurrent -1
-    // }
-    //  this.cloneListViews = cloneDeep(event.data);
-    // this.listViews = [];
-    // this.callApiInfo(params, event.type)
-  }
-
-  stepActivated(): void {
-    console.log(this.flowCurrent)
-    const stepS = document.querySelectorAll('.steps-contract .p-steps-item');
-    if (stepS.length > 0) {
-      for (let i = 0; i < this.steps.length; i++) {
-        if (i <= this.flowCurrent) {
-          console.log(i,i<= this.flowCurrent && i !== 0)
-          // console.log(i !== 1)
-          stepS[i].className +=  ` p-highlight ${i<= this.activeIndex ? 'active' : 'remove-active'} ${i<= this.flowCurrent && this.flowCurrent !== 1 ? 'active-confirm' : 'remove-active-confirm'}`;
-        } else {
-          stepS[i].classList.value = `p-steps-item icon-${i}`;
-        }
-      }
-    }
+   
   }
 
   setDetail(data) {
-    if(this.flowCurrent >= this.activeIndex) {
-      const params = {
-        ...this.detailInfo, group_fields: data.datas, flow_cur: this.flowCurrent, action: 'next'
-      };
-      this.cloneListViews = cloneDeep(data);
-      this.listViews = [];
-      this.callApiInfo(params)
-    }else {
-      this.getDetail(this.flowCurrent + 1);
-    }
-
-    // const  params = {
-    //   ...this.detailInfo, group_fields: data, flow_cur: this.flowCurrent
-    // };
-    // this.cloneListViews = cloneDeep(data);
-    // this.listViews = [];
-    // this.callApiInfo(params)
-  
-  }
-
-  callApiInfo(params, type = 'Update') {
+    const params = {
+      ...this.detailInfo, group_fields: data.datas
+    };
     this.spinner.show();
     this.apiService.setEmpProfile(params)
     .pipe(takeUntil(this.unsubscribe$))
@@ -178,13 +118,12 @@ export class ThongTinCaNhanEditDetailComponent implements OnInit {
         this.detailInfo = results.data;
         this.spinner.hide();
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Cập nhật thông tin thành công' });
-        if(type === 'Submit' || type === 'SaveNhap') {
+        if(data.event === 'actSubmit') {
           setTimeout(() => {
             this.cancelSave.emit();
           }, 200);
         }
       } else {
-        this.listViews = cloneDeep(this.cloneListViews);
         this.spinner.hide();
         this.messageService.add({
           severity: 'error', summary: 'Thông báo', detail: results.message
@@ -192,6 +131,7 @@ export class ThongTinCaNhanEditDetailComponent implements OnInit {
       }
     }, error => {
     });
+  
   }
 
   canceDetail(data) {
