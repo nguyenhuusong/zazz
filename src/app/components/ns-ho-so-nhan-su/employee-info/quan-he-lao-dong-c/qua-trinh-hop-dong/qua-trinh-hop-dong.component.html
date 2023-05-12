@@ -83,13 +83,21 @@
 
 
 <!-- <------------ Hợp đồng ----------->
-<p-dialog styleClass="popup-btngroup-edit-detail" [maximizable]="true"
+<app-contract-detail 
+    [displayFormEditDetail]="hienthihopdong" 
+    *ngIf="hienthihopdong" 
+    [modelContractInfo]="modelContractInfo"
+    (callback)="emitContract($event)" 
+    (back)="cancelPopupContract()">
+    </app-contract-detail>
+        
+<!-- <p-dialog styleClass="popup-btngroup-edit-detail" [maximizable]="true"
     header="{{modelContractInfo.contractId === null ? ' Tạo hợp đồng': 'Thông tin chi tiết hợp đồng'}}"
     [(visible)]="hienthihopdong" [modal]="true" [draggable]="false" [resizable]="false" [style]="{width: '80vw'}"
     [autoZIndex]=true [draggable]="false" [resizable]="false">
     <app-contract-detail *ngIf="hienthihopdong" [modelContractInfo]="modelContractInfo"
         (callback)="emitContract($event)" (back)="cancelPopupContract()"></app-contract-detail>
-</p-dialog>
+</p-dialog> -->
 
 <p-dialog [(visible)]="displayPrint" [baseZIndex]="99" [modal]="true" [style]="{width: '1400px', height: 'auto'}">
     <!-- <ngx-loading [show]="loading1" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading> -->

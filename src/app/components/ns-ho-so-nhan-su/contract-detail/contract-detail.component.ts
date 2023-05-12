@@ -19,6 +19,7 @@ export class ContractDetailComponent implements OnInit {
   }
   @Output() callback = new EventEmitter<any>();
   @Output() back = new EventEmitter<any>();
+  @Input() displayFormEditDetail: boolean = false;
   constructor(
     private apiService: ApiHrmService,
     private messageService: MessageService,
@@ -53,6 +54,10 @@ export class ContractDetailComponent implements OnInit {
   titlePage = '';
   url = '';
   itemsMenu = [];
+
+
+  status = [];
+  selectedStatus= null;
 
   private readonly unsubscribe$: Subject<void> = new Subject();
   ngOnDestroy() {
@@ -342,6 +347,16 @@ export class ContractDetailComponent implements OnInit {
         this.detailInfo = results.data;
         if (results.data.flow_cur > 1) this.getContractMetaPage();
         if (results.data.flow_cur > 0) this.getSalaryComponentPage();
+
+        this.status = results.data.flowStatuses;
+        if(results.data.status) {
+          this.status.push(results.data.status);
+        }
+        this.selectedStatus = results.data.status;
+        if(this.detailInfo.actions &&this.detailInfo.actions.length > 0) {
+          this.initButton();
+        }
+
         this.spinner.hide();
       } else {
         this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
@@ -484,6 +499,39 @@ export class ContractDetailComponent implements OnInit {
     this.downloadButtonClicked(event.rowData.meta_upload_url);
   }
 
+  UpdateStatus() {
+    this.getContractInfo(this.selectedStatus.value);
+  }
+
+  callActions(code) {
+    setTimeout(() => {
+      const s: HTMLElement = document.getElementById(code);
+      s.click();
+    }, 400);
+  }
+  menuActions = [];
+  initButton() {
+    this.optionsButtonsView = this.detailInfo.actions.map(item => {
+      return {
+        label: item.name,
+        value: item.code,
+        icon: item.icon
+      }
+    });
+
+    this.menuActions = this.detailInfo.actions.map((item, index) => {
+      return {
+        label: item.name,
+        value: item.code,
+        styleClass: index === 0 ? 'hidden' : '',
+        icon: item.icon,
+        command: () => {
+          this[item.code]();
+        }
+      }
+    });
+  }
+
   uploadContract(event) {
     if (event.rowData.metaId) {
       this.displayuploadcontract = true;
@@ -527,6 +575,9 @@ export class ContractDetailComponent implements OnInit {
     elem.click();
   }
 
+  hideFormDetail() {
+    this.callback.emit('hideFormDetail');
+  }
 
   CauHinh(type) {
     this.gridKeyForm = type === 0 ? this.gridKey : this.gridKey_1

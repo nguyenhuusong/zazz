@@ -40,7 +40,13 @@
 
 
 
-<app-chi-tiet-xu-ly-qt-cong-tac *ngIf="displayFormEditDetail" [displayFormEditDetail]="displayFormEditDetail" [isDialog]="true" [empId]="empId" [processId]="processId" (callback)="callbackSave()"></app-chi-tiet-xu-ly-qt-cong-tac>
+<app-chi-tiet-xu-ly-qt-cong-tac 
+    *ngIf="displayFormEditDetail" 
+    [displayFormEditDetail]="displayFormEditDetail" 
+    [isDialog]="true" [empId]="empId" 
+    [processId]="processId" 
+    (callback)="callbackSave()">
+</app-chi-tiet-xu-ly-qt-cong-tac>
 
 
 
