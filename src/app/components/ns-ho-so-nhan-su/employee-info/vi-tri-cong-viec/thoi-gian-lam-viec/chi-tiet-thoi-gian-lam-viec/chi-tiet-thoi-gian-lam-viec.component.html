@@ -1,5 +1,5 @@
 
-<p-dialog styleClass="popup-btngroup-edit-detail"  [(visible)]="displayFormEditDetail" [draggable]="false"  [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '1400px', height: 'auto'}">
+<p-dialog styleClass="popup-btngroup-edit-detail"  [(visible)]="displayFormEditDetail" (onHide)="cancelSave.emit()" [draggable]="false"  [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '1400px', height: 'auto'}">
     <p-header>
         Thêm mới thời gian làm việc
     </p-header>
@@ -46,7 +46,7 @@
                 </p-dropdown>
             </div>
             <p-splitButton icon="pi pi-send" *ngIf="menuActions.length > 0 && listViews.length> 0" styleClass="p-button-sm ml-2" [appendTo]="'body'" (onClick)="callActions(menuActions[0].value)" [label]="menuActions[0].label" [model]="menuActions"></p-splitButton>
-            <p-button label="Quay lại" styleClass="p-button-secondary p-button-sm ml-2" [style]="{'z-index': 9}" icon="pi pi-directions-alt"></p-button>
+            <p-button label="Đóng" (onClick)="cancelSave.emit()" styleClass="p-button-secondary p-button-sm ml-2" [style]="{'z-index': 9}" icon="pi pi-directions-alt"></p-button>
               </div>
     </ng-template>
     
