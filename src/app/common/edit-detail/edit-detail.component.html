@@ -1,4 +1,4 @@
-<div class="wrap-edit-detail" [id]="idDetail" *ngIf="dataView.length > 0">
+<div class="wrap-edit-detail" [ngClass]="{'custom-edit': isHideButton}"  [id]="idDetail" *ngIf="dataView.length > 0">
     <div class="grid">
         <ng-container *ngFor="let group of dataView; let idx = index">
             <!-- //box-item -->
