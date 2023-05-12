@@ -9,7 +9,7 @@
 <section *ngIf="!isDialog">
     <p-tabView [(activeIndex)]="indexTab" (onChange)="handleChange($event.index)">
         <p-tabPanel header="Thông tin chung">
-            <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'"
+            <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'" [isHideButton]="true"
                 [optionsButtonsEdit]="optionsButtonsView" [dataView]="listViews" (callback)="setTerminateInfo($event)" (callBackForm)="callBackForm($event)"
                 (callbackcancel)="cancel($event)"></app-edit-detail>
                 <app-loading-detail 
@@ -45,7 +45,7 @@
                                 </p-dropdown>
                             </div>
                             <p-splitButton icon="pi pi-send" *ngIf="menuActions.length > 0" styleClass="p-button-sm ml-2" [appendTo]="'body'" (onClick)="callActions(menuActions[0].value)" [label]="menuActions[0].label" [model]="menuActions"></p-splitButton>
-                            <p-button label="Đóng" (click)="callback.emit()" styleClass="p-button-secondary p-button-sm ml-2" [style]="{'z-index': 9}" icon="pi pi-directions-alt"></p-button>
+                            <p-button label="Quay lại" (click)="onBack()" styleClass="p-button-secondary p-button-sm ml-2" [style]="{'z-index': 9}" icon="pi pi-directions-alt"></p-button>
                               </div>
         </p-tabPanel>
         <p-tabPanel header="Danh sách hồ sơ">
@@ -59,10 +59,10 @@
 <p-dialog [(visible)]="isEditDetail" [autoZIndex]="true" [modal]="true" (onHide)="callback.emit()"  appendTo="body"
     [style]="{width: '1300px', height: 'auto'}">
     <p-header>
-        Hồ sơ nghỉ việc
+        Chi tiết hồ sơ nghỉ việc
     </p-header>
     <p-card>
-        <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'"
+        <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'" [isHideButton]="true"
             [optionsButtonsEdit]="optionsButtonsView" [dataView]="listViews" (callback)="setTerminateInfo($event)" (callBackForm)="callBackForm($event)"
             (callbackcancel)="cancel($event)"></app-edit-detail>
     </p-card>

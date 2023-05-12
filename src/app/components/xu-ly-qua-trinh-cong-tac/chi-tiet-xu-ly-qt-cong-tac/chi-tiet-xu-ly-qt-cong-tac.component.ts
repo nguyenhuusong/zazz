@@ -217,6 +217,9 @@ export class ChiTietXuLyQtCongTacComponent implements OnInit {
     })
   }
 
+  onBack() {
+    this.router.navigate(['/nhan-su/xu-ly-qua-trinh-cong-tac'])
+  }
   
   UpdateStatus() {
     this.getEmpProcessInfo(this.selectedStatus.value);

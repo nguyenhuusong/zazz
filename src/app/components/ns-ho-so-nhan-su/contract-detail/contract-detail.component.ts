@@ -249,6 +249,10 @@ export class ContractDetailComponent implements OnInit {
     })
   }
 
+  onBack() {
+    this.router.navigate(['/nhan-su/xu-ly-hop-dong']);
+  }
+
   flowCurrent = 0
   callApiInfo(params, type = 'Update') {
     this.spinner.show();

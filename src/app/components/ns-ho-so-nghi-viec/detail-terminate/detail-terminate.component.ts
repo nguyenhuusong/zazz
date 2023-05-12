@@ -198,7 +198,10 @@ export class DetailTerminateComponent implements OnInit {
     })
   }
 
-   
+  onBack() {
+    this.router.navigate(['/nhan-su/ho-so-nghi-viec'])
+  }
+
   UpdateStatus() {
     this.getTerminateInfo(this.selectedStatus.value);
   }
