@@ -1,6 +1,8 @@
 $colorIcon: rgb(82, 91, 115);
 $IconHover: rgb(0, 82, 204);
 $orangerColor: rgb(255, 124, 89);
+$redColor: rgb(255, 59, 72);
+$greenColor:rgb(52, 199, 89);
 .uni-icon{
     position: relative;
     line-height: 1;
@@ -189,9 +191,126 @@ $orangerColor: rgb(255, 124, 89);
         &::after { background-image: save($colorIcon); }
         &:hover{ &::after{ background-image: save($IconHover); } }
     }
-    
-    
-    
+    &.uni-create-contract{
+        &::after { background-image: createContract($colorIcon); }
+        &:hover{ &::after{ background-image: createContract($IconHover); } }
+    }
+    &.uni-work-off{
+        &::after { background-image: workOff($colorIcon); }
+        &:hover{ &::after{ background-image: workOff($IconHover); } }
+    }
+    &.uni-shuffle{
+        &::after { background-image: shuffle($colorIcon); }
+        &:hover{ &::after{ background-image: shuffle($IconHover); } }
+    }
+    &.uni-exit-cicle-fill{
+        &::after { background-image: exitCicleFill($colorIcon); }
+        &:hover{ &::after{ background-image: exitCicleFill($IconHover); } }
+    }
+    &.uni-import{
+        &::after { background-image: import($colorIcon); }
+        &:hover{ &::after{ background-image: import($IconHover); } }
+    }
+    &.uni-caculator{
+        &::after { background-image: caculator($colorIcon); }
+        &:hover{ &::after{ background-image: caculator($IconHover); } }
+    }
+    &.uni-pen-line{
+        &::after { background-image: penLine($colorIcon); }
+        &:hover{ &::after{ background-image: penLine($IconHover); } }
+    }
+    &.uni-check-square-line{
+        &::after { background-image: checkSquareLine($colorIcon); }
+        &:hover{ &::after{ background-image: checkSquareLine($IconHover); } }
+    }
+    &.uni-document-note{
+        &::after { background-image: documentNote($colorIcon); }
+        &:hover{ &::after{ background-image: documentNote($IconHover); } }
+    }
+    &.uni-structure-fill{
+        &::after { background-image: structureFill($colorIcon); }
+        &:hover{ &::after{ background-image: structureFill($IconHover); } }
+    }
+    &.uni-refresh{
+        &::after { background-image: refresh($colorIcon); }
+        &:hover{ &::after{ background-image: refresh($IconHover); } }
+    }
+    &.uni-arrow-down-fill{
+        &::after { background-image: arrowDownFill($colorIcon); }
+        &:hover{ &::after{ background-image: arrowDownFill($IconHover); } }
+    }
+    &.uni-update{
+        &::after { background-image: update($colorIcon); }
+        &:hover{ &::after{ background-image: update($IconHover); } }
+    }
+    &.uni-note-basic{
+        &::after { background-image: noteBasic($colorIcon); }
+        &:hover{ &::after{ background-image: noteBasic($IconHover); } }
+    }
+    &.uni-lock-open-fill{
+        &::after { background-image: lockOpenFill($colorIcon); }
+        &:hover{ &::after{ background-image: lockOpenFill($IconHover); } }
+    }
+    &.uni-lock-fill{
+        &::after { background-image: lockFill($colorIcon); }
+        &:hover{ &::after{ background-image: lockFill($IconHover); } }
+    }
+    &.uni-copy-line{
+        &::after { background-image: copyLine($colorIcon); }
+        &:hover{ &::after{ background-image: copyLine($IconHover); } }
+    }
+    &.uni-gmail-line{
+        &::after { background-image: gmailLine($colorIcon); }
+        &:hover{ &::after{ background-image: gmailLine($IconHover); } }
+    }
+    &.uni-icon-square{
+        &::after { background-image: iconSquare($colorIcon); }
+        &:hover{ &::after{ background-image: iconSquare($IconHover); } }
+    }
+    &.uni-chevron-right{
+        &::after { background-image: chevronRight($colorIcon); }
+        &:hover{ &::after{ background-image: chevronRight($IconHover); } }
+    }
+    &.uni-folder{
+        &::after { background-image: folder($colorIcon); }
+        &:hover{ &::after{ background-image: folder($IconHover); } }
+    }
+    &.uni-phone{
+        &::after { background-image: phone($colorIcon); }
+        &:hover{ &::after{ background-image: phone($IconHover); } }
+    }
+    &.uni-door{
+        &::after { background-image: door($colorIcon); }
+        &:hover{ &::after{ background-image: door($IconHover); } }
+    }
+    &.uni-notify-fill{
+        &::after { background-image: notifyFill($colorIcon); }
+        &:hover{ &::after{ background-image: notifyFill($IconHover); } }
+    }
+    &.uni-clock{
+        &::after { background-image: clock($colorIcon); }
+        &:hover{ &::after{ background-image: clock($IconHover); } }
+    }
+    &.uni-camera{
+        &::after { background-image: camera($colorIcon); }
+        &:hover{ &::after{ background-image: camera($IconHover); } }
+    }
+    &.uni-send{
+        &::after { background-image: send($colorIcon); }
+        &:hover{ &::after{ background-image: send($IconHover); } }
+    }
+    &.uni-document-money{
+        &::after { background-image: documentMoney($colorIcon); }
+        &:hover{ &::after{ background-image: documentMoney($IconHover); } }
+    }
+    &.uni-caculator-fill{
+        &::after { background-image: caculatorFill($colorIcon); }
+        &:hover{ &::after{ background-image: caculatorFill($IconHover); } }
+    }
+    &.uni-vector{
+        &::after { background-image: vector($colorIcon); }
+        &:hover{ &::after{ background-image: vector($IconHover); } }
+    }
     
 }
 .p-highlight, a:hover{
@@ -239,7 +358,35 @@ $orangerColor: rgb(255, 124, 89);
         &.uni-options{ &::after { background-image: options($IconHover); } }
         &.uni-search{ &::after { background-image: search($IconHover); } }
         &.uni-save{ &::after { background-image: save($IconHover); } }
-        
+        &.uni-create-contract{ &::after { background-image: createContract($IconHover); } }
+        &.uni-work-off{ &::after { background-image: workOff($IconHover); } }
+        &.uni-shuffle{ &::after { background-image: shuffle($IconHover); } }
+        &.uni-exit-cicle-fill{ &::after { background-image: exitCicleFill($IconHover); } }
+        &.uni-import{ &::after { background-image: import($IconHover); } }
+        &.uni-caculator{ &::after { background-image: caculator($IconHover); } }
+        &.uni-pen-line{ &::after { background-image: penLine($IconHover); } }
+        &.uni-check-square-line{ &::after { background-image: checkSquareLine($IconHover); } }
+        &.uni-document-note{ &::after { background-image: documentNote($IconHover); } }
+        &.uni-structure-fill{ &::after { background-image: structureFill($IconHover); } }
+        &.uni-refresh{ &::after { background-image: refresh($IconHover); } }
+        &.uni-arrow-down-fill{ &::after { background-image: arrowDownFill($IconHover); } }
+        &.uni-update{ &::after { background-image: update($IconHover); } }
+        &.uni-note-basic{ &::after { background-image: noteBasic($IconHover); } }
+        &.uni-lock-fill{ &::after { background-image: lockFill($IconHover); } }
+        &.uni-copy-line{ &::after { background-image: copyLine($IconHover); } }
+        &.uni-gmail-line{ &::after { background-image: gmailLine($IconHover); } }
+        &.uni-icon-square{ &::after { background-image: iconSquare($IconHover); } }
+        &.uni-chevron-right{ &::after { background-image: chevronRight($IconHover); } }
+        &.uni-folder{ &::after { background-image: folder($IconHover); } }
+        &.uni-phone{ &::after { background-image: phone($IconHover); } }
+        &.uni-door{ &::after { background-image: door($IconHover); } }
+        &.uni-notify-fill{ &::after { background-image: notifyFill($IconHover); } }
+        &.uni-clock{ &::after { background-image: clock($IconHover); } }
+        &.uni-camera{ &::after { background-image: camera($IconHover); } }
+        &.uni-send{ &::after { background-image: send($IconHover); } }
+        &.uni-document-money{ &::after { background-image: documentMoney($IconHover); } }
+        &.uni-caculator-fill{ &::after { background-image: caculatorFill($IconHover); } }
+        &.uni-vector{ &::after { background-image: vector($IconHover); } }
     }
 }
 
@@ -288,6 +435,114 @@ $orangerColor: rgb(255, 124, 89);
         &.uni-options{ &::after { background-image: options($orangerColor); } }
         &.uni-search{ &::after { background-image: search($orangerColor); } }
         &.uni-save{ &::after { background-image: save($orangerColor); } }
-        
+        &.uni-create-contract{ &::after { background-image: createContract($orangerColor); } }
+        &.uni-work-off{ &::after { background-image: workOff($orangerColor); } }
+        &.uni-shuffle{ &::after { background-image: shuffle($orangerColor); } }
+        &.uni-exit-cicle-fill{ &::after { background-image: exitCicleFill($orangerColor); } }
+        &.uni-import{ &::after { background-image: import($orangerColor); } }
+        &.uni-caculator{ &::after { background-image: caculator($orangerColor); } }
+        &.uni-pen-line{ &::after { background-image: penLine($orangerColor); } }
+        &.uni-check-square-line{ &::after { background-image: checkSquareLine($orangerColor); } }
+        &.uni-document-note{ &::after { background-image: documentNote($orangerColor); } }
+        &.uni-structure-fill{ &::after { background-image: structureFill($orangerColor); } }
+        &.uni-refresh{ &::after { background-image: refresh($orangerColor); } }
+        &.uni-arrow-down-fill{ &::after { background-image: arrowDownFill($orangerColor); } }
+        &.uni-update{ &::after { background-image: update($orangerColor); } }
+        &.uni-note-basic{ &::after { background-image: noteBasic($orangerColor); } }
+        &.uni-lock-fill{ &::after { background-image: lockFill($orangerColor); } }
+        &.uni-copy-line{ &::after { background-image: copyLine($orangerColor); } }
+        &.uni-gmail-line{ &::after { background-image: gmailLine($orangerColor); } }
+        &.uni-icon-square{ &::after { background-image: iconSquare($orangerColor); } }
+        &.uni-chevron-right{ &::after { background-image: chevronRight($orangerColor); } }
+        &.uni-folder{ &::after { background-image: folder($orangerColor); } }
+        &.uni-phone{ &::after { background-image: phone($orangerColor); } }
+        &.uni-door{ &::after { background-image: door($orangerColor); } }
+        &.uni-notify-fill{ &::after { background-image: notifyFill($orangerColor); } }
+        &.uni-clock{ &::after { background-image: clock($orangerColor); } }
+        &.uni-camera{ &::after { background-image: camera($orangerColor); } }
+        &.uni-send{ &::after { background-image: send($orangerColor); } }
+        &.uni-document-money{ &::after { background-image: documentMoney($orangerColor); } }
+        &.uni-caculator-fill{ &::after { background-image: caculatorFill($orangerColor); } }
+        &.uni-vector{ &::after { background-image: vector($orangerColor); } }
+    }
+    &.uni-red-color{
+        &.uni-tongquan{ &::after { background-image: overview($redColor); } }
+        &.uni-nhansu{ &::after { background-image: users($redColor); } }
+        &.uni-chamcong{ &::after { background-image: calendar($redColor); } }
+        &.uni-tinhluong{ &::after { background-image: noteMoney($redColor); } }
+        &.uni-quantri{ &::after { background-image: setting($redColor); } }
+        &.uni-thongtinchung{ &::after { background-image: userRate($redColor); } }
+        &.uni-qhgd{ &::after { background-image: homeBuilding($redColor); } }
+        &.uni-hopdong{ &::after { background-image: note($redColor); } }
+        &.uni-qtbonhiem{ &::after { background-image: noteUser($redColor); } }
+        &.uni-qtdaotao{ &::after { background-image: learningTools($redColor); } }
+        &.uni-dienbienluong{ &::after { background-image: money($redColor); } }
+        &.uni-user-group{ &::after { background-image: getUserGroup($redColor); } }
+        &.uni-user-plus{ &::after { background-image: getUserPlus($redColor); } }
+        &.uni-user-ban{ &::after { background-image: getUserBan($redColor); } }
+        &.uni-setting{ &::after { background-image: getSetting($redColor); } }
+        &.uni-full-screen{ &::after { background-image: getFullScreen($redColor); } }
+        &.uni-home{ &::after { background-image: home($redColor); } }
+        &.uni-user{ &::after { background-image: user($redColor); } }
+        &.uni-noti{ &::after { background-image: noti($redColor); } }
+        &.note-checked{ &::after { background-image: noteChecked($redColor); } }
+        &.uni-money-cicle{ &::after { background-image: moneyCicle($redColor); } }
+        &.uni-protect{ &::after { background-image: protect($redColor); } }
+        &.uni-setting-transparent{ &::after { background-image: settingTransparent($redColor); } }
+        &.uni-narrow-down{ &::after { background-image: narrowDown($redColor); } }
+        &.uni-delete{ &::after { background-image: delete($redColor); } }
+        &.uni-edit{ &::after { background-image: edit($redColor); } }
+        &.uni-plus-cicle{ &::after { background-image: plusCicle($redColor); } }
+        &.uni-plus{ &::after { background-image: plus($redColor); } }
+        &.uni-upload{ &::after { background-image: upload($redColor); } }
+        &.uni-calendar{ &::after { background-image: calendar($redColor); } }
+        &.uni-config{ &::after { background-image: config($redColor); } }
+        &.uni-cancel-cicle{ &::after { background-image: cancelCicle($redColor); } }
+        &.uni-checked-cicle{ &::after { background-image: checkedCicle($redColor); } }
+        &.uni-close{ &::after { background-image: close($redColor); } }
+        &.uni-narrow-long-left{ &::after { background-image: narrowLongLeft($redColor); } }
+        &.uni-file-attach{ &::after { background-image: fileAttach($redColor); } }
+        &.uni-envelope{ &::after { background-image: envelope($redColor); } }
+        &.uni-reload{ &::after { background-image: reload($redColor); } }
+        &.uni-config-table{ &::after { background-image: configTable($redColor); } }
+        &.uni-warning-cicle{ &::after { background-image: warningCicle($redColor); } }
+        &.uni-options{ &::after { background-image: options($redColor); } }
+        &.uni-search{ &::after { background-image: search($redColor); } }
+        &.uni-save{ &::after { background-image: save($redColor); } }
+        &.uni-create-contract{ &::after { background-image: createContract($redColor); } }
+        &.uni-work-off{ &::after { background-image: workOff($redColor); } }
+        &.uni-shuffle{ &::after { background-image: shuffle($redColor); } }
+        &.uni-exit-cicle-fill{ &::after { background-image: exitCicleFill($redColor); } }
+        &.uni-import{ &::after { background-image: import($redColor); } }
+        &.uni-caculator{ &::after { background-image: caculator($redColor); } }
+        &.uni-pen-line{ &::after { background-image: penLine($redColor); } }
+        &.uni-check-square-line{ &::after { background-image: checkSquareLine($redColor); } }
+        &.uni-document-note{ &::after { background-image: documentNote($redColor); } }
+        &.uni-structure-fill{ &::after { background-image: structureFill($redColor); } }
+        &.uni-refresh{ &::after { background-image: refresh($redColor); } }
+        &.uni-arrow-down-fill{ &::after { background-image: arrowDownFill($redColor); } }
+        &.uni-update{ &::after { background-image: update($redColor); } }
+        &.uni-note-basic{ &::after { background-image: noteBasic($redColor); } }
+        &.uni-lock-fill{ &::after { background-image: lockFill($redColor); } }
+        &.uni-copy-line{ &::after { background-image: copyLine($redColor); } }
+        &.uni-gmail-line{ &::after { background-image: gmailLine($redColor); } }
+        &.uni-icon-square{ &::after { background-image: iconSquare($redColor); } }
+        &.uni-chevron-right{ &::after { background-image: chevronRight($redColor); } }
+        &.uni-folder{ &::after { background-image: folder($redColor); } }
+        &.uni-phone{ &::after { background-image: phone($redColor); } }
+        &.uni-door{ &::after { background-image: door($redColor); } }
+        &.uni-notify-fill{ &::after { background-image: notifyFill($redColor); } }
+        &.uni-clock{ &::after { background-image: clock($redColor); } }
+        &.uni-camera{ &::after { background-image: camera($redColor); } }
+        &.uni-send{ &::after { background-image: send($redColor); } }
+        &.uni-document-money{ &::after { background-image: documentMoney($redColor); } }
+        &.uni-caculator-fill{ &::after { background-image: caculatorFill($redColor); } }
+        &.uni-vector{ &::after { background-image: vector($redColor); } }
+
+
+
+    }
+    &.uni-green-color{
+        &.uni-vector{ &::after { background-image: vector($greenColor); } }
     }
 }

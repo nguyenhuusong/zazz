@@ -190,7 +190,7 @@ export class LichSuTuyenDungComponent implements OnInit {
           label: 'Tiềm năng',
           icon: 'pi pi-send',
           class: 'btn-primary mr5',
-          hide: event.data.can_st === 10
+          hide: event.data.can_st === 10 || event.data.can_st === 8
           // hide: event.data.can_st === parseInt(this.recruitmentStatus[this.recruitmentStatus.length - 1])
         },
       ]

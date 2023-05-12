@@ -221,7 +221,7 @@ export class ThongTinHoSoCaNhanComponent implements OnInit {
                 hide: !params.data.meta_upload_url
               },
               {
-                onClick: this.dowloadFileUpload.bind(this),
+                onClick: this.uploadFile.bind(this),
                 label: 'upload hồ sơ',
                 icon: 'pi pi-upload',
                 key: 'view-job-detail',
