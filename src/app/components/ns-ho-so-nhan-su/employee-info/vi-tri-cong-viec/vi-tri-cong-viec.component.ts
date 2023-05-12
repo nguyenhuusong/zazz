@@ -48,6 +48,10 @@ export class ViTriCongViecComponent implements OnInit, AfterViewInit {
 
   }
 
+  onBack() {
+    this.router.navigate(['/nhan-su/ho-so-nhan-su']);
+  }
+
   private readonly unsubscribe$: Subject<void> = new Subject();
   ngOnDestroy() {
     this.unsubscribe$.next();

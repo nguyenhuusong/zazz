@@ -163,6 +163,10 @@ export class ThongTinCaNhanComponent implements OnInit {
     })
   }
 
+  onBack() {
+    this.router.navigate(['/nhan-su/ho-so-nhan-su'])
+  }
+
   // dùng cho các phần Giấy tờ tùy thân, Thông tin hồ sơ cá nhân, Danh sách đính kèm, Danh sách thông tin người liên hệ
   // @listViewsPart
  
