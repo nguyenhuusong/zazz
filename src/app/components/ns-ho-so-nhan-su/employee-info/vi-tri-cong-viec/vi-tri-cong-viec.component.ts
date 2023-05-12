@@ -68,13 +68,6 @@ export class ViTriCongViecComponent implements OnInit, AfterViewInit {
   itemsMenuPopup = []
   initMenuPopup() {
     this.itemsMenuPopup = [
-      // {
-      //   label: 'Chuyển công tác',
-      //   icon: 'pi pi-arrow-down-right',
-      //   command: () => {
-      //     this.chuyenCongTac();
-      //   }
-      // },
       {
         label: 'Nghỉ việc',
         icon: 'pi pi-directions',
