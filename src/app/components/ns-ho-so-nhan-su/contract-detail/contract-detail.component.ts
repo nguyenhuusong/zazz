@@ -109,13 +109,13 @@ export class ContractDetailComponent implements OnInit {
             value: d.flow_st
           }
         });
-        this.optionsButtonsView = [
-          { label: 'Quay lại', value: 'BackPage', class: `p-button-secondary ${results.data.prev_st ? '' : 'hidden'}`, icon: 'pi pi-caret-left', },
-          { label: 'Tiếp tục', value: 'Update', class: `btn-accept ${results.data.next_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-caret-right' },
-          { label: 'Lưu tạm', value: 'SaveNhap', class: `btn-accept ${results.data.save_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
-          { label: 'Xác nhận', value: 'Submit', class: `btn-accept ${results.data.submit_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
-          { label: 'Đóng', value: 'Close', class: `p-button-danger ml-1`, icon: 'pi pi-times' }
-        ]
+        // this.optionsButtonsView = [
+        //   { label: 'Quay lại', value: 'BackPage', class: `p-button-secondary ${results.data.prev_st ? '' : 'hidden'}`, icon: 'pi pi-caret-left', },
+        //   { label: 'Tiếp tục', value: 'Update', class: `btn-accept ${results.data.next_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-caret-right' },
+        //   { label: 'Lưu tạm', value: 'SaveNhap', class: `btn-accept ${results.data.save_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
+        //   { label: 'Xác nhận', value: 'Submit', class: `btn-accept ${results.data.submit_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
+        //   { label: 'Đóng', value: 'Close', class: `p-button-danger ml-1`, icon: 'pi pi-times' }
+        // ]
         this.listViews = cloneDeep(results.data.group_fields);
         setTimeout(() => {
           this.stepActivated();
@@ -168,7 +168,7 @@ export class ContractDetailComponent implements OnInit {
   setContractInfo(data) {
     if(this.flowCurrent >= this.activeIndex) {
       const params = {
-        ...this.detailInfo, group_fields: data, flow_cur: this.flowCurrent, action: 'next'
+        ...this.detailInfo, group_fields: data.datas, flow_cur: this.flowCurrent, action: 'next'
       };
       this.cloneListViews = cloneDeep(data);
       this.listViews = [];
@@ -223,14 +223,14 @@ export class ContractDetailComponent implements OnInit {
         }, 100);
         this.detailInfo = results.data;
         this.flowCurrent = results.data.flow_cur;
-        this.optionsButtonsView = [
-          { label: 'Quay lại', value: 'BackPage', class: `p-button-secondary ${results.data.prev_st ? '' : 'hidden'}`, icon: 'pi pi-caret-left', },
-          { label: 'Tiếp tục', value: 'Update', class: `btn-accept ${results.data.next_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-caret-right' },
-          { label: 'Lưu tạm', value: 'SaveNhap', class: `btn-accept ${results.data.save_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
-          { label: 'Xác nhận', value: 'Submit', class: `btn-accept ${results.data.submit_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
-          // { label: 'Tải về hồ sơ mẫu', value: 'Dowload', class: `btn-accept ${results.data.flow_cur > 1 ? '' : 'hidden'} ml-1`, icon: 'pi pi-dowload' },
-          { label: 'Đóng', value: 'Close', class: `p-button-danger ml-1`, icon: 'pi pi-times' }
-        ]
+        // this.optionsButtonsView = [
+        //   { label: 'Quay lại', value: 'BackPage', class: `p-button-secondary ${results.data.prev_st ? '' : 'hidden'}`, icon: 'pi pi-caret-left', },
+        //   { label: 'Tiếp tục', value: 'Update', class: `btn-accept ${results.data.next_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-caret-right' },
+        //   { label: 'Lưu tạm', value: 'SaveNhap', class: `btn-accept ${results.data.save_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
+        //   { label: 'Xác nhận', value: 'Submit', class: `btn-accept ${results.data.submit_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
+        //   { label: 'Tải về hồ sơ mẫu', value: 'Dowload', class: `btn-accept ${results.data.flow_cur > 1 ? '' : 'hidden'} ml-1`, icon: 'pi pi-dowload' },
+        //   { label: 'Đóng', value: 'Close', class: `p-button-danger ml-1`, icon: 'pi pi-times' }
+        // ]
         if (results.data.flow_cur > 1 && results.data.contractId) this.getContractMetaPage();
         if ((results.data.flow_cur > 0 && results.data.flow_cur < 4) && results.data.contractId) this.getSalaryComponentPage();
         if ((results.data.flow_cur > 0 && results.data.flow_cur < 4) && !results.data.contractId) this.getSalaryComponentPageNotContractId(results.data);
@@ -273,6 +273,7 @@ export class ContractDetailComponent implements OnInit {
         });
     
         this.spinner.hide();
+        this.getContractInfo()
       }
     }, error => {
       this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: error });
@@ -456,6 +457,7 @@ export class ContractDetailComponent implements OnInit {
       s.click();
     }, 400);
   }
+
   menuActions = [];
   initButton() {
     this.optionsButtonsView = this.detailInfo.actions.map(item => {
