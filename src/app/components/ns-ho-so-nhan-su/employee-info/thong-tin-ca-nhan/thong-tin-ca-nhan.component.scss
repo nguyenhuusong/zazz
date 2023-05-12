@@ -269,14 +269,16 @@
         }
     }
     .field-group.select{
-        .p-dropdown:hover{
-            border: none;
-        }
         .bgTodo{
             .p-dropdown-trigger{
                 .p-dropdown-trigger-icon{
                     color: #fff;
                 }
+            }
+        }
+        .bgDone{
+            &:hover{
+                border-color: #3f51b5;
             }
         }
     }

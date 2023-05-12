@@ -44,7 +44,7 @@ export class ThongTinCaNhanEditDetailComponent implements OnInit {
   selectedStatus = null;
   getDetail(flow_cur = null) {
     this.spinner.show();
-    this.detailInfo = null;
+    this.listViews = [];
     const query = { empId: this.empId, edit_is: true, flow_cur: flow_cur }
     this.apiService.getEmpProfile(queryString.stringify(query))
     .pipe(takeUntil(this.unsubscribe$))
@@ -176,24 +176,6 @@ export class ThongTinCaNhanEditDetailComponent implements OnInit {
       if (results.status === 'success') {
         this.listViews = cloneDeep(results.data.group_fields || []);
         this.detailInfo = results.data;
-        this.activeIndex = results.data.flow_st;
-        this.flowCurrent = results.data.flow_cur + 1;
-        this.steps = results.data.flowStatuses.map(d => {
-          return {
-            label: d.flow_name,
-            value: d.flow_st
-          }
-        });
-        setTimeout(() => {
-          this.stepActivated();
-        }, 100);
-        this.optionsButtonsView = [
-          { label: 'Quay lại', value: 'BackPage', class: `p-button-secondary ${results.data.prev_st ? '' : 'hidden'}`, icon: 'pi pi-caret-left',  },
-          { label: 'Tiếp tục', value: 'Update', class: `btn-accept ${results.data.next_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-caret-right' },
-          { label: 'Lưu tạm', value: 'SaveNhap', class: `btn-accept ${results.data.save_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
-          { label: 'Xác nhận', value: 'Submit', class: `btn-accept ${results.data.submit_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
-          { label: 'Đóng', value: 'Close', class: `p-button-danger ml-1`, icon: 'pi pi-times' }
-        ]
         this.spinner.hide();
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Cập nhật thông tin thành công' });
         if(type === 'Submit' || type === 'SaveNhap') {

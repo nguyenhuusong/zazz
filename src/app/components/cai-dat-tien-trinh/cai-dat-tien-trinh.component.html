@@ -115,7 +115,7 @@
             </section>
         </p-tabPanel>
         <p-tabPanel header="Cài đặt trạng thái">
-           <app-cai-dat-trang-thai *ngIf="tabIndex === 1"></app-cai-dat-trang-thai>
+           <app-cai-dat-trang-thai *ngIf="tabIndex === 1" [query]="query"></app-cai-dat-trang-thai>
         </p-tabPanel>
     </p-tabView>
 </section>

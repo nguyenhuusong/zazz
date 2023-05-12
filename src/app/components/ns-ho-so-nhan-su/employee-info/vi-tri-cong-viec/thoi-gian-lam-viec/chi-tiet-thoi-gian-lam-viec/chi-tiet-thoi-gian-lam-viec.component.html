@@ -1,29 +1,22 @@
-<!-- <p-card>
-    <div class="status-line steps-contract col-12 m-auto">
-        <p-steps [model]="steps" [(activeIndex)]="activeIndex" [readonly]="false"></p-steps>
-    </div>
-</p-card>
-<p-divider></p-divider> -->
 
-
-<p-dialog [(visible)]="isEditDetail" [autoZIndex]="true" [modal]="true"  appendTo="body"
-    [style]="{width: '1300px', height: 'auto'}">
+<p-dialog styleClass="popup-btngroup-edit-detail"  [(visible)]="displayFormEditDetail" [draggable]="false"  [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '1400px', height: 'auto'}">
     <p-header>
-       Chỉnh sửa vị trí công việc
+        Thêm mới thời gian làm việc
     </p-header>
 
     <p-card>
         <app-edit-detail *ngIf="listViews.length> 0" 
             [detail]="detailInfo" 
+            [isHideButton]="true" [isHideButton]="true"
             [manhinh]="'Edit'" 
             [dataView]="listViews"
-            [isHideButton]="true"
             [optionsButtonsEdit]="optionsButtonsView" 
             (callback)="setDetail($event)" 
             (callBackForm)="callBackForm($event)"
             (callbackcancel)="canceDetail($event)">
         </app-edit-detail>
     </p-card>
+
     <ng-template pTemplate="footer">
         <div class="col-12  flex justify-content-end align-items-center" >
             <div class="field-group select " style="margin-bottom: 0;">
@@ -52,10 +45,9 @@
                     </ng-template>
                 </p-dropdown>
             </div>
-            <p-splitButton icon="pi pi-send" *ngIf="menuActions.length > 0" styleClass="p-button-sm ml-2" [appendTo]="'body'" (onClick)="callActions(menuActions[0].value)" [label]="menuActions[0].label" [model]="menuActions"></p-splitButton>
+            <p-splitButton icon="pi pi-send" *ngIf="menuActions.length > 0 && listViews.length> 0" styleClass="p-button-sm ml-2" [appendTo]="'body'" (onClick)="callActions(menuActions[0].value)" [label]="menuActions[0].label" [model]="menuActions"></p-splitButton>
             <p-button label="Quay lại" styleClass="p-button-secondary p-button-sm ml-2" [style]="{'z-index': 9}" icon="pi pi-directions-alt"></p-button>
               </div>
     </ng-template>
-
     
 </p-dialog>

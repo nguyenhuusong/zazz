@@ -75,7 +75,7 @@ export class EmployeeInfoComponent implements OnInit {
     .subscribe(results => {
       if (results.status === 'success') {
         this.dataEmployeeStatus = results.data;
-        this.handleChange(results.data.tab_st);
+        // this.handleChange(results.data.tab_st);
 
       }
     })

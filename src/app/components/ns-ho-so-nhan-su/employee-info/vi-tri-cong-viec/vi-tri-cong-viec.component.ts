@@ -146,6 +146,8 @@ export class ViTriCongViecComponent implements OnInit, AfterViewInit {
         this.listViews = cloneDeep(results.data.group_fields || []);
         this.listViewsForm = cloneDeep(results.data.group_fields || []);
         this.detailInfo = results.data;
+        this.initButton();
+
         this.spinner.hide();
       }
     }, error => {
@@ -158,32 +160,24 @@ export class ViTriCongViecComponent implements OnInit, AfterViewInit {
 
   }
   
-  callActions(e) {
-
+  callActions(code) {
+      this[code]()
   }
 
   optionsButon = [];
   menuActions = [];
   initButton() {
-    this.optionsButon = this.detailInfo.actions.map(item => {
+    this.menuActions = this.detailInfo.actions.map((item, index) => {
       return {
         label: item.name,
         value: item.code,
-        icon: item.icon
+        styleClass: index === 0 ? 'hidden' : '',
+        icon: item.icon,
+        command: () => {
+          this[item.code]();
+        }
       }
     });
-
-    // this.menuActions = this.detailInfo.actions.map((item, index) => {
-    //   return {
-    //     label: item.name,
-    //     value: item.code,
-    //     styleClass: index === 0 ? 'hidden' : '',
-    //     icon: item.icon,
-    //     command: () => {
-    //       this.callActions(item.code);
-    //     }
-    //   }
-    // });
   }
  
   displayuploadcontract = false;
@@ -193,7 +187,6 @@ export class ViTriCongViecComponent implements OnInit, AfterViewInit {
     this.record = event.rowData;
   }
 
- 
   setEmployeeInfo(data) {
     const  params = {
       ...this.detailInfo, group_fields: data
@@ -494,7 +487,7 @@ export class ViTriCongViecComponent implements OnInit, AfterViewInit {
     // this.reloadEdit.emit();
   }
 
-  editDetail() {
+  actView() {
     this.isEditDetail = true;
   }
 

@@ -6,14 +6,8 @@
         </div>
     </section>
 </div>
-<p-card>
-    <div class="status-line steps-contract col-12 m-auto">
-        <p-steps [model]="steps" *ngIf="listViews.length> 0" [(activeIndex)]="activeIndex" [readonly]="false"></p-steps>
-    </div>
-</p-card>
-<p-divider></p-divider>
-<p-card>
-   
+
+<p-card *ngIf="!isDialog">
     <div>
         <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'"
             [optionsButtonsEdit]="optionsButtonsView" [dataView]="listViews" (callback)="setSalaryInfoDevM($event)" (callBackForm)="callBackForm($event)"
@@ -23,26 +17,91 @@
                 *ngIf="listViews.length === 0">
             </app-loading-detail>
             <p-divider></p-divider>
-
             <app-thanh-phan-luong [salaryInfoId]="modelEdit.salaryInfoId" *ngIf="detailInfo && detailInfo?.flow_cur > 1"></app-thanh-phan-luong>
-         
-
             <app-hop-dong-salary (cancelSave)="getSalaryInfoDevM()" [empId]="detailInfo.empId" [salaryInfoId]="modelEdit.salaryInfoId" *ngIf="detailInfo && detailInfo?.flow_cur > 2"></app-hop-dong-salary>
+            <div class="col-12  flex justify-content-end align-items-center" >
+                <div class="field-group select " style="margin-bottom: 0;">
+                    <p-dropdown 
+                        *ngIf="listViews.length> 0" 
+                        [options]="status" 
+                        (onChange)="UpdateStatus()"
+                        [(ngModel)]="selectedStatus" 
+                        [styleClass]="selectedStatus?.bgColor"  
+                        [style]="{'width': '180px'}" 
+                        optionLabel="name"  
+                        placeholder="Select a Country">
+                        <ng-template pTemplate="selectedItem" >
+                            <div class="flex align-items-center gap-2" *ngIf="selectedStatus" >
+                                <div style="color: #fff">{{ selectedStatus.name}}</div>
+                            </div>
+                        </ng-template>
+                        <ng-template let-country pTemplate="item">
+                            <div class="flex align-items-center gap-2" *ngIf="country.value != selectedStatus.value">
+                                <div class="pb-2 pt-2" style="display: flex; align-items: center; width: 100%;justify-content: space-around;font-size: 13px;">
+                                    <span>{{ country.placeholder }} </span>
+                                    <span class="pi pi-arrow-right" style="font-size: 12px;"></span>
+                                    <span [class]="country.textColor" class="pl-2 pr-2">{{ country.name }}</span>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+                <p-splitButton icon="pi pi-send" *ngIf="menuActions.length > 0" styleClass="p-button-sm ml-2" [appendTo]="'body'" (onClick)="callActions(menuActions[0].value)" [label]="menuActions[0].label" [model]="menuActions"></p-splitButton>
+                <p-button label="Quay lại" styleClass="p-button-secondary p-button-sm ml-2" [style]="{'z-index': 9}" icon="pi pi-directions-alt"></p-button>
+                  </div>
     </div>
        
 </p-card>
 
 
-<!-- <p-dialog [(visible)]="displayuploadcontract" [autoZIndex]="true" [modal]="true"  appendTo="body"
-    [style]="{width: '800px', height: 'auto'}">
+<p-dialog styleClass="popup-btngroup-edit-detail"  [(visible)]="displayFormEditDetail" (onHide)="callback.emit()" [draggable]="false"  [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '1400px', height: 'auto'}">
     <p-header>
-        Tải lên hợp đồng [{{metafile?.meta_title}}]
+        {{salaryInfoId ? 'Chỉnh sửa quá trình lương' : 'Thêm mới quá trình lương'}}
     </p-header>
-    <app-upload-file [maxFileSize]="8000000" [multiple]="" (callback)="handleUpload($event)" *ngIf="displayuploadcontract"></app-upload-file>
+    <p-card>
+        <div>
+            <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'" [isHideButton]="true"
+                [optionsButtonsEdit]="optionsButtonsView" [dataView]="listViews" (callback)="setSalaryInfoDevM($event)" (callBackForm)="callBackForm($event)"
+                (callbackcancel)="cancel($event)"></app-edit-detail>
+                <app-loading-detail 
+                    [id]="'sections-2qnt'" 
+                    *ngIf="listViews.length === 0">
+                </app-loading-detail>
+                <p-divider></p-divider>
+                <app-thanh-phan-luong [salaryInfoId]="modelEdit.salaryInfoId" *ngIf="detailInfo && detailInfo?.flow_cur > 1"></app-thanh-phan-luong>
+                <app-hop-dong-salary (cancelSave)="getSalaryInfoDevM()" [empId]="detailInfo.empId" [salaryInfoId]="modelEdit.salaryInfoId" *ngIf="detailInfo && detailInfo?.flow_cur > 2"></app-hop-dong-salary>
+        </div>
+    </p-card>
+    <ng-template pTemplate="footer" >
+        <div class="col-12  flex justify-content-end align-items-center" >
+            <div class="field-group select " style="margin-bottom: 0;">
+                <p-dropdown 
+                    *ngIf="listViews.length> 0" 
+                    [options]="status" 
+                    (onChange)="UpdateStatus()"
+                    [(ngModel)]="selectedStatus" 
+                    [styleClass]="selectedStatus?.bgColor"  
+                    [style]="{'width': '180px'}" 
+                    optionLabel="name"  
+                    placeholder="Select a Country">
+                    <ng-template pTemplate="selectedItem" >
+                        <div class="flex align-items-center gap-2" *ngIf="selectedStatus" >
+                            <div style="color: #fff">{{ selectedStatus.name}}</div>
+                        </div>
+                    </ng-template>
+                    <ng-template let-country pTemplate="item">
+                        <div class="flex align-items-center gap-2" *ngIf="country.value != selectedStatus.value">
+                            <div class="pb-2 pt-2" style="display: flex; align-items: center; width: 100%;justify-content: space-around;font-size: 13px;">
+                                <span>{{ country.placeholder }} </span>
+                                <span class="pi pi-arrow-right" style="font-size: 12px;"></span>
+                                <span [class]="country.textColor" class="pl-2 pr-2">{{ country.name }}</span>
+                            </div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+            </div>
+            <p-splitButton icon="pi pi-send" *ngIf="menuActions.length > 0" styleClass="p-button-sm ml-2" [appendTo]="'body'" (onClick)="callActions(menuActions[0].value)" [label]="menuActions[0].label" [model]="menuActions"></p-splitButton>
+            <p-button label="Quay lại" styleClass="p-button-secondary p-button-sm ml-2" [style]="{'z-index': 9}" icon="pi pi-directions-alt"></p-button>
+              </div>
+    </ng-template>
 </p-dialog>
-
-
-<p-dialog header="Cài đặt cấu hình" [(visible)]="displaySetting" (onHide)="gridKeyForm === 'view_hrm_contract_files' ? getContractMetaPage() : getSalaryComponentPage()" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
-    [draggable]="false" [resizable]="false" [focusTrap]="false" styleClass="popup-setting">
-    <app-config-grid-table-form *ngIf="displaySetting && gridKeyForm" [typeConfig]="'TableInfo'"   [gridKey]="gridKeyForm"></app-config-grid-table-form>
-</p-dialog> -->

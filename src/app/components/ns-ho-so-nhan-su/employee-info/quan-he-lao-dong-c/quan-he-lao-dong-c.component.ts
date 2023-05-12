@@ -59,8 +59,10 @@ export class QuanHeLaoDongCComponent implements OnInit {
         }
         this.selectedStatus = results.data.status;
         this.listViews = cloneDeep(results.data.group_fields || []);
-        // this.listViewsForm = cloneDeep(results.data.group_fields || []);
         this.detailInfo = results.data;
+        if(this.detailInfo.actions && this.detailInfo.actions.length > 0) {
+          this.initButton();
+        }
         this.spinner.hide();
       }
     }, error => {
@@ -74,32 +76,32 @@ export class QuanHeLaoDongCComponent implements OnInit {
 
   }
   
-  callActions(e) {
-
+  callActions(code) {
+    this[code]()
   }
 
   optionsButon = [];
   menuActions = [];
   initButton() {
-    this.optionsButon = this.detailInfo.actions.map(item => {
-      return {
-        label: item.name,
-        value: item.code,
-        icon: item.icon
-      }
-    });
-
-    // this.menuActions = this.detailInfo.actions.map((item, index) => {
+    // this.optionsButon = this.detailInfo.actions.map(item => {
     //   return {
     //     label: item.name,
     //     value: item.code,
-    //     styleClass: index === 0 ? 'hidden' : '',
-    //     icon: item.icon,
-    //     command: () => {
-    //       this.callActions(item.code);
-    //     }
+    //     icon: item.icon
     //   }
     // });
+
+    this.menuActions = this.detailInfo.actions.map((item, index) => {
+      return {
+        label: item.name,
+        value: item.code,
+        styleClass: index === 0 ? 'hidden' : '',
+        icon: item.icon,
+        command: () => {
+          this.callActions(item.code);
+        }
+      }
+    });
   }
 
   private readonly unsubscribe$: Subject<void> = new Subject();

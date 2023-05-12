@@ -1,1 +1,14 @@
-<p>chi-tiet-dang-ky-lich-lam-viec works!</p>
+<p-dialog styleClass="popup-btngroup-edit-detail" [(visible)]="displayFormEditDetail" [draggable]="false" (onHide)="callback.emit()"  [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '1200px', height: 'auto'}">
+    <p-header>
+        Chỉnh sửa lịch làm việc
+    </p-header>
+    <app-edit-detail 
+    *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'"
+    [optionsButtonsEdit]="hideButton ? [] : optionsButtonsView" [dataView]="listViews"
+    (callback)="setSchemeInfo($event)" (callBackForm)="callBackForm($event)"
+    (callbackcancel)="cancel($event)"></app-edit-detail>
+
+<app-loading-detail [id]="'markdown'" *ngIf="listViews.length === 0">
+</app-loading-detail>
+</p-dialog>
+

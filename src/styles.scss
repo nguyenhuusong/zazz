@@ -590,7 +590,7 @@ body {
                     font-family: "SFProTextRegular";
                     white-space: break-spaces;
                     color: rgba(0,0,0,0.9);
-                    font-size:.875rem;
+                    font-size:.800rem;
                  }
              }
              &:first-child{
@@ -3254,7 +3254,6 @@ app-edit-detail{
     width: 100%;
     // .p-card{
         position: relative;
-        padding-left: 10px;
         &::after{
             content: "";
             // display: block;
@@ -6841,3 +6840,70 @@ hr{
     }
 }
 
+
+.p-panel{
+    padding: 10px
+}
+
+.p-dialog-footer{
+    .field-group.select{
+        .bgTodo{
+            .p-dropdown-trigger{
+                .p-dropdown-trigger-icon{
+                    color: #fff;
+                }
+            }
+            &:hover{
+                border-color: #D1D4DC;
+            }
+        }
+        .bgDone{
+            &:hover{
+                border-color: #3f51b5;
+            }
+        }
+    }
+}
+p-tabpanel{
+    .p-dropdown-panel{
+        .p-dropdown-items{
+            .p-dropdown-item{
+                padding-top: 0px;
+                padding-bottom: 0px;
+                span{
+                    white-space: pre;
+                    &.pi-arrow-right{
+                        padding: 0px 10px;
+                    }
+                }
+            }
+        }
+    }
+    .base-info-em{
+        .field-group{
+            &.select{
+                .p-dropdown-trigger-icon{
+                    color: #fff;
+                }
+            }
+        }
+        .field-group.select{
+            .p-dropdown{
+                border-color: transparent !important;
+                .p-focus{
+                    border-color: transparent !important;
+                }
+                &:hover{
+                    border-color: transparent !important;
+                }
+            }
+            .bgTodo{
+                .p-dropdown-trigger{
+                    .p-dropdown-trigger-icon{
+                        color: #fff;
+                    }
+                }
+            }
+        }
+    }
+}

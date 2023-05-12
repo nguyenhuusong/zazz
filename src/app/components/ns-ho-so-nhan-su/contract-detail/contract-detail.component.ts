@@ -19,6 +19,7 @@ export class ContractDetailComponent implements OnInit {
   }
   @Output() callback = new EventEmitter<any>();
   @Output() back = new EventEmitter<any>();
+  @Input() displayFormEditDetail: boolean = false;
   constructor(
     private apiService: ApiHrmService,
     private messageService: MessageService,
@@ -53,6 +54,10 @@ export class ContractDetailComponent implements OnInit {
   titlePage = '';
   url = '';
   itemsMenu = [];
+
+
+  status = [];
+  selectedStatus= null;
 
   private readonly unsubscribe$: Subject<void> = new Subject();
   ngOnDestroy() {
@@ -104,13 +109,13 @@ export class ContractDetailComponent implements OnInit {
             value: d.flow_st
           }
         });
-        this.optionsButtonsView = [
-          { label: 'Quay lại', value: 'BackPage', class: `p-button-secondary ${results.data.prev_st ? '' : 'hidden'}`, icon: 'pi pi-caret-left', },
-          { label: 'Tiếp tục', value: 'Update', class: `btn-accept ${results.data.next_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-caret-right' },
-          { label: 'Lưu tạm', value: 'SaveNhap', class: `btn-accept ${results.data.save_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
-          { label: 'Xác nhận', value: 'Submit', class: `btn-accept ${results.data.submit_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
-          { label: 'Đóng', value: 'Close', class: `p-button-danger ml-1`, icon: 'pi pi-times' }
-        ]
+        // this.optionsButtonsView = [
+        //   { label: 'Quay lại', value: 'BackPage', class: `p-button-secondary ${results.data.prev_st ? '' : 'hidden'}`, icon: 'pi pi-caret-left', },
+        //   { label: 'Tiếp tục', value: 'Update', class: `btn-accept ${results.data.next_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-caret-right' },
+        //   { label: 'Lưu tạm', value: 'SaveNhap', class: `btn-accept ${results.data.save_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
+        //   { label: 'Xác nhận', value: 'Submit', class: `btn-accept ${results.data.submit_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
+        //   { label: 'Đóng', value: 'Close', class: `p-button-danger ml-1`, icon: 'pi pi-times' }
+        // ]
         this.listViews = cloneDeep(results.data.group_fields);
         setTimeout(() => {
           this.stepActivated();
@@ -163,7 +168,7 @@ export class ContractDetailComponent implements OnInit {
   setContractInfo(data) {
     if(this.flowCurrent >= this.activeIndex) {
       const params = {
-        ...this.detailInfo, group_fields: data, flow_cur: this.flowCurrent, action: 'next'
+        ...this.detailInfo, group_fields: data.datas, flow_cur: this.flowCurrent, action: 'next'
       };
       this.cloneListViews = cloneDeep(data);
       this.listViews = [];
@@ -218,14 +223,14 @@ export class ContractDetailComponent implements OnInit {
         }, 100);
         this.detailInfo = results.data;
         this.flowCurrent = results.data.flow_cur;
-        this.optionsButtonsView = [
-          { label: 'Quay lại', value: 'BackPage', class: `p-button-secondary ${results.data.prev_st ? '' : 'hidden'}`, icon: 'pi pi-caret-left', },
-          { label: 'Tiếp tục', value: 'Update', class: `btn-accept ${results.data.next_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-caret-right' },
-          { label: 'Lưu tạm', value: 'SaveNhap', class: `btn-accept ${results.data.save_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
-          { label: 'Xác nhận', value: 'Submit', class: `btn-accept ${results.data.submit_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
-          // { label: 'Tải về hồ sơ mẫu', value: 'Dowload', class: `btn-accept ${results.data.flow_cur > 1 ? '' : 'hidden'} ml-1`, icon: 'pi pi-dowload' },
-          { label: 'Đóng', value: 'Close', class: `p-button-danger ml-1`, icon: 'pi pi-times' }
-        ]
+        // this.optionsButtonsView = [
+        //   { label: 'Quay lại', value: 'BackPage', class: `p-button-secondary ${results.data.prev_st ? '' : 'hidden'}`, icon: 'pi pi-caret-left', },
+        //   { label: 'Tiếp tục', value: 'Update', class: `btn-accept ${results.data.next_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-caret-right' },
+        //   { label: 'Lưu tạm', value: 'SaveNhap', class: `btn-accept ${results.data.save_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
+        //   { label: 'Xác nhận', value: 'Submit', class: `btn-accept ${results.data.submit_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
+        //   { label: 'Tải về hồ sơ mẫu', value: 'Dowload', class: `btn-accept ${results.data.flow_cur > 1 ? '' : 'hidden'} ml-1`, icon: 'pi pi-dowload' },
+        //   { label: 'Đóng', value: 'Close', class: `p-button-danger ml-1`, icon: 'pi pi-times' }
+        // ]
         if (results.data.flow_cur > 1 && results.data.contractId) this.getContractMetaPage();
         if ((results.data.flow_cur > 0 && results.data.flow_cur < 4) && results.data.contractId) this.getSalaryComponentPage();
         if ((results.data.flow_cur > 0 && results.data.flow_cur < 4) && !results.data.contractId) this.getSalaryComponentPageNotContractId(results.data);
@@ -251,28 +256,8 @@ export class ContractDetailComponent implements OnInit {
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(results => {
       if (results.status === 'success') {
-        this.activeIndex = results.data.flow_st;
-        this.modelContractInfo.contractId = results.data.contractId;
-        this.listViews = cloneDeep(results.data.group_fields);
-        setTimeout(() => {
-          this.stepActivated();
-        }, 100);
-        this.detailInfo = results.data;
-        this.flowCurrent = results.data.flow_cur;
-        this.optionsButtonsView = [
-          { label: 'Quay lại', value: 'BackPage', class: `p-button-secondary ${results.data.prev_st ? '' : 'hidden'}`, icon: 'pi pi-caret-left', },
-          { label: 'Tiếp tục', value: 'Update', class: `btn-accept ${results.data.next_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-caret-right' },
-          { label: 'Lưu tạm', value: 'SaveNhap', class: `btn-accept ${results.data.save_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
-          { label: 'Xác nhận', value: 'Submit', class: `btn-accept ${results.data.submit_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
-          // { label: 'Tải về hồ sơ mẫu', value: 'Dowload', class: `btn-accept ${results.data.flow_cur > 1 ? '' : 'hidden'} ml-1`, icon: 'pi pi-dowload' },
-          { label: 'Đóng', value: 'Close', class: `p-button-danger ml-1`, icon: 'pi pi-times' }
-        ]
-        if (results.data.flow_cur > 1 && results.data.contractId) this.getContractMetaPage();
-        if ((results.data.flow_cur > 0 && results.data.flow_cur < 4) && results.data.contractId) this.getSalaryComponentPage();
-        if ((results.data.flow_cur > 0 && results.data.flow_cur < 4) && !results.data.contractId) this.getSalaryComponentPageNotContractId(results.data);
         this.spinner.hide();
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
-
         if (type === 'Submit' || type === 'SaveNhap') {
           setTimeout(() => {
             if (this.url === 'chi-tiet-xu-ly-hop-dong') {
@@ -283,25 +268,12 @@ export class ContractDetailComponent implements OnInit {
           }, 200);
         }
       } else {
-        this.listViews = cloneDeep(this.cloneListViews);
         this.messageService.add({
           severity: 'error', summary: 'Thông báo', detail: results.message
         });
-
-        setTimeout(() => {
-          this.stepActivated();
-        }, 100);
-        // this.listViews = cloneDeep(this.cloneListViews);
-        // this.flowCurrent = this.detailInfo.flow_cur;
-        // this.activeIndex = this.detailInfo.flow_st;
-        // if(this.detailInfo.flow_cur > 1 && this.detailInfo.contractId) this.getContractMetaPage();
-        // if((this.detailInfo.flow_cur > 0 && this.detailInfo.flow_cur < 4) && this.detailInfo.contractId) this.getSalaryComponentPage();
-        // if((this.detailInfo.flow_cur > 0 && this.detailInfo.flow_cur < 4)  && !this.detailInfo.contractId) this.getSalaryComponentPageNotContractId(this.detailInfo);
-        // setTimeout(() => {
-        //   this.stepActivated();
-        // }, 100);
-        // this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
+    
         this.spinner.hide();
+        this.getContractInfo()
       }
     }, error => {
       this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: error });
@@ -313,35 +285,26 @@ export class ContractDetailComponent implements OnInit {
     this.detailInfo = null;
     this.listViews = [];
     this.spinner.show();
-    console.log(this.modelContractInfo)
     const queryParams = queryString.stringify({ contractId: this.modelContractInfo.contractId, flow_cur: flow_cur, empId: this.modelContractInfo.empId });
     this.apiService.getContractInfo(queryParams)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(results => {
       if (results.status === 'success') {
-        this.activeIndex = results.data.flow_st;
-        this.flowCurrent = results.data.flow_cur;
         this.modelContractInfo.contractId = results.data.contractId;
-        this.steps = results.data.flowStatuses.map(d => {
-          return {
-            label: d.flow_name,
-            value: d.flow_st
-          }
-        });
         this.listViews = cloneDeep(results.data.group_fields);
-        setTimeout(() => {
-          this.stepActivated();
-        }, 100);
-        this.optionsButtonsView = [
-          { label: 'Quay lại', value: 'BackPage', class: `p-button-secondary ${results.data.prev_st ? '' : 'hidden'}`, icon: 'pi pi-caret-left', },
-          { label: 'Tiếp tục', value: 'Update', class: `btn-accept ${results.data.next_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-caret-right' },
-          { label: 'Lưu tạm', value: 'SaveNhap', class: `btn-accept ${results.data.save_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
-          { label: 'Xác nhận', value: 'Submit', class: `btn-accept ${results.data.submit_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
-          { label: 'Đóng', value: 'Close', class: `p-button-danger ml-1`, icon: 'pi pi-times' }
-        ]
         this.detailInfo = results.data;
         if (results.data.flow_cur > 1) this.getContractMetaPage();
         if (results.data.flow_cur > 0) this.getSalaryComponentPage();
+
+        this.status = results.data.flowStatuses;
+        if(results.data.status) {
+          this.status.push(results.data.status);
+        }
+        this.selectedStatus = results.data.status;
+        if(this.detailInfo.actions &&this.detailInfo.actions.length > 0) {
+          this.initButton();
+        }
+
         this.spinner.hide();
       } else {
         this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
@@ -484,6 +447,40 @@ export class ContractDetailComponent implements OnInit {
     this.downloadButtonClicked(event.rowData.meta_upload_url);
   }
 
+  UpdateStatus() {
+    this.getContractInfo(this.selectedStatus.value);
+  }
+
+  callActions(code) {
+    setTimeout(() => {
+      const s: HTMLElement = document.getElementById(code);
+      s.click();
+    }, 400);
+  }
+
+  menuActions = [];
+  initButton() {
+    this.optionsButtonsView = this.detailInfo.actions.map(item => {
+      return {
+        label: item.name,
+        value: item.code,
+        icon: item.icon
+      }
+    });
+
+    this.menuActions = this.detailInfo.actions.map((item, index) => {
+      return {
+        label: item.name,
+        value: item.code,
+        styleClass: index === 0 ? 'hidden' : '',
+        icon: item.icon,
+        command: () => {
+          this[item.code]();
+        }
+      }
+    });
+  }
+
   uploadContract(event) {
     if (event.rowData.metaId) {
       this.displayuploadcontract = true;
@@ -527,6 +524,9 @@ export class ContractDetailComponent implements OnInit {
     elem.click();
   }
 
+  hideFormDetail() {
+    this.callback.emit('hideFormDetail');
+  }
 
   CauHinh(type) {
     this.gridKeyForm = type === 0 ? this.gridKey : this.gridKey_1
