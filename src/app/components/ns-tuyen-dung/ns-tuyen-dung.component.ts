@@ -623,8 +623,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
           can_st: this.recruitmentStatusSelected
         }
 
-        localStorage.setItem('RecruitMail', JSON.stringify(data))
-        this.apiService.recruiUpdateStatus(queryString.stringify(query))
+        this.apiService.recruiUpdateStatus(query)
           .pipe(takeUntil(this.unsubscribe$))
           .subscribe((results: any) => {
             if (results.status === 'success') {
