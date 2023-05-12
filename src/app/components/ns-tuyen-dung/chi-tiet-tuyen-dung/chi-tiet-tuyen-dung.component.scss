@@ -26,6 +26,12 @@
     .bgTodo {
         background-color: var(--surface-500) !important;
         color: var(--surface-0) ;
+        &:hover{
+            border-color: transparent !important;
+        }
+        .p-dropdown-trigger-icon{
+            color: #fff;
+        }
     }
 
     .bgUndo {
