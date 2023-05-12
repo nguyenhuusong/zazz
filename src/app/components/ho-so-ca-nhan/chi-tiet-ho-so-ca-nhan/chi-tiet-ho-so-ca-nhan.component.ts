@@ -17,7 +17,7 @@ export class ChiTietHoSoCaNhanComponent implements OnInit {
   @Output() callback = new EventEmitter<any>();
   @Output() back = new EventEmitter<any>();
   @Input() isDialog = false;
-  @Input() isEditDetail: boolean = false;
+  @Input() displayCustomerProfile: boolean = false;
   @Input() custId = null;
   @Input() canId = null;
   @Input() hideButton: boolean = false;

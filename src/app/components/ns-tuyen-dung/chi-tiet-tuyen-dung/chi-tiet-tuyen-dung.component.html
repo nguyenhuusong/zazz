@@ -52,7 +52,7 @@
             <p-tabPanel header="Thông tin hồ sơ cá nhân" *ngIf="custId">
                 <app-chi-tiet-ho-so-ca-nhan 
                     *ngIf="tabIndex === 1" 
-                    [isDialog]="true" [custId]="custId"
+                    [isDialog]="true" [displayCustomerProfile]="false" [custId]="custId"
                     [canId]="modelEdit.canId" 
                     (callback)="callbackSaveProfile()">
                 </app-chi-tiet-ho-so-ca-nhan>
@@ -73,11 +73,9 @@
     </section>
 </div>
 
-<p-dialog header="Chi tiết hồ sơ cá nhân" [(visible)]="displayCustomerProfile" [modal]="true" [draggable]="false"
-    [resizable]="false" [style]="{width: '70vw'}" [autoZIndex]=true [draggable]="false" [resizable]="false">
-    <app-chi-tiet-ho-so-ca-nhan *ngIf="displayCustomerProfile" [isDialog]="true" [custId]="custId"
-        [canId]="modelEdit.canId" (callback)="callbackSaveProfile()"></app-chi-tiet-ho-so-ca-nhan>
-</p-dialog>
+
+<app-chi-tiet-ho-so-ca-nhan *ngIf="displayCustomerProfile" [displayCustomerProfile]="displayCustomerProfile" [isDialog]="true" [custId]="custId"
+[canId]="modelEdit.canId" (callback)="callbackSaveProfile()"></app-chi-tiet-ho-so-ca-nhan>
 
 <p-dialog header="  Tải lên CCCD,  Hộ chiếu" [(visible)]="displayAddCCCD" [modal]="true" [draggable]="false"
     [resizable]="false" [style]="{width: '50vw'}" [autoZIndex]=true [draggable]="false" [resizable]="false">

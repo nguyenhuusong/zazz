@@ -1,9 +1,9 @@
-<div class="main-grid product-detail" *ngIf="!isDialog">
+<div class="main-grid product-detail" *ngIf="!isDialog && !displayCustomerProfile">
     <section class="head-detail">
         <app-hrm-breadcrumb  [items]="itemsMenu" ></app-hrm-breadcrumb>
     </section>
 </div>
-<section *ngIf="!isDialog">
+<section *ngIf="!displayCustomerProfile">
     <div *ngIf="tabIndex === 0" style="float: right;position: relative; right: 20px;top: auto;z-index: 9;">
         <p-button 
             styleClass="p-button-sm" 
@@ -59,10 +59,10 @@
     </p-tabView>
 </section>
 
-<p-dialog [(visible)]="isEditDetail" [autoZIndex]="true" [modal]="true" (onHide)="callback.emit()"  appendTo="body"
+<p-dialog [(visible)]="displayCustomerProfile" [autoZIndex]="true" [modal]="true" (onHide)="callback.emit()"  appendTo="body"
     [style]="{width: '1300px', height: 'auto'}">
     <p-header>
-        Sửa thông tin cá nhân
+        Chi tiết hồ sơ cá nhân
     </p-header>
     <section *ngIf="!isDialog">
         <div *ngIf="tabIndex === 0" style="float: right;position: relative; right: 20px;top: auto;z-index: 9;">
