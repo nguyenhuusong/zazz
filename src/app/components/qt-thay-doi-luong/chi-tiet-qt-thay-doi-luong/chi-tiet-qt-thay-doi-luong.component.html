@@ -7,7 +7,7 @@
     </section>
 </div>
 
-<p-card *ngIf="!isDialog">
+<section *ngIf="!isDialog">
     <div>
         <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'"
             [optionsButtonsEdit]="optionsButtonsView" [dataView]="listViews" (callback)="setSalaryInfoDevM($event)" (callBackForm)="callBackForm($event)"
@@ -51,7 +51,7 @@
                   </div>
     </div>
        
-</p-card>
+</section>
 
 
 <p-dialog styleClass="popup-btngroup-edit-detail"  [(visible)]="displayFormEditDetail" (onHide)="callback.emit()" [draggable]="false"  [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '1400px', height: 'auto'}">

@@ -47,37 +47,27 @@
             <p-button label="Quay lại" styleClass="p-button-secondary p-button-sm ml-2" [style]="{'z-index': 9}" icon="pi pi-directions-alt"></p-button>
               </div>
     </div>
-    <div class="content page-detail" style="padding: 0;">
-        <p-panel styleClass="no-header">
-            <div class="">
-                <div class="row col-md-12">
-                    <div class="page-detail-edit-detail">
-                        <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [detailInfo]="detailInfo"
-                            [thongtinnhanvienNew]="true" [manhinh]="'Edit'" [optionsButtonsEdit]="[]"
-                            [dataView]="listViews" (callback)="setEmpQualification($event)"
-                            (callbackcancel)="cancelUpdate($event)">
-                        </app-edit-detail>
-                        <app-loading-detail 
-                            [id]="'employee-info-05'" 
-                            *ngIf="listViews.length === 0">
-                        </app-loading-detail>
-                        <p-divider></p-divider>
+</section>
 
-                        <app-qua-trinh-lam-viec [empId]="empId"></app-qua-trinh-lam-viec>
+<section>
+    <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [detailInfo]="detailInfo"
+        [thongtinnhanvienNew]="true" [manhinh]="'Edit'" [optionsButtonsEdit]="[]"
+        [dataView]="listViews" (callback)="setEmpQualification($event)"
+        (callbackcancel)="cancelUpdate($event)">
+    </app-edit-detail>
+    <app-loading-detail 
+        [id]="'employee-info-05'" 
+        *ngIf="listViews.length === 0">
+    </app-loading-detail>
+    <p-divider></p-divider>
 
-                        <app-qua-trinh-hoc-van [empId]="empId"></app-qua-trinh-hoc-van>
+    <app-qua-trinh-lam-viec [empId]="empId"></app-qua-trinh-lam-viec>
 
-                        <app-ky-nang [empId]="empId"></app-ky-nang>
+    <app-qua-trinh-hoc-van [empId]="empId"></app-qua-trinh-hoc-van>
 
-                        <app-chung-chi [empId]="empId"></app-chung-chi>
-                        
-                    </div>
+    <app-ky-nang [empId]="empId"></app-ky-nang>
 
-                </div>
-            </div>
-        </p-panel>
-    </div>
-
+    <app-chung-chi [empId]="empId"></app-chung-chi>
 </section>
 
 <p-dialog [(visible)]="isEditDetail" [autoZIndex]="true" [modal]="true"  appendTo="body"

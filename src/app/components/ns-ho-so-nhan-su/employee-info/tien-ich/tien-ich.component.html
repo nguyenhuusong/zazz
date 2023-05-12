@@ -46,38 +46,29 @@
             <p-button label="Quay lại" styleClass="p-button-secondary p-button-sm ml-2" [style]="{'z-index': 9}" icon="pi pi-directions-alt"></p-button> -->
               </div>
     </div>
-        <div class="content page-detail" style="padding: 0;">
-            <p-panel styleClass="no-header">
-                <div class="">
-                    <div class="row col-md-12">
-                        <div class="page-detail-edit-detail">
-                            <app-edit-detail *ngIf="listViews.length> 0" 
-                                [detail]="detailInfo" 
-                                [detailInfo]="detailInfo" 
-                                [thongtinnhanvienNew]="true" 
-                                [manhinh]="'Edit'" 
-                                [optionsButtonsEdit]="optionsButtonsView"  
-                                [dataView]="listViews"
-                                (callback)="setEmpOtherInfo($event)" 
-                                (callbackcancel)="cancelUpdate($event)">
-                            </app-edit-detail>
-                            <app-loading-detail 
-                                [id]="'employee-info-06'" 
-                                *ngIf="listViews.length === 0">
-                            </app-loading-detail>
-                            
-                            <p-divider></p-divider>
+    </section>
+    <section>
+        <app-edit-detail *ngIf="listViews.length> 0" 
+            [detail]="detailInfo" 
+            [detailInfo]="detailInfo" 
+            [thongtinnhanvienNew]="true" 
+            [manhinh]="'Edit'" 
+            [optionsButtonsEdit]="optionsButtonsView"  
+            [dataView]="listViews"
+            (callback)="setEmpOtherInfo($event)" 
+            (callbackcancel)="cancelUpdate($event)">
+        </app-edit-detail>
+        <app-loading-detail 
+            [id]="'employee-info-06'" 
+            *ngIf="listViews.length === 0">
+        </app-loading-detail>
+        
+        <p-divider></p-divider>
 
-                            <app-danh-sach-xe [empId]="empId"></app-danh-sach-xe>
+        <app-danh-sach-xe [empId]="empId"></app-danh-sach-xe>
 
-                            <app-danh-sach-thiet-bi [empId]="empId"></app-danh-sach-thiet-bi>
+        <app-danh-sach-thiet-bi [empId]="empId"></app-danh-sach-thiet-bi>
 
-                            <app-tai-khoan [empId]="empId"></app-tai-khoan>
-                            
-                        </div>
-    
-                    </div>
-                </div>
-            </p-panel>
-        </div>
+        <app-tai-khoan [empId]="empId"></app-tai-khoan>
+        
     </section>

@@ -5,8 +5,7 @@
             <h3>{{titlePage}}</h3>
         </div>
     </section>
-</div>
-<p-card>
+    <section>
     <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'"
         [optionsButtonsEdit]="optionsButtonsView" [dataView]="listViews" (callback)="setDetail($event)" 
         (callbackcancel)="cancel($event)"></app-edit-detail>
@@ -18,7 +17,7 @@
             <span class="p-tag">Danh sách kế hoạch</span>
         </p-divider>
         <app-plan-detail *ngIf="modelEdit.recruitPlanId" [recruitPlantId]="modelEdit.recruitPlanId"></app-plan-detail>
-</p-card>
-
+    </section>
+</div>
 
 

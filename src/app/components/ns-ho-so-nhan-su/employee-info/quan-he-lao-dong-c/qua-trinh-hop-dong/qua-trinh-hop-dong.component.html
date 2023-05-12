@@ -1,8 +1,8 @@
-<div class="grid wrap-edit-detail">
-    <div class="col-12 border-section ">
+<!-- <div class="grid wrap-edit-detail">
+    <div class="border-section ">
         <p-panel>
             <ng-template pTemplate="header">
-                <div style="display: flex; justify-content: space-between;">
+                <div>
                     <div class="grid d-flex justify-content-between">
                         <h3 class="title-section">Quá trình hợp đồng</h3>
                     </div>
@@ -39,8 +39,36 @@
             </div>
         </p-panel>
     </div>
-</div>
+</div> -->
 
+<section class="pl-2 pr-2">
+    <div class="d-flex justify-content-between">
+            <h3 class="title-section">Quá trình hợp đồng</h3>
+            <p-button (onClick)="Prints()"  *ngIf="this.listPrints.length > 0" label="PRINT" icon="pi pi-print" styleClass="p-button-sm height-56"
+                [disabled]="isShowbtnPheDuyet">
+            </p-button>
+
+            <p-button class="" *ngIf="this.listPrints.length === 0" (click)="DowloadPlugin()"
+                styleClass="p-button-sm height-56">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 0H16V16H0V0Z" fill="#F3F8FF"/>
+                    </svg>
+                    &nbsp;Cài plugin
+            </p-button>
+        </div>
+            <app-list-grid-angular 
+                [domLayout]="'autoHeight'" 
+                *ngIf="columnDefs.length > 0" 
+                [idGrid]="gridKey + '_45dfs'"
+                [title]="'Chứng chỉ'"
+                [listsData]="listsData" 
+                [rowSelection]="'multiple'"
+                (callback)="rowSelected($event)"
+                (showConfig)="CauHinh()"
+                (onCellClicked)="onCellClicked($event)"
+                [columnDefs]="columnDefs">
+            </app-list-grid-angular>
+</section>
 
 
 <p-dialog header="Cài đặt cấu hình " [appendTo]="'body'" [focusTrap]="false" styleClass="popup-setting"

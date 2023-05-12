@@ -49,41 +49,23 @@
               </div>
       
     </div>
-    <div class="content page-detail" style="padding: 0;">
-        <p-panel styleClass="no-header">
-            <div class="">
-                <div class="row col-md-12">
-                    <div class="page-detail-edit-detail">
-                        <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [detailInfo]="detailInfo"
-                            [thongtinnhanvienNew]="true" [manhinh]="'Edit'" [optionsButtonsEdit]="[]"
-                            [dataView]="listViews" (callback)="setEmployeeInfo($event)"
-                            (callbackcancel)="cancelUpdate($event)">
-                        </app-edit-detail>
-                        <app-loading-detail 
-                            [id]="'employee-info-03'" 
-                            *ngIf="listViews.length === 0">
-                        </app-loading-detail>
-                        <p-divider></p-divider>
+</section>
 
-                        <app-qua-trinh-hop-dong [empId]="empId" [detailInfo]="detailInfo" *ngIf="listViews.length >0 " (cancelSave)="cancelSave()"></app-qua-trinh-hop-dong>
-                        
-
-                        <app-tien-luong [empId]="empId" *ngIf="empId"></app-tien-luong> 
-                       
-
-                        <app-thong-tin-nguoi-phu-thuoc  *ngIf="empId" [empId]="empId" (cancelSave)="getEmployeeInfo()"></app-thong-tin-nguoi-phu-thuoc> 
-
-                        <!-- <app-thong-tin-nguoi-phu-thuoc  *ngIf="empId" [empId]="empId" (cancelSave)="getEmployeeInfo()"></app-thong-tin-nguoi-phu-thuoc>  -->
-
-                        <app-chinh-sach-nv  *ngIf="empId" [empId]="empId" (cancelSave)="getEmployeeInfo()"></app-chinh-sach-nv> 
-                            
-
-                    </div>
-
-                </div>
-            </div>
-        </p-panel>
-    </div>
-
+<section>
+    <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [detailInfo]="detailInfo"
+        [thongtinnhanvienNew]="true" [manhinh]="'Edit'" [optionsButtonsEdit]="[]"
+        [dataView]="listViews" (callback)="setEmployeeInfo($event)"
+        (callbackcancel)="cancelUpdate($event)">
+    </app-edit-detail>
+    <app-loading-detail 
+        [id]="'employee-info-03'" 
+        *ngIf="listViews.length === 0">
+    </app-loading-detail>
+    <p-divider></p-divider>
+    <app-qua-trinh-hop-dong [empId]="empId" [detailInfo]="detailInfo" *ngIf="listViews.length >0 " (cancelSave)="cancelSave()"></app-qua-trinh-hop-dong>
+    <app-tien-luong [empId]="empId" *ngIf="empId"></app-tien-luong> 
+    <app-thong-tin-nguoi-phu-thuoc  *ngIf="empId" [empId]="empId" (cancelSave)="getEmployeeInfo()"></app-thong-tin-nguoi-phu-thuoc> 
+    <!-- <app-thong-tin-nguoi-phu-thuoc  *ngIf="empId" [empId]="empId" (cancelSave)="getEmployeeInfo()"></app-thong-tin-nguoi-phu-thuoc>  -->
+    <app-chinh-sach-nv  *ngIf="empId" [empId]="empId" (cancelSave)="getEmployeeInfo()"></app-chinh-sach-nv> 
 </section>
 

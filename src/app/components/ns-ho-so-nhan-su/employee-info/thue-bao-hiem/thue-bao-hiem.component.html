@@ -46,35 +46,28 @@
             <p-button label="Quay lại" styleClass="p-button-secondary p-button-sm ml-2" [style]="{'z-index': 9}" icon="pi pi-directions-alt"></p-button>
               </div>
     </div>
-    <div class="content page-detail" style="padding: 0;">
-        <p-panel styleClass="no-header">
-            <div class="">
-                <div class="row col-md-12">
-                    <div class="page-detail-edit-detail" >
-                        <app-edit-detail *ngIf="listViews.length> 0" 
-                            [detail]="detailInfo" 
-                            [detailInfo]="detailInfo" 
-                            [thongtinnhanvienNew]="true" 
-                            [manhinh]="'Edit'" 
-                            [optionsButtonsEdit]="optionsButtonsView"  
-                            [dataView]="listViews"
-                            (callback)="setEmpByInsuranceInfo($event)" 
-                            (callbackcancel)="cancelUpdate($event)">
-                        </app-edit-detail>
-                        <app-loading-detail 
-                            [id]="'employee-info-04'" 
-                            *ngIf="listViews.length === 0">
-                        </app-loading-detail>
-                        <p-divider></p-divider>
-                        <app-tbh-ds-dinh-kem  [empId]="empId"></app-tbh-ds-dinh-kem>
-                        <app-tbh-qt-dong-bt  [empId]="empId"></app-tbh-qt-dong-bt>
-                    </div>
-                </div>
-            </div>
-        </p-panel>
-        </div>
-    </section>
-
+</section>
+<section>
+    <div class="page-detail-edit-detail" >
+        <app-edit-detail *ngIf="listViews.length> 0" 
+            [detail]="detailInfo" 
+            [detailInfo]="detailInfo" 
+            [thongtinnhanvienNew]="true" 
+            [manhinh]="'Edit'" 
+            [optionsButtonsEdit]="optionsButtonsView"  
+            [dataView]="listViews"
+            (callback)="setEmpByInsuranceInfo($event)" 
+            (callbackcancel)="cancelUpdate($event)">
+        </app-edit-detail>
+        <app-loading-detail 
+            [id]="'employee-info-04'" 
+            *ngIf="listViews.length === 0">
+        </app-loading-detail>
+        <p-divider></p-divider>
+        <app-tbh-ds-dinh-kem  [empId]="empId"></app-tbh-ds-dinh-kem>
+        <app-tbh-qt-dong-bt  [empId]="empId"></app-tbh-qt-dong-bt>
+    </div>
+</section>
     
 <p-dialog [(visible)]="isEditDetail" [autoZIndex]="true" [modal]="true"  appendTo="body"
 [style]="{width: '1300px', height: 'auto'}">

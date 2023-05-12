@@ -48,40 +48,29 @@
   
     </div>
 
-    <div class="content page-detail" style="padding: 0;">
-        <p-panel styleClass="no-header">
-            <div class="">
-                <div class="row col-md-12">
-                    <div class="page-detail-edit-detail" >
-                       
-                        <app-edit-detail *ngIf="listViews.length> 0" 
-                            [isShowAvatar] = true
-                            [detail]="detailInfo" 
-                            [detailInfo]="detailInfo" 
-                            [thongtinnhanvienNew]="true" 
-                            [manhinh]="'Edit'" 
-                            [optionsButtonsEdit]="optionsButtonsView"  
-                            [dataView]="listViews"
-                            (callback)="setEmployeeInfo($event)" 
-                            (callbackcancel)="cancelUpdate($event)">
-                        </app-edit-detail>
-                        <app-loading-detail [id]="'employee-info-01'" *ngIf="listViews.length === 0"></app-loading-detail>
-                        
-                        <p-divider></p-divider>
-
-                        <app-giay-to-tuy-than [empId]="empId"></app-giay-to-tuy-than>
-
-                        <app-thong-tin-nguoi-lien-he [empId]="empId"></app-thong-tin-nguoi-lien-he>
-                        <app-thong-tin-ho-so-ca-nhan [empId]="empId" (dataChaged)="theFileChanged($event)"></app-thong-tin-ho-so-ca-nhan>
-                        <app-danh-sach-dinh-kem [empId]="empId"></app-danh-sach-dinh-kem>
-                    </div>
-                </div>
-            </div>
-        </p-panel>
-    </div>
-
 </section>
+<section>
+    <app-edit-detail *ngIf="listViews.length> 0" 
+        [isShowAvatar] = true
+        [detail]="detailInfo" 
+        [detailInfo]="detailInfo" 
+        [thongtinnhanvienNew]="true" 
+        [manhinh]="'Edit'" 
+        [optionsButtonsEdit]="optionsButtonsView"  
+        [dataView]="listViews"
+        (callback)="setEmployeeInfo($event)" 
+        (callbackcancel)="cancelUpdate($event)">
+    </app-edit-detail>
+    <app-loading-detail [id]="'employee-info-01'" *ngIf="listViews.length === 0"></app-loading-detail>
+    
+    <p-divider></p-divider>
 
+    <app-giay-to-tuy-than [empId]="empId"></app-giay-to-tuy-than>
+
+    <app-thong-tin-nguoi-lien-he [empId]="empId"></app-thong-tin-nguoi-lien-he>
+    <app-thong-tin-ho-so-ca-nhan [empId]="empId" (dataChaged)="theFileChanged($event)"></app-thong-tin-ho-so-ca-nhan>
+    <app-danh-sach-dinh-kem [empId]="empId"></app-danh-sach-dinh-kem>
+</section>
 <p-dialog [(visible)]="displayuploadcontract" [autoZIndex]="true" [modal]="true"  appendTo="body"
     [style]="{width: '800px', height: 'auto'}">
     <p-header>
