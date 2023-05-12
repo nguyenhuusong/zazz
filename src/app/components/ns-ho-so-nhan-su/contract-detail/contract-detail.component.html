@@ -1,9 +1,6 @@
 <div class="main-grid product-detail" *ngIf="url === 'chi-tiet-xu-ly-hop-dong'" >
-    <section>
-        <div class="breadcrumb">
-            <p-breadcrumb [model]="itemsMenu"></p-breadcrumb>
-            <h3>{{titlePage}}</h3>
-        </div>
+    <section class="head-detail">
+        <app-hrm-breadcrumb [items]="itemsMenu" ></app-hrm-breadcrumb>
     </section>
 </div>
 <p-card *ngIf="url === 'chi-tiet-xu-ly-hop-dong'" >
