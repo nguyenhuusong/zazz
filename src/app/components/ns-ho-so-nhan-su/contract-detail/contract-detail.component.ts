@@ -101,25 +101,7 @@ export class ContractDetailComponent implements OnInit {
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(results => {
       if (results.status === 'success') {
-        this.activeIndex = results.data.flow_st;
-        this.flowCurrent = results.data.flow_cur;
-        this.steps = results.data.flowStatuses.map(d => {
-          return {
-            label: d.flow_name,
-            value: d.flow_st
-          }
-        });
-        // this.optionsButtonsView = [
-        //   { label: 'Quay lại', value: 'BackPage', class: `p-button-secondary ${results.data.prev_st ? '' : 'hidden'}`, icon: 'pi pi-caret-left', },
-        //   { label: 'Tiếp tục', value: 'Update', class: `btn-accept ${results.data.next_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-caret-right' },
-        //   { label: 'Lưu tạm', value: 'SaveNhap', class: `btn-accept ${results.data.save_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
-        //   { label: 'Xác nhận', value: 'Submit', class: `btn-accept ${results.data.submit_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
-        //   { label: 'Đóng', value: 'Close', class: `p-button-danger ml-1`, icon: 'pi pi-times' }
-        // ]
         this.listViews = cloneDeep(results.data.group_fields);
-        setTimeout(() => {
-          this.stepActivated();
-        }, 100);
         this.detailInfo = results.data;
         this.spinner.hide();
       } else {
@@ -128,19 +110,6 @@ export class ContractDetailComponent implements OnInit {
         this.spinner.hide();
       }
     })
-  }
-
-  stepActivated(): void {
-    const stepS = document.querySelectorAll('.steps-contract .p-steps-item');
-    if (stepS.length > 0) {
-      for (let i = 0; i < this.steps.length; i++) {
-        if (i <= this.flowCurrent) {
-          stepS[i].className += ` p-highlight ${i < this.activeIndex ? 'active' : 'remove-active'} ${i < this.flowCurrent && this.flowCurrent !== 1 ? 'active-confirm' : 'remove-active-confirm'}`;
-        } else {
-          stepS[i].className += ` p-highlight ${i < this.activeIndex ? 'active' : 'remove-active'} ${i < this.flowCurrent && this.flowCurrent !== 1 ? 'active-confirm' : 'remove-active-confirm'}`;
-        }
-      }
-    }
   }
 
   cancel(data) {
@@ -168,7 +137,7 @@ export class ContractDetailComponent implements OnInit {
   setContractInfo(data) {
     if(this.flowCurrent >= this.activeIndex) {
       const params = {
-        ...this.detailInfo, group_fields: data.datas, flow_cur: this.flowCurrent, action: 'next'
+        ...this.detailInfo, group_fields: data.datas
       };
       this.cloneListViews = cloneDeep(data);
       this.listViews = [];
@@ -187,25 +156,12 @@ export class ContractDetailComponent implements OnInit {
       this.listViews = [];
       this.setContractDraft(params);
     } else {
-      if(this.flowCurrent >= this.activeIndex) {
-        const params = {
-          ...this.detailInfo, group_fields: event.data
-          , flow_cur: event.type === 'Submit' ? this.flowCurrent : this.flowCurrent
-          , action: event.type === 'Submit' ? 'submit' : 'save'
-        }
-        this.cloneListViews = cloneDeep(event.data);
-        this.listViews = [];
-        this.callApiInfo(params, event.type);
-      }else {
-        const params = {
-          ...this.detailInfo, group_fields: event.data
-          , flow_st: this.detailInfo.flow_cur
-          , action: event.type === 'Submit' ? 'submit' : 'save'
-        }
-        this.cloneListViews = cloneDeep(event.data);
-        this.listViews = [];
-        this.callApiInfo(params, event.type);
+      const params = {
+        ...this.detailInfo, group_fields: event.data
       }
+      this.cloneListViews = cloneDeep(event.data);
+      this.listViews = [];
+      this.callApiInfo(params, event.type);
     }
   }
 
@@ -215,33 +171,16 @@ export class ContractDetailComponent implements OnInit {
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(results => {
       if (results.status === 'success') {
-        this.activeIndex = results.data.flow_st;
         this.modelContractInfo.contractId = results.data.contractId;
         this.listViews = cloneDeep(results.data.group_fields);
-        setTimeout(() => {
-          this.stepActivated();
-        }, 100);
         this.detailInfo = results.data;
-        this.flowCurrent = results.data.flow_cur;
-        // this.optionsButtonsView = [
-        //   { label: 'Quay lại', value: 'BackPage', class: `p-button-secondary ${results.data.prev_st ? '' : 'hidden'}`, icon: 'pi pi-caret-left', },
-        //   { label: 'Tiếp tục', value: 'Update', class: `btn-accept ${results.data.next_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-caret-right' },
-        //   { label: 'Lưu tạm', value: 'SaveNhap', class: `btn-accept ${results.data.save_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
-        //   { label: 'Xác nhận', value: 'Submit', class: `btn-accept ${results.data.submit_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
-        //   { label: 'Tải về hồ sơ mẫu', value: 'Dowload', class: `btn-accept ${results.data.flow_cur > 1 ? '' : 'hidden'} ml-1`, icon: 'pi pi-dowload' },
-        //   { label: 'Đóng', value: 'Close', class: `p-button-danger ml-1`, icon: 'pi pi-times' }
-        // ]
         if (results.data.flow_cur > 1 && results.data.contractId) this.getContractMetaPage();
         if ((results.data.flow_cur > 0 && results.data.flow_cur < 4) && results.data.contractId) this.getSalaryComponentPage();
         if ((results.data.flow_cur > 0 && results.data.flow_cur < 4) && !results.data.contractId) this.getSalaryComponentPageNotContractId(results.data);
         this.spinner.hide();
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
-
       } else {
-        this.listViews = cloneDeep(this.cloneListViews);
-        setTimeout(() => {
-          this.stepActivated();
-         }, 100);
+        
         this.messageService.add({
           severity: 'error', summary: 'Thông báo', detail: results.message
         });
@@ -262,7 +201,7 @@ export class ContractDetailComponent implements OnInit {
       if (results.status === 'success') {
         this.spinner.hide();
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
-        if (type === 'Submit' || type === 'SaveNhap') {
+        if (type === 'actSubmit' || type === 'SaveNhap') {
           setTimeout(() => {
             if (this.url === 'chi-tiet-xu-ly-hop-dong') {
               this.router.navigate(['/nhan-su/xu-ly-hop-dong'])

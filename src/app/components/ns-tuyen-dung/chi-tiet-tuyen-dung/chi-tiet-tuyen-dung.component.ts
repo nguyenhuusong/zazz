@@ -7,7 +7,6 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { CheckHideAction, AgGridFn } from 'src/app/common/function-common/common';
-import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { stringify } from 'querystring';
 @Component({
   selector: 'app-chi-tiet-tuyen-dung',
@@ -184,9 +183,11 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
           this.detailInfo = results.data;
           this.custId = results.data.custId;
           this.status = results.data.flowStatuses;
-          this.status.push(results.data.status);
+          if(results.data.status) this.status.push(results.data.status);
           this.selectedCountry = results.data.status;
-          this.initButton();
+          if(this.detailInfo.actions && this.detailInfo.actions.length > 0) {
+            this.initButton();
+          }
           this.detailEdit = results.data
         }
       });

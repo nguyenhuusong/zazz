@@ -101,7 +101,7 @@ export class EditViTriCongViecComponent implements OnInit {
 
   callBackForm(event) {
     const params = {
-      ...this.detailInfo, group_fields: event.data, flow_st: event.type === 'Submit' ?  this.activeIndex + 1 : this.activeIndex
+      ...this.detailInfo, group_fields: event.data
     }
     this.callApiInfo(params)
     if(event.type === 'Submit' || event.type === 'SaveNhap') {
@@ -110,21 +110,6 @@ export class EditViTriCongViecComponent implements OnInit {
       }, 200);
     }
   }
-
-  stepActivated(): void {
-    const stepS = document.querySelectorAll('.steps-contract .p-steps-item');
-    if (stepS.length > 0) {
-      for (let i = 0; i < this.steps.length; i++) {
-        if (i <= this.activeIndex) {
-          stepS[i].className += ' active';
-        } else {
-          stepS[i].classList.value = `p-steps-item icon-${i}`;
-        }
-      }
-    }
-  }
-
-  
 
   setDetail(data) {
     const  params = {
@@ -140,38 +125,6 @@ export class EditViTriCongViecComponent implements OnInit {
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe((results: any) => {
       if (results.status === 'success') {
-        // this.listViews = cloneDeep(results.data.group_fields || []);
-        // this.detailInfo = results.data;
-        // this.activeIndex = results.data.flow_st;
-        // this.steps = results.data.flowStatuses.map(d => {
-        //   return {
-        //     label: d.flow_name,
-        //     value: d.flow_st
-        //   }
-        // });
-        // setTimeout(() => {
-        //   this.stepActivated();
-        // }, 100);
-        // if(results.data.submit_st) {
-        //   this.optionsButtonsView = [
-        //     { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
-        //     { label: 'Trình duyệt', value: 'Submit', class: 'btn-accept' }
-        //   ]
-        // }else {
-        //   if(results.data.save_st) {
-        //     this.optionsButtonsView = [
-        //       { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
-        //       { label: 'Lưu tạm', value: 'Update', class: 'btn-accept' },
-        //       { label: 'Tiếp tục', value: 'Update', class: 'btn-accept' }
-        //     ]
-        //   }else {
-        //     this.optionsButtonsView = [
-        //       { label: 'Quay lại', value: 'BackPage', class: 'p-button-secondary', icon: 'pi pi-times' },
-        //       { label: 'Tiếp tục', value: 'Update', class: 'btn-accept' }
-        //     ]
-        //   }
-       
-        // }
         this.spinner.hide();
         this.cancelSave.emit();
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Cập nhật thông tin thành công' });
