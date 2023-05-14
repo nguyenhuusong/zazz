@@ -1737,6 +1737,16 @@ export class ApiHrmService {
       .get<any[]>(`${apiBaseUrl}/api/v2/employee/GetEmployeeList?` + queryParams, this.options)
   }
 
+  getEmployeeImportPage(queryParams): Observable<any> {
+    return this.http
+      .get<any>(`${apiHrmServer}/api/v2/employee/GetEmployeeImportPage?` + queryParams, this.options)
+  }
+
+  delEmployeeImport(queryParams): Observable<any> {
+    return this.http
+      .delete<any>(`${apiHrmServer}/api/v2/employee/delEmployeeImport?` + queryParams, this.options)
+  }
+
   setVehicleRemove(params): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/cardvehicle/SetVehicleRemove`, params, this.options);
   }
@@ -2128,6 +2138,15 @@ export class ApiHrmService {
     return this.http.delete<any>(`${apiHrmServer}/api/v2/form/DelFormTypeInfo?formId=${formId}`, this.options)
   }
   employeeImport(data): Observable<any> {
+    const customOptions = {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue()
+      })
+    };
+    return this.http.post<any>(`${apiHrmServer}/api/v2/employee/setEmployeeImport`, data, customOptions);
+  }
+
+  setEmployeeImport(data): Observable<any> {
     const customOptions = {
       headers: new HttpHeaders({
         Authorization: this.authService.getAuthorizationHeaderValue()
