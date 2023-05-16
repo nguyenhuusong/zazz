@@ -244,7 +244,7 @@ export class HoSoCaNhanComponent implements OnInit, AfterViewChecked {
   ChangeEmail({rowData}) {
     this.idRow = rowData.custId;
     this.displayApprovedProfile = true;
-    this.modelApproved.cif_no = rowData.cif_no;
+    this.modelApproved.cif_no = rowData.cif_No;
     this.modelApproved.comments = '';
     this.modelApproved.name = rowData.full_name;
     this.modelApproved.typeChange = "Email";
@@ -253,7 +253,7 @@ export class HoSoCaNhanComponent implements OnInit, AfterViewChecked {
   ChangePhone({rowData}) {
     this.idRow = rowData.custId;
     this.displayApprovedProfile = true;
-    this.modelApproved.cif_no = rowData.cif_no;
+    this.modelApproved.cif_no = rowData.cif_No;
     this.modelApproved.comments = '';
     this.modelApproved.name = rowData.full_name;
     this.modelApproved.typeChange = "Phone";
@@ -262,7 +262,7 @@ export class HoSoCaNhanComponent implements OnInit, AfterViewChecked {
   approved({rowData}) {
     this.idRow = rowData.custId;
     this.displayApprovedProfile = true;
-    this.modelApproved.cif_no = rowData.cif_no;
+    this.modelApproved.cif_no = rowData.cif_No;
     this.modelApproved.comments = '';
     this.modelApproved.name = rowData.full_name;
     this.modelApproved.typeChange = "Approved";
