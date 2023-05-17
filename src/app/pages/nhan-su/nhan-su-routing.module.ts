@@ -448,7 +448,8 @@ const routes: Routes = [
     fileDoc: 'nguoi_quan_ly_import.xlsx',
     apiExport: 'setEmpManagerExportDraft',
     apiTemImport: 'getEmpManagerImportTemp',
-    fileNameTemImport: 'file_mau_bien_dong_xa_hoi',
+    apihistory: 'getEmployeeImportPage',
+    fileNameTemImport: 'file_mau_import_nguoi_quan_ly',
   },
 },
   

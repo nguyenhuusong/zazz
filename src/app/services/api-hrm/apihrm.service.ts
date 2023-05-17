@@ -3833,12 +3833,12 @@ export class ApiHrmService {
   }
 
   setEmpManagerImport(queryParams): Observable<any> {
-    return this.http.post(`${apiHrmServer}/api/v2/empManager/SetEmpManagerImport`, queryParams, {
+    const customOptions = {
       headers: new HttpHeaders({
-        Authorization: this.authService.getAuthorizationHeaderValue(),
-      }),
-      responseType: "blob"
-    });
+        Authorization: this.authService.getAuthorizationHeaderValue()
+      })
+    };
+    return this.http.post<any>(`${apiHrmServer}/api/v2/empManager/SetEmpManagerImport`, queryParams, customOptions);
   }
 
   setEmpManagerAccept(queryParams): Observable<any> {

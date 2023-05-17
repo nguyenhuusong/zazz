@@ -122,7 +122,7 @@ export class ImportExcelComponent implements OnInit {
     if (results.status === 'success') {
       this.disViewHistory = false;
       this.dataImport = results.data;
-      if (results.data && results.data.dataList && results.data.dataList) {
+      if (results.data && results.data.dataList) {
         this.cols = results.data.gridflexs.map(item => {
           return {
             ...item,
