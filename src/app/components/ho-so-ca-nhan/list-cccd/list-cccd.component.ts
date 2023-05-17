@@ -179,7 +179,7 @@ export class ListCccdComponent implements OnInit {
       message: 'Bạn có chắc chắn muốn sử dụng giấy tờ cá nhân này?',
       accept: () => {
         const queryParams = queryString.stringify({ custId: rowData.custId,  idcard_no: rowData.idcard_no, overite: true});
-        this.apiService.setCustIdentityDefault(queryParams)
+        this.apiService.setCustIdentityDefault({ custId: rowData.custId,  idcard_no: rowData.idcard_no, overite: true})
           .pipe(takeUntil(this.unsubscribe$))
           .subscribe(results => {
             if (results.status === 'success') {
