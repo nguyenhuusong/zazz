@@ -58,13 +58,18 @@ export class ThueBaoHiemComponent implements OnInit {
         // if (!this.codeStaff) { //không hiểu thêm vào làm gì 
         //   this.codeStaff = getFieldValueAggrid(results.data, 'code');
         // }
-        this.status = results.data.flowStatuses;
+        if(results.data.flowStatuses) {
+          this.status = results.data.flowStatuses;
+        }
         if(results.data.status) {
           this.status.push(results.data.status);
         }
         this.selectedStatus = results.data.status;
         this.listViews = cloneDeep(results.data.group_fields || []);
         this.detailInfo = results.data;
+        if (this.detailInfo.actions && this.detailInfo.actions.length > 0) {
+          this.initButton();
+        }
         this.spinner.hide();
       }
     }, error => {
