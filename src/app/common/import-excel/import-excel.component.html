@@ -46,7 +46,7 @@
                  (firstDataRendered)="onFirstDataRendered($event)"
                 [columnDefs]="columnDefs"></app-list-grid-angular >
                 <div class="paginator" style="margin-top: 10px; text-align: right; margin-right: 25px; font-weight: 600;">
-                  <a href="" style="color: #0052CC;display: flex;" (click)="dowloadFile(dataImport?.importFile.fileUrl)"><span class="uni-icon uni-import mr-2"></span>{{dataImport?.importFile.fileName}}</a>
+                  <a *ngIf="dataImport.importFile && dataImport.importFile.fileUrl" href="" style="color: #0052CC;display: flex;" (click)="dowloadFile(dataImport?.importFile?.fileUrl)"><span class="uni-icon uni-import mr-2"></span>{{dataImport?.importFile?.fileName}}</a>
                 </div>
                 <!-- <div class="paginator">
                     <span>Từ {{ countRecord.currentRecordStart }} đến

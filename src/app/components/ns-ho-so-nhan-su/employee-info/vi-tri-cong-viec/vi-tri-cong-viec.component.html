@@ -65,33 +65,25 @@
             </div>
         </div> -->
     </div>
-    <div class="content page-detail" style="padding: 0;">
-        <p-panel styleClass="no-header">
-            <div class="">
-                <div class="row col-md-12">
-                    <div class="page-detail-edit-detail">
-                        <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [detailInfo]="detailInfo"
-                            [thongtinnhanvienNew]="true" [manhinh]="'Edit'" [optionsButtonsEdit]="[]"
-                            [dataView]="listViews" (callback)="setEmployeeInfo($event)"
-                            (callbackcancel)="cancelUpdate($event)">
-                        </app-edit-detail>
-                        <app-loading-detail 
-                            [id]="'employee-info-02'" 
-                            *ngIf="listViews.length === 0">
-                        </app-loading-detail>
-                        <p-divider></p-divider>
-
-                        <app-qua-trinh-cong-tac [empId]="empId" (cancelSave)="cancelSave()"></app-qua-trinh-cong-tac>
-                        <app-thoi-gian-lam-viec [empId]="empId"></app-thoi-gian-lam-viec>
-                    </div>
-
-                </div>
-            </div>
-        </p-panel>
-    </div>
 
 </section>
+<section>
+    <div class="page-detail-edit-detail">
+        <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [detailInfo]="detailInfo"
+            [thongtinnhanvienNew]="true" [manhinh]="'Edit'" [optionsButtonsEdit]="[]"
+            [dataView]="listViews" (callback)="setEmployeeInfo($event)"
+            (callbackcancel)="cancelUpdate($event)">
+        </app-edit-detail>
+        <app-loading-detail 
+            [id]="'employee-info-02'" 
+            *ngIf="listViews.length === 0">
+        </app-loading-detail>
+        <p-divider></p-divider>
 
+        <app-qua-trinh-cong-tac [empId]="empId" (cancelSave)="cancelSave()"></app-qua-trinh-cong-tac>
+        <app-thoi-gian-lam-viec [empId]="empId"></app-thoi-gian-lam-viec>
+    </div>
+</section>
 
 <p-dialog styleClass="popup-btngroup-edit-detail" header="{{titleForm.title}}" [(visible)]="displayDialog" [modal]="true" [draggable]="false"
     [resizable]="false" [style]="{width: '1300px'}" [autoZIndex]=true [draggable]="false" [resizable]="false">
