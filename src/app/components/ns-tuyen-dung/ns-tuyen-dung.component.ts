@@ -463,7 +463,14 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
             const param = {
               canId: item.canId
             }
-            listApi.push(this.apiService.setCandidateRegister(param).subscribe(error => error))
+            listApi.push(this.apiService.setCandidateRegister(param).subscribe((result: any) => {
+              if(result.status === 'success') {
+                this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Cập nhật thành công' });
+              }
+              if(result.status === "error") {
+                this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: result.message ? result.message : 'Thực hiện thao tác không thành công' });
+              }
+            }))
           }
 
           this.spinner.show();
