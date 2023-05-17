@@ -244,7 +244,7 @@ export class HoSoCaNhanComponent implements OnInit, AfterViewChecked {
   ChangeEmail({rowData}) {
     this.idRow = rowData.custId;
     this.displayApprovedProfile = true;
-    this.modelApproved.cif_no = rowData.cif_No;
+    this.modelApproved.cif_no = rowData.custId;
     this.modelApproved.comments = '';
     this.modelApproved.name = rowData.full_name;
     this.modelApproved.typeChange = "Email";
@@ -253,7 +253,7 @@ export class HoSoCaNhanComponent implements OnInit, AfterViewChecked {
   ChangePhone({rowData}) {
     this.idRow = rowData.custId;
     this.displayApprovedProfile = true;
-    this.modelApproved.cif_no = rowData.cif_No;
+    this.modelApproved.cif_no = rowData.custId;
     this.modelApproved.comments = '';
     this.modelApproved.name = rowData.full_name;
     this.modelApproved.typeChange = "Phone";
@@ -262,7 +262,7 @@ export class HoSoCaNhanComponent implements OnInit, AfterViewChecked {
   approved({rowData}) {
     this.idRow = rowData.custId;
     this.displayApprovedProfile = true;
-    this.modelApproved.cif_no = rowData.cif_No;
+    this.modelApproved.cif_no = rowData.custId;
     this.modelApproved.comments = '';
     this.modelApproved.name = rowData.full_name;
     this.modelApproved.typeChange = "Approved";
@@ -275,6 +275,7 @@ export class HoSoCaNhanComponent implements OnInit, AfterViewChecked {
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe(results => {
           if (results.status === 'success') {
+            this.displayApprovedProfile = false;
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Xác minh thành công' });
             this.load();
           } else {
@@ -293,6 +294,7 @@ export class HoSoCaNhanComponent implements OnInit, AfterViewChecked {
         .subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thay đổi số điện thoại thành công' });
+            this.displayApprovedProfile = false;
             this.load();
           } else {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
@@ -310,6 +312,7 @@ export class HoSoCaNhanComponent implements OnInit, AfterViewChecked {
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe(results => {
           if (results.status === 'success') {
+            this.displayApprovedProfile = false;
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thay đổi email thành công' });
             this.load();
           } else {
