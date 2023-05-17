@@ -120,6 +120,7 @@ export class ImportExcelComponent implements OnInit {
 
   dataSet(results) {
     if (results.status === 'success') {
+      this.disViewHistory = false;
       this.dataImport = results.data;
       if (results.data && results.data.dataList && results.data.dataList) {
         this.cols = results.data.gridflexs.map(item => {
@@ -210,7 +211,7 @@ export class ImportExcelComponent implements OnInit {
   }
   disViewHistory = false;
   viewHistory() {
-    this.disViewHistory = true;
+    this.disViewHistory = !this.disViewHistory;
   }
 
   createImageFromBlob(image: Blob) {

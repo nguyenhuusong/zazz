@@ -3,6 +3,7 @@ $IconHover: rgb(0, 82, 204);
 $orangerColor: rgb(255, 124, 89);
 $redColor: rgb(255, 59, 72);
 $greenColor:rgb(52, 199, 89);
+$whiteColor: rgb(255, 255, 255);
 .uni-icon{
     position: relative;
     line-height: 1;
@@ -544,5 +545,80 @@ $greenColor:rgb(52, 199, 89);
     }
     &.uni-green-color{
         &.uni-vector{ &::after { background-image: vector($greenColor); } }
+    }
+    &.uni-white-color{
+        &.uni-tongquan{ &::after { background-image: overview($whiteColor); } }
+        &.uni-nhansu{ &::after { background-image: users($whiteColor); } }
+        &.uni-chamcong{ &::after { background-image: calendar($whiteColor); } }
+        &.uni-tinhluong{ &::after { background-image: noteMoney($whiteColor); } }
+        &.uni-quantri{ &::after { background-image: setting($whiteColor); } }
+        &.uni-thongtinchung{ &::after { background-image: userRate($whiteColor); } }
+        &.uni-qhgd{ &::after { background-image: homeBuilding($whiteColor); } }
+        &.uni-hopdong{ &::after { background-image: note($whiteColor); } }
+        &.uni-qtbonhiem{ &::after { background-image: noteUser($whiteColor); } }
+        &.uni-qtdaotao{ &::after { background-image: learningTools($whiteColor); } }
+        &.uni-dienbienluong{ &::after { background-image: money($whiteColor); } }
+        &.uni-user-group{ &::after { background-image: getUserGroup($whiteColor); } }
+        &.uni-user-plus{ &::after { background-image: getUserPlus($whiteColor); } }
+        &.uni-user-ban{ &::after { background-image: getUserBan($whiteColor); } }
+        &.uni-setting{ &::after { background-image: getSetting($whiteColor); } }
+        &.uni-full-screen{ &::after { background-image: getFullScreen($whiteColor); } }
+        &.uni-home{ &::after { background-image: home($whiteColor); } }
+        &.uni-user{ &::after { background-image: user($whiteColor); } }
+        &.uni-noti{ &::after { background-image: noti($whiteColor); } }
+        &.note-checked{ &::after { background-image: noteChecked($whiteColor); } }
+        &.uni-money-cicle{ &::after { background-image: moneyCicle($whiteColor); } }
+        &.uni-protect{ &::after { background-image: protect($whiteColor); } }
+        &.uni-setting-transparent{ &::after { background-image: settingTransparent($whiteColor); } }
+        &.uni-narrow-down{ &::after { background-image: narrowDown($whiteColor); } }
+        &.uni-delete{ &::after { background-image: delete($whiteColor); } }
+        &.uni-edit{ &::after { background-image: edit($whiteColor); } }
+        &.uni-plus-cicle{ &::after { background-image: plusCicle($whiteColor); } }
+        &.uni-plus{ &::after { background-image: plus($whiteColor); } }
+        &.uni-upload{ &::after { background-image: upload($whiteColor); } }
+        &.uni-calendar{ &::after { background-image: calendar($whiteColor); } }
+        &.uni-config{ &::after { background-image: config($whiteColor); } }
+        &.uni-cancel-cicle{ &::after { background-image: cancelCicle($whiteColor); } }
+        &.uni-checked-cicle{ &::after { background-image: checkedCicle($whiteColor); } }
+        &.uni-close{ &::after { background-image: close($whiteColor); } }
+        &.uni-narrow-long-left{ &::after { background-image: narrowLongLeft($whiteColor); } }
+        &.uni-file-attach{ &::after { background-image: fileAttach($whiteColor); } }
+        &.uni-envelope{ &::after { background-image: envelope($whiteColor); } }
+        &.uni-reload{ &::after { background-image: reload($whiteColor); } }
+        &.uni-config-table{ &::after { background-image: configTable($whiteColor); } }
+        &.uni-warning-cicle{ &::after { background-image: warningCicle($whiteColor); } }
+        &.uni-options{ &::after { background-image: options($whiteColor); } }
+        &.uni-search{ &::after { background-image: search($whiteColor); } }
+        &.uni-save{ &::after { background-image: save($whiteColor); } }
+        &.uni-create-contract{ &::after { background-image: createContract($whiteColor); } }
+        &.uni-work-off{ &::after { background-image: workOff($whiteColor); } }
+        &.uni-shuffle{ &::after { background-image: shuffle($whiteColor); } }
+        &.uni-exit-cicle-fill{ &::after { background-image: exitCicleFill($whiteColor); } }
+        &.uni-import{ &::after { background-image: import($whiteColor); } }
+        &.uni-caculator{ &::after { background-image: caculator($whiteColor); } }
+        &.uni-pen-line{ &::after { background-image: penLine($whiteColor); } }
+        &.uni-check-square-line{ &::after { background-image: checkSquareLine($whiteColor); } }
+        &.uni-document-note{ &::after { background-image: documentNote($whiteColor); } }
+        &.uni-structure-fill{ &::after { background-image: structureFill($whiteColor); } }
+        &.uni-refresh{ &::after { background-image: refresh($whiteColor); } }
+        &.uni-arrow-down-fill{ &::after { background-image: arrowDownFill($whiteColor); } }
+        &.uni-update{ &::after { background-image: update($whiteColor); } }
+        &.uni-note-basic{ &::after { background-image: noteBasic($whiteColor); } }
+        &.uni-lock-fill{ &::after { background-image: lockFill($whiteColor); } }
+        &.uni-copy-line{ &::after { background-image: copyLine($whiteColor); } }
+        &.uni-gmail-line{ &::after { background-image: gmailLine($whiteColor); } }
+        &.uni-icon-square{ &::after { background-image: iconSquare($whiteColor); } }
+        &.uni-chevron-right{ &::after { background-image: chevronRight($whiteColor); } }
+        &.uni-folder{ &::after { background-image: folder($whiteColor); } }
+        &.uni-phone{ &::after { background-image: phone($whiteColor); } }
+        &.uni-door{ &::after { background-image: door($whiteColor); } }
+        &.uni-notify-fill{ &::after { background-image: notifyFill($whiteColor); } }
+        &.uni-clock{ &::after { background-image: clock($whiteColor); } }
+        &.uni-camera{ &::after { background-image: camera($whiteColor); } }
+        &.uni-send{ &::after { background-image: send($whiteColor); } }
+        &.uni-document-money{ &::after { background-image: documentMoney($whiteColor); } }
+        &.uni-caculator-fill{ &::after { background-image: caculatorFill($whiteColor); } }
+        &.uni-vector{ &::after { background-image: vector($whiteColor); } }
+
     }
 }

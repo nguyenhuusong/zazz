@@ -13,6 +13,8 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { HrmBreadCrumbModule } from '../hrm-breadcrumb/hrm-breadcrumb.module';
 import { ConfigGridTableFormModule } from '../config-grid-table-form/config-grid-table-form.module';
 import { HistoryUploadFileComponent } from './history-upload-file/history-upload-file.component';
+import { PaginatorModule } from 'primeng/paginator';
+
 @NgModule({
   declarations: [
     ImportExcelComponent,
@@ -31,7 +33,8 @@ import { HistoryUploadFileComponent } from './history-upload-file/history-upload
     ListGridAngularModule,
     FileUploadModule,
     HrmBreadCrumbModule,
-    ConfigGridTableFormModule
+    ConfigGridTableFormModule,
+    PaginatorModule
   ],
   exports: [ImportExcelComponent],
   entryComponents: [],

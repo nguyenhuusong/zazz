@@ -1922,6 +1922,10 @@ button{
         .pi{
             height: 14px;
             font-size: 100%;
+            margin-left: 7px;
+            &.p-button-icon-left{
+                margin-left: 0px;
+            }
         }
     }
 }

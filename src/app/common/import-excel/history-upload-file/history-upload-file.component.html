@@ -3,5 +3,15 @@
         <app-list-grid-angular *ngIf="columnDefs.length > 0" [listsData]="listsData" [domLayout]="'autoHeight'"
             (showConfig)="cauhinh()" [idGrid]="gridKey + '_45dfs'"
             [columnDefs]="columnDefs"></app-list-grid-angular>
+            <div class="paginator">
+                <span>
+                    Từ {{ countRecord.currentRecordStart }} đến
+                    {{ countRecord.currentRecordEnd }}
+                    trên tổng số
+                    {{ countRecord.totalRecord }} kết quả</span>
+                <p-paginator [rows]="query.pageSize" [totalRecords]="countRecord.totalRecord" [first]="first"
+                    (onPageChange)="paginate($event)" [rowsPerPageOptions]="[20,50,80,100,200,500,{ showAll: 'ALL' }]">
+                </p-paginator>
+            </div>
     </div>
 </section>
