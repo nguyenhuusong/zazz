@@ -4,9 +4,18 @@
         <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
     </section> -->
    <div class="content">
-    <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'" [dataView]="listViews"
+    <app-edit-detail 
+        *ngIf="listViews.length> 0" 
+        [detail]="detailInfo" 
+        [manhinh]="'Edit'" 
+        [dataView]="listViews"
         [optionsButtonsEdit]="optionsButtonsView" 
-        (callback)="setTerminateStatus($event)" (callBackForm)="callBackForm($event)" (callbackcancel)="cancelUpdate($event)"></app-edit-detail>
+        (callback)="setTerminateStatus($event)" 
+        (callBackForm)="callBackForm($event)" 
+        (callbackcancel)="cancelUpdate($event)"
+        [isUploadMultiple]="false"
+        >
+    </app-edit-detail>
         
    </div>
    
