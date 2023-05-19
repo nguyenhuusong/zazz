@@ -200,8 +200,13 @@ export class BaoCaoTuyenDungComponent implements OnInit {
           }
         }else {
           if(results.data && results.data.webContentLink){
-            window.open(results.data.webContentLink);
             this.spinner.hide();
+            this.confirmationService.confirm({
+              message: `${results.data.fileName} is a file type that might harm your computer. Only download this file if you understand the risks.`,
+              accept: () => {
+              this.createImageFromBlob(results.data.webContentLink, results.data.fileName);
+              }
+            });
           }else{
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Xuất báo cáo bị lỗi' });
             this.spinner.hide();
@@ -213,6 +218,17 @@ export class BaoCaoTuyenDungComponent implements OnInit {
         this.spinner.hide();
       });
   }
+
+  createImageFromBlob(image: string, fileName: string) {
+    var link = document.createElement("a");
+    link.download = fileName;
+    link.href = image;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    link.remove();
+  }
+
 
   initGrid() {
     console.log("sddddddđ")
