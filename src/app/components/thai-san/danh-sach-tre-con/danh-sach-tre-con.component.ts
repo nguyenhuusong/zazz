@@ -86,7 +86,12 @@ export class DanhSachTreConComponent implements OnInit {
     const param = {
       ...this.dataDetailInfo, group_fields: data
     }
-    this.apiService.setMaternityChildInfo(param)
+    const formData = new FormData();
+    formData.append('maternityId', `${this.maternityId}`);
+    formData.append('childId', this.childId ? `${this.childId}`: '');
+    formData.append('group_fields',  `${JSON.stringify(data)}`);
+    formData.append('formFile',  this.dataDetailInfo.formFile[0]);
+    this.apiService.setMaternityChildInfo(formData)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(results => {
       if (results.status === 'success') {
@@ -102,6 +107,12 @@ export class DanhSachTreConComponent implements OnInit {
     })
   
   }
+
+
+
+
+
+
 
   getMaternityChildPage() {
     this.spinner.show();

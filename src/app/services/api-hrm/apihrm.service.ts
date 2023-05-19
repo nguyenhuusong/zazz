@@ -908,7 +908,7 @@ export class ApiHrmService {
   }
 
   setMaternityChildInfo(params): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v2/maternity/SetMaternityChildInfo`, params, this.options)
+    return this.http.post<any>(`${apiHrmServer}/api/v2/maternity/SetMaternityChildInfo`, params, this.optionsUpload)
   }
 
   setMaternityPregnancyInfo(params): Observable<any> {
