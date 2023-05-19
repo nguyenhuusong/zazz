@@ -1681,6 +1681,10 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
         }
         for(let index in event.currentFiles) {
             this.uploadedFiles.push(event.currentFiles[index].name);
+            if(!this.isUploadMultiple) {
+              this.uploadedFiles = []
+              this.uploadedFiles.push(event.currentFiles[index].name);
+            }
         }
       }else{
         // this.spinner.hide();
