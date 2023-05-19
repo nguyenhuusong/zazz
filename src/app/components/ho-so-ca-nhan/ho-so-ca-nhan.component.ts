@@ -381,7 +381,7 @@ export class HoSoCaNhanComponent implements OnInit, AfterViewChecked {
   ViewDetail({rowData}) {
     const params = {
       custId: rowData.custId,
-      type: false
+      type: this.tabIndex === 0 ? true : false
     }
     this.router.navigate(['/tuyen-dung/ho-so-ca-nhan/chi-tiet-ho-so-ca-nhan'], { queryParams: params });
   }
