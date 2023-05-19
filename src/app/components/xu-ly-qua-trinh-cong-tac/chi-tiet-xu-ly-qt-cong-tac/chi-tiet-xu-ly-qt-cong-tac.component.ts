@@ -92,17 +92,15 @@ export class ChiTietXuLyQtCongTacComponent implements OnInit {
   setDetail(data) {
     this.listViews = [];
     const params = {
-      ...this.detailInfo, group_fields: data
+      ...this.detailInfo, group_fields: data.datas
     }
-    this.cloneListViews = cloneDeep(data); 
-    this.listViews = [];
     this.callApiInfo(params)
   }
   cloneListViews = []
   callBackForm(event) {
     const params = {
       ...this.detailInfo
-      , group_fields: event.data
+      , group_fields: event.data.datas
     }
     this.cloneListViews = cloneDeep(event.data);
     this.listViews = []
@@ -116,17 +114,13 @@ export class ChiTietXuLyQtCongTacComponent implements OnInit {
       if (results.status === 'success') {
         this.spinner.hide();
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
-        if(type === 'Submit' || type === 'SaveNhap') {
+        if(type === 'actSubmit' || type === 'SaveNhap') {
           setTimeout(() => {
             this.isDialog ? this.callback.emit() : this.router.navigate(['/nhan-su/xu-ly-qua-trinh-cong-tac'])
           }, 200);
         }
       } else {
-        // this.listViews = cloneDeep(this.cloneListViews);
-        // this.spinner.hide();
-        // setTimeout(() => {
-        //   this.stepActivated();
-        //  }, 100);
+       
         this.messageService.add({
           severity: 'error', summary: 'Thông báo', detail: results.message
         });

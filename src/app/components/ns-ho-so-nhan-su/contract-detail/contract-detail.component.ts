@@ -135,16 +135,12 @@ export class ContractDetailComponent implements OnInit {
   }
 
   setContractInfo(data) {
-    if(this.flowCurrent >= this.activeIndex) {
-      const params = {
-        ...this.detailInfo, group_fields: data.datas
-      };
-      this.cloneListViews = cloneDeep(data);
-      this.listViews = [];
-      this.callApiInfo(params)
-    }else {
-      this.getContractInfo(this.flowCurrent + 1);
-    }
+    const params = {
+      ...this.detailInfo, group_fields: data.datas
+    };
+    this.cloneListViews = cloneDeep(data);
+    this.listViews = [];
+    this.callApiInfo(params)
   }
   cloneListViews = []
   callBackForm(event) {

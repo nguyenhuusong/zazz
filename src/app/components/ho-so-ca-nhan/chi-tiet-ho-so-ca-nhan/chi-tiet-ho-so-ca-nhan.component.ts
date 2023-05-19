@@ -130,7 +130,7 @@ export class ChiTietHoSoCaNhanComponent implements OnInit {
       if (results.status === 'success') {
         this.spinner.hide();
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
-        if(type === 'Submit' || type === 'SaveNhap') {
+        if(type === 'actSubmit' || type === 'SaveNhap') {
           setTimeout(() => {
             this.isDialog ? this.callback.emit() : this.router.navigate(['/tuyen-dung/ho-so-ca-nhan'])
           }, 200);

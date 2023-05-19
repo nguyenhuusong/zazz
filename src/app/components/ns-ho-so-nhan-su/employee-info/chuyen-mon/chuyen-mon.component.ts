@@ -109,7 +109,7 @@ export class ChuyenMonComponent implements OnInit {
 
   setEmpQualification(data) {
     const params = {
-      ...this.detailInfo, group_fields: data
+      ...this.detailInfo, group_fields: data.datas
     };
     this.apiService.setEmpQualification(params)
     .pipe(takeUntil(this.unsubscribe$))

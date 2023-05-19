@@ -101,42 +101,18 @@ export class DetailTerminateComponent implements OnInit {
   }
 
   setTerminateInfo(data) {
-    if(this.flowCurrent >= this.activeIndex) {
-      this.listViews = [];
-      const params = {
-        ...this.detailInfo, group_fields: data, flow_cur: this.flowCurrent, action: 'next'
-      }
-      this.cloneListViews = cloneDeep(data); 
-      this.listViews = [];
-      this.callApiInfo(params)
-    }else {
-      this.getTerminateInfo(this.flowCurrent + 1);
+    const params = {
+      ...this.detailInfo, group_fields: data.datas
     }
-   
+    this.callApiInfo(params)
   }
   cloneListViews = []
   callBackForm(event) {
-    if(this.flowCurrent >= this.activeIndex) {
-      const params = {
-        ...this.detailInfo
-        , group_fields: event.data
-        , flow_cur: event.type === 'Submit' ?  this.flowCurrent : this.flowCurrent
-        , action: event.type === 'Submit' ? 'submit' : 'save'
-      }
-      this.cloneListViews = cloneDeep(event.data); 
-      this.listViews = [];
-      this.callApiInfo(params, event.type);
-    }else {
-      const params = {
-        ...this.detailInfo
-        , group_fields: event.data
-        , flow_st: this.detailInfo.flow_cur
-        , action: event.type === 'Submit' ? 'submit' : 'save'
-      }
-      this.cloneListViews = cloneDeep(event.data); 
-      this.listViews = [];
-      this.callApiInfo(params, event.type);
+    const params = {
+      ...this.detailInfo
+      , group_fields: event.data
     }
+    this.callApiInfo(params, event.type);
   }
 
   flowCurrent = 0
@@ -148,7 +124,7 @@ export class DetailTerminateComponent implements OnInit {
       if (results.status === 'success') {
         this.spinner.hide();
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
-        if(type === 'Submit' || type === 'SaveNhap') {
+        if(type === 'actSubmit' || type === 'SaveNhap') {
           setTimeout(() => {
             this.isDialog ? this.callback.emit() : this.router.navigate(['/nhan-su/ho-so-nghi-viec'])
           }, 200);

@@ -118,7 +118,7 @@ export class QuanHeLaoDongCComponent implements OnInit {
 
   setEmployeeInfo(data) {
     const params = {
-      ...this.detailInfo, group_fields: data
+      ...this.detailInfo, group_fields: data.datas
     };
     this.apiService.setEmployeeInfo(params)
     .pipe(takeUntil(this.unsubscribe$))

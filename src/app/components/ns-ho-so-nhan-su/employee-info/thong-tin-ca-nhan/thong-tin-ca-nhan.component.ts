@@ -123,7 +123,7 @@ export class ThongTinCaNhanComponent implements OnInit {
 
   setEmployeeInfo(data) {
     const  params = {
-      ...this.detailInfo, group_fields: data
+      ...this.detailInfo, group_fields: data.datas
     };
     this.apiService.setEmpProfile(params)
     .pipe(takeUntil(this.unsubscribe$))
@@ -144,11 +144,11 @@ export class ThongTinCaNhanComponent implements OnInit {
      if (button === 'CauHinh') {
       this.getEmployeeInfo();
     } else if (button === 'xuatHoSo') {
-      this.exportResume();
+      // this.exportResume();
     }
   }
 
-  exportResume() {
+  actExport() {
     this.spinner.show();
     this.apiService.exportResume(queryString.stringify({ empId: this.detailInfo.empId }))
     .pipe(takeUntil(this.unsubscribe$))

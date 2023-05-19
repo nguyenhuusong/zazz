@@ -134,27 +134,11 @@ export class ChiTietQTThayDoiLuongComponent implements OnInit {
       this.listViews = [];
       this.setSalaryDraft(params);
     } else {
-      if(this.flowCurrent >= this.activeIndex) {
-        const params = {
-          ...this.detailInfo
-          , group_fields: event.data
-          , flow_cur: event.type === 'Submit' ? this.flowCurrent : this.flowCurrent
-          , action: event.type === 'Submit' ? 'submit' : 'save'
-        }
-        this.cloneListViews = cloneDeep(event.data);
-        this.listViews = [];
-        this.callApiInfo(params, event.type);
-      }else {
-        const params = {
-          ...this.detailInfo
-          , group_fields: event.data
-          , flow_st: this.detailInfo.flow_cur
-          , action: event.type === 'Submit' ? 'submit' : 'save'
-        }
-        this.cloneListViews = cloneDeep(event.data);
-        this.listViews = [];
-        this.callApiInfo(params, event.type);
+      const params = {
+        ...this.detailInfo
+        , group_fields: event.data
       }
+      this.callApiInfo(params, event.type);
     }
   }
 
@@ -188,7 +172,7 @@ export class ChiTietQTThayDoiLuongComponent implements OnInit {
         this.modelEdit.salaryInfoId = results.data.salaryInfoId;
         this.spinner.hide();
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
-        if(type === 'Submit' || type === 'SaveNhap') {
+        if(type === 'actSubmit' || type === 'SaveNhap') {
           setTimeout(() => {
             this.isDialog ? this.callback.emit() : this.router.navigate(['/nhan-su/qua-trinh-thay-doi-luong'])
           }, 200);

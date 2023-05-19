@@ -101,7 +101,7 @@ export class EditViTriCongViecComponent implements OnInit {
 
   callBackForm(event) {
     const params = {
-      ...this.detailInfo, group_fields: event.data
+      ...this.detailInfo, group_fields: event.data.datas
     }
     this.callApiInfo(params)
     if(event.type === 'Submit' || event.type === 'SaveNhap') {
@@ -113,7 +113,7 @@ export class EditViTriCongViecComponent implements OnInit {
 
   setDetail(data) {
     const  params = {
-      ...this.detailInfo, group_fields: data
+      ...this.detailInfo, group_fields: data.datas
     };
     this.callApiInfo(params)
   

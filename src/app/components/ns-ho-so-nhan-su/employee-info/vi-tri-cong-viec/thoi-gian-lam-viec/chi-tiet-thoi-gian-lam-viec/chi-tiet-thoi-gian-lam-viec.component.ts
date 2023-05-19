@@ -115,7 +115,7 @@ export class ChiTietThoiGianLamViecComponent implements OnInit {
 
   setDetail(data) {
     const  params = {
-      ...this.detailInfo, group_fields: data
+      ...this.detailInfo, group_fields: data.datas
     };
     this.callApiInfo(params)
   }
