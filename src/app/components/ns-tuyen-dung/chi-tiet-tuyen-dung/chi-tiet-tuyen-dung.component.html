@@ -37,15 +37,24 @@
             </p-dropdown>
         </div>
         <p-splitButton icon="pi pi-send" *ngIf="menuActions.length > 0" styleClass="p-button-sm ml-2" [appendTo]="'body'" (onClick)="callActions(menuActions[0].value)" [label]="menuActions[0].label" [model]="menuActions"></p-splitButton>
-        <p-button label="Quay lại" styleClass="p-button-secondary p-button-sm ml-2" [style]="{'z-index': 9}" icon="pi pi-directions-alt"></p-button>
+        <p-button label="Quay lại" (click)="quaylai('')" styleClass="p-button-secondary p-button-sm ml-2" [style]="{'z-index': 9}" icon="pi pi-directions-alt"></p-button>
     </div>
 
 
         <p-tabView (onChange)="handleChange($event.index)" [(activeIndex)]="tabIndex">
             <p-tabPanel header="Thông tin tuyển dụng">
-                <app-edit-detail *ngIf="listViews.length> 0" [isHideButton]="true" [detail]="detailInfo" [manhinh]="'Edit'" [isNested]="true"
-                    [optionsButtonsEdit]="optionsButon" [dataView]="listViews" (callback)="setCandidateInfo($event)"
-                    (callbackcancel)="quaylai($event)" (callBackForm)="callBackForm($event)"></app-edit-detail>
+                <app-edit-detail 
+                    *ngIf="listViews.length> 0" 
+                    [isHideButton]="true" 
+                    [detail]="detailInfo" 
+                    [manhinh]="'Edit'" 
+                    [isNested]="true"
+                    [optionsButtonsEdit]="optionsButon" 
+                    [dataView]="listViews" 
+                    (callback)="setCandidateInfo($event)"
+                    (callbackcancel)="quaylai($event)" 
+                    (callBackForm)="callBackForm($event)">
+                </app-edit-detail>
                 <app-loading-detail [id]="'chi-tiet-tuyen-dung'" *ngIf="listViews.length === 0">
                 </app-loading-detail>
             </p-tabPanel>

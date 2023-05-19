@@ -123,6 +123,7 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
 
   cloneListViews = []
   callBackForm(event) {
+    console.log('fodsijfid', event)
     if (event.type === 'IsSpecial') {
       const params = {
         ...this.detailInfo, group_fields: event.data
