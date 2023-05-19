@@ -102,7 +102,7 @@ export class BaoCaoTuyenDungComponent implements OnInit {
   listViewsReport = [];
   optionsButonReport = [
     { label: 'Hiển thị', value: 'ViewReport', class: 'p-button-sm ml-2 height-56 addNew', icon: 'pi pi-plus' },
-    { label: 'Mở tệp', value: 'OpenReport', class: 'p-button-sm p-button-success ml-2 height-56 addNew', icon: 'pi pi-clone' },
+    // { label: 'Mở tệp', value: 'OpenReport', class: 'p-button-sm p-button-success ml-2 height-56 addNew', icon: 'pi pi-clone' },
     { label: 'Lưu tệp', value: 'DowloadReport', class: 'p-button-sm p-button-success ml-2 height-56 addNew', icon: 'pi pi-cloud-download' },
   ];
 
@@ -184,7 +184,7 @@ export class BaoCaoTuyenDungComponent implements OnInit {
 
   loadExport(queryParams: any, type: string) {
     this.spinner.show();
-    this.apiService.getDataReport(this.detailInfoReport.api_url_dowload, queryParams)
+    this.apiService.getDataFile(this.detailInfoReport.api_url_dowload, queryParams)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(
       (results: any) => {
@@ -279,9 +279,7 @@ export class BaoCaoTuyenDungComponent implements OnInit {
       const queryParams = queryString.stringify({ ...event.data });
       this.loadExport(queryParams, 'open');
     }else {
-      // this.isShowLists = false;
-      const queryParams = queryString.stringify({ ...event.data });
-      this.loadExport(queryParams, 'dowload');
+      this.loadExport({ ...event.data }, 'dowload');
     }
   
   }

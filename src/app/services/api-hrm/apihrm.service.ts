@@ -1360,6 +1360,15 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}${apiUrl}?` + queryParams, this.options)
   }
   
+  getDataFile(apiUrl, params): Observable<any> {
+    return this.http.post(`${apiHrmServer}${apiUrl}`, params, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
+  }
+  
   setUserAdd(params): Observable<any> {
     return this.http.put<any>(`${apiHrmServer}/api/v1/user/SetUserAdd`, params, this.options)
   }
