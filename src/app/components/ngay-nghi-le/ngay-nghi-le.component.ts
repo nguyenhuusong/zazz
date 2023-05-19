@@ -218,21 +218,6 @@ export class NgayNghiLeComponent implements OnInit {
 
   initGrid() {
     this.columnDefs = [
-      {
-        headerName: 'Stt',
-        filter: '',
-        maxWidth: 140,
-        pinned: 'left',
-        cellRenderer: params => {
-          return params.rowIndex + 1
-        },
-        cellClass: ['border-right', 'no-auto'],
-        // checkboxSelection: true,
-        // headerCheckboxSelection: true,
-        // headerCheckboxSelectionFilteredOnly: true,
-        field: 'checkbox2',
-        suppressSizeToFit: true,
-      },
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       {
         headerComponentParams: {

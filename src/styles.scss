@@ -6922,3 +6922,14 @@ app-edit-detail{
     margin-top: 5px !important;
     margin-bottom: 5px !important;
 }
+
+.ag-root-wrapper{
+    .ag-row-focus{
+        .ag-cell{
+            border-top: 1px solid #9abdf5 !important;
+                    border-bottom: 1px solid #9abdf5 !important;
+            border-left: transparent;
+            // background-color: rgba(0, 145, 234, 0.2);
+        }
+    }
+}
