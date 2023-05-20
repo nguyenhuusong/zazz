@@ -138,8 +138,6 @@ export class ContractDetailComponent implements OnInit {
     const params = {
       ...this.detailInfo, group_fields: data.datas
     };
-    this.cloneListViews = cloneDeep(data);
-    this.listViews = [];
     this.callApiInfo(params)
   }
   cloneListViews = []
@@ -151,14 +149,7 @@ export class ContractDetailComponent implements OnInit {
       this.cloneListViews = cloneDeep(event.data);
       this.listViews = [];
       this.setContractDraft(params);
-    } else {
-      const params = {
-        ...this.detailInfo, group_fields: event.data
-      }
-      this.cloneListViews = cloneDeep(event.data);
-      this.listViews = [];
-      this.callApiInfo(params, event.type);
-    }
+    } 
   }
 
   setContractDraft(params) {
@@ -197,22 +188,18 @@ export class ContractDetailComponent implements OnInit {
       if (results.status === 'success') {
         this.spinner.hide();
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
-        if (type === 'actSubmit' || type === 'SaveNhap' || type === 'actSave') {
-          setTimeout(() => {
-            if (this.url === 'chi-tiet-xu-ly-hop-dong') {
-              this.router.navigate(['/nhan-su/xu-ly-hop-dong'])
-            } else {
-              this.callback.emit();
-            }
-          }, 200);
-        }
+        setTimeout(() => {
+          if (this.url === 'chi-tiet-xu-ly-hop-dong') {
+            this.router.navigate(['/nhan-su/xu-ly-hop-dong'])
+          } else {
+            this.callback.emit();
+          }
+        }, 200);
       } else {
         this.messageService.add({
           severity: 'error', summary: 'Thông báo', detail: results.message
         });
-    
         this.spinner.hide();
-        this.getContractInfo()
       }
     }, error => {
       this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: error });
