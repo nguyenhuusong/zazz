@@ -12,7 +12,6 @@ import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.comp
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { ExportFileService } from 'src/app/services/export-file.service';
 import { cloneDeep } from 'lodash';
-import { flatten } from '@angular/compiler';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
