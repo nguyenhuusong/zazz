@@ -1,24 +1,21 @@
 import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
-import { MessageService } from 'primeng/api';
 import { BButton, FFields } from './buttons.mode';
 import { TYPES, TYPESAUTOCOMPLETE, TYPESCHECKBOX, TYPESDATETIME, TYPESDROPDOWN, TYPESIMAGE, TYPESINPUT, TYPESMULTISELECT, TYPESRESETPASSWORD, TYPESTEXTAREA, TYPETREESELECT } from './columnTypes';
-import { FormGroup } from '@angular/forms';
-import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
 import { forkJoin,  of,  Subject,  takeUntil} from 'rxjs';
 import { cloneDeep } from 'lodash';
 import { ApiService } from 'src/app/services/api.service';
 import { PanelWrapperComponent } from '../formLy/panel-wapper';
 import { NgxSpinnerService } from 'ngx-spinner';
-import queryString from 'query-string';
-import { TranslateService } from '@ngx-translate/core';
 import { ApiHrmV2Service } from 'src/app/services/api-hrm/apihrmv2.service';
+import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
+import { MessageService } from 'primeng/api';
+import { FormGroup } from '@angular/forms';
 @Component({
   selector: 'app-edit-detail',
   templateUrl: './edit-detail.component.html',
   styleUrls: ['./edit-detail.component.scss']
 })
 export class EditDetailComponent implements OnInit {
-  public translate = inject(TranslateService);
   private _messageService = inject(MessageService);
   @Input() isFiler: boolean = false;
   private _appApi = inject(ApiService);
@@ -270,8 +267,8 @@ export class EditDetailComponent implements OnInit {
 
   // cấu hình
   buttons1: any = [
-    { label: this.translate.instant('_ignore_'), value: 'Cancel', class: 'p-button p-button-secondary', icon: 'pi pi-times-circle' },
-    { label: this.translate.instant('_save_'), value: 'Update', class: '' }
+    { label: 'Đóng', value: 'Cancel', class: 'p-button p-button-secondary', icon: 'pi pi-times-circle' },
+    { label: 'Lưu lại', value: 'Update', class: '' }
   ];
   gridKey: string = '';
   group_cd: string = '';
@@ -314,7 +311,7 @@ export class EditDetailComponent implements OnInit {
       })
 
     } else {
-      this._messageService.add({ severity: 'error', summary: this.translate.instant('_notification_'), detail: this.translate.instant('_missing_data_') });
+      this._messageService.add({ severity: 'error', summary: 'Dữ liệu thiếu !'});
     }
   }
 
@@ -343,13 +340,13 @@ export class EditDetailComponent implements OnInit {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((results: any) => {
         if (results.status === 'success') {
-          this._messageService.add({ severity: 'success', summary: this.translate.instant("_notification_"), detail: results.message });
+          this._messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
           this._spinner.hide();
           this.displaySetting1 = false;
           // this.load();
         } else {
           this._messageService.add({
-            severity: 'error', summary: this.translate.instant("_notification_"),
+            severity: 'error', summary: 'Thông báo',
             detail: results.message
           });
           this._spinner.hide();
