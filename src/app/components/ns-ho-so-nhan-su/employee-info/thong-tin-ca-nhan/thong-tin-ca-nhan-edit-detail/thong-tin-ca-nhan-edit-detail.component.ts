@@ -118,11 +118,9 @@ export class ThongTinCaNhanEditDetailComponent implements OnInit {
         this.detailInfo = results.data;
         this.spinner.hide();
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Cập nhật thông tin thành công' });
-        if(data.event === 'actSubmit') {
-          setTimeout(() => {
-            this.cancelSave.emit();
-          }, 200);
-        }
+        setTimeout(() => {
+          this.cancelSave.emit();
+        }, 200);
       } else {
         this.spinner.hide();
         this.messageService.add({
