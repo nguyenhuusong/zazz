@@ -501,6 +501,10 @@ export class ViTriCongViecComponent implements OnInit, AfterViewInit {
       }
     })
   }
+  tabIndex = 0
+  handleChange(index) {
+    this.tabIndex = index
+  }
 
 }
 

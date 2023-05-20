@@ -172,11 +172,7 @@ export class ChiTietQTThayDoiLuongComponent implements OnInit {
         this.modelEdit.salaryInfoId = results.data.salaryInfoId;
         this.spinner.hide();
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
-        if(type === 'actSubmit' || type === 'SaveNhap') {
-          setTimeout(() => {
-            this.isDialog ? this.callback.emit() : this.router.navigate(['/nhan-su/qua-trinh-thay-doi-luong'])
-          }, 200);
-        }
+        this.isDialog ? this.callback.emit() : this.router.navigate(['/nhan-su/qua-trinh-thay-doi-luong'])
       } else {
         this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
         this.spinner.hide();

@@ -61,7 +61,7 @@
     <p-card>
         <div>
             <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'" [isHideButton]="true"
-                [optionsButtonsEdit]="optionsButtonsView" [dataView]="listViews" (callback)="setSalaryInfoDevM($event)" (callBackForm)="callBackForm($event)"
+                [optionsButtonsEdit]="optionsButtonsView" [dataView]="listViews" (callback)="setSalaryInfoDevM($event)" 
                 (callbackcancel)="cancel($event)"></app-edit-detail>
                 <app-loading-detail 
                     [id]="'sections-2qnt'" 

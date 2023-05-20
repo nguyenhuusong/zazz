@@ -106,14 +106,6 @@ export class DetailTerminateComponent implements OnInit {
     }
     this.callApiInfo(params)
   }
-  cloneListViews = []
-  callBackForm(event) {
-    const params = {
-      ...this.detailInfo
-      , group_fields: event.data
-    }
-    this.callApiInfo(params, event.type);
-  }
 
   flowCurrent = 0
   callApiInfo(params, type = 'Update') {
@@ -124,13 +116,8 @@ export class DetailTerminateComponent implements OnInit {
       if (results.status === 'success') {
         this.spinner.hide();
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
-        if(type === 'actSubmit' || type === 'SaveNhap') {
-          setTimeout(() => {
-            this.isDialog ? this.callback.emit() : this.router.navigate(['/nhan-su/ho-so-nghi-viec'])
-          }, 200);
-        }
+        this.isDialog ? this.callback.emit() : this.router.navigate(['/nhan-su/ho-so-nghi-viec'])
       } else {
-      
         this.spinner.hide();
         this.messageService.add({
           severity: 'error', summary: 'Thông báo', detail: results.message

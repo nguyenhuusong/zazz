@@ -5,7 +5,7 @@
 </div>
 <section *ngIf="!isDialog">
     <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'" [isHideButton]="true"
-        [optionsButtonsEdit]="optionsButtonsView" [dataView]="listViews" (callback)="setDetail($event)" (callBackForm)="callBackForm($event)"
+        [optionsButtonsEdit]="optionsButtonsView" [dataView]="listViews" (callback)="setDetail($event)"
         (callbackcancel)="cancel($event)"></app-edit-detail>
         <app-loading-detail 
             [id]="'app-chi-tiet-xu-ly-qt-cong-tac'" 
@@ -57,7 +57,7 @@
 
     <p-card >
         <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'" [isHideButton]="true"
-            [optionsButtonsEdit]="optionsButtonsView" [dataView]="listViews" (callback)="setDetail($event)" (callBackForm)="callBackForm($event)"
+            [optionsButtonsEdit]="optionsButtonsView" [dataView]="listViews" (callback)="setDetail($event)"
             (callbackcancel)="cancel($event)"></app-edit-detail>
             <app-loading-detail 
                 [id]="'app-chi-tiet-xu-ly-qt-cong-tac'" 

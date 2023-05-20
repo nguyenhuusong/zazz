@@ -6307,7 +6307,7 @@ app-thong-tin-ca-nhan-edit-detail{
 
 .hidden_row {
     .ag-row-no-animation {
-        height: 0;
+        height: 37;
     }
 }
 
@@ -6810,7 +6810,7 @@ hr{
 }
 
 .bgDone {
-    background-color: var(--primary-500) !important;
+    background-color: var(--green-500) !important;
     color: var(--surface-0) !important;
 }
 
@@ -6933,3 +6933,4 @@ app-edit-detail{
         }
     }
 }
+

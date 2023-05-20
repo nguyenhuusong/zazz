@@ -108,15 +108,7 @@ export class ChiTietHoSoCaNhanComponent implements OnInit {
     }
     this.callApiInfo(params)
   }
-  cloneListViews = []
-  callBackForm(event) {
-    const params = {
-      ...this.detailInfo
-      , group_fields: event.data
-    }
-    this.callApiInfo(params, event.type);
-  }
-
+  
   onBack() {
     this.router.navigate(['/tuyen-dung/ho-so-ca-nhan'])
   }
@@ -130,11 +122,7 @@ export class ChiTietHoSoCaNhanComponent implements OnInit {
       if (results.status === 'success') {
         this.spinner.hide();
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
-        if(type === 'actSubmit' || type === 'SaveNhap') {
-          setTimeout(() => {
-            this.isDialog ? this.callback.emit() : this.router.navigate(['/tuyen-dung/ho-so-ca-nhan'])
-          }, 200);
-        }
+        this.isDialog ? this.callback.emit() : this.router.navigate(['/tuyen-dung/ho-so-ca-nhan'])
       } else {
         this.spinner.hide();
         this.messageService.add({

@@ -197,7 +197,7 @@ export class ContractDetailComponent implements OnInit {
       if (results.status === 'success') {
         this.spinner.hide();
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
-        if (type === 'actSubmit' || type === 'SaveNhap') {
+        if (type === 'actSubmit' || type === 'SaveNhap' || type === 'actSave') {
           setTimeout(() => {
             if (this.url === 'chi-tiet-xu-ly-hop-dong') {
               this.router.navigate(['/nhan-su/xu-ly-hop-dong'])
