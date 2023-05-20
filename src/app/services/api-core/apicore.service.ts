@@ -9,14 +9,16 @@ const apiCoreBaseUrl = environment.apiCoreBase;
 export class ApiCoreService {
   constructor(
     private http: HttpClient,
-    private authService: AuthService) { }
+    private authService: AuthService) {
+      this.options = {
+        headers: new HttpHeaders({
+          Authorization: this.authService.getAuthorizationHeaderValue(),
+          'Content-Type': 'application/json',
+        })
+      }
+     }
 
-  options = {
-    headers: new HttpHeaders({
-      Authorization: this.authService.getAuthorizationHeaderValue(),
-      'Content-Type': 'application/json',
-    })
-  };
+  options = {};
 
   // Start api Stores
   getManagerList(): Observable<any> {

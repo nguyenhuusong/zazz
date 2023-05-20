@@ -1,0 +1,19 @@
+<div class="field">
+            <p-multiSelect
+            [options]="listOptions"
+            (onChange)="to.change && to.change(field, $event)"
+            [formControl]="formControl"
+            [formlyAttributes]="field"
+            optionValue="value"
+            [appendTo]="'body'"
+            [filter]="true"
+            filterBy="label"
+            [styleClass]="((formControl.touched || options.formState.submitted) && formControl.getError('required'))
+            ? 'ng-pristine ng-invalid ng-star-inserted ng-dirty ng-touched w-full text-base text-color surface-overlay  surface-border border-round outline-none focus:border-primary'
+            : 'w-full text-base text-color surface-overlay border-1 border-solid surface-border border-round outline-none focus:border-primary'">
+            </p-multiSelect>
+            <p-button *ngIf="field.key === 'employeeTypes' || field.key === 'Oids'" icon="uni-icon uni-search uni-white-color" (click)="search()"></p-button>
+
+</div>
+
+<app-list-emps *ngIf="isSearchEmp" [isSearchEmp]="isSearchEmp" [dataLists] ="dataSelects" (cancelSave)="callbackSeach($event)"></app-list-emps>
