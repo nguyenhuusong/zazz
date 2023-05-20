@@ -183,7 +183,7 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
           this.listViews = [...listViews];
           this.detailInfo = results.data;
           this.custId = results.data.custId;
-          this.status = results.data.flowStatuses;
+          this.status = results.data.flowStatuses || [];
           if(results.data.status) this.status.push(results.data.status);
           this.selectedCountry = results.data.status;
           if(this.detailInfo.actions && this.detailInfo.actions.length > 0) {

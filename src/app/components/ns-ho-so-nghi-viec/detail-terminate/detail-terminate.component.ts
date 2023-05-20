@@ -141,7 +141,7 @@ export class DetailTerminateComponent implements OnInit {
       if (results.status === 'success') {
         this.modelEdit.terminateId = results.data.terminateId;
         this.detailInfo = results.data;
-        this.status = results.data.flowStatuses;
+        this.status = results.data.flowStatuses || [];
         if(results.data.status) {
           this.status.push(results.data.status);
         }

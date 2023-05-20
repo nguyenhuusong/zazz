@@ -235,7 +235,7 @@ export class ContractDetailComponent implements OnInit {
         if (results.data.flow_cur > 1) this.getContractMetaPage();
         if (results.data.flow_cur > 0) this.getSalaryComponentPage();
 
-        this.status = results.data.flowStatuses;
+        this.status = results.data.flowStatuses || [];
         if(results.data.status) {
           this.status.push(results.data.status);
         }

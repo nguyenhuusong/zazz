@@ -129,7 +129,7 @@ export class ChiTietXuLyQtCongTacComponent implements OnInit {
         this.modelEdit.processId = results.data.processId;
         this.detailInfo = results.data;
         this.listViews = cloneDeep(results.data.group_fields);
-        this.status = results.data.flowStatuses;
+        this.status = results.data.flowStatuses || [];
         if(results.data.status) {
           this.status.push(results.data.status);
         }
