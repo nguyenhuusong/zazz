@@ -9,9 +9,10 @@
 
 <section *ngIf="!isDialog">
     <div>
-        <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'"
-            [optionsButtonsEdit]="optionsButtonsView" [dataView]="listViews" (callback)="setSalaryInfoDevM($event)" (callBackForm)="callBackForm($event)"
-            (callbackcancel)="cancel($event)"></app-edit-detail>
+            <app-edit-detail  
+            *ngIf="listViews.length> 0" [manhinh]="'Edit'"   [detailInfo]="detailInfo"  [buttons]="optionsButtonsView"
+           [listForms]="listViews" (callback)="setSalaryInfoDevM($event)" (close)="cancel($event)"
+         ></app-edit-detail>
             <app-loading-detail 
                 [id]="'sections-2qnt'" 
                 *ngIf="listViews.length === 0">
@@ -60,9 +61,10 @@
     </p-header>
     <p-card>
         <div>
-            <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'" [isHideButton]="true"
-                [optionsButtonsEdit]="optionsButtonsView" [dataView]="listViews" (callback)="setSalaryInfoDevM($event)" 
-                (callbackcancel)="cancel($event)"></app-edit-detail>
+                <app-edit-detail  
+                *ngIf="listViews.length> 0" [manhinh]="'Edit'"   [detailInfo]="detailInfo"  [buttons]="optionsButtonsView"
+               [listForms]="listViews" (callback)="setSalaryInfoDevM($event)" (close)="cancel($event)"
+             ></app-edit-detail>
                 <app-loading-detail 
                     [id]="'sections-2qnt'" 
                     *ngIf="listViews.length === 0">

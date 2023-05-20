@@ -4,7 +4,7 @@
         <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
     </section> -->
    <div class="content">
-    <app-edit-detail 
+    <!-- <app-edit-detail 
         *ngIf="listViews.length> 0" 
         [detail]="detailInfo" 
         [manhinh]="'Edit'" 
@@ -15,7 +15,11 @@
         (callbackcancel)="cancelUpdate($event)"
         [isUploadMultiple]="false"
         >
-    </app-edit-detail>
+    </app-edit-detail> -->
+    <!-- check lại điều kiện -->
+    <app-edit-detail *ngIf="listViews.length> 0" [manhinh]="'Edit'"[detailInfo]="detailInfo" [buttons]="optionsButtonsView"
+        [listForms]="listViews" (callback)="setTerminateStatus($event)" (close)="cancelUpdate($event)"
+      ></app-edit-detail>
         
    </div>
    

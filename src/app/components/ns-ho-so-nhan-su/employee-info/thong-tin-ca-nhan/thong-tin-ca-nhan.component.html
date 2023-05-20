@@ -50,7 +50,7 @@
 
 </section>
 <section>
-    <app-edit-detail *ngIf="listViews.length> 0" 
+    <!-- <app-edit-detail *ngIf="listViews.length> 0" 
         [isShowAvatar] = true
         [detail]="detailInfo" 
         [detailInfo]="detailInfo" 
@@ -60,7 +60,13 @@
         [dataView]="listViews"
         (callback)="setEmployeeInfo($event)" 
         (callbackcancel)="cancelUpdate($event)">
-    </app-edit-detail>
+    </app-edit-detail> -->
+    <!-- Check lại điều kiện -->
+
+    <app-edit-detail  *ngIf="listViews.length> 0"  [isNested]="true" [manhinh]="'Edit'"  [detailInfo]="detailInfo"  [buttons]="optionsButtonsView"
+        [listForms]="listViews" (callback)="setEmployeeInfo($event)" (close)="cancelUpdate($event)"
+      ></app-edit-detail>
+
     <app-loading-detail [id]="'employee-info-01'" *ngIf="listViews.length === 0"></app-loading-detail>
     
     <p-divider></p-divider>

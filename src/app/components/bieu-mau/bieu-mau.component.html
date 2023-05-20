@@ -148,14 +148,21 @@
     [(visible)]="addNewPopup2" 
     [modal]="true" [style]="{width: '1000px'}"
     [draggable]="false" [resizable]="false" [focusTrap]="false" >
-    <app-edit-detail
+    <!-- <app-edit-detail
         *ngIf="listViews.length> 0"
         [detail]="detailInfo"
         [manhinh]="'Edit'"
         [dataView]="listViews"
         (callback)="setWorkApprove($event)"
         (callbackcancel)="quaylai($event)"
-    ></app-edit-detail>
+    ></app-edit-detail> -->
+
+           
+    <app-edit-detail *ngIf="listViews.length> 0"  [detailInfo]="detailInfo"  [buttons]="[]"
+        [listForms]="listViews" (callback)="setWorkApprove($event)" (close)="quaylai($event)"
+      ></app-edit-detail>
+
+
 </p-dialog>
 <p-overlayPanel #op [style]="{'width': '40rem'}" [dismissable]="false" appendTo="body" >
     <ng-template pTemplate>

@@ -23,7 +23,7 @@
         [(visible)]="isFormDetail" 
         [modal]="true" [style]="{width: '600px'}"
         [draggable]="false" [resizable]="false" [focusTrap]="false" >
-        <app-edit-detail
+        <!-- <app-edit-detail
         *ngIf="listViewsDetail.length> 0"
         [detail]="detailInfoDetail"
         [manhinh]="'Edit'"
@@ -31,7 +31,14 @@
         [dataView]="listViewsDetail"
         (callback)="handleSaveTab1($event)"
         (callbackcancel)="quaylaiDetail($event)"
-    ></app-edit-detail>
+    ></app-edit-detail> -->
+
+
+      
+    <app-edit-detail *ngIf="listViewsDetail.length> 0"  [detailInfo]="detailInfoDetail"  [buttons]="optionsButon"
+        [listForms]="listViewsDetail" (callback)="handleSaveTab1($event)" (close)="quaylaiDetail($event)"
+      ></app-edit-detail>
+
 </p-dialog>
 
 <p-dialog header="Cài đặt cấu hình" [(visible)]="displaySetting" [appendTo]="'body'" (onHide)="getPayrollRankPage()" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"

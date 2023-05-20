@@ -23,16 +23,9 @@
             <div class="">
                 <div class="row col-md-12">
                     <div class="page-detail-edit-detail" >
-                        <app-edit-detail *ngIf="listViews.length> 0" 
-                            [detail]="detailInfo" 
-                            [detailInfo]="detailInfo" 
-                            [thongtinnhanvienNew]="true" 
-                            [manhinh]="'Edit'" 
-                            [optionsButtonsEdit]="optionsButtonsView"  
-                            [dataView]="listViews"
-                            (callback)="setEmployeeInfo($event)" 
-                            (callbackcancel)="cancelUpdate($event)">
-                        </app-edit-detail>
+                          <app-edit-detail  *ngIf="listViews.length> 0" [isNested]="true" [manhinh]="'Edit'"  [detailInfo]="detailInfo"  [buttons]="optionsButtonsView"
+                            [listForms]="listViews" (callback)="setEmployeeInfo($event)" (close)="cancelUpdate($event)"
+                          ></app-edit-detail>
                     </div>
 
                     </div>

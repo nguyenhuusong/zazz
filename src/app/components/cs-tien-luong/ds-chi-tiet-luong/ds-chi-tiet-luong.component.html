@@ -16,9 +16,12 @@
 
     <p-tabView [(activeIndex)]="indexTab" (onChange)="handleChange($event.index)">
         <p-tabPanel header="Thông tin chung">
-            <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'"
-                [optionsButtonsEdit]="optionsButtonsView" [dataView]="listViews" (callback)="setTerminateInfo($event)" (callBackForm)="callBackForm($event)"
-                (callbackcancel)="cancel($event)"></app-edit-detail>
+
+                <app-edit-detail *ngIf="listViews.length> 0" [manhinh]="'Edit'" [isNested]="true"   [detailInfo]="detailInfo"  [buttons]="optionsButtonsView"
+                    [listForms]="listViews" (callback)="setTerminateInfo($event)" (close)="cancel($event)"
+                  ></app-edit-detail>
+
+
             <app-loading-detail 
                 [id]="'sections-3qnt'" 
                 *ngIf="listViews.length === 0">

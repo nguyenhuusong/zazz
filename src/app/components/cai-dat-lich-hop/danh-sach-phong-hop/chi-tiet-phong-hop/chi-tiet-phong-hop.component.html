@@ -7,10 +7,10 @@
         </div>
     </section>
    <div class="content">
-    <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo"
-        [paramsObject]="paramsObject"
-        [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButon"  [dataView]="listViews"
-        (callback)="setMeetRoomInfo($event)" (callbackcancel)="quaylai($event)"></app-edit-detail>
+        <app-edit-detail *ngIf="listViews.length> 0" [manhinh]="'Edit'" [detailInfo]="detailInfo"  [buttons]="optionsButon"
+            [listForms]="listViews" (callback)="setMeetRoomInfo($event)" (close)="quaylai($event)"
+          ></app-edit-detail>
+  
     <app-loading-detail 
         [id]="'phong-hop'" 
         *ngIf="listViews.length === 0">

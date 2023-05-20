@@ -1,2 +1,3 @@
-<app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'"  [thongtinnhanvienNew]="true"  [optionsButtonsEdit]="optionsButon"  [dataView]="listViews"
-    (callback)="setEmpByInsuranceInfo($event)" (callbackcancel)="quaylai($event)"></app-edit-detail>
+    <app-edit-detail  *ngIf="listViews.length> 0"  [manhinh]="'Edit'"  [detailInfo]="detailInfo"  [buttons]="optionsButon"
+        [listForms]="listViews" (callback)="setEmpByInsuranceInfo($event)" (close)="quaylai($event)"
+      ></app-edit-detail>

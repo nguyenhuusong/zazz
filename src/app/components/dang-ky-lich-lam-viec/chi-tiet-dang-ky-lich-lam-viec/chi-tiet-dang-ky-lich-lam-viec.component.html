@@ -2,11 +2,9 @@
     <p-header>
         Chỉnh sửa lịch làm việc
     </p-header>
-    <app-edit-detail 
-    *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'"
-    [optionsButtonsEdit]="hideButton ? [] : optionsButtonsView" [dataView]="listViews"
-    (callback)="setSchemeInfo($event)" (callBackForm)="callBackForm($event)"
-    (callbackcancel)="cancel($event)"></app-edit-detail>
+    <app-edit-detail *ngIf="listViews.length> 0" [manhinh]="'Edit'" [isNested]="true"   [detailInfo]="detailInfo"  [buttons]="hideButton ? [] : optionsButtonsView"
+        [listForms]="listViews" (callback)="setSchemeInfo($event)" (close)="callBackForm($event)"
+      ></app-edit-detail>
 
 <app-loading-detail [id]="'markdown'" *ngIf="listViews.length === 0">
 </app-loading-detail>

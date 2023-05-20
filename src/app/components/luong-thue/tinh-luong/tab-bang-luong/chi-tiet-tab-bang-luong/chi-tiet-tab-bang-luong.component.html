@@ -3,15 +3,22 @@
 <p-tabView (onChange)="handleChange($event.index)" [(activeIndex)]="tabIndex">
     <p-tabPanel header="Thông tin chi tiết bảng lương" >
         <div class="content">
-            <app-edit-detail
+            <!-- <app-edit-detail
                 *ngIf="listViews.length> 0"
                 [detail]="detailInfo"
                 [manhinh]="'Edit'"
-                [optionsButtonsEdit]="optionsButon"
+                [optionsButtonsEdit]=""
                 [dataView]="listViews"
                 (callback)="handleSave($event)"
                 (callbackcancel)="quaylai($event)"
-            ></app-edit-detail>
+            ></app-edit-detail> -->
+
+
+                   
+        <app-edit-detail *ngIf="listViews.length> 0"  [detailInfo]="detailInfo"  [buttons]="optionsButon"
+            [listForms]="listViews" (callback)="handleSave($event)" (close)="quaylai($event)"
+          ></app-edit-detail>
+  
             <app-loading-detail 
                 [id]="'area'" 
                 *ngIf="listViews.length === 0">
@@ -48,7 +55,7 @@
         [(visible)]="isFormDetail" 
         [modal]="true" [style]="{width: '600px'}"
         [draggable]="false" [resizable]="false" [focusTrap]="false" >
-        <app-edit-detail
+        <!-- <app-edit-detail
             *ngIf="listViewsDetail.length> 0"
             [detail]="detailInfoDetail"
             [manhinh]="'Edit'"
@@ -56,7 +63,13 @@
             [dataView]="listViewsDetail"
             (callback)="handleSaveTab1($event)"
             (callbackcancel)="quaylaiDetail($event)"
-        ></app-edit-detail>
+        ></app-edit-detail> -->
+
+
+        <app-edit-detail *ngIf="listViewsDetail.length> 0"  [detailInfo]="detailInfoDetail"  [buttons]="optionsButon"
+            [listForms]="listViewsDetail" (callback)="handleSaveTab1($event)" (close)="quaylaiDetail($event)"
+          ></app-edit-detail>
+  
         <app-loading-detail 
             [id]="'long-field'" 
             *ngIf="listViewsDetail.length === 0">

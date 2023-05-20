@@ -9,8 +9,12 @@
             <app-hrm-step [steps]="detailInfo?.flowStatuses" [flowSt]="detailInfo?.flow_st" *ngIf="detailInfo"></app-hrm-step>
         </div>
     </div>
-    <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButon"  [dataView]="listViews"
-        (callback)="setVacancyInfo($event)" (callbackcancel)="quaylai($event)" (callBackForm)="callBackForm($event)"></app-edit-detail>
+
+        <app-edit-detail  *ngIf="listViews.length> 0" 
+            [manhinh]="'Edit'" 
+            [isNested]="true"   [detailInfo]="detailInfo"  [buttons]="optionsButon"
+           [listForms]="listViews" (callback)="setVacancyInfo($event)" (close)="callBackForm($event)"
+         ></app-edit-detail>
         <app-loading-detail 
             [id]="'chi-tiet-vi-tri-tuyen-dung'" 
             *ngIf="listViews.length === 0">

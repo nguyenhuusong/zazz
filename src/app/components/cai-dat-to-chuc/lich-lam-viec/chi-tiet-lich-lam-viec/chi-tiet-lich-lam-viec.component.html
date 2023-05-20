@@ -4,9 +4,10 @@
         <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
     </section>
    <div class="content">
-    <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'" [dataView]="listViews"
-        [optionsButtonsEdit]="optionsButtonsView" 
-        (callback)="setWorkTimeInfo($event)" (callbackcancel)="cancelUpdate($event)"></app-edit-detail>
+        <app-edit-detail *ngIf="listViews.length> 0" [manhinh]="'Edit'" [detailInfo]="detailInfo"  [buttons]="optionsButtonsView"
+            [listForms]="listViews" (callback)="setWorkTimeInfo($event)" (close)="cancelUpdate($event)"
+          ></app-edit-detail>
+       
         <app-loading-detail 
                 [id]="'area'" 
                 *ngIf="listViews.length === 0">

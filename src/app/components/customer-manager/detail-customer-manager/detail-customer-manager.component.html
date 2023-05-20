@@ -5,15 +5,20 @@
     <div class="content">
         <p-tabView [(activeIndex)]="indexTab" (onChange)="handleChange($event)">
             <p-tabPanel header="Thông tin quản lý">
-                    <app-edit-detail 
-                        [optionsButtonsEdit]="optionsButtonsView"   
-                        *ngIf="listViews.length> 0" 
-                        [detail]="detailInfo" 
-                        [manhinh]="'Edit'"  
-                        [dataView]="listViews"
-                        (callback)="setEmpManager($event)" 
-                        (callbackcancel)="cancelUpdate($event)">
-                    </app-edit-detail>
+                    <!-- <app-edit-detail *ngIf="listViews.length> 0" [manhinh]="'Edit'"   [detailInfo]="detailInfo"  [buttons]="optionsButtonsView"
+                        [listForms]="listViews" (callback)="setEmpManager($event)" (close)="cancelUpdate($event)"
+                      ></app-edit-detail> -->
+
+                          
+        <app-edit-detail *ngIf="listViews.length> 0"  [detailInfo]="detailInfo"  [buttons]="optionsButtonsView"
+            [listForms]="listViews" (callback)="setEmpManager($event)" (close)="cancelUpdate($event)"
+          ></app-edit-detail>
+  
+  
+  
+  
+  
+    
                     <app-loading-detail 
                         [id]="'sections-3qnt'" 
                         *ngIf="listViews.length === 0">
@@ -55,7 +60,7 @@
     [draggable]="false" [resizable]="false" [focusTrap]="false" 
     (onHide)="closeChangeMa()"
     >
-        <app-edit-detail 
+        <!-- <app-edit-detail 
             [optionsButtonsEdit]="optionsButtonsViewEmChange"   
             *ngIf="listViewsEmMgChange.length> 0" 
             [detail]="detailInfo" 
@@ -63,7 +68,14 @@
             [dataView]="listViewsEmMgChange"
             (callback)="setEmpManagerChange($event)" 
             (callbackcancel)="cancelUpdatChangeMg($event)">
-        </app-edit-detail>
+        </app-edit-detail> -->
+
+                
+        <app-edit-detail *ngIf="listViewsEmMgChange.length> 0"  [detailInfo]="detailInfo"  [buttons]="optionsButtonsViewEmChange"
+            [listForms]="listViewsEmMgChange" (callback)="setEmpManagerChange($event)" (close)="cancelUpdatChangeMg($event)"
+          ></app-edit-detail>
+  
+  
         <app-list-grid-angular 
             (callback)="rowSelected($event)"
             [rowSelection]="'multiple'"

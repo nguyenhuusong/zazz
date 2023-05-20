@@ -4,8 +4,10 @@
         <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
     </section>
    <div class="content">
-    <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButon"  [dataView]="listViews"
-        (callback)="setLeaveLack($event)" (callbackcancel)="quaylai($event)"></app-edit-detail>
+
+        <app-edit-detail *ngIf="listViews.length> 0" [manhinh]="'Edit'"[detailInfo]="detailInfo" [buttons]="optionsButon"
+            [listForms]="listViews" (callback)="setLeaveLack($event)" (close)="quaylai($event)"
+          ></app-edit-detail>
     <app-loading-detail 
         [id]="'sections-1qnt-col-2'" 
         *ngIf="listViews.length === 0">

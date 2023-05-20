@@ -3,13 +3,21 @@
         <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
     </section>
    <div class="content">
-    <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'" [dataView]="listViews"
+    <!-- <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'" [dataView]="listViews"
         [optionsButtonsEdit]="optionsButtonsView"
         (callback)="setTimekeepingWifiInfo($event)" (callbackcancel)="cancelUpdate($event)"></app-edit-detail>
+
+ -->
+
+        <app-edit-detail  
+        *ngIf="listViews.length> 0" [manhinh]="'Edit'"   [detailInfo]="detailInfo"  [buttons]="optionsButtonsView"
+       [listForms]="listViews" (callback)="setTimekeepingWifiInfo($event)" (close)="cancelUpdate($event)"
+     ></app-edit-detail>
         <app-loading-detail 
             [id]="'sections-1qnt'" 
             *ngIf="listViews.length === 0">
         </app-loading-detail>
+
 
    </div>
    

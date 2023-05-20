@@ -7,8 +7,11 @@
         </div>
     </section>
    <section>
-    <app-edit-detail [optionsButtonsEdit]="optionsButtonsView"   *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'"  [dataView]="listViews"
-        (callback)="setCompanyInfo($event)" (callbackcancel)="cancelUpdate($event)"></app-edit-detail>
+        <app-edit-detail *ngIf="listViews.length> 0" [manhinh]="'Edit'"   [detailInfo]="detailInfo"  [buttons]="[]"
+            [listForms]="listViews" (callback)="setCompanyInfo($event)" (close)="cancelUpdate($event)"
+          ></app-edit-detail>
+
+
     </section>
    
     <section>

@@ -15,10 +15,9 @@
                    <div class="col-md-2"></div>
                 </div>
                 <div class="mt-1" *ngIf="detailInfo">
-                    <app-edit-detail [optionsButtonsEdit]="optionsButtonsView"
-                        *ngIf="listViews.length> 0 && manhinh === 'Edit'" [thongtinnhanvienNew]="true"
-                        [manhinh]="'Edit'" [detail]="detailInfo" [dataView]="listViews" (callback)="setTerminateInfo($event)"
-                        (callbackcancel)="cancelUpdate($event)" (callbackButton)="callbackButton($event)"></app-edit-detail>
+                        <app-edit-detail  *ngIf="listViews.length> 0 && manhinh === 'Edit'" [manhinh]="'Edit'"[detailInfo]="detailInfo" [buttons]="optionsButtonsView"
+                            [listForms]="listViews" (callback)="setTerminateInfo($event)" (close)="cancelUpdate($event)"
+                          ></app-edit-detail>
                 </div>
             </p-tabPanel>
             <p-tabPanel header="Danh sách hồ sơ">
@@ -63,7 +62,12 @@
     [resizable]="false">
     <div class="pt-3" style="position: relative">
         <div *ngIf="showRehire">
-            <app-edit-detail [isViewButtonTop] = "true" *ngIf="listViewsFormEmp.length> 0" [detail]="detailInfoEmp" [manhinh]="manhinh" [thongtinnhanvienNew]="true" [dataView]="listViewsFormEmp" (callback)="handleRehire($event)" (callbackcancel)="cancelRehire($event)"></app-edit-detail>
+            <!-- <app-edit-detail [isViewButtonTop] = "true" *ngIf="listViewsFormEmp.length> 0" [detail]="detailInfoEmp" [manhinh]="manhinh" [thongtinnhanvienNew]="true" [dataView]="listViewsFormEmp" (callback)="handleRehire($event)" (callbackcancel)="cancelRehire($event)"></app-edit-detail> -->
+            <!-- Check lại điều kiện -->
+            <app-edit-detail  *ngIf="listViewsFormEmp.length> 0 && manhinh === 'Edit'" [manhinh]="manhinh"   [detailInfo]="detailInfoEmp"  [buttons]="optionsButtonsView"
+                [listForms]="listViewsFormEmp" (callback)="handleRehire($event)" (close)="cancelRehire($event)"
+              ></app-edit-detail>
+           
             <div class="col-md-6 mt-1">
                 <div class="field-group text" [ngClass]=" modelDuyet.full_name ? 'valid' : 'invalid' ">
                     <label for="">Nhân viên</label>

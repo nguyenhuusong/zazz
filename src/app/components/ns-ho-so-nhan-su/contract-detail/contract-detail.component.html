@@ -5,9 +5,14 @@
 </div>
 <p-card *ngIf="url === 'chi-tiet-xu-ly-hop-dong'" >
     <div [ngClass]="{'hsns' : url !== 'chi-tiet-xu-ly-hop-dong'}">
-        <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'" [isHideButton]="true"
+        <!-- <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'" [isHideButton]="true"
             [optionsButtonsEdit]="optionsButtonsView" [dataView]="listViews" (callback)="setContractInfo($event)" (callBackForm)="callBackForm($event)"
             (callbackcancel)="cancel($event)"></app-edit-detail>
+ -->
+                <!-- Check lại điều kiện -->
+            <app-edit-detail  *ngIf="listViews.length> 0 " [isNested]="true" [manhinh]="'Edit'"  [detailInfo]="detailInfo"  [buttons]="optionsButtonsView"
+                [listForms]="listViews" (callback)="setContractInfo($event)" (close)="cancel($event)"
+              ></app-edit-detail>
                 <app-loading-detail 
                 [id]="'app-contract-detail'" 
                 *ngIf="listViews.length === 0">
@@ -87,7 +92,7 @@
         </p-header>
         <p-card >
             <div [ngClass]="{'hsns' : url !== 'chi-tiet-xu-ly-hop-dong'}">
-                <app-edit-detail 
+                <!-- <app-edit-detail 
                     *ngIf="listViews.length> 0" 
                     [isNested]="true" 
                     [detail]="detailInfo" 
@@ -98,7 +103,12 @@
                     (callback)="setContractInfo($event)" 
                     (callBackForm)="callBackForm($event)"
                     (callbackcancel)="cancel($event)">
-                </app-edit-detail>
+                </app-edit-detail> -->
+                <!-- Check lại điều kiện -->
+
+                <app-edit-detail  *ngIf="listViews.length> 0 " [isNested]="true" [manhinh]="'Edit'"  [detailInfo]="detailInfo"  [buttons]="optionsButtonsView"
+                    [listForms]="listViews" (callback)="setContractInfo($event)" (close)="cancel($event)"
+                  ></app-edit-detail>
                 <app-loading-detail 
                     [id]="'app-contract-detail'" 
                     *ngIf="listViews.length === 0">

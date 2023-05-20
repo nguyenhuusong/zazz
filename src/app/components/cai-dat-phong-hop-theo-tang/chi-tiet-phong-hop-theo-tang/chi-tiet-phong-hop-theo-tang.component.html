@@ -6,10 +6,10 @@
     </div>
    <div class="content">
     <div >
-        <app-edit-detail *ngIf="listViews && listViews.length> 0"
-            [thongtinnhanvienNew]="true" [manhinh]="'Edit'" [dataView]="listViews"
-            (callback)="setMeetingFloorInfo($event)" (callbackcancel)="cancelUpdate($event)">
-        </app-edit-detail>
+        <app-edit-detail *ngIf="listViews.length> 0" [manhinh]="'Edit'" [detailInfo]="detailInfo"  [buttons]="optionsButtonsView"
+            [listForms]="listViews" (callback)="setMeetingFloorInfo($event)" (close)="cancelUpdate($event)"
+          ></app-edit-detail>
+  
     </div>
         
    </div>

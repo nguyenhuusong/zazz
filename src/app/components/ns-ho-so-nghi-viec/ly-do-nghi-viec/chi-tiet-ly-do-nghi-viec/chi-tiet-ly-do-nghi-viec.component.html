@@ -1,6 +1,6 @@
 
 <div class="main-grid product-detail">
-    <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'"  [dataView]="listViews"
-        [optionsButtonsEdit]="optionsButon" 
-        (callback)="setTerminateReasonInfo($event)" [optionsButtonsEdit]="optionsButon" (callbackcancel)="cancelUpdate($event)"></app-edit-detail>
+        <app-edit-detail  *ngIf="listViews.length> 0" [manhinh]="'Edit'"  [detailInfo]="detailInfo"  [buttons]="optionsButon"
+            [listForms]="listViews" (callback)="setTerminateReasonInfo($event)" (close)="cancelUpdate($event)"
+          ></app-edit-detail>
 </div>

@@ -102,7 +102,7 @@
                     </p-overlayPanel>
                     </div>
                     <div class="page-detail-edit-detail" *ngIf="selectedMenuCode !== API_PROFILE.QUAN_LY_TAI_KHOAN">
-                        <app-edit-detail *ngIf="listViews.length> 0" 
+                        <!-- <app-edit-detail *ngIf="listViews.length> 0" 
                             [detail]="detailInfo" 
                             [detailInfo]="detailInfo" 
                             [thongtinnhanvienNew]="true" 
@@ -112,7 +112,14 @@
                             (callback)="setEmployeeInfo($event)" 
                             [optionsEdit]="detailMenu"
                             (callbackcancel)="cancelUpdate($event)">
-                        </app-edit-detail>
+
+                        </app-edit-detail> -->
+                            <!-- Check lại điều kiện -->
+
+                            <app-edit-detail  *ngIf="listViews.length> 0" [manhinh]="'Edit'"  [detailInfo]="detailInfo"  [buttons]="optionsButtonsView"
+                                [listForms]="listViews" (callback)="setEmployeeInfo($event)" (close)="cancelUpdate($event)"
+                              ></app-edit-detail>
+
                     </div>
                             
                     </div>
@@ -399,12 +406,21 @@
 
 <p-dialog styleClass="popup-btngroup-edit-detail" header="{{titleForm.title}}" [(visible)]="displayDialog" [modal]="true" [draggable]="false"
     [resizable]="false" [style]="{width: '1200px'}" [autoZIndex]=true [draggable]="false" [resizable]="false">
-            <app-edit-detail
+            <!-- <app-edit-detail
                 *ngIf="listViewsForm.length> 0 && displayDialog &&  (titleForm.type === 'DuyetHoSo' || titleForm.type === 'TuyenDungLai' || titleForm.type === 'ChuyenCongTac')"
                 [detail]="detailInfoForm" [manhinh]="manhinh" [thongtinnhanvienNew]="true" [dataView]="listViewsForm"
                 (callback)="xacNhan($event)" (callbackcancel)="cancelViewsForm($event)"
                 [noDisableInput]="noDisableInput"
-                ></app-edit-detail>
+                ></app-edit-detail> -->
+
+
+     
+                <app-edit-detail *ngIf="listViewsForm.length> 0 && displayDialog &&  (titleForm.type === 'DuyetHoSo' || titleForm.type === 'TuyenDungLai' || titleForm.type === 'ChuyenCongTac')" [detailInfo]="detailInfoForm"  [buttons]="[]"
+                    [listForms]="listViewsForm" [manhinh]="manhinh" (callback)="xacNhan($event)" (close)="cancelViewsForm($event)"
+                  ></app-edit-detail>
+          
+
+
             <div *ngIf="titleForm.type !== 'ChuyenCongTac'">
                     <div class="col-md-6 mt-1">
                         <div class="field-group text" [ngClass]=" modelDuyet.full_name ? 'valid' : 'invalid' ">
@@ -538,10 +554,16 @@
     <p-header>
         {{titleType0}}
     </p-header>
-    <app-edit-detail [optionsButtonsEdit]="optionsButtonsPopup" *ngIf="listViewsDependent.length> 0 && detailDependentInfo" [detailInfo]="detailInfo"
+    <!-- <app-edit-detail [optionsButtonsEdit]="optionsButtonsPopup" *ngIf="listViewsDependent.length> 0 && detailDependentInfo" [detailInfo]="detailInfo"
         [detail]="detailDependentInfo" [manhinh]="'Edit'" [thongtinnhanvienNew]="true"
         [dataView]="listViewsDependent" (callback)="setEmpDependen($event)"
-        (callbackcancel)="cancelDependentInfo($event)"></app-edit-detail>
+        (callbackcancel)="cancelDependentInfo($event)"></app-edit-detail> -->
+        <!-- Check lại điều kiện -->
+
+        <app-edit-detail  *ngIf="listViewsDependent.length> 0 && detailDependentInfo" [manhinh]="'Edit'"  [detailInfo]="detailDependentInfo"  [buttons]="optionsButtonsPopup"
+            [listForms]="listViewsDependent" (callback)="setEmpDependen($event)" (close)="cancelDependentInfo($event)"
+          ></app-edit-detail>
+
 </p-dialog>
 
 
@@ -592,10 +614,16 @@
     <p-header>
         {{titleEmpTrain}}
     </p-header>
-    <app-edit-detail [optionsButtonsEdit]="optionsButtonsPopup" *ngIf="listViewsEmpTrain.length> 0 && detailEmpTrainInfo" [detailInfo]="detailInfo"
+    <!-- <app-edit-detail [optionsButtonsEdit]="optionsButtonsPopup" *ngIf="listViewsEmpTrain.length> 0 && detailEmpTrainInfo" [detailInfo]="detailInfo"
         [detail]="detailEmpTrainInfo" [manhinh]="'Edit'" [thongtinnhanvienNew]="true"
         [dataView]="listViewsEmpTrain" (callback)="setEmpTrain($event)"
         (callbackcancel)="cancelEmpTrainInfo($event)"></app-edit-detail>
+ -->
+            <!-- Check lại điều kiện -->
+        
+        <app-edit-detail  *ngIf="listViewsDependent.length> 0 && detailEmpTrainInfo" [manhinh]="'Edit'"  [detailInfo]="detailEmpTrainInfo"  [buttons]="optionsButtonsPopup"
+            [listForms]="listViewsDependent" (callback)="setEmpTrain($event)" (close)="cancelEmpTrainInfo($event)"
+          ></app-edit-detail>
 </p-dialog>
 
 

@@ -7,13 +7,9 @@
     <p-tabView [(activeIndex)]="indexTab" (onChange)="handleChange($event.index)">
         <p-tabPanel header="Thông tin chung">
               <div class="" *ngIf="detailInfo">
-                  <app-edit-detail *ngIf="listViews.length> 0 " 
-                    [thongtinnhanvienNew]="true"  
-                    [detail]="detailInfo"
-                    [manhinh]="'Edit'" 
-                    [dataView]="listViews"
-                    [optionsButtonsEdit]="optionsButtonsView" 
-                    (callback)="setCompanyInfo($event)" (callbackcancel)="cancelUpdate($event)"></app-edit-detail>
+                      <app-edit-detail *ngIf="listViews.length> 0"  [detailInfo]="detailInfo"  [buttons]="optionsButtonsView"
+                        [listForms]="listViews" (callback)="setCompanyInfo($event)" (close)="cancelUpdate($event)"
+                      ></app-edit-detail>
               </div>
               <app-loading-detail 
                   [id]="'area'" 
@@ -50,8 +46,13 @@
 
 <p-dialog styleClass="popup-btngroup-edit-detail" header="Thêm mới người duyệt" [(visible)]="displayScreemForm" [modal]="true" [draggable]="false" [resizable]="false" [style]="{width: '50vw'}" [autoZIndex]="true"
   [draggable]="false" [resizable]="false">
-  <app-edit-detail *ngIf="displayScreemForm"  [manhinh]="'Edit'" [thongtinnhanvienNew]="true" [dataView]="listViewsForm" (callback)="setComAuthorizeInfo($event)" (callbackcancel)="cancelAuthor($event)"></app-edit-detail>
-  </p-dialog> 
+  <app-edit-detail *ngIf="listViewsForm.length> 0 && displayScreemForm"  [detailInfo]="detailComAuthorizeInfo"  [buttons]="optionsButtonsView"
+    [listForms]="listViewsForm" (callback)="setComAuthorizeInfo($event)" (close)="cancelAuthor($event)"
+  ></app-edit-detail>
+
+
+
+</p-dialog> 
   
 
 <p-dialog [(visible)]="displaysearchUserMaster"  [autoZIndex]="true" [modal]="true" 

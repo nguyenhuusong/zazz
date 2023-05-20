@@ -9,13 +9,20 @@
    <div class="content">
         <div class="grid">
             <div class="col-10">
-                <app-edit-detail *ngIf="listViews.length> 0" 
+                <!-- <app-edit-detail *ngIf="listViews.length> 0" 
                     [detail]="detailInfo" [manhinh]="'Edit'" 
                     [optionsButtonsEdit]="optionsButon"  
                     [dataView]="listViews"
                     (callback)="setRecruitMailInfo($event)" 
                     (callback1)="getChipsValue($event)"
-                    (callbackcancel)="quaylai($event)"></app-edit-detail>
+                    (callbackcancel)="quaylai($event)"></app-edit-detail> -->
+
+
+                    <app-edit-detail  *ngIf="listViews.length> 0" 
+                        [manhinh]="'Edit'" 
+                        [isNested]="true"   [detailInfo]="detailInfo"  [buttons]="optionsButon"
+                       [listForms]="listViews" (callback)="setRecruitMailInfo($event)" (close)="quaylai($event)"
+                     ></app-edit-detail>
             </div>
             <div class="col-2">
                 <div class="sidebar-config">

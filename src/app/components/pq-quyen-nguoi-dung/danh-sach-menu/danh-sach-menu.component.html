@@ -11,8 +11,15 @@
     <p-header>
     Thông tin menu
     </p-header>
-    <app-edit-detail *ngIf="listViews.length> 0 && listsData.length > 0" [menus]="listsData" [detail]="detailDetailInfo" [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButon"  [dataView]="listViews"
+    <!-- <app-edit-detail *ngIf="listViews.length> 0 && listsData.length > 0" [menus]="listsData" [detail]="detailDetailInfo" [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButon"  [dataView]="listViews"
         (callback)="setConfigMenu($event)" (callbackcancel)="cancelUpdate($event)"></app-edit-detail>
+ -->
+            <!-- Check lại dữ liệu -->
+        <app-edit-detail  
+        *ngIf="listViews.length> 0 && listsData.length > 0" [manhinh]="'Edit'" 
+        [isNested]="true"   [detailInfo]="detailDetailInfo"  [buttons]="optionsButon"
+       [listForms]="listViews" (callback)="setConfigMenu($event)" (close)="cancelUpdate($event)"
+     ></app-edit-detail>
         <div class=" text-right mt-1" >
             <p-pickList [source]="sourceActions" [target]="targetActions" [targetStyle]="{'height':'30rem'}"  [sourceStyle]="{'height':'30rem'}" [showSourceControls]="false" [showTargetControls]="false"
             sourceHeader="Danh sách action được chọn" targetHeader="Danh sách action chưa chọn" [responsive]="true" filterBy="actionName" (onTargetFilter)="onTargetFilter($event)"

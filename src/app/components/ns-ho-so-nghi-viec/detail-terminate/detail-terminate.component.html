@@ -9,9 +9,11 @@
 <section *ngIf="!isDialog">
     <p-tabView [(activeIndex)]="indexTab" (onChange)="handleChange($event.index)">
         <p-tabPanel header="Thông tin chung">
-            <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'" [isHideButton]="true"
-                [optionsButtonsEdit]="optionsButtonsView" [dataView]="listViews" (callback)="setTerminateInfo($event)"
-                (callbackcancel)="cancel($event)"></app-edit-detail>
+                <app-edit-detail  *ngIf="listViews.length> 0 " [manhinh]="'Edit'"  [detailInfo]="detailInfo"  [buttons]="optionsButtonsView"
+                    [listForms]="listViews" (callback)="setTerminateInfo($event)" (close)="cancel($event)"
+                  ></app-edit-detail>
+
+
                 <app-loading-detail 
                             [id]="'app-detail-terminate'" 
                             *ngIf="listViews.length === 0">
@@ -62,9 +64,14 @@
         Chi tiết hồ sơ nghỉ việc
     </p-header>
     <p-card>
-        <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'" [isHideButton]="true"
+        <!-- <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'" [isHideButton]="true"
             [optionsButtonsEdit]="optionsButtonsView" [dataView]="listViews" (callback)="setTerminateInfo($event)" 
-            (callbackcancel)="cancel($event)"></app-edit-detail>
+            (callbackcancel)="cancel($event)"></app-edit-detail> -->
+            <!-- Check lại điều kiện -->
+
+            <app-edit-detail  *ngIf="listViews.length> 0 " [manhinh]="'Edit'"  [detailInfo]="detailInfo"  [buttons]="optionsButtonsView"
+                [listForms]="listViews" (callback)="setTerminateInfo($event)" (close)="cancel($event)"
+              ></app-edit-detail>
     </p-card>
 
     <ng-template pTemplate="footer" >

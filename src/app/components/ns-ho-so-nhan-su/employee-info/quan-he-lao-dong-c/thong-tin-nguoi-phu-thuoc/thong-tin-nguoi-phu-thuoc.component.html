@@ -43,10 +43,10 @@
     <p-header>
        {{ isEdit ? 'Sửa người phụ thuộc' : 'Thêm mới người phụ thuộc' }}
     </p-header>
-    <app-edit-detail [optionsButtonsEdit]="optionsButtonsPopup" *ngIf="listViewsDetail.length> 0 && displayFormEditDetail" [detailInfo]="dataDetailInfo"
-        [detail]="dataDetailInfo" [manhinh]="'Edit'" [thongtinnhanvienNew]="true"
-        [dataView]="listViewsDetail" (callback)="setDetailInfo($event)"
-        (callbackcancel)="cancelDetailInfo($event)"></app-edit-detail>
+
+        <app-edit-detail  *ngIf="listViewsDetail.length> 0 && displayFormEditDetail" [isNested]="true" [manhinh]="'Edit'"  [detailInfo]="dataDetailInfo"  [buttons]="optionsButtonsPopup"
+            [listForms]="listViewsDetail" (callback)="setDetailInfo($event)" (close)="cancelDetailInfo($event)"
+          ></app-edit-detail>
 </p-dialog>
 
 

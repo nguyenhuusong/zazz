@@ -91,8 +91,11 @@
 </p-dialog>
 
 <p-dialog header="Chi tiết" [(visible)]="isDetail" [modal]="true" [style]="{width: '50vw'}" >
-    <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'" [dataView]="listViews"
-        (callback)="setChitiet($event)"></app-edit-detail>
+        <app-edit-detail *ngIf="listViews.length> 0"  [manhinh]="'Edit'" [detailInfo]="detailInfo"  [buttons]="[]"
+            [listForms]="listViews" (callback)="setChitiet($event)" (close)="cancel()"
+          ></app-edit-detail>
+  
+  
     <app-loading-detail 
         [id]="'sections-1qnt'" 
         *ngIf="listViews.length === 0">

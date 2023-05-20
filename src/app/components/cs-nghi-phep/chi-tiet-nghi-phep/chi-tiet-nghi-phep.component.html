@@ -7,9 +7,11 @@
         </div>
     </section>
    <div class="content">
-    <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButon"  [dataView]="listViews"
-        (callback)="setLeaveInfo($event)" (callbackcancel)="quaylai($event)"></app-edit-detail>
-        
-   </div>
+        <app-edit-detail *ngIf="listViews.length> 0" [manhinh]="'Edit'"   [detailInfo]="detailInfo"  [buttons]="optionsButon"
+            [listForms]="listViews" (callback)="setLeaveInfo($event)" (close)="quaylai($event)"
+          ></app-edit-detail>
+  
+  
+    </div>
    
 </div>

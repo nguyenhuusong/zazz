@@ -108,10 +108,19 @@
 
 <p-dialog styleClass="popup-btngroup-edit-detail" header="Tuyển dụng lại" [(visible)]="displayDialog" [modal]="true" [draggable]="false"
 [resizable]="false" [style]="{width: '60vw'}" [autoZIndex]=true [draggable]="false" [resizable]="false">
-<app-edit-detail
+<!-- <app-edit-detail
     *ngIf="listViews.length> 0 && displayDialog"
     [detail]="detailInfoEmployee" [thongtinnhanvienNew]="true" [dataView]="listViews"
     (callback)="xacNhanTuyenDungLai($event)" (callbackcancel)="displayDialog = !displayDialog"></app-edit-detail>
+ -->
+
+       
+    <app-edit-detail *ngIf="listViews.length> 0 && displayDialog"  [detailInfo]="detailInfoEmployee"  [buttons]="[]"
+        [listForms]="listViews" (callback)="xacNhanTuyenDungLai($event)" (close)="displayDialog = !displayDialog"
+      ></app-edit-detail>
+
+
+
     <div class="col-md-6 mt-1">
         <div class="field-group text" [ngClass]="modelDuyet?.full_name ? 'valid' : 'invalid' ">
             <label for="">Nhân viên</label>

@@ -7,11 +7,12 @@
         </div>
     </section>
    <div class="content">
-    <!-- <div class="text-right">
-        <p-button label="Phê duyệt" (click)="pheDuyet()"></p-button>
-    </div> -->
-    <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButon"  [dataView]="listViews"
-    (callback)="setWorkApprove($event)" (callbackcancel)="quaylai($event)"></app-edit-detail>
+  
+    <app-edit-detail  
+    *ngIf="listViews.length> 0 " [manhinh]="'Edit'" 
+    [isNested]="true"   [detailInfo]="detailInfo"  [buttons]="optionsButon"
+   [listForms]="listViews" (callback)="setWorkApprove($event)" (close)="quaylai($event)"
+ ></app-edit-detail>
     <app-loading-detail 
         [id]="'sections-2qnt'" 
         *ngIf="listViews.length === 0">

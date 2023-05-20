@@ -7,9 +7,10 @@
         </div>
     </section>
     <section>
-        <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButon"  [dataView]="listViews"
-            (callback)="setCompanyInfo($event)"
-            (callbackcancel)="cancelUpdate($event)"></app-edit-detail>
+            <app-edit-detail *ngIf="listViews.length> 0"  [detailInfo]="detailInfo"  [buttons]="optionsButon"
+                [listForms]="listViews" (callback)="setCompanyInfo($event)" (close)="cancelUpdate($event)"
+              ></app-edit-detail>
+
             <div class="panel-heading">
                 <h3 class="panel-title">   Danh sách ăn ca </h3>
             </div>

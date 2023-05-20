@@ -1,11 +1,16 @@
 <div class="main-grid product-detail">
-    <app-edit-detail *ngIf="listViews.length> 0" 
+    <!-- <app-edit-detail *ngIf="listViews.length> 0" 
     [detail]="detailInfo" [manhinh]="'Edit'" 
     [optionsButtonsEdit]="optionsButon"  
     [dataView]="listViews"
     (callback)="handleSave($event)" 
     (callback1)="getChipsValue($event)"
-    (callbackcancel)="quaylai($event)"></app-edit-detail>
+    (callbackcancel)="quaylai($event)"></app-edit-detail> -->
+
+    <app-edit-detail  *ngIf="listViews.length> 0" 
+        [manhinh]="'Edit'"   [detailInfo]="detailInfo"  [buttons]="optionsButon"
+       [listForms]="listViews" (callback)="handleSave($event)" (close)="quaylai($event)"
+     ></app-edit-detail>
     <app-loading-detail 
             [id]="'chi-tiet-ns-cau-hinh-mail'" 
             *ngIf="listViews.length === 0">

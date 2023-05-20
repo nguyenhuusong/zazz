@@ -16,9 +16,8 @@ import { Router } from '@angular/router';
 import { TYPESDATETIME } from './columnTypes';
 import { ActionsNotSave, ActionsSave } from './action-types';
 @Component({
-  selector: 'app-edit-detail',
-  templateUrl: './edit-detail.component.html',
-  styleUrls: ['./edit-detail.component.scss']
+  selector: 'app-edit-detail'
+
 })
 export class EditDetailComponent implements OnInit, OnChanges {
   constructor(

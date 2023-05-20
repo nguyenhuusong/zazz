@@ -4,11 +4,11 @@
         <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
     </section>
    <div class="content">
-        <app-edit-detail *ngIf="listViews.length> 0 && manhinh === 'Edit'"
-            [thongtinnhanvienNew]="true"
-            [manhinh]="'Edit'" [dataView]="listViews"
-            (callback)="setNotifyRef($event)"
-            (callbackcancel)="cancelUpdate($event)">
-        </app-edit-detail>
+
+        <app-edit-detail  
+        *ngIf="listViews.length> 0 " [manhinh]="'Edit'" 
+        [isNested]="true"   [detailInfo]="detailInfo"  [buttons]="[]"
+       [listForms]="listViews" (callback)="setNotifyRef($event)" (close)="cancelUpdate($event)"
+     ></app-edit-detail>
    </div>
 </div>

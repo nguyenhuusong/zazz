@@ -5,7 +5,7 @@
     </p-header>
 
     <p-card>
-        <app-edit-detail *ngIf="listViews.length> 0" 
+        <!-- <app-edit-detail *ngIf="listViews.length> 0" 
             [detail]="detailInfo" 
             [isHideButton]="true" [isHideButton]="true"
             [manhinh]="'Edit'" 
@@ -14,7 +14,12 @@
             (callback)="setDetail($event)" 
             (callBackForm)="callBackForm($event)"
             (callbackcancel)="canceDetail($event)">
-        </app-edit-detail>
+        </app-edit-detail> -->
+
+        <app-edit-detail  *ngIf="listViews.length> 0" 
+            [manhinh]="'Edit'"  [detailInfo]="detailInfo"  [buttons]="optionsButtonsView"
+           [listForms]="listViews" (callback)="setDetail($event)" (close)="canceDetail($event)"
+         ></app-edit-detail>
     </p-card>
 
     <ng-template pTemplate="footer">

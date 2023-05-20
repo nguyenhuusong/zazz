@@ -3,8 +3,9 @@
         <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
     </section>
     <div class="content">
-        <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButon"  [dataView]="listViews"
-            (callback)="setHolidayInfo($event)" (callbackcancel)="quaylai($event)"></app-edit-detail>
+            <app-edit-detail *ngIf="listViews.length> 0" [manhinh]="'Edit'"[detailInfo]="detailInfo" [buttons]="optionsButon"
+                [listForms]="listViews" (callback)="setHolidayInfo($event)" (close)="quaylai($event)"
+              ></app-edit-detail>
     <app-loading-detail 
         [id]="'area'" 
         *ngIf="listViews.length === 0">

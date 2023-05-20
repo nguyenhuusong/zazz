@@ -44,9 +44,8 @@
     <p-header>
         File đính kèm
     </p-header>
-    <app-edit-detail [optionsButtonsEdit]="optionsButtonsPopup" *ngIf="listViewsDetail.length> 0 && displayFormEditDetail" [detailInfo]="dataDetailInfo"
-        [detail]="dataDetailInfo" [manhinh]="'Edit'" [thongtinnhanvienNew]="true"
-        [dataView]="listViewsDetail" (callback)="setDetailInfo($event)"
-        (callbackcancel)="cancelDetailInfo($event)" (callback1)="getFilesDetail($event)"></app-edit-detail>
+        <app-edit-detail  *ngIf="listViewsDetail.length> 0 && displayFormEditDetail"  [manhinh]="'Edit'"  [detailInfo]="dataDetailInfo"  [buttons]="optionsButtonsPopup"
+            [listForms]="listViewsDetail" (callback)="setDetailInfo($event)" (close)="cancelDetailInfo($event)"
+          ></app-edit-detail>
 </p-dialog>
 

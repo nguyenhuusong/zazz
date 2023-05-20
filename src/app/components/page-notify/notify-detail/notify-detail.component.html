@@ -27,9 +27,11 @@
                 </ng-template>
             </p-dropdown>
           </div>
-          <app-edit-detail *ngIf="listViews.length> 0 && manhinh === 'Edit'"  [detail]="dataInfo"
-            [manhinh]="manhinh" [modelMarkdow]="modelMarkdow" [dataView]="listViews" [optionsButtonsEdit]="optionsButon"
-            (callback)="saveNotifyInfo($event)" (callbackcancel)="cancelUpload($event)"></app-edit-detail>
+            <app-edit-detail  
+              *ngIf="listViews.length> 0 && manhinh === 'Edit'" [manhinh]="manhinh"
+              [isNested]="true"   [detailInfo]="dataInfo"  [buttons]="optionsButon"
+             [listForms]="listViews" (callback)="saveNotifyInfo($event)" (close)="cancelUpload($event)"
+           ></app-edit-detail>
             <app-loading-detail 
                 [id]="'markdown'" 
                 *ngIf="listViews.length === 0">

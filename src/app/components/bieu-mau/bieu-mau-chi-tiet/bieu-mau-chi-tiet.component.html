@@ -1,5 +1,5 @@
 <div class="content">
-    <app-edit-detail
+    <!-- <app-edit-detail
         [isUploadMultiple]="false"
         *ngIf="listViews.length> 0"
         [detail]="detailInfo"
@@ -8,7 +8,14 @@
         [dataView]="listViews"
         (callback)="handleSave($event)"
         (callbackcancel)="quaylai($event)"
-    ></app-edit-detail>
+    ></app-edit-detail> -->
+
+
+          
+    <app-edit-detail *ngIf="listViews.length> 0"  [detailInfo]="detailInfo"  [buttons]="optionsButon"
+        [listForms]="listViews" (callback)="handleSave($event)" (close)="quaylai($event)"
+      ></app-edit-detail>
+
     <app-loading-detail 
         [id]="'sections-2qnt'" 
         *ngIf="listViews.length === 0">

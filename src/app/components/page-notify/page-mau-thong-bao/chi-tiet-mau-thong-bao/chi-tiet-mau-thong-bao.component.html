@@ -6,8 +6,17 @@
     </div>
   </section>
   <div class="content">
-    <app-edit-detail *ngIf="listViews.length> 0 && manhinh === 'Edit'" [thongtinnhanvienNew]="true"
+    <!-- <app-edit-detail *ngIf="listViews.length> 0 && manhinh === 'Edit'" [thongtinnhanvienNew]="true"
       [modelMarkdow]="modelMarkdow" [manhinh]="'Edit'" [dataView]="listViews" (callback)="setNotifyTemp($event)"
-      (callbackcancel)="cancelUpdate()"></app-edit-detail>
+      (callbackcancel)="cancelUpdate()"></app-edit-detail> -->
+
+
+
+      
+      <app-edit-detail  
+      *ngIf="listViews.length> 0 " [manhinh]="'Edit'" 
+      [isNested]="true"   [detailInfo]="detailInfo"  [buttons]="[]"
+     [listForms]="listViews" (callback)="setNotifyTemp($event)" (close)="cancelUpdate()"
+   ></app-edit-detail>
   </div>
 </div>

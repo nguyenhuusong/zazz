@@ -50,11 +50,10 @@
 </section>
 
 <section>
-    <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [detailInfo]="detailInfo"
-        [thongtinnhanvienNew]="true" [manhinh]="'Edit'" [optionsButtonsEdit]="[]"
-        [dataView]="listViews" (callback)="setEmpQualification($event)"
-        (callbackcancel)="cancelUpdate($event)">
-    </app-edit-detail>
+
+    <app-edit-detail  *ngIf="listViews.length> 0 " [isNested]="true" [manhinh]="'Edit'"  [detailInfo]="detailInfo"  [buttons]="[]"
+        [listForms]="listViews" (callback)="setEmpQualification($event)" (close)="cancelUpdate($event)"
+      ></app-edit-detail>
     <app-loading-detail 
         [id]="'employee-info-05'" 
         *ngIf="listViews.length === 0">

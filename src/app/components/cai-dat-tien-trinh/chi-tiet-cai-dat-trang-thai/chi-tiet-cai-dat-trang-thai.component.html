@@ -1,9 +1,11 @@
 
 <div class="main-grid product-detail">
     <div class="content">
-        <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButon"  [dataView]="listViews"
-            (callback)="setFlowStatus($event)" (callbackcancel)="quaylai($event)"></app-edit-detail>
-            
+        <app-edit-detail *ngIf="listViews.length> 0"  [detailInfo]="detailInfo"  [buttons]="optionsButon"
+            [listForms]="listViews" (callback)="setFlowStatus($event)" (close)="quaylai($event)"
+          ></app-edit-detail>
+  
+  
        </div>
    
 </div>

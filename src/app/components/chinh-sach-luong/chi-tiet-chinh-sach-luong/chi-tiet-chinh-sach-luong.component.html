@@ -15,9 +15,10 @@
 <p-card>
         <p-tabView [(activeIndex)]="indexTab" (onChange)="handleChange($event.index)">
             <p-tabPanel header="Thông tin chung">
-                    <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'"
-                        [optionsButtonsEdit]="optionsButtonsView" [dataView]="listViews" (callback)="setSchemeInfo($event)" (callBackForm)="callBackForm($event)"
-                        (callbackcancel)="cancel($event)"></app-edit-detail>
+                        <app-edit-detail *ngIf="listViews.length> 0" [manhinh]="'Edit'" [detailInfo]="detailInfo"  [buttons]="optionsButtonsView"
+                            [listForms]="listViews" (callback)="setSchemeInfo($event)" (close)="cancel($event)"
+                          ></app-edit-detail>
+
                     <app-loading-detail 
                         [id]="'markdown'" 
                         *ngIf="listViews.length === 0">

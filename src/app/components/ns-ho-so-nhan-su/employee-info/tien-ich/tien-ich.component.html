@@ -48,7 +48,7 @@
     </div>
     </section>
     <section>
-        <app-edit-detail *ngIf="listViews.length> 0" 
+        <!-- <app-edit-detail *ngIf="listViews.length> 0" 
             [detail]="detailInfo" 
             [detailInfo]="detailInfo" 
             [thongtinnhanvienNew]="true" 
@@ -57,7 +57,13 @@
             [dataView]="listViews"
             (callback)="setEmpOtherInfo($event)" 
             (callbackcancel)="cancelUpdate($event)">
-        </app-edit-detail>
+        </app-edit-detail> -->
+
+
+
+        <app-edit-detail  *ngIf="listViews.length> 0"  [manhinh]="'Edit'"  [detailInfo]="detailInfo"  [buttons]="optionsButtonsView"
+            [listForms]="listViews" (callback)="setEmpOtherInfo($event)" (close)="cancelUpdate($event)"
+          ></app-edit-detail>
         <app-loading-detail 
             [id]="'employee-info-06'" 
             *ngIf="listViews.length === 0">

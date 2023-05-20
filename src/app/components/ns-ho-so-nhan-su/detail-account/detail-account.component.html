@@ -22,8 +22,10 @@
         <div class="col-md-12">
               <div class="" *ngIf="detailInfo">
                 <!-- <p-selectButton  [options]="optionsButtonsView" *ngIf="listViews.length> 0 && manhinh === 'View'" optionLabel="label" optionValue="value" (onChange)="onChangeButtonView($event)"></p-selectButton> -->
-                  <app-edit-detail *ngIf="listViews.length> 0 && manhinh === 'Edit'"  [manhinh]="manhinh" [dataView]="listViews" (callback)="setAccountInfo($event)" (callbackcancel)="cancelUpdate()"></app-edit-detail>
-              </div>
+                  <app-edit-detail  *ngIf="listViews.length> 0 " [isNested]="true" [manhinh]="'Edit'"  [detailInfo]="detailInfo"  [buttons]="[]"
+                    [listForms]="listViews" (callback)="setAccountInfo($event)" (close)="cancelUpdate()"
+                  ></app-edit-detail>
+                </div>
         </div>
       </div>
     </div>

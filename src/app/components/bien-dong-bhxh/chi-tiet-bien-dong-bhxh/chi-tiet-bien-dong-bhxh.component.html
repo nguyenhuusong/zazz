@@ -13,9 +13,9 @@
 </p-card>
 <p-divider></p-divider>
 <p-card>
-    <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'"
-        [optionsButtonsEdit]="optionsButtonsView" [dataView]="listViews" (callback)="setInsuranceInfo($event)" (callBackForm)="callBackForm($event)"
-        (callbackcancel)="cancel($event)"></app-edit-detail>
+        <app-edit-detail *ngIf="listViews.length> 0"  [isNested]="true" [detailInfo]="detailInfo"  [buttons]="optionsButtonsView"
+            [listForms]="listViews" (callback)="setInsuranceInfo($event)" (close)="cancel($event)"
+          ></app-edit-detail>
         <app-loading-detail 
             [id]="'sections-2qnt'" 
             *ngIf="listViews.length === 0">

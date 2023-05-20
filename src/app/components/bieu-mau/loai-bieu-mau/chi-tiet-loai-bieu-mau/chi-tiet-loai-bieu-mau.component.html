@@ -1,5 +1,5 @@
 <div class="content">
-    <app-edit-detail
+    <!-- <app-edit-detail
         *ngIf="listViews.length> 0"
         [detail]="detailInfo"
         [manhinh]="'Edit'"
@@ -8,7 +8,14 @@
         (callback)="setWorkApprove($event)"
         (callbackcancel)="quaylai($event)"
         [formTypeId]="formTypeId"
-    ></app-edit-detail>
+    ></app-edit-detail> -->
+
+           
+    <app-edit-detail *ngIf="listViews.length> 0"  [detailInfo]="detailInfo"  [buttons]="optionsButon"
+        [listForms]="listViews" (callback)="setWorkApprove($event)" (close)="quaylai($event)"
+      ></app-edit-detail>
+
+
     <app-loading-detail 
         [id]="'sections-3qnt'" 
         *ngIf="listViews.length === 0">

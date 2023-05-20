@@ -14,12 +14,17 @@
     </div>
     <p-tabView (onChange)="handleChange($event.index)" [(activeIndex)]="tabIndex">
         <p-tabPanel header="Thông tin chung">
-            <app-edit-detail 
+            <!-- <app-edit-detail 
                 *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'" [isHideButton]="true"
                 [optionsButtonsEdit]="hideButton ? [] : optionsButtonsView" [dataView]="listViews"
                 (callback)="setSchemeInfo($event)" 
-                (callbackcancel)="cancel($event)"></app-edit-detail>
+                (callbackcancel)="cancel($event)"></app-edit-detail> -->
 
+                <!-- check lại điều kiện -->
+                <app-edit-detail *ngIf="listViews.length> 0" [manhinh]="'Edit'" [isNested]="true"   [detailInfo]="detailInfo" [buttons]="hideButton ? [] : optionsButtonsView"
+                    [listForms]="listViews" (callback)="setSchemeInfo($event)" (close)="cancel($event)"
+                  ></app-edit-detail>
+        
             <app-loading-detail [id]="'markdown'" *ngIf="listViews.length === 0">
             </app-loading-detail>
             <div class="col-12  flex justify-content-end align-items-center" >
@@ -75,11 +80,18 @@
         </div>
         <p-tabView (onChange)="handleChange($event.index)" [(activeIndex)]="tabIndex">
             <p-tabPanel header="Thông tin chung">
-                <app-edit-detail 
+                <!-- <app-edit-detail 
                     *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'"
                     [optionsButtonsEdit]="hideButton ? [] : optionsButtonsView" [dataView]="listViews"
                     (callback)="setSchemeInfo($event)" 
-                    (callbackcancel)="cancel($event)"></app-edit-detail>
+                    (callbackcancel)="cancel($event)"></app-edit-detail> -->
+
+                          
+        <app-edit-detail *ngIf="listViews.length> 0"  [detailInfo]="detailInfo"  [buttons]="hideButton ? [] : optionsButtonsView"
+            [listForms]="listViews" (callback)="setSchemeInfo($event)" (close)="cancel($event)"
+          ></app-edit-detail>
+  
+  
     
                 <app-loading-detail [id]="'markdown'" *ngIf="listViews.length === 0">
                 </app-loading-detail>

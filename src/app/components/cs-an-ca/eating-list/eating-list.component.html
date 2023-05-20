@@ -102,6 +102,7 @@
     <app-config-grid-table-form *ngIf="displaySetting && gridKey" [typeConfig]="'TableInfo'"   [gridKey]="gridKey"></app-config-grid-table-form>
 </p-dialog>
 <p-dialog header="Chi tiết" [(visible)]="isDetail" [modal]="true" [style]="{width: '50vw'}" >
-    <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButon"  [dataView]="listViews"
-        (callback)="setChitiet($event)" (callbackcancel)="quaylai($event)"></app-edit-detail>
+        <app-edit-detail *ngIf="listViews.length> 0" [manhinh]="'Edit'"   [detailInfo]="detailInfo"  [buttons]="optionsButon"
+            [listForms]="listViews" (callback)="setChitiet($event)" (close)="quaylai($event)"
+          ></app-edit-detail>
 </p-dialog>

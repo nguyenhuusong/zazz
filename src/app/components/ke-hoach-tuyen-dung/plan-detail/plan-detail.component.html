@@ -35,9 +35,10 @@
     <p-header>
       {{idDetail ? 'Chi tiết kế hoạch' : 'Thêm mới chi tiết kế hoạch'}} 
     </p-header>
-    <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'"
-        [optionsButtonsEdit]="optionsButtonsPopup" [dataView]="listViews" (callback)="setRecruitPlanDetail($event)" 
-        (callbackcancel)="cancelDetailInfo($event)"></app-edit-detail>
+        <app-edit-detail *ngIf="listViews.length> 0" [manhinh]="'Edit'" [isNested]="true" [detailInfo]="detailInfo" [buttons]="optionsButtonsPopup"
+            [listForms]="listViews" (callback)="setRecruitPlanDetail($event)" (close)="cancelDetailInfo($event)"
+          ></app-edit-detail>
+
         <app-loading-detail 
             [id]="'chi-tiet-tuyen-dung'" 
             *ngIf="listViews.length === 0">

@@ -10,6 +10,8 @@ import { ApiHrmV2Service } from 'src/app/services/api-hrm/apihrmv2.service';
 import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
 import { MessageService } from 'primeng/api';
 import { FormGroup } from '@angular/forms';
+import queryString from 'query-string';
+import { ActionsNotSave, ActionsSave } from './action-types';
 @Component({
   selector: 'app-edit-detail',
   templateUrl: './edit-detail.component.html',
@@ -18,6 +20,8 @@ import { FormGroup } from '@angular/forms';
 export class EditDetailComponent implements OnInit {
   private _messageService = inject(MessageService);
   @Input() isFiler: boolean = false;
+  @Input() isNested: boolean = false;
+  @Input() manhinh;
   private _appApi = inject(ApiService);
   private _spinner = inject(NgxSpinnerService);
   private _apiHrmV2 = inject(ApiHrmV2Service);
@@ -304,12 +308,19 @@ export class EditDetailComponent implements OnInit {
         })
       });
       this.options.formState.submitted = false;
-      this.callback.emit({
-        forms: this.listForms,
-        model: this.model,
-        actions: 'Save'
-      })
-
+      if(ActionsSave.indexOf(action) > -1) {
+        this.callback.emit({
+          forms: this.listForms,
+          model: this.model,
+          actions: action
+        })
+      }else {
+        this.close.emit({
+          forms: this.listForms,
+          model: this.model,
+          actions: action
+        })
+      }
     } else {
       this._messageService.add({ severity: 'error', summary: 'Dữ liệu thiếu !'});
     }

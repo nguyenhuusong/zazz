@@ -12,8 +12,14 @@
   <p-header>
     Thông tin nhóm quyền
   </p-header>
-  <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailDetailInfo" [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButon"  [dataView]="listViews"
-      (callback)="setConfigMenu($event)" (callbackcancel)="cancelUpdate($event)"></app-edit-detail>
+  <!-- <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailDetailInfo" [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButon"  [dataView]="listViews"
+      (callback)="setConfigMenu($event)" (callbackcancel)="cancelUpdate($event)"></app-edit-detail> -->
+
+      <app-edit-detail  
+      *ngIf="listViews.length> 0 && listsData.length > 0" [manhinh]="'Edit'" 
+      [isNested]="true"   [detailInfo]="detailDetailInfo"  [buttons]="optionsButon"
+     [listForms]="listViews" (callback)="setConfigMenu($event)" (close)="cancelUpdate($event)"
+   ></app-edit-detail>
 </p-dialog>
       
 <p-dialog header="Cài đặt cấu hình " [(visible)]="displaySetting" (onHide)="getRoles()" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"

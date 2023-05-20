@@ -53,8 +53,13 @@
    <p-header>
     Cấu hình form group
 </p-header>
-    <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo"  [manhinh]="'Edit'"  [optionsButtonsEdit]="optionsButtonsEdit"  [dataView]="listViews"
+    <!-- <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo"  [manhinh]="'Edit'"  [optionsButtonsEdit]="optionsButtonsEdit"  [dataView]="listViews"
         (callback)="setGroupInfo($event)" (callbackcancel)="quaylai($event)"></app-edit-detail>
+ -->
+
+        <app-edit-detail *ngIf="listViews.length> 0"  [detailInfo]="detailInfo"  [buttons]="optionsButtonsEdit"
+            [listForms]="listViews" (callback)="setGroupInfo($event)" (close)="quaylai($event)"
+          ></app-edit-detail>
         <ng-template pTemplate="footer">
             <p-button label="Đóng tab" (onClick)="reload()" styleClass="p-button-sm p-button-secondary bg-secondary" icon="pi pi-times"></p-button>
         </ng-template>

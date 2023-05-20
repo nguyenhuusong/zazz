@@ -5,11 +5,16 @@
     <div class="content" [hidden]="showChooseCalander">
         <!-- <button (click)="showChooseCalander = true">Thêm thời gian họp</button> -->
         <div>
-            <app-edit-detail *ngIf="listViews && listViews.length> 0" [isNested]="true" [detail]="detailInfo"
+            <!-- <app-edit-detail *ngIf="listViews && listViews.length> 0" [isNested]="true" [detail]="detailInfo"
                 [thongtinnhanvienNew]="true" [manhinh]="'Edit'" [dataView]="listViews"
                 (callbackcancel)="quaylai($event)"
                 (callback)="setMeetRoomInfo($event)" (callback1)="getValueElemetn($event)" (callbackDataInfo)="getDataInfo($event)">
-            </app-edit-detail>
+            </app-edit-detail> -->
+
+            <app-edit-detail *ngIf="listViews && listViews.length> 0" [manhinh]="'Edit'" [detailInfo]="detailInfo"  [buttons]="optionsButtonsView"
+                [listForms]="listViews" (callback)="setMeetRoomInfo($event)" (close)="quaylai($event)"
+              ></app-edit-detail>
+
             <app-loading-detail 
                 [id]="'sections-3qnt'" 
                 *ngIf="listViews.length === 0">

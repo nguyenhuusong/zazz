@@ -7,8 +7,10 @@
         </div>
     </section>
    <div class="content">
-    <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButon"  [dataView]="listViews"
-        (callback)="setJobInfo($event)" (callbackcancel)="quaylai($event)"></app-edit-detail>
+        <app-edit-detail  *ngIf="listViews.length> 0" 
+            [manhinh]="'Edit'"   [detailInfo]="detailInfo"  [buttons]="optionsButon"
+           [listForms]="listViews" (callback)="setJobInfo($event)" (close)="quaylai($event)"
+         ></app-edit-detail>
         <app-loading-detail 
                 [id]="'sections-1qnt'" 
                 *ngIf="listViews.length === 0">

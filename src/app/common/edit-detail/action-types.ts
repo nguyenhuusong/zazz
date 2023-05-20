@@ -1,7 +1,8 @@
 export const ActionsNotSave = [
     'actSendMail',
     'actAddProfile',
-    'actRegEmpUser'
+    'actRegEmpUser',
+    'Cancel'
 ]
 
 export const ActionsSave = [

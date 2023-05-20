@@ -3,7 +3,9 @@
         <div class="d-flex bet bottom">
             <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
         </div>
-        <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'"  [dataView]="listViews"
-            (callback)="setOrganizeConfig($event)" (callbackcancel)="quaylai($event)"></app-edit-detail>
+            <app-edit-detail *ngIf="listViews.length> 0"  [detailInfo]="detailInfo"  [buttons]="[]"
+                [listForms]="listViews" (callback)="setOrganizeConfig($event)" (close)="quaylai($event)"
+              ></app-edit-detail>
+      
     </section>
 </div>

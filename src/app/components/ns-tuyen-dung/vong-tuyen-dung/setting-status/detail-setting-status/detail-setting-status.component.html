@@ -1,7 +1,7 @@
 
 <div class="main-grid product-detail">
     <div class="content ">
-        <app-edit-detail
+        <!-- <app-edit-detail
             *ngIf="listViews.length> 0"
             [detail]="detailInfo"
             [manhinh]="'Edit'"
@@ -9,7 +9,12 @@
             [dataView]="listViews"
             (callback)="handleSave($event)"
             (callbackcancel)="quaylai($event)"
-        ></app-edit-detail>
+        ></app-edit-detail> -->
+
+        <app-edit-detail *ngIf="listViews.length> 0"  [detailInfo]="detailInfo"  [buttons]="optionsButon"
+            [listForms]="listViews" (callback)="handleSave($event)" (close)="quaylai($event)"
+          ></app-edit-detail>
+  
         <app-loading-detail 
             [id]="'app-chi-tiet-vong-tuyen-dung'" 
             *ngIf="listViews.length === 0">

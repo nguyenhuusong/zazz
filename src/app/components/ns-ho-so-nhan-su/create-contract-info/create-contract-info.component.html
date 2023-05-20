@@ -15,8 +15,13 @@
 
 <ng-template #taoHopDong>
     <div class=" tao-hop-dong" *ngIf="listViews.length > 0">
-        <app-edit-detail *ngIf="listViews.length> 0" [detail]="modelContractInfo" [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButon" [thongtinnhanvienNew]="true" [dataView]="listViews"
+        <!-- <app-edit-detail *ngIf="listViews.length> 0" [detail]="modelContractInfo" [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButon" [thongtinnhanvienNew]="true" [dataView]="listViews"
             (callback)="setContractInfo($event)" (callback1)="saveCallback1($event)" (callbackcancel)="huy($event)"></app-edit-detail>
+ -->
+                <!-- Check lại điều kiện -->
+            <app-edit-detail  *ngIf="listViews.length> 0 " [isNested]="true" [manhinh]="'Edit'"  [detailInfo]="modelContractInfo"  [buttons]="optionsButon"
+                [listForms]="listViews" (callback)="setContractInfo($event)" (close)="huy($event)"
+              ></app-edit-detail>
         <p-card styleClass="" *ngIf="listViews.length> 0">
             <!-- <ng-template pTemplate="header">
                 <div class="panel-heading" style="padding: 10px;">

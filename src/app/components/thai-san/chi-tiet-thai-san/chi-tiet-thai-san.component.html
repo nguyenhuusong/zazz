@@ -4,10 +4,11 @@
         <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
     </section>
    <div class="content">
-    <app-edit-detail *ngIf="listViews.length> 0" 
-        [detail]="detailInfo" [manhinh]="'Edit'" 
-        [optionsButtonsEdit]="optionsButon"  [dataView]="listViews"
-        (callback)="setMaternityInfo($event)" (callbackcancel)="quaylai($event)"></app-edit-detail>
+        <app-edit-detail  
+        *ngIf="listViews.length> 0 " [manhinh]="'Edit'"   [detailInfo]="detailInfo"  [buttons]="optionsButon"
+       [listForms]="listViews" (callback)="setMaternityInfo($event)" (close)="quaylai($event)"
+     ></app-edit-detail>
+
     <app-loading-detail 
         [id]="'sections-2qnt'" 
         *ngIf="listViews.length === 0">
@@ -96,23 +97,34 @@
 
 <p-dialog styleClass="popup-chi-tiet-thai-san" header="{{modelAdd.title}}" [(visible)]="displayAddThaiSan" [modal]="true" [style]="{width: '1000px'}"
     [draggable]="false" [resizable]="false">
-    <app-edit-detail *ngIf="listViews_other.length> 0" 
+    <!-- <app-edit-detail *ngIf="listViews_other.length> 0" 
         (callback1)="getFileInfo($event)"
         [detail]="detailInfo_other" [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButon"  [dataView]="listViews_other"
-        (callback)="saveCallApi($event)" (callbackcancel)="displayAddThaiSan = !displayAddThaiSan"></app-edit-detail>
+        (callback)="saveCallApi($event)" (callbackcancel)="displayAddThaiSan = !displayAddThaiSan"></app-edit-detail> -->
+
+
+        <app-edit-detail  
+        *ngIf="listViews_other.length> 0 " [manhinh]="'Edit'"   [detailInfo]="detailInfo_other"  [buttons]="optionsButon"
+       [listForms]="listViews_other" (callback)="saveCallApi($event)" (close)="displayAddThaiSan = !displayAddThaiSan"
+     ></app-edit-detail>
 </p-dialog>
 
 <p-dialog styleClass="hideHeaderForm" header="Đăng ký lịch thai sản" 
     [(visible)]="isDetailLichThaiSan" 
     [modal]="true" [style]="{width: '1000px'}"
     [draggable]="false" [resizable]="false" [focusTrap]="false" >
-    <app-edit-detail
+    <!-- <app-edit-detail
         *ngIf="listViewsDetail.length> 0"
         [detail]="detailInfoDetail"
         [manhinh]="'Edit'"
         [dataView]="listViewsDetail"
         (callback)="setMaternityPolicyInfo($event)"
         (callbackcancel)="closeLichTS($event)"
-    ></app-edit-detail>
+    ></app-edit-detail> -->
+
+    <app-edit-detail  
+    *ngIf="listViewsDetail.length> 0 " [manhinh]="'Edit'"   [detailInfo]="detailInfoDetail"  [buttons]="[]"
+   [listForms]="listViewsDetail" (callback)="setMaternityPolicyInfo($event)" (close)="closeLichTS($event)"
+ ></app-edit-detail>
 </p-dialog>
 
