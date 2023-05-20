@@ -135,7 +135,7 @@ export class ViTriCongViecComponent implements OnInit, AfterViewInit {
         //   this.codeStaff = getFieldValueAggrid(results.data, 'code');
         // }
 
-        this.status = results.data.flowStatuses;
+        this.status = results.data.flowStatuses || [];
         if(results.data.status) {
           this.status.push(results.data.status);
         }

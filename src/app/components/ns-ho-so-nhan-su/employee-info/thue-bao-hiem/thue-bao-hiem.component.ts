@@ -59,7 +59,7 @@ export class ThueBaoHiemComponent implements OnInit {
         //   this.codeStaff = getFieldValueAggrid(results.data, 'code');
         // }
         if(results.data.flowStatuses) {
-          this.status = results.data.flowStatuses;
+          this.status = results.data.flowStatuses || [];
         }
         if(results.data.status) {
           this.status.push(results.data.status);

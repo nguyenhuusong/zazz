@@ -63,7 +63,7 @@ export class ThongTinCaNhanComponent implements OnInit {
         // if (!this.codeStaff) { // không hiểu làm gì (manh)
         //   this.codeStaff = getFieldValueAggrid(results.data, 'code');
         // }
-        this.status = results.data.flowStatuses;
+        this.status = results.data.flowStatuses || [];
         if(results.data.status) {
           this.status.push(results.data.status);
         }

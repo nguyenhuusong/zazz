@@ -196,7 +196,7 @@ export class ChiTietQTThayDoiLuongComponent implements OnInit {
         this.modelEdit.salaryInfoId = results.data.salaryInfoId;
         this.listViews = cloneDeep(results.data.group_fields);
         this.detailInfo = results.data;
-        this.status = results.data.flowStatuses;
+        this.status = results.data.flowStatuses || [];
         if(results.data.status) {
           this.status.push(results.data.status);
         }
