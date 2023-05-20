@@ -8,5 +8,6 @@ export const ActionsSave = [
     'actSave',
     'SaveNhap',
     'actSubmit',
-    'actRecord'
+    'actRecord',
+    'actConfirm'
 ]
