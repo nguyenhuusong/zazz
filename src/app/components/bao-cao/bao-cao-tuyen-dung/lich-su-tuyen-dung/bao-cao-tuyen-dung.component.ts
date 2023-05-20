@@ -2,13 +2,11 @@ import { AfterViewChecked, ChangeDetectorRef, Component, OnInit, ViewChild } fro
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import * as queryString from 'querystring';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { CustomTooltipComponent } from 'src/app/common/ag-component/customtooltip.component';
-import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
-import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.component';
 import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import * as FileSaver from 'file-saver';
 
 const MAX_SIZE = 100000000;
 import { cloneDeep } from 'lodash';
@@ -104,7 +102,7 @@ export class BaoCaoTuyenDungComponent implements OnInit {
   listViewsReport = [];
   optionsButonReport = [
     { label: 'Hiển thị', value: 'ViewReport', class: 'p-button-sm ml-2 height-56 addNew', icon: 'pi pi-plus' },
-    { label: 'Mở tệp', value: 'OpenReport', class: 'p-button-sm p-button-success ml-2 height-56 addNew', icon: 'pi pi-clone' },
+    // { label: 'Mở tệp', value: 'OpenReport', class: 'p-button-sm p-button-success ml-2 height-56 addNew', icon: 'pi pi-clone' },
     { label: 'Lưu tệp', value: 'DowloadReport', class: 'p-button-sm p-button-success ml-2 height-56 addNew', icon: 'pi pi-cloud-download' },
   ];
 
@@ -186,31 +184,16 @@ export class BaoCaoTuyenDungComponent implements OnInit {
 
   loadExport(queryParams: any, type: string) {
     this.spinner.show();
-    this.apiService.getDataReport(this.detailInfoReport.api_url_dowload, queryParams)
+    this.apiService.getDataFile(this.detailInfoReport.api_url_dowload, queryParams)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(
       (results: any) => {
-        if(type === 'open') {
-          if(results.data && results.data.webViewLink){
-            window.open(results.data.webViewLink);
-            this.spinner.hide();
-          }else{
-            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Xuất báo cáo bị lỗi' });
-            this.spinner.hide();
-          }
-        }else {
-          if(results.data && results.data.webContentLink){
-            this.spinner.hide();
-            this.confirmationService.confirm({
-              message: `${results.data.fileName} is a file type that might harm your computer. Only download this file if you understand the risks.`,
-              accept: () => {
-              this.createImageFromBlob(results.data.webContentLink, results.data.fileName);
-              }
-            });
-          }else{
-            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Xuất báo cáo bị lỗi' });
-            this.spinner.hide();
-          }
+        if (results.type === 'application/json') {
+          this.spinner.hide();
+        } else {
+          var blob = new Blob([results], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+          FileSaver.saveAs(blob, this.detailInfoReport.report_name + ".xlsx");
+          this.spinner.hide();
         }
       
       },
@@ -296,9 +279,7 @@ export class BaoCaoTuyenDungComponent implements OnInit {
       const queryParams = queryString.stringify({ ...event.data });
       this.loadExport(queryParams, 'open');
     }else {
-      // this.isShowLists = false;
-      const queryParams = queryString.stringify({ ...event.data });
-      this.loadExport(queryParams, 'dowload');
+      this.loadExport({ ...event.data }, 'dowload');
     }
   
   }
