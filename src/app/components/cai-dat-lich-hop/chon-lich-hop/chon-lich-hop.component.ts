@@ -1,11 +1,12 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
-import { Calendar, CalendarOptions, FullCalendarComponent } from '@fullcalendar/angular';
 import { ApiService } from 'src/app/services/api.service';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { dateFormatter } from 'src/app/utils/common/function-common';
 import * as moment from 'moment';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import { Subject, takeUntil } from 'rxjs';
+import { FullCalendarComponent } from '@fullcalendar/angular';
+import { Calendar, CalendarOptions } from '@fullcalendar/core';
 
 @Component({
   selector: 'app-chon-lich-hop',

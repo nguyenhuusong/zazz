@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, OnChanges } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Table } from 'primeng/table';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import * as moment from 'moment';
 import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
 import { MessageService } from 'primeng/api';

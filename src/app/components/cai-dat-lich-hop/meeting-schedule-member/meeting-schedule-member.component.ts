@@ -3,7 +3,7 @@ import { ApiService } from './../../../services/api.service';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
 import { MessageService, ConfirmationService } from 'primeng/api';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { AgGridFn } from 'src/app/common/function-common/common';
 import { CustomTooltipComponent } from 'src/app/common/ag-component/customtooltip.component';
 import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';

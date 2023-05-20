@@ -5,7 +5,7 @@ import { cloneDeep } from 'lodash'
 import { AuthService } from '../services/auth.service';
 import { ApiService } from '../services/api.service';
 import { OrganizeInfoService } from '../services/organize-info.service';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 declare var $: any
 @Directive({
   selector: '[CheckHideActions]',

@@ -3,7 +3,7 @@ import { Component, OnInit, ChangeDetectorRef, SimpleChanges, OnChanges, Input, 
 import { MessageService } from 'primeng/api';
 import { ConfirmationService } from 'primeng/api';
 import { ApiService } from 'src/app/services/api.service';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';

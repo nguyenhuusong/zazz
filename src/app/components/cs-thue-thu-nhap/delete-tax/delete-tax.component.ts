@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import * as moment from 'moment';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { Subject, takeUntil } from 'rxjs';
 

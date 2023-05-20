@@ -11,7 +11,7 @@ import { forkJoin, Subject, takeUntil } from 'rxjs';
 import { ApiHrmV2Service } from 'src/app/services/api-hrm/apihrmv2.service';
 import { ApiService } from 'src/app/services/api.service';
 import { setCheckboxradiolistValue, setMembers, setMultiSelectValue, setSelectTreeValue, setValueAndOptions, setValueAndOptionsAutocomplete } from '../function-common/objects.helper';
-const queryString = require('query-string');
+import queryString from 'query-string';
 @Component({
   selector: 'app-form-filter',
   templateUrl: './form-filter.component.html',

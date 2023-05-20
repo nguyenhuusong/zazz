@@ -2,7 +2,7 @@ import { MessageService } from 'primeng/api';
 import { concatMap, debounceTime, delay, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { concat, of, Subject, takeUntil } from 'rxjs';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 

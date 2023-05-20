@@ -6,7 +6,7 @@ import { CardInfo, SearchInfo } from 'src/app/models/cardinfo.model';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
 import { Subject, takeUntil } from 'rxjs';
-const queryString = require('query-string');
+import queryString from 'query-string';
 @Component({
   selector: 'app-pq-thang-may',
   templateUrl: './pq-thang-may.component.html',

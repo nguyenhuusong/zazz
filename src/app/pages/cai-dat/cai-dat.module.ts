@@ -107,12 +107,12 @@ import { ChiTietCaiDatTienTrinhComponent } from 'src/app/components/cai-dat-tien
 import { CaiDatTrangThaiComponent } from 'src/app/components/cai-dat-tien-trinh/cai-dat-trang-thai/cai-dat-trang-thai.component';
 import { ChiTietCaiDatTrangThaiComponent } from 'src/app/components/cai-dat-tien-trinh/chi-tiet-cai-dat-trang-thai/chi-tiet-cai-dat-trang-thai.component';
 
-FullCalendarModule.registerPlugins([
-  // register FullCalendar plugins
-  dayGridPlugin,
-  interactionPlugin,
-  timeGridPlugin
-]);
+// FullCalendarModule.registerPlugins([
+//   // register FullCalendar plugins
+//   dayGridPlugin,
+//   interactionPlugin,
+//   timeGridPlugin
+// ]);
 @NgModule({
   imports: [
     MessagesModule,

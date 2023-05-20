@@ -7,7 +7,7 @@ import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 
 import { fromEvent, Subject, takeUntil } from 'rxjs';
-const queryString = require('query-string');
+import queryString from 'query-string';
 declare var jQuery: any;
 
 @Component({

@@ -5,7 +5,7 @@ import { ExportFileService } from './../../services/export-file.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { Component, OnInit, ChangeDetectorRef, AfterViewChecked, OnDestroy } from '@angular/core';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { Subject, takeUntil } from 'rxjs';
 import { cloneDeep } from 'lodash';

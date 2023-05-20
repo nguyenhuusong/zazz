@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';

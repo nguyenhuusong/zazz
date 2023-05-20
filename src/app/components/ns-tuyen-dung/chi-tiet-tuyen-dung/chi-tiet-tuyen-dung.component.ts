@@ -1,13 +1,12 @@
 import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
-const queryString = require('query-string');
+import queryString from 'query-string';
 import { cloneDeep } from 'lodash';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
-import { CheckHideAction, AgGridFn } from 'src/app/common/function-common/common';
-import { stringify } from 'querystring';
+import {  AgGridFn } from 'src/app/common/function-common/common';
 @Component({
   selector: 'app-chi-tiet-tuyen-dung',
   templateUrl: './chi-tiet-tuyen-dung.component.html',
@@ -232,8 +231,8 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
   getCandidatesViewInfo() {
     this.columnDefs = [];
     this.listData = []
-    const query = { canId: this.modelEdit.canId }
-    this.apiService.getCandidatesViewInfo(stringify(query))
+    const queryParams = queryString.stringify({ canId: this.modelEdit.canId });
+    this.apiService.getCandidatesViewInfo(queryParams)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {
         if (results.status === 'success') {
@@ -247,8 +246,8 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
         }
       });
 
-    const queryParams = queryString.stringify(this.modelEdit);
-    this.apiService.getCandidateInfo(queryParams)
+    const queryParams1 = queryString.stringify(this.modelEdit);
+    this.apiService.getCandidateInfo(queryParams1)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {
         if (results.status === 'success') {

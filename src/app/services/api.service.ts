@@ -11,15 +11,17 @@ const apiCoreBaseUrl = 'https://apicore.sunshinegroup.vn';
 export class ApiService {
   constructor(
     private http: HttpClient,
-    private authService: AuthService) { }
+    private authService: AuthService) { 
+      this.options = {
+        headers: new HttpHeaders({
+          Authorization: this.authService.getAuthorizationHeaderValue() ? this.authService.getAuthorizationHeaderValue() : '',
+          'Content-Type': 'application/json',
+          'X-Role-Token': localStorage.hasOwnProperty('md5') && localStorage.getItem('md5') ? localStorage.getItem('md5') : ''
+        })
+      }
+    }
 
-  options = {
-    headers: new HttpHeaders({
-      Authorization: this.authService.getAuthorizationHeaderValue(),
-      'Content-Type': 'application/json',
-      'X-Role-Token': localStorage.hasOwnProperty('md5') && localStorage.getItem('md5') ? localStorage.getItem('md5') : ''
-    })
-  };
+  options = {};
 
   getListMenuByUserId(userId, webId): Observable<any> {
     return this.http

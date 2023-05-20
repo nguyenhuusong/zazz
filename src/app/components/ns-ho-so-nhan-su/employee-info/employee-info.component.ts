@@ -4,7 +4,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { ApiCoreService } from 'src/app/services/api-core/apicore.service';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-employee-info',

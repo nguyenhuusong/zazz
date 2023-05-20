@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AgGridFn } from 'src/app/common/function-common/common';
-const queryString = require('query-string');
+import queryString from 'query-string';
 import { cloneDeep } from 'lodash';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';

@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiCoreService } from 'src/app/services/api-core/apicore.service';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { cloneDeep } from 'lodash';
 import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';

@@ -1,11 +1,9 @@
 import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
-import { HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, OnChanges, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { cloneDeep } from 'lodash';
 import * as moment from 'moment';
 import { ApiService } from 'src/app/services/api.service';
-import * as queryString from 'querystring'
-import { NgForm } from '@angular/forms';
+import queryString from 'query-string';
 import { MessageService } from 'primeng/api';
 import { AgGridFn } from 'src/app/utils/common/function-common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';

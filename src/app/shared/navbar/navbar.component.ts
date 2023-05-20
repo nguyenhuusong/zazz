@@ -11,7 +11,7 @@ import { WebsocketService2 } from 'src/app/services/websocket.service';
 import { environment } from 'src/environments/environment';
 import * as CryptoJS from "crypto-js";
 
-const queryString = require('query-string');
+import queryString from 'query-string';
 
 @Component({
   selector: 'app-navbar',

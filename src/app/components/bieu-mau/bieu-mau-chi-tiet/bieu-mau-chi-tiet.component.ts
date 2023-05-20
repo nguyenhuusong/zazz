@@ -5,7 +5,7 @@ import { MenuItem, MessageService } from 'primeng/api';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { cloneDeep } from 'lodash';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 
 @Component({
   selector: 'app-bieu-mau-chi-tiet',

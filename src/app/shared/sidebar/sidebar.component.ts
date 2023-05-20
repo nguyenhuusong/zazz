@@ -5,7 +5,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { environment } from 'src/environments/environment';
 import {Event, RouterEvent, Router, NavigationEnd} from '@angular/router';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { MessageService } from 'primeng/api';
 import { NgxSpinnerService } from 'ngx-spinner';
 declare var $: any;

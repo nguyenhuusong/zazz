@@ -8,7 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { AgGridFn } from 'src/app/common/function-common/common';
 import * as FileSaver from 'file-saver';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 interface DataImport {
   valid: boolean,
   messages: string,

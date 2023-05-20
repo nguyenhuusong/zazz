@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import {MessageService } from 'primeng/api';
 import { NgxSpinnerService } from 'ngx-spinner';
 import * as moment from 'moment';

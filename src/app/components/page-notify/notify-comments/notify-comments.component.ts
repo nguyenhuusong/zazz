@@ -1,11 +1,10 @@
 import { Router } from '@angular/router';
 import { Component, OnInit, Input, OnChanges, SimpleChanges, Output, EventEmitter, ViewChild } from '@angular/core';
-import * as queryString from 'querystring';
-import { ApiService } from 'src/app/services/api.service';
 import { MessageService } from 'primeng/api';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { ACTIONS, CONSTANTS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { Subject, takeUntil } from 'rxjs';
+import queryString from 'query-string';
 @Component({
   selector: 'app-notify-comments',
   templateUrl: './notify-comments.component.html',
