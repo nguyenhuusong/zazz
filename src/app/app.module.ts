@@ -16,13 +16,6 @@ import { FeedBaseService } from './services/firebase.service';
 import { NotificationService } from './services/notification.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { ButtonModule } from 'primeng/button';
-import { FirebaseAuthService } from './services/firebase-auth.service';
-import { AngularFireModule } from '@angular/fire';
-import { environment } from 'src/environments/environment';
-import { AngularFireStorageModule } from '@angular/fire/storage';
-import { AngularFireAuthModule } from '@angular/fire/auth';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
-import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AuthInterceptor } from './services/auth-interceptor';
 import { DialogModule } from 'primeng/dialog';
 import { CurrencyDirectiveModule } from './utils/common/currency.module';
@@ -90,11 +83,6 @@ const APP_CONTAINERS = [DefaultLayoutComponent];
         HttpClientModule,
         FormsModule,
         ReactiveFormsModule,
-        AngularFireModule.initializeApp(environment.firebase),
-        AngularFireStorageModule,
-        AngularFireAuthModule,
-        AngularFirestoreModule,
-        AngularFireDatabaseModule,
         BrowserModule,
         ButtonModule,
         DialogModule,
@@ -135,7 +123,6 @@ const APP_CONTAINERS = [DefaultLayoutComponent];
     providers: [
         AuthService,
         AuthGuardService,
-        FirebaseAuthService,
         ExportFileService,
         ApiService,
         ApiHrmService,

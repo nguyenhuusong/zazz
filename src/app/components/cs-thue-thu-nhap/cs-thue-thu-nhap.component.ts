@@ -1,6 +1,6 @@
 import { ApiService } from './../../services/api.service';
 import { AfterViewChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { ExportFileService } from 'src/app/services/export-file.service';
 import { Router } from '@angular/router';
 import { NotificationService } from 'src/app/services/notification.service';

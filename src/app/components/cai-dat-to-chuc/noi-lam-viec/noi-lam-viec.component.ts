@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
 import { CustomTooltipComponent } from 'src/app/common/ag-component/customtooltip.component';

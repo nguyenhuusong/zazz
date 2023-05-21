@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { ApiService } from 'src/app/services/api.service';
 import { Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';

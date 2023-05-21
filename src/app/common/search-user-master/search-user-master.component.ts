@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { cloneDeep } from 'lodash';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { ApiService } from 'src/app/services/api.service';
 import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
 import { CustomTooltipComponent } from '../ag-component/customtooltip.component';

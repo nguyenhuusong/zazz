@@ -1,6 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import * as queryString from 'querystring'
-import { ApiService } from 'src/app/services/api.service';
+import queryString from 'query-string';
 import { cloneDeep } from 'lodash'
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';

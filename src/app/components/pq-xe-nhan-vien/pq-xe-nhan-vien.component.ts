@@ -1,7 +1,7 @@
 import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { AgGridFn, CheckHideAction, stringtodate } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
@@ -17,7 +17,6 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
 import { fromEvent, Subject, takeUntil } from 'rxjs';
-import { stringify } from 'query-string';
 @Component({
   selector: 'app-pq-xe-nhan-vien',
   templateUrl: './pq-xe-nhan-vien.component.html',
@@ -790,7 +789,8 @@ onCellClicked(event) {
   getEmpVehicleInfo(cardVehicleId = null, empId = null) {
     this.listViews = []
     this.isDetailVehic = true;
-    this.apiService.getEmpVehicleInfo(stringify({cardVehicleId: cardVehicleId, empId: empId}))
+    const queryParams = queryString.stringify({cardVehicleId: cardVehicleId, empId: empId});
+    this.apiService.getEmpVehicleInfo(queryParams)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe((results: any) => { 
       if (results.status === 'success') {

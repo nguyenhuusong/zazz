@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { cloneDeep } from 'lodash';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';

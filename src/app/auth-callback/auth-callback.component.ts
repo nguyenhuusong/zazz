@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
-import { FirebaseAuthService } from '../services/firebase-auth.service';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
@@ -13,7 +12,6 @@ import { map } from 'rxjs/operators';
 export class AuthCallbackComponent implements OnInit {
   constructor(
     private authService: AuthService,
-    private firebaseAuthService: FirebaseAuthService,
     private router: Router,
     private http: HttpClient) { }
 

@@ -3,7 +3,7 @@ import { Component, OnInit, Output, EventEmitter, OnDestroy, Input } from '@angu
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
 import { Subject, takeUntil } from 'rxjs';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 @Component({
   selector: 'app-cung-cap-cccd',
   templateUrl: './cung-cap-cccd.component.html',

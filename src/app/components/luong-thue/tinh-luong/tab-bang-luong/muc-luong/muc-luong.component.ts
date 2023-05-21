@@ -4,7 +4,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { cloneDeep } from 'lodash';
 import { AgGridFn } from 'src/app/common/function-common/common';
 @Component({

@@ -1,6 +1,6 @@
 import { cloneDeep, uniqBy } from 'lodash';
 import { AfterViewChecked, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import * as firebase from 'firebase';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';

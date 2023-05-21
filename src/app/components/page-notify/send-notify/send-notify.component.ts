@@ -7,7 +7,7 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { chunk } from 'lodash'
 import { takeUntil } from 'rxjs/operators';
 import { forkJoin, Subject } from 'rxjs';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { getFieldValueAggrid } from 'src/app/utils/common/function-common';
 @Component({
   selector: 'app-send-notify',

@@ -8,7 +8,7 @@ import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-render
 import { CustomTooltipComponent } from 'src/app/common/ag-component/customtooltip.component';
 import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { HttpParams } from '@angular/common/http';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { DialogService } from 'primeng/dynamicdialog';

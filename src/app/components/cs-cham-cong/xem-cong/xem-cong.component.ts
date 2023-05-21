@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { ActivatedRoute } from '@angular/router';
 import { cloneDeep } from 'lodash';
 import { NgxSpinnerService } from 'ngx-spinner';

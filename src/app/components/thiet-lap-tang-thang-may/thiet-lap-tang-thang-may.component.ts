@@ -6,7 +6,7 @@ import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { CheckHideAction } from 'src/app/common/function-common/common';
 import { ElevatorFloor } from 'src/app/models/elevatorfloor.model';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
-const queryString = require('query-string');
+import queryString from 'query-string';
 @Component({
   selector: 'app-thiet-lap-tang-thang-may',
   templateUrl: './thiet-lap-tang-thang-may.component.html',

@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 import { MessageService } from 'primeng/api';
 import * as firebase from 'firebase';
 import { ApiService } from 'src/app/services/api.service';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import showdown from 'showdown';
 import { MdEditorOption, UploadResult } from 'ngx-markdown-editor';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';

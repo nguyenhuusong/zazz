@@ -4,7 +4,7 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ExportFileService } from 'src/app/services/export-file.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
 import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { EmployeeCardList } from 'src/app/models/cardinfo.model';

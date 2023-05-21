@@ -5,7 +5,7 @@ import { ConfirmationService, MessageService, TreeNode } from 'primeng/api';
 import { finalize, Subject } from 'rxjs';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { ExportFileService } from 'src/app/services/export-file.service';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { cloneDeep } from 'lodash';

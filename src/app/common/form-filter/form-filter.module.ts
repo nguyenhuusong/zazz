@@ -25,22 +25,22 @@ import { ImageModule } from 'primeng/image';
 import { ListGridAngularModule } from '../list-grid-angular/list-grid-angular.module';
 import { PageMarkdownModule } from '../page-markdown/page-markdown.module';
 import { ConfigGridTableFormModule } from '../config-grid-table-form/config-grid-table-form.module';
-import {
-  AutocompleteControlModule
-  , CheckboxControlModule
-  , CheckboxListControlModule
-  , CurrencyControlModule
-  , DatefulltimeControlModule
-  , DatetimeControlModule
-  , DatetimesControlModule
-  , DropdownControlModule
-  , MultiSelectControlModule
-  , NumberControlModule
-  , SelectTreeControlModule
-  , TextAreaControlModule
-  , TextControlModule
-  , TimeonlyControlModule
-} from 'uni-control';
+// import {
+//   AutocompleteControlModule
+//   , CheckboxControlModule
+//   , CheckboxListControlModule
+//   , CurrencyControlModule
+//   , DatefulltimeControlModule
+//   , DatetimeControlModule
+//   , DatetimesControlModule
+//   , DropdownControlModule
+//   , MultiSelectControlModule
+//   , NumberControlModule
+//   , SelectTreeControlModule
+//   , TextAreaControlModule
+//   , TextControlModule
+//   , TimeonlyControlModule
+// } from 'uni-control';
 import { FormFilterComponent } from './form-filter.component';
 import { EditDetailModule } from '../edit-detail/edit-detail.module';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
@@ -75,20 +75,20 @@ import { DynamicDialogModule } from 'primeng/dynamicdialog';
     ButtonModule,
     TooltipModule,
     PageMarkdownModule,
-    AutocompleteControlModule,
-    CheckboxControlModule,
-    CheckboxListControlModule,
-    CurrencyControlModule,
-    DatefulltimeControlModule,
-    DatetimeControlModule,
-    DatetimesControlModule,
-    DropdownControlModule,
-    MultiSelectControlModule,
-    NumberControlModule,
-    SelectTreeControlModule,
-    TextAreaControlModule,
-    TextControlModule,
-    TimeonlyControlModule,
+    // AutocompleteControlModule,
+    // CheckboxControlModule,
+    // CheckboxListControlModule,
+    // CurrencyControlModule,
+    // DatefulltimeControlModule,
+    // DatetimeControlModule,
+    // DatetimesControlModule,
+    // DropdownControlModule,
+    // MultiSelectControlModule,
+    // NumberControlModule,
+    // SelectTreeControlModule,
+    // TextAreaControlModule,
+    // TextControlModule,
+    // TimeonlyControlModule,
     EditDetailModule,
     DynamicDialogModule,EditDetailModule,
   ],
