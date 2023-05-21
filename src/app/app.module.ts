@@ -35,7 +35,6 @@ import {TabMenuModule} from 'primeng/tabmenu';
 import { CalendarModule } from 'primeng/calendar';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { NavbarService } from './services/navbar.service';
-import { CustomTooltipComponent } from './utils/common/customtooltip.component';
 import { TooltipSuggestionComponent } from './utils/common/tooltip-suggestion.component';
 import { DropdownRendererComponent } from './utils/common/dropdown-renderer.component';
 import { DefaultLayoutComponent } from './containers/default-layout';
@@ -70,7 +69,6 @@ const APP_CONTAINERS = [DefaultLayoutComponent];
         NumberCellRenderer,
         TextEditorComponent,
         CheckboxEditorComponent,
-        CustomTooltipComponent,
         TooltipSuggestionComponent,
         DropdownRendererComponent,
         UniNotFoundComponent,

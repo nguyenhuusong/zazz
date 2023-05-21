@@ -46,6 +46,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
         MarginRoundPipe,
         NumericEditor,
         ButtonAgGridComponent,
+        CustomTooltipComponent
 
     ],
     imports: [
@@ -86,8 +87,8 @@ import { MultiSelectModule } from 'primeng/multiselect';
         MarginRoundPipe,
         NumericEditor,
         ButtonAgGridComponent,
-        FormatTimePipe
-
+        FormatTimePipe,
+        CustomTooltipComponent
 
     ],
     entryComponents: [
