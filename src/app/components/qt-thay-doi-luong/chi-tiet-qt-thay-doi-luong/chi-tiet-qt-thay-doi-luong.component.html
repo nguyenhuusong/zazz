@@ -1,28 +1,16 @@
 <div class="main-grid product-detail" *ngIf="!isDialog">
     <section>
-        <div class="breadcrumb">
-            <p-breadcrumb [model]="itemsMenu"></p-breadcrumb>
-            <h3>{{titlePage}}</h3>
-        </div>
-    </section>
-</div>
+        <div class="grid">
+            <div class="col-6">  <div class="breadcrumb">
+                <p-breadcrumb [model]="itemsMenu"></p-breadcrumb>
+                <h3>{{titlePage}}</h3>
+            </div>
 
-<section *ngIf="!isDialog">
-    <div>
-        <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'"
-            [optionsButtonsEdit]="optionsButtonsView" [dataView]="listViews" (callback)="setSalaryInfoDevM($event)" (callBackForm)="callBackForm($event)"
-            (callbackcancel)="cancel($event)"></app-edit-detail>
-            <app-loading-detail 
-                [id]="'sections-2qnt'" 
-                *ngIf="listViews.length === 0">
-            </app-loading-detail>
-            <p-divider></p-divider>
-            <app-thanh-phan-luong [salaryInfoId]="modelEdit.salaryInfoId" *ngIf="detailInfo && detailInfo?.flow_cur > 1"></app-thanh-phan-luong>
-            <app-hop-dong-salary (cancelSave)="getSalaryInfoDevM()" [empId]="detailInfo.empId" [salaryInfoId]="modelEdit.salaryInfoId" *ngIf="detailInfo && detailInfo?.flow_cur > 2"></app-hop-dong-salary>
-            <div class="col-12  flex justify-content-end align-items-center" >
+            </div>
+            <div class="col-6  flex justify-content-end align-items-center" >
                 <div class="field-group select " style="margin-bottom: 0;">
                     <p-dropdown 
-                        *ngIf="listViews.length> 0" 
+                        *ngIf="listViews.length> 0 && status.length > 0" 
                         [options]="status" 
                         (onChange)="UpdateStatus()"
                         [(ngModel)]="selectedStatus" 
@@ -49,6 +37,24 @@
                 <p-splitButton icon="pi pi-send" *ngIf="menuActions.length > 0" styleClass="p-button-sm ml-2" [appendTo]="'body'" (onClick)="callActions(menuActions[0].value)" [label]="menuActions[0].label" [model]="menuActions"></p-splitButton>
                 <p-button label="Quay lại" styleClass="p-button-secondary p-button-sm ml-2" [style]="{'z-index': 9}" icon="pi pi-directions-alt"></p-button>
                   </div>
+        </div>
+      
+    </section>
+</div>
+
+<section *ngIf="!isDialog">
+    <div>
+        <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'" [isHideButton]="true"
+            [optionsButtonsEdit]="optionsButtonsView" [dataView]="listViews" (callback)="setSalaryInfoDevM($event)" (callBackForm)="callBackForm($event)"
+            (callbackcancel)="cancel($event)"></app-edit-detail>
+            <app-loading-detail 
+                [id]="'sections-2qnt'" 
+                *ngIf="listViews.length === 0">
+            </app-loading-detail>
+            <p-divider></p-divider>
+            <app-thanh-phan-luong [salaryInfoId]="modelEdit.salaryInfoId" *ngIf="detailInfo && detailInfo?.flow_cur > 1"></app-thanh-phan-luong>
+            <app-hop-dong-salary (cancelSave)="getSalaryInfoDevM()" [empId]="detailInfo.empId" [salaryInfoId]="modelEdit.salaryInfoId" *ngIf="detailInfo && detailInfo?.flow_cur > 2"></app-hop-dong-salary>
+            
     </div>
        
 </section>

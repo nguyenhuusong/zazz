@@ -85,19 +85,6 @@ export class ChiTietQTThayDoiLuongComponent implements OnInit {
     });
   }
 
-  stepActivated(): void {
-    const stepS = document.querySelectorAll('.steps-contract .p-steps-item');
-    if (stepS.length > 0) {
-      for (let i = 0; i < this.steps.length; i++) {
-        if (i <= this.flowCurrent) {
-          stepS[i].className += ` p-highlight ${i < this.activeIndex ? 'active' : 'remove-active'} ${i < this.flowCurrent && this.flowCurrent !== 1 ? 'active-confirm' : 'remove-active-confirm'}`;
-        } else {
-          stepS[i].className += ` p-highlight ${i < this.activeIndex ? 'active' : 'remove-active'} ${i < this.flowCurrent && this.flowCurrent !== 1 ? 'active-confirm' : 'remove-active-confirm'}`;
-        }
-      }
-    }
-  }
-
   cancel(data) {
     if (data === 'CauHinh') {
       this.getSalaryInfoDevM() 
@@ -109,20 +96,11 @@ export class ChiTietQTThayDoiLuongComponent implements OnInit {
   }
 
   setSalaryInfoDevM(data) {
-    this.listViews = [];
-    if(this.flowCurrent >= this.activeIndex) {
-      const params = {
-        ...this.detailInfo
-        , group_fields: data
-        , flow_cur: this.flowCurrent
-        , action: 'next'
-      }
-      this.cloneListViews = cloneDeep(data); 
-      this.listViews = [];
-      this.callApiInfo(params)
-    }else {
-      this.getSalaryInfoDevM(this.flowCurrent + 1);
+    const params = {
+      ...this.detailInfo
+      , group_fields: data.datas
     }
+    this.callApiInfo(params)
   }
   cloneListViews = []
   callBackForm(event) {
@@ -133,13 +111,7 @@ export class ChiTietQTThayDoiLuongComponent implements OnInit {
       this.cloneListViews = cloneDeep(event.data);
       this.listViews = [];
       this.setSalaryDraft(params);
-    } else {
-      const params = {
-        ...this.detailInfo
-        , group_fields: event.data
-      }
-      this.callApiInfo(params, event.type);
-    }
+    } 
   }
 
   setSalaryDraft(params) {
@@ -148,7 +120,9 @@ export class ChiTietQTThayDoiLuongComponent implements OnInit {
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(results => {
       if (results.status === 'success') {
-        this.modelEdit.salaryInfoId = results.data.salaryInfoId
+        this.modelEdit.salaryInfoId = results.data.salaryInfoId;
+        this.listViews = results.data.group_fields;
+        this.detailInfo = results.data;
         this.spinner.hide();
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
       } else {

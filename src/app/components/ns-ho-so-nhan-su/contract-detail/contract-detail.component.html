@@ -1,6 +1,40 @@
 <div class="main-grid product-detail" *ngIf="url === 'chi-tiet-xu-ly-hop-dong'" >
     <section class="head-detail">
-        <app-hrm-breadcrumb [items]="itemsMenu" ></app-hrm-breadcrumb>
+        <div class="grid">
+            <div class="col-6">
+                <app-hrm-breadcrumb [items]="itemsMenu" ></app-hrm-breadcrumb>
+            </div>
+            <div class="col-6  flex justify-content-end align-items-center" >
+                <div class="field-group select " style="margin-bottom: 0;">
+                    <p-dropdown 
+                        *ngIf="listViews.length> 0" 
+                        [options]="status" 
+                        (onChange)="UpdateStatus()"
+                        [(ngModel)]="selectedStatus" 
+                        [styleClass]="selectedStatus?.bgColor"  
+                        [style]="{'width': '180px'}" 
+                        optionLabel="name"  
+                        placeholder="Select a Country">
+                        <ng-template pTemplate="selectedItem" >
+                            <div class="flex align-items-center gap-2" *ngIf="selectedStatus" >
+                                <div style="color: #fff">{{ selectedStatus.name}}</div>
+                            </div>
+                        </ng-template>
+                        <ng-template let-country pTemplate="item">
+                            <div class="flex align-items-center gap-2" *ngIf="country.value != selectedStatus.value">
+                                <div class="pb-2 pt-2" style="display: flex; align-items: center; width: 100%;justify-content: space-around;font-size: 13px;">
+                                    <span style="white-space:nowrap">{{ country.placeholder }} </span>
+                                    <span class="pi pi-arrow-right" style="font-size: 12px;"></span>
+                                    <span [class]="country.textColor" style="white-space:nowrap" class="pl-2 pr-2">{{ country.name }}</span>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+                <p-splitButton icon="pi pi-send" *ngIf="menuActions.length > 0" styleClass="p-button-sm ml-2" [appendTo]="'body'" (onClick)="callActions(menuActions[0].value)" [label]="menuActions[0].label" [model]="menuActions"></p-splitButton>
+                <p-button label="Quay lại" (onClick)="onBack()" styleClass="p-button-secondary p-button-sm ml-2"  [style]="{'z-index': 9}" icon="pi pi-directions-alt"></p-button>
+                  </div>
+        </div>
     </section>
 </div>
 <p-card *ngIf="url === 'chi-tiet-xu-ly-hop-dong'" >
@@ -40,36 +74,7 @@
             </div>
         </div>  
         <app-hop-dong [contractId]="detailInfo?.contractId" [empId]="modelContractInfo.empId" *ngIf="this.detailInfo?.flow_st > 1" (cancelSave)="getContractInfo()" ></app-hop-dong>
-        <div class="col-12  flex justify-content-end align-items-center" >
-            <div class="field-group select " style="margin-bottom: 0;">
-                <p-dropdown 
-                    *ngIf="listViews.length> 0" 
-                    [options]="status" 
-                    (onChange)="UpdateStatus()"
-                    [(ngModel)]="selectedStatus" 
-                    [styleClass]="selectedStatus?.bgColor"  
-                    [style]="{'width': '180px'}" 
-                    optionLabel="name"  
-                    placeholder="Select a Country">
-                    <ng-template pTemplate="selectedItem" >
-                        <div class="flex align-items-center gap-2" *ngIf="selectedStatus" >
-                            <div style="color: #fff">{{ selectedStatus.name}}</div>
-                        </div>
-                    </ng-template>
-                    <ng-template let-country pTemplate="item">
-                        <div class="flex align-items-center gap-2" *ngIf="country.value != selectedStatus.value">
-                            <div class="pb-2 pt-2" style="display: flex; align-items: center; width: 100%;justify-content: space-around;font-size: 13px;">
-                                <span style="white-space:nowrap">{{ country.placeholder }} </span>
-                                <span class="pi pi-arrow-right" style="font-size: 12px;"></span>
-                                <span [class]="country.textColor" style="white-space:nowrap" class="pl-2 pr-2">{{ country.name }}</span>
-                            </div>
-                        </div>
-                    </ng-template>
-                </p-dropdown>
-            </div>
-            <p-splitButton icon="pi pi-send" *ngIf="menuActions.length > 0" styleClass="p-button-sm ml-2" [appendTo]="'body'" (onClick)="callActions(menuActions[0].value)" [label]="menuActions[0].label" [model]="menuActions"></p-splitButton>
-            <p-button label="Quay lại" (onClick)="onBack()" styleClass="p-button-secondary p-button-sm ml-2"  [style]="{'z-index': 9}" icon="pi pi-directions-alt"></p-button>
-              </div>
+     
 </p-card>
 
 <p-dialog 
