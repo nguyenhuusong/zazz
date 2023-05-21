@@ -11,7 +11,7 @@
                                 [hidden]="!element.isVisiable"
                                 [ngClass]="{'isEmpty': element.isEmpty, 'has-image': includeImage && element?.columnType === 'image', 'image-iam': element?.columnType === 'image'}" 
                                 class="{{element.columnClass}}  col-item filed-filter">
-                                 <!-- <lib-text-control [detail]="detail" [dataView]="dataView" [modelFields]="modelFields" [element]="element" *ngIf="element?.columnType === 'input'" (callbackText)="callbackSearch()" [submit]="submit"></lib-text-control>
+                                 <lib-text-control [detail]="detail" [dataView]="dataView" [modelFields]="modelFields" [element]="element" *ngIf="element?.columnType === 'input'" (callbackText)="callbackSearch()" [submit]="submit"></lib-text-control>
                                 <lib-number-control [detail]="detail" [dataView]="dataView" [modelFields]="modelFields" [element]="element" *ngIf="element?.columnType === 'number'" (callbackNumber)="callbackSearch()" [submit]="submit"></lib-number-control>
                                 <lib-dropdown-control [detail]="detail" [dataView]="dataView" [modelFields]="modelFields" [element]="element" *ngIf="(element?.columnType === 'dropdown') || (element?.columnType === 'select')" (callbackText)="callbackSearch()" [submit]="submit"></lib-dropdown-control>
                                 <lib-currency-control [detail]="detail" [dataView]="dataView" [modelFields]="modelFields" [element]="element" *ngIf="element?.columnType === 'currency'" (callbackCurrency)="callbackSearch()" [submit]="submit"></lib-currency-control>
@@ -24,7 +24,7 @@
                                 <lib-timeonly-control [detail]="detail" [dataView]="dataView" [modelFields]="modelFields" [element]="element" *ngIf="element?.columnType === 'timeonly'" (callbackTimeonly)="callbackSearch()" [submit]="submit"></lib-timeonly-control>
                                 <lib-checkbox-control [detail]="detail" [dataView]="dataView" [modelFields]="modelFields" [element]="element" *ngIf="element?.columnType === 'checkbox'" (callbackCheckbox)="callbackSearch()" [submit]="submit"></lib-checkbox-control>
                                 <lib-checkbox-list-control [detail]="detail" [dataView]="dataView" [modelFields]="modelFields" [element]="element" *ngIf="element?.columnType === 'checkboxList'" (callbackCheckboxList)="callbackSearch()" [submit]="submit"></lib-checkbox-list-control>
-                                <lib-select-tree-control [detail]="detail" [dataView]="dataView" [modelFields]="modelFields" [element]="element" *ngIf="element?.columnType === 'selectTree'" (callbackSelectTree)="callbackSearch()" [submit]="submit"></lib-select-tree-control> -->
+                                <lib-select-tree-control [detail]="detail" [dataView]="dataView" [modelFields]="modelFields" [element]="element" *ngIf="element?.columnType === 'selectTree'" (callbackSelectTree)="callbackSearch()" [submit]="submit"></lib-select-tree-control>
                             </div>
                         </div>
                 

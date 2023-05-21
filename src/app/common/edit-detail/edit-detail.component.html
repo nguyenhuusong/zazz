@@ -1,6 +1,7 @@
-<!-- <div class="wrap-edit-detail" [ngClass]="{'custom-edit': isHideButton}"  [id]="idDetail" *ngIf="dataView.length > 0">
+<div class="wrap-edit-detail" [ngClass]="{'custom-edit': isHideButton}"  [id]="idDetail" *ngIf="dataView.length > 0">
     <div class="grid">
         <ng-container *ngFor="let group of dataView; let idx = index">
+            <!-- //box-item -->
             <div class="{{group.group_column}} ">
                 <div class="border-section">
                     <p-panel>
@@ -11,6 +12,7 @@
                                     <span *ngIf="group.group_name !== 'Giấy tờ'" class="pi pi-cog cursor-pointer" [ngClass]="{'hidden': group.group_name === 'Bàn giao'}" (click)="CauHinh()"></span>
                                     <p-button label="Xử lý bàn giao" *ngIf="group.group_name === 'Bàn giao'" styleClass="p-button-sm" icon="pi pi-check" (click)="onChangeButtonEdit('NghiViec')"></p-button>
                                      </div>
+                                <!-- <p-button label="Thêm mới" icon="pi pi-plus" (click)="addEmpDependent()" styleClass="p-button-sm mr-1"></p-button> -->
                             </div>
                         </ng-template>
                         <ng-template pTemplate="header" *ngIf="!group.group_name && idx === 0">
@@ -19,6 +21,12 @@
                                 </div>
                         </ng-template>
                         <div class="row" style="flex-wrap: wrap">
+                            <!-- <div class="col-md-2 avatar-c" *ngIf="isShowAvatar && detailInfo?.avatarUrl && idx === 0">
+                                <p-image
+                                    src="{{ detailInfo?.avatarUrl ? detailInfo?.avatarUrl : 'https://www.leviateair.com/wp-content/uploads/2017/01/No-Images.jpeg'}}"
+                                    [preview]="true" alt="Image" width="200">
+                                </p-image>
+                            </div> -->
                             <div *ngFor="let element of group.fields;let i=index" 
                             [hidden]="!element.isVisiable"
                             [ngClass]="{'isEmpty': element.isEmpty, 'has-image': includeImage && element?.columnType === 'image', 'image-iam': element?.columnType === 'image'}" 
@@ -64,7 +72,12 @@
                 <span class="button.icon"></span>{{button.label}}
             </button>
         </ng-container>
-       
+        <!-- <p-button styleClass="p-button-sm" (click)="CauHinh()">
+            <svg width="20" height="14px" viewBox="0 0 20 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M19.5 17V0H0.50855L0.5 17H19.5ZM6.675 15.3187H2.21V6.81868H6.675V15.3187ZM8.575 15.3187V6.81868H17.79V15.3187H8.575ZM2.21 1.68132V5.13736H17.79V1.68132H2.21Z" fill="white"/>
+                </svg>&nbsp;
+                Cấu hình 
+        </p-button> -->
     </div>
     <div class="main-grid text-right btn-group-edit-detail" *ngIf = "!isViewButtonTop">
         <ng-container *ngFor="let button of optionsButtonsEdit">
@@ -73,32 +86,10 @@
             <p-button *ngIf="button === 'CauHinh'" (onClick)="onChangeButtonEdit(button.value)" icon="{{button?.icon ? button?.icon : 'pi pi-plus'}}" styleClass="p-button-sm p-button-secondary {{button?.class ? button?.class : ''}} mr-1"></p-button>
         </ng-container>
     </div>
-</div> -->
+</div>
 
 
-<form [formGroup]="form" *ngIf="fields.length > 0" >
-     
-    <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form"></formly-form>
-    <div class="flex justify-content-end pb-4 gap-2 btns-detail">
-    <ng-container *ngFor="let button of buttons">
-        <button pButton  (click)="onChangeButtonEdit(button.value)"  [disabled]="button?.disabled" [class]="button?.class ? button.class: ''">
-          <span *ngIf="button.icon" [class]="button.icon"></span> {{button.label}}</button>
-    </ng-container>
-    <button pButton  (click)="CauHinh()"  class="p-button-sm p-button-secondary">
-      <span  class="uni-icon uni-setting-transparent uni-white-color"></span></button>
-    <button pButton *ngIf="isFiler" class="btn-trans ml-1" icon="pi pi-times" (click)="cancel('Close')">Đóng</button>
-  </div>
-  </form>
-
-
-
-
-
-
-
-
-
-<!-- <p-dialog header="Cài đặt cấu hình " [appendTo]="'body'" [focusTrap]="false" styleClass="popup-setting" [(visible)]="displaySetting" (onHide)="cancel('CauHinh')" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
+<p-dialog header="Cài đặt cấu hình " [appendTo]="'body'" [focusTrap]="false" styleClass="popup-setting" [(visible)]="displaySetting" (onHide)="cancel('CauHinh')" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
 [draggable]="false" [resizable]="false">
 <app-config-grid-table-form *ngIf="displaySetting && gridKey" [typeConfig]="'FormInfo'" (callbackF)="callbackConfigGridTanle($event)"  [gridKey]="gridKey"></app-config-grid-table-form>
 </p-dialog>
@@ -106,4 +97,4 @@
 <p-dialog [(visible)]="displaySetting1" [autoZIndex]="true" header="Cấu hình form group" [modal]="true" [style]="{width: '50vw', height: 'auto'}">
     <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfoConfig" [manhinh]="'Edit'" [isViewButtonTop]="false" [optionsButtonsEdit]="optionsButtonsEdit1"  [dataView]="listViews"
         (callback)="setGroupInfo($event)" (callbackcancel)="quaylai($event)"></app-edit-detail>
-</p-dialog> -->
+</p-dialog>

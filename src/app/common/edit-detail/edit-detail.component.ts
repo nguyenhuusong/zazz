@@ -1,158 +1,233 @@
-import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
-import { BButton, FFields } from './buttons.mode';
-import { TYPES, TYPESAUTOCOMPLETE, TYPESCHECKBOX, TYPESDATETIME, TYPESDROPDOWN, TYPESIMAGE, TYPESINPUT, TYPESMULTISELECT, TYPESRESETPASSWORD, TYPESTEXTAREA, TYPETREESELECT } from './columnTypes';
-import { forkJoin,  of,  Subject,  takeUntil} from 'rxjs';
+import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, OnChanges, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { cloneDeep } from 'lodash';
+import * as moment from 'moment';
 import { ApiService } from 'src/app/services/api.service';
-import { PanelWrapperComponent } from '../formLy/panel-wapper';
+import queryString from 'query-string';
+import { MessageService } from 'primeng/api';
+import { AgGridFn } from 'src/app/utils/common/function-common';
+import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
+import * as numeral from 'numeral';
+import { delay, forkJoin,Subject, takeUntil, tap, timer } from 'rxjs';
+import { setCheckboxradiolistValue, setMembers, setMultiSelectValue, setSelectTreeValue, setValueAndOptions, setValueAndOptionsAutocomplete, setValueAndOptionsAutocompletes } from '../function-common/objects.helper';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ApiHrmV2Service } from 'src/app/services/api-hrm/apihrmv2.service';
-import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
-import { MessageService } from 'primeng/api';
-import { FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+import { TYPESDATETIME } from './columnTypes';
+import { ActionsNotSave, ActionsSave } from './action-types';
 @Component({
   selector: 'app-edit-detail',
   templateUrl: './edit-detail.component.html',
   styleUrls: ['./edit-detail.component.scss']
 })
-export class EditDetailComponent implements OnInit {
-  private _messageService = inject(MessageService);
-  @Input() isFiler: boolean = false;
-  private _appApi = inject(ApiService);
-  private _spinner = inject(NgxSpinnerService);
-  private _apiHrmV2 = inject(ApiHrmV2Service);
-  @Input() buttons: BButton[] = [];
-  @Input() detailInfo: any = null;
-  @Output() close = new EventEmitter<any>();
-  @Input() listForms: any[] = [];
+export class EditDetailComponent implements OnInit, OnChanges {
+  constructor(
+    private apiService: ApiHrmService,
+    private messageService: MessageService,
+    private apiServiceCore: ApiService,
+    private apiHrmV2Service: ApiHrmV2Service,
+    private changeDetech: ChangeDetectorRef,
+    private spinner: NgxSpinnerService,
+    private router: Router,
+
+  ) { }
+  @Output() avatarUrl = new EventEmitter<any>();
   @Output() callback = new EventEmitter<any>();
-  public modelFields: any = {};
-  public includeImage: boolean = false;
-  public isSubmit: boolean = false;
-  form = new FormGroup({});
-  model: any = {};
-  public options: FormlyFormOptions = {
-    formState: {
-      awesomeIsForced: true,
-      tests : [
-        {name: 'dsd', value: 1}
-      ]
-    },
+  @Output() callbackcancel = new EventEmitter<any>();
+  @Output() callbackDataInfo = new EventEmitter<any>();
+  @Output() callback1 = new EventEmitter<any>();
+  @Output() callBackForm = new EventEmitter<any>();
+  @Output() callbackButton = new EventEmitter<any>();
+  @Input() thongtinnhanvienNew: boolean = false;
+  @Input() isUploadMultiple: boolean = true;
+  @Input() isNested: boolean = false;
+  @Input() manhinh;
+  @Input() isHideButton: boolean = false;
+  @Input() dataView = [];
+  @Input() projects = [];
+  @Input() idDetail = 'detail1';
+  includeImage = false;
+  @Input() paramsObject;
+  @Input() detailInfo = null;
+  @Input() isViewButtonTop = true;
+  @Input() optionsEdit = null;
+  @Input() menus = [];
+  @Input() noDisableInput: boolean = false;
+  @Input() isShowAvatar = false;
+
+  buttonSave = 'Update';
+  @Input() formTypeId: string = '';
+  @Input() optionsButtonsEdit: any = [
+    { label: 'Bỏ qua', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times-circle' },
+    { label: 'Lưu lại', value: 'Update', class: '' }
+  ];
+
+  optionsButtonsEdit1: any = [
+    { label: 'Bỏ qua', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times-circle' },
+    { label: 'Lưu lại', value: 'Update', class: '' }
+  ];
+  @Input() modelMarkdow = {
+    type: 1,
+    content: '',
+    attachs: [],
+    attack: false,
+    id: null
   };
-  fields: FormlyFieldConfig[] = [];
-  constructor() {
+  CONSTANTS_NOTIFY = {
+    NOTIFICATION: 'Notification',
+    SMS: 'SMS',
+    EMAIL: 'Email',
+    SUCCESS: 'success'
+  };
+  dropdownList = [
+    { id: 'push', itemName: this.CONSTANTS_NOTIFY.NOTIFICATION },
+    { id: 'sms', itemName: this.CONSTANTS_NOTIFY.SMS },
+    { id: 'email', itemName: this.CONSTANTS_NOTIFY.EMAIL }
+  ];
+  @Input() detail;
+  gridKey = '';
+  displaySetting = false;
+  listViews = [];
+  detailInfoConfig = null;
+  group_cd = '';
+  displaySetting1 = false;
+  public modules: Module[] = AllModules;
+  public agGridFn = AgGridFn;
+  query = {
+    filter: '',
+    offset: 0,
+    pageSize: 15,
+    gridWidth: 0
+  };
+  modelFields = {};
+
+
+  ngAfterViewInit() {
+    this.changeDetech.detectChanges();
   }
 
-
-  ngOnInit() {
-    this.submitMaterial();
-    this.callApiDropdow();
+  // tổ chức hiện tại được chọn
+  organizeInfoServiceId = ''
+  async ngOnInit(): Promise<void> {
+    await this.getOrganizeInfoService();
+    await this.callApiDrop();
   }
 
-  callApiDropdow() {
-    const datas = cloneDeep(this.fields);
-    const promissall: any[] = [];
-    this.listForms.forEach(ffields => {
-      ffields.fields.forEach((ffield: any) => {
-          if(TYPES.indexOf(ffield.columnType) > -1 && ffield.columnObject) {
-            promissall.push(this._apiHrmV2.getCustObjectListV2(ffield.columnObject, `${ffield.field_name}${ffield.group_cd}`));
+  ngOnChanges(changes: SimpleChanges): void {
+  }
+
+  resetData(value) {
+    this.callbackcancel.emit(value);
+  }
+
+  getDataInfo(data) {
+    this.callbackDataInfo.emit(data);
+  }
+
+  submit = false
+  dataViewNew = [];
+
+  getOrganizeInfoService() {
+
+  }
+
+  callApiDrop() {
+    const promissall = [];
+    this.dataViewNew = cloneDeep(this.dataView);
+    this.dataView = [];
+    this.dataViewNew.forEach(element => {
+      element.fields.forEach(element1 => {
+        if ((element1.columnType === 'markdown') || (element1.columnType === 'chips') || (element1.columnType === 'linkUrl') || (element1.columnType === 'linkUrlDrag')) {
+          const dataValidation = {
+            key: `${element1.field_name}${element1.group_cd}`,
+            isRequire: false,
+            error: false,
+            message: ''
           }
-      })
-    });
-    if (promissall && promissall.length > 0) {
-      this.fields = [];
-      forkJoin(promissall.filter(d => d !== undefined))
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((results: any) => {
-        const responses = results.filter((d: any) => d !== undefined);
-        responses.forEach((item: any) => {
-          this.options.formState[item.key] = item.result;
-        });
-        this.fields = cloneDeep(datas);
-      })
-    }
-  }
-
-  private readonly unsubscribe$: Subject<void> = new Subject();
-  ngOnDestroy() {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
-  }
-
-  submitMaterial() {
-    const lisst: any[] = []
-    this.listForms.forEach(ffields => {
-      lisst.push(
-        {
-          fieldGroupClassName: 'grid',
-          className:ffields.group_column,
-          fieldGroup:[{
-            fieldGroupClassName: 'grid',
-            className: 'col-12',
-            wrappers: [PanelWrapperComponent],
-            props: {
-              label: ffields.group_name,
-            },
-            fieldGroup: [...this.forChid(ffields)]
-          }]
+          this.modelFields[`${element1.field_name}${element1.group_cd}`] = dataValidation
+        } else {
+          const dataValidation = {
+            key: `${element1.field_name}${element1.group_cd}`,
+            isRequire: element1.isVisiable && !element1.isEmpty && element1.isRequire ? true : false,
+            error: element1.isVisiable && !element1.isDisable && !element1.isEmpty && element1.isRequire && (element1.columnValue === null || element1.columnValue === "") ? true : false,
+            message: element1.isVisiable && !element1.isDisable && !element1.isEmpty && element1.isRequire && (element1.columnValue === null || element1.columnValue === "") ? 'Trường bắt buộc nhập !' : ''
+          }
+          this.modelFields[`${element1.field_name}${element1.group_cd}`] = dataValidation
         }
-      )
-
+        if (element1.columnType === 'select' || element1.columnType === 'members' || element1.columnType === 'dropdown' || element1.columnType === 'selectTree' || element1.columnType === 'selectTrees'
+          || element1.columnType === 'checkboxList' || element1.columnType === 'checkboxradiolist'
+          || element1.columnType === 'multiSelect' || element1.columnType === 'autocomplete' || element1.columnType === 'autoCompletes') {
+          if (element1.columnObject) {
+            if (element1.columnType === 'selectTree' || element1.columnType === 'selectTrees') {
+              promissall.push(this.apiHrmV2Service.getCustObjectListTreeV2(element1.columnObject, `${element1.field_name}${element1.group_cd}`));
+            } else if (element1.columnType === 'autocomplete') {
+              promissall.push(this.apiHrmV2Service.getAutocompleteLinkApiV2(element1.columnObject, `${element1.field_name}${element1.group_cd}`));
+            }else if (element1.columnType === 'autoCompletes') {
+              promissall.push(this.apiHrmV2Service.getAutocompleteLinkApiV2s(element1.columnObject, `${element1.field_name}${element1.group_cd}`));
+            } else {
+              promissall.push(this.apiHrmV2Service.getCustObjectListV2(element1.columnObject, `${element1.field_name}${element1.group_cd}`));
+            }
+          } else {
+            if (element1.columnType === 'members') {
+              const queryParams = queryString.stringify({ ftUserId: element1.columnValue });
+              promissall.push(this.apiHrmV2Service.getEmployeeSearchGetUserIdV2(queryParams, `${element1.field_name}${element1.group_cd}`));
+            }
+          }
+        }else if(element1.columnType === 'chips') {
+          element1.columnValue = element1.columnValue && typeof element1.columnValue === 'string' ? element1.columnValue.split(',') : []
+        }else if (TYPESDATETIME.indexOf(element1.columnType) > -1) {
+          element1.columnValue = element1.columnValue ? new Date(this.convesrtDate(element1.columnValue)) : ''
+        }
+      });
     });
-    this.fields = [
-      {
-        fieldGroupClassName: 'grid',
-        fieldGroup:lisst
-   }]
-  }
-
-  forChid(ffields: any): any {
-    const newFields: any[] = ffields.fields.map((ffield: FFields) => {
-      return {
-        key: ffield.field_name,
-        defaultValue: this.setValueForm(ffield),
-        type: ffield.columnType && TYPESINPUT.indexOf(ffield.columnType) > -1 ? 'nzInput'
-          : ffield.columnType && TYPESDROPDOWN.indexOf(ffield.columnType) > -1 ? 'nzDropdown'
-            : ffield.columnType && TYPESTEXTAREA.indexOf(ffield.columnType) > -1 ? 'nzTextarea'
-              : ffield.columnType && TYPESCHECKBOX.indexOf(ffield.columnType) > -1 ? 'nzCheckbox'
-                : ffield.columnType && TYPESDATETIME.indexOf(ffield.columnType) > -1 ? 'nzDateTime'
-                  : ffield.columnType && TYPESAUTOCOMPLETE.indexOf(ffield.columnType) > -1 ? 'nzAutocomplete'
-                    : ffield.columnType && TYPETREESELECT.indexOf(ffield.columnType) > -1 ? 'nzTreeSelect'
-                      : ffield.columnType && TYPESMULTISELECT.indexOf(ffield.columnType) > -1 ? 'nzMultiSelect'
-                        : ffield.columnType && TYPESIMAGE.indexOf(ffield.columnType) > -1 ? 'nzImage'
-                          : '',
-        className: ffield.columnClass,
-        hide: !ffield.isVisiable,
-        expressionProperties: {
-          'props.options': `formState.${ffield.field_name}${ffield.group_cd}`
-        },
-        props: {
-          label: ffield.columnLabel,
-          placeholder: ffield.columnLabel,
-          required: ffield.isRequire,
-          disabled: ffield.isDisable,
-          type: ffield.data_type,
-          columnType: ffield.columnType,
-          valueProp: "value",
-          labelProp: 'name',
-          // options: this.options.formState[`${ffield.field_name}${ffield.group_cd}`],
-          change: this.onChangeField.bind(this),
-        },
-      }
-    });
-    return newFields
-  }
-
-  setValueForm(ffield: FFields) {
-    if (TYPESDATETIME.indexOf(ffield.columnType) > -1) {
-      return ffield.columnValue ? new Date(this.convesrtDate(ffield.columnValue)): ''
+    if (promissall.length > 0) {
+      this.spinner.show();
+      forkJoin(promissall.filter(d => d !== undefined))
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((results: any) => {
+          const responses = results.filter(d => d !== undefined);
+          this.spinner.hide();
+          this.dataViewNew.forEach(element => {
+            element.fields.forEach(element1 => {
+              if (responses.map(d => d.key).indexOf(`${element1.field_name}${element1.group_cd}`) > -1) {
+                if (element1.columnType === 'autocomplete' ) {
+                  const datas = responses.filter(d => d.key === `${element1.field_name}${element1.group_cd}`);
+                  setValueAndOptionsAutocomplete(element1, datas[0].result);
+                }else if (element1.columnType === 'autoCompletes') {
+                  const datas = responses.filter(d => d.key === `${element1.field_name}${element1.group_cd}`);
+                  setValueAndOptionsAutocompletes(element1, datas[0].result);
+                }  else if (element1.columnType === 'checkboxradiolist') {
+                  const datas = responses.filter(d => d.key === `${element1.field_name}${element1.group_cd}`);
+                  setCheckboxradiolistValue(element1, datas[0].result)
+                } else if ((element1.columnType === 'selectTree') || (element1.columnType === 'selectTrees')) {
+                  const datas = responses.filter(d => d.key === `${element1.field_name}${element1.group_cd}`);
+                  setSelectTreeValue(element1, datas[0].result);
+                } else if (element1.columnType === 'multiSelect') {
+                  const datas = responses.filter(d => d.key === `${element1.field_name}${element1.group_cd}`);
+                  setMultiSelectValue(element1, datas[0].result)
+                } else if (element1.columnType === 'members') {
+                  const datas = responses.filter(d => d.key === `${element1.field_name}${element1.group_cd}`);
+                  // element1.columnValue = datas[0].result
+                  // this.changeDetech.detectChanges();
+                  setMembers(element1, datas[0].result)
+                } else {
+                  const datas = responses.filter(d => d.key === `${element1.field_name}${element1.group_cd}`);
+                  setValueAndOptions(element1, datas[0].result);
+                }
+              }
+            })
+          })
+          this.dataView = [...this.dataViewNew];
+        });
     } else {
-      return ffield.columnValue == 'true' ? true : ffield.columnValue == 'false' ? false : ffield.columnValue
+      this.spinner.hide();
+      this.dataView = [...this.dataViewNew];
     }
   }
 
   convesrtDate(value: string) {
     const cutString = value.split(' ');
+    console.log(cutString)
     const stringDate = cutString[0].split('/');
     if(cutString.length > 1) {
       return `${stringDate[2]}-${stringDate[1]}-${stringDate[0]} ${cutString[1]}`
@@ -161,205 +236,254 @@ export class EditDetailComponent implements OnInit {
     }
   }
 
-  
-  onClickField(field: FormlyFieldConfig , event: any) {
+  getNode(item) {
+    return {
+      label: item.formTypeName || item.formTypeId,
+      data: item.formTypeId,
+      expandedIcon: "pi pi-folder-open",
+      collapsedIcon: "pi pi-folder",
+      children: item.children
+    };
   }
 
-  onChangeField(field: FormlyFieldConfig , event: any) {
-    const fieldItem: any = this.getValueByKey(field.key);
-    if(fieldItem && fieldItem.columnDisplay) {
-      const fieldsString = fieldItem.columnDisplay.split(",");
-      this.getOptionsField(fieldItem, fieldsString, field);
-    } 
-  }
-
-  getObjectList(props: any, filter: string, field: any) {
-    const fieldItem: any = this.getValueByKey(field.key);
-    if(fieldItem.columnObject) {
-      const apis = fieldItem.columnObject.split("?");
-      fieldItem.columnObject = apis[0].toString() + `?filter=${filter}&userIds=${fieldItem.columnValue}`;
-      this._apiHrmV2.getCustObjectListV2(fieldItem.columnObject, `${fieldItem.field_name}${fieldItem.group_cd}`)
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((results: any) => {
-       props['results'] = results.result;
-      })
-    }
-   
-  }
-
-  getOptionsField(itemField: FFields, fieldsString: any[], field: FormlyFieldConfig) {
-    if(itemField) {
-      const promissall: any[] = [];
-        this.listForms.forEach(ffields => {
-          ffields.fields.forEach((ffield: any) => {
-            if(fieldsString.indexOf(`${ffield.field_name}`) > -1 && ffield.columnObject) {
-              const params = ffield.columnObject.split("?");
-              let params1 = params[1].split("&");
-              const indexparams1 = params1.filter((d: any) => !d.includes(`${itemField.field_name}=`));
-              indexparams1.push(`${itemField.field_name}=${field.formControl?.value}`);
-              ffield.columnObject = params[0]  + `?${indexparams1.join("&")}`
-              promissall.push(this._apiHrmV2.getCustObjectListV2(ffield.columnObject, `${ffield.field_name}${ffield.group_cd}`))
-            }
-          })
-        });
-
-        if (promissall.length > 0) {
-          const datas = cloneDeep(this.fields);
-          this.fields = [];
-          forkJoin(promissall.filter(d => d !== undefined))
-          .pipe(takeUntil(this.unsubscribe$))
-          .subscribe((results: any) => {
-            const responses = results.filter((d: any) => d !== undefined);
-            responses.forEach((item: any) => {
-              this.options.formState[item.key] = item.result;
-            });
-            this.fields = cloneDeep(datas);
-          })
-        }
-    }
-    
-
-  }
-
-  hideGroup() {
-    this.displaySetting = true;
-  }
-
-  getValueByKey(key: any): any {
-    if (this.listForms && this.listForms.length > 0) {
-      let value = {}
-      for (let i = 0; i < this.listForms.length; i++) {
-        for (let j = 0; j < this.listForms[i].fields.length; j++) {
-          if (this.listForms[i].fields[j].field_name === key) {
-            value = this.listForms[i].fields[j];
+  getValueByKey(key) {
+    if (this.dataViewNew && this.dataViewNew.length > 0) {
+      let value = ''
+      for (let i = 0; i < this.dataViewNew.length; i++) {
+        for (let j = 0; j < this.dataViewNew[i].fields.length; j++) {
+          if (this.dataViewNew[i].fields[j].field_name === key) {
+            value = this.dataViewNew[i].fields[j].columnValue;
             break;
           }
         }
       }
       return value
     }
-    return null
   }
 
-  submitForm() {
-    if (this.form.valid) {
-      const object: any = this.form.getRawValue();
-      const objectKeys = Object.keys(object);
-      this.listForms.forEach(ffields => {
-        ffields.fields.forEach((ffield: any) => {
-           if(objectKeys.indexOf(ffield.field_name) > -1) {
-            ffield.columnValue = object[ffield.field_name] || null;
-           }
-        })
-      });
-      this.callback.emit({
-        forms: this.listForms,
-        actions: 'Save'
-      })
-
+  // { label: 'Quay lại', value: 'BackPage', class: `p-button-secondary ${results.data.prev_st ? '' : 'hidden'}`, icon: 'pi pi-caret-left', },
+  //         { label: 'Tiếp tục', value: 'Update', class: `btn-accept ${results.data.next_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-caret-right' },
+  //         { label: 'Lưu tạm', value: 'SaveNhap', class: `btn-accept ${results.data.save_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
+  //         { label: 'Xác nhận', value: 'Submit', class: `btn-accept ${results.data.submit_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
+  //         { label: 'Đóng', value: 'Close', class: `p-button-danger ml-1`, icon: 'pi pi-times' }
+  onChangeButtonEdit(event) {
+    if (ActionsSave.indexOf(event) > -1) {
+      this.submit = true;
+      for (let item in this.modelFields) {
+        if (this.modelFields[item].error) {
+          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Dữ liệu thiếu !' });
+          return
+        }
+      }
+      let group_fields = cloneDeep(this.dataView)
+      this.callbackform(group_fields, event)
+    }else if(ActionsNotSave.indexOf(event) > -1) {
+      let group_fields = cloneDeep(this.dataView)
+      this.callbackform(group_fields, event)
+    }else if(event === 'Update' || event ==='newUpdate' || event ==='Submit') {
+      let group_fields = cloneDeep(this.dataView)
+      this.callbackform(group_fields, event)
+    } else if (event === 'TamTinh') {
+      this.submit = true;
+      for (let item in this.modelFields) {
+        if (this.modelFields[item].error) {
+          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Dữ liệu thiếu !' });
+          return
+        }
+      }
+      this.submit = false;
+      let group_fields = cloneDeep(this.dataView)
+      this.callbackform(group_fields, 'TamTinh')
+    } else if (event === 'ReHire') {
+      this.callbackButton.emit({ type: 'rehire', data: null });
+    } else if (event === 'ADDROW') {
+      let group_fields = cloneDeep(this.dataView)
+      this.callbackform(group_fields, 'ADDROW');
+    } else if(event === 'Close') {
+      this.callbackcancel.emit('Close')
+    } else {
+      this.cancel(event);
     }
   }
 
-  
-  cancel(type: string) {
-    this.close.emit({ event: type, datas: this.listForms });
+  onChangeIsSpecial($event) {
+    let group_fields = cloneDeep(this.dataView)
+    this.callbackform(group_fields, 'IsSpecial');
   }
 
-  // cấu hình
-  buttons1: any = [
-    { label: 'Đóng', value: 'Cancel', class: 'p-button p-button-secondary', icon: 'pi pi-times-circle' },
-    { label: 'Lưu lại', value: 'Update', class: '' }
-  ];
-  gridKey: string = '';
-  group_cd: string = '';
-  listViews: any[] = [];
-  detailInfoConfig: any = null;
-  displaySetting1: boolean = false;
-  displaySetting: boolean = false;
+
+  callbackform(group_fields, type) {
+    group_fields.forEach(results => {
+      results.fields.forEach(data => {
+        if (data.columnType === 'datetime' && data.isVisiable) {
+          if (data.columnValue) {
+            data.columnValue = typeof data.columnValue === 'string' ? data.columnValue : moment(data.columnValue).format('DD/MM/YYYY');
+          } else {
+            data.columnValue = data.columnValue;
+          }
+        } else if (data.columnType === 'datefulltime' && data.isVisiable) {
+          if (data.columnValue) {
+            data.columnValue = typeof data.columnValue === 'string' ? data.columnValue : moment(data.columnValue).format('DD/MM/YYYY HH:mm:ss');
+          } else {
+            data.columnValue = data.columnValue;
+          }
+        } else if (data.columnType === 'timeonly') {
+          data.columnValue = typeof data.columnValue === 'string' ? `${data.columnValue}:00` : moment(data.columnValue).format('HH:mm');
+          // data.columnValue = typeof data.columnValue === 'string' ? `${data.columnValue}:00` : null;
+        } else if (data.columnType === 'selectTree') {
+          data.columnValue = data.columnValue ? data.columnValue.orgId : null;
+          delete data.options;
+        }  else if (data.columnType === 'autoCompletes') {
+          data.columnValue = data.columnValue &&  data.columnValue.length > 0 ? data.columnValue.map(d => d.code).toString() : null;
+          delete data.options;
+        } else if (data.columnType === 'selectTrees') {
+          data.columnValue = data.columnValue && data.columnValue.length > 0 ? data.columnValue.map(d => d.orgId).toString() : null;
+          delete data.options;
+        } else if (data.columnType === 'currency') {
+          data.columnValue = numeral(data.columnValue).value()
+        } else if (data.columnType === 'members') {
+          delete data.options;
+        } else if (data.columnType === 'linkUrlDrag' || data.columnType === 'listMch') {
+          data.columnValue = (data.columnValue && data.columnValue.length) > 0 ? data.columnValue.toString() : '';
+        } else if ((data.columnType === 'select' || data.columnType === 'multiSelect' || data.columnType === 'dropdown' || data.columnType === 'checkboxList') && data.options) {
+          if (data.columnType === 'multiSelect') {
+            if (data.columnValue && data.columnValue.length > 0) {
+              // data.columnValue = data.columnValue.map(d => d.code);
+              data.columnValue = data.columnValue.toString()
+            } else {
+              data.columnValue = null;
+            }
+            delete data.options;
+
+          } else if (data.columnType === 'checkboxList') {
+            if (data.columnValue && data.columnValue.length > 0) {
+              data.columnValue = data.columnValue.toString();
+            }
+            delete data.options;
+          } else {
+            data.columnValue = data.columnValue;
+            delete data.options;
+
+          }
+        } else if (data.columnType === 'chips') {
+          data.columnValue = data.columnValue ? data.columnValue.toString() : '';
+        } else if (data.columnType === 'onOff') {
+          data.columnValue = data.columnValue ? "1" : "0"
+        } else {
+          data.columnValue = data.columnValue;
+          if (data.columnType === 'number' && data.data_type === 'int') {
+            data.columnValue = data.columnValue ? this.formatNumber(+data.columnValue) : 0;
+            data.columnValue = numeral(data.columnValue).value();
+          }
+        }
+
+      })
+    });
+    if (ActionsSave.indexOf(type) > -1) {
+      this.callback.emit({
+        datas: group_fields,
+        event: type
+      });
+    }else if(ActionsNotSave.indexOf(type) > -1) {
+      this.callback.emit({
+        datas: group_fields,
+        event: type
+      });
+    }else if(type === 'Update' || type ==='newUpdate') {
+      this.callback.emit(group_fields);
+    } else if (type === 'SaveNhap' || type === 'Submit' || 'IsSpecial' || 'ADDROW') {
+      this.callBackForm.emit({ data: group_fields, type: type })
+    } else {
+      this.callback1.emit(group_fields);
+    }
+  }
+
+  formatNumber(value) {
+    return numeral(value).format('0,0[.][00]');
+  }
+
+  cancel(event) {
+    this.callbackcancel.emit(event);
+  }
+
   CauHinh() {
-    console.log(this.detailInfo.tableKey)
-    this.gridKey = this.detailInfo.tableKey
+    console.log(this.detail.tableKey)
+    this.gridKey = this.detail.tableKey
     this.displaySetting = true;
   }
 
-  callbackConfigGridTanle(event: any) {
+  callbackConfigGridTanle(event) {
     this.group_cd = event;
     this.getGroupInfo();
   }
 
-  onChangeButtonEdit(action: string | undefined) {
-    this.options.formState.submitted = true;
-    if (this.form.valid) {
-      const object: any = this.form.getRawValue();
-      const objectKeys = Object.keys(object);
-      this.listForms.forEach(ffields => {
-        ffields.fields.forEach((ffield: any) => {
-          if (objectKeys.indexOf(ffield.field_name) > -1) {
-            if (TYPESMULTISELECT.indexOf(ffield.columnType) > -1) {
-              ffield.columnValue = object[ffield.field_name].toString() || null;
-            } else {
-              ffield.columnValue = object[ffield.field_name] || null;
-            }
-          }
-        })
-      });
-      this.options.formState.submitted = false;
-      this.callback.emit({
-        forms: this.listForms,
-        model: this.model,
-        actions: 'Save'
-      })
-
-    } else {
-      this._messageService.add({ severity: 'error', summary: 'Dữ liệu thiếu !'});
-    }
-  }
-
   getGroupInfo() {
-    this.listViews = [];
-    const queryParams = queryString.stringify({ group_key: this.detailInfo.groupKey, group_cd: this.group_cd });
-    this._appApi.getGroupInfo(queryParams)
+    const queryParams = queryString.stringify({ group_key: this.detail.groupKey, group_cd: this.group_cd });
+    this.apiServiceCore.getGroupInfo(queryParams)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {
         if (results.status === 'success') {
           const listViews = cloneDeep(results.data.group_fields);
           this.listViews = [...listViews];
           this.detailInfoConfig = results.data;
-          this.displaySetting = false;
           this.displaySetting1 = true;
         }
       });
   }
 
-  setGroupInfo(data: any) {
-    this._spinner.show();
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
+  setGroupInfo(data) {
+    this.spinner.show();
     const params = {
-      ...this.detailInfoConfig, group_fields: data.forms
+      ...this.detailInfoConfig, group_fields: data
     }
-    this._appApi.setGroupInfo(params)
+    this.apiServiceCore.setGroupInfo(params)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((results: any) => {
         if (results.status === 'success') {
-          this._messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
-          this._spinner.hide();
+          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
+          this.spinner.hide();
           this.displaySetting1 = false;
           // this.load();
         } else {
-          this._messageService.add({
+          this.messageService.add({
             severity: 'error', summary: 'Thông báo',
             detail: results.message
           });
-          this._spinner.hide();
+          this.spinner.hide();
         }
-      })
+      }), error => {
+        this.spinner.hide();
+      };
   }
 
+  avatarUrlCallback(url) {
+    this.avatarUrl.emit(url);
+  }
 
-  quaylai(data: any) {
+  memberGetQuery(event) {
+    // this.getHrmMeetingPerson(element, event, organizeId, orgId )
+  }
+
+  getFilesDrag(event) {
+    this.callback1.emit(event);
+  }
+
+  quaylai(data) {
     this.displaySetting1 = false;
   }
 
+  getValueTree(event) {
+    this.dataView = cloneDeep(event)
+  }
 
+  emitChipsValue(event) {
+    this.callback1.emit(event);
+  }
 
 }
-
