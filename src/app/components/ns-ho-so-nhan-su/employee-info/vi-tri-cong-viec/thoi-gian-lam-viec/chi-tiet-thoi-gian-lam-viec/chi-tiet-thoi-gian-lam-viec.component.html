@@ -35,7 +35,7 @@
                         </div>
                     </ng-template>
                     <ng-template let-country pTemplate="item">
-                        <div class="flex align-items-center gap-2" *ngIf="country.value != selectedStatus.value">
+                        <div class="flex align-items-center gap-2" *ngIf="country.value != selectedStatus?.value">
                             <div class="pb-2 pt-2" style="display: flex; align-items: center; width: 100%;justify-content: space-around;font-size: 13px;">
                                 <span style="white-space:nowrap">{{ country.placeholder }} </span>
                                 <span class="pi pi-arrow-right" style="font-size: 12px;"></span>

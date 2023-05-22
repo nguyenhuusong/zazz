@@ -138,6 +138,7 @@ export class ViTriCongViecComponent implements OnInit, AfterViewInit {
         if(results.data.status) {
           this.status.push(results.data.status);
         }
+        console.log(this.status )
         this.selectedStatus = results.data.status;
         this.listViews = cloneDeep(results.data.group_fields || []);
         this.listViewsForm = cloneDeep(results.data.group_fields || []);

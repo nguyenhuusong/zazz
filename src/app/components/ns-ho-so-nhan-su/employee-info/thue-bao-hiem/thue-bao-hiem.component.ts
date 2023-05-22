@@ -83,32 +83,32 @@ export class ThueBaoHiemComponent implements OnInit {
 
   }
   
-  callActions(e) {
-
+  callActions(code) {
+    this[code]();
   }
 
   optionsButon = [];
   menuActions = [];
   initButton() {
-    this.optionsButon = this.detailInfo.actions.map(item => {
-      return {
-        label: item.name,
-        value: item.code,
-        icon: item.icon
-      }
-    });
-
-    // this.menuActions = this.detailInfo.actions.map((item, index) => {
+    // this.optionsButon = this.detailInfo.actions.map(item => {
     //   return {
     //     label: item.name,
     //     value: item.code,
-    //     styleClass: index === 0 ? 'hidden' : '',
-    //     icon: item.icon,
-    //     command: () => {
-    //       this.callActions(item.code);
-    //     }
+    //     icon: item.icon
     //   }
     // });
+
+    this.menuActions = this.detailInfo.actions.map((item, index) => {
+      return {
+        label: item.name,
+        value: item.code,
+        styleClass: index === 0 ? 'hidden' : '',
+        icon: item.icon,
+        command: () => {
+          this.callActions(item.code);
+        }
+      }
+    });
   }
  
 
@@ -174,7 +174,7 @@ export class ThueBaoHiemComponent implements OnInit {
   }
 
   isEditDetail = false;
-  editDetail() {
+  actView() {
     this.isEditDetail = true;
   }
 
