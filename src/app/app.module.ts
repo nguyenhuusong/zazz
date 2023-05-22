@@ -58,6 +58,8 @@ import {
   } from 'uni-control';
 import { ErrorService } from './services/error.service';
 import { EmployeeSaveService } from './services/employee-save.service';
+import { TabCandidateInterviewComponent } from './components/ns-tuyen-dung/chi-tiet-tuyen-dung/tab-candidate-interview/tab-candidate-interview.component';
+import { TabCandidateFinalComponent } from './components/ns-tuyen-dung/chi-tiet-tuyen-dung/tab-candidate-final/tab-candidate-final.component';
 const APP_CONTAINERS = [DefaultLayoutComponent];
 @NgModule({
     declarations: [
@@ -71,7 +73,7 @@ const APP_CONTAINERS = [DefaultLayoutComponent];
         CheckboxEditorComponent,
         TooltipSuggestionComponent,
         DropdownRendererComponent,
-        UniNotFoundComponent,
+        UniNotFoundComponent
         
     ],
     imports: [

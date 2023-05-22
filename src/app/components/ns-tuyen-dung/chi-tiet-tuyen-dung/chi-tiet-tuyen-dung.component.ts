@@ -151,6 +151,10 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
         }
       });
   }
+  
+  callBackCandidateFile() {
+    this.getCandidateInfo();
+  }
 
   recruiUpdateStatus() {
     const params = {
