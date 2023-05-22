@@ -58,9 +58,15 @@
                 <app-loading-detail [id]="'chi-tiet-tuyen-dung'" *ngIf="listViews.length === 0">
                 </app-loading-detail>
             </p-tabPanel>
-            <p-tabPanel header="Thông tin hồ sơ cá nhân" *ngIf="custId">
+            <p-tabPanel header="Thông tin phỏng vấn" *ngIf="custId">
+                
+            </p-tabPanel>
+            <p-tabPanel header="Thông tin đi làm" *ngIf="custId">
+                
+            </p-tabPanel>
+            <p-tabPanel header="Hồ sơ cá nhân" *ngIf="custId">
                 <app-chi-tiet-ho-so-ca-nhan 
-                    *ngIf="tabIndex === 1" 
+                    *ngIf="tabIndex === 3" 
                     [isDialog]="true" [displayCustomerProfile]="false" [custId]="custId"
                     [canId]="modelEdit.canId" 
                     (callback)="callbackSaveProfile()">
