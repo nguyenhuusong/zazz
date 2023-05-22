@@ -236,6 +236,7 @@ export class ViTriCongViecComponent implements OnInit, AfterViewInit {
   }
   displayFormTerminate = false;
   actTerminate() {
+    
     this.modelDuyet.empId = this.dataEmployeeStatus.empId;
     this.modelDuyet.full_name = this.dataEmployeeStatus.fullName;
     this.titleForm.title = 'Xác nhận nhân viên nghỉ việc';

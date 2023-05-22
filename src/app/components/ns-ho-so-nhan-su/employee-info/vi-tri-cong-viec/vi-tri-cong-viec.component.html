@@ -162,11 +162,14 @@
 <app-edit-vi-tri-cong-viec *ngIf="isEditDetail" [isEditDetail]="isEditDetail" [empId]="empId" (cancelSave)="cancelSetDetail($event)"></app-edit-vi-tri-cong-viec>
 
 
-<p-dialog styleClass="popup-btngroup-edit-detail" [maximizable]="true" header=" Xác nhận nhân viên nghỉ việc" [(visible)]="displayFormTerminate" [modal]="true"  [draggable]="false" [resizable]="false"
+<!-- <p-dialog styleClass="popup-btngroup-edit-detail" [maximizable]="true" header=" Xác nhận nhân viên nghỉ việc" [(visible)]="displayFormTerminate" [modal]="true"  [draggable]="false" [resizable]="false"
     [style]="{width: '80vw'}" [autoZIndex]=true [draggable]="false" [resizable]="false">
-    <app-detail-terminate *ngIf="displayFormTerminate && empId" [isDialog]="true" [id]="" [empId]="empId" (callback)="cancelSetDetail($event)"></app-detail-terminate>
+    {{empId}}
 
-</p-dialog>
+</p-dialog> -->
+
+<app-detail-terminate *ngIf="displayFormTerminate && empId" [isEditDetail]="displayFormTerminate" [isDialog]="true" [id]="" [empId]="empId" (callback)="cancelSetDetail($event)"></app-detail-terminate>
+
 
 <p-dialog  header="Đổi người quản lý"
     [(visible)]="isShowInfoMg" 
