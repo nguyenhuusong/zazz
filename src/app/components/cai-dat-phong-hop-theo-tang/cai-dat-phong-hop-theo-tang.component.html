@@ -8,7 +8,7 @@
         </div>
         <div class="table-tool grid white-background black-box-shadow-005 filterInput justify-content-start">
             <div class="header-filter-search col-4">
-                <div class="field-group text search mb-0" [ngClass]=" model.filter ? 'valid' : 'invalid' ">
+                <div class="fields search mb-0" [ngClass]=" model.filter ? 'valid' : 'invalid' ">
                     <label>Mã, tên nhóm</label>
                     <input class="input-default" type="text" id="filter"
                     (keydown.enter)="model.offSet = 0; first = 0;load()"

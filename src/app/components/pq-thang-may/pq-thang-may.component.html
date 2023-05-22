@@ -7,7 +7,7 @@
   <section class="bread-filter">
     <div class="d-flex bottom gap-16">
         <div class="col-item">
-          <div class="field-group text mb-0 " [ngClass]="key_car ? 'valid' : 'invalid' ">
+          <div class="fields mb-0 " [ngClass]="key_car ? 'valid' : 'invalid' ">
               <p-autoComplete placeholder="Nhập mã thẻ để tìm kiếm" [(ngModel)]="key_car" name="key_car" [suggestions]="listCars" (onSelect)="selectedItem1($event)"
               (completeMethod)="getCardCustomers($event)" field="fullNameAndCar"></p-autoComplete>
           </div>

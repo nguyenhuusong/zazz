@@ -1,7 +1,7 @@
 <section class="bread-filter d-flex end bottom">
     <div class=" d-flex end middle">
         <div class="filter filter-search">
-            <div class="field-group text search mb-0" [ngClass]=" query.filter ? 'valid' : 'invalid' ">
+            <div class="fields search mb-0" [ngClass]=" query.filter ? 'valid' : 'invalid' ">
                 <input class="input-default" placeholder="Tìm kiếm" type="text" autocomplete="off" id="filter"
                     (keydown.enter)="query.offSet = 0; first = 0;load()"
                     [(ngModel)]="query.filter">

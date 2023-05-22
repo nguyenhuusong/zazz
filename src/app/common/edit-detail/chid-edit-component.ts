@@ -15,7 +15,7 @@ import { forkJoin } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
 @Component({
   selector: 'app-type-image',
-  template: ` <div class="wrap-image">
+  template: ` <div class="fields">
                <p-image *ngIf="element.columnValue" src="{{element.columnValue}}" alt="Image" height="100" [preview]="true"></p-image>
                <p-image *ngIf="!element.columnValue" src="/assets/images/no-image2.png" alt="Image" height="100" [preview]="true"></p-image>
                <label class="upload" for="myfiless1-{{ element.field_name }}" *ngIf="!element.columnValue">
@@ -102,7 +102,7 @@ export class AppTypeImageComponent implements OnInit {
 
 @Component({
   selector: 'app-type-text',
-  template: ` <div class="field-group text" [ngClass]=" element.columnValue ? 'valid' : 'invalid' ">
+  template: ` <div class="fields" [ngClass]=" element.columnValue ? 'valid' : 'invalid' ">
   <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="modelFields[element.field_name+element.group_cd] && modelFields[element.field_name+element.group_cd].isRequire">*</span></label>
                   <input type="text" class="form-control" [(ngModel)]="element.columnValue" (change)="onChangeValue($event.target, element.field_name, element)"
                   name={{element.field_name}} [disabled]="element.isDisable"
@@ -165,7 +165,7 @@ export class AppTypeTextComponent implements OnInit {
 @Component({
   selector: 'app-type-select',
   template: `   
-          <div class="field-group select" [ngClass]=" element.columnValue ? 'valid' : 'invalid' ">
+          <div class="fields" [ngClass]=" element.columnValue ? 'valid' : 'invalid' ">
           <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
             <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"  [filterBy]="'label'"
               [disabled]="element.isDisable" [options]="element.options" (onChange)="onChangeValue($event.target, element.field_name, element)"
@@ -217,7 +217,7 @@ export class AppTypeSelectComponent implements OnInit {
 @Component({
   selector: 'app-type-selectTree',
   template: `  
-     <div class="field-group select treeselect" [ngClass]="'valid'" > 
+     <div class="fields" [ngClass]="'valid'" > 
      <label class="text-nowrap label-tex" pTooltip="{{element?.columnValue?.orgPath}}" 
       tooltipPosition="top">{{element.columnLabel}}  
       <span *ngIf="element.columnValue" 
@@ -365,7 +365,7 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
 @Component({
   selector: 'app-type-selectTrees',
   template: `  
-     <div class="field-group select treeselect" [ngClass]="'valid'" > 
+     <div class="fields" [ngClass]="'valid'" > 
      <label class="text-nowrap label-tex" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
      <p-treeSelect [appendTo]="'body'"
        [options]="element.options || []" [(ngModel)]="element.columnValue" [metaKeySelection]="false" selectionMode="multiple"
@@ -431,7 +431,7 @@ export class AppTypeSelectTreesComponent implements OnInit, OnChanges {
 @Component({
   selector: 'app-type-dropdown',
   template: `   
-          <div class="field-group select " [ngClass]=" element.columnValue ? 'valid' : 'invalid' " >
+          <div class="fields" [ngClass]=" element.columnValue ? 'valid' : 'invalid' " >
           <div class="uni-load " [ngClass]="loading ? 'loading' : ''"></div>
           <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
                 <p-dropdown appendTo="body" [baseZIndex]="100"
@@ -800,7 +800,7 @@ export class AppTypeDropdownComponent implements OnInit, AfterViewChecked {
 
 @Component({
   selector: 'app-type-number',
-  template: `   <div class="field-group" [ngClass]=" element.columnValue ? 'valid' : 'invalid' ">
+  template: `   <div class="fields" [ngClass]=" element.columnValue ? 'valid' : 'invalid' ">
   <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
                   <input type="number" oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : 0" class="form-control" [(ngModel)]="element.columnValue" [min]=0
                     name={{element.field_name}} [disabled]="element.isDisable" (change)="onChangeValue($event.target, element.field_name, element)"
@@ -866,7 +866,7 @@ export class AppTypeNumberComponent implements OnInit {
 
 @Component({
   selector: 'app-type-currency',
-  template: `   <div class="field-group text" [ngClass]=" element.columnValue ? 'valid' : 'invalid' ">
+  template: `   <div class="fields" [ngClass]=" element.columnValue ? 'valid' : 'invalid' ">
   <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
                   <input maxLength=18 type="text" (change)="changePrice($event, element.field_name, element)"
                   class="form-control" [(ngModel)]="element.columnValue" currency name={{element.field_name}}
@@ -912,7 +912,7 @@ export class AppTypeCurrencyComponent implements OnInit {
 @Component({
   selector: 'app-type-checkbox',
   template: `   
-                <div class="field-group checkbox">
+                <div class="fields">
                 <label for="{{ element.field_name }}" pTooltip="{{element.columnLabel}}" tooltipPosition="top" class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
                  <div class="checkbox-wrap"> <p-checkbox inputId="{{ element.field_name }}" name={{element.field_name}} [binary]="true" 
                   [required]="element.isRequire && element.isVisiable && !element.isEmpty" [disabled]="element.isDisable"
@@ -993,7 +993,7 @@ export class AppTypeCheckboxComponent implements OnInit {
 @Component({
   selector: 'app-type-textarea',
   template: `   
-              <div class="field-group textarea">
+              <div class="fields">
               <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
                   <textarea type="text" placeholder="" class="form-control"
                   [(ngModel)]="element.columnValue" name={{element.field_name}} [disabled]="element.isDisable"
@@ -1035,7 +1035,7 @@ export class AppTypeTextareaComponent implements OnInit {
 @Component({
   selector: 'app-type-datetime',
   template: `   
-  <div class="field-group date valid">
+  <div class="fields">
   <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
                   <p-calendar placeholder="DD/MM/YYYY" appendTo="body" [baseZIndex]="101" [disabled]="element.isDisable" (onSelect)="onChangeValue($event, element.field_name)"
                   [(ngModel)]="element.columnValue" [monthNavigator]="true" [yearNavigator]="true" (onBlur)="onChangeValue($event, element.field_name)"
@@ -1086,7 +1086,7 @@ export class AppTypeDatetimeComponent implements OnInit, OnChanges {
 @Component({
   selector: 'app-type-datefulltime',
   template: `   
-            <div class="field-group date" [ngClass]=" element.columnValue ? 'valid' : 'invalid' ">
+            <div class="fields" [ngClass]=" element.columnValue ? 'valid' : 'invalid' ">
             <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
             <p-calendar placeholder="DD/MM/YYYY hh:ss" appendTo="body" [baseZIndex]="101" [disabled]="element.isDisable"
                   [(ngModel)]="element.columnValue" [monthNavigator]="true" [showTime]="true" hourFormat="24" [yearNavigator]="true"
@@ -1123,7 +1123,7 @@ export class AppTypeDatefulltimeComponent implements OnInit {
 
 @Component({
   selector: 'app-type-timeonly',
-  template: `   <div class="field-group date" [ngClass]=" element.columnValue ? 'valid' : 'invalid' ">
+  template: `   <div class="fields" [ngClass]=" element.columnValue ? 'valid' : 'invalid' ">
                 <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
                 <div>
                 <p-calendar appendTo="body" [baseZIndex]="101" [disabled]="element.isDisable"
@@ -1161,7 +1161,7 @@ export class AppTypeTimeonlyComponent implements OnInit {
 
 @Component({
   selector: 'app-type-multiSelect',
-  template: `   <div class="field-group multi-select">
+  template: `   <div class="fields">
                   <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
                   <p-multiSelect 
                   [options]="element.options" 
@@ -1269,7 +1269,7 @@ export class AppTypeMultiSelectComponent implements OnInit {
 
 @Component({
   selector: 'app-type-markdown',
-  template: `  <div class="wrap-markdown"> <h3 class="text-nowrap label-text" >{{element.columnLabel}}</h3>
+  template: `  <div class="wrap-markdown fields"> <h3 class="text-nowrap label-text" >{{element.columnLabel}}</h3>
                 <app-page-markdown [modelMarkdow]="modelMarkdow" [element]="element" ></app-page-markdown>
                 </div>
                 `,
@@ -1310,7 +1310,7 @@ export class AppTypeMarkdownComponent implements OnInit {
 // checkboxList
 @Component({
   selector: 'app-type-checkboxList',
-  template: `   
+  template: `   <div class="fields">
                 <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
                 <div>
                       <div *ngFor="let item of element.options">
@@ -1326,6 +1326,7 @@ export class AppTypeMarkdownComponent implements OnInit {
                     Trường bắt buộc nhập!
                     </div>
                 </div>
+            </div>
             </div>
                 `,
 })
@@ -1349,7 +1350,7 @@ export class AppTypeCheckboxListComponent implements OnInit {
 // checkboxRadioList
 @Component({
   selector: 'app-type-checkboxradiolist',
-  template: `   
+  template: `   <div class="fields">
                 <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
                 <div>
                       <div *ngFor="let item of element.options">
@@ -1365,6 +1366,7 @@ export class AppTypeCheckboxListComponent implements OnInit {
                     Trường bắt buộc nhập!
                     </div>
                 </div>
+            </div>
             </div>
                 `,
 })
@@ -1388,7 +1390,7 @@ export class AppTypeCheckboxRadioListComponent implements OnInit {
 @Component({
   selector: 'app-type-linkurl',
   template: `   
-            <div class="field-group attach-file">
+            <div class="fields file">
             <label  class="text-nowrap label-text" >{{element.columnLabel}}</label>
                     <div class="control-image" style="display: flex" *ngIf="this.element.columnValue">
                       <input type="text" [disabled]="element.isDisable"  class="form-control" (change)="setvalueImage($event)" [value]="this.element.columnValue">
@@ -1553,7 +1555,7 @@ export class AppTypeLinkUrlRadioListComponent implements OnInit {
   selector: 'app-type-linkurl-drag',
   template: `   
             <div class="linkurl-drag">
-            <div class="wrap-upload">
+            <div class="fields wrap-upload">
                       <p-fileUpload accept="image/jpeg,image/png,image/jpg,image/gif,.mp4,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/pdf,application/msword,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.wordprocessingml.document" 
                       *ngIf="!isUpload" [chooseLabel]="''" [chooseIcon]="''"  
                       [multiple]="isUploadMultiple ? true : null" [showUploadButton]="false" [showCancelButton]="false" [customUpload]="true" name="demo[]" 
@@ -1737,7 +1739,7 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
 // Members
   @Component({
     selector: 'app-type-members',
-    template: `   <div class="wrap-members field-group">
+    template: `   <div class="fields">
                     <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
                     <div class="in d-flex bet middle">
                       <ul class="members-filed">
@@ -2018,7 +2020,7 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
 // chips, member out company
 @Component({
   selector: 'app-type-chips',
-  template: `   <div class="fileds field-group">
+  template: `   <div class="fileds">
                   <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
                   <div class="">
                     <p-chips (onRemove)="onRemove($event)" (onAdd)="onAddAchip($event)" (onChipClick)="onChipClick($event)" [(ngModel)]="element.columnValue" name="{{element.field_name}}"></p-chips>
@@ -2074,7 +2076,7 @@ export class AppTypeChips implements OnInit {
 // chips, member out company
 @Component({
   selector: 'app-type-listMch',
-  template: `   <div class="fileds field-group list-mch">
+  template: `   <div class="fileds list-mch">
                   <div class="d-flex middle wrap-label">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <path d="M20.5 16.9509C20.5 15.694 18.8369 15.0288 18.8369 13.7718V9.72547C18.8369 5.73495 15.7663 2.5 11.9786 2.5C8.19084 2.5 5.12027 5.73495 5.12027 9.72547V13.8181C5.12027 15.0495 3.5 15.7195 3.5 16.9509C3.5 17.4497 3.88382 17.8541 4.35729 17.8541H19.6427C20.1162 17.8541 20.5 17.4497 20.5 16.9509Z" fill="#4C97E4"/>
@@ -2238,7 +2240,7 @@ export class AppTyperoomImg implements OnInit {
 // onoff -title
 @Component({
   selector: 'app-type-onOff',
-  template: `   <div class="fileds onoff">
+  template: `   <div class="fileds">
                     <div class="d-flex">
                       <span>{{element.columnLabel}}</span>
                       <p-inputSwitch [(ngModel)]="element.columnValue"></p-inputSwitch>
@@ -2280,7 +2282,7 @@ export class AppTypeonOff implements OnInit {
 @Component({
   selector: 'app-type-autocomplete',
   template: ` 
-  <div class="field-group">  
+  <div class="fields">  
   <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
   <div> 
   <p-autoComplete [(ngModel)]="element.columnValue" [disabled]="element.isDisable" name="cusId" [baseZIndex]="100" [appendTo]="'body'" [style]="{width: '100%'}"
@@ -2460,7 +2462,7 @@ export class AppTypeSelectAutocompletesComponent implements OnInit, OnChanges {
 @Component({
   selector: 'app-type-label',
   template: `
-    <div class="fileds field-group">
+    <div class="fileds label">
       <div style = "color: #465373; font-weight: 500; font-size: 14px;">{{element.columnLabel}}</div>
     </div>`,
 })

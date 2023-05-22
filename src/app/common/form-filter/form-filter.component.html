@@ -32,7 +32,7 @@
                 </div>
             </ng-container>
         </div>
-        <div class="button-filter text-right d-flex gap-12">
+        <div class="button-filter text-right d-flex gap12">
             <ng-container *ngFor="let button of buttonsFilters">
                 <p-button label="{{button.label}}" (onClick)="onChangeButtonEdit(button.value)" [disabled]="button?.disabled" icon="{{button?.icon ? button?.icon : 'pi pi-plus'}}" styleClass="p-button-sm {{button?.class ? button?.class : ''}}"></p-button>
         </ng-container>
