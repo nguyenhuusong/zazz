@@ -70,10 +70,6 @@
     <app-chung-chi [empId]="empId"></app-chung-chi>
 </section>
 
-<p-dialog [(visible)]="isEditDetail" [autoZIndex]="true" [modal]="true"  appendTo="body"
-    [style]="{width: '1300px', height: 'auto'}">
-    <p-header>
-       Chỉnh sửa chuyên môn
-    </p-header>
-        <app-edit-chuyen-mon *ngIf="isEditDetail" [empId]="empId" (cancelSave)="cancelSetDetail($event)"></app-edit-chuyen-mon>
-</p-dialog>
+
+<app-edit-chuyen-mon *ngIf="isEditDetail" [isEditDetail]="isEditDetail" [empId]="empId" (cancelSave)="cancelSetDetail($event)"></app-edit-chuyen-mon>
+
