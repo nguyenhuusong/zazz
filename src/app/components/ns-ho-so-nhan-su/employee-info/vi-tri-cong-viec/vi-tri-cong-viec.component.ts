@@ -62,30 +62,29 @@ export class ViTriCongViecComponent implements OnInit, AfterViewInit {
     this.getTerminateReasons();
     this.getEmployeeInfo();
     this.getEmployeeStatus();
-    this.initMenuPopup();
   }
 
-  itemsMenuPopup = []
-  initMenuPopup() {
-    this.itemsMenuPopup = [
-      {
-        label: 'Nghỉ việc',
-        icon: 'pi pi-directions',
-        command: () => {
-          this.fnNghiViec();
-        }
-      },
-      {
-        label: 'Đổi người quản lý',
-        icon: 'pi pi-arrow-left',
-        command: () => {
-          this.changeMg();
-        },
-        visible: false
-      },
+  // itemsMenuPopup = []
+  // initMenuPopup() {
+  //   this.itemsMenuPopup = [
+  //     {
+  //       label: 'Nghỉ việc',
+  //       icon: 'pi pi-directions',
+  //       command: () => {
+  //         this.fnNghiViec();
+  //       }
+  //     },
+  //     {
+  //       label: 'Đổi người quản lý',
+  //       icon: 'pi pi-arrow-left',
+  //       command: () => {
+  //         this.changeMg();
+  //       },
+  //       visible: false
+  //     },
    
-    ]
-  }
+  //   ]
+  // }
   columnDefs1 = [];
   listsData1 = [];
   gridKey1 = '';
@@ -236,7 +235,7 @@ export class ViTriCongViecComponent implements OnInit, AfterViewInit {
     });
   }
   displayFormTerminate = false;
-  fnNghiViec() {
+  actTerminate() {
     this.modelDuyet.empId = this.dataEmployeeStatus.empId;
     this.modelDuyet.full_name = this.dataEmployeeStatus.fullName;
     this.titleForm.title = 'Xác nhận nhân viên nghỉ việc';
@@ -495,9 +494,9 @@ export class ViTriCongViecComponent implements OnInit, AfterViewInit {
     .subscribe(results => {
       if (results.status === 'success') {
         this.checkIsChangeMg = results.statusCode;
-        if(results.statusCode) {
-          this.itemsMenuPopup[1].visible = true;
-        }
+        // if(results.statusCode) {
+        //   this.itemsMenuPopup[1].visible = true;
+        // }
       }
     })
   }
