@@ -563,6 +563,10 @@ export class ApiHrmService {
     return this.http.post<T>(`${apiHrmServer}/api/v1/recruitcandidate/SetCandidateRegUser`, data, this.options);
   }
 
+  setCandidateFile(queryParams): Observable<any> {
+    return this.http.post(`${apiHrmServer}/api/v1/recruitcandidate/SetCandidateFile`, queryParams, this.optionsUpload)
+  }
+
   setEmployeeCancel(params): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/employee/SetEmployeeCancel`, params, this.options)
   }

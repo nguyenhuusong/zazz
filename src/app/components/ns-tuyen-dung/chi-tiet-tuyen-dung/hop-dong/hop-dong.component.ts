@@ -23,7 +23,7 @@ export class HopDongComponent implements OnInit {
     this.unsubscribe$.complete();
   }
 
-  @Input() canId= null;
+  @Input() canId = null;
   @Output() callBack = new EventEmitter<any>();
   constructor(
     private apiService: ApiHrmService,
@@ -43,15 +43,6 @@ export class HopDongComponent implements OnInit {
   CauHinh() {
     this.displaySetting = true;
   }
-  record = null;
-  uploadContract(event) {
-    this.displayuploadcontract = true;
-    this.record = event.rowData;
-  }
-
-  DeleteMeta(event) {
-
-  }
 
   downloadButtonClicked(urlLink) {
     var url = urlLink;
@@ -61,52 +52,45 @@ export class HopDongComponent implements OnInit {
     elem.click();
   }
 
-
   getCandidateFilePage() {
     this.spinner.show();
     this.columnDefs = [];
     const queryParams = queryString.stringify({ canId: this.canId, offSet: 0, pageSize: 10000 });
     this.apiService.getCandidateFilePage(queryParams)
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(repo => {
-      if (repo.status === 'success') {
-        if (repo.data.dataList.gridKey) {
-          this.gridKey = repo.data.dataList.gridKey;
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(repo => {
+        if (repo.status === 'success') {
+          if (repo.data.dataList.gridKey) {
+            this.gridKey = repo.data.dataList.gridKey;
+          }
+          this.spinner.hide();
+          this.listsData = repo.data.dataList.data || [];
+          this.initGrid('columnDefs', repo.data.gridflexs);
+          this.FnEvent();
+        } else {
+          this.spinner.hide();
         }
-        this.spinner.hide();
-        this.listsData = repo.data.dataList.data || [];
-        this.initGrid('columnDefs', repo.data.gridflexs);
-        this.FnEvent();
-      } else {
-        this.spinner.hide();
-      }
-    })
+      })
   }
 
   FnEvent() {
     setTimeout(() => {
-      var dragTarget = document.getElementById(`${this.gridKey}_hopdong`);
-      if(dragTarget) {
+      var dragTarget = document.getElementById(`${this.gridKey}_hoso`);
+      if (dragTarget) {
         const click$ = fromEvent(dragTarget, 'click');
         click$.subscribe(event => {
-          console.log("sdsdsd")
-          this.addContract()
+          this.uploadFile()
         });
       }
     }, 300);
   }
-
-  addContract() {
-    this.getContractRecord();
-  }
-
-  initGrid(columnDefs ,gridflexs) {
+  initGrid(columnDefs, gridflexs) {
     this[columnDefs] = [
       ...AgGridFn(gridflexs || []),
-      columnDefs === 'columnDefs' ? {
+      {
         headerComponentParams: {
           template:
-          `<button  class="btn-button" id="${this.gridKey}_hopdong"> <span class="pi pi-upload action-grid-add" ></span></button>`,
+            `<button  class="btn-button" id="${this.gridKey}_hoso"> <span class="pi pi-upload action-grid-add" ></span></button>`,
         },
         field: 'gridflexdetails1',
         cellClass: ['border-right', 'no-auto'],
@@ -118,67 +102,8 @@ export class HopDongComponent implements OnInit {
             buttons: [
               {
                 onClick: this.dowloadFile.bind(this),
-                label: 'Xem file mẫu',
+                label: 'Xem file',
                 icon: 'fa fa-edit editing',
-                key: 'view-job-detail',
-                class: 'btn-primary mr5',
-              },
-              {
-                onClick: this.dowloadFileDemo.bind(this),
-                label: 'Tải file mẫu',
-                icon: 'fa fa-edit editing',
-                key: 'view-job-detail',
-                class: 'btn-primary mr5',
-              },
-              {
-                onClick: this.dowloadFileUpload.bind(this),
-                label: 'Tải về hồ sơ đã ký',
-                icon: 'pi pi-upload',
-                key: 'view-job-detail',
-                class: 'btn-primary mr5',
-                hide: !params.data.meta_upload_url
-              },
-
-            
-            ]
-          };
-        },
-      } : {
-        
-        field: 'gridflexdetails12',
-        cellClass: ['border-right', 'no-auto'],
-        pinned: 'right',
-        width: 70,
-        cellRenderer: 'buttonAgGridComponent',
-        cellRendererParams: params => {
-          return {
-            buttons: [
-              {
-                onClick: this.dowloadFile.bind(this),
-                label: 'Xem file mẫu',
-                icon: 'fa fa-edit editing',
-                key: 'view-job-detail',
-                class: 'btn-primary mr5',
-              },
-              {
-                onClick: this.dowloadFileDemo.bind(this),
-                label: 'Tải file mẫu',
-                icon: 'fa fa-edit editing',
-                key: 'view-job-detail',
-                class: 'btn-primary mr5',
-              },
-              {
-                onClick: this.dowloadFileupload.bind(this),
-                label: 'Tải về file đã ký',
-                icon: 'fa fa-edit editing',
-                key: 'view-job-detail',
-                class: 'btn-primary mr5',
-                hide: !params.data.meta_upload_url
-              },
-              {
-                onClick: this.uploadFile.bind(this),
-                label: 'Tải lên file ký duyệt',
-                icon: 'pi pi-upload',
                 key: 'view-job-detail',
                 class: 'btn-primary mr5',
               },
@@ -189,108 +114,52 @@ export class HopDongComponent implements OnInit {
     ];
   }
 
-  dowloadFileDemo({rowData}) {
+  dowloadFileDemo({ rowData }) {
     this.downloadButtonClicked(rowData.temp_download_url)
   }
 
-  dowloadFile({rowData}) {
+  dowloadFile({ rowData }) {
     this.downloadButtonClicked(rowData.temp_view_url)
   }
 
-  dowloadFileupload({rowData}) {
+  dowloadFileupload({ rowData }) {
     this.downloadButtonClicked(rowData.meta_upload_url)
   }
 
-  dowloadFileUpload({rowData}) {
+  dowloadFileUpload({ rowData }) {
     this.downloadButtonClicked(rowData.meta_upload_url)
   }
 
   onCellClicked(event) {
-    if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
-      this.editRow(event = {rowData: event.data})
+    if (event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
+      // this.editRow(event = {rowData: event.data})
     }
   }
 
-  trainId = null;
-  editRow({rowData}) {
-    this.trainId = rowData.trainId
-    // this.getTrainFile();
-  }
-  columnDefsRecord = [];
-  listsDataRecord = [];
-  dataDetailInfo = null;
-  displayFormEditDetail =false;
-  getContractRecord() {
-    this.columnDefsRecord = [];
-    const queryParams = queryString.stringify({ canId: this.canId});
-    this.apiService.getContractRecord(queryParams)
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(results => {
-      if (results.status === 'success') {
-        this.spinner.hide();
-        this.listsDataRecord = results.data.records || [];
-        this.dataDetailInfo = results.data;
-        this.is_full_submit = this.dataDetailInfo.is_full_submit;
-        this.initGrid('columnDefsRecord',results.data.gridflexdetails1);
-        this.displayFormEditDetail = true;
-      } else {
-        this.spinner.hide();
-      }
-    })
-  }
-
-  saveContractRecord() {
-    const params = {
-      ...this.dataDetailInfo,
-      gridflexdetails1: this.dataDetailInfo.gridflexdetails1,
-      records: this.listsDataRecord,
-      is_full_submit: this.is_full_submit
-    }
-    this.apiService.setContractRecord(params)
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(results => {
-      if (results.status === 'success') {
-        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thêm mới thành công' });
-        this.displayFormEditDetail = false;
-
-        this.getCandidateFilePage();
-        this.callBack.emit();
-        this.spinner.hide();
-      } else {
-        this.spinner.hide();
-        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
-      }
-    })
-  }
-  metafile = null;
-  uploadFile(event) {
-    this.metafile = event.rowData;
+  idFile: any = null
+  uploadFile() {
+    this.idFile = null;
     this.displayuploadcontract = true;
   }
 
-  
   handleUpload(event) {
-    // console.log(event)
-    // let params = {...this.metafile}
-    // const formData= new FormData();
-    // formData.append('sourceId', this.contractId);
-    // formData.append('metaId', params.metaId);
-    // formData.append('empId', this.empId);
-    // formData.append('formFile', event.length >0 ? event[0].file: null);
-    // this.apiService.setContractRecordUpload(formData)
-    // .pipe(takeUntil(this.unsubscribe$))
-    // .subscribe(results => {
-    //   if (results.status === 'success') {
-    //     this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thêm mới thành công' });
-    //     this.displayuploadcontract = false;
-    //     this.getCandidateFilePage();
-    //     this.spinner.hide();
-    //   } else {
-    //     console.log(results)
-    //     this.spinner.hide();
-    //     this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
-    //   }
-    // })
+    const formData = new FormData();
+    formData.append('id', this.idFile ? this.idFile : '');
+    formData.append('canId', this.canId ? this.canId : '');
+    formData.append('formFile', event.length > 0 ? event[0].file : null);
+    this.apiService.setCandidateFile(formData)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(results => {
+        if (results.status === 'success') {
+          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thêm mới thành công' });
+          this.displayuploadcontract = false;
+          this.getCandidateFilePage();
+          this.spinner.hide();
+        } else {
+          this.spinner.hide();
+          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
+        }
+      })
   }
 
   getFilesDetail(event) {
