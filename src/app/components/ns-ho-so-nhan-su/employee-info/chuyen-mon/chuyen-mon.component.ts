@@ -67,6 +67,9 @@ export class ChuyenMonComponent implements OnInit {
         this.listViews = cloneDeep(results.data.group_fields || []);
         this.listViewsForm = cloneDeep(results.data.group_fields || []);
         this.detailInfo = results.data;
+        if(this.detailInfo.actions && this.detailInfo.actions.length > 0) {
+          this.initButton();
+        }
         this.spinner.hide();
       }
     }, error => {
@@ -76,11 +79,11 @@ export class ChuyenMonComponent implements OnInit {
   }
   
   recruiUpdateStatus() {
-
+    this.getEmpQualification();
   }
   
-  callActions(e) {
-
+  callActions(code) {
+    this[code]();
   }
 
   optionsButon = [];
@@ -143,7 +146,7 @@ export class ChuyenMonComponent implements OnInit {
     // this.reloadEdit.emit();
   }
 
-  editDetail() {
+  actView() {
     this.isEditDetail = true;
   }
 
