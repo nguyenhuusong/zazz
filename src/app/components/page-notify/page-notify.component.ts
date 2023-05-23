@@ -254,7 +254,7 @@ detailInfoFilter = null;
 
         {
           onClick: this.editRow.bind(this),
-          label: 'Sửa',
+          label: 'Xem',
           icon: 'fa fa-edit',
           class: 'btn-dropbox text-white',
           hide: CheckHideAction(MENUACTIONROLEAPI.GetAppNotifyPage.url, ACTIONS.VIEW)
@@ -293,7 +293,7 @@ detailInfoFilter = null;
           `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
         },
         filter: '',
-        width: 70,
+        width: 100,
         pinned: 'right',
         cellRenderer: 'buttonAgGridComponent',
         cellClass: ['border-right', 'no-auto'],
