@@ -55,14 +55,15 @@
                     (callbackcancel)="quaylai($event)" 
                     (callBackForm)="callBackForm($event)">
                 </app-edit-detail>
+                <app-ho-so *ngIf="listViews.length > 0" [canId]="modelEdit.canId" (callBack)="callBackCandidateFile()"></app-ho-so>
                 <app-loading-detail [id]="'chi-tiet-tuyen-dung'" *ngIf="listViews.length === 0">
                 </app-loading-detail>
             </p-tabPanel>
-            <p-tabPanel header="Thông tin phỏng vấn" *ngIf="custId">
-                
+            <p-tabPanel header="Thông tin phỏng vấn" >
+                <app-tab-candidate-interview  *ngIf="tabIndex === 1" [canId]="modelEdit.canId" ></app-tab-candidate-interview>
             </p-tabPanel>
-            <p-tabPanel header="Thông tin đi làm" *ngIf="custId">
-                
+            <p-tabPanel header="Thông tin đi làm">
+                <app-tab-candidate-final *ngIf="tabIndex === 2" [canId]="modelEdit.canId"></app-tab-candidate-final>
             </p-tabPanel>
             <p-tabPanel header="Hồ sơ cá nhân" *ngIf="custId">
                 <app-chi-tiet-ho-so-ca-nhan 

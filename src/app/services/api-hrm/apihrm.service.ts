@@ -563,6 +563,10 @@ export class ApiHrmService {
     return this.http.post<T>(`${apiHrmServer}/api/v1/recruitcandidate/SetCandidateRegUser`, data, this.options);
   }
 
+  setCandidateFile(queryParams): Observable<any> {
+    return this.http.post(`${apiHrmServer}/api/v1/recruitcandidate/SetCandidateFile`, queryParams, this.optionsUpload)
+  }
+
   setEmployeeCancel(params): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/employee/SetEmployeeCancel`, params, this.options)
   }
@@ -953,6 +957,18 @@ export class ApiHrmService {
 
   getCandidatePage(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/recruitcandidate/GetCandidatePage?` + queryParams, this.options)
+  }
+
+  getCandidateInterview(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitcandidate/GetCandidateInterview?` + queryParams, this.options)
+  }
+
+  getCandidateFinal(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitcandidate/GetCandidateFinal?` + queryParams, this.options)
+  }
+
+  getCandidateFilePage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/recruitcandidate/GetCandidateFilePage?` + queryParams, this.options)
   }
 
   getCandidateFilter(): Observable<any> {
