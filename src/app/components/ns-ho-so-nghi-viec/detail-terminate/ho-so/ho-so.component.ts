@@ -204,7 +204,7 @@ export class HoSoComponent implements OnInit {
         field: 'gridflexdetails1',
         cellClass: ['border-right', 'no-auto'],
         pinned: 'right',
-        width: 70,
+        width: 120,
         cellRenderer: 'buttonAgGridComponent',
         cellRendererParams: params => {
           return {

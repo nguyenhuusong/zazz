@@ -221,7 +221,7 @@ export class NsHoSoNghiViecComponent implements OnInit {
       buttons: [
         {
           onClick: this.editRow.bind(this),
-          label: 'Xem chi tiết',
+          label: 'Xem',
           icon: 'fa fa-edit',
           class: 'btn-primary mr5',
           hide: CheckHideAction(MENUACTIONROLEAPI.GetTerminatePage.url, ACTIONS.VIEW)

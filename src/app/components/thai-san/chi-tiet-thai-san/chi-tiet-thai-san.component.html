@@ -3,7 +3,7 @@
     <section class="bread-crumb">
         <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
     </section>
-   <div class="content">
+   <section>
     <app-edit-detail *ngIf="listViews.length> 0" 
         [detail]="detailInfo" [manhinh]="'Edit'" 
         [optionsButtonsEdit]="optionsButon"  [dataView]="listViews"
@@ -12,8 +12,6 @@
         [id]="'sections-2qnt'" 
         *ngIf="listViews.length === 0">
     </app-loading-detail>
-
-        <p-divider></p-divider>
         <app-danh-sach-kham-thai [maternityId]="modelEdit?.maternityId" *ngIf="modelEdit?.maternityId"></app-danh-sach-kham-thai>
         <app-danh-sach-tre-con [maternityId]="modelEdit?.maternityId" *ngIf="modelEdit?.maternityId"></app-danh-sach-tre-con>
 
@@ -90,7 +88,7 @@
                 (firstDataRendered)="onFirstDataRendered($event)"
                 [columnDefs]="columnDefDetail"></app-list-grid-angular>
         </section> -->
-   </div>
+   </section>
 </div>
 
 

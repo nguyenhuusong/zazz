@@ -1,10 +1,10 @@
 <div class="main-grid product-detail">
-    <section>
+    <section class="section-box">
         <div class="grid">
             <div class="col-6">
                 <div class="breadcrumb">
-                    <p-breadcrumb [model]="itemsMenu"></p-breadcrumb>
                     <h3>{{titlePage}}</h3>
+                    <p-breadcrumb [model]="itemsMenu"></p-breadcrumb>
                 </div>
             </div>
             <div class="col-6  flex justify-content-end align-items-center" >
@@ -41,7 +41,7 @@
        
     </section>
 </div>
-<p-card>
+<section>
  
     <p-tabView [(activeIndex)]="indexTab" (onChange)="handleChange($event.index)">
         <p-tabPanel header="Thông tin chung">
@@ -64,7 +64,7 @@
     <div>
     </div>
        
-</p-card>
+</section>
 
 
 

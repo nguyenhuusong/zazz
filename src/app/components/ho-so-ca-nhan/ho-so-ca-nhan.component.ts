@@ -196,7 +196,7 @@ export class HoSoCaNhanComponent implements OnInit, AfterViewChecked {
       buttons: [
         {
           onClick: this.ViewDetail.bind(this),
-          label: 'Xem chi tiết',
+          label: 'Xem',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
         },
@@ -348,7 +348,7 @@ export class HoSoCaNhanComponent implements OnInit, AfterViewChecked {
         //     `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
         // },
         filter: '',
-        width: 60,
+        width: 100,
         pinned: 'right',
         cellRenderer: 'buttonAgGridComponent',
         cellClass: ['border-right', 'no-auto'],

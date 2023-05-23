@@ -258,11 +258,6 @@ export class QuanLyHopDongComponent implements OnInit {
   }
 
   editRow({ rowData }) {
-    // const params = {
-    //   contractTypeId: rowData.contractTypeId,
-    // }
-    // this.router.navigate(['/cai-dat/quan-ly-hop-dong/chi-tiet-hop-dong'], { queryParams: params });
-
     this.isDetail = true;
     this.contractTypeId = rowData.contractTypeId;
   }

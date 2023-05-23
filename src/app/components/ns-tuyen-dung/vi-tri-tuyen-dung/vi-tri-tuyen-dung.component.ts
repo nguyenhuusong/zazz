@@ -109,6 +109,8 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
   heightGrid = 0;
   dataRowSelected: any = [];
   optionsButtonDB: any = [];
+  isDetail = false;
+  vacancyId = '';
   ngAfterViewChecked(): void {
     const a: any = document.querySelector(".header");
     const b: any = document.querySelector(".sidebarBody");
@@ -192,7 +194,7 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
       buttons: [
         {
           onClick: this.editRow.bind(this),
-          label: 'Xem chi tiết',
+          label: 'Xem',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
           hide: CheckHideAction(MENUACTIONROLEAPI.GetVacancyPage.url, ACTIONS.VIEW)
@@ -233,7 +235,7 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
             `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
         },
         filter: '',
-        width: 60,
+        width: 100,
         pinned: 'right',
         cellRenderer: 'buttonAgGridComponent',
         cellClass: ['border-right', 'no-auto'],
@@ -264,10 +266,8 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
   }
 
   editRow({rowData}) {
-    const params = {
-      vacancyId: rowData.vacancyId
-    }
-    this.router.navigate(['/tuyen-dung/vi-tri-tuyen-dung/chi-tiet-vi-tri-tuyen-dung'], { queryParams: params });
+    this.vacancyId = rowData.vacancyId
+    this.isDetail = true;
   }
 
   onCellClicked(event) {
@@ -277,10 +277,12 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
   }
 
   create() {
-    const params = {
-      vacancyId: null
-    }
-    this.router.navigate(['/tuyen-dung/vi-tri-tuyen-dung/them-moi-vi-tri-tuyen-dung'], { queryParams: params });
+    this.vacancyId = ''
+    this.isDetail = true;
+  }
+
+  callback() {
+    this.isDetail = false;
   }
 
   find() {

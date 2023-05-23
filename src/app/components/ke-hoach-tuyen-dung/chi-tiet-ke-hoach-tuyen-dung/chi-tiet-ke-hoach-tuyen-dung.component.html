@@ -1,9 +1,6 @@
 <div class="main-grid product-detail" *ngIf="!isDialog">
-    <section>
-        <div class="breadcrumb">
-            <p-breadcrumb [model]="itemsMenu"></p-breadcrumb>
-            <h3>{{titlePage}}</h3>
-        </div>
+    <section class="bread-crumb">
+        <app-hrm-breadcrumb [items]="itemsMenu" ></app-hrm-breadcrumb>
     </section>
     <section>
     <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'"
@@ -19,4 +16,15 @@
     </section>
 </div>
 
+<section>
+    <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'"
+    [optionsButtonsEdit]="optionsButtonsView" [dataView]="listViews" (callback)="setDetail($event)" 
+    (callbackcancel)="cancel($event)"></app-edit-detail>
+    <app-loading-detail 
+        [id]="'chi-tiet-tuyen-dung'" 
+        *ngIf="listViews.length === 0">
+    </app-loading-detail>
+        <h3>Danh sách kế hoạch</h3>
+    <app-plan-detail *ngIf="recruitPlanId" [recruitPlantId]="recruitPlanId"></app-plan-detail>
+</section>
 

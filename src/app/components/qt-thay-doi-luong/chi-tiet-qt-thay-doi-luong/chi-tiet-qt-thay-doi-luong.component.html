@@ -1,11 +1,11 @@
 <div class="main-grid product-detail" *ngIf="!isDialog">
-    <section>
+    <section class="section-box">
         <div class="grid">
-            <div class="col-6">  <div class="breadcrumb">
-                <p-breadcrumb [model]="itemsMenu"></p-breadcrumb>
-                <h3>{{titlePage}}</h3>
-            </div>
-
+            <div class="col-6">
+                <div class="breadcrumb">
+                    <h3>{{titlePage}}</h3>
+                    <p-breadcrumb [model]="itemsMenu"></p-breadcrumb>
+                </div>
             </div>
             <div class="col-6  flex justify-content-end align-items-center" >
                 <div class="fields " style="margin-bottom: 0;">
@@ -51,7 +51,6 @@
                 [id]="'sections-2qnt'" 
                 *ngIf="listViews.length === 0">
             </app-loading-detail>
-            <p-divider></p-divider>
             <app-thanh-phan-luong [salaryInfoId]="modelEdit.salaryInfoId" *ngIf="detailInfo && detailInfo?.flow_cur > 1"></app-thanh-phan-luong>
             <app-hop-dong-salary (cancelSave)="getSalaryInfoDevM()" [empId]="detailInfo.empId" [salaryInfoId]="modelEdit.salaryInfoId" *ngIf="detailInfo && detailInfo?.flow_cur > 2"></app-hop-dong-salary>
             
