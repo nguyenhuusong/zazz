@@ -338,8 +338,226 @@ ag-grid-angular{
     }
 }
 
+// #filter
 .hrm-filter{
     .p-card{
         box-shadow: none;
+    }
+}
+
+
+// #tabview
+p-tabview{
+    .p-tabview-nav-container{
+        .p-tabview-nav-content{
+            margin-bottom: 12px;
+            .p-tabview-nav{
+                border-bottom: 1px solid $C-E2E6F2;
+                padding-top: 0px;
+                &>li{
+                    a{
+                        padding: 8px 16px;
+                        border-radius: 0;
+                        &:hover,
+                        &:focus{
+                            background: none !important;
+                            outline: none;
+                            box-shadow: none !important;
+                        }
+                        &:hover{
+                            span{
+                                color: $activeColor
+                            }
+                        }
+                        .uni-icon{
+                            margin-right: 5px;
+                        }
+                        span{
+                            font-weight: 500;
+                            color: #212633;
+                            white-space: nowrap;
+                        }
+                        @media screen and (max-width: 1440px) {
+                            padding: 8px 12px;
+                        }
+                    }
+                    span{
+                        &.p-tabview-title{
+                            font-weight: 400;
+                            line-height: 20px;
+                            font-size: 14px;
+                            color: $C-212633;
+                        }
+                    }
+                    &.p-tabview-ink-bar{
+                        background: $mainBg;
+                        bottom: 11px;
+                        display: none;
+                    }
+                    &.p-highlight{
+                        a{
+                            span{
+                                color: $activeColor;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .p-tabview-panels{
+        padding: 0px !important;
+        background: none !important;
+    }
+    section{
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+    .p-tabview-nav-btn{
+        height: 36px;
+        box-shadow: 1px 1px 8px #ccc !important;
+        border-radius: 0px !important;
+        display: block;
+        text-align: center;
+        border: 1px solid #e9e9e9;
+        &:hover{
+            background: #f1f1f1 !important;
+        }
+        .pi{
+            color: #212633;
+            margin-right: 0px;
+        }
+    }
+    .p-tabview-nav-prev{
+
+    }
+    .tab-ver{
+        display: flex;
+        .p-tabview-nav{
+            display: block;
+            padding: 12px 0px;
+            overflow: auto;
+            &::-webkit-scrollbar {
+                width: 8px;
+              }
+              &::-webkit-scrollbar-track {
+                border-radius: 99px;
+                cursor: pointer;
+                box-shadow: inset 0 0 2px #80808078; 
+            }
+        
+            /* Handle */
+            &::-webkit-scrollbar-thumb {
+                border-radius: 99px;
+                    background:#c4c4c5; 
+            }
+            &::-webkit-scrollbar-thumb:hover {
+                background: #919192;
+            }
+            li{
+                counter-increment: custom;
+                position: relative;
+                a{
+                    margin-bottom: 0px !important;
+                    border-bottom: 1px solid #f5f5f5 !important;
+                    span{
+                        white-space: unset !important;
+                        line-height: 1;
+                    }
+                    .uni-icon{
+                        &::after{
+                            background: none;
+                        }
+                    }
+                }
+                &[role="presentation"]{
+                    &:last-child{
+                        a{
+                            border-bottom: none !important;
+                        }
+                    }
+                }
+                &:before{
+                    content: counter(custom) ". ";
+                    position: absolute;
+                    left: 13px;
+                    z-index: 1;
+                    top: 8px;
+                    font-weight: 500;
+                }
+                &.p-highlight{
+                    &:before{
+                        color: $activeColor;
+                    }
+                }
+                &:hover{
+                    &:before{
+                        color: $activeColor;
+                    }
+                }
+            }
+        }
+        .p-tabview-nav-content{
+            margin-bottom: 0px;
+        }
+        .p-tabview-nav-container{
+            width: 15%;
+            padding-left: 12px;
+        }
+        .p-tabview-panels{
+            width: 85%;
+        }
+        @media screen and (max-width: 1600px) {
+            .p-tabview-nav-container{
+                width: 18%;
+                padding-left: 12px;
+            }
+            .p-tabview-panels{
+                width: 82%;
+            }
+        }
+        @media screen and (max-width: 1366px) {
+            .p-tabview-nav-container{
+                width: 22%;
+                padding-left: 12px;
+            }
+            .p-tabview-panels{
+                width: 78%;
+            }
+        }
+    }
+}
+
+
+// #app-edit-detail
+app-edit-detail{
+    .border-section{
+        background: #fff;
+        padding: 13px;
+        box-shadow: 0px 0px 3px #e8e8e8;
+        border-radius: 2px;
+        transition: all 0.3s;
+        &:hover{
+            box-shadow: 4px 2px 5px #e8e8e8;
+            transition: all 0.3s;
+        }
+        .p-panel-header{
+            .title-section{
+                color: $mainBg;
+                margin-bottom: 16px;
+                position: relative;
+                padding-bottom: 5px;
+                font-weight: 700;
+                &::after{
+                    content: '';
+                    width: 32px;
+                    height: 4px;
+                    background: rgba(11,58,133,.7215686275);
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                }
+            }
+        }
     }
 }
