@@ -172,7 +172,7 @@ export class ChucDanhComponent implements OnInit, AfterViewChecked {
       buttons: [
         {
           onClick: this.editRow.bind(this),
-          label: 'Thông tin chi tiết',
+          label: 'Xem',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
           hide: CheckHideAction(MENUACTIONROLEAPI.GetPositionPage.url, ACTIONS.VIEW)
@@ -227,10 +227,12 @@ export class ChucDanhComponent implements OnInit, AfterViewChecked {
   }
 
   editRow({ rowData }) {
-    const params = {
-      positionTitleId: rowData.positionTitleId,
-    }
-    this.router.navigate(['/cai-dat/chuc-danh/chi-tiet-chuc-danh'], { queryParams: params });
+    this.isDetail = true;
+    this.positionTitleId = rowData.positionTitleId;
+    // const params = {
+    //   positionTitleId: rowData.positionTitleId,
+    // }
+    // this.router.navigate(['/cai-dat/chuc-danh/chi-tiet-chuc-danh'], { queryParams: params });
   }
 
   onCellClicked(event) {
@@ -239,12 +241,20 @@ export class ChucDanhComponent implements OnInit, AfterViewChecked {
     }
   }
 
-
+  isDetail = false;
+  positionTitleId = '';
   addChucVu() {
     const params = {
-      positionTitleId: 0
+      positionTitleId: null
     }
-    this.router.navigate(['/cai-dat/chuc-danh/them-moi-chuc-danh'], { queryParams: params });
+    //this.router.navigate(['/cai-dat/chuc-danh/them-moi-chuc-danh'], { queryParams: params });
+    this.isDetail = true;
+    this.positionTitleId = '';
+  }
+
+  callback() {
+    this.isDetail = false;
+    this.load();
   }
 
   find() {

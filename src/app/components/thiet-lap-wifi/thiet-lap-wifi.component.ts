@@ -176,7 +176,7 @@ export class ThietLapWifiComponent implements OnInit, AfterViewChecked {
       buttons: [
         {
           onClick: this.editRow.bind(this),
-          label: 'Xem chi tiết',
+          label: 'Xem',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
           hide: CheckHideAction(MENUACTIONROLEAPI.GetTimekeepingWifiPage.url, ACTIONS.VIEW)
@@ -231,10 +231,8 @@ export class ThietLapWifiComponent implements OnInit, AfterViewChecked {
   }
 
   editRow({rowData}) {
-    const params = {
-      id: rowData.id
-    }
-    this.router.navigate(['/cai-dat/thiet-lap-wifi/chi-tiet'], { queryParams: params });
+    this.isDetail = true;
+    this.id = rowData.id;
   }
 
   onCellClicked(event) {
@@ -243,11 +241,20 @@ export class ThietLapWifiComponent implements OnInit, AfterViewChecked {
     }
   }
 
+  isDetail = false;
+  id = '';
+
   addNew() {
     const params = {
       id: null
     }
-    this.router.navigate(['/cai-dat/thiet-lap-wifi/them-moi'], { queryParams: params });
+    this.isDetail = true;
+    this.id = '';
+  }
+
+  callback() {
+    this.isDetail = false;
+    this.load();
   }
 
   find() {

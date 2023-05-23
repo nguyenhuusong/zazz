@@ -15,6 +15,10 @@ import { Subject, takeUntil } from 'rxjs';
   styleUrls: ['./chi-tiet-chuc-danh.component.scss']
 })
 export class ChiTietChucDanhComponent implements OnInit, OnChanges {
+  @Input() positionTitleId = '';
+  @Input() dataRouter = null
+  @Output() back = new EventEmitter<any>();
+  @Output() callback = new EventEmitter<any>();
   manhinh = 'View';
   indexTab = 0;
   optionsButtonsView = [{ label: 'Lưu', value: 'Update',class: CheckHideAction(MENUACTIONROLEAPI.GetOrganizePage.url, ACTIONS.EDIT) ? 'hidden' : '' },
@@ -26,7 +30,6 @@ export class ChiTietChucDanhComponent implements OnInit, OnChanges {
     private confirmationService: ConfirmationService,
     private router: Router
   ) { }
-  positionTitleId = null
   organizeId = null
   listViews = []
   imagesUrl = []
@@ -38,9 +41,7 @@ export class ChiTietChucDanhComponent implements OnInit, OnChanges {
   }
   titlePage : string = '';
   url: string = '';
-
-  @Input() dataRouter = null
-  @Output() back = new EventEmitter<any>();
+  
   private readonly unsubscribe$: Subject<void> = new Subject();
   ngOnDestroy() {
     this.unsubscribe$.next();
@@ -71,7 +72,7 @@ export class ChiTietChucDanhComponent implements OnInit, OnChanges {
     .subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.dataRouter = this.paramsObject.params;
-      this.positionTitleId = this.paramsObject.params.positionTitleId || null;
+      //this.positionTitleId = this.paramsObject.params.positionTitleId || null;
       this.organizeId	 = this.paramsObject.params.organizeId || null	;
       this.getPositionTitleInfo();
     });
@@ -80,7 +81,7 @@ export class ChiTietChucDanhComponent implements OnInit, OnChanges {
   detailInfo = null;
   getPositionTitleInfo() {
     this.listViews = [];
-    const queryParams = queryString.stringify({positionTitleId: this.positionTitleId, organizeId	: this.organizeId	});
+    const queryParams = queryString.stringify({positionTitleId: this.positionTitleId});
     this.apiService.getPositionTitleInfo(queryParams)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(results => {
@@ -104,8 +105,9 @@ export class ChiTietChucDanhComponent implements OnInit, OnChanges {
     .subscribe((results: any) => {
       if (results.status === 'success') {
         this.displayUserInfo = false;
-        this.goBack()
+        this.callback.emit();
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Cập nhật thông tin thành công' });
+
       } else {
         this.messageService.add({
           severity: 'error', summary: 'Thông báo', detail: results.message
@@ -135,7 +137,7 @@ export class ChiTietChucDanhComponent implements OnInit, OnChanges {
     if(data === 'CauHinh') {
       this.getPositionTitleInfo();
     }else {
-      this.goBack();
+      this.callback.emit();
     }
   }
 

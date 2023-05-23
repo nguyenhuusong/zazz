@@ -281,6 +281,7 @@ export class QuanLyHopDongComponent implements OnInit {
 
   callback() {
     this.isDetail = false;
+    this.load();
   }
 
   find() {
