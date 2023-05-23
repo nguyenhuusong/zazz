@@ -585,25 +585,36 @@ onCellClicked(event) {
   uploadImageVehicle(event, index) {
     if (event.currentFiles.length > 0) {
       for (let file of event.currentFiles) {
-        const getDAte = new Date();
-        const getTime = getDAte.getTime();
-        const storageRef = firebase.storage().ref();
-        const uploadTask = storageRef.child(`s-hrm/file-attach/${getTime}-${file.name}`).put(file);
-        uploadTask.on('state_changed', (snapshot) => {
-        }, (error) => {
-          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: error.message });
-          this.spinner.hide();
-        }, () => {
-          uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-            if (downloadURL) {
-              this.spinner.hide();
-              if(this.modelTM.imageLinks[index]){
-                this.modelTM.imageLinks[index].url = downloadURL;
+        const formData = new FormData();
+        formData.append('formFile', file);
+        this.apiService.getCardVehicleFile(formData).subscribe(result => {
+          if(result.status === 'success') {
+            this.modelTM.imageLinks[index].url = result.data;
+          }
+        })
+
+
+
+
+        // const getDAte = new Date();
+        // const getTime = getDAte.getTime();
+        // const storageRef = firebase.storage().ref();
+        // const uploadTask = storageRef.child(`s-hrm/file-attach/${getTime}-${file.name}`).put(file);
+        // uploadTask.on('state_changed', (snapshot) => {
+        // }, (error) => {
+        //   this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: error.message });
+        //   this.spinner.hide();
+        // }, () => {
+        //   uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+        //     if (downloadURL) {
+        //       this.spinner.hide();
+        //       if(this.modelTM.imageLinks[index]){
+        //         this.modelTM.imageLinks[index].url = downloadURL;
                
-              }
-            }
-          });
-        });
+        //       }
+        //     }
+        //   });
+        // });
       }
     }
     else{

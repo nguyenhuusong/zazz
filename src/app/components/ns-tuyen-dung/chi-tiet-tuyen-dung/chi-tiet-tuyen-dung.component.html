@@ -44,7 +44,7 @@
         <p-tabView (onChange)="handleChange($event.index)" [(activeIndex)]="tabIndex">
             <p-tabPanel header="Thông tin tuyển dụng">
                 <app-edit-detail 
-                    *ngIf="listViews.length> 0" 
+                    *ngIf="listViews.length> 0 && tabIndex === 0" 
                     [isHideButton]="true" 
                     [detail]="detailInfo" 
                     [manhinh]="'Edit'" 

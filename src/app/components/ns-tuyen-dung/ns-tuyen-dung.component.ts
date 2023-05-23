@@ -153,7 +153,8 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   listActions = [];
   load() {
     this.dataRowSelected = [];
-    this.columnDefs = []
+    this.columnDefs = [];
+    this.listsData = [];
     // this.spinner.show();
     const queryParams = queryString.stringify(this.query);
     this.apiService.getCandidatePage(queryParams)
@@ -161,10 +162,11 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
       .subscribe(
         (results: any) => {
           this.listsData = results.data.dataList;
+          console.log(this.listsData)
           this.gridKey = results.data.gridKey;
+          this.listActions = results.data.can_actions;
           if (this.query.offSet === 0) {
             this.cols = results.data.gridflexs;
-            this.listActions = results.data.can_actions;
             this.colsDetail = results.data.gridflexdetails ? results.data.gridflexdetails : [];
           }
           this.initGrid();
@@ -208,17 +210,17 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
 
   showButtons(event: any) {
     const actions = this.listActions.filter(d => d.canId === event.data.canId)[0].actions;
-    return {
-      buttons: actions.map(item => {
-        return {
-          onClick: this[item.code]?.bind(this),
-          label: item.name,
-          icon: item.icon,
-          action_url: item.action_url,
-          tick: item.tick
-        }
-      })
-    }
+      return {
+        buttons: actions.map(item => {
+          return {
+            onClick: this[item.code]?.bind(this),
+            label: item.name,
+            icon: item.icon,
+            action_url: item.action_url,
+            tick: item.tick
+          }
+        })
+      }
   }
 
   checkHideAddAccount(params) {
@@ -664,23 +666,23 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   }
 
   sendRate() {
-    this.isSubmitRate = true;
-    if (this.queryRate.canId && this.queryRate.InterviewResult) {
-      this.apiService.updateInterviewResult(queryString.stringify(this.queryRate), null)
-        .pipe(takeUntil(this.unsubscribe$))
-        .subscribe(results => {
-          if (results.status === 'success') {
-            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Gửi thành công' });
-            this.isRateRecui = false;
-            this.isSubmitRate = false;
-            this.spinner.hide();
-          } else {
-            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.data : null });
-          }
-        })
-    } else if (!this.queryRate.InterviewResult) {
-      return;
-    }
+    // this.isSubmitRate = true;
+    // if (this.queryRate.canId && this.queryRate.InterviewResult) {
+    //   this.apiService.updateInterviewResult(queryString.stringify(this.queryRate), null)
+    //     .pipe(takeUntil(this.unsubscribe$))
+    //     .subscribe(results => {
+    //       if (results.status === 'success') {
+    //         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Gửi thành công' });
+    //         this.isRateRecui = false;
+    //         this.isSubmitRate = false;
+    //         this.spinner.hide();
+    //       } else {
+    //         this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.data : null });
+    //       }
+    //     })
+    // } else if (!this.queryRate.InterviewResult) {
+    //   return;
+    // }
   }
 
   cancelSendEmail() {
