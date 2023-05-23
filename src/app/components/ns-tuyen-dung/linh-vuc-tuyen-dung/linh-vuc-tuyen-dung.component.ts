@@ -202,7 +202,7 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
       buttons: [
         {
           onClick: this.editRow.bind(this),
-          label: 'Xem chi tiết',
+          label: 'Xem',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
           hide: CheckHideAction(MENUACTIONROLEAPI.GetJobPage.url, ACTIONS.VIEW)
@@ -228,7 +228,7 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
         },
         // headerName: 'Thao tác',
         filter: '',
-        width: 70,
+        width: 100,
         pinned: 'right',
         cellRenderer: 'buttonAgGridComponent',
         cellClass: [ 'no-auto'],
@@ -256,12 +256,14 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
       }
     });
   }
-
+  
   editRow({rowData}) {
+    this.isDetail = true;
+    this.jobId = rowData.jobId;
     const params = {
       jobId: rowData.jobId
     }
-    this.router.navigate(['/tuyen-dung/chuyen-mon/chi-tiet-linh-vuc-tuyen-dung'], { queryParams: params });
+    //this.router.navigate(['/tuyen-dung/chuyen-mon/chi-tiet-linh-vuc-tuyen-dung'], { queryParams: params });
   }
 
   onCellClicked(event) {
@@ -270,12 +272,20 @@ export class LinhVucTuyenDungComponent implements OnInit, AfterViewChecked {
     }
   }
   
-
+  isDetail = false;
+  jobId = '';
   addJob() {
     const params = {
-      jobId: 0
+      jobId: null
     }
-    this.router.navigate(['/tuyen-dung/chuyen-mon/them-moi-linh-vuc-tuyen-dung'], { queryParams: params });
+    //this.router.navigate(['/tuyen-dung/chuyen-mon/them-moi-linh-vuc-tuyen-dung'], { queryParams: params });
+    this.isDetail = true;
+    this.jobId = '';
+  }
+
+  callback() {
+    this.isDetail = false;
+    this.load();
   }
 
   find() {

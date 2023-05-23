@@ -171,7 +171,7 @@ export class DanhMucLoaiGiayToComponent implements OnInit, AfterViewChecked {
       buttons: [
         {
           onClick: this.editRow.bind(this),
-          label: 'Thông tin chi tiết',
+          label: 'Xem',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
         },
@@ -224,10 +224,8 @@ export class DanhMucLoaiGiayToComponent implements OnInit, AfterViewChecked {
   }
 
   editRow({rowData}) {
-    const params = {
-      recordTypeId: rowData.recordTypeId,
-    }
-    this.router.navigate(['/cai-dat/cai-dat-loai-giay-to/chi-tiet-loai-giay-to'], { queryParams: params });
+    this.isDetail = true;
+    this.recordTypeId = rowData.recordTypeId;
   }
 
   onCellClicked(event) {
@@ -236,12 +234,20 @@ export class DanhMucLoaiGiayToComponent implements OnInit, AfterViewChecked {
     }
   }
 
-
+  isDetail = false;
+  recordTypeId = '';
   addChucVu() {
     const params = {
-      recordTypeId: 0
+      recordTypeId: null
     }
-    this.router.navigate(['/cai-dat/cai-dat-loai-giay-to/them-moi-loai-giay-to'], { queryParams: params });
+    this.isDetail = true;
+    this.recordTypeId = '';
+    // this.router.navigate(['/cai-dat/cai-dat-loai-giay-to/them-moi-loai-giay-to'], { queryParams: params });
+  }
+
+  callback() {
+    this.isDetail = false;
+    this.load();
   }
 
   find() {

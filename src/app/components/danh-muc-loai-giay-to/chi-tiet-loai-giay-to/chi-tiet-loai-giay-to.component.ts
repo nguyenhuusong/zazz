@@ -27,7 +27,7 @@ export class ChiTietLoaiGiayToComponent implements OnInit, OnChanges {
     this.unsubscribe$.complete();
   }
 
-  recordTypeId = null
+  //recordTypeId = null
   listViews = []
   imagesUrl = []
   paramsObject = null
@@ -38,9 +38,10 @@ export class ChiTietLoaiGiayToComponent implements OnInit, OnChanges {
   }
   titlePage : string = '';
   url: string = '';
-
+  @Input() recordTypeId = '';
   @Input() dataRouter = null
   @Output() back = new EventEmitter<any>();
+  @Output() callback = new EventEmitter<any>();
 
   ngOnChanges() {
 
@@ -66,7 +67,7 @@ export class ChiTietLoaiGiayToComponent implements OnInit, OnChanges {
     .subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.dataRouter = this.paramsObject.params;
-      this.recordTypeId = this.paramsObject.params.recordTypeId || null;
+      //this.recordTypeId = this.paramsObject.params.recordTypeId || null;
       this.getEmpRecordTypeInfo();
     });
   };
@@ -98,7 +99,7 @@ export class ChiTietLoaiGiayToComponent implements OnInit, OnChanges {
     .subscribe((results: any) => {
       if (results.status === 'success') {
         this.displayUserInfo = false;
-        this.goBack()
+        this.callback.emit()
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Cập nhật thông tin thành công' });
       } else {
         this.messageService.add({
@@ -129,7 +130,7 @@ export class ChiTietLoaiGiayToComponent implements OnInit, OnChanges {
     if(data === 'CauHinh') {
       this.getEmpRecordTypeInfo();
     }else {
-      this.goBack();
+      this.callback.emit()
     }
   }
 
