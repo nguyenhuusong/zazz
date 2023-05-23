@@ -365,6 +365,9 @@
         padding: 10px !important;
         font-family: 'SFProTextRegular';
         font-weight: 400;
+        &:focus{
+            outline: none;
+        }
     }
     &.no-border{
         .p-dropdown{

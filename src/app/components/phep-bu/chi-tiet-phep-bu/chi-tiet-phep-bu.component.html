@@ -3,14 +3,13 @@
     <section class="bread-crumb">
         <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
     </section>
-   <div class="content">
-    <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButon"  [dataView]="listViews"
-        (callback)="setAnnualAddInfo($event)" (callbackcancel)="quaylai($event)"></app-edit-detail>
-    <app-loading-detail 
-        [id]="'sections-1qnt-col-2'" 
-        *ngIf="listViews.length === 0">
-    </app-loading-detail>
-
-   </div>
+        <section>
+            <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButon"  [dataView]="listViews"
+                (callback)="setAnnualAddInfo($event)" (callbackcancel)="quaylai($event)"></app-edit-detail>
+            <app-loading-detail 
+                [id]="'sections-1qnt-col-2'" 
+                *ngIf="listViews.length === 0">
+            </app-loading-detail>
+        </section>
    
 </div>
