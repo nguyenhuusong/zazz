@@ -230,7 +230,7 @@ detailInfoFilter = null;
       buttons: [
         {
           onClick: this.editRow.bind(this),
-          label: 'Xem chi tiết',
+          label: 'Xem',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
           hide: CheckHideAction(MENUACTIONROLEAPI.GetEmployeeSalaryMonthPage.url, ACTIONS.VIEW)
@@ -246,7 +246,7 @@ detailInfoFilter = null;
       {
         headerName: 'Thao tác',
         filter: '',
-        maxWidth: 90,
+        maxWidth: 100,
         pinned: 'right',
         cellRenderer: 'buttonAgGridComponent',
         cellClass: ['border-right', 'no-auto'],

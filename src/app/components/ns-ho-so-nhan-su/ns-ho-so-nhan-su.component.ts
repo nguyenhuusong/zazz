@@ -274,7 +274,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
       buttons: [
         {
           onClick: this.editRow.bind(this),
-          label: 'Thông tin chi tiết',
+          label: 'Xem',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
         },
@@ -379,7 +379,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
       {
         headerName: '...',
         filter: '',
-        maxWidth: 64,
+        maxWidth: 100,
         pinned: 'right',
         cellRenderer: 'buttonAgGridComponent',
         cellClass: ['border-right cell-action', 'no-auto'],

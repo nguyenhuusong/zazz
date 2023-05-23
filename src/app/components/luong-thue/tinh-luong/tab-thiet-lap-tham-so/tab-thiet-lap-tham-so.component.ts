@@ -146,7 +146,7 @@ export class TabThietLapThamSoComponent implements OnInit {
       buttons: [
         {
           onClick: this.editRow.bind(this),
-          label: 'Xem chi tiết',
+          label: 'Xem',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
           hide: CheckHideAction(MENUACTIONROLEAPI.GetPayrollAppInfoPage.url, ACTIONS.VIEW_TINH_LUONG_THIET_LAP_THAM_SO)

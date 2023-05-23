@@ -1,14 +1,14 @@
 
 <div class="main-grid product-detail">
-    <section>
+    <section class="section-box">
         <div class="breadcrumb">
-            <p-breadcrumb [model]="items"></p-breadcrumb>
             <h3>{{titlePage}}</h3>
+            <p-breadcrumb [model]="items"></p-breadcrumb>
         </div>
     </section>
    <section>
-    <app-edit-detail [optionsButtonsEdit]="optionsButtonsView"   *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'"  [dataView]="listViews"
-        (callback)="setCompanyInfo($event)" (callbackcancel)="cancelUpdate($event)"></app-edit-detail>
+        <app-edit-detail [optionsButtonsEdit]="optionsButtonsView"   *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'"  [dataView]="listViews"
+            (callback)="setCompanyInfo($event)" (callbackcancel)="cancelUpdate($event)"></app-edit-detail>
     </section>
    
     <section>

@@ -1,10 +1,10 @@
 <div class="main-grid product-detail" *ngIf="!isDialog">
-    <section>
+    <section class="section-box">
         <div class="grid">
             <div class="col-6">
                 <div class="breadcrumb">
-                    <p-breadcrumb [model]="itemsMenu"></p-breadcrumb>
                     <h3>{{titlePage}}</h3>
+                    <p-breadcrumb [model]="itemsMenu"></p-breadcrumb>
                 </div>
             </div>
             <div class="col-6  flex justify-content-end align-items-center" >
@@ -41,18 +41,15 @@
        
     </section>
 </div>
-<p-card>
+<section>
     <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'" [isHideButton]="true"
         [optionsButtonsEdit]="optionsButtonsView" [dataView]="listViews" (callback)="setInsuranceInfo($event)" (callBackForm)="callBackForm($event)"
         (callbackcancel)="cancel($event)"></app-edit-detail>
-        
         <app-loading-detail 
             [id]="'sections-2qnt'" 
             *ngIf="listViews.length === 0">
         </app-loading-detail>
-
-    <div>
-    </div>
        
-</p-card>
+    </section>
+       
 

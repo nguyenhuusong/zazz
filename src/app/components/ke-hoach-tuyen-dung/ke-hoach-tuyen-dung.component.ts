@@ -86,6 +86,10 @@ export class KeHoachTuyenDungComponent implements OnInit, AfterViewChecked {
   }
   loading = false;
   selectedValue: any = '';
+
+  isDetail = false;
+  recruitPlanId = ''
+
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
@@ -184,7 +188,7 @@ export class KeHoachTuyenDungComponent implements OnInit, AfterViewChecked {
       buttons: [
         {
           onClick: this.editRow.bind(this),
-          label: 'Xem chi tiết',
+          label: 'Xem',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
           // hide: CheckHideAction(MENUACTIONROLEAPI.getRecruitPlanPage.url, ACTIONS.VIEW)
@@ -225,7 +229,7 @@ export class KeHoachTuyenDungComponent implements OnInit, AfterViewChecked {
             `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
         },
         filter: '',
-        width: 60,
+        width: 90,
         pinned: 'right',
         cellRenderer: 'buttonAgGridComponent',
         cellClass: ['border-right', 'no-auto'],
@@ -256,10 +260,8 @@ export class KeHoachTuyenDungComponent implements OnInit, AfterViewChecked {
   }
 
   editRow({rowData}) {
-    const params = {
-      recruitPlanId: rowData.recruitPlanId	
-    }
-    this.router.navigate(['/tuyen-dung/ke-hoach-tuyen-dung/chi-tiet-ke-hoach-tuyen-dung'], { queryParams: params });
+    this.isDetail = true;
+    this.recruitPlanId = rowData.recruitPlanId;
   }
 
   onCellClicked(event) {
@@ -269,10 +271,13 @@ export class KeHoachTuyenDungComponent implements OnInit, AfterViewChecked {
   }
 
   create() {
-    const params = {
-      recruitPlanId	: null
-    }
-    this.router.navigate(['/tuyen-dung/ke-hoach-tuyen-dung/them-moi-ke-hoach-tuyen-dung'], { queryParams: params });
+    this.isDetail = true;
+    this.recruitPlanId = '';
+  }
+
+  callback() {
+    this.isDetail = false;
+    this.load();
   }
 
   find() {

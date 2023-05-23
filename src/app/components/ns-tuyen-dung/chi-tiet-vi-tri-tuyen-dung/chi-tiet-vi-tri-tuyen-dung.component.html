@@ -1,10 +1,10 @@
 
 <div class="main-grid product-detail">
-    <section class="bread-crumb">
+    <!-- <section class="bread-crumb">
         <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
-    </section>
+    </section> -->
    <div class="content">
-    <div class="d-flex center">
+    <div class="d-flex center" *ngIf="detailInfo.flowStatuses">
         <div class="col-8">
             <app-hrm-step [steps]="detailInfo?.flowStatuses" [flowSt]="detailInfo?.flow_st" *ngIf="detailInfo"></app-hrm-step>
         </div>

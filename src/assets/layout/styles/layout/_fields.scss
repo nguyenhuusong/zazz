@@ -185,6 +185,7 @@
             align-items: center;
             font-family: 'SFProTextRegular';
             font-weight: 400;
+            width: 100%;
             &.p-placeholder{
                 color: $C-99A2BC;
             }
@@ -207,9 +208,18 @@
     }
 
     .p-dropdown{
+        &.bgTodo,
+        &.bgDone{
+            height: 34px;
+        }
         &.bgDone{
             background-color: $success;
-            height: 34px;
+            .p-dropdown-trigger{
+                color: #fff;
+            }
+        }
+        &.bgTodo{
+            background-color: $secondary;
             .p-dropdown-trigger{
                 color: #fff;
             }
@@ -356,4 +366,26 @@
         font-family: 'SFProTextRegular';
         font-weight: 400;
     }
+    &.no-border{
+        .p-dropdown{
+            border: none;
+            .p-dropdown-label{
+                font-size: 12px;
+                padding: 0px;
+            }
+        }
+        p-calendar{
+            input{
+                border: none;
+                padding: 0px;
+                font-size: 12px;
+                outline: none;
+                &:focus{
+                    box-shadow: none;
+                }
+                cursor: pointer;
+            }
+        }
+    }
+
 }

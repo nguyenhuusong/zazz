@@ -181,7 +181,7 @@ export class LichSuTuyenDungComponent implements OnInit {
       buttons: [
         {
           onClick: this.viewRow.bind(this),
-          label: 'Xem chi tiết',
+          label: 'Xem',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
         },

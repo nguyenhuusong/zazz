@@ -1,4 +1,4 @@
-<div class="col-3 pt-0 pb-0 gap-2 flex justify-content-end"  style="position: absolute;right: 0; top: 5px ">
+<div class="col-3 pt-0 pb-0 gap-2 flex justify-content-end" style="position: absolute;right: 6px;top: 14px;z-index: 8;">
     <div class="fields ">
         <p-dropdown 
         *ngIf="listViews.length> 0 && status.length > 0" 
@@ -25,8 +25,8 @@
             </ng-template>
         </p-dropdown>
     </div>
-    <p-splitButton icon="pi pi-send" *ngIf="menuActions.length > 0" styleClass="p-button-sm ml-2" [appendTo]="'body'" (onClick)="callActions(menuActions[0].value)" [label]="menuActions[0].label" [model]="menuActions"></p-splitButton>
-    <p-button label="Quay lại" (click)="quaylai('')" styleClass="p-button-secondary p-button-sm ml-2" [style]="{'z-index': 9}" icon="pi pi-directions-alt"></p-button>
+    <p-splitButton icon="pi pi-send" *ngIf="menuActions.length > 0" styleClass="p-button-sm" [appendTo]="'body'" (onClick)="callActions(menuActions[0].value)" [label]="menuActions[0].label" [model]="menuActions"></p-splitButton>
+    <p-button label="Quay lại" (click)="quaylai('')" styleClass="p-button-secondary p-button-sm" [style]="{'z-index': 9}" icon="pi pi-directions-alt"></p-button>
 </div>
 <app-edit-detail 
 *ngIf="listViews.length> 0" 

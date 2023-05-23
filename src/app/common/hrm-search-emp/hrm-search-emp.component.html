@@ -13,7 +13,7 @@ styleClass="search-em-in {{ dataSearched?.length > 0 ? 'search-em-result' : '' }
 </ng-template>
     <div class="search-in" [ngClass]="{'res': dataSearched.length > 0}">
         <div class="search-group fields d-flex" style="display: flex">
-            <div class="col-3 pd-0" style="padding-right: 10px !important;border-right: 1px solid #ebe8e8;" *ngIf="!searchByOrgan">
+            <div class="col-3 p-0" style="padding-right: 10px !important;border-right: 1px solid #ebe8e8;" *ngIf="!searchByOrgan">
                 <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" placeholder="Tìm kiếm theo" 
                 [options]="searchBys" [(ngModel)]="searchBy" name="searchBy">
                 <ng-template let-item pTemplate="selectedItem">
@@ -26,7 +26,7 @@ styleClass="search-em-in {{ dataSearched?.length > 0 ? 'search-em-result' : '' }
                 </ng-template>
                 </p-dropdown>
             </div>
-            <div *ngIf="searchByOrgan" class="col-3 pd-0" 
+            <div *ngIf="searchByOrgan" class="col-3 p-0" 
                 style="padding-right: 10px !important;border-right: 1px solid #ebe8e8; position: relative;">
                 <p-dropdown appendTo="body" [baseZIndex]="100" 
                     [autoDisplayFirst]="false" placeholder="Chọn tổ chức *" 
@@ -50,7 +50,7 @@ styleClass="search-em-in {{ dataSearched?.length > 0 ? 'search-em-result' : '' }
                     Vui Lòng chọn tổ chức
                 </span>
             </div>
-            <div class="col-9 pd-0">
+            <div class="col-9 p-0">
                 <!-- <p-button styleClass="p-button-sm " icon=" pi pi-search" (click)="getStaffsAtStore()"></p-button> -->
                 <span class="pi pi-search" (click)="searchEmp()"></span>
                 <span class="number-res" *ngIf="isSearching">

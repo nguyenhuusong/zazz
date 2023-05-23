@@ -95,7 +95,7 @@ export class ConfigGridTableFormComponent implements OnInit {
       buttons: [
         {
           onClick: this.chitietgroup.bind(this),
-          label: 'Chi tiết group',
+          label: 'Group',
           icon: 'pi pi-trash',
           class: 'btn-primary mr5',
         },
