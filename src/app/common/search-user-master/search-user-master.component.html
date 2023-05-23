@@ -3,7 +3,7 @@
         <div class="row">
             <div class="p-inputgroup">
                 <div class="col-5 pt-0 pb-0">
-                    <div class="field-group select label-8">
+                    <div class="fields">
                         <label>Tìm kiếm theo</label>
                         <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" [options]="listTypeCustomer"
                             [required] (onChange)="changeKeyType($event)" [(ngModel)]="modelSearchOrder.keyType" name="keyType"
@@ -58,7 +58,7 @@
         <div class="row">
             <div class="p-inputgroup">
                 <div class="col-5 pt-0 pb-0">
-                    <div class="field-group select label-8">
+                    <div class="fields">
                         <label>Tìm kiếm theo</label>
                         <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" [options]="listTypeCustomerCorp"
                             [required] (onChange)="changeKeyType($event)" [(ngModel)]="modelSearchOrder.keyType" name="keyType"

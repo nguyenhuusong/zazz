@@ -2,7 +2,7 @@
     <div class="col-12 border-section ">
         <p-panel>
             <ng-template pTemplate="header">
-                <div class="grid d-flex justify-content-between">
+                <div class="d-flex justify-content-between">
                     <h3 class="title-section">Danh sách tài khoản đăng nhập</h3>
                 </div>
             </ng-template>
@@ -62,7 +62,7 @@
        Khởi tạo mật khẩu
     </p-header>
     <div class="">
-        <div class="field-group select">
+        <div class="fields">
             <p-dropdown placeholder="Chọn" 
                 [(ngModel)]="resetPasswordOtp.otp_type"
                 appendTo="body" 

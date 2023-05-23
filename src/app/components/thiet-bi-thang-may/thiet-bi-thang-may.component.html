@@ -13,7 +13,7 @@
                 </span>
           </div>
         </div>
-        <p-button styleClass="p-button-sm height-56" icon="pi pi-plus" label="Thêm mới" (click)="addThietBi()"
+        <p-button styleClass="p-button-sm " icon="pi pi-plus" label="Thêm mới" (click)="addThietBi()"
           [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetElevatorDevicePage.url, action: ACTIONS.ADD}"
         >
         </p-button>
@@ -40,7 +40,7 @@
 <p-dialog [(visible)]="isDialog" header="{{titleModal}}" [style]="{width: '600px', height: 'auto'}">
     <form #createElevatorfloor="ngForm" class="form-horizontal ng-pristine ng-valid ng-scope">
         <div class="box-body" style="padding:10px;">
-          <div class="field-group select label-8">
+          <div class="fields">
             <label class="control-label">Mã dự án
               <span style="color:red">*</span>
             </label>
@@ -51,7 +51,7 @@
                     {{advert.projectName}} </option>
                 </select>
           </div>
-          <div class="field-group select label-8">
+          <div class="fields">
             <label class="control-label">Tòa nhà</label>
             <div *ngIf="modelBuilding">
               <select (change)="getBuildingZones()" class="form-control" name="buildCd" [(ngModel)]="modelElevator.buildCd">
@@ -62,7 +62,7 @@
             </select>
             </div>
           </div>
-          <div class="field-group select label-8">
+          <div class="fields">
               <label class="control-label">Khu vực
                 <span style="color:red">*</span>
               </label>
@@ -89,7 +89,7 @@
             </div>
           </div> -->
 
-          <div class="field-group select label-8">
+          <div class="fields">
               <label class="control-label">Tầng
                 <span style="color:red">*</span>
               </label>

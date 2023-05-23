@@ -16,7 +16,7 @@
             </li>
         </ul>
         <div class="col-3 gap-2 flex justify-content-end align-items-center" style="padding: 0;">
-            <div class="field-group select " style="margin-bottom: 0;">
+            <div class="fields " style="margin-bottom: 0;">
                 <p-dropdown 
                 *ngIf="listViews.length> 0 && status.length > 0" 
                     [options]="status" 
@@ -109,7 +109,7 @@
                         </div>
                     </div>
                     <div class="col-md-6 mt-1"  *ngIf="titleForm.type === 'NghiViec'">
-                        <div class="field-group select" [ngClass]=" modelDuyet.reason_id? 'valid' : 'invalid' ">
+                        <div class="fields" [ngClass]=" modelDuyet.reason_id? 'valid' : 'invalid' ">
                             <label for="">Lý do</label>
                             <p-dropdown [autoZIndex]="true" [autoDisplayFirst]="false" [style]="{'width': '100%'}" [options]="terminateReasons"
                             [(ngModel)]="modelDuyet.reason_id" name="reason_id">

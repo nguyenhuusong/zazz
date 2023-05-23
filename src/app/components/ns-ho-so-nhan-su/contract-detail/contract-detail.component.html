@@ -1,11 +1,11 @@
 <div class="main-grid product-detail" *ngIf="url === 'chi-tiet-xu-ly-hop-dong'" >
-    <section class="head-detail">
+    <section class="bread-crumb">
         <div class="grid">
             <div class="col-6">
                 <app-hrm-breadcrumb [items]="itemsMenu" ></app-hrm-breadcrumb>
             </div>
             <div class="col-6  flex justify-content-end align-items-center" >
-                <div class="field-group select " style="margin-bottom: 0;">
+                <div class="fields " style="margin-bottom: 0;">
                     <p-dropdown 
                         *ngIf="listViews.length> 0" 
                         [options]="status" 
@@ -52,7 +52,7 @@
             <div class="col-12 border-section " *ngIf="this.detailInfo?.flow_st > 0 && detailInfo?.flow_st < 4">
                 <p-panel>
                     <ng-template pTemplate="header">
-                        <div class="grid d-flex justify-content-between">
+                        <div class="d-flex justify-content-between">
                             <h3 class="title-section">Thành phần lương</h3>
                             <!-- <p-button label="Thêm mới" icon="pi pi-plus" (click)="addWorked()" styleClass="p-button-sm mr-1"></p-button> -->
                         </div>
@@ -114,7 +114,7 @@
                     <div class="col-12 border-section " *ngIf="this.detailInfo?.flow_st > 0 && detailInfo?.flow_st < 4">
                         <p-panel>
                             <ng-template pTemplate="header">
-                                <div class="grid d-flex justify-content-between">
+                                <div class="d-flex justify-content-between">
                                     <h3 class="title-section">Thành phần lương</h3>
                                     <!-- <p-button label="Thêm mới" icon="pi pi-plus" (click)="addWorked()" styleClass="p-button-sm mr-1"></p-button> -->
                                 </div>
@@ -139,7 +139,7 @@
         </p-card>
         <ng-template pTemplate="footer">
             <div class="col-12  flex justify-content-end align-items-center" >
-                <div class="field-group select " style="margin-bottom: 0;">
+                <div class="fields " style="margin-bottom: 0;">
                     <p-dropdown 
                         *ngIf="listViews.length> 0" 
                         [options]="status" 

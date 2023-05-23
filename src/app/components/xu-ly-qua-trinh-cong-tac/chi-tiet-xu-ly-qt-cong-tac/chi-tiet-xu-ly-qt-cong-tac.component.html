@@ -1,11 +1,11 @@
 <div class="main-grid product-detail" *ngIf="!isDialog">
-    <section class="head-detail">
+    <section class="bread-crumb">
         <div class="grid">
             <div class="col-6">
                      <app-hrm-breadcrumb [items]="itemsMenu"></app-hrm-breadcrumb>
             </div>
             <div class="col-6  flex justify-content-end align-items-center" >
-                <div class="field-group select " style="margin-bottom: 0;">
+                <div class="fields " style="margin-bottom: 0;">
                     <p-dropdown 
                         *ngIf="listViews.length> 0" 
                         [options]="status" 
@@ -79,7 +79,7 @@
 
     <ng-template pTemplate="footer">
         <div class="col-12  flex justify-content-end align-items-center" >
-            <div class="field-group select " style="margin-bottom: 0;">
+            <div class="fields " style="margin-bottom: 0;">
                 <p-dropdown 
                     *ngIf="listViews.length> 0" 
                     [options]="status" 

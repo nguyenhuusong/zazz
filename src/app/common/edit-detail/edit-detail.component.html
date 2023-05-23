@@ -6,7 +6,7 @@
                 <div class="border-section">
                     <p-panel>
                         <ng-template pTemplate="header" *ngIf="group.group_name">
-                            <div class="grid d-flex justify-content-between" style="width: 100%">
+                            <div>
                                 <h3 class="title-section">{{group.group_name}}</h3>
                                 <div>
                                     <span *ngIf="group.group_name !== 'Giấy tờ'" class="pi pi-cog cursor-pointer" [ngClass]="{'hidden': group.group_name === 'Bàn giao'}" (click)="CauHinh()"></span>
@@ -16,7 +16,7 @@
                             </div>
                         </ng-template>
                         <ng-template pTemplate="header" *ngIf="!group.group_name && idx === 0">
-                            <div  class="grid d-flex justify-content-between" style="width: 100%">
+                            <div >
                                    <div> <span *ngIf="group.group_name !== 'Giấy tờ'" class="pi pi-cog cursor-pointer" [ngClass]="{'hidden': group.group_name === 'Bàn giao'}" (click)="CauHinh()"></span></div>
                                 </div>
                         </ng-template>

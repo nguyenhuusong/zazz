@@ -118,15 +118,95 @@ ul{
 
 // #button
 button{
-    &.p-button {
+    &.p-button{
+        background: $mainBg;
         border-radius: 4px;
         height: 34px;
-        padding: 9px 12px!important;
-        border-color: transparent;
-        font-size: 13px;
+        padding: 9px 12px !important;
+        border-color: transparent !important;
+        min-width: 0px;
+        box-shadow: none !important;
+        .p-button-label{
+            font-size: 13px;
+            font-weight: 500;
+        }
+        &:enabled{
+            &:hover{
+                background: $mainBg;
+                color: $white;
+                border-color: transparent;
+            }
+        }
+        svg {
+            height: 14px;
+            width: auto;
+        }
+        &.box-icon{
+            border: 1px solid #E2E6F2;
+            border-radius: 4px !important;
+            background: none !important;
+            width: auto;
+            &:hover{
+                border: 1px solid #E2E6F2 !important;
+            }
+        }
+        &.p-button-secondary{
+            border-color: $C-99A2BC !important
+        }
     }
-    svg{
-        width: 15px;
+    &.btn-option{
+        border: 1px solid $C-E2E6F2 !important;
+        background: none;
+        width: auto;
+        min-width: 0;
+        overflow: visible;
+        svg{
+            path{
+                fill: $grey;
+            }
+        }
+        &:hover{
+            svg{
+                path{
+                    fill: $white
+                }
+            }
+        }
+        &:focus,
+        &:active{
+            background: $mainBg !important;
+            color: $white !important;
+            border-color: transparent !important;
+            svg{
+                path{
+                    fill: $white
+                }
+            }
+        }
+    }
+    &.btn-trans{
+        border: 1px solid $C-E2E6F2;
+        background: none;
+        color: $grey;
+        &:hover{
+            svg{
+                path{
+                    fill: $white
+                }
+            }
+            color: $grey;
+        }
+    }
+    .dot{
+        position: absolute;
+        right: -3px;
+        top: -3px;
+        width: 8px;
+        height: 8px;
+        display: block;
+        border-radius: 100%;
+        background-color: $C-FF3B49;
+        z-index: 1;
     }
 }
 
@@ -354,6 +434,7 @@ p-tabview{
             .p-tabview-nav{
                 border-bottom: 1px solid $C-E2E6F2;
                 padding-top: 0px;
+                background: $white;
                 &>li{
                     a{
                         padding: 8px 16px;
@@ -537,6 +618,7 @@ app-edit-detail{
         box-shadow: 0px 0px 3px #e8e8e8;
         border-radius: 2px;
         transition: all 0.3s;
+        height: 100%;
         &:hover{
             box-shadow: 4px 2px 5px #e8e8e8;
             transition: all 0.3s;
@@ -552,11 +634,61 @@ app-edit-detail{
                     content: '';
                     width: 32px;
                     height: 4px;
-                    background: rgba(11,58,133,.7215686275);
+                    background: rgb(0 84 219 / 72%);
                     position: absolute;
                     bottom: 0;
                     left: 0;
                 }
+            }
+        }
+    }
+}
+
+
+// #section
+.section-box{
+    background: #fff;
+    padding: 13px;
+    box-shadow: 0px 0px 3px #e8e8e8;
+    border-radius: 2px;
+    transition: all 0.3s;
+    &:hover{
+        box-shadow: 4px 2px 5px #e8e8e8;
+        transition: all 0.3s;
+    }
+}
+
+// #grid buton
+app-button-renderer {
+    p-splitbutton {
+        .p-splitbutton{
+            border: 1px solid #b3b3b3;
+            border-radius: 4px;
+            width: 100%;
+            background: none;
+            button{
+                background: none;
+                color: #b3b3b3 !important;
+                border: none !important;
+                width: auto !important;
+                padding: 0 4px !important;
+            }
+        }
+        .p-splitbutton-defaultbutton {
+            // border: 1px solid #999797;
+            background-color: unset;
+            color: #ccc;
+            height: 25px !important;
+            .p-button-label {
+                font-size: 13px
+            }
+        }
+
+        .p-splitbutton-menubutton {
+            height: 25px !important;
+            .pi-chevron-down {
+                font-size: 11px !important;
+                margin-right: 4px !important;
             }
         }
     }

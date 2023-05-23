@@ -6,6 +6,9 @@
     border: none;
     border-radius: 0px;
     border-bottom: 0 !important;
+    position: sticky;
+    top: 0;
+    z-index: 9;
     .p-menubar-root-list{
         & > .p-menuitem {
             &> .p-menuitem-link{
@@ -26,14 +29,14 @@
                     }
                 }
                 .p-menuitem-icon{
-                    color: var(--white-color);
+                    color: $white;
                     margin-left: 0.5rem;
                 }
             }
             &.parent_active{
                 &>.p-menuitem-link{
                     .p-submenu-icon{
-                        color: var(--orange-background);
+                        color: $activeColor;
                     }
                     .p-menuitem-text{
                         color: $activeColor !important;
@@ -55,7 +58,7 @@
             &.parent_active{
                 &>a{
                     &>.p-menuitem-text{
-                        color: var(--main-color) !important;
+                        color: $mainBg !important;
                     }
                     .p-submenu-icon{
                         color: $activeColor;
@@ -72,21 +75,21 @@
             &.parent_active{
                 &>a{
                     &>.p-menuitem-text{
-                        color: var(--f68c1f);
+                        color: $C-f68c1f;
                     }
                 }
                 .p-menuitem-icon{
-                    color: var(--f68c1f);
+                    color: $C-f68c1f;
                 }
                 .p-submenu-icon{
-                    color: var(--f68c1f);
+                    color: $C-f68c1f;
                 }
                 .p-submenu-list{
                     &>li.active{
                         &>a{
-                            background: var(--f68c1f);
+                            background: $C-f68c1f;
                             .p-menuitem-text{
-                                color: var(--white-color);
+                                color: $white;
                             }
                         }
                     }
@@ -95,15 +98,16 @@
             .p-submenu-list{
                 &>li{
                     &>a{
+                        padding: 12px 16px !important;
+                        font-weight: 400;
+                        border-bottom: 1px solid #f4f4f4;
                         .p-menuitem-icon{
                             margin-right: 4px;
                         }
                         .p-menuitem-text{
-                            color: var(--000000);
+                            color: #000000;
                             white-space: nowrap;
                         }
-                        padding: 12px 16px !important;
-                        font-weight: 400;
                     }
                 }
             }
@@ -116,14 +120,16 @@
             }
         }
         .p-submenu-list{
-            background: var(--white-background);
-            box-shadow: var(--black-box-shadow-01);
+            background: $white;
             margin-top: 10px !important;
             overflow: visible !important;
             z-index: 9999 !important;
             width: auto;
             max-height: 345px;
             overflow: auto !important;
+            padding-top: 0px;
+            padding-bottom: 0px;
+            box-shadow: 0px 4px 10px rgb(0 0 0 / 10%);
             &::-webkit-scrollbar {
                 width: 8px;
               }
@@ -147,7 +153,7 @@
                     &:hover{
                         background: $activeColor;
                         span{
-                            color: var(--white-color) !important;
+                            color: $white !important;
                         }
                     }
                 }
@@ -162,7 +168,7 @@
             }
             &>li{
                 &>a{
-                    color: var(--text-color);
+                    color: $C-212633;
                 }
             }
         }
@@ -176,8 +182,8 @@
     }
     .p-menuitem-link{
         .p-menuitem-text{
-            color: var(--ink-color);
-            font-weight: var(--p-menubar-500);
+            color: $C-212633;
+            font-weight: 500;
         }
     }
 }

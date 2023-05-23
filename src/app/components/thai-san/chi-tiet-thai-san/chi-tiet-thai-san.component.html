@@ -1,6 +1,6 @@
 
 <div class="main-grid product-detail">
-    <section>
+    <section class="bread-crumb">
         <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
     </section>
    <div class="content">
@@ -74,7 +74,7 @@
         <section *ngIf="modelEdit.maternityId">
             <div class="d-flex bet middle">
                 <h4>Chi tiết lịch đăng ký thai sản</h4>
-                <p-button styleClass="p-button-sm height-56" (click)="themMoiChiTietDangKyTS()"
+                <p-button styleClass="p-button-sm " (click)="themMoiChiTietDangKyTS()"
                 [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetMaternityPage.url, action: ACTIONS.THEM_MOI_CHI_TIET_DANG_KY_THAI_SAN}"
                 >
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">

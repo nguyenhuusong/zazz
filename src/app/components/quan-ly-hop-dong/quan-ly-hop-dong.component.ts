@@ -202,7 +202,7 @@ export class QuanLyHopDongComponent implements OnInit {
       buttons: [
         {
           onClick: this.editRow.bind(this),
-          label: 'Xem chi tiết',
+          label: 'Xem',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
           hide: CheckHideAction(MENUACTIONROLEAPI.GetContractTypePage.url, ACTIONS.VIEW)
@@ -258,10 +258,13 @@ export class QuanLyHopDongComponent implements OnInit {
   }
 
   editRow({ rowData }) {
-    const params = {
-      contractTypeId: rowData.contractTypeId,
-    }
-    this.router.navigate(['/cai-dat/quan-ly-hop-dong/chi-tiet-hop-dong'], { queryParams: params });
+    // const params = {
+    //   contractTypeId: rowData.contractTypeId,
+    // }
+    // this.router.navigate(['/cai-dat/quan-ly-hop-dong/chi-tiet-hop-dong'], { queryParams: params });
+
+    this.isDetail = true;
+    this.contractTypeId = rowData.contractTypeId;
   }
 
   onCellClicked(event) {
@@ -270,12 +273,19 @@ export class QuanLyHopDongComponent implements OnInit {
     }
   }
 
-
+  isDetail = false;
+  contractTypeId = '';
   addHopDong() {
     const params = {
       contractTypeId: null
     }
-    this.router.navigate(['/cai-dat/quan-ly-hop-dong/them-moi-hop-dong'], { queryParams: params });
+    this.isDetail = true;
+    this.contractTypeId = '';
+    // this.router.navigate(['/cai-dat/quan-ly-hop-dong/them-moi-hop-dong'], { queryParams: params });
+  }
+
+  callback() {
+
   }
 
   find() {
@@ -367,8 +377,8 @@ export class QuanLyHopDongComponent implements OnInit {
   cloneListViewsFilter = [];
   detailInfoFilter = null;
   optionsButonFilter = [
-    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm height-56 addNew', icon: 'pi pi-search' },
-    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger height-56 addNew', icon: 'pi pi-times' },
+    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm  addNew', icon: 'pi pi-search' },
+    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger  addNew', icon: 'pi pi-times' },
   ];
   //filter 
   getFilter() {

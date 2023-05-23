@@ -3,7 +3,7 @@
         <div class="card  p-2">
             <div class="row">
                 <div class="col-sm-3 form-group">
-                    <div class="field-group select label-8">
+                    <div class="fields">
                         <label for="">Chọn tổ chức</label>
                         <p-dropdown appendTo="body"  [baseZIndex]="100" 
                             [options]="organizes" [(ngModel)]="modeAgencyOrganize.organizeId" [autoDisplayFirst]="false" (onChange)="getUserByPush($event.query)" name="organizeId" [filter]="true">
@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 <div class="col-sm-3 form-group">
-                    <div class="field-group select label-8" >
+                    <div class="fields" >
                         <label for="">Nhân viên</label>
                         <p-dropdown appendTo="body"  [baseZIndex]="100" 
                             [options]="listUsers" [(ngModel)]="modeAgencyOrganize.cusId" [autoDisplayFirst]="false" name="cusId" (onChange)="selectUser($event.query)"  [filter]="true">

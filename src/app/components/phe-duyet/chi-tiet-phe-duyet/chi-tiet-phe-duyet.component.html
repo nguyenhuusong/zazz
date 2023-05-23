@@ -21,7 +21,7 @@
    <p-dialog header="Phê duyệt" [(visible)]="displayPheDuyet" [style]="{width: '50vw'}">
        <div class="row">
         <div class="col-md-6">
-            <div class="field-group select" [ngClass]="setWorkQuery.approve_st ? 'valid' : 'invalid'">
+            <div class="fields" [ngClass]="setWorkQuery.approve_st ? 'valid' : 'invalid'">
                 <label>Trạng thái</label>
                  <select name="status" [(ngModel)]="setWorkQuery.approve_st">
                      <option value=true>Hoạt động</option>

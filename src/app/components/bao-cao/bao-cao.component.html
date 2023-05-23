@@ -12,7 +12,7 @@
             <p-card styleClass="mb-3">
                 <div class="row d-flex justify-content-center">
                   <div class="col-md-6">
-                    <div class="field-group select" [ngClass]="query.report_type ? 'valid' : 'invalid' ">
+                    <div class="fields" [ngClass]="query.report_type ? 'valid' : 'invalid' ">
                       <label for="">Loại báo cáo</label>
                       <p-dropdown appendTo="body" (onChange)="getDetailReport($event)" [baseZIndex]="100" [autoDisplayFirst]="false" [options]="listReports"
                         [(ngModel)]="query.report_type" name="report_type" [filter]="true">
@@ -53,7 +53,7 @@
                           </div>
                       </div>
                       <div *ngIf="paramater?.param_type === 'object'" class="col-md-6">
-                          <div class="field-group select" [ngClass]="paramater[paramater?.param_cd] ? 'valid' : 'invalid' ">
+                          <div class="fields" [ngClass]="paramater[paramater?.param_cd] ? 'valid' : 'invalid' ">
                             <label for="">{{paramater?.param_name}}: </label>
                             <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
                               [options]="paramater.options" [(ngModel)]="paramater[paramater?.param_cd]"

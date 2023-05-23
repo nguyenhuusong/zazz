@@ -19,7 +19,7 @@
                 </div>
             </div>
             <div class="col-sm-6 form-group">
-                <div class="field-group select label-8">
+                <div class="fields">
                     <label for="">Chọn tổ chức</label>
                     <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
                     [options]="organizes" formControlName="orgId"  [filter]="true">
@@ -79,7 +79,7 @@
         </ng-container>
         <ng-container *ngIf="cardForm?.get('isCardVehicle')?.value" [formGroup]="vehicleForm">
             <div class="col-sm-6 form-group" style="clear: left;">
-                <div class="field-group select label-8">
+                <div class="fields">
                     <label>Loại xe</label>
                     <select name="vehicleTypeId" class="form-control" formControlName="vehicleTypeId">
                         <option [ngValue]="1">Ô tô</option>

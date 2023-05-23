@@ -2101,8 +2101,8 @@ export class AppTypeChips implements OnInit {
                       <p-inputNumber [min]="10" [max]="30000" [(ngModel)]="timeInput">
                       </p-inputNumber>
                       <div class="buttons">
-                        <p-button styleClass="p-button-sm height-56" (click)="saveTimeNotis()"><i class="pi pi-save"> </i></p-button>
-                        <p-button styleClass="p-button-sm height-56 p-button-danger" (click)="cancelTimeNotis()"><i class="pi pi-times"> </i></p-button>
+                        <p-button styleClass="p-button-sm " (click)="saveTimeNotis()"><i class="pi pi-save"> </i></p-button>
+                        <p-button styleClass="p-button-sm  p-button-danger" (click)="cancelTimeNotis()"><i class="pi pi-times"> </i></p-button>
                       </div>
                     </div>
                     <div *ngIf="!isNewTime" class="more" (click)="addMoreLm()">

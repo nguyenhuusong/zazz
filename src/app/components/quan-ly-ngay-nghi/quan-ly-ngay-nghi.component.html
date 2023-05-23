@@ -3,14 +3,14 @@
 <div class="grid main-grid" style="padding: 0">
     <div class="col-12 right max-w-full" style="padding-top: 0;">
         
-        <div class="bread-filter">
+        <div class="bread-crumb">
             <div class="d-flex bet middle">
                 <app-hrm-breadcrumb [items]="itemsBreadcrumb"></app-hrm-breadcrumb>
                 <p-button label="Tạo ngày nghỉ trong năm" icon="pi pi-calendar-plus" (click)="AddDayToYear()"></p-button>
             </div>
             <div class="grid filter">
                 <div class="x-1"> 
-                    <div class="field-group select label-8">
+                    <div class="fields">
                         <label  for=""> Năm: </label>
                         <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
                         [options]="arrayYear" [(ngModel)]="query.year" name="year" (onChange)="load()">

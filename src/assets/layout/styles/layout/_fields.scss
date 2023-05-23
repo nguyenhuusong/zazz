@@ -2,6 +2,12 @@
 .hrm-filter .filed-filter,
 .p-field,
 .fields{
+    svg{
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        width: 16px;
+    }
     .p-disabled{
         opacity: 1;
     }
@@ -68,6 +74,7 @@
         }
         &:disabled{
             background: #f1f1f1 !important;
+            opacity: .66;
         }
     }
     .field{
@@ -183,18 +190,33 @@
             }
         }
         .p-dropdown-trigger-icon{
-            background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M0.209209 0.21967C-0.0697365 0.512563 -0.0697365 0.987437 0.209209 1.28033L4.49492 5.78033C4.77387 6.07322 5.22613 6.07322 5.50508 5.78033L9.79079 1.28033C10.0697 0.987437 10.0697 0.512564 9.79079 0.21967C9.51184 -0.0732229 9.05958 -0.073223 8.78064 0.21967L5 4.18934L1.21936 0.21967C0.940416 -0.0732233 0.488155 -0.0732233 0.209209 0.21967Z' fill='%2376809B'/%3E%3C/svg%3E%0A");
-            width: 10px;
-            height: 6px;
-            &::before{
-                display: none;
-            }
+            // background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M0.209209 0.21967C-0.0697365 0.512563 -0.0697365 0.987437 0.209209 1.28033L4.49492 5.78033C4.77387 6.07322 5.22613 6.07322 5.50508 5.78033L9.79079 1.28033C10.0697 0.987437 10.0697 0.512564 9.79079 0.21967C9.51184 -0.0732229 9.05958 -0.073223 8.78064 0.21967L5 4.18934L1.21936 0.21967C0.940416 -0.0732233 0.488155 -0.0732233 0.209209 0.21967Z' fill='%2376809B'/%3E%3C/svg%3E%0A");
+            // width: 10px;
+            // height: 6px;
+            // &::before{
+            //     display: none;
+            // }
         }
         &.p-disabled{
             background-color: #f1f1f1 !important;
+            opacity: .66;
             .p-dropdown-label{
-                color: $C-99A2BC
+                color: $C-212633
             }
+        }
+    }
+
+    .p-dropdown{
+        &.bgDone{
+            background-color: $success;
+            height: 34px;
+            .p-dropdown-trigger{
+                color: #fff;
+            }
+        }
+        &.p-focus{
+            box-shadow: none;
+            border-color: transparent;
         }
     }
     .p-treeselect{

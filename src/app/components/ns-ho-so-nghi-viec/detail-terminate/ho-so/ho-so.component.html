@@ -3,16 +3,16 @@
         <p-panel>
             <ng-template pTemplate="header">
                 <div style="display: flex; justify-content: space-between; width: 100%;">
-                    <div class="grid d-flex justify-content-between">
+                    <div class="d-flex justify-content-between">
                         <h3 class="title-section">Danh sách đính kèm</h3>
                     </div>
                     <div>
-                        <p-button (onClick)="Prints()"  *ngIf="this.listPrints.length > 0" label="PRINT" icon="pi pi-print" styleClass="p-button-sm height-56"
+                        <p-button (onClick)="Prints()"  *ngIf="this.listPrints.length > 0" label="PRINT" icon="pi pi-print" styleClass="p-button-sm "
                            >
                         </p-button>
         
                         <p-button class="" *ngIf="this.listPrints.length === 0" (click)="DowloadPlugin()"
-                            styleClass="p-button-sm height-56">
+                            styleClass="p-button-sm ">
                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M0 0H16V16H0V0Z" fill="#F3F8FF"/>
                                 </svg>
@@ -73,7 +73,7 @@
     </p-header>
     <div class="grid">
         <div class="col-4">
-            <div class="field-group select valid">
+            <div class="fields valid">
                 <label for="" style="z-index: 2">Danh sách máy in</label>
                 <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" [options]="listPrints"
                     [(ngModel)]="modelPrint.PrinterName" name="PrinterName">

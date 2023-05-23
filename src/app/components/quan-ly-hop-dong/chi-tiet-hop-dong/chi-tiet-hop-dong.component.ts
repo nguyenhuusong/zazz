@@ -14,6 +14,11 @@ import { Subject, takeUntil } from 'rxjs';
   styleUrls: ['./chi-tiet-hop-dong.component.scss']
 })
 export class ChiTietHopDongComponent implements OnInit, OnChanges {
+  @Input() contractTypeId = '';
+  @Input() dataRouter = null
+  @Output() back = new EventEmitter<any>();
+  @Output() callback = new EventEmitter<any>();
+
   manhinh = 'View';
   indexTab = 0;
   optionsButtonsView = [
@@ -26,7 +31,6 @@ export class ChiTietHopDongComponent implements OnInit, OnChanges {
     private confirmationService: ConfirmationService,
     private router: Router
   ) { }
-  contractTypeId = null
   organizeId = null
   org_level = 0
   listViews = []
@@ -39,9 +43,6 @@ export class ChiTietHopDongComponent implements OnInit, OnChanges {
   }
   titlePage : string = '';
   url: string = '';
-
-  @Input() dataRouter = null
-  @Output() back = new EventEmitter<any>();
 
   ngOnChanges() {
 
@@ -74,7 +75,7 @@ export class ChiTietHopDongComponent implements OnInit, OnChanges {
     .subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.dataRouter = this.paramsObject.params;
-      this.contractTypeId = this.paramsObject.params.contractTypeId || null;
+      // this.contractTypeId = this.paramsObject.params.contractTypeId || null;
       this.organizeId = this.paramsObject.params.organizeId || null;
       this.getContractTypeInfo();
     });

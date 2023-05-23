@@ -1,6 +1,6 @@
 
 <div class="main-grid product-detail chi-tiet-ho-so-nhan-su">
-    <section class="head-detail">
+    <section class="bread-crumb">
         <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
         <p-listbox [options]="menuItems" [(ngModel)]="selectedMenuCode"
             (onChange)="onChangeMenu($event.value)" optionLabel="name" optionValue="code">
@@ -413,7 +413,7 @@
                         </div>
                     </div>
                     <div class="col-md-6 mt-1"  *ngIf="titleForm.type === 'NghiViec'">
-                        <div class="field-group select" [ngClass]=" modelDuyet.reason_id? 'valid' : 'invalid' ">
+                        <div class="fields" [ngClass]=" modelDuyet.reason_id? 'valid' : 'invalid' ">
                             <label for="">Lý do</label>
                             <p-dropdown [autoZIndex]="true" [autoDisplayFirst]="false" [style]="{'width': '100%'}" [options]="terminateReasons"
                             [(ngModel)]="modelDuyet.reason_id" name="reason_id">

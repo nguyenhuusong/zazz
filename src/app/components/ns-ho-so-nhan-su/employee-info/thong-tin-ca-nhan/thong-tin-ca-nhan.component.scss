@@ -28,31 +28,6 @@
             display: flex;
             justify-content: flex-end;
         }
-        // .btn-group-edit-detail{
-        //     right: 16px !important;
-        //     top: 187px !important;
-        //     z-index: 999 !important;
-        // }
-        .popup-btngroup-edit-detail{
-            .btn-group-edit-detail{
-                // right: 52px !important;
-                // top: 22px !important;
-                // right: 40px !important;
-                // top: 45px !important;
-            }
-        }
-        // .page-detail{
-        //     p-dialog{
-        //         .p-dialog{
-        //             .wrap-edit-detail{
-        //                 .main-grid{
-        //                     // right: 50px !important;
-        //                     // top: 21px !important;
-        //                 }
-        //             }
-        //         }
-        //     }
-        // }
         .khachHangWrapper{
             .col-md-12{
                 position: static;
@@ -94,11 +69,6 @@
         .border-section{
             .p-panel-header{
                 display: block;
-            }
-            .p-panel{
-                // padding-left: 16px;
-                // padding-right: 16px;
-                // margin-bottom: 16px;
             }
         }
         .avatar-c{
@@ -176,7 +146,7 @@
     }
 }
 .base-info-em{
-    background: #F3F4F6;
+    background: #f8f8f8;
     ul{
         display: flex;
         border-radius: 4px 4px 0px 0px;

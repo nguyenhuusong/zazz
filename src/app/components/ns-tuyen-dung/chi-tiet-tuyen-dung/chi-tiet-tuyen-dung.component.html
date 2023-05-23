@@ -1,5 +1,5 @@
 <div class="main-grid product-detail">
-    <section>
+    <section class="bread-crumb">
         <app-hrm-breadcrumb [items]="items"></app-hrm-breadcrumb>
     </section>
     <section class="content" style="position: relative;">
@@ -10,7 +10,7 @@
             </div>
         </div> -->
         <div class="col-3 pt-0 pb-0 gap-2 flex justify-content-end" *ngIf="tabIndex === 0" style="position: absolute;right: 0; top: 5px ">
-        <div class="field-group select ">
+        <div class="fields ">
             <p-dropdown 
             *ngIf="listViews.length> 0 && status.length > 0" 
                 [options]="status" 
@@ -104,7 +104,7 @@
     [(visible)]="isSendMail" 
     [modal]="true" [style]="{width: '600px'}"
     [draggable]="false" [resizable]="false" [focusTrap]="false" >
-    <div class="field-group select" >
+    <div class="fields" >
         <label>Nội dung gửi <span style="color: red">*</span></label>
         <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
         [options]="mailsInput" placeholder="Chọn nội dung gửi" [(ngModel)]="mailInputValue" name="mailInputValue">

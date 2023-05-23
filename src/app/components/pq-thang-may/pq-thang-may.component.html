@@ -104,7 +104,7 @@
         <p-card header="Kiểm tra quyền">
             <div class="row" style="margin-top: 10px;">
                 <div class="col-xl-3 col-lg-2 col-md-3 mb-1">
-                  <div class="field-group select label-8" [ngClass]="modelElevator.projectCd ? 'valid' : 'invalid' ">
+                  <div class="fields" [ngClass]="modelElevator.projectCd ? 'valid' : 'invalid' ">
                     <label for="status">Dự án</label>
                     <select class="form-control" (change)="getBuidingsSearch();load1()" name="projectCd"
                       [(ngModel)]="modelElevator.projectCd" id="projectCd" #projectCd="ngModel">
@@ -115,7 +115,7 @@
                   </div>
                 </div>
                 <div class="col-xl-3 col-lg-2 col-md-3 mb-1">
-                  <div class="field-group select label-8" [ngClass]="modelElevator.buildCd ? 'valid' : 'invalid' ">
+                  <div class="fields" [ngClass]="modelElevator.buildCd ? 'valid' : 'invalid' ">
                     <label for="status">Tòa</label>
                     <select class="form-control" (change)="getBuildingZones($event);load1()" name="buildCd"
                       [(ngModel)]="modelElevator.buildCd" id="buildCd" #buildCd="ngModel">
@@ -127,7 +127,7 @@
                   </div>
                 </div>
                 <div class="col-xl-3 col-lg-2 col-md-3 mb-1">
-                  <div class="field-group select label-8" [ngClass]="modelElevator.buildZone ? 'valid' : 'invalid' ">
+                  <div class="fields" [ngClass]="modelElevator.buildZone ? 'valid' : 'invalid' ">
                     <label for="status">Khu vực</label>
                     <select class="form-control" name="buildZone" (change)="getFloors($event);load1()"
                       [(ngModel)]="modelElevator.buildZone" id="buildZone" #buildZone="ngModel">
@@ -138,7 +138,7 @@
                   </div>
                 </div>
                 <div class="col-xl-3 col-lg-2 col-md-3 mb-1">
-                  <div class="field-group select label-8" [ngClass]="modelElevator.floorNumber ? 'valid' : 'invalid' ">
+                  <div class="fields" [ngClass]="modelElevator.floorNumber ? 'valid' : 'invalid' ">
                     <label for="status">Tầng</label>
                     <select class="form-control" (change)="getHardware();load1()" name="floor"
                       [(ngModel)]="modelElevator.floorNumber" id="floor" #floor="ngModel">
@@ -149,7 +149,7 @@
                   </div>
                 </div>
                 <div class="col-xl-3 col-lg-2 col-md-3 mb-1">
-                  <div class="field-group select label-8" [ngClass]="modelElevator.hardwareId ? 'valid' : 'invalid' ">
+                  <div class="fields" [ngClass]="modelElevator.hardwareId ? 'valid' : 'invalid' ">
                     <label for="status">Thiết bị</label>
                     <select class="form-control" name="hardwareId" (change)="load1()"
                       [(ngModel)]="modelElevator.hardwareId" id="hardwareId" #hardwareId="ngModel">
@@ -199,7 +199,7 @@
             [(ngModel)]="cardinfo.fullName" placeholder="Tên chủ thẻ">
           </div>
 
-          <div class="form-row field-group select" *ngIf="modelCR" style="margin:10px 0px;">
+          <div class="form-row fields" *ngIf="modelCR" style="margin:10px 0px;">
             <label class=" control-label">Quyền của thẻ</label>
             <select class="form-control" name="cardRole" [(ngModel)]="cardinfo.cardRole">
               <option *ngFor="let objcardRole of modelCR" value={{objcardRole.value}}>
@@ -208,7 +208,7 @@
             </select>
           </div>
 
-          <div class="form-row field-group select" *ngIf="modelCardType" style="margin:10px 0px;">
+          <div class="form-row fields" *ngIf="modelCardType" style="margin:10px 0px;">
             <label class=" control-label">Loại thẻ</label>
             <select class="form-control" name="cardType" [(ngModel)]="cardinfo.cardType">
               <option *ngFor="let objCardType of modelCardType" value={{objCardType.cardTypeId}}>
@@ -217,7 +217,7 @@
             </select>
           </div>
 
-          <div class="form-row field-group select" *ngIf="modelProject" style="margin:10px 0px;">
+          <div class="form-row fields" *ngIf="modelProject" style="margin:10px 0px;">
             <label class=" control-label">Dự án</label>
             <select class="form-control" name="projectCd" [(ngModel)]="cardinfo.projectCd"
             (change)="loadGetBuildings()">
@@ -227,7 +227,7 @@
           </select>
           </div>
 
-          <div class="form-row field-group select" *ngIf="modelBuilding" style="margin:10px 0px;">
+          <div class="form-row fields" *ngIf="modelBuilding" style="margin:10px 0px;">
             <label class="control-label">Tòa nhà</label>
             <select class="form-control" name="buildCd" [(ngModel)]="cardinfo.buildCd"
             (change)="loadGetFloors()">
@@ -238,7 +238,7 @@
           </select>
           </div>
 
-          <div class="form-row field-group select" style="margin:10px 0px;">
+          <div class="form-row fields" style="margin:10px 0px;">
             <label class="control-label">Tầng</label>
             <select class="form-control" name="floorNumber" [(ngModel)]="cardinfo.floorNumber">
               <option value=null>---</option>

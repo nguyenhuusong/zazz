@@ -12,7 +12,7 @@ styleClass="search-em-in {{ dataSearched?.length > 0 ? 'search-em-result' : '' }
     Tìm kiếm nhân viên
 </ng-template>
     <div class="search-in" [ngClass]="{'res': dataSearched.length > 0}">
-        <div class="search-group field-group select d-flex" style="display: flex">
+        <div class="search-group fields d-flex" style="display: flex">
             <div class="col-3 pd-0" style="padding-right: 10px !important;border-right: 1px solid #ebe8e8;" *ngIf="!searchByOrgan">
                 <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" placeholder="Tìm kiếm theo" 
                 [options]="searchBys" [(ngModel)]="searchBy" name="searchBy">
@@ -140,12 +140,12 @@ styleClass="search-em-in {{ dataSearched?.length > 0 ? 'search-em-result' : '' }
     <ng-template pTemplate="footer">
         <div  *ngIf="empId">
             <button type="button" 
-                class="p-button-secondary btn-cancel height-56" 
+                class="p-button-secondary btn-cancel " 
                 pButton icon="pi pi-times" label="Hủy bỏ" 
                 (click)="cancelItem()">
             </button>
             <p-button 
-                styleClass="p-button-sm mr-1 height-56" 
+                styleClass="p-button-sm mr-1 " 
                 (click)="getItem()">
             Xác nhận
             </p-button>

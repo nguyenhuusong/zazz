@@ -1,9 +1,9 @@
 
 <div class="main-grid product-detail chi-tiet-ho-so-nhan-su single-page">
-    <section>
+    <section class="bread-crumb">
         <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
     </section>
-    <section class="head-detail">
+    <section>
         <p-tabView (onChange)="handleChange($event.index)" [(activeIndex)]="tabIndex">
             <p-tabPanel header="Thông tin cá nhân" leftIcon="{{dataEmployeeStatus?.profile_st ? 'pi pi-check-circle' : ''}} ">
                 <app-thong-tin-ca-nhan [empId]="empId" *ngIf="tabIndex ===0 && dataEmployeeStatus" [dataEmployeeStatus]="dataEmployeeStatus" (reloadEdit)="reloadEdit()"></app-thong-tin-ca-nhan>
