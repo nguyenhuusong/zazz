@@ -8,9 +8,12 @@ import { MenuItem } from 'primeng/api';
 @Component({
     selector: 'app-button-renderer',
   // template: `<p-splitButton icon="pi pi-bars"  styleClass="p-button-sm" [appendTo]="'body'" [baseZIndex]="99999999" [model]="items"></p-splitButton>`
+  // template: `
+  // <button pButton pRipple type="button" icon="pi pi-ellipsis-v" (click)="menu.toggle($event)" class="p-button-rounded p-button-text"></button>
+  // <p-menu styleClass="p-menu-buttons menu-agrid" [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'" #menu [popup]="true" [model]="items" [appendTo]="'body'"></p-menu>
+  // `
   template: `
-  <button pButton pRipple type="button" icon="pi pi-ellipsis-v" (click)="menu.toggle($event)" class="p-button-rounded p-button-text"></button>
-  <p-menu styleClass="p-menu-buttons menu-agrid" [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'" #menu [popup]="true" [model]="items" [appendTo]="'body'"></p-menu>
+      <p-splitButton *ngIf="items.length > 0" [label]="this.params.buttons[0].label"  styleClass="p-button-sm p-button-outlined" (onClick)="onClick($event, 0)" [model]="items" [appendTo]="'body'" ></p-splitButton>
   `
 })
 

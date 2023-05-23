@@ -158,7 +158,7 @@ export class ChiTietHopDongComponent implements OnInit, OnChanges {
     .subscribe((results: any) => {
       if (results.status === 'success') {
         this.displayUserInfo = false;
-        this.goBack()
+        this.callback.emit()
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Cập nhật thông tin thành công' });
       } else {
         this.messageService.add({
