@@ -191,7 +191,7 @@ export class ChiTietHopDongComponent implements OnInit, OnChanges {
     if(e === 'CauHinh') {
       this.getContractTypeInfo();
     }else {
-      this.goBack();
+      this.callback.emit();
     }
   }
 
