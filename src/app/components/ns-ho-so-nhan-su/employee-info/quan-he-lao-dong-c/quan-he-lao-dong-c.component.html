@@ -61,7 +61,6 @@
         [id]="'employee-info-03'" 
         *ngIf="listViews.length === 0">
     </app-loading-detail>
-    <p-divider></p-divider>
     <app-qua-trinh-hop-dong [empId]="empId" [detailInfo]="detailInfo" *ngIf="listViews.length >0 " (cancelSave)="cancelSave()"></app-qua-trinh-hop-dong>
     <app-tien-luong [empId]="empId" *ngIf="empId"></app-tien-luong> 
     <app-thong-tin-nguoi-phu-thuoc  *ngIf="empId" [empId]="empId" (cancelSave)="getEmployeeInfo()"></app-thong-tin-nguoi-phu-thuoc> 

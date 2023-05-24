@@ -4,7 +4,7 @@
         <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
     </section>
     <section>
-        <p-tabView (onChange)="handleChange($event.index)" [(activeIndex)]="tabIndex">
+        <p-tabView styleClass="tab-ver" (onChange)="handleChange($event.index)" [(activeIndex)]="tabIndex">
             <p-tabPanel header="Thông tin cá nhân" leftIcon="{{dataEmployeeStatus?.profile_st ? 'pi pi-check-circle' : ''}} ">
                 <app-thong-tin-ca-nhan [empId]="empId" *ngIf="tabIndex ===0 && dataEmployeeStatus" [dataEmployeeStatus]="dataEmployeeStatus" (reloadEdit)="reloadEdit()"></app-thong-tin-ca-nhan>
             </p-tabPanel>
