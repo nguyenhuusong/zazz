@@ -25,7 +25,7 @@
                     chooseLabel="Tạo mới import" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" 
                     *ngIf="isShowUpload" 
                     [showCancelButton]="true" (onSelect)="onSelectFile($event)"></p-fileUpload>
-                    <p-button styleClass="p-button-sm p-button-secondary" (click)="back()" icon="uni-icon uni-cancel-cicle" label="Quay lại" *ngIf="isShowUpload"></p-button>
+                    <p-button styleClass="p-button-sm p-button-secondary" (click)="back()" icon="uni-icon uni-cancel-cicle uni-white-color" label="Quay lại" *ngIf="isShowUpload"></p-button>
                     <p-button styleClass="p-button-sm" (click)="checkData(false)" icon="uni-icon uni-vector uni-white-color" label="Kiểm tra" *ngIf="!isShowUpload"></p-button>
                     <p-button styleClass="p-button-sm" (click)="checkData(true)" icon="uni-icon uni-send" label="Xác nhận" *ngIf="dataImport?.accept"></p-button>
                     <p-button styleClass="p-button-sm p-button-secondary" (click)="refetchFile()" icon="uni-icon uni-refresh" label="làm mới" *ngIf="!isShowUpload"></p-button>

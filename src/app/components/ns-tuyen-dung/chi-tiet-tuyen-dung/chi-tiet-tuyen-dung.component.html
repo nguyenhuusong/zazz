@@ -74,13 +74,15 @@
 
     </section>
     <section *ngIf="isView">
-        <div class="d-flex bet middle">
-            <h4>Lịch sử</h4>
-        </div>
-        <div class="grid-default">
-            <app-list-grid-angular *ngIf="columnDefs.length > 0" [listsData]="listData" [height]="heightGrid"
-                [columnDefs]="columnDefs">
-            </app-list-grid-angular>
+        <div class="col-12 section-box">
+            <div class="d-flex bet middle">
+                <h3>Lịch sử</h3>
+            </div>
+            <div class="grid-default">
+                <app-list-grid-angular *ngIf="columnDefs.length > 0" [listsData]="listData" [height]="heightGrid"
+                    [columnDefs]="columnDefs">
+                </app-list-grid-angular>
+            </div>
         </div>
     </section>
 </div>
