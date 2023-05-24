@@ -233,7 +233,7 @@ export class DanhSachPhongHopComponent implements OnInit {
       buttons: [
         {
           onClick: this.handleEdit.bind(this),
-          label: 'Sửa',
+          label: 'Xem',
           icon: 'fa fa-pencil-square-o',
           class: 'btn-primary mr5',
           hide: this.CheckHideXem(event)
@@ -293,7 +293,7 @@ export class DanhSachPhongHopComponent implements OnInit {
             `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
         },
         filter: '',
-        width: 70,
+        width: 100,
         pinned: 'right',
         cellRenderer: 'buttonAgGridComponent',
         cellClass: ['border-right', 'no-auto', 'cell-options'],
@@ -324,12 +324,29 @@ export class DanhSachPhongHopComponent implements OnInit {
     });
   }
 
-
+  roomId = '';
+  isDetail = false;
   handleEdit(e): void {
-    const params = {
-      roomId: e.rowData.roomId
-    }
-    this.router.navigate(['hoat-dong/lich-hop/danh-sach-phong-hop/chi-tiet-phong-hop'], { queryParams: params });
+    this.isDetail = true;
+    this.roomId = e.rowData.roomId;
+    // const params = {
+    //   roomId: e.rowData.roomId
+    // }
+    // this.router.navigate(['hoat-dong/lich-hop/danh-sach-phong-hop/chi-tiet-phong-hop'], { queryParams: params });
+  }
+
+  handleAdd(): void {
+    this.isDetail = true;
+    this.roomId = '';
+    // const params = {
+    //   roomId: ''
+    // }
+    // this.router.navigate(['hoat-dong/lich-hop/danh-sach-phong-hop/them-moi-phong-hop'], { queryParams: params });
+  }
+
+  callback() {
+    this.isDetail = false;
+    this.load();
   }
 
   onGridReady(params): void {
@@ -361,13 +378,6 @@ export class DanhSachPhongHopComponent implements OnInit {
 
   changePageSize(): void {
     this.load();
-  }
-
-  handleAdd(): void {
-    const params = {
-      roomId: ''
-    }
-    this.router.navigate(['hoat-dong/lich-hop/danh-sach-phong-hop/them-moi-phong-hop'], { queryParams: params });
   }
 
   //filter 

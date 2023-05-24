@@ -2,14 +2,14 @@
 <div class="modal-body p-2">
     <div class="row header grid ">
         <div class="col-3">
-            <div class="input-group">
+            <div class="fields">
                 <label for="searchFilterSelectImagePopup">Từ khóa</label>
                 <input class="form-control" type="text" [(ngModel)]="filter.search" placeholder="Nhập nội dung tìm kiếm ..."
                     id="searchFilterSelectImagePopup" name="search">
             </div>
         </div>
         <div class="col-2">
-            <div class="select-default">
+            <div class="fields">
                 <label>Loại tệp</label>
                 <select class="form-control custom-dropbox" name="type" (change)="handleSearch()"
                     id="typeFilterSelectImagePopup" [(ngModel)]="filter.type">
@@ -33,9 +33,9 @@
         <div class="col-7">
             <div class="group-btns">
                 <label>Tìm kiếm </label>
-                <button type="submit" (click)="handleSearch()" class="btn btn-dropbox mr-3">
+                <p-button styleClass="p-button-sm" (click)="handleSearch()">
                     <i class="fa fa-search"></i>
-                </button>
+                </p-button>
                 <button class="btn btn-dropbox" (click)="handleAddRootFolder()">
                     <i class="fa fa-folder-open-o" aria-hidden="true"></i> Tạo thư mục gốc
                 </button>

@@ -8,7 +8,7 @@
                         <ng-template pTemplate="header" *ngIf="group.group_name">
                             <div>
                                 <h3 class="title-section">{{group.group_name}}</h3>
-                                <div>
+                                <div class="config-detail">
                                     <span *ngIf="group.group_name !== 'Giấy tờ'" class="pi pi-cog cursor-pointer" [ngClass]="{'hidden': group.group_name === 'Bàn giao'}" (click)="CauHinh()"></span>
                                     <p-button label="Xử lý bàn giao" *ngIf="group.group_name === 'Bàn giao'" styleClass="p-button-sm" icon="pi pi-check" (click)="onChangeButtonEdit('NghiViec')"></p-button>
                                      </div>

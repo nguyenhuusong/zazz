@@ -17,6 +17,15 @@
     font-style: normal;
     font-display: swap;
   }
+  
+  @font-face {
+    font-family: 'SFProTextRegular';
+    src: url('assets/fonts/SFProText-Medium.woff2') format('woff2'),
+        url('assets/fonts/SFProText-Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+  }
 
 $fontRegular: 'SFProTextRegular';
 
@@ -75,6 +84,8 @@ $C-F3F8FF: #F3F8FF;
 $C-FF3B49: #FF3B49;
 $C-99A2BC: #99A2BC;
 $C-f68c1f: #f68c1f;
+$C-64748B: #64748B;
+$C-475569: #475569;
 $grey: #76809B;
 $activeColor: orange;
 $C-525B73 : #525B73;

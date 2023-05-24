@@ -3,9 +3,8 @@
         <app-hrm-breadcrumb [items]="items"></app-hrm-breadcrumb>
     </section>
     <section class="content" style="position: relative;">
-        <div class="col-3 pt-0 pb-0 gap-2 flex justify-content-end" *ngIf="tabIndex === 0" 
-        style="position: absolute;right: 6px;top: 14px;z-index: 8;">
-        <div class="fields ">
+        <div class="gap12 d-flex end" *ngIf="tabIndex === 0" >
+        <div class="fields mb-0">
             <p-dropdown 
                 *ngIf="listViews.length> 0 && status.length > 0" 
                 [options]="status" 
@@ -33,9 +32,9 @@
         <p-splitButton icon="pi pi-send" *ngIf="menuActions.length > 0" styleClass="p-button-sm" [appendTo]="'body'" (onClick)="callActions(menuActions[0].value)" [label]="menuActions[0].label" [model]="menuActions"></p-splitButton>
         <p-button label="Quay lại" (click)="quaylai('')" styleClass="p-button-secondary p-button-sm" [style]="{'z-index': 9}" icon="pi pi-directions-alt"></p-button>
     </div>
-
-
-        <p-tabView (onChange)="handleChange($event.index)" [(activeIndex)]="tabIndex">
+    </section>
+    <section class="pt-0 pl-0 pr-0">
+        <p-tabView styleClass="tab-ver" (onChange)="handleChange($event.index)" [(activeIndex)]="tabIndex">
             <p-tabPanel header="Thông tin tuyển dụng">
                 <app-edit-detail 
                     *ngIf="listViews.length> 0 && tabIndex === 0" 
@@ -49,7 +48,11 @@
                     (callbackcancel)="quaylai($event)" 
                     (callBackForm)="callBackForm($event)">
                 </app-edit-detail>
-                <app-ho-so *ngIf="listViews.length > 0" [canId]="modelEdit.canId" (callBack)="callBackCandidateFile()"></app-ho-so>
+                <div class="grid mt-0">
+                    <div class="col-12 pb-0">
+                        <app-ho-so *ngIf="listViews.length > 0" [canId]="modelEdit.canId" (callBack)="callBackCandidateFile()"></app-ho-so>
+                    </div>
+                </div>
                 <app-loading-detail [id]="'chi-tiet-tuyen-dung'" *ngIf="listViews.length === 0">
                 </app-loading-detail>
             </p-tabPanel>
@@ -68,7 +71,6 @@
                 </app-chi-tiet-ho-so-ca-nhan>
             </p-tabPanel>
         </p-tabView>
-
 
     </section>
     <section *ngIf="isView">

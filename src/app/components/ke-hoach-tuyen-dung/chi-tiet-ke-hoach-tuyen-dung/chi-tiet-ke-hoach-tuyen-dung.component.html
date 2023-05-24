@@ -3,15 +3,16 @@
         <app-hrm-breadcrumb [items]="itemsMenu" ></app-hrm-breadcrumb>
     </section>
     <section>
-    <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'"
+        <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'"
         [optionsButtonsEdit]="optionsButtonsView" [dataView]="listViews" (callback)="setDetail($event)" 
         (callbackcancel)="cancel($event)"></app-edit-detail>
         <app-loading-detail 
             [id]="'chi-tiet-tuyen-dung'" 
             *ngIf="listViews.length === 0">
         </app-loading-detail>
-            <p-divider > </p-divider>
-            <h3 class="pb-2">Danh sách kế hoạch</h3>
+    </section>
+    <section>
+        <h3 class="pb-2">Danh sách kế hoạch</h3>
         <app-plan-detail *ngIf="modelEdit.recruitPlanId" [recruitPlantId]="modelEdit.recruitPlanId"></app-plan-detail>
     </section>
 </div>
@@ -24,7 +25,9 @@
         [id]="'chi-tiet-tuyen-dung'" 
         *ngIf="listViews.length === 0">
     </app-loading-detail>
+    <section>
         <h3>Danh sách kế hoạch</h3>
-    <app-plan-detail *ngIf="recruitPlanId" [recruitPlantId]="recruitPlanId"></app-plan-detail>
+        <app-plan-detail *ngIf="recruitPlanId" [recruitPlantId]="recruitPlanId"></app-plan-detail>
+    </section>
 </section>
 

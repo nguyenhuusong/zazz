@@ -29,7 +29,7 @@
                         </div>
                         
                         <div class="the-month d-flex end">
-                          <div class="fields">
+                          <div class="fields no-border">
                             <p-dropdown [(ngModel)]="selectedMonth" name="selectedMonth" [options]="months" (onChange)="changeMonths($event)" optionLabel="name"></p-dropdown>
                           </div>
                         </div>
@@ -49,7 +49,7 @@
                       <h3 style="color:#0a58ca ;">Số lượng nhân sự </h3>
                       <!-- <p>Công ty KSFinance</p> -->
                     </div>
-                    <div class="fields">
+                    <div class="fields d-flex no-border middle">
                       <label class="mr-2">Năm</label>
                       <p-dropdown [(ngModel)]="selectedYear" name="selectedYear" [options]="years" optionLabel="name" (onChange)="changeYears($event)"></p-dropdown>
                     </div>
@@ -70,7 +70,7 @@
                   <div id="legend-bien-dong-nhan-su" class="legend-default line">
                       <ul class="d-flex center"></ul>
                   </div>
-                  <div class="fields">
+                  <div class="fields no-border">
                     <p-dropdown [(ngModel)]="selectedYear" [options]="years" optionLabel="name" (onChange)="changeYears($event)"></p-dropdown>
                   </div>
                 </div>

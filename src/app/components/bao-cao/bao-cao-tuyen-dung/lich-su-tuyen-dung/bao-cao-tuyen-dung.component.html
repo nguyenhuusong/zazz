@@ -1,14 +1,12 @@
 <div class="main-grid">
     <section class="bread-crumb">
-        <div class="d-flex grid bet ">
+        <div class="d-flex bet ">
             <div class="col-9 pd-0">
                 <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
             </div>
             <div class="col-3">
                 <div class="fields" >
-                    <label for="" style="color: #000;
-                    font-weight: 600;
-                    opacity: 0.9;">Chọn loại báo cáo  <span style="color:red">*</span></label>
+                    <label>Chọn loại báo cáo  <span style="color:red">*</span></label>
                     <p-dropdown appendTo="body" placeholder="Chọn báo cáo"
                         (onChange)="changeReportTypeValue($event)" 
                         [baseZIndex]="100" 

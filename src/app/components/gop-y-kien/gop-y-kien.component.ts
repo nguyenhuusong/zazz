@@ -190,7 +190,7 @@ export class GopYKienComponent implements OnInit {
       buttons: [
         {
           onClick: this.editRow.bind(this),
-          label: 'Xem chi tiết',
+          label: 'Xem',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
           hide: CheckHideAction(MENUACTIONROLEAPI.GetFeedbackPage.url, ACTIONS.VIEW)
@@ -215,11 +215,20 @@ export class GopYKienComponent implements OnInit {
       }]
   }
 
+  isDetail = false;
+  feedbackId = '';
   editRow({rowData}) {
-    const params = {
-      feedbackId: rowData.feedbackId,
-    }
-    this.router.navigate(['/gop-y/chi-tiet-gop-y'], { queryParams: params });
+    this.isDetail = true;
+    this.feedbackId = rowData.feedbackId;
+    // const params = {
+    //   feedbackId: rowData.feedbackId,
+    // }
+    // this.router.navigate(['/gop-y/chi-tiet-gop-y'], { queryParams: params });
+  }
+
+  callback() {
+    this.isDetail = false;
+    this.load();
   }
   
   onCellClicked(event) {

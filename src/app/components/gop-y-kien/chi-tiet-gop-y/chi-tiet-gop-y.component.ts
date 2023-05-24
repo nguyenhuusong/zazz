@@ -29,7 +29,6 @@ export class ChiTietGopYComponent implements OnInit, OnDestroy {
   displaysearchUserMaster = false;
   listViewsForm = [];
   detailComAuthorizeInfo = null;
-  feedbackId = null
   listViews = []
   imagesUrl = []
   paramsObject = null
@@ -45,7 +44,9 @@ export class ChiTietGopYComponent implements OnInit, OnDestroy {
   columnDefs
   @Input() dataRouter = null
   @Output() back = new EventEmitter<any>();
-
+  @Input() feedbackId = ''
+  @Output() callback = new EventEmitter<any>();
+  
   ngOnDestroy() {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
@@ -67,7 +68,7 @@ export class ChiTietGopYComponent implements OnInit, OnDestroy {
     this.activatedRoute.queryParamMap.subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.dataRouter = this.paramsObject.params;
-      this.feedbackId = this.paramsObject.params.feedbackId;
+      this.feedbackId = this.feedbackId;
         this.getFeedbackInfo();
     });
   };
@@ -75,7 +76,7 @@ export class ChiTietGopYComponent implements OnInit, OnDestroy {
   getFeedbackInfo() {
     this.listViews = [];
     this.listsData = [];
-    const queryParams = queryString.stringify(this.paramsObject.params);
+    const queryParams = queryString.stringify({ feedbackId: this.feedbackId });
     this.apiService.getFeedbackInfo(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.listViews = cloneDeep(results.data.group_fields);
@@ -123,7 +124,7 @@ export class ChiTietGopYComponent implements OnInit, OnDestroy {
     if (this.titlePage) {
       this.router.navigate(['/gop-y']);
     } else {
-      this.back.emit();
+      this.callback.emit();
     }
   }
 
