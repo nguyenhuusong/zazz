@@ -345,6 +345,10 @@ ag-grid-angular{
             }
             .ag-row{
                 border-color: #f5f5f5;
+                background: $white;
+                &.ag-row-odd{
+                    background: $white;
+                }
             }
             .ag-cell{
                 border: 1px solid transparent;
@@ -648,7 +652,7 @@ p-tabview{
         display: flex;
         &>.p-tabview-nav-container{
             width: 15%;
-            padding-left: 12px;
+            padding-left: 0;
             .p-tabview-nav-content{
                 margin-bottom: 0px;
             }
@@ -721,7 +725,7 @@ p-tabview{
         &>.p-tabview-panels{
             width: 85%;
             padding-left: 16px !important;
-            padding-right: 16px !important;
+            padding-right: 0 !important;
         }
 
         @media screen and (max-width: 1600px) {
@@ -1313,3 +1317,80 @@ section{
         }
     }
 }
+
+.choose-language{
+    .p-overlaypanel-content{
+        padding: 0px !important;
+        min-width: 180px;
+        border-radius: 3px !important;
+        z-index: 9999 !important;
+        ul li,
+        h3{
+            padding: 8px 15px;
+        }
+        ul{
+            li{
+                font-weight: 500;
+                &:hover{
+                    cursor: pointer;
+                }
+                &:hover,
+                &.active{
+                    background: #f2f3f7;
+                }
+                .checked{
+                    position: absolute;
+                    right: 10px;
+                }
+            }
+        }
+    }
+  }
+
+
+  .profile{
+    .p-avatar{
+        width: 32px;
+        height: 32px;
+        margin-top: 1px;
+    }
+    .card{
+        justify-content: center;
+        line-height: 1;
+        gap: 8px;
+    }
+    p-avatar{
+        img{
+            border-radius: 2px;
+        }
+    }
+    .name{
+        color: #212633;
+        font-size: 14px;
+        text-transform: uppercase;
+        cursor: pointer;
+        font-weight: 500;
+    }
+    .item{
+        width: 32px;
+        height: 32px;
+        display: flex;
+        background: rgb(100 100 100 / 10%);
+        border-radius: 2px;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+        &:hover{
+            cursor: pointer;
+            svg{
+                path{
+                    fill: $mainBg;
+                }
+            }
+        }
+    }
+  }
+  .p-toolbar{
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
