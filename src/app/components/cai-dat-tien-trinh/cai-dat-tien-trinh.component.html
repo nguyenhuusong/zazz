@@ -30,7 +30,7 @@
 <section class="pb-0">
     <p-tabView (onChange)="handleChange($event.index)" [(activeIndex)]="tabIndex">
         <p-tabPanel header="Cài đặt tiến trình" >
-            <section class="content">
+            <section class="content pt-0 pl-0 pr-0">
                 <div class="grid-default" #container>
                     <app-list-grid-angular  *ngIf="columnDefs.length > 0"
                         [listsData]="listsData" [height]="heightGrid"

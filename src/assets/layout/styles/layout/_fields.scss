@@ -612,6 +612,11 @@
             border: none;
         }
     }
+    &.btn {
+        .p-dropdown{
+            height: 34px;
+        }
+    }
 }
 .linkurl-drag{
     margin-bottom: 16px;
