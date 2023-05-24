@@ -21,7 +21,6 @@
     [stopEditingWhenCellsLoseFocus]="true"    [modules]="modules"
     [groupDisplayType]="'groupRows'"
     [rowClassRules]="rowClassRules"
-    [overlayNoRowsTemplate]="noRowsTemplate"
     [detailCellRendererParams]="detailCellRendererParams"
     [tooltipShowDelay]="tooltipShowDelay"
     (bodyScroll)="handleScroll($event)"
@@ -42,6 +41,8 @@
     (cellClicked)="CellClicked($event)"
     [isRowSelectable]="isRowSelectable"
     [getMainMenuItems]="getMainMenuItems"
+    [overlayNoRowsTemplate]="overlayNoRowsTemplate"
+    [overlayLoadingTemplate]="overlayLoadingTemplate"
     (firstDataRendered)="onFirstDataRendered($event)"
     [frameworkComponents]="frameworkComponents">
   </ag-grid-angular>

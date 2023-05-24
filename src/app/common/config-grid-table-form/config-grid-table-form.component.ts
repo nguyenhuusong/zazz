@@ -5,6 +5,8 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiService } from 'src/app/services/api.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AgGridFn, AgGridFnEdit } from 'src/app/common/function-common/common';
+import { forkJoin } from 'rxjs';
+import { cloneDeep } from 'lodash';
 const MAX_SIZE = 100000000;
 
 @Component({
@@ -71,6 +73,7 @@ export class ConfigGridTableFormComponent implements OnInit {
             ...d, error : false
           }
         });
+        this.gridKey= results.data.gridKey;
         if (this.query.offSet === 0) {
           this.cols = results.data.gridflexs;
           this.colsDetail = results.data.gridflexdetails ? results.data.gridflexdetails : [];
@@ -89,6 +92,60 @@ export class ConfigGridTableFormComponent implements OnInit {
         this.spinner.hide();
       };
   }
+
+  displaySetting = false;
+  cauhinh() {
+    this.displaySetting = true;
+  }
+
+  Save() {
+    if (this.typeConfig === 'FormInfo') {
+      this.callApiForm();
+    } else {
+      this.callApi();
+    }
+  }
+
+  callApiForm() {
+    this.setGridViewInfo();
+  }
+
+  callApi() {
+    this.setGridViewInfo();
+  }
+
+  
+  setGridViewInfo() {
+    if(this.listsData.length > 0) {
+      const newListsData = cloneDeep(this.listsData.filter((item: any) => item.isChange))
+      const listApis: any = [];
+      for(let item of newListsData) {
+        const params: any = item;
+        params.isDisable = params.isDisable ? 1 : 0,
+        params.isEmpty = params.isEmpty ? 1 : 0,
+        params.isIgnore = params.isIgnore ? 1 : 0,
+        params.isRequire = params.isRequire ? 1 : 0,
+        params.isSpecial = params.isSpecial ? 1 : 0,
+        params.isVisiable = params.isVisiable ? 1 : 0,
+        params.isVisiable = params.isVisiable ? 1 : 0,
+        listApis.push(this.apiService.setGridViewInfo(this.typeConfig === 'FormInfo' ? 'SetFormViewInfo' : 'SetGridViewInfo', params)) 
+      }
+      if(listApis.length > 0) {
+        this.spinner.show();
+        forkJoin(listApis).subscribe(results => {
+          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail:  'Cập nhật thành công' });
+          this.spinner.hide();
+          this.load();
+        })
+      }else {
+        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Không có bản ghi nào thay đổi !'});
+      }
+     
+    }
+   
+  }
+
+
 
   showButtons(event: any) {
     return {
