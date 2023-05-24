@@ -127,6 +127,7 @@ export class ChiTietTienLuongComponent implements OnInit {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {
         if (results.status === 'success') {
+          this.flowCurrent = results.data.flow_cur;
           this.modelEdit.recordId = results.data.recordId;
           this.detailInfo = results.data;
           this.listViews = cloneDeep(results.data.group_fields);
