@@ -54,7 +54,7 @@
         </ng-template>
     </p-organizationChart>
   </section> -->
-  <section >
+  <section>
       <div class="section-box pt-0 pb-0" #container *ngIf="!this.isHrDiagram">
             <app-list-grid-tree-angular 
             *ngIf="columnDefs.length > 0 && autoGroupColumnDef && getDataPath"  
@@ -76,7 +76,7 @@
             </p-paginator>
         </div>
       </div>
-      <div *ngIf="this.isHrDiagram">
+      <div class="section-box pt-0 pb-0" *ngIf="this.isHrDiagram">
         <p-organizationChart 
         [value]="listAgencyMap" #mydiv  
         [preserveSpace]="false" 
