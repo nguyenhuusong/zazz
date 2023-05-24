@@ -99,26 +99,28 @@ export class TabCandidateInterviewComponent implements OnInit, OnDestroy {
   }
   
   setVacancyInfo(data) {
-    // this.spinner.show();
-    // const params = {
-    //   ...this.detailInfo, group_fields: data
-    // }
-    // this.apiService.setVacancyInfo(params)
-    //   .pipe(takeUntil(this.unsubscribe$))
-    //   .subscribe((results: any) => {
-    //     if (results.status === 'success') {
-    //       this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
-    //       this.spinner.hide();
-    //     } else {
-    //       this.messageService.add({
-    //         severity: 'error', summary: 'Thông báo',
-    //         detail: results.message
-    //       });
-    //       this.spinner.hide();
-    //     }
-    //   }), error => {
-    //     this.spinner.hide();
-    //   };
+    if(data.event === 'actInterview' || data.event === 'actSave') {
+      this.spinner.show();
+      const params = {
+        ...this.detailInfo, group_fields: data.datas
+      }
+      this.apiService.updateInterviewResult(params)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((results: any) => {
+          if (results.status === 'success') {
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
+            this.spinner.hide();
+          } else {
+            this.messageService.add({
+              severity: 'error', summary: 'Thông báo',
+              detail: results.message
+            });
+            this.spinner.hide();
+          }
+        }), error => {
+          this.spinner.hide();
+        };
+    }
   }
 
   quaylai(data) {

@@ -9,5 +9,7 @@ export const ActionsSave = [
     'SaveNhap',
     'actSubmit',
     'actRecord',
-    'actConfirm'
+    'actConfirm',
+    'actInterview',
+    'actFinal',
 ]
