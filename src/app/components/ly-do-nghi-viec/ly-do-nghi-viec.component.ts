@@ -238,10 +238,8 @@ export class LyDoNghiViecComponent implements OnInit {
   }
 
   editRow({rowData}) {
-    const params = {
-      reason_code: rowData.reason_code,
-    }
-    this.router.navigate(['/cai-dat/ly-do-nghi/chi-tiet-ly-do-nghi'], { queryParams: params });
+    this.isDetail = true;
+    this.reason_code = rowData.reason_code;
   }
 
   onCellClicked(event) {
@@ -249,12 +247,20 @@ export class LyDoNghiViecComponent implements OnInit {
       this.editRow(event = {rowData: event.data})
     }
   }
-
+  isDetail = false;
+  reason_code = '';
   create() {
     const params = {
       reason_code: null,
     }
-    this.router.navigate(['/cai-dat/ly-do-nghi/them-moi-ly-do-nghi'], { queryParams: params });
+    //this.router.navigate(['/cai-dat/ly-do-nghi/them-moi-ly-do-nghi'], { queryParams: params });
+    this.isDetail = true;
+    this.reason_code = '';
+  }
+
+  callback() {
+    this.isDetail = false;
+    this.load();
   }
 
   find() {

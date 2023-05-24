@@ -147,12 +147,7 @@ export class NgayNghiLeComponent implements OnInit {
   }
 
 
-  themmoingaynghi() {
-    const params = {
-      id: 0
-    }
-    this.router.navigate(['/cai-dat/cai-dat-ngay-nghi-le/them-moi-ngay-nghi'], { queryParams: params });
-  }
+
 
   displaySetting = false;
   gridKey = ''
@@ -200,7 +195,7 @@ export class NgayNghiLeComponent implements OnInit {
       buttons: [
         {
           onClick: this.editRow.bind(this),
-          label: 'Thông tin chi tiết',
+          label: 'Xem',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
           hide: CheckHideAction(MENUACTIONROLEAPI.HolidayPage.url, ACTIONS.VIEW)
@@ -225,7 +220,7 @@ export class NgayNghiLeComponent implements OnInit {
           `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
         },
         filter: '',
-        width: 70,
+        width: 80,
         pinned: 'right',
         cellRenderer: 'buttonAgGridComponent',
         cellClass: ['border-right', 'no-auto'],
@@ -303,10 +298,9 @@ export class NgayNghiLeComponent implements OnInit {
   }
 
   editRow({rowData}) {
-    const params = {
-      id: rowData.id
-    }
-    this.router.navigate(['/cai-dat/cai-dat-ngay-nghi-le/chi-tiet-ngay-nghi'], { queryParams: params });
+    
+    this.isDetail = true;
+    this.id = rowData.id;
   }
 
   onCellClicked(event) {
@@ -314,8 +308,22 @@ export class NgayNghiLeComponent implements OnInit {
       this.editRow(event = {rowData: event.data})
     }
   }
+  themmoingaynghi() {
+    const params = {
+      id: null
+    }
+    this.isDetail = true;
+    this.id = '';
+  }
+  isDetail = false;
+  id = '';
 
   find() {
+    this.load();
+  }
+
+  callback() {
+    this.isDetail = false;
     this.load();
   }
 

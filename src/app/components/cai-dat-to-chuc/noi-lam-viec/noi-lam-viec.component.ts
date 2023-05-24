@@ -216,7 +216,7 @@ export class NoiLamViecComponent implements OnInit {
       buttons: [
         {
           onClick: this.editRow.bind(this),
-          label: 'Thông tin chi tiết',
+          label: 'Xem',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
           hide: CheckHideAction(MENUACTIONROLEAPI.GetWorkplacePage.url, ACTIONS.VIEW)
@@ -243,7 +243,7 @@ export class NoiLamViecComponent implements OnInit {
             `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
         },
         filter: '',
-        width: 70,
+        width: 100,
         pinned: 'right',
         cellRenderer: 'buttonAgGridComponent',
         cellClass: ['border-right', 'no-auto'],
@@ -274,10 +274,8 @@ export class NoiLamViecComponent implements OnInit {
   }
 
   editRow({ rowData }) {
-    const params = {
-      workplaceId: rowData.workplaceId,
-    }
-    this.router.navigate(['/cai-dat/noi-lam-viec/chi-tiet-noi-lam-viec'], { queryParams: params });
+    this.isDetail = true;
+    this.workplaceId = rowData.workplaceId;
   }
 
   onCellClicked(event) {
@@ -286,11 +284,20 @@ export class NoiLamViecComponent implements OnInit {
     }
   }
 
+  isDetail = false;
+  workplaceId = '';
+
   addNoiLamViec() {
     const params = {
       workplaceId: null
     }
-    this.router.navigate(['/cai-dat/noi-lam-viec/them-moi-noi-lam-viec'], { queryParams: params });
+    this.isDetail = true;
+    this.workplaceId = '';
+  }
+
+  callback() {
+    this.isDetail = false;
+    this.load();
   }
 
   find() {

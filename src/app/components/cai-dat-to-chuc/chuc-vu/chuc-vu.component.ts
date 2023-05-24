@@ -172,7 +172,7 @@ export class ChucVuComponent implements OnInit, AfterViewChecked {
       buttons: [
         {
           onClick: this.editRow.bind(this),
-          label: 'Thông tin chi tiết',
+          label: 'Xem',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
           hide: CheckHideAction(MENUACTIONROLEAPI.GetPositionPage.url, ACTIONS.VIEW)
@@ -227,10 +227,8 @@ export class ChucVuComponent implements OnInit, AfterViewChecked {
   }
 
   editRow({ rowData }) {
-    const params = {
-      positionId: rowData.positionId,
-    }
-    this.router.navigate(['/cai-dat/chuc-vu/chi-tiet-chuc-vu'], { queryParams: params });
+    this.isDetail = true;
+    this.positionId = rowData.positionId;
   }
 
   onCellClicked(event) {
@@ -239,12 +237,19 @@ export class ChucVuComponent implements OnInit, AfterViewChecked {
     }
   }
 
-
+  isDetail = false;
+  positionId = '';
   addChucVu() {
     const params = {
-      positionId: 0
+      positionId: null
     }
-    this.router.navigate(['/cai-dat/chuc-vu/them-moi-chuc-vu'], { queryParams: params });
+    this.isDetail = true;
+    this.positionId = '';
+  }
+
+  callback() {
+    this.isDetail = false;
+    this.load();
   }
 
   find() {
