@@ -72,7 +72,7 @@
                     [id]="'sections-2qnt'" 
                     *ngIf="listViews.length === 0">
                 </app-loading-detail>
-                <p-divider></p-divider>
+                
                 <app-thanh-phan-luong [salaryInfoId]="modelEdit.salaryInfoId" *ngIf="detailInfo && detailInfo?.flow_cur > 1"></app-thanh-phan-luong>
                 <app-hop-dong-salary (cancelSave)="getSalaryInfoDevM()" [empId]="detailInfo.empId" [salaryInfoId]="modelEdit.salaryInfoId" *ngIf="detailInfo && detailInfo?.flow_cur > 2"></app-hop-dong-salary>
         </div>
