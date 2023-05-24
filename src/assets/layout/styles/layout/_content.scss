@@ -720,6 +720,8 @@ p-tabview{
         }
         &>.p-tabview-panels{
             width: 85%;
+            padding-left: 16px !important;
+            padding-right: 16px !important;
         }
 
         @media screen and (max-width: 1600px) {
