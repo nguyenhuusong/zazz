@@ -652,7 +652,7 @@ p-tabview{
         display: flex;
         &>.p-tabview-nav-container{
             width: 15%;
-            padding-left: 12px;
+            padding-left: 0;
             .p-tabview-nav-content{
                 margin-bottom: 0px;
             }
@@ -725,7 +725,7 @@ p-tabview{
         &>.p-tabview-panels{
             width: 85%;
             padding-left: 16px !important;
-            padding-right: 16px !important;
+            padding-right: 0 !important;
         }
 
         @media screen and (max-width: 1600px) {
