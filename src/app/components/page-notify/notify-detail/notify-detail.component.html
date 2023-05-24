@@ -1,10 +1,10 @@
 
 
 <div class="main-grid product-detail">
-  <section>
+  <section class="section-box">
     <div class="breadcrumb">
+      <h3>{{titlePage}}</h3>
         <p-breadcrumb [model]="items"></p-breadcrumb>
-        <h3>{{titlePage}}</h3>
     </div>
   </section>
   <section>
@@ -55,18 +55,45 @@
     </div>
   </section>
 </div>
-    <p-dialog [(visible)]="displaySend" styleClass="paginator-bottom" [autoZIndex]="true" [modal]="true" [style]="{width: '1300px', height: 'auto'}">
+    <!-- <p-dialog [(visible)]="displaySend" styleClass="paginator-bottom" [autoZIndex]="true" [modal]="true" [style]="{width: '1300px', height: 'auto'}">
         <p-header>
           Gửi thông báo
         </p-header>
        <app-send-notify [notify]="dataInfo" *ngIf="displaySend" (reload)="backpageSend()"></app-send-notify>
-      </p-dialog>
+      </p-dialog> -->
+
+      <p-sidebar
+        [style]="{ width: '80%' }"
+        [(visible)]="displaySend" 
+        position="right">
+        <ng-template pTemplate="header">
+            <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+                <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+            </svg> &nbsp;&nbsp;
+            Gửi thông báo </ng-template>
+        <ng-template pTemplate="footer"></ng-template>
+        <app-send-notify [notify]="dataInfo" *ngIf="displaySend" (reload)="backpageSend()"></app-send-notify>
+    </p-sidebar>
       
-      <p-dialog [(visible)]="displayStore" [autoZIndex]="true" [modal]="true" [style]="{width: '1300px', height: 'auto'}">
+      <!-- <p-dialog [(visible)]="displayStore" [autoZIndex]="true" [modal]="true" [style]="{width: '1300px', height: 'auto'}">
         <p-header>
           Gửi thông báo
         </p-header>
        <app-store-notify [notify]="dataInfo" [isNotifi]="true" *ngIf="displayStore"  (reload)="backpagestore()"></app-store-notify>
-      </p-dialog>
-      
+      </p-dialog> -->
+
+      <p-sidebar
+      [style]="{ width: '80%' }"
+      [(visible)]="displayStore" 
+      position="right">
+      <ng-template pTemplate="header">
+          <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+              <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+          </svg> &nbsp;&nbsp;
+          Gửi thông báo </ng-template>
+      <ng-template pTemplate="footer"></ng-template>
+      <app-store-notify [notify]="dataInfo" [isNotifi]="true" *ngIf="displayStore"  (reload)="backpagestore()"></app-store-notify>
+  </p-sidebar>
   

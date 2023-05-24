@@ -1073,6 +1073,14 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v1/recruitcandidate/SetCandidateInfo`, params, this.options)
   }
 
+  updateInterviewResult(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/recruitcandidate/UpdateInterviewResult`, params, this.options)
+  }
+
+  updateCandidateFinal(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/recruitcandidate/UpdateCandidateFinal`, params, this.options)
+  }
+
   submitCandidateCV(params): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v1/recruitcandidate/SubmitCandidateCV`, params, this.options)
   }
@@ -1092,12 +1100,6 @@ export class ApiHrmService {
   sendRecruitMail(data = null): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v1/recruitemail/SendRecruitMail`, data, this.options)
   }
-
-  updateInterviewResult(query, data = null): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v1/recruitcandidate/UpdateInterviewResult?` + query, data, this.options)
-  }
-
-
 
   exportVacancy(queryParams): Observable<any> {
     return this.http.get(`${apiHrmServer}/api/v1/recruitvacancy/ExportVacancy/?${queryParams}`, {
@@ -1860,6 +1862,10 @@ export class ApiHrmService {
   unlockCardNV<T>(cardCd) {
     const card = { cardCd, status: 0 };
     return this.http.put<T>(`${apiHrmServer}/api/v2/cardvehicle/SetCardLock`, card, this.options);
+  }
+
+  getCardVehicleFile<T>(formData) {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/cardvehicle/GetCardVehicleFile`, formData, this.optionsUpload);
   }
 
   deleteCard(queryParams): Observable<any> {

@@ -2,7 +2,7 @@
     <section class="bread-crumb">
         <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
     </section>
-    <div class="content" [hidden]="showChooseCalander">
+    <section class="content" [hidden]="showChooseCalander">
         <!-- <button (click)="showChooseCalander = true">Thêm thời gian họp</button> -->
         <div>
             <app-edit-detail *ngIf="listViews && listViews.length> 0" [isNested]="true" [detail]="detailInfo"
@@ -34,10 +34,10 @@
             </div>
         </div>
     </div> -->
-    </div>
-    <div *ngIf="showChooseCalander">
+    </section>
+    <section *ngIf="showChooseCalander">
         <app-chon-lich-hop (chooseDate)="theDateChoosed($event)" [meetingInfo]="meetingInfo"></app-chon-lich-hop>
-    </div>
+    </section>
 </div>
 
 <p-dialog header="Thành viên cuộc họp" [(visible)]="showChooseMember" [style]="{width: '80vw'}">

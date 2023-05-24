@@ -285,7 +285,7 @@ export class BieuMauComponent implements OnInit, OnDestroy {
       buttons: [
         {
           onClick: this.editRow.bind(this),
-          label: 'Thông tin chi tiết',
+          label: 'Xem',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
           // hide: this.indexTab === 0 || CheckHideAction(MENUACTIONROLEAPI.GetFormGeneral.url, ACTIONS.VIEW)

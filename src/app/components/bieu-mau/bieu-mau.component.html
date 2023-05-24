@@ -45,7 +45,7 @@
 <section>
     <p-tabView [(activeIndex)]="indexTab" (onChange)="handleChange($event)">
         <p-tabPanel header="Tài liệu chung">
-            <section class="content">
+            <section class="content pl-0 pr-0">
                 <div class="grid-default" #container>
                     <app-list-grid-angular *ngIf="columnDefs?.length > 0"
                         [listsData]="listsData" 
@@ -71,7 +71,7 @@
             </section>
         </p-tabPanel>
         <p-tabPanel header="Tài liệu cá nhân">
-            <section class="content">
+            <section class="content pl-0 pr-0">
                 <div class="grid-default" #container>
                     <app-list-grid-angular *ngIf="columnDefs2?.length > 0"
                         [listsData]="listsData" 
@@ -126,13 +126,19 @@
     </p-organizationChart>
 </p-dialog>
 
-
-<p-dialog header="{{ titleHeader }}" 
+<p-sidebar
+    [style]="{ width: '80%' }"
     [(visible)]="addNewPopup" 
-    [modal]="true" [style]="{width: '1000px'}"
-    [draggable]="false" [resizable]="false" [focusTrap]="false" >
-   <app-bieu-mau-chi-tiet  [formId]="formId" (callback)="handleCallbackForm()" *ngIf="addNewPopup"></app-bieu-mau-chi-tiet>
-</p-dialog>
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        {{ titleHeader }} </ng-template>
+    <ng-template pTemplate="footer"></ng-template>
+    <app-bieu-mau-chi-tiet  [formId]="formId" (callback)="handleCallbackForm()" *ngIf="addNewPopup"></app-bieu-mau-chi-tiet>
+</p-sidebar>
 
 <!-- Tài liệu cá nhân -->
 <p-dialog styleClass="hideHeaderForm" header="Tài liệu cá nhân" 

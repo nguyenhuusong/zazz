@@ -228,6 +228,12 @@
             box-shadow: none;
             border-color: transparent;
         }
+        .p-dropdown-trigger {
+            position: absolute;
+            right: 0px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
     }
     .p-treeselect{
         width: 100% !important;
@@ -365,6 +371,9 @@
         padding: 10px !important;
         font-family: 'SFProTextRegular';
         font-weight: 400;
+        &:focus{
+            outline: none;
+        }
     }
     &.no-border{
         .p-dropdown{
@@ -387,5 +396,214 @@
             }
         }
     }
+    .p-checkbox{
+        box-shadow: none !important;
+    }
 
+    p-chips{
+        .p-chips{
+            width: 100%;
+        }
+        .p-chips-multiple-container{
+            border: 1px solid #D1D4DC !important;
+            border-radius: 4px;
+            padding-top: 4px !important;
+            padding-bottom: 0px !important;
+            width: 100%;
+            padding-left: 12px;
+            li{
+                padding: 5px 16px !important;
+                border: 1px solid #E2E9FC !important;
+                border-radius: 53px !important;
+                margin-bottom: 4px;
+                margin-top: 0px;
+                .p-chips-token-label{
+                    font-weight: 500;
+                    font-size: 13px;
+                    line-height: 1;
+                    color: #59637E;
+                }
+                .p-chips-token-icon{
+                    display: none;
+                }
+                &:hover{
+                    color: #4C97E4 !important;
+                    border: 1px solid #4C97E4 !important;
+                    .p-chips-token-label{
+                        color: #4C97E4;
+                    }
+                    .p-chips-token-icon{
+                        display: block;
+                    }
+                }
+                &.p-chips-input-token{
+                    border: none !important;
+                }
+                
+            }
+            
+            .p-chips-input-token{
+                input{
+                    height: 27px;
+
+                }
+                padding: 0px !important;
+            }
+        }
+    }
+    &.list-mch{
+        .wrap-label{
+            margin-bottom: 18px;
+        }
+        ul{
+            li{
+                font-weight: 400;
+                font-size: 12px;
+                line-height: 16px;
+                color: #465373;
+                padding: 10px 16px;
+                border: 1px solid #4C97E4;
+                border-radius: 2px;
+                margin-bottom: 8px;
+                &.more{
+                    display: inline-block;
+                    border: none;
+                    color: #4C97E4;
+                    font-size: 16px;
+                    line-height: 20px;
+                    cursor: pointer;
+                }
+            }
+        }
+        padding: 16px;
+        border: 1px solid #E8E9ED;
+        border-radius: 2px;
+        padding-bottom: 16px !important;
+        .add-time-notis{
+            display: inline-block;
+            position: relative;
+            margin-bottom: 10px;
+            input{
+                border: 1px solid #D1D4DC;
+                padding-right: 35px;
+                &:focus{
+                    border: 1px solid #0979FD !important;
+                    box-shadow: none !important;
+                }
+            }
+            .buttons{
+                position: absolute;
+                z-index: 2;
+                top: 0px;
+                right: auto;
+                left: 100%;
+                display: flex;
+                .p-button{
+                    height: 40px;
+                }
+            }
+            p-button{
+                
+                button{
+                    min-width: 0px;
+                }
+                .p-button-label{
+                    display: none;
+                }
+            }
+        }
+        
+        svg{
+            position: static;
+            width: auto;
+        }
+        .more{
+            color: #4C97E4;
+            font-size: 16px;
+            line-height: 20px;
+            cursor: pointer;
+            display: inline-block;
+        }
+    }
+    &.wrap-members{
+        svg{
+            position: static;
+        }
+        .add-member{
+            height: 32px;
+            background: #F3F8FF;
+            box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.016);
+            border-radius: 4px;
+            padding: 8px;
+            color: #0979FD;
+            cursor: pointer;
+            min-width: 150px;
+        }
+        .in{
+            border: 1px solid rgba(43, 47, 51, 0.1);
+            border-radius: 2px;
+            padding: 11px 16px;
+        }
+    }
+    
+    
+}
+.linkurl-drag{
+    margin-bottom: 16px;
+    border: 1px solid #D1D4DC;
+    border-radius: 2px;
+    padding: 16px;
+}
+
+app-type-linkurl-drag{
+    .wrap-upload{
+        .p-fileupload-buttonbar{
+            .p-fileupload-choose{
+                width: 143px;
+                margin-bottom: -40px;
+                position: relative;
+                z-index: 8;
+                background: transparent;
+            }
+        }
+    }
+}
+
+
+.wrap-upload{
+    border: 1px dashed #4C97E4;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    .p-fileupload-content{
+        border: none;
+        padding-top: 0px;
+        padding-bottom: 20px;
+        &.p-fileupload-highlight{
+            background: #4C97E4
+        }
+        p-progressbar,
+        .p-fileupload-files{
+            display: none;
+        }
+    }
+    .p-fileupload-buttonbar{
+        text-align: center;
+        .p-fileupload-choose{
+            background-image: url("data:image/svg+xml,%3Csvg width='33' height='32' viewBox='0 0 33 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M29.3333 20.4999V27.8333H3.66667V20.4999H0V31.4999H33V20.4999H29.3333Z' fill='white'/%3E%3Cpath d='M23.0817 12.0849L18.3333 7.35492V22.3333H14.6667V7.35492L9.91833 12.0849L7.33333 9.49992L16.5 0.333252L25.6667 9.49992L23.0817 12.0849Z' fill='white'/%3E%3C/svg%3E%0A");
+            background-color: transparent;
+            background-repeat: no-repeat;
+            background-size: contain;
+            width: 33px;
+            height: 33px;
+            padding: 0px;
+            margin: 0px;
+            min-width: 0px;
+        }
+    }
+    .content-upload h3{
+        margin-top: 0px;
+    }
+    .p-button-label{
+        display: none;
+    }
 }
