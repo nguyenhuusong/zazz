@@ -215,6 +215,14 @@ button{
         background: #fff !important;
     }
 }
+.chon-lich-hop{
+    .p-disabled{
+        background: #efefef !important;
+    }
+    .p-button{
+        height: 40px;
+    }
+}
 
 // #flex
 .flex,
@@ -915,8 +923,11 @@ p-dialog{
     }
     
 }
-
-
+.p-dialog{
+    .p-dialog-content{
+        padding-top: 20px;
+    }
+}
 .search-em-in{
     &.p-dialog{
         background: #0f204a;

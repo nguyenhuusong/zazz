@@ -1739,7 +1739,7 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
 // Members
   @Component({
     selector: 'app-type-members',
-    template: `   <div class="fields">
+    template: `   <div class="fields wrap-members">
                     <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
                     <div class="in d-flex bet middle">
                       <ul class="members-filed">
@@ -2020,7 +2020,7 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
 // chips, member out company
 @Component({
   selector: 'app-type-chips',
-  template: `   <div class="fileds">
+  template: `   <div class="fields">
                   <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
                   <div class="">
                     <p-chips (onRemove)="onRemove($event)" (onAdd)="onAddAchip($event)" (onChipClick)="onChipClick($event)" [(ngModel)]="element.columnValue" name="{{element.field_name}}"></p-chips>
@@ -2076,7 +2076,7 @@ export class AppTypeChips implements OnInit {
 // chips, member out company
 @Component({
   selector: 'app-type-listMch',
-  template: `   <div class="fileds list-mch">
+  template: `   <div class="fields list-mch">
                   <div class="d-flex middle wrap-label">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <path d="M20.5 16.9509C20.5 15.694 18.8369 15.0288 18.8369 13.7718V9.72547C18.8369 5.73495 15.7663 2.5 11.9786 2.5C8.19084 2.5 5.12027 5.73495 5.12027 9.72547V13.8181C5.12027 15.0495 3.5 15.7195 3.5 16.9509C3.5 17.4497 3.88382 17.8541 4.35729 17.8541H19.6427C20.1162 17.8541 20.5 17.4497 20.5 16.9509Z" fill="#4C97E4"/>
@@ -2240,7 +2240,7 @@ export class AppTyperoomImg implements OnInit {
 // onoff -title
 @Component({
   selector: 'app-type-onOff',
-  template: `   <div class="fileds">
+  template: `   <div class="fields">
                     <div class="d-flex">
                       <span>{{element.columnLabel}}</span>
                       <p-inputSwitch [(ngModel)]="element.columnValue"></p-inputSwitch>
@@ -2462,7 +2462,7 @@ export class AppTypeSelectAutocompletesComponent implements OnInit, OnChanges {
 @Component({
   selector: 'app-type-label',
   template: `
-    <div class="fileds label">
+    <div class="fields label">
       <div style = "color: #465373; font-weight: 500; font-size: 14px;">{{element.columnLabel}}</div>
     </div>`,
 })
