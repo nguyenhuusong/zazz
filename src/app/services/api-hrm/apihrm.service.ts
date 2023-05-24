@@ -3599,6 +3599,10 @@ export class ApiHrmService {
   setSchemeOpen(queryParams): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v1/schemeInfo/SetSchemeOpen`, queryParams, this.options);
   }
+
+  setSchemeOpenEmp(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v1/schemeInfo/SetSchemeOpenEmp`, queryParams, this.options);
+  }
   // SalaryTrans
   getSalaryTransPage(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/salaryevaluate/GetSalaryTransPage?` + queryParams, this.options);
