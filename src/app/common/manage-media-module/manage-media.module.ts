@@ -10,6 +10,8 @@ import {ContextMenuModule} from 'primeng/contextmenu';
 import { ButtonModule } from 'primeng/button';
 import { SharedModule } from 'src/app/shared/shared.module';
 import {DialogModule} from 'primeng/dialog';
+import { SidebarModule } from 'primeng/sidebar';
+
 @NgModule({
   declarations: [AddMediaComponent, MediaListComponent],
     imports: [
@@ -22,7 +24,8 @@ import {DialogModule} from 'primeng/dialog';
         TreeModule,
         ButtonModule,
         ContextMenuModule,
-        DialogModule
+        DialogModule,
+        SidebarModule
     ],
   exports: [
     MediaListComponent

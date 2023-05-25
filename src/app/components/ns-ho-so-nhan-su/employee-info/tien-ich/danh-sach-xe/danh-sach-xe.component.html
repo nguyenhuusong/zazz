@@ -41,67 +41,82 @@
         [gridKey]="gridKey"></app-config-grid-table-form>
 </p-dialog>
 
-<p-dialog styleClass="popup-btngroup-edit-detail"  [(visible)]="displayFormEditDetail" [draggable]="false"  [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '1400px', height: 'auto'}">
-    <p-header>
-        Thêm xe
-    </p-header>
+<p-sidebar
+    [style]="{ width: '80%' }"
+    [(visible)]="displayFormEditDetail" 
+    styleClass="popup-btngroup-edit-detail"
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        Thêm xe </ng-template>
+    <ng-template pTemplate="footer"></ng-template>
+    
     <app-edit-detail [optionsButtonsEdit]="optionsButtonsPopup" *ngIf="listViewsDetail.length> 0 && displayFormEditDetail" [detailInfo]="dataDetailInfo"
-        [detail]="dataDetailInfo" [manhinh]="'Edit'" [thongtinnhanvienNew]="true"
-        [dataView]="listViewsDetail" (callback)="setEmployeeVehicleInfo($event)"
-        (callbackcancel)="cancelDetailInfo($event)"></app-edit-detail>
-</p-dialog>
+      [detail]="dataDetailInfo" [manhinh]="'Edit'" [thongtinnhanvienNew]="true"
+      [dataView]="listViewsDetail" (callback)="setEmployeeVehicleInfo($event)"
+      (callbackcancel)="cancelDetailInfo($event)"></app-edit-detail>
+</p-sidebar>
+  
+<p-sidebar
+[style]="{ width: '80%' }"
+[(visible)]="displayVehicleApprove" 
+position="right">
+<ng-template pTemplate="header">
+    <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+        <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+    </svg> &nbsp;&nbsp;
+    Phê duyệt vé xe </ng-template>
+<ng-template pTemplate="footer"></ng-template>
+<form action="" #createSMSF="ngForm">
+  <div class="box-body">
 
+    <div class="col-md-12">
+        <div class="field-group text label-8">
+          <label>Mã thẻ
+            <span style="color:red">*</span>
+          </label>
+          <input type="text" class="form-control" name="cardCd" [(ngModel)]="modelApprove.cardCd" id="cardCd" required
+            #cardCd="ngModel" placeholder="Mã thẻ">
+          <div *ngIf="cardCd.errors && (cardCd.dirty || cardCd.touched)" class="alert-validation alert-danger">
+            <div *ngIf="cardCd.errors.required">Trường này bắt buộc nhập</div>
+          </div>
+        </div>
+    </div>
 
-<p-dialog [(visible)]="displayVehicleApprove"  [baseZIndex]="99" [modal]="true" [style]="{width: '600px', height: 'auto'}">
-    <p-header>
-      Phê duyệt vé xe
-    </p-header>
-    <form action="" #createSMSF="ngForm">
-      <div class="box-body">
-  
-        <div class="col-md-12">
-            <div class="field-group text label-8">
-              <label>Mã thẻ
-                <span style="color:red">*</span>
-              </label>
-              <input type="text" class="form-control" name="cardCd" [(ngModel)]="modelApprove.cardCd" id="cardCd" required
-                #cardCd="ngModel" placeholder="Mã thẻ">
-              <div *ngIf="cardCd.errors && (cardCd.dirty || cardCd.touched)" class="alert-validation alert-danger">
-                <div *ngIf="cardCd.errors.required">Trường này bắt buộc nhập</div>
-              </div>
+    <div class="col-md-12">
+        <label class="control-label" style="margin-bottom: 10px; font-weight: 500;display: block;">Ngày hết hạn</label>
+        <div class="checkbox-default d-flex mb-0">
+          <label for="vo-han" class="mb-0">Vô hạn</label>
+          <input id="vo-han" name="isEnddate" type="radio" checked (click)="checkEnddate(true)">
+        </div>
+        <div class="checkbox-default d-flex mb-0">
+          <label for="het-han-ngay">Hết hạn ngày</label>
+          <input id="het-han-ngay" name="isEnddate" type="radio" (click)="checkEnddate(false)">
+        </div>
+        <div class="datepicker-container" *ngIf="show">
+          <div class="field-group date" [ngClass]="modelApprove.endTime ? 'valid' : 'date-invalid' ">
+            <label>Ngày hạn</label>
+              <p-calendar [(ngModel)]="modelApprove.endTime" appendTo="body" [baseZIndex]="100" name="endTime"
+                dateFormat="dd/mm/yy"></p-calendar>
             </div>
         </div>
-  
-        <div class="col-md-12">
-            <label class="control-label" style="margin-bottom: 10px; font-weight: 500;display: block;">Ngày hết hạn</label>
-            <div class="checkbox-default d-flex mb-0">
-              <label for="vo-han" class="mb-0">Vô hạn</label>
-              <input id="vo-han" name="isEnddate" type="radio" checked (click)="checkEnddate(true)">
-            </div>
-            <div class="checkbox-default d-flex mb-0">
-              <label for="het-han-ngay">Hết hạn ngày</label>
-              <input id="het-han-ngay" name="isEnddate" type="radio" (click)="checkEnddate(false)">
-            </div>
-            <div class="datepicker-container" *ngIf="show">
-              <div class="field-group date" [ngClass]="modelApprove.endTime ? 'valid' : 'date-invalid' ">
-                <label>Ngày hạn</label>
-                  <p-calendar [(ngModel)]="modelApprove.endTime" appendTo="body" [baseZIndex]="100" name="endTime"
-                    dateFormat="dd/mm/yy"></p-calendar>
-                </div>
-            </div>
-        </div>
-  
-      </div>
-      <div class="row mt-1">
-        <div class="col-md-6"></div>
-        <div class="col-md-6 text-right">
-          <p-button label="Tạo thẻ" icon="pi pi-check" styleClass="p-button-sm mr-1"
-            (onClick)="SaveVehicleApprove()"></p-button>
-          <p-button label="Đóng" icon="pi pi-times" styleClass="p-button-sm p-button-secondary mr-1"
-            (onClick)="displayVehicleApprove = !displayVehicleApprove"></p-button>
-        </div>
-      </div>
-    </form>
-  </p-dialog>
+    </div>
+
+  </div>
+  <div class="row mt-1">
+    <div class="col-md-6"></div>
+    <div class="col-md-6 text-right">
+      <p-button label="Tạo thẻ" icon="pi pi-check" styleClass="p-button-sm mr-1"
+        (onClick)="SaveVehicleApprove()"></p-button>
+      <p-button label="Đóng" icon="pi pi-times" styleClass="p-button-sm p-button-secondary mr-1"
+        (onClick)="displayVehicleApprove = !displayVehicleApprove"></p-button>
+    </div>
+  </div>
+</form>
+</p-sidebar>
 
 

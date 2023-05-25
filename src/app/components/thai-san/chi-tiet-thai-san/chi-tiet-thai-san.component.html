@@ -91,19 +91,36 @@
    </section>
 </div>
 
-
-<p-dialog styleClass="popup-chi-tiet-thai-san" header="{{modelAdd.title}}" [(visible)]="displayAddThaiSan" [modal]="true" [style]="{width: '1000px'}"
-    [draggable]="false" [resizable]="false">
+<p-sidebar
+    [style]="{ width: '80%' }"
+    [(visible)]="displayAddThaiSan" 
+    styleClass="popup-chi-tiet-thai-san"
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        {{modelAdd.title}} </ng-template>
+    <ng-template pTemplate="footer"></ng-template>
     <app-edit-detail *ngIf="listViews_other.length> 0" 
         (callback1)="getFileInfo($event)"
         [detail]="detailInfo_other" [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButon"  [dataView]="listViews_other"
         (callback)="saveCallApi($event)" (callbackcancel)="displayAddThaiSan = !displayAddThaiSan"></app-edit-detail>
-</p-dialog>
+</p-sidebar>
 
-<p-dialog styleClass="hideHeaderForm" header="Đăng ký lịch thai sản" 
+<p-sidebar
+styleClass="hideHeaderForm"
+    [style]="{ width: '80%' }"
     [(visible)]="isDetailLichThaiSan" 
-    [modal]="true" [style]="{width: '1000px'}"
-    [draggable]="false" [resizable]="false" [focusTrap]="false" >
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        Đăng ký lịch thai sản </ng-template>
+    <ng-template pTemplate="footer"></ng-template>
     <app-edit-detail
         *ngIf="listViewsDetail.length> 0"
         [detail]="detailInfoDetail"
@@ -112,5 +129,5 @@
         (callback)="setMaternityPolicyInfo($event)"
         (callbackcancel)="closeLichTS($event)"
     ></app-edit-detail>
-</p-dialog>
+</p-sidebar>
 

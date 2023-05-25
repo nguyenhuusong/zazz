@@ -97,33 +97,40 @@
     (seachEmValue)="seachEmValue($event)">
 </app-hrm-search-emp>
 
-
-<p-dialog header="Trình duyệt chuyên viên tính lương" [(visible)]="displayApprove" [modal]="true" [draggable]="false"
-    [resizable]="false" [style]="{width: '40vw'}" [autoZIndex]=true [draggable]="false" [resizable]="false">
-    <div class="row col-md-12 mt-1" style="margin-top: 5px;">
-        <div class="field-group textarea ">
-            <label for="">Ghi chú</label>
-            <textarea [(ngModel)]="modelApprove.comment" name="comment" cols="30" rows="10" class="form-control"></textarea>
+<p-sidebar
+    [style]="{ width: '80%' }"
+    [(visible)]="displayApprove" 
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        Trình duyệt chuyên viên tính lương </ng-template>
+        <div class="row col-md-12 mt-1" style="margin-top: 5px;">
+            <div class="field-group textarea ">
+                <label for="">Ghi chú</label>
+                <textarea [(ngModel)]="modelApprove.comment" name="comment" cols="30" rows="10" class="form-control"></textarea>
+            </div>
         </div>
-    </div>
-    <div class="fields row col-md-12 valid">
-        <label for="">Người quản lý</label>
-        <p-dropdown appendTo="body" [filter]="true" [baseZIndex]="100" [autoDisplayFirst]="false"
-            [options]="managerLists" [(ngModel)]="modelApprove.reportTo" name="reportTo">
-            <ng-template let-item pTemplate="selectedItem">
-                <span>{{item.label}}</span>
-            </ng-template>
-            <ng-template let-car pTemplate="item">
-                <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                    <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
-                </div>
-            </ng-template>
-        </p-dropdown>
-    </div>
-    <ng-template pTemplate="footer">
-        <p-button icon="pi pi-check" (click)="saveApprove()" label="Xác nhận" styleClass=" p-button-sm mr-1">
-        </p-button>
-        <p-button icon="pi pi-times" (click)="displayApprove= !displayApprove" label="Hủy"
-            styleClass="p-button-secondary p-button-sm"></p-button>
-    </ng-template>
-</p-dialog>
+        <div class="fields row col-md-12 valid">
+            <label for="">Người quản lý</label>
+            <p-dropdown appendTo="body" [filter]="true" [baseZIndex]="100" [autoDisplayFirst]="false"
+                [options]="managerLists" [(ngModel)]="modelApprove.reportTo" name="reportTo">
+                <ng-template let-item pTemplate="selectedItem">
+                    <span>{{item.label}}</span>
+                </ng-template>
+                <ng-template let-car pTemplate="item">
+                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                        <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                    </div>
+                </ng-template>
+            </p-dropdown>
+        </div>
+        <ng-template pTemplate="footer">
+            <p-button icon="pi pi-check" (click)="saveApprove()" label="Xác nhận" styleClass=" p-button-sm mr-1">
+            </p-button>
+            <p-button icon="pi pi-times" (click)="displayApprove= !displayApprove" label="Hủy"
+                styleClass="p-button-secondary p-button-sm"></p-button>
+        </ng-template>
+</p-sidebar>

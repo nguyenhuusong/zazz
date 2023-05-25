@@ -42,8 +42,8 @@
                     </ng-template>
                 </p-dropdown>
             </div>
-            <p-splitButton icon="pi pi-send" *ngIf="menuActions.length > 0" styleClass="p-button-sm ml-2" [appendTo]="'body'" (onClick)="callActions(menuActions[0].value)" [label]="menuActions[0].label" [model]="menuActions"></p-splitButton>
-            <p-button label="Quay lại" (click)="onBack()" styleClass="p-button-secondary p-button-sm ml-2" [style]="{'z-index': 9}" icon="pi pi-directions-alt"></p-button>
+            <p-splitButton icon="pi pi-send" *ngIf="menuActions.length > 0" styleClass="p-button-sm" [appendTo]="'body'" (onClick)="callActions(menuActions[0].value)" [label]="menuActions[0].label" [model]="menuActions"></p-splitButton>
+            <p-button label="Quay lại" (click)="onBack()" styleClass="p-button-secondary p-button-sm" [style]="{'z-index': 9}" icon="pi pi-directions-alt"></p-button>
               </div>
         <!-- <div class="col-3 text-right">
             <div class="buttons" *ngIf="detailInfo?.emp_st === 1" >
@@ -93,9 +93,19 @@
     </div>
 </section>
 
-<p-dialog styleClass="popup-btngroup-edit-detail" header="{{titleForm.title}}" [(visible)]="displayDialog" [modal]="true" [draggable]="false"
-    [resizable]="false" [style]="{width: '1300px'}" [autoZIndex]=true [draggable]="false" [resizable]="false">
-            <app-edit-detail
+<p-sidebar
+    [style]="{ width: '80%' }"
+    [(visible)]="displayDialog" 
+    styleClass="popup-btngroup-edit-detail"
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        {{titleForm.title}} </ng-template>
+    <ng-template pTemplate="footer"></ng-template>
+    <app-edit-detail
                 *ngIf="listViewsForm.length> 0 && displayDialog &&  (titleForm.type === 'DuyetHoSo' || titleForm.type === 'TuyenDungLai' || titleForm.type === 'ChuyenCongTac')"
                 [detail]="detailInfoForm"  [thongtinnhanvienNew]="true" [dataView]="listViewsForm"
                 (callback)="xacNhan($event)" (callbackcancel)="cancelViewsForm($event)"
@@ -154,9 +164,7 @@
                 <p-button label="Lưu lại" (click)="onChangeButtonSave('Save')" icon="pi pi-check" styleClass="p-button-sm "></p-button>
             </div>
         </div>
-</p-dialog>
-
-
+</p-sidebar>
 
 
 <app-edit-vi-tri-cong-viec *ngIf="isEditDetail" [isEditDetail]="isEditDetail" [empId]="empId" (cancelSave)="cancelSetDetail($event)"></app-edit-vi-tri-cong-viec>
@@ -170,14 +178,19 @@
 
 <app-detail-terminate *ngIf="displayFormTerminate && empId" [isEditDetail]="displayFormTerminate" [isDialog]="true" [id]="" [empId]="empId" (callback)="cancelSetDetail($event)"></app-detail-terminate>
 
-
-<p-dialog  header="Đổi người quản lý"
-    [(visible)]="isShowInfoMg" 
-    [modal]="true" [style]="{width: '1600px'}"
-    [draggable]="false" [resizable]="false" [focusTrap]="false" 
-    (onHide)="closeChangeMa()"
-    >
-        <app-edit-detail 
+<p-sidebar
+    [style]="{ width: '80%' }"
+    [(visible)]="isShowInfoMg"
+    (onHide)="closeChangeMa()" 
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        Đổi người quản lý </ng-template>
+    <ng-template pTemplate="footer"></ng-template>
+    <app-edit-detail 
             [optionsButtonsEdit]="btnMgInfoDetail"   
             *ngIf="listViewsFormMgInfo.length> 0" 
             [detail]="detailMgInfo" 
@@ -203,4 +216,4 @@
                 (onPageChange)="paginate($event)" [rowsPerPageOptions]="[20,40,60,100,200,{ showAll: 'ALL' }]">
             </p-paginator>
         </div>
-</p-dialog>
+</p-sidebar>

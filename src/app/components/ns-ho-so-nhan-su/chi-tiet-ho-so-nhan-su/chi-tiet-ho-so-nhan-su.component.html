@@ -396,10 +396,19 @@
 <!-- ------------------------------ -->
 <!-- Dialog -->
 
-
-<p-dialog styleClass="popup-btngroup-edit-detail" header="{{titleForm.title}}" [(visible)]="displayDialog" [modal]="true" [draggable]="false"
-    [resizable]="false" [style]="{width: '1200px'}" [autoZIndex]=true [draggable]="false" [resizable]="false">
-            <app-edit-detail
+<p-sidebar
+    styleClass="popup-btngroup-edit-detail"
+    [style]="{ width: '80%' }"
+    [(visible)]="displayDialog" 
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        {{titleForm.title}} </ng-template>
+    <ng-template pTemplate="footer"></ng-template>
+    <app-edit-detail
                 *ngIf="listViewsForm.length> 0 && displayDialog &&  (titleForm.type === 'DuyetHoSo' || titleForm.type === 'TuyenDungLai' || titleForm.type === 'ChuyenCongTac')"
                 [detail]="detailInfoForm" [manhinh]="manhinh" [thongtinnhanvienNew]="true" [dataView]="listViewsForm"
                 (callback)="xacNhan($event)" (callbackcancel)="cancelViewsForm($event)"
@@ -458,111 +467,182 @@
                 <p-button label="Lưu lại" (click)="onChangeButtonSave('Save')" icon="pi pi-check" styleClass="p-button-sm "></p-button>
             </div>
         </div>
-</p-dialog>
-
+</p-sidebar>
 
 <!-- <----------Duyệt hợp đồng ------->
-
-<p-dialog header="Duyệt hợp đồng" [(visible)]="displayApproveContract" [modal]="true" [draggable]="false"
-    [resizable]="false" [style]="{width: '40vw'}" [autoZIndex]=true [draggable]="false" [resizable]="false">
-    <div class="row col-md-12 mt-1" style="margin-top: 5px;">
-        <div class="field-group textarea ">
-            <label for="">Ghi chú</label>
-            <textarea [(ngModel)]="modelDuyetHopDong.comment" name="comment" cols="30" rows="10" class="form-control"></textarea>
+<p-sidebar
+    [style]="{ width: '80%' }"
+    [(visible)]="displayApproveContract" 
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        Duyệt hợp đồng </ng-template>
+        <div class="row col-md-12 mt-1" style="margin-top: 5px;">
+            <div class="field-group textarea ">
+                <label for="">Ghi chú</label>
+                <textarea [(ngModel)]="modelDuyetHopDong.comment" name="comment" cols="30" rows="10" class="form-control"></textarea>
+            </div>
         </div>
-    </div>
-    <ng-template pTemplate="footer">
-        <p-button icon="pi pi-check" (click)="duyetHoSo()" label="Xác nhận" styleClass=" p-button-sm mr-1">
-        </p-button>
-        <p-button icon="pi pi-trash" (click)="cancelContract()" label="Hủy duyệt" styleClass=" p-button-sm mr-1">
-        </p-button>
-        <p-button icon="pi pi-times" (click)="displayApproveContract= !displayApproveContract" label="Hủy"
-            styleClass="p-button-secondary p-button-sm"></p-button>
-    </ng-template>
-</p-dialog>
+        <ng-template pTemplate="footer">
+            <p-button icon="pi pi-check" (click)="duyetHoSo()" label="Xác nhận" styleClass=" p-button-sm mr-1">
+            </p-button>
+            <p-button icon="pi pi-trash" (click)="cancelContract()" label="Hủy duyệt" styleClass=" p-button-sm mr-1">
+            </p-button>
+            <p-button icon="pi pi-times" (click)="displayApproveContract= !displayApproveContract" label="Hủy"
+                styleClass="p-button-secondary p-button-sm"></p-button>
+        </ng-template>
+</p-sidebar>
 
 <!-- <------------ Hợp đồng ----------->
-<p-dialog styleClass="popup-btngroup-edit-detail" [maximizable]="true" header="{{modelContractInfo.contractId === null ? ' Tạo hợp đồng': 'Thông tin chi tiết hợp đồng'}}" [(visible)]="hienthihopdong" [modal]="true"  [draggable]="false" [resizable]="false"
-    [style]="{width: '80vw'}" [autoZIndex]=true [draggable]="false" [resizable]="false">
+<p-sidebar
+    styleClass="popup-btngroup-edit-detail"
+    [style]="{ width: '80%' }"
+    [(visible)]="hienthihopdong" 
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        {{modelContractInfo.contractId === null ? ' Tạo hợp đồng': 'Thông tin chi tiết hợp đồng'}} </ng-template>
+    <ng-template pTemplate="footer"></ng-template>
     <app-contract-detail *ngIf="hienthihopdong" [modelContractInfo]="modelContractInfo"
-        (callback)="emitContract($event)" (back)="hienthihopdong = !hienthihopdong"></app-contract-detail>
-</p-dialog>
-
-
+    (callback)="emitContract($event)" (back)="hienthihopdong = !hienthihopdong"></app-contract-detail>
+</p-sidebar>
 
 <!-- <-------------------Xem chi tiết file đính kèm----------------->
-
-<p-dialog styleClass="popup-btngroup-edit-detail" header="{{modelAttach.metaId > 0 ? 'Xem chi tiết file đính kèm' : 'Thêm file đính kèm'}}" [(visible)]="displayAttach" [modal]="true" [draggable]="false" [resizable]="false"
-    [style]="{width: '600px'}" [autoZIndex]=true [draggable]="false" [resizable]="false">
+    <p-sidebar
+    [style]="{ width: '80%' }"
+    [(visible)]="displayAttach" 
+    styleClass="popup-btngroup-edit-detail"
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        {{modelAttach.metaId > 0 ? 'Xem chi tiết file đính kèm' : 'Thêm file đính kèm'}} </ng-template>
+    <ng-template pTemplate="footer"></ng-template>
     <app-emp-attach-file *ngIf="displayAttach" 
         [modelAttach]="modelAttach" 
         (callback)="emitAttach($event)"
         (back)="displayAttach = !displayAttach"></app-emp-attach-file>
-</p-dialog>
-
-
+</p-sidebar>
 
 <!-- <---------------Tải lên hợp đồng------------>
-
-<p-dialog [(visible)]="displayuploadcontract" [autoZIndex]="true" [modal]="true"  appendTo="body"
-    [style]="{width: '800px', height: 'auto'}">
-    <p-header>
-        Tải lên hợp đồng [{{record?.meta_title}}]
-    </p-header>
+<p-sidebar
+    [style]="{ width: '80%' }"
+    [(visible)]="displayuploadcontract" 
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        Tải lên hợp đồng [{{record?.meta_title}}] </ng-template>
+    <ng-template pTemplate="footer"></ng-template>
     <app-upload-file [multiple]="" (callback)="handleUpload($event)" *ngIf="displayuploadcontract"></app-upload-file>
-</p-dialog>
+</p-sidebar>
 
 
 <!-- <--------------- Xem thông tin giấy tờ--------------->
-<p-dialog styleClass="xemthongtin-giayto-for-btn" [(visible)]="isShowCustIndiCreate" (onHide)="onHideCreate()" [draggable]="false"  [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '1000px', height: 'auto'}">
-    <p-header>
-    Xem thông tin giấy tờ
-    </p-header>
+<p-sidebar
+styleClass="xemthongtin-giayto-for-btn"
+    [style]="{ width: '80%' }"
+    [(visible)]="isShowCustIndiCreate" 
+    (onHide)="onHideCreate()"
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        Xem thông tin giấy tờ </ng-template>
+    <ng-template pTemplate="footer"></ng-template>
     <app-detect-card *ngIf="isShowCustIndiCreate" [isShowRegister]="isShowRegister" (reset)="isShowRegister =!isShowRegister"  (callback)="confirmCheckCard($event)" [thongtinchitietthe]="thongtinchitietthe"></app-detect-card>
     <app-card-info *ngIf="isShowRegister" [thongtinchitietthe]="thongtinchitietthe"  (back)="onReloadCard()"></app-card-info>
-</p-dialog>
-
+</p-sidebar>
 
 <!-- <------------liên hệ-------------->
-
-<p-dialog [(visible)]="isShowAddress" [draggable]="false" [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '1200px', height: 'auto'}">
-    <p-header>
-        {{thongtinlienhe.cont_id ? 'Xem chi tiết liên hệ' :  'Thêm mới người liên hệ'}}
-    </p-header>
+<p-sidebar
+    [style]="{ width: '80%' }"
+    [(visible)]="isShowAddress" 
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        {{thongtinlienhe.cont_id ? 'Xem chi tiết liên hệ' :  'Thêm mới người liên hệ'}} </ng-template>
+    <ng-template pTemplate="footer"></ng-template>
     <app-add-address-contact *ngIf="isShowAddress" [thongtinlienhe]="thongtinlienhe" (back)="reloaddanhsachlienhe()"></app-add-address-contact>
-</p-dialog>
+</p-sidebar>
+
 
 <!-- <------------- sad ----------->
-
-<p-dialog styleClass="popup-btngroup-edit-detail" [ngClass]="hideTitlePopup ? 'hide-title-popup' : ''" [(visible)]="displayFormEditDetail" [draggable]="false"  [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '600px', height: 'auto'}">
-    <p-header>
-        {{titleType0}}
-    </p-header>
+<p-sidebar
+    [style]="{ width: '80%' }"
+    [(visible)]="displayFormEditDetail" 
+    styleClass="popup-btngroup-edit-detail"
+    [ngClass]="hideTitlePopup ? 'hide-title-popup' : ''"
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        {{titleType0}} </ng-template>
+    <ng-template pTemplate="footer"></ng-template>
     <app-edit-detail [optionsButtonsEdit]="optionsButtonsPopup" *ngIf="listViewsDependent.length> 0 && detailDependentInfo" [detailInfo]="detailInfo"
         [detail]="detailDependentInfo" [manhinh]="'Edit'" [thongtinnhanvienNew]="true"
         [dataView]="listViewsDependent" (callback)="setEmpDependen($event)"
         (callbackcancel)="cancelDependentInfo($event)"></app-edit-detail>
-</p-dialog>
+</p-sidebar>
 
-
-<p-dialog [(visible)]="isShowEditUserLogin" styleClass="xemthongtin-giayto-for-btn" [draggable]="false" [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '1200px', height: 'auto'}">
-    <p-header>
-        Chi tiết tài khoản
-    </p-header>
+<p-sidebar
+    [style]="{ width: '80%' }"
+    [(visible)]="isShowEditUserLogin" 
+    styleClass="xemthongtin-giayto-for-btn"
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        Chi tiết tài khoản </ng-template>
+    <ng-template pTemplate="footer"></ng-template>
     <app-user-detail [keyName]="keyName" *ngIf="isShowEditUserLogin" [isDialog]="true" (back)="saveUserLoginEdit()"></app-user-detail>
-</p-dialog>
+</p-sidebar>
 
-<p-dialog [(visible)]="displayNguoiDung" [draggable]="false"  [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '1200px', height: 'auto'}">
-    <p-header>
-    {{detailInfo?.account_no ? 'Chỉnh sửa' : 'Thêm'}} tài khoản người dùng [{{detailInfo?.fullName}}]
-    </p-header>
-<app-detail-account *ngIf="displayNguoiDung" [detailAccount]="detailAccount" [isModal]="false" (back)="displayNguoiDung = !displayNguoiDung"></app-detail-account>
-</p-dialog>
+<p-sidebar
+    [style]="{ width: '80%' }"
+    [(visible)]="displayNguoiDung" 
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        {{detailInfo?.account_no ? 'Chỉnh sửa' : 'Thêm'}} tài khoản người dùng [{{detailInfo?.fullName}}] </ng-template>
+    <ng-template pTemplate="footer"></ng-template>
+    <app-detail-account *ngIf="displayNguoiDung" [detailAccount]="detailAccount" [isModal]="false" (back)="displayNguoiDung = !displayNguoiDung"></app-detail-account>
+</p-sidebar>
 
-<p-dialog [(visible)]="isShowAddUserLogin" [draggable]="false" [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '600px', height: 'auto'}">
-    <p-header>
-    {{keyName === '' ? 'Thêm mới' : 'Chỉnh sửa'}}  tài khoản login
-    </p-header>
+<p-sidebar
+    [style]="{ width: '80%' }"
+    [(visible)]="isShowAddUserLogin" 
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        {{keyName === '' ? 'Thêm mới' : 'Chỉnh sửa'}}  tài khoản login </ng-template>
+    <ng-template pTemplate="footer"></ng-template>
+    
     <div class="field-group text label-8" [ngClass]=" keyName ? 'valid' : 'invalid' ">
         <label for="">Tên tài khoản</label>
         <input class="form-control" type="text"
@@ -574,29 +654,41 @@
         <p-button styleClass="p-button-sm" icon="pi pi-check" label="Lưu lại" (click)="saveUserLogin()"></p-button>
     </div>
     </div>
-</p-dialog>   
+</p-sidebar>
 
-<p-dialog [(visible)]="hienThifileDinhKem" [modal]="true" [style]="{width: '800px', height: 'auto'}">
-    <p-header>
-    File đính kèm
-    </p-header>
+<p-sidebar
+    [style]="{ width: '80%' }"
+    [(visible)]="hienThifileDinhKem" 
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        File đính kèm </ng-template>
+    <ng-template pTemplate="footer"></ng-template>
     <div class="view-file text-center">
         <img style="max-width: 100%; max-height: 600px;" *ngIf="dataFileDinhKem.meta_file_type === 'image/jpeg'" src="{{dataFileDinhKem.meta_file_url}}">
     </div>
-</p-dialog>   
+</p-sidebar>
 
-
-
-
-<p-dialog styleClass="popup-btngroup-edit-detail" [(visible)]="displayFormEmpTrain" [draggable]="false"  [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '600px', height: 'auto'}">
-    <p-header>
-        {{titleEmpTrain}}
-    </p-header>
+<p-sidebar
+    [style]="{ width: '80%' }"
+    [(visible)]="displayFormEmpTrain" 
+    styleClass="popup-btngroup-edit-detail"
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        {{titleEmpTrain}} </ng-template>
+    <ng-template pTemplate="footer"></ng-template>
     <app-edit-detail [optionsButtonsEdit]="optionsButtonsPopup" *ngIf="listViewsEmpTrain.length> 0 && detailEmpTrainInfo" [detailInfo]="detailInfo"
         [detail]="detailEmpTrainInfo" [manhinh]="'Edit'" [thongtinnhanvienNew]="true"
         [dataView]="listViewsEmpTrain" (callback)="setEmpTrain($event)"
         (callbackcancel)="cancelEmpTrainInfo($event)"></app-edit-detail>
-</p-dialog>
+</p-sidebar>
 
 
 <p-dialog header="Cài đặt cấu hình " [appendTo]="'body'" [focusTrap]="false" styleClass="popup-setting" (onHide)="reloadGetEmpTrainPage()" [(visible)]="displaySetting" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"

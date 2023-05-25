@@ -18,8 +18,6 @@
     </div>
 </div>
 
-
-
 <p-dialog header="Cài đặt cấu hình " [appendTo]="'body'" [focusTrap]="false" styleClass="popup-setting"
     (onHide)="getSchemeOpenPage()" [(visible)]="displaySetting" [modal]="true" [style]="{width: '50vw'}"
     [maximizable]="true" [draggable]="false" [resizable]="false">
@@ -27,10 +25,16 @@
         [gridKey]="gridKey"></app-config-grid-table-form>
 </p-dialog>
 
-<p-dialog styleClass="popup-btngroup-edit-detail"  [(visible)]="displayAddUserByUser" [draggable]="false"  [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '1400px', height: 'auto'}">
-    <p-header>
-        Thêm nhân viên áp dụng chính sách
-    </p-header>
+<p-sidebar
+    [style]="{ width: '80%' }"
+    [(visible)]="displayAddUserByUser" 
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        Thêm nhân viên áp dụng chính sách </ng-template>
     <div class="search-in">
         <div class="search-group fields d-flex" style="display: flex">
             <div class="col-6 pd-0" style="padding-right: 10px !important;border-right: 1px solid #ebe8e8;">
@@ -53,47 +57,47 @@
         </div>
     </div>
     <app-list-grid-angular 
-    [domLayout]="'autoHeight'" 
-    *ngIf="columnDefs2.length > 0" 
-    [idGrid]="gridKey + '_45dfs34343'"
-    [title]="'Chứng chỉ'"
-    [listsData]="listsData2" 
-    [rowSelection]="'multiple'"
-    (showConfig)="CauHinh()"
-    (onCellClicked)="onCellClicked($event)"
-    (callback)="rowSelected($event)"
-    [columnDefs]="columnDefs2">
-</app-list-grid-angular>
+        [domLayout]="'autoHeight'" 
+        *ngIf="columnDefs2.length > 0" 
+        [idGrid]="gridKey + '_45dfs34343'"
+        [title]="'Chứng chỉ'"
+        [listsData]="listsData2" 
+        [rowSelection]="'multiple'"
+        (showConfig)="CauHinh()"
+        (onCellClicked)="onCellClicked($event)"
+        (callback)="rowSelected($event)"
+        [columnDefs]="columnDefs2">
+    </app-list-grid-angular>
 <!-- <app-loading-grid [columnNumber]="10" *ngIf="columnDefs2.length === 0"  [gridtype]="'hsnv'" [value]="[1,2,3,4,5,6,7,8,9,1,2,3,4,5,6,7]"></app-loading-grid> -->
-<p-footer>
-    <div class="grid">
-        <div class="col-9 box-view d-flex" style="border: 1px solid #ccc;">
-            Ngày áp dụng:  
-            <div class="d-flex relative bet ml-1" style="width: 51%;" *ngIf="listDataSelect.length > 0">
-                <div class="fields no-border">
-                    <p-calendar placeholder="Từ ngày" 
-                    panelStyleClass="datepicker-default" placeholder="Từ ngày (DD/MM/YYYY)"
-                    [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="query.from_date" 
-                    [monthNavigator]="true"
-                    [yearNavigator]="true" inputId="navigators" dateFormat="dd/mm/yy"
-                    name="fromdate"></p-calendar>
+    <ng-template pTemplate="footer">
+        <div class="grid">
+            <div class="col-9 box-view d-flex" style="border: 1px solid #ccc;">
+                Ngày áp dụng:  
+                <div class="d-flex relative bet ml-1" style="width: 51%;" *ngIf="listDataSelect.length > 0">
+                    <div class="fields no-border">
+                        <p-calendar placeholder="Từ ngày" 
+                        panelStyleClass="datepicker-default" placeholder="Từ ngày (DD/MM/YYYY)"
+                        [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="query.from_date" 
+                        [monthNavigator]="true"
+                        [yearNavigator]="true" inputId="navigators" dateFormat="dd/mm/yy"
+                        name="fromdate"></p-calendar>
+                    </div>
+                    <span class="pi pi-arrow-right" style="position: absolute;left: 45%;z-index: 9;transform: translateX(-100%);top: 2px;"></span>
+                    <div class="fields no-border">
+                        <p-calendar placeholder="Đến ngày" 
+                        panelStyleClass="datepicker-default" placeholder="Đến ngày (DD/MM/YYYY)"
+                        [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="query.to_date" 
+                        [monthNavigator]="true" 
+                        [yearNavigator]="true" inputId="navigators" dateFormat="dd/mm/yy"
+                        name="fromdate"></p-calendar>
+                    </div>
                 </div>
-                <span class="pi pi-arrow-right" style="position: absolute;left: 45%;z-index: 9;transform: translateX(-100%);top: 2px;"></span>
-                <div class="fields no-border">
-                    <p-calendar placeholder="Đến ngày" 
-                    panelStyleClass="datepicker-default" placeholder="Đến ngày (DD/MM/YYYY)"
-                    [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="query.to_date" 
-                    [monthNavigator]="true" 
-                    [yearNavigator]="true" inputId="navigators" dateFormat="dd/mm/yy"
-                    name="fromdate"></p-calendar>
-                </div>
+            </div> 
+            <div class="col-3">
+                <button type="button" pButton class="p-button-primary mr-1 p-button-text"  label="{{listsData2.length}} kết quả"></button>
+                <button type="button" pButton icon="pi pi-check" label="Lưu lại ({{listDataSelect.length}})" (click)="save()"></button>
+                <button type="button" class="p-button-secondary btn-cancel" pButton icon="pi pi-times" label="Hủy bỏ" (click)="displayAddUserByUser = !displayAddUserByUser"></button>
             </div>
-        </div> 
-        <div class="col-3">
-            <button type="button" pButton class="p-button-primary mr-1 p-button-text"  label="{{listsData2.length}} kết quả"></button>
-            <button type="button" pButton icon="pi pi-check" label="Lưu lại ({{listDataSelect.length}})" (click)="save()"></button>
-            <button type="button" class="p-button-secondary btn-cancel" pButton icon="pi pi-times" label="Hủy bỏ" (click)="displayAddUserByUser = !displayAddUserByUser"></button>
         </div>
-    </div>
-</p-footer>
-</p-dialog>
+    </ng-template>
+</p-sidebar>

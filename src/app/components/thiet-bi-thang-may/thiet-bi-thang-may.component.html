@@ -36,96 +36,105 @@
         </div>
       </section>
 
-
-<p-dialog [(visible)]="isDialog" header="{{titleModal}}" [style]="{width: '600px', height: 'auto'}">
+<p-sidebar
+    [style]="{ width: '80%' }"
+    [(visible)]="isDialog" 
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        {{titleModal}} </ng-template>
+    <ng-template pTemplate="footer"></ng-template>
     <form #createElevatorfloor="ngForm" class="form-horizontal ng-pristine ng-valid ng-scope">
-        <div class="box-body" style="padding:10px;">
-          <div class="fields">
-            <label class="control-label">Mã dự án
-              <span style="color:red">*</span>
-            </label>
-              <select class="form-control" (change)="loadGetBuildings()" name="projectCd"
-                  [(ngModel)]="modelElevator.projectCd" id="projectCd" #projectCd="ngModel" >
-                  <option value="">Chọn dự án</option>
-                  <option *ngFor="let advert of projects; let i = index" value="{{advert.projectCd}}">
-                    {{advert.projectName}} </option>
-                </select>
-          </div>
-          <div class="fields">
-            <label class="control-label">Tòa nhà</label>
-            <div *ngIf="modelBuilding">
-              <select (change)="getBuildingZones()" class="form-control" name="buildCd" [(ngModel)]="modelElevator.buildCd">
-                <option value="">Chọn tòa</option>
-              <option *ngFor="let objBuilding of modelBuilding" value={{objBuilding.buildCd}}>
-                {{objBuilding.buildName}}
-              </option>
-            </select>
-            </div>
-          </div>
-          <div class="fields">
-              <label class="control-label">Khu vực
-                <span style="color:red">*</span>
-              </label>
-              <select class="form-control" (change)="loadGetFloors()" name="buildZone" [(ngModel)]="modelElevator.buildZone" id="buildZone" #buildZone="ngModel" >
-                <option value="">Chọn khu vực</option>
-                <option *ngFor="let advert of buildingZones; let i = index" value="{{advert.buildZoneName}}">
-                  {{advert.buildZoneName}} </option>
+      <div class="box-body" style="padding:10px;">
+        <div class="fields">
+          <label class="control-label">Mã dự án
+            <span style="color:red">*</span>
+          </label>
+            <select class="form-control" (change)="loadGetBuildings()" name="projectCd"
+                [(ngModel)]="modelElevator.projectCd" id="projectCd" #projectCd="ngModel" >
+                <option value="">Chọn dự án</option>
+                <option *ngFor="let advert of projects; let i = index" value="{{advert.projectCd}}">
+                  {{advert.projectName}} </option>
               </select>
-          </div>
-          <div class="field-group text label-8" [ngClass]="modelElevator.hardwareId ? 'valid' : 'invalid' ">
-            <label class="control-label">Mã thiết bị
-              <span style="color:red">*</span>
-            </label>
-              <input type="text" class="form-control" [(ngModel)]="modelElevator.hardwareId" id="hardwareId" #hardwareId="ngModel"  required name="hardwareId"
-                      placeholder="Mã thiết bị">
-          </div>
-          <!-- <div class="form-row" style="margin:10px 0px;">
-            <label class="col-sm-3 control-label">Khu thang máy
-              <span style="color:red">*</span>
-            </label>
-            <div class="col-sm-9">
-              <input type="number" class="form-control"  [(ngModel)]="modelElevator.elevatorBank" id="elevatorBank" #elevatorBank="ngModel" required name="elevatorBank"
-                      placeholder="Số QĐ">
-            </div>
-          </div> -->
-
-          <div class="fields">
-              <label class="control-label">Tầng
-                <span style="color:red">*</span>
-              </label>
-                <select class="form-control" name="floorNumber" [(ngModel)]="modelElevator.floorNumber" id="floorNumber" #floorNumber="ngModel">
-                <option value= '' selected="selected">Chọn tầng</option>
-                <option *ngFor="let advert of floorsCreate; let i = index" value="{{advert.floorNumber}}">
-                  {{advert.floorName}} </option>
-              </select>
-          </div>
-          <!-- <div class="form-row" style="margin:10px 0px;">
-            <label class="col-sm-3 control-label">Khu, trục thang máy
-              <span style="color:red">*</span>
-            </label>
-            <div class="col-sm-9">
-              <select class="form-control" name="elevatorShaftName" [(ngModel)]="modelElevator.elevatorShaftName" id="elevatorShaftName" #elevatorShaftName="ngModel">
-                                <option value="">Khu, trục thang máy</option>
-                                <option *ngFor="let advert of listShafts; let i = index" value="{{advert.elevatorShaftName}}">
-                                  {{advert.elevatorShaftName}} </option>
-                              </select>
-            </div>
-          </div> -->
-          <div class="checkbox-default d-flex">
-            <label class="control-label">Trạng thái
-              <span style="color:red">*</span>
-            </label>
-            <div class="form-check">
-                <input class="form-check-input" style="margin-left: 5px;" checked name="isActived" [(ngModel)]="modelElevator.isActived" id="isActived" #isActived="ngModel" type="checkbox"
-                value="">
-            </div>
-          </div>
-          <div class="form-row" >
-                <p-button label="Lưu lại" (click)="onSave()" styleClass="mr-2"
-                [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetElevatorDevicePage.url, action: ACTIONS.EDIT}"
-                ></p-button>
-                <p-button label="Đóng" (click)="isDialog = !isDialog"></p-button>
+        </div>
+        <div class="fields">
+          <label class="control-label">Tòa nhà</label>
+          <div *ngIf="modelBuilding">
+            <select (change)="getBuildingZones()" class="form-control" name="buildCd" [(ngModel)]="modelElevator.buildCd">
+              <option value="">Chọn tòa</option>
+            <option *ngFor="let objBuilding of modelBuilding" value={{objBuilding.buildCd}}>
+              {{objBuilding.buildName}}
+            </option>
+          </select>
           </div>
         </div>
-      </form>
-</p-dialog>
+        <div class="fields">
+            <label class="control-label">Khu vực
+              <span style="color:red">*</span>
+            </label>
+            <select class="form-control" (change)="loadGetFloors()" name="buildZone" [(ngModel)]="modelElevator.buildZone" id="buildZone" #buildZone="ngModel" >
+              <option value="">Chọn khu vực</option>
+              <option *ngFor="let advert of buildingZones; let i = index" value="{{advert.buildZoneName}}">
+                {{advert.buildZoneName}} </option>
+            </select>
+        </div>
+        <div class="field-group text label-8" [ngClass]="modelElevator.hardwareId ? 'valid' : 'invalid' ">
+          <label class="control-label">Mã thiết bị
+            <span style="color:red">*</span>
+          </label>
+            <input type="text" class="form-control" [(ngModel)]="modelElevator.hardwareId" id="hardwareId" #hardwareId="ngModel"  required name="hardwareId"
+                    placeholder="Mã thiết bị">
+        </div>
+        <!-- <div class="form-row" style="margin:10px 0px;">
+          <label class="col-sm-3 control-label">Khu thang máy
+            <span style="color:red">*</span>
+          </label>
+          <div class="col-sm-9">
+            <input type="number" class="form-control"  [(ngModel)]="modelElevator.elevatorBank" id="elevatorBank" #elevatorBank="ngModel" required name="elevatorBank"
+                    placeholder="Số QĐ">
+          </div>
+        </div> -->
+
+        <div class="fields">
+            <label class="control-label">Tầng
+              <span style="color:red">*</span>
+            </label>
+              <select class="form-control" name="floorNumber" [(ngModel)]="modelElevator.floorNumber" id="floorNumber" #floorNumber="ngModel">
+              <option value= '' selected="selected">Chọn tầng</option>
+              <option *ngFor="let advert of floorsCreate; let i = index" value="{{advert.floorNumber}}">
+                {{advert.floorName}} </option>
+            </select>
+        </div>
+        <!-- <div class="form-row" style="margin:10px 0px;">
+          <label class="col-sm-3 control-label">Khu, trục thang máy
+            <span style="color:red">*</span>
+          </label>
+          <div class="col-sm-9">
+            <select class="form-control" name="elevatorShaftName" [(ngModel)]="modelElevator.elevatorShaftName" id="elevatorShaftName" #elevatorShaftName="ngModel">
+                              <option value="">Khu, trục thang máy</option>
+                              <option *ngFor="let advert of listShafts; let i = index" value="{{advert.elevatorShaftName}}">
+                                {{advert.elevatorShaftName}} </option>
+                            </select>
+          </div>
+        </div> -->
+        <div class="checkbox-default d-flex">
+          <label class="control-label">Trạng thái
+            <span style="color:red">*</span>
+          </label>
+          <div class="form-check">
+              <input class="form-check-input" style="margin-left: 5px;" checked name="isActived" [(ngModel)]="modelElevator.isActived" id="isActived" #isActived="ngModel" type="checkbox"
+              value="">
+          </div>
+        </div>
+        <div class="form-row" >
+              <p-button label="Lưu lại" (click)="onSave()" styleClass="mr-2"
+              [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetElevatorDevicePage.url, action: ACTIONS.EDIT}"
+              ></p-button>
+              <p-button label="Đóng" (click)="isDialog = !isDialog"></p-button>
+        </div>
+      </div>
+    </form>
+</p-sidebar>

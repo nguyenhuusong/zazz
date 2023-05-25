@@ -42,8 +42,8 @@
             </ng-template>
         </p-dropdown>
     </div>
-    <p-splitButton  icon="pi pi-send" *ngIf="menuActions.length > 0 && listViews.length> 0" styleClass="p-button-sm ml-2" [appendTo]="'body'" (onClick)="actViewEdit(menuActions[0].value)" [label]="menuActions[0].label" [model]="menuActions"></p-splitButton>
-    <p-button label="Quay lại" (click)="onBack()" styleClass="p-button-secondary p-button-sm ml-2" [style]="{'z-index': 9}" icon="pi pi-directions-alt"></p-button>
+    <p-splitButton  icon="pi pi-send" *ngIf="menuActions.length > 0 && listViews.length> 0" styleClass="p-button-sm" [appendTo]="'body'" (onClick)="actViewEdit(menuActions[0].value)" [label]="menuActions[0].label" [model]="menuActions"></p-splitButton>
+    <p-button label="Quay lại" (click)="onBack()" styleClass="p-button-secondary p-button-sm" [style]="{'z-index': 9}" icon="pi pi-directions-alt"></p-button>
       </div>
   
     </div>
@@ -71,12 +71,19 @@
     <app-thong-tin-ho-so-ca-nhan [empId]="empId" (dataChaged)="theFileChanged($event)"></app-thong-tin-ho-so-ca-nhan>
     <app-danh-sach-dinh-kem [empId]="empId"></app-danh-sach-dinh-kem>
 </section>
-<p-dialog [(visible)]="displayuploadcontract" [autoZIndex]="true" [modal]="true"  appendTo="body"
-    [style]="{width: '800px', height: 'auto'}">
-    <p-header>
-        Tải lên hợp đồng [{{record?.meta_title}}]
-    </p-header>
-    <!-- <app-upload-file [multiple]="" (callback)="handleUpload($event)" *ngIf="displayuploadcontract"></app-upload-file> -->
-</p-dialog>
+
+<p-sidebar
+    [style]="{ width: '80%' }"
+    [(visible)]="displayuploadcontract" 
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        Tải lên hợp đồng [{{record?.meta_title}}]</ng-template>
+    <ng-template pTemplate="footer"></ng-template>
+  <!-- <app-upload-file [multiple]="" (callback)="handleUpload($event)" *ngIf="displayuploadcontract"></app-upload-file> -->
+</p-sidebar>
 
 <app-thong-tin-ca-nhan-edit-detail *ngIf="isEditDetail" [isEditDetail]="isEditDetail" [empId]="empId" (cancelSave)="cancelSetDetail($event)"></app-thong-tin-ca-nhan-edit-detail>

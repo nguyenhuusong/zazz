@@ -59,11 +59,17 @@
     </section>
 </div>
 
-<p-dialog [(visible)]="displayPrint" [baseZIndex]="99" [modal]="true" [style]="{width: '1400px', height: 'auto'}">
-    <!-- <ngx-loading [show]="loading1" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading> -->
-    <p-header>
-        Danh sách in
-    </p-header>
+<p-sidebar
+    [style]="{ width: '80%' }"
+    [(visible)]="displayPrint" 
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        Danh sách in </ng-template>
+    <ng-template pTemplate="footer"></ng-template>
     <div class="grid">
         <div class="col-4">
             <div class="fields valid">
@@ -159,42 +165,50 @@
             <p-button label="Đóng" icon="pi pi-times" styleClass="p-button-sm p-button-secondary" (click)="displayAddHoliday = !displayAddHoliday"> </p-button>
         </div>
     </div> -->
-</p-dialog>
+</p-sidebar>
 
-<p-dialog header="{{modelDuyetHopDong.type === 'duyet_ho_so' ? 'Duyệt hồ sơ' : 'Hủy duyệt hồ sơ'}}" [(visible)]="displayApproveContract" [modal]="true" [draggable]="false"
-    [resizable]="false" [style]="{width: '40vw'}" [autoZIndex]=true [draggable]="false" [resizable]="false">
-    <!-- <div class="row col-md-12 mt-1 select-default" >
-        <div class="fields">
-            <p-dropdown [autoZIndex]="true" [autoDisplayFirst]="false" [style]="{'width': '100%'}" [options]="statusApprover"
-            [(ngModel)]="modelDuyetHopDong.status" name="status">
-            <ng-template let-item pTemplate="selectedItem">
-                <span>{{item.label}}</span>
-            </ng-template>
-            <ng-template let-car pTemplate="item">
-                <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                    <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
-                </div>
-            </ng-template>
-            </p-dropdown>
-            <label for="">Trạng thái duyệt</label>
+<p-sidebar
+    [style]="{ width: '80%' }"
+    [(visible)]="displayApproveContract" 
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        {{modelDuyetHopDong.type === 'duyet_ho_so' ? 'Duyệt hồ sơ' : 'Hủy duyệt hồ sơ'}} </ng-template>
+        <!-- <div class="row col-md-12 mt-1 select-default" >
+            <div class="fields">
+                <p-dropdown [autoZIndex]="true" [autoDisplayFirst]="false" [style]="{'width': '100%'}" [options]="statusApprover"
+                [(ngModel)]="modelDuyetHopDong.status" name="status">
+                <ng-template let-item pTemplate="selectedItem">
+                    <span>{{item.label}}</span>
+                </ng-template>
+                <ng-template let-car pTemplate="item">
+                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                        <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                    </div>
+                </ng-template>
+                </p-dropdown>
+                <label for="">Trạng thái duyệt</label>
+            </div>
+        </div> -->
+        <div class="row col-md-12 mt-1" style="margin-top: 5px;">
+            <div class="field-group textarea ">
+                <label for="">Ghi chú</label>
+                <textarea [(ngModel)]="modelDuyetHopDong.comment" name="comment" cols="30" rows="10" class="form-control"></textarea>
+            </div>
         </div>
-    </div> -->
-    <div class="row col-md-12 mt-1" style="margin-top: 5px;">
-        <div class="field-group textarea ">
-            <label for="">Ghi chú</label>
-            <textarea [(ngModel)]="modelDuyetHopDong.comment" name="comment" cols="30" rows="10" class="form-control"></textarea>
-        </div>
-    </div>
-
-    <ng-template pTemplate="footer">
-        <p-button icon="pi pi-check" *ngIf="modelDuyetHopDong.type === 'duyet_ho_so'" (click)="duyetHoSo()" label="Xác nhận" styleClass=" p-button-sm mr-1">
-        </p-button>
-        <!-- <p-button icon="pi pi-trash" *ngIf="modelDuyetHopDong.type === 'huy_duyet'" (click)="cancelContract()" label="Hủy duyệt" styleClass=" p-button-sm mr-1">
-        </p-button> -->
-        <p-button icon="pi pi-times" (click)="displayApproveContract= !displayApproveContract" label="Hủy"
-            styleClass="p-button-secondary p-button-sm"></p-button>
-    </ng-template>
-</p-dialog>
+    
+        <ng-template pTemplate="footer">
+            <p-button icon="pi pi-check" *ngIf="modelDuyetHopDong.type === 'duyet_ho_so'" (click)="duyetHoSo()" label="Xác nhận" styleClass=" p-button-sm mr-1">
+            </p-button>
+            <!-- <p-button icon="pi pi-trash" *ngIf="modelDuyetHopDong.type === 'huy_duyet'" (click)="cancelContract()" label="Hủy duyệt" styleClass=" p-button-sm mr-1">
+            </p-button> -->
+            <p-button icon="pi pi-times" (click)="displayApproveContract= !displayApproveContract" label="Hủy"
+                styleClass="p-button-secondary p-button-sm"></p-button>
+        </ng-template>
+</p-sidebar>
 
 <p-dialog header="Cài đặt cấu hình" [(visible)]="displaySetting" (onHide)="find()" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
     [draggable]="false" [resizable]="false" [focusTrap]="false" styleClass="popup-setting">

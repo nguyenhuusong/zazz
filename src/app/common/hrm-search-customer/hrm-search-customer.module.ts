@@ -9,6 +9,7 @@ import { ButtonModule } from 'primeng/button';
 import { ImageModule } from 'primeng/image';
 import { HrmSearchCustomerComponent } from './hrm-search-customer.component';
 import { CheckboxModule } from 'primeng/checkbox';
+import { SidebarModule } from 'primeng/sidebar';
 @NgModule({
   declarations: [
     HrmSearchCustomerComponent,
@@ -22,7 +23,8 @@ import { CheckboxModule } from 'primeng/checkbox';
     AutoCompleteModule,
     ButtonModule,
     ImageModule,
-    CheckboxModule
+    CheckboxModule,
+    SidebarModule
   ],
   exports: [HrmSearchCustomerComponent],
   entryComponents: [],

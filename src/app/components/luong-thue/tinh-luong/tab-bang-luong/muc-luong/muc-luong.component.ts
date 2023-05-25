@@ -38,9 +38,10 @@ export class MucLuongComponent implements OnInit {
   cauhinh() {
     this.displaySetting = true;
   }
-
+  heightGrid = 0;
   ngOnInit(): void {
-    this.getPayrollRankPage()
+    this.heightGrid = window.innerHeight - 200;
+    this.getPayrollRankPage();
   }
   columnDefs = [];
   listsData = [];

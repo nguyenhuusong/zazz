@@ -132,60 +132,79 @@
     </section>
 </div>
 
-<p-dialog [modal]="true" [(visible)]="isTheOrganToMove" header="Chuyển tổ chức" [style]="{width: '60vw'}">
-<div class="grid ">
-    <div class="col-4">
-        <div class="fields mb-0 label-8" [ngClass]="organizeId? 'valid': 'invalid' ">
-            <label>Tổ chức</label>
-            <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" (onChange)="getOrganizeTree()"
-                [options]="organs" [(ngModel)]="organizeId" name="organizeId" [filter]="true"
-                placeholder="Chọn tổ chức"
-                >
-                <ng-template let-item pTemplate="selectedItem">
-                    <span style="vertical-align:middle;">{{item?.label}}</span>
-                </ng-template>
-                <ng-template let-car pTemplate="item">
-                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                    <div style="font-size:14px;float:right;margin-top:4px">{{car?.label}}</div>
-                    </div>
-                </ng-template>
-            </p-dropdown>
+<p-sidebar
+    [style]="{ width: '80%' }"
+    [(visible)]="isTheOrganToMove" 
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        Chuyển tổ chức </ng-template>
+    <ng-template pTemplate="footer"></ng-template>
+    <div class="grid ">
+        <div class="col-4">
+            <div class="fields mb-0 label-8" [ngClass]="organizeId? 'valid': 'invalid' ">
+                <label>Tổ chức</label>
+                <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" (onChange)="getOrganizeTree()"
+                    [options]="organs" [(ngModel)]="organizeId" name="organizeId" [filter]="true"
+                    placeholder="Chọn tổ chức"
+                    >
+                    <ng-template let-item pTemplate="selectedItem">
+                        <span style="vertical-align:middle;">{{item?.label}}</span>
+                    </ng-template>
+                    <ng-template let-car pTemplate="item">
+                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                        <div style="font-size:14px;float:right;margin-top:4px">{{car?.label}}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="fields mb-0 label-8">
+                <label>Bộ phận</label>
+                <p-treeSelect  [filterInputAutoFocus]="true" [filter]="true" [metaKeySelection]="false"
+                    [(ngModel)]="aDepartment" 
+                    [ngClass]="[ departmentFiltes.length <= 0 ? 'tree-empty' : '' ]" 
+                    [options]="departmentFiltes" 
+                    selectionMode="single" 
+                    name="aDepartment"
+                    (onNodeSelect)="onChangeTreeDepart($event)"
+                    placeholder="Chọn phòng ban">
+                </p-treeSelect>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="grid-default">
+                <app-list-grid-angular *ngIf="columnDefsMoveOrgan.length > 0" 
+                    [listsData]="theOrganToMoveData" 
+                    [height]="500"
+                    [idGrid]="'theOrganToMoveData'"
+                    [domLayout]="'autoHeight'" 
+                    [columnDefs]="columnDefsMoveOrgan"
+                    [rowSelection]="'multiple'"
+                    >
+                </app-list-grid-angular>
+            </div>
         </div>
     </div>
-    <div class="col-4">
-        <div class="fields mb-0 label-8">
-            <label>Bộ phận</label>
-            <p-treeSelect  [filterInputAutoFocus]="true" [filter]="true" [metaKeySelection]="false"
-                [(ngModel)]="aDepartment" 
-                [ngClass]="[ departmentFiltes.length <= 0 ? 'tree-empty' : '' ]" 
-                [options]="departmentFiltes" 
-                selectionMode="single" 
-                name="aDepartment"
-                (onNodeSelect)="onChangeTreeDepart($event)"
-                placeholder="Chọn phòng ban">
-            </p-treeSelect>
-        </div>
-    </div>
-    <div class="col-12">
-        <div class="grid-default">
-            <app-list-grid-angular *ngIf="columnDefsMoveOrgan.length > 0" 
-                [listsData]="theOrganToMoveData" 
-                [height]="500"
-                [idGrid]="'theOrganToMoveData'"
-                [domLayout]="'autoHeight'" 
-                [columnDefs]="columnDefsMoveOrgan"
-                [rowSelection]="'multiple'"
-                >
-            </app-list-grid-angular>
-        </div>
-    </div>
-</div>
-</p-dialog>
-<p-dialog styleClass="hr-diagram" [appendTo]="'body'" [autoZIndex]="true" [(visible)]="isHrDiagram" [modal]="true" [breakpoints]="{'1024': '95vw', '640px': '100vw'}" [style]="{width: '90vw'}">
-<ng-template pTemplate="header">
-    Lọc nhân sự theo sơ đồ tổ chức
-</ng-template>
-<p-organizationChart  [value]="listAgencyMap" *ngIf="isHrDiagram" styleClass="diagram-zindex" [preserveSpace]="false" selectionMode="single"
+</p-sidebar>
+
+<p-sidebar
+    [style]="{ width: '80%' }"
+    [(visible)]="isHrDiagram" 
+    styleClass="hr-diagram"
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        Lọc nhân sự theo sơ đồ tổ chức </ng-template>
+    <ng-template pTemplate="footer"></ng-template>
+    <p-organizationChart  [value]="listAgencyMap" *ngIf="isHrDiagram" styleClass="diagram-zindex" [preserveSpace]="false" selectionMode="single"
     [(selection)]="selectedNode" (onNodeSelect)="onNodeSelect($event)" styleClass="company">
     <ng-template let-node pTemplate="person">
         <div class="node-header p-corner-top">{{node.data.position ? node.data.position : 'No position'}}
@@ -200,7 +219,7 @@
         {{node.label}}
     </ng-template>
 </p-organizationChart>
-</p-dialog>
+</p-sidebar>
 
 <!-- <p-dialog header="Cài đặt cấu hình" [(visible)]="displaySetting" (onHide)="find()" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
 [draggable]="false" [resizable]="false" [focusTrap]="false" styleClass="popup-setting">

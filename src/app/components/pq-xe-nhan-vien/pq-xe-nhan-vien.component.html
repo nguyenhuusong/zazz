@@ -44,279 +44,291 @@
     </section>
 </div>
 
-
-<p-dialog [(visible)]="isShowP"  [baseZIndex]="99" [modal]="true"
-  [style]="{width: '1000px', height: 'auto'}">
-  <p-header>
-     {{ modelTM?.cardVehicleId ? 'Sửa vé gửi xe' : 'Thêm vé gửi xe' }}
-  </p-header>
-  <form action="" #createSMSF1="ngForm">
-    <div class="box-body" >
-      <div class="row">
+<p-sidebar
+    [style]="{ width: '80%' }"
+    [(visible)]="isShowP" 
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        {{ modelTM?.cardVehicleId ? 'Sửa vé gửi xe' : 'Thêm vé gửi xe' }} </ng-template>
+    <ng-template pTemplate="footer"></ng-template>
+    <form action="" #createSMSF1="ngForm">
+      <div class="box-body" >
+        <div class="row">
+          <div class="col-sm-6 form-group">
+            <div class="fields">
+              <label for="">Chọn tổ chức</label>
+                <p-dropdown appendTo="body"  [baseZIndex]="100" 
+                    [options]="organizesAdds" [(ngModel)]="modelTM.organizeId" [autoDisplayFirst]="false" (onChange)="getUserByPush()" name="organizeId" [filter]="true">
+                    <ng-template let-item pTemplate="selectedItem">
+                        <span>{{item.label}}</span>
+                    </ng-template>
+                    <ng-template let-car pTemplate="item">
+                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                        <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                        </div>
+                    </ng-template>
+                    </p-dropdown>
+            </div>
+        </div>
         <div class="col-sm-6 form-group">
-          <div class="fields">
-            <label for="">Chọn tổ chức</label>
-              <p-dropdown appendTo="body"  [baseZIndex]="100" 
-                  [options]="organizesAdds" [(ngModel)]="modelTM.organizeId" [autoDisplayFirst]="false" (onChange)="getUserByPush()" name="organizeId" [filter]="true">
-                  <ng-template let-item pTemplate="selectedItem">
-                      <span>{{item.label}}</span>
-                  </ng-template>
-                  <ng-template let-car pTemplate="item">
-                      <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                      <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
-                      </div>
-                  </ng-template>
-                  </p-dropdown>
-          </div>
-      </div>
-      <div class="col-sm-6 form-group">
-          <div class="fields" [ngClass]="modelTM?.cusId ? 'valid' : 'invalid'">
-            <label for="">Nhân viên</label>
-              <p-dropdown appendTo="body"  [baseZIndex]="100" 
-                  [options]="listUsers" [(ngModel)]="modelTM.cusId" 
-                  (onChange)="onChangeUser($event)" [autoDisplayFirst]="false" name="cusId" [filter]="true">
-                  <ng-template let-item pTemplate="selectedItem">
-                      <span>{{item.label}}</span>
-                  </ng-template>
-                  <ng-template let-car pTemplate="item">
-                      <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                      <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
-                      </div>
-                  </ng-template>
-                  </p-dropdown>
-          </div>
-      </div>
-
-<!-- 
-        <div class="col-sm-6">
-          <div class="field-group text label-8">
-            <p-autoComplete panelStyleClass="search-user-by-phone" [(ngModel)]="cusId" name="cusId"  [baseZIndex]="102" appendTo="body" [style]="{width: '100%'}"
-              [suggestions]="results" (onSelect)="onSelectCus($event)" placeholder="Tìm kiếm theo tên , SĐT.."
-              (completeMethod)="search($event)" field="fullName">
-              <ng-template let-value pTemplate="item">
-                <div class="result_cus_item">
-                  <label class="">{{ value.employeeName }}</label>
-                  <span class="phone">{{ value.phone }}</span>
-                </div>
-              </ng-template>
-            </p-autoComplete>
-            <label>Tên nhân viên<span style="color:red">*</span></label>
+            <div class="fields" [ngClass]="modelTM?.cusId ? 'valid' : 'invalid'">
+              <label for="">Nhân viên</label>
+                <p-dropdown appendTo="body"  [baseZIndex]="100" 
+                    [options]="listUsers" [(ngModel)]="modelTM.cusId" 
+                    (onChange)="onChangeUser($event)" [autoDisplayFirst]="false" name="cusId" [filter]="true">
+                    <ng-template let-item pTemplate="selectedItem">
+                        <span>{{item.label}}</span>
+                    </ng-template>
+                    <ng-template let-car pTemplate="item">
+                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                        <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                        </div>
+                    </ng-template>
+                    </p-dropdown>
             </div>
-        </div> -->
-
-        <div class="col-sm-6">
-          <div class="fields">
-            <label>Mã thẻ
-              <span *ngIf="modelTM.vehicleTypeIdTM != 1" style="color:red">*</span>
-            </label>
-            <!-- <input type="text" class="form-control" name="vehiclecardCd" [(ngModel)]="modelTM.vehiclecardCd"
-              id="vehiclecardCd" [required]="modelTM.vehicleTypeIdTM != 1" #vehiclecardCd="ngModel" placeholder="Mã thẻ"> -->
+        </div>
   
-              <p-dropdown 
-                appendTo="body" 
-                #vehiclecardCd="ngModel"
-                [required]="modelTM.vehicleTypeIdTM != 1"
-                [baseZIndex]="100" [autoDisplayFirst]="false" 
-                  [options]="listCard" [(ngModel)]="modelTM.vehiclecardCd" name="vehiclecardCd" >
-                  <ng-template let-item pTemplate="selectedItem">
-                      <span style="vertical-align:middle;">{{item.label}}</span>
-                  </ng-template>
-                  <ng-template let-car pTemplate="item">
-                      <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                          <div style="">{{car.label}}</div>
-                      </div>
-                  </ng-template>
-              </p-dropdown>
-
-            <div *ngIf="vehiclecardCd.errors && (vehiclecardCd.dirty || vehiclecardCd.touched)"
-              class="alert-validation alert-danger">
-              <div *ngIf="vehiclecardCd.errors.required">Trường này bắt buộc nhập</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-sm-6">
-          <div class="fields">
-            <label>Loại xe</label>
-            <select [disabled]="modelTM.type == 2" [(ngModel)]="modelTM.vehicleTypeIdTM" class="form-control"
-              name="vehicleTypeIdTM" id="vehicleTypeIdTM" #vehicleTypeIdTM="ngModel">
-              <option *ngFor="let advert of vehicleTypes; let i = index" value="{{vehicleTypes[i].vehicleTypeId}}"
-                [selected]="i==0"> {{vehicleTypes[i].vehicleTypeName}} </option>
-            </select>
-          </div>
-        </div>
-
-        <div class="col-sm-6">
-          <div class="field-group text label-8">
-            <label>Biển số xe
-              <span style="color:red">*</span>
-            </label>
-            <input type="text" class="form-control" name="vehicleNoTM" [(ngModel)]="modelTM.vehicleNoTM" id="vehicleNoTM"
-              required #vehicleNoTM="ngModel" placeholder="Biển số xe">
-            <div *ngIf="vehicleNoTM.errors && (vehicleNoTM.dirty || vehicleNoTM.touched)"
-              class="alert-validation alert-danger">
-              <div *ngIf="vehicleNoTM.errors.required">Trường này bắt buộc nhập</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-sm-6">
-          <div class="field-group text label-8">
-            <label>Tên xe
-              <span style="color:red">*</span>
-            </label>
-            <input type="text" class="form-control" name="vehicleNameTM" [(ngModel)]="modelTM.vehicleNameTM"
-              id="vehicleNameTM" required #vehicleNameTM="ngModel" placeholder="Tên xe">
-            <div *ngIf="vehicleNameTM.errors && (vehicleNameTM.dirty || vehicleNameTM.touched)"
-              class="alert-validation alert-danger">
-              <div *ngIf="vehicleNameTM.errors.required">Trường này bắt buộc nhập</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-sm-6">
-          <div class="field-group date label-8">
-            <div class="datepicker-container">
-              <label>Ngày bắt đầu</label>
-              <p-calendar [(ngModel)]="modelTM.startTimeTM" appendTo="body" [baseZIndex]="100" name="startTimeTM"
-                dateFormat="dd/mm/yy"></p-calendar>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-sm-6 mb-5" >
-          <div class="mb-1" style="margin-bottom: 10px; font-weight: 500;display: block;">Ngày kết thúc</div>
-          <div>
-            <div class="checkbox-default d-flex mb-0">
-              <input id="vo-han" name="isEnddateVehicleCard" type="radio" [checked]="!modelTM.endTimeTM" (click)="checkEnddateVehicleCard(true)">
-              <label for="vo-han" class="mb-0">Vô hạn</label>
-            </div>
-            <div class="checkbox-default d-flex mb-0">
-              <div class="checkbox-default d-flex mb-0">
-                <input id="ngay-het-han" name="isEnddateVehicleCard" type="radio" [checked]="modelTM.endTimeTM" (click)="checkEnddateVehicleCard(false)">
-                <label for="ngay-het-han" class="mb-0">Hết hạn ngày</label>
-              </div>
-              </div>
-              <div class="datepicker-container" *ngIf="showVehicleCard">
-                <div class="field-group date label-8" [ngClass]="modelTM.endTimeTM ? 'valid' : 'date-invalid' ">
-                  <label>Ngày hạn</label>
-                  <p-calendar [(ngModel)]="modelTM.endTimeTM" appendTo="body" [baseZIndex]="100" name="endTimeTM"
-                    dateFormat="dd/mm/yy"></p-calendar>
-                  </div>
-              </div>
-          </div>
-        </div>
-
-        <div class="col-sm-6">
-          <div class="field-group text label-8">
-            <label>Màu xe
-              <!-- <span style="color:red">*</span> -->
-            </label>
-            <input type="text" class="form-control" name="vehicleColorTM" [(ngModel)]="modelTM.vehicleColorTM"
-              id="vehicleColorTM"  #vehicleColorTM="ngModel" placeholder="Nhập màu xe">
-            <!-- required <div *ngIf="vehicleColor.errors && (vehicleColor.dirty || vehicleColor.touched)"
-              class="alert-validation alert-danger">
-              <div *ngIf="vehicleColor.errors.required">Trường này bắt buộc nhập</div>
-            </div> -->
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <div class="field-group textarea label-8">
-            <label>Ghi chú
-              <!-- <span style="color:red">*</span> -->
-            </label>
-            <textarea class="form-control" name="noteTM" [(ngModel)]="modelTM.noteTM"
-              id="noteTM"  #noteTM="ngModel" placeholder="Nhập ghi chú"></textarea>
-            <!-- required <div *ngIf="vehicleColor.errors && (vehicleColor.dirty || vehicleColor.touched)"
-              class="alert-validation alert-danger">
-              <div *ngIf="vehicleColor.errors.required">Trường này bắt buộc nhập</div>
-            </div> -->
-          </div>
-        </div>
-    </div>
-    
-    <div class="d-flex">
-      <div class="col-md-4 image-vehicle" *ngFor="let imgUrl of modelTM.imageLinks; let indexImg = index">
-        <h4>{{ indexImg === 0 || indexImg === 1 ? 'Ảnh giấy chứng nhận đăng ký xe' : 'Ảnh biển số xe' }}</h4>
-        <div class="img">
-          <p-image src="{{ imgUrl?.url ? imgUrl?.url : '/../../../../assets/images/file.png' }}" [preview]="true" alt="Image" ></p-image>
-           <p-fileUpload 
-             mode="basic" 
-             name="demo[]" 
-             [chooseIcon]="'pi pi-upload'"
-             accept="image/*" 
-             [maxFileSize]="10000000" 
-             (onSelect)="uploadImageVehicle($event, indexImg)">
-           </p-fileUpload>
-           <span class="pi pi-times delete-image" *ngIf="imgUrl?.url" (click)="deleteImg(indexImg)"></span>
-         </div>
-       </div>
-    </div>
-  </div>
-    <div class="row mt-1">
-      <div class="col-md-6"></div>
-      <div class="col-md-6 text-right">
-        <p-button label="{{ modelTM.cardVehicleId ? ' Cập nhật ' : 'Tạo thẻ'}}" icon="pi pi-check" styleClass="p-button-sm mr-1"
-          (onClick)="SaveVehicleCard();"></p-button>
-        <p-button label="Đóng" icon="pi pi-times" styleClass="p-button-sm p-button-secondary mr-1"
-          (onClick)="displayCreateVehicleCard = !displayCreateVehicleCard"></p-button>
-      </div>
-    </div>
-  </form>
-</p-dialog>
-
-
-<p-dialog [(visible)]="displayVehicleApprove"  [baseZIndex]="99" [modal]="true" [style]="{width: '600px', height: 'auto'}">
-    <p-header>
-      Phê duyệt vé xe
-    </p-header>
-    <form action="" #createSMSF="ngForm">
-      <div class="box-body">
-  
-        <div class="col-md-12">
+  <!-- 
+          <div class="col-sm-6">
             <div class="field-group text label-8">
+              <p-autoComplete panelStyleClass="search-user-by-phone" [(ngModel)]="cusId" name="cusId"  [baseZIndex]="102" appendTo="body" [style]="{width: '100%'}"
+                [suggestions]="results" (onSelect)="onSelectCus($event)" placeholder="Tìm kiếm theo tên , SĐT.."
+                (completeMethod)="search($event)" field="fullName">
+                <ng-template let-value pTemplate="item">
+                  <div class="result_cus_item">
+                    <label class="">{{ value.employeeName }}</label>
+                    <span class="phone">{{ value.phone }}</span>
+                  </div>
+                </ng-template>
+              </p-autoComplete>
+              <label>Tên nhân viên<span style="color:red">*</span></label>
+              </div>
+          </div> -->
+  
+          <div class="col-sm-6">
+            <div class="fields">
               <label>Mã thẻ
+                <span *ngIf="modelTM.vehicleTypeIdTM != 1" style="color:red">*</span>
+              </label>
+              <!-- <input type="text" class="form-control" name="vehiclecardCd" [(ngModel)]="modelTM.vehiclecardCd"
+                id="vehiclecardCd" [required]="modelTM.vehicleTypeIdTM != 1" #vehiclecardCd="ngModel" placeholder="Mã thẻ"> -->
+    
+                <p-dropdown 
+                  appendTo="body" 
+                  #vehiclecardCd="ngModel"
+                  [required]="modelTM.vehicleTypeIdTM != 1"
+                  [baseZIndex]="100" [autoDisplayFirst]="false" 
+                    [options]="listCard" [(ngModel)]="modelTM.vehiclecardCd" name="vehiclecardCd" >
+                    <ng-template let-item pTemplate="selectedItem">
+                        <span style="vertical-align:middle;">{{item.label}}</span>
+                    </ng-template>
+                    <ng-template let-car pTemplate="item">
+                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                            <div style="">{{car.label}}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+  
+              <div *ngIf="vehiclecardCd.errors && (vehiclecardCd.dirty || vehiclecardCd.touched)"
+                class="alert-validation alert-danger">
+                <div *ngIf="vehiclecardCd.errors.required">Trường này bắt buộc nhập</div>
+              </div>
+            </div>
+          </div>
+  
+          <div class="col-sm-6">
+            <div class="fields">
+              <label>Loại xe</label>
+              <select [disabled]="modelTM.type == 2" [(ngModel)]="modelTM.vehicleTypeIdTM" class="form-control"
+                name="vehicleTypeIdTM" id="vehicleTypeIdTM" #vehicleTypeIdTM="ngModel">
+                <option *ngFor="let advert of vehicleTypes; let i = index" value="{{vehicleTypes[i].vehicleTypeId}}"
+                  [selected]="i==0"> {{vehicleTypes[i].vehicleTypeName}} </option>
+              </select>
+            </div>
+          </div>
+  
+          <div class="col-sm-6">
+            <div class="field-group text label-8">
+              <label>Biển số xe
                 <span style="color:red">*</span>
               </label>
-              <input type="text" class="form-control" name="cardCd" disabled [(ngModel)]="modelApprove.cardCd" id="cardCd" required
-                #cardCd="ngModel" placeholder="Mã thẻ">
-              <div *ngIf="cardCd.errors && (cardCd.dirty || cardCd.touched)" class="alert-validation alert-danger">
-                <div *ngIf="cardCd.errors.required">Trường này bắt buộc nhập</div>
+              <input type="text" class="form-control" name="vehicleNoTM" [(ngModel)]="modelTM.vehicleNoTM" id="vehicleNoTM"
+                required #vehicleNoTM="ngModel" placeholder="Biển số xe">
+              <div *ngIf="vehicleNoTM.errors && (vehicleNoTM.dirty || vehicleNoTM.touched)"
+                class="alert-validation alert-danger">
+                <div *ngIf="vehicleNoTM.errors.required">Trường này bắt buộc nhập</div>
               </div>
             </div>
-        </div>
+          </div>
   
-        <div class="col-md-12">
-            <label class="control-label" style="margin-bottom: 10px; font-weight: 500;display: block;">Ngày hết hạn</label>
-            <div class="checkbox-default d-flex mb-0">
-              <label for="vo-han" class="mb-0">Vô hạn</label>
-              <input id="vo-han" name="isEnddate" type="radio" checked (click)="checkEnddate(true)">
+          <div class="col-sm-6">
+            <div class="field-group text label-8">
+              <label>Tên xe
+                <span style="color:red">*</span>
+              </label>
+              <input type="text" class="form-control" name="vehicleNameTM" [(ngModel)]="modelTM.vehicleNameTM"
+                id="vehicleNameTM" required #vehicleNameTM="ngModel" placeholder="Tên xe">
+              <div *ngIf="vehicleNameTM.errors && (vehicleNameTM.dirty || vehicleNameTM.touched)"
+                class="alert-validation alert-danger">
+                <div *ngIf="vehicleNameTM.errors.required">Trường này bắt buộc nhập</div>
+              </div>
             </div>
-            <div class="checkbox-default d-flex mb-0">
-              <label for="het-han-ngay">Hết hạn ngày</label>
-              <input id="het-han-ngay" name="isEnddate" type="radio" (click)="checkEnddate(false)">
+          </div>
+  
+          <div class="col-sm-6">
+            <div class="field-group date label-8">
+              <div class="datepicker-container">
+                <label>Ngày bắt đầu</label>
+                <p-calendar [(ngModel)]="modelTM.startTimeTM" appendTo="body" [baseZIndex]="100" name="startTimeTM"
+                  dateFormat="dd/mm/yy"></p-calendar>
+              </div>
             </div>
-            <div class="datepicker-container" *ngIf="show">
-              <div class="field-group date" [ngClass]="modelTM.endTime ? 'valid' : 'date-invalid' ">
-                <label>Ngày hạn</label>
-                  <p-calendar [(ngModel)]="modelTM.endTime" appendTo="body" [baseZIndex]="100" name="endTime"
-                    dateFormat="dd/mm/yy"></p-calendar>
+          </div>
+  
+          <div class="col-sm-6 mb-5" >
+            <div class="mb-1" style="margin-bottom: 10px; font-weight: 500;display: block;">Ngày kết thúc</div>
+            <div>
+              <div class="checkbox-default d-flex mb-0">
+                <input id="vo-han" name="isEnddateVehicleCard" type="radio" [checked]="!modelTM.endTimeTM" (click)="checkEnddateVehicleCard(true)">
+                <label for="vo-han" class="mb-0">Vô hạn</label>
+              </div>
+              <div class="checkbox-default d-flex mb-0">
+                <div class="checkbox-default d-flex mb-0">
+                  <input id="ngay-het-han" name="isEnddateVehicleCard" type="radio" [checked]="modelTM.endTimeTM" (click)="checkEnddateVehicleCard(false)">
+                  <label for="ngay-het-han" class="mb-0">Hết hạn ngày</label>
+                </div>
+                </div>
+                <div class="datepicker-container" *ngIf="showVehicleCard">
+                  <div class="field-group date label-8" [ngClass]="modelTM.endTimeTM ? 'valid' : 'date-invalid' ">
+                    <label>Ngày hạn</label>
+                    <p-calendar [(ngModel)]="modelTM.endTimeTM" appendTo="body" [baseZIndex]="100" name="endTimeTM"
+                      dateFormat="dd/mm/yy"></p-calendar>
+                    </div>
                 </div>
             </div>
-        </div>
+          </div>
   
+          <div class="col-sm-6">
+            <div class="field-group text label-8">
+              <label>Màu xe
+                <!-- <span style="color:red">*</span> -->
+              </label>
+              <input type="text" class="form-control" name="vehicleColorTM" [(ngModel)]="modelTM.vehicleColorTM"
+                id="vehicleColorTM"  #vehicleColorTM="ngModel" placeholder="Nhập màu xe">
+              <!-- required <div *ngIf="vehicleColor.errors && (vehicleColor.dirty || vehicleColor.touched)"
+                class="alert-validation alert-danger">
+                <div *ngIf="vehicleColor.errors.required">Trường này bắt buộc nhập</div>
+              </div> -->
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="field-group textarea label-8">
+              <label>Ghi chú
+                <!-- <span style="color:red">*</span> -->
+              </label>
+              <textarea class="form-control" name="noteTM" [(ngModel)]="modelTM.noteTM"
+                id="noteTM"  #noteTM="ngModel" placeholder="Nhập ghi chú"></textarea>
+              <!-- required <div *ngIf="vehicleColor.errors && (vehicleColor.dirty || vehicleColor.touched)"
+                class="alert-validation alert-danger">
+                <div *ngIf="vehicleColor.errors.required">Trường này bắt buộc nhập</div>
+              </div> -->
+            </div>
+          </div>
       </div>
+      
+      <div class="d-flex">
+        <div class="col-md-4 image-vehicle" *ngFor="let imgUrl of modelTM.imageLinks; let indexImg = index">
+          <h4>{{ indexImg === 0 || indexImg === 1 ? 'Ảnh giấy chứng nhận đăng ký xe' : 'Ảnh biển số xe' }}</h4>
+          <div class="img">
+            <p-image src="{{ imgUrl?.url ? imgUrl?.url : '/../../../../assets/images/file.png' }}" [preview]="true" alt="Image" ></p-image>
+             <p-fileUpload 
+               mode="basic" 
+               name="demo[]" 
+               [chooseIcon]="'pi pi-upload'"
+               accept="image/*" 
+               [maxFileSize]="10000000" 
+               (onSelect)="uploadImageVehicle($event, indexImg)">
+             </p-fileUpload>
+             <span class="pi pi-times delete-image" *ngIf="imgUrl?.url" (click)="deleteImg(indexImg)"></span>
+           </div>
+         </div>
+      </div>
+    </div>
       <div class="row mt-1">
         <div class="col-md-6"></div>
         <div class="col-md-6 text-right">
-          <p-button label="Tạo thẻ" icon="pi pi-check" styleClass="p-button-sm mr-1"
-            (onClick)="SaveVehicleApprove(); createSMSF.reset()"></p-button>
+          <p-button label="{{ modelTM.cardVehicleId ? ' Cập nhật ' : 'Tạo thẻ'}}" icon="pi pi-check" styleClass="p-button-sm mr-1"
+            (onClick)="SaveVehicleCard();"></p-button>
           <p-button label="Đóng" icon="pi pi-times" styleClass="p-button-sm p-button-secondary mr-1"
-            (onClick)="displayVehicleApprove = !displayVehicleApprove"></p-button>
+            (onClick)="displayCreateVehicleCard = !displayCreateVehicleCard"></p-button>
         </div>
       </div>
     </form>
-  </p-dialog>
+</p-sidebar>
+
+  <p-sidebar
+  [style]="{ width: '80%' }"
+  [(visible)]="displayVehicleApprove" 
+  position="right">
+  <ng-template pTemplate="header">
+      <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+          <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+      </svg> &nbsp;&nbsp;
+      Phê duyệt vé xe </ng-template>
+  <ng-template pTemplate="footer"></ng-template>
+  <form action="" #createSMSF="ngForm">
+    <div class="box-body">
+
+      <div class="col-md-12">
+          <div class="field-group text label-8">
+            <label>Mã thẻ
+              <span style="color:red">*</span>
+            </label>
+            <input type="text" class="form-control" name="cardCd" disabled [(ngModel)]="modelApprove.cardCd" id="cardCd" required
+              #cardCd="ngModel" placeholder="Mã thẻ">
+            <div *ngIf="cardCd.errors && (cardCd.dirty || cardCd.touched)" class="alert-validation alert-danger">
+              <div *ngIf="cardCd.errors.required">Trường này bắt buộc nhập</div>
+            </div>
+          </div>
+      </div>
+
+      <div class="col-md-12">
+          <label class="control-label" style="margin-bottom: 10px; font-weight: 500;display: block;">Ngày hết hạn</label>
+          <div class="checkbox-default d-flex mb-0">
+            <label for="vo-han" class="mb-0">Vô hạn</label>
+            <input id="vo-han" name="isEnddate" type="radio" checked (click)="checkEnddate(true)">
+          </div>
+          <div class="checkbox-default d-flex mb-0">
+            <label for="het-han-ngay">Hết hạn ngày</label>
+            <input id="het-han-ngay" name="isEnddate" type="radio" (click)="checkEnddate(false)">
+          </div>
+          <div class="datepicker-container" *ngIf="show">
+            <div class="field-group date" [ngClass]="modelTM.endTime ? 'valid' : 'date-invalid' ">
+              <label>Ngày hạn</label>
+                <p-calendar [(ngModel)]="modelTM.endTime" appendTo="body" [baseZIndex]="100" name="endTime"
+                  dateFormat="dd/mm/yy"></p-calendar>
+              </div>
+          </div>
+      </div>
+
+    </div>
+    <div class="row mt-1">
+      <div class="col-md-6"></div>
+      <div class="col-md-6 text-right">
+        <p-button label="Tạo thẻ" icon="pi pi-check" styleClass="p-button-sm mr-1"
+          (onClick)="SaveVehicleApprove(); createSMSF.reset()"></p-button>
+        <p-button label="Đóng" icon="pi pi-times" styleClass="p-button-sm p-button-secondary mr-1"
+          (onClick)="displayVehicleApprove = !displayVehicleApprove"></p-button>
+      </div>
+    </div>
+  </form>
+</p-sidebar>
+  
   <p-dialog header="Cài đặt cấu hình" [(visible)]="displaySetting" (onHide)="find()" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
   [draggable]="false" [resizable]="false" [focusTrap]="false" styleClass="popup-setting">
   <app-config-grid-table-form *ngIf="displaySetting && gridKey" [typeConfig]="'TableInfo'"   [gridKey]="gridKey"></app-config-grid-table-form>
@@ -331,39 +343,48 @@ styleClass="menu-option-right" #menuButton></p-menu>
   </ng-template>
 </p-overlayPanel>
 
-<p-dialog header="{{ isNew ? 'Thêm mới xe' : 'Sửa xe' }}" (onHide)="closeDetailVehic()" [(visible)]="isDetailVehic" 
-[modal]="true" [style]="{width: '50vw'}" 
-[maximizable]="true"
-[draggable]="false" [resizable]="false" [focusTrap]="false" styleClass="popup-setting">
-<app-edit-detail *ngIf="listViews.length> 0" 
-  [detail]="detailInfo" [manhinh]="'Edit'" 
-  [optionsButtonsEdit]="optionsButon" 
-  [dataView]="listViews"
-  (callback)="setEmpVehicleInfo($event)" (callbackcancel)="quaylai($event)"></app-edit-detail>
-  <app-loading-detail 
-      [id]="'sections-2qnt'" 
-      *ngIf="listViews.length === 0">
-  </app-loading-detail>
-
-  <div class="d-flex">
-    <div class="col-md-4 image-vehicle" *ngFor="let imgUrl of modelTM.imageLinks; let indexImg = index">
-      <h4>{{ indexImg === 0 || indexImg === 1 ? 'Ảnh giấy chứng nhận đăng ký xe' : 'Ảnh biển số xe' }}</h4>
-      <div class="img">
-        <p-image src="{{ imgUrl?.url ? imgUrl?.url : '/../../../../assets/images/file.png' }}" [preview]="true" alt="Image" ></p-image>
-         <p-fileUpload 
-            *ngIf="!modelTM.imageLinks[indexImg]?.url"
-            mode="basic" 
-            name="demo[]" 
-            [chooseIcon]="'pi pi-upload'"
-            accept="image/*" 
-            [maxFileSize]="10000000" 
-            (onSelect)="uploadImageVehicle($event, indexImg)">
-         </p-fileUpload>
-         <span class="pi pi-times delete-image" *ngIf="imgUrl?.url" (click)="deleteImg(indexImg)"></span>
-       </div>
-     </div>
-  </div>
-</p-dialog>
+<p-sidebar
+    [style]="{ width: '80%' }"
+    [(visible)]="isDetailVehic" 
+    styleClass="popup-setting"
+    (onHide)="closeDetailVehic()"
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        {{ isNew ? 'Thêm mới xe' : 'Sửa xe' }} </ng-template>
+    <ng-template pTemplate="footer"></ng-template>
+    <app-edit-detail *ngIf="listViews.length> 0" 
+        [detail]="detailInfo" [manhinh]="'Edit'" 
+        [optionsButtonsEdit]="optionsButon" 
+        [dataView]="listViews"
+        (callback)="setEmpVehicleInfo($event)" (callbackcancel)="quaylai($event)"></app-edit-detail>
+        <app-loading-detail 
+            [id]="'sections-2qnt'" 
+            *ngIf="listViews.length === 0">
+        </app-loading-detail>
+      
+        <div class="d-flex">
+          <div class="col-md-4 image-vehicle" *ngFor="let imgUrl of modelTM.imageLinks; let indexImg = index">
+            <h4>{{ indexImg === 0 || indexImg === 1 ? 'Ảnh giấy chứng nhận đăng ký xe' : 'Ảnh biển số xe' }}</h4>
+            <div class="img">
+              <p-image src="{{ imgUrl?.url ? imgUrl?.url : '/../../../../assets/images/file.png' }}" [preview]="true" alt="Image" ></p-image>
+              <p-fileUpload 
+                  *ngIf="!modelTM.imageLinks[indexImg]?.url"
+                  mode="basic" 
+                  name="demo[]" 
+                  [chooseIcon]="'pi pi-upload'"
+                  accept="image/*" 
+                  [maxFileSize]="10000000" 
+                  (onSelect)="uploadImageVehicle($event, indexImg)">
+              </p-fileUpload>
+              <span class="pi pi-times delete-image" *ngIf="imgUrl?.url" (click)="deleteImg(indexImg)"></span>
+            </div>
+          </div>
+        </div>
+</p-sidebar>
 
 <app-hrm-search-emp 
     *ngIf="isSearchEmp" 

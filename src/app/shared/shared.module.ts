@@ -30,6 +30,7 @@ import { CurrencyFormatPipeModule } from '../common/pipe/currency-pipe.module';
 import {DialogModule} from 'primeng/dialog';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { SidebarModule } from 'primeng/sidebar';
 
 @NgModule({
     exports: [
@@ -66,6 +67,7 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
         DialogModule,
         MultiSelectModule,
         OverlayPanelModule,
+        SidebarModule,
         AgGridModule.withComponents([
             ButtonRendererComponent,
             CustomTooltipComponent,
