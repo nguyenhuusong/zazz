@@ -45,57 +45,53 @@
 <section>
     <p-tabView [(activeIndex)]="indexTab" (onChange)="handleChange($event)">
         <p-tabPanel header="Tài liệu chung">
-            <section class="content pl-0 pr-0">
-                <div class="grid-default" #container>
-                    <app-list-grid-angular *ngIf="columnDefs?.length > 0"
-                        [listsData]="listsData" 
-                        [height]="heightGrid"
-                        [columnDefs]="columnDefs"
-                        [rowSelection]="'multiple'"
-                        (callback)="rowSelected($event)"
-                        (onCellClicked)="onCellClicked($event)"
-                        (showConfig)="cauhinh()" [idGrid]="gridKey + '_45dfs'"
-                        >
-                    </app-list-grid-angular>
-                    <app-loading-grid  [gridtype]="'lhd'" *ngIf="columnDefs.length === 0" [columnNumber]="11"></app-loading-grid>
-                    <div class="paginator">
-                        <span>Từ {{ countRecord.currentRecordStart }} đến
-                            {{ countRecord.currentRecordEnd }}
-                            trên tổng số
-                            {{ countRecord.totalRecord }} kết quả</span>
-                        <p-paginator [rows]="query.pageSize" [totalRecords]="countRecord.totalRecord" [first]="first"
-                            (onPageChange)="paginate($event)" [rowsPerPageOptions]="[20,40,60,100,200,{ showAll: 'ALL' }]">
-                        </p-paginator>
-                    </div>
+            <div class="grid-default" #container>
+                <app-list-grid-angular *ngIf="columnDefs?.length > 0"
+                    [listsData]="listsData" 
+                    [height]="heightGrid"
+                    [columnDefs]="columnDefs"
+                    [rowSelection]="'multiple'"
+                    (callback)="rowSelected($event)"
+                    (onCellClicked)="onCellClicked($event)"
+                    (showConfig)="cauhinh()" [idGrid]="gridKey + '_45dfs'"
+                    >
+                </app-list-grid-angular>
+                <app-loading-grid  [gridtype]="'lhd'" *ngIf="columnDefs.length === 0" [columnNumber]="11"></app-loading-grid>
+                <div class="paginator">
+                    <span>Từ {{ countRecord.currentRecordStart }} đến
+                        {{ countRecord.currentRecordEnd }}
+                        trên tổng số
+                        {{ countRecord.totalRecord }} kết quả</span>
+                    <p-paginator [rows]="query.pageSize" [totalRecords]="countRecord.totalRecord" [first]="first"
+                        (onPageChange)="paginate($event)" [rowsPerPageOptions]="[20,40,60,100,200,{ showAll: 'ALL' }]">
+                    </p-paginator>
                 </div>
-            </section>
+            </div>
         </p-tabPanel>
         <p-tabPanel header="Tài liệu cá nhân">
-            <section class="content pl-0 pr-0">
-                <div class="grid-default" #container>
-                    <app-list-grid-angular *ngIf="columnDefs2?.length > 0"
-                        [listsData]="listsData" 
-                        [height]="heightGrid"
-                        [columnDefs]="columnDefs2"
-                        [rowSelection]="'multiple'"
-                        (callback)="rowSelected($event)"
-                        (onCellClicked)="onCellClicked($event)"
-                        (showConfig)="cauhinh()" [idGrid]="gridKey + '_45dfs'"
-                        >
-                        <!-- (firstDataRendered)="onFirstDataRendered($event)" -->
-                    </app-list-grid-angular>
-                    <app-loading-grid  [gridtype]="'lhd'" *ngIf="columnDefs2.length === 0" [columnNumber]="11"></app-loading-grid>
-                    <div class="paginator">
-                        <span>Từ {{ countRecord.currentRecordStart }} đến
-                            {{ countRecord.currentRecordEnd }}
-                            trên tổng số
-                            {{ countRecord.totalRecord }} kết quả</span>
-                        <p-paginator [rows]="query.pageSize" [totalRecords]="countRecord.totalRecord" [first]="first"
-                            (onPageChange)="paginate($event)" [rowsPerPageOptions]="[20,40,60,100,200,{ showAll: 'ALL' }]">
-                        </p-paginator>
-                    </div>
+            <div class="grid-default" #container>
+                <app-list-grid-angular *ngIf="columnDefs2?.length > 0"
+                    [listsData]="listsData" 
+                    [height]="heightGrid"
+                    [columnDefs]="columnDefs2"
+                    [rowSelection]="'multiple'"
+                    (callback)="rowSelected($event)"
+                    (onCellClicked)="onCellClicked($event)"
+                    (showConfig)="cauhinh()" [idGrid]="gridKey + '_45dfs'"
+                    >
+                    <!-- (firstDataRendered)="onFirstDataRendered($event)" -->
+                </app-list-grid-angular>
+                <app-loading-grid  [gridtype]="'lhd'" *ngIf="columnDefs2.length === 0" [columnNumber]="11"></app-loading-grid>
+                <div class="paginator">
+                    <span>Từ {{ countRecord.currentRecordStart }} đến
+                        {{ countRecord.currentRecordEnd }}
+                        trên tổng số
+                        {{ countRecord.totalRecord }} kết quả</span>
+                    <p-paginator [rows]="query.pageSize" [totalRecords]="countRecord.totalRecord" [first]="first"
+                        (onPageChange)="paginate($event)" [rowsPerPageOptions]="[20,40,60,100,200,{ showAll: 'ALL' }]">
+                    </p-paginator>
                 </div>
-            </section>
+            </div>
         </p-tabPanel>
     </p-tabView>
 </section>

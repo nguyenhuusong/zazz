@@ -487,14 +487,14 @@ export class BieuMauComponent implements OnInit, OnDestroy {
   ngAfterViewChecked(): void {
     const a: any = document.querySelector(".header");
     const b: any = document.querySelector(".sidebarBody");
-    const c: any = document.querySelector(".bread-filter");
     // const d: any = document.querySelector(".bread-crumb");
     const e: any = document.querySelector(".paginator");
     this.loadjs++
     if (this.loadjs === 5) {
       if (b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight +  e.clientHeight + 200;
+        const totalHeight = a.clientHeight + b.clientHeight  +  e.clientHeight + 150;
         this.heightGrid = window.innerHeight - totalHeight
+        console.log(this.heightGrid)
         this.changeDetector.detectChanges();
       } else {
         this.loadjs = 0;

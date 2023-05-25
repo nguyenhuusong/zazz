@@ -1,6 +1,6 @@
 
 
-<p-tabView (onChange)="handleChange($event.index)" [(activeIndex)]="tabIndex">
+<p-tabView (onChange)="handleChange($event.index)" [style]="{'position': 'relative'}" [(activeIndex)]="tabIndex">
     <p-tabPanel header="Thông tin chi tiết bảng lương" >
         <div class="content">
             <app-edit-detail
@@ -23,14 +23,14 @@
     <p-tabPanel header="Thành phần lương">
         <div class="grid">
             <div class="col-6"></div>
-            <div class="col-6 text-right">
+            <div class="col-6 text-right" style="position: absolute;top: -12px;right: -10px;">
                 <p-button label="Thêm mới" icon="pi pi-plus" (click)="addPayroll()" styleClass="p-button-sm mr-1"></p-button>
                 <p-button label="Cấu hình" icon="pi pi-cog" (click)="cauhinh()" styleClass="p-button-sm"></p-button>
             </div>
         </div>
         <app-list-grid-angular *ngIf="columnDefs.length > 0" 
             [columnDefs]="columnDefs"
-            [height]="500" 
+            [height]="heightGrid" 
             [listsData]="listsData"
             >
         </app-list-grid-angular>
