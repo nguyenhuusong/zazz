@@ -68,3 +68,12 @@
     (seachEmValue)="seachEmValue($event)">
 </app-hrm-search-emp>
 <p-menu [model]="menuItemUtil" [appendTo]="'body'" [popup]="true" styleClass="menu-option-right" #menuButton></p-menu> 
+
+
+<app-chi-tiet-xu-ly-qt-cong-tac 
+    *ngIf="displayFormEditDetail" 
+    [displayFormEditDetail]="displayFormEditDetail" 
+    [isDialog]="true" [empId]="empId" 
+    [processId]="processId" 
+    (callback)="callbackSave()">
+</app-chi-tiet-xu-ly-qt-cong-tac>
