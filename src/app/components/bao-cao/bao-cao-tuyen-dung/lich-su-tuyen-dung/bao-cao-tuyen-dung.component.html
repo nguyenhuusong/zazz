@@ -19,21 +19,21 @@
             </div>
         </div>
     </section>
-    <section>
-        <div class="col-12">
+    <section class="pb-0">
+        <div class="section-box" *ngIf="listViewsReport.length > 0">
             <app-form-filter 
-            *ngIf="listViewsReport.length > 0" 
-            [listFields]="listViewsReport" 
-            [detailInfoFilter]="detailInfoReport" 
-            [buttonsFilters] ="optionsButonReport" 
-            (callback)="getReport($event)" 
-            (close)="close($event)">
-        </app-form-filter>
+                
+                [listFields]="listViewsReport" 
+                [detailInfoFilter]="detailInfoReport" 
+                [buttonsFilters] ="optionsButonReport" 
+                (callback)="getReport($event)" 
+                (close)="close($event)">
+            </app-form-filter>
             <!-- <app-hrm-filter-report [fields]="dataFilter" (queryData)="theQueryUpdated($event)"></app-hrm-filter-report> -->
         </div>
     </section>
-    <section class="content" *ngIf="isShowLists && !isGridTree">
-        <div class="grid-default" #container>
+    <section class="content pb-0" *ngIf="isShowLists && !isGridTree">
+        <div class="section-box" #container>
             <app-list-grid-angular *ngIf="columnDefs.length > 0 && isShowLists" [listsData]="listsData" [domLayout]="'autoHeight'"
                 (showConfig)="cauhinh()" [idGrid]="gridKey + '_45dfs'" 
                 [columnDefs]="columnDefs"></app-list-grid-angular>
@@ -50,7 +50,7 @@
         </div>
     </section>
     <section class="content" *ngIf="isShowLists && isGridTree">
-        <div class="grid-default" #container>
+        <div class="section-box" #container>
             <app-list-grid-tree-angular 
             *ngIf="columnDefs.length > 0  && autoGroupColumnDef && getDataPath"  
                 (showConfig)="cauhinh()"
