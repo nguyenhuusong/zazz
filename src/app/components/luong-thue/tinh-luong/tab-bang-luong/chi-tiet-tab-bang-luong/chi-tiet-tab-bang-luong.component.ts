@@ -38,8 +38,10 @@ export class ChiTietTabBangLuongComponent implements OnInit, OnDestroy {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
-
+  heightGrid = 0
   ngOnInit(): void {
+    console.log(window.innerHeight)
+    this.heightGrid = window.innerHeight - 200;
     this.getDetail();
   }
 
