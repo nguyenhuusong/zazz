@@ -68,22 +68,17 @@
         </svg> &nbsp;&nbsp;
         {{ processId ? 'Chi tiết quá trình công tác' : 'Thêm mới quá trình công tác' }}</ng-template>
     
-        <p-card >
-            <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'" [isHideButton]="true"
-                [optionsButtonsEdit]="optionsButtonsView" [dataView]="listViews" (callback)="setDetail($event)"
-                (callbackcancel)="cancel($event)"></app-edit-detail>
-                <app-loading-detail 
-                    [id]="'app-chi-tiet-xu-ly-qt-cong-tac'" 
-                    *ngIf="listViews.length === 0">
-                </app-loading-detail>
-                <app-loading-detail 
-                    [id]="'sections-3qnt'" 
-                    *ngIf="listViews.length === 0">
-                </app-loading-detail>
-            <div>
-            </div>
-               
-        </p-card>
+        <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'" [isHideButton]="true"
+            [optionsButtonsEdit]="optionsButtonsView" [dataView]="listViews" (callback)="setDetail($event)"
+            (callbackcancel)="cancel($event)"></app-edit-detail>
+            <app-loading-detail 
+                [id]="'app-chi-tiet-xu-ly-qt-cong-tac'" 
+                *ngIf="listViews.length === 0">
+            </app-loading-detail>
+            <app-loading-detail 
+                [id]="'sections-3qnt'" 
+                *ngIf="listViews.length === 0">
+            </app-loading-detail>
     
         <ng-template pTemplate="footer">
             <div class="col-12  flex justify-content-end align-items-center" >

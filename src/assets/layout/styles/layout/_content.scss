@@ -802,6 +802,7 @@ app-edit-detail{
     box-shadow: 0px 0px 3px #e8e8e8;
     border-radius: 2px;
     transition: all 0.3s;
+    border: 1px solid #ebeaea;
     &:hover{
         box-shadow: 4px 2px 5px #e8e8e8;
         transition: all 0.3s;
@@ -918,10 +919,20 @@ p-sidebar{
             z-index: 2;
             top: auto;
         }
-        .border-section{
-            padding: 0px 10px;
-            border: none;
+        .p-card{
             box-shadow: none;
+            border: none;
+            .p-card-body{
+                padding-top: 0px;
+                padding-bottom: 0px;
+            }
+        }
+        .p-sidebar-content{
+           .wrap-edit-detail{
+            &>.grid{
+                margin-top: 0px;
+            }
+           }
         }
     }
 }

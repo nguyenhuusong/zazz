@@ -25,9 +25,11 @@
         [id]="'chi-tiet-tuyen-dung'" 
         *ngIf="listViews.length === 0">
     </app-loading-detail>
-    <section>
+</section>
+<section>
+    <div class="section-box">
         <h3>Danh sách kế hoạch</h3>
         <app-plan-detail *ngIf="recruitPlanId" [recruitPlantId]="recruitPlanId"></app-plan-detail>
-    </section>
+    </div>
 </section>
 
