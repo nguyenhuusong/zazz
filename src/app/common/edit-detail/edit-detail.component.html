@@ -94,7 +94,7 @@
 <app-config-grid-table-form *ngIf="displaySetting && gridKey" [typeConfig]="'FormInfo'" (callbackF)="callbackConfigGridTanle($event)"  [gridKey]="gridKey"></app-config-grid-table-form>
 </p-dialog>
 
-<p-dialog [(visible)]="displaySetting1" [autoZIndex]="true" header="Cấu hình form group" [modal]="true" [style]="{width: '50vw', height: 'auto'}">
+<p-dialog [(visible)]="displaySetting1" styleClass="popup-setting config-form" [autoZIndex]="true" header="Cấu hình form group" [modal]="true" [style]="{width: '50vw', height: 'auto'}">
     <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfoConfig" [manhinh]="'Edit'" [isViewButtonTop]="false" [optionsButtonsEdit]="optionsButtonsEdit1"  [dataView]="listViews"
         (callback)="setGroupInfo($event)" (callbackcancel)="quaylai($event)"></app-edit-detail>
 </p-dialog>

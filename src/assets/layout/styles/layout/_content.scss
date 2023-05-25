@@ -866,7 +866,6 @@ p-sidebar{
         .p-sidebar-content{
             position: static;
             padding-bottom: 0px;
-            overflow: initial;
         }
         .p-sidebar-header{
             color: #2B2F33;
@@ -951,13 +950,42 @@ p-dialog{
             button{
                 &.p-dialog-header-icon,
                 &.p-dialog-header-close{
-                    height: auto;
                     color: #fff;
                 }
     
             }
         }
-    
+        &.popup-setting{
+            .p-dialog-header{
+                border-radius: 0px;
+                background: $white;
+                box-shadow: inset 0px -1px 0px #F0F0F0;
+                font-weight: 600;
+                font-size: 16px;
+                line-height: 20px;
+                padding: 16px 20px;
+                .p-dialog-title{
+                    color: $C-212633;
+                }
+                button{
+                    &.p-dialog-header-icon,
+                    &.p-dialog-header-close{
+                        color: $C-212633;
+                    }
+        
+                }
+            }
+        }
+        &.config-form{
+            .p-dialog-content{
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+            .btn-group-edit-detail{
+                top: 19px;
+                right: 59px;
+            }
+        }
     }
     
 }
@@ -1397,5 +1425,20 @@ section{
   .justify-content-center{
     &>div{
         justify-content: center;
+    }
+  }
+
+  p-confirmdialog{
+    .p-dialog-header{
+        padding: 10px 15px !important;
+        background: $mainBg !important;
+        .p-dialog-title{
+            color: $white;
+        }
+        .p-dialog-header-icons{
+            .pi {
+                color: $white;
+            }
+        }
     }
   }
