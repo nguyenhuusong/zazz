@@ -33,7 +33,7 @@
             </ng-container>
         </div>
         <div class="grid" >
-            <div class="col-12 section-box button-filter text-right d-flex gap12">
+            <div class="col-12 button-filter text-right d-flex gap12">
                 <ng-container *ngFor="let button of buttonsFilters">
                     <p-button label="{{button.label}}" (onClick)="onChangeButtonEdit(button.value)" [disabled]="button?.disabled" icon="{{button?.icon ? button?.icon : 'pi pi-plus'}}" styleClass="p-button-sm {{button?.class ? button?.class : ''}}"></p-button>
                 </ng-container>

@@ -340,7 +340,7 @@ export class LichSuTuyenDungComponent implements OnInit {
 
   //filter 
   getFilter() {
-    this.apiService.getFilter('/api/v1/recruitcandidate/GetCandidateFilter')
+    this.apiService.getFilter('/api/v1/recruitcandidate/GetCandidateHistoryFilter')
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(results => {
       if (results.status === 'success') {

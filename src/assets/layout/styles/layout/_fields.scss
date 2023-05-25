@@ -1,4 +1,8 @@
 // field
+.hrm-filter .filed-filter{
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
 .hrm-filter .filed-filter,
 .p-field,
 .fields{
@@ -620,6 +624,12 @@
     &.field-btn{
         input{
             height: 34px;
+        }
+    }
+    p-checkbox{
+        .p-highlight{
+            border-color: $mainBg !important;
+            background: $mainBg !important;
         }
     }
 }

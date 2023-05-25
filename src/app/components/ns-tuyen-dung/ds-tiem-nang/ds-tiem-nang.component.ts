@@ -416,7 +416,7 @@ export class DsTiemNangComponent implements OnInit {
 
   //filter 
   getFilter() {
-    this.apiService.getFilter('/api/v1/recruitcandidate/GetCandidateFilter')
+    this.apiService.getFilter('/api/v1/recruitcandidate/GetCandidatePotentialFilter')
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(results => {
       if (results.status === 'success') {
