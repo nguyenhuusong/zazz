@@ -754,3 +754,9 @@ app-type-linkurl-drag{
     }
 }
 
+.ag-checked{
+    background: $mainBg !important;
+    &:after{
+        color: #ffffff !important;
+    }
+}

@@ -390,7 +390,7 @@ export class DsTiemNangComponent implements OnInit {
           can_st: this.recruitmentStatusSelected,
           vacancyId: vacancyId
         }
-        this.apiService.recruiUpdateStatus(queryString.stringify(query))
+        this.apiService.recruiUpdateStatus(query)
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe((results: any) => {
           if (results.status === 'success') {
