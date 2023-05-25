@@ -14,6 +14,7 @@ import { DialogImageModule } from '../dialogimage/dialogimage.module';
 import { AttackFilesModule } from '../attack-files/attack-files.module';
 import { ManageMediaModule } from '../manage-media-module/manage-media.module';
 import { LMarkdownEditorModule } from 'ngx-markdown-editor';
+import { SidebarModule } from 'primeng/sidebar';
 @NgModule({
   declarations: [
     PageMarkdownComponent,
@@ -32,6 +33,7 @@ import { LMarkdownEditorModule } from 'ngx-markdown-editor';
     DialogModule,
     TabViewModule,
     PaginatorModule,
+    SidebarModule,
     ManageMediaModule],
   exports: [PageMarkdownComponent],
   entryComponents: [],
