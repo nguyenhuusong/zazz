@@ -272,9 +272,9 @@ export class AppTypeSelectTreeComponent implements OnInit, OnChanges {
     if(this.element.field_name === "org_Id"){
       this.setValue('', 'User_Id')
     }
-
-    this.modelFields[field_name].error = this.modelFields[field_name].isRequire && !this.element.columnValue ? true : false;
-    this.modelFields[field_name].message = this.modelFields[field_name].error ? 'Trường bắt buộc nhập !' : '';
+    console.log(this.modelFields[field_name])
+    this.modelFields[`${field_name}${element.group_cd}`].error = this.modelFields[`${field_name}${element.group_cd}`].isRequire && !this.element.columnValue ? true : false;
+    this.modelFields[`${field_name}${element.group_cd}`].message = this.modelFields[`${field_name}${element.group_cd}`].error ? 'Trường bắt buộc nhập !' : '';
     if(element.columnDisplay && !element.isSpecial) {
       const fields = element.columnDisplay.split(",");
       const promissall = [];
