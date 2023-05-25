@@ -683,9 +683,10 @@ p-tabview{
                     display: flex;
                     align-items: center;
                     padding-left: 10px;
+                    border-bottom: 1px solid #f5f5f5 !important;
                     a{
                         margin-bottom: 0px !important;
-                        border-bottom: 1px solid #f5f5f5 !important;
+                        border-bottom: none !important;
                         padding-left: 5px !important;
                         span{
                             white-space: unset !important;
