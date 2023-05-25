@@ -347,7 +347,7 @@ export class ApiHrmService {
   }
 
   getSalarydependentPage(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/salary/GetSalarydependentPage ?` + queryParams, this.options)
+    return this.http.get<any>(`${apiHrmServer}/api/v1/salary/GetSalarydependentPage?` + queryParams, this.options)
   }
 
   getSalaryWorkTimePage(queryParams): Observable<any> {
