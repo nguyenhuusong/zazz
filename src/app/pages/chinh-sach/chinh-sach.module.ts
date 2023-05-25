@@ -88,6 +88,8 @@ import { FormActiveComponent } from 'src/app/components/cs-tien-luong/chuyen-vie
 import { NghiKhongLuongComponent } from 'src/app/components/nghi-khong-luong/nghi-khong-luong.component';
 import { ChiTietNghiKhongLuongComponent } from 'src/app/components/nghi-khong-luong/chi-tiet-nghi-khong-luong/chi-tiet-nghi-khong-luong.component';
 import { ImportExcelModule } from 'src/app/common/import-excel/import-excel.module';
+import { TabSalaryInsuranceComponent } from 'src/app/components/cs-tien-luong/chi-tiet-tien-luong/tab-salary-insurance/tab-salary-insurance.component';
+import { TabSalaryDependentComponent } from 'src/app/components/cs-tien-luong/chi-tiet-tien-luong/tab-salary-dependent/tab-salary-dependent.component';
 
 @NgModule({
   imports: [
@@ -185,7 +187,9 @@ import { ImportExcelModule } from 'src/app/common/import-excel/import-excel.modu
     ChiTietChuyenVienTinhLuongComponent,
     FormActiveComponent,
     NghiKhongLuongComponent,
-    ChiTietNghiKhongLuongComponent
+    ChiTietNghiKhongLuongComponent,
+    TabSalaryInsuranceComponent,
+    TabSalaryDependentComponent
 
   ],
   providers: [],

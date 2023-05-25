@@ -87,10 +87,10 @@
                 Điều chỉnh
             </p-tabPanel>
             <p-tabPanel header="Người phụ thuộc" *ngIf="detailInfo">
-                Người phụ thuộc
+                <app-tab-salary-dependent [recordId]="modelEdit.recordId" *ngIf="indexTab === 9 && modelEdit.recordId"></app-tab-salary-dependent>
             </p-tabPanel>
             <p-tabPanel header="Biến động BHXH" *ngIf="detailInfo">
-                Biến động BHXH
+                <app-tab-salary-insurance [recordId]="modelEdit.recordId" *ngIf="indexTab === 10 && modelEdit.recordId"></app-tab-salary-insurance>
             </p-tabPanel>
             <p-tabPanel header="Tổng hợp" *ngIf="detailInfo">
                 <app-tong-hop-luong [recordId]="modelEdit.recordId" *ngIf="indexTab === 11 && modelEdit.recordId"></app-tong-hop-luong>

@@ -342,6 +342,14 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v1/salary/getSalaryEmployeePage?` + queryParams, this.options)
   }
 
+  getSalaryInsurancePage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/salaryinsurance/GetSalaryInsurancePage?` + queryParams, this.options)
+  }
+
+  getSalarydependentPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/salarydependent/GetSalarydependentPage ?` + queryParams, this.options)
+  }
+
   getSalaryWorkTimePage(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/salary/GetSalaryWorkTimePage?` + queryParams, this.options)
   }
