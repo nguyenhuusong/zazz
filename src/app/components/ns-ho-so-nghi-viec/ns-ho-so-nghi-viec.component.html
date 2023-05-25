@@ -53,13 +53,31 @@
     </section>
 </div>
 
-
-<p-dialog [(visible)]="isShowAvatar" header="Ảnh Avartar">
+<p-sidebar
+    [style]="{ width: '80%' }"
+    [(visible)]="isShowAvatar" 
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        Ảnh Avartar </ng-template>
+    <ng-template pTemplate="footer"></ng-template>
     <p-image class="img-popup" [src]="imgAvatar" alt="Image" [preview]="false" ></p-image>
-</p-dialog>
+</p-sidebar>
 
-<p-dialog header="Thay đổi trạng thái" [(visible)]="displayChangeStatus" [modal]="true" [style]="{width: '1300px'}"
-    [draggable]="false" [resizable]="false">
+<p-sidebar
+    [style]="{ width: '80%' }"
+    [(visible)]="displayChangeStatus" 
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        Thay đổi trạng thái </ng-template>
+    <ng-template pTemplate="footer"></ng-template>
     <app-cap-nhat-trang-thai-nghi-viec [terminateId]="modelPheDuyet.id" *ngIf="displayChangeStatus"></app-cap-nhat-trang-thai-nghi-viec>
     <!-- <div class="col-md-12 mt-1" style="padding: 0"> 
         <div class="field-group multi-select" [ngClass]=" modelPheDuyet.status_key ? 'valid' : 'invalid' ">
@@ -88,12 +106,21 @@
         <p-button label="Xác nhận" styleClass="p-button-sm mr-1" (click)="xacnhan()"> </p-button>
         <p-button label="Hủy bỏ" styleClass="p-button-sm p-button-secondary mr-1" (click)="displayChangeStatus = !displayChangeStatus"> </p-button>
     </div> -->
+</p-sidebar>
 
-</p-dialog>
-
-<p-dialog styleClass="popup-btngroup-edit-detail" header="Tuyển dụng lại" [(visible)]="displayDialog" [modal]="true" [draggable]="false"
-[resizable]="false" [style]="{width: '60vw'}" [autoZIndex]=true [draggable]="false" [resizable]="false">
-<app-edit-detail
+<p-sidebar
+    [style]="{ width: '80%' }"
+    [(visible)]="displayDialog" 
+    styleClass="popup-btngroup-edit-detail"
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        Tuyển dụng lại </ng-template>
+    <ng-template pTemplate="footer"></ng-template>
+    <app-edit-detail
     *ngIf="listViews.length> 0 && displayDialog"
     [detail]="detailInfoEmployee" [thongtinnhanvienNew]="true" [dataView]="listViews"
     (callback)="xacNhanTuyenDungLai($event)" (callbackcancel)="displayDialog = !displayDialog"></app-edit-detail>
@@ -111,19 +138,27 @@
                 dateFormat="dd/mm/yy" name="workDt"></p-calendar>
         </div>
     </div>
-   
-        <div class="col-md-12 mt-1">
-            <div class="field-group textarea">
-                <label for="">Ghi chú</label>
-                <textarea [(ngModel)]="modelDuyet.comments" name="comments" cols="30" rows="10" class="form-control"></textarea>
-            </div>
+    <div class="col-md-12 mt-1">
+        <div class="field-group textarea">
+            <label for="">Ghi chú</label>
+            <textarea [(ngModel)]="modelDuyet.comments" name="comments" cols="30" rows="10" class="form-control"></textarea>
         </div>
-</p-dialog>
+    </div>
+</p-sidebar>
 
-<p-dialog styleClass="hr-diagram" [appendTo]="'body'" [autoZIndex]="true" [(visible)]="isHrDiagram" [modal]="true" [breakpoints]="{'1024': '95vw', '640px': '100vw'}" [style]="{width: '90vw'}">
+<p-sidebar
+    [style]="{ width: '80%' }"
+    styleClass="hr-diagram"
+    [(visible)]="isHrDiagram" 
+    position="right">
     <ng-template pTemplate="header">
-        Lọc nhân sự theo sơ đồ tổ chức
-    </ng-template>
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        Lọc nhân sự theo sơ đồ tổ chức </ng-template>
+    <ng-template pTemplate="footer"></ng-template>
+    
     <p-organizationChart [value]="listAgencyMap" *ngIf="isHrDiagram" [preserveSpace]="false"  selectionMode="single"  [(selection)]="selectedNode" (onNodeSelect)="onNodeSelect($event)"
             styleClass="company">
             <ng-template let-node pTemplate="person">
@@ -137,7 +172,7 @@
                 {{node.label}}
             </ng-template>
         </p-organizationChart>
-</p-dialog>
+</p-sidebar>
 
 <p-dialog header="Cài đặt cấu hình" [(visible)]="displaySetting" (onHide)="find()" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
     [draggable]="false" [resizable]="false" [focusTrap]="false" styleClass="popup-setting">
@@ -150,10 +185,18 @@
     </ng-template>
 </p-overlayPanel>
 
-
-<p-dialog styleClass="popup-btngroup-edit-detail" header="{{modelLock.app_lock_st ? 'Đóng ứng dụng': 'Mở khóa ứng dụng'}} [{{modelLock.employeeName}}]" [(visible)]="displayLock" [modal]="true" [draggable]="false"
-[resizable]="false" [style]="{width: '60vw'}" [autoZIndex]=true [draggable]="false" [resizable]="false">
-     <div class="col-md-12 mt-1">
+<p-sidebar
+styleClass="popup-btngroup-edit-detail"
+    [style]="{ width: '80%' }"
+    [(visible)]="displayLock" 
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        {{modelLock.app_lock_st ? 'Đóng ứng dụng': 'Mở khóa ứng dụng'}} [{{modelLock.employeeName}}] </ng-template>
+        <div class="col-md-12 mt-1">
             <div class="field-group textarea">
                 <label for="">Ghi chú</label>
                 <textarea [(ngModel)]="modelLock.comment" name="comments" cols="30" rows="10" class="form-control"></textarea>
@@ -163,4 +206,4 @@
             <p-button styleClass="p-button-sm" label="Gửi" icon="pi pi-send" (click)="saveOnLock()"></p-button>
             <p-button styleClass="p-button-sm ml-1 p-button-secondary" icon="pi pi-times" label="Đóng" (click)="displayLock = false"></p-button>
         </ng-template> 
-</p-dialog>
+</p-sidebar>

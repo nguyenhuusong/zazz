@@ -33,6 +33,7 @@ import { FormFilterModule } from 'src/app/common/form-filter/form-filter.module'
 import { LoadingGridModule } from 'src/app/common/loading-grid/loading-grid.module';
 import { GetNotifyToComponent } from './get-notify-to/get-notify-to.component';
 import { EditDetailModule } from 'src/app/common/edit-detail/edit-detail.module';
+import { SidebarModule } from 'primeng/sidebar';
 @NgModule({
   declarations: [
     PageNotifyComponent,
@@ -67,7 +68,8 @@ import { EditDetailModule } from 'src/app/common/edit-detail/edit-detail.module'
     OverlayPanelModule,
     FormFilterModule,
     LoadingGridModule,
-    CheckHideActionsDirectiveModule
+    CheckHideActionsDirectiveModule,
+    SidebarModule,
   ],
   exports: [PageNotifyComponent],
   entryComponents: [],

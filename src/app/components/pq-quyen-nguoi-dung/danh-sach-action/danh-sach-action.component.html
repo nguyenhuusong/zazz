@@ -8,31 +8,40 @@
         [listsData]="listsData" [height]="heightGrid" 
         [columnDefs]="columnDefs"></app-list-grid-angular>
 </div>
-<p-dialog [(visible)]="displayInfo" [autoZIndex]="true" [modal]="true" [style]="{width: '800px', height: 'auto'}">
-<p-header>
-   Thông tin action
-</p-header>
-<div class="row">
-    <div class="col-md-12 ">
-      <div class="field-group text" [ngClass]=" modelAction.actionCd ? 'valid' : 'invalid' ">
-        <label for="">Mã action<span style="color:red">*</span></label>
-          <input type="text" [(ngModel)]="modelAction.actionCd" class="form-control" required>
-        </div>
+
+<p-sidebar
+    [style]="{ width: '80%' }"
+    [(visible)]="displayInfo" 
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        Thông tin action </ng-template>
+    <ng-template pTemplate="footer"></ng-template>
+        
+    <div class="row">
+      <div class="col-md-12 ">
+        <div class="field-group text" [ngClass]=" modelAction.actionCd ? 'valid' : 'invalid' ">
+          <label for="">Mã action<span style="color:red">*</span></label>
+            <input type="text" [(ngModel)]="modelAction.actionCd" class="form-control" required>
+          </div>
+      </div>
+      <div class="col-md-12">
+        <div class="field-group text"  [ngClass]=" modelAction.actionName ? 'valid' : 'invalid' ">
+            <label for="">Tên action<span style="color:red">*</span></label>
+            <input type="text" [(ngModel)]="modelAction.actionName" class="form-control" required>
+          </div>
+      </div>
     </div>
-    <div class="col-md-12">
-      <div class="field-group text"  [ngClass]=" modelAction.actionName ? 'valid' : 'invalid' ">
-          <label for="">Tên action<span style="color:red">*</span></label>
-          <input type="text" [(ngModel)]="modelAction.actionName" class="form-control" required>
-        </div>
+    <div class="row mt-1">
+      <div class="col-md-12 text-right">
+          <button pButton type="button" class="p-button-info mr-1 p-button-sm" [disabled]="modelAction.actionCd === '' || modelAction.actionName === ''" label="Lưu lại" icon="pi pi-check" (click)="saveAction()" ></button>
+          <button pButton  type="button" class="p-button-secondary p-button-sm" icon="pi pi-times" label="Đóng" (click)="displayInfo =!displayInfo"></button>
+      </div>
     </div>
-  </div>
-  <div class="row mt-1">
-    <div class="col-md-12 text-right">
-        <button pButton type="button" class="p-button-info mr-1 p-button-sm" [disabled]="modelAction.actionCd === '' || modelAction.actionName === ''" label="Lưu lại" icon="pi pi-check" (click)="saveAction()" ></button>
-        <button pButton  type="button" class="p-button-secondary p-button-sm" icon="pi pi-times" label="Đóng" (click)="displayInfo =!displayInfo"></button>
-    </div>
-  </div>
-</p-dialog>
+</p-sidebar>
       
 <p-dialog header="Cài đặt cấu hình " [(visible)]="displaySetting" [modal]="true" 
 (onHide)="getClientActions()"

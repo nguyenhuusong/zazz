@@ -12,6 +12,7 @@ import { PaginatorModule } from 'primeng/paginator';
 import { AgGridModule } from '@ag-grid-community/angular';
 import { DialogImageModule } from 'src/app/common/dialogimage/dialogimage.module';
 import { ManageMediaModule } from 'src/app/common/manage-media-module/manage-media.module';
+import { SidebarModule } from 'primeng/sidebar';
 @NgModule({
   declarations: [
     PageMarkdownComponent,
@@ -30,6 +31,7 @@ import { ManageMediaModule } from 'src/app/common/manage-media-module/manage-med
     DialogModule,
     TabViewModule,
     PaginatorModule,
+    SidebarModule,
     ManageMediaModule],
   exports: [PageMarkdownComponent],
   entryComponents: [],

@@ -7,10 +7,19 @@
     <app-list-grid-angular *ngIf="columnDefs?.length > 0" [height]="heightGrid"  [detailCellRendererParams]="detailCellRendererParams"
         [columnDefs]="columnDefs" [listsData]="listsData" ></app-list-grid-angular>
 </div>
-<p-dialog [(visible)]="displayInfo" [autoZIndex]="true" [modal]="true" [style]="{width: '1300px', height: 'auto'}">
-    <p-header>
-    Thông tin menu
-    </p-header>
+
+<p-sidebar
+    [style]="{ width: '80%' }"
+    [(visible)]="displayInfo" 
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        Thông tin menu </ng-template>
+    <ng-template pTemplate="footer"></ng-template>
+    
     <app-edit-detail *ngIf="listViews.length> 0 && listsData.length > 0" [menus]="listsData" [detail]="detailDetailInfo" [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButon"  [dataView]="listViews"
         (callback)="setConfigMenu($event)" (callbackcancel)="cancelUpdate($event)"></app-edit-detail>
         <div class=" text-right mt-1" >
@@ -28,7 +37,7 @@
                 </ng-template>
         </p-pickList>
         </div>
-</p-dialog>
+</p-sidebar>
       
 <p-dialog header="Cài đặt cấu hình " [(visible)]="displaySetting"  [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
     [draggable]="false" [resizable]="false" [focusTrap]="false" styleClass="popup-setting">

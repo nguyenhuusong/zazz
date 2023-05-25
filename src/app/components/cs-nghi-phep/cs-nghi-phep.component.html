@@ -82,23 +82,33 @@
     [draggable]="false" [resizable]="false" [focusTrap]="false" styleClass="popup-setting">
     <app-config-grid-table-form *ngIf="displaySetting && gridKey" [typeConfig]="'TableInfo'"   [gridKey]="gridKey"></app-config-grid-table-form>
 </p-dialog>
-<p-dialog header="Lý do hủy" [(visible)]="isReason"  [style]="{width: '600px'}">
-    <div class="warm-cool d-flex">
-        <span class="pi pi-bookmark-fill"></span>
-        <div class="">
-            <h4>Cho biết lý do bạn muốn hủy duyệt</h4>
+
+<p-sidebar
+    [style]="{ width: '80%' }"
+    [(visible)]="isReason" 
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        Lý do hủy </ng-template>
+        <div class="warm-cool d-flex">
+            <span class="pi pi-bookmark-fill"></span>
+            <div class="">
+                <h4>Cho biết lý do bạn muốn hủy duyệt</h4>
+            </div>
         </div>
-    </div>
-    <div class="field-group textarea">
-        <textarea placeholder="Lý do hủy duyệt" [(ngModel)]="reason_cancel" required></textarea>
-    </div>
-    <ng-template pTemplate="footer">
-        <button type="button" class="p-button-secondary btn-cancel" pButton icon="pi pi-times" label="Hủy bỏ" (click)="isReason = !isReason"></button>
-        <p-button styleClass="p-button-sm mr-1 " (click)="huyDuyet()">
-            Thực hiện
-        </p-button>
-    </ng-template>
-</p-dialog>
+        <div class="field-group textarea">
+            <textarea placeholder="Lý do hủy duyệt" [(ngModel)]="reason_cancel" required></textarea>
+        </div>
+        <ng-template pTemplate="footer">
+            <button type="button" class="p-button-secondary btn-cancel" pButton icon="pi pi-times" label="Hủy bỏ" (click)="isReason = !isReason"></button>
+            <p-button styleClass="p-button-sm mr-1 " (click)="huyDuyet()">
+                Thực hiện
+            </p-button>
+        </ng-template>
+</p-sidebar>
 
 <p-overlayPanel #op [style]="{'width': '40rem'}" [dismissable]="false" appendTo="body" >
     <ng-template pTemplate>

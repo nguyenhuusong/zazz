@@ -60,6 +60,7 @@ import { ErrorService } from './services/error.service';
 import { EmployeeSaveService } from './services/employee-save.service';
 import { TabCandidateInterviewComponent } from './components/ns-tuyen-dung/chi-tiet-tuyen-dung/tab-candidate-interview/tab-candidate-interview.component';
 import { TabCandidateFinalComponent } from './components/ns-tuyen-dung/chi-tiet-tuyen-dung/tab-candidate-final/tab-candidate-final.component';
+import { SidebarModule } from 'primeng/sidebar';
 const APP_CONTAINERS = [DefaultLayoutComponent];
 @NgModule({
     declarations: [
@@ -97,6 +98,7 @@ const APP_CONTAINERS = [DefaultLayoutComponent];
         MultiSelectModule,
         IconControlSvgModule,
         IconControlModule,
+        SidebarModule,
         // AgGridModule.withComponents([
         //     ButtonRendererComponent1,
         //     NumberCellRenderer,

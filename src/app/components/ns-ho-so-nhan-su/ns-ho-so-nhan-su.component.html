@@ -57,82 +57,111 @@
     </section>
 </div>
 
-<p-dialog  [modal]="true" [(visible)]="isShowAvatar" header="Ảnh Avartar">
-<p-image class="img-popup" [src]="imgAvatar" alt="Image" [preview]="false"></p-image>
-</p-dialog>
-<p-dialog [modal]="true" [(visible)]="isTheOrganToMove" header="Chuyển tổ chức" [style]="{width: '60vw'}">
-<div class="grid" style="align-items: flex-end;">
-    <div class="col-4">
-        <div class="fields mb-0 label-8" [ngClass]="organizeId? 'valid': 'invalid' ">
-            <label>Tổ chức</label>
-            <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" (onChange)="getOrganizeTree2()"
-                [options]="organs" [(ngModel)]="organizeId" name="organizeId" [filter]="true"
-                placeholder="Chọn tổ chức"
-                >
-                <ng-template let-item pTemplate="selectedItem">
-                    <span style="vertical-align:middle;">{{item?.label}}</span>
-                </ng-template>
-                <ng-template let-car pTemplate="item">
-                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                    <div style="font-size:14px;float:right;margin-top:4px">{{car?.label}}</div>
-                    </div>
-                </ng-template>
-            </p-dropdown>
+<p-sidebar
+    [style]="{ width: '80%' }"
+    [(visible)]="isShowAvatar" 
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        Ảnh Avartar </ng-template>
+    <ng-template pTemplate="footer"></ng-template>
+    <p-image class="img-popup" [src]="imgAvatar" alt="Image" [preview]="false"></p-image>
+</p-sidebar>
+
+<p-sidebar
+    [style]="{ width: '80%' }"
+    [(visible)]="isTheOrganToMove" 
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        Chuyển tổ chức </ng-template>
+    <ng-template pTemplate="footer"></ng-template>
+    <div class="grid" style="align-items: flex-end;">
+        <div class="col-4">
+            <div class="fields mb-0 label-8" [ngClass]="organizeId? 'valid': 'invalid' ">
+                <label>Tổ chức</label>
+                <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" (onChange)="getOrganizeTree2()"
+                    [options]="organs" [(ngModel)]="organizeId" name="organizeId" [filter]="true"
+                    placeholder="Chọn tổ chức"
+                    >
+                    <ng-template let-item pTemplate="selectedItem">
+                        <span style="vertical-align:middle;">{{item?.label}}</span>
+                    </ng-template>
+                    <ng-template let-car pTemplate="item">
+                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                        <div style="font-size:14px;float:right;margin-top:4px">{{car?.label}}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="fields mb-0 label-8">
+                <label>Bộ phận</label>
+                <p-treeSelect  [filterInputAutoFocus]="true" [filter]="true" [metaKeySelection]="false"
+                    [(ngModel)]="aDepartment" 
+                    [ngClass]="[ departmentFiltes2.length <= 0 ? 'tree-empty' : '' ]" 
+                    [options]="departmentFiltes2" 
+                    selectionMode="single" 
+                    name="aDepartment"
+                    (onNodeSelect)="onChangeTreeDepart($event)"
+                    placeholder="Chọn phòng ban">
+                </p-treeSelect>
+            </div>
+        </div>
+        <div class="col-2">
+            <p-button label="Chuyển tổ chức" styleClass="btn-h56" (click)="moveOrganNow()" [disabled]="isButtonmoveOrganNow"></p-button>
+        </div>
+        <div class="col-12">
+            <div class="grid-default">
+                <app-list-grid-angular *ngIf="columnDefsMoveOrgan.length > 0" 
+                    [listsData]="theOrganToMoveData" 
+                    [height]="600"
+                    [idGrid]="'theOrganToMoveData'"
+                    [domLayout]="" 
+                    [columnDefs]="columnDefsMoveOrgan"
+                    [rowSelection]="'multiple'"
+                    >
+                </app-list-grid-angular>
+            </div>
         </div>
     </div>
-    <div class="col-4">
-        <div class="fields mb-0 label-8">
-            <label>Bộ phận</label>
-            <p-treeSelect  [filterInputAutoFocus]="true" [filter]="true" [metaKeySelection]="false"
-                [(ngModel)]="aDepartment" 
-                [ngClass]="[ departmentFiltes2.length <= 0 ? 'tree-empty' : '' ]" 
-                [options]="departmentFiltes2" 
-                selectionMode="single" 
-                name="aDepartment"
-                (onNodeSelect)="onChangeTreeDepart($event)"
-                placeholder="Chọn phòng ban">
-            </p-treeSelect>
-        </div>
-    </div>
-    <div class="col-2">
-        <p-button label="Chuyển tổ chức" styleClass="btn-h56" (click)="moveOrganNow()" [disabled]="isButtonmoveOrganNow"></p-button>
-    </div>
-    <div class="col-12">
-        <div class="grid-default">
-            <app-list-grid-angular *ngIf="columnDefsMoveOrgan.length > 0" 
-                [listsData]="theOrganToMoveData" 
-                [height]="600"
-                [idGrid]="'theOrganToMoveData'"
-                [domLayout]="" 
-                [columnDefs]="columnDefsMoveOrgan"
-                [rowSelection]="'multiple'"
-                >
-            </app-list-grid-angular>
-        </div>
-    </div>
-</div>
-</p-dialog>
+</p-sidebar>
+
 <p-dialog header="Cài đặt cấu hình" [(visible)]="displaySetting" (onHide)="find()" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
 [draggable]="false" [resizable]="false" [focusTrap]="false" styleClass="popup-setting">
 <app-config-grid-table-form *ngIf="displaySetting && gridKey" [typeConfig]="'TableInfo'"   [gridKey]="gridKey"></app-config-grid-table-form>
 </p-dialog>
 
-
-<p-dialog header="{{modelBlockAndOpen.type === 'block' ? 'Phong tỏa' : 'Mở phong tỏa'}}" [(visible)]="displayApproveContract" [modal]="true" [draggable]="false"
-    [resizable]="false" [style]="{width: '40vw'}" [autoZIndex]=true [draggable]="false" [resizable]="false">
-    <div class="row col-md-12 mt-1" style="margin-top: 5px;">
-        <div class="field-group textarea ">
-            <label for="">Ghi chú</label>
-            <textarea [(ngModel)]="modelBlockAndOpen.comments" name="comment" cols="30" rows="10" class="form-control"></textarea>
+<p-sidebar
+    [style]="{ width: '80%' }"
+    [(visible)]="displayApproveContract" 
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        {{modelBlockAndOpen.type === 'block' ? 'Phong tỏa' : 'Mở phong tỏa'}} </ng-template>
+        <div class="row col-md-12 mt-1" style="margin-top: 5px;">
+            <div class="field-group textarea ">
+                <label for="">Ghi chú</label>
+                <textarea [(ngModel)]="modelBlockAndOpen.comments" name="comment" cols="30" rows="10" class="form-control"></textarea>
+            </div>
         </div>
-    </div>
-    <ng-template pTemplate="footer">
-        <p-button icon="pi pi-check" (click)="submit()" label="Xác nhận" styleClass=" p-button-sm mr-1">
-        </p-button>
-        <p-button icon="pi pi-times" (click)="displayApproveContract= !displayApproveContract" label="Đóng"
-            styleClass="p-button-secondary p-button-sm"></p-button>
-    </ng-template>
-</p-dialog>
+        <ng-template pTemplate="footer">
+            <p-button icon="pi pi-check" (click)="submit()" label="Xác nhận" styleClass=" p-button-sm mr-1">
+            </p-button>
+            <p-button icon="pi pi-times" (click)="displayApproveContract= !displayApproveContract" label="Đóng"
+                styleClass="p-button-secondary p-button-sm"></p-button>
+        </ng-template>
+</p-sidebar>
 
 <p-overlayPanel #op [style]="{'width': '40rem'}" [dismissable]="false" appendTo="body">
     <ng-template pTemplate>

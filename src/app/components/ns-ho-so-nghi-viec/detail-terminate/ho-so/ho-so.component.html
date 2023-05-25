@@ -55,22 +55,35 @@
         [gridKey]="gridKey"></app-config-grid-table-form>
 </p-dialog>
 
-<p-dialog styleClass="popup-btngroup-edit-detail"  [(visible)]="displayFormEditDetail" [draggable]="false"  [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '1400px', height: 'auto'}">
-    <p-header>
-        File đính kèm
-    </p-header>
+<p-sidebar
+    [style]="{ width: '80%' }"
+    [(visible)]="displayFormEditDetail" 
+    styleClass="popup-btngroup-edit-detail"
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        File đính kèm </ng-template>
+    <ng-template pTemplate="footer"></ng-template>
     <app-edit-detail [optionsButtonsEdit]="optionsButtonsPopup" *ngIf="listViewsDetail.length> 0 && displayFormEditDetail" [detailInfo]="dataDetailInfo"
         [detail]="dataDetailInfo" [manhinh]="'Edit'" [thongtinnhanvienNew]="true"
         [dataView]="listViewsDetail" (callback)="setDetailInfo($event)"
         (callbackcancel)="cancelDetailInfo($event)" (callback1)="getFilesDetail($event)"></app-edit-detail>
-</p-dialog>
+</p-sidebar>
 
-
-<p-dialog [(visible)]="displayPrint" [baseZIndex]="99" [modal]="true" [style]="{width: '1400px', height: 'auto'}">
-    <!-- <ngx-loading [show]="loading1" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading> -->
-    <p-header>
-        Danh sách in
-    </p-header>
+  <p-sidebar
+    [style]="{ width: '80%' }"
+    [(visible)]="displayPrint" 
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        Danh sách in </ng-template>
+    <ng-template pTemplate="footer"></ng-template>
     <div class="grid">
         <div class="col-4">
             <div class="fields valid">
@@ -125,5 +138,5 @@
             [detailCellRendererParams]="detailCellRendererParams"
             [columnDefs]="columnDefsPrint"></app-list-grid-angular>
     </div>
-  </p-dialog>
+</p-sidebar>
 

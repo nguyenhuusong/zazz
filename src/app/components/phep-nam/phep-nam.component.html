@@ -56,32 +56,42 @@
     [draggable]="false" [resizable]="false" [focusTrap]="false" styleClass="popup-setting">
     <app-config-grid-table-form *ngIf="displaySetting && gridKey" [typeConfig]="'TableInfo'"   [gridKey]="gridKey"></app-config-grid-table-form>
 </p-dialog>
-<p-dialog header="Chi tiết lịch sử dùng phép các kỳ" [(visible)]="isShowInfo" 
-    [modal]="true" [style]="{width: '800px'}" [maximizable]="true">
-    <div class="label-value d-flex wrap mb-2">
-        <div class="col-6 d-flex gap-16">
-            <label><b style="color: rgb(108 108 108);">Bộ phận: </b></label>
-            <div>{{ dataInfo?.orgName }}</div>
-        </div>
-        <div class="col-6 d-flex gap-16">
-            <label><b style="color: rgb(108 108 108);">Mã NV: </b></label>
-            <div>{{ dataInfo?.code }}</div>
-        </div>
-        <div class="col-6 d-flex gap-16">
-            <label><b style="color: rgb(108 108 108);">Chức danh: </b></label>
-            <div>{{ dataInfo?.orgName }}</div>
-        </div>
-    </div>
-    <div class="col-12">
-        <h2 style="color: #a1a1a1;" *ngIf="dataInfo?.lstMonth && dataInfo.lstMonth.length > 0">Phép năm đã dùng của năm {{ query.year }}</h2>
-        <div class="d-flex table-info gap-16 wrap" *ngIf="dataInfo && dataInfo.lstMonth">
-            <div class="label-value" *ngFor="let info of dataInfo.lstMonth">
-                <label class="mb-2">{{ info.month }}</label>
-                <div><b>{{ info.numLeave }}</b></div>
+
+<p-sidebar
+    [style]="{ width: '80%' }"
+    [(visible)]="isShowInfo" 
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        Chi tiết lịch sử dùng phép các kỳ </ng-template>
+        <ng-template pTemplate="footer"></ng-template>
+        <div class="label-value d-flex wrap mb-2">
+            <div class="col-6 d-flex gap-16">
+                <label><b style="color: rgb(108 108 108);">Bộ phận: </b></label>
+                <div>{{ dataInfo?.orgName }}</div>
+            </div>
+            <div class="col-6 d-flex gap-16">
+                <label><b style="color: rgb(108 108 108);">Mã NV: </b></label>
+                <div>{{ dataInfo?.code }}</div>
+            </div>
+            <div class="col-6 d-flex gap-16">
+                <label><b style="color: rgb(108 108 108);">Chức danh: </b></label>
+                <div>{{ dataInfo?.orgName }}</div>
             </div>
         </div>
-    </div>
-</p-dialog>
+        <div class="col-12">
+            <h2 style="color: #a1a1a1;" *ngIf="dataInfo?.lstMonth && dataInfo.lstMonth.length > 0">Phép năm đã dùng của năm {{ query.year }}</h2>
+            <div class="d-flex table-info gap-16 wrap" *ngIf="dataInfo && dataInfo.lstMonth">
+                <div class="label-value" *ngFor="let info of dataInfo.lstMonth">
+                    <label class="mb-2">{{ info.month }}</label>
+                    <div><b>{{ info.numLeave }}</b></div>
+                </div>
+            </div>
+        </div>
+</p-sidebar>
 
 <p-overlayPanel #op [style]="{'width': '40rem'}" [dismissable]="false" appendTo="body" >
     <ng-template pTemplate>

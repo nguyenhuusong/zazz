@@ -36,45 +36,57 @@
      
 </div>
   
-<p-dialog [(visible)]="showDialogimage" [autoZIndex]="true" [modal]="true" [style]="{width: '1000px', height: 'auto'}">
-    <!-- <ngx-loading [show]="loading1" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading> -->
-    <p-header>
-       Thư viện ảnh
-    </p-header>
-    <div class="row">
-        <div class="col-sm-3 p-1" *ngFor="let advert of items; let i = index">
-          <div class="one-image">
-            <div class="image_wrapper">
-              <img src="{{advert.documentUrl}}" alt="avatar" style="max-height: 100%; max-width: 100%;">
-            </div>
-            <button type="button" (click)="chooseImage(advert.documentUrl)">
-              <i class="fa  fa-check"></i>
-            </button>
-          </div>
-        </div>
+<p-sidebar
+[style]="{ width: '80%' }"
+[(visible)]="showDialogimage" 
+position="right">
+<ng-template pTemplate="header">
+    <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+        <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+    </svg> &nbsp;&nbsp;
+    Thư viện ảnh </ng-template>
+<ng-template pTemplate="footer"></ng-template>
+<div class="row">
+  <div class="col-sm-3 p-1" *ngFor="let advert of items; let i = index">
+    <div class="one-image">
+      <div class="image_wrapper">
+        <img src="{{advert.documentUrl}}" alt="avatar" style="max-height: 100%; max-width: 100%;">
       </div>
-      <div class="row">
-        <div class="col-sm-6 d-flex">
-          <p-paginator [rows]="query.pageSize" [first]="first"
-          [totalRecords]="pagingComponent?.total"
-          (onPageChange)="paginate($event)"></p-paginator>
-        </div>
-        <div class="col-sm-6 text-right">
-          <div class="form-group">
-            <label for="file-upload" class="custom-file-upload">
-              <i class="fa fa-cloud-upload"></i> Upload ảnh
-            </label>
-            <input id="file-upload" type="file" accept="image/*" 
-              (change)="onUploadOutput($event)" />
-          </div>
-        </div>
-      </div>
-  </p-dialog>
+      <button type="button" (click)="chooseImage(advert.documentUrl)">
+        <i class="fa  fa-check"></i>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-6 d-flex">
+    <p-paginator [rows]="query.pageSize" [first]="first"
+    [totalRecords]="pagingComponent?.total"
+    (onPageChange)="paginate($event)"></p-paginator>
+  </div>
+  <div class="col-sm-6 text-right">
+    <div class="form-group">
+      <label for="file-upload" class="custom-file-upload">
+        <i class="fa fa-cloud-upload"></i> Upload ảnh
+      </label>
+      <input id="file-upload" type="file" accept="image/*" 
+        (change)="onUploadOutput($event)" />
+    </div>
+  </div>
+</div>
+</p-sidebar>
+<p-sidebar
+[style]="{ width: '80%' }"
+[(visible)]="showMedia" 
+position="right">
+<ng-template pTemplate="header">
+    <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+        <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+    </svg> &nbsp;&nbsp;
+    Quản lý thư viện </ng-template>
+<ng-template pTemplate="footer"></ng-template>
 
-  <p-dialog [(visible)]="showMedia" [autoZIndex]="true" [modal]="true" [style]="{width: '1300px', height: 'auto'}">
-    <!-- <ngx-loading [show]="loading1" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading> -->
-    <p-header>
-      Quản lý thư viện
-    </p-header>
-    <app-media-list (save)="submitMedia($event)"></app-media-list>
-  </p-dialog>
+<app-media-list (save)="submitMedia($event)"></app-media-list>
+</p-sidebar>
