@@ -1,10 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import queryString from 'query-string';
 import { AgGridFn, TextFormatter } from 'src/app/common/function-common/common';
 import { Subject, takeUntil } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cham-cong',
@@ -24,6 +25,8 @@ export class ChamCongComponent implements OnInit {
     private apiService: ApiHrmService,
     private spinner: NgxSpinnerService,
     private messageService: MessageService,
+    private router: Router,
+    private changeDetector: ChangeDetectorRef,
     private confirmationService: ConfirmationService,
   ) { }
   listsData = [];
@@ -32,7 +35,20 @@ export class ChamCongComponent implements OnInit {
   colsDetail = [];
   detailCellRendererParams = null;
   listDataNew = [];
-  
+  query = {
+    filter: '',
+    offSet: 0,
+    pageSize: 20,
+    recordId: null
+  };
+  gridflexs = [];
+  totalRecord = 0;
+  countRecord: any = {
+    totalRecord: 0,
+    currentRecordStart: 0,
+    currentRecordEnd: 0
+  };
+  first = 0;
   private readonly unsubscribe$: Subject<void> = new Subject();
   ngOnDestroy() {
     this.unsubscribe$.next();
@@ -40,40 +56,87 @@ export class ChamCongComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.query.recordId = this.recordId;
     this.getTimekeepingPage();
   }
 
   cauhinh() {
     this.displaySetting = true;
   }
-  
+
+  paginate(event): void {
+    this.query.offSet = event.first;
+    this.first = event.first;
+    this.query.pageSize = event.rows;
+    this.getTimekeepingPage();
+  }
+
+  loadjs = 0;
+  heightGrid = 0
+  ngAfterViewChecked(): void {
+    const a: any = document.querySelector(".header");
+    const b: any = document.querySelector(".sidebarBody");
+    const e: any = document.querySelector(".paginator");
+    this.loadjs++
+    if (this.loadjs === 5) {
+      if (b && b.clientHeight) {
+        const totalHeight = a.clientHeight + b.clientHeight + e.clientHeight + 110;
+        this.heightGrid = window.innerHeight - totalHeight
+        this.changeDetector.detectChanges();
+      } else {
+        this.loadjs = 0;
+      }
+    }
+  }
+  status = [];
   getTimekeepingPage() {
     this.spinner.show();
     this.columnDefs = [];
-    const queryParams = queryString.stringify({ recordId: this.recordId, offSet: 0, pageSize: 10000 });
+    const queryParams = queryString.stringify({ ...this.query });
     this.apiService.getTimekeepingPage(queryParams)
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(repo => {
-      if (repo.status === 'success') {
-        if (repo.data.gridKey) {
-          this.gridKey = repo.data.dataList.gridKey;
-        }
-        this.spinner.hide();
-        this.listsData = repo.data.dataList.data || [];
-        this.initGrid(repo.data.gridflexs);
-      } else {
-        this.spinner.hide();
-      }
-    })
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        (results: any) => {
+          this.listsData = results.data.dataList;
+          this.gridKey = results.data.gridKey;
+          if (this.query.offSet === 0) {
+            this.gridflexs = results.data.gridflexs;
+          }
+          this.initGrid();
+          this.status = results.data.flowStatuses || [];
+          if (results.data.status) {
+            this.status.push(results.data.status);
+          }
+          this.selectedStatus = results.data.status;
+          if (this.detailInfo.actions) {
+            this.initButton();
+          }
+          this.countRecord.totalRecord = results.data.recordsTotal;
+          this.countRecord.totalRecord = results.data.recordsTotal;
+          this.countRecord.currentRecordStart = results.data.recordsTotal === 0 ? this.query.offSet = 0 : this.query.offSet + 1;
+          if ((results.data.recordsTotal - this.query.offSet) > this.query.pageSize) {
+            this.countRecord.currentRecordEnd = this.query.offSet + Number(this.query.pageSize);
+          } else {
+            this.countRecord.currentRecordEnd = results.data.dataList.recordsTotal;
+            setTimeout(() => {
+              const noData = document.querySelector('.ag-overlay-no-rows-center');
+              if (noData) { noData.innerHTML = 'Không có kết quả phù hợp' }
+            }, 100);
+          }
+          this.spinner.hide();
+        },
+        error => {
+          this.spinner.hide();
+        });
   }
 
-  initGrid(gridflexs) {
+  initGrid() {
     this.columnDefs = [
-      ...AgGridFn(gridflexs || []),
+      ...AgGridFn(this.gridflexs || []),
       {
         headerComponentParams: {
           template:
-          `<button  class="btn-button" id="${this.gridKey}_chungchi"> <span class="pi pi-plus action-grid-add" ></span></button>`,
+            `<button  class="btn-button" id="${this.gridKey}_chungchi"> <span class="pi pi-plus action-grid-add" ></span></button>`,
         },
         field: 'gridflexdetails1',
         cellClass: ['border-right', 'no-auto'],
@@ -158,7 +221,7 @@ export class ChamCongComponent implements OnInit {
   agGridFnCustomer(lists: Array<any>) {
     let arrAgGrids = [];
     for (let value of lists) {
-     let row = {
+      let row = {
         headerName: value.columnCaption,
         field: value.columnField,
         cellClass: value.cellClass,
@@ -166,8 +229,8 @@ export class ChamCongComponent implements OnInit {
         sortable: false,
         filterParams: {
           caseSensitive: true,
-          textFormatter:  (r) => TextFormatter(r),
-          cellRenderer:  this.cellRendererSanPham,
+          textFormatter: (r) => TextFormatter(r),
+          cellRenderer: this.cellRendererSanPham,
         },
         cellRenderer: value.isMasterDetail ? 'agGroupCellRenderer' : '',
         hide: value.isHide ? true : false,
@@ -175,11 +238,40 @@ export class ChamCongComponent implements OnInit {
         tooltipField: value.columnField,
         headerTooltip: value.columnCaption
         // valueFormatter: value.fieldType == 'decimal' ? ""
-    }
-        arrAgGrids.push(row);
+      }
+      arrAgGrids.push(row);
     }
     return arrAgGrids
-}
+  }
+
+
+  selectedStatus = null;
+  UpdateStatus() {
+    // this.getSalaryRecordInfo(this.selectedStatus.value);
+  }
+  menuActions = []
+
+  callActions(code) {
+    this[code]();
+  }
+
+  initButton() {
+    this.menuActions = this.detailInfo.actions.map((item, index) => {
+      return {
+        label: item.name,
+        value: item.code,
+        styleClass: index === 0 ? 'hidden' : '',
+        icon: item.icon,
+        command: () => {
+          this.callActions(item.code);
+        }
+      }
+    });
+  }
+
+  onBack() {
+    this.router.navigate(['/chinh-sach/tien-luong'])
+  }
 
 
 }

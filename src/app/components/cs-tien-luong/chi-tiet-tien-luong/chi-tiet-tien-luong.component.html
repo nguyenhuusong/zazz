@@ -41,18 +41,18 @@
        
     </section>
 </div>
+
 <section>
- 
     <p-tabView [(activeIndex)]="indexTab" (onChange)="handleChange($event.index)">
         <p-tabPanel header="Thông tin chung">
-            <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'"
-                [optionsButtonsEdit]="optionsButtonsView" [dataView]="listViews" (callback)="setTerminateInfo($event)" 
-                (callbackcancel)="cancel($event)"></app-edit-detail>
-            <app-loading-detail 
-                [id]="'sections-3qnt'" 
-                *ngIf="listViews.length === 0">
-            </app-loading-detail>
-           
+        
+          <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'"
+            [optionsButtonsEdit]="optionsButtonsView" [dataView]="listViews" (callback)="setTerminateInfo($event)" 
+            (callbackcancel)="cancel($event)"></app-edit-detail>
+        <app-loading-detail 
+            [id]="'sections-3qnt'" 
+            *ngIf="listViews.length === 0">
+        </app-loading-detail>
         </p-tabPanel>
         <p-tabPanel header="Lịch làm việc" *ngIf="this.flowCurrent > 1">
             <app-tab-ngay-cong [recordId]="modelEdit.recordId" *ngIf="indexTab === 1 && modelEdit.recordId" [detailInfo]="detailInfo"></app-tab-ngay-cong>
@@ -60,11 +60,9 @@
         <p-tabPanel header="Nhân sự" *ngIf="this.flowCurrent > 1">
             <app-tab-nhan-vien [recordId]="modelEdit.recordId" *ngIf="indexTab === 2 && modelEdit.recordId"></app-tab-nhan-vien>
         </p-tabPanel>
-    </p-tabView>
-    <div>
-    </div>
-       
+    </p-tabView>  
 </section>
+
 
 
 

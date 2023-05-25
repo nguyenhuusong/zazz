@@ -1,56 +1,107 @@
-<div class="main-grid product-detail">
+<div style="position: relative;">
+    <div class="main-grid product-detail" >
+        <section class="section-box">
+            <div class="grid">
+                <div class="col-6">
+                    <div class="breadcrumb">
+                        <h3>{{titlePage}}</h3>
+                        <p-breadcrumb [model]="itemsMenu"></p-breadcrumb>
+                    </div>
+                </div>
+              
+            </div>
+           
+        </section>
+    </div>
     <section>
-        <div class="breadcrumb">
-            <p-breadcrumb [model]="itemsMenu"></p-breadcrumb>
-            <h3>{{titlePage}}</h3>
+     
+        <p-tabView [(activeIndex)]="indexTab" styleClass="tab-ver" (onChange)="handleChange($event.index)">
+            <p-tabPanel header="Thông tin chung">
+                <div class="col-6  flex justify-content-end align-items-center"  style="position: absolute;top: 20px;right: 10px;">
+                    <div class="fields " style="margin-bottom: 0;">
+                        <p-dropdown 
+                            *ngIf="listViews.length> 0 && status.length > 0" 
+                            [options]="status" 
+                            (onChange)="UpdateStatus()"
+                            [(ngModel)]="selectedStatus" 
+                            [styleClass]="selectedStatus?.bgColor"  
+                            [style]="{'width': '180px'}" 
+                            optionLabel="name"  
+                            placeholder="Select a Country">
+                            <ng-template pTemplate="selectedItem" >
+                                <div class="flex align-items-center gap-2" *ngIf="selectedStatus" >
+                                    <div style="color: #fff">{{ selectedStatus.name}}</div>
+                                </div>
+                            </ng-template>
+                            <ng-template let-country pTemplate="item">
+                                <div class="flex align-items-center gap-2" *ngIf="country.value != selectedStatus?.value">
+                                    <div class="pb-2 pt-2" style="display: flex; align-items: center; width: 100%;justify-content: space-around;font-size: 13px;">
+                                        <span style="white-space:nowrap">{{ country.placeholder }} </span>
+                                        <span class="pi pi-arrow-right" style="font-size: 12px;"></span>
+                                        <span [class]="country.textColor" style="white-space:nowrap" class="pl-2 pr-2">{{ country.name }}</span>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </p-dropdown>
+                    </div>
+                    <p-splitButton icon="pi pi-send" *ngIf="menuActions.length > 0" styleClass="p-button-sm ml-2" [appendTo]="'body'" (onClick)="callActions(menuActions[0].value)" [label]="menuActions[0].label" [model]="menuActions"></p-splitButton>
+                    <p-button label="Quay lại" (onClick)="onBack()" styleClass="p-button-secondary p-button-sm ml-2" [style]="{'z-index': 9}" icon="pi pi-directions-alt"></p-button>
+                      </div>
+                <app-edit-detail *ngIf="listViews.length> 0 && indexTab === 0" [isNested]="true" [isHideButton]="true" [detail]="detailInfo" [manhinh]="'Edit'"
+                    [optionsButtonsEdit]="optionsButtonsView" [dataView]="listViews" (callback)="setTerminateInfo($event)" (callBackForm)="callBackForm($event)"
+                    (callbackcancel)="cancel($event)"></app-edit-detail>
+                <app-loading-detail 
+                    [id]="'sections-3qnt'" 
+                    *ngIf="listViews.length === 0">
+                </app-loading-detail>
+    
+            </p-tabPanel>
+        
+
+
+
+            <p-tabPanel header="Chốt công" *ngIf="detailInfo">
+                <app-cham-cong [recordId]="modelEdit.recordId" *ngIf="indexTab === 1 && modelEdit.recordId" [detailInfo]="detailInfo"></app-cham-cong>
+            </p-tabPanel>
+
+            <p-tabPanel header="Tăng ca" *ngIf="detailInfo">
+                <app-lam-ngoai-gio [recordId]="modelEdit.recordId" *ngIf="indexTab === 2 && modelEdit.recordId"></app-lam-ngoai-gio>
+            </p-tabPanel>
+
+            <p-tabPanel header="Ăn ca" *ngIf="detailInfo">
+                <app-an-ca [recordId]="modelEdit.recordId" *ngIf="indexTab === 3 && modelEdit.recordId"></app-an-ca>
+            </p-tabPanel>
+            <p-tabPanel header="Chính sách" *ngIf="detailInfo">
+                <app-ho-tro [recordId]="modelEdit.recordId" *ngIf="indexTab === 4 && modelEdit.recordId"></app-ho-tro>
+            </p-tabPanel>
+            <p-tabPanel header="Đánh giá" *ngIf="detailInfo">
+                <app-hieu-suat-lao-dong [recordId]="modelEdit.recordId" *ngIf="indexTab === 5 && modelEdit.recordId"></app-hieu-suat-lao-dong>
+            </p-tabPanel>
+            <p-tabPanel header="Lương KPI" *ngIf="detailInfo">
+                Lương KPI
+            </p-tabPanel>
+            <p-tabPanel header="Tăng/Giảm" *ngIf="detailInfo">
+                <tang-giam [recordId]="modelEdit.recordId" *ngIf="indexTab === 7 && modelEdit.recordId"></tang-giam>
+            </p-tabPanel>
+            <p-tabPanel header="Điều chỉnh" *ngIf="detailInfo">
+                Điều chỉnh
+            </p-tabPanel>
+            <p-tabPanel header="Người phụ thuộc" *ngIf="detailInfo">
+                Người phụ thuộc
+            </p-tabPanel>
+            <p-tabPanel header="Biến động BHXH" *ngIf="detailInfo">
+                Biến động BHXH
+            </p-tabPanel>
+            <p-tabPanel header="Tổng hợp" *ngIf="detailInfo">
+                <app-tong-hop-luong [recordId]="modelEdit.recordId" *ngIf="indexTab === 11 && modelEdit.recordId"></app-tong-hop-luong>
+            </p-tabPanel>
+        </p-tabView>
+        <div>
         </div>
+           
     </section>
 </div>
-<p-card styleClass="chi-tiet-tien-luong">
-    <section>
-        <app-step-info *ngIf="detailInfo?.workStatuses?.length > 0" [detailInfo]="detailInfo"></app-step-info>
-    </section>
-</p-card>
 
-<p-card>
-
-    <p-tabView [(activeIndex)]="indexTab" (onChange)="handleChange($event.index)">
-        <p-tabPanel header="Thông tin chung">
-            <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'"
-                [optionsButtonsEdit]="optionsButtonsView" [dataView]="listViews" (callback)="setTerminateInfo($event)" (callBackForm)="callBackForm($event)"
-                (callbackcancel)="cancel($event)"></app-edit-detail>
-            <app-loading-detail 
-                [id]="'sections-3qnt'" 
-                *ngIf="listViews.length === 0">
-            </app-loading-detail>
-
-        </p-tabPanel>
-        <p-tabPanel header="Chấm công" *ngIf="detailInfo">
-            <app-cham-cong [recordId]="modelEdit.recordId" *ngIf="indexTab === 1 && modelEdit.recordId" [detailInfo]="detailInfo"></app-cham-cong>
-        </p-tabPanel>
-        <p-tabPanel header="Ăn ca" *ngIf="detailInfo">
-            <app-an-ca [recordId]="modelEdit.recordId" *ngIf="indexTab === 2 && modelEdit.recordId"></app-an-ca>
-        </p-tabPanel>
-        <p-tabPanel header="Làm ngoài giờ" *ngIf="detailInfo">
-            <app-lam-ngoai-gio [recordId]="modelEdit.recordId" *ngIf="indexTab === 3 && modelEdit.recordId"></app-lam-ngoai-gio>
-        </p-tabPanel>
-        <p-tabPanel header="Hiệu suất công việc" *ngIf="detailInfo">
-            <app-hieu-suat-lao-dong [recordId]="modelEdit.recordId" *ngIf="indexTab === 4 && modelEdit.recordId"></app-hieu-suat-lao-dong>
-        </p-tabPanel>
-        <p-tabPanel header="Hỗ trợ" *ngIf="detailInfo">
-            <app-ho-tro [recordId]="modelEdit.recordId" *ngIf="indexTab === 5 && modelEdit.recordId"></app-ho-tro>
-        </p-tabPanel>
-        <p-tabPanel header="Tăng/Giảm" *ngIf="detailInfo">
-            <tang-giam [recordId]="modelEdit.recordId" *ngIf="indexTab === 6 && modelEdit.recordId"></tang-giam>
-        </p-tabPanel>
-        <p-tabPanel header="Tổng hợp lương" *ngIf="detailInfo">
-            <app-tong-hop-luong [recordId]="modelEdit.recordId" *ngIf="indexTab === 7 && modelEdit.recordId"></app-tong-hop-luong>
-        </p-tabPanel>
-    </p-tabView>
-    <div>
-    </div>
-       
-</p-card>
 
 
 

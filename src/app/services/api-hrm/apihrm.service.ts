@@ -387,7 +387,7 @@ export class ApiHrmService {
   }
 
   getTimekeepingPage(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/timekeeping/GetTimekeepingPage?` + queryParams, this.options)
+    return this.http.get<any>(`${apiHrmServer}/api/v1/timekeeping/GetSalaryTimekeepingPage?` + queryParams, this.options)
   }
 
   getEmployeeSalaryMonthPage(queryParams): Observable<any> {
@@ -3605,11 +3605,11 @@ export class ApiHrmService {
   }
   // SalaryTrans
   getSalaryTransPage(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/salaryevaluate/GetSalaryTransPage?` + queryParams, this.options);
+    return this.http.get<any>(`${apiHrmServer}/api/v1/salarytrans/GetSalaryTransPage?` + queryParams, this.options);
   }
 
   getSalaryTrans(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v1/salaryevaluate/GetSalaryTrans?` + queryParams, this.options);
+    return this.http.get<any>(`${apiHrmServer}/api/v1/salarytrans/GetSalaryTrans?` + queryParams, this.options);
   }
 
   // Người phụ thuộc
