@@ -1,4 +1,4 @@
-<p-tabView (onChange)="handleChange($event.index)" [(activeIndex)]="tabIndex">
+<p-tabView (onChange)="handleChange($event.index)" [style]="{'position':'relative'}" [(activeIndex)]="tabIndex">
     <p-tabPanel header="Thông tin chi tiết bậc lương" >
         <div class="content">
             <app-edit-detail
