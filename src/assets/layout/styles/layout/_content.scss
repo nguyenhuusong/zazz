@@ -1262,6 +1262,11 @@ p-dialog{
     }
 }
 .p-menu{
+    
+  .p-menuitem-link{
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
     .p-submenu-header{
         padding: 0px;
     }
