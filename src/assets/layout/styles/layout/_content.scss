@@ -698,6 +698,15 @@ p-tabview{
                             }
                         }
                     }
+                    &:hover{
+                        a{
+                            background: none !important;
+                            color: $activeColor !important;
+                            span{
+                                color: $activeColor !important;
+                            }
+                        }
+                    }
                     &[role="presentation"]{
                         &:last-child{
                             a{
