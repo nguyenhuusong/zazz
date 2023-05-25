@@ -271,7 +271,7 @@
 </p-sidebar>
 
   <p-sidebar
-  [style]="{ width: '80%' }"
+  [style]="{ width: '50%' }"
   [(visible)]="displayVehicleApprove" 
   position="right">
   <ng-template pTemplate="header">
@@ -285,7 +285,7 @@
     <div class="box-body">
 
       <div class="col-md-12">
-          <div class="field-group text label-8">
+          <div class="fields">
             <label>Mã thẻ
               <span style="color:red">*</span>
             </label>
@@ -299,19 +299,24 @@
 
       <div class="col-md-12">
           <label class="control-label" style="margin-bottom: 10px; font-weight: 500;display: block;">Ngày hết hạn</label>
-          <div class="checkbox-default d-flex mb-0">
-            <label for="vo-han" class="mb-0">Vô hạn</label>
+         <div class="d-flex gap16 mb-2">
+          <div class="d-flex gap12 mb-0">
+            <label style="font-weight: 500" for="vo-han" class="mb-0">Vô hạn</label>
             <input id="vo-han" name="isEnddate" type="radio" checked (click)="checkEnddate(true)">
           </div>
-          <div class="checkbox-default d-flex mb-0">
-            <label for="het-han-ngay">Hết hạn ngày</label>
+          <div class="d-flex gap12 mb-0">
+            <label style="font-weight: 500" for="het-han-ngay">Hết hạn ngày</label>
             <input id="het-han-ngay" name="isEnddate" type="radio" (click)="checkEnddate(false)">
           </div>
+         </div>
           <div class="datepicker-container" *ngIf="show">
-            <div class="field-group date" [ngClass]="modelTM.endTime ? 'valid' : 'date-invalid' ">
+            <div class="fields date" [ngClass]="modelTM.endTime ? 'valid' : 'date-invalid' ">
               <label>Ngày hạn</label>
                 <p-calendar [(ngModel)]="modelTM.endTime" appendTo="body" [baseZIndex]="100" name="endTime"
                   dateFormat="dd/mm/yy"></p-calendar>
+                  <svg width="19" class="icon-date" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12.8498 2.8V0.5H15.0998V2.8H18.7998V19H0.799805L0.808805 2.8H4.4998V0.5H6.7498V2.8H12.8498ZM2.5998 17.2H16.9998V9.1H2.5998V17.2ZM2.5998 7.3V4.6H16.9998V7.3H2.5998Z" fill="#2B2F33" fill-opacity="0.6"/>
+                  </svg>
               </div>
           </div>
       </div>
