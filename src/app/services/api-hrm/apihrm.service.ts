@@ -1396,7 +1396,7 @@ export class ApiHrmService {
       headers: new HttpHeaders({
         Authorization: this.authService.getAuthorizationHeaderValue(),
       }),
-      responseType: "blob"
+      responseType: "arraybuffer"
     });
   }
 
