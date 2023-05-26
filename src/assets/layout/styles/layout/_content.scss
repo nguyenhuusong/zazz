@@ -1077,7 +1077,11 @@ p-sidebar{
             }
            }
         }
+        z-index: 2122 !important;
     }
+}
+.p-sidebar-mask{
+    z-index: 2121 !important;
 }
 
 p-dialog{
