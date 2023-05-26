@@ -55,9 +55,12 @@ export class ChinhSachNvComponent implements OnInit, AfterViewInit {
     this.displayFormEditDetail = false;
   }
 
+  heightGrid = 450;
+
   ngOnInit(): void {
     this.getSchemeEmpPage();
     this.getSchemeEmp();
+    this.heightGrid = window.innerHeight - 180
   }
   columnDefs = [];
   gridKey = '';
@@ -354,10 +357,11 @@ export class ChinhSachNvComponent implements OnInit, AfterViewInit {
   }
 
   addSchemeByEmpid() {
-    this.displayAddSchemeByEmpId = true;
+   
     this.query.from_date = null;
     this.query.to_date = null;
     this.listSelects = [];
+    this.displayAddSchemeByEmpId = true;
     // this.listsData2 = [];
     // this.columnDefs2 = [];
   }

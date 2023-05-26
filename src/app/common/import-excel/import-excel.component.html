@@ -28,7 +28,7 @@
                     <p-button styleClass="p-button-sm p-button-secondary" (click)="back()" icon="uni-icon uni-cancel-cicle uni-white-color" label="Quay lại" *ngIf="isShowUpload"></p-button>
                     <p-button styleClass="p-button-sm" (click)="checkData(false)" icon="uni-icon uni-vector uni-white-color" label="Kiểm tra" *ngIf="!isShowUpload"></p-button>
                     <p-button styleClass="p-button-sm" (click)="checkData(true)" icon="uni-icon uni-send" label="Xác nhận" *ngIf="dataImport?.accept"></p-button>
-                    <p-button styleClass="p-button-sm p-button-secondary" (click)="refetchFile()" icon="uni-icon uni-refresh" label="làm mới" *ngIf="!isShowUpload"></p-button>
+                    <p-button styleClass="p-button-sm p-button-secondary" (click)="refetchFile()" icon="uni-icon uni-refresh uni-white-color" label="làm mới" *ngIf="!isShowUpload"></p-button>
                     <!-- <p-button styleClass="p-button-sm p-button-warning" (click)="viewHistory()" icon="uni-icon uni-clock" label="Lịch sử" ></p-button> -->
                     <p-button styleClass="p-button-sm {{!disViewHistory ? 'p-button-warning' : 'p-button-secondary'}}" (click)="viewHistory()" icon="uni-icon {{!disViewHistory ? 'uni-clock' : 'uni-cancel-cicle'}}" label="Lịch sử" ></p-button>
                 </div>
