@@ -31,6 +31,7 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
   MENUACTIONROLEAPI = MENUACTIONROLEAPI;
   ACTIONS = ACTIONS
   dataContractTypes: any;
+  hienthihopdong: boolean = false;
   constructor(
     private apiService: ApiHrmService,
     private route: ActivatedRoute,
@@ -282,11 +283,12 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
   }
   // GET /api/v2/contract/GetContractInfo
   editRow({rowData}) {
-    const modelContractInfo = {
+    this.modelContractInfo = {
       contractId: rowData.contractId,
-      empId:rowData.empId,
+      empId: rowData.empId
     }
-    this.router.navigate(['/nhan-su/xu-ly-hop-dong/chi-tiet-xu-ly-hop-dong'], { queryParams: modelContractInfo });
+    this.hienthihopdong = true;
+    // this.router.navigate(['/nhan-su/xu-ly-hop-dong/chi-tiet-xu-ly-hop-dong'], { queryParams: modelContractInfo });
 
   }
 
@@ -307,7 +309,12 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
       empId: event.value
     }
     if(event.value) {
-      this.router.navigate(['/nhan-su/xu-ly-hop-dong/chi-tiet-xu-ly-hop-dong'], { queryParams: params });
+      // this.router.navigate(['/nhan-su/xu-ly-hop-dong/chi-tiet-xu-ly-hop-dong'], { queryParams: params });
+      this.modelContractInfo = {
+        contractId: '',
+        empId: event.value
+      }
+      this.hienthihopdong = true;
     }else{
       this.isSearchEmp = false;
     }
@@ -409,7 +416,18 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
     this.webSocketService.closeConnection();
 
   }
-
+  emitContract(event) {
+    this.hienthihopdong = false;
+    this.load();
+  }
+  cancelPopupContract() {
+    this.hienthihopdong = false;
+    this.load();
+  }
+  modelContractInfo: any = {
+    contractId: null,
+    empId: null
+  }
   listPrints = []
   ngOnInit() {
     this.getContractFilter();
