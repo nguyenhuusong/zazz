@@ -30,7 +30,7 @@
                                     placeholder="Select a Country">
                                     <ng-template pTemplate="selectedItem" >
                                         <div class="flex align-items-center gap-2" *ngIf="selectedStatus" >
-                                            <div style="color: #fff">{{ selectedStatus.name}}</div>
+                                            <div>{{ selectedStatus.name}}</div>
                                         </div>
                                     </ng-template>
                                     <ng-template let-country pTemplate="item">
@@ -107,8 +107,18 @@
         </ng-template>
 </p-sidebar>
 
-<p-dialog header="Xử lý bàn giao" [(visible)]="displayChangeStatus" [modal]="true" [style]="{width: '1300px'}"
-    [draggable]="false" [resizable]="false">
+
+<p-sidebar
+    [style]="{ width: '80%' }"
+    [(visible)]="displayChangeStatus" 
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        Xử lý bàn giao </ng-template>
+    <ng-template pTemplate="footer"></ng-template>
     <app-cap-nhat-trang-thai-nghi-viec [terminateId]="modelPheDuyet.id" (back)="xacnhan()" *ngIf="displayChangeStatus"></app-cap-nhat-trang-thai-nghi-viec>
   
-</p-dialog>
+</p-sidebar>
