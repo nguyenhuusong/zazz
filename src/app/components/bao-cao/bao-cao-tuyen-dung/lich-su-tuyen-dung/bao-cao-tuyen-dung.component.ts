@@ -191,8 +191,12 @@ export class BaoCaoTuyenDungComponent implements OnInit {
         if (results.type === 'application/json') {
           this.spinner.hide();
         } else {
+          let type = '.xlsx'
+          if(queryParams.exportType === 'pdf') {
+            type = '.pdf'
+          }
           var blob = new Blob([results], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-          FileSaver.saveAs(blob, this.detailInfoReport.report_name + ".xlsx");
+          FileSaver.saveAs(blob, this.detailInfoReport.report_name + type);
           this.spinner.hide();
         }
       

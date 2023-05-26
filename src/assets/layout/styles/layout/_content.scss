@@ -320,6 +320,10 @@ ag-grid-angular{
         .ag-header-row {
             border-bottom: 1px solid #e2e2e2;
             box-shadow: 1px 1px 1px #b9b9b9f0;
+            .ag-header-cell{
+                padding-left: 12px;
+                padding-right: 12px;
+            }
         }
         .ag-root{
             .ag-header{
@@ -328,7 +332,8 @@ ag-grid-angular{
                     .ag-header-cell-text{
                         font-family: "SFProTextRegular";
                         font-size: .800rem;
-                        color: rgba(0,0,0,0.8);
+                        color: $C-212633;
+                        font-weight: 600;
                     }
                 }
                 .ag-floating-filter{
@@ -342,16 +347,34 @@ ag-grid-angular{
                         padding: 0px !important;
                     }
                 }
+                .ag-header-cell{
+                    &::after{
+                        content: "";
+                        position: absolute;
+                        z-index: 1;
+                        display: block;
+                        width: 1px;
+                        height: 50%;
+                        top: calc(50% - 25%);
+                        background: rgba(189, 195, 199, 0.5);
+                        right: 0;
+                    }
+                }
             }
             .ag-row{
                 border-color: #f5f5f5;
                 background: $white;
+                border-width: 1px;
+                border-bottom-style: solid;
                 &.ag-row-odd{
-                    background: $white;
+                    // background: $white;
                 }
+                
             }
             .ag-cell{
                 border: 1px solid transparent;
+                padding-left: 11px;
+                padding-right: 11px;
                 .ag-cell-wrapper{
                     .ag-cell-value{
                         font-family: 'SFProTextRegular';
@@ -370,9 +393,9 @@ ag-grid-angular{
                     border-bottom: 1px solid #9abdf5 !important;
                     border-left: transparent !important;
                     border-right: transparent !important;
-                    background: #fff!important;
+                    background: none !important;
                     &.ag-cell-range-selected{
-                        background: $white !important;
+                        background: none !important;
                     }
                 }
                 
@@ -388,7 +411,117 @@ ag-grid-angular{
         }
     }
 }
-
+app-list-grid-tree-angular{
+    .ag-root-wrapper{
+        .ag-root{
+            .ag-row{
+                &.ag-row-level-0 {
+                    background: #aaa !important;
+                    app-button-renderer{
+                        p-splitbutton {
+                            .p-splitbutton{
+                                border: 1px solid #ffffff;
+                                .p-button-label{
+                                    color: #ffffff !important;
+                                }
+                                .p-button-icon{
+                                    &::before{
+                                        color: #fff;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                &.ag-row-level-1 {
+                    background: rgba(170, 170, 170, 0.7) !important;
+                    app-button-renderer{
+                        p-splitbutton {
+                            .p-splitbutton{
+                                border: 1px solid #ffffff;
+                                .p-button-label{
+                                    color: #ffffff !important;
+                                }
+                                .p-button-icon{
+                                    &::before{
+                                        color: #fff;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                &.ag-row-level-2 {
+                    background: rgba(170, 170, 170, 0.4) !important;
+                    app-button-renderer{
+                        p-splitbutton {
+                            .p-splitbutton{
+                                border: 1px solid #949494;
+                                .p-button-label{
+                                    color: #949494 !important;
+                                }
+                                .p-button-icon{
+                                    &::before{
+                                        color: #949494;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                &.ag-row-level-3 {
+                    background: rgba(170, 170, 170, 0.2) !important;
+                    app-button-renderer{
+                        p-splitbutton {
+                            .p-splitbutton{
+                                border: 1px solid #949494;
+                                .p-button-label{
+                                    color: #949494 !important;
+                                }
+                                .p-button-icon{
+                                    &::before{
+                                        color: #949494;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                &.ag-row-level-4 {
+                    background: #fff !important;
+                }
+                &.ag-row-hover{
+                    &.ag-row-level-0 {
+                        .ag-cell {
+                            background: #aaa !important;
+                        }
+                    }
+                    &.ag-row-level-1 {
+                        .ag-cell {
+                            background: rgba(170, 170, 170, 0.7) !important;
+                        }
+                    }
+                    &.ag-row-level-2 {
+                        .ag-cell {
+                            background: rgba(170, 170, 170, 0.4) !important;
+                        }
+                    }
+                    &.ag-row-level-3 {
+                        .ag-cell {
+                            background: rgba(170, 170, 170, 0.2) !important;
+                        }
+                    }
+                    &.ag-row-level-4 {
+                        .ag-cell {
+                            background: #fff !important;
+                        }
+                    }
+                }
+            }
+            
+        }
+    }
+}
 
 .border-right {
     border-right: 1px solid rgb(221, 226, 235) !important;

@@ -290,18 +290,18 @@ export class CaiDatToChucComponent implements OnInit {
     return {
       buttons: [
         {
+          onClick: this.thongtinphongban.bind(this),
+          label: 'Xem',
+          icon: 'fa fa-eye',
+          class: 'btn-primary mr5',
+          hide: CheckHideAction(MENUACTIONROLEAPI.GetOrganizePage.url, ACTIONS.VIEW)
+        },
+        {
           onClick: this.addOrganizeByParentId.bind(this),
           label: 'Thêm tổ chức con',
           icon: 'fa fa-edit',
           class: 'btn-primary mr5',
           hide: CheckHideAction(MENUACTIONROLEAPI.GetOrganizePage.url, ACTIONS.EDIT)
-        },
-        {
-          onClick: this.thongtinphongban.bind(this),
-          label: 'Thông tin tổ chức',
-          icon: 'fa fa-eye',
-          class: 'btn-primary mr5',
-          hide: CheckHideAction(MENUACTIONROLEAPI.GetOrganizePage.url, ACTIONS.VIEW)
         },
         {
           onClick: this.delOrgin.bind(this),
@@ -389,7 +389,7 @@ export class CaiDatToChucComponent implements OnInit {
             `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
         },
         filter: '',
-        width: 160,
+        width: 100,
         pinned: 'right',
         cellRenderer: 'buttonAgGridComponent',
         cellClass: ['border-right', 'no-auto', 'justify-content-center'],
