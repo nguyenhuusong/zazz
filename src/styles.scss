@@ -66,6 +66,11 @@ body {
         font-size: var(--font-size);
     }
 }
+
+.p-link,
+.p-component{
+    font-family: $fontRegular
+}
 h1,
 h2,
 h3,
