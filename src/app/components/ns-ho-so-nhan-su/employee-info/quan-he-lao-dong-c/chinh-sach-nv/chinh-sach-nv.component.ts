@@ -378,7 +378,11 @@ export class ChinhSachNvComponent implements OnInit, AfterViewInit {
       empId: this.empId,
       from_date: this.query.from_date ? moment(this.query.from_date).format('DD/MM/YYYY') : null,
       to_date: this.query.from_date ? moment(this.query.to_date).format('DD/MM/YYYY') : null,
-      schemeIds: this.listSelects.map(d => d.schemeId)
+      schemeIds: this.listSelects.map(d => {
+        return {
+          gd: d.schemeId
+        }
+      })
     }
     this.apiService.setSchemeOpenEmp(params)
     .pipe(takeUntil(this.unsubscribe$))
