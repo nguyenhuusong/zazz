@@ -37,12 +37,12 @@ export class ApiHrmService {
       }),
       responseType: "blob"
     };
-    
+
   }
   options = {};
-  optionsUpload = { };
+  optionsUpload = {};
 
-  optionsExport: any = { };
+  optionsExport: any = {};
 
   getIdentityCardInfomation(image: File) {
     const options = {
@@ -4010,7 +4010,20 @@ export class ApiHrmService {
     return this.http.delete<any>(`${apiHrmServer}/api/v2/workflowtype/DelFlowStatus?` + queryParams, this.options);
   }
 
+  // SalaryAdjust
 
+
+  setSalaryAdjust(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/workflowtype/SetSalaryAdjust`, queryParams, this.options);
+  }
+
+  getSalaryAdjustPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/salaryadjust/GetSalaryAdjustPage?` + queryParams, this.options);
+  }
+
+  getSalaryAdjust(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/salaryadjust/GetSalaryAdjust?` + queryParams, this.options);
+  }
 
 
 

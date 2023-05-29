@@ -82,7 +82,7 @@
                 <tang-giam [recordId]="modelEdit.recordId" *ngIf="indexTab === 8 && modelEdit.recordId"></tang-giam>
             </p-tabPanel>
             <p-tabPanel header="Điều chỉnh" *ngIf="detailInfo">
-                Điều chỉnh
+               <app-dieu-chinh [recordId]="modelEdit.recordId" *ngIf="indexTab === 9 && modelEdit.recordId"></app-dieu-chinh>
             </p-tabPanel>
             <p-tabPanel header="Người phụ thuộc" *ngIf="detailInfo">
                 <app-tab-salary-dependent [recordId]="modelEdit.recordId" *ngIf="indexTab === 10 && modelEdit.recordId"></app-tab-salary-dependent>
