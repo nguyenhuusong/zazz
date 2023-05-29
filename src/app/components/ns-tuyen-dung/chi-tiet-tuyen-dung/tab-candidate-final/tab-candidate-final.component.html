@@ -1,0 +1,45 @@
+<div class="gap12 d-flex end" style="
+position: absolute;
+top: 15px;
+right: 15px;
+">
+    <div class="fields ">
+        <p-dropdown 
+        *ngIf="listViews.length> 0 && status.length > 0" 
+            [options]="status" 
+            (onChange)="UpdateStatus()"
+            [(ngModel)]="selectedCountry" 
+            [styleClass]="selectedCountry?.bgColor"  
+            [style]="{'width': '180px'}" 
+            optionLabel="name"  
+            placeholder="Select a Country">
+            <ng-template pTemplate="selectedItem" >
+                <div class="flex align-items-center gap-2" *ngIf="selectedCountry" >
+                    <div>{{ selectedCountry.name}}</div>
+                </div>
+            </ng-template>
+            <ng-template let-country pTemplate="item">
+                <div class="flex align-items-center gap-2" *ngIf="country.value != selectedCountry.value">
+                    <div class="pb-2 pt-2" style="display: flex; align-items: center; width: 100%;justify-content: space-around;font-size: 13px;">
+                        <span style="white-space:nowrap">{{ country.placeholder }} </span>
+                        <span class="pi pi-arrow-right" style="font-size: 12px;"></span>
+                        <span [class]="country.textColor" style="white-space:nowrap" class="pl-2 pr-2">{{ country.name }}</span>
+                    </div>
+                </div>
+            </ng-template>
+        </p-dropdown>
+    </div>
+    <p-splitButton icon="pi pi-send" *ngIf="menuActions.length > 0" styleClass="p-button-sm" [appendTo]="'body'" (onClick)="callActions(menuActions[0].value)" [label]="menuActions[0].label" [model]="menuActions"></p-splitButton>
+    <p-button label="Quay lại" (click)="quaylai('')" styleClass="p-button-secondary p-button-sm" [style]="{'z-index': 9}" icon="pi pi-directions-alt"></p-button>
+</div>
+<app-edit-detail 
+*ngIf="listViews.length> 0" 
+[isHideButton]="true" 
+[detail]="detailInfo" 
+[manhinh]="'Edit'" 
+[isNested]="true"
+[optionsButtonsEdit]="optionsButon" 
+[dataView]="listViews" 
+(callback)="setVacancyInfo($event)"
+(callbackcancel)="quaylai($event)" >
+</app-edit-detail>

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, OnChanges, OnDestroy } from '@angular/core';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { ActivatedRoute, Router } from '@angular/router';
 import { cloneDeep } from 'lodash';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -29,7 +29,7 @@ export class ChiTietThietLapWifiComponent implements OnInit, OnChanges, OnDestro
     private spinner: NgxSpinnerService,
     private router: Router
   ) { }
-  id = null
+  //id = null
   listViews = []
   paramsObject = null
   titlePage: string = '';
@@ -37,6 +37,8 @@ export class ChiTietThietLapWifiComponent implements OnInit, OnChanges, OnDestro
 
   @Input() dataRouter = null
   @Output() back = new EventEmitter<any>();
+  @Input() id = '';
+  @Output() callback = new EventEmitter<any>();
 
   ngOnDestroy() {
     this.unsubscribe$.next();
@@ -64,7 +66,7 @@ export class ChiTietThietLapWifiComponent implements OnInit, OnChanges, OnDestro
     this.activatedRoute.queryParamMap.subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.dataRouter = this.paramsObject.params;
-      this.id = this.paramsObject.params.id;
+      //this.id = this.paramsObject.params.id;
       this.getTimekeepingWifiInfo();
     });
   };
@@ -93,7 +95,7 @@ export class ChiTietThietLapWifiComponent implements OnInit, OnChanges, OnDestro
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe((results: any) => {
       if (results.status === 'success') {
-        this.goBack()
+        this.callback.emit();
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message});
       } else {
         this.messageService.add({
@@ -116,7 +118,7 @@ export class ChiTietThietLapWifiComponent implements OnInit, OnChanges, OnDestro
     if(data === 'CauHinh') {
       this.getTimekeepingWifiInfo();
     }else {
-      this.goBack();
+      this.callback.emit();
     }
   }
 

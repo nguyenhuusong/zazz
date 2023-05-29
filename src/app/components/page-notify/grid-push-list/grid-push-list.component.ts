@@ -1,7 +1,7 @@
 import { Router } from '@angular/router';
 import { Component, OnInit, OnChanges, SimpleChanges, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { cloneDeep } from 'lodash';
 import { ApiService } from 'src/app/services/api.service';
 import { NgxSpinnerService } from 'ngx-spinner';

@@ -5,3 +5,14 @@
         [columnDefs]="columnDefs"></app-list-grid-angular>
     </div>
 </div>
+
+<div class="btns" style="position: fixed;
+    right: 112px;
+    top: 19px;">
+    <p-button label="Xác nhận lưu cấu hình" styleClass="p-button-sm p-button" icon="uni-icon uni-send uni-white-color" (onClick)="Save()"></p-button>
+</div>
+
+<p-dialog header="Cài đặt cấu hình" [(visible)]="displaySetting" (onHide)="find()" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
+    [draggable]="false" [resizable]="false" [focusTrap]="false" styleClass="popup-setting">
+    <app-config-grid-table-form *ngIf="displaySetting && gridKey" [typeConfig]="'TableInfo'"   [gridKey]="gridKey"></app-config-grid-table-form>
+</p-dialog>

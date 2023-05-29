@@ -1,7 +1,7 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
-const queryString = require('query-string');
+import queryString from 'query-string';
 import { cloneDeep } from 'lodash';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subject, takeUntil } from 'rxjs';
@@ -14,6 +14,8 @@ import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
   styleUrls: ['./chi-tiet-phong-hop.component.scss']
 })
 export class ChiTietPhongHopComponent implements OnInit, OnDestroy {
+  @Input() roomId = '';
+  @Output() callback = new EventEmitter<any>();
   items: MenuItem[] = [];
   paramsObject = null;
   detailInfo = null
@@ -48,14 +50,14 @@ export class ChiTietPhongHopComponent implements OnInit, OnDestroy {
     ];
     this.handleParams();
   }
-  roomId = null
+
   titlePage = ''
   handleParams() {
     this.activatedRoute.queryParamMap
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((params) => {
         this.paramsObject = { ...params.keys, ...params };
-        this.roomId = this.paramsObject.params.roomId;
+        this.roomId = this.roomId;
         this.getMeetRoomInfo();
       });
   };
@@ -84,7 +86,7 @@ export class ChiTietPhongHopComponent implements OnInit, OnDestroy {
         if (results.status === 'success') {
           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
           this.spinner.hide();
-          this.router.navigate(['/cai-dat/cai-dat-lich-hop/danh-sach-phong-hop']);
+          this.callback.emit();
         } else {
           this.messageService.add({
             severity: 'error', summary: 'Thông báo',
@@ -101,7 +103,7 @@ export class ChiTietPhongHopComponent implements OnInit, OnDestroy {
     if(data === 'CauHinh') {
       this.getMeetRoomInfo();
     }else {
-      this.router.navigate(['hoat-dong/lich-hop/danh-sach-phong-hop']);
+      this.callback.emit();
     }
   }
 

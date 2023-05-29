@@ -3,7 +3,7 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService, TreeNode } from 'primeng/api';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
@@ -147,12 +147,7 @@ export class NgayNghiLeComponent implements OnInit {
   }
 
 
-  themmoingaynghi() {
-    const params = {
-      id: 0
-    }
-    this.router.navigate(['/cai-dat/cai-dat-ngay-nghi-le/them-moi-ngay-nghi'], { queryParams: params });
-  }
+
 
   displaySetting = false;
   gridKey = ''
@@ -200,7 +195,7 @@ export class NgayNghiLeComponent implements OnInit {
       buttons: [
         {
           onClick: this.editRow.bind(this),
-          label: 'Thông tin chi tiết',
+          label: 'Xem',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
           hide: CheckHideAction(MENUACTIONROLEAPI.HolidayPage.url, ACTIONS.VIEW)
@@ -218,21 +213,6 @@ export class NgayNghiLeComponent implements OnInit {
 
   initGrid() {
     this.columnDefs = [
-      {
-        headerName: 'Stt',
-        filter: '',
-        maxWidth: 140,
-        pinned: 'left',
-        cellRenderer: params => {
-          return params.rowIndex + 1
-        },
-        cellClass: ['border-right', 'no-auto'],
-        // checkboxSelection: true,
-        // headerCheckboxSelection: true,
-        // headerCheckboxSelectionFilteredOnly: true,
-        field: 'checkbox2',
-        suppressSizeToFit: true,
-      },
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       {
         headerComponentParams: {
@@ -240,7 +220,7 @@ export class NgayNghiLeComponent implements OnInit {
           `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
         },
         filter: '',
-        width: 70,
+        width: 80,
         pinned: 'right',
         cellRenderer: 'buttonAgGridComponent',
         cellClass: ['border-right', 'no-auto'],
@@ -318,10 +298,9 @@ export class NgayNghiLeComponent implements OnInit {
   }
 
   editRow({rowData}) {
-    const params = {
-      id: rowData.id
-    }
-    this.router.navigate(['/cai-dat/cai-dat-ngay-nghi-le/chi-tiet-ngay-nghi'], { queryParams: params });
+    
+    this.isDetail = true;
+    this.id = rowData.id;
   }
 
   onCellClicked(event) {
@@ -329,8 +308,22 @@ export class NgayNghiLeComponent implements OnInit {
       this.editRow(event = {rowData: event.data})
     }
   }
+  themmoingaynghi() {
+    const params = {
+      id: null
+    }
+    this.isDetail = true;
+    this.id = '';
+  }
+  isDetail = false;
+  id = '';
 
   find() {
+    this.load();
+  }
+
+  callback() {
+    this.isDetail = false;
     this.load();
   }
 
@@ -426,7 +419,7 @@ export class NgayNghiLeComponent implements OnInit {
     this.loadjs++
     if (this.loadjs === 5) {
       if (b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight +10;
+        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight +30;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       } else {
@@ -439,8 +432,8 @@ export class NgayNghiLeComponent implements OnInit {
   cloneListViewsFilter = [];
   detailInfoFilter = null;
   optionsButonFilter = [
-    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm height-56 addNew', icon: 'pi pi-search' },
-    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger height-56 addNew', icon: 'pi pi-times' },
+    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm  addNew', icon: 'pi pi-search' },
+    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger  addNew', icon: 'pi pi-times' },
   ];
 
   close({event, datas}) {

@@ -3,14 +3,14 @@
 <div class="grid main-grid" style="padding: 0">
     <div class="col-12 right max-w-full" style="padding-top: 0;">
         
-        <div class="bread-filter">
+        <div class="bread-crumb">
             <div class="d-flex bet middle">
                 <app-hrm-breadcrumb [items]="itemsBreadcrumb"></app-hrm-breadcrumb>
                 <p-button label="Tạo ngày nghỉ trong năm" icon="pi pi-calendar-plus" (click)="AddDayToYear()"></p-button>
             </div>
             <div class="grid filter">
                 <div class="x-1"> 
-                    <div class="field-group select label-8">
+                    <div class="fields">
                         <label  for=""> Năm: </label>
                         <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
                         [options]="arrayYear" [(ngModel)]="query.year" name="year" (onChange)="load()">
@@ -77,13 +77,17 @@
     </div>
 </div>
 
-            
-
-<p-dialog [(visible)]="displayAddHoliday" [baseZIndex]="99" [modal]="true" [style]="{width: '1000px', height: 'auto'}">
-    <!-- <ngx-loading [show]="loading1" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading> -->
-    <p-header>
-        Thêm mới ngày nghỉ
-    </p-header>
+<p-sidebar
+    [style]="{ width: '80%' }"
+    [(visible)]="displayAddHoliday" 
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        Thêm mới ngày nghỉ </ng-template>
+    <ng-template pTemplate="footer"></ng-template>
     <div class="row">
         <div class="group-date" [ngClass]=" modelAddHoliday.day_dt ? 'valid' : 'invalid' ">
             <label class="text-nowrap label-text" >Ngày nghỉ </label>
@@ -130,4 +134,4 @@
             <p-button label="Đóng" icon="pi pi-times" styleClass="p-button-sm p-button-secondary" (click)="displayAddHoliday = !displayAddHoliday"> </p-button>
         </div>
     </div>
-</p-dialog>
+</p-sidebar>

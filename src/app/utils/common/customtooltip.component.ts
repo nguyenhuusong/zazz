@@ -5,7 +5,7 @@ import { ITooltipAngularComp } from '@ag-grid-community/angular';
 @Component({
   selector: 'app-custom-tooltip',
   template: `
-    <div *ngIf="data" class="custom-tooltip">
+    <!-- <div *ngIf="data" class="custom-tooltip">
         <div [ngClass]="'panel panel-' + data?.type">
           <div class="panel-heading">
             <h3 class="panel-title">{{ params.colDef?.headerName }}</h3>
@@ -17,7 +17,7 @@ import { ITooltipAngularComp } from '@ag-grid-community/angular';
             <p *ngIf="!isAmount && !isHtml && params.colDef?.field.indexOf('margin') > -1">{{data[params.colDef?.field]| marginRound: 2 }}</p>
           </div>
         </div>
-      </div>
+      </div> -->
     `,
   styles: [
     `

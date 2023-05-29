@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiCoreService } from 'src/app/services/api-core/apicore.service';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { cloneDeep } from 'lodash';
 import { AgGridFn, getFieldValueAggrid } from 'src/app/utils/common/function-common';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -38,6 +38,8 @@ export class QuanHeLaoDongCComponent implements OnInit {
   codeStaff = ''
   listViews = [];
   listViewsForm = [];
+  status = [];
+  selectedStatus = null;
   getEmployeeInfo(): void {
     this.spinner.show();
     this.listViews = [];
@@ -48,18 +50,58 @@ export class QuanHeLaoDongCComponent implements OnInit {
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(results => {
       if (results.status === 'success') {
-        if (!this.codeStaff) {
-          this.codeStaff = getFieldValueAggrid(results.data, 'code');
+        // if (!this.codeStaff) { không hiểu thêm vào để làm gì (manh)
+        //   this.codeStaff = getFieldValueAggrid(results.data, 'code');
+        // }
+        this.status = results.data.flowStatuses || [];
+        if(results.data.status) {
+          this.status.push(results.data.status);
         }
+        this.selectedStatus = results.data.status;
         this.listViews = cloneDeep(results.data.group_fields || []);
-        // this.listViewsForm = cloneDeep(results.data.group_fields || []);
         this.detailInfo = results.data;
+        if(this.detailInfo.actions && this.detailInfo.actions.length > 0) {
+          this.initButton();
+        }
         this.spinner.hide();
       }
     }, error => {
       this.spinner.hide();
     });
     // this.gridApi.sizeColumnsToFit();
+  }
+
+
+  recruiUpdateStatus() {
+
+  }
+  
+  callActions(code) {
+    this[code]()
+  }
+
+  optionsButon = [];
+  menuActions = [];
+  initButton() {
+    // this.optionsButon = this.detailInfo.actions.map(item => {
+    //   return {
+    //     label: item.name,
+    //     value: item.code,
+    //     icon: item.icon
+    //   }
+    // });
+
+    this.menuActions = this.detailInfo.actions.map((item, index) => {
+      return {
+        label: item.name,
+        value: item.code,
+        styleClass: index === 0 ? 'hidden' : '',
+        icon: item.icon,
+        command: () => {
+          this.callActions(item.code);
+        }
+      }
+    });
   }
 
   private readonly unsubscribe$: Subject<void> = new Subject();
@@ -76,7 +118,7 @@ export class QuanHeLaoDongCComponent implements OnInit {
 
   setEmployeeInfo(data) {
     const params = {
-      ...this.detailInfo, group_fields: data
+      ...this.detailInfo, group_fields: data.datas
     };
     this.apiService.setEmployeeInfo(params)
     .pipe(takeUntil(this.unsubscribe$))

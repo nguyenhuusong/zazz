@@ -6,7 +6,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { AgGridFn } from 'src/app/common/function-common/common';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import * as FileSaver from 'file-saver';
 interface DataImport {
   valid: boolean,

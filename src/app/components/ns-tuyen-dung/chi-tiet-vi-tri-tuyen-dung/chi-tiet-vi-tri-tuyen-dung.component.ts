@@ -1,7 +1,7 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
-const queryString = require('query-string');
+import queryString from 'query-string';
 import { cloneDeep } from 'lodash';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subject, takeUntil } from 'rxjs';
@@ -17,6 +17,9 @@ import { getValueOfField, setOrganizeId } from 'src/app/utils/common/function-co
   styleUrls: ['./chi-tiet-vi-tri-tuyen-dung.component.scss']
 })
 export class ChiTietViTriTuyenDungComponent implements OnInit, OnDestroy {
+  @Input() vacancyId = '';
+  @Input() isCopy = false;
+  @Output() callback = new EventEmitter<any>();
   items: MenuItem[] = [];
   paramsObject = null;
   detailInfo = null
@@ -48,6 +51,7 @@ export class ChiTietViTriTuyenDungComponent implements OnInit, OnDestroy {
       { label: 'Vị trí tuyển dụng', routerLink: '/tuyen-dung/vi-tri-tuyen-dung' },
       { label: `${this.titlePage}` },
     ];
+    this.modelEdit.vacancyId = this.vacancyId;
     this.handleParams();
    
   }
@@ -55,15 +59,13 @@ export class ChiTietViTriTuyenDungComponent implements OnInit, OnDestroy {
     vacancyId: null,
   }
   titlePage = '';
-  isCopy = false;
   organIdSelected = '';
   handleParams() {
     this.activatedRoute.queryParamMap
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((params) => {
         this.paramsObject = { ...params.keys, ...params };
-        this.modelEdit.vacancyId = this.paramsObject.params.vacancyId || null;
-        this.isCopy = this.paramsObject.params.copy;
+        // this.modelEdit.vacancyId = this.paramsObject.params.vacancyId || null;
         if(this.isCopy) {
           this.getVacancyReplicationInfo();
         }else{
@@ -161,6 +163,7 @@ export class ChiTietViTriTuyenDungComponent implements OnInit, OnDestroy {
           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
           this.spinner.hide();
           this.router.navigate(['/tuyen-dung/vi-tri-tuyen-dung']);
+          this.callback.emit()
         } else {
           this.messageService.add({
             severity: 'error', summary: 'Thông báo',
@@ -177,7 +180,7 @@ export class ChiTietViTriTuyenDungComponent implements OnInit, OnDestroy {
     if(data === 'CauHinh') {
       this.getVacancyInfo();
     }else {
-      this.router.navigate(['/tuyen-dung/vi-tri-tuyen-dung']);
+      this.callback.emit()
     }
   }
 

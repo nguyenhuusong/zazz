@@ -20,6 +20,7 @@ import { AgGridModule } from '@ag-grid-community/angular';
 import { ButtonRendererComponent } from 'src/app/utils/common/button-renderer.component';
 import { ButtonAgGridComponent } from '../ag-component/button-renderermutibuttons.component';
 import { AvatarFullComponent } from '../ag-component/avatarFull.component';
+import { SplitButtonModule } from 'primeng/splitbutton';
 @NgModule({
     declarations: [GridAddComponent],
     imports: [
@@ -37,7 +38,7 @@ import { AvatarFullComponent } from '../ag-component/avatarFull.component';
         CalendarModule,
         AutoCompleteModule,
         TabViewModule,
-        
+        SplitButtonModule,
         InputTextModule,
         AgGridModule.withComponents([
             ButtonRendererComponent,

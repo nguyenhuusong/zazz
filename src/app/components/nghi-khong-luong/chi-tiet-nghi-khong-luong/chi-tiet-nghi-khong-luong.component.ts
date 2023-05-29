@@ -1,8 +1,8 @@
 
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
-const queryString = require('query-string');
+import queryString from 'query-string';
 import { cloneDeep } from 'lodash';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subject, takeUntil } from 'rxjs';
@@ -15,6 +15,9 @@ import { CheckHideAction } from 'src/app/common/function-common/common';
   styleUrls: ['./chi-tiet-nghi-khong-luong.component.scss']
 })
 export class ChiTietNghiKhongLuongComponent implements OnInit, OnDestroy {
+  @Input() id = '';
+  @Input() empId = '';
+  @Output() callback = new EventEmitter
   items: MenuItem[] = [];
 
   paramsObject = null;
@@ -58,8 +61,8 @@ export class ChiTietNghiKhongLuongComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((params) => {
         this.paramsObject = { ...params.keys, ...params };
-        this.modelEdit.id = this.paramsObject.params.id || ""
-        this.modelEdit.empId = this.paramsObject.params.empId || ""
+        this.modelEdit.id = this.id || ""
+        this.modelEdit.empId = this.empId || ""
         this.getLeaveLack();
       });
   };
@@ -88,7 +91,7 @@ export class ChiTietNghiKhongLuongComponent implements OnInit, OnDestroy {
         if (results.status === 'success') {
           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
           this.spinner.hide();
-          this.router.navigate(['/chinh-sach/nghi-khong-luong']);
+          this.callback.emit();
         } else {
           this.messageService.add({
             severity: 'error', summary: 'Thông báo',
@@ -105,7 +108,7 @@ export class ChiTietNghiKhongLuongComponent implements OnInit, OnDestroy {
     if(data === 'CauHinh') {
       this.getLeaveLack();
     }else {
-      this.router.navigate(['/chinh-sach/nghi-khong-luong']);
+      this.callback.emit();
     }
   }
 

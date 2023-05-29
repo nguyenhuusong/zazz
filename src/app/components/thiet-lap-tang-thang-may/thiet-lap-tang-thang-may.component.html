@@ -1,13 +1,13 @@
 <div class="main-grid">
     <section class="bread-crumb">
         <div class="d-flex bet middle">
-            <div class="col-4 pd-0">
+            <div class="p-0 col-12 md:col-12 lg:col-3 xl:col-3">
                 <app-hrm-breadcrumb [items]="items"></app-hrm-breadcrumb>
             </div>
-            <div class="d-flex end bottom gap-12 col-8 pd-0">
-                <div class="filter filter-search col-2 pd-0">
+            <div class="d-flex end p-0 wrap col-12 md:col-12 lg:col-9 xl:col-9 gap12">
+                <div class="filter filter-search p-0 col-4 md:col-4 lg:col-4 xl:col-3">
                     <div class="header-filter-search ">
-                        <div class="field-group text search mb-0" [ngClass]=" model.filter ? 'valid' : 'invalid' ">
+                        <div class="fields search mb-0" [ngClass]=" model.filter ? 'valid' : 'invalid' ">
                             <input placeholder="Tìm kiếm" class="input-default" type="text" id="filter"
                                 (keydown.enter)="model.offset = 0; first = 0;load()"
                                 [(ngModel)]="model.filter">
@@ -19,18 +19,18 @@
                         </div>
                     </div>
                 </div>
-                <p-button styleClass="reloadBtn hidden height-56" (click)="cancel()">
+                <p-button styleClass="reloadBtn hidden " (click)="cancel()">
                     <svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M8.89128 1.80952C5.00096 1.80952 1.81817 5.01267 1.81817 9C1.81817 12.9873 5.00096 16.1905 8.89128 16.1905C11.1061 16.1905 13.087 15.1561 14.3877 13.526C14.7 13.1346 15.2718 13.0693 15.665 13.3801C16.0582 13.6908 16.1238 14.2599 15.8116 14.6513C14.1855 16.6891 11.6915 18 8.89128 18C3.9647 18 0 13.9544 0 9C0 4.04557 3.9647 0 8.89128 0C12.8587 0 16.2024 2.62369 17.3539 6.23284L18.2926 4.51929C18.5329 4.08057 19.0851 3.91882 19.5259 4.15801C19.9667 4.39719 20.1292 4.94675 19.8889 5.38547L17.6716 9.43309C17.5446 9.66497 17.3221 9.83003 17.0626 9.88497C16.803 9.93991 16.5323 9.87923 16.3215 9.71886L12.7738 7.02045C12.3749 6.71703 12.2987 6.14921 12.6035 5.75219C12.9084 5.35518 13.4789 5.2793 13.8778 5.58273L15.6726 6.94784C14.8021 3.96847 12.0851 1.80952 8.89128 1.80952Z" fill="#BDC4D8"/>
                     </svg>
                 </p-button>
-                <p-button styleClass="p-button-sm mr-1 height-56" icon="pi pi-plus" label="Thêm mới" (click)="addThietLapTang()">
+                <p-button styleClass="p-button-sm mr-1 " icon="pi pi-plus" label="Thêm mới" (click)="addThietLapTang()">
                 </p-button>
             </div>
         </div>
     </section>
 </div>
-<section class="content pb-0">
+<section class="content">
         <div class="grid-default" #container>
             <app-list-grid-angular *ngIf="columnDefs.length > 0" [listsData]="listsData" [height]="heightGrid"
                 [columnDefs]="columnDefs"></app-list-grid-angular>
@@ -46,65 +46,74 @@
         </div>
 </section>
 
-
-<p-dialog [(visible)]="isDialog" header="{{titleModal}}" [style]="{width: '600px', height: 'auto'}">
+<p-sidebar
+    [style]="{ width: '80%' }"
+    [(visible)]="isDialog" 
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        {{titleModal}} </ng-template>
+    <ng-template pTemplate="footer"></ng-template>
     <form #createElevatorfloor="ngForm" class="form-horizontal ng-pristine ng-valid ng-scope">
-        <div class="box-body" style="padding:10px;">
-          <div class="field-group select label-8">
-            <label class="control-label">Mã dự án
-              <span style="color:red">*</span>
-            </label>
-              <select class="form-control" (change)="changeBuilding($event)" name="projectCd" [(ngModel)]="elevatorfloorModel.projectCd"
-                id="projectCd" #projectCd="ngModel">
-                <option value="">Chọn dự án</option>
-                <option *ngFor="let advert of projects; let i = index" value="{{advert.projectCd}}">
-                    {{advert.projectName}} </option>
-                </select>
-          </div>
-          <div class="field-group select label-8">
-            <label class="control-label">Tòa<span style="color:red">*</span></label>
-              <select class="form-control" (change)="changebuildName($event)" name="buildCd" [(ngModel)]="elevatorfloorModel.buildCd"
-                id="buildCd" #buildCd="ngModel">
-                <option value="">Chọn tòa</option>
-                <option *ngFor="let advert of buidings; let i = index" value="{{advert.buildCd}}">
-                    {{advert.buildName}} </option>
-                </select>
-          </div>
-          <div class="field-group select label-8">
-            <label class="control-label">Khu vực<span style="color:red">*</span></label>
-              <select class="form-control" name="buildZone" [(ngModel)]="elevatorfloorModel.buildZone"
-                id="buildZone" #buildZone="ngModel">
-                <option value="">Chọn khu vực</option>
-                <option *ngFor="let advert of buildingZones; let i = index" value="{{advert.buildZoneName}}">
-                    {{advert.buildZoneName}} </option>
-                </select>
-          </div>
-          <div class="field-group select label-8">
-            <label class="control-label">Tầng
-              <span style="color:red">*</span>
-            </label>
-              <select class="form-control" name="floorNumber" [(ngModel)]="elevatorfloorModel.floorNumber"
-                id="floorNumber" #floorNumber="ngModel">
-                <option value="">Chọn tầng</option>
-                <option *ngFor="let advert of floorsCreate; let i = index" value="{{advert.floorNumber}}">
-                    {{advert.floorName}} </option>
-                </select>
-          </div>
-          <div class="field-group select label-8">
-            <label class="control-label">Loại tầng
-              <span style="color:red">*</span>
-            </label>
-              <select class="form-control" name="floorType" [(ngModel)]="elevatorfloorModel.floorType"
-                    id="floorType" #floorType="ngModel">
-                    <option value="">Chọn loại tầng</option>
-                    <option *ngFor="let advert of floorsTypes; let i = index" value="{{advert.floorTypeName}}">
-                        {{advert.floorTypeName}} </option>
-                    </select>
-          </div>
-          <div class="form-row text-right">
-            <p-button label="Lưu lại" (click)="onSave()" styleClass="mr-2"></p-button>
-            <p-button label="Đóng" (click)="isDialog = !isDialog" styleClass="p-button-danger"></p-button>
-      </div>
+      <div class="box-body" style="padding:10px;">
+        <div class="fields">
+          <label class="control-label">Mã dự án
+            <span style="color:red">*</span>
+          </label>
+            <select class="form-control" (change)="changeBuilding($event)" name="projectCd" [(ngModel)]="elevatorfloorModel.projectCd"
+              id="projectCd" #projectCd="ngModel">
+              <option value="">Chọn dự án</option>
+              <option *ngFor="let advert of projects; let i = index" value="{{advert.projectCd}}">
+                  {{advert.projectName}} </option>
+              </select>
         </div>
-      </form>
-</p-dialog>
+        <div class="fields">
+          <label class="control-label">Tòa<span style="color:red">*</span></label>
+            <select class="form-control" (change)="changebuildName($event)" name="buildCd" [(ngModel)]="elevatorfloorModel.buildCd"
+              id="buildCd" #buildCd="ngModel">
+              <option value="">Chọn tòa</option>
+              <option *ngFor="let advert of buidings; let i = index" value="{{advert.buildCd}}">
+                  {{advert.buildName}} </option>
+              </select>
+        </div>
+        <div class="fields">
+          <label class="control-label">Khu vực<span style="color:red">*</span></label>
+            <select class="form-control" name="buildZone" [(ngModel)]="elevatorfloorModel.buildZone"
+              id="buildZone" #buildZone="ngModel">
+              <option value="">Chọn khu vực</option>
+              <option *ngFor="let advert of buildingZones; let i = index" value="{{advert.buildZoneName}}">
+                  {{advert.buildZoneName}} </option>
+              </select>
+        </div>
+        <div class="fields">
+          <label class="control-label">Tầng
+            <span style="color:red">*</span>
+          </label>
+            <select class="form-control" name="floorNumber" [(ngModel)]="elevatorfloorModel.floorNumber"
+              id="floorNumber" #floorNumber="ngModel">
+              <option value="">Chọn tầng</option>
+              <option *ngFor="let advert of floorsCreate; let i = index" value="{{advert.floorNumber}}">
+                  {{advert.floorName}} </option>
+              </select>
+        </div>
+        <div class="fields">
+          <label class="control-label">Loại tầng
+            <span style="color:red">*</span>
+          </label>
+            <select class="form-control" name="floorType" [(ngModel)]="elevatorfloorModel.floorType"
+                  id="floorType" #floorType="ngModel">
+                  <option value="">Chọn loại tầng</option>
+                  <option *ngFor="let advert of floorsTypes; let i = index" value="{{advert.floorTypeName}}">
+                      {{advert.floorTypeName}} </option>
+                  </select>
+        </div>
+        <div class="form-row text-right">
+          <p-button label="Lưu lại" (click)="onSave()" styleClass="mr-2"></p-button>
+          <p-button label="Đóng" (click)="isDialog = !isDialog" styleClass="p-button-danger"></p-button>
+    </div>
+      </div>
+    </form>
+</p-sidebar>

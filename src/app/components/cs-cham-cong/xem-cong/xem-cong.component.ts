@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { ActivatedRoute } from '@angular/router';
 import { cloneDeep } from 'lodash';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -193,7 +193,7 @@ export class XemCongComponent implements OnInit, OnDestroy {
     this.loadjs++
     if (this.loadjs === 5) {
       if (b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight +10;
+        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight +30;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       } else {

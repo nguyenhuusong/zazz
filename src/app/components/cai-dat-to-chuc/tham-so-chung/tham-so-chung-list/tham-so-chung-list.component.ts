@@ -8,7 +8,7 @@ import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-render
 import { CustomTooltipComponent } from 'src/app/common/ag-component/customtooltip.component';
 import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { HttpParams } from '@angular/common/http';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { DialogService } from 'primeng/dynamicdialog';
@@ -97,8 +97,8 @@ export class ThamSoChungListComponent implements OnInit {
   cloneListViewsFilter = [];
   detailInfoFilter = null;
   optionsButonFilter = [
-    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm height-56 addNew', icon: 'pi pi-search' },
-    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger height-56 addNew', icon: 'pi pi-times' },
+    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm  addNew', icon: 'pi pi-search' },
+    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger  addNew', icon: 'pi pi-times' },
   ];
   onGridReady(params) {
     this.gridApi = params.api;
@@ -169,7 +169,7 @@ export class ThamSoChungListComponent implements OnInit {
     this.loadjs++
     if (this.loadjs === 5) {
       if (b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight +10;
+        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight +30;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       } else {

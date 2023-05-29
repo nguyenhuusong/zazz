@@ -13,15 +13,17 @@ const apiShome = environment.apiShomeBase;
 export class ApiHrmV2Service {
   constructor(
     private httpClient: HttpClient,
-    private authService: AuthService) { }
+    private authService: AuthService) {
+      this.options = {
+          headers: new HttpHeaders({
+            Authorization: this.authService.getAuthorizationHeaderValue(),
+            'Content-Type': 'application/json',
+            'X-Role-Token': localStorage.hasOwnProperty('md5') && localStorage.getItem('md5') ? localStorage.getItem('md5') : ''
+          })
+      }
+     }
   
-  options = {
-    headers: new HttpHeaders({
-      Authorization: this.authService.getAuthorizationHeaderValue(),
-      'Content-Type': 'application/json',
-      'X-Role-Token': localStorage.hasOwnProperty('md5') && localStorage.getItem('md5') ? localStorage.getItem('md5') : ''
-    })
-  };
+  options = {};
 
   getOrganizeTreeV2(queryParams: any, field_name): Observable<any> {
     return this.httpClient.get(`${apiHrmServer}/api/v1/organize/GetOrganizeTree?` + queryParams, this.options).pipe(

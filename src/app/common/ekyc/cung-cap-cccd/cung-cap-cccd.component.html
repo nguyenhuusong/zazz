@@ -1,22 +1,30 @@
 <div class="cccmnd" >
-    <div class="field grid">
-        <label for="firstname3" class="col-fixed font-semibold" style="width:150px">Loại giấy tờ</label>
-        <div class="col">
-            <p-dropdown appendTo="body" [baseZIndex]="100" 
-            [autoDisplayFirst]="false" placeholder="Loại giấy tờ" 
-                [options]="typeCards" [(ngModel)]="identityImage.idcard_type" name="searchBy">
-                <ng-template let-item pTemplate="selectedItem">
-                    <span>{{item.name}}</span>
-                </ng-template>
-                <ng-template let-car pTemplate="item">
-                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                        <div>{{car.name}}</div>
-                    </div>
-                </ng-template>
-                </p-dropdown>
+    <div class="grid">
+        <div class="col-6">
+            <div class="fields" style="
+            padding-left: 51px;
+        ">
+                <label for="firstname3" class="col-fixed font-semibold" style="width:150px">Loại giấy tờ</label>
+                <div class="col">
+                    <p-dropdown appendTo="body" [baseZIndex]="100" 
+                    [autoDisplayFirst]="false" placeholder="Loại giấy tờ" 
+                        [options]="typeCards" [(ngModel)]="identityImage.idcard_type" name="searchBy">
+                        <ng-template let-item pTemplate="selectedItem">
+                            <span>{{item.name}}</span>
+                        </ng-template>
+                        <ng-template let-car pTemplate="item">
+                            <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                                <div>{{car.name}}</div>
+                            </div>
+                        </ng-template>
+                        </p-dropdown>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="note"><span class="red-color">Lưu ý:</span> Chỉ chấp nhận file định dạng JPG, PNG và dung lượng dưới 5 MB</div>
         </div>
     </div>
-    <div class="note"><span class="red-color">Lưu ý:</span> Chỉ chấp nhận file định dạng JPG, PNG và dung lượng dưới 5 MB</div>
     <div class="images">
         <div class="wrap_image left">
             <h3>{{identityImage.idcard_type == 3 ? 'Hộ chiếu' : 'Mặt trước CMND/CCCD'}}</h3>

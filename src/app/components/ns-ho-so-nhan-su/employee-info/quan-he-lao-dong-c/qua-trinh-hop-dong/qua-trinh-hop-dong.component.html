@@ -1,18 +1,18 @@
-<div class="grid wrap-edit-detail">
-    <div class="col-12 border-section ">
+<!-- <div class="grid wrap-edit-detail pt-2">
+    <div class="border-section ">
         <p-panel>
             <ng-template pTemplate="header">
-                <div style="display: flex; justify-content: space-between;">
-                    <div class="grid d-flex justify-content-between">
+                <div>
+                    <div class="d-flex justify-content-between">
                         <h3 class="title-section">Quá trình hợp đồng</h3>
                     </div>
                     <div>
-                        <p-button (onClick)="Prints()"  *ngIf="this.listPrints.length > 0" label="PRINT" icon="pi pi-print" styleClass="p-button-sm height-56"
+                        <p-button (onClick)="Prints()"  *ngIf="this.listPrints.length > 0" label="PRINT" icon="pi pi-print" styleClass="p-button-sm "
                             [disabled]="isShowbtnPheDuyet">
                         </p-button>
         
                         <p-button class="" *ngIf="this.listPrints.length === 0" (click)="DowloadPlugin()"
-                            styleClass="p-button-sm height-56">
+                            styleClass="p-button-sm ">
                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M0 0H16V16H0V0Z" fill="#F3F8FF"/>
                                 </svg>
@@ -39,8 +39,36 @@
             </div>
         </p-panel>
     </div>
-</div>
+</div> -->
 
+<section class="pt-0 pb-0">
+    <div class="d-flex section-box justify-content-between">
+            <h3 class="title-section">Quá trình hợp đồng</h3>
+            <p-button (onClick)="Prints()"  *ngIf="this.listPrints.length > 0" label="PRINT" icon="pi pi-print" styleClass="p-button-sm "
+                [disabled]="isShowbtnPheDuyet">
+            </p-button>
+
+            <p-button class="" *ngIf="this.listPrints.length === 0" (click)="DowloadPlugin()"
+                styleClass="p-button-sm ">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 0H16V16H0V0Z" fill="#F3F8FF"/>
+                    </svg>
+                    &nbsp;Cài plugin
+            </p-button>
+        </div>
+            <app-list-grid-angular 
+                [domLayout]="'autoHeight'" 
+                *ngIf="columnDefs.length > 0" 
+                [idGrid]="gridKey + '_45dfs'"
+                [title]="'Chứng chỉ'"
+                [listsData]="listsData" 
+                [rowSelection]="'multiple'"
+                (callback)="rowSelected($event)"
+                (showConfig)="CauHinh()"
+                (onCellClicked)="onCellClicked($event)"
+                [columnDefs]="columnDefs">
+            </app-list-grid-angular>
+</section>
 
 
 <p-dialog header="Cài đặt cấu hình " [appendTo]="'body'" [focusTrap]="false" styleClass="popup-setting"
@@ -50,55 +78,83 @@
         [gridKey]="gridKey"></app-config-grid-table-form>
 </p-dialog>
 
-<p-dialog styleClass="popup-btngroup-edit-detail"  [(visible)]="displayFormEditDetail" [draggable]="false"  [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '1400px', height: 'auto'}">
-    <p-header>
-       Thêm mới danh sách đính kèm
-    </p-header>
+<p-sidebar
+styleClass="popup-btngroup-edit-detail"
+    [style]="{ width: '80%' }"
+    [(visible)]="displayFormEditDetail" 
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        Thêm mới danh sách đính kèm </ng-template>
+    <ng-template pTemplate="footer"></ng-template>
     <app-edit-detail [optionsButtonsEdit]="optionsButtonsPopup" *ngIf="listViewsDetail.length> 0 && displayFormEditDetail" [detailInfo]="dataDetailInfo"
         [detail]="dataDetailInfo" [manhinh]="'Edit'" [thongtinnhanvienNew]="true"
         [dataView]="listViewsDetail" (callback)="setDetailInfo($event)"
         (callbackcancel)="cancelDetailInfo($event)"></app-edit-detail>
-</p-dialog>
+</p-sidebar>
 
-
-
-<p-dialog header="Duyệt hợp đồng" [(visible)]="displayApproveContract" [modal]="true" [draggable]="false"
-    [resizable]="false" [style]="{width: '40vw'}" [autoZIndex]=true [draggable]="false" [resizable]="false">
-    <div class="row col-md-12 mt-1" style="margin-top: 5px;">
-        <div class="field-group textarea ">
-            <label for="">Ghi chú</label>
-            <textarea [(ngModel)]="modelDuyetHopDong.comment" name="comment" cols="30" rows="10" class="form-control"></textarea>
+<p-sidebar
+    [style]="{ width: '80%' }"
+    [(visible)]="displayApproveContract" 
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        Duyệt hợp đồng </ng-template>
+        <div class="row col-md-12 mt-1" style="margin-top: 5px;">
+            <div class="field-group textarea ">
+                <label for="">Ghi chú</label>
+                <textarea [(ngModel)]="modelDuyetHopDong.comment" name="comment" cols="30" rows="10" class="form-control"></textarea>
+            </div>
         </div>
-    </div>
-    <ng-template pTemplate="footer">
-        <p-button icon="pi pi-check" (click)="duyetHoSo()" label="Xác nhận" styleClass=" p-button-sm mr-1">
-        </p-button>
-        <p-button icon="pi pi-trash" (click)="cancelContract()" label="Hủy duyệt" styleClass=" p-button-sm mr-1">
-        </p-button>
-        <p-button icon="pi pi-times" (click)="displayApproveContract= !displayApproveContract" label="Hủy"
-            styleClass="p-button-secondary p-button-sm"></p-button>
-    </ng-template>
-</p-dialog>
+        <ng-template pTemplate="footer">
+            <p-button icon="pi pi-check" (click)="duyetHoSo()" label="Xác nhận" styleClass=" p-button-sm mr-1">
+            </p-button>
+            <p-button icon="pi pi-trash" (click)="cancelContract()" label="Hủy duyệt" styleClass=" p-button-sm mr-1">
+            </p-button>
+            <p-button icon="pi pi-times" (click)="displayApproveContract= !displayApproveContract" label="Hủy"
+                styleClass="p-button-secondary p-button-sm"></p-button>
+        </ng-template>
+</p-sidebar>
 
 
 
 <!-- <------------ Hợp đồng ----------->
-<p-dialog styleClass="popup-btngroup-edit-detail" [maximizable]="true"
+<app-contract-detail 
+    [displayFormEditDetail]="hienthihopdong" 
+    *ngIf="hienthihopdong" 
+    [modelContractInfo]="modelContractInfo"
+    (callback)="emitContract($event)" 
+    (back)="cancelPopupContract()">
+    </app-contract-detail>
+        
+<!-- <p-dialog styleClass="popup-btngroup-edit-detail" [maximizable]="true"
     header="{{modelContractInfo.contractId === null ? ' Tạo hợp đồng': 'Thông tin chi tiết hợp đồng'}}"
     [(visible)]="hienthihopdong" [modal]="true" [draggable]="false" [resizable]="false" [style]="{width: '80vw'}"
     [autoZIndex]=true [draggable]="false" [resizable]="false">
     <app-contract-detail *ngIf="hienthihopdong" [modelContractInfo]="modelContractInfo"
         (callback)="emitContract($event)" (back)="cancelPopupContract()"></app-contract-detail>
-</p-dialog>
-
-<p-dialog [(visible)]="displayPrint" [baseZIndex]="99" [modal]="true" [style]="{width: '1400px', height: 'auto'}">
-    <!-- <ngx-loading [show]="loading1" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading> -->
-    <p-header>
-        Danh sách in
-    </p-header>
+</p-dialog> -->
+<p-sidebar
+    [style]="{ width: '80%' }"
+    [(visible)]="displayPrint" 
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        Danh sách in </ng-template>
+    <ng-template pTemplate="footer"></ng-template>
+    
     <div class="grid">
         <div class="col-4">
-            <div class="field-group select valid">
+            <div class="fields valid">
                 <label for="" style="z-index: 2">Danh sách máy in</label>
                 <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" [options]="listPrints"
                     [(ngModel)]="modelPrint.PrinterName" name="PrinterName">
@@ -189,7 +245,6 @@
             <p-button label="Đóng" icon="pi pi-times" styleClass="p-button-sm p-button-secondary" (click)="displayAddHoliday = !displayAddHoliday"> </p-button>
         </div>
     </div> -->
-</p-dialog>
-
+</p-sidebar>
 
 

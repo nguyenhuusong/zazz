@@ -1,6 +1,6 @@
 import { AfterViewChecked, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiService } from 'src/app/services/api.service';
 import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
@@ -109,6 +109,8 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
   heightGrid = 0;
   dataRowSelected: any = [];
   optionsButtonDB: any = [];
+  isDetail = false;
+  vacancyId = '';
   ngAfterViewChecked(): void {
     const a: any = document.querySelector(".header");
     const b: any = document.querySelector(".sidebarBody");
@@ -117,7 +119,7 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
     this.loadjs++
     if (this.loadjs === 5) {
       if (b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight + 10;
+        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight + 30;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       } else {
@@ -192,7 +194,7 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
       buttons: [
         {
           onClick: this.editRow.bind(this),
-          label: 'Xem chi tiết',
+          label: 'Xem',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
           hide: CheckHideAction(MENUACTIONROLEAPI.GetVacancyPage.url, ACTIONS.VIEW)
@@ -233,7 +235,7 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
             `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
         },
         filter: '',
-        width: 60,
+        width: 100,
         pinned: 'right',
         cellRenderer: 'buttonAgGridComponent',
         cellClass: ['border-right', 'no-auto'],
@@ -264,10 +266,8 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
   }
 
   editRow({rowData}) {
-    const params = {
-      vacancyId: rowData.vacancyId
-    }
-    this.router.navigate(['/tuyen-dung/vi-tri-tuyen-dung/chi-tiet-vi-tri-tuyen-dung'], { queryParams: params });
+    this.vacancyId = rowData.vacancyId
+    this.isDetail = true;
   }
 
   onCellClicked(event) {
@@ -277,10 +277,12 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
   }
 
   create() {
-    const params = {
-      vacancyId: null
-    }
-    this.router.navigate(['/tuyen-dung/vi-tri-tuyen-dung/them-moi-vi-tri-tuyen-dung'], { queryParams: params });
+    this.vacancyId = ''
+    this.isDetail = true;
+  }
+
+  callback() {
+    this.isDetail = false;
   }
 
   find() {
@@ -415,8 +417,8 @@ export class ViTriTuyenDungComponent implements OnInit, AfterViewChecked {
   cloneListViewsFilter = [];
   detailInfoFilter = null;
   optionsButonFilter = [
-    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm ml-2 height-56 addNew', icon: 'pi pi-plus' },
-    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger ml-2 height-56 addNew', icon: 'pi pi-times' },
+    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm ml-2  addNew', icon: 'pi pi-plus' },
+    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger ml-2  addNew', icon: 'pi pi-times' },
   ];
 
   getVacancyFilter() {

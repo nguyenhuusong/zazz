@@ -113,12 +113,30 @@ const routes: Routes = [
   },
   {
     path: 'ho-so-nhan-su/import',
-    component: ImportHoSoNhanSuComponent,
+    component: ImportExcelComponent,
     data: {
       title: 'Import hồ sơ nhân sự',
       url: 'import-ho-so-nhan-su',
+      titleDad : 'Danh sách hồ sơ nhân sự',
+      urlDad: '/nhan-su/ho-so-nhan-su',
+      api: 'setEmployeeImport',
+      apiAccept: 'setEmployeeAccept',
+      fileDoc: 'ho-so-nhan-su.xls',
+      apiExport: 'setEmployeeExportDraft',
+      apiTemImport: 'getEmployeeImportTemp',
+      apihistory: 'getEmployeeImportPage',
+      apiDelhistory: 'delEmployeeImport',
+      fileNameTemImport: 'file_mau_ho_so_nhan_su',
     },
   },
+  // {
+  //   path: 'ho-so-nhan-su/import',
+  //   component: ImportHoSoNhanSuComponent,
+  //   data: {
+  //     title: 'Import hồ sơ nhân sự',
+  //     url: 'import-ho-so-nhan-su',
+  //   },
+  // },
   {
     path: 'ho-so-nhan-su/chi-tiet-ho-so-nhan-su',
     component: EmployeeInfoComponent,
@@ -430,7 +448,8 @@ const routes: Routes = [
     fileDoc: 'nguoi_quan_ly_import.xlsx',
     apiExport: 'setEmpManagerExportDraft',
     apiTemImport: 'getEmpManagerImportTemp',
-    fileNameTemImport: 'file_mau_bien_dong_xa_hoi',
+    apihistory: 'getEmployeeImportPage',
+    fileNameTemImport: 'file_mau_import_nguoi_quan_ly',
   },
 },
   

@@ -11,7 +11,6 @@ export class FirebaseAuthService {
     authState: any = null;
     tokenData = '';
     constructor(
-        private afAuth: AngularFireAuth,
         // private db: AngularFirestore,
         private router: Router) {
 

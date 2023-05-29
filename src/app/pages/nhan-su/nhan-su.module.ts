@@ -128,6 +128,7 @@ import { LoadingDetailModule } from 'src/app/common/loading-detail/loading-detai
 import { ChinhSachNvComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/quan-he-lao-dong-c/chinh-sach-nv/chinh-sach-nv.component';
 import { CustomerManagerComponent } from 'src/app/components/customer-manager/customer-manager.component';
 import { DetailCustomerManagerComponent } from 'src/app/components/customer-manager/detail-customer-manager/detail-customer-manager.component';
+import { ChiTietThoiGianLamViecComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/vi-tri-cong-viec/thoi-gian-lam-viec/chi-tiet-thoi-gian-lam-viec/chi-tiet-thoi-gian-lam-viec.component';
 @NgModule({
   imports: [
     MessagesModule,
@@ -264,6 +265,8 @@ import { DetailCustomerManagerComponent } from 'src/app/components/customer-mana
     ChinhSachNvComponent,
     CustomerManagerComponent,
     DetailCustomerManagerComponent,
+    ChiTietThoiGianLamViecComponent,
+
 
   ],
   providers: [ ]

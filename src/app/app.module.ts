@@ -16,13 +16,6 @@ import { FeedBaseService } from './services/firebase.service';
 import { NotificationService } from './services/notification.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { ButtonModule } from 'primeng/button';
-import { FirebaseAuthService } from './services/firebase-auth.service';
-import { AngularFireModule } from '@angular/fire';
-import { environment } from 'src/environments/environment';
-import { AngularFireStorageModule } from '@angular/fire/storage';
-import { AngularFireAuthModule } from '@angular/fire/auth';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
-import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AuthInterceptor } from './services/auth-interceptor';
 import { DialogModule } from 'primeng/dialog';
 import { CurrencyDirectiveModule } from './utils/common/currency.module';
@@ -42,7 +35,6 @@ import {TabMenuModule} from 'primeng/tabmenu';
 import { CalendarModule } from 'primeng/calendar';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { NavbarService } from './services/navbar.service';
-import { CustomTooltipComponent } from './utils/common/customtooltip.component';
 import { TooltipSuggestionComponent } from './utils/common/tooltip-suggestion.component';
 import { DropdownRendererComponent } from './utils/common/dropdown-renderer.component';
 import { DefaultLayoutComponent } from './containers/default-layout';
@@ -66,6 +58,7 @@ import {
   } from 'uni-control';
 import { ErrorService } from './services/error.service';
 import { EmployeeSaveService } from './services/employee-save.service';
+import { SidebarModule } from 'primeng/sidebar';
 const APP_CONTAINERS = [DefaultLayoutComponent];
 @NgModule({
     declarations: [
@@ -77,7 +70,6 @@ const APP_CONTAINERS = [DefaultLayoutComponent];
         NumberCellRenderer,
         TextEditorComponent,
         CheckboxEditorComponent,
-        CustomTooltipComponent,
         TooltipSuggestionComponent,
         DropdownRendererComponent,
         UniNotFoundComponent,
@@ -90,11 +82,6 @@ const APP_CONTAINERS = [DefaultLayoutComponent];
         HttpClientModule,
         FormsModule,
         ReactiveFormsModule,
-        AngularFireModule.initializeApp(environment.firebase),
-        AngularFireStorageModule,
-        AngularFireAuthModule,
-        AngularFirestoreModule,
-        AngularFireDatabaseModule,
         BrowserModule,
         ButtonModule,
         DialogModule,
@@ -109,6 +96,7 @@ const APP_CONTAINERS = [DefaultLayoutComponent];
         MultiSelectModule,
         IconControlSvgModule,
         IconControlModule,
+        SidebarModule,
         // AgGridModule.withComponents([
         //     ButtonRendererComponent1,
         //     NumberCellRenderer,
@@ -135,7 +123,6 @@ const APP_CONTAINERS = [DefaultLayoutComponent];
     providers: [
         AuthService,
         AuthGuardService,
-        FirebaseAuthService,
         ExportFileService,
         ApiService,
         ApiHrmService,

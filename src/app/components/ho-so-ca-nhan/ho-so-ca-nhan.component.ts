@@ -1,6 +1,6 @@
 import { AfterViewChecked, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
 import { CustomTooltipComponent } from 'src/app/common/ag-component/customtooltip.component';
@@ -113,7 +113,7 @@ export class HoSoCaNhanComponent implements OnInit, AfterViewChecked {
     this.loadjs++
     if (this.loadjs === 5) {
       if (b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight + 10;
+        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight + 78;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       } else {
@@ -196,7 +196,7 @@ export class HoSoCaNhanComponent implements OnInit, AfterViewChecked {
       buttons: [
         {
           onClick: this.ViewDetail.bind(this),
-          label: 'Xem chi tiết',
+          label: 'Xem',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
         },
@@ -244,7 +244,7 @@ export class HoSoCaNhanComponent implements OnInit, AfterViewChecked {
   ChangeEmail({rowData}) {
     this.idRow = rowData.custId;
     this.displayApprovedProfile = true;
-    this.modelApproved.cif_no = rowData.cif_no;
+    this.modelApproved.cif_no = rowData.custId;
     this.modelApproved.comments = '';
     this.modelApproved.name = rowData.full_name;
     this.modelApproved.typeChange = "Email";
@@ -253,7 +253,7 @@ export class HoSoCaNhanComponent implements OnInit, AfterViewChecked {
   ChangePhone({rowData}) {
     this.idRow = rowData.custId;
     this.displayApprovedProfile = true;
-    this.modelApproved.cif_no = rowData.cif_no;
+    this.modelApproved.cif_no = rowData.custId;
     this.modelApproved.comments = '';
     this.modelApproved.name = rowData.full_name;
     this.modelApproved.typeChange = "Phone";
@@ -262,7 +262,7 @@ export class HoSoCaNhanComponent implements OnInit, AfterViewChecked {
   approved({rowData}) {
     this.idRow = rowData.custId;
     this.displayApprovedProfile = true;
-    this.modelApproved.cif_no = rowData.cif_no;
+    this.modelApproved.cif_no = rowData.custId;
     this.modelApproved.comments = '';
     this.modelApproved.name = rowData.full_name;
     this.modelApproved.typeChange = "Approved";
@@ -275,6 +275,7 @@ export class HoSoCaNhanComponent implements OnInit, AfterViewChecked {
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe(results => {
           if (results.status === 'success') {
+            this.displayApprovedProfile = false;
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Xác minh thành công' });
             this.load();
           } else {
@@ -293,6 +294,7 @@ export class HoSoCaNhanComponent implements OnInit, AfterViewChecked {
         .subscribe(results => {
           if (results.status === 'success') {
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thay đổi số điện thoại thành công' });
+            this.displayApprovedProfile = false;
             this.load();
           } else {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
@@ -310,6 +312,7 @@ export class HoSoCaNhanComponent implements OnInit, AfterViewChecked {
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe(results => {
           if (results.status === 'success') {
+            this.displayApprovedProfile = false;
             this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Thay đổi email thành công' });
             this.load();
           } else {
@@ -345,7 +348,7 @@ export class HoSoCaNhanComponent implements OnInit, AfterViewChecked {
         //     `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
         // },
         filter: '',
-        width: 60,
+        width: 100,
         pinned: 'right',
         cellRenderer: 'buttonAgGridComponent',
         cellClass: ['border-right', 'no-auto'],
@@ -378,7 +381,7 @@ export class HoSoCaNhanComponent implements OnInit, AfterViewChecked {
   ViewDetail({rowData}) {
     const params = {
       custId: rowData.custId,
-      type: false
+      type: this.tabIndex === 0 ? true : false
     }
     this.router.navigate(['/tuyen-dung/ho-so-ca-nhan/chi-tiet-ho-so-ca-nhan'], { queryParams: params });
   }
@@ -468,8 +471,8 @@ export class HoSoCaNhanComponent implements OnInit, AfterViewChecked {
   cloneListViewsFilter = [];
   detailInfoFilter = null;
   optionsButonFilter = [
-    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm ml-2 height-56 addNew', icon: 'pi pi-plus' },
-    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger ml-2 height-56 addNew', icon: 'pi pi-times' },
+    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm ml-2  addNew', icon: 'pi pi-plus' },
+    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger ml-2  addNew', icon: 'pi pi-times' },
   ];
 
   getRecruitPlanFilter() {

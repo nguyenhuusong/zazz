@@ -4,7 +4,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { cloneDeep } from 'lodash';
 import { AgGridFn } from 'src/app/common/function-common/common';
 @Component({
@@ -38,9 +38,10 @@ export class MucLuongComponent implements OnInit {
   cauhinh() {
     this.displaySetting = true;
   }
-
+  heightGrid = 0;
   ngOnInit(): void {
-    this.getPayrollRankPage()
+    this.heightGrid = window.innerHeight - 200;
+    this.getPayrollRankPage();
   }
   columnDefs = [];
   listsData = [];

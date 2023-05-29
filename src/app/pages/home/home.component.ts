@@ -2,12 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { Chart } from 'chart.js';
-import { ConfirmationService, MessageService, TreeNode } from 'primeng/api';
+import { TreeNode } from 'primeng/api';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { stringify } from 'querystring';
 import { finalize } from 'rxjs';
 import * as moment from 'moment';
-import * as queryString from 'querystring';
 // import { ChartsModule } from 'ng2-charts';
 @Component({
   selector: 'app-home',

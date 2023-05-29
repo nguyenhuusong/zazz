@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { cloneDeep } from 'lodash';
 import { AgGridFn } from 'src/app/common/function-common/common';
 import { fromEvent, Subject, takeUntil } from 'rxjs';
@@ -78,12 +78,30 @@ export class DanhSachDinhKemComponent implements OnInit {
       }
     })
   }
+  metaId = null;
+  getEmpAttach() {
+    const queryParams = queryString.stringify({ metaId: this.metaId});
+    this.listViewsDetail = [];
+    this.apiService.getEmpAttach(queryParams)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(results => {
+      if (results.status === 'success') {
+        this.listViewsDetail = cloneDeep(results.data.group_fields);
+        this.dataDetailInfo = results.data;
+        this.displayFormEditDetail = true;
+      }
+    })
+  }
+
 
   setDetailInfo(data) {
-    const param = {
-      ...this.dataDetailInfo, group_fields: data
-    }
-    this.apiService.empproFileSetEmpAttach(param)
+    const formData = new FormData();
+    formData.append('group_fields', `${JSON.stringify(data)}`)
+    formData.append('metaId', this.dataDetailInfo.metaId ? `${this.dataDetailInfo.metaId}` : '')
+    formData.append('empId', `${this.dataDetailInfo.empId}`)
+    formData.append('meta_type', `${this.dataDetailInfo.meta_type}`)
+    formData.append('formFile', this.dataDetailInfo.formFile[0])
+    this.apiService.empproFileSetEmpAttach(formData)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(results => {
       if (results.status === 'success') {
@@ -112,7 +130,6 @@ export class DanhSachDinhKemComponent implements OnInit {
       return fileName;
     }
   }
-
 
   getEmpPersonalPage() {
     this.spinner.show();
@@ -207,8 +224,8 @@ export class DanhSachDinhKemComponent implements OnInit {
   }
 
   editRow(event) {
-    this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Chức năng đang phát triển'});
-    // this.addEmpPersonal();
+    this.metaId = event.rowData.metaId;
+    this.getEmpAttach() 
   }
 
   onCellClicked(event) {

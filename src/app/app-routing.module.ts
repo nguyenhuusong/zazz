@@ -23,6 +23,7 @@ const appRoutes: Routes = [
     path: '', component: DefaultLayoutComponent,
     data: { title: '' }, children: [
       { path: 'home', component: HomeComponent },
+      { path: 'uni-example', loadChildren: () => import('../app/pages/uni-example/uni-example.module').then(m => m.UniExampleModule) },
       {
         path: 'tuyen-dung',
         loadChildren: () => import('../app/pages/tuyen-dung/tuyen-dung.module').then(m => m.TuyenDungModule)

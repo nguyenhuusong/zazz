@@ -2,9 +2,7 @@ import { Injectable } from '@angular/core';
 import { UserManager, UserManagerSettings, User } from 'oidc-client';
 import { environment } from '../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { FirebaseAuthService } from './firebase-auth.service';
 import { map } from 'rxjs';
-import { ApiHrmService } from './api-hrm/apihrm.service';
 import { MessageService } from 'primeng/api';
 
 @Injectable()
@@ -12,21 +10,11 @@ export class AuthService {
   private manager: UserManager = new UserManager(environment.authenSettings);
   private user: User = null;
   constructor(private http: HttpClient,
-    private firebaseAuthService: FirebaseAuthService,
     private messageService: MessageService,
     ) {
       this.manager.getUser().then(async user => {
         this.user = user;
-        if(this.user) {
-          const token = this.getAccessTokenValue();
-          if (!this.firebaseAuthService.authenticated) {
-            const customToken = await this.getCustomToken(token);
-            if (customToken) {
-              this.firebaseAuthService.customLogin(customToken);
-            }
-          }
-          
-        }
+ 
 
       });
       }

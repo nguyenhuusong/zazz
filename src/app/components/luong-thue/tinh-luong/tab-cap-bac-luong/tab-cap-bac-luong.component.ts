@@ -1,5 +1,5 @@
   import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-  import * as queryString from 'querystring';
+  import queryString from 'query-string';
   import { ConfirmationService, MessageService, TreeNode } from 'primeng/api';
   import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
   import { NgxSpinnerService } from 'ngx-spinner';
@@ -147,7 +147,7 @@ import { fromEvent, Subject, takeUntil } from 'rxjs';
         buttons: [
           {
             onClick: this.editRow.bind(this),
-            label: 'Xem chi tiết',
+            label: 'Xem',
             icon: 'pi pi-tablet',
             class: 'btn-primary mr5',
             hide: CheckHideAction(MENUACTIONROLEAPI.GetPayrollAppInfoPage.url, ACTIONS.VIEW_TINH_LUONG_CAP_BAC_LUONG)
@@ -249,7 +249,7 @@ import { fromEvent, Subject, takeUntil } from 'rxjs';
       this.loadjs++
       if (this.loadjs === 5) {
         if (b && b.clientHeight) {
-          const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight + 75;
+          const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight + 80;
           this.heightGrid = window.innerHeight - totalHeight
           this.changeDetector.detectChanges();
         } else {

@@ -7,7 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { CustomTooltipComponent } from 'src/app/common/ag-component/customtooltip.component';
 import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { forkJoin, Subject, takeUntil } from 'rxjs';
 import { cloneDeep } from 'lodash';
 @Component({

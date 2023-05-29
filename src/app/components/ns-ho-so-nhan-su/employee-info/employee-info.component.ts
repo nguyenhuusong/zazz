@@ -4,7 +4,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { ApiCoreService } from 'src/app/services/api-core/apicore.service';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-employee-info',
@@ -75,14 +75,13 @@ export class EmployeeInfoComponent implements OnInit {
     .subscribe(results => {
       if (results.status === 'success') {
         this.dataEmployeeStatus = results.data;
-        this.handleChange(results.data.tab_st);
+        // this.handleChange(results.data.tab_st);
 
       }
     })
   }
   
   reloadEdit() {
-    console.log('rieload')
     this.dataEmployeeStatus = null;
     this.getEmployeeStatus();
   }

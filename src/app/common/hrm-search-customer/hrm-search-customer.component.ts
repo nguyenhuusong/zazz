@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output, } from '@angular/core';
 import { MessageService } from 'primeng/api';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 @Component({
   selector: 'app-hrm-search-customer',

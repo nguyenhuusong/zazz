@@ -1,14 +1,12 @@
 <div class="main-grid">
     <section class="bread-crumb">
-        <div class="d-flex grid bet ">
+        <div class="d-flex bet ">
             <div class="col-9 pd-0">
                 <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
             </div>
             <div class="col-3">
-                <div class="field-group select" >
-                    <label for="" style="color: #000;
-                    font-weight: 600;
-                    opacity: 0.9;">Chọn loại báo cáo  <span style="color:red">*</span></label>
+                <div class="fields" >
+                    <label>Chọn loại báo cáo  <span style="color:red">*</span></label>
                     <p-dropdown appendTo="body" placeholder="Chọn báo cáo"
                         (onChange)="changeReportTypeValue($event)" 
                         [baseZIndex]="100" 
@@ -21,21 +19,21 @@
             </div>
         </div>
     </section>
-    <section>
-        <div class="col-12">
+    <section class="pb-0">
+        <div class="section-box" *ngIf="listViewsReport.length > 0">
             <app-form-filter 
-            *ngIf="listViewsReport.length > 0" 
-            [listFields]="listViewsReport" 
-            [detailInfoFilter]="detailInfoReport" 
-            [buttonsFilters] ="optionsButonReport" 
-            (callback)="getReport($event)" 
-            (close)="close($event)">
-        </app-form-filter>
+                
+                [listFields]="listViewsReport" 
+                [detailInfoFilter]="detailInfoReport" 
+                [buttonsFilters] ="optionsButonReport" 
+                (callback)="getReport($event)" 
+                (close)="close($event)">
+            </app-form-filter>
             <!-- <app-hrm-filter-report [fields]="dataFilter" (queryData)="theQueryUpdated($event)"></app-hrm-filter-report> -->
         </div>
     </section>
     <section class="content pb-0" *ngIf="isShowLists && !isGridTree">
-        <div class="grid-default" #container>
+        <div class="section-box" #container>
             <app-list-grid-angular *ngIf="columnDefs.length > 0 && isShowLists" [listsData]="listsData" [domLayout]="'autoHeight'"
                 (showConfig)="cauhinh()" [idGrid]="gridKey + '_45dfs'" 
                 [columnDefs]="columnDefs"></app-list-grid-angular>
@@ -51,8 +49,8 @@
             </div>
         </div>
     </section>
-    <section class="content pb-0" *ngIf="isShowLists && isGridTree">
-        <div class="grid-default" #container>
+    <section class="content" *ngIf="isShowLists && isGridTree">
+        <div class="section-box" #container>
             <app-list-grid-tree-angular 
             *ngIf="columnDefs.length > 0  && autoGroupColumnDef && getDataPath"  
                 (showConfig)="cauhinh()"
@@ -80,7 +78,16 @@
     <app-config-grid-table-form *ngIf="displaySetting && gridKey" [typeConfig]="'TableInfo'"   [gridKey]="gridKey"></app-config-grid-table-form>
 </p-dialog>
 
-<p-dialog header="Chi tiết {{org_name}}" [(visible)]="displaydetailChilren"  [modal]="true" [style]="{width: '60vw'}" [maximizable]="true"
-    [draggable]="false" [resizable]="false" [focusTrap]="false" styleClass="popup-setting">
+<p-sidebar
+    [style]="{ width: '80%' }"
+    [(visible)]="displaydetailChilren" 
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        Chi tiết {{org_name}}</ng-template>
+    <ng-template pTemplate="footer"></ng-template>
     <app-detail-report [listsData]="listsDataChilren" *ngIf="displaydetailChilren" [cols]="colsDetail"></app-detail-report>
-</p-dialog>
+</p-sidebar>

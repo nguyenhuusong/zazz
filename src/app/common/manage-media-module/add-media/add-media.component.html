@@ -20,7 +20,7 @@
         </div>
         <div class="form-row" style="margin:10px 0px;">
             <div class="col-sm-12 pl-0 pr-0" *ngIf="type === 'folder'">
-                <div class="input-group">
+                <div class="fields">
                     <label class="control-label">Tên thư mục
                         <span style="color:red">*</span>
                     </label>
@@ -80,10 +80,11 @@
     </form>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-dropbox mr-3" (click)="onSave()" >
+
+    <p-button styleClass="p-button-sm" (click)="onSave()">
         <i class="fa fa-floppy-o" aria-hidden="true"></i> Lưu lại
-    </button>
-    <button type="button" class="btn btn-default" (click)="closeModal($event)" >
+    </p-button>
+    <p-button styleClass="p-button-sm" (click)="closeModal($event)">
         <i class="fa fa-times" aria-hidden="true"></i> Đóng lại
-    </button>
+    </p-button>
 </div>

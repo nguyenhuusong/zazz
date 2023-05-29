@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiService } from 'src/app/services/api.service';
 import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
@@ -114,7 +114,7 @@ export class NghiKhongLuongComponent implements OnInit {
     this.loadjs++
     if (this.loadjs === 5) {
       if (b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight + 10;
+        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight + 30;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       } else {
@@ -176,7 +176,7 @@ export class NghiKhongLuongComponent implements OnInit {
       buttons: [
         {
           onClick: this.editRow.bind(this),
-          label: 'Xem chi tiết',
+          label: 'Xem',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
           // hide: CheckHideAction(MENUACTIONROLEAPI.GetContractTypePage.url, ACTIONS.VIEW)
@@ -231,12 +231,12 @@ export class NghiKhongLuongComponent implements OnInit {
       }
     });
   }
-
+  isDetail = false;
+  id = '';
+  empId = '';
   editRow({ rowData }) {
-    const params = {
-      id: rowData.id,
-    }
-    this.router.navigate(['/chinh-sach/nghi-khong-luong/chi-tiet-nghi-khong-luong'], { queryParams: params });
+    this.id = rowData.id
+    this.isDetail = true;
   }
 
   onCellClicked(event) {
@@ -319,8 +319,8 @@ export class NghiKhongLuongComponent implements OnInit {
   cloneListViewsFilter = [];
   detailInfoFilter = null;
   optionsButonFilter = [
-    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm height-56 addNew', icon: 'pi pi-search' },
-    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger height-56 addNew', icon: 'pi pi-times' },
+    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm  addNew', icon: 'pi pi-search' },
+    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger  addNew', icon: 'pi pi-times' },
   ];
   //filter 
   getFilter() {
@@ -374,15 +374,24 @@ export class NghiKhongLuongComponent implements OnInit {
 
   isSearchEmp = false
   seachEmValue(event) {
-    const params = {
-      id: null,
-      empId: event.value
-    }
+    // const params = {
+    //   id: null,
+    //   empId: event.value
+    // }
     if(event.value) {
-      this.router.navigate(['/chinh-sach/nghi-khong-luong/them-moi-nghi-khong-luong'], { queryParams: params });
+      this.id = ''
+      this.isDetail = true;
+      this.isSearchEmp = false;
+      this.empId =  event.value;
+      // this.router.navigate(['/chinh-sach/nghi-khong-luong/them-moi-nghi-khong-luong'], { queryParams: params });
     }else{
       this.isSearchEmp = false;
     }
+  }
+
+  callback() {
+    this.isDetail = false;
+    this.load();
   }
 
   importFileExel() {

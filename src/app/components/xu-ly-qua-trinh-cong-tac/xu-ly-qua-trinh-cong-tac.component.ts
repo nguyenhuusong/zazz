@@ -1,7 +1,7 @@
 
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiService } from 'src/app/services/api.service';
 import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
@@ -15,7 +15,6 @@ import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 
 import { cloneDeep } from 'lodash';
 import { DialogService } from 'primeng/dynamicdialog';
-import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
 import { fromEvent, Subject, takeUntil } from 'rxjs';
 import * as FileSaver from 'file-saver';
@@ -36,7 +35,7 @@ export class XuLyQuaTrinhCongTacComponent implements OnInit {
     private messageService: MessageService,
     private spinner: NgxSpinnerService,
     private changeDetector: ChangeDetectorRef,
-    
+
     public dialogService: DialogService,
     private router: Router) {
 
@@ -58,7 +57,9 @@ export class XuLyQuaTrinhCongTacComponent implements OnInit {
   pagingComponent = {
     total: 0
   }
-
+  displayFormEditDetail: boolean = false;
+  empId: string = '';
+  processId: string = '';
   titleForm = {
     label: 'Thêm mới tài khoản',
     value: 'Add'
@@ -115,7 +116,7 @@ export class XuLyQuaTrinhCongTacComponent implements OnInit {
     this.loadjs++
     if (this.loadjs === 5) {
       if (b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight + 10;
+        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight + 30;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       } else {
@@ -137,39 +138,44 @@ export class XuLyQuaTrinhCongTacComponent implements OnInit {
     this.unsubscribe$.complete();
   }
 
+  callbackSave() {
+    this.displayFormEditDetail = false;
+    this.load();
+  }
+
   load() {
     this.columnDefs = []
     // this.spinner.show();
     const queryParams = queryString.stringify(this.query);
     this.apiService.getEmpProcessPage(queryParams)
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(
-      (results: any) => {
-        this.listsData = results.data.dataList.data;
-        this.gridKey = results.data.dataList.gridKey;
-        if (this.query.offSet === 0) {
-          this.cols = results.data.gridflexs;
-          this.colsDetail = results.data.gridflexdetails ? results.data.gridflexdetails : [];
-        }
-        this.initGrid();
-        this.countRecord.totalRecord = results.data.dataList.recordsTotal;
-        this.countRecord.totalRecord = results.data.dataList.recordsTotal;
-        this.countRecord.currentRecordStart = results.data.dataList.recordsTotal === 0 ? this.query.offSet = 0 : this.query.offSet + 1;
-        if ((results.data.dataList.recordsTotal - this.query.offSet) > this.query.pageSize) {
-          this.countRecord.currentRecordEnd = this.query.offSet + Number(this.query.pageSize);
-        } else {
-          this.countRecord.currentRecordEnd = results.data.dataList.recordsTotal;
-          setTimeout(() => {
-            const noData = document.querySelector('.ag-overlay-no-rows-center');
-            if (noData) { noData.innerHTML = 'Không có kết quả phù hợp' }
-          }, 100);
-        }
-        this.spinner.hide();
-        this.FnEvent();
-      },
-      error => {
-        this.spinner.hide();
-      });
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        (results: any) => {
+          this.listsData = results.data.dataList.data;
+          this.gridKey = results.data.dataList.gridKey;
+          if (this.query.offSet === 0) {
+            this.cols = results.data.gridflexs;
+            this.colsDetail = results.data.gridflexdetails ? results.data.gridflexdetails : [];
+          }
+          this.initGrid();
+          this.countRecord.totalRecord = results.data.dataList.recordsTotal;
+          this.countRecord.totalRecord = results.data.dataList.recordsTotal;
+          this.countRecord.currentRecordStart = results.data.dataList.recordsTotal === 0 ? this.query.offSet = 0 : this.query.offSet + 1;
+          if ((results.data.dataList.recordsTotal - this.query.offSet) > this.query.pageSize) {
+            this.countRecord.currentRecordEnd = this.query.offSet + Number(this.query.pageSize);
+          } else {
+            this.countRecord.currentRecordEnd = results.data.dataList.recordsTotal;
+            setTimeout(() => {
+              const noData = document.querySelector('.ag-overlay-no-rows-center');
+              if (noData) { noData.innerHTML = 'Không có kết quả phù hợp' }
+            }, 100);
+          }
+          this.spinner.hide();
+          this.FnEvent();
+        },
+        error => {
+          this.spinner.hide();
+        });
   }
 
   showButtons(event: any) {
@@ -177,7 +183,7 @@ export class XuLyQuaTrinhCongTacComponent implements OnInit {
       buttons: [
         {
           onClick: this.editRow.bind(this),
-          label: 'Xem chi tiết',
+          label: 'Xem',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
           // hide: CheckHideAction(MENUACTIONROLEAPI.GetContractTypePage.url, ACTIONS.VIEW)
@@ -219,25 +225,27 @@ export class XuLyQuaTrinhCongTacComponent implements OnInit {
       accept: () => {
         const queryParams = queryString.stringify({ processId: event.rowData.processId });
         this.apiService.delEmpProcessInfo(queryParams)
-        .pipe(takeUntil(this.unsubscribe$))
-        .subscribe((results: any) => {
-          if (results.status === 'success') {
-            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
-            this.load();
-            this.FnEvent();
-          } else {
-            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
-          }
-        });
+          .pipe(takeUntil(this.unsubscribe$))
+          .subscribe((results: any) => {
+            if (results.status === 'success') {
+              this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
+              this.load();
+              this.FnEvent();
+            } else {
+              this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+            }
+          });
       }
     });
   }
 
   editRow({ rowData }) {
-    const params = {
-      processId: rowData.processId,
-    }
-    this.router.navigate(['/nhan-su/xu-ly-qua-trinh-cong-tac/chi-tiet-xu-ly-qua-trinh-cong-tac'], { queryParams: params });
+    this.processId = rowData.processId;
+    this.displayFormEditDetail = true;
+    // const params = {
+    //   processId: rowData.processId,
+    // }
+    // this.router.navigate(['/nhan-su/xu-ly-qua-trinh-cong-tac/chi-tiet-xu-ly-qua-trinh-cong-tac'], { queryParams: params });
   }
 
   onCellClicked(event) {
@@ -286,31 +294,31 @@ export class XuLyQuaTrinhCongTacComponent implements OnInit {
   }
 
   handleParams() {
-  
+
   };
 
   listViewsFilter = [];
   cloneListViewsFilter = [];
   detailInfoFilter = null;
   optionsButonFilter = [
-    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm height-56 addNew', icon: 'pi pi-search' },
-    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger height-56 addNew', icon: 'pi pi-times' },
+    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm  addNew', icon: 'pi pi-search' },
+    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger  addNew', icon: 'pi pi-times' },
   ];
   //filter 
   getFilter() {
     this.apiService.getFilter('/api/v2/working/GetEmpProcessFilter')
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(results => {
-      if (results.status === 'success') {
-        const listViews = cloneDeep(results.data.group_fields);
-        this.cloneListViewsFilter = cloneDeep(listViews);
-        this.listViewsFilter = [...listViews];
-        const params = getParamString(listViews)
-        this.query = { ...this.query, ...params };
-        this.load();
-        this.detailInfoFilter = results.data;
-      }
-    });
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(results => {
+        if (results.status === 'success') {
+          const listViews = cloneDeep(results.data.group_fields);
+          this.cloneListViewsFilter = cloneDeep(listViews);
+          this.listViewsFilter = [...listViews];
+          const params = getParamString(listViews)
+          this.query = { ...this.query, ...params };
+          this.load();
+          this.detailInfoFilter = results.data;
+        }
+      });
   }
 
   filterLoad(event) {
@@ -318,15 +326,15 @@ export class XuLyQuaTrinhCongTacComponent implements OnInit {
     this.load();
   }
 
-  close({event, datas}) {
-    if(event !== 'Close') {
+  close({ event, datas }) {
+    if (event !== 'Close') {
       const listViews = cloneDeep(this.cloneListViewsFilter);
       this.listViewsFilter = cloneDeep(listViews);
-      const params =  getParamString(listViews)
-      this.query = { ...this.query, ...params};
+      const params = getParamString(listViews)
+      this.query = { ...this.query, ...params };
       this.load();
-    }else {
-      this.listViewsFilter =  cloneDeep(datas);
+    } else {
+      this.listViewsFilter = cloneDeep(datas);
     }
   }
 
@@ -352,9 +360,12 @@ export class XuLyQuaTrinhCongTacComponent implements OnInit {
       processId: null,
       empId: event.value
     }
-    if(event.value) {
-      this.router.navigate(['/nhan-su/xu-ly-qua-trinh-cong-tac/them-moi-xu-ly-qua-trinh-cong-tac'], { queryParams: params });
-    }else{
+    if (event.value) {
+      // this.router.navigate(['/nhan-su/xu-ly-qua-trinh-cong-tac/them-moi-xu-ly-qua-trinh-cong-tac'], { queryParams: params });
+      this.processId = null;
+      this.empId = event.value;
+      this.displayFormEditDetail = true;
+    } else {
       this.isSearchEmp = false;
     }
   }

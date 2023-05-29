@@ -1,12 +1,12 @@
 <div class="main-grid">
     <section class="bread-crumb">
         <div class="d-flex bet middle">
-            <div class="col-3 pd-0">
+            <div class="p-0 col-12 md:col-12 lg:col-3 xl:col-3">
                 <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
             </div>
-            <div class="d-flex end bottom gap-12 col-9 pd-0">
-                <div class="filter filter-search col-2 pd-0">
-                    <div class="field-group text search mb-0" [ngClass]=" query.filter ? 'valid' : 'invalid' ">
+            <div class="d-flex end p-0 wrap col-12 md:col-12 lg:col-9 xl:col-9 gap12">
+                <div class="filter filter-search p-0 col-4 md:col-4 lg:col-4 xl:col-3">
+                    <div class="fields search mb-0" [ngClass]=" query.filter ? 'valid' : 'invalid' ">
                         <input class="input-default" placeholder="Tìm kiếm" type="text" autocomplete="off" id="filter"
                             (keydown.enter)="query.offSet = 0; first = 0;load()"
                             [(ngModel)]="query.filter">
@@ -16,15 +16,15 @@
                     </div>
                 </div>
                 
-                <p-button styleClass="reloadBtn hidden height-56" (click)="cancel()">
+                <p-button styleClass="reloadBtn hidden " (click)="cancel()">
                     <svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M8.89128 1.80952C5.00096 1.80952 1.81817 5.01267 1.81817 9C1.81817 12.9873 5.00096 16.1905 8.89128 16.1905C11.1061 16.1905 13.087 15.1561 14.3877 13.526C14.7 13.1346 15.2718 13.0693 15.665 13.3801C16.0582 13.6908 16.1238 14.2599 15.8116 14.6513C14.1855 16.6891 11.6915 18 8.89128 18C3.9647 18 0 13.9544 0 9C0 4.04557 3.9647 0 8.89128 0C12.8587 0 16.2024 2.62369 17.3539 6.23284L18.2926 4.51929C18.5329 4.08057 19.0851 3.91882 19.5259 4.15801C19.9667 4.39719 20.1292 4.94675 19.8889 5.38547L17.6716 9.43309C17.5446 9.66497 17.3221 9.83003 17.0626 9.88497C16.803 9.93991 16.5323 9.87923 16.3215 9.71886L12.7738 7.02045C12.3749 6.71703 12.2987 6.14921 12.6035 5.75219C12.9084 5.35518 13.4789 5.2793 13.8778 5.58273L15.6726 6.94784C14.8021 3.96847 12.0851 1.80952 8.89128 1.80952Z" fill="#BDC4D8"/>
                     </svg>
                 </p-button>
-                <p-button styleClass="p-button-sm mr-1 height-56" (click)="goToSettingRole()">
+                <p-button styleClass="p-button-sm mr-1 " (click)="goToSettingRole()">
                         Cài đặt quyền    
                 </p-button>
-                <!-- <p-button styleClass="p-button-sm mr-1 height-56" (click)="themmoi()"
+                <!-- <p-button styleClass="p-button-sm mr-1 " (click)="themmoi()"
                 [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetUserPage.url, action: ACTIONS.ADD}"
 
                 >
@@ -34,16 +34,16 @@
                         &nbsp;
                         Thêm mới        
                 </p-button> -->
-                <p-button styleClass="p-button-sm mr-1 height-56" (click)="themmoi2()">
+                <p-button styleClass="p-button-sm mr-1 " (click)="themmoi2()">
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M11 5H9V9H5V11H9V15H11V11H15V9H11V5ZM10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM10 18C5.59 18 2 14.41 2 10C2 5.59 5.59 2 10 2C14.41 2 18 5.59 18 10C18 14.41 14.41 18 10 18Z" fill="#F3F8FF"/>
                         </svg>
                         &nbsp;
                         Thêm mới 
                 </p-button>
-                <p-button styleClass="p-button-sm height-56" icon="pi pi-file-excel" label="Export" (click)="exportData()"
+                <p-button styleClass="p-button-sm " icon="pi pi-file-excel" label="Export" (click)="exportData()"
                 ></p-button>
-                <p-button styleClass="p-button-sm height-56" (click)="cauhinh()">
+                <p-button styleClass="p-button-sm " (click)="cauhinh()">
                     <svg width="20" height="17" viewBox="0 0 20 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M19.5 17V0H0.50855L0.5 17H19.5ZM6.675 15.3187H2.21V6.81868H6.675V15.3187ZM8.575 15.3187V6.81868H17.79V15.3187H8.575ZM2.21 1.68132V5.13736H17.79V1.68132H2.21Z" fill="#F3F8FF"/>
                     </svg>
@@ -53,7 +53,7 @@
             </div>
         </div>
     </section>
-    <section class="content pb-0">
+    <section class="content">
         <div class="grid-default" #container>
             <app-list-grid-angular 
                 *ngIf="columnDefs.length > 0" 
@@ -75,113 +75,149 @@
     </section>
 </div>
 
-<p-dialog [(visible)]="displayAdd" [autoZIndex]="true" [modal]="true" [style]="{width: '1000px', height: 'auto'}" [draggable]="false" [resizable]="false">
-    <p-header>
-      {{titleForm}}
-    </p-header> 
-    <div class="col-md-12">
-        <div class="field-group text label-8">
-            <label for="">Tên đăng nhập <span style="color:red">*</span></label>
-            <input type="text" [readonly]="isEditUser" class="form-control" [(ngModel)]="addUserQuery.loginName" name="loginName" placeholder="Nhập tên đăng nhập">
-            <div *ngIf="!addUserQuery.loginName && saveAddUser" class="alert-validation alert-danger">
-                Vui lòng điền tên đăng nhập
-            </div>
-        </div>
-    </div>
-    <div class="col-md-12 mt-1">
-        <div class="field-group text label-8">
-            <label for="">Mật khẩu <span style="color:red">*</span></label>
-            <input type="password" [readonly]="isEditUser"  autocomplete="false" [(ngModel)]="addUserQuery.password" class="form-control" [value]="addUserQuery?.password" name="password" placeholder="Nhập mật khẩu">
-            <div *ngIf="!addUserQuery.password && saveAddUser && !isEditUser" class="alert-validation alert-danger">
-                Vui lòng điền mật khẩu
-            </div>
-        </div>
-    </div>
-    <div class="col-md-12 mt-1">
-        <div class="field-group text label-8">
-            <label for="">Họ và tên <span style="color:red">*</span></label>
-            <input type="text" class="form-control" [(ngModel)]="addUserQuery.fullName" [value]="addUserQuery?.fullName" name="fullName" placeholder="Nhập họ và tên">
-            <div *ngIf="!addUserQuery.fullName && saveAddUser" class="alert-validation alert-danger">
-                Vui lòng điền họ và tên
-            </div>
-        </div>
-    </div>
-    <div class="col-md-12  mt-1">
-        <div class="field-group text label-8">
-            <label for="">Số điện thoại <span style="color:red">*</span></label>
-            <input type="text" class="form-control" [(ngModel)]="addUserQuery.phone" [value]="addUserQuery?.phone" name="phone" placeholder="Nhập số điện thoại">
-            <div *ngIf="!addUserQuery.phone && saveAddUser" class="alert-validation alert-danger">
-                Vui lòng điền số điện thoại
-            </div>
-        </div>
-    </div>
-    <div class="col-md-12  mt-1">
-        <div class="field-group text label-8">
-            <label for="">Thư điện tử <span style="color:red">*</span></label>
-            <input type="text" class="form-control" [(ngModel)]="addUserQuery.email" [value]="addUserQuery?.email" name="email" placeholder="Nhập thư điện tử">
-            <div *ngIf="!addUserQuery.email && saveAddUser" class="alert-validation alert-danger">
-                Vui lòng điền Email
-            </div>
-        </div>
-    </div>
-    <div class="col-md-12  mt-1">
-        <div class="field-group multi-select" >
-            <!-- [ngClass]="modelAdd.ord_ids ? 'valid' : 'invalid'" -->
-            <label for="">Tổ chức <span style="color:red">*</span></label>
-            <p-multiSelect appendTo="body"
-            optionValue="value"
-            optionLabel="label"
-            [options]="detailOrganizes" [(ngModel)]="addUserQuery.ord_ids"
-            (onChange)="onChangeOrgan($event)"
-            ></p-multiSelect>
-            <div *ngIf="(addUserQuery.ord_ids && addUserQuery.ord_ids.length <= 0) && saveAddUser" class="alert-validation alert-danger">
-                Vui lòng chọn tổ chức
-            </div>
-        </div>
-    </div>
-    
-    <!-- <div class="col-md-12  mt-1">
-        <div class="field-group select">
-            <label for="">Người dùng</label>
-            <p-dropdown appendTo="body" [baseZIndex]="100" [options]="userIdS"  
-            [filter]="true" 
-            [(ngModel)]="modelAdd.userId" (onChange)="changeOragin()"></p-dropdown>
-        </div>
-    </div> -->
-    <div class="col-md-12  mt-1">
-        <div class="field-group multi-select" >
-            <!-- [ngClass]="modelAdd.ord_ids ? 'valid' : 'invalid'" -->
-            <label for="">Công ty trả lương</label>
-            <p-multiSelect appendTo="body"
-            optionValue="code"
-            optionLabel="label"
-            [options]="companies" [(ngModel)]="addUserQuery.companyIds"
-            ></p-multiSelect>
-        </div>
-    </div>
-    <div class="col-md-12  mt-1">
-        <div class="field-group multi-select" [ngClass]="addUserQuery.roles ? 'valid' : 'invalid'">
-            <label for="">Phân nhóm quyền <span style="color:red">*</span></label>
-            <p-multiSelect appendTo="body"
-            optionValue="code"
-            optionLabel="label"
-            [options]="roles" 
-            [(ngModel)]="addUserQuery.roles"></p-multiSelect>
-            <div *ngIf="(addUserQuery.roles && addUserQuery.roles.length <= 0) && saveAddUser" class="alert-validation alert-danger">
-                    Vui Lòng chọn quyền
+<p-sidebar
+    [style]="{ width: '80%' }"
+    [(visible)]="displayAdd" 
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        {{titleForm}} </ng-template>
+        <div class="col-md-12">
+            <div class="field-group text label-8">
+                <label for="">Tên đăng nhập <span style="color:red">*</span></label>
+                <input type="text" [readonly]="isEditUser" class="form-control" [(ngModel)]="addUserQuery.loginName" name="loginName" placeholder="Nhập tên đăng nhập">
+                <div *ngIf="!addUserQuery.loginName && saveAddUser" class="alert-validation alert-danger">
+                    Vui lòng điền tên đăng nhập
                 </div>
+            </div>
         </div>
-    </div>
-    
-    <!-- <div class="col-md-12  mt-1">
-        <label for="">Phòng</label>
-        <input type="text" class="form-control" [value]="chiTietNguoiDUng?.departmentName" name="departmentName"  >
-    </div> -->
-    <!-- <div class="col-md-12  mt-1">
-        <div class="field-group select" [ngClass]="modelAdd.parent_id ? 'valid' : 'invalid' ">
-            <label for="">Người quản lý</label>
-            <p-dropdown appendTo="body" [filter]="true" [baseZIndex]="100" [autoDisplayFirst]="false"
-                [options]="managerLists" [(ngModel)]="modelAdd.parent_id" name="parentId">
+        <div class="col-md-12 mt-1">
+            <div class="field-group text label-8">
+                <label for="">Mật khẩu <span style="color:red">*</span></label>
+                <input type="password" [readonly]="isEditUser"  autocomplete="false" [(ngModel)]="addUserQuery.password" class="form-control" [value]="addUserQuery?.password" name="password" placeholder="Nhập mật khẩu">
+                <div *ngIf="!addUserQuery.password && saveAddUser && !isEditUser" class="alert-validation alert-danger">
+                    Vui lòng điền mật khẩu
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 mt-1">
+            <div class="field-group text label-8">
+                <label for="">Họ và tên <span style="color:red">*</span></label>
+                <input type="text" class="form-control" [(ngModel)]="addUserQuery.fullName" [value]="addUserQuery?.fullName" name="fullName" placeholder="Nhập họ và tên">
+                <div *ngIf="!addUserQuery.fullName && saveAddUser" class="alert-validation alert-danger">
+                    Vui lòng điền họ và tên
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12  mt-1">
+            <div class="field-group text label-8">
+                <label for="">Số điện thoại <span style="color:red">*</span></label>
+                <input type="text" class="form-control" [(ngModel)]="addUserQuery.phone" [value]="addUserQuery?.phone" name="phone" placeholder="Nhập số điện thoại">
+                <div *ngIf="!addUserQuery.phone && saveAddUser" class="alert-validation alert-danger">
+                    Vui lòng điền số điện thoại
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12  mt-1">
+            <div class="field-group text label-8">
+                <label for="">Thư điện tử <span style="color:red">*</span></label>
+                <input type="text" class="form-control" [(ngModel)]="addUserQuery.email" [value]="addUserQuery?.email" name="email" placeholder="Nhập thư điện tử">
+                <div *ngIf="!addUserQuery.email && saveAddUser" class="alert-validation alert-danger">
+                    Vui lòng điền Email
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12  mt-1">
+            <div class="field-group multi-select" >
+                <!-- [ngClass]="modelAdd.ord_ids ? 'valid' : 'invalid'" -->
+                <label for="">Tổ chức <span style="color:red">*</span></label>
+                <p-multiSelect appendTo="body"
+                optionValue="value"
+                optionLabel="label"
+                [options]="detailOrganizes" [(ngModel)]="addUserQuery.ord_ids"
+                (onChange)="onChangeOrgan($event)"
+                ></p-multiSelect>
+                <div *ngIf="(addUserQuery.ord_ids && addUserQuery.ord_ids.length <= 0) && saveAddUser" class="alert-validation alert-danger">
+                    Vui lòng chọn tổ chức
+                </div>
+            </div>
+        </div>
+        
+        <!-- <div class="col-md-12  mt-1">
+            <div class="fields">
+                <label for="">Người dùng</label>
+                <p-dropdown appendTo="body" [baseZIndex]="100" [options]="userIdS"  
+                [filter]="true" 
+                [(ngModel)]="modelAdd.userId" (onChange)="changeOragin()"></p-dropdown>
+            </div>
+        </div> -->
+        <div class="col-md-12  mt-1">
+            <div class="field-group multi-select" >
+                <!-- [ngClass]="modelAdd.ord_ids ? 'valid' : 'invalid'" -->
+                <label for="">Công ty trả lương</label>
+                <p-multiSelect appendTo="body"
+                optionValue="code"
+                optionLabel="label"
+                [options]="companies" [(ngModel)]="addUserQuery.companyIds"
+                ></p-multiSelect>
+            </div>
+        </div>
+        <div class="col-md-12  mt-1">
+            <div class="field-group multi-select" [ngClass]="addUserQuery.roles ? 'valid' : 'invalid'">
+                <label for="">Phân nhóm quyền <span style="color:red">*</span></label>
+                <p-multiSelect appendTo="body"
+                optionValue="code"
+                optionLabel="label"
+                [options]="roles" 
+                [(ngModel)]="addUserQuery.roles"></p-multiSelect>
+                <div *ngIf="(addUserQuery.roles && addUserQuery.roles.length <= 0) && saveAddUser" class="alert-validation alert-danger">
+                        Vui Lòng chọn quyền
+                    </div>
+            </div>
+        </div>
+        
+        <!-- <div class="col-md-12  mt-1">
+            <label for="">Phòng</label>
+            <input type="text" class="form-control" [value]="chiTietNguoiDUng?.departmentName" name="departmentName"  >
+        </div> -->
+        <!-- <div class="col-md-12  mt-1">
+            <div class="fields" [ngClass]="modelAdd.parent_id ? 'valid' : 'invalid' ">
+                <label for="">Người quản lý</label>
+                <p-dropdown appendTo="body" [filter]="true" [baseZIndex]="100" [autoDisplayFirst]="false"
+                    [options]="managerLists" [(ngModel)]="modelAdd.parent_id" name="parentId">
+                    <ng-template let-item pTemplate="selectedItem">
+                        <span>{{item.label}}</span>
+                    </ng-template>
+                    <ng-template let-car pTemplate="item">
+                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                            <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+            </div>
+        </div> -->
+        <!-- <div class="col-md-12  mt-1">
+            <div class="p-field-checkbox mb-2">
+                <label for="binary" class="mr-2"> Là admin</label>
+                <p-checkbox [(ngModel)]="modelAdd.admin_st" [binary]="true" inputId="binary"></p-checkbox>
+            </div>
+        </div> -->
+        <!-- <div class="col-md-12  mt-1">
+            <div class="fields">
+                <label for="">Tổ chức</label>
+                <p-dropdown appendTo="body" [baseZIndex]="100" [options]="detailOrganizes"  
+                [filter]="true" 
+                [(ngModel)]="modelAdd.ord_id" (onChange)="changeOragin()"></p-dropdown>
+            </div>
+        </div> -->
+        <!-- <div class="col-md-12  mt-1">
+            <div class="fields" [ngClass]="modelAdd.position ? 'valid' : 'invalid' ">
+                <label for="">Chức vụ</label>
+                <p-dropdown [filter]="true" appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
+                [options]="dataPositionList" [(ngModel)]="modelAdd.position" name="position">
                 <ng-template let-item pTemplate="selectedItem">
                     <span>{{item.label}}</span>
                 </ng-template>
@@ -190,108 +226,89 @@
                         <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
                     </div>
                 </ng-template>
-            </p-dropdown>
-        </div>
-    </div> -->
-    <!-- <div class="col-md-12  mt-1">
-        <div class="p-field-checkbox mb-2">
-            <label for="binary" class="mr-2"> Là admin</label>
-            <p-checkbox [(ngModel)]="modelAdd.admin_st" [binary]="true" inputId="binary"></p-checkbox>
-        </div>
-    </div> -->
-    <!-- <div class="col-md-12  mt-1">
-        <div class="field-group select">
-            <label for="">Tổ chức</label>
-            <p-dropdown appendTo="body" [baseZIndex]="100" [options]="detailOrganizes"  
-            [filter]="true" 
-            [(ngModel)]="modelAdd.ord_id" (onChange)="changeOragin()"></p-dropdown>
-        </div>
-    </div> -->
-    <!-- <div class="col-md-12  mt-1">
-        <div class="field-group select" [ngClass]="modelAdd.position ? 'valid' : 'invalid' ">
-            <label for="">Chức vụ</label>
-            <p-dropdown [filter]="true" appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
-            [options]="dataPositionList" [(ngModel)]="modelAdd.position" name="position">
+                </p-dropdown>
+                <div *ngIf="!modelAdd.position && saveAddUser" class="alert-validation alert-danger">
+                    Vui Lòng chọn chức vụ
+                </div>
+            </div>
+        </div> -->
+        <ng-template pTemplate="footer">
+            <div class="col-md-12 mt-1 text-right">
+                <p-button label="Lưu lại" icon="pi pi-check" styleClass="p-button-sm" (click)="save()" 
+    
+                ></p-button>
+                <!-- [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetUserPage.url, action: ACTIONS.EDIT}" -->
+            </div>
+        </ng-template>
+</p-sidebar>
+
+<p-sidebar
+[style]="{ width: '80%' }"
+[(visible)]="seachManager" 
+position="right">
+<ng-template pTemplate="header">
+    <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+        <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+    </svg> &nbsp;&nbsp;
+    Tìm kiếm Tài khoản </ng-template>
+
+    <p-panel header="Nhập tên nhân viên tìm kiếm">
+        <div class="fields">
+            <label for="">Chọn tổ chức</label>
+            <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
+            [options]="organizes" [(ngModel)]="orgId" name="orgId"   [filter]="true">
             <ng-template let-item pTemplate="selectedItem">
-                <span>{{item.label}}</span>
+                <span>{{item?.label}}</span>
             </ng-template>
             <ng-template let-car pTemplate="item">
                 <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                    <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                <div style="font-size:14px;float:right;margin-top:4px">{{car?.label}}</div>
                 </div>
             </ng-template>
             </p-dropdown>
-            <div *ngIf="!modelAdd.position && saveAddUser" class="alert-validation alert-danger">
-                Vui Lòng chọn chức vụ
-            </div>
         </div>
-    </div> -->
-    <ng-template pTemplate="footer">
-        <div class="col-md-12 mt-1 text-right">
-            <p-button label="Lưu lại" icon="pi pi-check" styleClass="p-button-sm" (click)="save()" 
-
-            ></p-button>
-            <!-- [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetUserPage.url, action: ACTIONS.EDIT}" -->
-        </div>
-    </ng-template>
-</p-dialog> 
-
-<p-dialog [(visible)]="seachManager" [autoZIndex]="true" [modal]="true" [style]="{width: '1000px', height: 'auto'}" [draggable]="false" [resizable]="false">
-    <!-- <ngx-loading [show]="loading1" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading> -->
-    <p-header >
-      Tìm kiếm Tài khoản
-  </p-header>
-  <p-panel header="Nhập tên nhân viên tìm kiếm">
-    <div class="field-group select label-8">
-        <label for="">Chọn tổ chức</label>
-        <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
-        [options]="organizes" [(ngModel)]="orgId" name="orgId"   [filter]="true">
-        <ng-template let-item pTemplate="selectedItem">
-            <span>{{item?.label}}</span>
-        </ng-template>
-        <ng-template let-car pTemplate="item">
-            <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-            <div style="font-size:14px;float:right;margin-top:4px">{{car?.label}}</div>
-            </div>
-        </ng-template>
-        </p-dropdown>
-    </div>
-    <div class="field-group text label-8">
-        <label>Tìm kiếm tên nhân viên</label> 
-        <p-autoComplete [(ngModel)]="valueSearchUser" name="valueSearchUser" placeholder="" 
-        [suggestions]="listUser" (onSelect)="onSelectUser($event)"
-        (completeMethod)="getListUserMaster($event)" field="label"></p-autoComplete>
-    </div>
-    
-    <!-- <div class="field-group text" [ngClass]="valueSearchUser ? 'valid' : 'invalid' ">
-            <p-autoComplete [(ngModel)]="valueSearchUser" name="valueSearchUser" placeholder="" [suggestions]="listUser" (onSelect)="onSelectUser($event)"
+        <div class="field-group text label-8">
+            <label>Tìm kiếm tên nhân viên</label> 
+            <p-autoComplete [(ngModel)]="valueSearchUser" name="valueSearchUser" placeholder="" 
+            [suggestions]="listUser" (onSelect)="onSelectUser($event)"
             (completeMethod)="getListUserMaster($event)" field="label"></p-autoComplete>
-            <label>Tìm kiếm tên nhân viên</label>
-        </div> -->
-    </p-panel>
-    <p-panel header="Thông tin tài khoản">
-        <div class="grid-default border">
-            <app-list-grid-angular *ngIf="columnDefs1.length > 0" [listsData]="managerInfoList" [height]="400"
-                [columnDefs]="columnDefs1"></app-list-grid-angular>
-            </div>
-    <ng-template pTemplate="footer">
-        <p-button label="Đóng"  styleClass="p-button-secondary" (click)="seachManager = !seachManager"></p-button>
-    </ng-template>
-    </p-panel>
-   
-  </p-dialog>
+        </div>
+        
+        <!-- <div class="field-group text" [ngClass]="valueSearchUser ? 'valid' : 'invalid' ">
+                <p-autoComplete [(ngModel)]="valueSearchUser" name="valueSearchUser" placeholder="" [suggestions]="listUser" (onSelect)="onSelectUser($event)"
+                (completeMethod)="getListUserMaster($event)" field="label"></p-autoComplete>
+                <label>Tìm kiếm tên nhân viên</label>
+            </div> -->
+        </p-panel>
+        <p-panel header="Thông tin tài khoản">
+            <div class="grid-default border">
+                <app-list-grid-angular *ngIf="columnDefs1.length > 0" [listsData]="managerInfoList" [height]="400"
+                    [columnDefs]="columnDefs1"></app-list-grid-angular>
+                </div>
+        </p-panel>
+        <ng-template pTemplate="footer">
+            <p-button label="Đóng"  styleClass="p-button-secondary" (click)="seachManager = !seachManager"></p-button>
+        </ng-template>
+</p-sidebar>
 
   <p-dialog header="Cài đặt cấu hình" [(visible)]="displaySetting" (onHide)="find()" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
     [draggable]="false" [resizable]="false" [focusTrap]="false" styleClass="popup-setting">
     <app-config-grid-table-form *ngIf="displaySetting && gridKey" [typeConfig]="'TableInfo'"   [gridKey]="gridKey"></app-config-grid-table-form>
 </p-dialog>
 
-
-
-<p-dialog [(visible)]="isShowChangePassword" [modal]="true" [style]="{width: '600px', height: 'auto'}">
-    <p-header>
-      Cập nhật mật khẩu tài khoản [{{this.modelPass.userLogin}}]
-  </p-header>
+<p-sidebar
+    [style]="{ width: '80%' }"
+    [(visible)]="isShowChangePassword" 
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        Cập nhật mật khẩu tài khoản [{{this.modelPass.userLogin}}] </ng-template>
+    <ng-template pTemplate="footer"></ng-template>
+    
   <form #editSMSF="ngForm" class="form-horizontal change-password">
     <div class="box-body" style="padding:10px;">
       <div class="form-row row" style="margin:10px 0px;">
@@ -344,7 +361,7 @@
     </div>
 
   </form>
-</p-dialog>
+</p-sidebar>
 
 <p-overlayPanel #op [style]="{'width': '40rem'}" [style]="{width: '700px'}" styleClass="advance-seach">
     <ng-template pTemplate>
@@ -354,7 +371,7 @@
         <div class="header-filter-search grid mt-1">
             <div class="icon col-12 pl-0" style="display: flex; flex-wrap: wrap;">
                 <!-- <div class="col-6">
-                    <div class="field-group select valid">
+                    <div class="fields valid">
                         <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
                         [options]="orgRoots" [(ngModel)]="query.organizeId" name="organizeId" (onChange)="find()">
                         <ng-template let-item pTemplate="selectedItem">

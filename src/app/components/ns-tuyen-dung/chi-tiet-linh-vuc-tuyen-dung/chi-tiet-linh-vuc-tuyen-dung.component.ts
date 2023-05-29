@@ -1,7 +1,7 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
-const queryString = require('query-string');
+import queryString from 'query-string';
 import { cloneDeep } from 'lodash';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subject, takeUntil } from 'rxjs';
@@ -15,6 +15,8 @@ import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
   styleUrls: ['./chi-tiet-linh-vuc-tuyen-dung.component.scss']
 })
 export class ChiTietLinhVucTuyenDungComponent implements OnInit, OnDestroy {
+  @Input() jobId = '';
+  @Output() callback = new EventEmitter<any>();
   items: MenuItem[] = [];
   paramsObject = null;
   detailInfo = null
@@ -56,13 +58,14 @@ export class ChiTietLinhVucTuyenDungComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((params) => {
         this.paramsObject = { ...params.keys, ...params };
-        this.modelEdit.jobId = this.paramsObject.params.jobId || null
+        //this.modelEdit.jobId = this.paramsObject.params.jobId || null
         this.getJobInfo();
       });
   };
 
   getJobInfo() {
-    const queryParams = queryString.stringify(this.modelEdit);
+    //const queryParams = queryString.stringify(this.modelEdit);
+    const queryParams = queryString.stringify({jobId: this.jobId});
     this.apiService.getJobInfo(queryParams)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {
@@ -85,7 +88,7 @@ export class ChiTietLinhVucTuyenDungComponent implements OnInit, OnDestroy {
         if (results.status === 'success') {
           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
           this.spinner.hide();
-          this.router.navigate(['/tuyen-dung/chuyen-mon']);
+          this.callback.emit();
         } else {
           this.messageService.add({
             severity: 'error', summary: 'Thông báo',
@@ -102,7 +105,7 @@ export class ChiTietLinhVucTuyenDungComponent implements OnInit, OnDestroy {
     if (data === 'CauHinh') {
       this.getJobInfo();
     } else {
-      this.router.navigate(['/tuyen-dung/chuyen-mon']);
+      this.callback.emit();
     }
 
   }

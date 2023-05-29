@@ -1,8 +1,8 @@
-<div class="grid wrap-edit-detail">
+<div class="grid wrap-edit-detail pt-2">
     <div class="col-12 border-section ">
         <p-panel>
             <ng-template pTemplate="header">
-                <div class="grid d-flex justify-content-between">
+                <div class="d-flex justify-content-between">
                     <h3 class="title-section">Quá trình công tác</h3>
                 </div>
             </ng-template>
@@ -38,27 +38,15 @@
         [gridKey]="gridKey"></app-config-grid-table-form>
 </p-dialog>
 
-<p-dialog styleClass="popup-btngroup-edit-detail"  [(visible)]="displayFormEditDetail" [draggable]="false"  [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '1400px', height: 'auto'}">
-    <p-header>
-        Thêm mới quá trình công tác
-    </p-header>
 
-    <!-- <p-card>
-        <div class="status-line steps-contract col-12 m-auto">
-            <p-steps [model]="steps" [(activeIndex)]="activeIndex" [readonly]="false"></p-steps>
-        </div>
-    </p-card>
-    <p-divider></p-divider>
-    <p-card>
-        <app-edit-detail [optionsButtonsEdit]="optionsButtonsView" *ngIf="listViewsDetail.length> 0" [detailInfo]="dataDetailInfo"
-            [detail]="dataDetailInfo" [manhinh]="'Edit'" [thongtinnhanvienNew]="true"
-            [dataView]="listViewsDetail" (callback)="setDetail($event)" 
-            (callBackForm)="callBackForm($event)"
-            (callbackcancel)="canceDetail($event)"></app-edit-detail>
-    </p-card>
-     -->
 
-     <app-chi-tiet-xu-ly-qt-cong-tac *ngIf="displayFormEditDetail" [isDialog]="true" [empId]="empId" [processId]="processId" (callback)="callbackSave()"></app-chi-tiet-xu-ly-qt-cong-tac>
-</p-dialog>
+<app-chi-tiet-xu-ly-qt-cong-tac 
+    *ngIf="displayFormEditDetail" 
+    [displayFormEditDetail]="displayFormEditDetail" 
+    [isDialog]="true" [empId]="empId" 
+    [processId]="processId" 
+    (callback)="callbackSave()">
+</app-chi-tiet-xu-ly-qt-cong-tac>
+
 
 

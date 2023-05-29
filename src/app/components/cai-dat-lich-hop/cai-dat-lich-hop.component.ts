@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { Router } from '@angular/router';
 import { ConfirmationService, MessageService, TreeNode } from 'primeng/api';
 import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
@@ -130,7 +130,7 @@ export class CaiDatLichHopComponent implements OnInit {
     this.loadjs ++ 
     if (this.loadjs === 5) {
       if(b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight +10;
+        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight +30;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       }else {
@@ -404,13 +404,6 @@ export class CaiDatLichHopComponent implements OnInit {
     this.router.navigate(['/cai-dat/cai-dat-lich-hop/danh-sach-phong-hop']);
   }
 
-  editRow({rowData}): void {
-    const params = {
-      meet_ud: rowData.meet_ud
-    }
-    this.router.navigate(['/cai-dat/cai-dat-lich-hop/chi-tiet-lich-hop'], { queryParams: params });
-  }
-
   onCellClicked(event) {
     if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
       this.editRow(event = {rowData: event.data})
@@ -452,11 +445,29 @@ export class CaiDatLichHopComponent implements OnInit {
     this.FnEvent();
   }
 
+  meetUd = '';
+  isDetail = false;
   handleAdd(): void {
-    const params = {
-      meet_ud: ''
-    }
-    this.router.navigate(['/cai-dat/cai-dat-lich-hop/them-moi-lich-hop'], { queryParams: params });
+    this.isDetail = true;
+    this.meetUd = '';
+    // const params = {
+    //   meet_ud: ''
+    // }
+    // this.router.navigate(['/cai-dat/cai-dat-lich-hop/them-moi-lich-hop'], { queryParams: params });
+  }
+
+  editRow({rowData}): void {
+    this.isDetail = true;
+    this.meetUd = rowData.meet_ud;
+    // const params = {
+    //   meet_ud: rowData.meet_ud
+    // }
+    // this.router.navigate(['/cai-dat/cai-dat-lich-hop/chi-tiet-lich-hop'], { queryParams: params });
+  }
+
+  callback() {
+    this.isDetail = false;
+    this.load();
   }
 
   toManagerRoom(): void {
@@ -472,8 +483,8 @@ export class CaiDatLichHopComponent implements OnInit {
   cloneListViewsFilter = [];
 detailInfoFilter = null;
   optionsButonFilter = [
-    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm height-56 addNew', icon: 'pi pi-search' },
-    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger height-56 addNew', icon: 'pi pi-times' },
+    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm  addNew', icon: 'pi pi-search' },
+    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger  addNew', icon: 'pi pi-times' },
   ];
   //filter 
   getFilter() {

@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
@@ -135,7 +135,7 @@ export class DanhSachPhongHopComponent implements OnInit {
     this.loadjs++
     if (this.loadjs === 5) {
       if (b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight + 10;
+        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight + 30;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       } else {
@@ -233,7 +233,7 @@ export class DanhSachPhongHopComponent implements OnInit {
       buttons: [
         {
           onClick: this.handleEdit.bind(this),
-          label: 'Sửa',
+          label: 'Xem',
           icon: 'fa fa-pencil-square-o',
           class: 'btn-primary mr5',
           hide: this.CheckHideXem(event)
@@ -293,7 +293,7 @@ export class DanhSachPhongHopComponent implements OnInit {
             `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
         },
         filter: '',
-        width: 70,
+        width: 100,
         pinned: 'right',
         cellRenderer: 'buttonAgGridComponent',
         cellClass: ['border-right', 'no-auto', 'cell-options'],
@@ -324,12 +324,29 @@ export class DanhSachPhongHopComponent implements OnInit {
     });
   }
 
-
+  roomId = '';
+  isDetail = false;
   handleEdit(e): void {
-    const params = {
-      roomId: e.rowData.roomId
-    }
-    this.router.navigate(['hoat-dong/lich-hop/danh-sach-phong-hop/chi-tiet-phong-hop'], { queryParams: params });
+    this.isDetail = true;
+    this.roomId = e.rowData.roomId;
+    // const params = {
+    //   roomId: e.rowData.roomId
+    // }
+    // this.router.navigate(['hoat-dong/lich-hop/danh-sach-phong-hop/chi-tiet-phong-hop'], { queryParams: params });
+  }
+
+  handleAdd(): void {
+    this.isDetail = true;
+    this.roomId = '';
+    // const params = {
+    //   roomId: ''
+    // }
+    // this.router.navigate(['hoat-dong/lich-hop/danh-sach-phong-hop/them-moi-phong-hop'], { queryParams: params });
+  }
+
+  callback() {
+    this.isDetail = false;
+    this.load();
   }
 
   onGridReady(params): void {
@@ -363,20 +380,13 @@ export class DanhSachPhongHopComponent implements OnInit {
     this.load();
   }
 
-  handleAdd(): void {
-    const params = {
-      roomId: ''
-    }
-    this.router.navigate(['hoat-dong/lich-hop/danh-sach-phong-hop/them-moi-phong-hop'], { queryParams: params });
-  }
-
   //filter 
   listViewsFilter = [];
   cloneListViewsFilter = [];
   detailInfoFilter = null;
   optionsButonFilter = [
-    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm height-56 addNew', icon: 'pi pi-search' },
-    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger height-56 addNew', icon: 'pi pi-times' },
+    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm  addNew', icon: 'pi pi-search' },
+    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger  addNew', icon: 'pi pi-times' },
   ];
   getFilter() {
     // value === 1 ? '' : ''

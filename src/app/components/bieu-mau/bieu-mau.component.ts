@@ -5,7 +5,7 @@ import { ExportFileService } from './../../services/export-file.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { Component, OnInit, ChangeDetectorRef, AfterViewChecked, OnDestroy } from '@angular/core';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { Subject, takeUntil } from 'rxjs';
 import { cloneDeep } from 'lodash';
@@ -285,7 +285,7 @@ export class BieuMauComponent implements OnInit, OnDestroy {
       buttons: [
         {
           onClick: this.editRow.bind(this),
-          label: 'Thông tin chi tiết',
+          label: 'Xem',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
           // hide: this.indexTab === 0 || CheckHideAction(MENUACTIONROLEAPI.GetFormGeneral.url, ACTIONS.VIEW)
@@ -487,14 +487,14 @@ export class BieuMauComponent implements OnInit, OnDestroy {
   ngAfterViewChecked(): void {
     const a: any = document.querySelector(".header");
     const b: any = document.querySelector(".sidebarBody");
-    const c: any = document.querySelector(".bread-filter");
     // const d: any = document.querySelector(".bread-crumb");
     const e: any = document.querySelector(".paginator");
     this.loadjs++
     if (this.loadjs === 5) {
       if (b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight +  e.clientHeight + 200;
+        const totalHeight = a.clientHeight + b.clientHeight  +  e.clientHeight + 150;
         this.heightGrid = window.innerHeight - totalHeight
+        console.log(this.heightGrid)
         this.changeDetector.detectChanges();
       } else {
         this.loadjs = 0;
@@ -616,8 +616,8 @@ export class BieuMauComponent implements OnInit, OnDestroy {
   cloneListViewsFilter = [];
 detailInfoFilter = null;
   optionsButonFilter = [
-    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm height-56 addNew', icon: 'pi pi-search' },
-    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger height-56 addNew', icon: 'pi pi-times' },
+    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm  addNew', icon: 'pi pi-search' },
+    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger  addNew', icon: 'pi pi-times' },
   ];
 
   //filter 

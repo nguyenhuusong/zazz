@@ -1,6 +1,6 @@
 import { AfterViewChecked, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { CustomTooltipComponent } from 'src/app/common/ag-component/customtooltip.component';
 import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
@@ -51,7 +51,7 @@ export class LichSuTuyenDungComponent implements OnInit {
       buttonAgGridComponent: ButtonAgGridComponent,
       avatarRendererFull: AvatarFullComponent,
     };
-    // this.getFilter();
+    this.getFilter();
   }
   pagingComponent = {
     total: 0
@@ -117,7 +117,7 @@ export class LichSuTuyenDungComponent implements OnInit {
     this.loadjs++
     if (this.loadjs === 5) {
       if (b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight +10;
+        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight +30;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       } else {
@@ -181,7 +181,7 @@ export class LichSuTuyenDungComponent implements OnInit {
       buttons: [
         {
           onClick: this.viewRow.bind(this),
-          label: 'Xem chi tiết',
+          label: 'Xem',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
         },
@@ -190,7 +190,7 @@ export class LichSuTuyenDungComponent implements OnInit {
           label: 'Tiềm năng',
           icon: 'pi pi-send',
           class: 'btn-primary mr5',
-          hide: event.data.can_st === 10
+          hide: event.data.can_st === 10 || event.data.can_st === 8
           // hide: event.data.can_st === parseInt(this.recruitmentStatus[this.recruitmentStatus.length - 1])
         },
       ]
@@ -322,12 +322,11 @@ export class LichSuTuyenDungComponent implements OnInit {
 
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
-      { label: 'Nhân sự' },
-      { label: 'Danh sách tuyển dụng', routerLink: '/tuyen-dung/ds-tuyen-dung' },
+      { label: 'Tuyển dụng' },
       { label: 'Danh sách lịch sử tuyển dụng' },
     ];
     this.getReRound();
-    this.load();
+    // this.load();
   }
 
 
@@ -335,13 +334,13 @@ export class LichSuTuyenDungComponent implements OnInit {
   cloneListViewsFilter = [];
   detailInfoFilter = null;
   optionsButonFilter = [
-    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm height-56 addNew', icon: 'pi pi-search' },
-    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger height-56 addNew', icon: 'pi pi-times' },
+    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm  addNew', icon: 'pi pi-search' },
+    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger  addNew', icon: 'pi pi-times' },
   ];
 
   //filter 
   getFilter() {
-    this.apiService.getFilter('/api/v1/recruitcandidate/GetCandidateFilter')
+    this.apiService.getFilter('/api/v1/recruitcandidate/GetCandidateHistoryFilter')
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(results => {
       if (results.status === 'success') {

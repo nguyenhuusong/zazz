@@ -155,6 +155,7 @@ import { HrmSearchEmpModule } from 'src/app/common/hrm-search-emp/hrm-search-emp
     TabThanhPhanLuongComponent,
     TabCapBacLuongComponent,
     ChiTietThanhPhanLuongComponent,
+    
   ],
   providers: []
 })

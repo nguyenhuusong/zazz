@@ -1,21 +1,12 @@
 <div class="main-grid">
     <section class="bread-crumb">
         <div class="d-flex bet middle">
-            <div class="col-3 pd-0">
+            <div class="p-0 col-12 md:col-12 lg:col-3 xl:col-3">
                 <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
             </div>
-            <div class="d-flex end mid bottom gap-12 col-9 pd-0">
-                <!-- <div class="filter filter-search col-2 pd-0">
-                    <div class="field-group text search mb-0" [ngClass]="">
-                        <input class="input-default" placeholder="Tìm kiếm" type="text" autocomplete="off" id="filter"
-                           >
-                            <span class="placeholder-icon" >
-                                <svg _ngcontent-xmj-c197="" width="19" height="20" viewBox="0 0 19 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path _ngcontent-xmj-c197="" fill-rule="evenodd" clip-rule="evenodd" d="M9.02893 0.850098C4.51087 0.850098 0.849609 4.51552 0.849609 9.03539C0.849609 13.5553 4.51087 17.2207 9.02893 17.2207C10.8456 17.2207 12.5254 16.6271 13.8828 15.6241L17.1276 18.8716C17.4984 19.2427 18.0999 19.243 18.4711 18.8721C18.8422 18.5013 18.8425 17.8998 18.4716 17.5286L15.2709 14.3252C16.4787 12.8991 17.2083 11.0518 17.2083 9.03539C17.2083 4.51552 13.547 0.850098 9.02893 0.850098ZM2.74961 9.03539C2.74961 5.56338 5.56169 2.7501 9.02893 2.7501C12.4962 2.7501 15.3083 5.56338 15.3083 9.03539C15.3083 10.8568 14.5355 12.496 13.2976 13.645C12.1765 14.6858 10.6778 15.3207 9.02893 15.3207C5.56169 15.3207 2.74961 12.5074 2.74961 9.03539Z" fill="#2B2F33" fill-opacity="0.6"></path></svg>
-                            </span>
-                    </div>
-                </div> -->
+            <div class="d-flex end p-0 wrap col-12 md:col-12 lg:col-9 xl:col-9 gap12">
                 <p-button (click)="goToChamCong()"
-                styleClass="p-button-sm height-56 ">
+                styleClass="p-button-sm  ">
                     Chấm công &nbsp;&nbsp;<span class="pi pi-arrow-right"></span>
                 </p-button>
             </div>
@@ -24,7 +15,7 @@
     <section class="overview content pb-0">
         <div class="grid">
             <div class="col-2">
-                <div class="box-view">
+                <div class="box">
                     <div>
                         <h4>Đi sớm về muộn</h4>
                         <div class="d-flex relative bet">
@@ -36,7 +27,7 @@
                                 [yearNavigator]="true" inputId="navigators" dateFormat="dd/mm/yy"
                                 name="fromdate"></p-calendar>
                             </div>
-                            <span class="pi pi-arrow-right" style="position: absolute;left: 45%;z-index: 9;transform: translateX(-100%);top: 2px;"></span>
+                            <span class="pi pi-arrow-right" style="position: absolute;left: 45%;z-index: 9;transform: translateX(-100%);top: 12px;"></span>
                             <div class="fields no-border">
                                 <p-calendar placeholder="Đến ngày" 
                                 panelStyleClass="datepicker-default" placeholder="DD/MM/YYYY"
@@ -54,7 +45,7 @@
                        Chi tiết
                     </div>
                 </div>
-                <div class="box-view">
+                <div class="box">
                     <div>
                         <h4>Thực tế đã nghỉ</h4>
                         <div class="fields no-border">
@@ -81,7 +72,7 @@
                        Chi tiết
                     </div>
                 </div>
-                <div class="box-view">
+                <div class="box">
                     <div>
                         <h4>Kế hoạch nghỉ</h4>
                         <div class="fields no-border">
@@ -112,7 +103,7 @@
             <div class="col-10">
                 <div class="grid">
                     <div class="col-5">
-                        <div class="box-view box-100">
+                        <div class="box box-100">
                             <div class="head d-flex bet">
                                 <div>
                                     <h4>Tình hình nghỉ theo thời gian</h4>
@@ -126,7 +117,7 @@
                                             [yearNavigator]="true" inputId="navigators" dateFormat="dd/mm/yy"
                                             name="fromdate"></p-calendar>
                                         </div>
-                                        <span class="pi pi-arrow-right" style="position: absolute;left: 45%;z-index: 9;transform: translateX(-100%);top: 2px;"></span>
+                                        <span class="pi pi-arrow-right" style="position: absolute;left: 45%;z-index: 9;transform: translateX(-100%);top: 12px;"></span>
                                         <div class="fields no-border">
                                             <p-calendar placeholder="Đến ngày" 
                                             panelStyleClass="datepicker-default" placeholder="DD/MM/YYYY"
@@ -145,7 +136,7 @@
                         </div>
                     </div>
                     <div class="col-7">
-                        <div class="box-view box-100">
+                        <div class="box box-100">
                             <div class="chart">
                                 <div class="head">
                                     <h4>Tình hình nghỉ theo phòng ban</h4>
@@ -159,7 +150,7 @@
                                             [yearNavigator]="true" inputId="navigators" dateFormat="dd/mm/yy"
                                             name="fromdate"></p-calendar>
                                         </div>
-                                        <span class="pi pi-arrow-right" style="position: absolute;left: 45%;z-index: 9;transform: translateX(-100%);top: 2px;"></span>
+                                        <span class="pi pi-arrow-right" style="position: absolute;left: 45%;z-index: 9;transform: translateX(-100%);top: 20px;"></span>
                                         <div class="fields no-border">
                                             <p-calendar placeholder="Đến ngày" 
                                             panelStyleClass="datepicker-default" placeholder="DD/MM/YYYY"
@@ -170,7 +161,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <canvas id="nghiTheoPhongBan" *ngIf="dataChartPhongban"></canvas>
+                                <canvas style="max-height: 300px" id="nghiTheoPhongBan" *ngIf="dataChartPhongban"></canvas>
                                 <div id="legend-nghiTheoPhongBan" class="legend-default">
                                     <ul></ul>
                                 </div>
@@ -180,7 +171,7 @@
                 </div>
                 <div class="grid box-100">
                     <div class="col-5">
-                        <div class="box box-view box-100">
+                        <div class="box box box-100">
                             <div class="head">
                                 <h4>Phân tích loại nghỉ</h4>
                                 {{ dataLoaiNghi?.organize_name }}<br>
@@ -193,7 +184,7 @@
                                         [yearNavigator]="true" inputId="navigators" dateFormat="dd/mm/yy"
                                         name="fromdate"></p-calendar>
                                     </div>
-                                    <span class="pi pi-arrow-right" style="position: absolute;left: 45%;z-index: 9;transform: translateX(-100%);top: 2px;"></span>
+                                    <span class="pi pi-arrow-right" style="position: absolute;left: 45%;z-index: 9;transform: translateX(-100%);top: 12px;"></span>
                                     <div class="fields no-border">
                                         <p-calendar placeholder="Đến ngày" 
                                         panelStyleClass="datepicker-default" placeholder="DD/MM/YYYY"
@@ -219,7 +210,7 @@
                     <div class="col-7">
                         <div class="grid" style="height: 100%">
                             <div class="col-6">
-                                <div class="box box-view box-100">
+                                <div class="box box box-100">
                                     <div class="head">
                                         <h4>Danh sách đi muộn về sớm</h4>
                                         {{ dataDimuon?.organize_name }}<br>
@@ -232,7 +223,7 @@
                                                 [yearNavigator]="true" inputId="navigators" dateFormat="dd/mm/yy"
                                                 name="fromdate"></p-calendar>
                                             </div>
-                                            <span class="pi pi-arrow-right" style="position: absolute;left: 45%;z-index: 9;transform: translateX(-100%);top: 2px;"></span>
+                                            <span class="pi pi-arrow-right" style="position: absolute;left: 45%;z-index: 9;transform: translateX(-100%);top: 12px;"></span>
                                             <div class="fields no-border">
                                                 <p-calendar placeholder="Đến ngày" 
                                                 panelStyleClass="datepicker-default" placeholder="DD/MM/YYYY"
@@ -260,7 +251,7 @@
                                 </div>
                             </div>
                             <div class="col-6">
-                                <div class="box box-view box-100">
+                                <div class="box box box-100">
                                     <div class="head">
                                         <h4>Danh sách ăn ca</h4>
                                         Tất cả đơn vị<br>
@@ -273,7 +264,7 @@
                                                 [yearNavigator]="true" inputId="navigators" dateFormat="dd/mm/yy"
                                                 name="fromdate"></p-calendar>
                                             </div>
-                                            <span class="pi pi-arrow-right" style="position: absolute;left: 45%;z-index: 9;transform: translateX(-100%);top: 2px;"></span>
+                                            <span class="pi pi-arrow-right" style="position: absolute;left: 45%;z-index: 9;transform: translateX(-100%);top: 12px;"></span>
                                             <div class="fields no-border">
                                                 <p-calendar placeholder="Đến ngày" 
                                                 panelStyleClass="datepicker-default" placeholder="DD/MM/YYYY"

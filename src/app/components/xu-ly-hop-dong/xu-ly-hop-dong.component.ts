@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiService } from 'src/app/services/api.service';
 import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
@@ -31,6 +31,7 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
   MENUACTIONROLEAPI = MENUACTIONROLEAPI;
   ACTIONS = ACTIONS
   dataContractTypes: any;
+  hienthihopdong: boolean = false;
   constructor(
     private apiService: ApiHrmService,
     private route: ActivatedRoute,
@@ -158,7 +159,7 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
     this.loadjs++
     if (this.loadjs === 5) {
       if (b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight + 10;
+        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight + 30;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       } else {
@@ -216,7 +217,7 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
       buttons: [
         {
           onClick: this.editRow.bind(this),
-          label: 'Xem chi tiết',
+          label: 'Xem',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
           hide: CheckHideAction(MENUACTIONROLEAPI.GetContractPage.url, ACTIONS.VIEW)
@@ -282,11 +283,12 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
   }
   // GET /api/v2/contract/GetContractInfo
   editRow({rowData}) {
-    const modelContractInfo = {
+    this.modelContractInfo = {
       contractId: rowData.contractId,
-      empId:rowData.empId,
+      empId: rowData.empId
     }
-    this.router.navigate(['/nhan-su/xu-ly-hop-dong/chi-tiet-xu-ly-hop-dong'], { queryParams: modelContractInfo });
+    this.hienthihopdong = true;
+    // this.router.navigate(['/nhan-su/xu-ly-hop-dong/chi-tiet-xu-ly-hop-dong'], { queryParams: modelContractInfo });
 
   }
 
@@ -307,7 +309,12 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
       empId: event.value
     }
     if(event.value) {
-      this.router.navigate(['/nhan-su/xu-ly-hop-dong/chi-tiet-xu-ly-hop-dong'], { queryParams: params });
+      // this.router.navigate(['/nhan-su/xu-ly-hop-dong/chi-tiet-xu-ly-hop-dong'], { queryParams: params });
+      this.modelContractInfo = {
+        contractId: '',
+        empId: event.value
+      }
+      this.hienthihopdong = true;
     }else{
       this.isSearchEmp = false;
     }
@@ -359,6 +366,16 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
   columnDefsPrint = []
   initGrid() {
     this.columnDefs = [
+      {
+        filter: '',
+        width: 70,
+        pinned: 'left',
+        cellClass: ['border-right', 'no-auto'],
+        checkboxSelection: true,
+        headerCheckboxSelection: true,
+        headerCheckboxSelectionFilteredOnly: true,
+        field: ''
+      },
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       {
         headerComponentParams: {
@@ -371,10 +388,9 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
         cellRenderer: 'buttonAgGridComponent',
         cellClass: ['border-right', 'no-auto'],
         cellRendererParams: (params: any) => this.showButtons(params),
-        checkboxSelection: true,
-        headerCheckboxSelection: true,
-        headerCheckboxSelectionFilteredOnly: true,
-        field: 'checkbox'
+        checkboxSelection: false,
+        headerCheckboxSelection: false,
+        headerCheckboxSelectionFilteredOnly: false,
       }
     ]
 
@@ -400,7 +416,18 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
     this.webSocketService.closeConnection();
 
   }
-
+  emitContract(event) {
+    this.hienthihopdong = false;
+    this.load();
+  }
+  cancelPopupContract() {
+    this.hienthihopdong = false;
+    this.load();
+  }
+  modelContractInfo: any = {
+    contractId: null,
+    empId: null
+  }
   listPrints = []
   ngOnInit() {
     this.getContractFilter();
@@ -757,8 +784,8 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
   cloneListViewsFilter = [];
 detailInfoFilter = null;
   optionsButonFilter = [
-    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm ml-2 height-56 addNew', icon: 'pi pi-plus' },
-    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger ml-2 height-56 addNew', icon: 'pi pi-times' },
+    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm ml-2  addNew', icon: 'pi pi-plus' },
+    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger ml-2  addNew', icon: 'pi pi-times' },
   ];
 
   getContractFilter() {

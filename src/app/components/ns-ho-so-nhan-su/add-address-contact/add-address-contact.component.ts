@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { cloneDeep } from 'lodash';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiService } from 'src/app/services/api.service';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { forkJoin, Subject, takeUntil } from 'rxjs';
 import { ApiCoreService } from 'src/app/services/api-core/apicore.service';
 @Component({

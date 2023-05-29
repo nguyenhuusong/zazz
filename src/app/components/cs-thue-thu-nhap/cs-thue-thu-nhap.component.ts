@@ -1,6 +1,6 @@
 import { ApiService } from './../../services/api.service';
 import { AfterViewChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { ExportFileService } from 'src/app/services/export-file.service';
 import { Router } from '@angular/router';
 import { NotificationService } from 'src/app/services/notification.service';
@@ -67,8 +67,8 @@ export class CsThueThuNhapComponent implements OnInit, AfterViewChecked {
   cloneListViewsFilter = [];
 detailInfoFilter = null;
   optionsButonFilter = [
-    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm height-56 addNew', icon: 'pi pi-search' },
-    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger height-56 addNew', icon: 'pi pi-times' },
+    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm  addNew', icon: 'pi pi-search' },
+    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger  addNew', icon: 'pi pi-times' },
   ];
   constructor(
     private apiService: ApiHrmService,
@@ -317,7 +317,7 @@ detailInfoFilter = null;
     this.loadjs ++ 
     if (this.loadjs === 5) {
       if(b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight +10;
+        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight +30;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       }else {

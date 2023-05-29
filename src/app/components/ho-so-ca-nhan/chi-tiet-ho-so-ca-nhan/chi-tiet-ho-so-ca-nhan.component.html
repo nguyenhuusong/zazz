@@ -1,19 +1,10 @@
-<div class="main-grid product-detail" *ngIf="!isDialog">
-    <section>
-        <div class="breadcrumb">
-            <p-breadcrumb [model]="itemsMenu"></p-breadcrumb>
-            <h3>{{titlePage}}</h3>
-        </div>
+<div class="main-grid product-detail" *ngIf="!isDialog && !displayCustomerProfile">
+    <section class="bread-crumb">
+        <app-hrm-breadcrumb  [items]="itemsMenu" ></app-hrm-breadcrumb>
     </section>
 </div>
-<p-card styleClass="chi-tiet-tien-luong" *ngIf="tabIndex === 0">
-    <div class="status-line steps-contract col-12 m-auto">
-        <p-steps [model]="steps" *ngIf="listViews.length> 0" [(activeIndex)]="activeIndex" [readonly]="false"></p-steps>
-    </div>
-</p-card>
-<p-divider></p-divider>
-<p-card>
-    <div *ngIf="tabIndex === 0" style="float: right;position: relative; right: 20px;top: auto;z-index: 9;">
+<section *ngIf="!displayCustomerProfile" class="pt-0">
+    <div *ngIf="tabIndex === 0" style="float: right;position: relative; right: 0px;top: auto;z-index: 9;">
         <p-button 
             styleClass="p-button-sm" 
             (click)="detailPopup()" 
@@ -24,23 +15,131 @@
     <p-tabView (onChange)="handleChange($event.index)" [(activeIndex)]="tabIndex">
         <p-tabPanel header="Thông tin chung">
             <app-edit-detail 
-                *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'"
+                *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'" [isHideButton]="true"
                 [optionsButtonsEdit]="hideButton ? [] : optionsButtonsView" [dataView]="listViews"
-                (callback)="setSchemeInfo($event)" (callBackForm)="callBackForm($event)"
+                (callback)="setSchemeInfo($event)" 
                 (callbackcancel)="cancel($event)"></app-edit-detail>
 
             <app-loading-detail [id]="'markdown'" *ngIf="listViews.length === 0">
             </app-loading-detail>
+            <div class="col-12  flex justify-content-end align-items-center" >
+                <div class="fields " style="margin-bottom: 0;">
+                    <p-dropdown 
+                        *ngIf="listViews.length> 0" 
+                        [options]="status" 
+                        (onChange)="UpdateStatus()"
+                        [(ngModel)]="selectedStatus" 
+                        [styleClass]="selectedStatus?.bgColor"  
+                        [style]="{'width': '180px'}" 
+                        optionLabel="name"  
+                        placeholder="Select a Country">
+                        <ng-template pTemplate="selectedItem" >
+                            <div class="flex align-items-center gap-2" *ngIf="selectedStatus" >
+                                <div style="color: #fff">{{ selectedStatus.name}}</div>
+                            </div>
+                        </ng-template>
+                        <ng-template let-country pTemplate="item">
+                            <div class="flex align-items-center gap-2" *ngIf="country.value != selectedStatus?.value">
+                                <div class="pb-2 pt-2" style="display: flex; align-items: center; width: 100%;justify-content: space-around;font-size: 13px;">
+                                    <span style="white-space:nowrap">{{ country.placeholder }} </span>
+                                    <span class="pi pi-arrow-right" style="font-size: 12px;"></span>
+                                    <span [class]="country.textColor" style="white-space:nowrap" class="pl-2 pr-2">{{ country.name }}</span>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+                <p-splitButton icon="pi pi-send" *ngIf="menuActions.length > 0" styleClass="p-button-sm ml-2" [appendTo]="'body'" (onClick)="callActions(menuActions[0].value)" [label]="menuActions[0].label" [model]="menuActions"></p-splitButton>
+                <p-button label="Quay lại" (click)="onBack()" styleClass="p-button-secondary p-button-sm ml-2" [style]="{'z-index': 9}" icon="pi pi-directions-alt"></p-button>
+                  </div>
         </p-tabPanel>
         <p-tabPanel header="Danh sách giấy tờ" *ngIf="modelEdit.custId"> 
             <app-list-cccd *ngIf="tabIndex === 1" [custId]="modelEdit.custId"></app-list-cccd>
         </p-tabPanel>
     </p-tabView>
-</p-card>
+</section>
 
+<p-sidebar
+    [style]="{ width: '80%' }"
+    [(visible)]="displayCustomerProfile" 
+    (onHide)="callback.emit()" 
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        Chi tiết hồ sơ cá nhân</ng-template>
+        <section *ngIf="!isDialog">
+            <div *ngIf="tabIndex === 0" style="float: right;position: relative; right: 20px;top: auto;z-index: 9;">
+                <p-button 
+                    styleClass="p-button-sm" 
+                    (click)="detailPopup()" 
+                    icon="pi pi-user-edit" 
+                    label="Sửa giấy tờ" >
+                </p-button>
+            </div>
+            <p-tabView (onChange)="handleChange($event.index)" [(activeIndex)]="tabIndex">
+                <p-tabPanel header="Thông tin chung">
+                    <app-edit-detail 
+                        *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'"
+                        [optionsButtonsEdit]="hideButton ? [] : optionsButtonsView" [dataView]="listViews"
+                        (callback)="setSchemeInfo($event)" 
+                        (callbackcancel)="cancel($event)"></app-edit-detail>
+        
+                    <app-loading-detail [id]="'markdown'" *ngIf="listViews.length === 0">
+                    </app-loading-detail>
+                </p-tabPanel>
+                <p-tabPanel header="Danh sách giấy tờ" *ngIf="modelEdit.custId"> 
+                    <app-list-cccd *ngIf="tabIndex === 1" [custId]="modelEdit.custId"></app-list-cccd>
+                </p-tabPanel>
+            </p-tabView>
+        </section>
+    
+        <ng-template pTemplate="footer" >
+            <div class="col-12  flex justify-content-end align-items-center" >
+                <div class="fields " style="margin-bottom: 0;">
+                    <p-dropdown 
+                        *ngIf="listViews.length> 0" 
+                        [options]="status" 
+                        (onChange)="UpdateStatus()"
+                        [(ngModel)]="selectedStatus" 
+                        [styleClass]="selectedStatus?.bgColor"  
+                        [style]="{'width': '180px'}" 
+                        optionLabel="name"  
+                        placeholder="Select a Country">
+                        <ng-template pTemplate="selectedItem" >
+                            <div class="flex align-items-center gap-2" *ngIf="selectedStatus" >
+                                <div style="color: #fff">{{ selectedStatus.name}}</div>
+                            </div>
+                        </ng-template>
+                        <ng-template let-country pTemplate="item">
+                            <div class="flex align-items-center gap-2" *ngIf="country.value != selectedStatus?.value">
+                                <div class="pb-2 pt-2" style="display: flex; align-items: center; width: 100%;justify-content: space-around;font-size: 13px;">
+                                    <span style="white-space:nowrap">{{ country.placeholder }} </span>
+                                    <span class="pi pi-arrow-right" style="font-size: 12px;"></span>
+                                    <span [class]="country.textColor" style="white-space:nowrap" class="pl-2 pr-2">{{ country.name }}</span>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+                <p-splitButton icon="pi pi-send" *ngIf="menuActions.length > 0" styleClass="p-button-sm ml-2" [appendTo]="'body'" (onClick)="callActions(menuActions[0].value)" [label]="menuActions[0].label" [model]="menuActions"></p-splitButton>
+                <p-button label="Đóng" (click)="callback.emit()" styleClass="p-button-secondary p-button-sm ml-2" [style]="{'z-index': 9}" icon="pi pi-directions-alt"></p-button>
+                  </div>
+        </ng-template>
+</p-sidebar>
 
-
-<p-dialog header="  Tải lên CCCD,  Hộ chiếu" [(visible)]="displayAddCCCD" [modal]="true" [draggable]="false"
-    [resizable]="false" [style]="{width: '50vw'}" [autoZIndex]=true [draggable]="false" [resizable]="false">
+<p-sidebar
+    [style]="{ width: '80%' }"
+    [(visible)]="displayAddCCCD" 
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        Tải lên CCCD,  Hộ chiếu </ng-template>
+    <ng-template pTemplate="footer"></ng-template>
     <app-cung-cap-cccd *ngIf="displayAddCCCD" [custId]="this.modelEdit.custId" [isCanId] = "false" (callback)="saveCCCD($event)"></app-cung-cap-cccd>
-</p-dialog>
+</p-sidebar>

@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { cloneDeep } from 'lodash';
 import * as moment from 'moment';
 import { AgGridFn } from 'src/app/common/function-common/common';
@@ -85,7 +85,13 @@ export class DanhSachKhamThaiComponent implements OnInit {
     const param = {
       ...this.dataDetailInfo, group_fields: data
     }
-    this.apiService.setMaternityPregnancyInfo(param)
+
+    const formData = new FormData();
+    formData.append('maternityId', `${this.maternityId}`);
+    formData.append('pregnancyId', this.pregnancyId ? `${this.pregnancyId}`: '');
+    formData.append('group_fields',  `${JSON.stringify(data)}`);
+    formData.append('formFile',  this.dataDetailInfo.formFile[0]);
+    this.apiService.setMaternityPregnancyInfo(formData)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(results => {
       if (results.status === 'success') {

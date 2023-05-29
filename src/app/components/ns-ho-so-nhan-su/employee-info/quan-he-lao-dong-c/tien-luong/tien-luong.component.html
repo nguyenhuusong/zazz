@@ -1,8 +1,8 @@
-<div class="grid wrap-edit-detail">
+<div class="grid wrap-edit-detail pt-2">
     <div class="col-12 border-section ">
         <p-panel>
             <ng-template pTemplate="header">
-                <div class="grid d-flex justify-content-between">
+                <div class="d-flex justify-content-between">
                     <h3 class="title-section">Danh sách tiền lương</h3>
                 </div>
             </ng-template>
@@ -41,13 +41,7 @@
         [gridKey]="gridKey"></app-config-grid-table-form>
 </p-dialog>
 
+<app-chi-tiet-qt-thay-doi-luong [empId]="empId" *ngIf="displayFormEditDetail" [displayFormEditDetail]="displayFormEditDetail" [salaryInfoId]="salaryInfoId" (callback)="callbackForm()" [isDialog] =  "true"></app-chi-tiet-qt-thay-doi-luong>
 
-<p-dialog styleClass="popup-btngroup-edit-detail"  [(visible)]="displayFormEditDetail" [draggable]="false"  [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '1400px', height: 'auto'}">
-    <p-header>
-        {{salaryInfoId ? 'Chỉnh sửa quá trình lương' : 'Thêm mới quá trình lương'}}
-    </p-header>
-
-    <app-chi-tiet-qt-thay-doi-luong [empId]="empId" *ngIf="displayFormEditDetail" [salaryInfoId]="salaryInfoId" (callback)="callbackForm()" [isDialog] =  "true"></app-chi-tiet-qt-thay-doi-luong>
-</p-dialog>
 
 

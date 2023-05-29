@@ -29,6 +29,8 @@ import { CustomTooltipComponent } from '../common/ag-component/customtooltip.com
 import { CurrencyFormatPipeModule } from '../common/pipe/currency-pipe.module';
 import {DialogModule} from 'primeng/dialog';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { SidebarModule } from 'primeng/sidebar';
 
 @NgModule({
     exports: [
@@ -46,6 +48,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
         MarginRoundPipe,
         NumericEditor,
         ButtonAgGridComponent,
+        CustomTooltipComponent
 
     ],
     imports: [
@@ -63,7 +66,8 @@ import { MultiSelectModule } from 'primeng/multiselect';
         MenuModule,
         DialogModule,
         MultiSelectModule,
-
+        OverlayPanelModule,
+        SidebarModule,
         AgGridModule.withComponents([
             ButtonRendererComponent,
             CustomTooltipComponent,
@@ -86,8 +90,8 @@ import { MultiSelectModule } from 'primeng/multiselect';
         MarginRoundPipe,
         NumericEditor,
         ButtonAgGridComponent,
-        FormatTimePipe
-
+        FormatTimePipe,
+        CustomTooltipComponent
 
     ],
     entryComponents: [

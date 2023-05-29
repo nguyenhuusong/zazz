@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { ButtonAgGridComponent } from '../ag-component/button-renderermutibuttons.component';
 import { CustomTooltipComponent } from '../ag-component/customtooltip.component';
 import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
@@ -51,11 +51,15 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
     rowHeight: 90,
     cellClass: [],
     tooltipComponentParams: { color: '#ececec' },
-  };;
+  };
+  public overlayLoadingTemplate =
+  '<span class="ag-overlay-loading-center aggrid-no-data" style="border: none; ">Loading...</span>';
+public overlayNoRowsTemplate =
+  `<span class="ag-overlay-loading-center aggrid-no-data" style="border: none; background: none">Không có bản ghi nào. </span>`;
   @Input() domLayout: string = '';
   @Input() height: number = 0;
-  @Input() heightRow: number = 40;
-  @Input() headerHeight: number = 45;
+  @Input() heightRow: number = 38;
+  @Input() headerHeight: number = 35;
   @Input() floatingFiltersHeight: number = 36;
   @Input() getContextMenuItems: any = null;
   @Input() excelStyles: any[] = [
@@ -91,6 +95,7 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
     private apiService: ApiService,
     private spinner: NgxSpinnerService,
     private messageService: MessageService,
+    private elem: ElementRef,
 
   ) {
     this.isRowSelectable = (rowNode) => {
@@ -190,6 +195,20 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
 
   onFirstDataRendered(event) {
     this.firstDataRendered.emit(event);
+  //   event.api.forEachNode((node: any) =>
+  //   node.setSelected(!!node.data && node.data.tontai)
+  // );
+    let allColumnIds: any = [];
+    this.gridColumnApi.getAllColumns()
+      .forEach((column: any) => {
+        if (column.colDef.cellClass && column.colDef.cellClass.indexOf('not-auto') < 0) {
+          allColumnIds.push(column)
+        } else {
+          column.colDef.resizable = false;
+        }
+      });
+    this.gridColumnApi.autoSizeColumns(allColumnIds, false);
+    this.autosizeAll2();
   }
   CellDoubleClicked(event) {
     this.cellDoubleClicked.emit(event);
@@ -204,17 +223,6 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
     var pivotModeOn = document.getElementById(`${this.idGrid}`);
     pivotModeOn?.addEventListener('change', (event: any) => {
       if (event.target.ariaLabel === 'Press SPACE to toggle visibility (visible)' || event.target.ariaLabel === 'Press SPACE to toggle visibility (hidden)') {
-        let allColumnIds: any = [];
-        this.gridColumnApi.getAllColumns()
-          .forEach((column: any) => {
-            if (column.colDef.cellClass.indexOf('no-auto') < 0) {
-              allColumnIds.push(column)
-            } else {
-              column.colDef.resizable = false;
-            }
-          });
-        this.gridColumnApi.autoSizeColumns(allColumnIds, false);
-        this.autoSizeAll()
       } else if (event.target.ariaLabel === 'Press Space to toggle row selection (checked)'
         || event.target.ariaLabel === 'Press Space to toggle row selection (unchecked)'
         || event.target.ariaLabel === 'Press Space to toggle all rows selection (checked)'
@@ -226,11 +234,11 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
   onRowSelected(event) {
     if (!event.node.isSelected() && this.isChange) {
       this.dataChange = event.data;
-      if(this.typeConfig === 'FormInfo') {
-       if(this.isConfig) this.callApiForm();
-      }else {
-        if(this.isConfig) this.callApi();
-      }
+      // if(this.typeConfig === 'FormInfo') {
+      //  if(this.isConfig) this.callApiForm();
+      // }else {
+      //   if(this.isConfig) this.callApi();
+      // }
     }
     this.callback.emit(this.gridApi.getSelectedRows())
   }
@@ -326,28 +334,43 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
   isChange = false
   onCellValueChanged(event) {
     if (event.value != event.oldValue) {
+      event.data.isChange = true;
+        if (this.typeConfig === 'FormInfo') {
+          for (let key in event.data) {
+            if (key === 'isSpecial' || key === 'isRequire' || key === 'isDisable' || key === 'isVisiable' || key === 'hideInApp' || key === 'isChange' || key === 'isEmpty') {
+              event.data[key] = event.data[key] == 1 || event.data[key] == true ? true : false
+            }
+          }
+      } else {
+        for (let key in event.data) {
+          if (key === 'isUsed' || key === 'isHide' || key === 'isFilter' || key === 'isMasterDetail' || key === 'isStatusLable') {
+            event.data[key] = event.data[key] == 1 || event.data[key] == true ? true : false
+          }
+        }
+      }
       this.isChange = true;
+      setTimeout(() => {
+        this.gridApi.applyTransaction({ update: [event.data] })
+      }, 500);
       if(!this.isConfig) this.rowDoubleClicked.emit(event);
-      console.log(event)
     } else {
       this.isChange = false;
     }
   }
-
-
+  gridWidth = 0
   onGridReady(params: any) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
     let allColumnIds: any = [];
-    this.gridColumnApi.getAllColumns()
-    .forEach((column: any) => {
-      if (column && column.colDef.cellClass && column.colDef.cellClass.length > 0 && column.colDef.cellClass.indexOf('no-auto') < 0) {
-        allColumnIds.push(column)
-      } else {
-        column.colDef.resizable = false;
-      }
-    });
-  this.gridColumnApi.autoSizeColumns(allColumnIds, false);
+    if (this.listsData.length === 0) {
+      this.gridApi.showNoRowsOverlay();
+      this.gridApi.sizeColumnsToFit()
+    }
+    var allColumns = params.columnApi.getAllColumns();
+    for (var i = 0; i < allColumns.length; i++) {
+      let column = allColumns[i];
+      this.gridWidth += column.getMinWidth();
+    }
 
   }
 
@@ -375,6 +398,30 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
 
   getDataAsExcel(event) {
     console.log(event)
+  }
+
+  autosizeAll2() {
+    setTimeout(() => {
+      this.gridApi.hideOverlay();
+      const grid = document.getElementById(`${this.idGrid}`);
+      if (grid) {
+        const container = this.elem.nativeElement.querySelectorAll(`#${this.idGrid}`);
+        if (container[0] && (this.gridColumnApi.columnModel.scrollWidth >= this.gridColumnApi.columnModel.bodyWidth) && this.gridApi) {
+          this.sizeToFit()
+        } else {
+          let allColumnIds: any = [];
+          this.gridColumnApi.getAllColumns()
+            .forEach((column: any) => {
+              if (column.colDef.cellClass && column.colDef.cellClass.indexOf('not-auto') < 0) {
+                allColumnIds.push(column)
+              } else {
+                column.colDef.resizable = false;
+              }
+            });
+          this.gridColumnApi.autoSizeColumns(allColumnIds, false);
+        }
+      }
+    }, 100);
   }
 
   autoSizeAll() {
@@ -420,30 +467,17 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
   }
 
   handleScroll(event: any) {
-    if (this.gridColumnApi) {
-      let allColumnIds: any = [];
-      this.gridColumnApi.getAllColumns()
-        .forEach((column: any) => {
-          if (column.colDef.cellClass.indexOf('no-auto') < 0) {
-            allColumnIds.push(column)
-          } else {
-            column.colDef.resizable = false;
-          }
-        });
-      this.gridColumnApi.autoSizeColumns(allColumnIds, false);
-      const grid = document.getElementById(`${this.idGrid}`);
-      if (grid) {
-        if ((event.left === 0) ||(event.left > 200 && event.left < 220)
-          || (event.left > 400 && event.left < 420)
-          || (event.left > 600 && event.left < 620)
-          || (event.left > 800 && event.left < 820)
-          || (event.left > 1200)) {
-          const gridBody = grid.querySelector('.ag-body-viewport') as any;
-          this.autoSizeAll();
-        }
+    const grid = document.getElementById(`${this.idGrid}`);
+    if (grid) {
+      if ((event.left > 0) || (event.left > 200 && event.left < 220)
+        || (event.left > 400 && event.left < 420)
+        || (event.left > 600 && event.left < 620)
+        || (event.left > 800 && event.left < 820)
+        || (event.left > 1200)) {
+        const gridBody = grid.querySelector('.ag-body-viewport') as any;
+        this.autosizeAll2()
       }
     }
-
   }
 
   private readonly unsubscribe$: Subject<void> = new Subject();

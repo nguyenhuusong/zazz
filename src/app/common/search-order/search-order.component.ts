@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, HostListener } from '@angular/core';
 import { ApiSmartService } from 'src/app/services/api-smart/apismart.service';
-const queryString = require('query-string');
+import queryString from 'query-string';
 import * as moment from 'moment';
 import { autoCompleteValueValidate, onProcessValue, onValidateNumeric } from 'src/app/utils/common/function-common';
 import { AllModules, Module } from '@ag-grid-enterprise/all-modules';

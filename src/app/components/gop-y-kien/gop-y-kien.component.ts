@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -102,8 +102,8 @@ export class GopYKienComponent implements OnInit {
   cloneListViewsFilter = [];
   detailInfoFilter = null;
   optionsButonFilter = [
-    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm height-56 addNew', icon: 'pi pi-search' },
-    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger height-56 addNew', icon: 'pi pi-times' },
+    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm  addNew', icon: 'pi pi-search' },
+    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger  addNew', icon: 'pi pi-times' },
   ];
 
   private readonly unsubscribe$: Subject<void> = new Subject();
@@ -190,7 +190,7 @@ export class GopYKienComponent implements OnInit {
       buttons: [
         {
           onClick: this.editRow.bind(this),
-          label: 'Xem chi tiết',
+          label: 'Xem',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
           hide: CheckHideAction(MENUACTIONROLEAPI.GetFeedbackPage.url, ACTIONS.VIEW)
@@ -215,11 +215,20 @@ export class GopYKienComponent implements OnInit {
       }]
   }
 
+  isDetail = false;
+  feedbackId = '';
   editRow({rowData}) {
-    const params = {
-      feedbackId: rowData.feedbackId,
-    }
-    this.router.navigate(['/gop-y/chi-tiet-gop-y'], { queryParams: params });
+    this.isDetail = true;
+    this.feedbackId = rowData.feedbackId;
+    // const params = {
+    //   feedbackId: rowData.feedbackId,
+    // }
+    // this.router.navigate(['/gop-y/chi-tiet-gop-y'], { queryParams: params });
+  }
+
+  callback() {
+    this.isDetail = false;
+    this.load();
   }
   
   onCellClicked(event) {

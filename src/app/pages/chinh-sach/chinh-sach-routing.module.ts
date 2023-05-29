@@ -298,7 +298,7 @@ const routes: Routes = [
   path: 'nghi-khong-luong/them-moi-nghi-khong-luong',
   component: ChiTietNghiKhongLuongComponent,
   data: {
-    title: 'Thêm mới chuyên viên tính lương',
+    title: 'Thêm mới nghỉ không lương',
     url: 'them-moi-nghi-khong-luong',
   },
 },
@@ -306,7 +306,7 @@ const routes: Routes = [
   path: 'nghi-khong-luong/chi-tiet-nghi-khong-luong',
   component: ChiTietNghiKhongLuongComponent,
   data: {
-    title: 'Chi tiết chuyên viên tính lương',
+    title: 'Chi tiết nghỉ không lương',
     url: 'chi-tiet-nghi-khong-luong',
   },
 },

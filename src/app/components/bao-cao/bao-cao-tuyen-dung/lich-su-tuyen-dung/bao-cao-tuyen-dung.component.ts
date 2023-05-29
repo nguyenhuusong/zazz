@@ -1,14 +1,12 @@
 import { AfterViewChecked, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { CustomTooltipComponent } from 'src/app/common/ag-component/customtooltip.component';
-import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
-import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.component';
 import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
+import * as FileSaver from 'file-saver';
 
 const MAX_SIZE = 100000000;
 import { cloneDeep } from 'lodash';
@@ -103,9 +101,9 @@ export class BaoCaoTuyenDungComponent implements OnInit {
   detailInfoReport = null;
   listViewsReport = [];
   optionsButonReport = [
-    { label: 'Hiển thị', value: 'ViewReport', class: 'p-button-sm ml-2 height-56 addNew', icon: 'pi pi-plus' },
-    { label: 'Mở tệp', value: 'OpenReport', class: 'p-button-sm p-button-success ml-2 height-56 addNew', icon: 'pi pi-clone' },
-    { label: 'Lưu tệp', value: 'DowloadReport', class: 'p-button-sm p-button-success ml-2 height-56 addNew', icon: 'pi pi-cloud-download' },
+    { label: 'Hiển thị', value: 'ViewReport', class: 'p-button-sm ml-2  addNew', icon: 'pi pi-plus' },
+    // { label: 'Mở tệp', value: 'OpenReport', class: 'p-button-sm p-button-success ml-2  addNew', icon: 'pi pi-clone' },
+    { label: 'Lưu tệp', value: 'DowloadReport', class: 'p-button-sm p-button-success ml-2  addNew', icon: 'pi pi-cloud-download' },
   ];
 
   changeReportTypeValue(event) {
@@ -186,26 +184,20 @@ export class BaoCaoTuyenDungComponent implements OnInit {
 
   loadExport(queryParams: any, type: string) {
     this.spinner.show();
-    this.apiService.getDataReport(this.detailInfoReport.api_url_dowload, queryParams)
+    this.apiService.getDataFile(this.detailInfoReport.api_url_dowload, queryParams)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(
       (results: any) => {
-        if(type === 'open') {
-          if(results.data && results.data.webViewLink){
-            window.open(results.data.webViewLink);
-            this.spinner.hide();
-          }else{
-            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Xuất báo cáo bị lỗi' });
-            this.spinner.hide();
+        if (results.type === 'application/json') {
+          this.spinner.hide();
+        } else {
+          let type = '.xlsx'
+          if(queryParams.exportType === 'pdf') {
+            type = '.pdf'
           }
-        }else {
-          if(results.data && results.data.webContentLink){
-            window.open(results.data.webContentLink);
-            this.spinner.hide();
-          }else{
-            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Xuất báo cáo bị lỗi' });
-            this.spinner.hide();
-          }
+          var blob = new Blob([results], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+          FileSaver.saveAs(blob, this.detailInfoReport.report_name + type);
+          this.spinner.hide();
         }
       
       },
@@ -213,6 +205,17 @@ export class BaoCaoTuyenDungComponent implements OnInit {
         this.spinner.hide();
       });
   }
+
+  createImageFromBlob(image: string, fileName: string) {
+    var link = document.createElement("a");
+    link.download = fileName;
+    link.href = image;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    link.remove();
+  }
+
 
   initGrid() {
     console.log("sddddddđ")
@@ -280,9 +283,7 @@ export class BaoCaoTuyenDungComponent implements OnInit {
       const queryParams = queryString.stringify({ ...event.data });
       this.loadExport(queryParams, 'open');
     }else {
-      // this.isShowLists = false;
-      const queryParams = queryString.stringify({ ...event.data });
-      this.loadExport(queryParams, 'dowload');
+      this.loadExport({ ...event.data }, 'dowload');
     }
   
   }

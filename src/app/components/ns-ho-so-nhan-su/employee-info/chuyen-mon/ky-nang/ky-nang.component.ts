@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { cloneDeep } from 'lodash';
 import { AgGridFn } from 'src/app/common/function-common/common';
 import { fromEvent, Subject, takeUntil } from 'rxjs';
@@ -82,22 +82,13 @@ export class KyNangComponent implements OnInit {
   }
 
   setDetailInfo(data) {
-    if(this.files && this.files.length > 0){
-      data[0].fields.forEach(element => {
-        if(element.field_name === "meta_file_size") {
-          element.columnValue = this.files[0].size
-        }else if(element.field_name === "meta_file_type") {
-          element.columnValue = this.files[0].type;
-        }
-        else if(element.field_name === "meta_file_name") {
-          element.columnValue = this.files[0].name;
-        }
-      });
-    }
-    const param = {
-      ...this.dataDetailInfo, group_fields: data
-    }
-    this.apiService.setTrainFile(param)
+    const formData = new FormData();
+    formData.append('trainId', this.trainId ? `${this.trainId}` : '');
+    formData.append('empId', `${this.empId}`);
+    formData.append('train_type', `${this.dataDetailInfo.train_type}`);
+    formData.append('group_fields', `${JSON.stringify(data)}`);
+    formData.append('formFile', this.dataDetailInfo.formFile[0]);
+    this.apiService.setTrainFile(formData)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(results => {
       if (results.status === 'success') {

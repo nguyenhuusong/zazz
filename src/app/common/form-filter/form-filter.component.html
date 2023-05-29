@@ -32,12 +32,14 @@
                 </div>
             </ng-container>
         </div>
-        <div class="button-filter text-right d-flex gap-12">
-            <ng-container *ngFor="let button of buttonsFilters">
-                <p-button label="{{button.label}}" (onClick)="onChangeButtonEdit(button.value)" [disabled]="button?.disabled" icon="{{button?.icon ? button?.icon : 'pi pi-plus'}}" styleClass="p-button-sm {{button?.class ? button?.class : ''}}"></p-button>
-        </ng-container>
-            <p-button label="Cấu hình" styleClass="p-button-sm addNew" icon="pi pi-cog" (click)="CauHinh()"></p-button>
-            <p-button label="Đóng" styleClass="p-button-sm p-button-secondary bg-secondary height-56 addNew close" icon="pi pi-times" (click)="cancel('Close')"></p-button>
+        <div class="grid" >
+            <div class="col-12 button-filter text-right d-flex gap12">
+                <ng-container *ngFor="let button of buttonsFilters">
+                    <p-button label="{{button.label}}" (onClick)="onChangeButtonEdit(button.value)" [disabled]="button?.disabled" icon="{{button?.icon ? button?.icon : 'pi pi-plus'}}" styleClass="p-button-sm {{button?.class ? button?.class : ''}}"></p-button>
+                </ng-container>
+                <p-button styleClass="p-button-sm p-button-secondary" (click)="CauHinh()"><span class="uni-icon uni-setting-transparent uni-white-color"></span></p-button>
+                <p-button label="Đóng" styleClass="p-button-sm p-button-secondary bg-secondary" icon="pi pi-times" (click)="cancel('Close')"></p-button>
+            </div>
         </div>
     </form>
 

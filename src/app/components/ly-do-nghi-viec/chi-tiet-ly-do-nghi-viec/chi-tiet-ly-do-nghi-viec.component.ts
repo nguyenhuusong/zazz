@@ -1,6 +1,6 @@
 
 import { Component, EventEmitter, Input, OnInit, Output, OnChanges, OnDestroy } from '@angular/core';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { ActivatedRoute, Router } from '@angular/router';
 import { cloneDeep } from 'lodash';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -34,7 +34,7 @@ export class ChiTietLyDoNghiViecComponent implements OnInit, OnDestroy {
   displaysearchUserMaster = false;
   listViewsForm = [];
   detailComAuthorizeInfo = null;
-  reason_code = null
+  //reason_code = null
   listViews = []
   imagesUrl = []
   paramsObject = null
@@ -48,8 +48,10 @@ export class ChiTietLyDoNghiViecComponent implements OnInit, OnDestroy {
   detailInfo = null;
   listsData = []
   columnDefs
+  @Input() reason_code = '';
   @Input() dataRouter = null
   @Output() back = new EventEmitter<any>();
+  @Output() callback = new EventEmitter<any>();
 
   ngOnDestroy() {
     this.unsubscribe$.next();
@@ -74,7 +76,7 @@ export class ChiTietLyDoNghiViecComponent implements OnInit, OnDestroy {
     .subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.dataRouter = this.paramsObject.params;
-      this.reason_code = this.paramsObject.params.reason_code;
+      //this.reason_code = this.paramsObject.params.reason_code;
         this.getLeaveReason();
     });
   };
@@ -82,7 +84,7 @@ export class ChiTietLyDoNghiViecComponent implements OnInit, OnDestroy {
   getLeaveReason() {
     this.listViews = [];
     this.listsData = [];
-    const queryParams = queryString.stringify(this.paramsObject.params);
+    const queryParams = queryString.stringify({reason_code: this.reason_code});
     this.apiService.getLeaveReason(queryParams)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(results => {
@@ -107,7 +109,7 @@ export class ChiTietLyDoNghiViecComponent implements OnInit, OnDestroy {
       if (results.status === 'success') {
         this.displayUserInfo = false;
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Cập nhật thông tin thành công' });
-        this.router.navigate(['/cai-dat/ly-do-nghi']);
+        this.callback.emit();
       } else {
         this.messageService.add({
           severity: 'error', summary: 'Thông báo', detail: results.message
@@ -137,7 +139,7 @@ export class ChiTietLyDoNghiViecComponent implements OnInit, OnDestroy {
     if(data === 'CauHinh') {
       this.getLeaveReason();
     }else {
-      this.router.navigate(['/cai-dat/ly-do-nghi']);
+      this.callback.emit();
     }
   }
 

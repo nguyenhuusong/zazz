@@ -91,6 +91,10 @@ import { ListCccdComponent } from 'src/app/components/ho-so-ca-nhan/list-cccd/li
 import { LichSuTuyenDungComponent } from 'src/app/components/ns-tuyen-dung/lich-su-tuyen-dung/lich-su-tuyen-dung.component';
 import { SettingStatusComponent } from 'src/app/components/ns-tuyen-dung/vong-tuyen-dung/setting-status/setting-status.component';
 import { DetailSettingStatusComponent } from 'src/app/components/ns-tuyen-dung/vong-tuyen-dung/setting-status/detail-setting-status/detail-setting-status.component';
+import { HopDongComponent } from 'src/app/components/ns-tuyen-dung/chi-tiet-tuyen-dung/hop-dong/hop-dong.component';
+import { CheckboxModule } from 'primeng/checkbox';
+import { TabCandidateInterviewComponent } from 'src/app/components/ns-tuyen-dung/chi-tiet-tuyen-dung/tab-candidate-interview/tab-candidate-interview.component';
+import { TabCandidateFinalComponent } from 'src/app/components/ns-tuyen-dung/chi-tiet-tuyen-dung/tab-candidate-final/tab-candidate-final.component';
 @NgModule({
   imports: [
     MessagesModule,
@@ -141,6 +145,7 @@ import { DetailSettingStatusComponent } from 'src/app/components/ns-tuyen-dung/v
     CheckHideActionsDirectiveModule,
     TreeSelectModule,
     RadioButtonModule,
+    CheckboxModule,
     AgGridModule.withComponents([
       ButtonRendererComponent,
       ButtonRendererComponent1
@@ -189,7 +194,10 @@ import { DetailSettingStatusComponent } from 'src/app/components/ns-tuyen-dung/v
     ListCccdComponent,
     LichSuTuyenDungComponent,
     SettingStatusComponent,
-    DetailSettingStatusComponent
+    DetailSettingStatusComponent,
+    HopDongComponent,
+    TabCandidateInterviewComponent,
+    TabCandidateFinalComponent,
   ],
   providers: [ ]
 })

@@ -12,8 +12,8 @@ styleClass="search-em-in {{ dataSearched?.length > 0 ? 'search-em-result' : '' }
     Tìm kiếm nhân viên
 </ng-template>
     <div class="search-in" [ngClass]="{'res': dataSearched.length > 0}">
-        <div class="search-group field-group select d-flex" style="display: flex">
-            <div class="col-3 pd-0" style="padding-right: 10px !important;border-right: 1px solid #ebe8e8;">
+        <div class="search-group fields d-flex" style="display: flex">
+            <div class="col-3 p-0" style="padding-right: 10px !important;border-right: 1px solid #ebe8e8;">
                 <p-dropdown 
                  (onChange)="changeKeyType($event)"
                   [(ngModel)]="query.keyType" 
@@ -23,7 +23,7 @@ styleClass="search-em-in {{ dataSearched?.length > 0 ? 'search-em-result' : '' }
                 placeholder="Tìm kiếm theo" >
                 </p-dropdown>
             </div>
-            <div class="col-9 pd-0">
+            <div class="col-9 p-0">
                 <!-- <p-button styleClass="p-button-sm " icon=" pi pi-search" (click)="getStaffsAtStore()"></p-button> -->
                 <span class="pi pi-search" (click)="searchEmp()"></span>
                 <span class="number-res" *ngIf="dataSearched && dataSearched.length > 0 && isSearching">{{ dataSearched.length }} kết quả</span>
@@ -115,18 +115,18 @@ styleClass="search-em-in {{ dataSearched?.length > 0 ? 'search-em-result' : '' }
         <div class="d-flex middle end">
             <div  *ngIf="custId">
                 <button type="button" 
-                    class="p-button-secondary btn-cancel height-56" 
+                    class="p-button-secondary p-button-sm " 
                     pButton icon="pi pi-times" label="Hủy bỏ" 
                     (click)="cancelItem()">
                 </button>
                 <p-button 
-                    styleClass="p-button-sm mr-1 height-56" 
+                    styleClass="p-button-sm mr-1 " 
                     (click)="getItem()">
                 Xác nhận
                 </p-button>
             </div>
             <p-button 
-                styleClass="p-button-sm mr-1 height-56" *ngIf="dataSearched.length > 1 && dataCusIdChoosed.length > 0"
+                styleClass="p-button-sm mr-1 " *ngIf="dataSearched.length > 1 && dataCusIdChoosed.length > 0"
                 (click)="xacnhan()">
             Gộp tài khoản
             </p-button>
@@ -134,55 +134,62 @@ styleClass="search-em-in {{ dataSearched?.length > 0 ? 'search-em-result' : '' }
     </ng-template>
 </p-dialog>
 
-
-<p-dialog header="Xác nhận gộp 2 tài khoản" [(visible)]="displayGop" [position]="'top-right'" [modal]="true" [style]="{width: '40vw'}"
-    [draggable]="false" [resizable]="false">
-   
-    <div class="col-md-12">
-        <p class="mb-1">{{modelXacnhan.message}}</p>
-        <div class="fields">
-            <label for="">Tài khoản được giữ lại</label>
-            <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" [options]="listTargets_s"
-                [required]="true"  [(ngModel)]="modelXacnhan.keep_custId" name="keep_custId" (onChange)="changeCifNo($event, 'keep_custId')">
-                <ng-template let-item pTemplate="selectedItem">
-
-                    <span style="vertical-align:middle; margin-left: .5em">{{item.label}} </span>
-                </ng-template>
-                <ng-template let-car pTemplate="item">
-                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-
-                        <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
-                    </div>
-                </ng-template>
-            </p-dropdown>
-        </div>
-    </div>
-    <div class="col-md-12 mt-1">
-        <div class="fields">
-            <label for="">Tài khoản sẽ hủy</label>
-            <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" (onChange)="changeCifNo($event, 'remove_custId')" [options]="listTargets_s"
-                [required]="true"  [(ngModel)]="modelXacnhan.remove_custId" name="remove_custId" >
-                <ng-template let-item pTemplate="selectedItem">
-                    <span style="vertical-align:middle; margin-left: .5em">{{item.label}} </span>
-                </ng-template>
-                <ng-template let-car pTemplate="item">
-                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-
-                        <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
-                    </div>
-                </ng-template>
-            </p-dropdown>
-        </div>
-    </div>
-
-    <div class="col-md-12 mt-1">
-        <div class="p-field-checkbox">
-            <p-checkbox [(ngModel)]="modelXacnhan.overite" [binary]="true" inputId="binary" label="Thông tin tài khoản giữ lại sẽ tự động cập nhật vào tất cả hợp đồng của khách hàng ."></p-checkbox>
-        </div>
-    </div>
+<p-sidebar
+    [style]="{ width: '80%' }"
+    [(visible)]="displayGop" 
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        Xác nhận gộp 2 tài khoản</ng-template>
     
-
-        <ng-template pTemplate="footer">
-            <p-button icon="pi pi-check" (click)="xacnhangop()" label="Đồng ý" styleClass="p-button-text"></p-button>
-        </ng-template>
-</p-dialog>
+        <div class="col-md-12">
+            <p class="mb-1">{{modelXacnhan.message}}</p>
+            <div class="fields">
+                <label for="">Tài khoản được giữ lại</label>
+                <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" [options]="listTargets_s"
+                    [required]="true"  [(ngModel)]="modelXacnhan.keep_custId" name="keep_custId" (onChange)="changeCifNo($event, 'keep_custId')">
+                    <ng-template let-item pTemplate="selectedItem">
+    
+                        <span style="vertical-align:middle; margin-left: .5em">{{item.label}} </span>
+                    </ng-template>
+                    <ng-template let-car pTemplate="item">
+                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+    
+                            <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+            </div>
+        </div>
+        <div class="col-md-12 mt-1">
+            <div class="fields">
+                <label for="">Tài khoản sẽ hủy</label>
+                <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" (onChange)="changeCifNo($event, 'remove_custId')" [options]="listTargets_s"
+                    [required]="true"  [(ngModel)]="modelXacnhan.remove_custId" name="remove_custId" >
+                    <ng-template let-item pTemplate="selectedItem">
+                        <span style="vertical-align:middle; margin-left: .5em">{{item.label}} </span>
+                    </ng-template>
+                    <ng-template let-car pTemplate="item">
+                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+    
+                            <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+            </div>
+        </div>
+    
+        <div class="col-md-12 mt-1">
+            <div class="p-field-checkbox">
+                <p-checkbox [(ngModel)]="modelXacnhan.overite" [binary]="true" inputId="binary" label="Thông tin tài khoản giữ lại sẽ tự động cập nhật vào tất cả hợp đồng của khách hàng ."></p-checkbox>
+            </div>
+        </div>
+        
+    
+            <ng-template pTemplate="footer">
+                <p-button icon="pi pi-check" (click)="xacnhangop()" label="Đồng ý" styleClass="p-button-text"></p-button>
+            </ng-template>
+</p-sidebar>

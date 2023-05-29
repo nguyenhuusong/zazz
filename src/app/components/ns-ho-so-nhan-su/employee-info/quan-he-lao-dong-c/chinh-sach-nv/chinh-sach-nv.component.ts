@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { cloneDeep } from 'lodash';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -55,9 +55,12 @@ export class ChinhSachNvComponent implements OnInit, AfterViewInit {
     this.displayFormEditDetail = false;
   }
 
+  heightGrid = 450;
+
   ngOnInit(): void {
     this.getSchemeEmpPage();
     this.getSchemeEmp();
+    this.heightGrid = window.innerHeight - 180
   }
   columnDefs = [];
   gridKey = '';
@@ -354,12 +357,13 @@ export class ChinhSachNvComponent implements OnInit, AfterViewInit {
   }
 
   addSchemeByEmpid() {
-    this.displayAddSchemeByEmpId = true;
+   
     this.query.from_date = null;
     this.query.to_date = null;
     this.listSelects = [];
-    this.listsData2 = [];
-    this.columnDefs2 = [];
+    this.displayAddSchemeByEmpId = true;
+    // this.listsData2 = [];
+    // this.columnDefs2 = [];
   }
 
   save() {
@@ -374,9 +378,13 @@ export class ChinhSachNvComponent implements OnInit, AfterViewInit {
       empId: this.empId,
       from_date: this.query.from_date ? moment(this.query.from_date).format('DD/MM/YYYY') : null,
       to_date: this.query.from_date ? moment(this.query.to_date).format('DD/MM/YYYY') : null,
-      schemeIds: this.listSelects.map(d => d.schemeId)
+      schemeIds: this.listSelects.map(d => {
+        return {
+          gd: d.schemeId
+        }
+      })
     }
-    this.apiService.setSchemeOpen(params)
+    this.apiService.setSchemeOpenEmp(params)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(results => {
       if (results.status === 'success') {

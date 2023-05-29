@@ -1,7 +1,4 @@
 <div class="main-grid product-detail">
-    <section>
-        <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
-    </section>
     <div class="content">
         <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButon"  [dataView]="listViews"
             (callback)="setHolidayInfo($event)" (callbackcancel)="quaylai($event)"></app-edit-detail>
@@ -12,11 +9,11 @@
 
     </div>
     
-   <div class="grid wrap-edit-detail">
+   <div class="grid wrap-edit-detail pt-2">
     <div class="col-12 border-section ">
         <p-panel>
             <ng-template pTemplate="header">
-                <div class="grid d-flex justify-content-between">
+                <div class="d-flex justify-content-between">
                     <h3 class="title-section">Cấu hình</h3>
                 </div>
             </ng-template>

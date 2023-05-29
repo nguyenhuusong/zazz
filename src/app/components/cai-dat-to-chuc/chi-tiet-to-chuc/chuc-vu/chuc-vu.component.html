@@ -1,8 +1,8 @@
-<div class="grid wrap-edit-detail">
+<div class="grid wrap-edit-detail pt-2">
     <div class="col-12 border-section ">
         <p-panel>
             <ng-template pTemplate="header">
-                <div class="grid d-flex justify-content-between">
+                <div class="d-flex justify-content-between">
                     <h3 class="title-section">Danh sách chức vụ</h3>
                 </div>
             </ng-template>
@@ -40,11 +40,25 @@
         [gridKey]="gridKey"></app-config-grid-table-form>
 </p-dialog>
 
-<p-dialog styleClass="popup-btngroup-edit-detail"  [(visible)]="displayFormEditDetail" [draggable]="false"  [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '1000px', height: 'auto'}">
-    <p-header>
-       Thêm mới chức vụ
-    </p-header>
-
+<p-sidebar
+    [style]="{ width: '80%' }"
+    [(visible)]="displayFormEditDetail" 
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        Thêm mới chức vụ </ng-template>
+    <ng-template pTemplate="footer">
+        <div style="color: #f68c1f;">
+        </div>
+        <div>
+            <p-button styleClass="p-button-sm p-button-danger" icon="pi pi-times" label="Đóng" (click)="displayFormEditDetail = false"> </p-button>
+        <p-button styleClass="p-button-sm ml-1" icon="pi pi-check" label="Xác nhận" (click)="xacnhan()"> </p-button>
+        </div>
+    </ng-template>
+    
     <p-pickList [source]="listSources" [target]="listTargets" sourceHeader="Danh sách chức vụ *Chưa* nằm trong tổ chức" targetHeader="Danh sách chức vụ nằm trong tổ chức" [dragdrop]="true"
     [responsive]="true" [sourceStyle]="{'height':'40rem'}" [targetStyle]="{'height':'40rem'}" filterBy="name"
     sourceFilterPlaceholder="Tìm kiếm tên chức vụ" targetFilterPlaceholder="Tìm kiếm tên chức vụ">
@@ -55,13 +69,5 @@
             </div>
         </div>
     </ng-template>
-</p-pickList>
-    <p-footer style="display: flex;justify-content:space-between ;">
-        <div style="color: #f68c1f;">
-        </div>
-        <div>
-            <p-button styleClass="p-button-sm p-button-danger" icon="pi pi-times" label="Đóng" (click)="displayFormEditDetail = false"> </p-button>
-        <p-button styleClass="p-button-sm ml-1" icon="pi pi-check" label="Xác nhận" (click)="xacnhan()"> </p-button>
-        </div>
-     </p-footer>
-</p-dialog>
+    </p-pickList>
+</p-sidebar>

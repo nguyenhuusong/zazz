@@ -1,7 +1,4 @@
-<div class="d-flex" style="position: absolute;
-z-index: 9999;
-top: 0;
-right: 0;">
+<div class="d-flex" >
   <p-toolbar styleClass="new-toolbar-style d-flex p-0 middle">
     <div class="p-toolbar-group-left">
       <!-- <div class="field-group mr-2">
@@ -10,7 +7,7 @@ right: 0;">
         <p-button class="search-button" icon="pi pi-search" (click)="load()"></p-button>
       </div> -->
       <!-- <div class="mr-1 x-1">
-        <div class="field-group select label-8 mr-2 mb-0">
+        <div class="fields mr-2 mb-0">
           <label>Trạng thái Push</label>
           <select class="form-control" name="push_st" [(ngModel)]="filter.push_st" #push_st="ngModel" (change)="load()">
             <option *ngFor="let type of notifyTypes" value={{type.statusId}}>
@@ -19,7 +16,7 @@ right: 0;">
         </div>
       </div>
       <div class="mr-1 x-1">
-        <div class="field-group select label-8 mr-2 mb-0">
+        <div class="fields mr-2 mb-0">
           <label>Trạng thái gửi Email</label>
           <select class="form-control" name="email_st" [(ngModel)]="filter.email_st" #email_st="ngModel" (change)="load()">
             <option *ngFor="let type of notifyTypes" value={{type.statusId}}>
@@ -28,7 +25,7 @@ right: 0;">
         </div>
       </div>
       <div class=" x-1">
-        <div class="field-group select label-8 mb-0">
+        <div class="fields mb-0">
           <label>Trạng thái gửi Sms</label>
           <select class="form-control" name="sms_st" [(ngModel)]="filter.sms_st" #sms_st="ngModel" (change)="load()">
             <option *ngFor="let type of notifyTypes" value={{type.statusId}}>
@@ -63,7 +60,7 @@ right: 0;">
 </p-toolbar>
  
 </div>
-<div class="mt-5">
+<div >
   <div class="grid-default border">
     <app-list-grid-angular *ngIf="columnDefs.length > 0" 
       [listsData]="items?.dataList?.data" 

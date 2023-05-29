@@ -1,8 +1,8 @@
-<div class="grid wrap-edit-detail">
+<div class="grid wrap-edit-detail pt-2">
     <div class="col-12 border-section ">
         <p-panel>
             <ng-template pTemplate="header">
-                <div class="grid d-flex justify-content-between">
+                <div class="d-flex justify-content-between">
                     <h3 class="title-section">Thời gian làm việc</h3>
                 </div>
             </ng-template>
@@ -41,25 +41,8 @@
 </p-dialog>
 
 
-<p-dialog styleClass="popup-btngroup-edit-detail"  [(visible)]="displayFormEditDetail" [draggable]="false"  [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '1400px', height: 'auto'}">
-    <p-header>
-        Thêm mới thời gian làm việc
-    </p-header>
 
-    <p-card>
-        <div class="status-line steps-contract col-12 m-auto">
-            <p-steps [model]="steps" [(activeIndex)]="activeIndex" [readonly]="false"></p-steps>
-        </div>
-    </p-card>
-    <p-divider></p-divider>
-    <p-card>
-        <app-edit-detail [optionsButtonsEdit]="optionsButtonsView" *ngIf="listViewsDetail.length> 0" [detailInfo]="dataDetailInfo"
-            [detail]="dataDetailInfo" [manhinh]="'Edit'" [thongtinnhanvienNew]="true"
-            [dataView]="listViewsDetail" (callback)="setDetail($event)" 
-            (callBackForm)="callBackForm($event)"
-            (callbackcancel)="canceDetail($event)"></app-edit-detail>
-    </p-card>
-    
-</p-dialog>
+
+<app-chi-tiet-thoi-gian-lam-viec *ngIf="displayFormEditDetail" [empId]="empId" [workingId]="workingId" (cancelSave)="saveInfo()" [displayFormEditDetail]="displayFormEditDetail"></app-chi-tiet-thoi-gian-lam-viec>
 
 

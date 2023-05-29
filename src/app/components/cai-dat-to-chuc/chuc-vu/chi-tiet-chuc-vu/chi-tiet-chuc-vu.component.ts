@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, OnChanges } from '@angular/core';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { ActivatedRoute, Router } from '@angular/router';
 import { cloneDeep } from 'lodash';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -25,7 +25,7 @@ export class ChiTietChucVuComponent implements OnInit, OnChanges {
     private confirmationService: ConfirmationService,
     private router: Router
   ) { }
-  positionId = null
+  //positionId = null
   organizeId = null
   listViews = []
   imagesUrl = []
@@ -37,9 +37,10 @@ export class ChiTietChucVuComponent implements OnInit, OnChanges {
   }
   titlePage : string = '';
   url: string = '';
-
+  @Input() positionId = '';
   @Input() dataRouter = null
   @Output() back = new EventEmitter<any>();
+  @Output() callback = new EventEmitter<any>();
 
   ngOnChanges() {
 
@@ -63,7 +64,7 @@ export class ChiTietChucVuComponent implements OnInit, OnChanges {
     this.activatedRoute.queryParamMap.subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.dataRouter = this.paramsObject.params;
-      this.positionId = this.paramsObject.params.positionId || null;
+      //this.positionId = this.paramsObject.params.positionId || null;
       this.organizeId	 = this.paramsObject.params.organizeId || null	;
       this.getPositionInfo();
     });
@@ -72,7 +73,7 @@ export class ChiTietChucVuComponent implements OnInit, OnChanges {
   detailInfo = null;
   getPositionInfo() {
     this.listViews = [];
-    const queryParams = queryString.stringify({positionId: this.positionId, organizeId	: this.organizeId	});
+    const queryParams = queryString.stringify({positionId: this.positionId});
     this.apiService.getPositionInfo(queryParams).subscribe(results => {
       if (results.status === 'success') {
         this.listViews = cloneDeep(results.data.group_fields);
@@ -92,7 +93,7 @@ export class ChiTietChucVuComponent implements OnInit, OnChanges {
     this.apiService.setPositionInfo(params).subscribe((results: any) => {
       if (results.status === 'success') {
         this.displayUserInfo = false;
-        this.goBack()
+        this.callback.emit();
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Cập nhật thông tin thành công' });
       } else {
         this.messageService.add({
@@ -123,7 +124,7 @@ export class ChiTietChucVuComponent implements OnInit, OnChanges {
     if(data === 'CauHinh') {
       this.getPositionInfo();
     }else {
-      this.goBack();
+      this.callback.emit();
     }
   }
 

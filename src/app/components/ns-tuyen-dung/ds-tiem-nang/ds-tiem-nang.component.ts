@@ -1,6 +1,6 @@
 import { AfterViewChecked, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { CustomTooltipComponent } from 'src/app/common/ag-component/customtooltip.component';
 import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
@@ -117,7 +117,7 @@ export class DsTiemNangComponent implements OnInit {
     this.loadjs++
     if (this.loadjs === 5) {
       if (b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight +10;
+        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight +30;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       } else {
@@ -181,7 +181,7 @@ export class DsTiemNangComponent implements OnInit {
       buttons: [
         {
           onClick: this.viewRow.bind(this),
-          label: 'Xem chi tiết',
+          label: 'Xem',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
           hide: CheckHideAction(MENUACTIONROLEAPI.GetCandidatePage.url, ACTIONS.VIEW)
@@ -298,8 +298,7 @@ export class DsTiemNangComponent implements OnInit {
 
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
-      { label: 'Nhân sự' },
-      { label: 'Danh sách tuyển dụng', routerLink: '/tuyen-dung/ds-tuyen-dung' },
+      { label: 'Tuyển dụng' },
       { label: 'Danh sách tiềm năng' },
     ];
     // this.getJobTitles();
@@ -391,7 +390,7 @@ export class DsTiemNangComponent implements OnInit {
           can_st: this.recruitmentStatusSelected,
           vacancyId: vacancyId
         }
-        this.apiService.recruiUpdateStatus(queryString.stringify(query))
+        this.apiService.recruiUpdateStatus(query)
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe((results: any) => {
           if (results.status === 'success') {
@@ -411,13 +410,13 @@ export class DsTiemNangComponent implements OnInit {
   cloneListViewsFilter = [];
   detailInfoFilter = null;
   optionsButonFilter = [
-    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm height-56 addNew', icon: 'pi pi-search' },
-    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger height-56 addNew', icon: 'pi pi-times' },
+    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm  addNew', icon: 'pi pi-search' },
+    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger  addNew', icon: 'pi pi-times' },
   ];
 
   //filter 
   getFilter() {
-    this.apiService.getFilter('/api/v1/recruitcandidate/GetCandidateFilter')
+    this.apiService.getFilter('/api/v1/recruitcandidate/GetCandidatePotentialFilter')
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(results => {
       if (results.status === 'success') {

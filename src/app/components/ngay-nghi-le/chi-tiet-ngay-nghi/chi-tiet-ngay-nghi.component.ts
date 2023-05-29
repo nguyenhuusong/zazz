@@ -1,7 +1,7 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
-const queryString = require('query-string');
+import queryString from 'query-string';
 import { cloneDeep, flatten } from 'lodash';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subject, takeUntil } from 'rxjs';
@@ -15,6 +15,10 @@ import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
   styleUrls: ['./chi-tiet-ngay-nghi.component.scss']
 })
 export class ChiTietNgayNghiComponent implements OnInit, OnDestroy {
+  @Input() id = '';
+  @Output() callback = new EventEmitter<any>();
+
+  
   items: MenuItem[] = [];
   paramsObject = null;
   detailInfo = null
@@ -106,13 +110,13 @@ export class ChiTietNgayNghiComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((params) => {
         this.paramsObject = { ...params.keys, ...params };
-        this.modelEdit.id = this.paramsObject.params.id || 0
+        //this.modelEdit.id = this.paramsObject.params.id || 0
         this.getHolidayInfo();
       });
   };
 
   getHolidayInfo() {
-    const queryParams = queryString.stringify(this.modelEdit);
+    const queryParams = queryString.stringify({id: this.id});
     this.apiService.getHolidayInfo(queryParams)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {
@@ -134,8 +138,7 @@ export class ChiTietNgayNghiComponent implements OnInit, OnDestroy {
       .subscribe((results: any) => {
         if (results.status === 'success') {
           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
-          this.spinner.hide();
-          this.router.navigate(['/cai-dat/cai-dat-ngay-nghi-le']);
+          this.callback.emit();
         } else {
           this.messageService.add({
             severity: 'error', summary: 'Thông báo',
@@ -157,11 +160,11 @@ export class ChiTietNgayNghiComponent implements OnInit, OnDestroy {
         this.whatDayName = parseInt(data);
         this.selecteOptionDate(this.whatDayName)
       }else {
-        this.router.navigate(['/cai-dat/cai-dat-ngay-nghi-le']);
+        this.callback.emit();
       }
     }
     if(data === 'Back') {
-      this.router.navigate(['/cai-dat/cai-dat-ngay-nghi-le']);
+      this.callback.emit();
     }
    
   }

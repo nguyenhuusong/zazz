@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { AgGridFn } from 'src/app/common/function-common/common';
 import { fromEvent, Subject, takeUntil } from 'rxjs';
 
@@ -221,7 +221,7 @@ export class ThongTinHoSoCaNhanComponent implements OnInit {
                 hide: !params.data.meta_upload_url
               },
               {
-                onClick: this.dowloadFileUpload.bind(this),
+                onClick: this.uploadFile.bind(this),
                 label: 'upload hồ sơ',
                 icon: 'pi pi-upload',
                 key: 'view-job-detail',
@@ -336,17 +336,24 @@ export class ThongTinHoSoCaNhanComponent implements OnInit {
   metafile = null;
   displayuploadcontract = false;
   handleUpload(event) {
-    this.columnDefsRecord = [];
     let params = {...this.metafile}
-    params.meta_upload_url = event[0].url;
-    params.meta_file_name = event[0].name;
-    params.meta_file_type = event[0].type;
-    params.meta_file_size = event[0].size;
-    const indexObj = this.listsDataRecord.findIndex(d => d.sourceId === params.sourceId);
-    this.listsDataRecord[indexObj] = params;
-    this.listsDataRecord = [...this.listsDataRecord];
-    this.initGrid('columnDefsRecord',this.dataDetailInfo.gridflexdetails1);
-    this.displayuploadcontract = false;
+    const formData = new FormData();
+    formData.append('sourceId', `${params.sourceId}`);
+    formData.append('metaId', params.metaId ? `${params.metaId}`: '');
+    formData.append('empId', `${this.empId}`);
+    formData.append('formFile', event[0].file);
+    this.apiService.setEmpRecordUpload(formData)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((results: any) => {
+      if (results.status === 'success') {
+        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message ? results.message : 'Tải lên thành công' });
+        this.getEmpRecord();
+        this.FnEvent();
+        this.displayuploadcontract = false;
+      } else {
+        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+      }
+    });
   }
 
   downloadButtonClicked(urlLink) {

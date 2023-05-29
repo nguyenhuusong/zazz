@@ -45,6 +45,9 @@ export class ChiTietLichHopComponent implements OnInit, OnDestroy {
   dateChoosed = null;
   @Input() dataRouter = null;
   @Output() back = new EventEmitter<any>();
+  @Input() meetUd = null;
+  @Output() callback = new EventEmitter<any>();
+  
   ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
@@ -76,7 +79,7 @@ export class ChiTietLichHopComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((params) => {
         this.paramsObject = { ...params.keys, ...params };
-        this.meet_ud = this.paramsObject.params.meet_ud;
+        this.meet_ud = this.meetUd;
         this.getMeetingInfo();
       });
   };
@@ -180,7 +183,7 @@ export class ChiTietLichHopComponent implements OnInit, OnDestroy {
   }
 
   onBack() {
-    this.router.navigateByUrl('/cai-dat/cai-dat-lich-hop');
+    this.callback.emit();
   }
 
   getDataInfo(event): void {
@@ -241,7 +244,7 @@ export class ChiTietLichHopComponent implements OnInit, OnDestroy {
 
   quaylai(event) {
     if(event === 'Cancel') {
-      this.router.navigate(['/cai-dat/cai-dat-lich-hop'])
+      this.callback.emit();
     }
   }
 }

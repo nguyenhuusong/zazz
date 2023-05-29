@@ -15,7 +15,7 @@
                 </div>
                     
                 <!-- treeSelect -->
-                <div class="fields field-group select treeselect" *ngIf="field.param_type === 'selectTrees'">
+                <div class="fields fields treeselect" *ngIf="field.param_type === 'selectTrees'">
                     <label>{{ field.param_name }}</label>
                         <p-treeSelect [appendTo]="'body'"
                             [options]="field.options || []" [(ngModel)]="field.param_default"
@@ -24,7 +24,7 @@
                 </div>
 
                 <!-- dropdown -->
-                <div class="fields field-group select" *ngIf="field.param_type === 'dropdown' || field.param_type === 'select'">
+                <div class="fields fields" *ngIf="field.param_type === 'dropdown' || field.param_type === 'select'">
                     <label>{{ field.param_name }}</label>
                         <p-dropdown appendTo="body" [baseZIndex]="100"
                             [(ngModel)]="field.param_default"

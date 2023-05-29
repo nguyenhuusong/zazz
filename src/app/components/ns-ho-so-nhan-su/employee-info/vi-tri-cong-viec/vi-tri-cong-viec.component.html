@@ -1,6 +1,6 @@
-<section>
+<section class="section-box">
     <div class="bg-grey base-info-em d-flex middle bet">
-        <ul class="col-3">
+        <ul class="col-9">
             <li>
                 <span class="label">Nhân viên:</span>
                 <span class="value"> {{ dataEmployeeStatus?.fullName }}</span>
@@ -15,16 +15,36 @@
                 <span class="value"> {{dataEmployeeStatus?.code}}</span>
             </li>
         </ul>
-        <div class="col-6">
-            <app-step-info [detailInfo]="detailInfo" *ngIf="listViews.length > 0"></app-step-info>
-        </div>
-        <div class="col-3 d-flex end" >
-            <div class=" gap-16 icons-detail-config d-flex align-items-center" >
-                <span class="pi pi-pencil" pTooltip="Chỉnh sửa" tooltipPosition="left" (click)="editDetail()"></span>
-                <button type="button" pButton icon="pi pi-angle-down" label="Thao Tác" class="height-56 ml-2 p-button-text"  (click)="menu.toggle($event)"></button>
-                <p-menu [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'" [appendTo]="'body'" #menu [popup]="true" [model]="itemsMenuPopup"></p-menu>
+        <div class="col-3 gap-2 flex justify-content-end align-items-center" style="padding: 0;">
+            <div class="fields " style="margin-bottom: 0;">
+                <p-dropdown 
+                *ngIf="listViews.length> 0 && status.length > 0" 
+                    [options]="status" 
+                    (onChange)="recruiUpdateStatus()"
+                    [(ngModel)]="selectedStatus" 
+                    [styleClass]="selectedStatus?.bgColor"  
+                    [style]="{'width': '180px'}" 
+                    optionLabel="name"  
+                    placeholder="Select a Country">
+                    <ng-template pTemplate="selectedItem" >
+                        <div class="flex align-items-center gap-2" *ngIf="selectedStatus" >
+                            <div style="color: #fff">{{ selectedStatus.name}}</div>
+                        </div>
+                    </ng-template>
+                    <ng-template let-country pTemplate="item">
+                        <div class="flex align-items-center gap-2" *ngIf="country.value != selectedStatus?.value">
+                            <div class="pb-2 pt-2" style="display: flex; align-items: center; width: 100%;justify-content: space-around;font-size: 13px;">
+                                <span style="white-space:nowrap">{{ country.placeholder }} </span>
+                                <span class="pi pi-arrow-right" style="font-size: 12px;"></span>
+                                <span [class]="country.textColor" style="white-space:nowrap" class="pl-2 pr-2">{{ country.name }}</span>
+                            </div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
             </div>
-        </div>
+            <p-splitButton icon="pi pi-send" *ngIf="menuActions.length > 0" styleClass="p-button-sm" [appendTo]="'body'" (onClick)="callActions(menuActions[0].value)" [label]="menuActions[0].label" [model]="menuActions"></p-splitButton>
+            <p-button label="Quay lại" (click)="onBack()" styleClass="p-button-secondary p-button-sm" [style]="{'z-index': 9}" icon="pi pi-directions-alt"></p-button>
+              </div>
         <!-- <div class="col-3 text-right">
             <div class="buttons" *ngIf="detailInfo?.emp_st === 1" >
                 <p-button (click)="chuyenCongTac()"
@@ -45,37 +65,47 @@
             </div>
         </div> -->
     </div>
-    <div class="content page-detail" style="padding: 0;">
-        <p-panel styleClass="no-header">
-            <div class="">
-                <div class="row col-md-12">
-                    <div class="page-detail-edit-detail">
-                        <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [detailInfo]="detailInfo"
-                            [thongtinnhanvienNew]="true" [manhinh]="'Edit'" [optionsButtonsEdit]="[]"
-                            [dataView]="listViews" (callback)="setEmployeeInfo($event)"
-                            (callbackcancel)="cancelUpdate($event)">
-                        </app-edit-detail>
-                        <app-loading-detail 
-                            [id]="'employee-info-02'" 
-                            *ngIf="listViews.length === 0">
-                        </app-loading-detail>
-                        <p-divider></p-divider>
-
-                        <app-qua-trinh-cong-tac [empId]="empId" (cancelSave)="cancelSave()"></app-qua-trinh-cong-tac>
-                        <app-thoi-gian-lam-viec [empId]="empId"></app-thoi-gian-lam-viec>
-                    </div>
-
-                </div>
-            </div>
-        </p-panel>
-    </div>
 
 </section>
+<section>
+    <div class="page-detail-edit-detail">
+        <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [detailInfo]="detailInfo"
+            [thongtinnhanvienNew]="true" [manhinh]="'Edit'" [optionsButtonsEdit]="[]"
+            [dataView]="listViews" (callback)="setEmployeeInfo($event)"
+            (callbackcancel)="cancelUpdate($event)">
+        </app-edit-detail>
+        <app-loading-detail 
+            [id]="'employee-info-02'" 
+            *ngIf="listViews.length === 0">
+        </app-loading-detail>
+        
+        <app-qua-trinh-cong-tac [empId]="empId"  (cancelSave)="cancelSave()"></app-qua-trinh-cong-tac>
 
+        <app-thoi-gian-lam-viec [empId]="empId"></app-thoi-gian-lam-viec>
+        
+        <!-- <p-tabView (onChange)="handleChange($event.index)" [(activeIndex)]="tabIndex">
+            <p-tabPanel header="Quá trình công tác" leftIcon="{{dataEmployeeStatus?.profile_st ? 'pi pi-check-circle' : ''}} ">
+            </p-tabPanel>
+             <p-tabPanel header="Vị trí công việc" leftIcon="{{dataEmployeeStatus?.working_st ? 'pi pi-check-circle' : ''}} ">
+            </p-tabPanel>
+        </p-tabView> -->
 
-<p-dialog styleClass="popup-btngroup-edit-detail" header="{{titleForm.title}}" [(visible)]="displayDialog" [modal]="true" [draggable]="false"
-    [resizable]="false" [style]="{width: '1300px'}" [autoZIndex]=true [draggable]="false" [resizable]="false">
-            <app-edit-detail
+    </div>
+</section>
+
+<p-sidebar
+    [style]="{ width: '80%' }"
+    [(visible)]="displayDialog" 
+    styleClass="popup-btngroup-edit-detail"
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        {{titleForm.title}} </ng-template>
+    <ng-template pTemplate="footer"></ng-template>
+    <app-edit-detail
                 *ngIf="listViewsForm.length> 0 && displayDialog &&  (titleForm.type === 'DuyetHoSo' || titleForm.type === 'TuyenDungLai' || titleForm.type === 'ChuyenCongTac')"
                 [detail]="detailInfoForm"  [thongtinnhanvienNew]="true" [dataView]="listViewsForm"
                 (callback)="xacNhan($event)" (callbackcancel)="cancelViewsForm($event)"
@@ -89,7 +119,7 @@
                         </div>
                     </div>
                     <div class="col-md-6 mt-1"  *ngIf="titleForm.type === 'NghiViec'">
-                        <div class="field-group select" [ngClass]=" modelDuyet.reason_id? 'valid' : 'invalid' ">
+                        <div class="fields" [ngClass]=" modelDuyet.reason_id? 'valid' : 'invalid' ">
                             <label for="">Lý do</label>
                             <p-dropdown [autoZIndex]="true" [autoDisplayFirst]="false" [style]="{'width': '100%'}" [options]="terminateReasons"
                             [(ngModel)]="modelDuyet.reason_id" name="reason_id">
@@ -134,20 +164,56 @@
                 <p-button label="Lưu lại" (click)="onChangeButtonSave('Save')" icon="pi pi-check" styleClass="p-button-sm "></p-button>
             </div>
         </div>
-</p-dialog>
+</p-sidebar>
 
 
+<app-edit-vi-tri-cong-viec *ngIf="isEditDetail" [isEditDetail]="isEditDetail" [empId]="empId" (cancelSave)="cancelSetDetail($event)"></app-edit-vi-tri-cong-viec>
 
-<p-dialog [(visible)]="isEditDetail" [autoZIndex]="true" [modal]="true"  appendTo="body"
-    [style]="{width: '1300px', height: 'auto'}">
-    <p-header>
-       Chỉnh sửa vị trí công việc
-    </p-header>
-        <app-edit-vi-tri-cong-viec *ngIf="isEditDetail" [empId]="empId" (cancelSave)="cancelSetDetail($event)"></app-edit-vi-tri-cong-viec>
-</p-dialog>
 
-<p-dialog styleClass="popup-btngroup-edit-detail" [maximizable]="true" header=" Xác nhận nhân viên nghỉ việc" [(visible)]="displayFormTerminate" [modal]="true"  [draggable]="false" [resizable]="false"
+<!-- <p-dialog styleClass="popup-btngroup-edit-detail" [maximizable]="true" header=" Xác nhận nhân viên nghỉ việc" [(visible)]="displayFormTerminate" [modal]="true"  [draggable]="false" [resizable]="false"
     [style]="{width: '80vw'}" [autoZIndex]=true [draggable]="false" [resizable]="false">
-    <app-detail-terminate *ngIf="displayFormTerminate && empId" [isDialog]="true" [id]="" [empId]="empId" (callback)="cancelSetDetail($event)"></app-detail-terminate>
+    {{empId}}
 
-</p-dialog>
+</p-dialog> -->
+
+<app-detail-terminate *ngIf="displayFormTerminate && empId" [isEditDetail]="displayFormTerminate" [isDialog]="true" [id]="" [empId]="empId" (callback)="cancelSetDetail($event)"></app-detail-terminate>
+
+<p-sidebar
+    [style]="{ width: '80%' }"
+    [(visible)]="isShowInfoMg"
+    (onHide)="closeChangeMa()" 
+    position="right">
+    <ng-template pTemplate="header">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+        </svg> &nbsp;&nbsp;
+        Đổi người quản lý </ng-template>
+    <ng-template pTemplate="footer"></ng-template>
+    <app-edit-detail 
+            [optionsButtonsEdit]="btnMgInfoDetail"   
+            *ngIf="listViewsFormMgInfo.length> 0" 
+            [detail]="detailMgInfo" 
+            [manhinh]="'Edit'"  
+            [dataView]="listViewsFormMgInfo"
+            (callback)="setEmpManagerChange($event)" 
+            (callbackcancel)="cancelViewMgInfo($event)">
+        </app-edit-detail>
+        <app-list-grid-angular 
+            (callback)="rowSelected($event)"
+            [rowSelection]="'multiple'"
+            *ngIf="columnDefsMgChange.length > 0" 
+            [listsData]="listData" 
+            [height]="heightGridPopup"
+            [columnDefs]="columnDefsMgChange">
+        </app-list-grid-angular>
+        <div class="paginator">
+            <span>Từ {{ countRecord.currentRecordStart }} đến
+                {{ countRecord.currentRecordEnd }}
+                trên tổng số
+                {{ countRecord.totalRecord }} kết quả</span>
+            <p-paginator [rows]="query.pageSize" [totalRecords]="countRecord.totalRecord" [first]="first"
+                (onPageChange)="paginate($event)" [rowsPerPageOptions]="[20,40,60,100,200,{ showAll: 'ALL' }]">
+            </p-paginator>
+        </div>
+</p-sidebar>

@@ -37,6 +37,7 @@ import { ProvinceComponent } from 'src/app/components/province/province.componen
 import { DetailProvinceComponent } from 'src/app/components/province/detail-province/detail-province.component';
 import { DanhSachCapBacComponent } from 'src/app/components/cai-dat-to-chuc/danh-sach-cap-bac/danh-sach-cap-bac.component';
 import { ChiTietCapBacComponent } from 'src/app/components/cai-dat-to-chuc/danh-sach-cap-bac/chi-tiet-cap-bac/chi-tiet-cap-bac.component';
+import { CaiDatTienTrinhComponent } from 'src/app/components/cai-dat-tien-trinh/cai-dat-tien-trinh.component';
 
 const routes: Routes = [
   {
@@ -694,6 +695,15 @@ const routes: Routes = [
     data: {
       title: 'Chi tiết cấp bậc',
       url: 'chi-tiet-cap-bac',
+    },
+  },
+  //cai đặt tiến trình
+  {
+    path: 'cai-dat-tien-trinh',
+    component: CaiDatTienTrinhComponent,
+    data: {
+      title: 'Danh sách cái đặt tiến trình',
+      url: 'cai-dat-tien-trinh',
     },
   },
 

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, OnChanges } from '@angular/core';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { ActivatedRoute, Router } from '@angular/router';
 import { cloneDeep } from 'lodash';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -25,7 +25,7 @@ export class ChiTietNoiLamViecComponent implements OnInit, OnChanges {
     private confirmationService: ConfirmationService,
     private router: Router
   ) { }
-  workplaceId = null
+  //workplaceId = null
   org_level = 0
   listViews = []
   imagesUrl = []
@@ -37,10 +37,10 @@ export class ChiTietNoiLamViecComponent implements OnInit, OnChanges {
   }
   titlePage : string = '';
   url: string = '';
-
+  @Input() workplaceId = '';
   @Input() dataRouter = null
   @Output() back = new EventEmitter<any>();
-
+  @Output() callback = new EventEmitter<any>();
   ngOnChanges() {
 
   }
@@ -64,7 +64,7 @@ export class ChiTietNoiLamViecComponent implements OnInit, OnChanges {
     this.activatedRoute.queryParamMap.subscribe((params) => {
       this.paramsObject = { ...params.keys, ...params };
       this.dataRouter = this.paramsObject.params;
-      this.workplaceId = this.paramsObject.params.workplaceId || null;
+      //this.workplaceId = this.paramsObject.params.workplaceId || null;
       this.getWorkplaceInfo();
     });
   };
@@ -92,7 +92,7 @@ export class ChiTietNoiLamViecComponent implements OnInit, OnChanges {
     this.apiService.setWorkplaceInfo(params).subscribe((results: any) => {
       if (results.status === 'success') {
         this.displayUserInfo = false;
-        this.goBack()
+        this.callback.emit();
         this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Cập nhật thông tin thành công' });
       } else {
         this.messageService.add({
@@ -123,7 +123,7 @@ export class ChiTietNoiLamViecComponent implements OnInit, OnChanges {
     if(data === 'CauHinh') {
       this.getWorkplaceInfo();
     }else {
-      this.goBack();
+      this.callback.emit();
     }
   }
 

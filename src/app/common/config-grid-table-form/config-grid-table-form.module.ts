@@ -10,6 +10,7 @@ import { DialogModule } from 'primeng/dialog';
 import { RatingModule } from 'primeng/rating';
 import { ConfigGridTableFormComponent } from './config-grid-table-form.component';
 import { ListGridAngularModule } from '../list-grid-angular/list-grid-angular.module';
+import { ButtonModule } from 'primeng/button';
 @NgModule({
     declarations: [ConfigGridTableFormComponent],
     imports: [
@@ -19,6 +20,7 @@ import { ListGridAngularModule } from '../list-grid-angular/list-grid-angular.mo
         RouterModule,
         RatingModule,
         DialogModule,
+        ButtonModule,
         ListGridAngularModule,
         AgGridModule.withComponents([
             CustomTooltipComponent,

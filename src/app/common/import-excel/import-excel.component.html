@@ -16,7 +16,7 @@
                 </ul>
             </div>
             <div class="col-item">
-                <div class="d-flex align-items-center gap-12">
+                <div class="d-flex align-items-center gap12">
                     <p-button type="button" class="p-button-sm " (click)="toggleGrid()" icon="pi pi-th-large" pTooltip="{{isFullScreen ? 'Ẩn toàn màn hình' : 'Hiển thị toàn màn hình'}}" tooltipPosition="top"></p-button>
                     <p-button *ngIf="isImport" styleClass="p-button-sm" (click)="exportDraft()" icon="pi pi-download" label="Export" ></p-button>
                     <p-button styleClass="p-button-sm" (click)="getTemfileImport()" icon="pi pi-download" label="Tải file mẫu" *ngIf="isShowUpload"></p-button>
@@ -25,15 +25,17 @@
                     chooseLabel="Tạo mới import" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" 
                     *ngIf="isShowUpload" 
                     [showCancelButton]="true" (onSelect)="onSelectFile($event)"></p-fileUpload>
-                    <p-button styleClass="p-button-sm p-button-secondary" (click)="back()" icon="pi pi-times" label="Quay lại" *ngIf="isShowUpload"></p-button>
-                    <p-button styleClass="p-button-sm" (click)="checkData(false)" icon="pi pi-check" label="Kiểm tra" *ngIf="!isShowUpload"></p-button>
-                    <p-button styleClass="p-button-sm" (click)="checkData(true)" icon="pi pi-check" label="Xác nhận" *ngIf="dataImport?.accept"></p-button>
-                    <p-button styleClass="p-button-sm p-button-secondary" (click)="refetchFile()" icon="pi pi-times" label="làm mới" *ngIf="!isShowUpload"></p-button>
+                    <p-button styleClass="p-button-sm p-button-secondary" (click)="back()" icon="uni-icon uni-cancel-cicle uni-white-color" label="Quay lại" *ngIf="isShowUpload"></p-button>
+                    <p-button styleClass="p-button-sm" (click)="checkData(false)" icon="uni-icon uni-vector uni-white-color" label="Kiểm tra" *ngIf="!isShowUpload"></p-button>
+                    <p-button styleClass="p-button-sm" (click)="checkData(true)" icon="uni-icon uni-send" label="Xác nhận" *ngIf="dataImport?.accept"></p-button>
+                    <p-button styleClass="p-button-sm p-button-secondary" (click)="refetchFile()" icon="uni-icon uni-refresh uni-white-color" label="làm mới" *ngIf="!isShowUpload"></p-button>
+                    <!-- <p-button styleClass="p-button-sm p-button-warning" (click)="viewHistory()" icon="uni-icon uni-clock" label="Lịch sử" ></p-button> -->
+                    <p-button styleClass="p-button-sm {{!disViewHistory ? 'p-button-warning' : 'p-button-secondary'}}" (click)="viewHistory()" icon="uni-icon {{!disViewHistory ? 'uni-clock' : 'uni-cancel-cicle'}}" label="Lịch sử" ></p-button>
                 </div>
             </div>
         </div>
     </section>
-    <section>
+    <section *ngIf="!disViewHistory">
         <div class="grid-default" #container *ngIf="columnDefs.length > 0">
             <app-list-grid-angular  
                 [listsData]="listsData" *ngIf="columnDefs.length > 0 && heightGrid > 0"
@@ -44,7 +46,7 @@
                  (firstDataRendered)="onFirstDataRendered($event)"
                 [columnDefs]="columnDefs"></app-list-grid-angular >
                 <div class="paginator" style="margin-top: 10px; text-align: right; margin-right: 25px; font-weight: 600;">
-                    Tổng số {{ listsData.length }}
+                  <a *ngIf="dataImport.importFile && dataImport.importFile.fileUrl" href="" style="color: #0052CC;display: flex;" (click)="dowloadFile(dataImport?.importFile?.fileUrl)"><span class="uni-icon uni-import mr-2"></span>{{dataImport?.importFile?.fileName}}</a>
                 </div>
                 <!-- <div class="paginator">
                     <span>Từ {{ countRecord.currentRecordStart }} đến
@@ -55,12 +57,22 @@
             </div> -->
     </div>
 </section>
-       
+<section style="padding: 10px;
+margin-bottom: 3px;
+background: #fff;" *ngIf="disViewHistory">
+   <app-history-upload-file [dataRouter]="dataRouter" *ngIf="disViewHistory"></app-history-upload-file>
+</section>
 
 <p-dialog header="Cài đặt cấu hình" [(visible)]="displaySetting" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
     [draggable]="false" [resizable]="false" [focusTrap]="false" styleClass="popup-setting">
     <app-config-grid-table-form *ngIf="displaySetting && gridKey" [typeConfig]="'TableInfo'"   [gridKey]="gridKey"></app-config-grid-table-form>
 </p-dialog>
+
+<!-- <p-dialog header="Lịch sử import" [(visible)]="disViewHistory" (onHide)="disViewHistory = false" [modal]="true" [style]="{width: '70vw'}" [maximizable]="true"
+    [draggable]="false" [resizable]="false" [focusTrap]="false" styleClass="popup-setting">
+    <app-history-upload-file *ngIf="disViewHistory" [dataRouter]="dataRouter"></app-history-upload-file>
+</p-dialog> -->
+
 
 
 

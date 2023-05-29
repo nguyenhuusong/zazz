@@ -1,21 +1,20 @@
 import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
-import { HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, OnChanges, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { cloneDeep } from 'lodash';
 import * as moment from 'moment';
 import { ApiService } from 'src/app/services/api.service';
-import * as queryString from 'querystring'
-import { NgForm } from '@angular/forms';
+import queryString from 'query-string';
 import { MessageService } from 'primeng/api';
 import { AgGridFn } from 'src/app/utils/common/function-common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import * as numeral from 'numeral';
-import { delay, forkJoin, lastValueFrom, of, Subject, takeUntil, tap, timer } from 'rxjs';
-import { findNodeInTree, setCheckboxradiolistValue, setMembers, setMultiSelectValue, setSelectTreeValue, setValueAndOptions, setValueAndOptionsAutocomplete, setValueAndOptionsAutocompletes } from '../function-common/objects.helper';
+import { delay, forkJoin,Subject, takeUntil, tap, timer } from 'rxjs';
+import { setCheckboxradiolistValue, setMembers, setMultiSelectValue, setSelectTreeValue, setValueAndOptions, setValueAndOptionsAutocomplete, setValueAndOptionsAutocompletes } from '../function-common/objects.helper';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ApiHrmV2Service } from 'src/app/services/api-hrm/apihrmv2.service';
 import { Router } from '@angular/router';
 import { TYPESDATETIME } from './columnTypes';
+import { ActionsNotSave, ActionsSave } from './action-types';
 @Component({
   selector: 'app-edit-detail',
   templateUrl: './edit-detail.component.html',
@@ -262,18 +261,27 @@ export class EditDetailComponent implements OnInit, OnChanges {
     }
   }
 
-
+  // { label: 'Quay lại', value: 'BackPage', class: `p-button-secondary ${results.data.prev_st ? '' : 'hidden'}`, icon: 'pi pi-caret-left', },
+  //         { label: 'Tiếp tục', value: 'Update', class: `btn-accept ${results.data.next_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-caret-right' },
+  //         { label: 'Lưu tạm', value: 'SaveNhap', class: `btn-accept ${results.data.save_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
+  //         { label: 'Xác nhận', value: 'Submit', class: `btn-accept ${results.data.submit_st ? '' : 'hidden'} ml-1`, icon: 'pi pi-check' },
+  //         { label: 'Đóng', value: 'Close', class: `p-button-danger ml-1`, icon: 'pi pi-times' }
   onChangeButtonEdit(event) {
-    console.log(event)
-    if (event === 'Update' || event === 'SaveNhap' || event === 'Submit' || event === 'newUpdate') {
+    if (ActionsSave.indexOf(event) > -1) {
       this.submit = true;
       for (let item in this.modelFields) {
         if (this.modelFields[item].error) {
+          console.log(this.modelFields[item])
           this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Dữ liệu thiếu !' });
           return
         }
       }
-      // this.submit = false;
+      let group_fields = cloneDeep(this.dataView)
+      this.callbackform(group_fields, event)
+    }else if(ActionsNotSave.indexOf(event) > -1) {
+      let group_fields = cloneDeep(this.dataView)
+      this.callbackform(group_fields, event)
+    }else if(event === 'Update' || event ==='newUpdate' || event ==='Submit') {
       let group_fields = cloneDeep(this.dataView)
       this.callbackform(group_fields, event)
     } else if (event === 'TamTinh') {
@@ -372,7 +380,17 @@ export class EditDetailComponent implements OnInit, OnChanges {
 
       })
     });
-    if (type === 'Update' || type ==='newUpdate') {
+    if (ActionsSave.indexOf(type) > -1) {
+      this.callback.emit({
+        datas: group_fields,
+        event: type
+      });
+    }else if(ActionsNotSave.indexOf(type) > -1) {
+      this.callback.emit({
+        datas: group_fields,
+        event: type
+      });
+    }else if(type === 'Update' || type ==='newUpdate') {
       this.callback.emit(group_fields);
     } else if (type === 'SaveNhap' || type === 'Submit' || 'IsSpecial' || 'ADDROW') {
       this.callBackForm.emit({ data: group_fields, type: type })

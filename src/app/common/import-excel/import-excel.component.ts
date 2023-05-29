@@ -8,7 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { AgGridFn } from 'src/app/common/function-common/common';
 import * as FileSaver from 'file-saver';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 interface DataImport {
   valid: boolean,
   messages: string,
@@ -17,6 +17,7 @@ interface DataImport {
   recordsFail: number,
   recordsAccepted: number,
   gridKey: string,
+  importFile: any
 
 }
 @Component({
@@ -103,7 +104,8 @@ export class ImportExcelComponent implements OnInit {
     this.isShowUpload = false;
     const params = {
       accept: accept,
-      imports: this.listsData
+      imports: this.listsData,
+      importFile: this.dataImport.importFile
     }
     this.apiService[this.dataRouter.apiAccept](params)
       .pipe(takeUntil(this.unsubscribe$))
@@ -112,10 +114,15 @@ export class ImportExcelComponent implements OnInit {
       })
   }
 
+  dowloadFile(url) {
+    this.createImageFromBlob(url);
+  }
+
   dataSet(results) {
     if (results.status === 'success') {
+      this.disViewHistory = false;
       this.dataImport = results.data;
-      if (results.data && results.data.dataList && results.data.dataList) {
+      if (results.data && results.data.dataList) {
         this.cols = results.data.gridflexs.map(item => {
           return {
             ...item,
@@ -124,13 +131,7 @@ export class ImportExcelComponent implements OnInit {
         });
         this.gridKey = results.data.gridKey;
         this.initGrid();
-        const a: any = document.querySelector(".header");
-        const b: any = document.querySelector(".sidebarBody");
-        const c: any = document.querySelector(".bread-filter");
-        // const d: any = document.querySelector(".filterInput");
-        const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + 80;
-        this.heightGrid = window.innerHeight - totalHeight
-        this.changeDetector.detectChanges();
+       
         // this.onInitAgGrid();
         this.isImport = true;
         this.listsData = results.data.dataList;
@@ -138,12 +139,26 @@ export class ImportExcelComponent implements OnInit {
           this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.data.messages });
         }
       }
+      this.getheight();
       this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
       this.spinner.hide();
     } else {
       this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
       this.spinner.hide();
     }
+  }
+
+  getheight() {
+    setTimeout(() => {
+      const a: any = document.querySelector(".header");
+      const b: any = document.querySelector(".sidebarBody");
+      const c: any = document.querySelector(".bread-filter");
+      const d: any = document.querySelector(".paginator");
+      // const d: any = document.querySelector(".filterInput");
+      const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight  + d.clientHeight + 130;
+      this.heightGrid = window.innerHeight - totalHeight
+      this.changeDetector.detectChanges();
+    },300)
   }
 
   initGrid() {
@@ -193,6 +208,10 @@ export class ImportExcelComponent implements OnInit {
         this.spinner.hide();
       }
     })
+  }
+  disViewHistory = false;
+  viewHistory() {
+    this.disViewHistory = !this.disViewHistory;
   }
 
   createImageFromBlob(image: Blob) {

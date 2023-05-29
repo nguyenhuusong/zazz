@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { cloneDeep } from 'lodash';
 import { AgGridFn } from 'src/app/common/function-common/common';
 import { fromEvent, Subject, takeUntil } from 'rxjs';
@@ -143,14 +143,14 @@ export class PlanDetailComponent implements OnInit {
         field: 'gridflexdetails1',
         cellClass: ['border-right', 'no-auto'],
         pinned: 'right',
-        width: 70,
+        width: 100,
         cellRenderer: 'buttonAgGridComponent',
         cellRendererParams: params => {
           return {
             buttons: [
               {
                 onClick: this.editRow.bind(this),
-                label: 'Xem chi tiết',
+                label: 'Xem',
                 icon: 'fa fa-edit editing',
                 key: 'view-job-detail',
                 class: 'btn-primary mr5',

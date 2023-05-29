@@ -1,7 +1,7 @@
 import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { AgGridFn, CheckHideAction, stringtodate } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
@@ -17,7 +17,6 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
 import { fromEvent, Subject, takeUntil } from 'rxjs';
-import { stringify } from 'query-string';
 @Component({
   selector: 'app-pq-xe-nhan-vien',
   templateUrl: './pq-xe-nhan-vien.component.html',
@@ -135,8 +134,8 @@ export class PqXeNhanVienComponent implements OnInit {
   cloneListViewsFilter = [];
 detailInfoFilter = null;
   optionsButonFilter = [
-    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm height-56 addNew', icon: 'pi pi-search' },
-    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger height-56 addNew', icon: 'pi pi-times' },
+    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm  addNew', icon: 'pi pi-search' },
+    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger  addNew', icon: 'pi pi-times' },
   ];
 
   
@@ -586,25 +585,36 @@ onCellClicked(event) {
   uploadImageVehicle(event, index) {
     if (event.currentFiles.length > 0) {
       for (let file of event.currentFiles) {
-        const getDAte = new Date();
-        const getTime = getDAte.getTime();
-        const storageRef = firebase.storage().ref();
-        const uploadTask = storageRef.child(`s-hrm/file-attach/${getTime}-${file.name}`).put(file);
-        uploadTask.on('state_changed', (snapshot) => {
-        }, (error) => {
-          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: error.message });
-          this.spinner.hide();
-        }, () => {
-          uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-            if (downloadURL) {
-              this.spinner.hide();
-              if(this.modelTM.imageLinks[index]){
-                this.modelTM.imageLinks[index].url = downloadURL;
+        const formData = new FormData();
+        formData.append('formFile', file);
+        this.apiService.getCardVehicleFile(formData).subscribe(result => {
+          if(result.status === 'success') {
+            this.modelTM.imageLinks[index].url = result.data;
+          }
+        })
+
+
+
+
+        // const getDAte = new Date();
+        // const getTime = getDAte.getTime();
+        // const storageRef = firebase.storage().ref();
+        // const uploadTask = storageRef.child(`s-hrm/file-attach/${getTime}-${file.name}`).put(file);
+        // uploadTask.on('state_changed', (snapshot) => {
+        // }, (error) => {
+        //   this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: error.message });
+        //   this.spinner.hide();
+        // }, () => {
+        //   uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+        //     if (downloadURL) {
+        //       this.spinner.hide();
+        //       if(this.modelTM.imageLinks[index]){
+        //         this.modelTM.imageLinks[index].url = downloadURL;
                
-              }
-            }
-          });
-        });
+        //       }
+        //     }
+        //   });
+        // });
       }
     }
     else{
@@ -733,7 +743,7 @@ onCellClicked(event) {
     this.loadjs++
     if (this.loadjs === 5) {
       if (b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight +10;
+        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight +30;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       } else {
@@ -790,7 +800,8 @@ onCellClicked(event) {
   getEmpVehicleInfo(cardVehicleId = null, empId = null) {
     this.listViews = []
     this.isDetailVehic = true;
-    this.apiService.getEmpVehicleInfo(stringify({cardVehicleId: cardVehicleId, empId: empId}))
+    const queryParams = queryString.stringify({cardVehicleId: cardVehicleId, empId: empId});
+    this.apiService.getEmpVehicleInfo(queryParams)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe((results: any) => { 
       if (results.status === 'success') {

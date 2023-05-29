@@ -11,7 +11,7 @@ import { WebsocketService2 } from 'src/app/services/websocket.service';
 import { environment } from 'src/environments/environment';
 import * as CryptoJS from "crypto-js";
 
-const queryString = require('query-string');
+import queryString from 'query-string';
 
 @Component({
   selector: 'app-navbar',
@@ -36,7 +36,7 @@ export class NavbarComponent implements OnInit {
   menuItems: any[] = [];
   urlsForDisableOrgan = []
   isShowPass = false;
-  isShowRepass = false
+  isShowRepass = false;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -101,7 +101,11 @@ export class NavbarComponent implements OnInit {
         command: () => {
           this.activeAccount();
         }
-      } : {},
+      } : {
+        label: 'Kích hoạt tài khoản',
+        icon: 'pi pi-check',
+        visible: false
+      },
       {
         label: 'Logout',
         icon: 'pi pi-refresh',
@@ -359,6 +363,7 @@ export class NavbarComponent implements OnInit {
             this.modelOTP.id = this.detailUserSalary.id;
             this.displayActiveAccount =false;
             this.displayActive = true;
+            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
             this.getUserSalary();
           } else {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });

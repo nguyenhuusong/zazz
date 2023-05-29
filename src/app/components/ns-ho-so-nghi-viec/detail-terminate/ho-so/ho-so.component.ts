@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { cloneDeep } from 'lodash';
 import * as moment from 'moment';
 import { AgGridFn } from 'src/app/common/function-common/common';
@@ -204,7 +204,7 @@ export class HoSoComponent implements OnInit {
         field: 'gridflexdetails1',
         cellClass: ['border-right', 'no-auto'],
         pinned: 'right',
-        width: 70,
+        width: 120,
         cellRenderer: 'buttonAgGridComponent',
         cellRendererParams: params => {
           return {
