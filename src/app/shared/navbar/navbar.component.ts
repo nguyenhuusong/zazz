@@ -101,7 +101,11 @@ export class NavbarComponent implements OnInit {
         command: () => {
           this.activeAccount();
         }
-      } : {},
+      } : {
+        label: 'Kích hoạt tài khoản',
+        icon: 'pi pi-check',
+        visible: false
+      },
       {
         label: 'Logout',
         icon: 'pi pi-refresh',
