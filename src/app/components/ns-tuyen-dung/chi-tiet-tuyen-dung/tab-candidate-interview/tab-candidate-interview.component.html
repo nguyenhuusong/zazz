@@ -15,7 +15,7 @@ right: 15px;
             placeholder="Select a Country">
             <ng-template pTemplate="selectedItem" >
                 <div class="flex align-items-center gap-2" *ngIf="selectedCountry" >
-                    <div style="color: #fff">{{ selectedCountry.name}}</div>
+                    <div>{{ selectedCountry.name}}</div>
                 </div>
             </ng-template>
             <ng-template let-country pTemplate="item">

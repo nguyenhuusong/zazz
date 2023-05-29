@@ -127,7 +127,7 @@ export class TabCandidateInterviewComponent implements OnInit, OnDestroy {
     if(data === 'CauHinh') {
       this.getCandidateInterview();
     }else {
-      this.router.navigate(['/tuyen-dung/vi-tri-tuyen-dung']);
+      this.router.navigate(['/tuyen-dung/ds-tuyen-dung']);
     }
   }
 
