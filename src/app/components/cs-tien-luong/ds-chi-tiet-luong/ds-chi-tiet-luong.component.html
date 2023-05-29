@@ -63,37 +63,39 @@
             <p-tabPanel header="Chốt công" *ngIf="detailInfo">
                 <app-cham-cong [recordId]="modelEdit.recordId" *ngIf="indexTab === 1 && modelEdit.recordId" [detailInfo]="detailInfo"></app-cham-cong>
             </p-tabPanel>
-
+            <p-tabPanel header="Nhân viên" *ngIf="detailInfo">
+                <app-tab-nhan-vien [recordId]="modelEdit.recordId" *ngIf="indexTab === 2 && modelEdit.recordId"></app-tab-nhan-vien>
+            </p-tabPanel>
             <p-tabPanel header="Tăng ca" *ngIf="detailInfo">
-                <app-lam-ngoai-gio [recordId]="modelEdit.recordId" *ngIf="indexTab === 2 && modelEdit.recordId"></app-lam-ngoai-gio>
+                <app-lam-ngoai-gio [recordId]="modelEdit.recordId" *ngIf="indexTab === 3 && modelEdit.recordId"></app-lam-ngoai-gio>
             </p-tabPanel>
 
             <p-tabPanel header="Ăn ca" *ngIf="detailInfo">
-                <app-an-ca [recordId]="modelEdit.recordId" *ngIf="indexTab === 3 && modelEdit.recordId"></app-an-ca>
+                <app-an-ca [recordId]="modelEdit.recordId" *ngIf="indexTab === 4 && modelEdit.recordId"></app-an-ca>
             </p-tabPanel>
             <p-tabPanel header="Chính sách" *ngIf="detailInfo">
-                <app-ho-tro [recordId]="modelEdit.recordId" *ngIf="indexTab === 4 && modelEdit.recordId"></app-ho-tro>
+                <app-ho-tro [recordId]="modelEdit.recordId" *ngIf="indexTab === 5 && modelEdit.recordId"></app-ho-tro>
             </p-tabPanel>
             <p-tabPanel header="Đánh giá" *ngIf="detailInfo">
-                <app-hieu-suat-lao-dong [recordId]="modelEdit.recordId" *ngIf="indexTab === 5 && modelEdit.recordId"></app-hieu-suat-lao-dong>
+                <app-hieu-suat-lao-dong [recordId]="modelEdit.recordId" *ngIf="indexTab === 6 && modelEdit.recordId"></app-hieu-suat-lao-dong>
             </p-tabPanel>
             <p-tabPanel header="Lương KPI" *ngIf="detailInfo">
                 Lương KPI
             </p-tabPanel>
             <p-tabPanel header="Tăng/Giảm" *ngIf="detailInfo">
-                <tang-giam [recordId]="modelEdit.recordId" *ngIf="indexTab === 7 && modelEdit.recordId"></tang-giam>
+                <tang-giam [recordId]="modelEdit.recordId" *ngIf="indexTab === 8 && modelEdit.recordId"></tang-giam>
             </p-tabPanel>
             <p-tabPanel header="Điều chỉnh" *ngIf="detailInfo">
                 Điều chỉnh
             </p-tabPanel>
             <p-tabPanel header="Người phụ thuộc" *ngIf="detailInfo">
-                <app-tab-salary-dependent [recordId]="modelEdit.recordId" *ngIf="indexTab === 9 && modelEdit.recordId"></app-tab-salary-dependent>
+                <app-tab-salary-dependent [recordId]="modelEdit.recordId" *ngIf="indexTab === 10 && modelEdit.recordId"></app-tab-salary-dependent>
             </p-tabPanel>
             <p-tabPanel header="Biến động BHXH" *ngIf="detailInfo">
-                <app-tab-salary-insurance [recordId]="modelEdit.recordId" *ngIf="indexTab === 10 && modelEdit.recordId"></app-tab-salary-insurance>
+                <app-tab-salary-insurance [recordId]="modelEdit.recordId" *ngIf="indexTab === 11 && modelEdit.recordId"></app-tab-salary-insurance>
             </p-tabPanel>
             <p-tabPanel header="Tổng hợp" *ngIf="detailInfo">
-                <app-tong-hop-luong [recordId]="modelEdit.recordId" *ngIf="indexTab === 11 && modelEdit.recordId"></app-tong-hop-luong>
+                <app-tong-hop-luong [recordId]="modelEdit.recordId" *ngIf="indexTab === 12 && modelEdit.recordId"></app-tong-hop-luong>
             </p-tabPanel>
         </p-tabView>
         <div>

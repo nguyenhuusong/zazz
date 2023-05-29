@@ -6,11 +6,11 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
 import { Subject, takeUntil } from 'rxjs';
 @Component({
-  selector: 'app-edit-chuyen-mon',
-  templateUrl: './edit-chuyen-mon.component.html',
-  styleUrls: ['./edit-chuyen-mon.component.scss']
+  selector: 'app-chi-tiet-cham-cong',
+  templateUrl: './chi-tiet-cham-cong.component.html',
+  styleUrls: ['./chi-tiet-cham-cong.component.scss']
 })
-export class EditChuyenMonComponent implements OnInit {
+export class ChiTietChamCongComponent implements OnInit {
   @Input() empId = null;
   @Input() isEditDetail: boolean = false;
   @Output() cancelSave = new EventEmitter<any>();
@@ -48,7 +48,7 @@ export class EditChuyenMonComponent implements OnInit {
     this.spinner.show();
     this.detailInfo = null;
     const query = { empId: this.empId, edit_is: true }
-    this.apiService.getEmpQualification(queryString.stringify(query))
+    this.apiService.getEmpWorkingStaus(queryString.stringify(query))
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(results => {
       if (results.status === 'success') {
@@ -113,7 +113,7 @@ export class EditChuyenMonComponent implements OnInit {
 
   callApiInfo(params) {
     this.spinner.show();
-    this.apiService.setEmpQualification(params)
+    this.apiService.setEmpWorkingStatus(params)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe((results: any) => {
       if (results.status === 'success') {

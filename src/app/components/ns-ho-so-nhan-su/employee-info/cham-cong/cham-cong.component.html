@@ -3,22 +3,23 @@
         <ul class="col-9">
             <li>
                 <span class="label">Nhân viên:</span>
-                <span class="value"> {{ detailInfo?.fullName }}</span>
+                <span class="value"> {{ dataEmployeeStatus?.fullName }}</span>
             </li>
-            <li class="spre"><svg width="1" height="20" viewBox="0 0 1 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <line x1="0.5" x2="0.5" y2="20" stroke="#A3A9B9"/>
+            <li class="spre"><svg width="1" height="20" viewBox="0 0 1 20" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <line x1="0.5" x2="0.5" y2="20" stroke="#A3A9B9" />
                 </svg>
-                </li>
+            </li>
             <li>
                 <span class="label">MNV:</span>
-                <span class="value"> {{codeStaff}}</span>
+                <span class="value"> {{dataEmployeeStatus?.code}}</span>
             </li>
         </ul>
-      
+       
         <div class="col-3 gap-2 flex justify-content-end align-items-center" style="padding: 0;">
-            <!-- <div class="fields " style="margin-bottom: 0;">
+            <div class="fields " style="margin-bottom: 0;">
                 <p-dropdown 
-                    *ngIf="listViews.length> 0" 
+                *ngIf="listViews.length> 0 && status.length > 0" 
                     [options]="status" 
                     (onChange)="recruiUpdateStatus()"
                     [(ngModel)]="selectedStatus" 
@@ -42,32 +43,25 @@
                     </ng-template>
                 </p-dropdown>
             </div>
-            <p-splitButton icon="pi pi-send" *ngIf="menuActions.length > 0" styleClass="p-button-sm ml-2" [appendTo]="'body'" (onClick)="callActions(menuActions[0].value)" [label]="menuActions[0].label" [model]="menuActions"></p-splitButton>
-            <p-button label="Quay lại" styleClass="p-button-secondary p-button-sm ml-2" [style]="{'z-index': 9}" icon="pi pi-directions-alt"></p-button> -->
+            <p-splitButton icon="pi pi-send" *ngIf="menuActions.length > 0" styleClass="p-button-sm" [appendTo]="'body'" (onClick)="callActions(menuActions[0].value)" [label]="menuActions[0].label" [model]="menuActions"></p-splitButton>
+            <p-button label="Quay lại" styleClass="p-button-secondary p-button-sm" [style]="{'z-index': 9}" icon="pi pi-directions-alt"></p-button>
               </div>
     </div>
-    </section>
-    <section>
-        <app-edit-detail *ngIf="listViews.length> 0" 
-            [detail]="detailInfo" 
-            [detailInfo]="detailInfo" 
-            [thongtinnhanvienNew]="true" 
-            [manhinh]="'Edit'" 
-            [optionsButtonsEdit]="optionsButtonsView"  
-            [dataView]="listViews"
-            (callback)="setEmpOtherInfo($event)" 
-            (callbackcancel)="cancelUpdate($event)">
-        </app-edit-detail>
-        <app-loading-detail 
-            [id]="'employee-info-06'" 
-            *ngIf="listViews.length === 0">
-        </app-loading-detail>
-        
-        
+</section>
 
-        <app-danh-sach-xe [empId]="empId"></app-danh-sach-xe>
+<section>
+    <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [detailInfo]="detailInfo"
+        [thongtinnhanvienNew]="true" [manhinh]="'Edit'" [optionsButtonsEdit]="[]"
+        [dataView]="listViews" (callback)="setEmpQualification($event)"
+        (callbackcancel)="cancelUpdate($event)">
+    </app-edit-detail>
+    <app-loading-detail 
+        [id]="'employee-info-05'" 
+        *ngIf="listViews.length === 0">
+    </app-loading-detail>
+    <app-danh-sach-thiet-bi [empId]="empId"></app-danh-sach-thiet-bi>
+</section>
 
 
-        <app-tai-khoan [empId]="empId"></app-tai-khoan>
-        
-    </section>
+<app-chi-tiet-cham-cong *ngIf="isEditDetail" [isEditDetail]="isEditDetail" [empId]="empId" (cancelSave)="cancelSetDetail($event)"></app-chi-tiet-cham-cong>
+
