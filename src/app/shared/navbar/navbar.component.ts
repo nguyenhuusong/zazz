@@ -359,6 +359,7 @@ export class NavbarComponent implements OnInit {
             this.modelOTP.id = this.detailUserSalary.id;
             this.displayActiveAccount =false;
             this.displayActive = true;
+            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
             this.getUserSalary();
           } else {
             this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
