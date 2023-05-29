@@ -56,15 +56,11 @@
                 </app-loading-detail>
     
             </p-tabPanel>
-        
-
-
-
-            <p-tabPanel header="Chốt công" *ngIf="detailInfo">
-                <app-cham-cong [recordId]="modelEdit.recordId" *ngIf="indexTab === 1 && modelEdit.recordId" [detailInfo]="detailInfo"></app-cham-cong>
-            </p-tabPanel>
             <p-tabPanel header="Nhân viên" *ngIf="detailInfo">
-                <app-tab-nhan-vien [recordId]="modelEdit.recordId" *ngIf="indexTab === 2 && modelEdit.recordId"></app-tab-nhan-vien>
+                <app-tab-nhan-vien [recordId]="modelEdit.recordId" *ngIf="indexTab === 1 && modelEdit.recordId"></app-tab-nhan-vien>
+            </p-tabPanel>
+            <p-tabPanel header="Chốt công" *ngIf="detailInfo">
+                <app-cham-cong [recordId]="modelEdit.recordId" *ngIf="indexTab === 2 && modelEdit.recordId" [detailInfo]="detailInfo"></app-cham-cong>
             </p-tabPanel>
             <p-tabPanel header="Tăng ca" *ngIf="detailInfo">
                 <app-lam-ngoai-gio [recordId]="modelEdit.recordId" *ngIf="indexTab === 3 && modelEdit.recordId"></app-lam-ngoai-gio>
