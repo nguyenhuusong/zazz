@@ -37,12 +37,12 @@ export class ApiHrmService {
       }),
       responseType: "blob"
     };
-    
+
   }
   options = {};
-  optionsUpload = { };
+  optionsUpload = {};
 
-  optionsExport: any = { };
+  optionsExport: any = {};
 
   getIdentityCardInfomation(image: File) {
     const options = {
@@ -632,7 +632,7 @@ export class ApiHrmService {
   }
 
   setEmpWorkJob(params): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v2/working/SetEmpWorkJob`, params, this.options)
+    return this.http.post<any>(`${apiHrmServer}/api/v2/empprocess/SetEmpWorkJob`, params, this.options)
   }
 
   delContractInfo(queryParams): Observable<any> {
@@ -2887,19 +2887,19 @@ export class ApiHrmService {
   }
 
   getEmpProcessPageByEmpId(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v2/working/GetEmpProcessPageByEmpId?` + queryParams, this.options)
+    return this.http.get<any>(`${apiHrmServer}/api/v2/empprocess/GetEmpProcessPageByEmpId?` + queryParams, this.options)
   }
 
   getEmpProcessFilter(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v2/working/GetEmpProcessFilter`, this.options)
+    return this.http.get<any>(`${apiHrmServer}/api/v2/empprocess/GetEmpProcessFilter`, this.options)
   }
 
   getEmpProcessPage(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v2/working/GetEmpProcessPage?` + queryParams, this.options)
+    return this.http.get<any>(`${apiHrmServer}/api/v2/empprocess/GetEmpProcessPage?` + queryParams, this.options)
   }
 
   getEmpWorkJob(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v2/working/GetEmpWorkJob?` + queryParams, this.options)
+    return this.http.get<any>(`${apiHrmServer}/api/v2/empprocess/GetEmpWorkJob?` + queryParams, this.options)
   }
 
   getEmpWorking(queryParams): Observable<any> {
@@ -2907,7 +2907,7 @@ export class ApiHrmService {
   }
 
   getEmpProcessInfo(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v2/working/GetEmpProcessInfo?` + queryParams, this.options)
+    return this.http.get<any>(`${apiHrmServer}/api/v2/empprocess/GetEmpProcessInfo?` + queryParams, this.options)
   }
 
   setEmpWorking(queryParams): Observable<any> {
@@ -2927,11 +2927,11 @@ export class ApiHrmService {
   }
 
   setEmpProcessInfo(queryParams): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v2/working/SetEmpProcessInfo`, queryParams, this.options)
+    return this.http.post<any>(`${apiHrmServer}/api/v2/empprocess/SetEmpProcessInfo`, queryParams, this.options)
   }
 
   delEmpProcessInfo(queryParams): Observable<any> {
-    return this.http.delete<any>(`${apiHrmServer}/api/v2/working/DelEmpProcessInfo?` + queryParams, this.options)
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/empprocess/DelEmpProcessInfo?` + queryParams, this.options)
   }
 
   getEmpWorkingFilter(): Observable<any> {
@@ -2944,16 +2944,16 @@ export class ApiHrmService {
         Authorization: this.authService.getAuthorizationHeaderValue()
       })
     };
-    return this.http.post<any>(`${apiHrmServer}/api/v2/working/SetEmpProcessImport`, queryParams, customOptions);
+    return this.http.post<any>(`${apiHrmServer}/api/v2/empprocess/SetEmpProcessImport`, queryParams, customOptions);
   }
 
 
   setEmpProcessAccept(queryParams): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v2/working/SetEmpProcessAccept`, queryParams, this.options);
+    return this.http.post<any>(`${apiHrmServer}/api/v2/empprocess/SetEmpProcessAccept`, queryParams, this.options);
   }
 
   setEmpProcessExportDraft(data): Observable<Blob> {
-    return this.http.post(`${apiHrmServer}/api/v2/working/SetEmpProcessExportDraft`, data, {
+    return this.http.post(`${apiHrmServer}/api/v2/empprocess/SetEmpProcessExportDraft`, data, {
       headers: new HttpHeaders({
         Authorization: this.authService.getAuthorizationHeaderValue(),
       }),
@@ -2962,7 +2962,7 @@ export class ApiHrmService {
   }
 
   getEmpProcessImportTemp(): Observable<any> {
-    return this.http.get(`${apiHrmServer}/api/v2/working/GetEmpProcessImportTemp`, {
+    return this.http.get(`${apiHrmServer}/api/v2/empprocess/GetEmpProcessImportTemp`, {
       headers: new HttpHeaders({
         Authorization: this.authService.getAuthorizationHeaderValue(),
       }),
@@ -3275,11 +3275,11 @@ export class ApiHrmService {
   }
 
   getEmpDeviceFilter(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v2/empother/GetEmpDeviceFilter?` + queryParams, this.options);
+    return this.http.get<any>(`${apiHrmServer}/api/v2/working/GetEmpDeviceFilter?` + queryParams, this.options);
   }
 
   getEmpDevicePage(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v2/empother/GetEmpDevicePage?` + queryParams, this.options);
+    return this.http.get<any>(`${apiHrmServer}/api/v2/working/GetEmpDevicePage?` + queryParams, this.options);
   }
 
   getEmpUserInfo(queryParams): Observable<any> {
@@ -3287,15 +3287,23 @@ export class ApiHrmService {
   }
 
   getEmpDeviceByEmp(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v2/empother/GetEmpDeviceByEmp?` + queryParams, this.options);
+    return this.http.get<any>(`${apiHrmServer}/api/v2/working/GetEmpDeviceByEmp?` + queryParams, this.options);
   }
 
   getEmpDevice(queryParams): Observable<any> {
-    return this.http.get<any>(`${apiHrmServer}/api/v2/empother/GetEmpDevice?` + queryParams, this.options);
+    return this.http.get<any>(`${apiHrmServer}/api/v2/working/GetEmpDevice?` + queryParams, this.options);
   }
 
   delEmpDevices(queryParams): Observable<any> {
-    return this.http.delete<any>(`${apiHrmServer}/api/v2/empother/DelEmpDevices?` + queryParams, this.options);
+    return this.http.delete<any>(`${apiHrmServer}/api/v2/working/DelEmpDevices?` + queryParams, this.options);
+  }
+
+  getEmpWorkingStaus(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/working/GetEmpWorkingStaus?` + queryParams, this.options);
+  }
+
+  setEmpWorkingStatus(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/working/SetEmpWorkingStatus`, this.options);
   }
 
   delEmpUserInfo(queryParams): Observable<any> {
@@ -3311,7 +3319,7 @@ export class ApiHrmService {
   }
 
   setEmpDeviceStatus(queryParams): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v2/empother/SetEmpDeviceStatus`, queryParams, this.options);
+    return this.http.post<any>(`${apiHrmServer}/api/v2/working/SetEmpDeviceStatus`, queryParams, this.options);
   }
 
   // RecruitPlan
@@ -4002,7 +4010,20 @@ export class ApiHrmService {
     return this.http.delete<any>(`${apiHrmServer}/api/v2/workflowtype/DelFlowStatus?` + queryParams, this.options);
   }
 
+  // SalaryAdjust
 
+
+  setSalaryAdjust(queryParams): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/workflowtype/SetSalaryAdjust`, queryParams, this.options);
+  }
+
+  getSalaryAdjustPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/salaryadjust/GetSalaryAdjustPage?` + queryParams, this.options);
+  }
+
+  getSalaryAdjust(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/salaryadjust/GetSalaryAdjust?` + queryParams, this.options);
+  }
 
 
 
