@@ -90,6 +90,7 @@ import { ChiTietNghiKhongLuongComponent } from 'src/app/components/nghi-khong-lu
 import { ImportExcelModule } from 'src/app/common/import-excel/import-excel.module';
 import { TabSalaryInsuranceComponent } from 'src/app/components/cs-tien-luong/chi-tiet-tien-luong/tab-salary-insurance/tab-salary-insurance.component';
 import { TabSalaryDependentComponent } from 'src/app/components/cs-tien-luong/chi-tiet-tien-luong/tab-salary-dependent/tab-salary-dependent.component';
+import { DieuChinhComponent } from 'src/app/components/cs-tien-luong/chi-tiet-tien-luong/dieu-chinh/dieu-chinh.component';
 
 @NgModule({
   imports: [
@@ -189,7 +190,8 @@ import { TabSalaryDependentComponent } from 'src/app/components/cs-tien-luong/ch
     NghiKhongLuongComponent,
     ChiTietNghiKhongLuongComponent,
     TabSalaryInsuranceComponent,
-    TabSalaryDependentComponent
+    TabSalaryDependentComponent,
+    DieuChinhComponent
 
   ],
   providers: [],

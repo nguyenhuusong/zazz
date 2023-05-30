@@ -11,17 +11,20 @@
              <p-tabPanel header="Vị trí công việc" leftIcon="{{dataEmployeeStatus?.working_st ? 'pi pi-check-circle' : ''}} ">
                 <app-vi-tri-cong-viec [empId]="empId" *ngIf="tabIndex ===1 && dataEmployeeStatus" [dataEmployeeStatus]="dataEmployeeStatus" (reloadEdit)="reloadEdit()"></app-vi-tri-cong-viec>
             </p-tabPanel>
+            <p-tabPanel header="Chấm công" leftIcon="{{dataEmployeeStatus?.working_st ? 'pi pi-check-circle' : ''}} ">
+                <app-cham-cong [empId]="empId" *ngIf="tabIndex ===2" [dataEmployeeStatus]="dataEmployeeStatus"></app-cham-cong>
+            </p-tabPanel>
            <p-tabPanel header="Quan hệ lao động C&B" leftIcon="{{dataEmployeeStatus?.contract_st ? 'pi pi-check-circle' : ''}} ">
-                <app-quan-he-lao-dong-c [empId]="empId" *ngIf="tabIndex ===2 && dataEmployeeStatus" [dataEmployeeStatus]="dataEmployeeStatus"  (reloadEdit)="reloadEdit()"></app-quan-he-lao-dong-c>
+                <app-quan-he-lao-dong-c [empId]="empId" *ngIf="tabIndex ===3 && dataEmployeeStatus" [dataEmployeeStatus]="dataEmployeeStatus"  (reloadEdit)="reloadEdit()"></app-quan-he-lao-dong-c>
             </p-tabPanel>
              <p-tabPanel header="Thuế bảo hiểm" leftIcon="{{dataEmployeeStatus?.insurance_st ? 'pi pi-check-circle' : ''}}" >
-                <app-thue-bao-hiem [empId]="empId" *ngIf="tabIndex ===3" [dataEmployeeStatus]="dataEmployeeStatus"></app-thue-bao-hiem>
+                <app-thue-bao-hiem [empId]="empId" *ngIf="tabIndex ===4" [dataEmployeeStatus]="dataEmployeeStatus"></app-thue-bao-hiem>
             </p-tabPanel>
             <p-tabPanel header="Chuyên Môn" leftIcon="{{dataEmployeeStatus?.train_st ? 'pi pi-check-circle' : ''}}" >
-                <app-chuyen-mon [empId]="empId" *ngIf="tabIndex ===4" [dataEmployeeStatus]="dataEmployeeStatus"></app-chuyen-mon>
+                <app-chuyen-mon [empId]="empId" *ngIf="tabIndex ===5" [dataEmployeeStatus]="dataEmployeeStatus"></app-chuyen-mon>
             </p-tabPanel>
             <p-tabPanel header="Thông tin khác" leftIcon="pi pi-check-circle">
-                <app-tien-ich [empId]="empId" *ngIf="tabIndex ===5"></app-tien-ich>
+                <app-tien-ich [empId]="empId" *ngIf="tabIndex ===6"></app-tien-ich>
             </p-tabPanel>
           <!-- <p-tabPanel header="Quản lý tài khoản">
                 <app-quan-ly-tai-khoan [empId]="empId" *ngIf="tabIndex ===6"></app-quan-ly-tai-khoan>

@@ -11,7 +11,7 @@
     <div class="content" style="position: relative;">
       <p-tabView [(activeIndex)]="indexTab" (onChange)="handleChange($event.index)">
         <p-tabPanel header="Thông tin chung">
-          <div class="fields col-3" *ngIf="!notiId">
+          <div class="fields" *ngIf="!notiId">
             <label for="">Mẫu thông báo</label>
             <p-dropdown placeholder="Chọn mẫu thông báo" appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
                 [options]="notifyTempList" [required] [(ngModel)]="notifyTempId"
