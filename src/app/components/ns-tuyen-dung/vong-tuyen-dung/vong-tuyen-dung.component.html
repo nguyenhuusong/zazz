@@ -53,7 +53,7 @@
             </div>
         </p-tabPanel>
         <p-tabPanel header="Thiết lâp trạng thái">
-            <app-setting-status></app-setting-status>
+            <app-setting-status *ngIf="tabIndex === 1"></app-setting-status>
         </p-tabPanel>
         
     </p-tabView>
