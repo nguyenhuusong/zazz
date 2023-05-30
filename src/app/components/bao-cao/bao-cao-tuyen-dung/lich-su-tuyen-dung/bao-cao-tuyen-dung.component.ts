@@ -101,9 +101,9 @@ export class BaoCaoTuyenDungComponent implements OnInit {
   detailInfoReport = null;
   listViewsReport = [];
   optionsButonReport = [
-    { label: 'Hiển thị', value: 'ViewReport', class: 'p-button-sm ml-2  addNew', icon: 'pi pi-plus' },
+    { label: 'Hiển thị', value: 'ViewReport', class: 'p-button-sm', icon: 'pi pi-plus' },
     // { label: 'Mở tệp', value: 'OpenReport', class: 'p-button-sm p-button-success ml-2  addNew', icon: 'pi pi-clone' },
-    { label: 'Lưu tệp', value: 'DowloadReport', class: 'p-button-sm p-button-success ml-2  addNew', icon: 'pi pi-cloud-download' },
+    { label: 'Lưu tệp', value: 'DowloadReport', class: 'p-button-sm p-button-success', icon: 'pi pi-cloud-download' },
   ];
 
   changeReportTypeValue(event) {

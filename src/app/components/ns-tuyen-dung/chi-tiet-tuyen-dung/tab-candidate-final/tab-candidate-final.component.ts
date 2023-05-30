@@ -127,7 +127,7 @@ export class TabCandidateFinalComponent implements OnInit, OnDestroy {
     if(data === 'CauHinh') {
       this.getCandidateFinal();
     }else {
-      this.router.navigate(['/tuyen-dung/vi-tri-tuyen-dung']);
+      this.router.navigate(['/tuyen-dung/ds-tuyen-dung']);
     }
   }
 

@@ -889,6 +889,11 @@ export class ApiHrmService {
     });
   }
 
+  getContractImportPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/contract/GetContractImportPage?${queryParams}`, this.options)
+  }
+
+
   // Thai sản
 
   getMaternityPage(queryParams): Observable<any> {
@@ -1202,6 +1207,10 @@ export class ApiHrmService {
 
   delTerminateInfo(queryParams): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v2/terminate/DelTerminateInfo?` + queryParams, this.options)
+  }
+
+  getTerminateImportPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/terminate/GetTerminateImportPage?` + queryParams, this.options);
   }
 
   getObjectGroup(queryParams): Observable<any> {
@@ -3054,6 +3063,10 @@ export class ApiHrmService {
   }
   setEmpByInsurance(queryParams): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/empinsurance/SetEmpByInsurance`, queryParams, this.options)
+  }
+
+  getInsuranceImportPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/empinsurance/GetInsuranceImportPage?` + queryParams, this.options);
   }
 
   getFilter(url): Observable<any> {
