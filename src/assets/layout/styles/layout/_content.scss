@@ -1709,3 +1709,57 @@ section{
     border: 1px solid #ccc;
     border-radius: 4px
 }
+
+.infos-import{
+    background: #f9f9f9;
+    padding: 6px;
+    border-radius: 4px;
+    li{
+        span{
+            font-size: 14px;
+            margin: 0px 5px 0px 0px;
+            &.pi{
+                padding-top: 5px;
+            }
+        }
+    }
+}
+
+.text-color{
+    &.text-danger{
+        color: #dc3545 !important;
+    }
+    &.text-warning{
+        color: #ffc107 !important;
+    }
+    &.text-success{
+        color: #198754 !important;
+    }
+    &.text-dark{
+        color: #212529 !important;
+    }
+    &.text-info{
+        color: #0dcaf0 !important;
+    }
+    &.text-light{
+        color: #f8f9fa !important;
+    }
+}
+.text-bold{
+    font-weight: bold;
+}
+
+app-import-excel
+{
+    .bread-filter{
+        background: #fff;
+        width: calc(100% - 24px);
+        margin: 12px auto 0px;
+    }
+}
+
+.right-button{
+    .button-filter{
+        justify-content: end;
+    }
+}

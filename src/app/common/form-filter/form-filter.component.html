@@ -1,7 +1,7 @@
 
     
     
-    <form  #myForm="ngForm" class="hrm-filter"> 
+    <form  #myForm="ngForm" class="hrm-filter" [ngClass]="styleClass"> 
         <div class="grid" style="justify-content: start;" *ngIf="dataView.length > 0">
             <ng-container *ngFor="let group of dataView; let idx = index">
                 <div class="{{group.group_column ? group.group_column : 'col-12'}} border-section">
