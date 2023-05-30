@@ -306,7 +306,7 @@ export class XuLyQuaTrinhCongTacComponent implements OnInit {
   ];
   //filter 
   getFilter() {
-    this.apiService.getFilter('/api/v2/working/GetEmpProcessFilter')
+    this.apiService.getFilter('/api/v2/empprocess/GetEmpProcessFilter')
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {
         if (results.status === 'success') {
