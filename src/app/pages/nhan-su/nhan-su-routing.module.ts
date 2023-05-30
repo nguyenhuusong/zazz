@@ -26,15 +26,24 @@ import { BienDongBHXHComponent } from 'src/app/components/bien-dong-bhxh/bien-do
 import { ImportExcelComponent } from 'src/app/common/import-excel/import-excel.component';
 import { CustomerManagerComponent } from 'src/app/components/customer-manager/customer-manager.component';
 import { DetailCustomerManagerComponent } from 'src/app/components/customer-manager/detail-customer-manager/detail-customer-manager.component';
+import { TongQuanNhanSuComponent } from 'src/app/components/ns-ho-so-nhan-su/tong-quan-nhan-su/tong-quan-nhan-su.component';
 
 const routes: Routes = [
   {
     path: "",
-    redirectTo: "ho-so-nhan-su",
+    redirectTo: "employee-overview",
     pathMatch: 'full'
   },
  // quyết định lương
 
+ {
+  path: 'employee-overview',
+  component: TongQuanNhanSuComponent,
+  data: {
+    title: 'Tổng quan nhân sự',
+    url: 'employee-overview',
+  },
+},
  {
   path: 'quyet-dinh-luong',
   component: QuyetDinhLuongComponent,

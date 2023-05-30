@@ -1,0 +1,28 @@
+:host ::ng-deep {
+
+   
+    .main-grid {
+        .knob{
+            .p-card-body {
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: end !important;
+                justify-content: space-around !important; 
+                padding: 0 !important;
+                .p-card-content {
+                    padding: 0 !important;
+                }
+            }
+            p-card {
+                .p-card-title {
+                    font-size: 0.75rem !important;
+                    font-weight: 600 !important;
+                    margin-bottom: 0 !important
+                }
+        }
+    
+        }
+    }
+
+
+}

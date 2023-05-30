@@ -131,6 +131,9 @@ import { DetailCustomerManagerComponent } from 'src/app/components/customer-mana
 import { ChiTietThoiGianLamViecComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/vi-tri-cong-viec/thoi-gian-lam-viec/chi-tiet-thoi-gian-lam-viec/chi-tiet-thoi-gian-lam-viec.component';
 import { ChamCongComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/cham-cong/cham-cong.component';
 import { ChiTietChamCongComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/cham-cong/chi-tiet-cham-cong/chi-tiet-cham-cong.component';
+import { TongQuanNhanSuComponent } from 'src/app/components/ns-ho-so-nhan-su/tong-quan-nhan-su/tong-quan-nhan-su.component';
+import { ChartModule } from 'primeng/chart';
+import { KnobModule } from 'primeng/knob';
 @NgModule({
   imports: [
     MessagesModule,
@@ -149,6 +152,7 @@ import { ChiTietChamCongComponent } from 'src/app/components/ns-ho-so-nhan-su/em
     DetailAccountModule,
     ListboxModule,
     UserDetailModule,
+    KnobModule,
     CheckboxModule,
     MultiSelectModule,
     ListGridAngularModule,
@@ -188,6 +192,7 @@ import { ChiTietChamCongComponent } from 'src/app/components/ns-ho-so-nhan-su/em
     SkeletonModule,
     CheckHideActionsDirectiveModule,
     LoadingDetailModule,
+    ChartModule,
     AgGridModule.withComponents([
       ButtonRendererComponent,
       ButtonRendererComponent1
@@ -269,7 +274,9 @@ import { ChiTietChamCongComponent } from 'src/app/components/ns-ho-so-nhan-su/em
     DetailCustomerManagerComponent,
     ChiTietThoiGianLamViecComponent,
     ChamCongComponent,
-    ChiTietChamCongComponent
+    ChiTietChamCongComponent,
+    TongQuanNhanSuComponent,
+
 
   ],
   providers: [ ]

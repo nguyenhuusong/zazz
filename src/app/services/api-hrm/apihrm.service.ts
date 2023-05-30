@@ -2140,10 +2140,14 @@ export class ApiHrmService {
   setContractAccept(params): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/contract/SetContractAccept`, params, this.options);
   }
-
+  // Dashboard
   getDashboardInfo(params): Observable<any> {
     // return this.http.get<any>(`${apiHrmServer}/api/v2/dashboard/GetDashboardInfo?` + queryParams, this.options)
     return this.http.post<any>(`${apiHrmServer}/api/v2/dashboard/GetDashboardInfo`, params, this.options)
+  }
+
+  getDashboardEmployee(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/dashboard/GetDashboardEmployee`, params, this.options)
   }
 
   getFormPage(queryParams): Observable<any> {
