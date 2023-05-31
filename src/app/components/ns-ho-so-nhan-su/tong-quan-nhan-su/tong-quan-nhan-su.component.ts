@@ -29,7 +29,6 @@ export class TongQuanNhanSuComponent implements OnInit {
     private changeDetector: ChangeDetectorRef,
     private router: Router) {
 
-
   }
 
   private readonly unsubscribe$: Subject<void> = new Subject();
@@ -45,10 +44,12 @@ export class TongQuanNhanSuComponent implements OnInit {
     offSet: 0,
     pageSize: 20,
   }
-
-  itemsToolOfGrid = []
+  perMale = 0;
+  perFeMale = 0;
+  itemsToolOfGrid = [];
+  bgColors = [];
   ngOnInit() {
-
+    this.getColors();
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Nhân sự' },
@@ -78,6 +79,12 @@ export class TongQuanNhanSuComponent implements OnInit {
           this.detailDashboardEmployee = results.data;
           this.onInitChart()
           this.spinner.hide();
+          if(results.data.emp_male && results.data.emp_total) {
+            this.perMale = this.percenOf(results.data.emp_male, results.data.emp_total)
+          }
+          if(results.data.emp_female && results.data.emp_total) {
+            this.perFeMale = this.percenOf(results.data.emp_female, results.data.emp_total)
+          }
         },
         error => {
           this.spinner.hide();
@@ -90,6 +97,7 @@ export class TongQuanNhanSuComponent implements OnInit {
   dataChartEmpContractType: any;
   optionsHorizontal: any;
   optionsChart: any;
+  optionsChartPie: any;
   onInitChart() {
     const documentStyle = getComputedStyle(document.documentElement);
     const textColor = documentStyle.getPropertyValue('--text-color');
@@ -133,7 +141,7 @@ export class TongQuanNhanSuComponent implements OnInit {
       labels: this.detailDashboardEmployee.empProcessing.map(d => d.name),
       datasets: [
         {
-          label: this.detailDashboardEmployee.empProcessing.map(d => d.name),
+          label: 'this.detailDashboardEmployee.empProcessing.map(d => d.name)',
           data: this.detailDashboardEmployee.empProcessing.map(d => d.emp_num),
           backgroundColor: [
             'rgba(255, 159, 64, 0.2)',
@@ -254,7 +262,8 @@ export class TongQuanNhanSuComponent implements OnInit {
         legend: {
           labels: {
             color: textColor
-          }
+          },
+          display: false
         }
       },
       scales: {
@@ -279,6 +288,37 @@ export class TongQuanNhanSuComponent implements OnInit {
         }
       }
     };
+
+    this.optionsChartPie = {
+      plugins: {
+        legend: {
+          labels: {
+            color: textColor
+          },
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            color: textColorSecondary
+          },
+          grid: {
+            color: surfaceBorder,
+            drawBorder: false
+          }
+        },
+        x: {
+          ticks: {
+            color: textColorSecondary
+          },
+          grid: {
+            color: surfaceBorder,
+            drawBorder: false
+          }
+        }
+      }
+    }
     
     this.optionsHorizontal = {
       indexAxis: 'y',
@@ -290,7 +330,8 @@ export class TongQuanNhanSuComponent implements OnInit {
                   color: textColor
               },
               position: 'top',
-              maxWidth: 500
+              maxWidth: 500,
+              display: false
           }
       },
       scales: {
@@ -317,7 +358,23 @@ export class TongQuanNhanSuComponent implements OnInit {
   };
   }
 
- 
+  percenOf(value, totalVlue) {
+    return Math.round((value / totalVlue) * 100);
+  }
+
+  getColors() {
+    this.bgColors = [
+      '#00FF7F', '#FFD700', '#FF4500', '#8B0000', '#4B0082', '#C71585', '#008080', '#BDB76B',
+      '#FF6347', '#B22222', '#663399', '#DB7093', '#800000', '#191970', '#00CED1', '#008B8B',
+      '#F0E68C', '#483D8B', '#FF1493', '#000000', '#FFE4E1', '#A0522D', '#00008B', '#48D1CC',
+      '#20B2AA', '#EEE8AA', '#FF7F50', '#FF0000', '#6A5ACD', '#FF69B4', '#2F4F4F', '#FAF0E6',
+      '#8B4513', '#0000CD', '#40E0D0', '#8FBC8F', '#FFDAB9', '#FF8C00', '#7B68EE', '#FFB6C1',
+      '#708090', '#FFFFFF', '#D2691E', '#CD853F', '#B8860B', '#DAA520', '#F4A460', '#BC8F8F',
+      '#0000FF', '#4169E1', '#1E90FF', '#4682B4', '#5F9EA0', '#7FFFD4', '#66CDAA', '#556B2F',
+      '#6B8E23', '#9ACD32', '#006400', '#008000', '#2E8B57', '#ADFF2F', '#FFFF00', '#FFFFE0',
+      '#DC143C', '#CD5C5C', '#F08080', '#9370DB', '#800080', '#FF00FF', '#E6E6FA', '#D8BFD8'
+    ]
+  }
 
 }
 
