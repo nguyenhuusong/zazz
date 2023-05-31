@@ -13,41 +13,103 @@
     
         }
     }
-
-    .grid-box{
-        gap: 16px;
-        &>div{
-            width: 12%;
-            .p-card{
-                height: 100% !important;
-                .p-card-title{
-                    font-size: 14px !important;
-                    min-height: 40px;
-                }
-                .p-card-content{
-                    text-align: center;
-                }
-            }
-        }
-    }
     .box{
         .box-items{
+            justify-content: end;
             h3{
                 color: rgba(0, 0, 0, 0.87);
+                padding-left: 11px;
             }
             display: flex;
             &>div{
-                width: 12%;
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+            .number{
+                color: rgb(2 38 88 / 87%);
+                font-size: 18px;
+                font-weight: 600;
             }
             .p-card{
                 height: 100% !important;
                 box-shadow: none;
                 .p-card-title{
-                    font-size: 14px !important;
-                    min-height: 40px;
+                    font-size: 13px !important;
+                    min-height: 25px;
+                    color: rgb(2 38 88 / 87%);
                 }
                 .p-card-content{
                     padding-top: 0px;
+                    text-align: center;
+                }
+                .p-card-body{
+                    padding-bottom: 0px;
+                }
+            }
+            div{
+                &:first-child{
+                    margin-right: auto;
+                    .p-card-body{
+                        padding-left: 0px;
+                    }
+                    .p-card-content{
+                        text-align: left;
+                    }
+                }
+            }
+            .humans{
+                gap: 20px;
+                justify-content: center;
+                position: relative;
+                max-width: 107px;
+                margin: auto;
+                .male{
+                    color: #0a2342;
+                    .per{
+                        text-align: left;
+                    }
+                }
+                .female{
+                    color: #c14c5f;
+                    .per{
+                        text-align: right;
+                    }
+                }
+                .bar{
+                    position: absolute;
+                    height: 2px;
+                    top: 20px;
+                    left: 0px;
+                    &.male-bar{
+                        background: #0a2342;
+                        z-index: 2;
+                    }
+                    &.female-bar{
+                        background: #c14c5f;
+                        width: 100% !important;
+                        z-index: 1;
+                    }
+                }
+            }
+            .human{
+                text-align: center;
+                margin-right: 0px !important;
+                .per{
+                    font-weight: 500;
+                    font-size: 15px;
+                    display: block;
+                    margin-bottom: 5px;
+                }
+                img{
+                    max-height: 100px;
+                    width: auto;
+                }
+            }
+            .head-title{
+                display: flex;
+                gap: 16px;
+                .p-card-title{
+                    padding-left: 0px;
                 }
             }
         }
