@@ -100,7 +100,7 @@ export class TongQuanNhanSuComponent implements OnInit {
       labels: this.detailDashboardEmployee.empWorking.map(d => d.name),
       datasets: [
         {
-          label: this.detailDashboardEmployee.empWorking.map(d => d.name),
+          label: 'Công việc',
           data: this.detailDashboardEmployee.empWorking.map(d => d.emp_num),
           backgroundColor: [
             'rgba(255, 159, 64, 0.2)',
@@ -164,7 +164,7 @@ export class TongQuanNhanSuComponent implements OnInit {
       labels: this.detailDashboardEmployee.empPositionType.map(d => d.name),
       datasets: [
         {
-          label: this.detailDashboardEmployee.empPositionType.map(d => d.name),
+          label: 'Vị trí',
           data: this.detailDashboardEmployee.empPositionType.map(d => d.emp_num),
           backgroundColor: [
             'rgba(255, 159, 64, 0.2)',
@@ -188,7 +188,7 @@ export class TongQuanNhanSuComponent implements OnInit {
       labels: this.detailDashboardEmployee.empPosition.map(d => d.name),
       datasets: [
         {
-          label: this.detailDashboardEmployee.empPosition.map(d => d.name),
+          label: 'Vị trí',
           data: this.detailDashboardEmployee.empPosition.map(d => d.emp_num),
           backgroundColor: [
             'rgba(255, 159, 64, 0.2)',
@@ -230,7 +230,7 @@ export class TongQuanNhanSuComponent implements OnInit {
       labels: this.detailDashboardEmployee.empContractType.map(d => d.name),
       datasets: [
         {
-          label: this.detailDashboardEmployee.empContractType.map(d => d.name),
+          label: 'Hợp đồng',
           data: this.detailDashboardEmployee.empContractType.map(d => d.emp_num),
           backgroundColor: [
             'rgba(255, 159, 64, 0.2)',
@@ -288,31 +288,31 @@ export class TongQuanNhanSuComponent implements OnInit {
           legend: {
               labels: {
                   color: textColor
-              }
+              },
+              position: 'top',
+              maxWidth: 500
           }
       },
       scales: {
-          x: {
-              ticks: {
-                  color: textColorSecondary,
-                  font: {
-                      weight: 500
-                  }
-              },
-              grid: {
-                  color: surfaceBorder,
-                  drawBorder: false
-              }
+        y: {
+          beginAtZero: true,
+          ticks: {
+              color: textColorSecondary
           },
-          y: {
-              ticks: {
-                  color: textColorSecondary
-              },
-              grid: {
-                  color: surfaceBorder,
-                  drawBorder: false
-              }
+          grid: {
+              color: surfaceBorder,
+              drawBorder: false
           }
+      },
+      x: {
+          ticks: {
+              color: textColorSecondary
+          },
+          grid: {
+              color: surfaceBorder,
+              drawBorder: false
+          }
+      }
       }
   };
   }
