@@ -12,35 +12,44 @@
 
 
     <section class="content" *ngIf="detailDashboardEmployee">
-        <div class="box mb-3">
-            <h3 style="padding-left: 11px;">Employee</h3>
-            <div class="box-items">
-                <div *ngFor="let item  of  detailDashboardEmployee.empoyees; let i=index">
-                    <p-card *ngIf="i === 0">
-                        <div class="head-title">
-                            <h3 class="p-card-title">
-                                {{item.name}}:
-                            </h3>
-                            <span class="number">
-                                {{ item.emp_num }}
-                            </span>
-                        </div>
-                        <div class="d-flex gap12 humans">
-                            <div class="human male">
-                                <span class="per">61%</span>
-                                <img src="../../../../assets/images/male.png">
+        <div class="mb-3">
+            <div class="grid">
+                <div class="col-12 pb-0 sm:col-12 md:col-12 lg:col-12 xl:col-10">
+                    <div class="box">
+                        <h3 style="padding-left: 11px;">Employee</h3>
+                        <div class="box-items">
+                            <div *ngFor="let item  of  detailDashboardEmployee.empoyees; let i=index">
+                                <p-card *ngIf="i === 0">
+                                    <div class="head-title">
+                                        <h3 class="p-card-title">
+                                            {{item.name}}:
+                                        </h3>
+                                        <span class="number">
+                                            {{ item.emp_num }}
+                                        </span>
+                                    </div>
+                                    <div class="d-flex gap12 humans">
+                                        <div class="human male">
+                                            <span class="per">61%</span>
+                                            <img src="../../../../assets/images/male.png">
+                                        </div>
+                                        <div class="human female">
+                                            <span class="per">39%</span>
+                                            <img src="../../../../assets/images/fe-male.png">
+                                        </div>
+                                        <span class="bar male-bar" style="width: 61%;"></span>
+                                        <span class="bar female-bar"></span>
+                                    </div>
+                                </p-card>
+                                <p-card *ngIf="i > 0" header="{{item.name}}" [style]="{'height': '170px', 'wdith': 'auto'}">
+                                    <p-knob [(ngModel)]="item.emp_num" [valueColor]="i === 0 ? 'DeepSkyBlue' : i===1 ? 'DarkOrange' : 'red'" [readonly]="true"></p-knob>
+                                </p-card>
                             </div>
-                            <div class="human female">
-                                <span class="per">39%</span>
-                                <img src="../../../../assets/images/fe-male.png">
-                            </div>
-                            <span class="bar male-bar" style="width: 61%;"></span>
-                            <span class="bar female-bar"></span>
                         </div>
-                    </p-card>
-                    <p-card *ngIf="i > 0" header="{{item.name}}" [style]="{'height': '170px', 'wdith': 'auto'}">
-                        <p-knob [(ngModel)]="item.emp_num" [valueColor]="i === 0 ? 'DeepSkyBlue' : i===1 ? 'DarkOrange' : 'red'" [readonly]="true"></p-knob>
-                    </p-card>
+                    </div>
+                </div>
+                <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-2 pb-0">
+                    <div class="box" style="height: 100%;"></div>
                 </div>
             </div>
         </div>

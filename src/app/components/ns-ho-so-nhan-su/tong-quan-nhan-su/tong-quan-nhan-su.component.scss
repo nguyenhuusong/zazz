@@ -13,9 +13,15 @@
     
         }
     }
-    .box{
+    
         .box-items{
             justify-content: end;
+            flex-wrap: wrap;
+            .box{
+                height: 100%;
+            }
+            // max-width: 80%;
+            // margin: auto;
             h3{
                 color: rgba(0, 0, 0, 0.87);
                 padding-left: 11px;
@@ -46,14 +52,26 @@
                     padding-bottom: 0px;
                 }
             }
-            div{
+            &>div{
                 &:first-child{
                     margin-right: auto;
+                    min-width: 230px;
+                    position: relative;
+                    &::after{
+                        content: '';
+                        height: 100%;
+                        display: block;
+                        width: 1px;
+                        background: #e4e4e4;
+                        position: absolute;
+                        top: 0px;
+                        left: calc(100%);
+                    }
                     .p-card-body{
                         padding-left: 0px;
                     }
                     .p-card-content{
-                        text-align: left;
+                        text-align: center;
                     }
                 }
             }
@@ -62,7 +80,6 @@
                 justify-content: center;
                 position: relative;
                 max-width: 107px;
-                margin: auto;
                 .male{
                     color: #0a2342;
                     .per{
@@ -113,7 +130,6 @@
                 }
             }
         }
-    }
     section{
         &.content{
             padding-left: 23px;
