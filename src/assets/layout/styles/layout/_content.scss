@@ -57,6 +57,16 @@ ul{
                 }
             }
         }
+        &.d-flex{
+            ul{
+                display: flex;
+                flex-wrap: wrap;
+                margin-top: 10px;
+                li{
+                    margin-bottom: 10px;
+                }
+            }
+        }
     }
 }
 

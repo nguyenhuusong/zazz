@@ -9,6 +9,7 @@ import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { Subject, takeUntil } from 'rxjs';
 import queryString from 'query-string';
 import { DashboardEmployee } from 'src/app/types/dashboard.type';
+import { Chart } from 'chart.js';
 const MAX_SIZE = 100000000;
 
 @Component({
@@ -50,6 +51,8 @@ export class TongQuanNhanSuComponent implements OnInit {
   bgColors = [];
   ngOnInit() {
     this.getColors();
+    let colorRgb = this.hexToRgb('#fff');
+    console.log('colorRgb', colorRgb.toString())
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Nhân sự' },
@@ -105,6 +108,7 @@ export class TongQuanNhanSuComponent implements OnInit {
     const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
 
     this.dataChart = {
+      
       labels: this.detailDashboardEmployee.empWorking.map(d => d.name),
       datasets: [
         {
@@ -290,34 +294,19 @@ export class TongQuanNhanSuComponent implements OnInit {
     };
 
     this.optionsChartPie = {
-      plugins: {
-        legend: {
-          labels: {
-            color: textColor
+      options: {
+        responsive: true,
+          indexAxis: 'x',
+          plugins: {
+          htmlLegend: {
+            containerID: 'legend-doughnut',
           },
-        }
-      },
-      scales: {
-        y: {
-          beginAtZero: true,
-          ticks: {
-            color: textColorSecondary
+          legend: {
+            display: false,
           },
-          grid: {
-            color: surfaceBorder,
-            drawBorder: false
-          }
         },
-        x: {
-          ticks: {
-            color: textColorSecondary
-          },
-          grid: {
-            color: surfaceBorder,
-            drawBorder: false
-          }
-        }
-      }
+
+    }
     }
     
     this.optionsHorizontal = {
@@ -355,7 +344,9 @@ export class TongQuanNhanSuComponent implements OnInit {
           }
       }
       }
-  };
+    };
+
+    this.chartPie();
   }
 
   percenOf(value, totalVlue) {
@@ -375,6 +366,120 @@ export class TongQuanNhanSuComponent implements OnInit {
       '#DC143C', '#CD5C5C', '#F08080', '#9370DB', '#800080', '#FF00FF', '#E6E6FA', '#D8BFD8'
     ]
   }
+
+  hexToRgb(color) {
+    return color.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i
+        ,(m, r, g, b) => '#' + r + r + g + g + b + b)
+    .substring(1).match(/.{2}/g)
+    .map(x => parseInt(x, 16));
+  }
+
+  chartPie() {
+    let configs = {
+      type: 'pie',
+      canvasID: 'doughnut',
+        options: {
+          responsive: true,
+            indexAxis: 'x',
+          plugins: {
+            htmlLegend: {
+              containerID: 'legend-doughnut',
+            },
+            legend: {
+              display: false,
+            },
+          },
+
+      }
+    }
+    let labels = this.dataChart.labels
+    let bg = []
+    for(let i = 0; i < this.dataChart.labels.length; i++){
+      bg.push(this.bgColors[i]);
+    };
+    let datas = {
+      labels: labels,
+      datasets: this.dataChart.datasets
+    };
+    this.drawChart(configs, datas)
+  }
+
+  /*
+    configs: type, options(htmlLegend), canvasID
+    data:
+  */
+    drawChart(configs, datas ) {
+      if(configs.canvasID) {
+        setTimeout(() => {
+        let ctx:any = document.getElementById(configs.canvasID);
+        ctx = ctx.getContext('2d');
+        let chart = new Chart(ctx, {
+          type: configs.type,
+          data: datas,
+          options: configs.options,
+          plugins: [{
+            id: 'htmlLegend',
+            afterUpdate(chart: any, args, options:any) {
+              if(configs.options.plugins.htmlLegend?.containerID){
+                const legendContainer = document.getElementById(configs.options.plugins.htmlLegend.containerID);
+                let listContainer:any = legendContainer.querySelector('ul');
+                if (!listContainer) {
+                  listContainer = document.createElement('ul');
+                  listContainer.style.display = 'flex';
+                  listContainer.style.flexDirection = 'row';
+                  listContainer.style.margin = 0;
+                  listContainer.style.padding = 0;
+                  legendContainer.appendChild(listContainer);
+                }
+                const ul = listContainer;
+      
+                // Remove old legend items
+                while (ul.firstChild) {
+                  ul.firstChild.remove();
+                }
+      
+                const items = chart.options.plugins.legend.labels.generateLabels(chart);
+                items.forEach((item:any) => {
+                  const li = document.createElement('li');
+                  const {type} = chart.config;
+                  li.onclick = () => {
+                    if (type === 'pie' || type === 'doughnut') {
+                      // Pie and doughnut charts only have a single dataset and visibility is per item
+                      chart.toggleDataVisibility(item.index);
+                    } else {
+                      chart.setDatasetVisibility(item.datasetIndex, !chart.isDatasetVisible(item.datasetIndex));
+                    }
+                    chart.update();
+                  };
+                  
+                  // Color box
+                  const boxSpan = document.createElement('span');
+                  boxSpan.style.background = item.fillStyle;
+                  // Text
+                  const textContainer:any = document.createElement('span');
+                  textContainer.style.textDecoration = item.hidden ? 'line-through' : '';
+                  let numberValue = ''
+                  if (type === 'pie' || type === 'doughnut') {
+                    if(chart.config.data.datasets.length === 1){
+                      numberValue += ' (' + new Intl.NumberFormat().format(chart.config.data.datasets[0].data[item.index]) + ')';
+                    }
+                  }
+                  const text = document.createTextNode(item.text +  numberValue );
+                  textContainer.appendChild(text);
+                  li.appendChild(boxSpan);
+                  li.appendChild(textContainer);
+                  ul.appendChild(li);
+                });
+              }
+            }
+          }],
+        });
+        chart.update();
+  
+        // chart.destroy();
+        }, 500);
+      }
+    }
 
 }
 
