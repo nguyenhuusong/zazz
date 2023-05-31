@@ -18,14 +18,14 @@
                     <div class="box" style="height: 100%;">
                         <h3 style="padding-left: 11px;">Employee</h3>
                         <div class="box-items">
-                            <div *ngFor="let item  of  detailDashboardEmployee.empoyees; let i=index">
-                                <p-card *ngIf="i === 0">
+                            <div>
+                                <p-card >
                                     <div class="head-title">
                                         <h3 class="p-card-title">
-                                            {{item.name}}:
+                                            Tổng nhân viên: 
                                         </h3>
                                         <span class="number">
-                                            {{ item.emp_num }}
+                                            {{ detailDashboardEmployee.emp_total }}
                                         </span>
                                     </div>
                                     <div class="d-flex gap12 humans">
@@ -37,11 +37,13 @@
                                             <span class="per">{{ perFeMale }} %</span>
                                             <img src="../../../../assets/images/fe-male.png">
                                         </div>
-                                        <span class="bar male-bar" [style.width]="perMale"></span>
+                                        <span class="bar male-bar" [style.width]="perMale + 'px'"></span>
                                         <span class="bar female-bar"></span>
                                     </div>
                                 </p-card>
-                                <p-card *ngIf="i > 0" header="{{item.name}}" [style]="{'height': '170px', 'wdith': 'auto'}">
+                            </div>
+                            <div *ngFor="let item  of  detailDashboardEmployee.empoyees; let i=index">
+                                <p-card header="{{item.name}}" [style]="{'height': '170px', 'wdith': 'auto'}">
                                     <p-knob [(ngModel)]="item.emp_num" [valueColor]="i === 0 ? 'DeepSkyBlue' : i===1 ? 'DarkOrange' : 'red'" [readonly]="true"></p-knob>
                                 </p-card>
                             </div>
@@ -82,7 +84,7 @@
             <div class="col-12">
                 <div class="box">
                  <h3>EmpPosition</h3>
-                    <div style="max-width: 83%; margin: auto">
+                    <div style="max-width: 78%; margin: auto">
                         <p-chart type="bar" [data]="dataChartEmpPosition" [options]="optionsChart"></p-chart>
                     </div>
                </div>

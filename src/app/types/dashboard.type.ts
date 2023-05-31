@@ -5,6 +5,9 @@ export interface DashboardEmployee {
     empPosition: DBEmpPosition[];
     empContractType: DBEmpContractType[];
     empProcessing: DBEmpoyees[];
+    emp_female: string;
+    emp_male: string;
+    emp_total: string;
 }
 
 export interface DBEmpoyees {
