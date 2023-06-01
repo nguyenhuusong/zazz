@@ -342,6 +342,14 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v1/salary/getSalaryEmployeePage?` + queryParams, this.options)
   }
 
+  setSalaryEmployeeConfirm(queryParams): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v1/salary/SetSalaryEmployeeConfirm` , queryParams, this.options)
+  }
+
+  setSalaryEmployeeRedo(queryParams): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v1/salary/SetSalaryEmployeeRedo` , queryParams, this.options)
+  }
+
   getSalaryInsurancePage(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/salary/GetSalaryInsurancePage?` + queryParams, this.options)
   }
@@ -3571,6 +3579,15 @@ export class ApiHrmService {
 
   setEmployeeExportDraft(data): Observable<Blob> {
     return this.http.post(`${apiHrmServer}/api/v2/employee/SetEmployeeExportDraft`, data, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
+  }
+
+  setSalaryEmployeeExport(data): Observable<Blob> {
+    return this.http.post(`${apiHrmServer}/api/v1/salary/SetSalaryEmployeeExport`, data, {
       headers: new HttpHeaders({
         Authorization: this.authService.getAuthorizationHeaderValue(),
       }),

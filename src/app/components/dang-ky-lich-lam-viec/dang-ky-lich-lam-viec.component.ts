@@ -15,7 +15,7 @@ import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { ApiService } from 'src/app/services/api.service';
 import { DialogService } from 'primeng/dynamicdialog';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
-import { Subject, takeUntil } from 'rxjs';
+import { map, Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-dang-ky-lich-lam-viec',
   templateUrl: './dang-ky-lich-lam-viec.component.html',
@@ -33,7 +33,7 @@ export class DangKyLichLamViecComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private apiService: ApiHrmService,
     private apiServiceCore: ApiService,
-    private route: ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
     private dialogService: DialogService,
     private changeDetector: ChangeDetectorRef,
     private confirmationService: ConfirmationService,
@@ -465,7 +465,17 @@ export class DangKyLichLamViecComponent implements OnInit {
       { label: 'Quan hệ lao động' },
       { label: 'Danh sách đăng ký lịch làm việc' },
     ];
-    this.getEmpWorkingFilter();
+    const state = this.activatedRoute.queryParams
+    .subscribe((params: any) => {
+      console.log(params)
+      const apiParam = params.apiParam;
+      if(apiParam !== "") {
+        
+        this.getEmpWorkingFilter();
+      }else {
+        this.getEmpWorkingFilter();
+      }
+    })
     this.getWorkTime();
   }
 

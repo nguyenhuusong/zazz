@@ -402,6 +402,12 @@ export class CsChamCongOverviewComponent implements OnInit {
       }
     }
 
+    navigateWithState(item: any) {
+      console.log(JSON.parse(item.apiParam))
+      debugger
+      this.router.navigate(['/nhan-su/dang-ky-lich-lam-viec'], { queryParams: { apiParam: item.apiParam } });
+    }
+
 }
 
 
