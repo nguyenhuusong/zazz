@@ -94,6 +94,7 @@ import { DieuChinhComponent } from 'src/app/components/cs-tien-luong/chi-tiet-ti
 import { ChartModule } from 'primeng/chart';
 import { KnobModule } from 'primeng/knob';
 import { AvatarModule } from 'primeng/avatar';
+import { CsLoiChamCongComponent } from 'src/app/components/cs-loi-cham-cong/cs-loi-cham-cong.component';
 @NgModule({
   imports: [
     MessagesModule,
@@ -195,7 +196,9 @@ import { AvatarModule } from 'primeng/avatar';
     ChiTietNghiKhongLuongComponent,
     TabSalaryInsuranceComponent,
     TabSalaryDependentComponent,
-    DieuChinhComponent
+    DieuChinhComponent,
+    CsLoiChamCongComponent,
+
 
   ],
   providers: [],

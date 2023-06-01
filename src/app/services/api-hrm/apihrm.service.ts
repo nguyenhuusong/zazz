@@ -406,6 +406,10 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v1/timekeeping/GetSalaryTimekeepingPage?` + queryParams, this.options)
   }
 
+  getTimekeepingFailPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/timekeeping/GetTimekeepingFailPage?` + queryParams, this.options)
+  }
+
   getEmployeeSalaryMonthPage(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/timekeeping/GetEmployeeSalaryMonthPage?` + queryParams, this.options)
   }
