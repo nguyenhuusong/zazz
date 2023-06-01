@@ -1,300 +1,104 @@
 <div class="main-grid">
     <section class="bread-crumb">
-        <div class="d-flex bet middle">
+        <div class="d-flex bet bottom">
             <div class="p-0 col-12 md:col-12 lg:col-3 xl:col-3">
                 <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
             </div>
-            <div class="d-flex end p-0 wrap col-12 md:col-12 lg:col-9 xl:col-9 gap12">
-                <p-button (click)="goToChamCong()"
-                styleClass="p-button-sm  ">
-                    Chấm công &nbsp;&nbsp;<span class="pi pi-arrow-right"></span>
-                </p-button>
-            </div>
         </div>
     </section>
-    <section class="overview content pb-0">
-        <div class="grid">
-            <div class="col-2">
-                <div class="box">
-                    <div>
-                        <h4>Đi sớm về muộn</h4>
-                        <div class="d-flex relative bet">
-                            <div class="fields no-border">
-                                <p-calendar placeholder="Từ ngày" 
-                                panelStyleClass="datepicker-default" placeholder="DD/MM/YYYY"
-                                [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="queryDiMuonVeSom.fromdate" 
-                                [monthNavigator]="true" (onSelect)="changeFromDate()"
-                                [yearNavigator]="true" inputId="navigators" dateFormat="dd/mm/yy"
-                                name="fromdate"></p-calendar>
-                            </div>
-                            <span class="pi pi-arrow-right" style="position: absolute;left: 45%;z-index: 9;transform: translateX(-100%);top: 12px;"></span>
-                            <div class="fields no-border">
-                                <p-calendar placeholder="Đến ngày" 
-                                panelStyleClass="datepicker-default" placeholder="DD/MM/YYYY"
-                                [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="queryDiMuonVeSom.todate" 
-                                [monthNavigator]="true" (onSelect)="changeToDate()"
-                                [yearNavigator]="true" inputId="navigators" dateFormat="dd/mm/yy"
-                                name="fromdate"></p-calendar>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="number-vlaue">
-                        {{ numberDimuon }}
-                    </div>
-                    <div class="text-right">
-                       Chi tiết
-                    </div>
-                </div>
-                <div class="box">
-                    <div>
-                        <h4>Thực tế đã nghỉ</h4>
-                        <div class="fields no-border">
-                            <p-dropdown placeholder="Chọn" 
-                                [(ngModel)]="dataSeleted"
-                                appendTo="body" 
-                                [baseZIndex]="100" [autoDisplayFirst]="false"
-                                [options]="dataOptions" [filter]="true">
-                                <ng-template let-item pTemplate="selectedItem">
-                                <span style="vertical-align:middle;">{{item.label}}</span>
-                                </ng-template>
-                                <ng-template let-car pTemplate="item">
-                                <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                                    <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
-                                </div>
-                                </ng-template>
-                            </p-dropdown>
-                        </div>
-                    </div>
-                    <div class="number-vlaue">
-                        0
-                    </div>
-                    <div class="text-right">
-                       Chi tiết
-                    </div>
-                </div>
-                <div class="box">
-                    <div>
-                        <h4>Kế hoạch nghỉ</h4>
-                        <div class="fields no-border">
-                            <p-dropdown placeholder="Chọn" 
-                                [(ngModel)]="dataSeleted"
-                                appendTo="body" 
-                                [baseZIndex]="100" [autoDisplayFirst]="false"
-                                [options]="dataOptions" [filter]="true">
-                                <ng-template let-item pTemplate="selectedItem">
-                                <span style="vertical-align:middle;">{{item.label}}</span>
-                                </ng-template>
-                                <ng-template let-car pTemplate="item">
-                                <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                                    <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
-                                </div>
-                                </ng-template>
-                            </p-dropdown>
-                        </div>
-                    </div>
-                    <div class="number-vlaue">
-                        0
-                    </div>
-                    <div class="text-right">
-                       Chi tiết
-                    </div>
-                </div>
-            </div>
-            <div class="col-10">
-                <div class="grid">
-                    <div class="col-5">
-                        <div class="box box-100">
-                            <div class="head d-flex bet">
-                                <div>
-                                    <h4>Tình hình nghỉ theo thời gian</h4>
-                                    CÔNG TY CỔ PHẦN ĐẦU TƯ CÔNG NGHỆ UNICLOUD<br>
-                                    <div class="d-flex relative bet">
-                                        <div class="fields no-border">
-                                            <p-calendar placeholder="Từ ngày" 
-                                            panelStyleClass="datepicker-default" placeholder="DD/MM/YYYY"
-                                            [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="queryNghiTheoThoiGian.fromdate" 
-                                            [monthNavigator]="true" (onSelect)="changeDate('nghitheothoigian')"
-                                            [yearNavigator]="true" inputId="navigators" dateFormat="dd/mm/yy"
-                                            name="fromdate"></p-calendar>
-                                        </div>
-                                        <span class="pi pi-arrow-right" style="position: absolute;left: 45%;z-index: 9;transform: translateX(-100%);top: 12px;"></span>
-                                        <div class="fields no-border">
-                                            <p-calendar placeholder="Đến ngày" 
-                                            panelStyleClass="datepicker-default" placeholder="DD/MM/YYYY"
-                                            [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="queryNghiTheoThoiGian.todate" 
-                                            [monthNavigator]="true" (onSelect)="changeDate('nghitheothoigian')"
-                                            [yearNavigator]="true" inputId="navigators" dateFormat="dd/mm/yy"
-                                            name="fromdate"></p-calendar>
-                                        </div>
+
+    <!-- muốn có h3 để biết nó thuộc nhóm dữ liệu nào  xu ly giup tao -->
+
+
+
+    <section class="content" *ngIf="detailDashboardTimekeeping">
+        <div class="mb-3">
+            <div class="grid">
+                <div class="col-12 pb-0 sm:col-12 md:col-12 lg:col-12 xl:col-10">
+                    <div class="box" style="height: 100%;">
+                        <h3 style="padding-left: 11px;">Employee</h3>
+                        <div class="box-items">
+                            <div>
+                                <p-card >
+                                    <div class="head-title">
+                                        <h3 class="p-card-title">
+                                            Tổng nhân viên: 
+                                        </h3>
+                                        <span class="number">
+                                            {{ detailDashboardTimekeeping.emp_total }}
+                                        </span>
                                     </div>
-                                </div>
-                                
-                            </div>
-                            <div class="chart">
-                                <canvas  id="nghiTheoThoiGian"></canvas>
-                              </div>
-                        </div>
-                    </div>
-                    <div class="col-7">
-                        <div class="box box-100">
-                            <div class="chart">
-                                <div class="head">
-                                    <h4>Tình hình nghỉ theo phòng ban</h4>
-                                    {{ dataChartPhongban?.organize_name }}<br>
-                                    <div class="d-flex relative bet col-4 pd-0">
-                                        <div class="fields no-border">
-                                            <p-calendar placeholder="Từ ngày" 
-                                            panelStyleClass="datepicker-default" placeholder="DD/MM/YYYY"
-                                            [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="queryNghiTheoPB.fromdate" 
-                                            [monthNavigator]="true" (onSelect)="changeDate('phongban')"
-                                            [yearNavigator]="true" inputId="navigators" dateFormat="dd/mm/yy"
-                                            name="fromdate"></p-calendar>
+                                    <div class="d-flex gap12 humans">
+                                        <div class="human male">
+                                            <span class="per" >{{ detailDashboardTimekeeping.emp_female }} NV</span>
+                                            <img src="../../../../assets/images/male.png">
                                         </div>
-                                        <span class="pi pi-arrow-right" style="position: absolute;left: 45%;z-index: 9;transform: translateX(-100%);top: 20px;"></span>
-                                        <div class="fields no-border">
-                                            <p-calendar placeholder="Đến ngày" 
-                                            panelStyleClass="datepicker-default" placeholder="DD/MM/YYYY"
-                                            [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="queryNghiTheoPB.todate" 
-                                            [monthNavigator]="true" (onSelect)="changeDate('phongban')"
-                                            [yearNavigator]="true" inputId="navigators" dateFormat="dd/mm/yy"
-                                            name="fromdate"></p-calendar>
+                                        <div class="human female">
+                                            <span class="per">{{ detailDashboardTimekeeping.emp_male }} NV</span>
+                                            <img src="../../../../assets/images/fe-male.png">
                                         </div>
+                                        <span class="bar male-bar" [style.width]="perMale + 'px'"></span>
+                                        <span class="bar female-bar"></span>
                                     </div>
-                                </div>
-                                <canvas style="max-height: 300px" id="nghiTheoPhongBan" *ngIf="dataChartPhongban"></canvas>
-                                <div id="legend-nghiTheoPhongBan" class="legend-default">
-                                    <ul></ul>
-                                </div>
+                                </p-card>
+                            </div>
+                            <div *ngFor="let item  of  detailDashboardTimekeeping.overview; let i=index">
+                                <p-card header="{{item.name}}" [style]="{'height': '170px', 'wdith': 'auto'}">
+                                    <p-knob [(ngModel)]="item.emp_num" [valueColor]="i === 0 ? 'CornflowerBlue' : i === 1 ? 'DarkOrange' : 'red'" [readonly]="true"></p-knob>
+                                </p-card>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="grid box-100">
-                    <div class="col-5">
-                        <div class="box box box-100">
-                            <div class="head">
-                                <h4>Phân tích loại nghỉ</h4>
-                                {{ dataLoaiNghi?.organize_name }}<br>
-                                <div class="d-flex relative bet col-6 pd-0">
-                                    <div class="fields no-border">
-                                        <p-calendar placeholder="Từ ngày" 
-                                        panelStyleClass="datepicker-default" placeholder="DD/MM/YYYY"
-                                        [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="queryLoainghi.fromdate" 
-                                        [monthNavigator]="true" (onSelect)="changeDate('phantichloainghi')"
-                                        [yearNavigator]="true" inputId="navigators" dateFormat="dd/mm/yy"
-                                        name="fromdate"></p-calendar>
-                                    </div>
-                                    <span class="pi pi-arrow-right" style="position: absolute;left: 45%;z-index: 9;transform: translateX(-100%);top: 12px;"></span>
-                                    <div class="fields no-border">
-                                        <p-calendar placeholder="Đến ngày" 
-                                        panelStyleClass="datepicker-default" placeholder="DD/MM/YYYY"
-                                        [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="queryLoainghi.todate" 
-                                        [monthNavigator]="true" (onSelect)="changeDate('phantichloainghi')"
-                                        [yearNavigator]="true" inputId="navigators" dateFormat="dd/mm/yy"
-                                        name="fromdate"></p-calendar>
-                                    </div>
-                                </div>
+                <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-2 pb-0">
+                    <div class="box" style="height: 100%;display: flex;flex-direction: column;justify-content: space-around;">
+                        <h3>Leave Reasons</h3> 
+                        <!-- <p-chart type="bar" [data]="dataChart" [options]="optionsChartPie"></p-chart> -->
+                        <div class="chart">
+                            <canvas  style="max-width: 180px; margin: auto" id="doughnut" *ngIf="dataChart?.datasets"></canvas>
+                            <div id="legend-doughnut" class="legend-default dou d-flex">
+                                <ul></ul>
                             </div>
-                            <div class="chart grid">
-                                <div class="col-8">
-                                    <canvas *ngIf="dataLoaiNghi" id="loaiNghi"></canvas>
-                                </div>
-                                <div class="col-4">
-                                    <div id="legend-loaiNghi" class="legend-default dou" style="margin-top: 0px">
-                                        <ul></ul>
-                                    </div>
-                                </div>
-                              </div>
-                        </div>
-                    </div>
-                    <div class="col-7">
-                        <div class="grid" style="height: 100%">
-                            <div class="col-6">
-                                <div class="box box box-100">
-                                    <div class="head">
-                                        <h4>Danh sách đi muộn về sớm</h4>
-                                        {{ dataDimuon?.organize_name }}<br>
-                                        <div class="d-flex relative bet col-10 pd-0">
-                                            <div class="fields no-border">
-                                                <p-calendar placeholder="Từ ngày" 
-                                                panelStyleClass="datepicker-default" placeholder="DD/MM/YYYY"
-                                                [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="queryDiMuonVeSom.fromdate" 
-                                                [monthNavigator]="true" (onSelect)="changeFromDate()"
-                                                [yearNavigator]="true" inputId="navigators" dateFormat="dd/mm/yy"
-                                                name="fromdate"></p-calendar>
-                                            </div>
-                                            <span class="pi pi-arrow-right" style="position: absolute;left: 45%;z-index: 9;transform: translateX(-100%);top: 12px;"></span>
-                                            <div class="fields no-border">
-                                                <p-calendar placeholder="Đến ngày" 
-                                                panelStyleClass="datepicker-default" placeholder="DD/MM/YYYY"
-                                                [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="queryDiMuonVeSom.todate" 
-                                                [monthNavigator]="true" (onSelect)="changeToDate()"
-                                                [yearNavigator]="true" inputId="navigators" dateFormat="dd/mm/yy"
-                                                name="fromdate"></p-calendar>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="list-item-info" *ngIf="dataDimuon.timekeeping" >
-                                        <div class="item d-flex gap-12" *ngFor="let item of dataDimuon.timekeeping">
-                                            <div class="avar"><img src="{{ item?.image_url ? item.image_url : '../../../../assets/images/avatar.jpg' }}"></div>
-                                            <div class="inf">
-                                                <label>{{ item.fullName }}</label>
-                                                <p>{{ item.organize_name }}</p>
-                                            </div>
-                                            <div class="number-time"><b>{{ item.num_late }} lần</b></div>
-                                        </div>
-                                        <div class="loadMore d-flex bet">
-                                            <div>{{ dataDimuon.timekeeping.length }} kết quả</div>
-                                            <div (click)="loadMore('disomvemuon')">Xem Thêm</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="box box box-100">
-                                    <div class="head">
-                                        <h4>Danh sách ăn ca</h4>
-                                        Tất cả đơn vị<br>
-                                        <div class="d-flex relative bet col-10 pd-0">
-                                            <div class="fields no-border">
-                                                <p-calendar placeholder="Từ ngày" 
-                                                panelStyleClass="datepicker-default" placeholder="DD/MM/YYYY"
-                                                [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="queryAnCa.fromdate" 
-                                                [monthNavigator]="true" (onSelect)="changeDate('anca')"
-                                                [yearNavigator]="true" inputId="navigators" dateFormat="dd/mm/yy"
-                                                name="fromdate"></p-calendar>
-                                            </div>
-                                            <span class="pi pi-arrow-right" style="position: absolute;left: 45%;z-index: 9;transform: translateX(-100%);top: 12px;"></span>
-                                            <div class="fields no-border">
-                                                <p-calendar placeholder="Đến ngày" 
-                                                panelStyleClass="datepicker-default" placeholder="DD/MM/YYYY"
-                                                [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="queryAnCa.todate" 
-                                                [monthNavigator]="true" (onSelect)="changeDate('anca')"
-                                                [yearNavigator]="true" inputId="navigators" dateFormat="dd/mm/yy"
-                                                name="fromdate"></p-calendar>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="list-item-info" *ngIf="dataAnca?.eating" >
-                                        <div class="item d-flex gap-12" *ngFor="let item of dataAnca.eating">
-                                            <div class="avar"><img src="{{ item?.image_url ? item.image_url : '../../../../assets/images/avatar.jpg' }}"></div>
-                                            <div class="inf">
-                                                <label>{{ item.fullName }}</label>
-                                                <p>{{ item.organize_name }}</p>
-                                            </div>
-                                            <div class="number-time"><b>{{ item.total }} lần</b></div>
-                                        </div>
-                                        <div class="loadMore d-flex bet">
-                                            <div>{{ dataAnca.eating.length }} kết quả</div>
-                                            <div (click)="loadMore('dsanca')">Xem Thêm</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                          </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="grid charts">
+            <div class="col-4">
+                <div class="box">
+                    <h3>agvLeaveMonths</h3>
+                    <p-chart type="bar" [data]="dataChartEmpLeaveMonths" [options]="optionsHorizontal"></p-chart>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="box">
+                <h3>topLeaves</h3>
+                    <div class="item" *ngFor="let item of detailDashboardTimekeeping.topLeaves">
+                        <p-avatar image="{{item.avatar_url}}" styleClass="mr-2" size="xlarge" shape="circle"></p-avatar>
+                        <div class="content">
+                            <label for="">{{item.fullname}} - {{item.code}}</label>
+                            <p for="">Leave {{item.num}}</p>
+                        </div>
+                    </div>
+                    <!-- <p-chart type="bar" [data]="dataChartEmpPositionType" [options]="optionsHorizontal"></p-chart> -->
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="box">
+                <h3>topTimeworks</h3>
+                    <div class="item" *ngFor="let item of detailDashboardTimekeeping.topLeaves">
+                        <p-avatar image="{{item.avatar_url}}" styleClass="mr-2" size="xlarge" shape="circle"></p-avatar>
+                        <div class="content">
+                            <label for="">{{item.fullname}} - {{item.code}}</label>
+                            <p for="">Timework {{item.num}}</p>
+                        </div>
+                    </div>
+                    <!-- <p-chart type="bar" [data]="dataChartEmpPositionType" [options]="optionsHorizontal"></p-chart> -->
+                </div>
+            </div>
+         </div>
+       
     </section>
 </div>
+

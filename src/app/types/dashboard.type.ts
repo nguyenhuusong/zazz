@@ -10,6 +10,38 @@ export interface DashboardEmployee {
     emp_total: string;
 }
 
+export interface DashboardTimekeeping {
+    emp_total: number;
+    emp_male: number;
+    emp_female: number;
+    overview: DBOverview[];
+    leaveReasons: DBEmpPositionType[];
+    topTimeworks: DBTopLeaves[];
+    topLeaves: DBTopLeaves[];
+    topEatings: DBTopLeaves[];
+    agvleaveDays: DBOverview[];
+    agvLeaveMonths: DBOverview[];
+    
+}
+
+export interface DBOverview {
+    typeid: number;
+    name: string;
+    emp_num: number;
+    perc: number;
+}
+export interface DBTopLeaves {
+    avatar_url: string;
+    code: string;
+    fullname: string;
+    num: number;
+}
+export interface DBTopTimeworks {
+    avatar_url: string;
+    code: string;
+    fullname: string;
+    num: number;
+}
 export interface DBEmpoyees {
     id: number;
     name: string;
@@ -20,7 +52,7 @@ export interface DBEmpWorking {
     cd: string;
     name: string;
     emp_num: number;
-    status: number
+    status?: number
 }
 
 export interface DBEmpPositionType {

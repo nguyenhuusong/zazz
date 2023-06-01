@@ -91,7 +91,9 @@ import { ImportExcelModule } from 'src/app/common/import-excel/import-excel.modu
 import { TabSalaryInsuranceComponent } from 'src/app/components/cs-tien-luong/chi-tiet-tien-luong/tab-salary-insurance/tab-salary-insurance.component';
 import { TabSalaryDependentComponent } from 'src/app/components/cs-tien-luong/chi-tiet-tien-luong/tab-salary-dependent/tab-salary-dependent.component';
 import { DieuChinhComponent } from 'src/app/components/cs-tien-luong/chi-tiet-tien-luong/dieu-chinh/dieu-chinh.component';
-
+import { ChartModule } from 'primeng/chart';
+import { KnobModule } from 'primeng/knob';
+import { AvatarModule } from 'primeng/avatar';
 @NgModule({
   imports: [
     MessagesModule,
@@ -134,6 +136,7 @@ import { DieuChinhComponent } from 'src/app/components/cs-tien-luong/chi-tiet-ti
     HrmSearchEmpModule,
     StepsModule,
     DividerModule,
+    AvatarModule,
     AgGridModule.withComponents([
       ButtonRendererComponent,
       ButtonRendererComponent1,
@@ -144,7 +147,8 @@ import { DieuChinhComponent } from 'src/app/components/cs-tien-luong/chi-tiet-ti
     LoadingGridModule,
     LoadingDetailModule,
     ImportExcelModule,
-
+    ChartModule,
+    KnobModule,
   ],
 
   declarations: [

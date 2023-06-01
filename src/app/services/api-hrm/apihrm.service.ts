@@ -2159,6 +2159,10 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v2/dashboard/GetDashboardEmployee`, params, this.options)
   }
 
+  getDashboardTimekeeping(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/dashboard/GetDashboardTimekeeping`, params, this.options)
+  }
+
   getFormPage(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/form/GetFormPage?` + queryParams, this.options)
   }

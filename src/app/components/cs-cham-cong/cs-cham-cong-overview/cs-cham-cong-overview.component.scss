@@ -1,11 +1,153 @@
-    .grid{ 
-        margin-right: -0.5rem; 
-        margin-left: -0.5rem; 
-        margin-top: -0.5rem;
+:host ::ng-deep {
+    .main-grid {
+        .knob{
+            .p-card-body {
+                padding: 10px !important;
+            }
+            p-card {
+                .p-card-title {
+                    font-size: 16px !important;
+                    font-weight: 500 !important;
+                }
+        }
+    
+        }
     }
-    .box{
-        margin-bottom: 15px;
-        &.box-100{
+    
+        .box-items{
+            justify-content: end;
+            flex-wrap: wrap;
+            .box{
+                height: 100%;
+            }
+            // max-width: 80%;
+            // margin: auto;
+            h3{
+                color: rgba(0, 0, 0, 0.87);
+                padding-left: 11px;
+            }
+            display: flex;
+            &>div{
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+            .number{
+                color: rgb(2 38 88 / 87%);
+                font-size: 18px;
+                font-weight: 600;
+            }
+            .p-card{
+                height: 100% !important;
+                box-shadow: none;
+                .p-card-title{
+                    font-size: 13px !important;
+                    min-height: 25px;
+                    color: rgb(2 38 88 / 87%);
+                }
+                .p-card-content{
+                    padding-top: 0px;
+                    text-align: center;
+                }
+                .p-card-body{
+                    padding-bottom: 0px;
+                }
+            }
+            &>div{
+                &:first-child{
+                    margin-right: auto;
+                    min-width: 230px;
+                    position: relative;
+                    &::after{
+                        content: '';
+                        height: 100%;
+                        display: block;
+                        width: 1px;
+                        background: #e4e4e4;
+                        position: absolute;
+                        top: 0px;
+                        left: calc(100%);
+                    }
+                    .p-card-body{
+                        padding-left: 0px;
+                    }
+                    .p-card-content{
+                        text-align: center;
+                    }
+                }
+            }
+            .humans{
+                gap: 20px;
+                justify-content: center;
+                position: relative;
+                max-width: 107px;
+                margin: auto;
+                .male{
+                    color: #0a2342;
+                    .per{
+                        text-align: left;
+                        white-space: pre
+                    }
+                }
+                .female{
+                    color: #c14c5f;
+                    .per{
+                        text-align: right;
+                        white-space: pre
+                    }
+                }
+                .bar{
+                    position: absolute;
+                    height: 2px;
+                    top: 20px;
+                    left: 0px;
+                    width: 0px;
+                    transition: all 0.6s;
+                    &.male-bar{
+                        background: #0a2342;
+                        z-index: 2;
+                        transition: all 0.6s;
+                    }
+                    &.female-bar{
+                        background: #c14c5f;
+                        width: 100% !important;
+                        z-index: 1;
+                        transition: all 0.6s;
+                    }
+                }
+            }
+            .human{
+                text-align: center;
+                margin-right: 0px !important;
+                .per{
+                    font-weight: 500;
+                    font-size: 15px;
+                    display: block;
+                    margin-bottom: 5px;
+                }
+                img{
+                    max-height: 100px;
+                    width: auto;
+                }
+            }
+            .head-title{
+                display: flex;
+                gap: 16px;
+                justify-content: center;
+                .p-card-title{
+                    padding-left: 0px;
+                }
+            }
+        }
+    section{
+        &.content{
+            padding-left: 23px;
+            padding-right: 23px;
+            padding-top: 20px;
+        }
+    }
+    .charts{
+        .box{
             height: 100%;
         }
     }
+}
