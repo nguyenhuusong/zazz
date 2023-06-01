@@ -655,7 +655,17 @@ export class NsHoSoNhanSuComponent implements OnInit {
       { label: 'Quan hệ lao động' },
       { label: 'Hồ sơ nhân sự' },
     ];
-    this.getEmpFilter();
+    this.route.queryParams
+    .subscribe((params: any) => {
+      const apiParam = params;
+      if (apiParam) {
+        this.query = { ...this.query, ...apiParam };
+        this.load();
+        this.getEmpFilter(false);
+      } else {
+        this.getEmpFilter(true);
+      }
+    })
 
   }
   employeeStatus = []
@@ -985,7 +995,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
     { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger  addNew', icon: 'pi pi-times' },
   ];
 
-  getEmpFilter() {
+  getEmpFilter(reload: boolean) {
     this.apiService.getEmpFilter()
      .pipe(takeUntil(this.unsubscribe$))
      .subscribe(results => {
@@ -995,7 +1005,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
         this.listViewsFilter = [...listViews];
         const params = getParamString(listViews)
         this.query = { ...this.query, ...params };
-        this.load();
+        if(reload) this.load();
         this.detailInfoFilter = results.data;
       }
     });

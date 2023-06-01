@@ -411,6 +411,10 @@ export class CsChamCongOverviewComponent implements OnInit {
   
     }
 
+    getDetailEmployye(item: any) {
+      this.router.navigate([`nhan-su/ho-so-nhan-su`], {queryParams: {filter: item.fullname}});
+    }
+
 }
 
 

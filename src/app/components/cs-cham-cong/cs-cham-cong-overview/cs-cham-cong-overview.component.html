@@ -44,7 +44,7 @@
                             </div>
                             <div *ngFor="let item  of  detailDashboardTimekeeping.overview; let i=index">
                                 <p-card header="{{item.name}}" [style]="{'height': '170px', 'wdith': 'auto'}" >
-                                    <p-knob (click)="navigateWithState(item)" [(ngModel)]="item.emp_num" [valueColor]="i === 0 ? 'CornflowerBlue' : i === 1 ? 'DarkOrange' : 'red'" [readonly]="true"></p-knob>
+                                    <p-knob (click)="navigateWithState(item)" [(ngModel)]="item.emp_num" [valueColor]="i === 1 ? 'CornflowerBlue' : i === 0 ? 'DarkOrange' : 'red'" [readonly]="true"></p-knob>
                                 </p-card>
                             </div>
                         </div>
@@ -79,7 +79,7 @@
                 <div class="box">
                 <h3>topTimeworks</h3>
                 <div class="members grid">
-                    <div class="item col-3" *ngFor="let item of detailDashboardTimekeeping.topTimeworks">
+                    <div class="item col-3" *ngFor="let item of detailDashboardTimekeeping.topTimeworks" (click)="getDetailEmployye(item)">
                         <p-avatar image="{{item.avatar_url ? item.avatar_url : 'https://placehold.co/64x64'}}" styleClass="mr-2" size="xlarge" shape="circle"></p-avatar>
                         <div class="content">
                             <h4>{{item.fullname}}</h4>
