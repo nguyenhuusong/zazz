@@ -54,9 +54,9 @@
                     <div class="box" style="height: 100%;display: flex;flex-direction: column;justify-content: space-around;">
                         <h3>empWorking</h3> 
                         <!-- <p-chart type="bar" [data]="dataChart" [options]="optionsChartPie"></p-chart> -->
-                        <div class="chart">
-                            <canvas  style="max-width: 180px; margin: auto" id="doughnut" *ngIf="dataChart?.datasets"></canvas>
-                            <div id="legend-doughnut" class="legend-default dou d-flex">
+                        <div class="chart d-flex gap12 middle">
+                            <canvas  style="max-width: 180px; max-height: 180px; margin: auto" id="doughnut" *ngIf="dataChart?.datasets"></canvas>
+                            <div id="legend-doughnut" class="legend-default dou column">
                                 <ul></ul>
                             </div>
                           </div>
