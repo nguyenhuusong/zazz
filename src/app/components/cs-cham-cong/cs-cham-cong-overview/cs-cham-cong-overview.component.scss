@@ -150,4 +150,29 @@
             height: 100%;
         }
     }
+
+    .members{
+        .item{
+            text-align: center;
+            h4{
+                line-height: 1;
+                margin-bottom: 3px;
+                font-size: 11px;
+                font-weight: 600;
+                text-transform: uppercase;
+            }
+            .content{
+                span{
+                    color: #212633;
+                    font-weight: 600;
+                }
+            }
+            .p-avatar{
+                img{
+                    object-fit: cover;
+                    object-position: center;
+                }
+            }
+        }
+    }
 }

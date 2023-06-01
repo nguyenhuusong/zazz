@@ -73,30 +73,35 @@
             </div>
             <div class="col-4">
                 <div class="box">
-                <h3>topLeaves</h3>
-                    <div class="item" *ngFor="let item of detailDashboardTimekeeping.topLeaves">
-                        <p-avatar image="{{item.avatar_url}}" styleClass="mr-2" size="xlarge" shape="circle"></p-avatar>
+                <h3>topTimeworks</h3>
+                <div class="members grid">
+                    <div class="item col-3" *ngFor="let item of detailDashboardTimekeeping.topTimeworks">
+                        <p-avatar image="{{item.avatar_url ? item.avatar_url : 'https://placehold.co/64x64'}}" styleClass="mr-2" size="xlarge" shape="circle"></p-avatar>
                         <div class="content">
-                            <label for="">{{item.fullname}} - {{item.code}}</label>
-                            <p for="">Leave {{item.num}}</p>
+                            <h4>{{item.fullname}}</h4>
+                            <p>Leave <span>{{item.num}}</span></p>
                         </div>
                     </div>
+                </div>
                     <!-- <p-chart type="bar" [data]="dataChartEmpPositionType" [options]="optionsHorizontal"></p-chart> -->
                 </div>
             </div>
             <div class="col-4">
                 <div class="box">
-                <h3>topTimeworks</h3>
-                    <div class="item" *ngFor="let item of detailDashboardTimekeeping.topLeaves">
-                        <p-avatar image="{{item.avatar_url}}" styleClass="mr-2" size="xlarge" shape="circle"></p-avatar>
+                <h3>topLeaves</h3>
+                <div class="members grid">
+                    <div class="item col-3" *ngFor="let item of detailDashboardTimekeeping.topLeaves">
+                        <p-avatar image="{{item.avatar_url ? item.avatar_url : 'https://placehold.co/64x64'}}" styleClass="mr-2" size="xlarge" shape="circle"></p-avatar>
                         <div class="content">
-                            <label for="">{{item.fullname}} - {{item.code}}</label>
-                            <p for="">Timework {{item.num}}</p>
+                            <h4>{{item.fullname}}</h4>
+                            <p>Leave <span>{{item.num}}</span></p>
                         </div>
                     </div>
+                </div>
                     <!-- <p-chart type="bar" [data]="dataChartEmpPositionType" [options]="optionsHorizontal"></p-chart> -->
                 </div>
             </div>
+         
          </div>
        
     </section>
