@@ -20,7 +20,7 @@ export interface DashboardTimekeeping {
     topLeaves: DBTopLeaves[];
     topEatings: DBTopLeaves[];
     agvleaveDays: DBOverview[];
-    agvLeaveMonths: DBOverview[];
+    agvLeaveMonths: DBLeaveMonths[];
     
 }
 
@@ -47,6 +47,13 @@ export interface DBEmpoyees {
     name: string;
     emp_num: number;
 }
+
+export interface DBLeaveMonths {
+    id: number;
+    name: string;
+    num: number;
+}
+
 
 export interface DBEmpWorking {
     cd: string;

@@ -54,8 +54,8 @@ export class CsChamCongOverviewComponent implements OnInit {
     console.log('colorRgb', colorRgb.toString())
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
-      { label: 'Nhân sự' },
-      { label: 'Tổng quan nhân sự' },
+      { label: 'Chấm công' },
+      { label: 'Tổng quan chấm công' },
     ];
     this.itemsToolOfGrid = [
       {
@@ -144,7 +144,7 @@ export class CsChamCongOverviewComponent implements OnInit {
       datasets: [
         {
           label: 'this.detailDashboardTimekeeping.empProcessing.map(d => d.name)',
-          data: this.detailDashboardTimekeeping.agvLeaveMonths.map(d => d.emp_num),
+          data: this.detailDashboardTimekeeping.agvLeaveMonths.map(d => d.num),
           backgroundColor: [
             'rgba(255, 159, 64, 0.2)',
             'rgba(75, 192, 192, 0.2)',
@@ -154,6 +154,12 @@ export class CsChamCongOverviewComponent implements OnInit {
             'rgba(255, 156, 48, 0.2)',
             'rgba(255, 156, 251, 0.2)',
             'rgba(106, 90, 205, 0.2)',
+            'rgba(255, 99, 71, 0.2)',
+            'rgba(120, 120, 120, 0.2)',
+            'rgba(234, 156, 120, 0.2)',
+            'rgba(255, 156, 59, 0.2)',
+            'rgba(42, 156, 59, 0.2)',
+            'rgba(42, 14, 59, 0.2)',
           ],
           borderColor: [
             'rgb(255, 159, 64)',
@@ -164,6 +170,12 @@ export class CsChamCongOverviewComponent implements OnInit {
             'rgb(255, 156, 48)',
             'rgb(255, 156, 251)',
             'rgb(106, 90, 205)',
+            'rgb(255, 99, 71)',
+            'rgb(120, 120, 120)',
+            'rgb(234, 156, 120)',
+            'rgb(255, 156, 59)',
+            'rgb(42, 156, 59)',
+            'rgb(42, 14, 59)',
           ],
           borderWidth: 1
         }
