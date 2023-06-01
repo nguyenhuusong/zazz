@@ -35,7 +35,7 @@ export class NghiKhongLuongComponent implements OnInit {
     private messageService: MessageService,
     private spinner: NgxSpinnerService,
     private changeDetector: ChangeDetectorRef,
-    
+
     public dialogService: DialogService,
     private router: Router) {
 
@@ -141,34 +141,34 @@ export class NghiKhongLuongComponent implements OnInit {
     // this.spinner.show();
     const queryParams = queryString.stringify(this.query);
     this.apiService.getLeaveLackPage(queryParams)
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(
-      (results: any) => {
-        this.listsData = results.data.dataList.data;
-        this.gridKey = results.data.dataList.gridKey;
-        if (this.query.offSet === 0) {
-          this.cols = results.data.gridflexs;
-          this.colsDetail = results.data.gridflexdetails ? results.data.gridflexdetails : [];
-        }
-        this.initGrid();
-        this.countRecord.totalRecord = results.data.dataList.recordsTotal;
-        this.countRecord.totalRecord = results.data.dataList.recordsTotal;
-        this.countRecord.currentRecordStart = results.data.dataList.recordsTotal === 0 ? this.query.offSet = 0 : this.query.offSet + 1;
-        if ((results.data.dataList.recordsTotal - this.query.offSet) > this.query.pageSize) {
-          this.countRecord.currentRecordEnd = this.query.offSet + Number(this.query.pageSize);
-        } else {
-          this.countRecord.currentRecordEnd = results.data.dataList.recordsTotal;
-          setTimeout(() => {
-            const noData = document.querySelector('.ag-overlay-no-rows-center');
-            if (noData) { noData.innerHTML = 'Không có kết quả phù hợp' }
-          }, 100);
-        }
-        this.spinner.hide();
-        this.FnEvent();
-      },
-      error => {
-        this.spinner.hide();
-      });
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        (results: any) => {
+          this.listsData = results.data.dataList.data;
+          this.gridKey = results.data.dataList.gridKey;
+          if (this.query.offSet === 0) {
+            this.cols = results.data.gridflexs;
+            this.colsDetail = results.data.gridflexdetails ? results.data.gridflexdetails : [];
+          }
+          this.initGrid();
+          this.countRecord.totalRecord = results.data.dataList.recordsTotal;
+          this.countRecord.totalRecord = results.data.dataList.recordsTotal;
+          this.countRecord.currentRecordStart = results.data.dataList.recordsTotal === 0 ? this.query.offSet = 0 : this.query.offSet + 1;
+          if ((results.data.dataList.recordsTotal - this.query.offSet) > this.query.pageSize) {
+            this.countRecord.currentRecordEnd = this.query.offSet + Number(this.query.pageSize);
+          } else {
+            this.countRecord.currentRecordEnd = results.data.dataList.recordsTotal;
+            setTimeout(() => {
+              const noData = document.querySelector('.ag-overlay-no-rows-center');
+              if (noData) { noData.innerHTML = 'Không có kết quả phù hợp' }
+            }, 100);
+          }
+          this.spinner.hide();
+          this.FnEvent();
+        },
+        error => {
+          this.spinner.hide();
+        });
   }
 
   showButtons(event: any) {
@@ -218,16 +218,16 @@ export class NghiKhongLuongComponent implements OnInit {
       accept: () => {
         const queryParams = queryString.stringify({ id: event.rowData.id });
         this.apiService.delLeaveLack(queryParams)
-        .pipe(takeUntil(this.unsubscribe$))
-        .subscribe((results: any) => {
-          if (results.status === 'success') {
-            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
-            this.load();
-            this.FnEvent();
-          } else {
-            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
-          }
-        });
+          .pipe(takeUntil(this.unsubscribe$))
+          .subscribe((results: any) => {
+            if (results.status === 'success') {
+              this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
+              this.load();
+              this.FnEvent();
+            } else {
+              this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+            }
+          });
       }
     });
   }
@@ -266,7 +266,17 @@ export class NghiKhongLuongComponent implements OnInit {
   }
   menuItemUtil = [];
   ngOnInit() {
-    this.getFilter();
+    this.route.queryParams
+      .subscribe((params: any) => {
+        const apiParam = params;
+        if (apiParam) {
+          this.query = { ...this.query, ...apiParam };
+          this.load();
+          this.getFilter(false);
+        } else {
+          this.getFilter(true);
+        }
+      })
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Chấm công' },
@@ -298,21 +308,21 @@ export class NghiKhongLuongComponent implements OnInit {
     this.query.pageSize = 1000000;
     const query = { ...this.query };
     const queryParams = queryString.stringify(query);
-      this.apiService.setLeaveLackExport(queryParams)
+    this.apiService.setLeaveLackExport(queryParams)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {
         if (results.type === 'application/json') {
           this.spinner.hide();
         } else {
           var blob = new Blob([results], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-          FileSaver.saveAs(blob, `Danh sách nghỉ không lương` +".xlsx");
+          FileSaver.saveAs(blob, `Danh sách nghỉ không lương` + ".xlsx");
           this.spinner.hide();
         }
       })
   }
 
   handleParams() {
-  
+
   };
 
   listViewsFilter = [];
@@ -323,20 +333,20 @@ export class NghiKhongLuongComponent implements OnInit {
     { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger  addNew', icon: 'pi pi-times' },
   ];
   //filter 
-  getFilter() {
+  getFilter(reload: boolean) {
     this.apiService.getFilter('/api/v2/leavelack/GetLeaveLackFilter')
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(results => {
-      if (results.status === 'success') {
-        const listViews = cloneDeep(results.data.group_fields);
-        this.cloneListViewsFilter = cloneDeep(listViews);
-        this.listViewsFilter = [...listViews];
-        const params = getParamString(listViews)
-        this.query = { ...this.query, ...params };
-        this.load();
-        this.detailInfoFilter = results.data;
-      }
-    });
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(results => {
+        if (results.status === 'success') {
+          const listViews = cloneDeep(results.data.group_fields);
+          this.cloneListViewsFilter = cloneDeep(listViews);
+          this.listViewsFilter = [...listViews];
+          const params = getParamString(listViews)
+          this.query = { ...this.query, ...params };
+          if(reload) this.load();
+          this.detailInfoFilter = results.data;
+        }
+      });
   }
 
   filterLoad(event) {
@@ -344,15 +354,15 @@ export class NghiKhongLuongComponent implements OnInit {
     this.load();
   }
 
-  close({event, datas}) {
-    if(event !== 'Close') {
+  close({ event, datas }) {
+    if (event !== 'Close') {
       const listViews = cloneDeep(this.cloneListViewsFilter);
       this.listViewsFilter = cloneDeep(listViews);
-      const params =  getParamString(listViews)
-      this.query = { ...this.query, ...params};
+      const params = getParamString(listViews)
+      this.query = { ...this.query, ...params };
       this.load();
-    }else {
-      this.listViewsFilter =  cloneDeep(datas);
+    } else {
+      this.listViewsFilter = cloneDeep(datas);
     }
   }
 
@@ -378,13 +388,13 @@ export class NghiKhongLuongComponent implements OnInit {
     //   id: null,
     //   empId: event.value
     // }
-    if(event.value) {
+    if (event.value) {
       this.id = ''
       this.isDetail = true;
       this.isSearchEmp = false;
-      this.empId =  event.value;
+      this.empId = event.value;
       // this.router.navigate(['/chinh-sach/nghi-khong-luong/them-moi-nghi-khong-luong'], { queryParams: params });
-    }else{
+    } else {
       this.isSearchEmp = false;
     }
   }
@@ -397,7 +407,7 @@ export class NghiKhongLuongComponent implements OnInit {
   importFileExel() {
     this.router.navigate(['/chinh-sach/nghi-khong-luong/import-nghi-khong-luong']);
   }
-  
+
 
 }
 

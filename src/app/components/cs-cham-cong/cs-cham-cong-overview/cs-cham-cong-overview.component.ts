@@ -403,9 +403,8 @@ export class CsChamCongOverviewComponent implements OnInit {
     }
 
     navigateWithState(item: any) {
-      console.log(JSON.parse(item.apiParam))
-      debugger
-      this.router.navigate(['/nhan-su/dang-ky-lich-lam-viec'], { queryParams: { apiParam: item.apiParam } });
+    const state =  JSON.parse('{"' + item.apiParam.replace(/&/g, '","').replace(/=/g,'":"') + '"}', (key, value) => { return key===""?value:decodeURIComponent(value) })
+      this.router.navigate([`/nhan-su/dang-ky-lich-lam-viec`], {queryParams: {... state}});
     }
 
 }

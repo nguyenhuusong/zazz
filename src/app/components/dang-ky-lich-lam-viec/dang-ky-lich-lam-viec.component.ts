@@ -467,13 +467,13 @@ export class DangKyLichLamViecComponent implements OnInit {
     ];
     const state = this.activatedRoute.queryParams
     .subscribe((params: any) => {
-      console.log(params)
-      const apiParam = params.apiParam;
-      if(apiParam !== "") {
-        
-        this.getEmpWorkingFilter();
+      const apiParam = params;
+      if(apiParam) {
+        this.query = {...this.query, ...apiParam};
+        this.load();
+        this.getEmpWorkingFilter(false);
       }else {
-        this.getEmpWorkingFilter();
+        this.getEmpWorkingFilter(true);
       }
     })
     this.getWorkTime();
@@ -641,7 +641,7 @@ export class DangKyLichLamViecComponent implements OnInit {
     { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger ml-2  addNew', icon: 'pi pi-times' },
   ];
 
-  getEmpWorkingFilter() {
+  getEmpWorkingFilter(reload: boolean = false) {
     this.apiService.getEmpWorkingFilter()
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {
@@ -651,7 +651,7 @@ export class DangKyLichLamViecComponent implements OnInit {
           this.listViewsFilter = [...listViews];
           const params = getParamString(listViews)
           this.query = { ...this.query, ...params };
-          this.load();
+          if(reload) this.load();
           this.detailInfoFilter = results.data;
         }
       });
