@@ -68,6 +68,16 @@ ul{
             }
         }
     }
+    &.column{
+        margin-top: 0px;
+        li{
+            margin-bottom: 0px !important;
+            margin-right: 0px;
+            span{
+                font-size: 11px;
+            }
+        }
+    }
 }
 
 // breadcrumb
@@ -1853,3 +1863,8 @@ app-import-excel
     }
 }
 
+.chart{
+    &.column{
+
+    }
+}
