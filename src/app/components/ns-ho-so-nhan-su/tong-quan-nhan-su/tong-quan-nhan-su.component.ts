@@ -1,3 +1,4 @@
+
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -7,16 +8,16 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { Subject, takeUntil } from 'rxjs';
 import queryString from 'query-string';
-import { DashboardEmployee, DashboardTimekeeping } from 'src/app/types/dashboard.type';
+import { DashboardEmployee } from 'src/app/types/dashboard.type';
 import { Chart } from 'chart.js';
 const MAX_SIZE = 100000000;
 
 @Component({
-  selector: 'app-cs-cham-cong-overview',
-  templateUrl: './cs-cham-cong-overview.component.html',
-  styleUrls: ['./cs-cham-cong-overview.component.scss']
+  selector: 'app-tong-quan-nhan-su',
+  templateUrl: './tong-quan-nhan-su.component.html',
+  styleUrls: ['./tong-quan-nhan-su.component.scss']
 })
-export class CsChamCongOverviewComponent implements OnInit {
+export class TongQuanNhanSuComponent implements OnInit {
   MENUACTIONROLEAPI = MENUACTIONROLEAPI;
   ACTIONS = ACTIONS
   items = []
@@ -54,8 +55,8 @@ export class CsChamCongOverviewComponent implements OnInit {
     console.log('colorRgb', colorRgb.toString())
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
-      { label: 'Chấm công' },
-      { label: 'Tổng quan chấm công' },
+      { label: 'Nhân sự' },
+      { label: 'Tổng quan nhân sự' },
     ];
     this.itemsToolOfGrid = [
       {
@@ -68,16 +69,17 @@ export class CsChamCongOverviewComponent implements OnInit {
       },
     ]
 
-    this.getDashboardTimekeeping()
+    this.getDashboardEmployee()
   }
-  detailDashboardTimekeeping: DashboardTimekeeping;
-  getDashboardTimekeeping() {
+  detailDashboardEmployee: DashboardEmployee;
+  getDashboardEmployee() {
     this.spinner.show();
-    this.apiService.getDashboardTimekeeping({ months: 0, years: 0 })
+    this.apiService.getDashboardEmployee({ months: 0, years: 0 })
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         (results: any) => {
-          this.detailDashboardTimekeeping = results.data;
+          console.log(results.data)
+          this.detailDashboardEmployee = results.data;
           this.onInitChart()
           this.spinner.hide();
           if(results.data.emp_male && results.data.emp_total) {
@@ -92,7 +94,7 @@ export class CsChamCongOverviewComponent implements OnInit {
         });
   }
   dataChart: any;
-  dataChartEmpLeaveMonths: any;
+  dataChartEmpProcessing: any;
   dataChartEmpPositionType: any;
   dataChartEmpPosition: any;
   dataChartEmpContractType: any;
@@ -107,11 +109,11 @@ export class CsChamCongOverviewComponent implements OnInit {
 
     this.dataChart = {
       
-      labels: this.detailDashboardTimekeeping.leaveReasons.map(d => d.name),
+      labels: this.detailDashboardEmployee.empWorking.map(d => d.name),
       datasets: [
         {
           label: 'Công việc',
-          data: this.detailDashboardTimekeeping.leaveReasons.map(d => d.emp_num),
+          data: this.detailDashboardEmployee.empWorking.map(d => d.emp_num),
           backgroundColor: [
             'rgba(255, 159, 64, 0.2)',
             'rgba(75, 192, 192, 0.2)',
@@ -139,12 +141,67 @@ export class CsChamCongOverviewComponent implements OnInit {
       ]
     };
 
-    this.dataChartEmpLeaveMonths = {
-      labels: this.detailDashboardTimekeeping.agvLeaveMonths.map(d => d.name),
+    this.dataChartEmpProcessing = {
+      labels: this.detailDashboardEmployee.empProcessing.map(d => d.name),
       datasets: [
         {
-          label: 'this.detailDashboardTimekeeping.empProcessing.map(d => d.name)',
-          data: this.detailDashboardTimekeeping.agvLeaveMonths.map(d => d.num),
+          label: 'this.detailDashboardEmployee.empProcessing.map(d => d.name)',
+          data: this.detailDashboardEmployee.empProcessing.map(d => d.emp_num),
+          backgroundColor: [
+            'rgba(255, 159, 64, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(60, 179, 113, 0.2)',
+            'rgba(255, 156, 48, 0.2)',
+            'rgba(255, 156, 251, 0.2)',
+            'rgba(106, 90, 205, 0.2)',
+          ],
+          borderColor: [
+            'rgb(255, 159, 64)',
+            'rgb(75, 192, 192)',
+            'rgb(54, 162, 235)',
+            'rgb(153, 102, 255)',
+            'rgb(60, 179, 113)',
+            'rgb(255, 156, 48)',
+            'rgb(255, 156, 251)',
+            'rgb(106, 90, 205)',
+          ],
+          borderWidth: 1
+        }
+      ]
+    };
+
+    this.dataChartEmpPositionType = {
+      labels: this.detailDashboardEmployee.empPositionType.map(d => d.name),
+      datasets: [
+        {
+          label: 'Vị trí',
+          data: this.detailDashboardEmployee.empPositionType.map(d => d.emp_num),
+          backgroundColor: [
+            'rgba(255, 159, 64, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(60, 179, 113, 0.2)',
+          ],
+          borderColor: [
+            'rgb(255, 159, 64)',
+            'rgb(75, 192, 192)',
+            'rgb(54, 162, 235)',
+            'rgb(153, 102, 255)',
+            'rgb(60, 179, 113)',
+          ],
+          borderWidth: 1
+        }
+      ]
+    };
+    this.dataChartEmpPosition = {
+      labels: this.detailDashboardEmployee.empPosition.map(d => d.name),
+      datasets: [
+        {
+          label: 'Vị trí',
+          data: this.detailDashboardEmployee.empPosition.map(d => d.emp_num),
           backgroundColor: [
             'rgba(255, 159, 64, 0.2)',
             'rgba(75, 192, 192, 0.2)',
@@ -176,6 +233,28 @@ export class CsChamCongOverviewComponent implements OnInit {
             'rgb(255, 156, 59)',
             'rgb(42, 156, 59)',
             'rgb(42, 14, 59)',
+          ],
+          borderWidth: 1
+        }
+      ]
+    };
+    this.dataChartEmpContractType = {
+      labels: this.detailDashboardEmployee.empContractType.map(d => d.name),
+      datasets: [
+        {
+          label: 'Hợp đồng',
+          data: this.detailDashboardEmployee.empContractType.map(d => d.emp_num),
+          backgroundColor: [
+            'rgba(255, 159, 64, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+          ],
+          borderColor: [
+            'rgb(255, 159, 64)',
+            'rgb(75, 192, 192)',
+            'rgb(54, 162, 235)',
+            'rgb(153, 102, 255)',
           ],
           borderWidth: 1
         }
@@ -409,10 +488,6 @@ export class CsChamCongOverviewComponent implements OnInit {
         this.router.navigate([`${linkRouter.url}`], {queryParams: {... state}});
       }
   
-    }
-
-    getDetailEmployye(item: any) {
-      this.router.navigate([`nhan-su/ho-so-nhan-su`], {queryParams: {filter: item.fullname}});
     }
 
 }

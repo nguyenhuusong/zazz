@@ -22,7 +22,8 @@
     <section class="pb-0">
         <div class="section-box" *ngIf="listViewsReport.length > 0">
             <app-form-filter 
-                
+            *ngIf="listViewsReport.length > 0"
+                [styleClass]="'right-button'"
                 [listFields]="listViewsReport" 
                 [detailInfoFilter]="detailInfoReport" 
                 [buttonsFilters] ="optionsButonReport" 

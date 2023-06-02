@@ -332,7 +332,7 @@ export class ThietBiWifiChamCongComponent implements OnInit {
   ];
   //filter 
   getFilter() {
-    this.apiService.getFilter('/api/v2/empother/GetEmpDeviceFilter')
+    this.apiService.getFilter('/api/v2/working/GetEmpDeviceFilter')
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(results => {
       if (results.status === 'success') {

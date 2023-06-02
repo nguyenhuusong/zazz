@@ -6,6 +6,8 @@ import queryString from 'query-string';
 import { cloneDeep } from 'lodash';
 import { AgGridFn } from 'src/app/common/function-common/common';
 import { fromEvent, Subject, takeUntil } from 'rxjs';
+import { Router } from '@angular/router';
+import * as FileSaver from 'file-saver';
 @Component({
   selector: 'app-tab-nhan-vien',
   templateUrl: './tab-nhan-vien.component.html',
@@ -22,6 +24,7 @@ export class TabNhanVienComponent implements OnInit {
     private apiService: ApiHrmService,
     private spinner: NgxSpinnerService,
     private changeDetector: ChangeDetectorRef,
+    private router: Router,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
   ) { }
@@ -141,7 +144,9 @@ export class TabNhanVienComponent implements OnInit {
       }
     }
   }
-
+  status = [];
+  selectedStatus = null;
+  detailpage = null;
   getSalaryEmployeePage() {
     this.spinner.show();
     this.columnDefs = [];
@@ -151,11 +156,20 @@ export class TabNhanVienComponent implements OnInit {
     .subscribe(
       (results: any) => {
         this.listsData = results.data.dataList;
+        this.detailpage = results.data;
         this.gridKey= results.data.gridKey;
         if (this.query.offSet === 0) {
           this.gridflexs = results.data.gridflexs;
         }
         this.initGrid();
+        this.status = results.data.flowStatuses || [];
+        if (results.data.status) {
+          this.status.push(results.data.status);
+        }
+        this.selectedStatus = results.data.status;
+        if (results.data.actions) {
+          this.initButton();
+        }
         this.countRecord.totalRecord = results.data.recordsTotal;
         this.countRecord.totalRecord = results.data.recordsTotal;
         this.countRecord.currentRecordStart = results.data.recordsTotal === 0 ? this.query.offSet = 0 :  this.query.offSet + 1;
@@ -169,6 +183,93 @@ export class TabNhanVienComponent implements OnInit {
           }, 100);
         }
         this.spinner.hide();
+      },
+      error => {
+        this.spinner.hide();
+      });
+  }
+
+  menuActions = []
+  initButton() {
+    this.menuActions = this.detailpage.actions.map((item, index) => {
+      return {
+        label: item.name,
+        value: item.code,
+        styleClass: index === 0 ? 'hidden' : '',
+        icon: item.icon,
+        command: () => {
+          this.callActions(item.code);
+        }
+      }
+    });
+  }
+
+  onBack() {
+    this.router.navigate(['/chinh-sach/tien-luong'])
+  }
+
+
+  UpdateStatus() {
+    // this.getSalaryRecordInfo(this.selectedStatus.value);
+  }
+
+  callActions(code) {
+    this[code]();
+  }
+
+  actConfirm() {
+    this.confirmationService.confirm({
+      message: 'Bạn có chắc chắn muốn thực hiện hành động này ?',
+      accept: () => {
+        this.apiService.setSalaryEmployeeConfirm({ recordId: this.recordId })
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(results => {
+          if (results.status === 'success') {
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa công ty thành công' });
+            this.getSalaryEmployeePage();
+          } else {
+            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+          }
+        });
+      }
+    });
+  }
+  
+  actReDo() {
+    // /api/v1/salary/SetSalaryEmployeeRedo
+    this.confirmationService.confirm({
+      message: 'Bạn có chắc chắn muốn thực hiện hành động này ?',
+      accept: () => {
+        this.apiService.setSalaryEmployeeRedo({ recordId: this.recordId })
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(results => {
+          if (results.status === 'success') {
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa công ty thành công' });
+            this.getSalaryEmployeePage();
+          } else {
+            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+          }
+        });
+      }
+    });
+  }
+
+  actExport() {
+    this.spinner.show();
+    const query = {
+      recordId: this.recordId
+    }
+    this.apiService.setSalaryEmployeeExport(query)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(
+      (results: any) => {
+        if (results.type === 'application/json') {
+          this.spinner.hide();
+        } else if (results.type === 'application/octet-stream') {
+          var blob = new Blob([results], { type: 'application/msword' });
+          FileSaver.saveAs(blob, `Danh sách nhân viên` + ".xlsx");
+          this.spinner.hide();
+        }
       },
       error => {
         this.spinner.hide();

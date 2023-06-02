@@ -19,6 +19,7 @@ const queryString = require('query-string');
 })
 export class FormFilterComponent implements OnInit, OnChanges {
   @Input() position = 'absolute';
+  @Input() styleClass = '';
   @Input() styleButton = {
     right: '67px',
     'z-index': 1,

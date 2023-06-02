@@ -15,7 +15,7 @@ import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { ApiService } from 'src/app/services/api.service';
 import { DialogService } from 'primeng/dynamicdialog';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
-import { Subject, takeUntil } from 'rxjs';
+import { map, Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-dang-ky-lich-lam-viec',
   templateUrl: './dang-ky-lich-lam-viec.component.html',
@@ -33,7 +33,7 @@ export class DangKyLichLamViecComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private apiService: ApiHrmService,
     private apiServiceCore: ApiService,
-    private route: ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
     private dialogService: DialogService,
     private changeDetector: ChangeDetectorRef,
     private confirmationService: ConfirmationService,
@@ -465,7 +465,17 @@ export class DangKyLichLamViecComponent implements OnInit {
       { label: 'Quan hệ lao động' },
       { label: 'Danh sách đăng ký lịch làm việc' },
     ];
-    this.getEmpWorkingFilter();
+    const state = this.activatedRoute.queryParams
+    .subscribe((params: any) => {
+      const apiParam = params;
+      if(apiParam) {
+        this.query = {...this.query, ...apiParam};
+        this.load();
+        this.getEmpWorkingFilter(false);
+      }else {
+        this.getEmpWorkingFilter(true);
+      }
+    })
     this.getWorkTime();
   }
 
@@ -631,7 +641,7 @@ export class DangKyLichLamViecComponent implements OnInit {
     { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger ml-2  addNew', icon: 'pi pi-times' },
   ];
 
-  getEmpWorkingFilter() {
+  getEmpWorkingFilter(reload: boolean = false) {
     this.apiService.getEmpWorkingFilter()
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {
@@ -641,7 +651,7 @@ export class DangKyLichLamViecComponent implements OnInit {
           this.listViewsFilter = [...listViews];
           const params = getParamString(listViews)
           this.query = { ...this.query, ...params };
-          this.load();
+          if(reload) this.load();
           this.detailInfoFilter = results.data;
         }
       });

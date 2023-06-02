@@ -85,14 +85,12 @@
                     color: #0a2342;
                     .per{
                         text-align: left;
-                        white-space: pre
                     }
                 }
                 .female{
                     color: #c14c5f;
                     .per{
                         text-align: right;
-                        white-space: pre
                     }
                 }
                 .bar{
@@ -148,31 +146,6 @@
     .charts{
         .box{
             height: 100%;
-        }
-    }
-
-    .members{
-        .item{
-            text-align: center;
-            h4{
-                line-height: 1;
-                margin-bottom: 3px;
-                font-size: 11px;
-                font-weight: 600;
-                text-transform: uppercase;
-            }
-            .content{
-                span{
-                    color: #212633;
-                    font-weight: 600;
-                }
-            }
-            .p-avatar{
-                img{
-                    object-fit: cover;
-                    object-position: center;
-                }
-            }
         }
     }
     @media screen and (min-width: 1200px) and (max-width: 1700px) {

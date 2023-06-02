@@ -11,7 +11,7 @@
 
 
 
-    <section class="content" *ngIf="detailDashboardTimekeeping">
+    <section class="content" *ngIf="detailDashboardEmployee">
         <div class="mb-3">
             <div class="grid">
                 <div class="col-12 pb-0 sm:col-12 md:col-12 lg:col-12 xl:col-10">
@@ -25,16 +25,16 @@
                                             Tổng nhân viên: 
                                         </h3>
                                         <span class="number">
-                                            {{ detailDashboardTimekeeping.emp_total }}
+                                            {{ detailDashboardEmployee.emp_total }}
                                         </span>
                                     </div>
                                     <div class="d-flex gap12 humans">
                                         <div class="human male">
-                                            <span class="per" >{{ detailDashboardTimekeeping.emp_female }} NV</span>
+                                            <span class="per" >{{ perMale }} %</span>
                                             <img src="../../../../assets/images/male.png">
                                         </div>
                                         <div class="human female">
-                                            <span class="per">{{ detailDashboardTimekeeping.emp_male }} NV</span>
+                                            <span class="per">{{ perFeMale }} %</span>
                                             <img src="../../../../assets/images/fe-male.png">
                                         </div>
                                         <span class="bar male-bar" [style.width]="perMale + 'px'"></span>
@@ -42,9 +42,9 @@
                                     </div>
                                 </p-card>
                             </div>
-                            <div class="wrap-knod" *ngFor="let item  of  detailDashboardTimekeeping.overview; let i=index">
-                                <p-card header="{{item.name}}" [style]="{'height': '170px', 'width': 'auto'}" >
-                                    <p-knob (click)="navigateWithState(item)" [max]="800" [(ngModel)]="item.emp_num" [valueColor]="i === 1 ? 'CornflowerBlue' : i === 0 ? 'DarkOrange' : 'red'" [readonly]="true"></p-knob>
+                            <div class="wrap-knod" *ngFor="let item  of  detailDashboardEmployee.empoyees; let i=index">
+                                <p-card header="{{item.name}}" [style]="{'height': '170px', 'width': 'auto'}">
+                                    <p-knob (click)="navigateWithState(item)" [max]="800" [(ngModel)]="item.emp_num" [valueColor]="i === 0 ? 'DarkOrange' : 'red'" [readonly]="true"></p-knob>
                                 </p-card>
                             </div>
                         </div>
@@ -52,10 +52,10 @@
                 </div>
                 <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-2 pb-0">
                     <div class="box" style="height: 100%;display: flex;flex-direction: column;justify-content: space-around;">
-                        <h3>Leave Reasons</h3> 
+                        <h3>empWorking</h3> 
                         <!-- <p-chart type="bar" [data]="dataChart" [options]="optionsChartPie"></p-chart> -->
                         <div class="chart d-flex gap12 middle">
-                            <canvas  style="max-width: 160px; max-height: 160px; " id="doughnut" *ngIf="dataChart?.datasets"></canvas>
+                            <canvas  style="max-width: 160px; max-height: 160px;" id="doughnut" *ngIf="dataChart?.datasets"></canvas>
                             <div id="legend-doughnut" class="legend-default dou column">
                                 <ul></ul>
                             </div>
@@ -66,48 +66,36 @@
         </div>
         <div class="grid charts">
             <div class="col-4">
-                <div class="box" style="
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-            ">
-                    <h3>agvLeaveMonths</h3>
-                    <p-chart type="bar" [data]="dataChartEmpLeaveMonths" [options]="optionsChart"></p-chart>
+                <div class="box">
+                    <h3>EmpProcessing</h3>
+                    <p-chart type="bar" [data]="dataChartEmpProcessing" [options]="optionsHorizontal"></p-chart>
                 </div>
             </div>
             <div class="col-4">
                 <div class="box">
-                <h3>topTimeworks</h3>
-                <div class="members grid">
-                    <div class="item col-3" *ngFor="let item of detailDashboardTimekeeping.topTimeworks" (click)="getDetailEmployye(item)">
-                        <p-avatar image="{{item.avatar_url ? item.avatar_url : 'https://placehold.co/64x64'}}" styleClass="mr-2" size="xlarge" shape="circle"></p-avatar>
-                        <div class="content">
-                            <h4>{{item.fullname}}</h4>
-                            <p>Works <span>{{item.num}}</span></p>
-                        </div>
-                    </div>
-                </div>
-                    <!-- <p-chart type="bar" [data]="dataChartEmpPositionType" [options]="optionsHorizontal"></p-chart> -->
+                <h3>EmpPositionType</h3>
+                    <p-chart type="bar" [data]="dataChartEmpPositionType" [options]="optionsHorizontal"></p-chart>
                 </div>
             </div>
             <div class="col-4">
                 <div class="box">
-                <h3>topLeaves</h3>
-                <div class="members grid">
-                    <div class="item col-3" *ngFor="let item of detailDashboardTimekeeping.topLeaves">
-                        <p-avatar image="{{item.avatar_url ? item.avatar_url : 'https://placehold.co/64x64'}}" styleClass="mr-2" size="xlarge" shape="circle"></p-avatar>
-                        <div class="content">
-                            <h4>{{item.fullname}}</h4>
-                            <p>Leave <span>{{item.num}}</span></p>
-                        </div>
+                  <h3>EmpContractType</h3>
+                    <p-chart type="bar" [data]="dataChartEmpContractType" [options]="optionsHorizontal"></p-chart>
                     </div>
-                </div>
-                    <!-- <p-chart type="bar" [data]="dataChartEmpPositionType" [options]="optionsHorizontal"></p-chart> -->
-                </div>
             </div>
-         
          </div>
-       
+         <div class="grid charts" style="
+         margin-top: 0px;
+     ">
+            <div class="col-12">
+                <div class="box">
+                 <h3>EmpPosition</h3>
+                    <div style="max-width: 78%; margin: auto">
+                        <p-chart type="bar" [data]="dataChartEmpPosition" [options]="optionsChart"></p-chart>
+                    </div>
+               </div>
+            </div>
+         </div>
     </section>
 </div>
 

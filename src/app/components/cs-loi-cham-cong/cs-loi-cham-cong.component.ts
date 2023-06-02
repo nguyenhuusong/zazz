@@ -1,42 +1,43 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewChecked, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import queryString from 'query-string';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { ApiService } from 'src/app/services/api.service';
-import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { CustomTooltipComponent } from 'src/app/common/ag-component/customtooltip.component';
 import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
 import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.component';
 import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 
+const MAX_SIZE = 100000000;
 import { cloneDeep } from 'lodash';
-import { DialogService } from 'primeng/dynamicdialog';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
+import { DialogService } from 'primeng/dynamicdialog';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
 import { fromEvent, Subject, takeUntil } from 'rxjs';
-import * as FileSaver from 'file-saver';
+
 @Component({
-  selector: 'app-nghi-khong-luong',
-  templateUrl: './nghi-khong-luong.component.html',
-  styleUrls: ['./nghi-khong-luong.component.scss']
+  selector: 'app-cs-loi-cham-cong',
+  templateUrl: './cs-loi-cham-cong.component.html',
+  styleUrls: ['./cs-loi-cham-cong.component.scss']
 })
-export class NghiKhongLuongComponent implements OnInit {
+export class CsLoiChamCongComponent implements OnInit, AfterViewChecked {
+
+  listsData: any[] = [];
+  items = []
   MENUACTIONROLEAPI = MENUACTIONROLEAPI;
   ACTIONS = ACTIONS
 
-  dataContractTypes: any;
   constructor(
     private apiService: ApiHrmService,
     private route: ActivatedRoute,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private spinner: NgxSpinnerService,
+    private dialogService: DialogService,
     private changeDetector: ChangeDetectorRef,
 
-    public dialogService: DialogService,
     private router: Router) {
 
     this.defaultColDef = {
@@ -54,20 +55,18 @@ export class NghiKhongLuongComponent implements OnInit {
       avatarRendererFull: AvatarFullComponent,
     };
   }
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
   pagingComponent = {
     total: 0
   }
-
-  titleForm = {
-    label: 'Thêm mới tài khoản',
-    value: 'Add'
-  }
-
-  public modules: Module[] = AllModules;
   public agGridFn = AgGridFn;
   cols: any[];
   colsDetail: any[];
-  items = [];
   columnDefs = [];
   detailRowHeight;
   defaultColDef;
@@ -94,14 +93,13 @@ export class NghiKhongLuongComponent implements OnInit {
     currentRecordStart: 0,
     currentRecordEnd: 0
   }
+  loading = false;
+  listVacancy = []
+  companies = []
 
-  cancel() {
-    this.query = {
-      filter: '',
-      offSet: 0,
-      pageSize: 20,
-    }
-    this.load();
+  onGridReady(params) {
+    this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
   }
 
   loadjs = 0;
@@ -123,24 +121,27 @@ export class NghiKhongLuongComponent implements OnInit {
     }
   }
 
-  listsData = [];
+  cancel() {
+    this.query = {
+      filter: '',
+      offSet: 0,
+      pageSize: 20,
+    }
+    this.load();
+  }
+
   displaySetting = false;
   gridKey = ''
   cauhinh() {
     this.displaySetting = true;
   }
 
-  private readonly unsubscribe$: Subject<void> = new Subject();
-  ngOnDestroy() {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
-  }
-
   load() {
     this.columnDefs = []
     // this.spinner.show();
-    const queryParams = queryString.stringify(this.query);
-    this.apiService.getLeaveLackPage(queryParams)
+    const params: any = { ...this.query };
+    const queryParams = queryString.stringify(params);
+    this.apiService.getTimekeepingFailPage(queryParams)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         (results: any) => {
@@ -174,23 +175,38 @@ export class NghiKhongLuongComponent implements OnInit {
   showButtons(event: any) {
     return {
       buttons: [
-        {
-          onClick: this.editRow.bind(this),
-          label: 'Xem',
-          icon: 'fa fa-eye',
-          class: 'btn-primary mr5',
-          // hide: CheckHideAction(MENUACTIONROLEAPI.GetContractTypePage.url, ACTIONS.VIEW)
-        },
-        {
-          onClick: this.delRow.bind(this),
-          label: 'Xóa',
-          icon: 'pi pi-trash',
-          class: 'btn-primary mr5',
-          // hide: CheckHideAction(MENUACTIONROLEAPI.GetContractTypePage.url, ACTIONS.DELETE)
-        },
-
+        // {
+        //   onClick: this.editRow.bind(this),
+        //   label: 'Xem chi tiết',
+        //   icon: 'fa fa-eye',
+        //   class: 'btn-primary mr5',
+        //   // hide: CheckHideAction(MENUACTIONROLEAPI.GetMaternityPage.url, ACTIONS.VIEW)
+        // },
+        // {
+        //   onClick: this.delRow.bind(this),
+        //   label: 'Xóa ',
+        //   icon: 'pi pi-trash',
+        //   class: 'btn-primary mr5',
+        //   hide: CheckHideAction(MENUACTIONROLEAPI.GetMaternityPage.url, ACTIONS.DELETE)
+        // },
       ]
     };
+  }
+
+  ngAfterViewInit(): void {
+    this.FnEvent();
+  }
+
+  FnEvent() {
+    setTimeout(() => {
+      var dragTarget = document.getElementById(this.gridKey);
+      if (dragTarget) {
+        const click$ = fromEvent(dragTarget, 'click');
+        click$.subscribe(event => {
+          this.addThaiSan()
+        });
+      }
+    }, 300);
   }
 
   initGrid() {
@@ -202,7 +218,7 @@ export class NghiKhongLuongComponent implements OnInit {
             `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
         },
         filter: '',
-        width: 100,
+        width: 70,
         pinned: 'right',
         cellRenderer: 'buttonAgGridComponent',
         cellClass: ['border-right', 'no-auto'],
@@ -210,18 +226,65 @@ export class NghiKhongLuongComponent implements OnInit {
         checkboxSelection: false,
         field: 'checkbox'
       }]
+
+    this.detailCellRendererParams = {
+      detailGridOptions: {
+        frameworkComponents: {},
+        getRowHeight: (params) => {
+          return 40;
+        },
+        columnDefs: [
+          ...AgGridFn(this.colsDetail),
+        ],
+
+        enableCellTextSelection: true,
+        onFirstDataRendered(params) {
+          let allColumnIds: any = [];
+          params.columnApi.getAllColumns()
+            .forEach((column: any) => {
+              if (column.colDef.cellClass.indexOf('auto') < 0) {
+                allColumnIds.push(column)
+              } else {
+                column.colDef.suppressSizeToFit = true;
+                allColumnIds.push(column)
+              }
+            });
+          params.api.sizeColumnsToFit(allColumnIds);
+        },
+      },
+      getDetailRowData(params) {
+        params.successCallback(params.data.Owns);
+      },
+      excelStyles: [
+        {
+          id: 'stringType',
+          dataType: 'string'
+        }
+      ],
+      template: function (params) {
+        var personName = params.data.theme;
+        return (
+          '<div style="height: 100%; background-color: #EDF6FF; padding: 20px; box-sizing: border-box;">' +
+          `  <div style="height: 10%; padding: 2px; font-weight: bold;">###### Danh sách (${params.data.Owns.length}) : [` +
+          personName + ']' +
+          '</div>' +
+          '  <div ref="eDetailGrid" style="height: 90%;"></div>' +
+          '</div>'
+        );
+      },
+    };
   }
 
   delRow(event) {
     this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn xóa bản ghi này?',
+      message: 'Bạn có chắc chắn muốn thực hiện xóa bản ghi này?',
       accept: () => {
-        const queryParams = queryString.stringify({ id: event.rowData.id });
-        this.apiService.delLeaveLack(queryParams)
+        const queryParams = queryString.stringify({ maternityId: event.rowData.maternityId });
+        this.apiService.delMaternityInfo(queryParams)
           .pipe(takeUntil(this.unsubscribe$))
-          .subscribe((results: any) => {
+          .subscribe(results => {
             if (results.status === 'success') {
-              this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
+              this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa tuyển dụng thành công' });
               this.load();
               this.FnEvent();
             } else {
@@ -231,12 +294,12 @@ export class NghiKhongLuongComponent implements OnInit {
       }
     });
   }
-  isDetail = false;
-  id = '';
-  empId = '';
+
   editRow({ rowData }) {
-    this.id = rowData.id
-    this.isDetail = true;
+    const params = {
+      maternityId: rowData.maternityId
+    }
+    this.router.navigate(['/nhan-su/thai-san/chi-tiet-thai-san'], { queryParams: params });
   }
 
   onCellClicked(event) {
@@ -245,96 +308,63 @@ export class NghiKhongLuongComponent implements OnInit {
     }
   }
 
-
-  addHopDong() {
+  isSearchEmp = false;
+  addThaiSan() {
     this.isSearchEmp = true;
+
+    // const params = {
+    //   maternityId: null
+    // }
+    // this.router.navigate(['/nhan-su/thai-san/them-moi-thai-san'], { queryParams: params });
   }
 
   find() {
     this.load();
+    this.FnEvent();
   }
 
   changePageSize() {
     this.load();
+    this.FnEvent();
   }
 
-  paginate(event) {
+  paginate(event: any) {
     this.query.offSet = event.first;
     this.first = event.first;
-    this.query.pageSize = event.rows;
-    this.load();
+    this.query.pageSize = event.rows === 4 ? 100000000 : event.rows;
+    this.find();
   }
-  menuItemUtil = [];
+
   ngOnInit() {
+    this.items = [
+      { label: 'Trang chủ', routerLink: '/home' },
+      { label: 'Chấm công' },
+      { label: 'Lỗi chấm công' },
+    ];
     this.route.queryParams
       .subscribe((params: any) => {
         const apiParam = params;
         if (apiParam) {
           this.query = { ...this.query, ...apiParam };
           this.load();
-          this.getFilter(false);
+          this.getEmpFilter(false);
         } else {
-          this.getFilter(true);
+          this.getEmpFilter(true);
         }
       })
-    this.items = [
-      { label: 'Trang chủ', routerLink: '/home' },
-      { label: 'Chấm công' },
-      { label: 'Danh sách nghỉ không lương' },
-    ];
-    this.menuItemUtil = [
-      {
-        label: 'Import',
-        icon: 'pi pi-upload',
-        command: () => {
-          this.importFileExel();
-        }
-      },
-      {
-        label: 'Export',
-        code: 'export',
-        icon: 'pi pi-download',
-        command: () => {
-          this.exportData();
-        }
-      },
-    ]
-    // this.handleParams();
+
   }
-
-
-  exportData() {
-    this.spinner.show();
-    this.query.pageSize = 1000000;
-    const query = { ...this.query };
-    const queryParams = queryString.stringify(query);
-    this.apiService.setLeaveLackExport(queryParams)
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(results => {
-        if (results.type === 'application/json') {
-          this.spinner.hide();
-        } else {
-          var blob = new Blob([results], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-          FileSaver.saveAs(blob, `Danh sách nghỉ không lương` + ".xlsx");
-          this.spinner.hide();
-        }
-      })
-  }
-
-  handleParams() {
-
-  };
 
   listViewsFilter = [];
   cloneListViewsFilter = [];
   detailInfoFilter = null;
   optionsButonFilter = [
-    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm  addNew', icon: 'pi pi-search' },
-    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger  addNew', icon: 'pi pi-times' },
+    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm ml-2  addNew', icon: 'pi pi-plus' },
+    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger ml-2  addNew', icon: 'pi pi-times' },
   ];
-  //filter 
-  getFilter(reload: boolean) {
-    this.apiService.getFilter('/api/v2/leavelack/GetLeaveLackFilter')
+  
+  getEmpFilter(reload: boolean) {
+    this.apiService.getFilter('/api/v1/timekeeping/GetTimekeepingFilter')
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {
         if (results.status === 'success') {
@@ -348,10 +378,10 @@ export class NghiKhongLuongComponent implements OnInit {
         }
       });
   }
-
   filterLoad(event) {
     this.query = { ...this.query, ...event.data };
     this.load();
+    this.FnEvent();
   }
 
   close({ event, datas }) {
@@ -366,50 +396,18 @@ export class NghiKhongLuongComponent implements OnInit {
     }
   }
 
-  ngAfterViewInit(): void {
-    this.FnEvent();
-  }
-
-  FnEvent() {
-    setTimeout(() => {
-      var dragTarget = document.getElementById(this.gridKey);
-      if (dragTarget) {
-        const click$ = fromEvent(dragTarget, 'click');
-        click$.subscribe(event => {
-          this.addHopDong()
-        });
-      }
-    }, 300);
-  }
-
-  isSearchEmp = false
   seachEmValue(event) {
-    // const params = {
-    //   id: null,
-    //   empId: event.value
-    // }
+    const params = {
+      maternityId: null,
+      empId: event.value
+    }
     if (event.value) {
-      this.id = ''
-      this.isDetail = true;
-      this.isSearchEmp = false;
-      this.empId = event.value;
-      // this.router.navigate(['/chinh-sach/nghi-khong-luong/them-moi-nghi-khong-luong'], { queryParams: params });
+      this.router.navigate(['/nhan-su/thai-san/them-moi-thai-san'], { queryParams: params });
     } else {
       this.isSearchEmp = false;
     }
   }
 
-  callback() {
-    this.isDetail = false;
-    this.load();
-  }
-
-  importFileExel() {
-    this.router.navigate(['/chinh-sach/nghi-khong-luong/import-nghi-khong-luong']);
-  }
-
-
 }
-
 
 

@@ -101,19 +101,23 @@ export class BaoCaoTuyenDungComponent implements OnInit {
   detailInfoReport = null;
   listViewsReport = [];
   optionsButonReport = [
-    { label: 'Hiển thị', value: 'ViewReport', class: 'p-button-sm ml-2  addNew', icon: 'pi pi-plus' },
+    { label: 'Hiển thị', value: 'ViewReport', class: 'p-button-sm', icon: 'pi pi-plus' },
     // { label: 'Mở tệp', value: 'OpenReport', class: 'p-button-sm p-button-success ml-2  addNew', icon: 'pi pi-clone' },
-    { label: 'Lưu tệp', value: 'DowloadReport', class: 'p-button-sm p-button-success ml-2  addNew', icon: 'pi pi-cloud-download' },
+    { label: 'Lưu tệp', value: 'DowloadReport', class: 'p-button-sm p-button-success', icon: 'pi pi-cloud-download' },
   ];
 
   changeReportTypeValue(event) {
     this.listViewsReport = [];
+    this.detailInfoReport = null;
     this.columnDefs = [];
     this.isShowLists = false;
     let dataSelected = this.dataReportTypeValue.filter(d => parseInt(d.int_order) === parseInt(this.reportTypeValue))
+    console.log(dataSelected)
     if (dataSelected.length > 0) {
+     setTimeout(() => {
       this.detailInfoReport = dataSelected[0];
       this.listViewsReport = dataSelected[0].group_fields;
+     }, 200);
     }
   }
 
@@ -195,7 +199,7 @@ export class BaoCaoTuyenDungComponent implements OnInit {
           if(queryParams.exportType === 'pdf') {
             type = '.pdf'
           }
-          var blob = new Blob([results], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+          var blob = new Blob([results], { type: queryParams.exportType === 'pdf' ? 'application/pdf' : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
           FileSaver.saveAs(blob, this.detailInfoReport.report_name + type);
           this.spinner.hide();
         }
