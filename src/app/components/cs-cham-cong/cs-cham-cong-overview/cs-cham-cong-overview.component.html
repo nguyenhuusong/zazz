@@ -44,7 +44,7 @@
                             </div>
                             <div *ngFor="let item  of  detailDashboardTimekeeping.overview; let i=index">
                                 <p-card header="{{item.name}}" [style]="{'height': '170px', 'wdith': 'auto'}" >
-                                    <p-knob (click)="navigateWithState(item)" [(ngModel)]="item.emp_num" [valueColor]="i === 1 ? 'CornflowerBlue' : i === 0 ? 'DarkOrange' : 'red'" [readonly]="true"></p-knob>
+                                    <p-knob (click)="navigateWithState(item)" [max]="800" [(ngModel)]="item.emp_num" [valueColor]="i === 1 ? 'CornflowerBlue' : i === 0 ? 'DarkOrange' : 'red'" [readonly]="true"></p-knob>
                                 </p-card>
                             </div>
                         </div>
