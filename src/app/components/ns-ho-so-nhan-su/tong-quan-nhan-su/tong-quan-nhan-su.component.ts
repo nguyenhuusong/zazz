@@ -484,7 +484,7 @@ export class TongQuanNhanSuComponent implements OnInit {
     navigateWithState(item: any) {
       const linkRouter = MENUACTIONROLEAPI[item.apiName];
       if(linkRouter) {
-        const state =  JSON.parse('{"' + item.apiParam.replace(/&/g, '","').replace(/=/g,'":"') + '"}', (key, value) => { return key===""?value:decodeURIComponent(value) })
+        const state = item.apiParam ?  JSON.parse('{"' + item.apiParam.replace(/&/g, '","').replace(/=/g,'":"') + '"}', (key, value) => { return key===""?value:decodeURIComponent(value) }) : null
         this.router.navigate([`${linkRouter.url}`], {queryParams: {... state}});
       }
   
