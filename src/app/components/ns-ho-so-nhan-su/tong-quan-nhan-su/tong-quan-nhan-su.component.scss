@@ -148,4 +148,11 @@
             height: 100%;
         }
     }
+    @media screen and (min-width: 1200px) and (max-width: 1700px) {
+        .box{
+            .chart{
+                display: block;
+            }
+        }
+    }
 }
