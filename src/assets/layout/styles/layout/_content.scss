@@ -1796,8 +1796,10 @@ app-import-excel
             color: #ffffff
         }
         &>div{
-            width: 33.33%;
-
+            width: 120px;
+            &.text-right{
+                width: 66%;
+            }
         }
     }
     .p-dropdown{
