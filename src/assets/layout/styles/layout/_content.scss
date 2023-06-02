@@ -1796,8 +1796,10 @@ app-import-excel
             color: #ffffff
         }
         &>div{
-            width: 33.33%;
-
+            width: 120px;
+            &.text-right{
+                width: 66%;
+            }
         }
     }
     .p-dropdown{
@@ -1888,6 +1890,25 @@ app-import-excel
             }
             .p-card-title {
                 color: rgb(0 72 172 / 87%) !important;
+            }
+        }
+    }
+}
+.members{
+    .item{
+        cursor: pointer;
+        &:hover{
+            .p-avatar{
+                img{
+                    box-shadow: 1px 2px 7px #ccc;
+                    border-radius: 100%;
+                    transition: all 0.3s;
+                }
+            }
+            .content{
+                h4{
+                    color: rgba(0, 72, 172, 0.87) !important;
+                }
             }
         }
     }

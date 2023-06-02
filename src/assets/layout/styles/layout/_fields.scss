@@ -282,6 +282,9 @@
         }
         &.bgDone{
             background-color: $success;
+            .p-dropdown-label{
+                color: #fff;
+            }
             .p-dropdown-trigger{
                 color: #fff;
             }
@@ -792,5 +795,13 @@ app-type-linkurl-drag{
     background: $mainBg !important;
     &:after{
         color: #ffffff !important;
+    }
+}
+.p-dropdown-panel{
+    .p-dropdown-items{
+        .p-dropdown-item{
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
     }
 }

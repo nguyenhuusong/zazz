@@ -282,6 +282,12 @@ export class EditDetailComponent implements OnInit, OnChanges {
       let group_fields = cloneDeep(this.dataView)
       this.callbackform(group_fields, event)
     }else if(event === 'Update' || event ==='newUpdate' || event ==='Submit') {
+      for (let item in this.modelFields) {
+        if (this.modelFields[item].error) {
+          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Dữ liệu thiếu !' });
+          return
+        }
+      }
       let group_fields = cloneDeep(this.dataView)
       this.callbackform(group_fields, event)
     } else if (event === 'TamTinh') {

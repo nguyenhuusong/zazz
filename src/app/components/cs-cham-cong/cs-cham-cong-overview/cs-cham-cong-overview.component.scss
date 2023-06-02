@@ -171,6 +171,10 @@
                 img{
                     object-fit: cover;
                     object-position: center;
+                    margin: auto;
+                    height: calc(100% - 10px);
+                    border-radius: 100%;
+                    width: calc(100% - 10px);
                 }
             }
         }
