@@ -1868,3 +1868,27 @@ app-import-excel
 
     }
 }
+
+.em-activities{
+    .p-card-title {
+        text-align: center;
+    }
+    .wrap-knod{
+        .p-knob{
+            transition: all 0.3s;
+        }
+        &:hover{
+            cursor: pointer;
+            .p-knob{
+                svg{
+                    box-shadow: 1px 1px 4px #ccc;
+                    border-radius: 100%;
+                    transition: all 0.3s;
+                }
+            }
+            .p-card-title {
+                color: rgb(0 72 172 / 87%) !important;
+            }
+        }
+    }
+}
