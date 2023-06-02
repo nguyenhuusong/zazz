@@ -108,12 +108,16 @@ export class BaoCaoTuyenDungComponent implements OnInit {
 
   changeReportTypeValue(event) {
     this.listViewsReport = [];
+    this.detailInfoReport = null;
     this.columnDefs = [];
     this.isShowLists = false;
     let dataSelected = this.dataReportTypeValue.filter(d => parseInt(d.int_order) === parseInt(this.reportTypeValue))
+    console.log(dataSelected)
     if (dataSelected.length > 0) {
+     setTimeout(() => {
       this.detailInfoReport = dataSelected[0];
       this.listViewsReport = dataSelected[0].group_fields;
+     }, 200);
     }
   }
 
@@ -195,7 +199,7 @@ export class BaoCaoTuyenDungComponent implements OnInit {
           if(queryParams.exportType === 'pdf') {
             type = '.pdf'
           }
-          var blob = new Blob([results], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+          var blob = new Blob([results], { type: queryParams.exportType === 'pdf' ? 'application/pdf' : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
           FileSaver.saveAs(blob, this.detailInfoReport.report_name + type);
           this.spinner.hide();
         }
