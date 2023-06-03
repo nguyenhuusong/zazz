@@ -141,7 +141,7 @@ export class SearchUserMasterComponent implements OnInit {
             buttons: [
               {
                 onClick: this.ChooseUserView.bind(this),
-                label: 'Xem chi tiết',
+                label: 'Xem',
                 icon: 'pi pi-check',
                 class: 'btn-primary',
                 hide: this.button.indexOf('View') < 0

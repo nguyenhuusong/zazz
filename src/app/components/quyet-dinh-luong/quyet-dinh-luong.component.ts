@@ -155,7 +155,7 @@ export class QuyetDinhLuongComponent implements OnInit {
       buttons: [
         {
           onClick: this.XemChiTiet.bind(this),
-          label: 'Xem chi tiết',
+          label: 'Xem',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
         },

@@ -169,7 +169,7 @@ export class PqQuyenNguoiDungComponent implements OnInit {
       buttons: [
         {
           onClick: this.XemChiTiet.bind(this),
-          label: 'Xem chi tiết',
+          label: 'Xem',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
           // hide: CheckHideAction(MENUACTIONROLEAPI.GetUserPage.url, ACTIONS.VIEW)
