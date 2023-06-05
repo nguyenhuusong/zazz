@@ -58,23 +58,23 @@ export class MediaListComponent implements OnInit {
   async getLibraries() {
     const libraries = [];
     
-    try {
-      // Get all folder to build the trees
-      await this.firebaseService.getAllDocumentWithCondition('library_media', 'is_file', false, '==').then(res => {
-        res.forEach(doc => {
-          const data = initItemMedia(doc.data()).value;
-          data.documentId = doc.id;
-          data.id = doc.id;
-          libraries.push(data);
-        });
-      });
+    // try {
+    //   // Get all folder to build the trees
+    //   await this.firebaseService.getAllDocumentWithCondition('library_media', 'is_file', false, '==').then(res => {
+    //     res.forEach(doc => {
+    //       const data = initItemMedia(doc.data()).value;
+    //       data.documentId = doc.id;
+    //       data.id = doc.id;
+    //       libraries.push(data);
+    //     });
+    //   });
       
-      return libraries;
-    } catch (error) {
-      console.log('Error get library:', error);
+    //   return libraries;
+    // } catch (error) {
+    //   console.log('Error get library:', error);
       
-      return [];
-    }
+    //   return [];
+    // }
   }
 
   async initData() {
