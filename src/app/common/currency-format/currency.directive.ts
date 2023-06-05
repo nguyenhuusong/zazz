@@ -24,7 +24,7 @@ export class CurrencyDirective implements OnInit, AfterViewInit, AfterContentChe
   onInputChange(event: any, backspace: any) {
     if (event) {
       if (event.target) {
-        let newVal = numeral(event.target.value).format('0,0');
+        let newVal = numeral(event.target.value).format('0,0[.]00');
         // // var myNumeral2 = numeral(newVal);
         // // var value2 = myNumeral2.value();
         var rawValue = newVal;
