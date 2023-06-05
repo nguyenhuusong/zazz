@@ -86,6 +86,10 @@ export class ChiTietChinhSachLuongComponent implements OnInit {
     }
   }
 
+  onBackPage() {
+    this.isDialog ? this.callback.emit() : this.router.navigate(['/luong-thue/chinh-sach'])
+  }
+
   setSchemeInfo(data) {
       const params = {
         ...this.detailInfo, group_fields: data.datas

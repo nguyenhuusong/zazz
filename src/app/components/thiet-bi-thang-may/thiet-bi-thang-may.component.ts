@@ -154,7 +154,7 @@ export class ThietBiThangMayComponent implements OnInit {
       buttons: [
         {
           onClick: this.editElevatordevice.bind(this),
-          label: 'Xem chi tiết',
+          label: 'Xem',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
           hide: CheckHideAction(MENUACTIONROLEAPI.GetElevatorDevicePage.url, ACTIONS.VIEW)

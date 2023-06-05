@@ -319,7 +319,7 @@ export class ContractDetailComponent implements OnInit {
               },
               {
                 onClick: this.ViewHoSomau.bind(this),
-                label: 'Xem file mẫu',
+                label: 'File mẫu',
                 icon: 'pi pi-cloud-upload',
                 key: 'xemhosomau',
                 class: 'btn-primary mr5',

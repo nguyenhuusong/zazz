@@ -25,7 +25,7 @@
         <app-edit-detail 
         *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'"
         [optionsButtonsEdit]="hideButton ? [] : optionsButtonsView" [dataView]="listViews"
-        (callback)="setSchemeInfo($event)" (callBackForm)="callBackForm($event)"
+        (callback)="setSchemeInfo($event)" 
         (callbackcancel)="cancel($event)"></app-edit-detail>
     
     <app-loading-detail [id]="'markdown'" *ngIf="listViews.length === 0">

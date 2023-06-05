@@ -162,7 +162,7 @@ export class DanhSachTreConComponent implements OnInit {
             buttons: [
               {
                 onClick: this.editRow.bind(this),
-                label: 'Xem chi tiết',
+                label: 'Xem',
                 icon: 'fa fa-edit editing',
                 key: 'view-job-detail',
                 class: 'btn-primary mr5',

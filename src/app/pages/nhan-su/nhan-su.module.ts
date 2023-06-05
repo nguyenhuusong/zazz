@@ -134,6 +134,7 @@ import { ChiTietChamCongComponent } from 'src/app/components/ns-ho-so-nhan-su/em
 import { TongQuanNhanSuComponent } from 'src/app/components/ns-ho-so-nhan-su/tong-quan-nhan-su/tong-quan-nhan-su.component';
 import { ChartModule } from 'primeng/chart';
 import { KnobModule } from 'primeng/knob';
+import { ToastModule } from 'primeng/toast';
 @NgModule({
   imports: [
     MessagesModule,
@@ -193,6 +194,7 @@ import { KnobModule } from 'primeng/knob';
     CheckHideActionsDirectiveModule,
     LoadingDetailModule,
     ChartModule,
+    ToastModule,
     AgGridModule.withComponents([
       ButtonRendererComponent,
       ButtonRendererComponent1

@@ -119,7 +119,7 @@ export class HopDongComponent implements OnInit {
             buttons: [
               {
                 onClick: this.dowloadFile.bind(this),
-                label: 'Xem file mẫu',
+                label: 'File mẫu',
                 icon: 'fa fa-edit editing',
                 key: 'view-job-detail',
                 class: 'btn-primary mr5',
@@ -156,7 +156,7 @@ export class HopDongComponent implements OnInit {
             buttons: [
               {
                 onClick: this.dowloadFile.bind(this),
-                label: 'Xem file mẫu',
+                label: 'File mẫu',
                 icon: 'fa fa-edit editing',
                 key: 'view-job-detail',
                 class: 'btn-primary mr5',
