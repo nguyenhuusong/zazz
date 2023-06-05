@@ -291,6 +291,9 @@
         }
         &.bgTodo{
             background-color: $secondary;
+            .p-dropdown-label{
+                color: #fff;
+            }
             .p-dropdown-trigger{
                 color: #fff;
             }
@@ -803,5 +806,11 @@ app-type-linkurl-drag{
             padding-top: 10px;
             padding-bottom: 10px;
         }
+    }
+}
+
+p-button{
+    .p-button-lg{
+        height: 40px;
     }
 }
