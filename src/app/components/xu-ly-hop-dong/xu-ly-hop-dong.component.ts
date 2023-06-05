@@ -176,6 +176,11 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
   }
   
   load() {
+    
+    // for hide sidebar
+    this.listRowSelects = [];
+    this.isShowbtnPheDuyet = true;
+    
     this.columnDefs = []
     // this.spinner.show();
     let params: any = { ... this.query };
@@ -820,6 +825,13 @@ detailInfoFilter = null;
       this.listViewsFilter =  cloneDeep(datas);
     }
   }
+
+  hidePrint() {
+
+    console.log('this.listRowSelects', this.listRowSelects)
+  }
+
+
 }
 
 
