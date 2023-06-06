@@ -55,7 +55,8 @@
 </p-sidebar>
 
 <p-sidebar
-    [style]="{ width: '80%' }"
+    [style]="{ width: '80%' }" [autoZIndex]="false"
+    [baseZIndex]="9999999"
     [(visible)]="displayFormEditDetail" 
     styleClass="popup-btngroup-edit-detail" 
     position="right">
