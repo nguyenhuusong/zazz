@@ -9,7 +9,7 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 export class ModalNodeComponent implements OnInit {
   @Input() modelAddNode = {
     title: '',
-    typeNode: ''
+    type: ''
   }
   constructor() {}
 

@@ -1,6 +1,6 @@
 
 
-import { Component, OnInit, OnChanges, Input, ChangeDetectionStrategy, ViewContainerRef, ViewChild } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, ChangeDetectionStrategy, ViewContainerRef, ViewChild, SimpleChanges } from '@angular/core';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ModalNodeComponent } from '../modal-node/modal-node.component';
 import { NodeService } from '../node.service';
@@ -12,7 +12,7 @@ import { NodeService } from '../node.service';
   templateUrl: './node-container.component.html',
   styleUrls: ['./node-container.component.scss']
 })
-export class NodeContainerComponent implements OnInit {
+export class NodeContainerComponent implements OnInit, OnChanges {
   @Input() nodes = [];
 
   @Input() connections = [];
@@ -20,7 +20,19 @@ export class NodeContainerComponent implements OnInit {
   ref: DynamicDialogRef;
 
   constructor(private nodeService: NodeService, public dialogService: DialogService) { }
+  ngOnChanges(changes: SimpleChanges): void {
+    this.nodeService.setRootViewContainerRef(this.viewContainerRef);
 
+    this.nodes.forEach(node => {
+      this.nodeService.addDynamicNode(node);
+    });
+
+    setTimeout(() => {
+      this.connections.forEach(connection => {
+        this.nodeService.addConnection(connection);
+      });
+    })
+  }
   ngOnInit() {
     console.log(this.viewContainerRef)
     this.nodeService.setRootViewContainerRef(this.viewContainerRef);
@@ -38,12 +50,12 @@ export class NodeContainerComponent implements OnInit {
   displayAdd: boolean = false;
   modelAddNode = {
     title: '',
-    typeNode: ''
+    type: ''
   }
   addNode() {
     this.modelAddNode = {
       title: 'dd',
-      typeNode: ''
+      type: ''
     }
     this.displayAdd = true;
 
@@ -61,6 +73,8 @@ export class NodeContainerComponent implements OnInit {
     const nodes = Array.from(container.querySelectorAll('.node')).map((node: HTMLDivElement) => {
       return {
         id: node.id,
+        title: node.title,
+        type: "",
         top: node.offsetTop,
         left: node.offsetLeft,
       }

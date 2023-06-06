@@ -13,7 +13,7 @@ export interface Node {
 @Component({
   selector: 'node',
   template: `
-  <div class="node" (dblclick)="editNode(node)" id="{{node.id}}" [style.top.px]="node.top || 0" [style.left.px]="node.left || 20">{{node.title}}<i  class="pi pi-times" style="
+  <div class="node" (dblclick)="editNode(node)" id="{{node.id}}" data-title="{{node.title}}"  [style.top.px]="node.top || 0" [style.left.px]="node.left || 20">{{node.title}}<i  class="pi pi-times" style="
     position: absolute;
     right: -8px;
     top: -8px;
