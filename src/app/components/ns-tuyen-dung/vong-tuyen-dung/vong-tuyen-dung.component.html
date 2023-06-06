@@ -80,6 +80,7 @@
 <p-sidebar
     [style]="{ width: '80%' }"
     [(visible)]="isFormDetailJsplumb" 
+    [autoZIndex]="true"
     position="right">
     <ng-template pTemplate="header">
         <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -93,4 +94,3 @@
     </div>
     <app-node-container #nodeContainer [nodes]="nodes" [connections]="connections"></app-node-container>
 </p-sidebar>
-

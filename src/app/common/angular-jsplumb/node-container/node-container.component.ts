@@ -1,6 +1,6 @@
 
 
-  import { Component, OnInit, OnChanges, Input, ChangeDetectionStrategy, ViewContainerRef, ViewChild } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, ChangeDetectionStrategy, ViewContainerRef, ViewChild, SimpleChanges } from '@angular/core';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ModalNodeComponent } from '../modal-node/modal-node.component';
 import { NodeService } from '../node.service';
@@ -12,15 +12,27 @@ import { NodeService } from '../node.service';
   templateUrl: './node-container.component.html',
   styleUrls: ['./node-container.component.scss']
 })
-export class NodeContainerComponent implements OnInit {
+export class NodeContainerComponent implements OnInit, OnChanges {
   @Input() nodes = [];
 
   @Input() connections = [];
   @ViewChild('nodes', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
   ref: DynamicDialogRef;
 
-  constructor(private nodeService: NodeService, public dialogService: DialogService) {}
+  constructor(private nodeService: NodeService, public dialogService: DialogService) { }
+  ngOnChanges(changes: SimpleChanges): void {
+    this.nodeService.setRootViewContainerRef(this.viewContainerRef);
 
+    this.nodes.forEach(node => {
+      this.nodeService.addDynamicNode(node);
+    });
+
+    setTimeout(() => {
+      this.connections.forEach(connection => {
+        this.nodeService.addConnection(connection);
+      });
+    })
+  }
   ngOnInit() {
     console.log(this.viewContainerRef)
     this.nodeService.setRootViewContainerRef(this.viewContainerRef);
@@ -28,64 +40,52 @@ export class NodeContainerComponent implements OnInit {
     this.nodes.forEach(node => {
       this.nodeService.addDynamicNode(node);
     });
-    
+
     setTimeout(() => {
       this.connections.forEach(connection => {
         this.nodeService.addConnection(connection);
       });
     })
-  }  
+  }
   displayAdd: boolean = false;
   modelAddNode = {
     title: '',
-    typeNode: ''
+    type: ''
   }
   addNode() {
     this.modelAddNode = {
-      title: '',
-      typeNode: ''
+      title: 'dd',
+      type: ''
     }
+    this.displayAdd = true;
 
-    this.ref = this.dialogService.open(ModalNodeComponent, {
-       data: this.modelAddNode,
-        header: 'Thêm tiến trình',
-        width: '70%',
-        contentStyle: { overflow: 'auto' },
-        autoZIndex: true,
-        maximizable: true
-      });
-    this.ref.onClose.subscribe((param: Node) => {
-      if (param) {
-         console.log(param)
-
-        //  const node = { id: "Step id_"  + [Math.random().toString(16).slice(2, 8)], ...param};
-        // this.nodeService.addDynamicNode(node);
-      }
-  });
   }
 
   saveNode() {
-    
+    const node = { id: "Step id_" + [Math.random().toString(16).slice(2, 8)], ...this.modelAddNode };
+    this.nodeService.addDynamicNode(node);
   }
 
-  saveNodeJson(){
+  saveNodeJson() {
     //save element position on Canvas and node conections
 
     const container = this.viewContainerRef.element.nativeElement.parentNode;
     const nodes = Array.from(container.querySelectorAll('.node')).map((node: HTMLDivElement) => {
       return {
         id: node.id,
+        title: node.title,
+        type: "",
         top: node.offsetTop,
-        left: node.offsetLeft, 
+        left: node.offsetLeft,
       }
     });
 
     const connections = (this.nodeService.jsPlumbInstance.getAllConnections() as any[])
-        .map((conn) => ({ uuids: conn.getUuids() }));
+      .map((conn) => ({ uuids: conn.getUuids() }));
 
     const json = JSON.stringify({ nodes, connections });
 
     console.log(json);
   }
-  
+
 }
