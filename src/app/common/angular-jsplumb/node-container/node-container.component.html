@@ -1,0 +1,66 @@
+<div class="container">
+	<div #nodes></div>
+</div>
+<div >
+  <button clasa="align-middle" (click)="saveNodeJson()">Save Flow Node JSON</button>
+</div>
+
+
+<p-dialog 
+        [(visible)]="displayAdd" header="Thêm trạng thái"
+        [modal]="true" [style]="{width: 800 + 'px'}"
+        [draggable]="false" [resizable]="false" [focusTrap]="false" >
+
+        <section>
+            <!-- <div *ngIf="paramater?.param_type === 'object'" class="col-md-6">
+                <div class="fields" [ngClass]="paramater[paramater?.param_cd] ? 'valid' : 'invalid' ">
+                  <label for="">{{paramater?.param_name}}: </label>
+                  <p-dropdown appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false"
+                    [options]="paramater.options" [(ngModel)]="paramater[paramater?.param_cd]"
+                    name={{paramater.param_cd}} [filter]="true">
+                    <ng-template let-item pTemplate="selectedItem">
+                      <span>{{item.label}}</span>
+                    </ng-template>
+                    <ng-template let-car pTemplate="item">
+                      <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                        <div style="font-size:14px;float:left;margin-top:4px">{{car.label}}</div>
+                      </div>
+                    </ng-template>
+                  </p-dropdown>
+                </div>
+            </div> -->
+            <!-- <div *ngIf="paramater?.param_type === 'multiSelect'" class="col-md-12">
+              <div class="field-group multi-select" [ngClass]="paramater[paramater?.param_cd] ? 'valid' : 'invalid' ">
+                <label for="">{{paramater?.param_name}}: </label>
+                <p-multiSelect [options]="paramater.options" [showToggleAll]="true"  (onChange)="selectChangeMultiSelect($event, paramater.param_cd)"
+                [(ngModel)]="paramater[paramater?.param_cd]" optionLabel="name"  name={{paramater.param_cd}} [virtualScroll]="true"
+                  [filter]="true" [itemSize]="34" class="multiselect-custom-virtual-scroll">
+                  <ng-template let-country pTemplate="item">
+                      <div class="country-item">
+                          <div>{{country.name}}</div>
+                      </div>
+                  </ng-template>
+              </p-multiSelect>
+              </div>
+          </div> -->
+         <div class="col-md-12">
+            <div class="field-group col-12 text valid" >
+                <label for="">Tên tiến trình: </label>
+                <input type="text" class="form-control" [(ngModel)]="modelAddNode.title"
+                name="title">
+              </div>
+              <div class="field-group col-12 text valid" >
+                <label for="">Loại tiến trình: </label>
+                <input type="text" class="form-control" [(ngModel)]="modelAddNode.typeNode"
+                name="typeNode">
+              </div>
+         </div>
+        </section>
+
+        <ng-template pTemplate="footer">
+            <div class="col-12 flex justify-content-end">
+                    <p-button label="Thêm tiến trình" (click)="saveNode()" styleClass="p-button-sm mr-1 p-button-info" icon="pi pi-check"></p-button>
+            </div>
+        </ng-template>
+      
+</p-dialog>

@@ -31,6 +31,7 @@ import {DialogModule} from 'primeng/dialog';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { SidebarModule } from 'primeng/sidebar';
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
     exports: [
@@ -68,6 +69,7 @@ import { SidebarModule } from 'primeng/sidebar';
         MultiSelectModule,
         OverlayPanelModule,
         SidebarModule,
+        ToastModule,
         AgGridModule.withComponents([
             ButtonRendererComponent,
             CustomTooltipComponent,

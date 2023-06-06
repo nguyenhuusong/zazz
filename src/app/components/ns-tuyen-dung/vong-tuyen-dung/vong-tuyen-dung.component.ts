@@ -281,6 +281,15 @@ import { Router } from '@angular/router';
   handleChange(index) {
     this.tabIndex = index;
   }
+  isFormDetailJsplumb : boolean = false;
+  settingJsplumb() {
+    this.isFormDetailJsplumb = true;
+  }
+
+  nodes = [];
+
+  connections = [];
+
   
   
   }
