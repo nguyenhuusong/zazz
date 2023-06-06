@@ -278,6 +278,7 @@ export class BaoCaoTuyenDungComponent implements OnInit {
       this.query.offSet = 0;
       this.query.pageSize = 0;
       this.listViewsReport = [];
+      this.isShowLists = false;
       setTimeout(() => {
         this.listViewsReport = this.detailInfoReport.group_fields;
         this.listsData = [];
