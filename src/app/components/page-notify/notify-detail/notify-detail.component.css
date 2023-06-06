@@ -2,3 +2,10 @@
     right: 35px;
     top: 135px;
 }
+:host::ng-deep .wrap-edit-detail {
+    position: relative;
+}
+:host::ng-deep .wrap-edit-detail .btn-group-edit-detail{
+    top: 14px !important;
+    right: 40px !important;
+}
