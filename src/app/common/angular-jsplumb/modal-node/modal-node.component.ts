@@ -14,7 +14,9 @@ export class ModalNodeComponent implements OnInit {
   constructor(public ref: DynamicDialogRef) {}
 
   ngOnInit(): void {
-      console.log(this.ref)
+    this.ref.onDragStart.subscribe(ressult => {
+      console.log(ressult)
+    })
   }
 
   saveNode() {

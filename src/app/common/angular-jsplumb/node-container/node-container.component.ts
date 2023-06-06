@@ -42,7 +42,7 @@ export class NodeContainerComponent implements OnInit {
   }
   addNode() {
     this.modelAddNode = {
-      title: '',
+      title: 'dd',
       typeNode: ''
     }
 
