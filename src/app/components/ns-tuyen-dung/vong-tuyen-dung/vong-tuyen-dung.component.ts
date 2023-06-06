@@ -284,12 +284,20 @@ import { Router } from '@angular/router';
   isFormDetailJsplumb : boolean = false;
   settingJsplumb() {
     this.isFormDetailJsplumb = true;
+
+    // this.fillFromJson();
   }
 
   nodes = [];
 
   connections = [];
-
+  fillFromJson() {
+    const json = `{"nodes":[{"id":"Step id_4d68f7","top":106,"left":39},{"id":"Step id_bdb95b","top":318,"left":69},{"id":"Step id_fbecce","top":0,"left":20}],"connections":[]}`;
+    const data = JSON.parse(json);
+   
+    this.nodes = data.nodes;
+    this.connections = data.connections;
+  }
   
   
   }

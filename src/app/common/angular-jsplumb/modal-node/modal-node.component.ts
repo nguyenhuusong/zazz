@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-modal-node',
@@ -11,16 +11,9 @@ export class ModalNodeComponent implements OnInit {
     title: '',
     typeNode: ''
   }
-  constructor(public ref: DynamicDialogRef) {}
+  constructor() {}
 
   ngOnInit(): void {
-    this.ref.onDragStart.subscribe(ressult => {
-      console.log(ressult)
-    })
-  }
-
-  saveNode() {
-    this.ref.close(this.modelAddNode);
   }
 
 }
