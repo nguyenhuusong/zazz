@@ -51,3 +51,8 @@
     width: 100% !important ;
 }
 
+:host::ng-deep{
+    .p-toast{
+        z-index: 999999999999 !important;
+    }
+}

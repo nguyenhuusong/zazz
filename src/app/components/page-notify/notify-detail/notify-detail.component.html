@@ -11,21 +11,23 @@
     <div class="content" style="position: relative;">
       <p-tabView [(activeIndex)]="indexTab" (onChange)="handleChange($event.index)">
         <p-tabPanel header="Thông tin chung">
-          <div class="fields" *ngIf="!notiId">
-            <label for="">Mẫu thông báo</label>
-            <p-dropdown placeholder="Chọn mẫu thông báo" appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
-                [options]="notifyTempList" [required] [(ngModel)]="notifyTempId"
-                (onChange)="changeNotiTem()"
-                name="tempId" [filter]="true">
-                <ng-template let-item pTemplate="selectedItem">
-                    <span>{{item.label}}</span>
-                </ng-template>
-                <ng-template let-car pTemplate="item">
-                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                        <div style="font-size:14px;float:left;margin-top:4px">{{car.label}}</div>
-                    </div>
-                </ng-template>
-            </p-dropdown>
+          <div class="box mb-2">
+            <div class="fields" *ngIf="!notiId">
+              <label for="">Mẫu thông báo</label>
+              <p-dropdown placeholder="Chọn mẫu thông báo" appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
+                  [options]="notifyTempList" [required] [(ngModel)]="notifyTempId"
+                  (onChange)="changeNotiTem()"
+                  name="tempId" [filter]="true">
+                  <ng-template let-item pTemplate="selectedItem">
+                      <span>{{item.label}}</span>
+                  </ng-template>
+                  <ng-template let-car pTemplate="item">
+                      <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                          <div style="font-size:14px;float:left;margin-top:4px">{{car.label}}</div>
+                      </div>
+                  </ng-template>
+              </p-dropdown>
+            </div>
           </div>
           <app-edit-detail *ngIf="listViews.length> 0 && manhinh === 'Edit'"  [detail]="dataInfo"
             [manhinh]="manhinh" [modelMarkdow]="modelMarkdow" [dataView]="listViews" [optionsButtonsEdit]="optionsButon"
