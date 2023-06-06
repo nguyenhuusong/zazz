@@ -22,6 +22,7 @@
     [groupDisplayType]="'groupRows'"
     [rowClassRules]="rowClassRules"
     [detailCellRendererParams]="detailCellRendererParams"
+  [detailCellRenderer]="detailCellRenderer"
     [tooltipShowDelay]="tooltipShowDelay"
     (bodyScroll)="handleScroll($event)"
     [rowSelection]="rowSelection"
@@ -44,6 +45,7 @@
     [overlayNoRowsTemplate]="overlayNoRowsTemplate"
     [overlayLoadingTemplate]="overlayLoadingTemplate"
     (firstDataRendered)="onFirstDataRendered($event)"
+    (selectionChanged)="OnSelectionChanged($event)"
     [frameworkComponents]="frameworkComponents">
   </ag-grid-angular>
 </div>
