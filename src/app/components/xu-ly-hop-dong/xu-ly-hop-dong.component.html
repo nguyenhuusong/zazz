@@ -122,12 +122,16 @@
             [domLayout]="'autoHeight'"
             [rowSelection]="'multiple'" 
             [idGrid]="'prints'" 
-            (callback)="rowSelected($event)" 
-           
+            (callback)="callbackRowSelected($event)" 
+            (rowSelected)="rowSelected2($event)" 
+            (onSelectionChanged)="onSelectionChanged($event)"
             (showConfig)="cauhinh()"
-            [detailCellRendererParams]="detailCellRendererParams"
+            [frameworkComponents]="frameworkComponents"
+            (gridReady)="onGridReady($event)"
+            [detailCellRenderer]="detailCellRenderer"
             [columnDefs]="columnDefsPrint"></app-list-grid-angular>
     </div>
+    <!-- [detailCellRendererParams]="detailCellRenderer" -->
 
 
     <!-- <div class="row mt-1">

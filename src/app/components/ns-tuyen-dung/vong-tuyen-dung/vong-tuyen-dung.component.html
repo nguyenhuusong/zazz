@@ -88,7 +88,9 @@
         </svg> &nbsp;&nbsp;
         Thêm tiến trình</ng-template>
     <ng-template pTemplate="footer"></ng-template>
-    <button (click)="nodeContainer.addNode()">Create new node</button>
+    <div class="btn-popup-top-right">
+        <p-button [styleClass]="'p-button p-button-sm'" (click)="nodeContainer.addNode()">Create new node</p-button>
+    </div>
     <app-node-container #nodeContainer [nodes]="nodes" [connections]="connections"></app-node-container>
 </p-sidebar>
 
