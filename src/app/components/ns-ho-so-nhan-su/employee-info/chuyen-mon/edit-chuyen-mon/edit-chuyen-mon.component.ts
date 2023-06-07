@@ -73,13 +73,13 @@ export class EditChuyenMonComponent implements OnInit {
   optionsButon = [];
   menuActions = [];
   initButton() {
-    // this.optionsButon = this.detailInfo.actions.map(item => {
-    //   return {
-    //     label: item.name,
-    //     value: item.code,
-    //     icon: item.icon
-    //   }
-    // });
+    this.optionsButon = this.detailInfo.actions.map(item => {
+      return {
+        label: item.name,
+        value: item.code,
+        icon: item.icon
+      }
+    });
 
     this.menuActions = this.detailInfo.actions.map((item, index) => {
       return {
@@ -101,7 +101,12 @@ export class EditChuyenMonComponent implements OnInit {
     }, 400);
   }
 
-  
+  actSave(data) {
+    const  params = {
+      ...this.detailInfo, group_fields: data.datas
+    };
+    this.callApiInfo(params)
+  }
 
   setDetail(data) {
     const  params = {

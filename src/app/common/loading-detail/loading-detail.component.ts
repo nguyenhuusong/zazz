@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ErrorService } from 'src/app/services/error.service';
 
 @Component({
   selector: 'app-loading-detail',
@@ -6,19 +8,27 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./loading-detail.component.css']
 })
 export class LoadingDetailComponent implements OnInit {
+  constructor(private errorService: ErrorService, private spinner: NgxSpinnerService,) {
 
+  }
   @Input() id: string = '';
 
   dataLongField = [];
   dataShortField = [];
   dataFieldArea = [];
   dataMarkdown = [];
-  
+  isLoad = true;
   ngOnInit(): void {
     this.setDataFullWidth();
     this.setDataShortField();
     this.setDataFieldArea();
     this.setDataMarkdown();
+     this.errorService.fetchAll().subscribe(res => {
+        if(res === 404 || res === 500 || res === 400 || res === 401 || res === 0) {
+          this.isLoad = false;
+          this.spinner.hide();
+        }
+      })
     
   }
 

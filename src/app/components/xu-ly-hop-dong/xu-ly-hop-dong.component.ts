@@ -22,6 +22,7 @@ import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
 import { DialogService } from 'primeng/dynamicdialog';
 import { FormFilterComponent } from 'src/app/common/form-filter/form-filter.component';
 import { getParamString } from 'src/app/common/function-common/objects.helper';
+import { DetailRendererGrid } from 'src/app/common/detail-renderer-grid/detailRendererGrid';
 @Component({
   selector: 'app-xu-ly-hop-dong',
   templateUrl: './xu-ly-hop-dong.component.html',
@@ -41,7 +42,7 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
     private spinner: NgxSpinnerService,
     private changeDetector: ChangeDetectorRef,
     private webSocketService: WebsocketService2,
-    
+    private detailRendererGrid: DetailRendererGrid,
     private router: Router) {
     this.webSocketService.connect(environment.socketServer);
     this.webSocketService.emit("action", 'PRINT_LIST_PRINTERS')
@@ -58,8 +59,12 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
       customTooltip: CustomTooltipComponent,
       buttonAgGridComponent: ButtonAgGridComponent,
       avatarRendererFull: AvatarFullComponent,
+      myDetailCellRenderer: DetailRendererGrid,
     };
   }
+
+  detailCellRenderer = 'myDetailCellRenderer';
+
   pagingComponent = {
     total: 0
   }
@@ -123,6 +128,7 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
+    console.log(' this.gridApi', this.gridApi)
   }
 
   cancel() {
@@ -176,6 +182,11 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
   }
   
   load() {
+    
+    // for hide sidebar
+    this.listRowSelects = [];
+    this.isShowbtnPheDuyet = true;
+    
     this.columnDefs = []
     // this.spinner.show();
     let params: any = { ... this.query };
@@ -556,6 +567,11 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
         this.dataPrint = results.data;
         this.initGridPrint();
         this.displayPrint = true;
+
+        this.filesPrints = results.data.dataList.data.map( (t, i ) => (
+          {...t, gridflexs: results.data.detailGrid
+          }));
+
       }
 
     })
@@ -567,6 +583,17 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
     } else {
       this.isShowbtnPheDuyet = true;
     }
+  }
+
+  onSelectionChanged(event) {
+    console.log('fdsfjldkjf', event.api.getSelectedNodes())
+  }
+
+  rowSelected2(event) {
+    console.log('fdsfjldkjf', event)
+  }
+  callbackRowSelected(event) {
+    console.log('fdsfjldkjf', event)
   }
 
   pheDuyetHopDong() {
@@ -636,6 +663,12 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
       )
   }
 
+  fileSelectedToPrint = []
+  rowPrintSelected(event) {
+    this.fileSelectedToPrint = event;
+    console.log('this.fileSelectedToPrint', this.fileSelectedToPrint)
+  }
+
   initGridPrint() {
     this.columnDefsPrint = [
       ...AgGridFn(this.dataPrint.gridflexs.filter((d: any) => !d.isHide)),
@@ -643,11 +676,28 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
 
       this.detailCellRendererParams = {
         detailGridOptions: {
-          frameworkComponents: {},
+          rowSelection: 'multiple',
+          suppressRowClickSelection: true,
+          enableRangeSelection: true,
           getRowHeight: (params) => {
             return 40;
           },
+          filter: '',
+          pinned: 'left',
+          cellClass: ['border-right', 'no-auto'],
+          checkboxSelection: true,
+          headerCheckboxSelection: true,
+          headerCheckboxSelectionFilteredOnly: true,
           columnDefs: [
+            { 
+              field: '', 
+              checkboxSelection: true,
+              filter: '',
+              pinned: 'left',
+              cellClass: ['border-right'],
+              headerCheckboxSelection: true,
+              headerCheckboxSelectionFilteredOnly: true,
+            },
             ...AgGridFn(this.dataPrint.detailGrid),
           ],
 
@@ -665,6 +715,12 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
               });
             params.api.sizeColumnsToFit(allColumnIds);
           },
+          rowSelected(params) {
+            console.log('params', params)
+          },
+          getSelectedNodes( params ) {
+            console.log('params', params)
+          }
         },
         getDetailRowData(params) {
           params.successCallback(params.data.contractFiles);
@@ -820,6 +876,13 @@ detailInfoFilter = null;
       this.listViewsFilter =  cloneDeep(datas);
     }
   }
+
+  hidePrint() {
+
+    console.log('this.listRowSelects', this.listRowSelects)
+  }
+
+
 }
 
 

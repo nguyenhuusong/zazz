@@ -150,7 +150,7 @@ position="right">
                     placeholder="Select a Country">
                     <ng-template pTemplate="selectedItem" >
                         <div class="flex align-items-center gap-2" *ngIf="selectedStatus" >
-                            <div style="color: #fff">{{ selectedStatus.name}}</div>
+                            <div>{{ selectedStatus.name}}</div>
                         </div>
                     </ng-template>
                     <ng-template let-country pTemplate="item">
@@ -188,5 +188,3 @@ position="right">
     [draggable]="false" [resizable]="false" [focusTrap]="false" styleClass="popup-setting">
     <app-config-grid-table-form *ngIf="displaySetting && gridKeyForm" [typeConfig]="'TableInfo'"   [gridKey]="gridKeyForm"></app-config-grid-table-form>
 </p-dialog>
-
-<p-toast position="top-right" [baseZIndex]="999999999999" [autoZIndex]="true"></p-toast>

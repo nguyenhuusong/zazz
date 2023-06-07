@@ -25,11 +25,14 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
   @Output() onCellClicked = new EventEmitter<any>();
   @Output() callback = new EventEmitter<any>();
   @Output() showConfig = new EventEmitter<any>();
+  @Output() onSelectionChanged = new EventEmitter<any>();
+  @Output() gridReady = new EventEmitter<any>();
   @Input() columnDefs: Array<any> = [];
   @Input() isConfig: boolean = true;
   @Input() rowSelection: string = 'single';
   @Input() frameworkComponents = {};
   @Input() detailCellRendererParams: any;
+  @Input() detailCellRenderer: any;
   @Input() rowClassRules: any;
   @Input() noRowsTemplate: any = 'Không có kết quả phù hợp';
   @Input() pinnedTopRowData: any[] = [];
@@ -212,10 +215,15 @@ public overlayNoRowsTemplate =
   }
   CellDoubleClicked(event) {
     this.cellDoubleClicked.emit(event);
+    console.log('fdjsofijdsjofi')
   }
 
   CellClicked(event) {
     this.onCellClicked.emit(event);
+  }
+
+  OnSelectionChanged(event) {
+    this.onSelectionChanged.emit(event);
   }
 
   ngOnInit(): void {
@@ -371,7 +379,7 @@ public overlayNoRowsTemplate =
       let column = allColumns[i];
       this.gridWidth += column.getMinWidth();
     }
-
+    this.gridReady.emit(params)
   }
 
   ngOnChanges() {

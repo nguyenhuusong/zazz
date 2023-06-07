@@ -1,5 +1,6 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpRequest } from '@angular/common/http';
 import { Component, inject, Input, OnInit } from '@angular/core';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ErrorService } from 'src/app/services/error.service';
 
 @Component({
@@ -9,7 +10,8 @@ import { ErrorService } from 'src/app/services/error.service';
 })
 export class LoadingGridComponent implements OnInit {
   constructor(
-    private errorService: ErrorService
+    private errorService: ErrorService,
+    private spinner: NgxSpinnerService,
   ) {
 
   }
@@ -21,11 +23,11 @@ export class LoadingGridComponent implements OnInit {
  async ngOnInit() {
     this.listThs = Array(this.columnNumber).fill(1).map((x, i) => i);
      this.errorService.fetchAll().subscribe(res => {
-        if(res === 404 || res === 500) {
+        if(res === 404 || res === 500 || res === 400 || res === 401 || res === 0) {
           this.isLoad = false;
+          this.spinner.hide();
         }
       })
-
   }
 }
 
