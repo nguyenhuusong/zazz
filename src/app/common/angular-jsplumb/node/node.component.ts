@@ -23,7 +23,7 @@ export interface Node {
     font-size: 11px;
     box-shadow: 2px 2px 4px #ccc;
     cursor: pointer;
-"></i></div>`,
+" (click)="removeNode(node)"></i></div>`,
   styles: [
     `.node {position: absolute;width: 150px;height: 50px;
   padding: 4px;box-shadow: 0 10px 40px 0 #B0C1D9;text-align: center;}`,
@@ -41,7 +41,7 @@ export class NodeComponent implements AfterViewInit {
       activeClass: 'dragActive',
     };
     let Endpoint1 = {
-      endpoint: ['Dot', { radius: 7 }],
+      endpoint: ['Dot', { radius: 5 }],
       paintStyle: { fill: '#99cb3a' },
       isSource: true,
       scope: 'jsPlumb_DefaultScope',
@@ -62,16 +62,32 @@ export class NodeComponent implements AfterViewInit {
       dropOptions: exampleDropOptions,
     };
     const { id } = this.node;
+
+
     this.jsPlumbInstance.addEndpoint(
       id,
       { anchor: 'Bottom', uuid: id + '_bottom' },
       Endpoint1
     );
+
     this.jsPlumbInstance.addEndpoint(
       id,
-      { anchor: 'Top', uuid: id + '_top' },
-      Endpoint2
+      { anchor: 'BottomRight', uuid: id + '_BottomRight' },
+      Endpoint1
     );
+
+    this.jsPlumbInstance.addEndpoint(
+      id,
+      { anchor: 'Top', uuid: id + '_Top' },
+      Endpoint1
+    );
+
+
+    // this.jsPlumbInstance.addEndpoint(
+    //   id,
+    //   { anchor: 'Top', uuid: id + '_top' },
+    //   Endpoint2
+    // );
     this.jsPlumbInstance.addEndpoint(
       id,
       { anchor: 'Right', uuid: id + '_Right' },
@@ -83,11 +99,11 @@ export class NodeComponent implements AfterViewInit {
       Endpoint2
     );
     
-    this.jsPlumbInstance.addEndpoint(
-      id,
-      { anchor: 'BottomRight', uuid: id + '_BottomRight' },
-      Endpoint2
-    );
+    // this.jsPlumbInstance.addEndpoint(
+    //   id,
+    //   { anchor: 'BottomRight', uuid: id + '_BottomRight' },
+    //   Endpoint2
+    // );
     this.jsPlumbInstance.addEndpoint(
       id,
       { anchor: 'BottomLeft', uuid: id + '_BottomLeft' },

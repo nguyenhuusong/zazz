@@ -22,7 +22,6 @@ export class NodeContainerComponent implements OnInit, OnChanges {
   constructor(private nodeService: NodeService, public dialogService: DialogService) { }
   ngOnChanges(changes: SimpleChanges): void {
     this.nodeService.setRootViewContainerRef(this.viewContainerRef);
-
     this.nodes.forEach(node => {
       this.nodeService.addDynamicNode(node);
     });
@@ -34,9 +33,7 @@ export class NodeContainerComponent implements OnInit, OnChanges {
     })
   }
   ngOnInit() {
-    console.log(this.viewContainerRef)
     this.nodeService.setRootViewContainerRef(this.viewContainerRef);
-
     this.nodes.forEach(node => {
       this.nodeService.addDynamicNode(node);
     });
