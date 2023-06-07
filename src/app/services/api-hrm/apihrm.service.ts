@@ -885,7 +885,7 @@ export class ApiHrmService {
   }
 
   setContractTypeTemplate(queryParams): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v2/contracttype/SetContractTypeTemplate`, queryParams, this.options)
+    return this.http.post<any>(`${apiHrmServer}/api/v2/contracttype/SetContractTypeTemplate`, queryParams, this.optionsUpload)
   }
 
   getPrintFiles(queryParams): Observable<any> {
