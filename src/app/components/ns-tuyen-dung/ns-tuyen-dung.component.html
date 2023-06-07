@@ -7,7 +7,7 @@
             <div class="d-flex end p-0 wrap col-12 md:col-12 lg:col-9 xl:col-9 gap12">
                 <div class="filter filter-search p-0 col-4 md:col-4 lg:col-4 xl:col-3">
                     <div class="fields search mb-0" [ngClass]=" query.filter ? 'valid' : 'invalid' ">
-                        <input placeholder="Vị trí, chuyên môn ..." class="input-default" type="text" autocomplete="off" id="filter"
+                        <input placeholder="Họ tên, số điện thoại, email..." class="input-default" type="text" autocomplete="off" id="filter"
                         (keydown.enter)="query.offSet = 0; first = 0;load()"
                             [(ngModel)]="query.filter">
                             <span class="placeholder-icon" (click)="query.offSet = 0; first = 0; load()">
