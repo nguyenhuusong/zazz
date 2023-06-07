@@ -1,4 +1,3 @@
-<section class="text-center">
   <div class="grid">
     <div class="col-5">
     </div>
@@ -10,13 +9,28 @@
   </div>
   <p-tabView>
     <p-tabPanel header="Fetch data">
-        -- Breadcrum
-          component dùng chung: 
-                              app-hrm-breadcrumb
-                              
+        <div class="col-12">
+          <div class="box mb-2">
+            - Thư viện sự dụng: <br>
+              &nbsp;&nbsp;+ https://primeng.org/<br>
+              &nbsp;&nbsp;+ https://www.ag-grid.com/angular-data-grid/<br><br>
+            -- Breadcrumb<br>
+            &nbsp;&nbsp; component dùng chung: <b>app-hrm-breadcrumb</b> sử dụng: https://primeng.org/breadcrumb (p-breadcrumb)<br><br>
+            --paginator: phân trang<br>
+            &nbsp;&nbsp;component: https://primeng.org/paginator<br><br>
+            -- Grid (table)<br>
+            &nbsp;&nbsp; component dùng chung: <b>app-list-grid-angular</b> sử dụng: https://www.ag-grid.com/angular-data-grid/ (ag-grid-angular)<br><br>
+          </div>
+          <div class="box">
+            <h3>Fetch data ra bảng</h3>
+            <b>Đổ data trang danh sách tuyển dụng: làm giống trang này https://dev-web-hrm.unicloudgroup.com.vn/tuyen-dung/ds-tuyen-dung</b><br>
+            branch: newFetchData<br>
+            API: https://dev.api.hrm.unicloudgroup.com.vn/swagger/index.html<br>
+            API tuyển dụng: /api/v1/recruitcandidate/GetCandidatePage <br>
+            User: admin/123456A@,<br>
 
-
-        https://www.ag-grid.com/javascript-data-grid/
+          </div>
+        </div>
     </p-tabPanel>
     <p-tabPanel header="Icon">
         <div class="grid">
@@ -32,4 +46,3 @@
         
     </p-tabPanel>
 </p-tabView>
-</section>
