@@ -1917,3 +1917,19 @@ app-import-excel
 img{
     max-width: 100%;
 }
+
+p-sidebar{
+    &>.p-sidebar{
+        z-index: 9999 !important;
+        p-sidebar{
+            &>.p-sidebar{
+                z-index: 99999 !important;
+                p-sidebar{
+                    &>.p-sidebar{
+                        z-index: 999999 !important;
+                    }
+                }
+            }
+        }
+    }
+}
