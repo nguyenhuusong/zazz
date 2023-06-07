@@ -1,0 +1,6 @@
+[class*="col"] {
+    margin-bottom: 15px !important;
+}
+:host::ng-deep .mb2{
+        margin-bottom: 5px !important;
+    }

@@ -59,6 +59,7 @@
     </section>
 </div>
 
+<!-- (onHide)="hidePrint()" -->
 <p-sidebar
     [style]="{ width: '80%' }"
     [(visible)]="displayPrint" 
@@ -88,7 +89,7 @@
             </div>
         </div>
         <div class="col-2">
-            <div class="field-group valid">
+            <div class="fields">
                 <label for="" style="z-index: 2">Số lần in</label>
                 <input type="number" name="Copies" [(ngModel)]="modelPrint.Copies">
             </div>
@@ -108,7 +109,7 @@
         </div>
         <div class="col-2">
             <label for="" style="visibility: hidden;display: block;margin-bottom: 3px;">Thực hiện</label>
-            <p-button label="Thực hiện" styleClass="p-button-sm mb-2"
+            <p-button label="Thực hiện" styleClass="p-button-sm p-button-lg"
                 [disabled]="filesPrints.length === 0 || !modelPrint.PrinterName || modelPrint.Copies === 0 || !modelPrint.Copies"
                 (onClick)="openPrint()"></p-button>
         </div>
@@ -121,12 +122,16 @@
             [domLayout]="'autoHeight'"
             [rowSelection]="'multiple'" 
             [idGrid]="'prints'" 
-            (callback)="rowSelected($event)" 
-           
+            (callback)="callbackRowSelected($event)" 
+            (rowSelected)="rowSelected2($event)" 
+            (onSelectionChanged)="onSelectionChanged($event)"
             (showConfig)="cauhinh()"
-            [detailCellRendererParams]="detailCellRendererParams"
+            [frameworkComponents]="frameworkComponents"
+            (gridReady)="onGridReady($event)"
+            [detailCellRenderer]="detailCellRenderer"
             [columnDefs]="columnDefsPrint"></app-list-grid-angular>
     </div>
+    <!-- [detailCellRendererParams]="detailCellRenderer" -->
 
 
     <!-- <div class="row mt-1">

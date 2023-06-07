@@ -135,6 +135,7 @@ import { TongQuanNhanSuComponent } from 'src/app/components/ns-ho-so-nhan-su/ton
 import { ChartModule } from 'primeng/chart';
 import { KnobModule } from 'primeng/knob';
 import { ToastModule } from 'primeng/toast';
+import { DetailRendererGrid } from 'src/app/common/detail-renderer-grid/detailRendererGrid';
 @NgModule({
   imports: [
     MessagesModule,
@@ -278,9 +279,14 @@ import { ToastModule } from 'primeng/toast';
     ChamCongComponent,
     ChiTietChamCongComponent,
     TongQuanNhanSuComponent,
-
+    DetailRendererGrid
 
   ],
-  providers: [ ]
+  providers: [ 
+    DetailRendererGrid
+  ],
+  entryComponents: [
+    DetailRendererGrid
+  ],
 })
 export class NhanSuModule { }

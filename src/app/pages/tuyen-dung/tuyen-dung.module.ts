@@ -95,6 +95,7 @@ import { HopDongComponent } from 'src/app/components/ns-tuyen-dung/chi-tiet-tuye
 import { CheckboxModule } from 'primeng/checkbox';
 import { TabCandidateInterviewComponent } from 'src/app/components/ns-tuyen-dung/chi-tiet-tuyen-dung/tab-candidate-interview/tab-candidate-interview.component';
 import { TabCandidateFinalComponent } from 'src/app/components/ns-tuyen-dung/chi-tiet-tuyen-dung/tab-candidate-final/tab-candidate-final.component';
+import { AngularJsplumbModule } from 'src/app/common/angular-jsplumb/angular-jsplumb.module';
 @NgModule({
   imports: [
     MessagesModule,
@@ -146,6 +147,7 @@ import { TabCandidateFinalComponent } from 'src/app/components/ns-tuyen-dung/chi
     TreeSelectModule,
     RadioButtonModule,
     CheckboxModule,
+    AngularJsplumbModule,
     AgGridModule.withComponents([
       ButtonRendererComponent,
       ButtonRendererComponent1

@@ -228,6 +228,8 @@ import { Router } from '@angular/router';
   
     ngOnInit() {
     this.load();
+ 
+
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Tuyển dụng' },
@@ -280,6 +282,26 @@ import { Router } from '@angular/router';
   tabIndex = 0
   handleChange(index) {
     this.tabIndex = index;
+  }
+  isFormDetailJsplumb : boolean = false;
+  settingJsplumb() {
+    this.isFormDetailJsplumb = true;
+      setTimeout(() => {
+        this.fillFromJson();
+      }, 500);
+
+  }
+
+  nodes = [];
+
+  connections = [];
+  fillFromJson() {
+    const json = `{"nodes":[{"id":"Step id_863206","title":"TODO","type":"","top":279,"left":46},{"id":"Step id_744b6b","title":"UN-DO","type":"","top":108,"left":500},{"id":"Step id_67beea","title":"IN PROGRESS","type":"","top":435,"left":325},{"id":"Step id_b28216","title":"REOPENED","type":"","top":681,"left":317},{"id":"Step id_2429ed","title":"RESOLVED","type":"","top":460,"left":1032},{"id":"Step id_6a3b13","title":"IN-REVIEW","type":"","top":447,"left":682},{"id":"Step id_3dd5f5","title":"DONE","type":"","top":475,"left":1317}],"connections":[{"uuids":["Step id_744b6b_bottom","Step id_863206_top"]},{"uuids":["Step id_744b6b_bottom","Step id_67beea_top"]},{"uuids":["Step id_863206_bottom","Step id_67beea_Left"]},{"uuids":["Step id_b28216_bottom","Step id_67beea_BottomLeft"]},{"uuids":["Step id_67beea_bottom","Step id_6a3b13_TopLeft"]},{"uuids":["Step id_67beea_bottom","Step id_2429ed_TopLeft"]},{"uuids":["Step id_6a3b13_bottom","Step id_2429ed_BottomLeft"]},{"uuids":["Step id_2429ed_bottom","Step id_3dd5f5_TopLeft"]},{"uuids":["Step id_3dd5f5_bottom","Step id_2429ed_BottomRight"]},{"uuids":["Step id_2429ed_bottom","Step id_b28216_Right"]}]}`;
+    const data = JSON.parse(json);
+    this.nodes = data.nodes;
+    console.log(this.nodes )
+
+    this.connections = data.connections;
   }
   
   

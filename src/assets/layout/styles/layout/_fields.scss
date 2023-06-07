@@ -291,6 +291,9 @@
         }
         &.bgTodo{
             background-color: $secondary;
+            .p-dropdown-label{
+                color: #fff;
+            }
             .p-dropdown-trigger{
                 color: #fff;
             }
@@ -669,6 +672,21 @@
         line-height: 1;
         font-size: 10px;
     }
+    p-autocomplete{
+        .p-autocomplete-multiple-container{
+            padding: 0px;
+            border: none;
+            &:focus{
+                box-shadow: none !important;
+            }
+            .p-autocomplete-input-token{
+                padding: 0px;
+                input{
+                    border: 1px solid #E2E6F2 !important;
+                }
+            }
+        }
+    }
 }
 .linkurl-drag{
     margin-bottom: 16px;
@@ -803,5 +821,11 @@ app-type-linkurl-drag{
             padding-top: 10px;
             padding-bottom: 10px;
         }
+    }
+}
+
+p-button{
+    .p-button-lg{
+        height: 40px;
     }
 }

@@ -178,19 +178,22 @@ export class TinhLuongComponent implements OnInit {
   }
 
   checkTitleAddNew() {
+    const itemBread = cloneDeep(this.items);
+    this.items = [];
     if (this.tabIndex === 0) {
       this.titleAddnew = 'Bảng lương';
-      this.items[this.items.length - 1] = 'Bảng lương';
+      itemBread[itemBread.length - 1].label = 'Bảng lương';
     } else if (this.tabIndex === 1) {
       this.titleAddnew = 'Thiết lâp tham số';
-      this.items[this.items.length - 1] = 'Thiết lâp tham số';
+      itemBread[itemBread.length - 1].label = 'Thiết lâp tham số';
     } else if (this.tabIndex === 2) {
       this.titleAddnew = 'Thành phần lương';
-      this.items[this.items.length - 1] = 'Thành phần lương';
+      itemBread[itemBread.length - 1].label = 'Thành phần lương';
     } else if (this.tabIndex === 3) {
       this.titleAddnew = 'Cấp bậc lương';
-      this.items[this.items.length - 1] = 'Cấp bậc lương';
+      itemBread[itemBread.length - 1].label = 'Cấp bậc lương';
     }
+    this.items = itemBread
   }
 
   hrDiagram() {

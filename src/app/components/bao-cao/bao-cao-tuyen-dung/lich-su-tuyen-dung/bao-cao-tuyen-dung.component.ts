@@ -104,6 +104,7 @@ export class BaoCaoTuyenDungComponent implements OnInit {
     { label: 'Hiển thị', value: 'ViewReport', class: 'p-button-sm', icon: 'pi pi-plus' },
     // { label: 'Mở tệp', value: 'OpenReport', class: 'p-button-sm p-button-success ml-2  addNew', icon: 'pi pi-clone' },
     { label: 'Lưu tệp', value: 'DowloadReport', class: 'p-button-sm p-button-success', icon: 'pi pi-cloud-download' },
+    { label: 'Clear', value: 'Clear', class: 'p-button-sm p-button-warning', icon: 'pi pi-times' },
   ];
 
   changeReportTypeValue(event) {
@@ -112,12 +113,11 @@ export class BaoCaoTuyenDungComponent implements OnInit {
     this.columnDefs = [];
     this.isShowLists = false;
     let dataSelected = this.dataReportTypeValue.filter(d => parseInt(d.int_order) === parseInt(this.reportTypeValue))
-    console.log(dataSelected)
     if (dataSelected.length > 0) {
-     setTimeout(() => {
-      this.detailInfoReport = dataSelected[0];
-      this.listViewsReport = dataSelected[0].group_fields;
-     }, 200);
+      setTimeout(() => {
+        this.detailInfoReport = dataSelected[0];
+        this.listViewsReport = dataSelected[0].group_fields;
+      }, 200);
     }
   }
 
@@ -152,62 +152,62 @@ export class BaoCaoTuyenDungComponent implements OnInit {
     delete params.type;
     const queryParams = queryString.stringify(params);
     this.apiService.getReportAll(this.detailInfoReport.api_url_view, queryParams)
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(
-      (results: any) => {
-        this.listsData = results.data.dataList;
-        this.gridKey= results.data.gridKey;
-        this.isGridTree = results.data.gridType === 1 ? true : false;
-        if (this.query.offSet === 0) {
-          this.cols = results.data.gridflexs;
-          this.colsDetail = results.data.childgridflexs ? results.data.childgridflexs : [];
-        }
-        if(this.isGridTree) {
-          this.initGridTree(results.data.treeName);
-        }else {
-          this.initGrid();
-        }
-        this.countRecord.totalRecord = results.data.recordsTotal;
-        this.countRecord.totalRecord = results.data.recordsTotal;
-        this.countRecord.currentRecordStart = results.data.recordsTotal === 0 ? this.query.offSet = 0 : this.query.offSet + 1;
-        if ((results.data.recordsTotal - this.query.offSet) > this.query.pageSize) {
-          this.countRecord.currentRecordEnd = this.query.offSet + Number(this.query.pageSize);
-        } else {
-          this.countRecord.currentRecordEnd = results.data.dataList.recordsTotal;
-          setTimeout(() => {
-            const noData = document.querySelector('.ag-overlay-no-rows-center');
-            if (noData) { noData.innerHTML = 'Không có kết quả phù hợp' }
-          }, 100);
-        }
-        this.spinner.hide();
-      },
-      error => {
-        this.spinner.hide();
-      });
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        (results: any) => {
+          this.listsData = results.data.dataList;
+          this.gridKey = results.data.gridKey;
+          this.isGridTree = results.data.gridType === 1 ? true : false;
+          if (this.query.offSet === 0) {
+            this.cols = results.data.gridflexs;
+            this.colsDetail = results.data.childgridflexs ? results.data.childgridflexs : [];
+          }
+          if (this.isGridTree) {
+            this.initGridTree(results.data.treeName);
+          } else {
+            this.initGrid();
+          }
+          this.countRecord.totalRecord = results.data.recordsTotal;
+          this.countRecord.totalRecord = results.data.recordsTotal;
+          this.countRecord.currentRecordStart = results.data.recordsTotal === 0 ? this.query.offSet = 0 : this.query.offSet + 1;
+          if ((results.data.recordsTotal - this.query.offSet) > this.query.pageSize) {
+            this.countRecord.currentRecordEnd = this.query.offSet + Number(this.query.pageSize);
+          } else {
+            this.countRecord.currentRecordEnd = results.data.dataList.recordsTotal;
+            setTimeout(() => {
+              const noData = document.querySelector('.ag-overlay-no-rows-center');
+              if (noData) { noData.innerHTML = 'Không có kết quả phù hợp' }
+            }, 100);
+          }
+          this.spinner.hide();
+        },
+        error => {
+          this.spinner.hide();
+        });
   }
 
   loadExport(queryParams: any, type: string) {
     this.spinner.show();
     this.apiService.getDataFile(this.detailInfoReport.api_url_dowload, queryParams)
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(
-      (results: any) => {
-        if (results.type === 'application/json') {
-          this.spinner.hide();
-        } else {
-          let type = '.xlsx'
-          if(queryParams.exportType === 'pdf') {
-            type = '.pdf'
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        (results: any) => {
+          if (results.type === 'application/json') {
+            this.spinner.hide();
+          } else {
+            let type = '.xlsx'
+            if (queryParams.exportType === 'pdf') {
+              type = '.pdf'
+            }
+            var blob = new Blob([results], { type: queryParams.exportType === 'pdf' ? 'application/pdf' : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+            FileSaver.saveAs(blob, this.detailInfoReport.report_name + type);
+            this.spinner.hide();
           }
-          var blob = new Blob([results], { type: queryParams.exportType === 'pdf' ? 'application/pdf' : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-          FileSaver.saveAs(blob, this.detailInfoReport.report_name + type);
+
+        },
+        error => {
           this.spinner.hide();
-        }
-      
-      },
-      error => {
-        this.spinner.hide();
-      });
+        });
   }
 
   createImageFromBlob(image: string, fileName: string) {
@@ -222,22 +222,21 @@ export class BaoCaoTuyenDungComponent implements OnInit {
 
 
   initGrid() {
-    console.log("sddddddđ")
     this.columnDefs = [
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide))
     ]
   }
 
-  autoGroupColumnDef:any = null;
+  autoGroupColumnDef: any = null;
   getDataPath: any = null;
   isGridTree = false;
   initGridTree(treeName: string) {
- 
+
     this.autoGroupColumnDef = {
       headerName: treeName,
-      cellClass: [ 'no-auto'],
+      cellClass: ['no-auto'],
       // cellClass: parmas => parmas.node.level > 0  ?  ['hidden'] : [''],
-     minWidth: 400,
+      minWidth: 400,
       cellRendererParams: {
         suppressCount: true,
       },
@@ -258,7 +257,7 @@ export class BaoCaoTuyenDungComponent implements OnInit {
       this.listsDataChilren = event.data.children;
       this.org_name = event.data.org_name;
       this.displaydetailChilren = true;
-    } 
+    }
   }
 
   dataRouter: any = null;
@@ -274,22 +273,40 @@ export class BaoCaoTuyenDungComponent implements OnInit {
   }
 
   close(event) {
-    this.getReportList();
+    console.log(event)
+    if (event.event === 'Clear') {
+      this.query.offSet = 0;
+      this.query.pageSize = 0;
+      this.listViewsReport = [];
+      this.isShowLists = false;
+      setTimeout(() => {
+        this.listViewsReport = this.detailInfoReport.group_fields;
+        this.listsData = [];
+        this.columnDefs = [];
+      }, 200);
+      // this.isShowLists = true;
+      // const queryParams = queryString.stringify({ ...event.data });
+      // this.loadExport(queryParams, 'open');
+    } else {
+      this.getReportList();
+
+    }
   }
   isShowLists: boolean = false;
   getReport(event) {
-    if(event.type === "ViewReport") {
+    console.log(event)
+    if (event.type === "ViewReport") {
       this.isShowLists = true;
-      this.query = {...this.query, ...event.data}
+      this.query = { ...this.query, ...event.data }
       this.load();
-    }else if(event.type === "OpenReport") {
+    } else if (event.type === "OpenReport") {
       this.isShowLists = true;
       const queryParams = queryString.stringify({ ...event.data });
       this.loadExport(queryParams, 'open');
-    }else {
+    } else {
       this.loadExport({ ...event.data }, 'dowload');
     }
-  
+
   }
 
 

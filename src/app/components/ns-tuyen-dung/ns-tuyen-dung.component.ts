@@ -691,7 +691,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   }
 
   sendEmail() {
-    if (!this.mailInputValue) {
+    if (!this.mailInputValue ||  this.mailInputValue.length < 1) {
       this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Chưa chọn nội dung gửi' });
       return
     }
