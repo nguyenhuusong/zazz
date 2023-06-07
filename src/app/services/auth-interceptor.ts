@@ -70,17 +70,17 @@ export class AuthInterceptor implements HttpInterceptor {
                 handled = true;
                 break;
             case 500:
-                // this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: `Error: Lỗi 500 !` });
+                this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: `Error: Lỗi Server !` });
                 this.spinner.hide();
                 handled = true;
                 break;
             case 404:
-                this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: `Error: Lỗi 404 !` });
+                this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: `Error: Lỗi đường dẫn !` });
                 this.spinner.hide();
                 handled = true;
                 break;
             case 0:
-                // this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: `Error: Lỗi 500 !` });
+                this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: `Error: Lỗi Server !` });
                 this.spinner.hide();
                 handled = true;
                 break;

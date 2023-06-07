@@ -1920,13 +1920,13 @@ img{
 
 p-sidebar{
     &>.p-sidebar{
-        z-index: 9999 !important;
+        z-index: 1103 !important;
         p-sidebar{
             &>.p-sidebar{
-                z-index: 99999 !important;
+                z-index: 1104 !important;
                 p-sidebar{
                     &>.p-sidebar{
-                        z-index: 999999 !important;
+                        z-index: 1105 !important;
                     }
                 }
             }
