@@ -46,7 +46,7 @@ export class AppTypeImageComponent implements OnInit {
   constructor(
     private spinner: NgxSpinnerService,
     private messageService: MessageService,
-    private apiService: ApiService
+    private apiService: ApiHrmService,
   ) { }
   ngOnInit(): void {
 
@@ -58,44 +58,43 @@ export class AppTypeImageComponent implements OnInit {
   }
   onUploadOutput(event, field_name) {
     this.spinner.show();
+    // if (event.target.files[0] && event.target.files[0].size > 0) {
+    //   const getDAte = new Date();
+    //   const getTime = getDAte.getTime();
+    //   const storageRef = firebase.storage().ref();
+    //   const uploadTask = storageRef.child(`ksbond/images/${getTime}-uninini-${event.target.files[0].name}`).put(event.target.files[0]);
+    //   uploadTask.on('state_changed', (snapshot) => {
+    //   }, (error) => {
+    //   }, () => {
+    //     uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+    //       if (downloadURL) {
+    //         this.element.columnValue = downloadURL;
+    //         this.avatarUrl = downloadURL;
+    //         this.isUploadAvatar = false;
+    //         this.spinner.hide();
+    //         this.avatarUrlCallback.emit(this.avatarUrl)
+    //         this.spinner.hide();
+    //       }
+
+    //     }).catch(error => {
+    //       this.spinner.show();
+    //     });
+    //   });
+    // }
+      // this.uploadedFiles.push(event.currentFiles[index].name);
     if (event.target.files[0] && event.target.files[0].size > 0) {
-      const getDAte = new Date();
-      const getTime = getDAte.getTime();
-      const storageRef = firebase.storage().ref();
-      const uploadTask = storageRef.child(`ksbond/images/${getTime}-uninini-${event.target.files[0].name}`).put(event.target.files[0]);
-      uploadTask.on('state_changed', (snapshot) => {
-      }, (error) => {
-      }, () => {
-        uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-          if (downloadURL) {
-            this.element.columnValue = downloadURL;
-            this.avatarUrl = downloadURL;
-            this.isUploadAvatar = false;
-            this.spinner.hide();
-            this.avatarUrlCallback.emit(this.avatarUrl)
-            // this.dataView.forEach(element => {
-            //   element.fields.forEach(async element1 => {
-            //     if (element1.field_name === 'meta_file_type') {
-            //       element1.columnValue = event.target.files[0].type
-            //     } else if (element1.field_name === 'meta_file_size') {
-            //       element1.columnValue = event.target.files[0].size
-            //     } else if (element1.field_name === 'meta_file_name') {
-            //       element1.columnValue = event.target.files[0].name
-            //     } else if (element1.field_name === 'meta_file_url') {
-            //       element1.columnValue = downloadURL
-            //     }
-            //   });
-            // });
-            this.spinner.hide();
-          }
-
-        }).catch(error => {
-          this.spinner.show();
-        });
-      });
+      const formData = new FormData();
+      formData.append('formFile', event.target.files[0]);
+      console.log('formData', formData)
+      this.apiService.getCardVehicleFile(formData).subscribe(result => {
+        if(result.status === 'success') {
+          this.element.columnValue = result.data;
+          this.avatarUrl = result.data;
+          this.avatarUrlCallback.emit(this.avatarUrl)
+          this.spinner.hide();
+        }
+      })
     }
-
-
   }
 }
 
@@ -1631,14 +1630,20 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    // console.log('this.uploadedFiles',this.element)
     this.element.columnValue = this.element.columnValue && (typeof this.element.columnValue === 'string') ? this.element.columnValue.split(',') : this.element.columnValue 
-    this.element.columnValue = this.element.columnValue && this.element.columnValue.length > 0 ? this.element.columnValue : []
+    // this.element.columnValue = this.element.columnValue && this.element.columnValue.length > 0 ? this.element.columnValue : []
     this.dataView.forEach(element => {
       element.fields.forEach(async element1 => {
-        if (((element1.field_name === 'AttachName') || (element1.field_name === 'attached_name') || (element1.field_name === 'attachName')) && element1.columnValue ) {
-          this.uploadedFiles = element1.columnValue.split(',');
-        }else if(element1.field_name === 'meta_file_name' && element1.columnValue){
-           this.uploadedFiles.push(element1.columnValue);
+        if(element1.columnType === 'linkUrlDrag'){
+          if (((element1.field_name === 'AttachName') || (element1.field_name === 'attached_name') || (element1.field_name === 'attachName')) && element1.columnValue ) {
+            this.uploadedFiles = element1.columnValue;
+          }else if(element1.field_name === 'meta_file_name' && element1.columnValue){
+             this.uploadedFiles.push(element1.columnValue);
+          }else if(element1.field_name !== 'link_view'){
+            this.uploadedFiles = element1.columnValue;
+            console.log('this.uploadedFiles', this.uploadedFiles)
+          }
         }
         // else if(element1.field_name === 'link_view'){
         //   console.log('link view', element1.columnValue)
@@ -1681,13 +1686,26 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
         if(this.detailInfo && this.detailInfo.hasOwnProperty('formFile')) {
           this.detailInfo.formFile = event.currentFiles;
         }
-        for(let index in event.currentFiles) {
-            this.uploadedFiles.push(event.currentFiles[index].name);
-            if(!this.isUploadMultiple) {
-              this.uploadedFiles = []
-              this.uploadedFiles.push(event.currentFiles[index].name);
-            }
+        for(let file of event.currentFiles) {
+            // this.uploadedFiles.push(event.currentFiles[index].name);
+            const formData = new FormData();
+            formData.append('formFile', file);
+            console.log('formData', formData)
+            this.apiService.getCardVehicleFile(formData).subscribe(result => {
+              if(result.status === 'success') {
+                if(this.isUploadMultiple) {
+                  this.uploadedFiles.push(result.data);
+                }else if(!this.isUploadMultiple) {
+                  this.uploadedFiles = []
+                  this.uploadedFiles.push(result.data);
+                  // this.uploadedFiles.push(event.currentFiles[index].name);
+                }
+                this.element.columnValue = this.uploadedFiles;
+              }
+              
+            })
         }
+
       }else{
         // this.spinner.hide();
         // if(event.files.length > 0){
