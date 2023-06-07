@@ -173,7 +173,7 @@ export class BaoCaoTuyenDungComponent implements OnInit {
           if ((results.data.recordsTotal - this.query.offSet) > this.query.pageSize) {
             this.countRecord.currentRecordEnd = this.query.offSet + Number(this.query.pageSize);
           } else {
-            this.countRecord.currentRecordEnd = results.data.dataList.recordsTotal;
+            this.countRecord.currentRecordEnd = results.data.recordsTotal;
             setTimeout(() => {
               const noData = document.querySelector('.ag-overlay-no-rows-center');
               if (noData) { noData.innerHTML = 'Không có kết quả phù hợp' }
@@ -276,7 +276,7 @@ export class BaoCaoTuyenDungComponent implements OnInit {
     console.log(event)
     if (event.event === 'Clear') {
       this.query.offSet = 0;
-      this.query.pageSize = 0;
+      this.query.pageSize = 20;
       this.listViewsReport = [];
       this.isShowLists = false;
       setTimeout(() => {
@@ -297,6 +297,8 @@ export class BaoCaoTuyenDungComponent implements OnInit {
     console.log(event)
     if (event.type === "ViewReport") {
       this.isShowLists = true;
+      this.query.offSet = 0;
+      this.query.pagesize = 20;
       this.query = { ...this.query, ...event.data }
       this.load();
     } else if (event.type === "OpenReport") {

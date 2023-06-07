@@ -1917,7 +1917,9 @@ app-import-excel
 img{
     max-width: 100%;
 }
-
+.p-sidebar-mask{
+    z-index: 1102 !important;
+}
 p-sidebar{
     &>.p-sidebar{
         z-index: 1103 !important;
