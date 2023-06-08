@@ -6,7 +6,7 @@ import * as numeral from 'numeral';
 export class CurrencyFormatPipe implements PipeTransform {
 
   transform(value: any): string {
-    return numeral(value).format('0,0[.][00]');
+    return numeral(value).format('0,0[.][000]');
   }
 
 }
