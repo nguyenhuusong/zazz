@@ -1589,7 +1589,7 @@ export class AppTypeLinkUrlRadioListComponent implements OnInit {
                           </li>
                       </ul> -->
                     </div>
-                    <div class="file-uploaded" *ngIf="uploadedFiles.length > 0">
+                    <div class="file-uploaded" *ngIf="uploadedFiles && uploadedFiles?.length > 0">
                     <ul>
                         <li class="d-flex middle bet" *ngFor="let file of uploadedFiles; let i=index">
                         <a [href]="file" target="_blank">{{ file }} </a>
@@ -1637,12 +1637,11 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
       element.fields.forEach(async element1 => {
         if(element1.columnType === 'linkUrlDrag'){
           if (((element1.field_name === 'AttachName') || (element1.field_name === 'attached_name') || (element1.field_name === 'attachName')) && element1.columnValue ) {
-            this.uploadedFiles = element1.columnValue;
+            this.uploadedFiles.push(element1.columnValue);
           }else if(element1.field_name === 'meta_file_name' && element1.columnValue){
              this.uploadedFiles.push(element1.columnValue);
-          }else if(element1.field_name !== 'link_view'){
-            this.uploadedFiles = element1.columnValue;
-            console.log('this.uploadedFiles', this.uploadedFiles)
+          }else if(element1.field_name !== 'link_view' && element1.columnValue){
+            this.uploadedFiles.push(element1.columnValue);
           }
         }
         // else if(element1.field_name === 'link_view'){
@@ -1685,12 +1684,12 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
       if(event.currentFiles.length > 0){
         if(this.detailInfo && this.detailInfo.hasOwnProperty('formFile')) {
           this.detailInfo.formFile = event.currentFiles;
-        }
-        for(let file of event.currentFiles) {
+           this.uploadedFiles.push(event.currentFiles[0].name);
+        }else {
+          for(let file of event.currentFiles) {
             // this.uploadedFiles.push(event.currentFiles[index].name);
             const formData = new FormData();
             formData.append('formFile', file);
-            console.log('formData', formData)
             this.apiService.getCardVehicleFile(formData).subscribe(result => {
               if(result.status === 'success') {
                 if(this.isUploadMultiple) {
@@ -1705,18 +1704,10 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
               
             })
         }
-
+        }
+       
       }else{
-        // this.spinner.hide();
-        // if(event.files.length > 0){
-        //   for( let i = 0; i < event.files.length; i ++){
-        //     if(event.files[i].size > 10000000) {
-        //       this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Kích thước file lớn hơn 20 MB' });
-        //     }
-        //   }
-        // }else{
-        //   this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Không hỗ trợ định dạng file' });
-        // }
+        
         this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Không hỗ trợ định dạng file' });
       }
       setTimeout(() => {
