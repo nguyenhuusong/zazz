@@ -63,6 +63,7 @@ export class NodeComponent implements AfterViewInit {
       maxConnections: 1,
       isTarget: true,
       dropOptions: exampleDropOptions,
+      dragAllowedWhenFull: true
     };
     const { id, title } = this.node;
 
