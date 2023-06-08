@@ -80,9 +80,10 @@ export class AddContractComponent implements OnInit {
   }
 
   setDetailInfo(data) {
+    console.log(this.dataDetailInfo.formFile)
     const formData = new FormData();
     formData.append('contractTypeId',this.contractTypeId ? `${this.contractTypeId}` : '');
-    formData.append('tempId',this.tempId ? `${this.tempId}` : '');
+    formData.append('tempId',this.tempId ? `${this.tempId}` : ``);
     formData.append('group_fields', `${JSON.stringify(data)}`);
     formData.append('formFile', (this.dataDetailInfo.formFile && this.dataDetailInfo.formFile.length > 0) ? this.dataDetailInfo.formFile[0] : '');
     this.apiService.setContractTypeTemplate(formData)
