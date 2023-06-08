@@ -754,3 +754,12 @@ export function formatNumber(value) {
 }
 
   // end parseHtmlToMarkdown
+  export function convesrtDate(value: string) {
+    const cutString = value.split(' ');
+    const stringDate = cutString[0].split('/');
+    if(cutString.length > 1) {
+      return `${stringDate[2]}-${stringDate[1]}-${stringDate[0]} ${cutString[1]}`
+    }else {
+      return `${stringDate[2]}-${stringDate[1]}-${stringDate[0]}`
+    }
+  }
