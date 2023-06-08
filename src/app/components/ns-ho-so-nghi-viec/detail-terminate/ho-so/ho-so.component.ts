@@ -17,6 +17,7 @@ import { environment } from 'src/environments/environment';
 })
 export class HoSoComponent implements OnInit {
   @Input() terminateId = null;
+  fileSelectedToPrint = []
   optionsButtonsPopup = [
     { label: 'Bỏ qua', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
     { label: 'Xác nhận', value: 'Update', class: 'btn-accept' }
@@ -337,8 +338,31 @@ export class HoSoComponent implements OnInit {
             return 40;
           },
           columnDefs: [
+            {
+              field: '',
+              checkboxSelection: true,
+              filter: '',
+              pinned: 'left',
+              cellClass: ['border-right'],
+              headerCheckboxSelection: true,
+              headerCheckboxSelectionFilteredOnly: true,
+            },
             ...AgGridFn(this.dataPrint.detailGrid),
           ],
+
+          onSelectionChanged: (params) => {
+            params.api.forEachNode(detailRowNode => {
+              if (detailRowNode.isSelected()) {
+                if (this.fileSelectedToPrint.map(d => d.id).indexOf(detailRowNode.data.id) < 0) {
+                  this.fileSelectedToPrint.push(detailRowNode.data);
+                  this.fileSelectedToPrint = [...this.fileSelectedToPrint];
+                }
+              } else {
+                this.fileSelectedToPrint = this.fileSelectedToPrint.filter(d => d.id !== detailRowNode.data.id);
+                this.fileSelectedToPrint = [...this.fileSelectedToPrint];
+              }
+            });
+          },
 
           enableCellTextSelection: true,
           onFirstDataRendered(params) {
@@ -383,6 +407,12 @@ export class HoSoComponent implements OnInit {
     Copies: 1
   }
 
+  rowPrintSelected(event) {
+    this.fileSelectedToPrint = event;
+    console.log('this.fileSelectedToPrint', this.fileSelectedToPrint)
+  }
+
+
   isPrinted = false
   openPrint() {
     this.isPrinted = true;
@@ -390,13 +420,16 @@ export class HoSoComponent implements OnInit {
     for(let item of this.filesPrints) {
       filesPrints = [...item.contractFiles]
     }
-    console.log(filesPrints)
+    if(this.fileSelectedToPrint.length === 0) {
+      this.messageService.add({ severity: 'warn', summary: 'Thông báo', detail: 'Cần chọn hợp đồng để in' });
+      return ;
+    }
     const data = {
       "action": "PRINT",
       "data": {
         "PrinterName": this.modelPrint.PrinterName,
         "Copies": this.modelPrint.Copies,
-        "Files": filesPrints.map(d => {
+        "Files": this.fileSelectedToPrint.map(d => {
           return {
             "Filename": d.filename,
             "Url": d.url,

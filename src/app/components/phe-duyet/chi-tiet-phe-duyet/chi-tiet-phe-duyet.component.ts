@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import queryString from 'query-string';
@@ -22,7 +22,8 @@ export class ChiTietPheDuyetComponent implements OnInit, OnDestroy {
     { label: 'Quay lại', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
     { label: 'Xác nhận', value: 'Update', class: '', icon: 'pi pi-check' }
   ];
-  wft_id: any = ''
+  @Input() wft_id = '';
+  @Output() callback = new EventEmitter<any>();
   setWorkQuery = {
     wft_id: "",
     work_type: "",
@@ -64,7 +65,6 @@ export class ChiTietPheDuyetComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((params) => {
         this.paramsObject = { ...params.keys, ...params };
-        this.wft_id = this.paramsObject.params.wft_id || null
         this.getWorkflowInfo();
       });
   };
@@ -95,8 +95,8 @@ export class ChiTietPheDuyetComponent implements OnInit, OnDestroy {
       .subscribe((results: any) => {
         if (results.status === 'success') {
           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
-          this.router.navigate(['/nhan-su/phe-duyet']);
           this.spinner.hide();
+          this.callback.emit()
         } else {
           this.messageService.add({
             severity: 'error', summary: 'Thông báo',
