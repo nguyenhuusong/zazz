@@ -307,6 +307,9 @@
             top: 50%;
             transform: translateY(-50%);
         }
+        &:hover{
+            border-color: rgba(10, 88, 202, 0.46) !important;
+        }
     }
     .p-treeselect{
         width: 100% !important;
@@ -827,5 +830,14 @@ app-type-linkurl-drag{
 p-button{
     .p-button-lg{
         height: 40px;
+    }
+}
+
+
+p-image{
+    .p-image-preview-indicator{
+        .p-image-preview-icon{
+            position: static;
+        }
     }
 }

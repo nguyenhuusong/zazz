@@ -65,7 +65,8 @@
             <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
         </svg> &nbsp;&nbsp;
         Danh sách hồ sơ cá nhân cần cập nhật </ng-template>
-        <app-list-grid-angular 
+        <div class="section-box">
+            <app-list-grid-angular 
             [domLayout]="'autoHeight'" 
             *ngIf="columnDefsRecord.length > 0" 
             [idGrid]="gridKey + '_45dfsupload'"
@@ -73,6 +74,7 @@
             [listsData]="listsDataRecord" 
             [columnDefs]="columnDefsRecord">
         </app-list-grid-angular>
+        </div>
         <ng-template pTemplate="footer">
             <div class="d-flex" style="justify-content: space-between">
                 <div>

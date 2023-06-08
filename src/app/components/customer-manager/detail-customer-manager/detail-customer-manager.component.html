@@ -69,21 +69,23 @@
             (callback)="setEmpManagerChange($event)" 
             (callbackcancel)="cancelUpdatChangeMg($event)">
         </app-edit-detail>
-        <app-list-grid-angular 
-            (callback)="rowSelected($event)"
-            [rowSelection]="'multiple'"
-            *ngIf="columnDefsMgChange.length > 0" 
-            [listsData]="listData" 
-            [height]="heightGridPopup"
-            [columnDefs]="columnDefsMgChange">
-        </app-list-grid-angular>
-        <div class="paginator">
-            <span>Từ {{ countRecord.currentRecordStart }} đến
-                {{ countRecord.currentRecordEnd }}
-                trên tổng số
-                {{ countRecord.totalRecord }} kết quả</span>
-            <p-paginator [rows]="query.pageSize" [totalRecords]="countRecord.totalRecord" [first]="first"
-                (onPageChange)="paginate($event, true)" [rowsPerPageOptions]="[20,40,60,100,200,{ showAll: 'ALL' }]">
-            </p-paginator>
+        <div class="section-box">
+            <app-list-grid-angular 
+                (callback)="rowSelected($event)"
+                [rowSelection]="'multiple'"
+                *ngIf="columnDefsMgChange.length > 0" 
+                [listsData]="listData" 
+                [height]="heightGridPopup"
+                [columnDefs]="columnDefsMgChange">
+            </app-list-grid-angular>
+            <div class="paginator">
+                <span>Từ {{ countRecord.currentRecordStart }} đến
+                    {{ countRecord.currentRecordEnd }}
+                    trên tổng số
+                    {{ countRecord.totalRecord }} kết quả</span>
+                <p-paginator [rows]="query.pageSize" [totalRecords]="countRecord.totalRecord" [first]="first"
+                    (onPageChange)="paginate($event, true)" [rowsPerPageOptions]="[20,40,60,100,200,{ showAll: 'ALL' }]">
+                </p-paginator>
+            </div>
         </div>
 </p-sidebar>

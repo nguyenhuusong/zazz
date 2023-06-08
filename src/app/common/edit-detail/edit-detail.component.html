@@ -16,9 +16,11 @@
                             </div>
                         </ng-template>
                         <ng-template pTemplate="header" *ngIf="!group.group_name && idx === 0">
-                            <div >
-                                   <div> <span *ngIf="group.group_name !== 'Giấy tờ'" class="pi pi-cog cursor-pointer" [ngClass]="{'hidden': group.group_name === 'Bàn giao'}" (click)="CauHinh()"></span></div>
+                            <div class="pt-2">
+                                <div class="config-detail">
+                                    <div> <span *ngIf="group.group_name !== 'Giấy tờ'" class="pi pi-cog cursor-pointer" [ngClass]="{'hidden': group.group_name === 'Bàn giao'}" (click)="CauHinh()"></span></div>
                                 </div>
+                            </div>
                         </ng-template>
                         <div class="row" style="flex-wrap: wrap">
                             <!-- <div class="col-md-2 avatar-c" *ngIf="isShowAvatar && detailInfo?.avatarUrl && idx === 0">

@@ -4,12 +4,14 @@
         <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
     </section>
    <div class="content">
-    <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'"  [dataView]="listViews"
-        (callback)="setEmpDependent($event)" [optionsButtonsEdit]="optionsButon" (callbackcancel)="cancelUpdate($event)"></app-edit-detail>
-    <app-loading-detail 
-        [id]="'phong-hop'" 
-        *ngIf="listViews.length === 0">
-        </app-loading-detail>
+    <section>
+        <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'"  [dataView]="listViews"
+            (callback)="setEmpDependent($event)" [optionsButtonsEdit]="optionsButon" (callbackcancel)="cancelUpdate($event)"></app-edit-detail>
+        <app-loading-detail 
+            [id]="'phong-hop'" 
+            *ngIf="listViews.length === 0">
+            </app-loading-detail>
+    </section>
    </div>
    
 </div>
