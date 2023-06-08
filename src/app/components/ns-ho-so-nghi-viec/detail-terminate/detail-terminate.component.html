@@ -35,10 +35,10 @@
                                     </ng-template>
                                     <ng-template let-country pTemplate="item">
                                         <div class="flex align-items-center gap-2" *ngIf="country.value != selectedStatus?.value">
-                                            <div class="pb-2 pt-2" style="display: flex; align-items: center; width: 100%;justify-content: space-around;font-size: 13px;">
+                                            <div class="pb-2 pt-2 gap-2" style="display: flex; align-items: center; width: 100%;justify-content: space-around;font-size: 13px;">
                                                 <span style="white-space:nowrap">{{ country.placeholder }} </span>
                                                 <span class="pi pi-arrow-right" style="font-size: 12px;"></span>
-                                                <span [class]="country.textColor" style="white-space:nowrap" class="pl-2 pr-2">{{ country.name }}</span>
+                                                <span [class]="country.textColor" style="white-space:nowrap">{{ country.name }}</span>
                                             </div>
                                         </div>
                                     </ng-template>
