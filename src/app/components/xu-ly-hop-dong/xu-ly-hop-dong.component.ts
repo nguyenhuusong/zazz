@@ -740,7 +740,7 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
         var personName = params.data.empName;
         return (
           '<div style="height: 100%; background-color: #EDF6FF; padding: 20px; box-sizing: border-box;">' +
-          `  <div style="height: 10%; padding: 2px; font-weight: bold;">###### Danh sách đính kèm (${params.data.contractFiles.length}) : [` +
+          `  <div style="height: 10%; padding: 2px; font-weight: bold;">&nbsp;&nbsp;Danh sách đính kèm (${params.data.contractFiles.length}) : [` +
           personName + ']' +
           '</div>' +
           '  <div ref="eDetailGrid" style="height: 90%;"></div>' +

@@ -389,7 +389,31 @@ ag-grid-angular{
                 &.ag-row-odd{
                     // background: $white;
                 }
-                
+                &.ag-row-level-1{
+                    padding-top: 10px !important;
+                    padding-bottom: 10px !important;
+                    .ag-details-row-fixed-height{
+                        background-color: transparent !important;
+                        border: 1px solid #ccc;
+                        padding: 0px !important;
+                        width: calc(100% - 20px);
+                        margin: auto;
+                    }
+                    .ag-cell{
+                        border-top: none !important;
+                        border-bottom: none !important;
+                        background: none !important;
+                    }
+                    .ag-row-hover{
+                        background: #eee !important;
+                    }
+                    .ag-row-focus {
+                        .ag-cell{
+                            border-top: 1px solid #9abdf5 !important;
+                            border-bottom: 1px solid #9abdf5 !important;
+                        }
+                    }
+                }
             }
             .ag-cell{
                 border: 1px solid transparent;
