@@ -83,7 +83,7 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
 
   public modules: Module[] = AllModules;
   public agGridFn = AgGridFn;
-  cols: any[]= [];
+  cols: any[] = [];
   colsDetail: any[] = [];
   items = [];
   columnDefs = [];
@@ -137,7 +137,7 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
       offSet: 0,
       pageSize: 20,
     }
-    if(this.companies.length > 0) {
+    if (this.companies.length > 0) {
       this.query.companyIds = this.companies[0].value;
     }
     this.load();
@@ -180,47 +180,47 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
   cauhinh() {
     this.displaySetting = true;
   }
-  
+
   load() {
-    
+
     // for hide sidebar
     this.listRowSelects = [];
     this.isShowbtnPheDuyet = true;
-    
+
     this.columnDefs = []
     // this.spinner.show();
     let params: any = { ... this.query };
     const queryParams = queryString.stringify(params);
     this.apiService.getContractPage(queryParams)
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(
-      (results: any) => {
-        this.listsData = results.data.dataList.data;
-        this.gridKey= results.data.dataList.gridKey;
-        if (this.query.offSet === 0) {
-          this.cols = results.data.gridflexs;
-          this.colsDetail = results.data.gridflexdetails ? results.data.gridflexdetails : [];
-        }
-        this.initGrid();
-        this.countRecord.totalRecord = results.data.dataList.recordsTotal;
-        this.countRecord.totalRecord = results.data.dataList.recordsTotal;
-        this.countRecord.currentRecordStart = results.data.dataList.recordsTotal === 0 ? this.query.offSet = 0 : this.query.offSet + 1;
-        if ((results.data.dataList.recordsTotal - this.query.offSet) > this.query.pageSize) {
-          this.countRecord.currentRecordEnd = this.query.offSet + Number(this.query.pageSize);
-        } else {
-          this.countRecord.currentRecordEnd = results.data.dataList.recordsTotal;
-          setTimeout(() => {
-            const noData = document.querySelector('.ag-overlay-no-rows-center');
-            if (noData) { noData.innerHTML = 'Không có kết quả phù hợp' }
-          }, 100);
-        }
-        this.spinner.hide();
-        this.FnEvent();
-      },
-      error => {
-        this.spinner.hide();
-      });
-      this.setQueryLocalStorage();
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        (results: any) => {
+          this.listsData = results.data.dataList.data;
+          this.gridKey = results.data.dataList.gridKey;
+          if (this.query.offSet === 0) {
+            this.cols = results.data.gridflexs;
+            this.colsDetail = results.data.gridflexdetails ? results.data.gridflexdetails : [];
+          }
+          this.initGrid();
+          this.countRecord.totalRecord = results.data.dataList.recordsTotal;
+          this.countRecord.totalRecord = results.data.dataList.recordsTotal;
+          this.countRecord.currentRecordStart = results.data.dataList.recordsTotal === 0 ? this.query.offSet = 0 : this.query.offSet + 1;
+          if ((results.data.dataList.recordsTotal - this.query.offSet) > this.query.pageSize) {
+            this.countRecord.currentRecordEnd = this.query.offSet + Number(this.query.pageSize);
+          } else {
+            this.countRecord.currentRecordEnd = results.data.dataList.recordsTotal;
+            setTimeout(() => {
+              const noData = document.querySelector('.ag-overlay-no-rows-center');
+              if (noData) { noData.innerHTML = 'Không có kết quả phù hợp' }
+            }, 100);
+          }
+          this.spinner.hide();
+          this.FnEvent();
+        },
+        error => {
+          this.spinner.hide();
+        });
+    this.setQueryLocalStorage();
   }
 
   showButtons(event: any) {
@@ -253,24 +253,24 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
   }
 
   CheckHideUpdateStatus(event) {
-    if(CheckHideAction(MENUACTIONROLEAPI.GetContractPage.url, ACTIONS.CAP_NHAT_TT)) {
+    if (CheckHideAction(MENUACTIONROLEAPI.GetContractPage.url, ACTIONS.CAP_NHAT_TT)) {
       return true;
-    }else {
-      if(event.data.contract_value === 3) {
+    } else {
+      if (event.data.contract_value === 3) {
         return true;
-      }else {
+      } else {
         return false;
       }
     }
   }
 
   CheckHideXoaStatus(event) {
-    if(CheckHideAction(MENUACTIONROLEAPI.GetContractPage.url, ACTIONS.DELETE)) {
+    if (CheckHideAction(MENUACTIONROLEAPI.GetContractPage.url, ACTIONS.DELETE)) {
       return true;
-    }else {
-      if(event.data.contract_value > 0) {
+    } else {
+      if (event.data.contract_value > 0) {
         return true;
-      }else {
+      } else {
         return false;
       }
     }
@@ -293,7 +293,7 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
 
   }
   // GET /api/v2/contract/GetContractInfo
-  editRow({rowData}) {
+  editRow({ rowData }) {
     this.modelContractInfo = {
       contractId: rowData.contractId,
       empId: rowData.empId
@@ -304,8 +304,8 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
   }
 
   onCellClicked(event) {
-    if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
-      this.editRow(event = {rowData: event.data})
+    if (event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
+      this.editRow(event = { rowData: event.data })
     }
   }
 
@@ -319,14 +319,14 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
       contractId: '',
       empId: event.value
     }
-    if(event.value) {
+    if (event.value) {
       // this.router.navigate(['/nhan-su/xu-ly-hop-dong/chi-tiet-xu-ly-hop-dong'], { queryParams: params });
       this.modelContractInfo = {
         contractId: '',
         empId: event.value
       }
       this.hienthihopdong = true;
-    }else{
+    } else {
       this.isSearchEmp = false;
     }
   }
@@ -345,15 +345,15 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
       accept: () => {
         const queryParams = queryString.stringify({ contractId: event.rowData.contractId });
         this.apiService.delContractInfo(queryParams)
-        .pipe(takeUntil(this.unsubscribe$))
-        .subscribe((results: any) => {
-          if (results.status === 'success') {
-            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa hợp đồng thành công' });
-            this.load();
-          } else {
-            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
-          }
-        });
+          .pipe(takeUntil(this.unsubscribe$))
+          .subscribe((results: any) => {
+            if (results.status === 'success') {
+              this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa hợp đồng thành công' });
+              this.load();
+            } else {
+              this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+            }
+          });
       }
     });
   }
@@ -365,7 +365,7 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
   FnEvent() {
     setTimeout(() => {
       var dragTarget = document.getElementById(this.gridKey);
-      if(dragTarget) {
+      if (dragTarget) {
         const click$ = fromEvent(dragTarget, 'click');
         click$.subscribe(event => {
           this.addNew()
@@ -391,7 +391,7 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
       {
         headerComponentParams: {
           template:
-          `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
+            `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
         },
         filter: '',
         width: 100,
@@ -474,25 +474,25 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
 
   getWebSocketService() {
     this.webSocketService.myWebSocket
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(
-      repon => {
-        repon = JSON.parse(repon)
-        if (repon && repon.data && repon.data.length > 0) {
-          this.listPrints = repon.data.map(d => {
-            return {
-              label: d,
-              value: d
-            }
-          });
-          localStorage.setItem('listPrints', JSON.stringify(this.listPrints))
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        repon => {
+          repon = JSON.parse(repon)
+          if (repon && repon.data && repon.data.length > 0) {
+            this.listPrints = repon.data.map(d => {
+              return {
+                label: d,
+                value: d
+              }
+            });
+            localStorage.setItem('listPrints', JSON.stringify(this.listPrints))
 
-        }
-      },
-      err => {
-        console.log(err)
-      },
-    )
+          }
+        },
+        err => {
+          console.log(err)
+        },
+      )
   }
 
   sizeToFit() {
@@ -560,21 +560,22 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
       }
     })
     this.apiService.getPrintFiles(params)
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(results => {
-      if (results.status === 'success') {
-        this.filesPrints = results.data.dataList.data;
-        this.dataPrint = results.data;
-        this.initGridPrint();
-        this.displayPrint = true;
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(results => {
+        if (results.status === 'success') {
+          this.filesPrints = results.data.dataList.data;
+          this.dataPrint = results.data;
+          this.initGridPrint();
+          this.displayPrint = true;
 
-        this.filesPrints = results.data.dataList.data.map( (t, i ) => (
-          {...t, gridflexs: results.data.detailGrid
-          }));
+          this.filesPrints = results.data.dataList.data.map((t, i) => (
+            {
+              ...t, gridflexs: results.data.detailGrid
+            }));
 
-      }
+        }
 
-    })
+      })
   }
   rowSelected(event) {
     this.listRowSelects = event;
@@ -608,29 +609,29 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
         }
       })
       this.apiService.setListContractStatus(this.paramsPheDuyet)
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((res: any) => {
-        if (res.status === 'success') {
-          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: res.data ? res.data : '' });
-        } else {
-          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: res.message });
-        }
-      });
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((res: any) => {
+          if (res.status === 'success') {
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: res.data ? res.data : '' });
+          } else {
+            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: res.message });
+          }
+        });
     }
   }
 
   openPrint() {
-    this.isPrinted = true;
-    let filesPrints = [];
-    for(let item of this.filesPrints) {
-      filesPrints = [...item.contractFiles]
+    if(this.fileSelectedToPrint.length === 0) {
+      this.messageService.add({ severity: 'warn', summary: 'Thông báo', detail: 'Cần chọn hợp đồng để in' });
+      return ;
     }
+    this.isPrinted = true;
     const data = {
       "action": "PRINT",
       "data": {
         "PrinterName": this.modelPrint.PrinterName,
         "Copies": this.modelPrint.Copies,
-        "Files": filesPrints.map(d => {
+        "Files": this.fileSelectedToPrint.map(d => {
           return {
             "Filename": d.filename,
             "Url": d.url,
@@ -672,77 +673,81 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
   initGridPrint() {
     this.columnDefsPrint = [
       ...AgGridFn(this.dataPrint.gridflexs.filter((d: any) => !d.isHide)),
-      ]
-
-      this.detailCellRendererParams = {
-        detailGridOptions: {
-          rowSelection: 'multiple',
-          suppressRowClickSelection: true,
-          enableRangeSelection: true,
-          getRowHeight: (params) => {
-            return 40;
-          },
-          filter: '',
-          pinned: 'left',
-          cellClass: ['border-right', 'no-auto'],
-          checkboxSelection: true,
-          headerCheckboxSelection: true,
-          headerCheckboxSelectionFilteredOnly: true,
-          columnDefs: [
-            { 
-              field: '', 
-              checkboxSelection: true,
-              filter: '',
-              pinned: 'left',
-              cellClass: ['border-right'],
-              headerCheckboxSelection: true,
-              headerCheckboxSelectionFilteredOnly: true,
-            },
-            ...AgGridFn(this.dataPrint.detailGrid),
-          ],
-
-          enableCellTextSelection: true,
-          onFirstDataRendered(params) {
-            let allColumnIds: any = [];
-            params.columnApi.getAllColumns()
-              .forEach((column: any) => {
-                if (column.colDef.cellClass.indexOf('auto') < 0) {
-                  allColumnIds.push(column)
-                } else {
-                  column.colDef.suppressSizeToFit = true;
-                  allColumnIds.push(column)
-                }
-              });
-            params.api.sizeColumnsToFit(allColumnIds);
-          },
-          rowSelected(params) {
-            console.log('params', params)
-          },
-          getSelectedNodes( params ) {
-            console.log('params', params)
-          }
+    ]
+    this.detailCellRendererParams = {
+      detailGridOptions: {
+        rowSelection: 'multiple',
+        getRowHeight: (params) => {
+          return 40;
         },
-        getDetailRowData(params) {
-          params.successCallback(params.data.contractFiles);
-        },
-        excelStyles: [
+        filter: '',
+        pinned: 'left',
+        cellClass: ['border-right', 'no-auto'],
+        columnDefs: [
           {
-            id: 'stringType',
-            dataType: 'string'
-          }
+            field: '',
+            checkboxSelection: true,
+            filter: '',
+            pinned: 'left',
+            cellClass: ['border-right'],
+            headerCheckboxSelection: true,
+            headerCheckboxSelectionFilteredOnly: true,
+          },
+          ...AgGridFn(this.dataPrint.detailGrid),
         ],
-        template: function (params) {
-          var personName = params.data.empName;
-          return (
-            '<div style="height: 100%; background-color: #EDF6FF; padding: 20px; box-sizing: border-box;">' +
-            `  <div style="height: 10%; padding: 2px; font-weight: bold;">###### Danh sách đính kèm (${params.data.contractFiles.length}) : [` +
-            personName + ']' +
-            '</div>' +
-            '  <div ref="eDetailGrid" style="height: 90%;"></div>' +
-            '</div>'
-          );
+        getRowNodeId: function (rowData) {
+          return rowData.id;      // detail items are indexed by id field
         },
-      };
+        onSelectionChanged: (params) => {
+          params.api.forEachNode(detailRowNode => {
+            if (detailRowNode.isSelected()) {
+              if (this.fileSelectedToPrint.map(d => d.id).indexOf(detailRowNode.data.id) < 0) {
+                this.fileSelectedToPrint.push(detailRowNode.data);
+                this.fileSelectedToPrint = [...this.fileSelectedToPrint];
+              }
+            } else {
+              this.fileSelectedToPrint = this.fileSelectedToPrint.filter(d => d.id !== detailRowNode.data.id);
+              this.fileSelectedToPrint = [...this.fileSelectedToPrint];
+            }
+          });
+        },
+        enableCellTextSelection: true,
+        onFirstDataRendered(params) {
+          let allColumnIds: any = [];
+          params.columnApi.getAllColumns()
+            .forEach((column: any) => {
+              if (column.colDef.cellClass.indexOf('auto') < 0) {
+                allColumnIds.push(column)
+              } else {
+                column.colDef.suppressSizeToFit = true;
+                allColumnIds.push(column)
+              }
+            });
+          params.api.sizeColumnsToFit(allColumnIds);
+        },
+
+      },
+      getDetailRowData(params) {
+        params.successCallback(params.data.contractFiles);
+      },
+      excelStyles: [
+        {
+          id: 'stringType',
+          dataType: 'string'
+        }
+      ],
+      template: function (params) {
+        var personName = params.data.empName;
+        return (
+          '<div style="height: 100%; background-color: #EDF6FF; padding: 20px; box-sizing: border-box;">' +
+          `  <div style="height: 10%; padding: 2px; font-weight: bold;">###### Danh sách đính kèm (${params.data.contractFiles.length}) : [` +
+          personName + ']' +
+          '</div>' +
+          '  <div ref="eDetailGrid" style="height: 90%;"></div>' +
+          '</div>'
+        );
+      },
+    };
   }
 
 
@@ -753,21 +758,21 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
   displayApproveContract = false
   duyetHoSo() {
     this.spinner.show();
-    let params = {...this.modelDuyetHopDong};
+    let params = { ...this.modelDuyetHopDong };
     delete params.type;
     this.apiService.setContractStatus(params)
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(results => {
-      if (results.status === 'success') {
-        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
-        this.displayApproveContract = false;
-        this.load();
-        this.spinner.hide();
-      } else {
-        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
-        this.spinner.hide();
-      }
-    })
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(results => {
+        if (results.status === 'success') {
+          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
+          this.displayApproveContract = false;
+          this.load();
+          this.spinner.hide();
+        } else {
+          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+          this.spinner.hide();
+        }
+      })
   }
 
   cancelContract() {
@@ -775,17 +780,17 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
     this.apiService.setContractCancel({
       contractId: this.modelDuyetHopDong.contractId
     })
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(results => {
-      if (results.status === 'success') {
-        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
-        this.load();
-        this.spinner.hide();
-      } else {
-        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
-        this.spinner.hide();
-      }
-    })
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(results => {
+        if (results.status === 'success') {
+          this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
+          this.load();
+          this.spinner.hide();
+        } else {
+          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+          this.spinner.hide();
+        }
+      })
   }
 
 
@@ -813,7 +818,7 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
 
   getQueryLocalSotrage() {
     let queryLocal: any = JSON.parse(localStorage.getItem('queryXLHD'));
-    if(queryLocal) {
+    if (queryLocal) {
       this.query.filter = queryLocal.filter;
       this.query.organizeId = queryLocal.organizeId;
       this.query.contract_st = queryLocal.contract_st;
@@ -824,7 +829,7 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
   }
 
   // query from storage
-  queryStorage: any = { }
+  queryStorage: any = {}
   setQueryLocalStorage() {
     this.queryStorage.filter = this.query.filter;
     this.queryStorage.organizeId = this.query.organizeId;
@@ -838,7 +843,7 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
 
   listViewsFilter = [];
   cloneListViewsFilter = [];
-detailInfoFilter = null;
+  detailInfoFilter = null;
   optionsButonFilter = [
     { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm ml-2  addNew', icon: 'pi pi-plus' },
     { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger ml-2  addNew', icon: 'pi pi-times' },
@@ -846,34 +851,34 @@ detailInfoFilter = null;
 
   getContractFilter() {
     this.apiService.getContractFilter()
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(results => {
-      if(results.status === 'success') {
-        const listViews = cloneDeep(results.data.group_fields);
-        this.cloneListViewsFilter = cloneDeep(listViews);
-        this.listViewsFilter = [...listViews];
-        const params =  getParamString(listViews)
-        this.query = { ...this.query, ...params};
-        this.load();
-        this.detailInfoFilter = results.data;
-      }
-    });
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(results => {
+        if (results.status === 'success') {
+          const listViews = cloneDeep(results.data.group_fields);
+          this.cloneListViewsFilter = cloneDeep(listViews);
+          this.listViewsFilter = [...listViews];
+          const params = getParamString(listViews)
+          this.query = { ...this.query, ...params };
+          this.load();
+          this.detailInfoFilter = results.data;
+        }
+      });
   }
- 
-   filterLoad(event) {
+
+  filterLoad(event) {
     this.query = { ...this.query, ...event.data };
     this.load();
   }
 
-  close({event, datas}) {
-    if(event !== 'Close') {
+  close({ event, datas }) {
+    if (event !== 'Close') {
       const listViews = cloneDeep(this.cloneListViewsFilter);
       this.listViewsFilter = cloneDeep(listViews);
-      const params =  getParamString(listViews)
-      this.query = { ...this.query, ...params};
+      const params = getParamString(listViews)
+      this.query = { ...this.query, ...params };
       this.load();
-    }else {
-      this.listViewsFilter =  cloneDeep(datas);
+    } else {
+      this.listViewsFilter = cloneDeep(datas);
     }
   }
 
