@@ -1590,7 +1590,7 @@ export class AppTypeLinkUrlRadioListComponent implements OnInit {
                           </li>
                       </ul> -->
                     </div>
-                    <div class="file-uploaded" *ngIf="uploadedFiles.length > 0">
+                    <div class="file-uploaded" *ngIf="uploadedFiles && uploadedFiles?.length > 0">
                     <ul>
                         <li class="d-flex middle bet" *ngFor="let file of uploadedFiles; let i=index">
                         <a [href]="file" target="_blank">{{ file }} </a>
