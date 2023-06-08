@@ -307,6 +307,9 @@
             top: 50%;
             transform: translateY(-50%);
         }
+        &:hover{
+            border-color: rgba(10, 88, 202, 0.46) !important;
+        }
     }
     .p-treeselect{
         width: 100% !important;

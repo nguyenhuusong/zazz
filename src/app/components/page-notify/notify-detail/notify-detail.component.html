@@ -11,8 +11,8 @@
     <div class="content" style="position: relative;">
       <p-tabView [(activeIndex)]="indexTab" (onChange)="handleChange($event.index)">
         <p-tabPanel header="Thông tin chung">
-          <div class="box mb-2">
-            <div class="fields" *ngIf="!notiId">
+          <div class="box mb-2" *ngIf="!notiId">
+            <div class="fields">
               <label for="">Mẫu thông báo</label>
               <p-dropdown placeholder="Chọn mẫu thông báo" appendTo="body" [baseZIndex]="100" [autoDisplayFirst]="false" 
                   [options]="notifyTempList" [required] [(ngModel)]="notifyTempId"
@@ -29,13 +29,13 @@
               </p-dropdown>
             </div>
           </div>
-          <app-edit-detail *ngIf="listViews.length> 0 && manhinh === 'Edit'"  [detail]="dataInfo"
-            [manhinh]="manhinh" [modelMarkdow]="modelMarkdow" [dataView]="listViews" [optionsButtonsEdit]="optionsButon"
-            (callback)="saveNotifyInfo($event)" (callbackcancel)="cancelUpload($event)"></app-edit-detail>
-            <app-loading-detail 
-                [id]="'markdown'" 
-                *ngIf="listViews.length === 0">
-            </app-loading-detail>
+            <app-edit-detail *ngIf="listViews.length> 0 && manhinh === 'Edit'"  [detail]="dataInfo"
+              [manhinh]="manhinh" [modelMarkdow]="modelMarkdow" [dataView]="listViews" [optionsButtonsEdit]="optionsButon"
+              (callback)="saveNotifyInfo($event)" (callbackcancel)="cancelUpload($event)"></app-edit-detail>
+              <app-loading-detail 
+                  [id]="'markdown'" 
+                  *ngIf="listViews.length === 0">
+              </app-loading-detail>
 
           <app-notify-comments [notify]="dataInfo"></app-notify-comments>
           <p-divider align="center" *ngIf="notiId">
@@ -44,14 +44,16 @@
           <app-get-notify-to  *ngIf="listViews.length > 0" [modelMarkdow]="modelMarkdow" [notify]="dataInfo" [listViewsMaster]="listViews" [modelNotifyTo]="modelNotifyTo"  [n_id]="notiId" ></app-get-notify-to>
         </p-tabPanel>
           <p-tabPanel header="Danh sách gửi thông báo" *ngIf="notiId" leftIcon="pi pi-bell">
-              <app-grid-push-list 
-                [notify]="dataInfo" 
-                *ngIf="indexTab === 1" 
-                [indexTab]="indexTab" 
-                (send)="displayDsThongBao($event)" 
-                [loadForm]="loadForm" 
-                (saveStore)="displayDsCaiDatDS($event)" 
-                (deleteRooms)="deleteRooms($event)"></app-grid-push-list>
+            <div class="pt-2">
+                <app-grid-push-list 
+                  [notify]="dataInfo" 
+                  *ngIf="indexTab === 1" 
+                  [indexTab]="indexTab" 
+                  (send)="displayDsThongBao($event)" 
+                  [loadForm]="loadForm" 
+                  (saveStore)="displayDsCaiDatDS($event)" 
+                  (deleteRooms)="deleteRooms($event)"></app-grid-push-list>
+                </div>
             </p-tabPanel>
       </p-tabView>
     </div>

@@ -13,7 +13,8 @@ export interface Node {
 @Component({
   selector: 'node',
   template: `
-  <div class="node" (dblclick)="editNode(node)" id="{{node.id}}" data-title="{{node.title}}"  [style.top.px]="node.top || 0" [style.left.px]="node.left || 20">{{node.title}}<i  class="pi pi-times" style="
+  <div class="node" (dblclick)="editNode(node)" id="{{node.id}}" data-title="{{node.title}}"  [style.top.px]="node.top || 0" [style.left.px]="node.left || 20">{{node.title}}
+    <!-- <i  class="pi pi-times" style="
     position: absolute;
     right: -8px;
     top: -8px;
@@ -23,7 +24,8 @@ export interface Node {
     font-size: 11px;
     box-shadow: 2px 2px 4px #ccc;
     cursor: pointer;
-" (click)="removeNode(node)"></i></div>`,
+" (click)="removeNode(node)"></i> -->
+</div>`,
   styles: [
     `.node {position: absolute;width: 150px;height: 50px;
   padding: 4px;box-shadow: 0 10px 40px 0 #B0C1D9;text-align: center;}`,
@@ -33,6 +35,7 @@ export class NodeComponent implements AfterViewInit {
   @Input() node: Node;
 
   @Input() jsPlumbInstance;
+
 
   ngAfterViewInit() {
     const exampleDropOptions = {
@@ -46,14 +49,14 @@ export class NodeComponent implements AfterViewInit {
       isSource: true,
       scope: 'jsPlumb_DefaultScope',
       connectorStyle: { stroke: '#99cb3a', strokeWidth: 1 },
-      connector: ['Bezier', { curviness: 63 }],
+      connector: ["Flowchart", {cornerRadius: 3,stub:16}],
       maxConnections: 30,
       isTarget: false,
-      connectorOverlays: [['Arrow', { location: 1 }]],
+      connectorOverlays: [["Arrow",{location:1,width:10, length:10}]],
       dropOptions: exampleDropOptions,
     };
     let Endpoint2 = {
-      endpoint: ['Dot', { radius: 2 }],
+      endpoint: ['Dot', { radius: 4,  cssClass: "plumb-endpoint" }],
       paintStyle: { fill: '#ffcb3a' },
       isSource: false,
       scope: 'jsPlumb_DefaultScope',
@@ -61,25 +64,25 @@ export class NodeComponent implements AfterViewInit {
       isTarget: true,
       dropOptions: exampleDropOptions,
     };
-    const { id } = this.node;
+    const { id, title } = this.node;
 
-
+    this.jsPlumbInstance.repaintEverything();
     this.jsPlumbInstance.addEndpoint(
       id,
       { anchor: 'Bottom', uuid: id + '_bottom' },
-      Endpoint1
+      {...Endpoint1, connectorOverlays: [...Endpoint1.connectorOverlays, ['Label', { label: title, id: title }]]},
     );
 
     this.jsPlumbInstance.addEndpoint(
       id,
       { anchor: 'BottomRight', uuid: id + '_BottomRight' },
-      Endpoint1
+      {...Endpoint1, connectorOverlays: [...Endpoint1.connectorOverlays, ['Label', { label: title, id: title }]]},
     );
 
     this.jsPlumbInstance.addEndpoint(
       id,
       { anchor: 'Top', uuid: id + '_Top' },
-      Endpoint1
+      {...Endpoint1, connectorOverlays: [...Endpoint1.connectorOverlays, ['Label', { label: title, id: title }]]},
     );
 
 

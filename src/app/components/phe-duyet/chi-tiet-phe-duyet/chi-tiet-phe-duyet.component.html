@@ -1,23 +1,22 @@
 
 <div class="main-grid product-detail">
-    <section>
-        <div class="breadcrumb">
-            <p-breadcrumb [model]="items"></p-breadcrumb>
-            <h3>{{titlePage}}</h3>
-        </div>
-    </section>
-   <div class="content">
+    <!-- <section class="bread-crumb">
+        <app-hrm-breadcrumb  [items]="items" ></app-hrm-breadcrumb>
+    </section> -->
     <!-- <div class="text-right">
         <p-button label="Phê duyệt" (click)="pheDuyet()"></p-button>
     </div> -->
-    <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButon"  [dataView]="listViews"
-    (callback)="setWorkApprove($event)" (callbackcancel)="quaylai($event)"></app-edit-detail>
-    <app-loading-detail 
-        [id]="'sections-2qnt'" 
-        *ngIf="listViews.length === 0">
-    </app-loading-detail>
+    <section>
+        <div class="content">
+        <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'" [optionsButtonsEdit]="optionsButon"  [dataView]="listViews"
+            (callback)="setWorkApprove($event)" (callbackcancel)="quaylai($event)"></app-edit-detail>
+            <app-loading-detail 
+                [id]="'sections-2qnt'" 
+                *ngIf="listViews.length === 0">
+            </app-loading-detail>
 
-   </div>
+        </div>
+    </section>
 </div>
 
 <p-sidebar
