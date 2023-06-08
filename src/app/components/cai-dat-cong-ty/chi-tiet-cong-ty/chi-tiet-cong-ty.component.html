@@ -6,22 +6,26 @@
    <div class="content">
     <p-tabView [(activeIndex)]="indexTab" (onChange)="handleChange($event.index)">
         <p-tabPanel header="Thông tin chung">
-              <div class="" *ngIf="detailInfo">
-                  <app-edit-detail *ngIf="listViews.length> 0 " 
-                    [thongtinnhanvienNew]="true"  
-                    [detail]="detailInfo"
-                    [manhinh]="'Edit'" 
-                    [dataView]="listViews"
-                    [optionsButtonsEdit]="optionsButtonsView" 
-                    (callback)="setCompanyInfo($event)" (callbackcancel)="cancelUpdate($event)"></app-edit-detail>
+              <div class="pl-2 pr-2">
+                <div class="" *ngIf="detailInfo">
+                    <app-edit-detail *ngIf="listViews.length> 0 " 
+                      [thongtinnhanvienNew]="true"  
+                      [detail]="detailInfo"
+                      [manhinh]="'Edit'" 
+                      [dataView]="listViews"
+                      [optionsButtonsEdit]="optionsButtonsView" 
+                      (callback)="setCompanyInfo($event)" (callbackcancel)="cancelUpdate($event)"></app-edit-detail>
+                </div>
+                <app-loading-detail 
+                    [id]="'area'" 
+                    *ngIf="listViews.length === 0">
+                </app-loading-detail>
               </div>
-              <app-loading-detail 
-                  [id]="'area'" 
-                  *ngIf="listViews.length === 0">
-              </app-loading-detail>
         </p-tabPanel>
         <p-tabPanel header="Đăng ký người duyệt">
-            <app-nguoi-duyet [companyId]="companyId" *ngIf="indexTab === 1"></app-nguoi-duyet>
+            <div class="pr-2 pl-2">
+                <app-nguoi-duyet [companyId]="companyId" *ngIf="indexTab === 1"></app-nguoi-duyet>
+            </div>
             <!-- <p-card styleClass="mt-1">
             <ng-template pTemplate="header">
              <div class="d-flex">
