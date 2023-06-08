@@ -488,7 +488,6 @@ export function convertNumberToStringDay(day) {
 
 export function getDaysOfEndWeek(year, month) {
     var monthDate = moment(year + '-' + month, 'YYYY-MM');
-    console.log(monthDate)
     var daysInMonth = monthDate.daysInMonth();
     console.log(daysInMonth)
     var arrDays = [];
@@ -507,7 +506,6 @@ export function getDaysOfEndWeek(year, month) {
 
 export function getDaysOfSaturDay(year, month) {
     var monthDate = moment(year + '-' + month, 'YYYY-MM');
-    console.log(monthDate)
     var daysInMonth = monthDate.daysInMonth();
     console.log(daysInMonth)
     var arrDays = [];
@@ -526,7 +524,6 @@ export function getDaysOfSaturDay(year, month) {
 
 export function getDaysOfSunday(year, month) {
     var monthDate = moment(year + '-' + month, 'YYYY-MM');
-    console.log(monthDate)
     var daysInMonth = monthDate.daysInMonth();
     console.log(daysInMonth)
     var arrDays = [];
