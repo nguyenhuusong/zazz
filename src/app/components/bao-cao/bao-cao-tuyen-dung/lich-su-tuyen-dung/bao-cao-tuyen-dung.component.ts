@@ -2,7 +2,7 @@ import { AfterViewChecked, ChangeDetectorRef, Component, OnInit, ViewChild } fro
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import queryString from 'query-string';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
+import { AgGridFn, CheckHideAction, convesrtDate } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ACTIONS, MENUACTIONROLEAPI } from 'src/app/common/constants/constant';
@@ -13,6 +13,7 @@ import { cloneDeep } from 'lodash';
 import { getParamString, replaceQueryReport } from 'src/app/common/function-common/objects.helper';
 import { DialogService } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
+import * as moment from 'moment';
 @Component({
   selector: 'app-bao-cao-tuyen-dung',
   templateUrl: './bao-cao-tuyen-dung.component.html',
@@ -146,6 +147,16 @@ export class BaoCaoTuyenDungComponent implements OnInit {
 
 
   load() {
+    if(this.query.fromDate && this.query.toDate) {
+      if(this.valiDateFromTo(this.query.fromDate, this.query.toDate)) {
+        return
+      }
+    }
+    if(this.query.month) {
+      if(this.valiMontBirthday(this.query.month)){
+        return;
+      }
+    }
     this.columnDefs = []
     this.spinner.show();
     const params: any = { ... this.query };
@@ -187,6 +198,16 @@ export class BaoCaoTuyenDungComponent implements OnInit {
   }
 
   loadExport(queryParams: any, type: string) {
+    if(queryParams.fromDate && queryParams.toDate) {
+      if(this.valiDateFromTo(queryParams.fromDate, queryParams.toDate)) {
+        return
+      }
+    }
+    if(queryParams.month) {
+      if(this.valiMontBirthday(queryParams.month)){
+        return;
+      }
+    }
     this.spinner.show();
     this.apiService.getDataFile(this.detailInfoReport.api_url_dowload, queryParams)
       .pipe(takeUntil(this.unsubscribe$))
@@ -294,7 +315,6 @@ export class BaoCaoTuyenDungComponent implements OnInit {
   }
   isShowLists: boolean = false;
   getReport(event) {
-    console.log(event)
     if (event.type === "ViewReport") {
       this.isShowLists = true;
       this.query.offSet = 0;
@@ -311,6 +331,24 @@ export class BaoCaoTuyenDungComponent implements OnInit {
 
   }
 
+  valiDateFromTo(date1, date2) {
+    
+      let fromDate = new Date(convesrtDate(date1));
+      let toDate = new Date(convesrtDate(date2));
+      if(fromDate.getTime() > toDate.getTime()) {
+        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Vui lòng chọn từ ngày nhỏ hơn đến ngày!' });
+        return true
+      }
+      return false
+    }
+
+    valiMontBirthday(date) {
+      if(date < 1 || date > 12 ){
+        this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Vui lòng chọn từ tháng 1 tới tháng 12!' });
+        return true
+      }
+      return false
+    }
 
 }
 
