@@ -829,3 +829,12 @@ p-button{
         height: 40px;
     }
 }
+
+
+p-image{
+    .p-image-preview-indicator{
+        .p-image-preview-icon{
+            position: static;
+        }
+    }
+}
