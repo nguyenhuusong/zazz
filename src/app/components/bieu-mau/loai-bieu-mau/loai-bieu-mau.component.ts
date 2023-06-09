@@ -299,13 +299,10 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
     };
     this.columnDefs = [
       {
-        headerName: 'Stt',
+        headerName: '',
         filter: '',
-        maxWidth: 120,
+        maxWidth: 50,
         pinned: 'left',
-        cellRenderer: params => {
-          return params.rowIndex + 1
-        },
         cellClass: ['border-right', 'no-auto'],
         checkboxSelection: true,
         headerCheckboxSelection: true,
@@ -435,7 +432,7 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
     this.loadjs++
     if (this.loadjs === 5) {
       if (b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight +30;
+        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight + 55;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       } else {

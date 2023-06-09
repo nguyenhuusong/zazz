@@ -30,7 +30,6 @@
         </div>
     </section>
     <section class="content">
-        <div class="grid-default" #container>
             <!-- <app-list-grid-angular *ngIf="columnDefs.length > 0"
                 [listsData]="listsData" 
                 [height]="heightGrid"
@@ -40,27 +39,28 @@
                 (onCellClicked)="onCellClicked($event)"
                 >
             </app-list-grid-angular> -->
-            <app-list-grid-tree-angular 
-                *ngIf="columnDefs.length > 0 && autoGroupColumnDef && getDataPath"  
-                (callback)="rowSelected($event)"  
-                (onCellClicked)="onCellClicked($event)"  
-                (showConfig)="cauhinh()"
-                [listsData]="listsData" 
-                [height]="heightGrid" 
-                [getDataPath]="getDataPath" 
-                [autoGroupColumnDef]="autoGroupColumnDef"
-                [columnDefs]="columnDefs">
-            </app-list-grid-tree-angular>
-            <div class="paginator">
-                <span>Từ {{ countRecord.currentRecordStart }} đến
-                    {{ countRecord.currentRecordEnd }}
-                    trên tổng số
-                    {{ countRecord.totalRecord }} kết quả</span>
-                <p-paginator [rows]="query.pageSize" [totalRecords]="countRecord.totalRecord" [first]="first"
-                    (onPageChange)="paginate($event)" [rowsPerPageOptions]="[20,40,60,100,200,{ showAll: 'ALL' }]">
-                </p-paginator>
+            <div class="section-box">
+                <app-list-grid-tree-angular 
+                    *ngIf="columnDefs.length > 0 && autoGroupColumnDef && getDataPath"  
+                    (callback)="rowSelected($event)"  
+                    (onCellClicked)="onCellClicked($event)"  
+                    (showConfig)="cauhinh()"
+                    [listsData]="listsData" 
+                    [height]="heightGrid" 
+                    [getDataPath]="getDataPath" 
+                    [autoGroupColumnDef]="autoGroupColumnDef"
+                    [columnDefs]="columnDefs">
+                </app-list-grid-tree-angular>
+                <div class="paginator">
+                    <span>Từ {{ countRecord.currentRecordStart }} đến
+                        {{ countRecord.currentRecordEnd }}
+                        trên tổng số
+                        {{ countRecord.totalRecord }} kết quả</span>
+                    <p-paginator [rows]="query.pageSize" [totalRecords]="countRecord.totalRecord" [first]="first"
+                        (onPageChange)="paginate($event)" [rowsPerPageOptions]="[20,40,60,100,200,{ showAll: 'ALL' }]">
+                    </p-paginator>
+                </div>
             </div>
-        </div>
     </section>
 </div>
 
