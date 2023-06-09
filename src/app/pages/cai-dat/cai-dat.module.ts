@@ -106,7 +106,7 @@ import { CaiDatTienTrinhComponent } from 'src/app/components/cai-dat-tien-trinh/
 import { ChiTietCaiDatTienTrinhComponent } from 'src/app/components/cai-dat-tien-trinh/chi-tiet-cai-dat-tien-trinh/chi-tiet-cai-dat-tien-trinh.component';
 import { CaiDatTrangThaiComponent } from 'src/app/components/cai-dat-tien-trinh/cai-dat-trang-thai/cai-dat-trang-thai.component';
 import { ChiTietCaiDatTrangThaiComponent } from 'src/app/components/cai-dat-tien-trinh/chi-tiet-cai-dat-trang-thai/chi-tiet-cai-dat-trang-thai.component';
-
+import { NgxPanZoomModule } from 'ngx-panzoom';
 // FullCalendarModule.registerPlugins([
 //   // register FullCalendar plugins
 //   dayGridPlugin,
@@ -164,6 +164,7 @@ import { ChiTietCaiDatTrangThaiComponent } from 'src/app/components/cai-dat-tien
     LoadingGridModule,
     CheckHideActionsDirectiveModule,
     LoadingDetailModule,
+    NgxPanZoomModule,
     AgGridModule.withComponents([
       ButtonRendererComponent,
       ButtonRendererComponent1
