@@ -4,17 +4,18 @@
         <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
     </section>
    <div class="content">
-    <section>
-        <app-edit-detail [optionsButtonsEdit]="optionsButtonsView" [detail]="detailInfo" *ngIf="listViews.length> 0" [thongtinnhanvienNew]="true" [manhinh]="'Edit'" [dataView]="listViews" (callback)="setOrganizeInfo($event)" (callbackcancel)="cancelUpdate($event)"></app-edit-detail>
+        <div class="">
+            <app-edit-detail [optionsButtonsEdit]="optionsButtonsView" [detail]="detailInfo" *ngIf="listViews.length> 0" [thongtinnhanvienNew]="true" [manhinh]="'Edit'" [dataView]="listViews" (callback)="setOrganizeInfo($event)" (callbackcancel)="cancelUpdate($event)"></app-edit-detail>
             <app-loading-detail 
                 [id]="'sections-1qnt'" 
                 *ngIf="listViews.length === 0">
             </app-loading-detail>
-            <app-cong-ty-orgid [orgId]="orgId" *ngIf="orgId"></app-cong-ty-orgid>
-            <app-chuc-vu-orgid [orgId]="orgId" *ngIf="orgId"></app-chuc-vu-orgid>
-            <app-chuyen-mon-orgid [orgId]="orgId" *ngIf="orgId"></app-chuyen-mon-orgid>
-    </section>
+
+        </div>
         
+        <app-cong-ty-orgid [orgId]="orgId" *ngIf="orgId"></app-cong-ty-orgid>
+        <app-chuc-vu-orgid [orgId]="orgId" *ngIf="orgId"></app-chuc-vu-orgid>
+        <app-chuyen-mon-orgid [orgId]="orgId" *ngIf="orgId"></app-chuyen-mon-orgid>
    </div>
    
 </div>
