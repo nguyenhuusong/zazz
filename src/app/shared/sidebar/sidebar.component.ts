@@ -214,11 +214,11 @@ export class SidebarComponent implements OnInit {
         for (let k of obj) {
             k.label = k.title;
             if (k.path && k.classs !== 'navigation-header') {
-                // k.routerLink = k.path
+                k.routerLink = k.path
                 k.styleClass = 'nav-item';
                 k.classs = 'nav-item';
-                k.url = k.path;
-                k.target = '_self'
+                // k.url = k.path;
+                // k.target = '_self'
             }
             if (k.submenus && k.submenus.length > 0) {
                 k.items = k.submenus.filter((d: any) => d.classs && (d.classs.indexOf("hidden") < 0));

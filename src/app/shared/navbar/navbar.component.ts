@@ -311,12 +311,12 @@ export class NavbarComponent implements OnInit {
             const base64 = btoa(this.detailUserSalary.roleToken)
             localStorage.setItem("md5", base64)
           }else {
-            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: this.detailUserSalary.messages });
+            this.messageService.add({ severity: 'warn', summary: 'Thông báo', detail: this.detailUserSalary.messages });
             localStorage.removeItem("md5")
           }
            this.initMenu();
         } else {
-          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results.message });
+          this.messageService.add({ severity: 'warn', summary: 'Thông báo', detail: results.message });
         }
       });
     
@@ -333,7 +333,7 @@ export class NavbarComponent implements OnInit {
         this.modelPass.userPassCf = '';
      
     } else {
-      this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Bạn chưa cài đặt plugin' });
+      this.messageService.add({ severity: 'warn', summary: 'Thông báo', detail: 'Bạn chưa cài đặt plugin' });
     };
   }
 
@@ -381,7 +381,7 @@ export class NavbarComponent implements OnInit {
   }
   handleFillEvent(): void {
     if (!this.modelOTP.code) {
-      this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Chưa nhập mã code' });
+      this.messageService.add({ severity: 'warn', summary: 'Thông báo', detail: 'Chưa nhập mã code' });
       return;
     }
     this.spinner.show();

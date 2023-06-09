@@ -38,7 +38,7 @@
     </div>
     </section>
     <section>
-        <p-tabView styleClass="tab-ver" (onChange)="handleChange($event.index)" [(activeIndex)]="tabIndex">
+        <p-tabView (onChange)="handleChange($event.index)" [(activeIndex)]="tabIndex">
             <p-tabPanel header="Thông tin tuyển dụng">
                 <app-edit-detail 
                     *ngIf="listViews.length> 0 && tabIndex === 0" 

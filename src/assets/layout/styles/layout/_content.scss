@@ -351,7 +351,7 @@ ag-grid-angular{
                 .ag-header-cell-label {
                     .ag-header-cell-text{
                         font-family: "SFProTextRegular";
-                        font-size: .800rem;
+                        font-size: 0.75rem;
                         color: $C-212633;
                         font-weight: 600;
                     }
@@ -390,8 +390,8 @@ ag-grid-angular{
                     // background: $white;
                 }
                 &.ag-row-level-1{
-                    padding-top: 10px !important;
-                    padding-bottom: 10px !important;
+                    // padding-top: 10px !important;
+                    // padding-bottom: 10px !important;
                     .ag-details-row-fixed-height{
                         background-color: transparent !important;
                         border: 1px solid #ccc;
