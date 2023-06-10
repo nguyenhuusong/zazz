@@ -59,8 +59,11 @@
         [id]="'employee-info-05'" 
         *ngIf="listViews.length === 0">
     </app-loading-detail>
+    <app-thoi-gian-lam-viec [empId]="empId"></app-thoi-gian-lam-viec>
     <app-danh-sach-thiet-bi [empId]="empId"></app-danh-sach-thiet-bi>
+
 </section>
+
 
 
 <app-chi-tiet-cham-cong *ngIf="isEditDetail" [isEditDetail]="isEditDetail" [empId]="empId" (cancelSave)="cancelSetDetail($event)"></app-chi-tiet-cham-cong>
