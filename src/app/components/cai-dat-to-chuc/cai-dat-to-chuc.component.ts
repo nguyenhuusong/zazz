@@ -160,11 +160,8 @@ export class CaiDatToChucComponent implements OnInit {
     .subscribe(results => {
       if (results.status === 'success') {
         this.listAgencyMap = [...results.data.root];
-        if (localStorage.getItem("organize") === null) {
-          this.selectedNode = this.listAgencyMap[0];
-          this.detailOrganizeMap = this.selectedNode
-          localStorage.setItem('organize', JSON.stringify(this.listAgencyMap[0]));
-        } else {
+
+        if(localStorage.hasOwnProperty("organize") && localStorage.getItem("organize") && localStorage.getItem("organize") != "undefined") {
           this.selectedNode = JSON.parse(localStorage.getItem("organize"));
           this.parseObjectProperties(this.listAgencyMap, this.selectedNode.organizeId);
           this.detailOrganizeMap = this.selectedNode
@@ -172,6 +169,10 @@ export class CaiDatToChucComponent implements OnInit {
           if (type) {
             this.isHrDiagram = true;
           }
+        }else {
+          this.selectedNode = this.listAgencyMap[0];
+          this.detailOrganizeMap = this.selectedNode
+          localStorage.setItem('organize', JSON.stringify(this.listAgencyMap[0]));
         }
         this.spinner.hide();
       }

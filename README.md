@@ -6,3 +6,6 @@ Quản lý nhân sự angular13
 
 
 kế hoạch tuyển dụng
+
+
+# npm i -D -f @angular-builders/jest@next
