@@ -54,14 +54,15 @@ export class TimeKeepingDailyComponent implements OnInit {
     let colorRgb = this.hexToRgb('#fff');
     this.getTimekeepingDaily()
   }
-  detailDashboardTimekeepingDailyDaily: any = null;
+  timekeepingDaily: any = null;
   getTimekeepingDaily() {
     this.spinner.show();
-    this.apiService.getTimekeepingDaily({ months: 0, years: 0 })
+    const queryParams = queryString.stringify({ months: 0, years: 0 , filter_type: null });
+    this.apiService.getTimekeepingDaily(queryParams)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         (results: any) => {
-          this.detailDashboardTimekeepingDailyDaily = results.data;
+          this.timekeepingDaily = results.data;
           this.spinner.hide();
           if (results.data.emp_male && results.data.emp_total) {
             this.perMale = this.percenOf(results.data.emp_male, results.data.emp_total)

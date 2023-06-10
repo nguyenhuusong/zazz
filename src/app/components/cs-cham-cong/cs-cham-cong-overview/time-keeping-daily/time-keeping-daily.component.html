@@ -1,20 +1,99 @@
-<div class="main-grid">
-    <section class="content" *ngIf="detailDashboardTimekeepingDailyDaily">
-        <div class="mb-3">
-            <div class="grid">
-                <div class="pt-0 col-12 pb-0 sm:col-12 md:col-12 lg:col-12 xl:col-10">
-                    <div class="box" style="height: 100%;">
-                        <h3 style="padding-left: 11px;">Employee</h3>
-                        <div class="wrap-knod" *ngFor="let item  of  detailDashboardTimekeepingDailyDaily.overview; let i=index">
-                            <p-card header="{{item.name}}( {{item.emp_num}}/{{item.emp_total}} )" [style]="{'height': '170px', 'width': 'auto'}" >
-                                <p-knob (click)="navigateWithState(item)" [max]="item.emp_total" [(ngModel)]="item.emp_num" [valueColor]="i === 1 ? 'CornflowerBlue' : i === 0 ? 'DarkOrange' : 'red'" [readonly]="true"></p-knob>
-                            </p-card>
-                        </div>
-                    </div>
-                </div>
-                
-            </div>
-        </div>
-    </section>
+<div class="d-flex gap12 box-items em-activities">
+    <div class="wrap-knod d-flex middle gap6" >
+        <ul class="note">
+            <li>
+                <span class=""></span>
+                <span pTooltip="Chưa checkin">{{ timekeepingDaily.checkin.num_fail }}</span>
+            </li>
+            <li>
+                <span class=""></span>
+                <span pTooltip="Đã checkin">{{ timekeepingDaily.checkin.num_right }}</span>
+            </li>
+            
+        </ul>
+        <p-card header="{{timekeepingDaily.checkin.name}}" [style]="{'height': '170px', 'width': 'auto'}" >
+            <p-knob  [max]="timekeepingDaily.checkin.num_fail + timekeepingDaily.checkin.num_right" [(ngModel)]="timekeepingDaily.checkin.num_fail" [valueColor]="'red'" [readonly]="true"></p-knob>
+        </p-card>
+    </div>
+    <div class="wrap-knod d-flex middle gap6" >
+        <ul class="note">
+            <li>
+                <span class=""></span>
+                <span pTooltip="Checkin muộn">{{ timekeepingDaily.checkin_late.num_fail }}</span>
+            </li>
+            <li>
+                <span class=""></span>
+                <span  pTooltip="Đã giải trình">{{ timekeepingDaily.checkin_late.num_right }}</span>
+            </li>
+            
+        </ul>
+        <p-card header="{{timekeepingDaily.checkin_late.name}}" [style]="{'height': '170px', 'width': 'auto'}" >
+            <p-knob  [max]="timekeepingDaily.checkin_late.num_fail + timekeepingDaily.checkin_late.num_right" [(ngModel)]="timekeepingDaily.checkin_late.num_fail" [valueColor]="'red'" [readonly]="true"></p-knob>
+        </p-card>
+    </div>
+    <div class="wrap-knod d-flex middle gap6" >
+        <ul class="note">
+            <li>
+                <span class=""></span>
+                <span pTooltip="Chưa Checkout">{{ timekeepingDaily.checkout.num_fail }}</span>
+            </li>
+            <li>
+                <span class=""></span>
+                <span pTooltip="Đã Checkout">{{ timekeepingDaily.checkout.num_right }}</span>
+            </li>
+            
+        </ul>
+        <p-card header="{{timekeepingDaily.checkout.name}}" [style]="{'height': '170px', 'width': 'auto'}" >
+            <p-knob  [max]="timekeepingDaily.checkout.num_fail + timekeepingDaily.checkout.num_right" [(ngModel)]="timekeepingDaily.checkout.num_fail" [valueColor]="'red'" [readonly]="true"></p-knob>
+        </p-card>
+    </div>
+    <div class="wrap-knod d-flex middle gap6" >
+        <ul class="note">
+            <li>
+                <span class=""></span>
+                <span pTooltip="Về sớm">{{ timekeepingDaily.checkout_early.num_fail }}</span>
+            </li>
+            <li>
+                <span class=""></span>
+                <span pTooltip="Checkout đúng giờ">{{ timekeepingDaily.checkout_early.num_right }}</span>
+            </li>
+            
+        </ul>
+        <p-card header="{{timekeepingDaily.checkout_early.name}}" [style]="{'height': '170px', 'width': 'auto'}" >
+            <p-knob  [max]="timekeepingDaily.checkout_early.num_fail + timekeepingDaily.checkout_early.num_right" [(ngModel)]="timekeepingDaily.checkout_early.num_fail" [valueColor]="'red'" [readonly]="true"></p-knob>
+        </p-card>
+    </div>
+    <div class="wrap-knod d-flex middle gap6" >
+        <ul class="note">
+            <li>
+                <span class=""></span>
+                <span pTooltip="Nghỉ không lương">{{ timekeepingDaily.leaves.num_fail }}</span>
+            </li>
+            <li>
+                <span class=""></span>
+                <span pTooltip="Nghỉ có lương">{{ timekeepingDaily.leaves.num_right }}</span>
+            </li>
+            
+        </ul>
+         
+        <p-card header="{{timekeepingDaily.leaves.name}}" [style]="{'height': '170px', 'width': 'auto'}" >
+            <p-knob  [max]="timekeepingDaily.leaves.num_fail + timekeepingDaily.leaves.num_right" [(ngModel)]="timekeepingDaily.leaves.num_fail" [valueColor]="'red'" [readonly]="true"></p-knob>
+        </p-card>
+    </div>
+    <div class="wrap-knod d-flex middle gap6" >
+        <ul class="note">
+            <li>
+                <span class=""></span>
+                <span pTooltip="Tính nửa công">{{ timekeepingDaily.workdays.num_fail }}</span>
+            </li>
+            <li>
+                <span class=""></span>
+                <span pTooltip="Đủ công">{{ timekeepingDaily.workdays.num_right }}</span>
+            </li>
+            
+        </ul>
+        <p-card header="{{timekeepingDaily.workdays.name}}" [style]="{'height': '170px', 'width': 'auto'}" >
+            <p-knob  [max]="timekeepingDaily.workdays.num_fail + timekeepingDaily.workdays.num_right" [(ngModel)]="timekeepingDaily.workdays.num_fail" [valueColor]="'red'" [readonly]="true"></p-knob>
+        </p-card>
+    </div>
 </div>
-

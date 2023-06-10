@@ -2176,7 +2176,7 @@ export class ApiHrmService {
   }
 
   getTimekeepingDaily(params): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v2/dashboard/GetTimekeepingDaily`, params, this.options)
+    return this.http.get<any>(`${apiHrmServer}/api/v2/timekeepingchart/GetTimekeepingDaily?` +  params, this.options)
   }
 
   getFormPage(queryParams): Observable<any> {
