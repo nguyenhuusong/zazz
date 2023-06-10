@@ -80,10 +80,10 @@ export class CsChamCongOverviewComponent implements OnInit {
           this.detailDashboardTimekeeping = results.data;
           this.onInitChart()
           this.spinner.hide();
-          if(results.data.emp_male && results.data.emp_total) {
+          if (results.data.emp_male && results.data.emp_total) {
             this.perMale = this.percenOf(results.data.emp_male, results.data.emp_total)
           }
-          if(results.data.emp_female && results.data.emp_total) {
+          if (results.data.emp_female && results.data.emp_total) {
             this.perFeMale = this.percenOf(results.data.emp_female, results.data.emp_total)
           }
         },
@@ -91,6 +91,9 @@ export class CsChamCongOverviewComponent implements OnInit {
           this.spinner.hide();
         });
   }
+
+
+
   dataChart: any;
   dataChartEmpLeaveMonths: any;
   dataChartEmpPositionType: any;
@@ -106,7 +109,7 @@ export class CsChamCongOverviewComponent implements OnInit {
     const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
 
     this.dataChart = {
-      
+
       labels: this.detailDashboardTimekeeping.leaveReasons.map(d => d.name),
       datasets: [
         {
@@ -217,8 +220,8 @@ export class CsChamCongOverviewComponent implements OnInit {
     this.optionsChartPie = {
       options: {
         responsive: true,
-          indexAxis: 'x',
-          plugins: {
+        indexAxis: 'x',
+        plugins: {
           htmlLegend: {
             containerID: 'legend-doughnut',
           },
@@ -227,43 +230,43 @@ export class CsChamCongOverviewComponent implements OnInit {
           },
         },
 
+      }
     }
-    }
-    
+
     this.optionsHorizontal = {
       indexAxis: 'y',
       maintainAspectRatio: false,
       aspectRatio: 0.8,
       plugins: {
-          legend: {
-              labels: {
-                  color: textColor
-              },
-              position: 'top',
-              maxWidth: 500,
-              display: false
-          }
+        legend: {
+          labels: {
+            color: textColor
+          },
+          position: 'top',
+          maxWidth: 500,
+          display: false
+        }
       },
       scales: {
         y: {
           beginAtZero: true,
           ticks: {
-              color: textColorSecondary
+            color: textColorSecondary
           },
           grid: {
-              color: surfaceBorder,
-              drawBorder: false
+            color: surfaceBorder,
+            drawBorder: false
           }
-      },
-      x: {
+        },
+        x: {
           ticks: {
-              color: textColorSecondary
+            color: textColorSecondary
           },
           grid: {
-              color: surfaceBorder,
-              drawBorder: false
+            color: surfaceBorder,
+            drawBorder: false
           }
-      }
+        }
       }
     };
 
@@ -290,32 +293,32 @@ export class CsChamCongOverviewComponent implements OnInit {
 
   hexToRgb(color) {
     return color.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i
-        ,(m, r, g, b) => '#' + r + r + g + g + b + b)
-    .substring(1).match(/.{2}/g)
-    .map(x => parseInt(x, 16));
+      , (m, r, g, b) => '#' + r + r + g + g + b + b)
+      .substring(1).match(/.{2}/g)
+      .map(x => parseInt(x, 16));
   }
 
   chartPie() {
     let configs = {
       type: 'pie',
       canvasID: 'doughnut',
-        options: {
-          responsive: true,
-            indexAxis: 'x',
-          plugins: {
-            htmlLegend: {
-              containerID: 'legend-doughnut',
-            },
-            legend: {
-              display: false,
-            },
+      options: {
+        responsive: true,
+        indexAxis: 'x',
+        plugins: {
+          htmlLegend: {
+            containerID: 'legend-doughnut',
           },
+          legend: {
+            display: false,
+          },
+        },
 
       }
     }
     let labels = this.dataChart.labels
     let bg = []
-    for(let i = 0; i < this.dataChart.labels.length; i++){
+    for (let i = 0; i < this.dataChart.labels.length; i++) {
       bg.push(this.bgColors[i]);
     };
     let datas = {
@@ -329,10 +332,10 @@ export class CsChamCongOverviewComponent implements OnInit {
     configs: type, options(htmlLegend), canvasID
     data:
   */
-    drawChart(configs, datas ) {
-      if(configs.canvasID) {
-        setTimeout(() => {
-        let ctx:any = document.getElementById(configs.canvasID);
+  drawChart(configs, datas) {
+    if (configs.canvasID) {
+      setTimeout(() => {
+        let ctx: any = document.getElementById(configs.canvasID);
         ctx = ctx.getContext('2d');
         let chart = new Chart(ctx, {
           type: configs.type,
@@ -340,10 +343,10 @@ export class CsChamCongOverviewComponent implements OnInit {
           options: configs.options,
           plugins: [{
             id: 'htmlLegend',
-            afterUpdate(chart: any, args, options:any) {
-              if(configs.options.plugins.htmlLegend?.containerID){
+            afterUpdate(chart: any, args, options: any) {
+              if (configs.options.plugins.htmlLegend?.containerID) {
                 const legendContainer = document.getElementById(configs.options.plugins.htmlLegend.containerID);
-                let listContainer:any = legendContainer.querySelector('ul');
+                let listContainer: any = legendContainer.querySelector('ul');
                 if (!listContainer) {
                   listContainer = document.createElement('ul');
                   listContainer.style.display = 'flex';
@@ -353,16 +356,16 @@ export class CsChamCongOverviewComponent implements OnInit {
                   legendContainer.appendChild(listContainer);
                 }
                 const ul = listContainer;
-      
+
                 // Remove old legend items
                 while (ul.firstChild) {
                   ul.firstChild.remove();
                 }
-      
+
                 const items = chart.options.plugins.legend.labels.generateLabels(chart);
-                items.forEach((item:any) => {
+                items.forEach((item: any) => {
                   const li = document.createElement('li');
-                  const {type} = chart.config;
+                  const { type } = chart.config;
                   li.onclick = () => {
                     if (type === 'pie' || type === 'doughnut') {
                       // Pie and doughnut charts only have a single dataset and visibility is per item
@@ -372,20 +375,20 @@ export class CsChamCongOverviewComponent implements OnInit {
                     }
                     chart.update();
                   };
-                  
+
                   // Color box
                   const boxSpan = document.createElement('span');
                   boxSpan.style.background = item.fillStyle;
                   // Text
-                  const textContainer:any = document.createElement('span');
+                  const textContainer: any = document.createElement('span');
                   textContainer.style.textDecoration = item.hidden ? 'line-through' : '';
                   let numberValue = ''
                   if (type === 'pie' || type === 'doughnut') {
-                    if(chart.config.data.datasets.length === 1){
+                    if (chart.config.data.datasets.length === 1) {
                       numberValue += ' (' + new Intl.NumberFormat().format(chart.config.data.datasets[0].data[item.index]) + ')';
                     }
                   }
-                  const text = document.createTextNode(item.text +  numberValue );
+                  const text = document.createTextNode(item.text + numberValue);
                   textContainer.appendChild(text);
                   li.appendChild(boxSpan);
                   li.appendChild(textContainer);
@@ -396,24 +399,24 @@ export class CsChamCongOverviewComponent implements OnInit {
           }],
         });
         chart.update();
-  
+
         // chart.destroy();
-        }, 500);
-      }
+      }, 500);
+    }
+  }
+
+  navigateWithState(item: any) {
+    const linkRouter = MENUACTIONROLEAPI[item.apiName];
+    if (linkRouter) {
+      const state = item.apiParam ? JSON.parse('{"' + item.apiParam.replace(/&/g, '","').replace(/=/g, '":"') + '"}', (key, value) => { return key === "" ? value : decodeURIComponent(value) }) : null
+      this.router.navigate([`${linkRouter.url}`], { queryParams: { ...state } });
     }
 
-    navigateWithState(item: any) {
-      const linkRouter = MENUACTIONROLEAPI[item.apiName];
-      if(linkRouter) {
-        const state = item.apiParam ?  JSON.parse('{"' + item.apiParam.replace(/&/g, '","').replace(/=/g,'":"') + '"}', (key, value) => { return key===""?value:decodeURIComponent(value) }) : null
-        this.router.navigate([`${linkRouter.url}`], {queryParams: {... state}});
-      }
-  
-    }
+  }
 
-    getDetailEmployye(item: any) {
-      this.router.navigate([`nhan-su/ho-so-nhan-su`], {queryParams: {filter: item.fullname}});
-    }
+  getDetailEmployye(item: any) {
+    this.router.navigate([`nhan-su/ho-so-nhan-su`], { queryParams: { filter: item.fullname } });
+  }
 
 }
 

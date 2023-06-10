@@ -95,6 +95,7 @@ import { ChartModule } from 'primeng/chart';
 import { KnobModule } from 'primeng/knob';
 import { AvatarModule } from 'primeng/avatar';
 import { CsLoiChamCongComponent } from 'src/app/components/cs-loi-cham-cong/cs-loi-cham-cong.component';
+import { TimeKeepingDailyComponent } from 'src/app/components/cs-cham-cong/cs-cham-cong-overview/time-keeping-daily/time-keeping-daily.component';
 @NgModule({
   imports: [
     MessagesModule,
@@ -198,6 +199,7 @@ import { CsLoiChamCongComponent } from 'src/app/components/cs-loi-cham-cong/cs-l
     TabSalaryDependentComponent,
     DieuChinhComponent,
     CsLoiChamCongComponent,
+    TimeKeepingDailyComponent,
 
 
   ],

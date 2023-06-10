@@ -1,0 +1,20 @@
+<div class="main-grid">
+    <section class="content" *ngIf="detailDashboardTimekeepingDailyDaily">
+        <div class="mb-3">
+            <div class="grid">
+                <div class="pt-0 col-12 pb-0 sm:col-12 md:col-12 lg:col-12 xl:col-10">
+                    <div class="box" style="height: 100%;">
+                        <h3 style="padding-left: 11px;">Employee</h3>
+                        <div class="wrap-knod" *ngFor="let item  of  detailDashboardTimekeepingDailyDaily.overview; let i=index">
+                            <p-card header="{{item.name}}( {{item.emp_num}}/{{item.emp_total}} )" [style]="{'height': '170px', 'width': 'auto'}" >
+                                <p-knob (click)="navigateWithState(item)" [max]="item.emp_total" [(ngModel)]="item.emp_num" [valueColor]="i === 1 ? 'CornflowerBlue' : i === 0 ? 'DarkOrange' : 'red'" [readonly]="true"></p-knob>
+                            </p-card>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+</div>
+
