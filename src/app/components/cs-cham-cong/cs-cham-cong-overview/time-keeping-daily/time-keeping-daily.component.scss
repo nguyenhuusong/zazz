@@ -1,0 +1,49 @@
+.note{
+    li{
+        display: flex;
+        gap: 5px;
+        margin-bottom: 5px;
+        span{
+            &:first-child{
+                width: 20px;
+                height: 15px;
+                display: block;
+            }
+            &:last-child{
+                font-weight: 500;
+            }
+        }
+        &:first-child{
+            span{
+                &:first-child{
+                    background-color: red;
+                }
+                &:last-child{
+                    color: red;
+                }
+            }
+        }
+        &:last-child{
+            span{
+                &:first-child{
+                    background-color: grey;
+                }
+            }
+        }
+    }
+}
+.box-items{
+    justify-content: start;
+    &>div{
+        &:first-child{
+            margin-right: unset;
+            min-width: 0;
+            &::after{
+                display: none;
+            }
+            .p-card-content{
+                text-align: unset;
+            }
+        }
+    }
+}
