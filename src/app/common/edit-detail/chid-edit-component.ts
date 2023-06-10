@@ -46,7 +46,7 @@ export class AppTypeImageComponent implements OnInit {
   constructor(
     private spinner: NgxSpinnerService,
     private messageService: MessageService,
-    private apiService: ApiService
+    private apiService: ApiHrmService,
   ) { }
   ngOnInit(): void {
 
@@ -58,44 +58,43 @@ export class AppTypeImageComponent implements OnInit {
   }
   onUploadOutput(event, field_name) {
     this.spinner.show();
+    // if (event.target.files[0] && event.target.files[0].size > 0) {
+    //   const getDAte = new Date();
+    //   const getTime = getDAte.getTime();
+    //   const storageRef = firebase.storage().ref();
+    //   const uploadTask = storageRef.child(`ksbond/images/${getTime}-uninini-${event.target.files[0].name}`).put(event.target.files[0]);
+    //   uploadTask.on('state_changed', (snapshot) => {
+    //   }, (error) => {
+    //   }, () => {
+    //     uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+    //       if (downloadURL) {
+    //         this.element.columnValue = downloadURL;
+    //         this.avatarUrl = downloadURL;
+    //         this.isUploadAvatar = false;
+    //         this.spinner.hide();
+    //         this.avatarUrlCallback.emit(this.avatarUrl)
+    //         this.spinner.hide();
+    //       }
+
+    //     }).catch(error => {
+    //       this.spinner.show();
+    //     });
+    //   });
+    // }
+      // this.uploadedFiles.push(event.currentFiles[index].name);
     if (event.target.files[0] && event.target.files[0].size > 0) {
-      const getDAte = new Date();
-      const getTime = getDAte.getTime();
-      const storageRef = firebase.storage().ref();
-      const uploadTask = storageRef.child(`ksbond/images/${getTime}-uninini-${event.target.files[0].name}`).put(event.target.files[0]);
-      uploadTask.on('state_changed', (snapshot) => {
-      }, (error) => {
-      }, () => {
-        uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-          if (downloadURL) {
-            this.element.columnValue = downloadURL;
-            this.avatarUrl = downloadURL;
-            this.isUploadAvatar = false;
-            this.spinner.hide();
-            this.avatarUrlCallback.emit(this.avatarUrl)
-            // this.dataView.forEach(element => {
-            //   element.fields.forEach(async element1 => {
-            //     if (element1.field_name === 'meta_file_type') {
-            //       element1.columnValue = event.target.files[0].type
-            //     } else if (element1.field_name === 'meta_file_size') {
-            //       element1.columnValue = event.target.files[0].size
-            //     } else if (element1.field_name === 'meta_file_name') {
-            //       element1.columnValue = event.target.files[0].name
-            //     } else if (element1.field_name === 'meta_file_url') {
-            //       element1.columnValue = downloadURL
-            //     }
-            //   });
-            // });
-            this.spinner.hide();
-          }
-
-        }).catch(error => {
-          this.spinner.show();
-        });
-      });
+      const formData = new FormData();
+      formData.append('formFile', event.target.files[0]);
+      console.log('formData', formData)
+      this.apiService.getCardVehicleFile(formData).subscribe(result => {
+        if(result.status === 'success') {
+          this.element.columnValue = result.data;
+          this.avatarUrl = result.data;
+          this.avatarUrlCallback.emit(this.avatarUrl)
+          this.spinner.hide();
+        }
+      })
     }
-
-
   }
 }
 
@@ -1590,7 +1589,7 @@ export class AppTypeLinkUrlRadioListComponent implements OnInit {
                           </li>
                       </ul> -->
                     </div>
-                    <div class="file-uploaded" *ngIf="uploadedFiles.length > 0">
+                    <div class="file-uploaded" *ngIf="uploadedFiles && uploadedFiles?.length > 0">
                     <ul>
                         <li class="d-flex middle bet" *ngFor="let file of uploadedFiles; let i=index">
                         <a [href]="file" target="_blank">{{ file }} </a>
@@ -1631,14 +1630,19 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    // console.log('this.uploadedFiles',this.element)
     this.element.columnValue = this.element.columnValue && (typeof this.element.columnValue === 'string') ? this.element.columnValue.split(',') : this.element.columnValue 
-    this.element.columnValue = this.element.columnValue && this.element.columnValue.length > 0 ? this.element.columnValue : []
+    // this.element.columnValue = this.element.columnValue && this.element.columnValue.length > 0 ? this.element.columnValue : []
     this.dataView.forEach(element => {
       element.fields.forEach(async element1 => {
-        if (((element1.field_name === 'AttachName') || (element1.field_name === 'attached_name') || (element1.field_name === 'attachName')) && element1.columnValue ) {
-          this.uploadedFiles = element1.columnValue.split(',');
-        }else if(element1.field_name === 'meta_file_name' && element1.columnValue){
-           this.uploadedFiles.push(element1.columnValue);
+        if(element1.columnType === 'linkUrlDrag'){
+          if (((element1.field_name === 'AttachName') || (element1.field_name === 'attached_name') || (element1.field_name === 'attachName')) && element1.columnValue ) {
+            this.uploadedFiles.push(element1.columnValue);
+          }else if(element1.field_name === 'meta_file_name' && element1.columnValue){
+             this.uploadedFiles.push(element1.columnValue);
+          }else if(element1.field_name !== 'link_view' && element1.columnValue){
+            this.uploadedFiles.push(element1.columnValue);
+          }
         }
         // else if(element1.field_name === 'link_view'){
         //   console.log('link view', element1.columnValue)
@@ -1680,25 +1684,30 @@ export class AppTypeLinkUrlDragComponent implements OnInit {
       if(event.currentFiles.length > 0){
         if(this.detailInfo && this.detailInfo.hasOwnProperty('formFile')) {
           this.detailInfo.formFile = event.currentFiles;
+           this.uploadedFiles.push(event.currentFiles[0].name);
+        }else {
+          for(let file of event.currentFiles) {
+            // this.uploadedFiles.push(event.currentFiles[index].name);
+            const formData = new FormData();
+            formData.append('formFile', file);
+            this.apiService.getCardVehicleFile(formData).subscribe(result => {
+              if(result.status === 'success') {
+                if(this.isUploadMultiple) {
+                  this.uploadedFiles.push(result.data);
+                }else if(!this.isUploadMultiple) {
+                  this.uploadedFiles = []
+                  this.uploadedFiles.push(result.data);
+                  // this.uploadedFiles.push(event.currentFiles[index].name);
+                }
+                this.element.columnValue = this.uploadedFiles;
+              }
+              
+            })
         }
-        for(let index in event.currentFiles) {
-            this.uploadedFiles.push(event.currentFiles[index].name);
-            if(!this.isUploadMultiple) {
-              this.uploadedFiles = []
-              this.uploadedFiles.push(event.currentFiles[index].name);
-            }
         }
+       
       }else{
-        // this.spinner.hide();
-        // if(event.files.length > 0){
-        //   for( let i = 0; i < event.files.length; i ++){
-        //     if(event.files[i].size > 10000000) {
-        //       this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Kích thước file lớn hơn 20 MB' });
-        //     }
-        //   }
-        // }else{
-        //   this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Không hỗ trợ định dạng file' });
-        // }
+        
         this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Không hỗ trợ định dạng file' });
       }
       setTimeout(() => {

@@ -77,24 +77,38 @@
         </div>
       </div>
       <div class="section-box pt-0 pb-0" *ngIf="this.isHrDiagram">
-        <p-organizationChart 
-        [value]="listAgencyMap" #mydiv  
-        [preserveSpace]="false" 
-        selectionMode="single" 
-        [(selection)]="selectedNode" 
-        (onNodeSelect)="onNodeSelect($event)"
-                styleClass="company">
-                <ng-template let-node pTemplate="person">
-                    <div class="node-header p-corner-top">{{node.data.position ? node.data.position : 'No position'}}</div>
-                    <div class="node-content">
-                        <img src="{{node.data.avatarUrl ? node.data.avatarUrl : '../../../../../assets/images/img_avatar.png'}}" width="32">
-                        <div>{{node.data.full_name ? node.data.full_name : 'No name'}}</div>
-                    </div>
-                </ng-template>
-                <ng-template let-node pTemplate="department" >
-                    {{node.label}}
-                </ng-template>
-            </p-organizationChart>
+
+        <div style="position: absolute; top: 100px; bottom: 0; left: 0; right: 0;">
+
+            <pan-zoom [config]="panZoomConfig">
+      
+              <div style="position: relative;">
+      
+                                <p-organizationChart 
+                        [value]="listAgencyMap" #mydiv  
+                        [preserveSpace]="false" 
+                        selectionMode="single" 
+                        [(selection)]="selectedNode" 
+                        (onNodeSelect)="onNodeSelect($event)"
+                                styleClass="company">
+                                <ng-template let-node pTemplate="person">
+                                    <div class="node-header p-corner-top">{{node.data.position ? node.data.position : 'No position'}}</div>
+                                    <div class="node-content">
+                                        <img src="{{node.data.avatarUrl ? node.data.avatarUrl : '../../../../../assets/images/img_avatar.png'}}" width="32">
+                                        <div>{{node.data.full_name ? node.data.full_name : 'No name'}}</div>
+                                    </div>
+                                </ng-template>
+                                <ng-template let-node pTemplate="department" >
+                                    {{node.label}}
+                                </ng-template>
+                            </p-organizationChart>
+      
+              </div>
+      
+            </pan-zoom>
+      
+          </div>
+       
     
             <p-footer >
                <div class="grid d-flex mt-2 justify-content-end">

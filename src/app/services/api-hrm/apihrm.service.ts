@@ -342,6 +342,14 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v1/salary/getSalaryEmployeePage?` + queryParams, this.options)
   }
 
+  setSalaryEmployeeConfirm(queryParams): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v1/salary/SetSalaryEmployeeConfirm` , queryParams, this.options)
+  }
+
+  setSalaryEmployeeRedo(queryParams): Observable<any> {
+    return this.http.put<any>(`${apiHrmServer}/api/v1/salary/SetSalaryEmployeeRedo` , queryParams, this.options)
+  }
+
   getSalaryInsurancePage(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/salary/GetSalaryInsurancePage?` + queryParams, this.options)
   }
@@ -396,6 +404,10 @@ export class ApiHrmService {
 
   getTimekeepingPage(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/timekeeping/GetSalaryTimekeepingPage?` + queryParams, this.options)
+  }
+
+  getTimekeepingFailPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/timekeeping/GetTimekeepingFailPage?` + queryParams, this.options)
   }
 
   getEmployeeSalaryMonthPage(queryParams): Observable<any> {
@@ -873,7 +885,7 @@ export class ApiHrmService {
   }
 
   setContractTypeTemplate(queryParams): Observable<any> {
-    return this.http.post<any>(`${apiHrmServer}/api/v2/contracttype/SetContractTypeTemplate`, queryParams, this.options)
+    return this.http.post<any>(`${apiHrmServer}/api/v2/contracttype/SetContractTypeTemplate`, queryParams, this.optionsUpload)
   }
 
   getPrintFiles(queryParams): Observable<any> {
@@ -888,6 +900,11 @@ export class ApiHrmService {
       responseType: "blob"
     });
   }
+
+  getContractImportPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/contract/GetContractImportPage?${queryParams}`, this.options)
+  }
+
 
   // Thai sản
 
@@ -1202,6 +1219,10 @@ export class ApiHrmService {
 
   delTerminateInfo(queryParams): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v2/terminate/DelTerminateInfo?` + queryParams, this.options)
+  }
+
+  getTerminateImportPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/terminate/GetTerminateImportPage?` + queryParams, this.options);
   }
 
   getObjectGroup(queryParams): Observable<any> {
@@ -2140,10 +2161,18 @@ export class ApiHrmService {
   setContractAccept(params): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/contract/SetContractAccept`, params, this.options);
   }
-
+  // Dashboard
   getDashboardInfo(params): Observable<any> {
     // return this.http.get<any>(`${apiHrmServer}/api/v2/dashboard/GetDashboardInfo?` + queryParams, this.options)
     return this.http.post<any>(`${apiHrmServer}/api/v2/dashboard/GetDashboardInfo`, params, this.options)
+  }
+
+  getDashboardEmployee(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/dashboard/GetDashboardEmployee`, params, this.options)
+  }
+
+  getDashboardTimekeeping(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/dashboard/GetDashboardTimekeeping`, params, this.options)
   }
 
   getFormPage(queryParams): Observable<any> {
@@ -3052,6 +3081,10 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v2/empinsurance/SetEmpByInsurance`, queryParams, this.options)
   }
 
+  getInsuranceImportPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/empinsurance/GetInsuranceImportPage?` + queryParams, this.options);
+  }
+
   getFilter(url): Observable<any> {
     return this.http.get<any>(`${apiHrmServer + url} `, this.options)
   }
@@ -3550,6 +3583,15 @@ export class ApiHrmService {
 
   setEmployeeExportDraft(data): Observable<Blob> {
     return this.http.post(`${apiHrmServer}/api/v2/employee/SetEmployeeExportDraft`, data, {
+      headers: new HttpHeaders({
+        Authorization: this.authService.getAuthorizationHeaderValue(),
+      }),
+      responseType: "blob"
+    });
+  }
+
+  setSalaryEmployeeExport(data): Observable<Blob> {
+    return this.http.post(`${apiHrmServer}/api/v1/salary/SetSalaryEmployeeExport`, data, {
       headers: new HttpHeaders({
         Authorization: this.authService.getAuthorizationHeaderValue(),
       }),

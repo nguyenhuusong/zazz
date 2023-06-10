@@ -29,6 +29,7 @@ import { ChiTietChuyenVienTinhLuongComponent } from 'src/app/components/cs-tien-
 import { NghiKhongLuongComponent } from 'src/app/components/nghi-khong-luong/nghi-khong-luong.component';
 import { ChiTietNghiKhongLuongComponent } from 'src/app/components/nghi-khong-luong/chi-tiet-nghi-khong-luong/chi-tiet-nghi-khong-luong.component';
 import { ImportExcelComponent } from 'src/app/common/import-excel/import-excel.component';
+import { CsLoiChamCongComponent } from 'src/app/components/cs-loi-cham-cong/cs-loi-cham-cong.component';
 
 const routes: Routes = [
   {
@@ -324,6 +325,17 @@ const routes: Routes = [
     apiExport: 'setLeaveLackExportDraft',
     apiTemImport: 'getLeaveLackImportTemp',
     fileNameTemImport: 'file_mau_danh_sach_nghi_khong_luong',
+  },
+},
+
+//Lỗi chấm công
+
+{
+  path: 'loi-cham-cong',
+  component: CsLoiChamCongComponent,
+  data: {
+    title: 'Lỗi chấm công',
+    url: 'loi-cham-cong',
   },
 },
 ];

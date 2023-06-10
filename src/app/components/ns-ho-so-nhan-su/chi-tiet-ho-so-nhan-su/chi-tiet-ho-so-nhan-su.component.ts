@@ -676,7 +676,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
                 buttons: [
                   {
                     onClick: this.OnClick.bind(this),
-                    label: 'Xem chi tiết',
+                    label: 'Xem',
                     icon: 'fa fa-edit',
                     key: 'xem-chi-tiet-file-dinh-kem',
                     class: 'btn-primary mr5',
@@ -711,7 +711,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
                 buttons: [
                   {
                     onClick: this.OnClick.bind(this),
-                    label: 'Xem chi tiết',
+                    label: 'Xem',
                     icon: 'fa fa-edit',
                     key: 'xemchitietlienhe',
                     class: 'btn-primary mr-1',
@@ -798,7 +798,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
                 buttons: [
                   {
                     onClick: this.OnClick.bind(this),
-                    label: 'Xem chi tiết',
+                    label: 'Xem',
                     icon: 'fa fa-edit',
                     key: 'xem-chi-tiet-file-dinh-kem',
                     class: 'btn-primary mr5',
@@ -967,7 +967,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
                     buttons: [
                       {
                         onClick: this.GetEmpWorkedButton.bind(this, link),
-                        label: 'Xem chi tiết',
+                        label: 'Xem',
                         icon: 'fa fa-edit editing',
                         key: 'view-qua-trinh-hop-dong',
                         class: 'btn-primary mr5',
@@ -988,7 +988,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
                     buttons: [
                       {
                         onClick: this.AddEducation.bind(this, link),
-                        label: 'Xem chi tiết',
+                        label: 'Xem',
                         icon: 'fa fa-edit editing',
                         key: 'view-qua-trinh-hop-dong',
                         class: 'btn-primary mr5',
@@ -1000,7 +1000,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
                     buttons: [
                       {
                         onClick: this.AddTraining.bind(this, link),
-                        label: 'Xem chi tiết',
+                        label: 'Xem',
                         icon: 'fa fa-edit editing',
                         key: 'view-qua-trinh-hop-dong',
                         class: 'btn-primary mr5',
@@ -1012,7 +1012,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
                     buttons: [
                       {
                         onClick: this.AddSkill.bind(this, link),
-                        label: 'Xem chi tiết',
+                        label: 'Xem',
                         icon: 'fa fa-edit editing',
                         key: 'view-qua-trinh-hop-dong',
                         class: 'btn-primary mr5',
@@ -1024,7 +1024,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
                     buttons: [
                       {
                         onClick: this.AddCertificate.bind(this, link),
-                        label: 'Xem chi tiết',
+                        label: 'Xem',
                         icon: 'fa fa-edit editing',
                         key: 'view-qua-trinh-hop-dong',
                         class: 'btn-primary mr5',
@@ -1197,7 +1197,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
                 buttons: [
                   {
                     onClick: this.OnClick.bind(this),
-                    label: 'Xem chi tiết',
+                    label: 'Xem',
                     icon: 'fa fa-edit editing',
                     key: 'view-qua-trinh-hop-dong',
                     class: 'btn-primary mr5',

@@ -28,7 +28,6 @@ export class CurrencyDirective implements OnInit, AfterViewInit, AfterContentChe
         // // var myNumeral2 = numeral(newVal);
         // // var value2 = myNumeral2.value();
         var rawValue = newVal;
-        console.log(newVal)
         event.target.value = newVal
         // this.model = newVal
         this.rawChange.emit(rawValue)

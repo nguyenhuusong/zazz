@@ -15,6 +15,7 @@ import { getParamString } from 'src/app/common/function-common/objects.helper';
 import { fromEvent, Subject, takeUntil } from 'rxjs';
 import { cloneDeep } from 'lodash';
 import * as FileSaver from 'file-saver';
+import { PanZoomConfig } from 'ngx-panzoom';
 @Component({
   selector: 'app-cai-dat-to-chuc',
   templateUrl: './cai-dat-to-chuc.component.html',
@@ -24,7 +25,14 @@ export class CaiDatToChucComponent implements OnInit {
   pagingComponent = {
     total: 0
   };
- 
+  panZoomConfig: PanZoomConfig = new PanZoomConfig({
+    freeMouseWheel: false,
+    zoomLevels: 5,
+    scalePerZoomLevel: 1.4,
+    invertMouseWheel: true,
+    initialPanX: 0,
+    initialPanY: 70,
+  });
   MENUACTIONROLEAPI = MENUACTIONROLEAPI;
   ACTIONS = ACTIONS
   selectedValue = null
@@ -152,11 +160,8 @@ export class CaiDatToChucComponent implements OnInit {
     .subscribe(results => {
       if (results.status === 'success') {
         this.listAgencyMap = [...results.data.root];
-        if (localStorage.getItem("organize") === null) {
-          this.selectedNode = this.listAgencyMap[0];
-          this.detailOrganizeMap = this.selectedNode
-          localStorage.setItem('organize', JSON.stringify(this.listAgencyMap[0]));
-        } else {
+
+        if(localStorage.hasOwnProperty("organize") && localStorage.getItem("organize") && localStorage.getItem("organize") != "undefined") {
           this.selectedNode = JSON.parse(localStorage.getItem("organize"));
           this.parseObjectProperties(this.listAgencyMap, this.selectedNode.organizeId);
           this.detailOrganizeMap = this.selectedNode
@@ -164,6 +169,10 @@ export class CaiDatToChucComponent implements OnInit {
           if (type) {
             this.isHrDiagram = true;
           }
+        }else {
+          this.selectedNode = this.listAgencyMap[0];
+          this.detailOrganizeMap = this.selectedNode
+          localStorage.setItem('organize', JSON.stringify(this.listAgencyMap[0]));
         }
         this.spinner.hide();
       }

@@ -250,8 +250,8 @@ export class QtThayDoiLuongComponent implements OnInit {
       buttons: [
         {
           onClick: this.editRow.bind(this),
-          label: 'Sửa',
-          icon: 'pi pi-tablet',
+          label: 'Xem',
+          icon: 'pi pi-eye',
           class: 'btn-primary mr5',
           hide: CheckHideAction(MENUACTIONROLEAPI.GetHrmPayrollRecordPage.url, ACTIONS.VIEW)
         },
@@ -336,7 +336,7 @@ export class QtThayDoiLuongComponent implements OnInit {
           `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
         },
         filter: '',
-        maxWidth: 64,
+        maxWidth: 100,
         pinned: 'right',
         cellRenderer: 'buttonAgGridComponent',
         cellClass: ['border-right cell-action', 'no-auto'],

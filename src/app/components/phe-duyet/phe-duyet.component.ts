@@ -87,9 +87,10 @@ export class PheDuyetComponent implements OnInit, AfterViewChecked {
     currentRecordEnd: 0
   }
   loading = false;
-  listVacancy = []
-  companies = []
-
+  listVacancy = [];
+  companies = [];
+  isDetail = false;
+  wft_id = '';
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
@@ -209,7 +210,7 @@ export class PheDuyetComponent implements OnInit, AfterViewChecked {
       buttons: [
         {
           onClick: this.editRow.bind(this),
-          label: 'Xem chi tiết',
+          label: 'Xem',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
           hide: CheckHideAction(MENUACTIONROLEAPI.GetWorkflowPage.url, ACTIONS.VIEW)
@@ -290,10 +291,8 @@ export class PheDuyetComponent implements OnInit, AfterViewChecked {
 
 
   editRow({rowData}) {
-    const params = {
-      wft_id: rowData.wft_id
-    }
-    this.router.navigate(['/nhan-su/phe-duyet/chi-tiet-phe-duyet'], { queryParams: params });
+    this.wft_id = rowData.wft_id
+    this.isDetail = true;
   }
 
   onCellClicked(event) {
@@ -336,7 +335,10 @@ export class PheDuyetComponent implements OnInit, AfterViewChecked {
   getCompany() {
    
   }
-
+  
+  callback() {
+    this.isDetail = false;
+  }
 
 
 

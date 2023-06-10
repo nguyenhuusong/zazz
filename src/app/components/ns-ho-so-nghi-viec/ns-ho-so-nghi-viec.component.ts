@@ -228,6 +228,13 @@ export class NsHoSoNghiViecComponent implements OnInit {
 
         },
         {
+          onClick: this.ViewHoSoNS.bind(this),
+          label: 'Hồ sơ nhân sự',
+          icon: 'fa fa-edit',
+          class: 'btn-primary mr5',
+
+        },
+        {
           onClick: this.lock.bind(this),
           label: 'Đóng ứng dụng',
           icon: 'pi pi-lock',
@@ -267,6 +274,13 @@ export class NsHoSoNghiViecComponent implements OnInit {
         // },
       ]
     };
+  }
+
+  ViewHoSoNS({rowData}) {
+    const params = {
+      empId: rowData.empId
+    }
+    this.router.navigate(['/nhan-su/ho-so-nhan-su/chi-tiet-ho-so-nhan-su'], { queryParams: params });
   }
   modelLock = {
     terminateId: '',

@@ -57,6 +57,26 @@ ul{
                 }
             }
         }
+        &.d-flex{
+            ul{
+                display: flex;
+                flex-wrap: wrap;
+                margin-top: 10px;
+                li{
+                    margin-bottom: 10px;
+                }
+            }
+        }
+    }
+    &.column{
+        margin-top: 0px;
+        li{
+            margin-bottom: 0px !important;
+            margin-right: 0px;
+            span{
+                font-size: 11px;
+            }
+        }
     }
 }
 
@@ -331,7 +351,7 @@ ag-grid-angular{
                 .ag-header-cell-label {
                     .ag-header-cell-text{
                         font-family: "SFProTextRegular";
-                        font-size: .800rem;
+                        font-size: 0.75rem;
                         color: $C-212633;
                         font-weight: 600;
                     }
@@ -369,7 +389,31 @@ ag-grid-angular{
                 &.ag-row-odd{
                     // background: $white;
                 }
-                
+                &.ag-row-level-1{
+                    // padding-top: 10px !important;
+                    // padding-bottom: 10px !important;
+                    .ag-details-row-fixed-height{
+                        background-color: transparent !important;
+                        border: 1px solid #ccc;
+                        padding: 0px !important;
+                        width: calc(100% - 20px);
+                        margin: auto;
+                    }
+                    .ag-cell{
+                        border-top: none !important;
+                        border-bottom: none !important;
+                        background: none !important;
+                    }
+                    .ag-row-hover{
+                        background: #eee !important;
+                    }
+                    .ag-row-focus {
+                        .ag-cell{
+                            border-top: 1px solid #9abdf5 !important;
+                            border-bottom: 1px solid #9abdf5 !important;
+                        }
+                    }
+                }
             }
             .ag-cell{
                 border: 1px solid transparent;
@@ -1142,6 +1186,7 @@ p-dialog{
             .btn-group-edit-detail{
                 top: 19px;
                 right: 59px;
+                bottom: auto !important;
             }
         }
     }
@@ -1776,8 +1821,10 @@ app-import-excel
             color: #ffffff
         }
         &>div{
-            width: 33.33%;
-
+            width: 120px;
+            &.text-right{
+                width: 66%;
+            }
         }
     }
     .p-dropdown{
@@ -1843,3 +1890,67 @@ app-import-excel
     }
 }
 
+.em-activities{
+    .p-card-title {
+        text-align: center;
+    }
+    .wrap-knod{
+        .p-knob{
+            transition: all 0.3s;
+        }
+        &:hover{
+            cursor: pointer;
+            .p-knob{
+                svg{
+                    box-shadow: 1px 1px 4px #ccc;
+                    border-radius: 100%;
+                    transition: all 0.3s;
+                }
+            }
+            .p-card-title {
+                color: rgb(0 72 172 / 87%) !important;
+            }
+        }
+    }
+}
+.members{
+    .item{
+        cursor: pointer;
+        &:hover{
+            .p-avatar{
+                img{
+                    box-shadow: 1px 2px 7px #ccc;
+                    border-radius: 100%;
+                    transition: all 0.3s;
+                }
+            }
+            .content{
+                h4{
+                    color: rgba(0, 72, 172, 0.87) !important;
+                }
+            }
+        }
+    }
+}
+
+img{
+    max-width: 100%;
+}
+.p-sidebar-mask{
+    z-index: 1102 !important;
+}
+p-sidebar{
+    &>.p-sidebar{
+        z-index: 1103 !important;
+        p-sidebar{
+            &>.p-sidebar{
+                z-index: 1104 !important;
+                p-sidebar{
+                    &>.p-sidebar{
+                        z-index: 1105 !important;
+                    }
+                }
+            }
+        }
+    }
+}

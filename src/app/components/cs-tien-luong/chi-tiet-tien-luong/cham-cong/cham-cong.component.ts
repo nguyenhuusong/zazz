@@ -89,6 +89,7 @@ export class ChamCongComponent implements OnInit {
     }
   }
   status = [];
+  detailpage: any = null;
   getTimekeepingPage() {
     this.spinner.show();
     this.columnDefs = [];
@@ -98,6 +99,7 @@ export class ChamCongComponent implements OnInit {
       .subscribe(
         (results: any) => {
           this.listsData = results.data.dataList;
+          this.detailpage = results.data;
           this.gridKey = results.data.gridKey;
           if (this.query.offSet === 0) {
             this.gridflexs = results.data.gridflexs;
@@ -108,7 +110,7 @@ export class ChamCongComponent implements OnInit {
             this.status.push(results.data.status);
           }
           this.selectedStatus = results.data.status;
-          if (this.detailInfo.actions) {
+          if (results.data.actions) {
             this.initButton();
           }
           this.countRecord.totalRecord = results.data.recordsTotal;
@@ -148,7 +150,7 @@ export class ChamCongComponent implements OnInit {
             // buttons: [
             //   {
             //     onClick: this.editRow.bind(this),
-            //     label: 'Xem chi tiết',
+            //     label: 'Xem',
             //     icon: 'fa fa-edit editing',
             //     key: 'view-job-detail',
             //     class: 'btn-primary mr5',
@@ -256,7 +258,7 @@ export class ChamCongComponent implements OnInit {
   }
 
   initButton() {
-    this.menuActions = this.detailInfo.actions.map((item, index) => {
+    this.menuActions = this.detailpage.actions.map((item, index) => {
       return {
         label: item.name,
         value: item.code,

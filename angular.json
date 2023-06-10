@@ -54,7 +54,8 @@
             ],
             "scripts": [
               "node_modules/chart.js/dist/Chart.js",
-              "node_modules/ngx-markdown-editor/assets/marked.min.js"
+              "node_modules/ngx-markdown-editor/assets/marked.min.js",
+              "node_modules/jsplumb/dist/js/jsplumb.min.js"
             ]
           },
           "configurations": {

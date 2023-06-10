@@ -80,22 +80,13 @@ export class AddContractComponent implements OnInit {
   }
 
   setDetailInfo(data) {
-    if (this.files && this.files.length > 0) {
-      data[0].fields.forEach(element => {
-        if (element.field_name === "meta_file_size") {
-          element.columnValue = this.files[0].size
-        } else if (element.field_name === "meta_file_type") {
-          element.columnValue = this.files[0].type;
-        }
-        else if (element.field_name === "meta_file_name") {
-          element.columnValue = this.files[0].name;
-        }
-      });
-    }
-    const param = {
-      ...this.dataDetailInfo, group_fields: data
-    }
-    this.apiService.setContractTypeTemplate(param)
+    console.log(this.dataDetailInfo.formFile)
+    const formData = new FormData();
+    formData.append('contractTypeId',this.contractTypeId ? `${this.contractTypeId}` : '');
+    formData.append('tempId',this.tempId ? `${this.tempId}` : ``);
+    formData.append('group_fields', `${JSON.stringify(data)}`);
+    formData.append('formFile', (this.dataDetailInfo.formFile && this.dataDetailInfo.formFile.length > 0) ? this.dataDetailInfo.formFile[0] : '');
+    this.apiService.setContractTypeTemplate(formData)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(results => {
       if (results.status === 'success') {
@@ -159,7 +150,7 @@ export class AddContractComponent implements OnInit {
 
               {
                 onClick: this.editRow.bind(this),
-                label: 'Xem chi tiết',
+                label: 'Xem',
                 icon: 'fa fa-edit editing',
                 key: 'view-job-detail',
                 class: 'btn-primary mr5',

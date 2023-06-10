@@ -165,7 +165,7 @@ export class DanhSachMenuComponent implements OnInit {
                 buttons: [
                   {
                     onClick: this.OnClickRow.bind(this),
-                    label: 'Xem chi tiết',
+                    label: 'Xem',
                     icon: 'pi pi-pencil',
                     class: 'btn-primary mr5',
                     key: KEYBUTTON.XEMCHITIET

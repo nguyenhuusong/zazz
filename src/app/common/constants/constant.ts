@@ -641,6 +641,18 @@ export const API_PROFILE  = {
         'menu': '',
         'url': '/nhan-su/dang-ky-lich-lam-viec'
     },
+    'GetLeaveLackPage': {
+        'name': 'Danh sách nghỉ không lương',
+        'api': '0eed6cc8-55f4-4285-9f8e-bfc0ba572253',
+        'menu': '',
+        'url': '/chinh-sach/nghi-khong-luong'
+    },
+    'GetTimekeepingFailPage': {
+        'name': 'Danh sách lỗi chấm công',
+        'api': '0eed6cc8-55f4-4285-9f8e-bfc0ba572253',
+        'menu': '',
+        'url': '/chinh-sach/loi-cham-cong'
+    },
     'GetMaternityPage': {
         'name': 'Danh sách thai sản',
         'api': '0eed6cc8-55f4-4285-9f8e-bfc0ba572253',

@@ -26,15 +26,24 @@ import { BienDongBHXHComponent } from 'src/app/components/bien-dong-bhxh/bien-do
 import { ImportExcelComponent } from 'src/app/common/import-excel/import-excel.component';
 import { CustomerManagerComponent } from 'src/app/components/customer-manager/customer-manager.component';
 import { DetailCustomerManagerComponent } from 'src/app/components/customer-manager/detail-customer-manager/detail-customer-manager.component';
+import { TongQuanNhanSuComponent } from 'src/app/components/ns-ho-so-nhan-su/tong-quan-nhan-su/tong-quan-nhan-su.component';
 
 const routes: Routes = [
   {
     path: "",
-    redirectTo: "ho-so-nhan-su",
+    redirectTo: "employee-overview",
     pathMatch: 'full'
   },
  // quyết định lương
 
+ {
+  path: 'employee-overview',
+  component: TongQuanNhanSuComponent,
+  data: {
+    title: 'Tổng quan nhân sự',
+    url: 'employee-overview',
+  },
+},
  {
   path: 'quyet-dinh-luong',
   component: QuyetDinhLuongComponent,
@@ -67,6 +76,7 @@ const routes: Routes = [
       fileDoc: 'xu-ly-hop-dong.xls',
       apiExport: 'setContractExportDraft',
       apiTemImport: 'getContractImportTemp',
+      apihistory: 'getContractImportPage',
       fileNameTemImport: 'file_mau_xu_ly_hop_dong',
     },
   },
@@ -204,6 +214,7 @@ const routes: Routes = [
       fileDoc: 'ho-so-nhan-su-nghi-viec.xls',
       apiExport: 'setTerminateExportDraft',
       apiTemImport: 'setTerminateExportTemp',
+      apihistory: 'getTerminateImportPage',
       fileNameTemImport: 'file_mau_ho_so_nhan_su_nghi_viec',
     },
   },
@@ -343,6 +354,7 @@ const routes: Routes = [
     fileDoc: 'Qua_trinh_luong_Import.xls',
     apiExport: 'setSalaryInfoExportDraft',
     apiTemImport: 'getSalaryInfoImportTemp',
+    apihistory: 'getContractImportPage',
     fileNameTemImport: 'file_mau_qua_trinh_thay_doi_luong',
   },
 },
@@ -387,6 +399,7 @@ const routes: Routes = [
     fileDoc: 'bien_dong_bhxh_import.xlsx',
     apiExport: 'setInsuranceExportDraft',
     apiTemImport: 'getInsuranceImportTemp',
+    apihistory: 'getInsuranceImportPage',
     fileNameTemImport: 'file_mau_bien_dong_xa_hoi',
   },
 },

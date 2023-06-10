@@ -22,10 +22,10 @@
                         </ng-template>
                         <ng-template let-country pTemplate="item">
                             <div class="flex align-items-center gap-2" *ngIf="country.value != selectedStatus?.value">
-                                <div class="pb-2 pt-2" style="display: flex; align-items: center; width: 100%;justify-content: space-around;font-size: 13px;">
+                                <div class="pb-2 pt-2 gap-2" style="display: flex; align-items: center; width: 100%;justify-content: space-around;font-size: 13px;">
                                     <span style="white-space:nowrap">{{ country.placeholder }} </span>
                                     <span class="pi pi-arrow-right" style="font-size: 12px;"></span>
-                                    <span [class]="country.textColor" style="white-space:nowrap" class="pl-2 pr-2">{{ country.name }}</span>
+                                    <span [class]="country.textColor" style="white-space:nowrap">{{ country.name }}</span>
                                 </div>
                             </div>
                         </ng-template>
@@ -111,27 +111,17 @@ position="right">
             
             <div class="grid wrap-edit-detail pt-2">
                 <div class="col-12 border-section " *ngIf="this.detailInfo?.flow_st > 0 && detailInfo?.flow_st < 4">
-                    <p-panel>
-                        <ng-template pTemplate="header">
-                            <div class="d-flex justify-content-between">
-                                <h3 class="title-section">Thành phần lương</h3>
-                                <!-- <p-button label="Thêm mới" icon="pi pi-plus" (click)="addWorked()" styleClass="p-button-sm mr-1"></p-button> -->
-                            </div>
-                        </ng-template>
-                        <div class="row" style="flex-wrap: wrap">
-                            <div class="grid-default border">
-                                <app-list-grid-angular [domLayout]="'autoHeight'" *ngIf="columnDefs_1.length > 0" [title]="'Chứng chỉ'"
-                                    [listsData]="listsData_1" (showConfig)="CauHinh(1)" [columnDefs]="columnDefs_1"></app-list-grid-angular>
-                                    <app-loading-grid 
-                                        [columnNumber]="9" 
-                                        gridtype="''" 
-                                        [value]="[1,2]" 
-                                        *ngIf="columnDefs_1.length === 0">
-                                    </app-loading-grid>
-
-                                </div>
-                        </div>
-                    </p-panel>
+                    <div class="section-box">
+                        <h3 class="title-section">Thành phần lương</h3>
+                        <app-list-grid-angular [domLayout]="'autoHeight'" *ngIf="columnDefs_1.length > 0" [title]="'Chứng chỉ'"
+                            [listsData]="listsData_1" (showConfig)="CauHinh(1)" [columnDefs]="columnDefs_1"></app-list-grid-angular>
+                            <app-loading-grid 
+                                [columnNumber]="9" 
+                                gridtype="''" 
+                                [value]="[1,2]" 
+                                *ngIf="columnDefs_1.length === 0">
+                            </app-loading-grid>
+                    </div>
                 </div>
             </div>  
             <app-hop-dong [contractId]="detailInfo?.contractId" [empId]="modelContractInfo.empId" *ngIf="this.detailInfo?.flow_st > 1" (cancelSave)="getContractInfo()" ></app-hop-dong>
@@ -150,15 +140,15 @@ position="right">
                     placeholder="Select a Country">
                     <ng-template pTemplate="selectedItem" >
                         <div class="flex align-items-center gap-2" *ngIf="selectedStatus" >
-                            <div style="color: #fff">{{ selectedStatus.name}}</div>
+                            <div>{{ selectedStatus.name}}</div>
                         </div>
                     </ng-template>
                     <ng-template let-country pTemplate="item">
                         <div class="flex align-items-center gap-2" *ngIf="country.value != selectedStatus?.value">
-                            <div class="pb-2 pt-2" style="display: flex; align-items: center; width: 100%;justify-content: space-around;font-size: 13px;">
+                            <div class="pb-2 pt-2 gap-2" style="display: flex; align-items: center; width: 100%;justify-content: space-around;font-size: 13px;">
                                 <span style="white-space:nowrap">{{ country.placeholder }} </span>
                                 <span class="pi pi-arrow-right" style="font-size: 12px;"></span>
-                                <span [class]="country.textColor" style="white-space:nowrap" class="pl-2 pr-2">{{ country.name }}</span>
+                                <span [class]="country.textColor" style="white-space:nowrap">{{ country.name }}</span>
                             </div>
                         </div>
                     </ng-template>

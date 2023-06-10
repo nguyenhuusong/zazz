@@ -1,0 +1,20 @@
+<div class="container">
+	<div #nodes></div>
+</div>
+<div class="btn-popup-bottom-right">
+  <p-button [styleClass]="'p-button-sm'" (click)="saveNodeJson()">Save Flow Node JSON</p-button>
+</div>
+
+
+<p-dialog 
+        [(visible)]="displayAdd" header="Thêm trạng thái"
+        [modal]="true" [style]="{width: 800 + 'px'}"
+        [draggable]="false" [resizable]="false" [focusTrap]="false" >
+        <app-modal-node [modelAddNode]="modelAddNode" *ngIf="displayAdd"></app-modal-node>
+        <ng-template pTemplate="footer">
+            <div class="col-12 flex justify-content-end">
+                    <p-button label="Thêm tiến trình" (click)="saveNode()" styleClass="p-button-sm mr-1 p-button-info" icon="pi pi-check"></p-button>
+            </div>
+        </ng-template>
+      
+</p-dialog>

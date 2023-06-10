@@ -32,7 +32,7 @@
 </p-dialog>
 
 <p-sidebar
-    [style]="{ width: '80%' }"
+    [style]="{ width: '80%' }" [autoZIndex]="false" [baseZIndex]="99999" styleClass="z-index-99999"
     [(visible)]="displayFormEditDetail" 
     position="right">
     <ng-template pTemplate="header">

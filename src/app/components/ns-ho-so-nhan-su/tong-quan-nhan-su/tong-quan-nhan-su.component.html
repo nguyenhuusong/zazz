@@ -1,0 +1,101 @@
+<div class="main-grid">
+    <section class="bread-crumb">
+        <div class="d-flex bet bottom">
+            <div class="p-0 col-12 md:col-12 lg:col-3 xl:col-3">
+                <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
+            </div>
+        </div>
+    </section>
+
+    <!-- muốn có h3 để biết nó thuộc nhóm dữ liệu nào  xu ly giup tao -->
+
+
+
+    <section class="content" *ngIf="detailDashboardEmployee">
+        <div class="mb-3">
+            <div class="grid">
+                <div class="pt-0 col-12 pb-0 sm:col-12 md:col-12 lg:col-12 xl:col-10">
+                    <div class="box" style="height: 100%;">
+                        <h3 style="padding-left: 11px;">Employee</h3>
+                        <div class="box-items em-activities">
+                            <div>
+                                <p-card >
+                                    <div class="head-title">
+                                        <h3 class="p-card-title">
+                                            Tổng nhân viên: 
+                                        </h3>
+                                        <span class="number">
+                                            {{ detailDashboardEmployee.emp_total }}
+                                        </span>
+                                    </div>
+                                    <div class="d-flex gap12 humans">
+                                        <div class="human male">
+                                            <span class="per" >{{ perMale }} %</span>
+                                            <img src="../../../../assets/images/male.png">
+                                        </div>
+                                        <div class="human female">
+                                            <span class="per">{{ perFeMale }} %</span>
+                                            <img src="../../../../assets/images/fe-male.png">
+                                        </div>
+                                        <span class="bar male-bar" [style.width]="perMale + 'px'"></span>
+                                        <span class="bar female-bar"></span>
+                                    </div>
+                                </p-card>
+                            </div>
+                            <div class="wrap-knod" *ngFor="let item  of  detailDashboardEmployee.empoyees; let i=index">
+                                <p-card header="{{item.name}}( {{item.emp_num}}/{{item.emp_total}} )" [style]="{'height': '170px', 'width': 'auto'}">
+                                    <p-knob (click)="navigateWithState(item)" [max]="item.emp_total" [(ngModel)]="item.emp_num" [valueColor]="i === 0 ? 'DarkOrange' : 'red'" [readonly]="true"></p-knob>
+                                </p-card>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-2 pb-0 pt-0">
+                    <div class="box" style="height: 100%;display: flex;flex-direction: column;justify-content: space-around;">
+                        <h3>empWorking</h3> 
+                        <!-- <p-chart type="bar" [data]="dataChart" [options]="optionsChartPie"></p-chart> -->
+                        <div class="chart d-flex gap12 middle">
+                            <canvas  style="max-width: 160px; max-height: 160px;" id="doughnut" *ngIf="dataChart?.datasets"></canvas>
+                            <div id="legend-doughnut" class="legend-default dou column">
+                                <ul></ul>
+                            </div>
+                          </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="grid charts">
+            <div class="col-4">
+                <div class="box">
+                    <h3>EmpProcessing</h3>
+                    <p-chart type="bar" [data]="dataChartEmpProcessing" [options]="optionsHorizontal"></p-chart>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="box">
+                <h3>EmpPositionType</h3>
+                    <p-chart type="bar" [data]="dataChartEmpPositionType" [options]="optionsHorizontal"></p-chart>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="box">
+                  <h3>EmpContractType</h3>
+                    <p-chart type="bar" [data]="dataChartEmpContractType" [options]="optionsHorizontal"></p-chart>
+                    </div>
+            </div>
+         </div>
+         <div class="grid charts" style="
+         margin-top: 0px;
+     ">
+            <div class="col-12">
+                <div class="box">
+                 <h3>EmpPosition</h3>
+                    <div style="max-width: 78%; margin: auto">
+                        <p-chart type="bar" [data]="dataChartEmpPosition" [options]="optionsChart"></p-chart>
+                    </div>
+               </div>
+            </div>
+         </div>
+    </section>
+</div>
+

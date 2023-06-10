@@ -36,7 +36,7 @@ export class ThaiSanComponent implements OnInit, AfterViewChecked {
     private spinner: NgxSpinnerService,
     private dialogService: DialogService,
     private changeDetector: ChangeDetectorRef,
-    
+
     private router: Router) {
 
     this.defaultColDef = {
@@ -141,34 +141,34 @@ export class ThaiSanComponent implements OnInit, AfterViewChecked {
     const params: any = { ...this.query };
     const queryParams = queryString.stringify(params);
     this.apiService.getMaternityPage(queryParams)
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(
-      (results: any) => {
-        this.listsData = results.data.dataList.data;
-        this.gridKey= results.data.dataList.gridKey;
-        if (this.query.offSet === 0) {
-          this.cols = results.data.gridflexs;
-          this.colsDetail = results.data.gridflexdetails ? results.data.gridflexdetails : [];
-        }
-        this.initGrid();
-        this.countRecord.totalRecord = results.data.dataList.recordsTotal;
-        this.countRecord.totalRecord = results.data.dataList.recordsTotal;
-        this.countRecord.currentRecordStart = results.data.dataList.recordsTotal === 0 ? this.query.offSet = 0 : this.query.offSet + 1;
-        if ((results.data.dataList.recordsTotal - this.query.offSet) > this.query.pageSize) {
-          this.countRecord.currentRecordEnd = this.query.offSet + Number(this.query.pageSize);
-        } else {
-          this.countRecord.currentRecordEnd = results.data.dataList.recordsTotal;
-          setTimeout(() => {
-            const noData = document.querySelector('.ag-overlay-no-rows-center');
-            if (noData) { noData.innerHTML = 'Không có kết quả phù hợp' }
-          }, 100);
-        }
-        this.spinner.hide();
-        this.FnEvent();
-      },
-      error => {
-        this.spinner.hide();
-      });
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        (results: any) => {
+          this.listsData = results.data.dataList.data;
+          this.gridKey = results.data.dataList.gridKey;
+          if (this.query.offSet === 0) {
+            this.cols = results.data.gridflexs;
+            this.colsDetail = results.data.gridflexdetails ? results.data.gridflexdetails : [];
+          }
+          this.initGrid();
+          this.countRecord.totalRecord = results.data.dataList.recordsTotal;
+          this.countRecord.totalRecord = results.data.dataList.recordsTotal;
+          this.countRecord.currentRecordStart = results.data.dataList.recordsTotal === 0 ? this.query.offSet = 0 : this.query.offSet + 1;
+          if ((results.data.dataList.recordsTotal - this.query.offSet) > this.query.pageSize) {
+            this.countRecord.currentRecordEnd = this.query.offSet + Number(this.query.pageSize);
+          } else {
+            this.countRecord.currentRecordEnd = results.data.dataList.recordsTotal;
+            setTimeout(() => {
+              const noData = document.querySelector('.ag-overlay-no-rows-center');
+              if (noData) { noData.innerHTML = 'Không có kết quả phù hợp' }
+            }, 100);
+          }
+          this.spinner.hide();
+          this.FnEvent();
+        },
+        error => {
+          this.spinner.hide();
+        });
   }
 
   showButtons(event: any) {
@@ -176,7 +176,7 @@ export class ThaiSanComponent implements OnInit, AfterViewChecked {
       buttons: [
         {
           onClick: this.editRow.bind(this),
-          label: 'Xem chi tiết',
+          label: 'Xem',
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
           // hide: CheckHideAction(MENUACTIONROLEAPI.GetMaternityPage.url, ACTIONS.VIEW)
@@ -191,7 +191,7 @@ export class ThaiSanComponent implements OnInit, AfterViewChecked {
       ]
     };
   }
-  
+
   ngAfterViewInit(): void {
     this.FnEvent();
   }
@@ -199,7 +199,7 @@ export class ThaiSanComponent implements OnInit, AfterViewChecked {
   FnEvent() {
     setTimeout(() => {
       var dragTarget = document.getElementById(this.gridKey);
-      if(dragTarget) {
+      if (dragTarget) {
         const click$ = fromEvent(dragTarget, 'click');
         click$.subscribe(event => {
           this.addThaiSan()
@@ -214,7 +214,7 @@ export class ThaiSanComponent implements OnInit, AfterViewChecked {
       {
         headerComponentParams: {
           template:
-          `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
+            `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
         },
         filter: '',
         width: 70,
@@ -280,21 +280,21 @@ export class ThaiSanComponent implements OnInit, AfterViewChecked {
       accept: () => {
         const queryParams = queryString.stringify({ maternityId: event.rowData.maternityId });
         this.apiService.delMaternityInfo(queryParams)
-        .pipe(takeUntil(this.unsubscribe$))
-        .subscribe(results => {
-          if (results.status === 'success') {
-            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa tuyển dụng thành công' });
-            this.load();
-            this.FnEvent();
-          } else {
-            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
-          }
-        });
+          .pipe(takeUntil(this.unsubscribe$))
+          .subscribe(results => {
+            if (results.status === 'success') {
+              this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa tuyển dụng thành công' });
+              this.load();
+              this.FnEvent();
+            } else {
+              this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+            }
+          });
       }
     });
   }
 
-  editRow({rowData}) {
+  editRow({ rowData }) {
     const params = {
       maternityId: rowData.maternityId
     }
@@ -302,8 +302,8 @@ export class ThaiSanComponent implements OnInit, AfterViewChecked {
   }
 
   onCellClicked(event) {
-    if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
-      this.editRow(event = {rowData: event.data})
+    if (event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
+      this.editRow(event = { rowData: event.data })
     }
   }
 
@@ -340,13 +340,23 @@ export class ThaiSanComponent implements OnInit, AfterViewChecked {
       { label: 'Quan hệ lao động' },
       { label: 'Danh sách thai sản' },
     ];
-    this.getEmpFilter()
+    this.route.queryParams
+      .subscribe((params: any) => {
+        const apiParam = params;
+        if (apiParam) {
+          this.query = { ...this.query, ...apiParam };
+          this.load();
+          this.getEmpFilter(false);
+        } else {
+          this.getEmpFilter(true);
+        }
+      })
 
   }
 
 
   getCompany() {
-   
+
   }
 
 
@@ -358,40 +368,40 @@ export class ThaiSanComponent implements OnInit, AfterViewChecked {
     { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger ml-2  addNew', icon: 'pi pi-times' },
   ];
 
-  getEmpFilter() {
+  getEmpFilter(reload: boolean) {
     this.apiService.getFilter('/api/v2/maternity/GetMaternityFilter')
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(results => {
-      if(results.status === 'success') {
-        const listViews = cloneDeep(results.data.group_fields);
-        this.cloneListViewsFilter = cloneDeep(listViews);
-        this.listViewsFilter = [...listViews];
-        const params =  getParamString(listViews)
-        this.query = { ...this.query, ...params};
-        this.load();
-        this.detailInfoFilter = results.data;
-      }
-    });
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(results => {
+        if (results.status === 'success') {
+          const listViews = cloneDeep(results.data.group_fields);
+          this.cloneListViewsFilter = cloneDeep(listViews);
+          this.listViewsFilter = [...listViews];
+          const params = getParamString(listViews)
+          this.query = { ...this.query, ...params };
+          if(reload) this.load();
+          this.detailInfoFilter = results.data;
+        }
+      });
   }
-   filterLoad(event) {
+  filterLoad(event) {
     this.query = { ...this.query, ...event.data };
     this.load();
     this.FnEvent();
   }
 
-  close({event, datas}) {
-    if(event !== 'Close') {
+  close({ event, datas }) {
+    if (event !== 'Close') {
       const listViews = cloneDeep(this.cloneListViewsFilter);
       this.listViewsFilter = cloneDeep(listViews);
-      const params =  getParamString(listViews)
-      this.query = { ...this.query, ...params};
+      const params = getParamString(listViews)
+      this.query = { ...this.query, ...params };
       this.load();
-    }else {
-      this.listViewsFilter =  cloneDeep(datas);
+    } else {
+      this.listViewsFilter = cloneDeep(datas);
     }
   }
 
-showFilter() {
+  showFilter() {
     const ref = this.dialogService.open(FormFilterComponent, {
       header: 'Tìm kiếm nâng cao',
       width: '40%',
@@ -411,25 +421,25 @@ showFilter() {
           this.load();
         } else if (event.type === 'CauHinh') {
           this.apiService.getFilter('/api/v2/maternity/GetMaternityFilter')
-          .pipe(takeUntil(this.unsubscribe$))
-          .subscribe(results => {
-            if (results.status === 'success') {
-              const listViews = cloneDeep(results.data.group_fields);
-              this.listViewsFilter = [...listViews];
-              const params =  getParamString(listViews)
-              this.query = { ...this.query, ...params};
-              this.load();
-              this.detailInfoFilter = results.data;
-              this.showFilter()
-            }
-          });
+            .pipe(takeUntil(this.unsubscribe$))
+            .subscribe(results => {
+              if (results.status === 'success') {
+                const listViews = cloneDeep(results.data.group_fields);
+                this.listViewsFilter = [...listViews];
+                const params = getParamString(listViews)
+                this.query = { ...this.query, ...params };
+                this.load();
+                this.detailInfoFilter = results.data;
+                this.showFilter()
+              }
+            });
 
         } else if (event.type === 'Reset') {
           const listViews = cloneDeep(this.cloneListViewsFilter);
           this.listViewsFilter = cloneDeep(listViews);
-         const params =  getParamString(listViews)
-        this.query = { ...this.query, ...params};
-        this.load();
+          const params = getParamString(listViews)
+          this.query = { ...this.query, ...params };
+          this.load();
         }
       }
     });
@@ -440,9 +450,9 @@ showFilter() {
       maternityId: null,
       empId: event.value
     }
-    if(event.value) {
+    if (event.value) {
       this.router.navigate(['/nhan-su/thai-san/them-moi-thai-san'], { queryParams: params });
-    }else{
+    } else {
       this.isSearchEmp = false;
     }
   }
