@@ -28,6 +28,7 @@ export interface DBOverview {
     typeid: number;
     name: string;
     emp_num: number;
+    emp_total?: number;
     perc: number;
 }
 export interface DBTopLeaves {
@@ -46,6 +47,7 @@ export interface DBEmpoyees {
     id: number;
     name: string;
     emp_num: number;
+    emp_total: number;
 }
 
 export interface DBLeaveMonths {

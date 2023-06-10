@@ -50,7 +50,7 @@ export class DetailRendererGrid implements OnInit {
   ngOnDestroy(): void {
    
   }
-
+  
   rowSelected(event) {
     console.log('event child', event)
   }

@@ -240,6 +240,7 @@ public overlayNoRowsTemplate =
   }
   dataChange = null;
   onRowSelected(event) {
+    console.log("ddddddddddddddd", event)
     if (!event.node.isSelected() && this.isChange) {
       this.dataChange = event.data;
       // if(this.typeConfig === 'FormInfo') {
