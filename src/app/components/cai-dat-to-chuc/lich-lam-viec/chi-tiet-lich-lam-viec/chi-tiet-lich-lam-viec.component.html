@@ -3,7 +3,7 @@
     <section class="bread-crumb">
         <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
     </section>
-   <section class="content">
+   <div class="content">
     <app-edit-detail *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'" [dataView]="listViews"
         [optionsButtonsEdit]="optionsButtonsView" 
         (callback)="setWorkTimeInfo($event)" (callbackcancel)="cancelUpdate($event)"></app-edit-detail>
@@ -12,16 +12,17 @@
                 *ngIf="listViews.length === 0">
             </app-loading-detail>
 
-        <p-card styleClass="mt-1">
+        <p-card styleClass="mt-1"
+        >
          <ng-template pTemplate="header">
              <div class="row d-flex">
                  <div class="col-md-6">
                      <div class="panel-heading" style="padding: 10px;">
-                         <h3 class="panel-title" style="color: black; font-weight: 500;">
+                         <h6 class="panel-title" style="color: black; font-weight: 500;">
                             Các ngày trong tuần <p-badge *ngIf="detailInfo?.weekdays.length > 0"
                                value="{{detailInfo?.weekdays.length}}" styleClass="p-mr-2">
                              </p-badge>
-                         </h3>
+                         </h6>
                      </div>
                  </div>
              </div>
@@ -41,6 +42,6 @@
                 </div>
             </section>
      </p-card>
-   </section>
+   </div>
    
 </div>

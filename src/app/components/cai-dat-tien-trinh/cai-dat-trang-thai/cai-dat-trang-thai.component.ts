@@ -102,7 +102,7 @@ export class CaiDatTrangThaiComponent implements OnInit, AfterViewChecked, OnCha
     this.loadjs++
     if (this.loadjs === 5) {
       if (b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + 0 + e.clientHeight + 186;
+        const totalHeight = a.clientHeight + b.clientHeight + 0 + e.clientHeight + 10;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       } else {
