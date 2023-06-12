@@ -2913,6 +2913,10 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v2/employee/GetEmployeeSearchPopupVehicle?` + queryParams, this.options)
   }
 
+  getEmpTimelines(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/employee/GetEmpTimelines?` + queryParams, this.options)
+  }
+
   // EmpWorking
 
   getEmpWorkingPageByEmpId(queryParams): Observable<any> {

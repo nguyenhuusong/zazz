@@ -1,1 +1,14 @@
-<google-chart [data]="timelineChartData"></google-chart>
+<!-- <google-chart [data]="timelineChartData"></google-chart> -->
+<p-timeline [value]="dataTimeline" layout="horizontal" align="top">
+    <ng-template pTemplate="marker" let-event>
+        <span class="p-timeline-event-marker" [style.backgroundColor]="event.color">
+            <i [ngClass]="event.icon"></i>
+        </span>
+    </ng-template>
+    <ng-template pTemplate="content" let-event>
+        <small class="p-text-secondary">{{ event.date }}</small>
+    </ng-template>
+    <ng-template pTemplate="opposite" let-event>
+        {{ event.status }}
+    </ng-template>
+</p-timeline>

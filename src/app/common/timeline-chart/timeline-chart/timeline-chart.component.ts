@@ -1,11 +1,17 @@
 
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import queryString from 'query-string';
+import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 @Component({
   selector: 'app-timeline-chart',
   templateUrl: './timeline-chart.component.html',
   styleUrls: ['./timeline-chart.component.scss']
 })
 export class TimelineChartComponent  {
+  @Input() empId = '';
+  constructor(
+    private apiService: ApiHrmService) {
+    }
   public timelineChartData:any =  {
     chartType: 'Timeline',
     dataTable: 
@@ -123,4 +129,25 @@ export class TimelineChartComponent  {
     //   ]
     // }
  }
+ dataTimeline = []
+
+ ngOnInit() {
+  this.getEmpTimelines(); 
+ }
+
+ getEmpTimelines() {
+  const queryParams = queryString.stringify({ empId: this.empId });
+    this.apiService.getEmpTimelines(queryParams)
+      .pipe()
+      .subscribe(
+        (results: any) => {
+          if (results.status === 'success') {
+            this.dataTimeline = results.data;
+          }
+        }
+        ,
+        error => {
+        });
+ }
+
 }
