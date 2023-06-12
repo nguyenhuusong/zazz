@@ -10,6 +10,7 @@ import { Subject, takeUntil } from 'rxjs';
 import queryString from 'query-string';
 import { DashboardEmployee } from 'src/app/types/dashboard.type';
 import { Chart } from 'chart.js';
+import * as moment from 'moment';
 const MAX_SIZE = 100000000;
 
 @Component({
@@ -49,6 +50,13 @@ export class TongQuanNhanSuComponent implements OnInit {
   perFeMale = 0;
   itemsToolOfGrid = [];
   bgColors = [];
+
+  baseQuery = {
+    months: 0, 
+    years: 0
+  }
+  monthYear = ''
+
   ngOnInit() {
     this.getColors();
     let colorRgb = this.hexToRgb('#fff');
@@ -74,7 +82,7 @@ export class TongQuanNhanSuComponent implements OnInit {
   detailDashboardEmployee: DashboardEmployee;
   getDashboardEmployee() {
     this.spinner.show();
-    this.apiService.getDashboardEmployee({ months: 0, years: 0 })
+    this.apiService.getDashboardEmployee(this.baseQuery)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         (results: any) => {
@@ -488,6 +496,21 @@ export class TongQuanNhanSuComponent implements OnInit {
         this.router.navigate([`${linkRouter.url}`], {queryParams: {... state}});
       }
   
+    }
+
+    onSelectMonth(event) {
+      let date = this.queryToDate(this.monthYear);
+      this.baseQuery.months = date.months
+      this.baseQuery.years = date.years
+      this.getDashboardEmployee();
+    }
+
+    queryToDate(date) {
+      let months = moment(date).month();
+      let years = moment(date).year();
+      return {
+        months, years
+      }
     }
 
 }

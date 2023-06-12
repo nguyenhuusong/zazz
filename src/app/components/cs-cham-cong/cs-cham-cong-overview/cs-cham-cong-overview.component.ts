@@ -9,6 +9,8 @@ import { Subject, takeUntil } from 'rxjs';
 import queryString from 'query-string';
 import { DashboardEmployee, DashboardTimekeeping } from 'src/app/types/dashboard.type';
 import { Chart } from 'chart.js';
+import * as moment from 'moment';
+import { TimeKeepingDailyComponent } from './time-keeping-daily/time-keeping-daily.component';
 const MAX_SIZE = 100000000;
 
 @Component({
@@ -17,6 +19,7 @@ const MAX_SIZE = 100000000;
   styleUrls: ['./cs-cham-cong-overview.component.scss']
 })
 export class CsChamCongOverviewComponent implements OnInit {
+  @ViewChild('timeKeepingDaily') timeKeepingDaily: TimeKeepingDailyComponent;
   MENUACTIONROLEAPI = MENUACTIONROLEAPI;
   ACTIONS = ACTIONS
   items = []
@@ -48,6 +51,22 @@ export class CsChamCongOverviewComponent implements OnInit {
   perFeMale = 0;
   itemsToolOfGrid = [];
   bgColors = [];
+  monthYear = '';
+  filterType = '';
+  baseQuery = {
+    months: 0, 
+    years: 0
+  }
+  timeKeepingQuery = {
+    months: 0, 
+    years: 0 , 
+    filter_type: null 
+  }
+  filterTypeOptions = [
+    { label: 'Type 1', value: null },
+    { label: 'Type 2', value: 1 },
+    { label: 'Type 3', value: 2 },
+  ]
   ngOnInit() {
     this.getColors();
     let colorRgb = this.hexToRgb('#fff');
@@ -73,7 +92,7 @@ export class CsChamCongOverviewComponent implements OnInit {
   detailDashboardTimekeeping: DashboardTimekeeping;
   getDashboardTimekeeping() {
     this.spinner.show();
-    this.apiService.getDashboardTimekeeping({ months: 0, years: 0 })
+    this.apiService.getDashboardTimekeeping(this.baseQuery)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         (results: any) => {
@@ -91,8 +110,6 @@ export class CsChamCongOverviewComponent implements OnInit {
           this.spinner.hide();
         });
   }
-
-
 
   dataChart: any;
   dataChartEmpLeaveMonths: any;
@@ -291,6 +308,22 @@ export class CsChamCongOverviewComponent implements OnInit {
     ]
   }
 
+  onSelectMonth(event) {
+    let date = this.queryToDate(this.monthYear);
+    this.baseQuery.months = date.months
+    this.baseQuery.years = date.years
+    
+    this.timeKeepingQuery.months = date.months
+    this.timeKeepingQuery.years = date.years
+
+    this.getDashboardTimekeeping();
+    this.timeKeepingDaily.getTimekeepingDaily();
+  }
+
+  changeTypeFilter() {
+    this.timeKeepingDaily.getTimekeepingDaily();
+  }
+
   hexToRgb(color) {
     return color.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i
       , (m, r, g, b) => '#' + r + r + g + g + b + b)
@@ -416,6 +449,14 @@ export class CsChamCongOverviewComponent implements OnInit {
 
   getDetailEmployye(item: any) {
     this.router.navigate([`nhan-su/ho-so-nhan-su`], { queryParams: { filter: item.fullname } });
+  }
+
+  queryToDate(date) {
+    let months = moment(date).month();
+    let years = moment(date).year();
+    return {
+      months, years
+    }
   }
 
 }
