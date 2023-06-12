@@ -80,16 +80,17 @@
         </app-loading-detail>
         
         <app-qua-trinh-cong-tac [empId]="empId"  (cancelSave)="cancelSave()"></app-qua-trinh-cong-tac>
-
-        
         <!-- <p-tabView (onChange)="handleChange($event.index)" [(activeIndex)]="tabIndex">
             <p-tabPanel header="Quá trình công tác" leftIcon="{{dataEmployeeStatus?.profile_st ? 'pi pi-check-circle' : ''}} ">
             </p-tabPanel>
              <p-tabPanel header="Vị trí công việc" leftIcon="{{dataEmployeeStatus?.working_st ? 'pi pi-check-circle' : ''}} ">
             </p-tabPanel>
         </p-tabView> -->
-
     </div>
+</section>
+<section class="section-box">
+    <h3 class="title-section">Quá trình làm việc</h3>
+    <app-timeline-chart></app-timeline-chart>
 </section>
 
 <p-sidebar
