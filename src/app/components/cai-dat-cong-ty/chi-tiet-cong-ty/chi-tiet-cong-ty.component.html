@@ -3,7 +3,7 @@
     <section class="bread-crumb">
         <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
     </section>
-   <div class="content">
+   <section class="content">
     <p-tabView [(activeIndex)]="indexTab" (onChange)="handleChange($event.index)">
         <p-tabPanel header="Thông tin chung">
               <div class="pl-2 pr-2">
@@ -23,9 +23,7 @@
               </div>
         </p-tabPanel>
         <p-tabPanel header="Đăng ký người duyệt">
-            <div class="pr-2 pl-2">
-                <app-nguoi-duyet [companyId]="companyId" *ngIf="indexTab === 1"></app-nguoi-duyet>
-            </div>
+            <app-nguoi-duyet [companyId]="companyId" *ngIf="indexTab === 1"></app-nguoi-duyet>
             <!-- <p-card styleClass="mt-1">
             <ng-template pTemplate="header">
              <div class="d-flex">
@@ -48,7 +46,7 @@
             </p-card> -->
         </p-tabPanel>
       </p-tabView>
-   </div>
+   </section>
    
 </div>
 
