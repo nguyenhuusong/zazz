@@ -16,7 +16,6 @@
     
         .box-items{
             justify-content: end;
-            flex-wrap: wrap;
             .box{
                 height: 100%;
             }
@@ -178,6 +177,15 @@
                 }
             }
         }
+    }
+    .pcard-title{
+        font-size: 13px !important;
+        font-weight: 700;
+        color: rgba(2, 38, 88, 0.87) !important;
+        text-align: center;
+    }
+    .box-items{
+        gap: 25px;
     }
     @media screen and (min-width: 1200px) and (max-width: 1700px) {
         .box{
