@@ -444,7 +444,6 @@ export class CsChamCongOverviewComponent implements OnInit {
       const state = item.apiParam ? JSON.parse('{"' + item.apiParam.replace(/&/g, '","').replace(/=/g, '":"') + '"}', (key, value) => { return key === "" ? value : decodeURIComponent(value) }) : null
       this.router.navigate([`${linkRouter.url}`], { queryParams: { ...state } });
     }
-
   }
 
   getDetailEmployye(item: any) {
