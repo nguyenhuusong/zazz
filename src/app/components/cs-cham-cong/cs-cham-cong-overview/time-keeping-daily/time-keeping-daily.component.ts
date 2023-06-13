@@ -1,5 +1,5 @@
 
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
@@ -20,7 +20,12 @@ const MAX_SIZE = 100000000;
 export class TimeKeepingDailyComponent implements OnInit {
   MENUACTIONROLEAPI = MENUACTIONROLEAPI;
   ACTIONS = ACTIONS
-  items = []
+  items = [];
+  @Input() queryParams = { 
+    months: 0, 
+    years: 0 , 
+    filter_type: null 
+  }
   constructor(
     private apiService: ApiHrmService,
     private route: ActivatedRoute,
@@ -57,7 +62,7 @@ export class TimeKeepingDailyComponent implements OnInit {
   timekeepingDaily: any = null;
   getTimekeepingDaily() {
     this.spinner.show();
-    const queryParams = queryString.stringify({ months: 0, years: 0 , filter_type: null });
+    const queryParams = queryString.stringify(this.queryParams);
     this.apiService.getTimekeepingDaily(queryParams)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
@@ -126,5 +131,3 @@ export class TimeKeepingDailyComponent implements OnInit {
   }
 
 }
-
-

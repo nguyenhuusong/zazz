@@ -12,7 +12,7 @@
             
         </ul>
         <p-card header="{{timekeepingDaily.checkin.name}}" [style]="{'height': '170px', 'width': 'auto'}" >
-            <p-knob  [max]="timekeepingDaily.checkin.num_fail + timekeepingDaily.checkin.num_right" [(ngModel)]="timekeepingDaily.checkin.num_fail" [valueColor]="'red'" [readonly]="true"></p-knob>
+            <p-knob (click)="navigateWithState(timekeepingDaily.checkin)" [max]="timekeepingDaily.checkin.num_fail + timekeepingDaily.checkin.num_right" [(ngModel)]="timekeepingDaily.checkin.num_fail" [valueColor]="'red'" [readonly]="true"></p-knob>
         </p-card>
     </div>
     <div class="wrap-knod d-flex middle gap6" >
@@ -28,7 +28,7 @@
             
         </ul>
         <p-card header="{{timekeepingDaily.checkin_late.name}}" [style]="{'height': '170px', 'width': 'auto'}" >
-            <p-knob  [max]="timekeepingDaily.checkin_late.num_fail + timekeepingDaily.checkin_late.num_right" [(ngModel)]="timekeepingDaily.checkin_late.num_fail" [valueColor]="'red'" [readonly]="true"></p-knob>
+            <p-knob (click)="navigateWithState(timekeepingDaily.checkin_late)" [max]="timekeepingDaily.checkin_late.num_fail + timekeepingDaily.checkin_late.num_right" [(ngModel)]="timekeepingDaily.checkin_late.num_fail" [valueColor]="'red'" [readonly]="true"></p-knob>
         </p-card>
     </div>
     <div class="wrap-knod d-flex middle gap6" >
@@ -44,7 +44,7 @@
             
         </ul>
         <p-card header="{{timekeepingDaily.checkout.name}}" [style]="{'height': '170px', 'width': 'auto'}" >
-            <p-knob  [max]="timekeepingDaily.checkout.num_fail + timekeepingDaily.checkout.num_right" [(ngModel)]="timekeepingDaily.checkout.num_fail" [valueColor]="'red'" [readonly]="true"></p-knob>
+            <p-knob (click)="navigateWithState(timekeepingDaily.checkout)" [max]="timekeepingDaily.checkout.num_fail + timekeepingDaily.checkout.num_right" [(ngModel)]="timekeepingDaily.checkout.num_fail" [valueColor]="'red'" [readonly]="true"></p-knob>
         </p-card>
     </div>
     <div class="wrap-knod d-flex middle gap6" >
@@ -60,7 +60,7 @@
             
         </ul>
         <p-card header="{{timekeepingDaily.checkout_early.name}}" [style]="{'height': '170px', 'width': 'auto'}" >
-            <p-knob  [max]="timekeepingDaily.checkout_early.num_fail + timekeepingDaily.checkout_early.num_right" [(ngModel)]="timekeepingDaily.checkout_early.num_fail" [valueColor]="'red'" [readonly]="true"></p-knob>
+            <p-knob (click)="navigateWithState(timekeepingDaily.checkout_early)" [max]="timekeepingDaily.checkout_early.num_fail + timekeepingDaily.checkout_early.num_right" [(ngModel)]="timekeepingDaily.checkout_early.num_fail" [valueColor]="'red'" [readonly]="true"></p-knob>
         </p-card>
     </div>
     <div class="wrap-knod d-flex middle gap6" >
@@ -77,7 +77,7 @@
         </ul>
          
         <p-card header="{{timekeepingDaily.leaves.name}}" [style]="{'height': '170px', 'width': 'auto'}" >
-            <p-knob  [max]="timekeepingDaily.leaves.num_fail + timekeepingDaily.leaves.num_right" [(ngModel)]="timekeepingDaily.leaves.num_fail" [valueColor]="'red'" [readonly]="true"></p-knob>
+            <p-knob (click)="navigateWithState(timekeepingDaily.leaves)" [max]="timekeepingDaily.leaves.num_fail + timekeepingDaily.leaves.num_right" [(ngModel)]="timekeepingDaily.leaves.num_fail" [valueColor]="'red'" [readonly]="true"></p-knob>
         </p-card>
     </div>
     <div class="wrap-knod d-flex middle gap6" >
@@ -93,7 +93,7 @@
             
         </ul>
         <p-card header="{{timekeepingDaily.workdays.name}}" [style]="{'height': '170px', 'width': 'auto'}" >
-            <p-knob  [max]="timekeepingDaily.workdays.num_fail + timekeepingDaily.workdays.num_right" [(ngModel)]="timekeepingDaily.workdays.num_fail" [valueColor]="'red'" [readonly]="true"></p-knob>
+            <p-knob (click)="navigateWithState(timekeepingDaily.workdays)" [max]="timekeepingDaily.workdays.num_fail + timekeepingDaily.workdays.num_right" [(ngModel)]="timekeepingDaily.workdays.num_fail" [valueColor]="'red'" [readonly]="true"></p-knob>
         </p-card>
     </div>
 </div>
