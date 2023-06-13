@@ -371,9 +371,9 @@ styleClass="menu-option-right" #menuButton></p-menu>
             *ngIf="listViews.length === 0">
         </app-loading-detail>
       
-        <div class="d-flex">
+        <div class="d-flex section-box mt-3">
           <div class="col-md-4 image-vehicle" *ngFor="let imgUrl of modelTM.imageLinks; let indexImg = index">
-            <h4>{{ indexImg === 0 || indexImg === 1 ? 'Ảnh giấy chứng nhận đăng ký xe' : 'Ảnh biển số xe' }}</h4>
+            <h3 class="mb-3">{{ indexImg === 0 || indexImg === 1 ? 'Ảnh giấy chứng nhận đăng ký xe' : 'Ảnh biển số xe' }}</h3>
             <div class="img">
               <p-image src="{{ imgUrl?.url ? imgUrl?.url : '/../../../../assets/images/file.png' }}" [preview]="true" alt="Image" ></p-image>
               <p-fileUpload 

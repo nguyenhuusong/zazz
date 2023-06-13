@@ -16,7 +16,7 @@
                 [(ngModel)]="selectedCountry" 
                 [styleClass]="selectedCountry?.bgColor"  
                 optionLabel="name"  
-                placeholder="Select a Country">
+                placeholder="Chọn trạng thái">
                 <ng-template pTemplate="selectedItem" >
                     <div class="flex align-items-center gap-2" *ngIf="selectedCountry" >
                         <div>{{ selectedCountry.name}}</div>
@@ -67,12 +67,14 @@
                 <app-tab-candidate-final *ngIf="tabIndex === 2" [canId]="modelEdit.canId"></app-tab-candidate-final>
             </p-tabPanel>
             <p-tabPanel header="Hồ sơ cá nhân" *ngIf="custId">
-                <app-chi-tiet-ho-so-ca-nhan 
-                    *ngIf="tabIndex === 3" 
-                    [isDialog]="true" [displayCustomerProfile]="false" [custId]="custId"
-                    [canId]="modelEdit.canId" 
-                    (callback)="callbackSaveProfile()">
-                </app-chi-tiet-ho-so-ca-nhan>
+                <div class="position-btn-top">
+                    <app-chi-tiet-ho-so-ca-nhan 
+                        *ngIf="tabIndex === 3" 
+                        [isDialog]="true" [displayCustomerProfile]="false" [custId]="custId"
+                        [canId]="modelEdit.canId" 
+                        (callback)="callbackSaveProfile()">
+                    </app-chi-tiet-ho-so-ca-nhan>
+                </div>
             </p-tabPanel>
         </p-tabView>
 

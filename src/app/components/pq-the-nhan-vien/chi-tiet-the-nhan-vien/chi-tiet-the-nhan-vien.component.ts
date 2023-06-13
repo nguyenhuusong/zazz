@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import queryString from 'query-string';
@@ -12,6 +12,9 @@ import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
   styleUrls: ['./chi-tiet-the-nhan-vien.component.scss']
 })
 export class ChiTietTheNhanVienComponent implements OnInit, OnDestroy {
+  @Input() empId = '';
+  @Input() canId = '';
+  @Output() callback = new EventEmitter<any>();
   items: MenuItem[] = [];
   paramsObject = null;
   detailInfo = null
@@ -49,14 +52,13 @@ export class ChiTietTheNhanVienComponent implements OnInit, OnDestroy {
     empId: null
   }
   titlePage = '';
-  empId = '';
   handleParams() {
     this.activatedRoute.queryParamMap
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((params) => {
         this.paramsObject = { ...params.keys, ...params };
-        this.modelEdit.carCode = this.paramsObject.params.canId || null
-        this.modelEdit.empId = this.paramsObject.params.empId || null
+        this.modelEdit.carCode = this.canId || null
+        this.modelEdit.empId = this.empId || null
         this.GetEmployeeCardInfo();
       });
   };
@@ -91,8 +93,8 @@ export class ChiTietTheNhanVienComponent implements OnInit, OnDestroy {
       .subscribe((results: any) => {
         if (results.status === 'success') {
           this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.message });
-          this.router.navigate(['/phan-quyen/the-nhan-vien']);
           this.spinner.hide();
+          this.callback.emit();
         } else {
           this.messageService.add({
             severity: 'error', summary: 'Thông báo',
@@ -109,7 +111,7 @@ export class ChiTietTheNhanVienComponent implements OnInit, OnDestroy {
     if(data === 'CauHinh') {
       this.GetEmployeeCardInfo();
     }else {
-      this.router.navigate(['/phan-quyen/the-nhan-vien']);
+      this.callback.emit();
     }
   }
 
