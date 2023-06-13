@@ -136,6 +136,7 @@ import { ChartModule } from 'primeng/chart';
 import { KnobModule } from 'primeng/knob';
 import { ToastModule } from 'primeng/toast';
 import { DetailRendererGrid } from 'src/app/common/detail-renderer-grid/detailRendererGrid';
+import { TimelineChartModule } from 'src/app/common/timeline-chart/timeline-chart.module';
 @NgModule({
   imports: [
     MessagesModule,
@@ -200,6 +201,7 @@ import { DetailRendererGrid } from 'src/app/common/detail-renderer-grid/detailRe
       ButtonRendererComponent,
       ButtonRendererComponent1
     ]),
+    TimelineChartModule
   ],
 
   declarations: [

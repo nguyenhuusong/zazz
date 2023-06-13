@@ -4,7 +4,7 @@
         <div class="p-0 col-12 md:col-12 lg:col-3 xl:col-3">
           <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
         </div>
-        <div class="d-flex end p-0 wrap col-12 md:col-12 lg:col-9 xl:col-9 gap12">
+        <div class="d-flex end p-0 wrap col-12 md:col-12 lg:col-9 xl:col-9 gap12 middle">
           <div class="filter filter-search p-0 col-4 md:col-4 lg:col-4 xl:col-3">
               <div class="fields search mb-0" [ngClass]=" query.filter ? 'valid' : 'invalid' ">
                   <input placeholder="Tìm kiếm" class="input-default" type="text" autocomplete="off" id="filter"
@@ -24,6 +24,11 @@
             </svg>
             <span class="dot"></span>
         </p-button>
+        <div class="d-flex gap6" *ngIf="this.isHrDiagram">
+
+          <p-button label="Thêm mới" styleClass="p-button-sm mr-1 " icon="pi pi-plus" (click)="addNew()"></p-button>
+         <p-button label="Chỉnh sửa" styleClass="p-button-sm p-button-success" icon="pi pi-check" (click)="chinhSua()"></p-button>
+        </div>
         <div class="select-ori ml-1 " (click)="hrDiagram()">
           <div class="dia">
               <svg width="22" height="19" viewBox="0 0 22 19" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -78,7 +83,7 @@
       </div>
       <div class="section-box pt-0 pb-0" *ngIf="this.isHrDiagram">
 
-        <div style="position: absolute; top: 100px; bottom: 0; left: 0; right: 0;">
+        <div style="position: absolute; top: 170px; bottom: 0; left: 0; right: 0;">
 
             <pan-zoom [config]="panZoomConfig">
       
@@ -102,33 +107,33 @@
                                     {{node.label}}
                                 </ng-template>
                             </p-organizationChart>
-      
               </div>
-      
             </pan-zoom>
-      
           </div>
-       
-    
-            <p-footer >
-               <div class="grid d-flex mt-2 justify-content-end">
-                <p-button label="Thêm mới" styleClass="p-button-sm mr-1 " icon="pi pi-plus" (click)="addNew()"></p-button>
-               <p-button label="Chỉnh sửa" styleClass="p-button-sm p-button-success" icon="pi pi-check" (click)="chinhSua()"></p-button>
-               </div>
-            </p-footer>
       </div>
-
     </section>
 </div>
 
 
-<p-dialog [(visible)]="displayOrganize" [draggable]="false" [resizable]="false"  [modal]="true" [style]="{width: modelOrganize.orgId ? '1400px' : '700px', height: 'auto'}">
+<!-- <p-dialog [(visible)]="displayOrganize" [draggable]="false" [resizable]="false"  [modal]="true" [style]="{width: modelOrganize.orgId ? '1400px' : '700px', height: 'auto'}">
     <p-header>
         {{modelOrganize.orgId ? 'Thông tin chi tiết tổ chức' : 'Thêm mới tổ chức'}}
     </p-header>
     <app-chi-tiet-to-chuc [orgId]="modelOrganize.orgId" [parentId]="modelOrganize.parentId" [isDialog]="true" *ngIf="displayOrganize" (back)="backPage()"></app-chi-tiet-to-chuc>
-</p-dialog>
+</p-dialog> -->
 
+<p-sidebar
+    [style]="{ width: '80%' }"
+    [(visible)]="displayOrganize" 
+    position="right">
+    <ng-template pTemplate="header">
+      <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
+          <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
+      </svg> &nbsp;&nbsp;
+      {{modelOrganize.orgId ? 'Thông tin chi tiết tổ chức' : 'Thêm mới tổ chức'}}</ng-template>
+      <app-chi-tiet-to-chuc [orgId]="modelOrganize.orgId" [parentId]="modelOrganize.parentId" [isDialog]="true" *ngIf="displayOrganize" (back)="backPage()"></app-chi-tiet-to-chuc>
+</p-sidebar>
 <p-sidebar
     [style]="{ width: '80%' }"
     [(visible)]="displayButton" 
