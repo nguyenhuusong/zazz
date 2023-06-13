@@ -54,8 +54,11 @@
                                     </div>
                                 </p-card>
                             </div>
-                            <div class="wrap-knod" *ngFor="let item  of  detailDashboardTimekeeping.overview; let i=index">
-                                <p-card header="{{item.name}}( {{item.emp_num}}/{{item.emp_total}} )" [style]="{'height': '170px', 'width': 'auto'}" >
+                            <div class="wrap-knod wrap-knod1" *ngFor="let item  of  detailDashboardTimekeeping.overview; let i=index">
+                                <p-card [style]="{'height': '170px', 'width': 'auto'}" >
+                                    <ng-template pTemplate="header">
+                                        <h4 class="pcard-title">{{item.name}}<br>( {{item.emp_num}}/{{item.emp_total}} )</h4>
+                                    </ng-template>
                                     <p-knob (click)="navigateWithState(item)" [max]="item.emp_total" [(ngModel)]="item.emp_num" [valueColor]="i === 1 ? 'CornflowerBlue' : i === 0 ? 'DarkOrange' : 'red'" [readonly]="true"></p-knob>
                                 </p-card>
                             </div>
