@@ -343,7 +343,7 @@ export class ThaiSanComponent implements OnInit, AfterViewChecked {
     this.route.queryParams
       .subscribe((params: any) => {
         const apiParam = params;
-        if (apiParam) {
+        if (Object.keys(apiParam).length > 0) {
           this.query = { ...this.query, ...apiParam };
           this.load();
           this.getEmpFilter(false);
