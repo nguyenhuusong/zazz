@@ -690,6 +690,20 @@
             }
         }
     }
+    .uni-icon{
+        position: absolute;
+        right: 8px;
+        top: 9px;
+        z-index: 0;
+    }
+    &.small{
+        input{
+            height: 36px;
+        }
+        .p-dropdown{
+            height: 36px;
+        }
+    }
 }
 .linkurl-drag{
     margin-bottom: 16px;

@@ -1,8 +1,7 @@
 :host::ng-deep{
-     .p-card .p-card-body{
-            padding: 0 !important;
-        }
-
+    .p-card .p-card-body{
+        padding: 0 !important;
+    }
     .wrap-edit-detail{
         &>.grid{
             &>.col-12{
@@ -10,5 +9,6 @@
                 padding-right: 0px;
             }
         }
+
     }
 }
