@@ -1,5 +1,5 @@
 import { AfterViewChecked, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import queryString from 'query-string';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
@@ -33,6 +33,7 @@ export class HoSoCaNhanComponent implements OnInit, AfterViewChecked {
     private messageService: MessageService,
     private spinner: NgxSpinnerService,
     private changeDetector: ChangeDetectorRef,
+    private route: ActivatedRoute,
     private router: Router) {
 
     this.defaultColDef = {
@@ -422,7 +423,17 @@ export class HoSoCaNhanComponent implements OnInit, AfterViewChecked {
       { label: 'Quan hệ lao động' },
       { label: 'Danh sách hồ sơ cá nhân' },
     ];
-    this.load();
+    this.route.queryParams
+    .subscribe((params: any) => {
+      const apiParam = params;
+      if (apiParam) {
+        this.query = { ...this.query, ...apiParam };
+        this.load();
+      } else {
+        this.load();
+      }
+    })
+
     this.optionsButtonDB = [
       // {
       //   label: 'Import kế hoạch',

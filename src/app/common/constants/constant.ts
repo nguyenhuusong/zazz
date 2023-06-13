@@ -838,6 +838,24 @@ export const API_PROFILE  = {
         'menu': '',
         'url': '/cai-dat/cai-dat-ngay-nghi-le'
     },
+    'GetEmpProcessPage': {
+        'name': 'Danh sách quá trình công tác',
+        'api': '0eed6cc8-55f4-4285-9f8e-bfc0ba572253',
+        'menu': '',
+        'url': '/nhan-su/xu-ly-qua-trinh-cong-tac'
+    },
+    'GetSalaryInfoPage': {
+        'name': 'Quá trình thay đổi lương',
+        'api': '0eed6cc8-55f4-4285-9f8e-bfc0ba572253',
+        'menu': '',
+        'url': '/nhan-su/qua-trinh-thay-doi-luong'
+    },
+    'GetCustSearch': {
+        'name': 'Danh sách hồ sơ cá nhân',
+        'api': '0eed6cc8-55f4-4285-9f8e-bfc0ba572253',
+        'menu': '',
+        'url': '/tuyen-dung/ho-so-ca-nhan'
+    },
     'GetTimekeepingWifiPage': {
         'name': ' Danh sách thiết lập wifi',
         'api': '0eed6cc8-55f4-4285-9f8e-bfc0ba572253',

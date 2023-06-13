@@ -215,10 +215,10 @@ export class SidebarComponent implements OnInit {
             k.label = k.title;
             if (k.path && k.classs !== 'navigation-header') {
                 k.routerLink = k.path
-                k.styleClass = 'nav-item';
-                k.classs = 'nav-item';
-                // k.url = k.path;
-                // k.target = '_self'
+                k.icon = ''
+            }
+            if (k.path && k.classs === 'nav-link') {
+                k.routerLink = k.path
             }
             if (k.submenus && k.submenus.length > 0) {
                 k.items = k.submenus.filter((d: any) => d.classs && (d.classs.indexOf("hidden") < 0));
@@ -243,14 +243,14 @@ export class SidebarComponent implements OnInit {
                
             } else {
                 //active cha
-                let element1: any = {
-                    columnValue: ''
-                };
-                this.findNodeInTree2(obj, pathname,element1);
-                if (k.badgeClass && pathname && pathname.split('/').indexOf(k.badgeClass) > -1 && k.classs === 'navigation-header') {
-                    k.styleClass ="parent_active" + ' ' + k.classs
+                // let element1: any = {
+                //     columnValue: ''
+                // };
+                // this.findNodeInTree2(obj, pathname,element1);
+                if (k.path && pathname && pathname.split('/').indexOf(k.path) > -1 && k.classs === 'navigation-header') {
+                    k.styleClass = "parent_active" + ' ' + k.classs
                 } else {
-                    k.styleClass ="parent_no_active" + ' ' + k.classs
+                    k.styleClass = "parent_no_active" + ' ' + k.classs
                 }
             }
 
