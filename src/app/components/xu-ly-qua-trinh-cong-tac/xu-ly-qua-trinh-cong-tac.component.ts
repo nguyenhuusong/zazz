@@ -275,7 +275,6 @@ export class XuLyQuaTrinhCongTacComponent implements OnInit {
   }
   menuItemUtil = [];
   ngOnInit() {
-    this.getFilter();
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Quan hệ lao động' },
@@ -290,6 +289,18 @@ export class XuLyQuaTrinhCongTacComponent implements OnInit {
         }
       },
     ]
+
+    this.route.queryParams
+    .subscribe((params: any) => {
+      const apiParam = params;
+      if (apiParam) {
+        this.query = { ...this.query, ...apiParam };
+        this.load();
+        this.getFilter(false);
+      } else {
+        this.getFilter(true);
+      }
+    })
     // this.handleParams();
   }
 
@@ -305,7 +316,7 @@ export class XuLyQuaTrinhCongTacComponent implements OnInit {
     { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger  addNew', icon: 'pi pi-times' },
   ];
   //filter 
-  getFilter() {
+  getFilter(reload: boolean) {
     this.apiService.getFilter('/api/v2/empprocess/GetEmpProcessFilter')
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {
@@ -315,7 +326,7 @@ export class XuLyQuaTrinhCongTacComponent implements OnInit {
           this.listViewsFilter = [...listViews];
           const params = getParamString(listViews)
           this.query = { ...this.query, ...params };
-          this.load();
+          if(reload) this.load();
           this.detailInfoFilter = results.data;
         }
       });
