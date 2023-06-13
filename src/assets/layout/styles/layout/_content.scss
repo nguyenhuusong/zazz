@@ -1960,3 +1960,28 @@ p-sidebar{
         }
     }
 }
+
+.base-info-em{
+    background: #F3F4F6;
+    ul{
+        display: flex;
+        border-radius: 4px 4px 0px 0px;
+        padding: 11px 17px;
+        align-items: center;
+    }
+    li{
+        font-size: 14px;
+        color: #2F3E62;
+        display: inline-block;
+        font-family: 'SFProTextRegular';
+        line-height: 1;
+        &.spre{
+            margin: 0px 16px;
+        }
+        .value{
+            font-family: 'SFProTextMedium';
+            font-weight: 500;
+            color: #4C97E4
+        }
+    }
+}
