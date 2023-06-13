@@ -247,8 +247,6 @@ export class SidebarComponent implements OnInit {
                 //     columnValue: ''
                 // };
                 // this.findNodeInTree2(obj, pathname,element1);
-                console.log('kkkkkkkk', k)
-                console.log('pathname', pathname)
                 if (k.path && pathname && pathname.split('/').indexOf(k.path) > -1 && k.classs === 'navigation-header') {
                     k.styleClass = "parent_active" + ' ' + k.classs
                 } else {

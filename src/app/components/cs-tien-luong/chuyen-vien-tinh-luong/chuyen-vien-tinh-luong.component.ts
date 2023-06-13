@@ -241,7 +241,7 @@ export class ChuyenVienTinhLuongComponent implements OnInit, AfterViewChecked {
 
   managerLists: any = null;
   getManagerList() {
-    const queryParams = queryString.stringify({ admin_st: 1 });
+    const queryParams = queryString.stringify({ admin_st: 1, salary_st: 1 });
     this.apiService.getUsersByAdmin(queryParams)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(results => {
