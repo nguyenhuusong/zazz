@@ -108,7 +108,7 @@ export class QtThayDoiLuongComponent implements OnInit {
     private messageService: MessageService,
     private fileService: ExportFileService,
     private changeDetector: ChangeDetectorRef,
-    
+
     private router: Router) {
     this.defaultColDef = {
       tooltipComponent: 'customTooltip',
@@ -125,7 +125,6 @@ export class QtThayDoiLuongComponent implements OnInit {
       buttonAgGridComponent: ButtonAgGridComponent,
       avatarRendererFull: AvatarFullComponent,
     };
-    this.getSalaryInfoFilter();
   }
   query = {
     filter: '',
@@ -180,12 +179,12 @@ export class QtThayDoiLuongComponent implements OnInit {
         if (d.children.length > 0) this.expanded(d.children, this.selectedNode.parentId)
       }
       d.children.forEach((elm: { children: { expanded: boolean; }[]; expanded: boolean; }) => {
-        elm.children.forEach((e: { expanded: boolean; }) =>{
+        elm.children.forEach((e: { expanded: boolean; }) => {
           if (e.expanded === true) {
             elm.expanded = true
           }
         })
-      });      
+      });
     })
     return datas
   }
@@ -214,35 +213,35 @@ export class QtThayDoiLuongComponent implements OnInit {
     // this.spinner.show();
     const queryParams = queryString.stringify(this.query);
     this.apiService.getSalaryInfoPageNew(queryParams)
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(
-      (results: any) => {
-        this.listsData = results?.data?.dataList?.data;
-        this.gridKey= results?.data?.dataList?.gridKey;
-        if (this.query.offSet === 0) {
-          this.cols = results?.data?.gridflexs ? results?.data?.gridflexs : [];
-          this.colsDetail = results?.data?.gridflexdetails ? results?.data?.gridflexdetails : [];
-        }
-        this.initGrid();
-        this.countRecord.totalRecord = results?.data?.dataList?.recordsTotal;
-        this.countRecord.totalRecord = results?.data?.dataList?.recordsTotal;
-        this.countRecord.currentRecordStart = results?.data?.dataList?.recordsTotal === 0 ? this.query.offSet = 0 : this.query.offSet + 1;
-        if ((results?.data?.dataList?.recordsTotal - this.query.offSet) > this.query.pageSize) {
-          this.countRecord.currentRecordEnd = this.query.offSet + Number(this.query.pageSize);
-        } else {
-          this.countRecord.currentRecordEnd = results?.data?.dataList?.recordsTotal;
-          setTimeout(() => {
-            const noData = document.querySelector('.ag-overlay-no-rows-center');
-            if (noData) { noData.innerHTML = 'Không có kết quả phù hợp' }
-          }, 100);
-        }
-        this.spinner.hide();
-        this.FnEvent();
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        (results: any) => {
+          this.listsData = results?.data?.dataList?.data;
+          this.gridKey = results?.data?.dataList?.gridKey;
+          if (this.query.offSet === 0) {
+            this.cols = results?.data?.gridflexs ? results?.data?.gridflexs : [];
+            this.colsDetail = results?.data?.gridflexdetails ? results?.data?.gridflexdetails : [];
+          }
+          this.initGrid();
+          this.countRecord.totalRecord = results?.data?.dataList?.recordsTotal;
+          this.countRecord.totalRecord = results?.data?.dataList?.recordsTotal;
+          this.countRecord.currentRecordStart = results?.data?.dataList?.recordsTotal === 0 ? this.query.offSet = 0 : this.query.offSet + 1;
+          if ((results?.data?.dataList?.recordsTotal - this.query.offSet) > this.query.pageSize) {
+            this.countRecord.currentRecordEnd = this.query.offSet + Number(this.query.pageSize);
+          } else {
+            this.countRecord.currentRecordEnd = results?.data?.dataList?.recordsTotal;
+            setTimeout(() => {
+              const noData = document.querySelector('.ag-overlay-no-rows-center');
+              if (noData) { noData.innerHTML = 'Không có kết quả phù hợp' }
+            }, 100);
+          }
+          this.spinner.hide();
+          this.FnEvent();
 
-      },
-      error => {
-        this.spinner.hide();
-      });
+        },
+        error => {
+          this.spinner.hide();
+        });
   }
 
   showButtons(event: any) {
@@ -266,7 +265,7 @@ export class QtThayDoiLuongComponent implements OnInit {
     };
   }
   idEdit = null;
-  editRow({rowData}) {
+  editRow({ rowData }) {
     const params = {
       salaryInfoId: rowData.salaryInfoId
     }
@@ -274,8 +273,8 @@ export class QtThayDoiLuongComponent implements OnInit {
   }
 
   onCellClicked(event) {
-    if(event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
-      this.editRow(event = {rowData: event.data})
+    if (event.colDef.cellClass && event.colDef.cellClass.indexOf('colLink') > -1) {
+      this.editRow(event = { rowData: event.data })
     }
   }
 
@@ -283,18 +282,18 @@ export class QtThayDoiLuongComponent implements OnInit {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa?',
       accept: () => {
-        const queryParams = queryString.stringify({salaryInfoId: event.rowData.salaryInfoId});
+        const queryParams = queryString.stringify({ salaryInfoId: event.rowData.salaryInfoId });
         this.apiService.delSalaryInfoNew(queryParams)
-        .pipe(takeUntil(this.unsubscribe$))
-        .subscribe((results: any) => {
-          if (results.status === 'success') {
-            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa nhân viên thành công' });
-            this.load();
-            this.FnEvent();
-          } else {
-            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
-          }
-        });
+          .pipe(takeUntil(this.unsubscribe$))
+          .subscribe((results: any) => {
+            if (results.status === 'success') {
+              this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa nhân viên thành công' });
+              this.load();
+              this.FnEvent();
+            } else {
+              this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
+            }
+          });
       }
     });
   }
@@ -306,7 +305,7 @@ export class QtThayDoiLuongComponent implements OnInit {
   FnEvent() {
     setTimeout(() => {
       var dragTarget = document.getElementById(this.gridKey);
-      if(dragTarget) {
+      if (dragTarget) {
         const click$ = fromEvent(dragTarget, 'click');
         click$.subscribe(event => {
           this.addNew()
@@ -333,7 +332,7 @@ export class QtThayDoiLuongComponent implements OnInit {
       {
         headerComponentParams: {
           template:
-          `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
+            `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
         },
         filter: '',
         maxWidth: 100,
@@ -416,7 +415,7 @@ export class QtThayDoiLuongComponent implements OnInit {
       { label: 'Quan hệ lao động' },
       { label: 'Quá trình thay đổi lương' },
     ];
-    
+
     this.itemsToolOfGrid = [
       {
         label: 'Import file',
@@ -437,10 +436,23 @@ export class QtThayDoiLuongComponent implements OnInit {
         }
       },
     ]
+    this.route.queryParams
+    .subscribe((params: any) => {
+      const apiParam = params;
+      if (apiParam) {
+        this.query = { ...this.query, ...apiParam };
+        this.load();
+        this.getSalaryInfoFilter(false);
+      } else {
+        this.getSalaryInfoFilter(true);
+      }
+    })
+
+
   }
   employeeStatus = []
   getEmployeeStatus() {
-   
+
   }
 
   Back() {
@@ -470,36 +482,36 @@ export class QtThayDoiLuongComponent implements OnInit {
     const query = { ...this.query };
     const queryParams = queryString.stringify(query);
     this.apiService.getSalaryInfoPageNew(queryParams)
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(
-      (results: any) => {
-        const dataExport = [];
-        let gridflexs = results.data.gridflexs;
-        let arrKey = gridflexs.map(elementName => elementName.columnField);
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        (results: any) => {
+          const dataExport = [];
+          let gridflexs = results.data.gridflexs;
+          let arrKey = gridflexs.map(elementName => elementName.columnField);
 
-        let dataList = results.data.dataList.data;
-        for (let elementValue of dataList) {
-          const data: any = {};
-          for (let elementName of gridflexs) {
-            if (arrKey.indexOf(elementName.columnField) > -1 && !elementName.isHide && elementName.columnField !== 'statusName') {
-              let valueColumn = elementValue[elementName.columnField];
-              if (elementName.columnField == 'status_name' || elementName.columnField == 'isContacted' || elementName.columnField == 'isProfileFull' || elementName.columnField == 'lockName') {
-                valueColumn = this.replaceHtmlToText(valueColumn);
+          let dataList = results.data.dataList.data;
+          for (let elementValue of dataList) {
+            const data: any = {};
+            for (let elementName of gridflexs) {
+              if (arrKey.indexOf(elementName.columnField) > -1 && !elementName.isHide && elementName.columnField !== 'statusName') {
+                let valueColumn = elementValue[elementName.columnField];
+                if (elementName.columnField == 'status_name' || elementName.columnField == 'isContacted' || elementName.columnField == 'isProfileFull' || elementName.columnField == 'lockName') {
+                  valueColumn = this.replaceHtmlToText(valueColumn);
+                }
+                data[elementName.columnCaption] = valueColumn || '';
               }
-              data[elementName.columnCaption] = valueColumn || '';
+
             }
 
+            dataExport.push(data);
           }
+          this.fileService.exportAsExcelFile(dataExport, 'Danh sách Quá trình thay đổi lương');
 
-          dataExport.push(data);
-        }
-        this.fileService.exportAsExcelFile(dataExport, 'Danh sách Quá trình thay đổi lương');
-
-        this.spinner.hide();
-      },
-      error => {
-        this.spinner.hide();
-      });
+          this.spinner.hide();
+        },
+        error => {
+          this.spinner.hide();
+        });
   }
 
   replaceHtmlToText(string) {
@@ -529,18 +541,18 @@ export class QtThayDoiLuongComponent implements OnInit {
   getOrgan() {
     const queryParams = queryString.stringify({ filter: '' });
     this.apiService.getOrganizations(queryParams)
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(results => {
-      if (results.status === 'success') {
-        this.organs = results.data.map(d => {
-          return {
-            label: d.organizationName,
-            value: `${d.organizeId}`
-          }
-        });
-        this.organs = [...this.organs];
-      }
-    })
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(results => {
+        if (results.status === 'success') {
+          this.organs = results.data.map(d => {
+            return {
+              label: d.organizationName,
+              value: `${d.organizeId}`
+            }
+          });
+          this.organs = [...this.organs];
+        }
+      })
   }
 
   getOrganizeTree(): void {
@@ -554,7 +566,7 @@ export class QtThayDoiLuongComponent implements OnInit {
         error => { });
     this.queryStaffToMove.orgId = '';
     this.aDepartment = '';
-    if(this.organizeId && this.queryStaffToMove.orgId){
+    if (this.organizeId && this.queryStaffToMove.orgId) {
       this.isButtonmoveOrganNow = false;
     }
     else {
@@ -588,7 +600,7 @@ export class QtThayDoiLuongComponent implements OnInit {
     this.loadjs++
     if (this.loadjs === 5) {
       if (b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight +30;
+        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight + 30;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       } else {
@@ -610,60 +622,60 @@ export class QtThayDoiLuongComponent implements OnInit {
       salaryInfoId: null,
       empId: event.value
     }
-    if(event.value) {
-       this.router.navigate(['/nhan-su/qua-trinh-thay-doi-luong/them-moi-qua-trinh-thay-doi-luong'], { queryParams: params });
-    }else{
+    if (event.value) {
+      this.router.navigate(['/nhan-su/qua-trinh-thay-doi-luong/them-moi-qua-trinh-thay-doi-luong'], { queryParams: params });
+    } else {
       this.isSearchEmp = false;
     }
   }
 
   getCompany() {
-    
+
   }
 
 
   listViewsFilter = [];
   cloneListViewsFilter = [];
-detailInfoFilter = null;
+  detailInfoFilter = null;
   optionsButonFilter = [
     { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm ml-2  addNew', icon: 'pi pi-plus' },
     { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger ml-2  addNew', icon: 'pi pi-times' },
   ];
 
-  getSalaryInfoFilter() {
+  getSalaryInfoFilter(reload: boolean) {
     this.apiService.getSalaryInfoFilter()
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(results => {
-      if(results.status === 'success') {
-        const listViews = cloneDeep(results.data.group_fields);
-        this.cloneListViewsFilter = cloneDeep(listViews);
-        this.listViewsFilter = [...listViews];
-        const params =  getParamString(listViews)
-        this.query = { ...this.query, ...params};
-        this.load();
-        this.detailInfoFilter = results.data;
-      }
-    });
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(results => {
+        if (results.status === 'success') {
+          const listViews = cloneDeep(results.data.group_fields);
+          this.cloneListViewsFilter = cloneDeep(listViews);
+          this.listViewsFilter = [...listViews];
+          const params = getParamString(listViews)
+          this.query = { ...this.query, ...params };
+          if(reload) this.load();
+          this.detailInfoFilter = results.data;
+        }
+      });
   }
-   filterLoad(event) {
+  filterLoad(event) {
     this.query = { ...this.query, ...event.data };
     this.load();
   }
 
-  close({event, datas}) {
-    if(event !== 'Close') {
+  close({ event, datas }) {
+    if (event !== 'Close') {
       const listViews = cloneDeep(this.cloneListViewsFilter);
       this.listViewsFilter = cloneDeep(listViews);
-      const params =  getParamString(listViews)
-      this.query = { ...this.query, ...params};
+      const params = getParamString(listViews)
+      this.query = { ...this.query, ...params };
       this.load();
-    }else {
-      this.listViewsFilter =  cloneDeep(datas);
+    } else {
+      this.listViewsFilter = cloneDeep(datas);
     }
   }
 
 
-showFilter() {
+  showFilter() {
     const ref = this.dialogService.open(FormFilterComponent, {
       header: 'Tìm kiếm nâng cao',
       width: '40%',
@@ -682,26 +694,26 @@ showFilter() {
           this.query = { ...this.query, ...event.data };
           this.load();
         } else if (event.type === 'CauHinh') {
-        this.apiService.getSalaryInfoFilter()
-        .pipe(takeUntil(this.unsubscribe$))
-        .subscribe(results => {
-            if (results.status === 'success') {
-              const listViews = cloneDeep(results.data.group_fields);
-              this.listViewsFilter = [...listViews];
-              const params =  getParamString(listViews)
-              this.query = { ...this.query, ...params};
-              this.load();
-              this.detailInfoFilter = results.data;
-              this.showFilter()
-            }
-          });
+          this.apiService.getSalaryInfoFilter()
+            .pipe(takeUntil(this.unsubscribe$))
+            .subscribe(results => {
+              if (results.status === 'success') {
+                const listViews = cloneDeep(results.data.group_fields);
+                this.listViewsFilter = [...listViews];
+                const params = getParamString(listViews)
+                this.query = { ...this.query, ...params };
+                this.load();
+                this.detailInfoFilter = results.data;
+                this.showFilter()
+              }
+            });
 
         } else if (event.type === 'Reset') {
           const listViews = cloneDeep(this.cloneListViewsFilter);
           this.listViewsFilter = cloneDeep(listViews);
-         const params =  getParamString(listViews)
-        this.query = { ...this.query, ...params};
-        this.load();
+          const params = getParamString(listViews)
+          this.query = { ...this.query, ...params };
+          this.load();
         }
       }
     });

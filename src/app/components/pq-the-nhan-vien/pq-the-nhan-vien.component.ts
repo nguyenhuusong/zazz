@@ -76,6 +76,9 @@ export class PqTheNhanVienComponent implements OnInit {
     { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger  addNew', icon: 'pi pi-times' },
   ];
   isSearchEmp = false;
+  isDetail = false;
+  canId = '';
+  empId = '';
   constructor(
     private apiService: ApiHrmService,
     private fileService: ExportFileService,
@@ -496,6 +499,7 @@ export class PqTheNhanVienComponent implements OnInit {
       canId: null,
       empId: event.value
     }
+    this.empId = event.value;
     if(event.value) {
       if(event.data) {
         let queryParams = {
@@ -518,7 +522,9 @@ export class PqTheNhanVienComponent implements OnInit {
         .subscribe(results => {
           if (results.status === 'success') {
             this.spinner.hide();
-            this.router.navigate(['/phan-quyen/the-nhan-vien/them-moi-the-nhan-vien'], { queryParams: params });
+            this.isSearchEmp = false;
+            this.isDetail = true;
+            // this.router.navigate(['/phan-quyen/the-nhan-vien/them-moi-the-nhan-vien'], { queryParams: params });
           }else{
   
           }
@@ -630,5 +636,11 @@ showFilter() {
       }
     }, 3000);
   }
+
+  callback() {
+    this.isDetail = false;
+    this.load();
+  }
+
 }
 
