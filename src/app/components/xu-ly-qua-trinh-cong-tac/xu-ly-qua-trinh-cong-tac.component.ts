@@ -241,6 +241,7 @@ export class XuLyQuaTrinhCongTacComponent implements OnInit {
 
   editRow({ rowData }) {
     this.processId = rowData.processId;
+    this.empId = rowData.empId;
     this.displayFormEditDetail = true;
     // const params = {
     //   processId: rowData.processId,
@@ -293,7 +294,7 @@ export class XuLyQuaTrinhCongTacComponent implements OnInit {
     this.route.queryParams
     .subscribe((params: any) => {
       const apiParam = params;
-      if (apiParam) {
+      if (Object.keys(apiParam).length > 0) {
         this.query = { ...this.query, ...apiParam };
         this.load();
         this.getFilter(false);
