@@ -1,26 +1,27 @@
 const host = {
   socketServer: 'wss://localhost:6999',
-  authServer: 'https://uat-auth.unicloudgroup.com.vn',
-  apiServer: 'https://uat.api.unicloudgroup.com.vn', 
-  apShomeServer: 'https://uat.api.resident.unicloudgroup.com.vn',
-  apiCoreServer: 'https://uat.api.core.unicloudgroup.com.vn',
-  apiHrmConfig: 'https://uat.api.hrm.config.unicloudgroup.com.vn',
-  apiHrmServer: 'https://uat.api.hrm.unicloudgroup.com.vn',
+  authServer: 'https://api.sunshinegroup.vn:5000',
+  apiServer: 'https://api.sunshinetech.com.vn',
+  apShomeServer: 'https://apiresident.sunshinetech.com.vn',
+  apiCoreServer: 'https://apicore.sunshinetech.com.vn',
+  apiHrmConfig: 'https://apiuniconfig.sunshinetech.com.vn',
+  apiHrmServer: 'https://apihrm.sunshinetech.com.vn',
   uploadServer: 'https://data.sunshinegroup.vn/api/v1/FileHandler',
+  // cloudFunction: 'https://us-central1-sunshine-super-app.cloudfunctions.net' //dev
   cloudFunction: 'https://asia-northeast1-sunshine-app-production.cloudfunctions.net' //product
 };
 
 const authenSettings = {
   authority: host.authServer,
   client_id: 'web_s_hrm_prod',
-  redirect_uri: 'https://demo-hrm.unicloudgroup.com.vn/auth-callback',
-  post_logout_redirect_uri: 'https://demo-hrm.unicloudgroup.com.vn',
+  redirect_uri: 'https://s-hrm.sunshineapp.vn/auth-callback',
+  post_logout_redirect_uri: 'https://s-hrm.sunshineapp.vn',
   response_type: 'id_token token',
   scope: 'openid profile api_sre api_home_service api_core_bigtec api_hrm_bigtec api_uni_config',
   filterProtocolClaims: true,
   loadUserInfo: true,
   automaticSilentRenew: true,
-  silent_redirect_uri: 'https://demo-hrm.unicloudgroup.com.vn/silent-refresh.html'
+  silent_redirect_uri: 'https://s-hrm.sunshineapp.vn/silent-refresh.html'
 
 };
 
