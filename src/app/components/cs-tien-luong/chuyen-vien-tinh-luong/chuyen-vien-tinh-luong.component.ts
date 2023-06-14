@@ -279,8 +279,7 @@ export class ChuyenVienTinhLuongComponent implements OnInit, AfterViewChecked {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn đóng chuyên viên tính lương?',
       accept: () => {
-        const queryParams = queryString.stringify({ Id: event.rowData.id });
-        this.apiService.setUserSalaryClose(queryParams)
+        this.apiService.setUserSalaryClose({ Id: event.rowData.id })
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe(results => {
           if (results.status === 'success') {
