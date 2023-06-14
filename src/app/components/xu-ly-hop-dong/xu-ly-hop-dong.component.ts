@@ -128,7 +128,6 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
-    console.log(' this.gridApi', this.gridApi)
   }
 
   cancel() {
@@ -182,7 +181,6 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
   }
 
   load() {
-
     // for hide sidebar
     this.listRowSelects = [];
     this.isShowbtnPheDuyet = true;
@@ -441,7 +439,6 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
   }
   listPrints = []
   ngOnInit() {
-    this.getContractFilter();
     this.getWebSocketService();
     this.items = [
       { label: 'Trang chủ', routerLink: '/home' },
@@ -469,7 +466,19 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
           this.DowloadPlugin();
         }
       },
-    ]
+    ];
+
+    this.route.queryParams
+    .subscribe((params: any) => {
+      const apiParam = params;
+      if (Object.keys(apiParam).length > 0) {
+        this.query = { ...this.query, ...apiParam };
+        this.load();
+        this.getContractFilter(false);
+      } else {
+        this.getContractFilter(true);
+      }
+    })
   }
 
   getWebSocketService() {
@@ -849,7 +858,7 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
     { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger ml-2  addNew', icon: 'pi pi-times' },
   ];
 
-  getContractFilter() {
+  getContractFilter(reload: boolean = false) {
     this.apiService.getContractFilter()
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {
@@ -859,7 +868,7 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
           this.listViewsFilter = [...listViews];
           const params = getParamString(listViews)
           this.query = { ...this.query, ...params };
-          this.load();
+          if(reload) this.load();
           this.detailInfoFilter = results.data;
         }
       });
