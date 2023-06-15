@@ -410,6 +410,10 @@ export class ApiHrmService {
     return this.http.get<any>(`${apiHrmServer}/api/v1/timekeeping/GetTimekeepingFailPage?` + queryParams, this.options)
   }
 
+  getTimeSheetPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v1/timekeeping/GetTimeSheetPage?` + queryParams, this.options)
+  }
+
   getEmployeeSalaryMonthPage(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/timekeeping/GetEmployeeSalaryMonthPage?` + queryParams, this.options)
   }
@@ -2165,6 +2169,10 @@ export class ApiHrmService {
   getDashboardInfo(params): Observable<any> {
     // return this.http.get<any>(`${apiHrmServer}/api/v2/dashboard/GetDashboardInfo?` + queryParams, this.options)
     return this.http.post<any>(`${apiHrmServer}/api/v2/dashboard/GetDashboardInfo`, params, this.options)
+  }
+
+  getDashboardRemind(params): Observable<any> {
+    return this.http.post<any>(`${apiHrmServer}/api/v2/dashboard/GetDashboardRemind`, params, this.options)
   }
 
   getDashboardEmployee(params): Observable<any> {

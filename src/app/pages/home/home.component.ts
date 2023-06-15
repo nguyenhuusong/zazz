@@ -6,6 +6,7 @@ import { TreeNode } from 'primeng/api';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { finalize } from 'rxjs';
 import * as moment from 'moment';
+import { AgGridFn } from 'src/app/common/function-common/common';
 // import { ChartsModule } from 'ng2-charts';
 @Component({
   selector: 'app-home',
@@ -25,7 +26,6 @@ export class HomeComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private router: Router) { }
   columnDefs = [];
-    
   columnDefs1 = [];
   months: any = []
   years: any = [];
@@ -49,7 +49,7 @@ export class HomeComponent implements OnInit {
     months: (moment().month() + 1),
     years: 2022
   }
-  currentYear = moment().year()
+  currentYear = moment().year();
   bg = [
     '#4591FE',
     '#F0D042',
@@ -64,55 +64,23 @@ export class HomeComponent implements OnInit {
     '#36ebb9',
     '#36eb6e',
   ]
+  baseQuery = {
+    months: 0,
+    years: 0
+  }
+
+  selectBaseQuery = new Date(moment(new Date(new Date().getFullYear(), new Date().getMonth())).format());
+
   ngOnInit() {
-    this.getDashboardInfo();
-    this.load();
-    this.columnDefs = [
-      {
-       headerName: 'Thời gian',
-       cellClass: ['border-right'],
-       field: 'date'
-      },
-      {
-       headerName: 'Hoạt động',
-       cellClass: ['border-right'],
-       field: 'hoat_dong'
-      }]
-    this.columnDefs1 = [
-      {
-       headerName: 'Tên khách hàng',
-       cellClass: ['border-right'],
-       field: 'tenKH'
-      },
-      {
-       headerName: 'Nội Dung cần hỗ trợ',
-       cellClass: ['border-right'],
-       field: 'noiDung'
-      }]
-      this.months = [
-        {name: 'Tháng 1', code: 1},
-        {name: 'Tháng 2', code: 2},
-        {name: 'Tháng 3', code: 3},
-        {name: 'Tháng 4', code: 4},
-        {name: 'Tháng 5', code: 5},
-        {name: 'Tháng 6', code: 6},
-        {name: 'Tháng 7', code: 7},
-        {name: 'Tháng 8', code: 8},
-        {name: 'Tháng 9', code: 9},
-        {name: 'Tháng 10', code: 10},
-        {name: 'Tháng 11', code: 11},
-        {name: 'Tháng 12', code: 12},
-    ];
-    
-    this.getYears();
-    // this.getAgencyOrganizeMap();
+    this.onSelectMonth();
   }
   ngOnDestroy() {
+
   }
   // line chart
- chartOptions = {
-  responsive: true
-};
+  chartOptions = {
+    responsive: true
+  };
 
   theOrginSelected: any = {}
   getOriginLabelByid() {
@@ -129,13 +97,72 @@ public barChartOptions:any = {
   responsive: true
 };
 
-  getYears() {
-    let yearsTem = []
-    for( let i = 2000; i <= this.currentYear; i ++ ){
-      yearsTem.push({name: i, code: i})
-    }
-    this.years = yearsTem
-  }
+
+heightGrid = 200;
+// hợp đồng hết hạn
+colsEmpContractExp = [];
+empContractExpColumnDef = [];
+dataEmpContractExp = [];
+
+// chưa ký hợp đồng
+colsEmpSignContract = [];
+empSignContractColumnDef = [];
+dataEmpSignContract = [];
+
+// hết hạn hộ chiếu/cccd
+colsEmpIdCardExp = [];
+empIdCardExpColumnDef = [];
+dataEmpIdCardExp = [];
+
+// sinh nhật
+empBirthDays = [{
+  "avatar_url": "",
+  "full_name": "",
+  "age": "",
+  "birth_day": "",
+  "birth_day_ago": ""
+}]
+getDashboardRemind() {
+  this.apiService.getDashboardRemind(this.baseQuery)
+    .pipe(
+      finalize(() => this.spinner.hide())
+    )
+    .subscribe( results => {
+      if (results.status === 'success') {
+
+        this.colsEmpContractExp = results.data.gridEmpContractExp;
+        this.dataEmpContractExp = results.data.dataEmpContractExp;
+
+        this.colsEmpSignContract = results.data.gridEmpSignContract;
+        this.dataEmpSignContract = results.data.dataEmpSignContract;
+
+        this.colsEmpIdCardExp = results.data.gridEmpIdCardExp;
+        this.dataEmpIdCardExp = results.data.dataEmpIdCardExp;
+
+        if(results.data.empBirthDays.length > 0) {
+          this.empBirthDays = results.data.empBirthDays;
+        }
+        this.initGrid();
+      }
+    })
+}
+
+initGrid() {
+  this.empContractExpColumnDef = [...AgGridFn(this.colsEmpContractExp.filter((d: any) => !d.isHide))];
+  this.empSignContractColumnDef = [...AgGridFn(this.colsEmpSignContract.filter((d: any) => !d.isHide))];
+  this.empIdCardExpColumnDef = [...AgGridFn(this.colsEmpIdCardExp.filter((d: any) => !d.isHide))]
+}
+
+onSelectMonth() {
+  let months = moment(this.selectBaseQuery).month();
+
+  let years = moment(this.selectBaseQuery).year();
+  this.baseQuery.months = months + 1;
+  this.baseQuery.years = years;
+  this.getDashboardInfo();
+  this.getDashboardRemind();
+}
+
 chartSlNhanSu() {
   let configs = {
     type: 'bar',
@@ -470,7 +497,7 @@ chartBDNhanSu() {
     
     this.getOriginLabelByid();
     this.dashboardData = null;
-    this.apiService.getDashboardInfo(this.queryDashboard)
+    this.apiService.getDashboardInfo(this.baseQuery)
     .pipe(
       finalize(() => this.spinner.hide())
     )
@@ -480,7 +507,7 @@ chartBDNhanSu() {
         this.chartSlNhanSu();
         this.chartBDNhanSu();
         this.charDou();
-        this.charDou2();
+        // this.charDou2();
       }
     })
   }
@@ -498,5 +525,6 @@ chartBDNhanSu() {
     this.spinner.show();
     this.getDashboardInfo()
   }
+
 
 }

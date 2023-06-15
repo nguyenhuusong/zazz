@@ -10,7 +10,6 @@ export class AuthGuardService {
 
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean | Observable<boolean> | Promise<boolean>> {
     const isLoginSunshine = await this.authService.isLoggedIn();
-    console.log(isLoginSunshine)
     if (!isLoginSunshine) {
       localStorage.setItem('returnUrl', state.url);
       this.authService.startAuthentication();
