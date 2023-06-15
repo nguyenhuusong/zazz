@@ -96,6 +96,7 @@ import { KnobModule } from 'primeng/knob';
 import { AvatarModule } from 'primeng/avatar';
 import { CsLoiChamCongComponent } from 'src/app/components/cs-loi-cham-cong/cs-loi-cham-cong.component';
 import { TimeKeepingDailyComponent } from 'src/app/components/cs-cham-cong/cs-cham-cong-overview/time-keeping-daily/time-keeping-daily.component';
+import { ChiTietCsLoiChamCongComponent } from 'src/app/components/cs-loi-cham-cong/chi-tiet-cs-loi-cham-cong/chi-tiet-cs-loi-cham-cong.component';
 @NgModule({
   imports: [
     MessagesModule,
@@ -200,7 +201,7 @@ import { TimeKeepingDailyComponent } from 'src/app/components/cs-cham-cong/cs-ch
     DieuChinhComponent,
     CsLoiChamCongComponent,
     TimeKeepingDailyComponent,
-
+    ChiTietCsLoiChamCongComponent
 
   ],
   providers: [],

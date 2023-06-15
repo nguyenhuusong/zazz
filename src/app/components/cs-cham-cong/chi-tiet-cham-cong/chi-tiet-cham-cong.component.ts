@@ -47,6 +47,13 @@ export class ChiTietChamCongComponent implements OnInit, OnDestroy {
   @Input() dataRouter = null
   @Output() back = new EventEmitter<any>();
 
+  queryDetail = {
+    recordId: '',
+    empId: '',
+    work_date: ''
+  }
+  isDetail = false;
+
   ngOnDestroy() {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
@@ -85,9 +92,35 @@ export class ChiTietChamCongComponent implements OnInit, OnDestroy {
         this.listViews = cloneDeep(results.data.group_fields);
         this.detailInfo = results.data;
         this.listsData = results.data.checkinouts;
-        this.columnDefs = [...AgGridFn(results.data.gridflexcheckinout.filter((d: any) => !d.isHide))]
+        this.columnDefs = [
+
+          ...AgGridFn(results.data.gridflexcheckinout.filter((d: any) => !d.isHide)),
+          {
+            filter: '',
+            width: 70,
+            pinned: 'right',
+            cellRenderer: 'buttonAgGridComponent',
+            cellClass: ['border-right', 'no-auto'],
+            cellRendererParams: (params: any) => this.showButtons(params),
+            checkboxSelection: false,
+            field: 'checkbox'
+          }
+        ]
       }
     })
+  }
+
+  showButtons(event: any) {
+    return {
+      buttons: [
+        {
+          onClick: this.editRow.bind(this),
+          label: 'Xem',
+          icon: 'fa fa-eye',
+          class: 'btn-primary mr5',
+        },
+      ]
+    };
   }
 
   handleChange(index) {
@@ -142,6 +175,17 @@ export class ChiTietChamCongComponent implements OnInit, OnDestroy {
     }else {
       this.router.navigate(['/chinh-sach/cham-cong']);
     }
+  }
+
+  editRow({ rowData }) {
+    this.isDetail = true;
+    this.queryDetail.empId = rowData.empId;
+    this.queryDetail.recordId = rowData.recordId;
+    this.queryDetail.work_date = rowData.work_date;
+  }
+
+  callback() {
+    this.isDetail = false;
   }
 
 }

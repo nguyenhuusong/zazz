@@ -95,7 +95,13 @@ export class CsLoiChamCongComponent implements OnInit, AfterViewChecked {
   }
   loading = false;
   listVacancy = []
-  companies = []
+  companies = [];
+  queryDetail = {
+    recordId: '',
+    empId: '',
+    work_date: ''
+  }
+  isDetail = false;
 
   onGridReady(params) {
     this.gridApi = params.api;
@@ -175,13 +181,12 @@ export class CsLoiChamCongComponent implements OnInit, AfterViewChecked {
   showButtons(event: any) {
     return {
       buttons: [
-        // {
-        //   onClick: this.editRow.bind(this),
-        //   label: 'Xem',
-        //   icon: 'fa fa-eye',
-        //   class: 'btn-primary mr5',
-        //   // hide: CheckHideAction(MENUACTIONROLEAPI.GetMaternityPage.url, ACTIONS.VIEW)
-        // },
+        {
+          onClick: this.editRow.bind(this),
+          label: 'Xem',
+          icon: 'fa fa-eye',
+          class: 'btn-primary mr5',
+        },
         // {
         //   onClick: this.delRow.bind(this),
         //   label: 'Xóa ',
@@ -294,12 +299,16 @@ export class CsLoiChamCongComponent implements OnInit, AfterViewChecked {
       }
     });
   }
-
+  
   editRow({ rowData }) {
-    const params = {
-      maternityId: rowData.maternityId
-    }
-    this.router.navigate(['/nhan-su/thai-san/chi-tiet-thai-san'], { queryParams: params });
+    this.isDetail = true;
+    this.queryDetail.empId = rowData.empId;
+    this.queryDetail.recordId = rowData.recordId;
+    this.queryDetail.work_date = rowData.work_dt;
+  }
+
+  callback() {
+    this.isDetail = false;
   }
 
   onCellClicked(event) {
