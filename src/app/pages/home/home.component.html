@@ -1,7 +1,23 @@
 <div class="content-body p-3">
+
     <!-- row 1 -->
+    <div class="grid">
+      <div class="col-2">
+        <div class="fields">
+          <p-calendar 
+              (onSelect)="onSelectMonth()"
+              [(ngModel)]="selectBaseQuery" 
+              view="month" 
+              dateFormat="mm/yy" 
+              placeholder="Chọn tháng năm"
+              [readonlyInput]="true">
+          </p-calendar>
+          <span class="uni-icon uni-calendar"> </span>
+        </div>
+      </div>
+    </div>
     <div class="grid boxs">
-      <div class="col-9 pr-0 md:col-12 lg:col-9 xl:col-9">
+      <div class="col-9 md:col-12 lg:col-9 xl:col-9">
         <div class="grid">
             <div class="col-12 md:col-6 lg:col-4 xl:col-3" *ngFor="let tongQuanNhanSu of dashboardData?.tongquan">
               <div class="card">
@@ -27,12 +43,6 @@
                             </div>
                             <div class="per"> <span>-10% </span></div>
                         </div>
-                        
-                        <div class="the-month d-flex end">
-                          <div class="fields no-border">
-                            <p-dropdown [(ngModel)]="selectedMonth" name="selectedMonth" [options]="months" (onChange)="changeMonths($event)" optionLabel="name"></p-dropdown>
-                          </div>
-                        </div>
                       </div>
 
                   </div>
@@ -42,127 +52,134 @@
             </div>
         </div>
           <div class="grid">
-            <div class="col-12 pt-3">
-              <div class="chart-section">
-                <div class="d-flex bet ">
-                    <div class="des">
-                      <h3 style="color:#0a58ca ;">Số lượng nhân sự </h3>
-                      <!-- <p>Công ty KSFinance</p> -->
-                    </div>
-                    <div class="fields d-flex no-border middle">
-                      <label class="mr-2">Năm</label>
-                      <p-dropdown [(ngModel)]="selectedYear" name="selectedYear" [options]="years" optionLabel="name" (onChange)="changeYears($event)"></p-dropdown>
-                    </div>
-                </div>
-                <div class="chart" >
-                  <!-- <div id="legend-so-luong-nhan-su" class="legend-default">
-                      <ul></ul>
-                  </div> -->
-                  <canvas style="max-height: 250px" id="so-luong-nhan-su" *ngIf="dashboardData"></canvas>
+              <div class="col-6 pt-3">
+                <div class="chart-section">
+                  <div class="d-flex bet ">
+                      <div class="des">
+                        <h3 style="color:#0a58ca ;">Số lượng nhân sự </h3>
+                        <!-- <p>Công ty KSFinance</p> -->
+                      </div>
+                  </div>
+                  <div class="chart" >
+                    <!-- <div id="legend-so-luong-nhan-su" class="legend-default">
+                        <ul></ul>
+                    </div> -->
+                    <canvas style="max-height: 250px" id="so-luong-nhan-su" *ngIf="dashboardData"></canvas>
+                  </div>
                 </div>
               </div>
-              <div class="chart-section">
-                <div class="d-flex bet middle">
-                  <div class="desc">
-                    <h3 style="color:#0a58ca ;">Biến động nhân sự </h3>
-                    <p>{{ selectedNode?.label }}</p>
+              <div class="col-6 pt-3 ">
+                <div class="chart-section">
+                  <div class="d-flex bet middle">
+                    <div class="desc">
+                      <h3 style="color:#0a58ca ;">Biến động nhân sự </h3>
+                      <p>{{ selectedNode?.label }}</p>
+                    </div>
+                    <div id="legend-bien-dong-nhan-su" class="legend-default line">
+                        <ul class="d-flex center"></ul>
+                    </div>
                   </div>
-                  <div id="legend-bien-dong-nhan-su" class="legend-default line">
-                      <ul class="d-flex center"></ul>
+                  <div class="chart">
+                    <canvas style="max-height: 200px" id="bien-dong-nhan-su" *ngIf="dashboardData"></canvas>
                   </div>
-                  <div class="fields no-border">
-                    <p-dropdown [(ngModel)]="selectedYear" [options]="years" optionLabel="name" (onChange)="changeYears($event)"></p-dropdown>
-                  </div>
-                </div>
-                <div class="chart">
-                  <canvas style="max-height: 200px" id="bien-dong-nhan-su" *ngIf="dashboardData"></canvas>
                 </div>
               </div>
-            </div>
+              <div class="col-6">
+                <div class="box">
+                  <h3 class="mb-3">Thống kê hợp đồng theo loại hợp đồng</h3>
+                  <div class="chart d-flex middle">
+                    <canvas  style="max-height: 240px; max-width: 240px; margin: auto" id="doughnut" *ngIf="dashboardData"></canvas>
+                    <div id="legend-doughnut" class="legend-default dou">
+                        <ul></ul>
+                    </div>
+                  </div>
+                  <ul>
+                    <li class="d-flex bet">Hợp đồng sắp hết hạn: {{ dashboardData?.hd_saphethan }}
+                      <span class="icon">
+                          <svg width="6" height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M0.259459 0.278481C0.54816 0.00352719 1.01624 0.00352719 1.30494 0.278481L5.74054 4.50286C6.02924 4.77781 6.02924 5.2236 5.74054 5.49856L1.30494 9.72293C1.01624 9.99789 0.54816 9.99789 0.259459 9.72293C-0.029243 9.44798 -0.029243 9.00219 0.259459 8.72724L4.17232 5.00071L0.259459 1.27418C-0.029243 0.999223 -0.029243 0.553435 0.259459 0.278481Z" fill="#99A2BC"/>
+                          </svg>
+                      </span>
+                    </li>
+                    <li class="d-flex bet">Hợp đồng quá hạn: {{ dashboardData?.hd_quahan }}
+                      <span class="icon">
+                          <svg width="6" height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M0.259459 0.278481C0.54816 0.00352719 1.01624 0.00352719 1.30494 0.278481L5.74054 4.50286C6.02924 4.77781 6.02924 5.2236 5.74054 5.49856L1.30494 9.72293C1.01624 9.99789 0.54816 9.99789 0.259459 9.72293C-0.029243 9.44798 -0.029243 9.00219 0.259459 8.72724L4.17232 5.00071L0.259459 1.27418C-0.029243 0.999223 -0.029243 0.553435 0.259459 0.278481Z" fill="#99A2BC"/>
+                          </svg>
+                      </span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="box h-100">
+                  <h3 class="mb-3">Nhân viên chưa ký hợp đồng</h3>
+                  <app-list-grid-angular  
+                    *ngIf="empSignContractColumnDef.length > 0"
+                    [listsData]="dataEmpSignContract" 
+                    [height]="heightGrid" 
+                    [idGrid]="'dataEmpSignContract'"
+                    [columnDefs]="empSignContractColumnDef">
+                  </app-list-grid-angular>
+                  <div class="p-6 text-center" *ngIf="empSignContractColumnDef && empSignContractColumnDef.length < 1">
+                    <p style="opacity: 0.6;">Không có dữ liệu</p>
+                  </div>
+                </div>
+              </div>
           </div>
       </div>
       <div class="col-3 md:col-12 lg:col-3 xl:col-3">
-        <div class="sidebar col-12 pt-0">
-          <div class="box mb-3">
-            <h3>Thống kê hợp đồng theo loại hợp đồng</h3>
-            <p>{{ theOrginSelected[0]?.label }} - Đến ngày {{ queryDashboard.months}}/{{ queryDashboard.years}}</p>
-            <div class="chart">
-              <canvas  style="max-width: 180px; margin: auto" id="doughnut" *ngIf="dashboardData"></canvas>
-              <div id="legend-doughnut" class="legend-default dou">
-                  <ul></ul>
+        <div class="box mb-3">
+          <h3 class="mb-3">Sinh nhật nhân viên</h3>
+          <ul class="birth-day" *ngIf="empBirthDays && empBirthDays.length > 0">
+            <li *ngFor="let birthDay of empBirthDays">
+              <div class="d-flex gap12">
+                <div><img src="{{ birthDay.avatar_url ? birthDay.avatar_url : '../../../../../assets/images/avatar.jpg' }}"></div>
+                <div>
+                  <div><label>Họ tên: </label>{{ birthDay.full_name }}</div>
+                  <div><label>Ngày sinh: </label>{{ birthDay.birth_day }}</div>
+                  <div><label>Tuổi: </label>{{ birthDay.age }}</div>
+                </div>
               </div>
-            </div>
-            <ul>
-              <li class="d-flex bet">Hợp đồng sắp hết hạn: {{ dashboardData?.hd_saphethan }}
-                <span class="icon">
-                    <svg width="6" height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path fill-rule="evenodd" clip-rule="evenodd" d="M0.259459 0.278481C0.54816 0.00352719 1.01624 0.00352719 1.30494 0.278481L5.74054 4.50286C6.02924 4.77781 6.02924 5.2236 5.74054 5.49856L1.30494 9.72293C1.01624 9.99789 0.54816 9.99789 0.259459 9.72293C-0.029243 9.44798 -0.029243 9.00219 0.259459 8.72724L4.17232 5.00071L0.259459 1.27418C-0.029243 0.999223 -0.029243 0.553435 0.259459 0.278481Z" fill="#99A2BC"/>
-                    </svg>
-                </span>
-              </li>
-              <li class="d-flex bet">Hợp đồng quá hạn: {{ dashboardData?.hd_quahan }}
-                <span class="icon">
-                    <svg width="6" height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path fill-rule="evenodd" clip-rule="evenodd" d="M0.259459 0.278481C0.54816 0.00352719 1.01624 0.00352719 1.30494 0.278481L5.74054 4.50286C6.02924 4.77781 6.02924 5.2236 5.74054 5.49856L1.30494 9.72293C1.01624 9.99789 0.54816 9.99789 0.259459 9.72293C-0.029243 9.44798 -0.029243 9.00219 0.259459 8.72724L4.17232 5.00071L0.259459 1.27418C-0.029243 0.999223 -0.029243 0.553435 0.259459 0.278481Z" fill="#99A2BC"/>
-                    </svg>
-                </span>
-              </li>
-            </ul>
+            </li>
+          </ul>
+        </div>
+        <div class="box mb-3">
+          <h3 class="mb-3">Nhân viên hết hạn hợp đồng</h3>
+          <app-list-grid-angular  
+            *ngIf="empContractExpColumnDef.length > 0"
+            [listsData]="dataEmpContractExp" 
+            [height]="heightGrid" 
+            [idGrid]="'dataEmpContractExp'"
+            [columnDefs]="empContractExpColumnDef">
+          </app-list-grid-angular>
+          <div class="p-6 text-center" *ngIf="empContractExpColumnDef && empContractExpColumnDef.length < 1">
+            <p style="opacity: 0.6;">Không có dữ liệu</p>
           </div>
-          <div class="box">
-            <h3>Thống kê giới tính</h3>
-            <p>{{ theOrginSelected[0]?.label }} - Đến ngày {{ queryDashboard.months}}/{{ queryDashboard.years}}</p>
-            <!-- <div class="chart" style="max-width: 300px; margin: auto">
-              <p-chart type="doughnut" [data]="dataDou" [style]="{'width': '40%'}"></p-chart>
-            </div> -->
-            <div class="chart">
-              <canvas  style="max-width: 180px; margin: auto" id="doughnut-2" *ngIf="dashboardData"></canvas>
-              <div id="legend-doughnut-2" class="legend-default dou">
-                <ul></ul>
-            </div>
-            </div>
+        </div>
+        <div class="box mb-3">
+          <h3 class="mb-3">Nhân viên hết hạn hộ chiếu/chứng minh thư</h3>
+          <app-list-grid-angular  
+            *ngIf="empIdCardExpColumnDef.length > 0"
+            [listsData]="dataEmpIdCardExp" 
+            [height]="heightGrid" 
+            [idGrid]="'dataEmpIdCardExp'"
+            [columnDefs]="empIdCardExpColumnDef">
+          </app-list-grid-angular>
+          <div class="p-6 text-center" *ngIf="empIdCardExpColumnDef && empIdCardExpColumnDef.length < 1">
+            <p style="opacity: 0.6;">Không có dữ liệu</p>
           </div>
         </div>
       </div>
-      <!-- row 2 -->
-      <!-- <div class="row custom-card">
-          <div class="col-lg-6">
-              <div class="card mb-1">
-                  <div class="card-header card-header-custom">
-                      <h4 class="card-title"><i class="fa fa-users"></i> Khách hàng theo nhóm</h4>
-                  </div>
-              </div>
-              <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title"><i class="fa fa-clock-o"></i> Lịch làm việc trong ngày</h4>
-                </div>
-                <div class="card-content1"> 
-                  <div class="grid-default border">
-                    <app-list-grid-angular [listsData]="dataLamViecTrongNgay" [height]="500"
-                        [columnDefs]="columnDefs"></app-list-grid-angular>
-                  </div>
-                </div> 
-            </div>
-            <div class="col-lg-6">
-                <div class="card mb-1">
-                    <div class="card-header card-header-custom">
-                        <h4 class="card-title"><i class="ft-arrow-up"></i> Tăng trưởng khách hàng hàng năm</h4>
-                    </div>
-                  </div>
-                  <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title"><i class="fa fa-commenting"></i> Hỗ trợ khách hàng</h4>
-                    </div>
-                    <div class="card-content1"> 
-                      <div class="grid-default border">
-                        <app-list-grid-angular  [listsData]="dataHoTroKhachHang" [height]="500"
-                            [columnDefs]="columnDefs1"></app-list-grid-angular>
-                          </div>
-                    </div> 
-                  </div>
-                </div>
-              </div>
-          </div> -->
+      <!-- <div class="chart" style="max-width: 300px; margin: auto">
+        <p-chart type="doughnut" [data]="dataDou" [style]="{'width': '40%'}"></p-chart>
+      </div> -->
+      <!-- <div class="chart">
+        <canvas  style="max-width: 180px; margin: auto" id="doughnut-2" *ngIf="dashboardData"></canvas>
+        <div id="legend-doughnut-2" class="legend-default dou">
+          <ul></ul>
+      </div>
+      </div> -->
     </div>
 </div>
 
