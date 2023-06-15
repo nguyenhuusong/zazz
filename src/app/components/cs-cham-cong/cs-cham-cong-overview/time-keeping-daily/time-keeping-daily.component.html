@@ -1,13 +1,41 @@
+<div class="grid end">
+    <div class="fields small col-2">
+        <!-- <p-dropdown appendTo="body"  
+            [baseZIndex]="100" 
+            [options]="filterTypeOptions" 
+            [(ngModel)]="timeKeepingQuery.filter_type" 
+            [autoDisplayFirst]="false" 
+            (onChange)="changeTypeFilter()"
+            placeholder="Select type to filter" 
+            name="organizeId" [filter]="true">
+            <ng-template let-item pTemplate="selectedItem">
+                <span>{{item.label}}</span>
+            </ng-template>
+            <ng-template let-car pTemplate="item">
+                <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                </div>
+            </ng-template>
+        </p-dropdown> -->
+
+        <p-calendar  (onSelect)="getTimekeepingDaily()"  placeholder="Select date to filter"
+        panelStyleClass="datepicker-default" placeholder="(DD/MM/YYYY)"
+        [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="query.toDate" 
+        [monthNavigator]="true" 
+        [yearNavigator]="true" inputId="navigators" dateFormat="dd/mm/yy"
+        name="toDate"></p-calendar>
+    </div>
+</div>
 <div class="d-flex gap12 box-items em-activities">
     <div class="wrap-knod d-flex middle gap6" >
         <ul class="note">
-            <li>
+            <li pTooltip="Chưa checkin">
                 <span class=""></span>
-                <span pTooltip="Chưa checkin">{{ timekeepingDaily?.checkin.num_fail }}</span>
+                <span >{{ timekeepingDaily?.checkin.num_fail }}</span>
             </li>
-            <li>
+            <li  pTooltip="Đã checkin">
                 <span class=""></span>
-                <span pTooltip="Đã checkin">{{ timekeepingDaily?.checkin.num_right }}</span>
+                <span>{{ timekeepingDaily?.checkin.num_right }}</span>
             </li>
             
         </ul>
@@ -17,13 +45,13 @@
     </div>
     <div class="wrap-knod d-flex middle gap6" >
         <ul class="note">
-            <li>
+            <li  pTooltip="Checkin muộn">
                 <span class=""></span>
-                <span pTooltip="Checkin muộn">{{ timekeepingDaily?.checkin_late.num_fail }}</span>
+                <span>{{ timekeepingDaily?.checkin_late.num_fail }}</span>
             </li>
-            <li>
+            <li  pTooltip="Đã giải trình">
                 <span class=""></span>
-                <span  pTooltip="Đã giải trình">{{ timekeepingDaily?.checkin_late.num_right }}</span>
+                <span >{{ timekeepingDaily?.checkin_late.num_right }}</span>
             </li>
             
         </ul>
@@ -33,13 +61,13 @@
     </div>
     <div class="wrap-knod d-flex middle gap6" >
         <ul class="note">
-            <li>
+            <li pTooltip="Chưa Checkout">
                 <span class=""></span>
-                <span pTooltip="Chưa Checkout">{{ timekeepingDaily?.checkout.num_fail }}</span>
+                <span >{{ timekeepingDaily?.checkout.num_fail }}</span>
             </li>
-            <li>
+            <li pTooltip="Đã Checkout">
                 <span class=""></span>
-                <span pTooltip="Đã Checkout">{{ timekeepingDaily?.checkout.num_right }}</span>
+                <span >{{ timekeepingDaily?.checkout.num_right }}</span>
             </li>
             
         </ul>
@@ -49,13 +77,13 @@
     </div>
     <div class="wrap-knod d-flex middle gap6" >
         <ul class="note">
-            <li>
+            <li pTooltip="Về sớm">
                 <span class=""></span>
-                <span pTooltip="Về sớm">{{ timekeepingDaily?.checkout_early.num_fail }}</span>
+                <span >{{ timekeepingDaily?.checkout_early.num_fail }}</span>
             </li>
-            <li>
+            <li pTooltip="Checkout đúng giờ">
                 <span class=""></span>
-                <span pTooltip="Checkout đúng giờ">{{ timekeepingDaily?.checkout_early.num_right }}</span>
+                <span >{{ timekeepingDaily?.checkout_early.num_right }}</span>
             </li>
             
         </ul>
@@ -65,13 +93,13 @@
     </div>
     <div class="wrap-knod d-flex middle gap6" >
         <ul class="note">
-            <li>
+            <li pTooltip="Nghỉ không lương">
                 <span class=""></span>
-                <span pTooltip="Nghỉ không lương">{{ timekeepingDaily?.leaves.num_fail }}</span>
+                <span >{{ timekeepingDaily?.leaves.num_fail }}</span>
             </li>
-            <li>
+            <li pTooltip="Nghỉ có lương">
                 <span class=""></span>
-                <span pTooltip="Nghỉ có lương">{{ timekeepingDaily?.leaves.num_right }}</span>
+                <span >{{ timekeepingDaily?.leaves.num_right }}</span>
             </li>
             
         </ul>
@@ -82,13 +110,13 @@
     </div>
     <div class="wrap-knod d-flex middle gap6" >
         <ul class="note">
-            <li>
+            <li pTooltip="Tính nửa công">
                 <span class=""></span>
-                <span pTooltip="Tính nửa công">{{ timekeepingDaily?.workdays.num_fail }}</span>
+                <span >{{ timekeepingDaily?.workdays.num_fail }}</span>
             </li>
-            <li>
+            <li pTooltip="Đủ công">
                 <span class=""></span>
-                <span pTooltip="Đủ công">{{ timekeepingDaily?.workdays.num_right }}</span>
+                <span >{{ timekeepingDaily?.workdays.num_right }}</span>
             </li>
             
         </ul>

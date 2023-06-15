@@ -119,27 +119,7 @@
                                     </div>
                                 </p-card>
                             </div> -->
-                        <div class="grid end">
-                            <div class="fields small col-2">
-                                <p-dropdown appendTo="body"  
-                                    [baseZIndex]="100" 
-                                    [options]="filterTypeOptions" 
-                                    [(ngModel)]="timeKeepingQuery.filter_type" 
-                                    [autoDisplayFirst]="false" 
-                                    (onChange)="changeTypeFilter()"
-                                    placeholder="Select type to filter" 
-                                    name="organizeId" [filter]="true">
-                                    <ng-template let-item pTemplate="selectedItem">
-                                        <span>{{item.label}}</span>
-                                    </ng-template>
-                                    <ng-template let-car pTemplate="item">
-                                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
-                                        <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
-                                        </div>
-                                    </ng-template>
-                                </p-dropdown>
-                            </div>
-                        </div>
+                       
                         <app-time-keeping-daily #timeKeepingDaily [queryParams]="timeKeepingQuery"></app-time-keeping-daily>
                     </div>
                 </div>
