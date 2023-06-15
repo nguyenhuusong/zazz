@@ -132,7 +132,7 @@
         <div class="box mb-3">
           <h3 class="mb-3" style="color:#0a58ca;">Sinh nhật nhân viên</h3>
           <ul class="birth-day" *ngIf="empBirthDays && empBirthDays.length > 0">
-            <li *ngFor="let birthDay of empBirthDays">
+            <li *ngFor="let birthDay of empBirthDays" class="mb-2">
               <div class="d-flex gap12">
                 <div><img src="{{ birthDay.avatar_url ? birthDay.avatar_url : '../../../../../assets/images/avatar.jpg' }}"></div>
                 <div>
