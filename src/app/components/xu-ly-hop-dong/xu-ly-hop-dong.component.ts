@@ -184,7 +184,6 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
     // for hide sidebar
     this.listRowSelects = [];
     this.isShowbtnPheDuyet = true;
-
     this.columnDefs = []
     // this.spinner.show();
     let params: any = { ... this.query };
@@ -218,7 +217,7 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
         error => {
           this.spinner.hide();
         });
-    this.setQueryLocalStorage();
+    // this.setQueryLocalStorage();
   }
 
   showButtons(event: any) {
@@ -445,7 +444,7 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
       { label: 'Quan hệ lao động' },
       { label: 'Xử lý hợp đồng' }
     ];
-    this.getQueryLocalSotrage();
+    // this.getQueryLocalSotrage();
 
     this.itemsToolOfGrid = [
       {
